@@ -64,6 +64,7 @@ namespace Chromium.WebBrowser {
 
             var settings = new CfxSettings();
             settings.MultiThreadedMessageLoop = true;
+            settings.NoSandbox = true;
 
             CfxOnBeforeCommandLineProcessingEventHandler onBeforeCommandLineProcessingEventHandler;
 
