@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+# SharpDevelop 4.4
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChromiumFX", "ChromiumFX.csproj", "{36972B7C-3A3A-465F-B064-51B525FD4C14}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{36972B7C-3A3A-465F-B064-51B525FD4C14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36972B7C-3A3A-465F-B064-51B525FD4C14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36972B7C-3A3A-465F-B064-51B525FD4C14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36972B7C-3A3A-465F-B064-51B525FD4C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal
