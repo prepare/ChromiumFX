@@ -56,7 +56,10 @@ namespace CfxTestApplication {
 
             Chromium.WebBrowser.ChromiumWebBrowser.OnBeforeCfxInitialize += new OnBeforeCfxInitializeEventHandler(ChromiumWebBrowser_OnBeforeCfxInitialize);
             Chromium.WebBrowser.ChromiumWebBrowser.Initialize();
-            
+
+            //Walkthrough01.Main();
+            //return;
+
             Application.EnableVisualStyles();
             var f = new BrowserForm();
             f.Show();
