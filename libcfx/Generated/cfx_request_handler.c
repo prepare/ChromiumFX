@@ -43,9 +43,9 @@ typedef struct _cfx_request_handler_t {
     gc_handle_t gc_handle;
 } cfx_request_handler_t;
 
-int CEF_CALLBACK _cfx_request_handler_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_request_handler_add_ref(struct _cef_base_t* base) {
     cfx_request_handler_t* ptr = (cfx_request_handler_t*)base;
-    return InterlockedIncrement(&ptr->ref_count);
+    InterlockedIncrement(&ptr->ref_count);
 }
 int CEF_CALLBACK _cfx_request_handler_release(struct _cef_base_t* base) {
     cfx_request_handler_t* ptr = (cfx_request_handler_t*)base;
@@ -56,10 +56,6 @@ int CEF_CALLBACK _cfx_request_handler_release(struct _cef_base_t* base) {
     }
     return count;
 }
-int CEF_CALLBACK _cfx_request_handler_get_refct(struct _cef_base_t* base) {
-    cfx_request_handler_t* ptr = (cfx_request_handler_t*)base;
-    return ptr->ref_count;
-}
 
 CFX_EXPORT cfx_request_handler_t* cfx_request_handler_ctor(gc_handle_t gc_handle) {
     cfx_request_handler_t* ptr = (cfx_request_handler_t*)calloc(1, sizeof(cfx_request_handler_t));
@@ -67,7 +63,6 @@ CFX_EXPORT cfx_request_handler_t* cfx_request_handler_ctor(gc_handle_t gc_handle
     ptr->cef_request_handler.base.size = sizeof(cef_request_handler_t);
     ptr->cef_request_handler.base.add_ref = _cfx_request_handler_add_ref;
     ptr->cef_request_handler.base.release = _cfx_request_handler_release;
-    ptr->cef_request_handler.base.get_refct = _cfx_request_handler_get_refct;
     ptr->ref_count = 1;
     ptr->gc_handle = gc_handle;
     return ptr;

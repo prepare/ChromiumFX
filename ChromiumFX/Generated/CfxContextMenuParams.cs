@@ -187,6 +187,26 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Returns the text of the misspelled word, if any, that the context menu was
+        /// invoked on.
+        /// </summary>
+        public String MisspelledWord {
+            get {
+                return StringUserfree.Convert(CfxApi.cfx_context_menu_params_get_misspelled_word(NativePtr));
+            }
+        }
+
+        /// <summary>
+        /// Returns the hash of the misspelled word, if any, that the context menu was
+        /// invoked on.
+        /// </summary>
+        public int MisspellingHash {
+            get {
+                return CfxApi.cfx_context_menu_params_get_misspelling_hash(NativePtr);
+            }
+        }
+
+        /// <summary>
         /// Returns true (1) if the context menu was invoked on an editable node.
         /// </summary>
         public bool IsEditable {
@@ -197,11 +217,11 @@ namespace Chromium {
 
         /// <summary>
         /// Returns true (1) if the context menu was invoked on an editable node where
-        /// speech-input is enabled.
+        /// spell-check is enabled.
         /// </summary>
-        public bool IsSpeechInputEnabled {
+        public bool IsSpellCheckEnabled {
             get {
-                return 0 != CfxApi.cfx_context_menu_params_is_speech_input_enabled(NativePtr);
+                return 0 != CfxApi.cfx_context_menu_params_is_spell_check_enabled(NativePtr);
             }
         }
 
@@ -213,6 +233,21 @@ namespace Chromium {
             get {
                 return CfxApi.cfx_context_menu_params_get_edit_state_flags(NativePtr);
             }
+        }
+
+        /// <summary>
+        /// Returns true (1) if suggestions exist, false (0) otherwise. Fills in
+        /// |suggestions| from the spell check service for the misspelled word if there
+        /// is one.
+        /// </summary>
+        public bool GetDictionarySuggestions(System.Collections.Generic.List<string> suggestions) {
+            PinnedString[] suggestions_handles;
+            var suggestions_unwrapped = CfxStringCollections.UnwrapCfxStringList(suggestions, out suggestions_handles);
+            var __retval = CfxApi.cfx_context_menu_params_get_dictionary_suggestions(NativePtr, suggestions_unwrapped);
+            CfxStringCollections.FreePinnedStrings(suggestions_handles);
+            CfxStringCollections.CfxStringListCopyToManaged(suggestions_unwrapped, suggestions);
+            CfxApi.cfx_string_list_free(suggestions_unwrapped);
+            return 0 != __retval;
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

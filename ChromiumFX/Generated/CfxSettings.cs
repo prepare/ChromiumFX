@@ -45,6 +45,7 @@ namespace Chromium {
         private bool m_NoSandbox;
         private string m_BrowserSubprocessPath;
         private bool m_MultiThreadedMessageLoop;
+        private bool m_WindowlessRenderingEnabled;
         private bool m_CommandLineArgsDisabled;
         private string m_CachePath;
         private bool m_PersistSessionCookies;
@@ -53,7 +54,6 @@ namespace Chromium {
         private string m_Locale;
         private string m_LogFile;
         private CfxLogSeverity m_LogSeverity;
-        private int m_ReleaseDcheckEnabled;
         private string m_JavascriptFlags;
         private string m_ResourcesDirPath;
         private string m_LocalesDirPath;
@@ -121,6 +121,20 @@ namespace Chromium {
             }
             set {
                 m_MultiThreadedMessageLoop = value;
+            }
+        }
+
+        /// <summary>
+        /// Set to true (1) to enable windowless (off-screen) rendering support. Do not
+        /// enable this value if the application does not use windowless rendering as
+        /// it may reduce rendering performance on some systems.
+        /// </summary>
+        public bool WindowlessRenderingEnabled {
+            get {
+                return m_WindowlessRenderingEnabled;
+            }
+            set {
+                m_WindowlessRenderingEnabled = value;
             }
         }
 
@@ -243,19 +257,6 @@ namespace Chromium {
             }
             set {
                 m_LogSeverity = value;
-            }
-        }
-
-        /// <summary>
-        /// Enable DCHECK in release mode to ease debugging. Also configurable using the
-        /// "enable-release-dcheck" command-line switch.
-        /// </summary>
-        public int ReleaseDcheckEnabled {
-            get {
-                return m_ReleaseDcheckEnabled;
-            }
-            set {
-                m_ReleaseDcheckEnabled = value;
             }
         }
 
@@ -420,7 +421,7 @@ namespace Chromium {
             var m_JavascriptFlags_pinned = new PinnedString(m_JavascriptFlags);
             var m_ResourcesDirPath_pinned = new PinnedString(m_ResourcesDirPath);
             var m_LocalesDirPath_pinned = new PinnedString(m_LocalesDirPath);
-            CfxApi.cfx_settings_copy_to_native(nativePtrUnchecked, m_SingleProcess ? 1 : 0, m_NoSandbox ? 1 : 0, m_BrowserSubprocessPath_pinned.Obj.PinnedPtr, m_BrowserSubprocessPath_pinned.Length, m_MultiThreadedMessageLoop ? 1 : 0, m_CommandLineArgsDisabled ? 1 : 0, m_CachePath_pinned.Obj.PinnedPtr, m_CachePath_pinned.Length, m_PersistSessionCookies ? 1 : 0, m_UserAgent_pinned.Obj.PinnedPtr, m_UserAgent_pinned.Length, m_ProductVersion_pinned.Obj.PinnedPtr, m_ProductVersion_pinned.Length, m_Locale_pinned.Obj.PinnedPtr, m_Locale_pinned.Length, m_LogFile_pinned.Obj.PinnedPtr, m_LogFile_pinned.Length, m_LogSeverity, m_ReleaseDcheckEnabled, m_JavascriptFlags_pinned.Obj.PinnedPtr, m_JavascriptFlags_pinned.Length, m_ResourcesDirPath_pinned.Obj.PinnedPtr, m_ResourcesDirPath_pinned.Length, m_LocalesDirPath_pinned.Obj.PinnedPtr, m_LocalesDirPath_pinned.Length, m_PackLoadingDisabled ? 1 : 0, m_RemoteDebuggingPort, m_UncaughtExceptionStackSize, m_ContextSafetyImplementation ? 1 : 0, m_IgnoreCertificateErrors ? 1 : 0, CfxColor.Unwrap(m_BackgroundColor));
+            CfxApi.cfx_settings_copy_to_native(nativePtrUnchecked, m_SingleProcess ? 1 : 0, m_NoSandbox ? 1 : 0, m_BrowserSubprocessPath_pinned.Obj.PinnedPtr, m_BrowserSubprocessPath_pinned.Length, m_MultiThreadedMessageLoop ? 1 : 0, m_WindowlessRenderingEnabled ? 1 : 0, m_CommandLineArgsDisabled ? 1 : 0, m_CachePath_pinned.Obj.PinnedPtr, m_CachePath_pinned.Length, m_PersistSessionCookies ? 1 : 0, m_UserAgent_pinned.Obj.PinnedPtr, m_UserAgent_pinned.Length, m_ProductVersion_pinned.Obj.PinnedPtr, m_ProductVersion_pinned.Length, m_Locale_pinned.Obj.PinnedPtr, m_Locale_pinned.Length, m_LogFile_pinned.Obj.PinnedPtr, m_LogFile_pinned.Length, m_LogSeverity, m_JavascriptFlags_pinned.Obj.PinnedPtr, m_JavascriptFlags_pinned.Length, m_ResourcesDirPath_pinned.Obj.PinnedPtr, m_ResourcesDirPath_pinned.Length, m_LocalesDirPath_pinned.Obj.PinnedPtr, m_LocalesDirPath_pinned.Length, m_PackLoadingDisabled ? 1 : 0, m_RemoteDebuggingPort, m_UncaughtExceptionStackSize, m_ContextSafetyImplementation ? 1 : 0, m_IgnoreCertificateErrors ? 1 : 0, CfxColor.Unwrap(m_BackgroundColor));
             m_BrowserSubprocessPath_pinned.Obj.Free();
             m_CachePath_pinned.Obj.Free();
             m_UserAgent_pinned.Obj.Free();

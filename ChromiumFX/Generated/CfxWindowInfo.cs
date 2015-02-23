@@ -53,8 +53,8 @@ namespace Chromium {
         private int m_Height;
         private IntPtr m_ParentWindow;
         private IntPtr m_Menu;
-        private bool m_WindowRenderingDisabled;
-        private bool m_TransparentPainting;
+        private bool m_WindowlessRenderingEnabled;
+        private bool m_TransparentPaintingEnabled;
         private IntPtr m_Window;
 
         public CfxWindowInfo() : base(CfxApi.cfx_window_info_ctor, CfxApi.cfx_window_info_dtor) {}
@@ -145,37 +145,41 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// If window rendering is disabled no browser window will be created. Set
-        /// |parent_window| to be used for identifying monitor info
-        /// (MonitorFromWindow). If |parent_window| is not provided the main screen
-        /// monitor will be used.
+        /// Set to true (1) to create the browser using windowless (off-screen)
+        /// rendering. No window will be created for the browser and all rendering will
+        /// occur via the CefRenderHandler interface. The |parent_window| value will be
+        /// used to identify monitor info and to act as the parent window for dialogs,
+        /// context menus, etc. If |parent_window| is not provided then the main screen
+        /// monitor will be used and some functionality that requires a parent window
+        /// may not function correctly. In order to create windowless browsers the
+        /// CefSettings.windowless_rendering_enabled value must be set to true.
         /// </summary>
-        public bool WindowRenderingDisabled {
+        public bool WindowlessRenderingEnabled {
             get {
-                return m_WindowRenderingDisabled;
+                return m_WindowlessRenderingEnabled;
             }
             set {
-                m_WindowRenderingDisabled = value;
+                m_WindowlessRenderingEnabled = value;
             }
         }
 
         /// <summary>
-        /// Set to true to enable transparent painting.
-        /// If window rendering is disabled and |transparent_painting| is set to true
-        /// WebKit rendering will draw on a transparent background (RGBA=0x00000000).
-        /// When this value is false the background will be white and opaque.
+        /// Set to true (1) to enable transparent painting in combination with
+        /// windowless rendering. When this value is true a transparent background
+        /// color will be used (RGBA=0x00000000). When this value is false the
+        /// background will be white and opaque.
         /// </summary>
-        public bool TransparentPainting {
+        public bool TransparentPaintingEnabled {
             get {
-                return m_TransparentPainting;
+                return m_TransparentPaintingEnabled;
             }
             set {
-                m_TransparentPainting = value;
+                m_TransparentPaintingEnabled = value;
             }
         }
 
         /// <summary>
-        /// Handle for the new browser window.
+        /// Handle for the new browser window. Only used with windowed rendering.
         /// </summary>
         public IntPtr Window {
             get {
@@ -188,18 +192,18 @@ namespace Chromium {
 
         protected override void CopyToNative() {
             var m_WindowName_pinned = new PinnedString(m_WindowName);
-            CfxApi.cfx_window_info_copy_to_native(nativePtrUnchecked, m_ExStyle, m_WindowName_pinned.Obj.PinnedPtr, m_WindowName_pinned.Length, m_Style, m_X, m_Y, m_Width, m_Height, m_ParentWindow, m_Menu, m_WindowRenderingDisabled ? 1 : 0, m_TransparentPainting ? 1 : 0, m_Window);
+            CfxApi.cfx_window_info_copy_to_native(nativePtrUnchecked, m_ExStyle, m_WindowName_pinned.Obj.PinnedPtr, m_WindowName_pinned.Length, m_Style, m_X, m_Y, m_Width, m_Height, m_ParentWindow, m_Menu, m_WindowlessRenderingEnabled ? 1 : 0, m_TransparentPaintingEnabled ? 1 : 0, m_Window);
             m_WindowName_pinned.Obj.Free();
         }
 
         protected override void CopyToManaged(IntPtr nativePtr) {
             IntPtr window_name_str = IntPtr.Zero; int window_name_length = 0;
-            int window_rendering_disabled = default(int);
-            int transparent_painting = default(int);
-            CfxApi.cfx_window_info_copy_to_managed(nativePtr, out m_ExStyle, out window_name_str, out window_name_length, out m_Style, out m_X, out m_Y, out m_Width, out m_Height, out m_ParentWindow, out m_Menu, out window_rendering_disabled, out transparent_painting, out m_Window);
+            int windowless_rendering_enabled = default(int);
+            int transparent_painting_enabled = default(int);
+            CfxApi.cfx_window_info_copy_to_managed(nativePtr, out m_ExStyle, out window_name_str, out window_name_length, out m_Style, out m_X, out m_Y, out m_Width, out m_Height, out m_ParentWindow, out m_Menu, out windowless_rendering_enabled, out transparent_painting_enabled, out m_Window);
             m_WindowName = window_name_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(window_name_str, window_name_length) : String.Empty;;
-            m_WindowRenderingDisabled = 0 != window_rendering_disabled;
-            m_TransparentPainting = 0 != transparent_painting;
+            m_WindowlessRenderingEnabled = 0 != windowless_rendering_enabled;
+            m_TransparentPaintingEnabled = 0 != transparent_painting_enabled;
         }
     }
 }

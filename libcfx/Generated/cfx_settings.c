@@ -57,11 +57,12 @@ CFX_EXPORT void cfx_settings_dtor(cef_settings_t* ptr) {
     free(ptr);
 }
 
-CFX_EXPORT void cfx_settings_copy_to_native(cef_settings_t* self, int single_process, int no_sandbox, char16 *browser_subprocess_path_str, int browser_subprocess_path_length, int multi_threaded_message_loop, int command_line_args_disabled, char16 *cache_path_str, int cache_path_length, int persist_session_cookies, char16 *user_agent_str, int user_agent_length, char16 *product_version_str, int product_version_length, char16 *locale_str, int locale_length, char16 *log_file_str, int log_file_length, cef_log_severity_t log_severity, int release_dcheck_enabled, char16 *javascript_flags_str, int javascript_flags_length, char16 *resources_dir_path_str, int resources_dir_path_length, char16 *locales_dir_path_str, int locales_dir_path_length, int pack_loading_disabled, int remote_debugging_port, int uncaught_exception_stack_size, int context_safety_implementation, int ignore_certificate_errors, uint32 background_color) {
+CFX_EXPORT void cfx_settings_copy_to_native(cef_settings_t* self, int single_process, int no_sandbox, char16 *browser_subprocess_path_str, int browser_subprocess_path_length, int multi_threaded_message_loop, int windowless_rendering_enabled, int command_line_args_disabled, char16 *cache_path_str, int cache_path_length, int persist_session_cookies, char16 *user_agent_str, int user_agent_length, char16 *product_version_str, int product_version_length, char16 *locale_str, int locale_length, char16 *log_file_str, int log_file_length, cef_log_severity_t log_severity, char16 *javascript_flags_str, int javascript_flags_length, char16 *resources_dir_path_str, int resources_dir_path_length, char16 *locales_dir_path_str, int locales_dir_path_length, int pack_loading_disabled, int remote_debugging_port, int uncaught_exception_stack_size, int context_safety_implementation, int ignore_certificate_errors, uint32 background_color) {
     self->single_process = single_process;
     self->no_sandbox = no_sandbox;
     cef_string_utf16_set(browser_subprocess_path_str, browser_subprocess_path_length, &(self->browser_subprocess_path), 1);
     self->multi_threaded_message_loop = multi_threaded_message_loop;
+    self->windowless_rendering_enabled = windowless_rendering_enabled;
     self->command_line_args_disabled = command_line_args_disabled;
     cef_string_utf16_set(cache_path_str, cache_path_length, &(self->cache_path), 1);
     self->persist_session_cookies = persist_session_cookies;
@@ -70,7 +71,6 @@ CFX_EXPORT void cfx_settings_copy_to_native(cef_settings_t* self, int single_pro
     cef_string_utf16_set(locale_str, locale_length, &(self->locale), 1);
     cef_string_utf16_set(log_file_str, log_file_length, &(self->log_file), 1);
     self->log_severity = log_severity;
-    self->release_dcheck_enabled = release_dcheck_enabled;
     cef_string_utf16_set(javascript_flags_str, javascript_flags_length, &(self->javascript_flags), 1);
     cef_string_utf16_set(resources_dir_path_str, resources_dir_path_length, &(self->resources_dir_path), 1);
     cef_string_utf16_set(locales_dir_path_str, locales_dir_path_length, &(self->locales_dir_path), 1);

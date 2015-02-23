@@ -66,10 +66,6 @@ CFX_EXPORT int cfx_release(cef_base_t* base) {
 	return base->release(base);
 }
 
-CFX_EXPORT int cfx_get_refct(cef_base_t* base) {
-	return base->get_refct(base);
-}
-
 CFX_EXPORT char16* cfx_string_get_ptr(cef_string_t* cefstr,  int *length) {
 	*length = cefstr->length;
 	return cefstr->str;

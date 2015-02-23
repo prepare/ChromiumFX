@@ -161,6 +161,38 @@ namespace Chromium.Remote {
         }
     }
 
+    internal class CfxRuntimeEndTracingRenderProcessCall : RenderProcessCall {
+
+        internal CfxRuntimeEndTracingRenderProcessCall()
+            : base(RemoteCallId.CfxRuntimeEndTracingRenderProcessCall) {}
+
+        internal string tracingFile;
+        internal ulong callback;
+        internal bool __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(tracingFile);
+            h.Write(callback);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out tracingFile);
+            h.Read(out callback);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            __retval = CfxRuntime.EndTracing(tracingFile, (CfxEndTracingCallback)RemoteProxy.Unwrap(callback));
+        }
+    }
+
     internal class CfxRuntimeExecuteProcessRenderProcessCall : RenderProcessCall {
 
         internal CfxRuntimeExecuteProcessRenderProcessCall()
@@ -190,6 +222,35 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             __retval = CfxRuntime.ExecuteProcess((CfxApp)RemoteProxy.Unwrap(application), windowsSandboxInfo);
+        }
+    }
+
+    internal class CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall : RenderProcessCall {
+
+        internal CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall()
+            : base(RemoteCallId.CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall) {}
+
+        internal string mimeType;
+        internal System.Collections.Generic.List<string> extensions;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(mimeType);
+            h.Write(extensions);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out mimeType);
+            h.Read(out extensions);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            CfxRuntime.GetExtensionsForMimeType(mimeType, extensions);
         }
     }
 

@@ -35,19 +35,18 @@ using System;
 
 namespace Chromium {
     /// <summary>
-    /// Structure used to represent a DOM event. The functions of this structure
-    /// should only be called on the render process main thread.
+    /// Callback structure for asynchronous continuation of print dialog requests.
     /// </summary>
-    public class CfxDomEvent : CfxBase {
+    public class CfxPrintDialogCallback : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
 
-        internal static CfxDomEvent Wrap(IntPtr nativePtr) {
+        internal static CfxPrintDialogCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
-                var wrapper = (CfxDomEvent)weakCache.Get(nativePtr);
+                var wrapper = (CfxPrintDialogCallback)weakCache.Get(nativePtr);
                 if(wrapper == null) {
-                    wrapper = new CfxDomEvent(nativePtr);
+                    wrapper = new CfxPrintDialogCallback(nativePtr);
                     weakCache.Add(wrapper);
                 } else {
                     CfxApi.cfx_release(nativePtr);
@@ -57,78 +56,20 @@ namespace Chromium {
         }
 
 
-        internal CfxDomEvent(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxPrintDialogCallback(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Returns the event type.
+        /// Continue printing with the specified |settings|.
         /// </summary>
-        public String Type {
-            get {
-                return StringUserfree.Convert(CfxApi.cfx_domevent_get_type(NativePtr));
-            }
+        public void Continue(CfxPrintSettings settings) {
+            CfxApi.cfx_print_dialog_callback_cont(NativePtr, CfxPrintSettings.Unwrap(settings));
         }
 
         /// <summary>
-        /// Returns the event category.
+        /// Cancel the printing.
         /// </summary>
-        public CfxDomEventCategory Category {
-            get {
-                return CfxApi.cfx_domevent_get_category(NativePtr);
-            }
-        }
-
-        /// <summary>
-        /// Returns the event processing phase.
-        /// </summary>
-        public CfxDomEventPhase Phase {
-            get {
-                return CfxApi.cfx_domevent_get_phase(NativePtr);
-            }
-        }
-
-        /// <summary>
-        /// Returns true (1) if the event can bubble up the tree.
-        /// </summary>
-        public bool CanBubble {
-            get {
-                return 0 != CfxApi.cfx_domevent_can_bubble(NativePtr);
-            }
-        }
-
-        /// <summary>
-        /// Returns true (1) if the event can be canceled.
-        /// </summary>
-        public bool CanCancel {
-            get {
-                return 0 != CfxApi.cfx_domevent_can_cancel(NativePtr);
-            }
-        }
-
-        /// <summary>
-        /// Returns the document associated with this event.
-        /// </summary>
-        public CfxDomDocument Document {
-            get {
-                return CfxDomDocument.Wrap(CfxApi.cfx_domevent_get_document(NativePtr));
-            }
-        }
-
-        /// <summary>
-        /// Returns the target of the event.
-        /// </summary>
-        public CfxDomNode Target {
-            get {
-                return CfxDomNode.Wrap(CfxApi.cfx_domevent_get_target(NativePtr));
-            }
-        }
-
-        /// <summary>
-        /// Returns the current target of the event.
-        /// </summary>
-        public CfxDomNode CurrentTarget {
-            get {
-                return CfxDomNode.Wrap(CfxApi.cfx_domevent_get_current_target(NativePtr));
-            }
+        public void Cancel() {
+            CfxApi.cfx_print_dialog_callback_cancel(NativePtr);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

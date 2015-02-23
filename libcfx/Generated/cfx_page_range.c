@@ -31,52 +31,23 @@
 // Generated file. Do not edit.
 
 
-// cef_domevent
+// cef_page_range
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-// cef_base_t base
-
-// get_type
-CFX_EXPORT cef_string_userfree_t cfx_domevent_get_type(cef_domevent_t* self) {
-    return self->get_type(self);
+CFX_EXPORT cef_page_range_t* cfx_page_range_ctor() {
+    return (cef_page_range_t*)calloc(1, sizeof(cef_page_range_t));
 }
 
-// get_category
-CFX_EXPORT cef_dom_event_category_t cfx_domevent_get_category(cef_domevent_t* self) {
-    return self->get_category(self);
+CFX_EXPORT void cfx_page_range_dtor(cef_page_range_t* ptr) {
+    free(ptr);
 }
 
-// get_phase
-CFX_EXPORT cef_dom_event_phase_t cfx_domevent_get_phase(cef_domevent_t* self) {
-    return self->get_phase(self);
-}
-
-// can_bubble
-CFX_EXPORT int cfx_domevent_can_bubble(cef_domevent_t* self) {
-    return self->can_bubble(self);
-}
-
-// can_cancel
-CFX_EXPORT int cfx_domevent_can_cancel(cef_domevent_t* self) {
-    return self->can_cancel(self);
-}
-
-// get_document
-CFX_EXPORT cef_domdocument_t* cfx_domevent_get_document(cef_domevent_t* self) {
-    return self->get_document(self);
-}
-
-// get_target
-CFX_EXPORT cef_domnode_t* cfx_domevent_get_target(cef_domevent_t* self) {
-    return self->get_target(self);
-}
-
-// get_current_target
-CFX_EXPORT cef_domnode_t* cfx_domevent_get_current_target(cef_domevent_t* self) {
-    return self->get_current_target(self);
+CFX_EXPORT void cfx_page_range_copy_to_native(cef_page_range_t* self, int from, int to) {
+    self->from = from;
+    self->to = to;
 }
 
 

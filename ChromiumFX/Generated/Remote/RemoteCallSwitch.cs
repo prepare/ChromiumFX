@@ -45,8 +45,12 @@ namespace Chromium.Remote {
                     return new CfxRuntimeCreateUrlRenderProcessCall();
                 case RemoteCallId.CfxRuntimeCurrentlyOnRenderProcessCall:
                     return new CfxRuntimeCurrentlyOnRenderProcessCall();
+                case RemoteCallId.CfxRuntimeEndTracingRenderProcessCall:
+                    return new CfxRuntimeEndTracingRenderProcessCall();
                 case RemoteCallId.CfxRuntimeExecuteProcessRenderProcessCall:
                     return new CfxRuntimeExecuteProcessRenderProcessCall();
+                case RemoteCallId.CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall:
+                    return new CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall();
                 case RemoteCallId.CfxRuntimeGetGeolocationRenderProcessCall:
                     return new CfxRuntimeGetGeolocationRenderProcessCall();
                 case RemoteCallId.CfxRuntimeGetMimeTypeRenderProcessCall:
@@ -281,32 +285,6 @@ namespace Chromium.Remote {
                     return new CfxDomDocumentGetBaseUrlRenderProcessCall();
                 case RemoteCallId.CfxDomDocumentGetCompleteUrlRenderProcessCall:
                     return new CfxDomDocumentGetCompleteUrlRenderProcessCall();
-                case RemoteCallId.CfxDomEventGetTypeRenderProcessCall:
-                    return new CfxDomEventGetTypeRenderProcessCall();
-                case RemoteCallId.CfxDomEventGetCategoryRenderProcessCall:
-                    return new CfxDomEventGetCategoryRenderProcessCall();
-                case RemoteCallId.CfxDomEventGetPhaseRenderProcessCall:
-                    return new CfxDomEventGetPhaseRenderProcessCall();
-                case RemoteCallId.CfxDomEventCanBubbleRenderProcessCall:
-                    return new CfxDomEventCanBubbleRenderProcessCall();
-                case RemoteCallId.CfxDomEventCanCancelRenderProcessCall:
-                    return new CfxDomEventCanCancelRenderProcessCall();
-                case RemoteCallId.CfxDomEventGetDocumentRenderProcessCall:
-                    return new CfxDomEventGetDocumentRenderProcessCall();
-                case RemoteCallId.CfxDomEventGetTargetRenderProcessCall:
-                    return new CfxDomEventGetTargetRenderProcessCall();
-                case RemoteCallId.CfxDomEventGetCurrentTargetRenderProcessCall:
-                    return new CfxDomEventGetCurrentTargetRenderProcessCall();
-                case RemoteCallId.CfxDomEventListenerCtorRenderProcessCall:
-                    return new CfxDomEventListenerCtorRenderProcessCall();
-                case RemoteCallId.CfxDomEventListenerHandleEventBrowserProcessCall:
-                    return new CfxDomEventListenerHandleEventBrowserProcessCall();
-                case RemoteCallId.CfxDomEventListenerHandleEventActivateRenderProcessCall:
-                    return new CfxDomEventListenerHandleEventActivateRenderProcessCall();
-                case RemoteCallId.CfxDomEventListenerHandleEventDeactivateRenderProcessCall:
-                    return new CfxDomEventListenerHandleEventDeactivateRenderProcessCall();
-                case RemoteCallId.CfxDomEventListenerHandleEventGetEventRenderProcessCall:
-                    return new CfxDomEventListenerHandleEventGetEventRenderProcessCall();
                 case RemoteCallId.CfxDomNodeGetTypeRenderProcessCall:
                     return new CfxDomNodeGetTypeRenderProcessCall();
                 case RemoteCallId.CfxDomNodeIsTextRenderProcessCall:
@@ -343,8 +321,6 @@ namespace Chromium.Remote {
                     return new CfxDomNodeGetFirstChildRenderProcessCall();
                 case RemoteCallId.CfxDomNodeGetLastChildRenderProcessCall:
                     return new CfxDomNodeGetLastChildRenderProcessCall();
-                case RemoteCallId.CfxDomNodeAddEventListenerRenderProcessCall:
-                    return new CfxDomNodeAddEventListenerRenderProcessCall();
                 case RemoteCallId.CfxDomNodeGetElementTagNameRenderProcessCall:
                     return new CfxDomNodeGetElementTagNameRenderProcessCall();
                 case RemoteCallId.CfxDomNodeHasElementAttributesRenderProcessCall:
@@ -369,6 +345,8 @@ namespace Chromium.Remote {
                     return new CfxDomVisitorVisitDeactivateRenderProcessCall();
                 case RemoteCallId.CfxDomVisitorVisitGetDocumentRenderProcessCall:
                     return new CfxDomVisitorVisitGetDocumentRenderProcessCall();
+                case RemoteCallId.CfxEndTracingCallbackOnEndTracingCompleteRenderProcessCall:
+                    return new CfxEndTracingCallbackOnEndTracingCompleteRenderProcessCall();
                 case RemoteCallId.CfxFrameIsValidRenderProcessCall:
                     return new CfxFrameIsValidRenderProcessCall();
                 case RemoteCallId.CfxFrameUndoRenderProcessCall:

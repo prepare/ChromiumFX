@@ -39,7 +39,9 @@
 #pragma once
 
 #include "include/capi/cef_base_capi.h"
+#include "include/capi/cef_drag_data_capi.h"
 #include "include/capi/cef_frame_capi.h"
+#include "include/capi/cef_navigation_entry_capi.h"
 #include "include/capi/cef_process_message_capi.h"
 #include "include/capi/cef_request_context_capi.h"
 
@@ -204,6 +206,29 @@ typedef struct _cef_run_file_dialog_callback_t {
 
 
 ///
+// Callback structure for cef_browser_host_t::GetNavigationEntries. The
+// functions of this structure will be called on the browser process UI thread.
+///
+typedef struct _cef_navigation_entry_visitor_t {
+  ///
+  // Base structure.
+  ///
+  cef_base_t base;
+
+  ///
+  // Method that will be executed. Do not keep a reference to |entry| outside of
+  // this callback. Return true (1) to continue visiting entries or false (0) to
+  // stop. |current| is true (1) if this entry is the currently loaded
+  // navigation entry. |index| is the 0-based index of this entry and |total| is
+  // the total number of entries.
+  ///
+  int (CEF_CALLBACK *visit)(struct _cef_navigation_entry_visitor_t* self,
+      struct _cef_navigation_entry_t* entry, int current, int index,
+      int total);
+} cef_navigation_entry_visitor_t;
+
+
+///
 // Structure used to represent the browser process aspects of a browser window.
 // The functions of this structure can only be called in the browser process.
 // They may be called on any thread in that process unless otherwise indicated
@@ -219,15 +244,6 @@ typedef struct _cef_browser_host_t {
   // Returns the hosted browser object.
   ///
   struct _cef_browser_t* (CEF_CALLBACK *get_browser)(
-      struct _cef_browser_host_t* self);
-
-  ///
-  // Call this function before destroying a contained browser window. This
-  // function performs any internal cleanup that may be needed before the
-  // browser window is destroyed. See cef_life_span_handler_t::do_close()
-  // documentation for additional usage information.
-  ///
-  void (CEF_CALLBACK *parent_window_will_close)(
       struct _cef_browser_host_t* self);
 
   ///
@@ -341,18 +357,30 @@ typedef struct _cef_browser_host_t {
       int clearSelection);
 
   ///
-  // Open developer tools in its own window.
+  // Open developer tools in its own window. If |inspect_element_at| is non-
+  // NULL the element at the specified (x,y) location will be inspected.
   ///
   void (CEF_CALLBACK *show_dev_tools)(struct _cef_browser_host_t* self,
       const struct _cef_window_info_t* windowInfo,
       struct _cef_client_t* client,
-      const struct _cef_browser_settings_t* settings);
+      const struct _cef_browser_settings_t* settings,
+      const cef_point_t* inspect_element_at);
 
   ///
   // Explicitly close the developer tools window if one exists for this browser
   // instance.
   ///
   void (CEF_CALLBACK *close_dev_tools)(struct _cef_browser_host_t* self);
+
+  ///
+  // Retrieve a snapshot of current navigation entries as values sent to the
+  // specified visitor. If |current_only| is true (1) only the current
+  // navigation entry will be sent, otherwise all navigation entries will be
+  // sent.
+  ///
+  ///
+  void (CEF_CALLBACK *get_navigation_entries)(struct _cef_browser_host_t* self,
+      struct _cef_navigation_entry_visitor_t* visitor, int current_only);
 
   ///
   // Set whether mouse cursor change is disabled.
@@ -365,6 +393,19 @@ typedef struct _cef_browser_host_t {
   ///
   int (CEF_CALLBACK *is_mouse_cursor_change_disabled)(
       struct _cef_browser_host_t* self);
+
+  ///
+  // If a misspelled word is currently selected in an editable node calling this
+  // function will replace it with the specified |word|.
+  ///
+  void (CEF_CALLBACK *replace_misspelling)(struct _cef_browser_host_t* self,
+      const cef_string_t* word);
+
+  ///
+  // Add the specified |word| to the spelling dictionary.
+  ///
+  void (CEF_CALLBACK *add_word_to_dictionary)(struct _cef_browser_host_t* self,
+      const cef_string_t* word);
 
   ///
   // Returns true (1) if window rendering is disabled.
@@ -399,12 +440,12 @@ typedef struct _cef_browser_host_t {
       struct _cef_browser_host_t* self);
 
   ///
-  // Invalidate the |dirtyRect| region of the view. The browser will call
-  // cef_render_handler_t::OnPaint asynchronously with the updated regions. This
-  // function is only used when window rendering is disabled.
+  // Invalidate the view. The browser will call cef_render_handler_t::OnPaint
+  // asynchronously. This function is only used when window rendering is
+  // disabled.
   ///
   void (CEF_CALLBACK *invalidate)(struct _cef_browser_host_t* self,
-      const cef_rect_t* dirtyRect, cef_paint_element_type_t type);
+      cef_paint_element_type_t type);
 
   ///
   // Send a key event to the browser.
@@ -450,6 +491,13 @@ typedef struct _cef_browser_host_t {
       struct _cef_browser_host_t* self);
 
   ///
+  // Notify the browser that the window hosting it is about to be moved or
+  // resized. This function is only used on Windows and Linux.
+  ///
+  void (CEF_CALLBACK *notify_move_or_resize_started)(
+      struct _cef_browser_host_t* self);
+
+  ///
   // Get the NSTextInputContext implementation for enabling IME on Mac when
   // window rendering is disabled.
   ///
@@ -468,6 +516,70 @@ typedef struct _cef_browser_host_t {
   ///
   void (CEF_CALLBACK *handle_key_event_after_text_input_client)(
       struct _cef_browser_host_t* self, cef_event_handle_t keyEvent);
+
+  ///
+  // Call this function when the user drags the mouse into the web view (before
+  // calling DragTargetDragOver/DragTargetLeave/DragTargetDrop). |drag_data|
+  // should not contain file contents as this type of data is not allowed to be
+  // dragged into the web view. File contents can be removed using
+  // cef_drag_data_t::ResetFileContents (for example, if |drag_data| comes from
+  // cef_render_handler_t::StartDragging). This function is only used when
+  // window rendering is disabled.
+  ///
+  void (CEF_CALLBACK *drag_target_drag_enter)(struct _cef_browser_host_t* self,
+      struct _cef_drag_data_t* drag_data,
+      const struct _cef_mouse_event_t* event,
+      cef_drag_operations_mask_t allowed_ops);
+
+  ///
+  // Call this function each time the mouse is moved across the web view during
+  // a drag operation (after calling DragTargetDragEnter and before calling
+  // DragTargetDragLeave/DragTargetDrop). This function is only used when window
+  // rendering is disabled.
+  ///
+  void (CEF_CALLBACK *drag_target_drag_over)(struct _cef_browser_host_t* self,
+      const struct _cef_mouse_event_t* event,
+      cef_drag_operations_mask_t allowed_ops);
+
+  ///
+  // Call this function when the user drags the mouse out of the web view (after
+  // calling DragTargetDragEnter). This function is only used when window
+  // rendering is disabled.
+  ///
+  void (CEF_CALLBACK *drag_target_drag_leave)(struct _cef_browser_host_t* self);
+
+  ///
+  // Call this function when the user completes the drag operation by dropping
+  // the object onto the web view (after calling DragTargetDragEnter). The
+  // object being dropped is |drag_data|, given as an argument to the previous
+  // DragTargetDragEnter call. This function is only used when window rendering
+  // is disabled.
+  ///
+  void (CEF_CALLBACK *drag_target_drop)(struct _cef_browser_host_t* self,
+      const struct _cef_mouse_event_t* event);
+
+  ///
+  // Call this function when the drag operation started by a
+  // cef_render_handler_t::StartDragging call has ended either in a drop or by
+  // being cancelled. |x| and |y| are mouse coordinates relative to the upper-
+  // left corner of the view. If the web view is both the drag source and the
+  // drag target then all DragTarget* functions should be called before
+  // DragSource* mthods. This function is only used when window rendering is
+  // disabled.
+  ///
+  void (CEF_CALLBACK *drag_source_ended_at)(struct _cef_browser_host_t* self,
+      int x, int y, cef_drag_operations_mask_t op);
+
+  ///
+  // Call this function when the drag operation started by a
+  // cef_render_handler_t::StartDragging call has completed. This function may
+  // be called immediately without first calling DragSourceEndedAt to cancel a
+  // drag operation. If the web view is both the drag source and the drag target
+  // then all DragTarget* functions should be called before DragSource* mthods.
+  // This function is only used when window rendering is disabled.
+  ///
+  void (CEF_CALLBACK *drag_source_system_drag_ended)(
+      struct _cef_browser_host_t* self);
 } cef_browser_host_t;
 
 

@@ -35,60 +35,59 @@ using System;
 
 namespace Chromium {
     /// <summary>
-    /// Generic callback structure used for asynchronous completion.
+    /// Structure representing cursor information. |buffer| will be
+    /// |size.width|*|size.height|*4 bytes in size and represents a BGRA image with
+    /// an upper-left origin.
     /// </summary>
-    public class CfxCompletionHandler : CfxBase {
+    public sealed class CfxCursorInfo : CfxStructure {
 
-        internal static CfxCompletionHandler Wrap(IntPtr nativePtr) {
+        internal static CfxCursorInfo Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_completion_handler_get_gc_handle(nativePtr);
-            return (CfxCompletionHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
+            return new CfxCursorInfo(nativePtr);
         }
 
+        private CfxPoint m_Hotspot;
+        private float m_ImageScaleFactor;
+        private IntPtr m_Buffer;
 
-        internal static void on_complete(IntPtr gcHandlePtr) {
-            var self = (CfxCompletionHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
-                return;
+        public CfxCursorInfo() : base(CfxApi.cfx_cursor_info_ctor, CfxApi.cfx_cursor_info_dtor) {}
+        internal CfxCursorInfo(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_cursor_info_ctor, CfxApi.cfx_cursor_info_dtor) {}
+
+        public CfxPoint Hotspot {
+            get {
+                return m_Hotspot;
             }
-            var e = new CfxEventArgs();
-            var eventHandler = self.m_OnComplete;
-            if(eventHandler != null) eventHandler(self, e);
-            e.m_isInvalid = true;
-        }
-
-        internal CfxCompletionHandler(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxCompletionHandler() : base(CfxApi.cfx_completion_handler_ctor) {}
-
-        /// <summary>
-        /// Method that will be called once the task is complete.
-        /// </summary>
-        public event CfxEventHandler OnComplete {
-            add {
-                if(m_OnComplete == null) {
-                    CfxApi.cfx_completion_handler_activate_callback(NativePtr, 0, 1);
-                }
-                m_OnComplete += value;
-            }
-            remove {
-                m_OnComplete -= value;
-                if(m_OnComplete == null) {
-                    CfxApi.cfx_completion_handler_activate_callback(NativePtr, 0, 0);
-                }
+            set {
+                m_Hotspot = value;
             }
         }
 
-        private CfxEventHandler m_OnComplete;
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            if(m_OnComplete != null) {
-                m_OnComplete = null;
-                CfxApi.cfx_completion_handler_activate_callback(NativePtr, 0, 0);
+        public float ImageScaleFactor {
+            get {
+                return m_ImageScaleFactor;
             }
-            base.OnDispose(nativePtr);
+            set {
+                m_ImageScaleFactor = value;
+            }
+        }
+
+        public IntPtr Buffer {
+            get {
+                return m_Buffer;
+            }
+            set {
+                m_Buffer = value;
+            }
+        }
+
+        protected override void CopyToNative() {
+            CfxApi.cfx_cursor_info_copy_to_native(nativePtrUnchecked, CfxPoint.Unwrap(m_Hotspot), m_ImageScaleFactor, m_Buffer);
+        }
+
+        protected override void CopyToManaged(IntPtr nativePtr) {
+            IntPtr hotspot = default(IntPtr);
+            CfxApi.cfx_cursor_info_copy_to_managed(nativePtr, out hotspot, out m_ImageScaleFactor, out m_Buffer);
+            m_Hotspot = CfxPoint.Wrap(hotspot);
         }
     }
-
-
-
 }

@@ -311,25 +311,6 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Add an event listener to this node for the specified event type. If
-        /// |useCapture| is true (1) then this listener will be considered a capturing
-        /// listener. Capturing listeners will recieve all events of the specified type
-        /// before the events are dispatched to any other event targets beneath the
-        /// current node in the tree. Events which are bubbling upwards through the
-        /// tree will not trigger a capturing listener. Separate calls to this function
-        /// can be used to register the same listener with and without capture. See
-        /// WebCore/dom/EventNames.h for the list of supported event types.
-        /// </summary>
-        public void AddEventListener(string eventType, CfrDomEventListener listener, bool useCapture) {
-            var call = new CfxDomNodeAddEventListenerRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
-            call.eventType = eventType;
-            call.listener = CfrObject.Unwrap(listener);
-            call.useCapture = useCapture;
-            call.Execute(remoteRuntime.connection);
-        }
-
-        /// <summary>
         /// Returns true (1) if this element has an attribute named |attrName|.
         /// </summary>
         public bool HasElementAttribute(string attrName) {

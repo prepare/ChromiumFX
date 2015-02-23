@@ -91,6 +91,19 @@ namespace Chromium {
             }
         }
 
+        internal static void get_print_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
+            var self = (CfxBrowserProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null) {
+                __retval = default(IntPtr);
+                return;
+            }
+            var e = new CfxGetPrintHandlerEventArgs();
+            var eventHandler = self.m_GetPrintHandler;
+            if(eventHandler != null) eventHandler(self, e);
+            e.m_isInvalid = true;
+            __retval = CfxPrintHandler.Unwrap(e.m_returnValue);
+        }
+
         internal CfxBrowserProcessHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxBrowserProcessHandler() : base(CfxApi.cfx_browser_process_handler_ctor) {}
 
@@ -163,6 +176,27 @@ namespace Chromium {
 
         private CfxOnRenderProcessThreadCreatedEventHandler m_OnRenderProcessThreadCreated;
 
+        /// <summary>
+        /// Return the handler for printing on Linux. If a print handler is not
+        /// provided then printing will not be supported on the Linux platform.
+        /// </summary>
+        public event CfxGetPrintHandlerEventHandler GetPrintHandler {
+            add {
+                if(m_GetPrintHandler == null) {
+                    CfxApi.cfx_browser_process_handler_activate_callback(NativePtr, 3, 1);
+                }
+                m_GetPrintHandler += value;
+            }
+            remove {
+                m_GetPrintHandler -= value;
+                if(m_GetPrintHandler == null) {
+                    CfxApi.cfx_browser_process_handler_activate_callback(NativePtr, 3, 0);
+                }
+            }
+        }
+
+        private CfxGetPrintHandlerEventHandler m_GetPrintHandler;
+
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnContextInitialized != null) {
                 m_OnContextInitialized = null;
@@ -175,6 +209,10 @@ namespace Chromium {
             if(m_OnRenderProcessThreadCreated != null) {
                 m_OnRenderProcessThreadCreated = null;
                 CfxApi.cfx_browser_process_handler_activate_callback(NativePtr, 2, 0);
+            }
+            if(m_GetPrintHandler != null) {
+                m_GetPrintHandler = null;
+                CfxApi.cfx_browser_process_handler_activate_callback(NativePtr, 3, 0);
             }
             base.OnDispose(nativePtr);
         }
@@ -241,6 +279,31 @@ namespace Chromium {
 
         public override string ToString() {
             return String.Format("ExtraInfo={{{0}}}", ExtraInfo);
+        }
+    }
+
+    public delegate void CfxGetPrintHandlerEventHandler(object sender, CfxGetPrintHandlerEventArgs e);
+
+    /// <summary>
+    /// Return the handler for printing on Linux. If a print handler is not
+    /// provided then printing will not be supported on the Linux platform.
+    /// </summary>
+    public class CfxGetPrintHandlerEventArgs : CfxEventArgs {
+
+
+        internal CfxPrintHandler m_returnValue;
+        private bool returnValueSet;
+
+        internal CfxGetPrintHandlerEventArgs() {
+        }
+
+        public void SetReturnValue(CfxPrintHandler returnValue) {
+            CheckAccess();
+            if(returnValueSet) {
+                throw new CfxException("The return value has already been set");
+            }
+            returnValueSet = true;
+            this.m_returnValue = returnValue;
         }
     }
 
