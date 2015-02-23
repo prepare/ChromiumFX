@@ -50,6 +50,10 @@ CFX_EXPORT void cfx_point_copy_to_native(cef_point_t* self, int x, int y) {
     self->y = y;
 }
 
+CFX_EXPORT void cfx_point_copy_to_managed(cef_point_t* self, int* x, int* y) {
+    *x = self->x;
+    *y = self->y;
+}
 
 #ifdef __cplusplus
 } // extern "C"

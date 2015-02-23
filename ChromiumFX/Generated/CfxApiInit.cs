@@ -418,6 +418,7 @@ namespace Chromium {
             cfx_cursor_info_dtor = (cfx_dtor_delegate)GetDelegate(libcfxPtr, "cfx_cursor_info_dtor", typeof(cfx_dtor_delegate));
 
             cfx_cursor_info_copy_to_native = (cfx_cursor_info_copy_to_native_delegate)GetDelegate(libcfxPtr, "cfx_cursor_info_copy_to_native", typeof(cfx_cursor_info_copy_to_native_delegate));
+            cfx_cursor_info_copy_to_managed = (cfx_cursor_info_copy_to_managed_delegate)GetDelegate(libcfxPtr, "cfx_cursor_info_copy_to_managed", typeof(cfx_cursor_info_copy_to_managed_delegate));
 
 
             // cef_dialog_handler
@@ -959,6 +960,7 @@ namespace Chromium {
             cfx_point_dtor = (cfx_dtor_delegate)GetDelegate(libcfxPtr, "cfx_point_dtor", typeof(cfx_dtor_delegate));
 
             cfx_point_copy_to_native = (cfx_point_copy_to_native_delegate)GetDelegate(libcfxPtr, "cfx_point_copy_to_native", typeof(cfx_point_copy_to_native_delegate));
+            cfx_point_copy_to_managed = (cfx_point_copy_to_managed_delegate)GetDelegate(libcfxPtr, "cfx_point_copy_to_managed", typeof(cfx_point_copy_to_managed_delegate));
 
 
             // cef_popup_features

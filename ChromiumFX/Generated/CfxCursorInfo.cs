@@ -41,11 +41,17 @@ namespace Chromium {
     /// </summary>
     public sealed class CfxCursorInfo : CfxStructure {
 
+        internal static CfxCursorInfo Wrap(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return null;
+            return new CfxCursorInfo(nativePtr);
+        }
+
         private CfxPoint m_Hotspot;
         private float m_ImageScaleFactor;
         private IntPtr m_Buffer;
 
         public CfxCursorInfo() : base(CfxApi.cfx_cursor_info_ctor, CfxApi.cfx_cursor_info_dtor) {}
+        internal CfxCursorInfo(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_cursor_info_ctor, CfxApi.cfx_cursor_info_dtor) {}
 
         public CfxPoint Hotspot {
             get {
@@ -78,5 +84,10 @@ namespace Chromium {
             CfxApi.cfx_cursor_info_copy_to_native(nativePtrUnchecked, CfxPoint.Unwrap(m_Hotspot), m_ImageScaleFactor, m_Buffer);
         }
 
+        protected override void CopyToManaged(IntPtr nativePtr) {
+            IntPtr hotspot = default(IntPtr);
+            CfxApi.cfx_cursor_info_copy_to_managed(nativePtr, out hotspot, out m_ImageScaleFactor, out m_Buffer);
+            m_Hotspot = CfxPoint.Wrap(hotspot);
+        }
     }
 }

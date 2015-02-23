@@ -51,6 +51,11 @@ CFX_EXPORT void cfx_cursor_info_copy_to_native(cef_cursor_info_t* self, cef_poin
     self->buffer = buffer;
 }
 
+CFX_EXPORT void cfx_cursor_info_copy_to_managed(cef_cursor_info_t* self, cef_point_t** hotspot, float* image_scale_factor, void** buffer) {
+    *hotspot = &(self->hotspot);
+    *image_scale_factor = self->image_scale_factor;
+    *buffer = self->buffer;
+}
 
 #ifdef __cplusplus
 } // extern "C"

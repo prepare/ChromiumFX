@@ -1205,6 +1205,10 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_cursor_info_copy_to_native_delegate(IntPtr self, IntPtr hotspot, float image_scale_factor, IntPtr buffer);
         public static cfx_cursor_info_copy_to_native_delegate cfx_cursor_info_copy_to_native;
+        // CFX_EXPORT void cfx_cursor_info_copy_to_managed(cef_cursor_info_t* self, cef_point_t** hotspot, float* image_scale_factor, void** buffer)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_cursor_info_copy_to_managed_delegate(IntPtr self, out IntPtr hotspot, out float image_scale_factor, out IntPtr buffer);
+        public static cfx_cursor_info_copy_to_managed_delegate cfx_cursor_info_copy_to_managed;
 
 
         // CfxDialogHandler
@@ -2684,6 +2688,10 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_point_copy_to_native_delegate(IntPtr self, int x, int y);
         public static cfx_point_copy_to_native_delegate cfx_point_copy_to_native;
+        // CFX_EXPORT void cfx_point_copy_to_managed(cef_point_t* self, int* x, int* y)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_point_copy_to_managed_delegate(IntPtr self, out int x, out int y);
+        public static cfx_point_copy_to_managed_delegate cfx_point_copy_to_managed;
 
 
         // CfxPopupFeatures

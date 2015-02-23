@@ -39,10 +39,16 @@ namespace Chromium {
     /// </summary>
     public sealed class CfxPoint : CfxStructure {
 
+        internal static CfxPoint Wrap(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return null;
+            return new CfxPoint(nativePtr);
+        }
+
         private int m_X;
         private int m_Y;
 
         public CfxPoint() : base(CfxApi.cfx_point_ctor, CfxApi.cfx_point_dtor) {}
+        internal CfxPoint(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_point_ctor, CfxApi.cfx_point_dtor) {}
 
         public int X {
             get {
@@ -66,5 +72,8 @@ namespace Chromium {
             CfxApi.cfx_point_copy_to_native(nativePtrUnchecked, m_X, m_Y);
         }
 
+        protected override void CopyToManaged(IntPtr nativePtr) {
+            CfxApi.cfx_point_copy_to_managed(nativePtr, out m_X, out m_Y);
+        }
     }
 }
