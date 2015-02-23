@@ -43,9 +43,9 @@ typedef struct _cfx_navigation_entry_visitor_t {
     gc_handle_t gc_handle;
 } cfx_navigation_entry_visitor_t;
 
-int CEF_CALLBACK _cfx_navigation_entry_visitor_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_navigation_entry_visitor_add_ref(struct _cef_base_t* base) {
     cfx_navigation_entry_visitor_t* ptr = (cfx_navigation_entry_visitor_t*)base;
-    return InterlockedIncrement(&ptr->ref_count);
+    InterlockedIncrement(&ptr->ref_count);
 }
 int CEF_CALLBACK _cfx_navigation_entry_visitor_release(struct _cef_base_t* base) {
     cfx_navigation_entry_visitor_t* ptr = (cfx_navigation_entry_visitor_t*)base;
@@ -56,10 +56,6 @@ int CEF_CALLBACK _cfx_navigation_entry_visitor_release(struct _cef_base_t* base)
     }
     return count;
 }
-int CEF_CALLBACK _cfx_navigation_entry_visitor_get_refct(struct _cef_base_t* base) {
-    cfx_navigation_entry_visitor_t* ptr = (cfx_navigation_entry_visitor_t*)base;
-    return ptr->ref_count;
-}
 
 CFX_EXPORT cfx_navigation_entry_visitor_t* cfx_navigation_entry_visitor_ctor(gc_handle_t gc_handle) {
     cfx_navigation_entry_visitor_t* ptr = (cfx_navigation_entry_visitor_t*)calloc(1, sizeof(cfx_navigation_entry_visitor_t));
@@ -67,7 +63,6 @@ CFX_EXPORT cfx_navigation_entry_visitor_t* cfx_navigation_entry_visitor_ctor(gc_
     ptr->cef_navigation_entry_visitor.base.size = sizeof(cef_navigation_entry_visitor_t);
     ptr->cef_navigation_entry_visitor.base.add_ref = _cfx_navigation_entry_visitor_add_ref;
     ptr->cef_navigation_entry_visitor.base.release = _cfx_navigation_entry_visitor_release;
-    ptr->cef_navigation_entry_visitor.base.get_refct = _cfx_navigation_entry_visitor_get_refct;
     ptr->ref_count = 1;
     ptr->gc_handle = gc_handle;
     return ptr;

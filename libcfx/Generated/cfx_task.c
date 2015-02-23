@@ -43,9 +43,9 @@ typedef struct _cfx_task_t {
     gc_handle_t gc_handle;
 } cfx_task_t;
 
-int CEF_CALLBACK _cfx_task_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_task_add_ref(struct _cef_base_t* base) {
     cfx_task_t* ptr = (cfx_task_t*)base;
-    return InterlockedIncrement(&ptr->ref_count);
+    InterlockedIncrement(&ptr->ref_count);
 }
 int CEF_CALLBACK _cfx_task_release(struct _cef_base_t* base) {
     cfx_task_t* ptr = (cfx_task_t*)base;
@@ -56,10 +56,6 @@ int CEF_CALLBACK _cfx_task_release(struct _cef_base_t* base) {
     }
     return count;
 }
-int CEF_CALLBACK _cfx_task_get_refct(struct _cef_base_t* base) {
-    cfx_task_t* ptr = (cfx_task_t*)base;
-    return ptr->ref_count;
-}
 
 CFX_EXPORT cfx_task_t* cfx_task_ctor(gc_handle_t gc_handle) {
     cfx_task_t* ptr = (cfx_task_t*)calloc(1, sizeof(cfx_task_t));
@@ -67,7 +63,6 @@ CFX_EXPORT cfx_task_t* cfx_task_ctor(gc_handle_t gc_handle) {
     ptr->cef_task.base.size = sizeof(cef_task_t);
     ptr->cef_task.base.add_ref = _cfx_task_add_ref;
     ptr->cef_task.base.release = _cfx_task_release;
-    ptr->cef_task.base.get_refct = _cfx_task_get_refct;
     ptr->ref_count = 1;
     ptr->gc_handle = gc_handle;
     return ptr;

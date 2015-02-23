@@ -43,9 +43,9 @@ typedef struct _cfx_get_geolocation_callback_t {
     gc_handle_t gc_handle;
 } cfx_get_geolocation_callback_t;
 
-int CEF_CALLBACK _cfx_get_geolocation_callback_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_get_geolocation_callback_add_ref(struct _cef_base_t* base) {
     cfx_get_geolocation_callback_t* ptr = (cfx_get_geolocation_callback_t*)base;
-    return InterlockedIncrement(&ptr->ref_count);
+    InterlockedIncrement(&ptr->ref_count);
 }
 int CEF_CALLBACK _cfx_get_geolocation_callback_release(struct _cef_base_t* base) {
     cfx_get_geolocation_callback_t* ptr = (cfx_get_geolocation_callback_t*)base;
@@ -56,10 +56,6 @@ int CEF_CALLBACK _cfx_get_geolocation_callback_release(struct _cef_base_t* base)
     }
     return count;
 }
-int CEF_CALLBACK _cfx_get_geolocation_callback_get_refct(struct _cef_base_t* base) {
-    cfx_get_geolocation_callback_t* ptr = (cfx_get_geolocation_callback_t*)base;
-    return ptr->ref_count;
-}
 
 CFX_EXPORT cfx_get_geolocation_callback_t* cfx_get_geolocation_callback_ctor(gc_handle_t gc_handle) {
     cfx_get_geolocation_callback_t* ptr = (cfx_get_geolocation_callback_t*)calloc(1, sizeof(cfx_get_geolocation_callback_t));
@@ -67,7 +63,6 @@ CFX_EXPORT cfx_get_geolocation_callback_t* cfx_get_geolocation_callback_ctor(gc_
     ptr->cef_get_geolocation_callback.base.size = sizeof(cef_get_geolocation_callback_t);
     ptr->cef_get_geolocation_callback.base.add_ref = _cfx_get_geolocation_callback_add_ref;
     ptr->cef_get_geolocation_callback.base.release = _cfx_get_geolocation_callback_release;
-    ptr->cef_get_geolocation_callback.base.get_refct = _cfx_get_geolocation_callback_get_refct;
     ptr->ref_count = 1;
     ptr->gc_handle = gc_handle;
     return ptr;
