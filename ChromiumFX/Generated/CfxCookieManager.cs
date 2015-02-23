@@ -169,11 +169,11 @@ namespace Chromium {
 
         /// <summary>
         /// Flush the backing store (if any) to disk and execute the specified
-        /// |handler| on the IO thread when done. Returns false (0) if cookies cannot
+        /// |callback| on the IO thread when done. Returns false (0) if cookies cannot
         /// be accessed.
         /// </summary>
-        public bool FlushStore(CfxCompletionHandler handler) {
-            return 0 != CfxApi.cfx_cookie_manager_flush_store(NativePtr, CfxCompletionHandler.Unwrap(handler));
+        public bool FlushStore(CfxCompletionCallback callback) {
+            return 0 != CfxApi.cfx_cookie_manager_flush_store(NativePtr, CfxCompletionCallback.Unwrap(callback));
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

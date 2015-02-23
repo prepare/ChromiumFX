@@ -34,6 +34,29 @@
 using System;
 
 namespace Chromium {
+    public enum CfxColorModel {
+        Unknown,
+        Gray,
+        Color,
+        Cmyk,
+        Cmy,
+        Kcmy,
+        CmyK,
+        Black,
+        Grayscale,
+        Rgb,
+        Rgb16,
+        Rgba,
+        ColormodeColor,
+        ColormodeMonochrome,
+        HpColorColor,
+        HpColorBlack,
+        PrintoutmodeNormal,
+        PrintoutmodeNormalGray,
+        ProcesscolormodelCmyk,
+        ProcesscolormodelGreyscale,
+        ProcesscolormodelRgb
+    }
     [Flags()]
     public enum CfxContextMenuEditStateFlags {
         None = unchecked((int)0),
@@ -78,6 +101,52 @@ namespace Chromium {
         Selection = unchecked((int)1 << 4),
         Editable = unchecked((int)1 << 5)
     }
+    public enum CfxCursorType {
+        Pointer = unchecked((int)0),
+        Cross,
+        Hand,
+        Ibeam,
+        Wait,
+        Help,
+        Eastresize,
+        Northresize,
+        Northeastresize,
+        Northwestresize,
+        Southresize,
+        Southeastresize,
+        Southwestresize,
+        Westresize,
+        Northsouthresize,
+        Eastwestresize,
+        Northeastsouthwestresize,
+        Northwestsoutheastresize,
+        Columnresize,
+        Rowresize,
+        Middlepanning,
+        Eastpanning,
+        Northpanning,
+        Northeastpanning,
+        Northwestpanning,
+        Southpanning,
+        Southeastpanning,
+        Southwestpanning,
+        Westpanning,
+        Move,
+        VerticalText,
+        Cell,
+        Contextmenu,
+        Alias,
+        Progress,
+        Nodrop,
+        Copy,
+        None,
+        Notallowed,
+        Zoomin,
+        Zoomout,
+        Grab,
+        Grabbing,
+        Custom
+    }
     public enum CfxDomDocumentType {
         Unknown = unchecked((int)0),
         Html,
@@ -101,8 +170,7 @@ namespace Chromium {
         PageTransition = unchecked((int)0x1000),
         Popstate = unchecked((int)0x2000),
         Progress = unchecked((int)0x4000),
-        XmlhttpRequestProgress = unchecked((int)0x8000),
-        BeforeLoad = unchecked((int)0x10000)
+        XmlhttpRequestProgress = unchecked((int)0x8000)
     }
     public enum CfxDomEventPhase {
         Unknown = unchecked((int)0),
@@ -116,14 +184,11 @@ namespace Chromium {
         Attribute,
         Text,
         CdataSection,
-        Entity,
         ProcessingInstructions,
         Comment,
         Document,
         DocumentType,
-        DocumentFragment,
-        Notation,
-        XpathNamespace
+        DocumentFragment
     }
     public enum CfxDragOperationsMask {
         DragOperationNone = unchecked((int)0),
@@ -135,6 +200,12 @@ namespace Chromium {
         DragOperationDelete = unchecked((int)32),
         DragOperationEvery,
         UintMax
+    }
+    public enum CfxDuplexMode {
+        Unknown = unchecked((int)-1),
+        Simplex,
+        LongEdge,
+        ShortEdge
     }
     public enum CfxErrorCode {
         None = unchecked((int)0),
@@ -235,7 +306,6 @@ namespace Chromium {
         Info,
         Warning,
         Error,
-        ErrorReport,
         Disable = unchecked((int)99)
     }
     public enum CfxMenuId {
@@ -254,6 +324,14 @@ namespace Chromium {
         Find = unchecked((int)130),
         Print = unchecked((int)131),
         ViewSource = unchecked((int)132),
+        SpellcheckSuggestion0 = unchecked((int)200),
+        SpellcheckSuggestion1 = unchecked((int)201),
+        SpellcheckSuggestion2 = unchecked((int)202),
+        SpellcheckSuggestion3 = unchecked((int)203),
+        SpellcheckSuggestion4 = unchecked((int)204),
+        SpellcheckSuggestionLast = unchecked((int)204),
+        NoSpellingSuggestions = unchecked((int)205),
+        AddToDictionary = unchecked((int)206),
         UserFirst = unchecked((int)26500),
         UserLast = unchecked((int)28500)
     }
@@ -313,7 +391,9 @@ namespace Chromium {
         SharedWorker,
         Prefetch,
         Favicon,
-        Xhr
+        Xhr,
+        Ping,
+        ServiceWorker
     }
     public enum CfxState {
         Default = unchecked((int)0),
@@ -361,9 +441,7 @@ namespace Chromium {
         None = unchecked((int)0),
         SkipCache = unchecked((int)1 << 0),
         AllowCachedCredentials = unchecked((int)1 << 1),
-        AllowCookies = unchecked((int)1 << 2),
         ReportUploadProgress = unchecked((int)1 << 3),
-        ReportLoadTiming = unchecked((int)1 << 4),
         ReportRawHeaders = unchecked((int)1 << 5),
         NoDownloadData = unchecked((int)1 << 6),
         NoRetryOn5xx = unchecked((int)1 << 7)

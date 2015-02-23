@@ -101,9 +101,9 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Start tracing events on all processes. Tracing begins immediately locally,
-        /// and asynchronously on child processes as soon as they receive the
-        /// BeginTracing request.
+        /// Start tracing events on all processes. Tracing is initialized asynchronously
+        /// and |callback| will be executed on the UI thread after initialization is
+        /// complete.
         /// If CefBeginTracing was called previously, or if a CefEndTracingAsync call is
         /// pending, CefBeginTracing will fail and return false (0).
         /// |categories| is a comma-delimited list of category wildcards. A category can
@@ -113,9 +113,9 @@ namespace Chromium {
         /// "-excluded_category1,-excluded_category2"
         /// This function must be called on the browser process UI thread.
         /// </summary>
-        public static bool BeginTracing(string categories) {
+        public static bool BeginTracing(string categories, CfxCompletionCallback callback) {
             var categories_pinned = new PinnedString(categories);
-            var __retval = CfxApi.cfx_begin_tracing(categories_pinned.Obj.PinnedPtr, categories_pinned.Length);
+            var __retval = CfxApi.cfx_begin_tracing(categories_pinned.Obj.PinnedPtr, categories_pinned.Length, CfxCompletionCallback.Unwrap(callback));
             categories_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -155,7 +155,7 @@ namespace Chromium {
 
         /// <summary>
         /// Returns true (1) if called on the specified thread. Equivalent to using
-        /// cef_task_runner_t::GetForThread(threadId)->belongs_to_current_thread().
+        /// cef_task_tRunner::GetForThread(threadId)->belongs_to_current_thread().
         /// </summary>
         public static bool CurrentlyOn(CfxThreadId threadId) {
             return 0 != CfxApi.cfx_currently_on(threadId);
@@ -183,9 +183,9 @@ namespace Chromium {
         /// used. If |callback| is NULL no trace data will be written.
         /// This function must be called on the browser process UI thread.
         /// </summary>
-        public static bool EndTracingAsync(string tracingFile, CfxEndTracingCallback callback) {
+        public static bool EndTracing(string tracingFile, CfxEndTracingCallback callback) {
             var tracingFile_pinned = new PinnedString(tracingFile);
-            var __retval = CfxApi.cfx_end_tracing_async(tracingFile_pinned.Obj.PinnedPtr, tracingFile_pinned.Length, CfxEndTracingCallback.Unwrap(callback));
+            var __retval = CfxApi.cfx_end_tracing(tracingFile_pinned.Obj.PinnedPtr, tracingFile_pinned.Length, CfxEndTracingCallback.Unwrap(callback));
             tracingFile_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -214,6 +214,23 @@ namespace Chromium {
             var path_pinned = new PinnedString(path);
             CfxApi.cfx_force_web_plugin_shutdown(path_pinned.Obj.PinnedPtr, path_pinned.Length);
             path_pinned.Obj.Free();
+        }
+
+        /// <summary>
+        /// Get the extensions associated with the given mime type. This should be passed
+        /// in lower case. There could be multiple extensions for a given mime type, like
+        /// "html,htm" for "text/html", or "txt,text,html,..." for "text/*". Any existing
+        /// elements in the provided vector will not be erased.
+        /// </summary>
+        public static void GetExtensionsForMimeType(string mimeType, System.Collections.Generic.List<string> extensions) {
+            var mimeType_pinned = new PinnedString(mimeType);
+            PinnedString[] extensions_handles;
+            var extensions_unwrapped = CfxStringCollections.UnwrapCfxStringList(extensions, out extensions_handles);
+            CfxApi.cfx_get_extensions_for_mime_type(mimeType_pinned.Obj.PinnedPtr, mimeType_pinned.Length, extensions_unwrapped);
+            mimeType_pinned.Obj.Free();
+            CfxStringCollections.FreePinnedStrings(extensions_handles);
+            CfxStringCollections.CfxStringListCopyToManaged(extensions_unwrapped, extensions);
+            CfxApi.cfx_string_list_free(extensions_unwrapped);
         }
 
         /// <summary>
@@ -308,7 +325,7 @@ namespace Chromium {
 
         /// <summary>
         /// Post a task for delayed execution on the specified thread. Equivalent to
-        /// using cef_task_runner_t::GetForThread(threadId)->PostDelayedTask(task,
+        /// using cef_task_tRunner::GetForThread(threadId)->PostDelayedTask(task,
         /// delay_ms).
         /// </summary>
         public static int PostDelayedTask(CfxThreadId threadId, CfxTask task, long delayMs) {
@@ -317,7 +334,7 @@ namespace Chromium {
 
         /// <summary>
         /// Post a task for execution on the specified thread. Equivalent to using
-        /// cef_task_runner_t::GetForThread(threadId)->PostTask(task).
+        /// cef_task_tRunner::GetForThread(threadId)->PostTask(task).
         /// </summary>
         public static int PostTask(CfxThreadId threadId, CfxTask task) {
             return CfxApi.cfx_post_task(threadId, CfxTask.Unwrap(task));

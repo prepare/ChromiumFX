@@ -47,6 +47,7 @@ namespace Chromium {
             return new CfxBrowserSettings(nativePtr);
         }
 
+        private int m_WindowlessFrameRate;
         private string m_StandardFontFamily;
         private string m_FixedFontFamily;
         private string m_SerifFontFamily;
@@ -78,11 +79,25 @@ namespace Chromium {
         private CfxState m_Databases;
         private CfxState m_ApplicationCache;
         private CfxState m_Webgl;
-        private CfxState m_AcceleratedCompositing;
         private CfxColor m_BackgroundColor;
 
         public CfxBrowserSettings() : base(CfxApi.cfx_browser_settings_ctor, CfxApi.cfx_browser_settings_dtor) {}
         internal CfxBrowserSettings(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_browser_settings_ctor, CfxApi.cfx_browser_settings_dtor) {}
+
+        /// <summary>
+        /// The maximum rate in frames per second (fps) that CefRenderHandler::OnPaint
+        /// will be called for a windowless browser. The actual fps may be lower if
+        /// the browser cannot generate frames at the requested rate. The minimum
+        /// value is 1 and the maximum value is 60 (default 30).
+        /// </summary>
+        public int WindowlessFrameRate {
+            get {
+                return m_WindowlessFrameRate;
+            }
+            set {
+                m_WindowlessFrameRate = value;
+            }
+        }
 
         /// <summary>
         /// The below values map to WebPreferences settings.
@@ -462,21 +477,6 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Controls whether content that depends on accelerated compositing can be
-        /// used. Note that accelerated compositing requires hardware support and may
-        /// not work on all systems even when enabled. Also configurable using the
-        /// "disable-accelerated-compositing" command-line switch.
-        /// </summary>
-        public CfxState AcceleratedCompositing {
-            get {
-                return m_AcceleratedCompositing;
-            }
-            set {
-                m_AcceleratedCompositing = value;
-            }
-        }
-
-        /// <summary>
         /// Opaque background color used for the browser before a document is loaded
         /// and when no document color is specified. By default the background color
         /// will be the same as CefSettings.background_color. Only the RGB compontents
@@ -500,7 +500,7 @@ namespace Chromium {
             var m_CursiveFontFamily_pinned = new PinnedString(m_CursiveFontFamily);
             var m_FantasyFontFamily_pinned = new PinnedString(m_FantasyFontFamily);
             var m_DefaultEncoding_pinned = new PinnedString(m_DefaultEncoding);
-            CfxApi.cfx_browser_settings_copy_to_native(nativePtrUnchecked, m_StandardFontFamily_pinned.Obj.PinnedPtr, m_StandardFontFamily_pinned.Length, m_FixedFontFamily_pinned.Obj.PinnedPtr, m_FixedFontFamily_pinned.Length, m_SerifFontFamily_pinned.Obj.PinnedPtr, m_SerifFontFamily_pinned.Length, m_SansSerifFontFamily_pinned.Obj.PinnedPtr, m_SansSerifFontFamily_pinned.Length, m_CursiveFontFamily_pinned.Obj.PinnedPtr, m_CursiveFontFamily_pinned.Length, m_FantasyFontFamily_pinned.Obj.PinnedPtr, m_FantasyFontFamily_pinned.Length, m_DefaultFontSize, m_DefaultFixedFontSize, m_MinimumFontSize, m_MinimumLogicalFontSize, m_DefaultEncoding_pinned.Obj.PinnedPtr, m_DefaultEncoding_pinned.Length, m_RemoteFonts, m_Javascript, m_JavascriptOpenWindows, m_JavascriptCloseWindows, m_JavascriptAccessClipboard, m_JavascriptDomPaste, m_CaretBrowsing, m_Java, m_Plugins, m_UniversalAccessFromFileUrls, m_FileAccessFromFileUrls, m_WebSecUrity, m_ImageLoading, m_ImageShrinkStandaloneToFit, m_TextAreaResize, m_TabToLinks, m_LocalStorage, m_Databases, m_ApplicationCache, m_Webgl, m_AcceleratedCompositing, CfxColor.Unwrap(m_BackgroundColor));
+            CfxApi.cfx_browser_settings_copy_to_native(nativePtrUnchecked, m_WindowlessFrameRate, m_StandardFontFamily_pinned.Obj.PinnedPtr, m_StandardFontFamily_pinned.Length, m_FixedFontFamily_pinned.Obj.PinnedPtr, m_FixedFontFamily_pinned.Length, m_SerifFontFamily_pinned.Obj.PinnedPtr, m_SerifFontFamily_pinned.Length, m_SansSerifFontFamily_pinned.Obj.PinnedPtr, m_SansSerifFontFamily_pinned.Length, m_CursiveFontFamily_pinned.Obj.PinnedPtr, m_CursiveFontFamily_pinned.Length, m_FantasyFontFamily_pinned.Obj.PinnedPtr, m_FantasyFontFamily_pinned.Length, m_DefaultFontSize, m_DefaultFixedFontSize, m_MinimumFontSize, m_MinimumLogicalFontSize, m_DefaultEncoding_pinned.Obj.PinnedPtr, m_DefaultEncoding_pinned.Length, m_RemoteFonts, m_Javascript, m_JavascriptOpenWindows, m_JavascriptCloseWindows, m_JavascriptAccessClipboard, m_JavascriptDomPaste, m_CaretBrowsing, m_Java, m_Plugins, m_UniversalAccessFromFileUrls, m_FileAccessFromFileUrls, m_WebSecUrity, m_ImageLoading, m_ImageShrinkStandaloneToFit, m_TextAreaResize, m_TabToLinks, m_LocalStorage, m_Databases, m_ApplicationCache, m_Webgl, CfxColor.Unwrap(m_BackgroundColor));
             m_StandardFontFamily_pinned.Obj.Free();
             m_FixedFontFamily_pinned.Obj.Free();
             m_SerifFontFamily_pinned.Obj.Free();
@@ -519,7 +519,7 @@ namespace Chromium {
             IntPtr fantasy_font_family_str = IntPtr.Zero; int fantasy_font_family_length = 0;
             IntPtr default_encoding_str = IntPtr.Zero; int default_encoding_length = 0;
             uint background_color = default(uint);
-            CfxApi.cfx_browser_settings_copy_to_managed(nativePtr, out standard_font_family_str, out standard_font_family_length, out fixed_font_family_str, out fixed_font_family_length, out serif_font_family_str, out serif_font_family_length, out sans_serif_font_family_str, out sans_serif_font_family_length, out cursive_font_family_str, out cursive_font_family_length, out fantasy_font_family_str, out fantasy_font_family_length, out m_DefaultFontSize, out m_DefaultFixedFontSize, out m_MinimumFontSize, out m_MinimumLogicalFontSize, out default_encoding_str, out default_encoding_length, out m_RemoteFonts, out m_Javascript, out m_JavascriptOpenWindows, out m_JavascriptCloseWindows, out m_JavascriptAccessClipboard, out m_JavascriptDomPaste, out m_CaretBrowsing, out m_Java, out m_Plugins, out m_UniversalAccessFromFileUrls, out m_FileAccessFromFileUrls, out m_WebSecUrity, out m_ImageLoading, out m_ImageShrinkStandaloneToFit, out m_TextAreaResize, out m_TabToLinks, out m_LocalStorage, out m_Databases, out m_ApplicationCache, out m_Webgl, out m_AcceleratedCompositing, out background_color);
+            CfxApi.cfx_browser_settings_copy_to_managed(nativePtr, out m_WindowlessFrameRate, out standard_font_family_str, out standard_font_family_length, out fixed_font_family_str, out fixed_font_family_length, out serif_font_family_str, out serif_font_family_length, out sans_serif_font_family_str, out sans_serif_font_family_length, out cursive_font_family_str, out cursive_font_family_length, out fantasy_font_family_str, out fantasy_font_family_length, out m_DefaultFontSize, out m_DefaultFixedFontSize, out m_MinimumFontSize, out m_MinimumLogicalFontSize, out default_encoding_str, out default_encoding_length, out m_RemoteFonts, out m_Javascript, out m_JavascriptOpenWindows, out m_JavascriptCloseWindows, out m_JavascriptAccessClipboard, out m_JavascriptDomPaste, out m_CaretBrowsing, out m_Java, out m_Plugins, out m_UniversalAccessFromFileUrls, out m_FileAccessFromFileUrls, out m_WebSecUrity, out m_ImageLoading, out m_ImageShrinkStandaloneToFit, out m_TextAreaResize, out m_TabToLinks, out m_LocalStorage, out m_Databases, out m_ApplicationCache, out m_Webgl, out background_color);
             m_StandardFontFamily = standard_font_family_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(standard_font_family_str, standard_font_family_length) : String.Empty;;
             m_FixedFontFamily = fixed_font_family_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(fixed_font_family_str, fixed_font_family_length) : String.Empty;;
             m_SerifFontFamily = serif_font_family_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(serif_font_family_str, serif_font_family_length) : String.Empty;;

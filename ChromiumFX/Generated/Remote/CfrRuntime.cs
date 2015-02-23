@@ -103,11 +103,29 @@ namespace Chromium.Remote {
 
         /// <summary>
         /// Returns true (1) if called on the specified thread. Equivalent to using
-        /// cef_task_runner_t::GetForThread(threadId)->belongs_to_current_thread().
+        /// cef_task_tRunner::GetForThread(threadId)->belongs_to_current_thread().
         /// </summary>
         public bool CurrentlyOn(CfxThreadId threadId) {
             var call = new CfxRuntimeCurrentlyOnRenderProcessCall();
             call.threadId = (int)threadId;
+            call.Execute(connection);
+            return call.__retval;
+        }
+
+        /// <summary>
+        /// Stop tracing events on all processes.
+        /// This function will fail and return false (0) if a previous call to
+        /// CefEndTracingAsync is already pending or if CefBeginTracing was not called.
+        /// |tracing_file| is the path at which tracing data will be written and
+        /// |callback| is the callback that will be executed once all processes have sent
+        /// their trace data. If |tracing_file| is NULL a new temporary file path will be
+        /// used. If |callback| is NULL no trace data will be written.
+        /// This function must be called on the browser process UI thread.
+        /// </summary>
+        public bool EndTracing(string tracingFile, CfrEndTracingCallback callback) {
+            var call = new CfxRuntimeEndTracingRenderProcessCall();
+            call.tracingFile = tracingFile;
+            call.callback = CfrObject.Unwrap(callback);
             call.Execute(connection);
             return call.__retval;
         }
@@ -130,6 +148,19 @@ namespace Chromium.Remote {
             call.windowsSandboxInfo = windowsSandboxInfo.ptr;
             call.Execute(connection);
             return call.__retval;
+        }
+
+        /// <summary>
+        /// Get the extensions associated with the given mime type. This should be passed
+        /// in lower case. There could be multiple extensions for a given mime type, like
+        /// "html,htm" for "text/html", or "txt,text,html,..." for "text/*". Any existing
+        /// elements in the provided vector will not be erased.
+        /// </summary>
+        public void GetExtensionsForMimeType(string mimeType, System.Collections.Generic.List<string> extensions) {
+            var call = new CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall();
+            call.mimeType = mimeType;
+            call.extensions = extensions;
+            call.Execute(connection);
         }
 
         /// <summary>
@@ -180,7 +211,7 @@ namespace Chromium.Remote {
 
         /// <summary>
         /// Post a task for delayed execution on the specified thread. Equivalent to
-        /// using cef_task_runner_t::GetForThread(threadId)->PostDelayedTask(task,
+        /// using cef_task_tRunner::GetForThread(threadId)->PostDelayedTask(task,
         /// delay_ms).
         /// </summary>
         public int PostDelayedTask(CfxThreadId threadId, CfrTask task, long delayMs) {
@@ -194,7 +225,7 @@ namespace Chromium.Remote {
 
         /// <summary>
         /// Post a task for execution on the specified thread. Equivalent to using
-        /// cef_task_runner_t::GetForThread(threadId)->PostTask(task).
+        /// cef_task_tRunner::GetForThread(threadId)->PostTask(task).
         /// </summary>
         public int PostTask(CfxThreadId threadId, CfrTask task) {
             var call = new CfxRuntimePostTaskRenderProcessCall();

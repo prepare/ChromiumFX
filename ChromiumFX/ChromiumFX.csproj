@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -51,18 +51,17 @@
     <Compile Include="Generated\CfxCallback.cs" />
     <Compile Include="Generated\CfxClient.cs" />
     <Compile Include="Generated\CfxCommandLine.cs" />
-    <Compile Include="Generated\CfxCompletionHandler.cs" />
+    <Compile Include="Generated\CfxCompletionCallback.cs" />
     <Compile Include="Generated\CfxContextMenuHandler.cs" />
     <Compile Include="Generated\CfxContextMenuParams.cs" />
     <Compile Include="Generated\CfxCookie.cs" />
     <Compile Include="Generated\CfxCookieManager.cs" />
     <Compile Include="Generated\CfxCookieVisitor.cs" />
+    <Compile Include="Generated\CfxCursorInfo.cs" />
     <Compile Include="Generated\CfxDialogHandler.cs" />
     <Compile Include="Generated\CfxDictionaryValue.cs" />
     <Compile Include="Generated\CfxDisplayHandler.cs" />
     <Compile Include="Generated\CfxDomDocument.cs" />
-    <Compile Include="Generated\CfxDomEvent.cs" />
-    <Compile Include="Generated\CfxDomEventListener.cs" />
     <Compile Include="Generated\CfxDomNode.cs" />
     <Compile Include="Generated\CfxDomVisitor.cs" />
     <Compile Include="Generated\CfxDownloadHandler.cs" />
@@ -88,9 +87,17 @@
     <Compile Include="Generated\CfxLoadHandler.cs" />
     <Compile Include="Generated\CfxMenuModel.cs" />
     <Compile Include="Generated\CfxMouseEvent.cs" />
+    <Compile Include="Generated\CfxNavigationEntry.cs" />
+    <Compile Include="Generated\CfxNavigationEntryVisitor.cs" />
+    <Compile Include="Generated\CfxPageRange.cs" />
+    <Compile Include="Generated\CfxPoint.cs" />
     <Compile Include="Generated\CfxPopupFeatures.cs" />
     <Compile Include="Generated\CfxPostData.cs" />
     <Compile Include="Generated\CfxPostDataElement.cs" />
+    <Compile Include="Generated\CfxPrintDialogCallback.cs" />
+    <Compile Include="Generated\CfxPrintHandler.cs" />
+    <Compile Include="Generated\CfxPrintJobCallback.cs" />
+    <Compile Include="Generated\CfxPrintSettings.cs" />
     <Compile Include="Generated\CfxProcessMessage.cs" />
     <Compile Include="Generated\CfxQuotaCallback.cs" />
     <Compile Include="Generated\CfxReadHandler.cs" />
@@ -110,6 +117,7 @@
     <Compile Include="Generated\CfxSchemeRegistrar.cs" />
     <Compile Include="Generated\CfxScreenInfo.cs" />
     <Compile Include="Generated\CfxSettings.cs" />
+    <Compile Include="Generated\CfxSize.cs" />
     <Compile Include="Generated\CfxStreamReader.cs" />
     <Compile Include="Generated\CfxStreamWriter.cs" />
     <Compile Include="Generated\CfxStringVisitor.cs" />
@@ -139,10 +147,9 @@
     <Compile Include="Generated\Remote\CfrCommandLine.cs" />
     <Compile Include="Generated\Remote\CfrDictionaryValue.cs" />
     <Compile Include="Generated\Remote\CfrDomDocument.cs" />
-    <Compile Include="Generated\Remote\CfrDomEvent.cs" />
-    <Compile Include="Generated\Remote\CfrDomEventListener.cs" />
     <Compile Include="Generated\Remote\CfrDomNode.cs" />
     <Compile Include="Generated\Remote\CfrDomVisitor.cs" />
+    <Compile Include="Generated\Remote\CfrEndTracingCallback.cs" />
     <Compile Include="Generated\Remote\CfrFrame.cs" />
     <Compile Include="Generated\Remote\CfrGeoposition.cs" />
     <Compile Include="Generated\Remote\CfrGetGeolocationCallback.cs" />
@@ -174,10 +181,9 @@
     <Compile Include="Generated\Remote\CfxCommandLineRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxDictionaryValueRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxDomDocumentRemoteCalls.cs" />
-    <Compile Include="Generated\Remote\CfxDomEventListenerRemoteCalls.cs" />
-    <Compile Include="Generated\Remote\CfxDomEventRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxDomNodeRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxDomVisitorRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxEndTracingCallbackRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxFrameRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxGeopositionRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxGetGeolocationCallbackRemoteCalls.cs" />

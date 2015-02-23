@@ -37,7 +37,7 @@ namespace Chromium {
     /// <summary>
     /// Implement this structure to handle events related to geolocation permission
     /// requests. The functions of this structure will be called on the browser
-    /// process IO thread.
+    /// process UI thread.
     /// </summary>
     public class CfxGeolocationHandler : CfxBase {
 
@@ -48,9 +48,10 @@ namespace Chromium {
         }
 
 
-        internal static void on_request_geolocation_permission(IntPtr gcHandlePtr, IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id, IntPtr callback) {
+        internal static void on_request_geolocation_permission(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id, IntPtr callback) {
             var self = (CfxGeolocationHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
+                __retval = default(int);
                 return;
             }
             var e = new CfxOnRequestGeolocationPermissionEventArgs(browser, requesting_url_str, requesting_url_length, request_id, callback);
@@ -59,6 +60,7 @@ namespace Chromium {
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
+            __retval = e.m_returnValue ? 1 : 0;
         }
 
         internal static void on_cancel_geolocation_permission(IntPtr gcHandlePtr, IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id) {
@@ -79,9 +81,10 @@ namespace Chromium {
         /// <summary>
         /// Called when a page requests permission to access geolocation information.
         /// |requesting_url| is the URL requesting permission and |request_id| is the
-        /// unique ID for the permission request. Call
-        /// cef_geolocation_callback_t::Continue to allow or deny the permission
-        /// request.
+        /// unique ID for the permission request. Return true (1) and call
+        /// cef_geolocation_callback_t::cont() either in this function or at a later
+        /// time to continue or cancel the request. Return false (0) to cancel the
+        /// request immediately.
         /// </summary>
         public event CfxOnRequestGeolocationPermissionEventHandler OnRequestGeolocationPermission {
             add {
@@ -141,9 +144,10 @@ namespace Chromium {
     /// <summary>
     /// Called when a page requests permission to access geolocation information.
     /// |requesting_url| is the URL requesting permission and |request_id| is the
-    /// unique ID for the permission request. Call
-    /// cef_geolocation_callback_t::Continue to allow or deny the permission
-    /// request.
+    /// unique ID for the permission request. Return true (1) and call
+    /// cef_geolocation_callback_t::cont() either in this function or at a later
+    /// time to continue or cancel the request. Return false (0) to cancel the
+    /// request immediately.
     /// </summary>
     public class CfxOnRequestGeolocationPermissionEventArgs : CfxEventArgs {
 
@@ -155,6 +159,9 @@ namespace Chromium {
         internal int m_request_id;
         internal IntPtr m_callback;
         internal CfxGeolocationCallback m_callback_wrapped;
+
+        internal bool m_returnValue;
+        private bool returnValueSet;
 
         internal CfxOnRequestGeolocationPermissionEventArgs(IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id, IntPtr callback) {
             m_browser = browser;
@@ -190,6 +197,14 @@ namespace Chromium {
                 if(m_callback_wrapped == null) m_callback_wrapped = CfxGeolocationCallback.Wrap(m_callback);
                 return m_callback_wrapped;
             }
+        }
+        public void SetReturnValue(bool returnValue) {
+            CheckAccess();
+            if(returnValueSet) {
+                throw new CfxException("The return value has already been set");
+            }
+            returnValueSet = true;
+            this.m_returnValue = returnValue;
         }
 
         public override string ToString() {

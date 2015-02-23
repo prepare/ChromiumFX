@@ -186,9 +186,8 @@ namespace Chromium {
         private CfxOnTooltipEventHandler m_OnTooltip;
 
         /// <summary>
-        /// Called when the browser receives a status message. |text| contains the text
-        /// that will be displayed in the status message and |type| indicates the
-        /// status message type.
+        /// Called when the browser receives a status message. |value| contains the
+        /// text that will be displayed in the status message.
         /// </summary>
         public event CfxOnStatusMessageEventHandler OnStatusMessage {
             add {
@@ -408,9 +407,8 @@ namespace Chromium {
     public delegate void CfxOnStatusMessageEventHandler(object sender, CfxOnStatusMessageEventArgs e);
 
     /// <summary>
-    /// Called when the browser receives a status message. |text| contains the text
-    /// that will be displayed in the status message and |type| indicates the
-    /// status message type.
+    /// Called when the browser receives a status message. |value| contains the
+    /// text that will be displayed in the status message.
     /// </summary>
     public class CfxOnStatusMessageEventArgs : CfxEventArgs {
 

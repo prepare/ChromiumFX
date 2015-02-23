@@ -35,60 +35,39 @@ using System;
 
 namespace Chromium {
     /// <summary>
-    /// Generic callback structure used for asynchronous completion.
+    /// Callback structure for asynchronous continuation of print job requests.
     /// </summary>
-    public class CfxCompletionHandler : CfxBase {
+    public class CfxPrintJobCallback : CfxBase {
 
-        internal static CfxCompletionHandler Wrap(IntPtr nativePtr) {
+        private static readonly WeakCache weakCache = new WeakCache();
+
+        internal static CfxPrintJobCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_completion_handler_get_gc_handle(nativePtr);
-            return (CfxCompletionHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
-        internal static void on_complete(IntPtr gcHandlePtr) {
-            var self = (CfxCompletionHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
-                return;
+            lock(weakCache) {
+                var wrapper = (CfxPrintJobCallback)weakCache.Get(nativePtr);
+                if(wrapper == null) {
+                    wrapper = new CfxPrintJobCallback(nativePtr);
+                    weakCache.Add(wrapper);
+                } else {
+                    CfxApi.cfx_release(nativePtr);
+                }
+                return wrapper;
             }
-            var e = new CfxEventArgs();
-            var eventHandler = self.m_OnComplete;
-            if(eventHandler != null) eventHandler(self, e);
-            e.m_isInvalid = true;
         }
 
-        internal CfxCompletionHandler(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxCompletionHandler() : base(CfxApi.cfx_completion_handler_ctor) {}
+
+        internal CfxPrintJobCallback(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Method that will be called once the task is complete.
+        /// Indicate completion of the print job.
         /// </summary>
-        public event CfxEventHandler OnComplete {
-            add {
-                if(m_OnComplete == null) {
-                    CfxApi.cfx_completion_handler_activate_callback(NativePtr, 0, 1);
-                }
-                m_OnComplete += value;
-            }
-            remove {
-                m_OnComplete -= value;
-                if(m_OnComplete == null) {
-                    CfxApi.cfx_completion_handler_activate_callback(NativePtr, 0, 0);
-                }
-            }
+        public void Continue() {
+            CfxApi.cfx_print_job_callback_cont(NativePtr);
         }
 
-        private CfxEventHandler m_OnComplete;
-
         internal override void OnDispose(IntPtr nativePtr) {
-            if(m_OnComplete != null) {
-                m_OnComplete = null;
-                CfxApi.cfx_completion_handler_activate_callback(NativePtr, 0, 0);
-            }
+            weakCache.Remove(nativePtr);
             base.OnDispose(nativePtr);
         }
     }
-
-
-
 }
