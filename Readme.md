@@ -28,7 +28,7 @@ Pull the repo and build ChromiumFX.sln with Visual Studio 2013 Community Edition
 
 * **Using ChromiumFX**
 
-If you don't want to build ChromiumFX yourself, you can find the current release in the download section. The download package already comes bundled with the needed CEF binaries. For required and optional components, see cef/README.txt.
+If you don't want to build ChromiumFX yourself, you can find the current release binaries in the download section. For the required CEF version, see CefVersion.txt in the download package.
 
 Then take a look at the [wiki](https://bitbucket.org/wborgsm/chromiumfx/wiki/Home).
 
