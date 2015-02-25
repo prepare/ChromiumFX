@@ -1,0 +1,211 @@
+// Copyright (c) 2014-2015 Wolfgang Borgsmüller
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without 
+// modification, are permitted provided that the following conditions 
+// are met:
+// 
+// 1. Redistributions of source code must retain the above copyright 
+//    notice, this list of conditions and the following disclaimer.
+// 
+// 2. Redistributions in binary form must reproduce the above copyright 
+//    notice, this list of conditions and the following disclaimer in the 
+//    documentation and/or other materials provided with the distribution.
+// 
+// 3. Neither the name of the copyright holder nor the names of its 
+//    contributors may be used to endorse or promote products derived 
+//    from this software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS 
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+// COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, 
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
+// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS 
+// OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND 
+// ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR 
+// TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE 
+// USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+// Generated file. Do not edit.
+
+
+using System;
+
+namespace Chromium {
+    /// <summary>
+    /// Structure that should be implemented to handle V8 function calls. The
+    /// functions of this structure will be called on the thread associated with the
+    /// V8 function.
+    /// </summary>
+    public class CfxV8Handler : CfxBase {
+
+        internal static CfxV8Handler Wrap(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return null;
+            var handlePtr = CfxApi.cfx_v8handler_get_gc_handle(nativePtr);
+            return (CfxV8Handler)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
+        }
+
+
+        internal static void execute(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, int argumentsCount, IntPtr arguments, out IntPtr retval, ref IntPtr exception_str, ref int exception_length) {
+            var self = (CfxV8Handler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null) {
+                __retval = default(int);
+                retval = default(IntPtr);
+                return;
+            }
+            var e = new CfxV8HandlerExecuteEventArgs(name_str, name_length, @object, arguments, argumentsCount, exception_str, exception_length);
+            var eventHandler = self.m_Execute;
+            if(eventHandler != null) eventHandler(self, e);
+            e.m_isInvalid = true;
+            if(e.m_object_wrapped == null) CfxApi.cfx_release(e.m_object);
+            if(e.m_arguments_managed == null) {
+                for(int i = 0; i < argumentsCount; ++i) {
+                    CfxApi.cfx_release(e.m_arguments[i]);
+                }
+            }
+            if(e.m_exception_changed) {
+                var exception_pinned = new PinnedString(e.m_exception_wrapped);
+                exception_str = exception_pinned.Obj.PinnedPtr;
+                exception_length = exception_pinned.Length;
+            }
+            if(e.m_returnValue != null) {
+                retval = CfxV8Value.Unwrap(e.m_returnValue);
+                __retval = 1;
+            } else {
+                retval = IntPtr.Zero;
+                __retval = 0;
+            }
+        }
+
+        internal CfxV8Handler(IntPtr nativePtr) : base(nativePtr) {}
+        public CfxV8Handler() : base(CfxApi.cfx_v8handler_ctor) {}
+
+        /// <summary>
+        /// Handle execution of the function identified by |name|. |object| is the
+        /// receiver ('this' object) of the function. |arguments| is the list of
+        /// arguments passed to the function. If execution succeeds set |retval| to the
+        /// function return value. If execution fails set |exception| to the exception
+        /// that will be thrown. Return true (1) if execution was handled.
+        /// </summary>
+        public event CfxV8HandlerExecuteEventHandler Execute {
+            add {
+                if(m_Execute == null) {
+                    CfxApi.cfx_v8handler_activate_callback(NativePtr, 0, 1);
+                }
+                m_Execute += value;
+            }
+            remove {
+                m_Execute -= value;
+                if(m_Execute == null) {
+                    CfxApi.cfx_v8handler_activate_callback(NativePtr, 0, 0);
+                }
+            }
+        }
+
+        private CfxV8HandlerExecuteEventHandler m_Execute;
+
+        internal override void OnDispose(IntPtr nativePtr) {
+            if(m_Execute != null) {
+                m_Execute = null;
+                CfxApi.cfx_v8handler_activate_callback(NativePtr, 0, 0);
+            }
+            base.OnDispose(nativePtr);
+        }
+    }
+
+
+    public delegate void CfxV8HandlerExecuteEventHandler(object sender, CfxV8HandlerExecuteEventArgs e);
+
+    /// <summary>
+    /// Handle execution of the function identified by |name|. |object| is the
+    /// receiver ('this' object) of the function. |arguments| is the list of
+    /// arguments passed to the function. If execution succeeds set |retval| to the
+    /// function return value. If execution fails set |exception| to the exception
+    /// that will be thrown. Return true (1) if execution was handled.
+    /// </summary>
+    public class CfxV8HandlerExecuteEventArgs : CfxEventArgs {
+
+        internal IntPtr m_name_str;
+        internal int m_name_length;
+        internal string m_name;
+        internal IntPtr m_object;
+        internal CfxV8Value m_object_wrapped;
+        internal IntPtr[] m_arguments;
+        internal CfxV8Value[] m_arguments_managed;
+        internal IntPtr m_exception_str;
+        internal int m_exception_length;
+        internal string m_exception_wrapped;
+        internal bool m_exception_changed;
+
+        internal CfxV8Value m_returnValue;
+        private bool returnValueSet;
+
+        internal CfxV8HandlerExecuteEventArgs(IntPtr name_str, int name_length, IntPtr @object, IntPtr arguments, int argumentsCount, IntPtr exception_str, int exception_length) {
+            m_name_str = name_str;
+            m_name_length = name_length;
+            m_object = @object;
+            m_arguments = new IntPtr[argumentsCount];
+            if(argumentsCount > 0) {
+                System.Runtime.InteropServices.Marshal.Copy(arguments, m_arguments, 0, argumentsCount);
+            }
+            m_exception_str = exception_str;
+            m_exception_length = exception_length;
+        }
+
+        public string Name {
+            get {
+                CheckAccess();
+                if(m_name == null && m_name_str != IntPtr.Zero) m_name = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_name_str, m_name_length);
+                return m_name;
+            }
+        }
+        public CfxV8Value Object {
+            get {
+                CheckAccess();
+                if(m_object_wrapped == null) m_object_wrapped = CfxV8Value.Wrap(m_object);
+                return m_object_wrapped;
+            }
+        }
+        public CfxV8Value[] Arguments {
+            get {
+                CheckAccess();
+                if(m_arguments_managed == null) {
+                    m_arguments_managed = new CfxV8Value[m_arguments.Length];
+                    for(int i = 0; i < m_arguments.Length; ++i) {
+                        m_arguments_managed[i] = CfxV8Value.Wrap(m_arguments[i]);
+                    }
+                }
+                return m_arguments_managed;
+            }
+        }
+        public string Exception {
+            get {
+                CheckAccess();
+                if(!m_exception_changed && m_exception_wrapped == null && m_exception_str != IntPtr.Zero) {
+                    m_exception_wrapped = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_exception_str, m_exception_length);
+                }
+                return m_exception_wrapped;
+            }
+            set {
+                CheckAccess();
+                m_exception_wrapped = value;
+                m_exception_changed = true;
+            }
+        }
+        public void SetReturnValue(CfxV8Value returnValue) {
+            CheckAccess();
+            if(returnValueSet) {
+                throw new CfxException("The return value has already been set");
+            }
+            returnValueSet = true;
+            this.m_returnValue = returnValue;
+        }
+
+        public override string ToString() {
+            return String.Format("Name={{{0}}}, Object={{{1}}}, Arguments={{{2}}}, Exception={{{3}}}", Name, Object, Arguments, Exception);
+        }
+    }
+
+}
