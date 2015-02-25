@@ -241,6 +241,7 @@ Public Class CodeBuilder
         If summary IsNot Nothing AndAlso Not summary.Length = 0 Then
             AppendLine("/// <summary>")
             For Each line In summary
+                line = Regex.Replace(line, "&(?!\w+;)", "&amp;")
                 AppendLine("/// " & line)
             Next
             AppendLine("/// </summary>")
