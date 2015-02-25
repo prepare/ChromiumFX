@@ -401,7 +401,7 @@ namespace Chromium {
         private CfxStartDraggingEventHandler m_StartDragging;
 
         /// <summary>
-        /// Called when the web view wants to update the mouse cursor during a drag &
+        /// Called when the web view wants to update the mouse cursor during a drag &amp;
         /// drop operation. |operation| describes the allowed operation (none, move,
         /// copy, link).
         /// </summary>
@@ -1011,7 +1011,7 @@ namespace Chromium {
     public delegate void CfxUpdateDragCursorEventHandler(object sender, CfxUpdateDragCursorEventArgs e);
 
     /// <summary>
-    /// Called when the web view wants to update the mouse cursor during a drag &
+    /// Called when the web view wants to update the mouse cursor during a drag &amp;
     /// drop operation. |operation| describes the allowed operation (none, move,
     /// copy, link).
     /// </summary>
