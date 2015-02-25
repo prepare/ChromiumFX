@@ -429,6 +429,10 @@ namespace Chromium.WebBrowser {
         /// V8 context is created in the render process.
         /// </summary>
         public void AddGlobalJSFunction(JSFunction globalFunction) {
+            if(globalFunction.Browser != null) {
+                throw new CfxException("This JSFunction object already belongs to a browser.");
+            }
+            globalFunction.Browser = this;
             mainFrameJSFunctions.Add(globalFunction);
         }
 
@@ -438,11 +442,15 @@ namespace Chromium.WebBrowser {
         /// V8 context is created for a frame with this name in the render process.
         /// </summary>
         public void AddGlobalJSFunction(string frameName, JSFunction globalFunction) {
+            if(globalFunction.Browser != null) {
+                throw new CfxException("This JSFunction object already belongs to a browser.");
+            }
             List<JSFunction> list;
             if(!frameJSFunctions.TryGetValue(frameName, out list)) {
                 list = new List<JSFunction>();
                 frameJSFunctions.Add(frameName, list);
             }
+            globalFunction.Browser = this;
             list.Add(globalFunction);
         }
 
@@ -455,7 +463,7 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public JSFunction AddGlobalJSFunction(string functionName) {
             var f = new JSFunction(functionName, this);
-            mainFrameJSFunctions.Add(f);
+            AddGlobalJSFunction(f);
             return f;
         }
 
@@ -469,7 +477,7 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public JSFunction AddGlobalJSFunction(string functionName, bool executeOnUiThread) {
             var f = new JSFunction(functionName, executeOnUiThread ? this : null);
-            mainFrameJSFunctions.Add(f);
+            AddGlobalJSFunction(f);
             return f;
         }
 
@@ -482,12 +490,7 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public JSFunction AddGlobalJSFunction(string frameName, string functionName) {
             var f = new JSFunction(functionName, this);
-            List<JSFunction> list;
-            if(!frameJSFunctions.TryGetValue(frameName, out list)) {
-                list = new List<JSFunction>();
-                frameJSFunctions.Add(frameName, list);
-            }
-            list.Add(f);
+            AddGlobalJSFunction(frameName, f);
             return f;
         }
 

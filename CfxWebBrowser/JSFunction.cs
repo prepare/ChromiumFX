@@ -54,6 +54,11 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public string FunctionName { get; private set; }
 
+        /// <summary>
+        /// The browser this function belongs to. 
+        /// </summary>
+        public ChromiumWebBrowser Browser { get; internal set; }
+        
         private readonly Control invokeControl;
 
         /// <summary>
