@@ -30,9 +30,11 @@ namespace CfxTestApplication {
 
             //wb.ExecuteJavascript("var x = HelloApp();");
 
-            var html = " <button onclick='var x = HelloApp(12345); document.getElementById(\"demo\").innerHTML =x;'>Trigger HelloApp(12345) callback function.</button><br><br><img src='http://localresource/image'>";
+            var html = " <button onclick='var x = HelloApp(12345); document.getElementById(\"demo\").innerHTML =x;'>";
+            html += "Trigger HelloApp(12345) callback function.</button><br><br><img src='http://localresource/image'>";
             html += "<br><p>Callback returned: <span id='demo'></span></p>";
-
+            html += "<br><br><button onclick='DoSomething();'>Do something</button>";
+            
             var bm = new System.Drawing.Bitmap(100, 100);
             using(var g = System.Drawing.Graphics.FromImage(bm)) {
                 g.DrawLine(System.Drawing.Pens.Black, 0, 0, 100, 100);
@@ -52,7 +54,13 @@ namespace CfxTestApplication {
         }
 
         static void DoSomething_Execute(object sender, CfrV8HandlerExecuteEventArgs e) {
-            
+            var f = (JSFunction)sender;
+            f.Browser.VisitDom(VisitDom);
+        }
+
+        static void VisitDom(CfrDomDocument doc, CfrBrowser browser) {
+            if(doc.Body.HasChildren)
+                MessageBox.Show("DOM document body has children!");
         }
 
         static void HelloApp_Execute(object sender, CfrV8HandlerExecuteEventArgs e) {
