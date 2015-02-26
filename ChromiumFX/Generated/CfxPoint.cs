@@ -44,11 +44,17 @@ namespace Chromium {
             return new CfxPoint(nativePtr);
         }
 
+        internal static CfxPoint WrapOwned(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return null;
+            return new CfxPoint(nativePtr, true);
+        }
+
         private int m_X;
         private int m_Y;
 
         public CfxPoint() : base(CfxApi.cfx_point_ctor, CfxApi.cfx_point_dtor) {}
         internal CfxPoint(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_point_ctor, CfxApi.cfx_point_dtor) {}
+        internal CfxPoint(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_point_ctor, CfxApi.cfx_point_dtor, owned) {}
 
         public int X {
             get {

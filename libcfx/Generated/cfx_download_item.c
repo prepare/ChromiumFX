@@ -81,12 +81,12 @@ CFX_EXPORT int64 cfx_download_item_get_received_bytes(cef_download_item_t* self)
 
 // get_start_time
 CFX_EXPORT cef_time_t* cfx_download_item_get_start_time(cef_download_item_t* self) {
-    return &(self->get_start_time(self));
+    return (cef_time_t*)cfx_tmp_return_value(&self->get_start_time(self), sizeof(cef_time_t));
 }
 
 // get_end_time
 CFX_EXPORT cef_time_t* cfx_download_item_get_end_time(cef_download_item_t* self) {
-    return &(self->get_end_time(self));
+    return (cef_time_t*)cfx_tmp_return_value(&self->get_end_time(self), sizeof(cef_time_t));
 }
 
 // get_full_path

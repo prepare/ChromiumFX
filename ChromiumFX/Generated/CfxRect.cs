@@ -44,6 +44,11 @@ namespace Chromium {
             return new CfxRect(nativePtr);
         }
 
+        internal static CfxRect WrapOwned(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return null;
+            return new CfxRect(nativePtr, true);
+        }
+
         private int m_X;
         private int m_Y;
         private int m_Width;
@@ -51,6 +56,7 @@ namespace Chromium {
 
         public CfxRect() : base(CfxApi.cfx_rect_ctor, CfxApi.cfx_rect_dtor) {}
         internal CfxRect(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_rect_ctor, CfxApi.cfx_rect_dtor) {}
+        internal CfxRect(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_rect_ctor, CfxApi.cfx_rect_dtor, owned) {}
 
         public int X {
             get {

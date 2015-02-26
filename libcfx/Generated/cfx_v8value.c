@@ -175,7 +175,7 @@ CFX_EXPORT double cfx_v8value_get_double_value(cef_v8value_t* self) {
 
 // get_date_value
 CFX_EXPORT cef_time_t* cfx_v8value_get_date_value(cef_v8value_t* self) {
-    return &(self->get_date_value(self));
+    return (cef_time_t*)cfx_tmp_return_value(&self->get_date_value(self), sizeof(cef_time_t));
 }
 
 // get_string_value

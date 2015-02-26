@@ -183,6 +183,11 @@ Public Class ApiType
         End Get
     End Property
 
+    Public Overridable ReadOnly Property NativeReturnExpression(var As String) As String
+        Get
+            Return NativeWrapExpression(var)
+        End Get
+    End Property
 
     Public Overridable ReadOnly Property NativeWrapExpression(var As String) As String
         Get
@@ -193,6 +198,12 @@ Public Class ApiType
     Public Overridable ReadOnly Property NativeUnwrapExpression(var As String) As String
         Get
             Return var
+        End Get
+    End Property
+
+    Public Overridable ReadOnly Property PublicReturnExpression(var As String) As String
+        Get
+            Return PublicWrapExpression(var)
         End Get
     End Property
 

@@ -68,14 +68,12 @@ Public Class CefStructPtrType
 
     Public Overrides ReadOnly Property PublicWrapExpression(var As String) As String
         Get
-            Struct.ClassBuilder.WrapFunctionUsed = True
             Return String.Format("{0}.Wrap({1})", Struct.ClassName, var)
         End Get
     End Property
 
     Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
         Get
-            Struct.ClassBuilder.UnwrapFunctionUsed = True
             Return String.Format("{0}.Unwrap({1})", Struct.ClassName, CSharp.Escape(var))
         End Get
     End Property

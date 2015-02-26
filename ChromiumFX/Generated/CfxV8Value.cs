@@ -315,7 +315,7 @@ namespace Chromium {
         /// </summary>
         public CfxTime DateValue {
             get {
-                return CfxTime.Wrap(CfxApi.cfx_v8value_get_date_value(NativePtr));
+                return CfxTime.WrapOwned(CfxApi.cfx_v8value_get_date_value(NativePtr));
             }
         }
 

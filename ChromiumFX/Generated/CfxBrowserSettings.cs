@@ -47,6 +47,11 @@ namespace Chromium {
             return new CfxBrowserSettings(nativePtr);
         }
 
+        internal static CfxBrowserSettings WrapOwned(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return null;
+            return new CfxBrowserSettings(nativePtr, true);
+        }
+
         private int m_WindowlessFrameRate;
         private string m_StandardFontFamily;
         private string m_FixedFontFamily;
@@ -83,6 +88,7 @@ namespace Chromium {
 
         public CfxBrowserSettings() : base(CfxApi.cfx_browser_settings_ctor, CfxApi.cfx_browser_settings_dtor) {}
         internal CfxBrowserSettings(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_browser_settings_ctor, CfxApi.cfx_browser_settings_dtor) {}
+        internal CfxBrowserSettings(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_browser_settings_ctor, CfxApi.cfx_browser_settings_dtor, owned) {}
 
         /// <summary>
         /// The maximum rate in frames per second (fps) that CefRenderHandler::OnPaint

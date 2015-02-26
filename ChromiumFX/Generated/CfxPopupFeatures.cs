@@ -44,6 +44,11 @@ namespace Chromium {
             return new CfxPopupFeatures(nativePtr);
         }
 
+        internal static CfxPopupFeatures WrapOwned(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return null;
+            return new CfxPopupFeatures(nativePtr, true);
+        }
+
         private int m_X;
         private int m_XSet;
         private int m_Y;
@@ -64,6 +69,7 @@ namespace Chromium {
 
         public CfxPopupFeatures() : base(CfxApi.cfx_popup_features_ctor, CfxApi.cfx_popup_features_dtor) {}
         internal CfxPopupFeatures(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_popup_features_ctor, CfxApi.cfx_popup_features_dtor) {}
+        internal CfxPopupFeatures(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_popup_features_ctor, CfxApi.cfx_popup_features_dtor, owned) {}
 
         public int X {
             get {

@@ -44,6 +44,11 @@ namespace Chromium {
             return new CfxCookie(nativePtr);
         }
 
+        internal static CfxCookie WrapOwned(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return null;
+            return new CfxCookie(nativePtr, true);
+        }
+
         private string m_Name;
         private string m_Value;
         private string m_Domain;
@@ -57,6 +62,7 @@ namespace Chromium {
 
         public CfxCookie() : base(CfxApi.cfx_cookie_ctor, CfxApi.cfx_cookie_dtor) {}
         internal CfxCookie(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_cookie_ctor, CfxApi.cfx_cookie_dtor) {}
+        internal CfxCookie(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_cookie_ctor, CfxApi.cfx_cookie_dtor, owned) {}
 
         /// <summary>
         /// The cookie name.

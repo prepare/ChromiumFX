@@ -44,6 +44,11 @@ namespace Chromium {
             return new CfxKeyEvent(nativePtr);
         }
 
+        internal static CfxKeyEvent WrapOwned(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return null;
+            return new CfxKeyEvent(nativePtr, true);
+        }
+
         private CfxKeyEventType m_Type;
         private uint m_Modifiers;
         private int m_WindowsKeyCode;
@@ -55,6 +60,7 @@ namespace Chromium {
 
         public CfxKeyEvent() : base(CfxApi.cfx_key_event_ctor, CfxApi.cfx_key_event_dtor) {}
         internal CfxKeyEvent(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_key_event_ctor, CfxApi.cfx_key_event_dtor) {}
+        internal CfxKeyEvent(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_key_event_ctor, CfxApi.cfx_key_event_dtor, owned) {}
 
         /// <summary>
         /// The type of keyboard event.

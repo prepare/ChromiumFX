@@ -102,6 +102,12 @@ Public Class CefStructType
         End Get
     End Property
 
+    Public Overrides ReadOnly Property NativeReturnExpression(var As String) As String
+        Get
+            Return String.Format("({0}*)cfx_tmp_return_value(&{1}, sizeof({0}))", OriginalSymbol, var)
+        End Get
+    End Property
+
     Public Overrides ReadOnly Property NativeWrapExpression(var As String) As String
         Get
             Return String.Format("&({0})", var)
@@ -114,16 +120,22 @@ Public Class CefStructType
         End Get
     End Property
 
+    Public Overrides ReadOnly Property PublicReturnExpression(var As String) As String
+        Get
+            Return String.Format("{0}.WrapOwned({1})", ClassName, var)
+            Return MyBase.PublicReturnExpression(var)
+        End Get
+    End Property
+
+
     Public Overrides ReadOnly Property PublicWrapExpression(var As String) As String
         Get
-            ClassBuilder.WrapFunctionUsed = True
             Return String.Format("{0}.Wrap({1})", ClassName, var)
         End Get
     End Property
 
     Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
         Get
-            ClassBuilder.UnwrapFunctionUsed = True
             Return String.Format("{0}.Unwrap({1})", ClassName, var)
         End Get
     End Property

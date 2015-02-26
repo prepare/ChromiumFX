@@ -113,9 +113,7 @@ Public Class CfxClassBuilder
     Private ReadOnly ClassName As String
     Private ReadOnly RemoteClassName As String
 
-    Private ReadOnly IsCallbackValueStruct As Boolean
-    Public WrapFunctionUsed As Boolean
-    Public UnwrapFunctionUsed As Boolean
+    Private ReadOnly NeedsWrapping As Boolean
 
     Public Sub New(struct As CefStructType, sd As Parser.StructData, api As ApiTypeBuilder)
 
@@ -194,7 +192,7 @@ Public Class CfxClassBuilder
         End If
 
         If Category = StructCategory.Values Then
-            IsCallbackValueStruct = GeneratorConfig.IsCallbackValueStruct(struct.Name)
+            NeedsWrapping = GeneratorConfig.ValueStructNeedsWrapping(struct.Name)
         End If
 
     End Sub
@@ -403,7 +401,7 @@ Public Class CfxClassBuilder
         b.AppendLine()
 
 
-        If IsCallbackValueStruct Then
+        If NeedsWrapping Then
             b.BeginBlock(NativeCopyToManagedHeader)
             For Each sm In StructMembers
                 If sm.Name <> "size" Then
@@ -474,7 +472,7 @@ Public Class CfxClassBuilder
             b.AppendComment(NativeCopyToNativeHeader)
             CodeSnippets.EmitPInvokeDelegate(b, CfxName & "_copy_to_native", "void", "IntPtr self, " & String.Join(", ", args.ToArray()))
 
-            If IsCallbackValueStruct Then
+            If NeedsWrapping Then
                 args.Clear()
                 For Each sm In StructMembers
                     If sm.Name <> "size" Then
@@ -533,7 +531,7 @@ Public Class CfxClassBuilder
             CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_dtor", "cfx_dtor_delegate")
             b.AppendLine()
             CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_copy_to_native")
-            If IsCallbackValueStruct Then
+            If NeedsWrapping Then
                 CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_copy_to_managed")
             End If
         ElseIf Category = StructCategory.ApiCalls Then
@@ -744,10 +742,15 @@ Public Class CfxClassBuilder
         b.BeginClass(ClassName & " : CfxStructure", GeneratorConfig.ClassModifiers(ClassName, "public sealed"))
         b.AppendLine()
 
-        If IsCallbackValueStruct Then
+        If NeedsWrapping Then
             b.BeginFunction("Wrap", ClassName, "IntPtr nativePtr", "internal static")
             b.AppendLine("if(nativePtr == IntPtr.Zero) return null;")
             b.AppendLine("return new {0}(nativePtr);", ClassName)
+            b.EndBlock()
+            b.AppendLine()
+            b.BeginFunction("WrapOwned", ClassName, "IntPtr nativePtr", "internal static")
+            b.AppendLine("if(nativePtr == IntPtr.Zero) return null;")
+            b.AppendLine("return new {0}(nativePtr, true);", ClassName)
             b.EndBlock()
             b.AppendLine()
         End If
@@ -759,8 +762,9 @@ Public Class CfxClassBuilder
         Next
         b.AppendLine()
         b.AppendLine("public {0}() : base(CfxApi.{1}_ctor, CfxApi.{1}_dtor) {{}}", ClassName, CfxName)
-        If IsCallbackValueStruct Then
+        If NeedsWrapping Then
             b.AppendLine("internal {0}(IntPtr nativePtr) : base(nativePtr, CfxApi.{1}_ctor, CfxApi.{1}_dtor) {{}}", ClassName, CfxName)
+            b.AppendLine("internal {0}(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.{1}_ctor, CfxApi.{1}_dtor, owned) {{}}", ClassName, CfxName)
         End If
         b.AppendLine()
 
@@ -801,7 +805,7 @@ Public Class CfxClassBuilder
         b.EndBlock()
         b.AppendLine()
 
-        If IsCallbackValueStruct Then
+        If NeedsWrapping Then
 
             b.BeginFunction("void CopyToManaged(IntPtr nativePtr)", "protected override")
 

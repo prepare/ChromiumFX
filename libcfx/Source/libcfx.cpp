@@ -51,6 +51,13 @@ typedef void* gc_handle_t;
 void(CEF_CALLBACK *cfx_gc_handle_free)(gc_handle_t gc_handle);
 
 
+__inline void* cfx_tmp_return_value(void* source, size_t size) {
+	if(!source) return 0;
+	void* target = malloc(size);
+	memcpy(target, source, size);
+	return target;
+}
+
 #include "libcfx\Generated\cfx_amalgamation.c"
 
 

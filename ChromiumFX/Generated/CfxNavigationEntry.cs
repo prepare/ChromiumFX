@@ -141,7 +141,7 @@ namespace Chromium {
         /// </summary>
         public CfxTime CompletionTime {
             get {
-                return CfxTime.Wrap(CfxApi.cfx_navigation_entry_get_completion_time(NativePtr));
+                return CfxTime.WrapOwned(CfxApi.cfx_navigation_entry_get_completion_time(NativePtr));
             }
         }
 
