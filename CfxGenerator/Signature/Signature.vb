@@ -192,7 +192,7 @@ Public Class Signature
                 args.Add(ReturnType.NativeOutSignature("__retval"))
             End If
             For i = 1 To Arguments.Length - 1
-                args.Add(Arguments(i).NativeWrapperSignature)
+                args.Add(Arguments(i).NativeCallSignature)
             Next
             Return args.Join()
         End Get
@@ -201,7 +201,7 @@ Public Class Signature
     Public Overridable ReadOnly Property NativeExportSignature(functionName As String) As String
         Get
             For i = 0 To Arguments.Length - 1
-                args.Add(Arguments(i).NativeWrapperSignature)
+                args.Add(Arguments(i).NativeCallSignature)
             Next
             Return String.Format("CFX_EXPORT {0} {1}({2})", ReturnType.NativeSymbol, functionName, args.Join())
         End Get

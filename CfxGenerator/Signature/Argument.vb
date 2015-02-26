@@ -146,7 +146,7 @@ Public Class Argument
         End Get
     End Property
 
-    Public ReadOnly Property NativeWrapperSignature As String
+    Public ReadOnly Property NativeCallSignature As String
         Get
             Return ArgumentType.NativeCallSignature(VarName, IsConst)
         End Get
