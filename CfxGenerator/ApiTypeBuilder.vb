@@ -99,10 +99,6 @@ Public Class ApiTypeBuilder
 
         AddType(New CefStringUserFreeType)
 
-        'Dim tt = New CefTimeType
-        'AddType(tt)
-        'AddType(New CefTimePtrType(tt))
-
         NumericType.CreateAll(Me)
 
         Dim bTypes = AssemblyResources.GetLines("BlittableTypes.txt")
