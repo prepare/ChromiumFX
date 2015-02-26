@@ -44,6 +44,11 @@ namespace Chromium {
             return new CfxTime(nativePtr);
         }
 
+        internal static CfxTime WrapOwned(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return null;
+            return new CfxTime(nativePtr, true);
+        }
+
         private int m_Year;
         private int m_Month;
         private int m_DayOfWeek;
@@ -55,6 +60,7 @@ namespace Chromium {
 
         public CfxTime() : base(CfxApi.cfx_time_ctor, CfxApi.cfx_time_dtor) {}
         internal CfxTime(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_time_ctor, CfxApi.cfx_time_dtor) {}
+        internal CfxTime(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_time_ctor, CfxApi.cfx_time_dtor, owned) {}
 
         public int Year {
             get {

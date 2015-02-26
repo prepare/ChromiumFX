@@ -56,6 +56,17 @@ namespace Chromium {
             CopyToManaged(nativePtr);
         }
 
+        internal CfxStructure(IntPtr nativePtr, CfxApi.cfx_ctor_delegate cfx_ctor, CfxApi.cfx_dtor_delegate cfx_dtor, bool owned) {
+            this.m_cfx_ctor = cfx_ctor;
+            this.m_cfx_dtor = cfx_dtor;
+            if(owned) {
+                TakeOwnership(nativePtr);
+            } else {
+                CreateNative(cfx_ctor);
+            }
+            CopyToManaged(nativePtr);
+        }
+
         /// <summary>
         /// Provides access to the underlying native cef struct.
         /// This object is not refcounted. The native cef struct

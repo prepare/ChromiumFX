@@ -46,6 +46,11 @@ namespace Chromium {
             return new CfxScreenInfo(nativePtr);
         }
 
+        internal static CfxScreenInfo WrapOwned(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return null;
+            return new CfxScreenInfo(nativePtr, true);
+        }
+
         private float m_DeviceScaleFactor;
         private int m_Depth;
         private int m_DepthPerComponent;
@@ -55,6 +60,7 @@ namespace Chromium {
 
         public CfxScreenInfo() : base(CfxApi.cfx_screen_info_ctor, CfxApi.cfx_screen_info_dtor) {}
         internal CfxScreenInfo(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_screen_info_ctor, CfxApi.cfx_screen_info_dtor) {}
+        internal CfxScreenInfo(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_screen_info_ctor, CfxApi.cfx_screen_info_dtor, owned) {}
 
         /// <summary>
         /// Device scale factor. Specifies the ratio between physical and logical

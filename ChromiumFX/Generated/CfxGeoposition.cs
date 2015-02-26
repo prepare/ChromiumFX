@@ -46,6 +46,11 @@ namespace Chromium {
             return new CfxGeoposition(nativePtr);
         }
 
+        internal static CfxGeoposition WrapOwned(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return null;
+            return new CfxGeoposition(nativePtr, true);
+        }
+
         private double m_Latitude;
         private double m_Longitude;
         private double m_Altitude;
@@ -59,6 +64,7 @@ namespace Chromium {
 
         public CfxGeoposition() : base(CfxApi.cfx_geoposition_ctor, CfxApi.cfx_geoposition_dtor) {}
         internal CfxGeoposition(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_geoposition_ctor, CfxApi.cfx_geoposition_dtor) {}
+        internal CfxGeoposition(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_geoposition_ctor, CfxApi.cfx_geoposition_dtor, owned) {}
 
         /// <summary>
         /// Latitude in decimal degrees north (WGS84 coordinate frame).

@@ -137,7 +137,7 @@ namespace Chromium {
         /// </summary>
         public CfxTime StartTime {
             get {
-                return CfxTime.Wrap(CfxApi.cfx_download_item_get_start_time(NativePtr));
+                return CfxTime.WrapOwned(CfxApi.cfx_download_item_get_start_time(NativePtr));
             }
         }
 
@@ -146,7 +146,7 @@ namespace Chromium {
         /// </summary>
         public CfxTime EndTime {
             get {
-                return CfxTime.Wrap(CfxApi.cfx_download_item_get_end_time(NativePtr));
+                return CfxTime.WrapOwned(CfxApi.cfx_download_item_get_end_time(NativePtr));
             }
         }
 

@@ -44,6 +44,11 @@ namespace Chromium {
             return new CfxWindowInfo(nativePtr);
         }
 
+        internal static CfxWindowInfo WrapOwned(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return null;
+            return new CfxWindowInfo(nativePtr, true);
+        }
+
         private int m_ExStyle;
         private string m_WindowName;
         private int m_Style;
@@ -59,6 +64,7 @@ namespace Chromium {
 
         public CfxWindowInfo() : base(CfxApi.cfx_window_info_ctor, CfxApi.cfx_window_info_dtor) {}
         internal CfxWindowInfo(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_window_info_ctor, CfxApi.cfx_window_info_dtor) {}
+        internal CfxWindowInfo(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_window_info_ctor, CfxApi.cfx_window_info_dtor, owned) {}
 
         /// <summary>
         /// Standard parameters required by CreateWindowEx()

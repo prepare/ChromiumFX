@@ -74,9 +74,9 @@ Public Class GeneratorConfig
     End Property
 
 
-    Public Shared ReadOnly Property IsCallbackValueStruct(item As String) As Boolean
+    Public Shared ReadOnly Property ValueStructNeedsWrapping(item As String) As Boolean
         Get
-            Static callbackValueStructs As String() = AssemblyResources.GetLines("CallbackValueStructs.txt")
+            Static callbackValueStructs As String() = AssemblyResources.GetLines("StructsNeedWrapping.txt")
             Return callbackValueStructs.Contains(item)
         End Get
     End Property

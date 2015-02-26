@@ -50,6 +50,10 @@ namespace Chromium {
                 throw new OutOfMemoryException();
         }
 
+        internal void TakeOwnership(IntPtr nativePtr) {
+            this.m_nativePtr = nativePtr;
+        }
+
         internal void CreateNative(CfxApi.cfx_ctor_with_gc_handle_delegate cfx_ctor) {
             // must be a weak handle
             // otherwise transient callback structs never go out of scope if

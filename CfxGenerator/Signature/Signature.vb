@@ -93,7 +93,7 @@ Public Class Signature
             End If
         Next
 
-        DebugPrintUnhandledArrayArguments()
+        'DebugPrintUnhandledArrayArguments()
 
     End Sub
 
@@ -276,9 +276,9 @@ Public Class Signature
             If b1.IsNotEmpty Then
                 b.AppendLine("var __retval = {0};", apiCall)
                 b.AppendBuilder(b1)
-                b.AppendLine("return {0};", PublicReturnType.PublicWrapExpression("__retval"))
+                b.AppendLine("return {0};", PublicReturnType.PublicReturnExpression("__retval"))
             Else
-                b.AppendLine("return {0};", PublicReturnType.PublicWrapExpression(apiCall))
+                b.AppendLine("return {0};", PublicReturnType.PublicReturnExpression(apiCall))
             End If
         End If
 
@@ -478,7 +478,7 @@ Public Class Signature
             Arguments(i).EmitPostNativeCallStatements(b1)
         Next
 
-        Dim wrappedRetVal = ReturnType.NativeWrapExpression(String.Format("{0}({1})", functionName, NativeCall))
+        Dim wrappedRetVal = ReturnType.NativeReturnExpression(String.Format("{0}({1})", functionName, NativeCall))
 
         If Not ReturnType.IsVoid AndAlso b1.IsNotEmpty Then
             b.AppendLine("{0} __ret_val_ = {1};", ReturnType.NativeSymbol, wrappedRetVal)

@@ -46,12 +46,18 @@ namespace Chromium {
             return new CfxCursorInfo(nativePtr);
         }
 
+        internal static CfxCursorInfo WrapOwned(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return null;
+            return new CfxCursorInfo(nativePtr, true);
+        }
+
         private CfxPoint m_Hotspot;
         private float m_ImageScaleFactor;
         private IntPtr m_Buffer;
 
         public CfxCursorInfo() : base(CfxApi.cfx_cursor_info_ctor, CfxApi.cfx_cursor_info_dtor) {}
         internal CfxCursorInfo(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_cursor_info_ctor, CfxApi.cfx_cursor_info_dtor) {}
+        internal CfxCursorInfo(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_cursor_info_ctor, CfxApi.cfx_cursor_info_dtor, owned) {}
 
         public CfxPoint Hotspot {
             get {
