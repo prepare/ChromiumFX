@@ -224,6 +224,7 @@
     <Compile Include="Source\CfxResponse.cs" />
     <Compile Include="Source\CfxTime.cs" />
     <Compile Include="Source\CfxStringCollections.cs" />
+    <Compile Include="Source\CfxZipReader.cs" />
     <Compile Include="Source\Remote\CfrTime.cs" />
     <Compile Include="Source\Remote\CfrV8HandlerExecuteEventArgs.cs" />
     <Compile Include="Source\Remote\CfrBinaryValue.cs" />
