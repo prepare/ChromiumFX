@@ -229,7 +229,7 @@ namespace Chromium.WebBrowser {
         /// <summary>
         /// Returns the request handler for this browser.
         /// Do not set the return value in the GetResourceHandler event for URLs
-        /// with associated WebResources.
+        /// with associated WebResources (see also SetWebResource).
         /// </summary>
         public CfxRequestHandler RequestHandler { get { return client.requestHandler; } }
 
@@ -598,6 +598,10 @@ namespace Chromium.WebBrowser {
 
         /// <summary>
         /// Set a resource to be used for the specified URL.
+        /// Note that those resources are kept in the memory.
+        /// If you need bulk handling of web resources,
+        /// subscribing to RequestHandler.GetResourceHandler
+        /// might be a better choice.
         /// </summary>
         /// <param name="url"></param>
         /// <param name="resource"></param>
