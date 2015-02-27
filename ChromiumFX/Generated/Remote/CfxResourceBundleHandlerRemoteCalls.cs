@@ -273,30 +273,26 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetDataResourceGetDataRenderProcessCall : RenderProcessCall {
+    internal class CfxGetDataResourceSetDataRenderProcessCall : RenderProcessCall {
 
-        internal CfxGetDataResourceGetDataRenderProcessCall()
-            : base(RemoteCallId.CfxGetDataResourceGetDataRenderProcessCall) {}
+        internal CfxGetDataResourceSetDataRenderProcessCall()
+            : base(RemoteCallId.CfxGetDataResourceSetDataRenderProcessCall) {}
 
         internal ulong eventArgsId;
         internal IntPtr value;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(eventArgsId);
+            h.Write(value);
         }
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out eventArgsId);
-        }
-        protected override void WriteReturn(StreamHandler h) {
-            h.Write(value);
-        }
-        protected override void ReadReturn(StreamHandler h) {
             h.Read(out value);
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var e = (CfxGetDataResourceEventArgs)BrowserProcessCall.GetEventArgs(eventArgsId);
-            value = e.Data;
+            e.Data = value;
         }
     }
 

@@ -404,7 +404,7 @@ namespace Chromium.Remote {
         CfxGetDataResourceActivateRenderProcessCall,
         CfxGetDataResourceDeactivateRenderProcessCall,
         CfxGetDataResourceGetResourceIdRenderProcessCall,
-        CfxGetDataResourceGetDataRenderProcessCall,
+        CfxGetDataResourceSetDataRenderProcessCall,
         CfxGetDataResourceSetDataSizeRenderProcessCall,
         CfxGetDataResourceSetReturnValueRenderProcessCall,
         CfxSchemeRegistrarAddCustomSchemeRenderProcessCall,

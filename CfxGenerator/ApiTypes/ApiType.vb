@@ -314,8 +314,10 @@ Public Class ApiType
         b.AppendLine("internal {0} m_{1};", PInvokeSymbol, var)
     End Sub
 
-
     Public Overridable Sub EmitPostPublicRaiseEventStatements(b As CodeBuilder, var As String)
+        If Me.IsOut Then
+            b.AppendLine("{0} = e.m_{0};", var)
+        End If
     End Sub
 
     Public Sub EmitRemoteCallFields(b As CodeBuilder, var As String)

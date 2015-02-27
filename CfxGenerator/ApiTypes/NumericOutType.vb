@@ -63,10 +63,6 @@ Public Class NumericOutType
         b.AppendLine("m_{0} = value;", var)
     End Sub
 
-    Public Overrides Sub EmitPostPublicRaiseEventStatements(b As CodeBuilder, var As String)
-        b.AppendLine("{0} = e.m_{0};", var)
-    End Sub
-
     Public Overrides ReadOnly Property IsOut As Boolean
         Get
             Return True
