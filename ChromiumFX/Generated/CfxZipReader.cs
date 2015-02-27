@@ -39,7 +39,7 @@ namespace Chromium {
     /// The functions of this structure should only be called on the thread that
     /// creates the object.
     /// </summary>
-    public class CfxZipReader : CfxBase {
+    public partial class CfxZipReader : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
 
