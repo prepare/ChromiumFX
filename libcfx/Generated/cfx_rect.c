@@ -45,19 +45,38 @@ CFX_EXPORT void cfx_rect_dtor(cef_rect_t* ptr) {
     free(ptr);
 }
 
-CFX_EXPORT void cfx_rect_copy_to_native(cef_rect_t* self, int x, int y, int width, int height) {
+// cef_rect_t->x
+CFX_EXPORT void cfx_rect_set_x(cef_rect_t *self, int x) {
     self->x = x;
-    self->y = y;
-    self->width = width;
-    self->height = height;
+}
+CFX_EXPORT void cfx_rect_get_x(cef_rect_t *self, int* x) {
+    *x = self->x;
 }
 
-CFX_EXPORT void cfx_rect_copy_to_managed(cef_rect_t* self, int* x, int* y, int* width, int* height) {
-    *x = self->x;
+// cef_rect_t->y
+CFX_EXPORT void cfx_rect_set_y(cef_rect_t *self, int y) {
+    self->y = y;
+}
+CFX_EXPORT void cfx_rect_get_y(cef_rect_t *self, int* y) {
     *y = self->y;
+}
+
+// cef_rect_t->width
+CFX_EXPORT void cfx_rect_set_width(cef_rect_t *self, int width) {
+    self->width = width;
+}
+CFX_EXPORT void cfx_rect_get_width(cef_rect_t *self, int* width) {
     *width = self->width;
+}
+
+// cef_rect_t->height
+CFX_EXPORT void cfx_rect_set_height(cef_rect_t *self, int height) {
+    self->height = height;
+}
+CFX_EXPORT void cfx_rect_get_height(cef_rect_t *self, int* height) {
     *height = self->height;
 }
+
 
 #ifdef __cplusplus
 } // extern "C"

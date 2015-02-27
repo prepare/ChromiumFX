@@ -39,16 +39,6 @@ namespace Chromium {
     /// </summary>
     public sealed class CfxUrlParts : CfxStructure {
 
-        private string m_Spec;
-        private string m_Scheme;
-        private string m_UserName;
-        private string m_Password;
-        private string m_Host;
-        private string m_Port;
-        private string m_Origin;
-        private string m_Path;
-        private string m_Query;
-
         public CfxUrlParts() : base(CfxApi.cfx_urlparts_ctor, CfxApi.cfx_urlparts_dtor) {}
 
         /// <summary>
@@ -56,10 +46,15 @@ namespace Chromium {
         /// </summary>
         public string Spec {
             get {
-                return m_Spec;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_urlparts_get_spec(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_Spec = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_urlparts_set_spec(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -68,10 +63,15 @@ namespace Chromium {
         /// </summary>
         public string Scheme {
             get {
-                return m_Scheme;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_urlparts_get_scheme(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_Scheme = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_urlparts_set_scheme(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -80,10 +80,15 @@ namespace Chromium {
         /// </summary>
         public string UserName {
             get {
-                return m_UserName;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_urlparts_get_username(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_UserName = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_urlparts_set_username(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -92,10 +97,15 @@ namespace Chromium {
         /// </summary>
         public string Password {
             get {
-                return m_Password;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_urlparts_get_password(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_Password = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_urlparts_set_password(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -105,10 +115,15 @@ namespace Chromium {
         /// </summary>
         public string Host {
             get {
-                return m_Host;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_urlparts_get_host(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_Host = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_urlparts_set_host(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -117,10 +132,15 @@ namespace Chromium {
         /// </summary>
         public string Port {
             get {
-                return m_Port;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_urlparts_get_port(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_Port = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_urlparts_set_port(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -132,10 +152,15 @@ namespace Chromium {
         /// </summary>
         public string Origin {
             get {
-                return m_Origin;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_urlparts_get_origin(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_Origin = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_urlparts_set_origin(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -144,10 +169,15 @@ namespace Chromium {
         /// </summary>
         public string Path {
             get {
-                return m_Path;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_urlparts_get_path(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_Path = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_urlparts_set_path(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -156,33 +186,16 @@ namespace Chromium {
         /// </summary>
         public string Query {
             get {
-                return m_Query;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_urlparts_get_query(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_Query = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_urlparts_set_query(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
-        }
-
-        protected override void CopyToNative() {
-            var m_Spec_pinned = new PinnedString(m_Spec);
-            var m_Scheme_pinned = new PinnedString(m_Scheme);
-            var m_UserName_pinned = new PinnedString(m_UserName);
-            var m_Password_pinned = new PinnedString(m_Password);
-            var m_Host_pinned = new PinnedString(m_Host);
-            var m_Port_pinned = new PinnedString(m_Port);
-            var m_Origin_pinned = new PinnedString(m_Origin);
-            var m_Path_pinned = new PinnedString(m_Path);
-            var m_Query_pinned = new PinnedString(m_Query);
-            CfxApi.cfx_urlparts_copy_to_native(nativePtrUnchecked, m_Spec_pinned.Obj.PinnedPtr, m_Spec_pinned.Length, m_Scheme_pinned.Obj.PinnedPtr, m_Scheme_pinned.Length, m_UserName_pinned.Obj.PinnedPtr, m_UserName_pinned.Length, m_Password_pinned.Obj.PinnedPtr, m_Password_pinned.Length, m_Host_pinned.Obj.PinnedPtr, m_Host_pinned.Length, m_Port_pinned.Obj.PinnedPtr, m_Port_pinned.Length, m_Origin_pinned.Obj.PinnedPtr, m_Origin_pinned.Length, m_Path_pinned.Obj.PinnedPtr, m_Path_pinned.Length, m_Query_pinned.Obj.PinnedPtr, m_Query_pinned.Length);
-            m_Spec_pinned.Obj.Free();
-            m_Scheme_pinned.Obj.Free();
-            m_UserName_pinned.Obj.Free();
-            m_Password_pinned.Obj.Free();
-            m_Host_pinned.Obj.Free();
-            m_Port_pinned.Obj.Free();
-            m_Origin_pinned.Obj.Free();
-            m_Path_pinned.Obj.Free();
-            m_Query_pinned.Obj.Free();
         }
 
     }

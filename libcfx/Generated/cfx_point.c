@@ -45,15 +45,22 @@ CFX_EXPORT void cfx_point_dtor(cef_point_t* ptr) {
     free(ptr);
 }
 
-CFX_EXPORT void cfx_point_copy_to_native(cef_point_t* self, int x, int y) {
+// cef_point_t->x
+CFX_EXPORT void cfx_point_set_x(cef_point_t *self, int x) {
     self->x = x;
-    self->y = y;
+}
+CFX_EXPORT void cfx_point_get_x(cef_point_t *self, int* x) {
+    *x = self->x;
 }
 
-CFX_EXPORT void cfx_point_copy_to_managed(cef_point_t* self, int* x, int* y) {
-    *x = self->x;
+// cef_point_t->y
+CFX_EXPORT void cfx_point_set_y(cef_point_t *self, int y) {
+    self->y = y;
+}
+CFX_EXPORT void cfx_point_get_y(cef_point_t *self, int* y) {
     *y = self->y;
 }
+
 
 #ifdef __cplusplus
 } // extern "C"

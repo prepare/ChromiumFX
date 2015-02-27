@@ -40,55 +40,46 @@ namespace Chromium {
             return structure.NativePtr;
         }
 
-        private readonly CfxApi.cfx_ctor_delegate m_cfx_ctor;
         private readonly CfxApi.cfx_dtor_delegate m_cfx_dtor;
-        
+
+        // Case 1) User created structure: 
+        // allocate native on creation, free native on dispose.
         internal CfxStructure(CfxApi.cfx_ctor_delegate cfx_ctor, CfxApi.cfx_dtor_delegate cfx_dtor) {
-            this.m_cfx_ctor = cfx_ctor;
             this.m_cfx_dtor = cfx_dtor;
             CreateNative(cfx_ctor);
         }
 
-        internal CfxStructure(IntPtr nativePtr, CfxApi.cfx_ctor_delegate cfx_ctor, CfxApi.cfx_dtor_delegate cfx_dtor) {
-            this.m_cfx_ctor = cfx_ctor;
-            this.m_cfx_dtor = cfx_dtor;
-            CreateNative(cfx_ctor);
-            CopyToManaged(nativePtr);
+        // Case 2) struct pointer passed in from framework in callback function
+        // wrap native pointer on creation, do not free native pointer
+        internal CfxStructure(IntPtr nativePtr) {
+            SetNative(nativePtr);
         }
 
-        internal CfxStructure(IntPtr nativePtr, CfxApi.cfx_ctor_delegate cfx_ctor, CfxApi.cfx_dtor_delegate cfx_dtor, bool owned) {
-            this.m_cfx_ctor = cfx_ctor;
+        // Case 3) struct passed in from framework as a return value
+        // native layer makes a copy -> free native pointer on dispose
+        internal CfxStructure(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) {
             this.m_cfx_dtor = cfx_dtor;
-            if(owned) {
-                TakeOwnership(nativePtr);
-            } else {
-                CreateNative(cfx_ctor);
-            }
-            CopyToManaged(nativePtr);
+            SetNative(nativePtr);
         }
 
         /// <summary>
         /// Provides access to the underlying native cef struct.
         /// This object is not refcounted. The native cef struct
         /// will be destroyed when this object is disposed or finalized.
-        /// Changes made to this managed object will not be copied
-        /// to the native struct until you call this property again.
         /// </summary>
         public sealed override IntPtr NativePtr {
             get {
                 if(nativePtrUnchecked == IntPtr.Zero) {
-                    CreateNative(m_cfx_ctor);
+                    throw new ObjectDisposedException(this.GetType().Name);
+                } else {
+                    return nativePtrUnchecked;
                 }
-                CopyToNative();
-                return nativePtrUnchecked;
             }
         }
 
-        protected abstract void CopyToNative();
-        protected virtual void CopyToManaged(IntPtr nativePtr) { }
-
         internal override sealed void OnDispose(IntPtr nativePtr) {
-            m_cfx_dtor(nativePtr);
+            if(m_cfx_dtor != null)
+                m_cfx_dtor(nativePtr);
         }
     }
 }

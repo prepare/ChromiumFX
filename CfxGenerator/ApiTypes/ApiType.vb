@@ -162,6 +162,12 @@ Public Class ApiType
         End Get
     End Property
 
+    Public Overridable ReadOnly Property PInvokeOutArgument(var As String) As String
+        Get
+            Return "out " & CSharp.Escape(var)
+        End Get
+    End Property
+
     Public Overridable ReadOnly Property PublicCallSignature(var As String) As String
         Get
             If PublicSymbol Is Nothing Then Return Nothing
@@ -258,12 +264,6 @@ Public Class ApiType
         End Get
     End Property
 
-    Public Overridable ReadOnly Property PassCopyToManaged(var As String) As String
-        Get
-            Return "out " & CSharp.Escape(var)
-        End Get
-    End Property
-
     Public Overridable Sub EmitPreNativeCallbackStatements(b As CodeBuilder, var As String)
     End Sub
 
@@ -337,8 +337,8 @@ Public Class ApiType
         b.AppendLine("e.{0} = {1};", var, ProxyUnwrapExpression("value"))
     End Sub
 
-    Public Overridable Sub EmitCopyToManagedLocalVars(b As CodeBuilder, var As String)
-        b.AppendLine("{0} {1} = default({0});", PInvokeSymbol, CSharp.Escape(var))
+    Public Overridable Sub EmitValueStructGetterVars(b As CodeBuilder, var As String)
+        b.AppendLine("{0} {1};", PInvokeSymbol, CSharp.Escape(var))
     End Sub
 
     Public Overridable Sub EmitAssignToNativeStructMember(b As CodeBuilder, var As String, Optional struct As String = "self")

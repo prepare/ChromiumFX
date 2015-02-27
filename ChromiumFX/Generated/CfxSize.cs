@@ -39,31 +39,28 @@ namespace Chromium {
     /// </summary>
     public sealed class CfxSize : CfxStructure {
 
-        private int m_Width;
-        private int m_Height;
-
         public CfxSize() : base(CfxApi.cfx_size_ctor, CfxApi.cfx_size_dtor) {}
 
         public int Width {
             get {
-                return m_Width;
+                int value;
+                CfxApi.cfx_size_get_width(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Width = value;
+                CfxApi.cfx_size_set_width(nativePtrUnchecked, value);
             }
         }
 
         public int Height {
             get {
-                return m_Height;
+                int value;
+                CfxApi.cfx_size_get_height(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Height = value;
+                CfxApi.cfx_size_set_height(nativePtrUnchecked, value);
             }
-        }
-
-        protected override void CopyToNative() {
-            CfxApi.cfx_size_copy_to_native(nativePtrUnchecked, m_Width, m_Height);
         }
 
     }

@@ -46,107 +46,115 @@ namespace Chromium {
 
         internal static CfxWindowInfo WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxWindowInfo(nativePtr, true);
+            return new CfxWindowInfo(nativePtr, CfxApi.cfx_window_info_dtor);
         }
 
-        private int m_ExStyle;
-        private string m_WindowName;
-        private int m_Style;
-        private int m_X;
-        private int m_Y;
-        private int m_Width;
-        private int m_Height;
-        private IntPtr m_ParentWindow;
-        private IntPtr m_Menu;
-        private bool m_WindowlessRenderingEnabled;
-        private bool m_TransparentPaintingEnabled;
-        private IntPtr m_Window;
-
         public CfxWindowInfo() : base(CfxApi.cfx_window_info_ctor, CfxApi.cfx_window_info_dtor) {}
-        internal CfxWindowInfo(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_window_info_ctor, CfxApi.cfx_window_info_dtor) {}
-        internal CfxWindowInfo(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_window_info_ctor, CfxApi.cfx_window_info_dtor, owned) {}
+        internal CfxWindowInfo(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxWindowInfo(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         /// <summary>
         /// Standard parameters required by CreateWindowEx()
         /// </summary>
         public int ExStyle {
             get {
-                return m_ExStyle;
+                int value;
+                CfxApi.cfx_window_info_get_ex_style(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_ExStyle = value;
+                CfxApi.cfx_window_info_set_ex_style(nativePtrUnchecked, value);
             }
         }
 
         public string WindowName {
             get {
-                return m_WindowName;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_window_info_get_window_name(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_WindowName = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_window_info_set_window_name(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
         public int Style {
             get {
-                return m_Style;
+                int value;
+                CfxApi.cfx_window_info_get_style(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Style = value;
+                CfxApi.cfx_window_info_set_style(nativePtrUnchecked, value);
             }
         }
 
         public int X {
             get {
-                return m_X;
+                int value;
+                CfxApi.cfx_window_info_get_x(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_X = value;
+                CfxApi.cfx_window_info_set_x(nativePtrUnchecked, value);
             }
         }
 
         public int Y {
             get {
-                return m_Y;
+                int value;
+                CfxApi.cfx_window_info_get_y(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Y = value;
+                CfxApi.cfx_window_info_set_y(nativePtrUnchecked, value);
             }
         }
 
         public int Width {
             get {
-                return m_Width;
+                int value;
+                CfxApi.cfx_window_info_get_width(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Width = value;
+                CfxApi.cfx_window_info_set_width(nativePtrUnchecked, value);
             }
         }
 
         public int Height {
             get {
-                return m_Height;
+                int value;
+                CfxApi.cfx_window_info_get_height(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Height = value;
+                CfxApi.cfx_window_info_set_height(nativePtrUnchecked, value);
             }
         }
 
         public IntPtr ParentWindow {
             get {
-                return m_ParentWindow;
+                IntPtr value;
+                CfxApi.cfx_window_info_get_parent_window(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_ParentWindow = value;
+                CfxApi.cfx_window_info_set_parent_window(nativePtrUnchecked, value);
             }
         }
 
         public IntPtr Menu {
             get {
-                return m_Menu;
+                IntPtr value;
+                CfxApi.cfx_window_info_get_menu(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Menu = value;
+                CfxApi.cfx_window_info_set_menu(nativePtrUnchecked, value);
             }
         }
 
@@ -162,10 +170,12 @@ namespace Chromium {
         /// </summary>
         public bool WindowlessRenderingEnabled {
             get {
-                return m_WindowlessRenderingEnabled;
+                int value;
+                CfxApi.cfx_window_info_get_windowless_rendering_enabled(nativePtrUnchecked, out value);
+                return 0 != value;
             }
             set {
-                m_WindowlessRenderingEnabled = value;
+                CfxApi.cfx_window_info_set_windowless_rendering_enabled(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -177,10 +187,12 @@ namespace Chromium {
         /// </summary>
         public bool TransparentPaintingEnabled {
             get {
-                return m_TransparentPaintingEnabled;
+                int value;
+                CfxApi.cfx_window_info_get_transparent_painting_enabled(nativePtrUnchecked, out value);
+                return 0 != value;
             }
             set {
-                m_TransparentPaintingEnabled = value;
+                CfxApi.cfx_window_info_set_transparent_painting_enabled(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -189,27 +201,14 @@ namespace Chromium {
         /// </summary>
         public IntPtr Window {
             get {
-                return m_Window;
+                IntPtr value;
+                CfxApi.cfx_window_info_get_window(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Window = value;
+                CfxApi.cfx_window_info_set_window(nativePtrUnchecked, value);
             }
         }
 
-        protected override void CopyToNative() {
-            var m_WindowName_pinned = new PinnedString(m_WindowName);
-            CfxApi.cfx_window_info_copy_to_native(nativePtrUnchecked, m_ExStyle, m_WindowName_pinned.Obj.PinnedPtr, m_WindowName_pinned.Length, m_Style, m_X, m_Y, m_Width, m_Height, m_ParentWindow, m_Menu, m_WindowlessRenderingEnabled ? 1 : 0, m_TransparentPaintingEnabled ? 1 : 0, m_Window);
-            m_WindowName_pinned.Obj.Free();
-        }
-
-        protected override void CopyToManaged(IntPtr nativePtr) {
-            IntPtr window_name_str = IntPtr.Zero; int window_name_length = 0;
-            int windowless_rendering_enabled = default(int);
-            int transparent_painting_enabled = default(int);
-            CfxApi.cfx_window_info_copy_to_managed(nativePtr, out m_ExStyle, out window_name_str, out window_name_length, out m_Style, out m_X, out m_Y, out m_Width, out m_Height, out m_ParentWindow, out m_Menu, out windowless_rendering_enabled, out transparent_painting_enabled, out m_Window);
-            m_WindowName = window_name_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(window_name_str, window_name_length) : String.Empty;;
-            m_WindowlessRenderingEnabled = 0 != windowless_rendering_enabled;
-            m_TransparentPaintingEnabled = 0 != transparent_painting_enabled;
-        }
     }
 }

@@ -45,17 +45,30 @@ CFX_EXPORT void cfx_cursor_info_dtor(cef_cursor_info_t* ptr) {
     free(ptr);
 }
 
-CFX_EXPORT void cfx_cursor_info_copy_to_native(cef_cursor_info_t* self, cef_point_t* hotspot, float image_scale_factor, void* buffer) {
+// cef_cursor_info_t->hotspot
+CFX_EXPORT void cfx_cursor_info_set_hotspot(cef_cursor_info_t *self, cef_point_t* hotspot) {
     self->hotspot = *(hotspot);
-    self->image_scale_factor = image_scale_factor;
-    self->buffer = buffer;
+}
+CFX_EXPORT void cfx_cursor_info_get_hotspot(cef_cursor_info_t *self, cef_point_t** hotspot) {
+    *hotspot = &(self->hotspot);
 }
 
-CFX_EXPORT void cfx_cursor_info_copy_to_managed(cef_cursor_info_t* self, cef_point_t** hotspot, float* image_scale_factor, void** buffer) {
-    *hotspot = &(self->hotspot);
+// cef_cursor_info_t->image_scale_factor
+CFX_EXPORT void cfx_cursor_info_set_image_scale_factor(cef_cursor_info_t *self, float image_scale_factor) {
+    self->image_scale_factor = image_scale_factor;
+}
+CFX_EXPORT void cfx_cursor_info_get_image_scale_factor(cef_cursor_info_t *self, float* image_scale_factor) {
     *image_scale_factor = self->image_scale_factor;
+}
+
+// cef_cursor_info_t->buffer
+CFX_EXPORT void cfx_cursor_info_set_buffer(cef_cursor_info_t *self, void* buffer) {
+    self->buffer = buffer;
+}
+CFX_EXPORT void cfx_cursor_info_get_buffer(cef_cursor_info_t *self, void** buffer) {
     *buffer = self->buffer;
 }
+
 
 #ifdef __cplusplus
 } // extern "C"

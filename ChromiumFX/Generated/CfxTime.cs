@@ -46,82 +46,87 @@ namespace Chromium {
 
         internal static CfxTime WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxTime(nativePtr, true);
+            return new CfxTime(nativePtr, CfxApi.cfx_time_dtor);
         }
 
-        private int m_Year;
-        private int m_Month;
-        private int m_DayOfWeek;
-        private int m_DayOfMonth;
-        private int m_Hour;
-        private int m_Minute;
-        private int m_Second;
-        private int m_Millisecond;
-
         public CfxTime() : base(CfxApi.cfx_time_ctor, CfxApi.cfx_time_dtor) {}
-        internal CfxTime(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_time_ctor, CfxApi.cfx_time_dtor) {}
-        internal CfxTime(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_time_ctor, CfxApi.cfx_time_dtor, owned) {}
+        internal CfxTime(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxTime(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         public int Year {
             get {
-                return m_Year;
+                int value;
+                CfxApi.cfx_time_get_year(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Year = value;
+                CfxApi.cfx_time_set_year(nativePtrUnchecked, value);
             }
         }
 
         public int Month {
             get {
-                return m_Month;
+                int value;
+                CfxApi.cfx_time_get_month(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Month = value;
+                CfxApi.cfx_time_set_month(nativePtrUnchecked, value);
             }
         }
 
         public int DayOfWeek {
             get {
-                return m_DayOfWeek;
+                int value;
+                CfxApi.cfx_time_get_day_of_week(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_DayOfWeek = value;
+                CfxApi.cfx_time_set_day_of_week(nativePtrUnchecked, value);
             }
         }
 
         public int DayOfMonth {
             get {
-                return m_DayOfMonth;
+                int value;
+                CfxApi.cfx_time_get_day_of_month(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_DayOfMonth = value;
+                CfxApi.cfx_time_set_day_of_month(nativePtrUnchecked, value);
             }
         }
 
         public int Hour {
             get {
-                return m_Hour;
+                int value;
+                CfxApi.cfx_time_get_hour(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Hour = value;
+                CfxApi.cfx_time_set_hour(nativePtrUnchecked, value);
             }
         }
 
         public int Minute {
             get {
-                return m_Minute;
+                int value;
+                CfxApi.cfx_time_get_minute(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Minute = value;
+                CfxApi.cfx_time_set_minute(nativePtrUnchecked, value);
             }
         }
 
         public int Second {
             get {
-                return m_Second;
+                int value;
+                CfxApi.cfx_time_get_second(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Second = value;
+                CfxApi.cfx_time_set_second(nativePtrUnchecked, value);
             }
         }
 
@@ -130,19 +135,14 @@ namespace Chromium {
         /// </summary>
         public int Millisecond {
             get {
-                return m_Millisecond;
+                int value;
+                CfxApi.cfx_time_get_millisecond(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Millisecond = value;
+                CfxApi.cfx_time_set_millisecond(nativePtrUnchecked, value);
             }
         }
 
-        protected override void CopyToNative() {
-            CfxApi.cfx_time_copy_to_native(nativePtrUnchecked, m_Year, m_Month, m_DayOfWeek, m_DayOfMonth, m_Hour, m_Minute, m_Second, m_Millisecond);
-        }
-
-        protected override void CopyToManaged(IntPtr nativePtr) {
-            CfxApi.cfx_time_copy_to_managed(nativePtr, out m_Year, out m_Month, out m_DayOfWeek, out m_DayOfMonth, out m_Hour, out m_Minute, out m_Second, out m_Millisecond);
-        }
     }
 }

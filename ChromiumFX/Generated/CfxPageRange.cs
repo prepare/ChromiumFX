@@ -39,31 +39,28 @@ namespace Chromium {
     /// </summary>
     public sealed class CfxPageRange : CfxStructure {
 
-        private int m_From;
-        private int m_To;
-
         public CfxPageRange() : base(CfxApi.cfx_page_range_ctor, CfxApi.cfx_page_range_dtor) {}
 
         public int From {
             get {
-                return m_From;
+                int value;
+                CfxApi.cfx_page_range_get_from(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_From = value;
+                CfxApi.cfx_page_range_set_from(nativePtrUnchecked, value);
             }
         }
 
         public int To {
             get {
-                return m_To;
+                int value;
+                CfxApi.cfx_page_range_get_to(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_To = value;
+                CfxApi.cfx_page_range_set_to(nativePtrUnchecked, value);
             }
-        }
-
-        protected override void CopyToNative() {
-            CfxApi.cfx_page_range_copy_to_native(nativePtrUnchecked, m_From, m_To);
         }
 
     }

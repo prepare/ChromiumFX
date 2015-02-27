@@ -39,10 +39,6 @@ namespace Chromium {
     /// </summary>
     public sealed class CfxMouseEvent : CfxStructure {
 
-        private int m_X;
-        private int m_Y;
-        private uint m_Modifiers;
-
         public CfxMouseEvent() : base(CfxApi.cfx_mouse_event_ctor, CfxApi.cfx_mouse_event_dtor) {}
 
         /// <summary>
@@ -50,10 +46,12 @@ namespace Chromium {
         /// </summary>
         public int X {
             get {
-                return m_X;
+                int value;
+                CfxApi.cfx_mouse_event_get_x(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_X = value;
+                CfxApi.cfx_mouse_event_set_x(nativePtrUnchecked, value);
             }
         }
 
@@ -62,10 +60,12 @@ namespace Chromium {
         /// </summary>
         public int Y {
             get {
-                return m_Y;
+                int value;
+                CfxApi.cfx_mouse_event_get_y(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Y = value;
+                CfxApi.cfx_mouse_event_set_y(nativePtrUnchecked, value);
             }
         }
 
@@ -75,15 +75,13 @@ namespace Chromium {
         /// </summary>
         public uint Modifiers {
             get {
-                return m_Modifiers;
+                uint value;
+                CfxApi.cfx_mouse_event_get_modifiers(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Modifiers = value;
+                CfxApi.cfx_mouse_event_set_modifiers(nativePtrUnchecked, value);
             }
-        }
-
-        protected override void CopyToNative() {
-            CfxApi.cfx_mouse_event_copy_to_native(nativePtrUnchecked, m_X, m_Y, m_Modifiers);
         }
 
     }

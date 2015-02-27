@@ -46,60 +46,56 @@ namespace Chromium {
 
         internal static CfxRect WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxRect(nativePtr, true);
+            return new CfxRect(nativePtr, CfxApi.cfx_rect_dtor);
         }
 
-        private int m_X;
-        private int m_Y;
-        private int m_Width;
-        private int m_Height;
-
         public CfxRect() : base(CfxApi.cfx_rect_ctor, CfxApi.cfx_rect_dtor) {}
-        internal CfxRect(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_rect_ctor, CfxApi.cfx_rect_dtor) {}
-        internal CfxRect(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_rect_ctor, CfxApi.cfx_rect_dtor, owned) {}
+        internal CfxRect(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxRect(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         public int X {
             get {
-                return m_X;
+                int value;
+                CfxApi.cfx_rect_get_x(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_X = value;
+                CfxApi.cfx_rect_set_x(nativePtrUnchecked, value);
             }
         }
 
         public int Y {
             get {
-                return m_Y;
+                int value;
+                CfxApi.cfx_rect_get_y(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Y = value;
+                CfxApi.cfx_rect_set_y(nativePtrUnchecked, value);
             }
         }
 
         public int Width {
             get {
-                return m_Width;
+                int value;
+                CfxApi.cfx_rect_get_width(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Width = value;
+                CfxApi.cfx_rect_set_width(nativePtrUnchecked, value);
             }
         }
 
         public int Height {
             get {
-                return m_Height;
+                int value;
+                CfxApi.cfx_rect_get_height(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Height = value;
+                CfxApi.cfx_rect_set_height(nativePtrUnchecked, value);
             }
         }
 
-        protected override void CopyToNative() {
-            CfxApi.cfx_rect_copy_to_native(nativePtrUnchecked, m_X, m_Y, m_Width, m_Height);
-        }
-
-        protected override void CopyToManaged(IntPtr nativePtr) {
-            CfxApi.cfx_rect_copy_to_managed(nativePtr, out m_X, out m_Y, out m_Width, out m_Height);
-        }
     }
 }
