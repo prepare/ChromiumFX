@@ -45,9 +45,20 @@ CFX_EXPORT void cfx_size_dtor(cef_size_t* ptr) {
     free(ptr);
 }
 
-CFX_EXPORT void cfx_size_copy_to_native(cef_size_t* self, int width, int height) {
+// cef_size_t->width
+CFX_EXPORT void cfx_size_set_width(cef_size_t *self, int width) {
     self->width = width;
+}
+CFX_EXPORT void cfx_size_get_width(cef_size_t *self, int* width) {
+    *width = self->width;
+}
+
+// cef_size_t->height
+CFX_EXPORT void cfx_size_set_height(cef_size_t *self, int height) {
     self->height = height;
+}
+CFX_EXPORT void cfx_size_get_height(cef_size_t *self, int* height) {
+    *height = self->height;
 }
 
 

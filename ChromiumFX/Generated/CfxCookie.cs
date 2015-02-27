@@ -46,33 +46,27 @@ namespace Chromium {
 
         internal static CfxCookie WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxCookie(nativePtr, true);
+            return new CfxCookie(nativePtr, CfxApi.cfx_cookie_dtor);
         }
 
-        private string m_Name;
-        private string m_Value;
-        private string m_Domain;
-        private string m_Path;
-        private bool m_Secure;
-        private bool m_HttpOnly;
-        private CfxTime m_Creation;
-        private CfxTime m_LastAccess;
-        private bool m_HasExpires;
-        private CfxTime m_Expires;
-
         public CfxCookie() : base(CfxApi.cfx_cookie_ctor, CfxApi.cfx_cookie_dtor) {}
-        internal CfxCookie(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_cookie_ctor, CfxApi.cfx_cookie_dtor) {}
-        internal CfxCookie(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_cookie_ctor, CfxApi.cfx_cookie_dtor, owned) {}
+        internal CfxCookie(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxCookie(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         /// <summary>
         /// The cookie name.
         /// </summary>
         public string Name {
             get {
-                return m_Name;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_cookie_get_name(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_Name = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_cookie_set_name(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -81,10 +75,15 @@ namespace Chromium {
         /// </summary>
         public string Value {
             get {
-                return m_Value;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_cookie_get_value(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_Value = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_cookie_set_value(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -95,10 +94,15 @@ namespace Chromium {
         /// </summary>
         public string Domain {
             get {
-                return m_Domain;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_cookie_get_domain(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_Domain = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_cookie_set_domain(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -108,10 +112,15 @@ namespace Chromium {
         /// </summary>
         public string Path {
             get {
-                return m_Path;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_cookie_get_path(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_Path = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_cookie_set_path(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -120,10 +129,12 @@ namespace Chromium {
         /// </summary>
         public bool Secure {
             get {
-                return m_Secure;
+                int value;
+                CfxApi.cfx_cookie_get_secure(nativePtrUnchecked, out value);
+                return 0 != value;
             }
             set {
-                m_Secure = value;
+                CfxApi.cfx_cookie_set_secure(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -132,10 +143,12 @@ namespace Chromium {
         /// </summary>
         public bool HttpOnly {
             get {
-                return m_HttpOnly;
+                int value;
+                CfxApi.cfx_cookie_get_httponly(nativePtrUnchecked, out value);
+                return 0 != value;
             }
             set {
-                m_HttpOnly = value;
+                CfxApi.cfx_cookie_set_httponly(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -145,10 +158,12 @@ namespace Chromium {
         /// </summary>
         public CfxTime Creation {
             get {
-                return m_Creation;
+                IntPtr value;
+                CfxApi.cfx_cookie_get_creation(nativePtrUnchecked, out value);
+                return CfxTime.Wrap(value);
             }
             set {
-                m_Creation = value;
+                CfxApi.cfx_cookie_set_creation(nativePtrUnchecked, CfxTime.Unwrap(value));
             }
         }
 
@@ -158,10 +173,12 @@ namespace Chromium {
         /// </summary>
         public CfxTime LastAccess {
             get {
-                return m_LastAccess;
+                IntPtr value;
+                CfxApi.cfx_cookie_get_last_access(nativePtrUnchecked, out value);
+                return CfxTime.Wrap(value);
             }
             set {
-                m_LastAccess = value;
+                CfxApi.cfx_cookie_set_last_access(nativePtrUnchecked, CfxTime.Unwrap(value));
             }
         }
 
@@ -170,56 +187,25 @@ namespace Chromium {
         /// </summary>
         public bool HasExpires {
             get {
-                return m_HasExpires;
+                int value;
+                CfxApi.cfx_cookie_get_has_expires(nativePtrUnchecked, out value);
+                return 0 != value;
             }
             set {
-                m_HasExpires = value;
+                CfxApi.cfx_cookie_set_has_expires(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
         public CfxTime Expires {
             get {
-                return m_Expires;
+                IntPtr value;
+                CfxApi.cfx_cookie_get_expires(nativePtrUnchecked, out value);
+                return CfxTime.Wrap(value);
             }
             set {
-                m_Expires = value;
+                CfxApi.cfx_cookie_set_expires(nativePtrUnchecked, CfxTime.Unwrap(value));
             }
         }
 
-        protected override void CopyToNative() {
-            var m_Name_pinned = new PinnedString(m_Name);
-            var m_Value_pinned = new PinnedString(m_Value);
-            var m_Domain_pinned = new PinnedString(m_Domain);
-            var m_Path_pinned = new PinnedString(m_Path);
-            CfxApi.cfx_cookie_copy_to_native(nativePtrUnchecked, m_Name_pinned.Obj.PinnedPtr, m_Name_pinned.Length, m_Value_pinned.Obj.PinnedPtr, m_Value_pinned.Length, m_Domain_pinned.Obj.PinnedPtr, m_Domain_pinned.Length, m_Path_pinned.Obj.PinnedPtr, m_Path_pinned.Length, m_Secure ? 1 : 0, m_HttpOnly ? 1 : 0, CfxTime.Unwrap(m_Creation), CfxTime.Unwrap(m_LastAccess), m_HasExpires ? 1 : 0, CfxTime.Unwrap(m_Expires));
-            m_Name_pinned.Obj.Free();
-            m_Value_pinned.Obj.Free();
-            m_Domain_pinned.Obj.Free();
-            m_Path_pinned.Obj.Free();
-        }
-
-        protected override void CopyToManaged(IntPtr nativePtr) {
-            IntPtr name_str = IntPtr.Zero; int name_length = 0;
-            IntPtr value_str = IntPtr.Zero; int value_length = 0;
-            IntPtr domain_str = IntPtr.Zero; int domain_length = 0;
-            IntPtr path_str = IntPtr.Zero; int path_length = 0;
-            int secure = default(int);
-            int httponly = default(int);
-            IntPtr creation = default(IntPtr);
-            IntPtr last_access = default(IntPtr);
-            int has_expires = default(int);
-            IntPtr expires = default(IntPtr);
-            CfxApi.cfx_cookie_copy_to_managed(nativePtr, out name_str, out name_length, out value_str, out value_length, out domain_str, out domain_length, out path_str, out path_length, out secure, out httponly, out creation, out last_access, out has_expires, out expires);
-            m_Name = name_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(name_str, name_length) : String.Empty;;
-            m_Value = value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
-            m_Domain = domain_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(domain_str, domain_length) : String.Empty;;
-            m_Path = path_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(path_str, path_length) : String.Empty;;
-            m_Secure = 0 != secure;
-            m_HttpOnly = 0 != httponly;
-            m_Creation = CfxTime.Wrap(creation);
-            m_LastAccess = CfxTime.Wrap(last_access);
-            m_HasExpires = 0 != has_expires;
-            m_Expires = CfxTime.Wrap(expires);
-        }
     }
 }

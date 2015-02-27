@@ -41,29 +41,6 @@ namespace Chromium {
     /// </summary>
     public sealed class CfxSettings : CfxStructure {
 
-        private bool m_SingleProcess;
-        private bool m_NoSandbox;
-        private string m_BrowserSubprocessPath;
-        private bool m_MultiThreadedMessageLoop;
-        private bool m_WindowlessRenderingEnabled;
-        private bool m_CommandLineArgsDisabled;
-        private string m_CachePath;
-        private bool m_PersistSessionCookies;
-        private string m_UserAgent;
-        private string m_ProductVersion;
-        private string m_Locale;
-        private string m_LogFile;
-        private CfxLogSeverity m_LogSeverity;
-        private string m_JavascriptFlags;
-        private string m_ResourcesDirPath;
-        private string m_LocalesDirPath;
-        private bool m_PackLoadingDisabled;
-        private int m_RemoteDebuggingPort;
-        private int m_UncaughtExceptionStackSize;
-        private bool m_ContextSafetyImplementation;
-        private bool m_IgnoreCertificateErrors;
-        private CfxColor m_BackgroundColor;
-
         public CfxSettings() : base(CfxApi.cfx_settings_ctor, CfxApi.cfx_settings_dtor) {}
 
         /// <summary>
@@ -74,10 +51,12 @@ namespace Chromium {
         /// </summary>
         public bool SingleProcess {
             get {
-                return m_SingleProcess;
+                int value;
+                CfxApi.cfx_settings_get_single_process(nativePtrUnchecked, out value);
+                return 0 != value;
             }
             set {
-                m_SingleProcess = value;
+                CfxApi.cfx_settings_set_single_process(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -88,10 +67,12 @@ namespace Chromium {
         /// </summary>
         public bool NoSandbox {
             get {
-                return m_NoSandbox;
+                int value;
+                CfxApi.cfx_settings_get_no_sandbox(nativePtrUnchecked, out value);
+                return 0 != value;
             }
             set {
-                m_NoSandbox = value;
+                CfxApi.cfx_settings_set_no_sandbox(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -103,10 +84,15 @@ namespace Chromium {
         /// </summary>
         public string BrowserSubprocessPath {
             get {
-                return m_BrowserSubprocessPath;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_settings_get_browser_subprocess_path(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_BrowserSubprocessPath = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_settings_set_browser_subprocess_path(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -117,10 +103,12 @@ namespace Chromium {
         /// </summary>
         public bool MultiThreadedMessageLoop {
             get {
-                return m_MultiThreadedMessageLoop;
+                int value;
+                CfxApi.cfx_settings_get_multi_threaded_message_loop(nativePtrUnchecked, out value);
+                return 0 != value;
             }
             set {
-                m_MultiThreadedMessageLoop = value;
+                CfxApi.cfx_settings_set_multi_threaded_message_loop(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -131,10 +119,12 @@ namespace Chromium {
         /// </summary>
         public bool WindowlessRenderingEnabled {
             get {
-                return m_WindowlessRenderingEnabled;
+                int value;
+                CfxApi.cfx_settings_get_windowless_rendering_enabled(nativePtrUnchecked, out value);
+                return 0 != value;
             }
             set {
-                m_WindowlessRenderingEnabled = value;
+                CfxApi.cfx_settings_set_windowless_rendering_enabled(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -146,10 +136,12 @@ namespace Chromium {
         /// </summary>
         public bool CommandLineArgsDisabled {
             get {
-                return m_CommandLineArgsDisabled;
+                int value;
+                CfxApi.cfx_settings_get_command_line_args_disabled(nativePtrUnchecked, out value);
+                return 0 != value;
             }
             set {
-                m_CommandLineArgsDisabled = value;
+                CfxApi.cfx_settings_set_command_line_args_disabled(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -161,10 +153,15 @@ namespace Chromium {
         /// </summary>
         public string CachePath {
             get {
-                return m_CachePath;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_settings_get_cache_path(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_CachePath = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_settings_set_cache_path(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -178,10 +175,12 @@ namespace Chromium {
         /// </summary>
         public bool PersistSessionCookies {
             get {
-                return m_PersistSessionCookies;
+                int value;
+                CfxApi.cfx_settings_get_persist_session_cookies(nativePtrUnchecked, out value);
+                return 0 != value;
             }
             set {
-                m_PersistSessionCookies = value;
+                CfxApi.cfx_settings_set_persist_session_cookies(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -192,10 +191,15 @@ namespace Chromium {
         /// </summary>
         public string UserAgent {
             get {
-                return m_UserAgent;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_settings_get_user_agent(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_UserAgent = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_settings_set_user_agent(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -207,10 +211,15 @@ namespace Chromium {
         /// </summary>
         public string ProductVersion {
             get {
-                return m_ProductVersion;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_settings_get_product_version(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_ProductVersion = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_settings_set_product_version(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -223,10 +232,15 @@ namespace Chromium {
         /// </summary>
         public string Locale {
             get {
-                return m_Locale;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_settings_get_locale(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_Locale = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_settings_set_locale(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -238,10 +252,15 @@ namespace Chromium {
         /// </summary>
         public string LogFile {
             get {
-                return m_LogFile;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_settings_get_log_file(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_LogFile = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_settings_set_log_file(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -253,10 +272,12 @@ namespace Chromium {
         /// </summary>
         public CfxLogSeverity LogSeverity {
             get {
-                return m_LogSeverity;
+                CfxLogSeverity value;
+                CfxApi.cfx_settings_get_log_severity(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_LogSeverity = value;
+                CfxApi.cfx_settings_set_log_severity(nativePtrUnchecked, value);
             }
         }
 
@@ -267,10 +288,15 @@ namespace Chromium {
         /// </summary>
         public string JavascriptFlags {
             get {
-                return m_JavascriptFlags;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_settings_get_javascript_flags(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_JavascriptFlags = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_settings_set_javascript_flags(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -283,10 +309,15 @@ namespace Chromium {
         /// </summary>
         public string ResourcesDirPath {
             get {
-                return m_ResourcesDirPath;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_settings_get_resources_dir_path(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_ResourcesDirPath = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_settings_set_resources_dir_path(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -299,10 +330,15 @@ namespace Chromium {
         /// </summary>
         public string LocalesDirPath {
             get {
-                return m_LocalesDirPath;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_settings_get_locales_dir_path(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_LocalesDirPath = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_settings_set_locales_dir_path(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -315,10 +351,12 @@ namespace Chromium {
         /// </summary>
         public bool PackLoadingDisabled {
             get {
-                return m_PackLoadingDisabled;
+                int value;
+                CfxApi.cfx_settings_get_pack_loading_disabled(nativePtrUnchecked, out value);
+                return 0 != value;
             }
             set {
-                m_PackLoadingDisabled = value;
+                CfxApi.cfx_settings_set_pack_loading_disabled(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -331,10 +369,12 @@ namespace Chromium {
         /// </summary>
         public int RemoteDebuggingPort {
             get {
-                return m_RemoteDebuggingPort;
+                int value;
+                CfxApi.cfx_settings_get_remote_debugging_port(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_RemoteDebuggingPort = value;
+                CfxApi.cfx_settings_set_remote_debugging_port(nativePtrUnchecked, value);
             }
         }
 
@@ -347,10 +387,12 @@ namespace Chromium {
         /// </summary>
         public int UncaughtExceptionStackSize {
             get {
-                return m_UncaughtExceptionStackSize;
+                int value;
+                CfxApi.cfx_settings_get_uncaught_exception_stack_size(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_UncaughtExceptionStackSize = value;
+                CfxApi.cfx_settings_set_uncaught_exception_stack_size(nativePtrUnchecked, value);
             }
         }
 
@@ -373,10 +415,12 @@ namespace Chromium {
         /// </summary>
         public bool ContextSafetyImplementation {
             get {
-                return m_ContextSafetyImplementation;
+                int value;
+                CfxApi.cfx_settings_get_context_safety_implementation(nativePtrUnchecked, out value);
+                return 0 != value;
             }
             set {
-                m_ContextSafetyImplementation = value;
+                CfxApi.cfx_settings_set_context_safety_implementation(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -389,10 +433,12 @@ namespace Chromium {
         /// </summary>
         public bool IgnoreCertificateErrors {
             get {
-                return m_IgnoreCertificateErrors;
+                int value;
+                CfxApi.cfx_settings_get_ignore_certificate_errors(nativePtrUnchecked, out value);
+                return 0 != value;
             }
             set {
-                m_IgnoreCertificateErrors = value;
+                CfxApi.cfx_settings_set_ignore_certificate_errors(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -404,33 +450,13 @@ namespace Chromium {
         /// </summary>
         public CfxColor BackgroundColor {
             get {
-                return m_BackgroundColor;
+                uint value;
+                CfxApi.cfx_settings_get_background_color(nativePtrUnchecked, out value);
+                return CfxColor.Wrap(value);
             }
             set {
-                m_BackgroundColor = value;
+                CfxApi.cfx_settings_set_background_color(nativePtrUnchecked, CfxColor.Unwrap(value));
             }
-        }
-
-        protected override void CopyToNative() {
-            var m_BrowserSubprocessPath_pinned = new PinnedString(m_BrowserSubprocessPath);
-            var m_CachePath_pinned = new PinnedString(m_CachePath);
-            var m_UserAgent_pinned = new PinnedString(m_UserAgent);
-            var m_ProductVersion_pinned = new PinnedString(m_ProductVersion);
-            var m_Locale_pinned = new PinnedString(m_Locale);
-            var m_LogFile_pinned = new PinnedString(m_LogFile);
-            var m_JavascriptFlags_pinned = new PinnedString(m_JavascriptFlags);
-            var m_ResourcesDirPath_pinned = new PinnedString(m_ResourcesDirPath);
-            var m_LocalesDirPath_pinned = new PinnedString(m_LocalesDirPath);
-            CfxApi.cfx_settings_copy_to_native(nativePtrUnchecked, m_SingleProcess ? 1 : 0, m_NoSandbox ? 1 : 0, m_BrowserSubprocessPath_pinned.Obj.PinnedPtr, m_BrowserSubprocessPath_pinned.Length, m_MultiThreadedMessageLoop ? 1 : 0, m_WindowlessRenderingEnabled ? 1 : 0, m_CommandLineArgsDisabled ? 1 : 0, m_CachePath_pinned.Obj.PinnedPtr, m_CachePath_pinned.Length, m_PersistSessionCookies ? 1 : 0, m_UserAgent_pinned.Obj.PinnedPtr, m_UserAgent_pinned.Length, m_ProductVersion_pinned.Obj.PinnedPtr, m_ProductVersion_pinned.Length, m_Locale_pinned.Obj.PinnedPtr, m_Locale_pinned.Length, m_LogFile_pinned.Obj.PinnedPtr, m_LogFile_pinned.Length, m_LogSeverity, m_JavascriptFlags_pinned.Obj.PinnedPtr, m_JavascriptFlags_pinned.Length, m_ResourcesDirPath_pinned.Obj.PinnedPtr, m_ResourcesDirPath_pinned.Length, m_LocalesDirPath_pinned.Obj.PinnedPtr, m_LocalesDirPath_pinned.Length, m_PackLoadingDisabled ? 1 : 0, m_RemoteDebuggingPort, m_UncaughtExceptionStackSize, m_ContextSafetyImplementation ? 1 : 0, m_IgnoreCertificateErrors ? 1 : 0, CfxColor.Unwrap(m_BackgroundColor));
-            m_BrowserSubprocessPath_pinned.Obj.Free();
-            m_CachePath_pinned.Obj.Free();
-            m_UserAgent_pinned.Obj.Free();
-            m_ProductVersion_pinned.Obj.Free();
-            m_Locale_pinned.Obj.Free();
-            m_LogFile_pinned.Obj.Free();
-            m_JavascriptFlags_pinned.Obj.Free();
-            m_ResourcesDirPath_pinned.Obj.Free();
-            m_LocalesDirPath_pinned.Obj.Free();
         }
 
     }

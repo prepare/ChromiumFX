@@ -49,46 +49,12 @@ namespace Chromium {
 
         internal static CfxBrowserSettings WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxBrowserSettings(nativePtr, true);
+            return new CfxBrowserSettings(nativePtr, CfxApi.cfx_browser_settings_dtor);
         }
 
-        private int m_WindowlessFrameRate;
-        private string m_StandardFontFamily;
-        private string m_FixedFontFamily;
-        private string m_SerifFontFamily;
-        private string m_SansSerifFontFamily;
-        private string m_CursiveFontFamily;
-        private string m_FantasyFontFamily;
-        private int m_DefaultFontSize;
-        private int m_DefaultFixedFontSize;
-        private int m_MinimumFontSize;
-        private int m_MinimumLogicalFontSize;
-        private string m_DefaultEncoding;
-        private CfxState m_RemoteFonts;
-        private CfxState m_Javascript;
-        private CfxState m_JavascriptOpenWindows;
-        private CfxState m_JavascriptCloseWindows;
-        private CfxState m_JavascriptAccessClipboard;
-        private CfxState m_JavascriptDomPaste;
-        private CfxState m_CaretBrowsing;
-        private CfxState m_Java;
-        private CfxState m_Plugins;
-        private CfxState m_UniversalAccessFromFileUrls;
-        private CfxState m_FileAccessFromFileUrls;
-        private CfxState m_WebSecUrity;
-        private CfxState m_ImageLoading;
-        private CfxState m_ImageShrinkStandaloneToFit;
-        private CfxState m_TextAreaResize;
-        private CfxState m_TabToLinks;
-        private CfxState m_LocalStorage;
-        private CfxState m_Databases;
-        private CfxState m_ApplicationCache;
-        private CfxState m_Webgl;
-        private CfxColor m_BackgroundColor;
-
         public CfxBrowserSettings() : base(CfxApi.cfx_browser_settings_ctor, CfxApi.cfx_browser_settings_dtor) {}
-        internal CfxBrowserSettings(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_browser_settings_ctor, CfxApi.cfx_browser_settings_dtor) {}
-        internal CfxBrowserSettings(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_browser_settings_ctor, CfxApi.cfx_browser_settings_dtor, owned) {}
+        internal CfxBrowserSettings(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxBrowserSettings(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         /// <summary>
         /// The maximum rate in frames per second (fps) that CefRenderHandler::OnPaint
@@ -98,10 +64,12 @@ namespace Chromium {
         /// </summary>
         public int WindowlessFrameRate {
             get {
-                return m_WindowlessFrameRate;
+                int value;
+                CfxApi.cfx_browser_settings_get_windowless_frame_rate(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_WindowlessFrameRate = value;
+                CfxApi.cfx_browser_settings_set_windowless_frame_rate(nativePtrUnchecked, value);
             }
         }
 
@@ -111,91 +79,129 @@ namespace Chromium {
         /// </summary>
         public string StandardFontFamily {
             get {
-                return m_StandardFontFamily;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_browser_settings_get_standard_font_family(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_StandardFontFamily = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_browser_settings_set_standard_font_family(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
         public string FixedFontFamily {
             get {
-                return m_FixedFontFamily;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_browser_settings_get_fixed_font_family(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_FixedFontFamily = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_browser_settings_set_fixed_font_family(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
         public string SerifFontFamily {
             get {
-                return m_SerifFontFamily;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_browser_settings_get_serif_font_family(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_SerifFontFamily = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_browser_settings_set_serif_font_family(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
         public string SansSerifFontFamily {
             get {
-                return m_SansSerifFontFamily;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_browser_settings_get_sans_serif_font_family(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_SansSerifFontFamily = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_browser_settings_set_sans_serif_font_family(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
         public string CursiveFontFamily {
             get {
-                return m_CursiveFontFamily;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_browser_settings_get_cursive_font_family(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_CursiveFontFamily = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_browser_settings_set_cursive_font_family(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
         public string FantasyFontFamily {
             get {
-                return m_FantasyFontFamily;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_browser_settings_get_fantasy_font_family(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_FantasyFontFamily = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_browser_settings_set_fantasy_font_family(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
         public int DefaultFontSize {
             get {
-                return m_DefaultFontSize;
+                int value;
+                CfxApi.cfx_browser_settings_get_default_font_size(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_DefaultFontSize = value;
+                CfxApi.cfx_browser_settings_set_default_font_size(nativePtrUnchecked, value);
             }
         }
 
         public int DefaultFixedFontSize {
             get {
-                return m_DefaultFixedFontSize;
+                int value;
+                CfxApi.cfx_browser_settings_get_default_fixed_font_size(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_DefaultFixedFontSize = value;
+                CfxApi.cfx_browser_settings_set_default_fixed_font_size(nativePtrUnchecked, value);
             }
         }
 
         public int MinimumFontSize {
             get {
-                return m_MinimumFontSize;
+                int value;
+                CfxApi.cfx_browser_settings_get_minimum_font_size(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_MinimumFontSize = value;
+                CfxApi.cfx_browser_settings_set_minimum_font_size(nativePtrUnchecked, value);
             }
         }
 
         public int MinimumLogicalFontSize {
             get {
-                return m_MinimumLogicalFontSize;
+                int value;
+                CfxApi.cfx_browser_settings_get_minimum_logical_font_size(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_MinimumLogicalFontSize = value;
+                CfxApi.cfx_browser_settings_set_minimum_logical_font_size(nativePtrUnchecked, value);
             }
         }
 
@@ -205,10 +211,15 @@ namespace Chromium {
         /// </summary>
         public string DefaultEncoding {
             get {
-                return m_DefaultEncoding;
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_browser_settings_get_default_encoding(nativePtrUnchecked, out value_str, out value_length);
+                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
             }
             set {
-                m_DefaultEncoding = value;
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_browser_settings_set_default_encoding(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 
@@ -218,10 +229,12 @@ namespace Chromium {
         /// </summary>
         public CfxState RemoteFonts {
             get {
-                return m_RemoteFonts;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_remote_fonts(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_RemoteFonts = value;
+                CfxApi.cfx_browser_settings_set_remote_fonts(nativePtrUnchecked, value);
             }
         }
 
@@ -231,10 +244,12 @@ namespace Chromium {
         /// </summary>
         public CfxState Javascript {
             get {
-                return m_Javascript;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_javascript(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Javascript = value;
+                CfxApi.cfx_browser_settings_set_javascript(nativePtrUnchecked, value);
             }
         }
 
@@ -245,10 +260,12 @@ namespace Chromium {
         /// </summary>
         public CfxState JavascriptOpenWindows {
             get {
-                return m_JavascriptOpenWindows;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_javascript_open_windows(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_JavascriptOpenWindows = value;
+                CfxApi.cfx_browser_settings_set_javascript_open_windows(nativePtrUnchecked, value);
             }
         }
 
@@ -260,10 +277,12 @@ namespace Chromium {
         /// </summary>
         public CfxState JavascriptCloseWindows {
             get {
-                return m_JavascriptCloseWindows;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_javascript_close_windows(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_JavascriptCloseWindows = value;
+                CfxApi.cfx_browser_settings_set_javascript_close_windows(nativePtrUnchecked, value);
             }
         }
 
@@ -273,10 +292,12 @@ namespace Chromium {
         /// </summary>
         public CfxState JavascriptAccessClipboard {
             get {
-                return m_JavascriptAccessClipboard;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_javascript_access_clipboard(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_JavascriptAccessClipboard = value;
+                CfxApi.cfx_browser_settings_set_javascript_access_clipboard(nativePtrUnchecked, value);
             }
         }
 
@@ -288,10 +309,12 @@ namespace Chromium {
         /// </summary>
         public CfxState JavascriptDomPaste {
             get {
-                return m_JavascriptDomPaste;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_javascript_dom_paste(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_JavascriptDomPaste = value;
+                CfxApi.cfx_browser_settings_set_javascript_dom_paste(nativePtrUnchecked, value);
             }
         }
 
@@ -301,10 +324,12 @@ namespace Chromium {
         /// </summary>
         public CfxState CaretBrowsing {
             get {
-                return m_CaretBrowsing;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_caret_browsing(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_CaretBrowsing = value;
+                CfxApi.cfx_browser_settings_set_caret_browsing(nativePtrUnchecked, value);
             }
         }
 
@@ -314,10 +339,12 @@ namespace Chromium {
         /// </summary>
         public CfxState Java {
             get {
-                return m_Java;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_java(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Java = value;
+                CfxApi.cfx_browser_settings_set_java(nativePtrUnchecked, value);
             }
         }
 
@@ -327,10 +354,12 @@ namespace Chromium {
         /// </summary>
         public CfxState Plugins {
             get {
-                return m_Plugins;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_plugins(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Plugins = value;
+                CfxApi.cfx_browser_settings_set_plugins(nativePtrUnchecked, value);
             }
         }
 
@@ -340,10 +369,12 @@ namespace Chromium {
         /// </summary>
         public CfxState UniversalAccessFromFileUrls {
             get {
-                return m_UniversalAccessFromFileUrls;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_universal_access_from_file_urls(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_UniversalAccessFromFileUrls = value;
+                CfxApi.cfx_browser_settings_set_universal_access_from_file_urls(nativePtrUnchecked, value);
             }
         }
 
@@ -353,10 +384,12 @@ namespace Chromium {
         /// </summary>
         public CfxState FileAccessFromFileUrls {
             get {
-                return m_FileAccessFromFileUrls;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_file_access_from_file_urls(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_FileAccessFromFileUrls = value;
+                CfxApi.cfx_browser_settings_set_file_access_from_file_urls(nativePtrUnchecked, value);
             }
         }
 
@@ -368,10 +401,12 @@ namespace Chromium {
         /// </summary>
         public CfxState WebSecUrity {
             get {
-                return m_WebSecUrity;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_web_security(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_WebSecUrity = value;
+                CfxApi.cfx_browser_settings_set_web_security(nativePtrUnchecked, value);
             }
         }
 
@@ -382,10 +417,12 @@ namespace Chromium {
         /// </summary>
         public CfxState ImageLoading {
             get {
-                return m_ImageLoading;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_image_loading(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_ImageLoading = value;
+                CfxApi.cfx_browser_settings_set_image_loading(nativePtrUnchecked, value);
             }
         }
 
@@ -396,10 +433,12 @@ namespace Chromium {
         /// </summary>
         public CfxState ImageShrinkStandaloneToFit {
             get {
-                return m_ImageShrinkStandaloneToFit;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_image_shrink_standalone_to_fit(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_ImageShrinkStandaloneToFit = value;
+                CfxApi.cfx_browser_settings_set_image_shrink_standalone_to_fit(nativePtrUnchecked, value);
             }
         }
 
@@ -409,10 +448,12 @@ namespace Chromium {
         /// </summary>
         public CfxState TextAreaResize {
             get {
-                return m_TextAreaResize;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_text_area_resize(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_TextAreaResize = value;
+                CfxApi.cfx_browser_settings_set_text_area_resize(nativePtrUnchecked, value);
             }
         }
 
@@ -422,10 +463,12 @@ namespace Chromium {
         /// </summary>
         public CfxState TabToLinks {
             get {
-                return m_TabToLinks;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_tab_to_links(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_TabToLinks = value;
+                CfxApi.cfx_browser_settings_set_tab_to_links(nativePtrUnchecked, value);
             }
         }
 
@@ -435,10 +478,12 @@ namespace Chromium {
         /// </summary>
         public CfxState LocalStorage {
             get {
-                return m_LocalStorage;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_local_storage(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_LocalStorage = value;
+                CfxApi.cfx_browser_settings_set_local_storage(nativePtrUnchecked, value);
             }
         }
 
@@ -448,10 +493,12 @@ namespace Chromium {
         /// </summary>
         public CfxState Databases {
             get {
-                return m_Databases;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_databases(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Databases = value;
+                CfxApi.cfx_browser_settings_set_databases(nativePtrUnchecked, value);
             }
         }
 
@@ -461,10 +508,12 @@ namespace Chromium {
         /// </summary>
         public CfxState ApplicationCache {
             get {
-                return m_ApplicationCache;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_application_cache(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_ApplicationCache = value;
+                CfxApi.cfx_browser_settings_set_application_cache(nativePtrUnchecked, value);
             }
         }
 
@@ -475,10 +524,12 @@ namespace Chromium {
         /// </summary>
         public CfxState Webgl {
             get {
-                return m_Webgl;
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_webgl(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Webgl = value;
+                CfxApi.cfx_browser_settings_set_webgl(nativePtrUnchecked, value);
             }
         }
 
@@ -491,49 +542,14 @@ namespace Chromium {
         /// </summary>
         public CfxColor BackgroundColor {
             get {
-                return m_BackgroundColor;
+                uint value;
+                CfxApi.cfx_browser_settings_get_background_color(nativePtrUnchecked, out value);
+                return CfxColor.Wrap(value);
             }
             set {
-                m_BackgroundColor = value;
+                CfxApi.cfx_browser_settings_set_background_color(nativePtrUnchecked, CfxColor.Unwrap(value));
             }
         }
 
-        protected override void CopyToNative() {
-            var m_StandardFontFamily_pinned = new PinnedString(m_StandardFontFamily);
-            var m_FixedFontFamily_pinned = new PinnedString(m_FixedFontFamily);
-            var m_SerifFontFamily_pinned = new PinnedString(m_SerifFontFamily);
-            var m_SansSerifFontFamily_pinned = new PinnedString(m_SansSerifFontFamily);
-            var m_CursiveFontFamily_pinned = new PinnedString(m_CursiveFontFamily);
-            var m_FantasyFontFamily_pinned = new PinnedString(m_FantasyFontFamily);
-            var m_DefaultEncoding_pinned = new PinnedString(m_DefaultEncoding);
-            CfxApi.cfx_browser_settings_copy_to_native(nativePtrUnchecked, m_WindowlessFrameRate, m_StandardFontFamily_pinned.Obj.PinnedPtr, m_StandardFontFamily_pinned.Length, m_FixedFontFamily_pinned.Obj.PinnedPtr, m_FixedFontFamily_pinned.Length, m_SerifFontFamily_pinned.Obj.PinnedPtr, m_SerifFontFamily_pinned.Length, m_SansSerifFontFamily_pinned.Obj.PinnedPtr, m_SansSerifFontFamily_pinned.Length, m_CursiveFontFamily_pinned.Obj.PinnedPtr, m_CursiveFontFamily_pinned.Length, m_FantasyFontFamily_pinned.Obj.PinnedPtr, m_FantasyFontFamily_pinned.Length, m_DefaultFontSize, m_DefaultFixedFontSize, m_MinimumFontSize, m_MinimumLogicalFontSize, m_DefaultEncoding_pinned.Obj.PinnedPtr, m_DefaultEncoding_pinned.Length, m_RemoteFonts, m_Javascript, m_JavascriptOpenWindows, m_JavascriptCloseWindows, m_JavascriptAccessClipboard, m_JavascriptDomPaste, m_CaretBrowsing, m_Java, m_Plugins, m_UniversalAccessFromFileUrls, m_FileAccessFromFileUrls, m_WebSecUrity, m_ImageLoading, m_ImageShrinkStandaloneToFit, m_TextAreaResize, m_TabToLinks, m_LocalStorage, m_Databases, m_ApplicationCache, m_Webgl, CfxColor.Unwrap(m_BackgroundColor));
-            m_StandardFontFamily_pinned.Obj.Free();
-            m_FixedFontFamily_pinned.Obj.Free();
-            m_SerifFontFamily_pinned.Obj.Free();
-            m_SansSerifFontFamily_pinned.Obj.Free();
-            m_CursiveFontFamily_pinned.Obj.Free();
-            m_FantasyFontFamily_pinned.Obj.Free();
-            m_DefaultEncoding_pinned.Obj.Free();
-        }
-
-        protected override void CopyToManaged(IntPtr nativePtr) {
-            IntPtr standard_font_family_str = IntPtr.Zero; int standard_font_family_length = 0;
-            IntPtr fixed_font_family_str = IntPtr.Zero; int fixed_font_family_length = 0;
-            IntPtr serif_font_family_str = IntPtr.Zero; int serif_font_family_length = 0;
-            IntPtr sans_serif_font_family_str = IntPtr.Zero; int sans_serif_font_family_length = 0;
-            IntPtr cursive_font_family_str = IntPtr.Zero; int cursive_font_family_length = 0;
-            IntPtr fantasy_font_family_str = IntPtr.Zero; int fantasy_font_family_length = 0;
-            IntPtr default_encoding_str = IntPtr.Zero; int default_encoding_length = 0;
-            uint background_color = default(uint);
-            CfxApi.cfx_browser_settings_copy_to_managed(nativePtr, out m_WindowlessFrameRate, out standard_font_family_str, out standard_font_family_length, out fixed_font_family_str, out fixed_font_family_length, out serif_font_family_str, out serif_font_family_length, out sans_serif_font_family_str, out sans_serif_font_family_length, out cursive_font_family_str, out cursive_font_family_length, out fantasy_font_family_str, out fantasy_font_family_length, out m_DefaultFontSize, out m_DefaultFixedFontSize, out m_MinimumFontSize, out m_MinimumLogicalFontSize, out default_encoding_str, out default_encoding_length, out m_RemoteFonts, out m_Javascript, out m_JavascriptOpenWindows, out m_JavascriptCloseWindows, out m_JavascriptAccessClipboard, out m_JavascriptDomPaste, out m_CaretBrowsing, out m_Java, out m_Plugins, out m_UniversalAccessFromFileUrls, out m_FileAccessFromFileUrls, out m_WebSecUrity, out m_ImageLoading, out m_ImageShrinkStandaloneToFit, out m_TextAreaResize, out m_TabToLinks, out m_LocalStorage, out m_Databases, out m_ApplicationCache, out m_Webgl, out background_color);
-            m_StandardFontFamily = standard_font_family_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(standard_font_family_str, standard_font_family_length) : String.Empty;;
-            m_FixedFontFamily = fixed_font_family_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(fixed_font_family_str, fixed_font_family_length) : String.Empty;;
-            m_SerifFontFamily = serif_font_family_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(serif_font_family_str, serif_font_family_length) : String.Empty;;
-            m_SansSerifFontFamily = sans_serif_font_family_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(sans_serif_font_family_str, sans_serif_font_family_length) : String.Empty;;
-            m_CursiveFontFamily = cursive_font_family_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(cursive_font_family_str, cursive_font_family_length) : String.Empty;;
-            m_FantasyFontFamily = fantasy_font_family_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(fantasy_font_family_str, fantasy_font_family_length) : String.Empty;;
-            m_DefaultEncoding = default_encoding_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(default_encoding_str, default_encoding_length) : String.Empty;;
-            m_BackgroundColor = CfxColor.Wrap(background_color);
-        }
     }
 }

@@ -49,35 +49,90 @@ CFX_EXPORT void cfx_cookie_dtor(cef_cookie_t* ptr) {
     free(ptr);
 }
 
-CFX_EXPORT void cfx_cookie_copy_to_native(cef_cookie_t* self, char16 *name_str, int name_length, char16 *value_str, int value_length, char16 *domain_str, int domain_length, char16 *path_str, int path_length, int secure, int httponly, cef_time_t* creation, cef_time_t* last_access, int has_expires, cef_time_t* expires) {
+// cef_cookie_t->name
+CFX_EXPORT void cfx_cookie_set_name(cef_cookie_t *self, char16 *name_str, int name_length) {
     cef_string_utf16_set(name_str, name_length, &(self->name), 1);
-    cef_string_utf16_set(value_str, value_length, &(self->value), 1);
-    cef_string_utf16_set(domain_str, domain_length, &(self->domain), 1);
-    cef_string_utf16_set(path_str, path_length, &(self->path), 1);
-    self->secure = secure;
-    self->httponly = httponly;
-    self->creation = *(creation);
-    self->last_access = *(last_access);
-    self->has_expires = has_expires;
-    self->expires = *(expires);
 }
-
-CFX_EXPORT void cfx_cookie_copy_to_managed(cef_cookie_t* self, char16 **name_str, int *name_length, char16 **value_str, int *value_length, char16 **domain_str, int *domain_length, char16 **path_str, int *path_length, int* secure, int* httponly, cef_time_t** creation, cef_time_t** last_access, int* has_expires, cef_time_t** expires) {
+CFX_EXPORT void cfx_cookie_get_name(cef_cookie_t *self, char16 **name_str, int *name_length) {
     *name_str = self->name.str;
     *name_length = self->name.length;
+}
+
+// cef_cookie_t->value
+CFX_EXPORT void cfx_cookie_set_value(cef_cookie_t *self, char16 *value_str, int value_length) {
+    cef_string_utf16_set(value_str, value_length, &(self->value), 1);
+}
+CFX_EXPORT void cfx_cookie_get_value(cef_cookie_t *self, char16 **value_str, int *value_length) {
     *value_str = self->value.str;
     *value_length = self->value.length;
+}
+
+// cef_cookie_t->domain
+CFX_EXPORT void cfx_cookie_set_domain(cef_cookie_t *self, char16 *domain_str, int domain_length) {
+    cef_string_utf16_set(domain_str, domain_length, &(self->domain), 1);
+}
+CFX_EXPORT void cfx_cookie_get_domain(cef_cookie_t *self, char16 **domain_str, int *domain_length) {
     *domain_str = self->domain.str;
     *domain_length = self->domain.length;
+}
+
+// cef_cookie_t->path
+CFX_EXPORT void cfx_cookie_set_path(cef_cookie_t *self, char16 *path_str, int path_length) {
+    cef_string_utf16_set(path_str, path_length, &(self->path), 1);
+}
+CFX_EXPORT void cfx_cookie_get_path(cef_cookie_t *self, char16 **path_str, int *path_length) {
     *path_str = self->path.str;
     *path_length = self->path.length;
+}
+
+// cef_cookie_t->secure
+CFX_EXPORT void cfx_cookie_set_secure(cef_cookie_t *self, int secure) {
+    self->secure = secure;
+}
+CFX_EXPORT void cfx_cookie_get_secure(cef_cookie_t *self, int* secure) {
     *secure = self->secure;
+}
+
+// cef_cookie_t->httponly
+CFX_EXPORT void cfx_cookie_set_httponly(cef_cookie_t *self, int httponly) {
+    self->httponly = httponly;
+}
+CFX_EXPORT void cfx_cookie_get_httponly(cef_cookie_t *self, int* httponly) {
     *httponly = self->httponly;
+}
+
+// cef_cookie_t->creation
+CFX_EXPORT void cfx_cookie_set_creation(cef_cookie_t *self, cef_time_t* creation) {
+    self->creation = *(creation);
+}
+CFX_EXPORT void cfx_cookie_get_creation(cef_cookie_t *self, cef_time_t** creation) {
     *creation = &(self->creation);
+}
+
+// cef_cookie_t->last_access
+CFX_EXPORT void cfx_cookie_set_last_access(cef_cookie_t *self, cef_time_t* last_access) {
+    self->last_access = *(last_access);
+}
+CFX_EXPORT void cfx_cookie_get_last_access(cef_cookie_t *self, cef_time_t** last_access) {
     *last_access = &(self->last_access);
+}
+
+// cef_cookie_t->has_expires
+CFX_EXPORT void cfx_cookie_set_has_expires(cef_cookie_t *self, int has_expires) {
+    self->has_expires = has_expires;
+}
+CFX_EXPORT void cfx_cookie_get_has_expires(cef_cookie_t *self, int* has_expires) {
     *has_expires = self->has_expires;
+}
+
+// cef_cookie_t->expires
+CFX_EXPORT void cfx_cookie_set_expires(cef_cookie_t *self, cef_time_t* expires) {
+    self->expires = *(expires);
+}
+CFX_EXPORT void cfx_cookie_get_expires(cef_cookie_t *self, cef_time_t** expires) {
     *expires = &(self->expires);
 }
+
 
 #ifdef __cplusplus
 } // extern "C"

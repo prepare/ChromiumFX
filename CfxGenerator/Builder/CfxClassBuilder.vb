@@ -390,56 +390,20 @@ Public Class CfxClassBuilder
         b.EndBlock()
         b.AppendLine()
 
-
-        b.BeginBlock(NativeCopyToNativeHeader)
         For Each sm In StructMembers
             If sm.Name <> "size" Then
+                b.AppendComment("{0}->{1}", struct.OriginalSymbol, sm.Name)
+                b.BeginBlock("CFX_EXPORT void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeCallSignature(sm.Name, False))
                 sm.MemberType.EmitAssignToNativeStructMember(b, sm.Name)
+                b.EndBlock()
+                b.BeginBlock("CFX_EXPORT void {0}_get_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name))
+                sm.MemberType.EmitAssignFromNativeStructMember(b, sm.Name)
+                b.EndBlock()
+                b.AppendLine()
             End If
         Next
-        b.EndBlock()
-        b.AppendLine()
-
-
-        If NeedsWrapping Then
-            b.BeginBlock(NativeCopyToManagedHeader)
-            For Each sm In StructMembers
-                If sm.Name <> "size" Then
-                    sm.MemberType.EmitAssignFromNativeStructMember(b, sm.Name)
-                End If
-            Next
-            b.EndBlock()
-        End If
-
 
     End Sub
-
-
-
-    Private ReadOnly Property NativeCopyToManagedHeader As String
-        Get
-            Dim args = New List(Of String)
-            For Each sm In StructMembers
-                If sm.Name <> "size" Then
-                    args.Add(sm.MemberType.NativeOutSignature(sm.Name))
-                End If
-            Next
-            Return String.Format("CFX_EXPORT void {0}_copy_to_managed({1}* self, {2})", CfxName, OriginalSymbol, String.Join(", ", args.ToArray()))
-        End Get
-    End Property
-
-    Private ReadOnly Property NativeCopyToNativeHeader As String
-        Get
-            Dim args = New List(Of String)
-            For Each sm In StructMembers
-                If sm.Name <> "size" Then
-                    args.Add(sm.MemberType.NativeCallSignature(sm.Name, False))
-                End If
-            Next
-            Return String.Format("CFX_EXPORT void {0}_copy_to_native({1}* self, {2})", CfxName, OriginalSymbol, String.Join(", ", args.ToArray()))
-        End Get
-    End Property
-
 
 
     Public Sub EmitApiDeclarations(b As CodeBuilder)
@@ -462,29 +426,19 @@ Public Class CfxClassBuilder
             b.AppendLine("public static cfx_dtor_delegate {0}_dtor;", CfxName)
             b.AppendLine()
 
-            Dim args = New List(Of String)
             For Each sm In StructMembers
                 If sm.Name <> "size" Then
-                    args.Add(sm.MemberType.PInvokeCallSignature(sm.Name))
+                    b.AppendComment("CFX_EXPORT void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeCallSignature(sm.Name, False))
+                    b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]")
+                    b.AppendLine("public delegate void {0}_set_{1}_delegate(IntPtr self, {2});", CfxName, sm.Name, sm.MemberType.PInvokeCallSignature(sm.Name))
+                    b.AppendLine("public static {0}_set_{1}_delegate {0}_set_{1};", CfxName, sm.Name)
+                    b.AppendComment("CFX_EXPORT void {0}_get_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name))
+                    b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]")
+                    b.AppendLine("public delegate void {0}_get_{1}_delegate(IntPtr self, {2});", CfxName, sm.Name, sm.MemberType.PInvokeOutSignature(sm.Name))
+                    b.AppendLine("public static {0}_get_{1}_delegate {0}_get_{1};", CfxName, sm.Name)
+                    b.AppendLine()
                 End If
             Next
-
-            b.AppendComment(NativeCopyToNativeHeader)
-            CodeSnippets.EmitPInvokeDelegate(b, CfxName & "_copy_to_native", "void", "IntPtr self, " & String.Join(", ", args.ToArray()))
-
-            If NeedsWrapping Then
-                args.Clear()
-                For Each sm In StructMembers
-                    If sm.Name <> "size" Then
-                        args.Add(sm.MemberType.PInvokeOutSignature(sm.Name))
-                    End If
-                Next
-
-                b.AppendComment(NativeCopyToManagedHeader)
-                CodeSnippets.EmitPInvokeDelegate(b, CfxName & "_copy_to_managed", "void", "IntPtr self, " & String.Join(", ", args.ToArray()))
-            End If
-
-            b.AppendLine()
 
         Else
 
@@ -530,10 +484,15 @@ Public Class CfxClassBuilder
             CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_ctor", "cfx_ctor_delegate")
             CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_dtor", "cfx_dtor_delegate")
             b.AppendLine()
-            CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_copy_to_native")
-            If NeedsWrapping Then
-                CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_copy_to_managed")
-            End If
+
+            For Each sm In StructMembers
+                If sm.Name <> "size" Then
+                    CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_set_" & sm.Name)
+                    CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_get_" & sm.Name)
+                End If
+            Next
+            b.AppendLine()
+
         ElseIf Category = StructCategory.ApiCalls Then
             For Each sm In StructMembers
                 If sm.MemberType.IsCefCallbackType Then
@@ -750,21 +709,15 @@ Public Class CfxClassBuilder
             b.AppendLine()
             b.BeginFunction("WrapOwned", ClassName, "IntPtr nativePtr", "internal static")
             b.AppendLine("if(nativePtr == IntPtr.Zero) return null;")
-            b.AppendLine("return new {0}(nativePtr, true);", ClassName)
+            b.AppendLine("return new {0}(nativePtr, CfxApi.{1}_dtor);", ClassName, CfxName)
             b.EndBlock()
             b.AppendLine()
         End If
 
-        For Each sm In StructMembers
-            If sm.Name <> "size" Then
-                b.AppendLine("private {1} m_{0};", sm.PublicName, sm.MemberType.PublicSymbol)
-            End If
-        Next
-        b.AppendLine()
         b.AppendLine("public {0}() : base(CfxApi.{1}_ctor, CfxApi.{1}_dtor) {{}}", ClassName, CfxName)
         If NeedsWrapping Then
-            b.AppendLine("internal {0}(IntPtr nativePtr) : base(nativePtr, CfxApi.{1}_ctor, CfxApi.{1}_dtor) {{}}", ClassName, CfxName)
-            b.AppendLine("internal {0}(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.{1}_ctor, CfxApi.{1}_dtor, owned) {{}}", ClassName, CfxName)
+            b.AppendLine("internal {0}(IntPtr nativePtr) : base(nativePtr) {{}}", ClassName, CfxName)
+            b.AppendLine("internal {0}(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {{}}", ClassName, CfxName)
         End If
         b.AppendLine()
 
@@ -773,63 +726,19 @@ Public Class CfxClassBuilder
                 b.AppendSummary(sm.Comments)
                 b.BeginBlock("public {1} {0}", CSharp.Escape(sm.PublicName), sm.MemberType.PublicSymbol)
                 b.BeginBlock("get")
-                b.AppendLine("return m_{0};", sm.PublicName)
+                sm.MemberType.EmitValueStructGetterVars(b, "value")
+                b.AppendLine("CfxApi.{0}_get_{1}(nativePtrUnchecked, {2});", CfxName, sm.Name, sm.MemberType.PInvokeOutArgument("value"))
+                b.AppendLine("return {0};", sm.MemberType.PublicWrapExpression("value"))
                 b.EndBlock()
                 b.BeginBlock("set")
-                b.AppendLine("m_{0} = value;", sm.PublicName)
+                sm.MemberType.EmitPrePublicCallStatements(b, "value")
+                b.AppendLine("CfxApi.{0}_set_{1}(nativePtrUnchecked, {2});", CfxName, sm.Name, sm.MemberType.PublicUnwrapExpression("value"))
+                sm.MemberType.EmitPostPublicCallStatements(b, "value")
                 b.EndBlock()
                 b.EndBlock()
                 b.AppendLine()
             End If
         Next
-
-
-        Dim pass = New List(Of String)
-        For Each sm In StructMembers
-            If sm.Name <> "size" Then
-                pass.Add(sm.MemberType.PublicUnwrapExpression("m_" & sm.PublicName))
-            End If
-        Next
-        b.BeginFunction("void CopyToNative()", "protected override")
-        For Each sm In StructMembers
-            If sm.Name <> "size" Then
-                sm.MemberType.EmitPrePublicCallStatements(b, "m_" & sm.PublicName)
-            End If
-        Next
-        b.AppendLine("CfxApi.{0}_copy_to_native(nativePtrUnchecked, {1});", CfxName, String.Join(", ", pass))
-        For Each sm In StructMembers
-            If sm.Name <> "size" Then
-                sm.MemberType.EmitPostPublicCallStatements(b, "m_" & sm.PublicName)
-            End If
-        Next
-        b.EndBlock()
-        b.AppendLine()
-
-        If NeedsWrapping Then
-
-            b.BeginFunction("void CopyToManaged(IntPtr nativePtr)", "protected override")
-
-            pass.Clear()
-            For Each sm In StructMembers
-                If sm.Name <> "size" Then
-                    If sm.MemberType.PublicWrapExpression(sm.Name) <> sm.Name Then
-                        sm.MemberType.EmitCopyToManagedLocalVars(b, sm.Name)
-                        pass.Add(sm.MemberType.PassCopyToManaged(sm.Name))
-                    Else
-                        pass.Add("out m_" & sm.PublicName)
-                    End If
-                End If
-            Next
-            b.AppendLine("CfxApi.{0}_copy_to_managed(nativePtr, {1});", CfxName, String.Join(", ", pass))
-            For Each sm In StructMembers
-                If sm.Name <> "size" Then
-                    If sm.MemberType.PublicWrapExpression(sm.Name) <> sm.Name Then
-                        b.AppendLine("m_{0} = {1};", sm.PublicName, sm.MemberType.PublicWrapExpression(sm.Name))
-                    End If
-                End If
-            Next
-            b.EndBlock()
-        End If
 
         b.EndBlock()
 

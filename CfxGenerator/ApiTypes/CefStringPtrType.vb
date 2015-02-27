@@ -109,7 +109,7 @@ Public Class CefStringPtrType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property PassCopyToManaged(var As String) As String
+    Public Overrides ReadOnly Property PInvokeOutArgument(var As String) As String
         Get
             Return String.Format("out {0}_str, out {0}_length", var)
         End Get

@@ -48,19 +48,12 @@ namespace Chromium {
 
         internal static CfxScreenInfo WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxScreenInfo(nativePtr, true);
+            return new CfxScreenInfo(nativePtr, CfxApi.cfx_screen_info_dtor);
         }
 
-        private float m_DeviceScaleFactor;
-        private int m_Depth;
-        private int m_DepthPerComponent;
-        private bool m_IsMonochrome;
-        private CfxRect m_Rect;
-        private CfxRect m_AvailableRect;
-
         public CfxScreenInfo() : base(CfxApi.cfx_screen_info_ctor, CfxApi.cfx_screen_info_dtor) {}
-        internal CfxScreenInfo(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_screen_info_ctor, CfxApi.cfx_screen_info_dtor) {}
-        internal CfxScreenInfo(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_screen_info_ctor, CfxApi.cfx_screen_info_dtor, owned) {}
+        internal CfxScreenInfo(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxScreenInfo(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         /// <summary>
         /// Device scale factor. Specifies the ratio between physical and logical
@@ -68,10 +61,12 @@ namespace Chromium {
         /// </summary>
         public float DeviceScaleFactor {
             get {
-                return m_DeviceScaleFactor;
+                float value;
+                CfxApi.cfx_screen_info_get_device_scale_factor(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_DeviceScaleFactor = value;
+                CfxApi.cfx_screen_info_set_device_scale_factor(nativePtrUnchecked, value);
             }
         }
 
@@ -80,10 +75,12 @@ namespace Chromium {
         /// </summary>
         public int Depth {
             get {
-                return m_Depth;
+                int value;
+                CfxApi.cfx_screen_info_get_depth(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Depth = value;
+                CfxApi.cfx_screen_info_set_depth(nativePtrUnchecked, value);
             }
         }
 
@@ -93,10 +90,12 @@ namespace Chromium {
         /// </summary>
         public int DepthPerComponent {
             get {
-                return m_DepthPerComponent;
+                int value;
+                CfxApi.cfx_screen_info_get_depth_per_component(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_DepthPerComponent = value;
+                CfxApi.cfx_screen_info_set_depth_per_component(nativePtrUnchecked, value);
             }
         }
 
@@ -105,10 +104,12 @@ namespace Chromium {
         /// </summary>
         public bool IsMonochrome {
             get {
-                return m_IsMonochrome;
+                int value;
+                CfxApi.cfx_screen_info_get_is_monochrome(nativePtrUnchecked, out value);
+                return 0 != value;
             }
             set {
-                m_IsMonochrome = value;
+                CfxApi.cfx_screen_info_set_is_monochrome(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -123,10 +124,12 @@ namespace Chromium {
         /// </summary>
         public CfxRect Rect {
             get {
-                return m_Rect;
+                IntPtr value;
+                CfxApi.cfx_screen_info_get_rect(nativePtrUnchecked, out value);
+                return CfxRect.Wrap(value);
             }
             set {
-                m_Rect = value;
+                CfxApi.cfx_screen_info_set_rect(nativePtrUnchecked, CfxRect.Unwrap(value));
             }
         }
 
@@ -144,25 +147,14 @@ namespace Chromium {
         /// </summary>
         public CfxRect AvailableRect {
             get {
-                return m_AvailableRect;
+                IntPtr value;
+                CfxApi.cfx_screen_info_get_available_rect(nativePtrUnchecked, out value);
+                return CfxRect.Wrap(value);
             }
             set {
-                m_AvailableRect = value;
+                CfxApi.cfx_screen_info_set_available_rect(nativePtrUnchecked, CfxRect.Unwrap(value));
             }
         }
 
-        protected override void CopyToNative() {
-            CfxApi.cfx_screen_info_copy_to_native(nativePtrUnchecked, m_DeviceScaleFactor, m_Depth, m_DepthPerComponent, m_IsMonochrome ? 1 : 0, CfxRect.Unwrap(m_Rect), CfxRect.Unwrap(m_AvailableRect));
-        }
-
-        protected override void CopyToManaged(IntPtr nativePtr) {
-            int is_monochrome = default(int);
-            IntPtr rect = default(IntPtr);
-            IntPtr available_rect = default(IntPtr);
-            CfxApi.cfx_screen_info_copy_to_managed(nativePtr, out m_DeviceScaleFactor, out m_Depth, out m_DepthPerComponent, out is_monochrome, out rect, out available_rect);
-            m_IsMonochrome = 0 != is_monochrome;
-            m_Rect = CfxRect.Wrap(rect);
-            m_AvailableRect = CfxRect.Wrap(available_rect);
-        }
     }
 }
