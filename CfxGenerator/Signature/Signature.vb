@@ -93,7 +93,7 @@ Public Class Signature
             End If
         Next
 
-        'DebugPrintUnhandledArrayArguments()
+        DebugPrintUnhandledArrayArguments()
 
     End Sub
 
@@ -494,6 +494,8 @@ Public Class Signature
     Public Overridable Sub DebugPrintUnhandledArrayArguments()
 
         If Parent.CefName.StartsWith("cef_binary_value") Then Return
+        If Parent.CefName = "cef_resource_handler::get_response_headers" Then Return
+        If Parent.CefName = "cef_resource_bundle_handler::get_data_resource" Then Return
 
         For i = 0 To Arguments.Length - 1
             Dim suffixLength = CountArgumentSuffixLength(Arguments(i))

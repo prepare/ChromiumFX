@@ -65,17 +65,19 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
-        internal static void get_data_resource(IntPtr gcHandlePtr, out int __retval, int resource_id, IntPtr data, out int data_size) {
+        internal static void get_data_resource(IntPtr gcHandlePtr, out int __retval, int resource_id, out IntPtr data, out int data_size) {
             var self = (CfxResourceBundleHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
+                data = default(IntPtr);
                 data_size = default(int);
                 return;
             }
-            var e = new CfxGetDataResourceEventArgs(resource_id, data);
+            var e = new CfxGetDataResourceEventArgs(resource_id);
             var eventHandler = self.m_GetDataResource;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
+            data = e.m_data;
             data_size = e.m_data_size;
             __retval = e.m_returnValue ? 1 : 0;
         }
@@ -223,9 +225,8 @@ namespace Chromium {
         internal bool m_returnValue;
         private bool returnValueSet;
 
-        internal CfxGetDataResourceEventArgs(int resource_id, IntPtr data) {
+        internal CfxGetDataResourceEventArgs(int resource_id) {
             m_resource_id = resource_id;
-            m_data = data;
         }
 
         public int ResourceId {
@@ -235,9 +236,9 @@ namespace Chromium {
             }
         }
         public IntPtr Data {
-            get {
+            set {
                 CheckAccess();
-                return m_data;
+                m_data = value;
             }
         }
         public int DataSize {
@@ -256,7 +257,7 @@ namespace Chromium {
         }
 
         public override string ToString() {
-            return String.Format("ResourceId={{{0}}}, Data={{{1}}}", ResourceId, Data);
+            return String.Format("ResourceId={{{0}}}", ResourceId);
         }
     }
 

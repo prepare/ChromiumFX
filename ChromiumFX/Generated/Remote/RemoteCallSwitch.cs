@@ -775,8 +775,8 @@ namespace Chromium.Remote {
                     return new CfxGetDataResourceDeactivateRenderProcessCall();
                 case RemoteCallId.CfxGetDataResourceGetResourceIdRenderProcessCall:
                     return new CfxGetDataResourceGetResourceIdRenderProcessCall();
-                case RemoteCallId.CfxGetDataResourceGetDataRenderProcessCall:
-                    return new CfxGetDataResourceGetDataRenderProcessCall();
+                case RemoteCallId.CfxGetDataResourceSetDataRenderProcessCall:
+                    return new CfxGetDataResourceSetDataRenderProcessCall();
                 case RemoteCallId.CfxGetDataResourceSetDataSizeRenderProcessCall:
                     return new CfxGetDataResourceSetDataSizeRenderProcessCall();
                 case RemoteCallId.CfxGetDataResourceSetReturnValueRenderProcessCall:

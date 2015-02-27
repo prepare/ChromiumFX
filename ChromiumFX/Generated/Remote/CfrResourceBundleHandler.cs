@@ -218,7 +218,6 @@ namespace Chromium.Remote {
 
         bool ResourceIdFetched;
         int m_ResourceId;
-        bool DataFetched;
         RemotePtr m_Data;
         int m_DataSize;
 
@@ -238,14 +237,14 @@ namespace Chromium.Remote {
         }
         public RemotePtr Data {
             get {
-                if(!DataFetched) {
-                    DataFetched = true;
-                    var call = new CfxGetDataResourceGetDataRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Data = new RemotePtr(call.value);
-                }
                 return m_Data;
+            }
+            set {
+                m_Data = value;
+                var call = new CfxGetDataResourceSetDataRenderProcessCall();
+                call.eventArgsId = eventArgsId;
+                call.value = value.ptr;
+                call.Execute(remoteRuntime.connection);
             }
         }
         public int DataSize {
@@ -268,7 +267,7 @@ namespace Chromium.Remote {
         }
 
         public override string ToString() {
-            return String.Format("ResourceId={{{0}}}, Data={{{1}}}", ResourceId, Data);
+            return String.Format("ResourceId={{{0}}}", ResourceId);
         }
     }
 

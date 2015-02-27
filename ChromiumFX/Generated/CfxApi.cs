@@ -3396,7 +3396,7 @@ namespace Chromium {
 
         // get_data_resource
         [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_resource_bundle_handler_get_data_resource_delegate(IntPtr gcHandlePtr, out int __retval, int resource_id, IntPtr data, out int data_size);
+        public delegate void cfx_resource_bundle_handler_get_data_resource_delegate(IntPtr gcHandlePtr, out int __retval, int resource_id, out IntPtr data, out int data_size);
         public static cfx_resource_bundle_handler_get_data_resource_delegate cfx_resource_bundle_handler_get_data_resource;
 
 
