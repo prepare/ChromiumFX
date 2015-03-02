@@ -46,40 +46,34 @@ namespace Chromium {
 
         internal static CfxPoint WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxPoint(nativePtr, true);
+            return new CfxPoint(nativePtr, CfxApi.cfx_point_dtor);
         }
 
-        private int m_X;
-        private int m_Y;
-
         public CfxPoint() : base(CfxApi.cfx_point_ctor, CfxApi.cfx_point_dtor) {}
-        internal CfxPoint(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_point_ctor, CfxApi.cfx_point_dtor) {}
-        internal CfxPoint(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_point_ctor, CfxApi.cfx_point_dtor, owned) {}
+        internal CfxPoint(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxPoint(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         public int X {
             get {
-                return m_X;
+                int value;
+                CfxApi.cfx_point_get_x(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_X = value;
+                CfxApi.cfx_point_set_x(nativePtrUnchecked, value);
             }
         }
 
         public int Y {
             get {
-                return m_Y;
+                int value;
+                CfxApi.cfx_point_get_y(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Y = value;
+                CfxApi.cfx_point_set_y(nativePtrUnchecked, value);
             }
         }
 
-        protected override void CopyToNative() {
-            CfxApi.cfx_point_copy_to_native(nativePtrUnchecked, m_X, m_Y);
-        }
-
-        protected override void CopyToManaged(IntPtr nativePtr) {
-            CfxApi.cfx_point_copy_to_managed(nativePtr, out m_X, out m_Y);
-        }
     }
 }

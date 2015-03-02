@@ -46,32 +46,87 @@ CFX_EXPORT void cfx_geoposition_dtor(cef_geoposition_t* ptr) {
     free(ptr);
 }
 
-CFX_EXPORT void cfx_geoposition_copy_to_native(cef_geoposition_t* self, double latitude, double longitude, double altitude, double accuracy, double altitude_accuracy, double heading, double speed, cef_time_t* timestamp, cef_geoposition_error_code_t error_code, char16 *error_message_str, int error_message_length) {
+// cef_geoposition_t->latitude
+CFX_EXPORT void cfx_geoposition_set_latitude(cef_geoposition_t *self, double latitude) {
     self->latitude = latitude;
-    self->longitude = longitude;
-    self->altitude = altitude;
-    self->accuracy = accuracy;
-    self->altitude_accuracy = altitude_accuracy;
-    self->heading = heading;
-    self->speed = speed;
-    self->timestamp = *(timestamp);
-    self->error_code = error_code;
-    cef_string_utf16_set(error_message_str, error_message_length, &(self->error_message), 1);
+}
+CFX_EXPORT void cfx_geoposition_get_latitude(cef_geoposition_t *self, double* latitude) {
+    *latitude = self->latitude;
 }
 
-CFX_EXPORT void cfx_geoposition_copy_to_managed(cef_geoposition_t* self, double* latitude, double* longitude, double* altitude, double* accuracy, double* altitude_accuracy, double* heading, double* speed, cef_time_t** timestamp, cef_geoposition_error_code_t* error_code, char16 **error_message_str, int *error_message_length) {
-    *latitude = self->latitude;
+// cef_geoposition_t->longitude
+CFX_EXPORT void cfx_geoposition_set_longitude(cef_geoposition_t *self, double longitude) {
+    self->longitude = longitude;
+}
+CFX_EXPORT void cfx_geoposition_get_longitude(cef_geoposition_t *self, double* longitude) {
     *longitude = self->longitude;
+}
+
+// cef_geoposition_t->altitude
+CFX_EXPORT void cfx_geoposition_set_altitude(cef_geoposition_t *self, double altitude) {
+    self->altitude = altitude;
+}
+CFX_EXPORT void cfx_geoposition_get_altitude(cef_geoposition_t *self, double* altitude) {
     *altitude = self->altitude;
+}
+
+// cef_geoposition_t->accuracy
+CFX_EXPORT void cfx_geoposition_set_accuracy(cef_geoposition_t *self, double accuracy) {
+    self->accuracy = accuracy;
+}
+CFX_EXPORT void cfx_geoposition_get_accuracy(cef_geoposition_t *self, double* accuracy) {
     *accuracy = self->accuracy;
+}
+
+// cef_geoposition_t->altitude_accuracy
+CFX_EXPORT void cfx_geoposition_set_altitude_accuracy(cef_geoposition_t *self, double altitude_accuracy) {
+    self->altitude_accuracy = altitude_accuracy;
+}
+CFX_EXPORT void cfx_geoposition_get_altitude_accuracy(cef_geoposition_t *self, double* altitude_accuracy) {
     *altitude_accuracy = self->altitude_accuracy;
+}
+
+// cef_geoposition_t->heading
+CFX_EXPORT void cfx_geoposition_set_heading(cef_geoposition_t *self, double heading) {
+    self->heading = heading;
+}
+CFX_EXPORT void cfx_geoposition_get_heading(cef_geoposition_t *self, double* heading) {
     *heading = self->heading;
+}
+
+// cef_geoposition_t->speed
+CFX_EXPORT void cfx_geoposition_set_speed(cef_geoposition_t *self, double speed) {
+    self->speed = speed;
+}
+CFX_EXPORT void cfx_geoposition_get_speed(cef_geoposition_t *self, double* speed) {
     *speed = self->speed;
+}
+
+// cef_geoposition_t->timestamp
+CFX_EXPORT void cfx_geoposition_set_timestamp(cef_geoposition_t *self, cef_time_t* timestamp) {
+    self->timestamp = *(timestamp);
+}
+CFX_EXPORT void cfx_geoposition_get_timestamp(cef_geoposition_t *self, cef_time_t** timestamp) {
     *timestamp = &(self->timestamp);
+}
+
+// cef_geoposition_t->error_code
+CFX_EXPORT void cfx_geoposition_set_error_code(cef_geoposition_t *self, cef_geoposition_error_code_t error_code) {
+    self->error_code = error_code;
+}
+CFX_EXPORT void cfx_geoposition_get_error_code(cef_geoposition_t *self, cef_geoposition_error_code_t* error_code) {
     *error_code = self->error_code;
+}
+
+// cef_geoposition_t->error_message
+CFX_EXPORT void cfx_geoposition_set_error_message(cef_geoposition_t *self, char16 *error_message_str, int error_message_length) {
+    cef_string_utf16_set(error_message_str, error_message_length, &(self->error_message), 1);
+}
+CFX_EXPORT void cfx_geoposition_get_error_message(cef_geoposition_t *self, char16 **error_message_str, int *error_message_length) {
     *error_message_str = self->error_message.str;
     *error_message_length = self->error_message.length;
 }
+
 
 #ifdef __cplusplus
 } // extern "C"

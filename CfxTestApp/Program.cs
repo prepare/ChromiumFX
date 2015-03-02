@@ -54,12 +54,40 @@ namespace CfxTestApplication {
             CfxRuntime.LoadLibraries(@"cef\Release");
 //#endif
 
-            Chromium.WebBrowser.ChromiumWebBrowser.OnBeforeCfxInitialize += new OnBeforeCfxInitializeEventHandler(ChromiumWebBrowser_OnBeforeCfxInitialize);
+
+            //for(int i = 0; i < 1000000; i++) {
+
+            //    var ps = CfxPrintSettings.Create();
+            //    var pr = new CfxPageRange[] { new CfxPageRange(), new CfxPageRange(), new CfxPageRange() };
+
+            //    pr[0].To = 3;
+            //    pr[1].From = 10;
+            //    pr[1].To = 11;
+            //    pr[2].From = 60;
+            //    pr[2].To = 65;
+
+            //    ps.SetPageRanges(pr);
+
+            //    pr[0].Dispose();
+            //    pr[1].Dispose();
+            //    pr[2].Dispose();
+
+            //    var x = ps.PageRangesCount;
+
+            //    var y = ps.GetPageRanges();
+
+            //    //ps.Dispose();
+            //    //GC.Collect();
+            //}
+
+
+            Chromium.WebBrowser.ChromiumWebBrowser.OnBeforeCfxInitialize += ChromiumWebBrowser_OnBeforeCfxInitialize;
             Chromium.WebBrowser.ChromiumWebBrowser.Initialize();
 
             //Walkthrough01.Main();
             //return;
 
+           
             Application.EnableVisualStyles();
             var f = new BrowserForm();
             f.Show();
@@ -69,11 +97,9 @@ namespace CfxTestApplication {
 
         }
 
-        static void ChromiumWebBrowser_OnBeforeCfxInitialize(CfxSettings settings, CfxBrowserProcessHandler processHandler, out CfxOnBeforeCommandLineProcessingEventHandler onBeforeCommandLineProcessingEventHandler) {
-            settings.LocalesDirPath = System.IO.Path.GetFullPath(@"cef\Resources\locales");
-            settings.ResourcesDirPath = System.IO.Path.GetFullPath(@"cef\Resources");
-            settings.NoSandbox = true;
-            onBeforeCommandLineProcessingEventHandler = null;
+        static void ChromiumWebBrowser_OnBeforeCfxInitialize(OnBeforeCfxInitializeEventArgs e) {
+            e.Settings.LocalesDirPath = System.IO.Path.GetFullPath(@"cef\Resources\locales");
+            e.Settings.ResourcesDirPath = System.IO.Path.GetFullPath(@"cef\Resources");
         }
     }
 }

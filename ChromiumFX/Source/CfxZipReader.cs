@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Wolfgang Borgsmüller
+﻿// Copyright (c) 2014-2015 Wolfgang Borgsmüller
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without 
@@ -28,41 +28,25 @@
 // TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE 
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// Generated file. Do not edit.
+using System;
 
+namespace Chromium {
 
-// cef_size
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-CFX_EXPORT cef_size_t* cfx_size_ctor() {
-    return (cef_size_t*)calloc(1, sizeof(cef_size_t));
+    public partial class CfxZipReader {
+        /// <summary>
+        /// Read uncompressed file contents into the specified buffer. Returns 
+        /// 0 if at the end of file, or the number of bytes read.
+        /// Throws an exception if an error occurred.
+        /// </summary>
+        public int ReadFile(byte[] buffer) {
+            if(buffer == null || buffer.Length == 0)
+                throw new ArgumentException("Buffer can't be null or zero length.", "buffer");
+            var pb = new PinnedObject(buffer);
+            var retval = CfxApi.cfx_zip_reader_read_file(NativePtr, pb.PinnedPtr, buffer.Length);
+            pb.Free();
+            if(retval < 0)
+                throw new CfxException("Failed to read from zip file");
+            return retval;
+        }
+    }
 }
-
-CFX_EXPORT void cfx_size_dtor(cef_size_t* ptr) {
-    free(ptr);
-}
-
-// cef_size_t->width
-CFX_EXPORT void cfx_size_set_width(cef_size_t *self, int width) {
-    self->width = width;
-}
-CFX_EXPORT void cfx_size_get_width(cef_size_t *self, int* width) {
-    *width = self->width;
-}
-
-// cef_size_t->height
-CFX_EXPORT void cfx_size_set_height(cef_size_t *self, int height) {
-    self->height = height;
-}
-CFX_EXPORT void cfx_size_get_height(cef_size_t *self, int* height) {
-    *height = self->height;
-}
-
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
-

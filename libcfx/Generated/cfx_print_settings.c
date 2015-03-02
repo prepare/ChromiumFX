@@ -95,8 +95,19 @@ CFX_EXPORT int cfx_print_settings_get_dpi(cef_print_settings_t* self) {
 }
 
 // set_page_ranges
-CFX_EXPORT void cfx_print_settings_set_page_ranges(cef_print_settings_t* self, int rangesCount, cef_page_range_t const* ranges) {
-    self->set_page_ranges(self, (size_t)(rangesCount), ranges);
+CFX_EXPORT void cfx_print_settings_set_page_ranges(cef_print_settings_t* self, int rangesCount, cef_page_range_t const** ranges, int* ranges_nomem) {
+    cef_page_range_t *ranges_tmp = (cef_page_range_t*)malloc(rangesCount * sizeof(cef_page_range_t));
+    if(ranges_tmp) {
+        for(int i = 0; i < rangesCount; ++i) {
+            ranges_tmp[i] = *ranges[i];
+        }
+        *ranges_nomem = 0;
+    } else {
+        rangesCount = 0;
+        *ranges_nomem = 1;
+    }
+    self->set_page_ranges(self, (size_t)(rangesCount), ranges_tmp);
+    if(ranges_tmp) free(ranges_tmp);
 }
 
 // get_page_ranges_count
@@ -105,8 +116,19 @@ CFX_EXPORT int cfx_print_settings_get_page_ranges_count(cef_print_settings_t* se
 }
 
 // get_page_ranges
-CFX_EXPORT void cfx_print_settings_get_page_ranges(cef_print_settings_t* self, size_t* rangesCount, cef_page_range_t* ranges) {
-    self->get_page_ranges(self, rangesCount, ranges);
+CFX_EXPORT void cfx_print_settings_get_page_ranges(cef_print_settings_t* self, size_t* rangesCount, cef_page_range_t** ranges, int* ranges_nomem) {
+    cef_page_range_t *ranges_tmp = (cef_page_range_t*)malloc(*rangesCount * sizeof(cef_page_range_t));
+    if(ranges_tmp) {
+        *ranges_nomem = 0;
+        self->get_page_ranges(self, rangesCount, ranges_tmp);
+        for(size_t i = 0; i < *rangesCount; ++i) {
+            ranges[i] = (cef_page_range_t*)malloc(sizeof(cef_page_range_t));
+            *ranges[i] = ranges_tmp[i];
+        }
+        free(ranges_tmp);
+    } else {
+        *ranges_nomem = 1;
+    }
 }
 
 // set_selection_only

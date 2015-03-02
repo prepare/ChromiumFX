@@ -38,8 +38,6 @@ using Chromium.Remote;
 
 namespace Chromium.WebBrowser {
 
-    public delegate void OnBeforeCfxInitializeEventHandler(CfxSettings settings, CfxBrowserProcessHandler processHandler, out CfxOnBeforeCommandLineProcessingEventHandler onBeforeCommandLineProcessingEventHandler);
-
     public class ChromiumWebBrowser : Control {
 
         private static CfxBrowserSettings defaultBrowserSettings;
@@ -62,10 +60,13 @@ namespace Chromium.WebBrowser {
         public static event OnBeforeCfxInitializeEventHandler OnBeforeCfxInitialize;
         internal static void RaiseOnBeforeCfxInitialize(CfxSettings settings, CfxBrowserProcessHandler processHandler, out CfxOnBeforeCommandLineProcessingEventHandler onBeforeCommandLineProcessingEventHandler) {
             var handler = OnBeforeCfxInitialize;
-            if(handler != null)
-                handler(settings, processHandler, out onBeforeCommandLineProcessingEventHandler);
-            else
+            if(handler != null) {
+                var e = new OnBeforeCfxInitializeEventArgs(settings, processHandler);
+                handler(e);
+                onBeforeCommandLineProcessingEventHandler = e.m_onBeforeCommandLineProcessingEventHandler;
+            } else {
                 onBeforeCommandLineProcessingEventHandler = null;
+            }
         }
         
 
@@ -104,6 +105,8 @@ namespace Chromium.WebBrowser {
 
         public CfxBrowser Browser { get; private set; }
         public CfxBrowserHost BrowserHost { get; private set; }
+
+
 
         private readonly object browserSyncRoot = new object();
         private IntPtr browserWindowHandle;
@@ -229,7 +232,7 @@ namespace Chromium.WebBrowser {
         /// <summary>
         /// Returns the request handler for this browser.
         /// Do not set the return value in the GetResourceHandler event for URLs
-        /// with associated WebResources.
+        /// with associated WebResources (see also SetWebResource).
         /// </summary>
         public CfxRequestHandler RequestHandler { get { return client.requestHandler; } }
 
@@ -361,7 +364,33 @@ namespace Chromium.WebBrowser {
             }
         }
 
-        
+
+        /// <summary>
+        /// Special Invoke for framework callbacks from the render process.
+        /// Maintains affinity with the render process thread.
+        /// Use this instead of invoke when the following conditions are meat:
+        /// 1) The current thread is executing in the scope of a framework
+        ///    callback event from the render process (ex. CfrTask.Execute).
+        /// 2) You need to Invoke on the webbrowser control and
+        /// 3) The invoked code needs to call into the render process.
+        /// </summary>
+        public Object RenderThreadInvoke(Delegate method, params Object[] args) {
+            object retval = null;
+            int id = CfxRemoting.RemoteThreadId;
+            Invoke((MethodInvoker)(() => { retval = RenderThreadInvokeInternal(method, args, id); }));
+            return retval;
+        }
+
+        private Object RenderThreadInvokeInternal(Delegate method, Object[] args, int remoteThreadId) {
+            CfxRemoting.SetThreadAffinity(remoteThreadId);
+            try {
+                return method.DynamicInvoke(args);
+            } finally {
+                CfxRemoting.SetThreadAffinity(0);
+            }
+        }
+
+
         /// <summary>
         /// Evaluate a string of javascript code in the browser's main frame.
         /// Evaluation is done asynchronously in the render process.
@@ -411,13 +440,13 @@ namespace Chromium.WebBrowser {
                     var context = wb.remoteBrowser.MainFrame.V8Context;
                     var result = context.Eval(code, out retval, out ex);
                     if(result) {
-                        wb.Invoke((MethodInvoker)(() => { callback(retval, ex); }));
+                        wb.RenderThreadInvoke((MethodInvoker)(() => { callback(retval, ex); }));
                     } else {
-                        wb.Invoke((MethodInvoker)(() => { callback(null, null); }));
+                        wb.RenderThreadInvoke((MethodInvoker)(() => { callback(null, null); }));
                     }
                     
                 } catch {
-                    wb.Invoke((MethodInvoker)(() => { callback(null, null); }));
+                    wb.RenderThreadInvoke((MethodInvoker)(() => { callback(null, null); }));
                 }
             }
         }
@@ -462,7 +491,7 @@ namespace Chromium.WebBrowser {
         /// underlying window handle. Preserves affinity to the original thread.
         /// </summary>
         public JSFunction AddGlobalJSFunction(string functionName) {
-            var f = new JSFunction(functionName, this);
+            var f = new JSFunction(functionName, true);
             AddGlobalJSFunction(f);
             return f;
         }
@@ -471,12 +500,12 @@ namespace Chromium.WebBrowser {
         /// Add a JS Function to the main frame's global object.
         /// The function will be available after the next time a
         /// V8 context is created in the render process.
-        /// If executeOnUiThread is true, then the function is 
+        /// If invokeOnBrowser is true, then the function is 
         /// executed on the thread that owns this browser control's 
-        /// underlying window handle. Preserves affinity to the original thread.
+        /// underlying window handle. Preserves affinity to the render thread.
         /// </summary>
-        public JSFunction AddGlobalJSFunction(string functionName, bool executeOnUiThread) {
-            var f = new JSFunction(functionName, executeOnUiThread ? this : null);
+        public JSFunction AddGlobalJSFunction(string functionName, bool invokeOnBrowser) {
+            var f = new JSFunction(functionName, invokeOnBrowser);
             AddGlobalJSFunction(f);
             return f;
         }
@@ -489,55 +518,10 @@ namespace Chromium.WebBrowser {
         /// underlying window handle. Preserves affinity to the original thread.
         /// </summary>
         public JSFunction AddGlobalJSFunction(string frameName, string functionName) {
-            var f = new JSFunction(functionName, this);
+            var f = new JSFunction(functionName, true);
             AddGlobalJSFunction(frameName, f);
             return f;
         }
-
-        /// <summary>
-        /// Visit the remote browser object.
-        /// Returns false if the remote browser is currently unavailable.
-        /// If this function returns false, then |callback| will not be called. Otherwise,
-        /// |callback| will be called on the thread that owns this browser control's 
-        /// underlying window handle, preserving affinity to the renderer thread.
-        /// Use with care:
-        /// The callback may never be called if the render process gets killed prematurely.
-        /// Do not keep a reference to the remote browser after returning from the callback.
-        /// Do not block the callback since it blocks the render thread.
-        /// </summary>
-        /// <param name="callback"></param>
-        /// <returns></returns>
-        public bool VisitRemoteBrowser(Action<CfrBrowser> callback) {
-            var rb = remoteBrowser;
-            if(rb == null) return false;
-            try {
-                var taskRunner = CfrTaskRunner.GetForThread(rb.RemoteRuntime, CfxThreadId.Renderer);
-                var task = new VisitRemoteBrowserTask(this, callback);
-                taskRunner.PostTask(task);
-                return true;
-            } catch(System.IO.IOException) {
-                return false;
-            }
-        }
-
-        private class VisitRemoteBrowserTask : CfrTask {
-
-            ChromiumWebBrowser wb;
-            Action<CfrBrowser> callback;
-
-            internal VisitRemoteBrowserTask(ChromiumWebBrowser wb, Action<CfrBrowser> callback)
-                : base(wb.remoteProcess.remoteRuntime) {
-                this.wb = wb;
-                this.callback = callback;
-                this.Execute += Task_Execute;
-            }
-
-            void Task_Execute(object sender, CfrEventArgs e) {
-                wb.Invoke((MethodInvoker)(() => { callback(wb.remoteBrowser); }));
-            }
-        }
-
-
 
         /// <summary>
         /// Visit the DOM in the remote browser's main frame.
@@ -590,7 +574,7 @@ namespace Chromium.WebBrowser {
             }
 
             void visitor_Visit(object sender, CfrDomVisitorVisitEventArgs e) {
-                wb.Invoke((MethodInvoker)(() => { callback(e.Document, wb.remoteBrowser); }));
+                wb.RenderThreadInvoke((MethodInvoker)(() => { callback(e.Document, wb.remoteBrowser); }));
             }
 
         }
@@ -598,6 +582,10 @@ namespace Chromium.WebBrowser {
 
         /// <summary>
         /// Set a resource to be used for the specified URL.
+        /// Note that those resources are kept in the memory.
+        /// If you need bulk handling of web resources,
+        /// subscribing to RequestHandler.GetResourceHandler
+        /// might be a better choice.
         /// </summary>
         /// <param name="url"></param>
         /// <param name="resource"></param>
@@ -616,9 +604,19 @@ namespace Chromium.WebBrowser {
         
         /// <summary>
         /// Raised after the CfxBrowser object for this WebBrowser has been created.
+        /// The event is executed on the thread that owns this browser control's 
+        /// underlying window handle.
         /// </summary>
-        public event CfxOnAfterCreatedEventHandler OnAfterCreated;
-        
+        public event BrowserCreatedEventHandler BrowserCreated;
+
+        /// <summary>
+        /// Called after a remote browser has been created. When browsing cross-origin a new
+        /// browser will be created before the old browser is destroyed.
+        /// The event is executed on the thread that owns this browser control's 
+        /// underlying window handle, preserving affinity to the render thread.
+        /// </summary>
+        public event RemoteBrowserCreatedEventHandler RemoteBrowserCreated;
+
         /// <summary>
         /// Called when the loading state has changed. This callback will be executed
         /// twice -- once when loading is initiated either programmatically or by user
@@ -738,9 +736,17 @@ namespace Chromium.WebBrowser {
             browserId = Browser.Identifier;
             browsers.Add(browserId, this);
             SetWindowPos(browserWindowHandle, IntPtr.Zero, 0, 0, Width, Height, SWP_NOMOVE | SWP_NOZORDER);
-            var handler = OnAfterCreated;
-            if(handler != null)
-                Invoke((MethodInvoker)(() => { handler(this, e); }));
+            
+            var handler = BrowserCreated;
+            if(handler != null) {
+                var e1 = new BrowserCreatedEventArgs(e.Browser);
+                if(InvokeRequired) {
+                    Invoke((MethodInvoker)(() => { handler(this, e1); }));
+                } else {
+                    handler(this, e1);
+                }
+            }
+                
             System.Threading.ThreadPool.QueueUserWorkItem(AfterSetBrowserTasks);
         }
 
@@ -760,6 +766,15 @@ namespace Chromium.WebBrowser {
             this.remoteBrowser = remoteBrowser;
             this.remoteProcess = remoteProcess;
             remoteProcess.OnExit += new Action<RenderProcess>(remoteProcess_OnExit);
+            var h = RemoteBrowserCreated;
+            if(h != null) { 
+                var e = new RemoteBrowserCreatedEventArgs(remoteBrowser);
+                if(InvokeRequired) {
+                    Invoke((MethodInvoker)(() => { h(this, e); }));
+                } else {
+                    h(this, e);
+                }
+            }
         }
 
         void remoteProcess_OnExit(RenderProcess process) {

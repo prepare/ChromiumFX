@@ -40,7 +40,6 @@ Public Class NumericOutType
         Me.BaseType = baseType
     End Sub
 
-
     Public Overrides ReadOnly Property PInvokeSymbol As String
         Get
             Return BaseType.PInvokeSymbol
@@ -61,10 +60,6 @@ Public Class NumericOutType
 
     Public Overrides Sub EmitPublicEventArgSetterStatements(b As CodeBuilder, var As String)
         b.AppendLine("m_{0} = value;", var)
-    End Sub
-
-    Public Overrides Sub EmitPostPublicRaiseEventStatements(b As CodeBuilder, var As String)
-        b.AppendLine("{0} = e.m_{0};", var)
     End Sub
 
     Public Overrides ReadOnly Property IsOut As Boolean

@@ -46,31 +46,24 @@ namespace Chromium {
 
         internal static CfxKeyEvent WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxKeyEvent(nativePtr, true);
+            return new CfxKeyEvent(nativePtr, CfxApi.cfx_key_event_dtor);
         }
 
-        private CfxKeyEventType m_Type;
-        private uint m_Modifiers;
-        private int m_WindowsKeyCode;
-        private int m_NativeKeyCode;
-        private bool m_IsSystemKey;
-        private short m_Character;
-        private short m_UnmodifiedCharacter;
-        private int m_FocusOnEditableField;
-
         public CfxKeyEvent() : base(CfxApi.cfx_key_event_ctor, CfxApi.cfx_key_event_dtor) {}
-        internal CfxKeyEvent(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_key_event_ctor, CfxApi.cfx_key_event_dtor) {}
-        internal CfxKeyEvent(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_key_event_ctor, CfxApi.cfx_key_event_dtor, owned) {}
+        internal CfxKeyEvent(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxKeyEvent(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         /// <summary>
         /// The type of keyboard event.
         /// </summary>
         public CfxKeyEventType Type {
             get {
-                return m_Type;
+                CfxKeyEventType value;
+                CfxApi.cfx_key_event_get_type(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Type = value;
+                CfxApi.cfx_key_event_set_type(nativePtrUnchecked, value);
             }
         }
 
@@ -80,10 +73,12 @@ namespace Chromium {
         /// </summary>
         public uint Modifiers {
             get {
-                return m_Modifiers;
+                uint value;
+                CfxApi.cfx_key_event_get_modifiers(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Modifiers = value;
+                CfxApi.cfx_key_event_set_modifiers(nativePtrUnchecked, value);
             }
         }
 
@@ -95,10 +90,12 @@ namespace Chromium {
         /// </summary>
         public int WindowsKeyCode {
             get {
-                return m_WindowsKeyCode;
+                int value;
+                CfxApi.cfx_key_event_get_windows_key_code(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_WindowsKeyCode = value;
+                CfxApi.cfx_key_event_set_windows_key_code(nativePtrUnchecked, value);
             }
         }
 
@@ -107,10 +104,12 @@ namespace Chromium {
         /// </summary>
         public int NativeKeyCode {
             get {
-                return m_NativeKeyCode;
+                int value;
+                CfxApi.cfx_key_event_get_native_key_code(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_NativeKeyCode = value;
+                CfxApi.cfx_key_event_set_native_key_code(nativePtrUnchecked, value);
             }
         }
 
@@ -121,10 +120,12 @@ namespace Chromium {
         /// </summary>
         public bool IsSystemKey {
             get {
-                return m_IsSystemKey;
+                int value;
+                CfxApi.cfx_key_event_get_is_system_key(nativePtrUnchecked, out value);
+                return 0 != value;
             }
             set {
-                m_IsSystemKey = value;
+                CfxApi.cfx_key_event_set_is_system_key(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -133,10 +134,12 @@ namespace Chromium {
         /// </summary>
         public short Character {
             get {
-                return m_Character;
+                short value;
+                CfxApi.cfx_key_event_get_character(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Character = value;
+                CfxApi.cfx_key_event_set_character(nativePtrUnchecked, value);
             }
         }
 
@@ -146,10 +149,12 @@ namespace Chromium {
         /// </summary>
         public short UnmodifiedCharacter {
             get {
-                return m_UnmodifiedCharacter;
+                short value;
+                CfxApi.cfx_key_event_get_unmodified_character(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_UnmodifiedCharacter = value;
+                CfxApi.cfx_key_event_set_unmodified_character(nativePtrUnchecked, value);
             }
         }
 
@@ -159,21 +164,14 @@ namespace Chromium {
         /// </summary>
         public int FocusOnEditableField {
             get {
-                return m_FocusOnEditableField;
+                int value;
+                CfxApi.cfx_key_event_get_focus_on_editable_field(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_FocusOnEditableField = value;
+                CfxApi.cfx_key_event_set_focus_on_editable_field(nativePtrUnchecked, value);
             }
         }
 
-        protected override void CopyToNative() {
-            CfxApi.cfx_key_event_copy_to_native(nativePtrUnchecked, m_Type, m_Modifiers, m_WindowsKeyCode, m_NativeKeyCode, m_IsSystemKey ? 1 : 0, m_Character, m_UnmodifiedCharacter, m_FocusOnEditableField);
-        }
-
-        protected override void CopyToManaged(IntPtr nativePtr) {
-            int is_system_key = default(int);
-            CfxApi.cfx_key_event_copy_to_managed(nativePtr, out m_Type, out m_Modifiers, out m_WindowsKeyCode, out m_NativeKeyCode, out is_system_key, out m_Character, out m_UnmodifiedCharacter, out m_FocusOnEditableField);
-            m_IsSystemKey = 0 != is_system_key;
-        }
     }
 }

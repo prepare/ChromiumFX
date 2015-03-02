@@ -41,7 +41,7 @@ Public Class Signature
         End If
     End Function
 
-    Private Class ArgList
+    Protected Class ArgList
         Private args As New List(Of String)
         Public Sub Add(arg As String)
             If Not String.IsNullOrWhiteSpace(arg) Then
@@ -60,7 +60,7 @@ Public Class Signature
     Public ReadOnly Arguments As Argument()
     Public ReadOnly ReturnType As ApiType
 
-    Private args As New ArgList
+    Protected args As New ArgList
 
     Protected Sub New(parent As ISignatureParent, sd As Parser.SignatureData, api As ApiTypeBuilder)
         Me.Parent = parent
@@ -93,7 +93,7 @@ Public Class Signature
             End If
         Next
 
-        'DebugPrintUnhandledArrayArguments()
+        DebugPrintUnhandledArrayArguments()
 
     End Sub
 
@@ -486,6 +486,7 @@ Public Class Signature
             b.AppendLine("return __ret_val_;")
         ElseIf ReturnType.IsVoid Then
             b.AppendLine("{0}({1});", functionName, NativeCall)
+            b.AppendBuilder(b1)
         Else
             b.AppendLine("return {0};", wrappedRetVal)
         End If
@@ -493,7 +494,12 @@ Public Class Signature
 
     Public Overridable Sub DebugPrintUnhandledArrayArguments()
 
-        If Parent.CefName.StartsWith("cef_binary_value") Then Return
+        If Parent.CefName = "cef_binary_value_create" Then Return
+        If Parent.CefName = "cef_binary_value::get_data" Then Return
+        If Parent.CefName = "cef_resource_handler::get_response_headers" Then Return
+        If Parent.CefName = "cef_resource_bundle_handler::get_data_resource" Then Return
+        If Parent.CefName = "cef_urlrequest_client::on_download_data" Then Return
+        If Parent.CefName = "cef_zip_reader::read_file" Then Return
 
         For i = 0 To Arguments.Length - 1
             Dim suffixLength = CountArgumentSuffixLength(Arguments(i))

@@ -46,25 +46,4 @@ Public Class WrapperArrayType
         End Get
     End Property
 
-
-    Public Overrides ReadOnly Property ProxySymbol As String
-        Get
-            If ArrayType.StartsWith("Cfx") Then
-                Return "IntPtr[]"
-            Else
-                Return PublicSymbol
-            End If
-        End Get
-    End Property
-
-    Public Overrides ReadOnly Property RemoteSymbol As String
-        Get
-            If ArrayType.StartsWith("Cfx") Then
-                Return "Cfr" & ArrayType.Substring(3) & "[]"
-            Else
-                Return PublicSymbol
-            End If
-        End Get
-    End Property
-
 End Class

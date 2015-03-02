@@ -46,197 +46,204 @@ namespace Chromium {
 
         internal static CfxPopupFeatures WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxPopupFeatures(nativePtr, true);
+            return new CfxPopupFeatures(nativePtr, CfxApi.cfx_popup_features_dtor);
         }
 
-        private int m_X;
-        private int m_XSet;
-        private int m_Y;
-        private int m_YSet;
-        private int m_Width;
-        private int m_WidthSet;
-        private int m_Height;
-        private int m_HeightSet;
-        private int m_MenuBarVisible;
-        private int m_StatusBarVisible;
-        private int m_ToolBarVisible;
-        private int m_LocationBarVisible;
-        private int m_ScrollbarsVisible;
-        private int m_Resizable;
-        private int m_Fullscreen;
-        private int m_Dialog;
-        private System.Collections.Generic.List<string> m_AdditionalFeatures;
-
         public CfxPopupFeatures() : base(CfxApi.cfx_popup_features_ctor, CfxApi.cfx_popup_features_dtor) {}
-        internal CfxPopupFeatures(IntPtr nativePtr) : base(nativePtr, CfxApi.cfx_popup_features_ctor, CfxApi.cfx_popup_features_dtor) {}
-        internal CfxPopupFeatures(IntPtr nativePtr, bool owned) : base(nativePtr, CfxApi.cfx_popup_features_ctor, CfxApi.cfx_popup_features_dtor, owned) {}
+        internal CfxPopupFeatures(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxPopupFeatures(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         public int X {
             get {
-                return m_X;
+                int value;
+                CfxApi.cfx_popup_features_get_x(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_X = value;
+                CfxApi.cfx_popup_features_set_x(nativePtrUnchecked, value);
             }
         }
 
         public int XSet {
             get {
-                return m_XSet;
+                int value;
+                CfxApi.cfx_popup_features_get_xSet(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_XSet = value;
+                CfxApi.cfx_popup_features_set_xSet(nativePtrUnchecked, value);
             }
         }
 
         public int Y {
             get {
-                return m_Y;
+                int value;
+                CfxApi.cfx_popup_features_get_y(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Y = value;
+                CfxApi.cfx_popup_features_set_y(nativePtrUnchecked, value);
             }
         }
 
         public int YSet {
             get {
-                return m_YSet;
+                int value;
+                CfxApi.cfx_popup_features_get_ySet(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_YSet = value;
+                CfxApi.cfx_popup_features_set_ySet(nativePtrUnchecked, value);
             }
         }
 
         public int Width {
             get {
-                return m_Width;
+                int value;
+                CfxApi.cfx_popup_features_get_width(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Width = value;
+                CfxApi.cfx_popup_features_set_width(nativePtrUnchecked, value);
             }
         }
 
         public int WidthSet {
             get {
-                return m_WidthSet;
+                int value;
+                CfxApi.cfx_popup_features_get_widthSet(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_WidthSet = value;
+                CfxApi.cfx_popup_features_set_widthSet(nativePtrUnchecked, value);
             }
         }
 
         public int Height {
             get {
-                return m_Height;
+                int value;
+                CfxApi.cfx_popup_features_get_height(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Height = value;
+                CfxApi.cfx_popup_features_set_height(nativePtrUnchecked, value);
             }
         }
 
         public int HeightSet {
             get {
-                return m_HeightSet;
+                int value;
+                CfxApi.cfx_popup_features_get_heightSet(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_HeightSet = value;
+                CfxApi.cfx_popup_features_set_heightSet(nativePtrUnchecked, value);
             }
         }
 
         public int MenuBarVisible {
             get {
-                return m_MenuBarVisible;
+                int value;
+                CfxApi.cfx_popup_features_get_menuBarVisible(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_MenuBarVisible = value;
+                CfxApi.cfx_popup_features_set_menuBarVisible(nativePtrUnchecked, value);
             }
         }
 
         public int StatusBarVisible {
             get {
-                return m_StatusBarVisible;
+                int value;
+                CfxApi.cfx_popup_features_get_statusBarVisible(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_StatusBarVisible = value;
+                CfxApi.cfx_popup_features_set_statusBarVisible(nativePtrUnchecked, value);
             }
         }
 
         public int ToolBarVisible {
             get {
-                return m_ToolBarVisible;
+                int value;
+                CfxApi.cfx_popup_features_get_toolBarVisible(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_ToolBarVisible = value;
+                CfxApi.cfx_popup_features_set_toolBarVisible(nativePtrUnchecked, value);
             }
         }
 
         public int LocationBarVisible {
             get {
-                return m_LocationBarVisible;
+                int value;
+                CfxApi.cfx_popup_features_get_locationBarVisible(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_LocationBarVisible = value;
+                CfxApi.cfx_popup_features_set_locationBarVisible(nativePtrUnchecked, value);
             }
         }
 
         public int ScrollbarsVisible {
             get {
-                return m_ScrollbarsVisible;
+                int value;
+                CfxApi.cfx_popup_features_get_scrollbarsVisible(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_ScrollbarsVisible = value;
+                CfxApi.cfx_popup_features_set_scrollbarsVisible(nativePtrUnchecked, value);
             }
         }
 
         public int Resizable {
             get {
-                return m_Resizable;
+                int value;
+                CfxApi.cfx_popup_features_get_resizable(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Resizable = value;
+                CfxApi.cfx_popup_features_set_resizable(nativePtrUnchecked, value);
             }
         }
 
         public int Fullscreen {
             get {
-                return m_Fullscreen;
+                int value;
+                CfxApi.cfx_popup_features_get_fullscreen(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Fullscreen = value;
+                CfxApi.cfx_popup_features_set_fullscreen(nativePtrUnchecked, value);
             }
         }
 
         public int Dialog {
             get {
-                return m_Dialog;
+                int value;
+                CfxApi.cfx_popup_features_get_dialog(nativePtrUnchecked, out value);
+                return value;
             }
             set {
-                m_Dialog = value;
+                CfxApi.cfx_popup_features_set_dialog(nativePtrUnchecked, value);
             }
         }
 
         public System.Collections.Generic.List<string> AdditionalFeatures {
             get {
-                return m_AdditionalFeatures;
+                IntPtr value;
+                CfxApi.cfx_popup_features_get_additionalFeatures(nativePtrUnchecked, out value);
+                return CfxStringCollections.WrapCfxStringList(value);
             }
             set {
-                m_AdditionalFeatures = value;
+                PinnedString[] value_handles;
+                var value_unwrapped = CfxStringCollections.UnwrapCfxStringList(value, out value_handles);
+                CfxApi.cfx_popup_features_set_additionalFeatures(nativePtrUnchecked, value_unwrapped);
+                CfxStringCollections.FreePinnedStrings(value_handles);
+                CfxStringCollections.CfxStringListCopyToManaged(value_unwrapped, value);
+                CfxApi.cfx_string_list_free(value_unwrapped);
             }
         }
 
-        protected override void CopyToNative() {
-            PinnedString[] m_AdditionalFeatures_handles;
-            var m_AdditionalFeatures_unwrapped = CfxStringCollections.UnwrapCfxStringList(m_AdditionalFeatures, out m_AdditionalFeatures_handles);
-            CfxApi.cfx_popup_features_copy_to_native(nativePtrUnchecked, m_X, m_XSet, m_Y, m_YSet, m_Width, m_WidthSet, m_Height, m_HeightSet, m_MenuBarVisible, m_StatusBarVisible, m_ToolBarVisible, m_LocationBarVisible, m_ScrollbarsVisible, m_Resizable, m_Fullscreen, m_Dialog, m_AdditionalFeatures_unwrapped);
-            CfxStringCollections.FreePinnedStrings(m_AdditionalFeatures_handles);
-            CfxStringCollections.CfxStringListCopyToManaged(m_AdditionalFeatures_unwrapped, m_AdditionalFeatures);
-            CfxApi.cfx_string_list_free(m_AdditionalFeatures_unwrapped);
-        }
-
-        protected override void CopyToManaged(IntPtr nativePtr) {
-            IntPtr additionalFeatures = default(IntPtr);
-            CfxApi.cfx_popup_features_copy_to_managed(nativePtr, out m_X, out m_XSet, out m_Y, out m_YSet, out m_Width, out m_WidthSet, out m_Height, out m_HeightSet, out m_MenuBarVisible, out m_StatusBarVisible, out m_ToolBarVisible, out m_LocationBarVisible, out m_ScrollbarsVisible, out m_Resizable, out m_Fullscreen, out m_Dialog, out additionalFeatures);
-            m_AdditionalFeatures = CfxStringCollections.WrapCfxStringList(additionalFeatures);
-        }
     }
 }

@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Wolfgang Borgsmüller
+﻿// Copyright (c) 2014-2015 Wolfgang Borgsmüller
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without 
@@ -28,57 +28,41 @@
 // TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE 
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// Generated file. Do not edit.
+using System;
+using Chromium;
+using Chromium.Remote;
 
+namespace Chromium.WebBrowser {
 
-// cef_rect
+    public delegate void OnBeforeCfxInitializeEventHandler(OnBeforeCfxInitializeEventArgs e);
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+    public class OnBeforeCfxInitializeEventArgs : EventArgs {
+        public CfxSettings Settings { get; private set; }
+        public CfxBrowserProcessHandler ProcessHandler { get; private set; }
+        public CfxOnBeforeCommandLineProcessingEventHandler OnBeforeCommandLineProcessingEventHandler { set { m_onBeforeCommandLineProcessingEventHandler = value; } }
+        internal CfxOnBeforeCommandLineProcessingEventHandler m_onBeforeCommandLineProcessingEventHandler;
+        internal OnBeforeCfxInitializeEventArgs(CfxSettings settings, CfxBrowserProcessHandler processHandler) {
+            Settings = settings;
+            ProcessHandler = processHandler;
+        }
+    }
 
-CFX_EXPORT cef_rect_t* cfx_rect_ctor() {
-    return (cef_rect_t*)calloc(1, sizeof(cef_rect_t));
+    public delegate void BrowserCreatedEventHandler(object sender, BrowserCreatedEventArgs e);
+
+    public class BrowserCreatedEventArgs : EventArgs {
+        public CfxBrowser Browser { get; private set; }
+        internal BrowserCreatedEventArgs(CfxBrowser browser) {
+            Browser = browser;
+        }
+    }
+
+    public delegate void RemoteBrowserCreatedEventHandler(object sender, RemoteBrowserCreatedEventArgs e);
+
+    public class RemoteBrowserCreatedEventArgs : EventArgs {
+        public CfrBrowser Browser { get; private set; }
+        internal RemoteBrowserCreatedEventArgs(CfrBrowser browser) {
+            Browser = browser;
+        }
+    }
+
 }
-
-CFX_EXPORT void cfx_rect_dtor(cef_rect_t* ptr) {
-    free(ptr);
-}
-
-// cef_rect_t->x
-CFX_EXPORT void cfx_rect_set_x(cef_rect_t *self, int x) {
-    self->x = x;
-}
-CFX_EXPORT void cfx_rect_get_x(cef_rect_t *self, int* x) {
-    *x = self->x;
-}
-
-// cef_rect_t->y
-CFX_EXPORT void cfx_rect_set_y(cef_rect_t *self, int y) {
-    self->y = y;
-}
-CFX_EXPORT void cfx_rect_get_y(cef_rect_t *self, int* y) {
-    *y = self->y;
-}
-
-// cef_rect_t->width
-CFX_EXPORT void cfx_rect_set_width(cef_rect_t *self, int width) {
-    self->width = width;
-}
-CFX_EXPORT void cfx_rect_get_width(cef_rect_t *self, int* width) {
-    *width = self->width;
-}
-
-// cef_rect_t->height
-CFX_EXPORT void cfx_rect_set_height(cef_rect_t *self, int height) {
-    self->height = height;
-}
-CFX_EXPORT void cfx_rect_get_height(cef_rect_t *self, int* height) {
-    *height = self->height;
-}
-
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
-

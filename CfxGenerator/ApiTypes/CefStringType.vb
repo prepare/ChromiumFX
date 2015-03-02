@@ -78,7 +78,7 @@ Public Class CefStringType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property PassCopyToManaged(var As String) As String
+    Public Overrides ReadOnly Property PInvokeOutArgument(var As String) As String
         Get
             Return String.Format("out {0}_str, out {0}_length", var)
         End Get
@@ -92,8 +92,9 @@ Public Class CefStringType
         b.AppendLine("{0}_pinned.Obj.Free();", var)
     End Sub
 
-    Public Overrides Sub EmitCopyToManagedLocalVars(b As CodeBuilder, var As String)
-        b.AppendLine("IntPtr {0}_str = IntPtr.Zero; int {0}_length = 0;", var, PInvokeSymbol)
+    Public Overrides Sub EmitValueStructGetterVars(b As CodeBuilder, var As String)
+        b.AppendLine("IntPtr {0}_str;", var)
+        b.AppendLine("int {0}_length;", var)
     End Sub
 
     Public Overrides Sub EmitAssignToNativeStructMember(b As CodeBuilder, var As String, Optional struct As String = "self")

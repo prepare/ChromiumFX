@@ -31,7 +31,6 @@
 
 
 Public Class SignatureWithStructPtrArray
-
     Inherits Signature
 
     Private arrayIndex As Integer

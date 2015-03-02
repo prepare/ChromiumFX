@@ -50,7 +50,7 @@ namespace Chromium {
                 throw new OutOfMemoryException();
         }
 
-        internal void TakeOwnership(IntPtr nativePtr) {
+        internal void SetNative(IntPtr nativePtr) {
             this.m_nativePtr = nativePtr;
         }
 

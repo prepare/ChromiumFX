@@ -45,27 +45,70 @@ CFX_EXPORT void cfx_time_dtor(cef_time_t* ptr) {
     free(ptr);
 }
 
-CFX_EXPORT void cfx_time_copy_to_native(cef_time_t* self, int year, int month, int day_of_week, int day_of_month, int hour, int minute, int second, int millisecond) {
+// cef_time_t->year
+CFX_EXPORT void cfx_time_set_year(cef_time_t *self, int year) {
     self->year = year;
-    self->month = month;
-    self->day_of_week = day_of_week;
-    self->day_of_month = day_of_month;
-    self->hour = hour;
-    self->minute = minute;
-    self->second = second;
-    self->millisecond = millisecond;
+}
+CFX_EXPORT void cfx_time_get_year(cef_time_t *self, int* year) {
+    *year = self->year;
 }
 
-CFX_EXPORT void cfx_time_copy_to_managed(cef_time_t* self, int* year, int* month, int* day_of_week, int* day_of_month, int* hour, int* minute, int* second, int* millisecond) {
-    *year = self->year;
+// cef_time_t->month
+CFX_EXPORT void cfx_time_set_month(cef_time_t *self, int month) {
+    self->month = month;
+}
+CFX_EXPORT void cfx_time_get_month(cef_time_t *self, int* month) {
     *month = self->month;
+}
+
+// cef_time_t->day_of_week
+CFX_EXPORT void cfx_time_set_day_of_week(cef_time_t *self, int day_of_week) {
+    self->day_of_week = day_of_week;
+}
+CFX_EXPORT void cfx_time_get_day_of_week(cef_time_t *self, int* day_of_week) {
     *day_of_week = self->day_of_week;
+}
+
+// cef_time_t->day_of_month
+CFX_EXPORT void cfx_time_set_day_of_month(cef_time_t *self, int day_of_month) {
+    self->day_of_month = day_of_month;
+}
+CFX_EXPORT void cfx_time_get_day_of_month(cef_time_t *self, int* day_of_month) {
     *day_of_month = self->day_of_month;
+}
+
+// cef_time_t->hour
+CFX_EXPORT void cfx_time_set_hour(cef_time_t *self, int hour) {
+    self->hour = hour;
+}
+CFX_EXPORT void cfx_time_get_hour(cef_time_t *self, int* hour) {
     *hour = self->hour;
+}
+
+// cef_time_t->minute
+CFX_EXPORT void cfx_time_set_minute(cef_time_t *self, int minute) {
+    self->minute = minute;
+}
+CFX_EXPORT void cfx_time_get_minute(cef_time_t *self, int* minute) {
     *minute = self->minute;
+}
+
+// cef_time_t->second
+CFX_EXPORT void cfx_time_set_second(cef_time_t *self, int second) {
+    self->second = second;
+}
+CFX_EXPORT void cfx_time_get_second(cef_time_t *self, int* second) {
     *second = self->second;
+}
+
+// cef_time_t->millisecond
+CFX_EXPORT void cfx_time_set_millisecond(cef_time_t *self, int millisecond) {
+    self->millisecond = millisecond;
+}
+CFX_EXPORT void cfx_time_get_millisecond(cef_time_t *self, int* millisecond) {
     *millisecond = self->millisecond;
 }
+
 
 #ifdef __cplusplus
 } // extern "C"

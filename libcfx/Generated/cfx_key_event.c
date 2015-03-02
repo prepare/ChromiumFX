@@ -45,27 +45,70 @@ CFX_EXPORT void cfx_key_event_dtor(cef_key_event_t* ptr) {
     free(ptr);
 }
 
-CFX_EXPORT void cfx_key_event_copy_to_native(cef_key_event_t* self, cef_key_event_type_t type, uint32 modifiers, int windows_key_code, int native_key_code, int is_system_key, char16 character, char16 unmodified_character, int focus_on_editable_field) {
+// cef_key_event_t->type
+CFX_EXPORT void cfx_key_event_set_type(cef_key_event_t *self, cef_key_event_type_t type) {
     self->type = type;
-    self->modifiers = modifiers;
-    self->windows_key_code = windows_key_code;
-    self->native_key_code = native_key_code;
-    self->is_system_key = is_system_key;
-    self->character = character;
-    self->unmodified_character = unmodified_character;
-    self->focus_on_editable_field = focus_on_editable_field;
+}
+CFX_EXPORT void cfx_key_event_get_type(cef_key_event_t *self, cef_key_event_type_t* type) {
+    *type = self->type;
 }
 
-CFX_EXPORT void cfx_key_event_copy_to_managed(cef_key_event_t* self, cef_key_event_type_t* type, uint32* modifiers, int* windows_key_code, int* native_key_code, int* is_system_key, char16* character, char16* unmodified_character, int* focus_on_editable_field) {
-    *type = self->type;
+// cef_key_event_t->modifiers
+CFX_EXPORT void cfx_key_event_set_modifiers(cef_key_event_t *self, uint32 modifiers) {
+    self->modifiers = modifiers;
+}
+CFX_EXPORT void cfx_key_event_get_modifiers(cef_key_event_t *self, uint32* modifiers) {
     *modifiers = self->modifiers;
+}
+
+// cef_key_event_t->windows_key_code
+CFX_EXPORT void cfx_key_event_set_windows_key_code(cef_key_event_t *self, int windows_key_code) {
+    self->windows_key_code = windows_key_code;
+}
+CFX_EXPORT void cfx_key_event_get_windows_key_code(cef_key_event_t *self, int* windows_key_code) {
     *windows_key_code = self->windows_key_code;
+}
+
+// cef_key_event_t->native_key_code
+CFX_EXPORT void cfx_key_event_set_native_key_code(cef_key_event_t *self, int native_key_code) {
+    self->native_key_code = native_key_code;
+}
+CFX_EXPORT void cfx_key_event_get_native_key_code(cef_key_event_t *self, int* native_key_code) {
     *native_key_code = self->native_key_code;
+}
+
+// cef_key_event_t->is_system_key
+CFX_EXPORT void cfx_key_event_set_is_system_key(cef_key_event_t *self, int is_system_key) {
+    self->is_system_key = is_system_key;
+}
+CFX_EXPORT void cfx_key_event_get_is_system_key(cef_key_event_t *self, int* is_system_key) {
     *is_system_key = self->is_system_key;
+}
+
+// cef_key_event_t->character
+CFX_EXPORT void cfx_key_event_set_character(cef_key_event_t *self, char16 character) {
+    self->character = character;
+}
+CFX_EXPORT void cfx_key_event_get_character(cef_key_event_t *self, char16* character) {
     *character = self->character;
+}
+
+// cef_key_event_t->unmodified_character
+CFX_EXPORT void cfx_key_event_set_unmodified_character(cef_key_event_t *self, char16 unmodified_character) {
+    self->unmodified_character = unmodified_character;
+}
+CFX_EXPORT void cfx_key_event_get_unmodified_character(cef_key_event_t *self, char16* unmodified_character) {
     *unmodified_character = self->unmodified_character;
+}
+
+// cef_key_event_t->focus_on_editable_field
+CFX_EXPORT void cfx_key_event_set_focus_on_editable_field(cef_key_event_t *self, int focus_on_editable_field) {
+    self->focus_on_editable_field = focus_on_editable_field;
+}
+CFX_EXPORT void cfx_key_event_get_focus_on_editable_field(cef_key_event_t *self, int* focus_on_editable_field) {
     *focus_on_editable_field = self->focus_on_editable_field;
 }
+
 
 #ifdef __cplusplus
 } // extern "C"

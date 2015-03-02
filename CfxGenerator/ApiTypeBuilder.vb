@@ -109,7 +109,7 @@ Public Class ApiTypeBuilder
             End If
         Next
 
-        AddType(New BlittablePtrType(apiTypes("void*").AsBlittableType, "*"))
+        AddType(New VoidPtrPtrType())
 
         For Each ed In apiData.CefEnums
             Dim t = New CefEnumType(ed)

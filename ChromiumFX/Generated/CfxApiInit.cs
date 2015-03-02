@@ -252,8 +252,73 @@ namespace Chromium {
             cfx_browser_settings_ctor = (cfx_ctor_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_ctor", typeof(cfx_ctor_delegate));
             cfx_browser_settings_dtor = (cfx_dtor_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_dtor", typeof(cfx_dtor_delegate));
 
-            cfx_browser_settings_copy_to_native = (cfx_browser_settings_copy_to_native_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_copy_to_native", typeof(cfx_browser_settings_copy_to_native_delegate));
-            cfx_browser_settings_copy_to_managed = (cfx_browser_settings_copy_to_managed_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_copy_to_managed", typeof(cfx_browser_settings_copy_to_managed_delegate));
+            cfx_browser_settings_set_windowless_frame_rate = (cfx_browser_settings_set_windowless_frame_rate_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_windowless_frame_rate", typeof(cfx_browser_settings_set_windowless_frame_rate_delegate));
+            cfx_browser_settings_get_windowless_frame_rate = (cfx_browser_settings_get_windowless_frame_rate_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_windowless_frame_rate", typeof(cfx_browser_settings_get_windowless_frame_rate_delegate));
+            cfx_browser_settings_set_standard_font_family = (cfx_browser_settings_set_standard_font_family_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_standard_font_family", typeof(cfx_browser_settings_set_standard_font_family_delegate));
+            cfx_browser_settings_get_standard_font_family = (cfx_browser_settings_get_standard_font_family_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_standard_font_family", typeof(cfx_browser_settings_get_standard_font_family_delegate));
+            cfx_browser_settings_set_fixed_font_family = (cfx_browser_settings_set_fixed_font_family_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_fixed_font_family", typeof(cfx_browser_settings_set_fixed_font_family_delegate));
+            cfx_browser_settings_get_fixed_font_family = (cfx_browser_settings_get_fixed_font_family_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_fixed_font_family", typeof(cfx_browser_settings_get_fixed_font_family_delegate));
+            cfx_browser_settings_set_serif_font_family = (cfx_browser_settings_set_serif_font_family_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_serif_font_family", typeof(cfx_browser_settings_set_serif_font_family_delegate));
+            cfx_browser_settings_get_serif_font_family = (cfx_browser_settings_get_serif_font_family_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_serif_font_family", typeof(cfx_browser_settings_get_serif_font_family_delegate));
+            cfx_browser_settings_set_sans_serif_font_family = (cfx_browser_settings_set_sans_serif_font_family_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_sans_serif_font_family", typeof(cfx_browser_settings_set_sans_serif_font_family_delegate));
+            cfx_browser_settings_get_sans_serif_font_family = (cfx_browser_settings_get_sans_serif_font_family_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_sans_serif_font_family", typeof(cfx_browser_settings_get_sans_serif_font_family_delegate));
+            cfx_browser_settings_set_cursive_font_family = (cfx_browser_settings_set_cursive_font_family_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_cursive_font_family", typeof(cfx_browser_settings_set_cursive_font_family_delegate));
+            cfx_browser_settings_get_cursive_font_family = (cfx_browser_settings_get_cursive_font_family_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_cursive_font_family", typeof(cfx_browser_settings_get_cursive_font_family_delegate));
+            cfx_browser_settings_set_fantasy_font_family = (cfx_browser_settings_set_fantasy_font_family_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_fantasy_font_family", typeof(cfx_browser_settings_set_fantasy_font_family_delegate));
+            cfx_browser_settings_get_fantasy_font_family = (cfx_browser_settings_get_fantasy_font_family_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_fantasy_font_family", typeof(cfx_browser_settings_get_fantasy_font_family_delegate));
+            cfx_browser_settings_set_default_font_size = (cfx_browser_settings_set_default_font_size_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_default_font_size", typeof(cfx_browser_settings_set_default_font_size_delegate));
+            cfx_browser_settings_get_default_font_size = (cfx_browser_settings_get_default_font_size_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_default_font_size", typeof(cfx_browser_settings_get_default_font_size_delegate));
+            cfx_browser_settings_set_default_fixed_font_size = (cfx_browser_settings_set_default_fixed_font_size_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_default_fixed_font_size", typeof(cfx_browser_settings_set_default_fixed_font_size_delegate));
+            cfx_browser_settings_get_default_fixed_font_size = (cfx_browser_settings_get_default_fixed_font_size_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_default_fixed_font_size", typeof(cfx_browser_settings_get_default_fixed_font_size_delegate));
+            cfx_browser_settings_set_minimum_font_size = (cfx_browser_settings_set_minimum_font_size_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_minimum_font_size", typeof(cfx_browser_settings_set_minimum_font_size_delegate));
+            cfx_browser_settings_get_minimum_font_size = (cfx_browser_settings_get_minimum_font_size_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_minimum_font_size", typeof(cfx_browser_settings_get_minimum_font_size_delegate));
+            cfx_browser_settings_set_minimum_logical_font_size = (cfx_browser_settings_set_minimum_logical_font_size_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_minimum_logical_font_size", typeof(cfx_browser_settings_set_minimum_logical_font_size_delegate));
+            cfx_browser_settings_get_minimum_logical_font_size = (cfx_browser_settings_get_minimum_logical_font_size_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_minimum_logical_font_size", typeof(cfx_browser_settings_get_minimum_logical_font_size_delegate));
+            cfx_browser_settings_set_default_encoding = (cfx_browser_settings_set_default_encoding_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_default_encoding", typeof(cfx_browser_settings_set_default_encoding_delegate));
+            cfx_browser_settings_get_default_encoding = (cfx_browser_settings_get_default_encoding_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_default_encoding", typeof(cfx_browser_settings_get_default_encoding_delegate));
+            cfx_browser_settings_set_remote_fonts = (cfx_browser_settings_set_remote_fonts_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_remote_fonts", typeof(cfx_browser_settings_set_remote_fonts_delegate));
+            cfx_browser_settings_get_remote_fonts = (cfx_browser_settings_get_remote_fonts_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_remote_fonts", typeof(cfx_browser_settings_get_remote_fonts_delegate));
+            cfx_browser_settings_set_javascript = (cfx_browser_settings_set_javascript_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_javascript", typeof(cfx_browser_settings_set_javascript_delegate));
+            cfx_browser_settings_get_javascript = (cfx_browser_settings_get_javascript_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_javascript", typeof(cfx_browser_settings_get_javascript_delegate));
+            cfx_browser_settings_set_javascript_open_windows = (cfx_browser_settings_set_javascript_open_windows_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_javascript_open_windows", typeof(cfx_browser_settings_set_javascript_open_windows_delegate));
+            cfx_browser_settings_get_javascript_open_windows = (cfx_browser_settings_get_javascript_open_windows_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_javascript_open_windows", typeof(cfx_browser_settings_get_javascript_open_windows_delegate));
+            cfx_browser_settings_set_javascript_close_windows = (cfx_browser_settings_set_javascript_close_windows_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_javascript_close_windows", typeof(cfx_browser_settings_set_javascript_close_windows_delegate));
+            cfx_browser_settings_get_javascript_close_windows = (cfx_browser_settings_get_javascript_close_windows_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_javascript_close_windows", typeof(cfx_browser_settings_get_javascript_close_windows_delegate));
+            cfx_browser_settings_set_javascript_access_clipboard = (cfx_browser_settings_set_javascript_access_clipboard_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_javascript_access_clipboard", typeof(cfx_browser_settings_set_javascript_access_clipboard_delegate));
+            cfx_browser_settings_get_javascript_access_clipboard = (cfx_browser_settings_get_javascript_access_clipboard_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_javascript_access_clipboard", typeof(cfx_browser_settings_get_javascript_access_clipboard_delegate));
+            cfx_browser_settings_set_javascript_dom_paste = (cfx_browser_settings_set_javascript_dom_paste_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_javascript_dom_paste", typeof(cfx_browser_settings_set_javascript_dom_paste_delegate));
+            cfx_browser_settings_get_javascript_dom_paste = (cfx_browser_settings_get_javascript_dom_paste_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_javascript_dom_paste", typeof(cfx_browser_settings_get_javascript_dom_paste_delegate));
+            cfx_browser_settings_set_caret_browsing = (cfx_browser_settings_set_caret_browsing_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_caret_browsing", typeof(cfx_browser_settings_set_caret_browsing_delegate));
+            cfx_browser_settings_get_caret_browsing = (cfx_browser_settings_get_caret_browsing_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_caret_browsing", typeof(cfx_browser_settings_get_caret_browsing_delegate));
+            cfx_browser_settings_set_java = (cfx_browser_settings_set_java_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_java", typeof(cfx_browser_settings_set_java_delegate));
+            cfx_browser_settings_get_java = (cfx_browser_settings_get_java_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_java", typeof(cfx_browser_settings_get_java_delegate));
+            cfx_browser_settings_set_plugins = (cfx_browser_settings_set_plugins_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_plugins", typeof(cfx_browser_settings_set_plugins_delegate));
+            cfx_browser_settings_get_plugins = (cfx_browser_settings_get_plugins_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_plugins", typeof(cfx_browser_settings_get_plugins_delegate));
+            cfx_browser_settings_set_universal_access_from_file_urls = (cfx_browser_settings_set_universal_access_from_file_urls_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_universal_access_from_file_urls", typeof(cfx_browser_settings_set_universal_access_from_file_urls_delegate));
+            cfx_browser_settings_get_universal_access_from_file_urls = (cfx_browser_settings_get_universal_access_from_file_urls_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_universal_access_from_file_urls", typeof(cfx_browser_settings_get_universal_access_from_file_urls_delegate));
+            cfx_browser_settings_set_file_access_from_file_urls = (cfx_browser_settings_set_file_access_from_file_urls_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_file_access_from_file_urls", typeof(cfx_browser_settings_set_file_access_from_file_urls_delegate));
+            cfx_browser_settings_get_file_access_from_file_urls = (cfx_browser_settings_get_file_access_from_file_urls_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_file_access_from_file_urls", typeof(cfx_browser_settings_get_file_access_from_file_urls_delegate));
+            cfx_browser_settings_set_web_security = (cfx_browser_settings_set_web_security_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_web_security", typeof(cfx_browser_settings_set_web_security_delegate));
+            cfx_browser_settings_get_web_security = (cfx_browser_settings_get_web_security_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_web_security", typeof(cfx_browser_settings_get_web_security_delegate));
+            cfx_browser_settings_set_image_loading = (cfx_browser_settings_set_image_loading_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_image_loading", typeof(cfx_browser_settings_set_image_loading_delegate));
+            cfx_browser_settings_get_image_loading = (cfx_browser_settings_get_image_loading_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_image_loading", typeof(cfx_browser_settings_get_image_loading_delegate));
+            cfx_browser_settings_set_image_shrink_standalone_to_fit = (cfx_browser_settings_set_image_shrink_standalone_to_fit_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_image_shrink_standalone_to_fit", typeof(cfx_browser_settings_set_image_shrink_standalone_to_fit_delegate));
+            cfx_browser_settings_get_image_shrink_standalone_to_fit = (cfx_browser_settings_get_image_shrink_standalone_to_fit_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_image_shrink_standalone_to_fit", typeof(cfx_browser_settings_get_image_shrink_standalone_to_fit_delegate));
+            cfx_browser_settings_set_text_area_resize = (cfx_browser_settings_set_text_area_resize_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_text_area_resize", typeof(cfx_browser_settings_set_text_area_resize_delegate));
+            cfx_browser_settings_get_text_area_resize = (cfx_browser_settings_get_text_area_resize_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_text_area_resize", typeof(cfx_browser_settings_get_text_area_resize_delegate));
+            cfx_browser_settings_set_tab_to_links = (cfx_browser_settings_set_tab_to_links_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_tab_to_links", typeof(cfx_browser_settings_set_tab_to_links_delegate));
+            cfx_browser_settings_get_tab_to_links = (cfx_browser_settings_get_tab_to_links_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_tab_to_links", typeof(cfx_browser_settings_get_tab_to_links_delegate));
+            cfx_browser_settings_set_local_storage = (cfx_browser_settings_set_local_storage_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_local_storage", typeof(cfx_browser_settings_set_local_storage_delegate));
+            cfx_browser_settings_get_local_storage = (cfx_browser_settings_get_local_storage_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_local_storage", typeof(cfx_browser_settings_get_local_storage_delegate));
+            cfx_browser_settings_set_databases = (cfx_browser_settings_set_databases_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_databases", typeof(cfx_browser_settings_set_databases_delegate));
+            cfx_browser_settings_get_databases = (cfx_browser_settings_get_databases_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_databases", typeof(cfx_browser_settings_get_databases_delegate));
+            cfx_browser_settings_set_application_cache = (cfx_browser_settings_set_application_cache_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_application_cache", typeof(cfx_browser_settings_set_application_cache_delegate));
+            cfx_browser_settings_get_application_cache = (cfx_browser_settings_get_application_cache_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_application_cache", typeof(cfx_browser_settings_get_application_cache_delegate));
+            cfx_browser_settings_set_webgl = (cfx_browser_settings_set_webgl_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_webgl", typeof(cfx_browser_settings_set_webgl_delegate));
+            cfx_browser_settings_get_webgl = (cfx_browser_settings_get_webgl_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_webgl", typeof(cfx_browser_settings_get_webgl_delegate));
+            cfx_browser_settings_set_background_color = (cfx_browser_settings_set_background_color_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_set_background_color", typeof(cfx_browser_settings_set_background_color_delegate));
+            cfx_browser_settings_get_background_color = (cfx_browser_settings_get_background_color_delegate)GetDelegate(libcfxPtr, "cfx_browser_settings_get_background_color", typeof(cfx_browser_settings_get_background_color_delegate));
+
 
 
             // cef_callback
@@ -380,8 +445,27 @@ namespace Chromium {
             cfx_cookie_ctor = (cfx_ctor_delegate)GetDelegate(libcfxPtr, "cfx_cookie_ctor", typeof(cfx_ctor_delegate));
             cfx_cookie_dtor = (cfx_dtor_delegate)GetDelegate(libcfxPtr, "cfx_cookie_dtor", typeof(cfx_dtor_delegate));
 
-            cfx_cookie_copy_to_native = (cfx_cookie_copy_to_native_delegate)GetDelegate(libcfxPtr, "cfx_cookie_copy_to_native", typeof(cfx_cookie_copy_to_native_delegate));
-            cfx_cookie_copy_to_managed = (cfx_cookie_copy_to_managed_delegate)GetDelegate(libcfxPtr, "cfx_cookie_copy_to_managed", typeof(cfx_cookie_copy_to_managed_delegate));
+            cfx_cookie_set_name = (cfx_cookie_set_name_delegate)GetDelegate(libcfxPtr, "cfx_cookie_set_name", typeof(cfx_cookie_set_name_delegate));
+            cfx_cookie_get_name = (cfx_cookie_get_name_delegate)GetDelegate(libcfxPtr, "cfx_cookie_get_name", typeof(cfx_cookie_get_name_delegate));
+            cfx_cookie_set_value = (cfx_cookie_set_value_delegate)GetDelegate(libcfxPtr, "cfx_cookie_set_value", typeof(cfx_cookie_set_value_delegate));
+            cfx_cookie_get_value = (cfx_cookie_get_value_delegate)GetDelegate(libcfxPtr, "cfx_cookie_get_value", typeof(cfx_cookie_get_value_delegate));
+            cfx_cookie_set_domain = (cfx_cookie_set_domain_delegate)GetDelegate(libcfxPtr, "cfx_cookie_set_domain", typeof(cfx_cookie_set_domain_delegate));
+            cfx_cookie_get_domain = (cfx_cookie_get_domain_delegate)GetDelegate(libcfxPtr, "cfx_cookie_get_domain", typeof(cfx_cookie_get_domain_delegate));
+            cfx_cookie_set_path = (cfx_cookie_set_path_delegate)GetDelegate(libcfxPtr, "cfx_cookie_set_path", typeof(cfx_cookie_set_path_delegate));
+            cfx_cookie_get_path = (cfx_cookie_get_path_delegate)GetDelegate(libcfxPtr, "cfx_cookie_get_path", typeof(cfx_cookie_get_path_delegate));
+            cfx_cookie_set_secure = (cfx_cookie_set_secure_delegate)GetDelegate(libcfxPtr, "cfx_cookie_set_secure", typeof(cfx_cookie_set_secure_delegate));
+            cfx_cookie_get_secure = (cfx_cookie_get_secure_delegate)GetDelegate(libcfxPtr, "cfx_cookie_get_secure", typeof(cfx_cookie_get_secure_delegate));
+            cfx_cookie_set_httponly = (cfx_cookie_set_httponly_delegate)GetDelegate(libcfxPtr, "cfx_cookie_set_httponly", typeof(cfx_cookie_set_httponly_delegate));
+            cfx_cookie_get_httponly = (cfx_cookie_get_httponly_delegate)GetDelegate(libcfxPtr, "cfx_cookie_get_httponly", typeof(cfx_cookie_get_httponly_delegate));
+            cfx_cookie_set_creation = (cfx_cookie_set_creation_delegate)GetDelegate(libcfxPtr, "cfx_cookie_set_creation", typeof(cfx_cookie_set_creation_delegate));
+            cfx_cookie_get_creation = (cfx_cookie_get_creation_delegate)GetDelegate(libcfxPtr, "cfx_cookie_get_creation", typeof(cfx_cookie_get_creation_delegate));
+            cfx_cookie_set_last_access = (cfx_cookie_set_last_access_delegate)GetDelegate(libcfxPtr, "cfx_cookie_set_last_access", typeof(cfx_cookie_set_last_access_delegate));
+            cfx_cookie_get_last_access = (cfx_cookie_get_last_access_delegate)GetDelegate(libcfxPtr, "cfx_cookie_get_last_access", typeof(cfx_cookie_get_last_access_delegate));
+            cfx_cookie_set_has_expires = (cfx_cookie_set_has_expires_delegate)GetDelegate(libcfxPtr, "cfx_cookie_set_has_expires", typeof(cfx_cookie_set_has_expires_delegate));
+            cfx_cookie_get_has_expires = (cfx_cookie_get_has_expires_delegate)GetDelegate(libcfxPtr, "cfx_cookie_get_has_expires", typeof(cfx_cookie_get_has_expires_delegate));
+            cfx_cookie_set_expires = (cfx_cookie_set_expires_delegate)GetDelegate(libcfxPtr, "cfx_cookie_set_expires", typeof(cfx_cookie_set_expires_delegate));
+            cfx_cookie_get_expires = (cfx_cookie_get_expires_delegate)GetDelegate(libcfxPtr, "cfx_cookie_get_expires", typeof(cfx_cookie_get_expires_delegate));
+
 
 
             // cef_cookie_manager
@@ -417,8 +501,13 @@ namespace Chromium {
             cfx_cursor_info_ctor = (cfx_ctor_delegate)GetDelegate(libcfxPtr, "cfx_cursor_info_ctor", typeof(cfx_ctor_delegate));
             cfx_cursor_info_dtor = (cfx_dtor_delegate)GetDelegate(libcfxPtr, "cfx_cursor_info_dtor", typeof(cfx_dtor_delegate));
 
-            cfx_cursor_info_copy_to_native = (cfx_cursor_info_copy_to_native_delegate)GetDelegate(libcfxPtr, "cfx_cursor_info_copy_to_native", typeof(cfx_cursor_info_copy_to_native_delegate));
-            cfx_cursor_info_copy_to_managed = (cfx_cursor_info_copy_to_managed_delegate)GetDelegate(libcfxPtr, "cfx_cursor_info_copy_to_managed", typeof(cfx_cursor_info_copy_to_managed_delegate));
+            cfx_cursor_info_set_hotspot = (cfx_cursor_info_set_hotspot_delegate)GetDelegate(libcfxPtr, "cfx_cursor_info_set_hotspot", typeof(cfx_cursor_info_set_hotspot_delegate));
+            cfx_cursor_info_get_hotspot = (cfx_cursor_info_get_hotspot_delegate)GetDelegate(libcfxPtr, "cfx_cursor_info_get_hotspot", typeof(cfx_cursor_info_get_hotspot_delegate));
+            cfx_cursor_info_set_image_scale_factor = (cfx_cursor_info_set_image_scale_factor_delegate)GetDelegate(libcfxPtr, "cfx_cursor_info_set_image_scale_factor", typeof(cfx_cursor_info_set_image_scale_factor_delegate));
+            cfx_cursor_info_get_image_scale_factor = (cfx_cursor_info_get_image_scale_factor_delegate)GetDelegate(libcfxPtr, "cfx_cursor_info_get_image_scale_factor", typeof(cfx_cursor_info_get_image_scale_factor_delegate));
+            cfx_cursor_info_set_buffer = (cfx_cursor_info_set_buffer_delegate)GetDelegate(libcfxPtr, "cfx_cursor_info_set_buffer", typeof(cfx_cursor_info_set_buffer_delegate));
+            cfx_cursor_info_get_buffer = (cfx_cursor_info_get_buffer_delegate)GetDelegate(libcfxPtr, "cfx_cursor_info_get_buffer", typeof(cfx_cursor_info_get_buffer_delegate));
+
 
 
             // cef_dialog_handler
@@ -717,8 +806,27 @@ namespace Chromium {
             cfx_geoposition_ctor = (cfx_ctor_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_ctor", typeof(cfx_ctor_delegate));
             cfx_geoposition_dtor = (cfx_dtor_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_dtor", typeof(cfx_dtor_delegate));
 
-            cfx_geoposition_copy_to_native = (cfx_geoposition_copy_to_native_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_copy_to_native", typeof(cfx_geoposition_copy_to_native_delegate));
-            cfx_geoposition_copy_to_managed = (cfx_geoposition_copy_to_managed_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_copy_to_managed", typeof(cfx_geoposition_copy_to_managed_delegate));
+            cfx_geoposition_set_latitude = (cfx_geoposition_set_latitude_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_set_latitude", typeof(cfx_geoposition_set_latitude_delegate));
+            cfx_geoposition_get_latitude = (cfx_geoposition_get_latitude_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_get_latitude", typeof(cfx_geoposition_get_latitude_delegate));
+            cfx_geoposition_set_longitude = (cfx_geoposition_set_longitude_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_set_longitude", typeof(cfx_geoposition_set_longitude_delegate));
+            cfx_geoposition_get_longitude = (cfx_geoposition_get_longitude_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_get_longitude", typeof(cfx_geoposition_get_longitude_delegate));
+            cfx_geoposition_set_altitude = (cfx_geoposition_set_altitude_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_set_altitude", typeof(cfx_geoposition_set_altitude_delegate));
+            cfx_geoposition_get_altitude = (cfx_geoposition_get_altitude_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_get_altitude", typeof(cfx_geoposition_get_altitude_delegate));
+            cfx_geoposition_set_accuracy = (cfx_geoposition_set_accuracy_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_set_accuracy", typeof(cfx_geoposition_set_accuracy_delegate));
+            cfx_geoposition_get_accuracy = (cfx_geoposition_get_accuracy_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_get_accuracy", typeof(cfx_geoposition_get_accuracy_delegate));
+            cfx_geoposition_set_altitude_accuracy = (cfx_geoposition_set_altitude_accuracy_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_set_altitude_accuracy", typeof(cfx_geoposition_set_altitude_accuracy_delegate));
+            cfx_geoposition_get_altitude_accuracy = (cfx_geoposition_get_altitude_accuracy_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_get_altitude_accuracy", typeof(cfx_geoposition_get_altitude_accuracy_delegate));
+            cfx_geoposition_set_heading = (cfx_geoposition_set_heading_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_set_heading", typeof(cfx_geoposition_set_heading_delegate));
+            cfx_geoposition_get_heading = (cfx_geoposition_get_heading_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_get_heading", typeof(cfx_geoposition_get_heading_delegate));
+            cfx_geoposition_set_speed = (cfx_geoposition_set_speed_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_set_speed", typeof(cfx_geoposition_set_speed_delegate));
+            cfx_geoposition_get_speed = (cfx_geoposition_get_speed_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_get_speed", typeof(cfx_geoposition_get_speed_delegate));
+            cfx_geoposition_set_timestamp = (cfx_geoposition_set_timestamp_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_set_timestamp", typeof(cfx_geoposition_set_timestamp_delegate));
+            cfx_geoposition_get_timestamp = (cfx_geoposition_get_timestamp_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_get_timestamp", typeof(cfx_geoposition_get_timestamp_delegate));
+            cfx_geoposition_set_error_code = (cfx_geoposition_set_error_code_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_set_error_code", typeof(cfx_geoposition_set_error_code_delegate));
+            cfx_geoposition_get_error_code = (cfx_geoposition_get_error_code_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_get_error_code", typeof(cfx_geoposition_get_error_code_delegate));
+            cfx_geoposition_set_error_message = (cfx_geoposition_set_error_message_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_set_error_message", typeof(cfx_geoposition_set_error_message_delegate));
+            cfx_geoposition_get_error_message = (cfx_geoposition_get_error_message_delegate)GetDelegate(libcfxPtr, "cfx_geoposition_get_error_message", typeof(cfx_geoposition_get_error_message_delegate));
+
 
 
             // cef_get_geolocation_callback
@@ -765,8 +873,23 @@ namespace Chromium {
             cfx_key_event_ctor = (cfx_ctor_delegate)GetDelegate(libcfxPtr, "cfx_key_event_ctor", typeof(cfx_ctor_delegate));
             cfx_key_event_dtor = (cfx_dtor_delegate)GetDelegate(libcfxPtr, "cfx_key_event_dtor", typeof(cfx_dtor_delegate));
 
-            cfx_key_event_copy_to_native = (cfx_key_event_copy_to_native_delegate)GetDelegate(libcfxPtr, "cfx_key_event_copy_to_native", typeof(cfx_key_event_copy_to_native_delegate));
-            cfx_key_event_copy_to_managed = (cfx_key_event_copy_to_managed_delegate)GetDelegate(libcfxPtr, "cfx_key_event_copy_to_managed", typeof(cfx_key_event_copy_to_managed_delegate));
+            cfx_key_event_set_type = (cfx_key_event_set_type_delegate)GetDelegate(libcfxPtr, "cfx_key_event_set_type", typeof(cfx_key_event_set_type_delegate));
+            cfx_key_event_get_type = (cfx_key_event_get_type_delegate)GetDelegate(libcfxPtr, "cfx_key_event_get_type", typeof(cfx_key_event_get_type_delegate));
+            cfx_key_event_set_modifiers = (cfx_key_event_set_modifiers_delegate)GetDelegate(libcfxPtr, "cfx_key_event_set_modifiers", typeof(cfx_key_event_set_modifiers_delegate));
+            cfx_key_event_get_modifiers = (cfx_key_event_get_modifiers_delegate)GetDelegate(libcfxPtr, "cfx_key_event_get_modifiers", typeof(cfx_key_event_get_modifiers_delegate));
+            cfx_key_event_set_windows_key_code = (cfx_key_event_set_windows_key_code_delegate)GetDelegate(libcfxPtr, "cfx_key_event_set_windows_key_code", typeof(cfx_key_event_set_windows_key_code_delegate));
+            cfx_key_event_get_windows_key_code = (cfx_key_event_get_windows_key_code_delegate)GetDelegate(libcfxPtr, "cfx_key_event_get_windows_key_code", typeof(cfx_key_event_get_windows_key_code_delegate));
+            cfx_key_event_set_native_key_code = (cfx_key_event_set_native_key_code_delegate)GetDelegate(libcfxPtr, "cfx_key_event_set_native_key_code", typeof(cfx_key_event_set_native_key_code_delegate));
+            cfx_key_event_get_native_key_code = (cfx_key_event_get_native_key_code_delegate)GetDelegate(libcfxPtr, "cfx_key_event_get_native_key_code", typeof(cfx_key_event_get_native_key_code_delegate));
+            cfx_key_event_set_is_system_key = (cfx_key_event_set_is_system_key_delegate)GetDelegate(libcfxPtr, "cfx_key_event_set_is_system_key", typeof(cfx_key_event_set_is_system_key_delegate));
+            cfx_key_event_get_is_system_key = (cfx_key_event_get_is_system_key_delegate)GetDelegate(libcfxPtr, "cfx_key_event_get_is_system_key", typeof(cfx_key_event_get_is_system_key_delegate));
+            cfx_key_event_set_character = (cfx_key_event_set_character_delegate)GetDelegate(libcfxPtr, "cfx_key_event_set_character", typeof(cfx_key_event_set_character_delegate));
+            cfx_key_event_get_character = (cfx_key_event_get_character_delegate)GetDelegate(libcfxPtr, "cfx_key_event_get_character", typeof(cfx_key_event_get_character_delegate));
+            cfx_key_event_set_unmodified_character = (cfx_key_event_set_unmodified_character_delegate)GetDelegate(libcfxPtr, "cfx_key_event_set_unmodified_character", typeof(cfx_key_event_set_unmodified_character_delegate));
+            cfx_key_event_get_unmodified_character = (cfx_key_event_get_unmodified_character_delegate)GetDelegate(libcfxPtr, "cfx_key_event_get_unmodified_character", typeof(cfx_key_event_get_unmodified_character_delegate));
+            cfx_key_event_set_focus_on_editable_field = (cfx_key_event_set_focus_on_editable_field_delegate)GetDelegate(libcfxPtr, "cfx_key_event_set_focus_on_editable_field", typeof(cfx_key_event_set_focus_on_editable_field_delegate));
+            cfx_key_event_get_focus_on_editable_field = (cfx_key_event_get_focus_on_editable_field_delegate)GetDelegate(libcfxPtr, "cfx_key_event_get_focus_on_editable_field", typeof(cfx_key_event_get_focus_on_editable_field_delegate));
+
 
 
             // cef_keyboard_handler
@@ -915,7 +1038,13 @@ namespace Chromium {
             cfx_mouse_event_ctor = (cfx_ctor_delegate)GetDelegate(libcfxPtr, "cfx_mouse_event_ctor", typeof(cfx_ctor_delegate));
             cfx_mouse_event_dtor = (cfx_dtor_delegate)GetDelegate(libcfxPtr, "cfx_mouse_event_dtor", typeof(cfx_dtor_delegate));
 
-            cfx_mouse_event_copy_to_native = (cfx_mouse_event_copy_to_native_delegate)GetDelegate(libcfxPtr, "cfx_mouse_event_copy_to_native", typeof(cfx_mouse_event_copy_to_native_delegate));
+            cfx_mouse_event_set_x = (cfx_mouse_event_set_x_delegate)GetDelegate(libcfxPtr, "cfx_mouse_event_set_x", typeof(cfx_mouse_event_set_x_delegate));
+            cfx_mouse_event_get_x = (cfx_mouse_event_get_x_delegate)GetDelegate(libcfxPtr, "cfx_mouse_event_get_x", typeof(cfx_mouse_event_get_x_delegate));
+            cfx_mouse_event_set_y = (cfx_mouse_event_set_y_delegate)GetDelegate(libcfxPtr, "cfx_mouse_event_set_y", typeof(cfx_mouse_event_set_y_delegate));
+            cfx_mouse_event_get_y = (cfx_mouse_event_get_y_delegate)GetDelegate(libcfxPtr, "cfx_mouse_event_get_y", typeof(cfx_mouse_event_get_y_delegate));
+            cfx_mouse_event_set_modifiers = (cfx_mouse_event_set_modifiers_delegate)GetDelegate(libcfxPtr, "cfx_mouse_event_set_modifiers", typeof(cfx_mouse_event_set_modifiers_delegate));
+            cfx_mouse_event_get_modifiers = (cfx_mouse_event_get_modifiers_delegate)GetDelegate(libcfxPtr, "cfx_mouse_event_get_modifiers", typeof(cfx_mouse_event_get_modifiers_delegate));
+
 
 
             // cef_navigation_entry
@@ -951,7 +1080,11 @@ namespace Chromium {
             cfx_page_range_ctor = (cfx_ctor_delegate)GetDelegate(libcfxPtr, "cfx_page_range_ctor", typeof(cfx_ctor_delegate));
             cfx_page_range_dtor = (cfx_dtor_delegate)GetDelegate(libcfxPtr, "cfx_page_range_dtor", typeof(cfx_dtor_delegate));
 
-            cfx_page_range_copy_to_native = (cfx_page_range_copy_to_native_delegate)GetDelegate(libcfxPtr, "cfx_page_range_copy_to_native", typeof(cfx_page_range_copy_to_native_delegate));
+            cfx_page_range_set_from = (cfx_page_range_set_from_delegate)GetDelegate(libcfxPtr, "cfx_page_range_set_from", typeof(cfx_page_range_set_from_delegate));
+            cfx_page_range_get_from = (cfx_page_range_get_from_delegate)GetDelegate(libcfxPtr, "cfx_page_range_get_from", typeof(cfx_page_range_get_from_delegate));
+            cfx_page_range_set_to = (cfx_page_range_set_to_delegate)GetDelegate(libcfxPtr, "cfx_page_range_set_to", typeof(cfx_page_range_set_to_delegate));
+            cfx_page_range_get_to = (cfx_page_range_get_to_delegate)GetDelegate(libcfxPtr, "cfx_page_range_get_to", typeof(cfx_page_range_get_to_delegate));
+
 
 
             // cef_point
@@ -959,8 +1092,11 @@ namespace Chromium {
             cfx_point_ctor = (cfx_ctor_delegate)GetDelegate(libcfxPtr, "cfx_point_ctor", typeof(cfx_ctor_delegate));
             cfx_point_dtor = (cfx_dtor_delegate)GetDelegate(libcfxPtr, "cfx_point_dtor", typeof(cfx_dtor_delegate));
 
-            cfx_point_copy_to_native = (cfx_point_copy_to_native_delegate)GetDelegate(libcfxPtr, "cfx_point_copy_to_native", typeof(cfx_point_copy_to_native_delegate));
-            cfx_point_copy_to_managed = (cfx_point_copy_to_managed_delegate)GetDelegate(libcfxPtr, "cfx_point_copy_to_managed", typeof(cfx_point_copy_to_managed_delegate));
+            cfx_point_set_x = (cfx_point_set_x_delegate)GetDelegate(libcfxPtr, "cfx_point_set_x", typeof(cfx_point_set_x_delegate));
+            cfx_point_get_x = (cfx_point_get_x_delegate)GetDelegate(libcfxPtr, "cfx_point_get_x", typeof(cfx_point_get_x_delegate));
+            cfx_point_set_y = (cfx_point_set_y_delegate)GetDelegate(libcfxPtr, "cfx_point_set_y", typeof(cfx_point_set_y_delegate));
+            cfx_point_get_y = (cfx_point_get_y_delegate)GetDelegate(libcfxPtr, "cfx_point_get_y", typeof(cfx_point_get_y_delegate));
+
 
 
             // cef_popup_features
@@ -968,8 +1104,41 @@ namespace Chromium {
             cfx_popup_features_ctor = (cfx_ctor_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_ctor", typeof(cfx_ctor_delegate));
             cfx_popup_features_dtor = (cfx_dtor_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_dtor", typeof(cfx_dtor_delegate));
 
-            cfx_popup_features_copy_to_native = (cfx_popup_features_copy_to_native_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_copy_to_native", typeof(cfx_popup_features_copy_to_native_delegate));
-            cfx_popup_features_copy_to_managed = (cfx_popup_features_copy_to_managed_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_copy_to_managed", typeof(cfx_popup_features_copy_to_managed_delegate));
+            cfx_popup_features_set_x = (cfx_popup_features_set_x_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_set_x", typeof(cfx_popup_features_set_x_delegate));
+            cfx_popup_features_get_x = (cfx_popup_features_get_x_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_get_x", typeof(cfx_popup_features_get_x_delegate));
+            cfx_popup_features_set_xSet = (cfx_popup_features_set_xSet_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_set_xSet", typeof(cfx_popup_features_set_xSet_delegate));
+            cfx_popup_features_get_xSet = (cfx_popup_features_get_xSet_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_get_xSet", typeof(cfx_popup_features_get_xSet_delegate));
+            cfx_popup_features_set_y = (cfx_popup_features_set_y_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_set_y", typeof(cfx_popup_features_set_y_delegate));
+            cfx_popup_features_get_y = (cfx_popup_features_get_y_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_get_y", typeof(cfx_popup_features_get_y_delegate));
+            cfx_popup_features_set_ySet = (cfx_popup_features_set_ySet_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_set_ySet", typeof(cfx_popup_features_set_ySet_delegate));
+            cfx_popup_features_get_ySet = (cfx_popup_features_get_ySet_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_get_ySet", typeof(cfx_popup_features_get_ySet_delegate));
+            cfx_popup_features_set_width = (cfx_popup_features_set_width_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_set_width", typeof(cfx_popup_features_set_width_delegate));
+            cfx_popup_features_get_width = (cfx_popup_features_get_width_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_get_width", typeof(cfx_popup_features_get_width_delegate));
+            cfx_popup_features_set_widthSet = (cfx_popup_features_set_widthSet_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_set_widthSet", typeof(cfx_popup_features_set_widthSet_delegate));
+            cfx_popup_features_get_widthSet = (cfx_popup_features_get_widthSet_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_get_widthSet", typeof(cfx_popup_features_get_widthSet_delegate));
+            cfx_popup_features_set_height = (cfx_popup_features_set_height_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_set_height", typeof(cfx_popup_features_set_height_delegate));
+            cfx_popup_features_get_height = (cfx_popup_features_get_height_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_get_height", typeof(cfx_popup_features_get_height_delegate));
+            cfx_popup_features_set_heightSet = (cfx_popup_features_set_heightSet_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_set_heightSet", typeof(cfx_popup_features_set_heightSet_delegate));
+            cfx_popup_features_get_heightSet = (cfx_popup_features_get_heightSet_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_get_heightSet", typeof(cfx_popup_features_get_heightSet_delegate));
+            cfx_popup_features_set_menuBarVisible = (cfx_popup_features_set_menuBarVisible_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_set_menuBarVisible", typeof(cfx_popup_features_set_menuBarVisible_delegate));
+            cfx_popup_features_get_menuBarVisible = (cfx_popup_features_get_menuBarVisible_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_get_menuBarVisible", typeof(cfx_popup_features_get_menuBarVisible_delegate));
+            cfx_popup_features_set_statusBarVisible = (cfx_popup_features_set_statusBarVisible_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_set_statusBarVisible", typeof(cfx_popup_features_set_statusBarVisible_delegate));
+            cfx_popup_features_get_statusBarVisible = (cfx_popup_features_get_statusBarVisible_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_get_statusBarVisible", typeof(cfx_popup_features_get_statusBarVisible_delegate));
+            cfx_popup_features_set_toolBarVisible = (cfx_popup_features_set_toolBarVisible_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_set_toolBarVisible", typeof(cfx_popup_features_set_toolBarVisible_delegate));
+            cfx_popup_features_get_toolBarVisible = (cfx_popup_features_get_toolBarVisible_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_get_toolBarVisible", typeof(cfx_popup_features_get_toolBarVisible_delegate));
+            cfx_popup_features_set_locationBarVisible = (cfx_popup_features_set_locationBarVisible_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_set_locationBarVisible", typeof(cfx_popup_features_set_locationBarVisible_delegate));
+            cfx_popup_features_get_locationBarVisible = (cfx_popup_features_get_locationBarVisible_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_get_locationBarVisible", typeof(cfx_popup_features_get_locationBarVisible_delegate));
+            cfx_popup_features_set_scrollbarsVisible = (cfx_popup_features_set_scrollbarsVisible_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_set_scrollbarsVisible", typeof(cfx_popup_features_set_scrollbarsVisible_delegate));
+            cfx_popup_features_get_scrollbarsVisible = (cfx_popup_features_get_scrollbarsVisible_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_get_scrollbarsVisible", typeof(cfx_popup_features_get_scrollbarsVisible_delegate));
+            cfx_popup_features_set_resizable = (cfx_popup_features_set_resizable_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_set_resizable", typeof(cfx_popup_features_set_resizable_delegate));
+            cfx_popup_features_get_resizable = (cfx_popup_features_get_resizable_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_get_resizable", typeof(cfx_popup_features_get_resizable_delegate));
+            cfx_popup_features_set_fullscreen = (cfx_popup_features_set_fullscreen_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_set_fullscreen", typeof(cfx_popup_features_set_fullscreen_delegate));
+            cfx_popup_features_get_fullscreen = (cfx_popup_features_get_fullscreen_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_get_fullscreen", typeof(cfx_popup_features_get_fullscreen_delegate));
+            cfx_popup_features_set_dialog = (cfx_popup_features_set_dialog_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_set_dialog", typeof(cfx_popup_features_set_dialog_delegate));
+            cfx_popup_features_get_dialog = (cfx_popup_features_get_dialog_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_get_dialog", typeof(cfx_popup_features_get_dialog_delegate));
+            cfx_popup_features_set_additionalFeatures = (cfx_popup_features_set_additionalFeatures_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_set_additionalFeatures", typeof(cfx_popup_features_set_additionalFeatures_delegate));
+            cfx_popup_features_get_additionalFeatures = (cfx_popup_features_get_additionalFeatures_delegate)GetDelegate(libcfxPtr, "cfx_popup_features_get_additionalFeatures", typeof(cfx_popup_features_get_additionalFeatures_delegate));
+
 
 
             // cef_post_data
@@ -1102,8 +1271,15 @@ namespace Chromium {
             cfx_rect_ctor = (cfx_ctor_delegate)GetDelegate(libcfxPtr, "cfx_rect_ctor", typeof(cfx_ctor_delegate));
             cfx_rect_dtor = (cfx_dtor_delegate)GetDelegate(libcfxPtr, "cfx_rect_dtor", typeof(cfx_dtor_delegate));
 
-            cfx_rect_copy_to_native = (cfx_rect_copy_to_native_delegate)GetDelegate(libcfxPtr, "cfx_rect_copy_to_native", typeof(cfx_rect_copy_to_native_delegate));
-            cfx_rect_copy_to_managed = (cfx_rect_copy_to_managed_delegate)GetDelegate(libcfxPtr, "cfx_rect_copy_to_managed", typeof(cfx_rect_copy_to_managed_delegate));
+            cfx_rect_set_x = (cfx_rect_set_x_delegate)GetDelegate(libcfxPtr, "cfx_rect_set_x", typeof(cfx_rect_set_x_delegate));
+            cfx_rect_get_x = (cfx_rect_get_x_delegate)GetDelegate(libcfxPtr, "cfx_rect_get_x", typeof(cfx_rect_get_x_delegate));
+            cfx_rect_set_y = (cfx_rect_set_y_delegate)GetDelegate(libcfxPtr, "cfx_rect_set_y", typeof(cfx_rect_set_y_delegate));
+            cfx_rect_get_y = (cfx_rect_get_y_delegate)GetDelegate(libcfxPtr, "cfx_rect_get_y", typeof(cfx_rect_get_y_delegate));
+            cfx_rect_set_width = (cfx_rect_set_width_delegate)GetDelegate(libcfxPtr, "cfx_rect_set_width", typeof(cfx_rect_set_width_delegate));
+            cfx_rect_get_width = (cfx_rect_get_width_delegate)GetDelegate(libcfxPtr, "cfx_rect_get_width", typeof(cfx_rect_get_width_delegate));
+            cfx_rect_set_height = (cfx_rect_set_height_delegate)GetDelegate(libcfxPtr, "cfx_rect_set_height", typeof(cfx_rect_set_height_delegate));
+            cfx_rect_get_height = (cfx_rect_get_height_delegate)GetDelegate(libcfxPtr, "cfx_rect_get_height", typeof(cfx_rect_get_height_delegate));
+
 
 
             // cef_render_handler
@@ -1330,8 +1506,19 @@ namespace Chromium {
             cfx_screen_info_ctor = (cfx_ctor_delegate)GetDelegate(libcfxPtr, "cfx_screen_info_ctor", typeof(cfx_ctor_delegate));
             cfx_screen_info_dtor = (cfx_dtor_delegate)GetDelegate(libcfxPtr, "cfx_screen_info_dtor", typeof(cfx_dtor_delegate));
 
-            cfx_screen_info_copy_to_native = (cfx_screen_info_copy_to_native_delegate)GetDelegate(libcfxPtr, "cfx_screen_info_copy_to_native", typeof(cfx_screen_info_copy_to_native_delegate));
-            cfx_screen_info_copy_to_managed = (cfx_screen_info_copy_to_managed_delegate)GetDelegate(libcfxPtr, "cfx_screen_info_copy_to_managed", typeof(cfx_screen_info_copy_to_managed_delegate));
+            cfx_screen_info_set_device_scale_factor = (cfx_screen_info_set_device_scale_factor_delegate)GetDelegate(libcfxPtr, "cfx_screen_info_set_device_scale_factor", typeof(cfx_screen_info_set_device_scale_factor_delegate));
+            cfx_screen_info_get_device_scale_factor = (cfx_screen_info_get_device_scale_factor_delegate)GetDelegate(libcfxPtr, "cfx_screen_info_get_device_scale_factor", typeof(cfx_screen_info_get_device_scale_factor_delegate));
+            cfx_screen_info_set_depth = (cfx_screen_info_set_depth_delegate)GetDelegate(libcfxPtr, "cfx_screen_info_set_depth", typeof(cfx_screen_info_set_depth_delegate));
+            cfx_screen_info_get_depth = (cfx_screen_info_get_depth_delegate)GetDelegate(libcfxPtr, "cfx_screen_info_get_depth", typeof(cfx_screen_info_get_depth_delegate));
+            cfx_screen_info_set_depth_per_component = (cfx_screen_info_set_depth_per_component_delegate)GetDelegate(libcfxPtr, "cfx_screen_info_set_depth_per_component", typeof(cfx_screen_info_set_depth_per_component_delegate));
+            cfx_screen_info_get_depth_per_component = (cfx_screen_info_get_depth_per_component_delegate)GetDelegate(libcfxPtr, "cfx_screen_info_get_depth_per_component", typeof(cfx_screen_info_get_depth_per_component_delegate));
+            cfx_screen_info_set_is_monochrome = (cfx_screen_info_set_is_monochrome_delegate)GetDelegate(libcfxPtr, "cfx_screen_info_set_is_monochrome", typeof(cfx_screen_info_set_is_monochrome_delegate));
+            cfx_screen_info_get_is_monochrome = (cfx_screen_info_get_is_monochrome_delegate)GetDelegate(libcfxPtr, "cfx_screen_info_get_is_monochrome", typeof(cfx_screen_info_get_is_monochrome_delegate));
+            cfx_screen_info_set_rect = (cfx_screen_info_set_rect_delegate)GetDelegate(libcfxPtr, "cfx_screen_info_set_rect", typeof(cfx_screen_info_set_rect_delegate));
+            cfx_screen_info_get_rect = (cfx_screen_info_get_rect_delegate)GetDelegate(libcfxPtr, "cfx_screen_info_get_rect", typeof(cfx_screen_info_get_rect_delegate));
+            cfx_screen_info_set_available_rect = (cfx_screen_info_set_available_rect_delegate)GetDelegate(libcfxPtr, "cfx_screen_info_set_available_rect", typeof(cfx_screen_info_set_available_rect_delegate));
+            cfx_screen_info_get_available_rect = (cfx_screen_info_get_available_rect_delegate)GetDelegate(libcfxPtr, "cfx_screen_info_get_available_rect", typeof(cfx_screen_info_get_available_rect_delegate));
+
 
 
             // cef_settings
@@ -1339,7 +1526,51 @@ namespace Chromium {
             cfx_settings_ctor = (cfx_ctor_delegate)GetDelegate(libcfxPtr, "cfx_settings_ctor", typeof(cfx_ctor_delegate));
             cfx_settings_dtor = (cfx_dtor_delegate)GetDelegate(libcfxPtr, "cfx_settings_dtor", typeof(cfx_dtor_delegate));
 
-            cfx_settings_copy_to_native = (cfx_settings_copy_to_native_delegate)GetDelegate(libcfxPtr, "cfx_settings_copy_to_native", typeof(cfx_settings_copy_to_native_delegate));
+            cfx_settings_set_single_process = (cfx_settings_set_single_process_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_single_process", typeof(cfx_settings_set_single_process_delegate));
+            cfx_settings_get_single_process = (cfx_settings_get_single_process_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_single_process", typeof(cfx_settings_get_single_process_delegate));
+            cfx_settings_set_no_sandbox = (cfx_settings_set_no_sandbox_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_no_sandbox", typeof(cfx_settings_set_no_sandbox_delegate));
+            cfx_settings_get_no_sandbox = (cfx_settings_get_no_sandbox_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_no_sandbox", typeof(cfx_settings_get_no_sandbox_delegate));
+            cfx_settings_set_browser_subprocess_path = (cfx_settings_set_browser_subprocess_path_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_browser_subprocess_path", typeof(cfx_settings_set_browser_subprocess_path_delegate));
+            cfx_settings_get_browser_subprocess_path = (cfx_settings_get_browser_subprocess_path_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_browser_subprocess_path", typeof(cfx_settings_get_browser_subprocess_path_delegate));
+            cfx_settings_set_multi_threaded_message_loop = (cfx_settings_set_multi_threaded_message_loop_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_multi_threaded_message_loop", typeof(cfx_settings_set_multi_threaded_message_loop_delegate));
+            cfx_settings_get_multi_threaded_message_loop = (cfx_settings_get_multi_threaded_message_loop_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_multi_threaded_message_loop", typeof(cfx_settings_get_multi_threaded_message_loop_delegate));
+            cfx_settings_set_windowless_rendering_enabled = (cfx_settings_set_windowless_rendering_enabled_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_windowless_rendering_enabled", typeof(cfx_settings_set_windowless_rendering_enabled_delegate));
+            cfx_settings_get_windowless_rendering_enabled = (cfx_settings_get_windowless_rendering_enabled_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_windowless_rendering_enabled", typeof(cfx_settings_get_windowless_rendering_enabled_delegate));
+            cfx_settings_set_command_line_args_disabled = (cfx_settings_set_command_line_args_disabled_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_command_line_args_disabled", typeof(cfx_settings_set_command_line_args_disabled_delegate));
+            cfx_settings_get_command_line_args_disabled = (cfx_settings_get_command_line_args_disabled_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_command_line_args_disabled", typeof(cfx_settings_get_command_line_args_disabled_delegate));
+            cfx_settings_set_cache_path = (cfx_settings_set_cache_path_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_cache_path", typeof(cfx_settings_set_cache_path_delegate));
+            cfx_settings_get_cache_path = (cfx_settings_get_cache_path_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_cache_path", typeof(cfx_settings_get_cache_path_delegate));
+            cfx_settings_set_persist_session_cookies = (cfx_settings_set_persist_session_cookies_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_persist_session_cookies", typeof(cfx_settings_set_persist_session_cookies_delegate));
+            cfx_settings_get_persist_session_cookies = (cfx_settings_get_persist_session_cookies_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_persist_session_cookies", typeof(cfx_settings_get_persist_session_cookies_delegate));
+            cfx_settings_set_user_agent = (cfx_settings_set_user_agent_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_user_agent", typeof(cfx_settings_set_user_agent_delegate));
+            cfx_settings_get_user_agent = (cfx_settings_get_user_agent_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_user_agent", typeof(cfx_settings_get_user_agent_delegate));
+            cfx_settings_set_product_version = (cfx_settings_set_product_version_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_product_version", typeof(cfx_settings_set_product_version_delegate));
+            cfx_settings_get_product_version = (cfx_settings_get_product_version_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_product_version", typeof(cfx_settings_get_product_version_delegate));
+            cfx_settings_set_locale = (cfx_settings_set_locale_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_locale", typeof(cfx_settings_set_locale_delegate));
+            cfx_settings_get_locale = (cfx_settings_get_locale_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_locale", typeof(cfx_settings_get_locale_delegate));
+            cfx_settings_set_log_file = (cfx_settings_set_log_file_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_log_file", typeof(cfx_settings_set_log_file_delegate));
+            cfx_settings_get_log_file = (cfx_settings_get_log_file_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_log_file", typeof(cfx_settings_get_log_file_delegate));
+            cfx_settings_set_log_severity = (cfx_settings_set_log_severity_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_log_severity", typeof(cfx_settings_set_log_severity_delegate));
+            cfx_settings_get_log_severity = (cfx_settings_get_log_severity_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_log_severity", typeof(cfx_settings_get_log_severity_delegate));
+            cfx_settings_set_javascript_flags = (cfx_settings_set_javascript_flags_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_javascript_flags", typeof(cfx_settings_set_javascript_flags_delegate));
+            cfx_settings_get_javascript_flags = (cfx_settings_get_javascript_flags_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_javascript_flags", typeof(cfx_settings_get_javascript_flags_delegate));
+            cfx_settings_set_resources_dir_path = (cfx_settings_set_resources_dir_path_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_resources_dir_path", typeof(cfx_settings_set_resources_dir_path_delegate));
+            cfx_settings_get_resources_dir_path = (cfx_settings_get_resources_dir_path_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_resources_dir_path", typeof(cfx_settings_get_resources_dir_path_delegate));
+            cfx_settings_set_locales_dir_path = (cfx_settings_set_locales_dir_path_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_locales_dir_path", typeof(cfx_settings_set_locales_dir_path_delegate));
+            cfx_settings_get_locales_dir_path = (cfx_settings_get_locales_dir_path_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_locales_dir_path", typeof(cfx_settings_get_locales_dir_path_delegate));
+            cfx_settings_set_pack_loading_disabled = (cfx_settings_set_pack_loading_disabled_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_pack_loading_disabled", typeof(cfx_settings_set_pack_loading_disabled_delegate));
+            cfx_settings_get_pack_loading_disabled = (cfx_settings_get_pack_loading_disabled_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_pack_loading_disabled", typeof(cfx_settings_get_pack_loading_disabled_delegate));
+            cfx_settings_set_remote_debugging_port = (cfx_settings_set_remote_debugging_port_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_remote_debugging_port", typeof(cfx_settings_set_remote_debugging_port_delegate));
+            cfx_settings_get_remote_debugging_port = (cfx_settings_get_remote_debugging_port_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_remote_debugging_port", typeof(cfx_settings_get_remote_debugging_port_delegate));
+            cfx_settings_set_uncaught_exception_stack_size = (cfx_settings_set_uncaught_exception_stack_size_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_uncaught_exception_stack_size", typeof(cfx_settings_set_uncaught_exception_stack_size_delegate));
+            cfx_settings_get_uncaught_exception_stack_size = (cfx_settings_get_uncaught_exception_stack_size_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_uncaught_exception_stack_size", typeof(cfx_settings_get_uncaught_exception_stack_size_delegate));
+            cfx_settings_set_context_safety_implementation = (cfx_settings_set_context_safety_implementation_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_context_safety_implementation", typeof(cfx_settings_set_context_safety_implementation_delegate));
+            cfx_settings_get_context_safety_implementation = (cfx_settings_get_context_safety_implementation_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_context_safety_implementation", typeof(cfx_settings_get_context_safety_implementation_delegate));
+            cfx_settings_set_ignore_certificate_errors = (cfx_settings_set_ignore_certificate_errors_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_ignore_certificate_errors", typeof(cfx_settings_set_ignore_certificate_errors_delegate));
+            cfx_settings_get_ignore_certificate_errors = (cfx_settings_get_ignore_certificate_errors_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_ignore_certificate_errors", typeof(cfx_settings_get_ignore_certificate_errors_delegate));
+            cfx_settings_set_background_color = (cfx_settings_set_background_color_delegate)GetDelegate(libcfxPtr, "cfx_settings_set_background_color", typeof(cfx_settings_set_background_color_delegate));
+            cfx_settings_get_background_color = (cfx_settings_get_background_color_delegate)GetDelegate(libcfxPtr, "cfx_settings_get_background_color", typeof(cfx_settings_get_background_color_delegate));
+
 
 
             // cef_size
@@ -1347,7 +1578,11 @@ namespace Chromium {
             cfx_size_ctor = (cfx_ctor_delegate)GetDelegate(libcfxPtr, "cfx_size_ctor", typeof(cfx_ctor_delegate));
             cfx_size_dtor = (cfx_dtor_delegate)GetDelegate(libcfxPtr, "cfx_size_dtor", typeof(cfx_dtor_delegate));
 
-            cfx_size_copy_to_native = (cfx_size_copy_to_native_delegate)GetDelegate(libcfxPtr, "cfx_size_copy_to_native", typeof(cfx_size_copy_to_native_delegate));
+            cfx_size_set_width = (cfx_size_set_width_delegate)GetDelegate(libcfxPtr, "cfx_size_set_width", typeof(cfx_size_set_width_delegate));
+            cfx_size_get_width = (cfx_size_get_width_delegate)GetDelegate(libcfxPtr, "cfx_size_get_width", typeof(cfx_size_get_width_delegate));
+            cfx_size_set_height = (cfx_size_set_height_delegate)GetDelegate(libcfxPtr, "cfx_size_set_height", typeof(cfx_size_set_height_delegate));
+            cfx_size_get_height = (cfx_size_get_height_delegate)GetDelegate(libcfxPtr, "cfx_size_get_height", typeof(cfx_size_get_height_delegate));
+
 
 
             // cef_stream_reader
@@ -1420,8 +1655,23 @@ namespace Chromium {
             cfx_time_ctor = (cfx_ctor_delegate)GetDelegate(libcfxPtr, "cfx_time_ctor", typeof(cfx_ctor_delegate));
             cfx_time_dtor = (cfx_dtor_delegate)GetDelegate(libcfxPtr, "cfx_time_dtor", typeof(cfx_dtor_delegate));
 
-            cfx_time_copy_to_native = (cfx_time_copy_to_native_delegate)GetDelegate(libcfxPtr, "cfx_time_copy_to_native", typeof(cfx_time_copy_to_native_delegate));
-            cfx_time_copy_to_managed = (cfx_time_copy_to_managed_delegate)GetDelegate(libcfxPtr, "cfx_time_copy_to_managed", typeof(cfx_time_copy_to_managed_delegate));
+            cfx_time_set_year = (cfx_time_set_year_delegate)GetDelegate(libcfxPtr, "cfx_time_set_year", typeof(cfx_time_set_year_delegate));
+            cfx_time_get_year = (cfx_time_get_year_delegate)GetDelegate(libcfxPtr, "cfx_time_get_year", typeof(cfx_time_get_year_delegate));
+            cfx_time_set_month = (cfx_time_set_month_delegate)GetDelegate(libcfxPtr, "cfx_time_set_month", typeof(cfx_time_set_month_delegate));
+            cfx_time_get_month = (cfx_time_get_month_delegate)GetDelegate(libcfxPtr, "cfx_time_get_month", typeof(cfx_time_get_month_delegate));
+            cfx_time_set_day_of_week = (cfx_time_set_day_of_week_delegate)GetDelegate(libcfxPtr, "cfx_time_set_day_of_week", typeof(cfx_time_set_day_of_week_delegate));
+            cfx_time_get_day_of_week = (cfx_time_get_day_of_week_delegate)GetDelegate(libcfxPtr, "cfx_time_get_day_of_week", typeof(cfx_time_get_day_of_week_delegate));
+            cfx_time_set_day_of_month = (cfx_time_set_day_of_month_delegate)GetDelegate(libcfxPtr, "cfx_time_set_day_of_month", typeof(cfx_time_set_day_of_month_delegate));
+            cfx_time_get_day_of_month = (cfx_time_get_day_of_month_delegate)GetDelegate(libcfxPtr, "cfx_time_get_day_of_month", typeof(cfx_time_get_day_of_month_delegate));
+            cfx_time_set_hour = (cfx_time_set_hour_delegate)GetDelegate(libcfxPtr, "cfx_time_set_hour", typeof(cfx_time_set_hour_delegate));
+            cfx_time_get_hour = (cfx_time_get_hour_delegate)GetDelegate(libcfxPtr, "cfx_time_get_hour", typeof(cfx_time_get_hour_delegate));
+            cfx_time_set_minute = (cfx_time_set_minute_delegate)GetDelegate(libcfxPtr, "cfx_time_set_minute", typeof(cfx_time_set_minute_delegate));
+            cfx_time_get_minute = (cfx_time_get_minute_delegate)GetDelegate(libcfxPtr, "cfx_time_get_minute", typeof(cfx_time_get_minute_delegate));
+            cfx_time_set_second = (cfx_time_set_second_delegate)GetDelegate(libcfxPtr, "cfx_time_set_second", typeof(cfx_time_set_second_delegate));
+            cfx_time_get_second = (cfx_time_get_second_delegate)GetDelegate(libcfxPtr, "cfx_time_get_second", typeof(cfx_time_get_second_delegate));
+            cfx_time_set_millisecond = (cfx_time_set_millisecond_delegate)GetDelegate(libcfxPtr, "cfx_time_set_millisecond", typeof(cfx_time_set_millisecond_delegate));
+            cfx_time_get_millisecond = (cfx_time_get_millisecond_delegate)GetDelegate(libcfxPtr, "cfx_time_get_millisecond", typeof(cfx_time_get_millisecond_delegate));
+
 
 
             // cef_urlparts
@@ -1429,7 +1679,25 @@ namespace Chromium {
             cfx_urlparts_ctor = (cfx_ctor_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_ctor", typeof(cfx_ctor_delegate));
             cfx_urlparts_dtor = (cfx_dtor_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_dtor", typeof(cfx_dtor_delegate));
 
-            cfx_urlparts_copy_to_native = (cfx_urlparts_copy_to_native_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_copy_to_native", typeof(cfx_urlparts_copy_to_native_delegate));
+            cfx_urlparts_set_spec = (cfx_urlparts_set_spec_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_set_spec", typeof(cfx_urlparts_set_spec_delegate));
+            cfx_urlparts_get_spec = (cfx_urlparts_get_spec_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_get_spec", typeof(cfx_urlparts_get_spec_delegate));
+            cfx_urlparts_set_scheme = (cfx_urlparts_set_scheme_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_set_scheme", typeof(cfx_urlparts_set_scheme_delegate));
+            cfx_urlparts_get_scheme = (cfx_urlparts_get_scheme_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_get_scheme", typeof(cfx_urlparts_get_scheme_delegate));
+            cfx_urlparts_set_username = (cfx_urlparts_set_username_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_set_username", typeof(cfx_urlparts_set_username_delegate));
+            cfx_urlparts_get_username = (cfx_urlparts_get_username_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_get_username", typeof(cfx_urlparts_get_username_delegate));
+            cfx_urlparts_set_password = (cfx_urlparts_set_password_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_set_password", typeof(cfx_urlparts_set_password_delegate));
+            cfx_urlparts_get_password = (cfx_urlparts_get_password_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_get_password", typeof(cfx_urlparts_get_password_delegate));
+            cfx_urlparts_set_host = (cfx_urlparts_set_host_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_set_host", typeof(cfx_urlparts_set_host_delegate));
+            cfx_urlparts_get_host = (cfx_urlparts_get_host_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_get_host", typeof(cfx_urlparts_get_host_delegate));
+            cfx_urlparts_set_port = (cfx_urlparts_set_port_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_set_port", typeof(cfx_urlparts_set_port_delegate));
+            cfx_urlparts_get_port = (cfx_urlparts_get_port_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_get_port", typeof(cfx_urlparts_get_port_delegate));
+            cfx_urlparts_set_origin = (cfx_urlparts_set_origin_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_set_origin", typeof(cfx_urlparts_set_origin_delegate));
+            cfx_urlparts_get_origin = (cfx_urlparts_get_origin_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_get_origin", typeof(cfx_urlparts_get_origin_delegate));
+            cfx_urlparts_set_path = (cfx_urlparts_set_path_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_set_path", typeof(cfx_urlparts_set_path_delegate));
+            cfx_urlparts_get_path = (cfx_urlparts_get_path_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_get_path", typeof(cfx_urlparts_get_path_delegate));
+            cfx_urlparts_set_query = (cfx_urlparts_set_query_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_set_query", typeof(cfx_urlparts_set_query_delegate));
+            cfx_urlparts_get_query = (cfx_urlparts_get_query_delegate)GetDelegate(libcfxPtr, "cfx_urlparts_get_query", typeof(cfx_urlparts_get_query_delegate));
+
 
 
             // cef_urlrequest
@@ -1638,8 +1906,31 @@ namespace Chromium {
             cfx_window_info_ctor = (cfx_ctor_delegate)GetDelegate(libcfxPtr, "cfx_window_info_ctor", typeof(cfx_ctor_delegate));
             cfx_window_info_dtor = (cfx_dtor_delegate)GetDelegate(libcfxPtr, "cfx_window_info_dtor", typeof(cfx_dtor_delegate));
 
-            cfx_window_info_copy_to_native = (cfx_window_info_copy_to_native_delegate)GetDelegate(libcfxPtr, "cfx_window_info_copy_to_native", typeof(cfx_window_info_copy_to_native_delegate));
-            cfx_window_info_copy_to_managed = (cfx_window_info_copy_to_managed_delegate)GetDelegate(libcfxPtr, "cfx_window_info_copy_to_managed", typeof(cfx_window_info_copy_to_managed_delegate));
+            cfx_window_info_set_ex_style = (cfx_window_info_set_ex_style_delegate)GetDelegate(libcfxPtr, "cfx_window_info_set_ex_style", typeof(cfx_window_info_set_ex_style_delegate));
+            cfx_window_info_get_ex_style = (cfx_window_info_get_ex_style_delegate)GetDelegate(libcfxPtr, "cfx_window_info_get_ex_style", typeof(cfx_window_info_get_ex_style_delegate));
+            cfx_window_info_set_window_name = (cfx_window_info_set_window_name_delegate)GetDelegate(libcfxPtr, "cfx_window_info_set_window_name", typeof(cfx_window_info_set_window_name_delegate));
+            cfx_window_info_get_window_name = (cfx_window_info_get_window_name_delegate)GetDelegate(libcfxPtr, "cfx_window_info_get_window_name", typeof(cfx_window_info_get_window_name_delegate));
+            cfx_window_info_set_style = (cfx_window_info_set_style_delegate)GetDelegate(libcfxPtr, "cfx_window_info_set_style", typeof(cfx_window_info_set_style_delegate));
+            cfx_window_info_get_style = (cfx_window_info_get_style_delegate)GetDelegate(libcfxPtr, "cfx_window_info_get_style", typeof(cfx_window_info_get_style_delegate));
+            cfx_window_info_set_x = (cfx_window_info_set_x_delegate)GetDelegate(libcfxPtr, "cfx_window_info_set_x", typeof(cfx_window_info_set_x_delegate));
+            cfx_window_info_get_x = (cfx_window_info_get_x_delegate)GetDelegate(libcfxPtr, "cfx_window_info_get_x", typeof(cfx_window_info_get_x_delegate));
+            cfx_window_info_set_y = (cfx_window_info_set_y_delegate)GetDelegate(libcfxPtr, "cfx_window_info_set_y", typeof(cfx_window_info_set_y_delegate));
+            cfx_window_info_get_y = (cfx_window_info_get_y_delegate)GetDelegate(libcfxPtr, "cfx_window_info_get_y", typeof(cfx_window_info_get_y_delegate));
+            cfx_window_info_set_width = (cfx_window_info_set_width_delegate)GetDelegate(libcfxPtr, "cfx_window_info_set_width", typeof(cfx_window_info_set_width_delegate));
+            cfx_window_info_get_width = (cfx_window_info_get_width_delegate)GetDelegate(libcfxPtr, "cfx_window_info_get_width", typeof(cfx_window_info_get_width_delegate));
+            cfx_window_info_set_height = (cfx_window_info_set_height_delegate)GetDelegate(libcfxPtr, "cfx_window_info_set_height", typeof(cfx_window_info_set_height_delegate));
+            cfx_window_info_get_height = (cfx_window_info_get_height_delegate)GetDelegate(libcfxPtr, "cfx_window_info_get_height", typeof(cfx_window_info_get_height_delegate));
+            cfx_window_info_set_parent_window = (cfx_window_info_set_parent_window_delegate)GetDelegate(libcfxPtr, "cfx_window_info_set_parent_window", typeof(cfx_window_info_set_parent_window_delegate));
+            cfx_window_info_get_parent_window = (cfx_window_info_get_parent_window_delegate)GetDelegate(libcfxPtr, "cfx_window_info_get_parent_window", typeof(cfx_window_info_get_parent_window_delegate));
+            cfx_window_info_set_menu = (cfx_window_info_set_menu_delegate)GetDelegate(libcfxPtr, "cfx_window_info_set_menu", typeof(cfx_window_info_set_menu_delegate));
+            cfx_window_info_get_menu = (cfx_window_info_get_menu_delegate)GetDelegate(libcfxPtr, "cfx_window_info_get_menu", typeof(cfx_window_info_get_menu_delegate));
+            cfx_window_info_set_windowless_rendering_enabled = (cfx_window_info_set_windowless_rendering_enabled_delegate)GetDelegate(libcfxPtr, "cfx_window_info_set_windowless_rendering_enabled", typeof(cfx_window_info_set_windowless_rendering_enabled_delegate));
+            cfx_window_info_get_windowless_rendering_enabled = (cfx_window_info_get_windowless_rendering_enabled_delegate)GetDelegate(libcfxPtr, "cfx_window_info_get_windowless_rendering_enabled", typeof(cfx_window_info_get_windowless_rendering_enabled_delegate));
+            cfx_window_info_set_transparent_painting_enabled = (cfx_window_info_set_transparent_painting_enabled_delegate)GetDelegate(libcfxPtr, "cfx_window_info_set_transparent_painting_enabled", typeof(cfx_window_info_set_transparent_painting_enabled_delegate));
+            cfx_window_info_get_transparent_painting_enabled = (cfx_window_info_get_transparent_painting_enabled_delegate)GetDelegate(libcfxPtr, "cfx_window_info_get_transparent_painting_enabled", typeof(cfx_window_info_get_transparent_painting_enabled_delegate));
+            cfx_window_info_set_window = (cfx_window_info_set_window_delegate)GetDelegate(libcfxPtr, "cfx_window_info_set_window", typeof(cfx_window_info_set_window_delegate));
+            cfx_window_info_get_window = (cfx_window_info_get_window_delegate)GetDelegate(libcfxPtr, "cfx_window_info_get_window", typeof(cfx_window_info_get_window_delegate));
+
 
 
             // cef_write_handler
