@@ -62,10 +62,12 @@ namespace Chromium.Remote {
         }
 
         public void Add(CfrRuntime remoteRuntime, ulong proxyId, object obj) {
+            // always locked by caller
             cache.Add(new CacheKey(remoteRuntime, proxyId), new WeakReference(obj, false));
         }
 
         public object Get(CfrRuntime remoteRuntime, ulong proxyId) {
+            // always locked by caller
             WeakReference r;
             if(cache.TryGetValue(new CacheKey(remoteRuntime, proxyId), out r))
                 return r.Target;
@@ -75,7 +77,9 @@ namespace Chromium.Remote {
 
 
         public void Remove(CfrRuntime remoteRuntime, ulong proxyId) {
-            cache.Remove(new CacheKey(remoteRuntime, proxyId));
+            lock(this) {
+                cache.Remove(new CacheKey(remoteRuntime, proxyId));
+            }
         }
     }
 }

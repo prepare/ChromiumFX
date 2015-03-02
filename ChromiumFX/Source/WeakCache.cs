@@ -42,10 +42,12 @@ namespace Chromium {
         }
 
         public void Add(CfxBase obj) {
+            // always locked by caller
             cache.Add(obj.nativePtrUnchecked, new WeakReference(obj, false));
         }
 
         public object Get(IntPtr ptr) {
+            // always locked by caller
             WeakReference r;
             if(cache.TryGetValue(ptr, out r))
                 return r.Target;
@@ -54,7 +56,9 @@ namespace Chromium {
         }
 
         public void Remove(IntPtr ptr) {
-            cache.Remove(ptr);
+            lock(this) {
+                cache.Remove(ptr);
+            }
         }
 
         private void OnShutdown() {
