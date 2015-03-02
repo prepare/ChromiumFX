@@ -38,8 +38,6 @@ using Chromium.Remote;
 
 namespace Chromium.WebBrowser {
 
-    public delegate void OnBeforeCfxInitializeEventHandler(CfxSettings settings, CfxBrowserProcessHandler processHandler, out CfxOnBeforeCommandLineProcessingEventHandler onBeforeCommandLineProcessingEventHandler);
-
     public class ChromiumWebBrowser : Control {
 
         private static CfxBrowserSettings defaultBrowserSettings;
@@ -62,10 +60,13 @@ namespace Chromium.WebBrowser {
         public static event OnBeforeCfxInitializeEventHandler OnBeforeCfxInitialize;
         internal static void RaiseOnBeforeCfxInitialize(CfxSettings settings, CfxBrowserProcessHandler processHandler, out CfxOnBeforeCommandLineProcessingEventHandler onBeforeCommandLineProcessingEventHandler) {
             var handler = OnBeforeCfxInitialize;
-            if(handler != null)
-                handler(settings, processHandler, out onBeforeCommandLineProcessingEventHandler);
-            else
+            if(handler != null) {
+                var e = new OnBeforeCfxInitializeEventArgs(settings, processHandler);
+                handler(e);
+                onBeforeCommandLineProcessingEventHandler = e.m_onBeforeCommandLineProcessingEventHandler;
+            } else {
                 onBeforeCommandLineProcessingEventHandler = null;
+            }
         }
         
 
@@ -104,6 +105,8 @@ namespace Chromium.WebBrowser {
 
         public CfxBrowser Browser { get; private set; }
         public CfxBrowserHost BrowserHost { get; private set; }
+
+
 
         private readonly object browserSyncRoot = new object();
         private IntPtr browserWindowHandle;
