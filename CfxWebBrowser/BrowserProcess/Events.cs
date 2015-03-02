@@ -28,11 +28,7 @@
 // TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE 
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
-
 using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using Chromium;
 using Chromium.Remote;
 
@@ -48,6 +44,24 @@ namespace Chromium.WebBrowser {
         internal OnBeforeCfxInitializeEventArgs(CfxSettings settings, CfxBrowserProcessHandler processHandler) {
             Settings = settings;
             ProcessHandler = processHandler;
+        }
+    }
+
+    public delegate void BrowserCreatedEventHandler(object sender, BrowserCreatedEventArgs e);
+
+    public class BrowserCreatedEventArgs : EventArgs {
+        public CfxBrowser Browser { get; private set; }
+        internal BrowserCreatedEventArgs(CfxBrowser browser) {
+            Browser = browser;
+        }
+    }
+
+    public delegate void RemoteBrowserCreatedEventHandler(object sender, RemoteBrowserCreatedEventArgs e);
+
+    public class RemoteBrowserCreatedEventArgs : EventArgs {
+        public CfrBrowser Browser { get; private set; }
+        internal RemoteBrowserCreatedEventArgs(CfrBrowser browser) {
+            Browser = browser;
         }
     }
 
