@@ -649,9 +649,19 @@ namespace Chromium.WebBrowser {
         
         /// <summary>
         /// Raised after the CfxBrowser object for this WebBrowser has been created.
+        /// The event is executed on the thread that owns this browser control's 
+        /// underlying window handle.
         /// </summary>
-        public event CfxOnAfterCreatedEventHandler OnAfterCreated;
-        
+        public event BrowserCreatedEventHandler BrowserCreated;
+
+        /// <summary>
+        /// Called after a remote browser has been created. When browsing cross-origin a new
+        /// browser will be created before the old browser is destroyed.
+        /// The event is executed on the thread that owns this browser control's 
+        /// underlying window handle, preserving affinity to the render thread.
+        /// </summary>
+        public event RemoteBrowserCreatedEventHandler RemoteBrowserCreated;
+
         /// <summary>
         /// Called when the loading state has changed. This callback will be executed
         /// twice -- once when loading is initiated either programmatically or by user
@@ -771,9 +781,17 @@ namespace Chromium.WebBrowser {
             browserId = Browser.Identifier;
             browsers.Add(browserId, this);
             SetWindowPos(browserWindowHandle, IntPtr.Zero, 0, 0, Width, Height, SWP_NOMOVE | SWP_NOZORDER);
-            var handler = OnAfterCreated;
-            if(handler != null)
-                Invoke((MethodInvoker)(() => { handler(this, e); }));
+            
+            var handler = BrowserCreated;
+            if(handler != null) {
+                var e1 = new BrowserCreatedEventArgs(e.Browser);
+                if(InvokeRequired) {
+                    Invoke((MethodInvoker)(() => { handler(this, e1); }));
+                } else {
+                    handler(this, e1);
+                }
+            }
+                
             System.Threading.ThreadPool.QueueUserWorkItem(AfterSetBrowserTasks);
         }
 
@@ -793,6 +811,15 @@ namespace Chromium.WebBrowser {
             this.remoteBrowser = remoteBrowser;
             this.remoteProcess = remoteProcess;
             remoteProcess.OnExit += new Action<RenderProcess>(remoteProcess_OnExit);
+            var h = RemoteBrowserCreated;
+            if(h != null) { 
+                var e = new RemoteBrowserCreatedEventArgs(remoteBrowser);
+                if(InvokeRequired) {
+                    Invoke((MethodInvoker)(() => { h(this, e); }));
+                } else {
+                    h(this, e);
+                }
+            }
         }
 
         void remoteProcess_OnExit(RenderProcess process) {
