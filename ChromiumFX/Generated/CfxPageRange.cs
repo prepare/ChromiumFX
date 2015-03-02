@@ -39,7 +39,19 @@ namespace Chromium {
     /// </summary>
     public sealed class CfxPageRange : CfxStructure {
 
+        internal static CfxPageRange Wrap(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return null;
+            return new CfxPageRange(nativePtr);
+        }
+
+        internal static CfxPageRange WrapOwned(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return null;
+            return new CfxPageRange(nativePtr, CfxApi.cfx_page_range_dtor);
+        }
+
         public CfxPageRange() : base(CfxApi.cfx_page_range_ctor, CfxApi.cfx_page_range_dtor) {}
+        internal CfxPageRange(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxPageRange(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         public int From {
             get {

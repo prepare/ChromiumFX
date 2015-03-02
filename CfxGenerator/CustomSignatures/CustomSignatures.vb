@@ -46,6 +46,10 @@ Public Class CustomSignatures
                 Return New GetPostDataElementsSignature(parent, sd, api)
             Case "cef_v8handler::execute"
                 Return New CefV8HandlerExecuteSignature(parent, sd, api)
+            Case "cef_print_settings::set_page_ranges"
+                Return New SignatureWithStructArray(parent, sd, api, 2, 1)
+            Case "cef_print_settings::get_page_ranges"
+                Return New GetPageRangesSignature(parent, sd, api, 2, 1)
             Case Else
                 Return Nothing
         End Select

@@ -40,7 +40,6 @@ Public Class NumericOutType
         Me.BaseType = baseType
     End Sub
 
-
     Public Overrides ReadOnly Property PInvokeSymbol As String
         Get
             Return BaseType.PInvokeSymbol
