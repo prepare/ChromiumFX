@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Wolfgang Borgsmüller
+﻿// Copyright (c) 2014-2015 Wolfgang Borgsmüller
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without 
@@ -31,47 +31,24 @@
 
 
 using System;
-using System.Drawing;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Chromium;
-using Chromium.WebBrowser;
-using System.Diagnostics;
+using Chromium.Remote;
 
-namespace CfxTestApplication {
+namespace Chromium.WebBrowser {
 
-    public class Program {
+    public delegate void OnBeforeCfxInitializeEventHandler(OnBeforeCfxInitializeEventArgs e);
 
-        [STAThread]
-        public static void Main() {
-
-            var assemblyDir = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
-
-            Environment.CurrentDirectory = System.IO.Path.Combine(assemblyDir, @"..\..\");
-            
-//#if DEBUG
-//            CfxRuntime.LoadLibraries(@"cef\Debug");
-//#else
-            CfxRuntime.LoadLibraries(@"cef\Release");
-//#endif
-
-            Chromium.WebBrowser.ChromiumWebBrowser.OnBeforeCfxInitialize += ChromiumWebBrowser_OnBeforeCfxInitialize;
-            Chromium.WebBrowser.ChromiumWebBrowser.Initialize();
-
-            //Walkthrough01.Main();
-            //return;
-
-            Application.EnableVisualStyles();
-            var f = new BrowserForm();
-            f.Show();
-            Application.Run(f);
-
-            CfxRuntime.Shutdown();
-
-        }
-
-        static void ChromiumWebBrowser_OnBeforeCfxInitialize(OnBeforeCfxInitializeEventArgs e) {
-            e.Settings.LocalesDirPath = System.IO.Path.GetFullPath(@"cef\Resources\locales");
-            e.Settings.ResourcesDirPath = System.IO.Path.GetFullPath(@"cef\Resources");
+    public class OnBeforeCfxInitializeEventArgs : EventArgs {
+        public CfxSettings Settings { get; private set; }
+        public CfxBrowserProcessHandler ProcessHandler { get; private set; }
+        public CfxOnBeforeCommandLineProcessingEventHandler OnBeforeCommandLineProcessingEventHandler { set { m_onBeforeCommandLineProcessingEventHandler = value; } }
+        internal CfxOnBeforeCommandLineProcessingEventHandler m_onBeforeCommandLineProcessingEventHandler;
+        internal OnBeforeCfxInitializeEventArgs(CfxSettings settings, CfxBrowserProcessHandler processHandler) {
+            Settings = settings;
+            ProcessHandler = processHandler;
         }
     }
+
 }

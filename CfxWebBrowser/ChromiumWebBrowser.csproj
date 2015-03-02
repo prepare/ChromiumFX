@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="BrowserProcess\BrowserClient.cs" />
     <Compile Include="BrowserProcess\BrowserProcess.cs" />
+    <Compile Include="BrowserProcess\Events.cs" />
     <Compile Include="BrowserProcess\RequestHandler.cs" />
     <Compile Include="JSFunction.cs" />
     <Compile Include="BrowserProcess\LifeSpanHandler.cs" />
