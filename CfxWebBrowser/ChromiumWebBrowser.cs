@@ -524,51 +524,6 @@ namespace Chromium.WebBrowser {
         }
 
         /// <summary>
-        /// Visit the remote browser object.
-        /// Returns false if the remote browser is currently unavailable.
-        /// If this function returns false, then |callback| will not be called. Otherwise,
-        /// |callback| will be called on the thread that owns this browser control's 
-        /// underlying window handle, preserving affinity to the renderer thread.
-        /// Use with care:
-        /// The callback may never be called if the render process gets killed prematurely.
-        /// Do not keep a reference to the remote browser after returning from the callback.
-        /// Do not block the callback since it blocks the render thread.
-        /// </summary>
-        /// <param name="callback"></param>
-        /// <returns></returns>
-        public bool VisitRemoteBrowser(Action<CfrBrowser> callback) {
-            var rb = remoteBrowser;
-            if(rb == null) return false;
-            try {
-                var taskRunner = CfrTaskRunner.GetForThread(rb.RemoteRuntime, CfxThreadId.Renderer);
-                var task = new VisitRemoteBrowserTask(this, callback);
-                taskRunner.PostTask(task);
-                return true;
-            } catch(System.IO.IOException) {
-                return false;
-            }
-        }
-
-        private class VisitRemoteBrowserTask : CfrTask {
-
-            ChromiumWebBrowser wb;
-            Action<CfrBrowser> callback;
-
-            internal VisitRemoteBrowserTask(ChromiumWebBrowser wb, Action<CfrBrowser> callback)
-                : base(wb.remoteProcess.remoteRuntime) {
-                this.wb = wb;
-                this.callback = callback;
-                this.Execute += Task_Execute;
-            }
-
-            void Task_Execute(object sender, CfrEventArgs e) {
-                wb.RenderThreadInvoke((MethodInvoker)(() => { callback(wb.remoteBrowser); }));
-            }
-        }
-
-
-
-        /// <summary>
         /// Visit the DOM in the remote browser's main frame.
         /// Returns false if the remote browser is currently unavailable.
         /// If this function returns false, then |callback| will not be called. Otherwise,
