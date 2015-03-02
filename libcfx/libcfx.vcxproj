@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\libcfx.cpp" />
+    <ClCompile Include="Source\libcfx.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{64ED684B-187D-4D21-903C-DA5067F8F066}</ProjectGuid>

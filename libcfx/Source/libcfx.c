@@ -29,17 +29,8 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-
-
-
 // this is the one and only translation unit in this project,
 // which includes all the other c files
-
-// this is a cpp file instead of a c file because
-// some cef c-api structures still may contain cpp types
-// so we have to compile the whole thing as cpp
-// TODO: check future versions of CEF C-API
-// if cpp types are gone and compile this as c.
 
 
 #define CFX_EXPORT __declspec(dllexport)
@@ -48,10 +39,10 @@
 
 
 typedef void* gc_handle_t;
-void(CEF_CALLBACK *cfx_gc_handle_free)(gc_handle_t gc_handle);
+static void(CEF_CALLBACK *cfx_gc_handle_free)(gc_handle_t gc_handle);
 
 
-__inline void* cfx_tmp_return_value(void* source, size_t size) {
+static __inline void* cfx_copy_structure(void* source, size_t size) {
 	if(!source) return 0;
 	void* target = malloc(size);
 	memcpy(target, source, size);

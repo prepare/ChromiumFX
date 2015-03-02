@@ -102,11 +102,17 @@ Public Class CefStructType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property NativeReturnExpression(var As String) As String
-        Get
-            Return String.Format("({0}*)cfx_tmp_return_value(&{1}, sizeof({0}))", OriginalSymbol, var)
-        End Get
-    End Property
+    Public Overrides Sub EmitNativeReturnStatements(b As CodeBuilder, functionCall As String, postCallStatements As CodeBuilder)
+        b.AppendLine("{0} __retval_tmp = {1};", OriginalSymbol, functionCall)
+        If postCallStatements.IsNotEmpty Then
+            b.AppendLine("{0} *__retval = ({0}*)cfx_copy_structure(&__retval_tmp, sizeof({0}));", OriginalSymbol)
+            b.AppendBuilder(postCallStatements)
+            b.AppendLine("return __retval;")
+        Else
+            b.AppendLine("return ({0}*)cfx_copy_structure(&__retval_tmp, sizeof({0}));", OriginalSymbol)
+        End If
+
+    End Sub
 
     Public Overrides ReadOnly Property NativeWrapExpression(var As String) As String
         Get

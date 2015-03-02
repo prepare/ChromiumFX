@@ -81,7 +81,8 @@ CFX_EXPORT cef_string_userfree_t cfx_navigation_entry_get_frame_name(cef_navigat
 
 // get_completion_time
 CFX_EXPORT cef_time_t* cfx_navigation_entry_get_completion_time(cef_navigation_entry_t* self) {
-    return (cef_time_t*)cfx_tmp_return_value(&self->get_completion_time(self), sizeof(cef_time_t));
+    cef_time_t __retval_tmp = self->get_completion_time(self);
+    return (cef_time_t*)cfx_copy_structure(&__retval_tmp, sizeof(cef_time_t));
 }
 
 // get_http_status_code

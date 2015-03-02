@@ -189,12 +189,6 @@ Public Class ApiType
         End Get
     End Property
 
-    Public Overridable ReadOnly Property NativeReturnExpression(var As String) As String
-        Get
-            Return NativeWrapExpression(var)
-        End Get
-    End Property
-
     Public Overridable ReadOnly Property NativeWrapExpression(var As String) As String
         Get
             Return var
@@ -264,6 +258,7 @@ Public Class ApiType
         End Get
     End Property
 
+
     Public Overridable Sub EmitPreNativeCallbackStatements(b As CodeBuilder, var As String)
     End Sub
 
@@ -275,6 +270,24 @@ Public Class ApiType
 
     Public Overridable Sub EmitPostNativeCallStatements(b As CodeBuilder, var As String)
     End Sub
+
+    Public Overridable Sub EmitNativeReturnStatements(b As CodeBuilder, functionCall As String, postCallStatements As CodeBuilder)
+
+        If IsVoid Then
+            b.AppendLine("{0};", NativeWrapExpression(functionCall))
+            b.AppendBuilder(postCallStatements)
+            Return
+        End If
+
+        If postCallStatements.IsNotEmpty Then
+            b.AppendLine("{0} __ret_val_ = {1};", NativeSymbol, NativeWrapExpression(functionCall))
+            b.AppendBuilder(postCallStatements)
+            b.AppendLine("return __ret_val_;")
+        Else
+            b.AppendLine("return {0};", NativeWrapExpression(functionCall))
+        End If
+    End Sub
+
 
     Public Overridable Sub EmitPrePublicCallStatements(b As CodeBuilder, var As String)
     End Sub
