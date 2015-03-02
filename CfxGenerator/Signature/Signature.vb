@@ -478,18 +478,9 @@ Public Class Signature
             Arguments(i).EmitPostNativeCallStatements(b1)
         Next
 
-        Dim wrappedRetVal = ReturnType.NativeReturnExpression(String.Format("{0}({1})", functionName, NativeCall))
+        Dim functionCall = String.Format("{0}({1})", functionName, NativeCall)
+        ReturnType.EmitNativeReturnStatements(b, functionCall, b1)
 
-        If Not ReturnType.IsVoid AndAlso b1.IsNotEmpty Then
-            b.AppendLine("{0} __ret_val_ = {1};", ReturnType.NativeSymbol, wrappedRetVal)
-            b.AppendBuilder(b1)
-            b.AppendLine("return __ret_val_;")
-        ElseIf ReturnType.IsVoid Then
-            b.AppendLine("{0}({1});", functionName, NativeCall)
-            b.AppendBuilder(b1)
-        Else
-            b.AppendLine("return {0};", wrappedRetVal)
-        End If
     End Sub
 
     Public Overridable Sub DebugPrintUnhandledArrayArguments()
