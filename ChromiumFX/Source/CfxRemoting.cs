@@ -58,6 +58,39 @@ namespace Chromium {
         public static void Initialize(CfxRenderProcessStartupDelegate renderProcessStartupCallback, CfxBrowserProcessHandler browserProcessHandler) {
             RemoteService.Initialize(renderProcessStartupCallback, browserProcessHandler);
         }
-        
+
+        /// <summary>
+        /// Thread-relative static property indicating the thread id of an affine thread
+        /// in the remote process. Zero if the calling thread has no affinity with a remote thread.
+        /// </summary>
+        public static int RemoteThreadId {
+            get { return remoteThreadId; }
+        }
+
+        /// <summary>
+        /// Set thread-relative affinity to a thread in the remote process.
+        /// Use with care, if the identified remote thread does not exist or is not 
+        /// waiting on the remote call interface, then the behaviour is undefined.
+        /// Use try/finally to make sure the thread calls SetThreadAffinity(0) when it's 
+        /// done calling into the render process on behalf of the identified thread.
+        /// Typical use case: marshal an Invoke call to the render thread.
+        /// </summary>
+        /// <param name="remoteThreadId"></param>
+        public static void SetThreadAffinity(int remoteThreadId) {
+            
+            if(CfxRemoting.remoteThreadId != 0 && !threadAffinityIsExternal)
+                throw new CfxException("Can's set thread affinity on a framework provided thread.");
+
+            threadAffinityIsExternal = true;
+            CfxRemoting.remoteThreadId = remoteThreadId;
+
+        }
+
+        [ThreadStatic]
+        internal static int remoteThreadId;
+
+        [ThreadStatic]
+        internal static bool threadAffinityIsExternal;
+
     }
 }

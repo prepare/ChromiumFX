@@ -59,8 +59,12 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public ChromiumWebBrowser Browser { get; internal set; }
         
-        private readonly Control invokeControl;
-
+        /// <summary>
+        /// If true, then the function is executed on the thread that owns the browser's 
+        /// underlying window handle. Preserves affinity to the render thread.
+        /// </summary>
+        public bool InvokeOnBrowser { get; set; }
+        
         /// <summary>
         /// Creates a JS Function for registration with a
         /// ChromiumWebBrowser control.
@@ -72,12 +76,12 @@ namespace Chromium.WebBrowser {
         /// <summary>
         /// Creates a JS Function for registration with a
         /// ChromiumWebBrowser control.
-        /// The function is executed on the thread that owns invokeControl's 
-        /// underlying window handle. Preserves affinity to the original thread.
+        /// If invokeOnBrowser is true, then the function is executed on the thread that 
+        /// owns the browser's underlying window handle. Preserves affinity to the render thread.
         /// </summary>
-        public JSFunction(string functionName, Control invokeControl) {
+        public JSFunction(string functionName, bool invokeOnBrowser) {
             this.FunctionName = functionName;
-            this.invokeControl = invokeControl;
+            this.InvokeOnBrowser = invokeOnBrowser;
         }
 
         internal void SetV8Handler(CfrV8Handler handler) {
@@ -87,8 +91,8 @@ namespace Chromium.WebBrowser {
         private void handler_Execute(object sender, CfrV8HandlerExecuteEventArgs e) {
             var eventHandler = Execute;
             if(eventHandler != null) {
-                if(invokeControl != null) {
-                    invokeControl.Invoke((MethodInvoker)(() => { eventHandler(this, e); }));
+                if(InvokeOnBrowser) {
+                    Browser.RenderThreadInvoke((MethodInvoker)(() => { eventHandler(this, e); }));
                 } else {
                     eventHandler(this, e);
                 }

@@ -361,7 +361,33 @@ namespace Chromium.WebBrowser {
             }
         }
 
-        
+
+        /// <summary>
+        /// Special Invoke for framework callbacks from the render process.
+        /// Maintains affinity with the render process thread.
+        /// Use this instead of invoke when the following conditions are meat:
+        /// 1) The current thread is executing in the scope of a framework
+        ///    callback event from the render process (ex. CfrTask.Execute).
+        /// 2) You need to Invoke on the webbrowser control and
+        /// 3) The invoked code needs to call into the render process.
+        /// </summary>
+        public Object RenderThreadInvoke(Delegate method, params Object[] args) {
+            object retval = null;
+            int id = CfxRemoting.RemoteThreadId;
+            Invoke((MethodInvoker)(() => { retval = RenderThreadInvokeInternal(method, args, id); }));
+            return retval;
+        }
+
+        private Object RenderThreadInvokeInternal(Delegate method, Object[] args, int remoteThreadId) {
+            CfxRemoting.SetThreadAffinity(remoteThreadId);
+            try {
+                return method.DynamicInvoke(args);
+            } finally {
+                CfxRemoting.SetThreadAffinity(0);
+            }
+        }
+
+
         /// <summary>
         /// Evaluate a string of javascript code in the browser's main frame.
         /// Evaluation is done asynchronously in the render process.
@@ -411,13 +437,13 @@ namespace Chromium.WebBrowser {
                     var context = wb.remoteBrowser.MainFrame.V8Context;
                     var result = context.Eval(code, out retval, out ex);
                     if(result) {
-                        wb.Invoke((MethodInvoker)(() => { callback(retval, ex); }));
+                        wb.RenderThreadInvoke((MethodInvoker)(() => { callback(retval, ex); }));
                     } else {
-                        wb.Invoke((MethodInvoker)(() => { callback(null, null); }));
+                        wb.RenderThreadInvoke((MethodInvoker)(() => { callback(null, null); }));
                     }
                     
                 } catch {
-                    wb.Invoke((MethodInvoker)(() => { callback(null, null); }));
+                    wb.RenderThreadInvoke((MethodInvoker)(() => { callback(null, null); }));
                 }
             }
         }
@@ -462,7 +488,7 @@ namespace Chromium.WebBrowser {
         /// underlying window handle. Preserves affinity to the original thread.
         /// </summary>
         public JSFunction AddGlobalJSFunction(string functionName) {
-            var f = new JSFunction(functionName, this);
+            var f = new JSFunction(functionName, true);
             AddGlobalJSFunction(f);
             return f;
         }
@@ -471,12 +497,12 @@ namespace Chromium.WebBrowser {
         /// Add a JS Function to the main frame's global object.
         /// The function will be available after the next time a
         /// V8 context is created in the render process.
-        /// If executeOnUiThread is true, then the function is 
+        /// If invokeOnBrowser is true, then the function is 
         /// executed on the thread that owns this browser control's 
-        /// underlying window handle. Preserves affinity to the original thread.
+        /// underlying window handle. Preserves affinity to the render thread.
         /// </summary>
-        public JSFunction AddGlobalJSFunction(string functionName, bool executeOnUiThread) {
-            var f = new JSFunction(functionName, executeOnUiThread ? this : null);
+        public JSFunction AddGlobalJSFunction(string functionName, bool invokeOnBrowser) {
+            var f = new JSFunction(functionName, invokeOnBrowser);
             AddGlobalJSFunction(f);
             return f;
         }
@@ -489,7 +515,7 @@ namespace Chromium.WebBrowser {
         /// underlying window handle. Preserves affinity to the original thread.
         /// </summary>
         public JSFunction AddGlobalJSFunction(string frameName, string functionName) {
-            var f = new JSFunction(functionName, this);
+            var f = new JSFunction(functionName, true);
             AddGlobalJSFunction(frameName, f);
             return f;
         }
@@ -533,7 +559,7 @@ namespace Chromium.WebBrowser {
             }
 
             void Task_Execute(object sender, CfrEventArgs e) {
-                wb.Invoke((MethodInvoker)(() => { callback(wb.remoteBrowser); }));
+                wb.RenderThreadInvoke((MethodInvoker)(() => { callback(wb.remoteBrowser); }));
             }
         }
 
@@ -590,7 +616,7 @@ namespace Chromium.WebBrowser {
             }
 
             void visitor_Visit(object sender, CfrDomVisitorVisitEventArgs e) {
-                wb.Invoke((MethodInvoker)(() => { callback(e.Document, wb.remoteBrowser); }));
+                wb.RenderThreadInvoke((MethodInvoker)(() => { callback(e.Document, wb.remoteBrowser); }));
             }
 
         }

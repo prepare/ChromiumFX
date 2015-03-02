@@ -73,10 +73,7 @@ namespace Chromium.Remote {
                 localThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
                 connection.callStack.Push(this);
 
-                var cfxId = (CfxId)System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("CfxId");
-                if(cfxId != null)
-                    remoteThreadId = cfxId.threadId;
-
+                remoteThreadId = CfxRemoting.remoteThreadId;
 
                 connection.EnqueueRequest(this);
 
@@ -96,8 +93,7 @@ namespace Chromium.Remote {
                     }
                     
                     reentryCall.ExecutionThreadEntry(connection);
-                    if(cfxId != null)
-                        System.Runtime.Remoting.Messaging.CallContext.LogicalSetData("CfxId", cfxId);
+                    CfxRemoting.remoteThreadId = remoteThreadId;
 
                     reentryCall = null;
                 }
@@ -161,16 +157,12 @@ namespace Chromium.Remote {
                 return;
             }
 
-            if(remoteThreadId != 0) {
-                System.Runtime.Remoting.Messaging.CallContext.LogicalSetData("CfxId", new CfxId(remoteThreadId));
-            }
+            CfxRemoting.remoteThreadId = remoteThreadId;
 
             try {
                 ExecuteInTargetProcess(connection);
             } finally {
-                if(remoteThreadId != 0) {
-                    System.Runtime.Remoting.Messaging.CallContext.FreeNamedDataSlot("CfxId");
-                }
+                CfxRemoting.remoteThreadId = 0;
             }
             connection.EnqueueResponse(this);
         }
@@ -184,17 +176,6 @@ namespace Chromium.Remote {
         protected virtual void ReadReturn(StreamHandler h) { }
 
         protected abstract void ExecuteInTargetProcess(RemoteConnection connection);
-        
-
-        private class CfxId : System.Runtime.Remoting.Messaging.ILogicalThreadAffinative {
-            internal readonly int threadId;
-            internal CfxId(int threadId) {
-                this.threadId = threadId;
-            }
-            public override string ToString() {
-                return threadId.ToString();
-            }
-        }
         
     }
 }
