@@ -41,7 +41,7 @@ Public Class Signature
         End If
     End Function
 
-    Private Class ArgList
+    Protected Class ArgList
         Private args As New List(Of String)
         Public Sub Add(arg As String)
             If Not String.IsNullOrWhiteSpace(arg) Then
@@ -60,7 +60,7 @@ Public Class Signature
     Public ReadOnly Arguments As Argument()
     Public ReadOnly ReturnType As ApiType
 
-    Private args As New ArgList
+    Protected args As New ArgList
 
     Protected Sub New(parent As ISignatureParent, sd As Parser.SignatureData, api As ApiTypeBuilder)
         Me.Parent = parent
@@ -486,6 +486,7 @@ Public Class Signature
             b.AppendLine("return __ret_val_;")
         ElseIf ReturnType.IsVoid Then
             b.AppendLine("{0}({1});", functionName, NativeCall)
+            b.AppendBuilder(b1)
         Else
             b.AppendLine("return {0};", wrappedRetVal)
         End If

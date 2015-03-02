@@ -3622,9 +3622,9 @@ namespace Chromium {
         public delegate int cfx_print_settings_get_dpi_delegate(IntPtr self);
         public static cfx_print_settings_get_dpi_delegate cfx_print_settings_get_dpi;
 
-        // CFX_EXPORT void cfx_print_settings_set_page_ranges(cef_print_settings_t* self, int rangesCount, cef_page_range_t const* ranges)
+        // CFX_EXPORT void cfx_print_settings_set_page_ranges(cef_print_settings_t* self, int rangesCount, cef_page_range_t const** ranges, int* ranges_nomem)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_print_settings_set_page_ranges_delegate(IntPtr self, int rangesCount, IntPtr ranges);
+        public delegate void cfx_print_settings_set_page_ranges_delegate(IntPtr self, int rangesCount, IntPtr ranges, out int ranges_nomem);
         public static cfx_print_settings_set_page_ranges_delegate cfx_print_settings_set_page_ranges;
 
         // CFX_EXPORT int cfx_print_settings_get_page_ranges_count(cef_print_settings_t* self)
@@ -3632,9 +3632,9 @@ namespace Chromium {
         public delegate int cfx_print_settings_get_page_ranges_count_delegate(IntPtr self);
         public static cfx_print_settings_get_page_ranges_count_delegate cfx_print_settings_get_page_ranges_count;
 
-        // CFX_EXPORT void cfx_print_settings_get_page_ranges(cef_print_settings_t* self, size_t* rangesCount, cef_page_range_t* ranges)
+        // CFX_EXPORT void cfx_print_settings_get_page_ranges(cef_print_settings_t* self, size_t* rangesCount, cef_page_range_t** ranges, int* ranges_nomem)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_print_settings_get_page_ranges_delegate(IntPtr self, out int rangesCount, IntPtr ranges);
+        public delegate void cfx_print_settings_get_page_ranges_delegate(IntPtr self, ref int rangesCount, IntPtr ranges, out int ranges_nomem);
         public static cfx_print_settings_get_page_ranges_delegate cfx_print_settings_get_page_ranges;
 
         // CFX_EXPORT void cfx_print_settings_set_selection_only(cef_print_settings_t* self, int selection_only)

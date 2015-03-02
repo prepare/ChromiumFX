@@ -210,15 +210,39 @@ namespace Chromium {
         /// <summary>
         /// Set the page ranges.
         /// </summary>
-        public void SetPageRanges(int rangesCount, CfxPageRange ranges) {
-            CfxApi.cfx_print_settings_set_page_ranges(NativePtr, rangesCount, CfxPageRange.Unwrap(ranges));
+        public void SetPageRanges(CfxPageRange[] ranges) {
+            int ranges_length = ranges.Length;
+            IntPtr[] ranges_ptrs = new IntPtr[ranges_length];
+            for(int i = 0; i < ranges_length; ++i) {
+                ranges_ptrs[i] = CfxPageRange.Unwrap(ranges[i]);
+            }
+            PinnedObject ranges_pinned = new PinnedObject(ranges_ptrs);
+            int ranges_nomem;
+            CfxApi.cfx_print_settings_set_page_ranges(NativePtr, ranges_length, ranges_pinned.PinnedPtr, out ranges_nomem);
+            ranges_pinned.Free();
+            if(ranges_nomem != 0) {
+                throw new OutOfMemoryException();
+            }
         }
 
         /// <summary>
         /// Retrieve the page ranges.
         /// </summary>
-        public void GetPageRanges(int rangesCount, CfxPageRange ranges) {
-            CfxApi.cfx_print_settings_get_page_ranges(NativePtr, out rangesCount, CfxPageRange.Unwrap(ranges));
+        public CfxPageRange[] GetPageRanges() {
+            int rangesCount = CfxApi.cfx_print_settings_get_page_ranges_count(NativePtr);
+            IntPtr[] pp = new IntPtr[rangesCount];
+            PinnedObject pp_pinned = new PinnedObject(pp);
+            int ranges_nomem;
+            CfxApi.cfx_print_settings_get_page_ranges(NativePtr, ref rangesCount, pp_pinned.PinnedPtr, out ranges_nomem);
+            pp_pinned.Free();
+            if(ranges_nomem != 0) {
+                throw new OutOfMemoryException();
+            }
+            var retval = new CfxPageRange[rangesCount];
+            for(int i = 0; i < rangesCount; ++i) {
+                retval[i] = CfxPageRange.WrapOwned(pp[i]);
+            }
+            return retval;
         }
 
         /// <summary>

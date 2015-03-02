@@ -104,9 +104,12 @@
     <Compile Include="ApiTypes\SpecialType.vb" />
     <Compile Include="ApiTypes\StringCollectionType.vb" />
     <Compile Include="ApiTypes\VoidPtrPtrType.vb" />
+    <Compile Include="ApiTypes\WrapperOnly\CefStructArrayType.vb" />
     <Compile Include="ApiTypes\WrapperOnly\CefStructPtrArrayType.vb" />
     <Compile Include="ApiTypes\WrapperOnly\WrapperArrayType.vb" />
     <Compile Include="Builder\CfxClassBuilder.vb" />
+    <Compile Include="CustomSignatures\GetPageRangesSignature.vb" />
+    <Compile Include="CustomSignatures\SignatureWithStructArray.vb" />
     <Compile Include="Signature\Argument.vb" />
     <EmbeddedResource Include="Config\VolatileEventArgs.txt" />
     <EmbeddedResource Include="Config\RenderProcessThreadAffinity.txt" />
