@@ -93,8 +93,6 @@ namespace Chromium.Remote {
                     }
                     
                     reentryCall.ExecutionThreadEntry(connection);
-                    CfxRemoting.remoteThreadId = remoteThreadId;
-
                     reentryCall = null;
                 }
             }
@@ -157,12 +155,13 @@ namespace Chromium.Remote {
                 return;
             }
 
+            var previousRemoteThreadId = CfxRemoting.remoteThreadId;
             CfxRemoting.remoteThreadId = remoteThreadId;
 
             try {
                 ExecuteInTargetProcess(connection);
             } finally {
-                CfxRemoting.remoteThreadId = 0;
+                CfxRemoting.remoteThreadId = previousRemoteThreadId;
             }
             connection.EnqueueResponse(this);
         }

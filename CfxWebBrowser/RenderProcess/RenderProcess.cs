@@ -55,7 +55,7 @@ namespace Chromium.WebBrowser {
             app = new CfrApp(remoteRuntime);
             processHandler = new RenderProcessHandler(this);
 
-            app.GetRenderProcessHandler += new CfrGetRenderProcessHandlerEventHandler(app_GetRenderProcessHandler);
+            app.GetRenderProcessHandler += app_GetRenderProcessHandler;
             
         }
 
