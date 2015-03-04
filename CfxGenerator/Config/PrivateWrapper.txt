@@ -1,0 +1,3 @@
+﻿cef_shutdown
+cef_string_map_alloc
+cef_string_list_alloc
