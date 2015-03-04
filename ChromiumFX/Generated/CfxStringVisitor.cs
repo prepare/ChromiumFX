@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Implement this structure to receive string values asynchronously.
     /// </summary>
@@ -90,33 +92,36 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxStringVisitorVisitEventHandler(object sender, CfxStringVisitorVisitEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Method that will be executed.
-    /// </summary>
-    public class CfxStringVisitorVisitEventArgs : CfxEventArgs {
+        public delegate void CfxStringVisitorVisitEventHandler(object sender, CfxStringVisitorVisitEventArgs e);
 
-        internal IntPtr m_string_str;
-        internal int m_string_length;
-        internal string m_string;
+        /// <summary>
+        /// Method that will be executed.
+        /// </summary>
+        public class CfxStringVisitorVisitEventArgs : CfxEventArgs {
 
-        internal CfxStringVisitorVisitEventArgs(IntPtr string_str, int string_length) {
-            m_string_str = string_str;
-            m_string_length = string_length;
-        }
+            internal IntPtr m_string_str;
+            internal int m_string_length;
+            internal string m_string;
 
-        public string String {
-            get {
-                CheckAccess();
-                if(m_string == null && m_string_str != IntPtr.Zero) m_string = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_string_str, m_string_length);
-                return m_string;
+            internal CfxStringVisitorVisitEventArgs(IntPtr string_str, int string_length) {
+                m_string_str = string_str;
+                m_string_length = string_length;
+            }
+
+            public string String {
+                get {
+                    CheckAccess();
+                    if(m_string == null && m_string_str != IntPtr.Zero) m_string = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_string_str, m_string_length);
+                    return m_string;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("String={{{0}}}", String);
             }
         }
 
-        public override string ToString() {
-            return String.Format("String={{{0}}}", String);
-        }
     }
-
 }

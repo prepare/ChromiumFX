@@ -34,6 +34,7 @@
 using System;
 
 namespace Chromium.Remote {
+
     /// <summary>
     /// URL component parts.
     /// </summary>

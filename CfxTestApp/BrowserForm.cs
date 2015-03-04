@@ -35,7 +35,9 @@ using System.Windows.Forms;
 using System.Diagnostics;
 
 using Chromium;
+using Chromium.Event;
 using Chromium.Remote;
+using Chromium.Remote.Event;
 
 
 namespace CfxTestApplication {
@@ -51,7 +53,7 @@ namespace CfxTestApplication {
             ResourcesTestButton.Click += new EventHandler(TestButton_Click);
             VisitDomButton.Click += new EventHandler(VisitDomButton_Click);
 
-            WebBrowser.AddGlobalJSFunction("CfxHelloWorld").Execute += new Chromium.Remote.CfrV8HandlerExecuteEventHandler(CfxHelloWorld_Execute);
+            WebBrowser.AddGlobalJSFunction("CfxHelloWorld").Execute += CfxHelloWorld_Execute;
 
             var html = "<html><body> Test ã çç<br><img src='http://localresource/image'>";
             WebBrowser.SetWebResource("http://localresource/text.html", new Chromium.WebBrowser.WebResource(html));
@@ -63,8 +65,8 @@ namespace CfxTestApplication {
 
             WebBrowser.SetWebResource("http://localresource/image", new Chromium.WebBrowser.WebResource(bm));
             
-            WebBrowser.DisplayHandler.OnConsoleMessage += new Chromium.CfxOnConsoleMessageEventHandler(DisplayHandler_OnConsoleMessage);
-            WebBrowser.DisplayHandler.OnTitleChange += new CfxOnTitleChangeEventHandler(DisplayHandler_OnTitleChange);
+            WebBrowser.DisplayHandler.OnConsoleMessage += DisplayHandler_OnConsoleMessage;
+            WebBrowser.DisplayHandler.OnTitleChange += DisplayHandler_OnTitleChange;
             
 
         }
@@ -73,7 +75,7 @@ namespace CfxTestApplication {
             LogCallback(sender, e);
         }
 
-        void DisplayHandler_OnConsoleMessage(object sender, Chromium.CfxOnConsoleMessageEventArgs e) {
+        void DisplayHandler_OnConsoleMessage(object sender, CfxOnConsoleMessageEventArgs e) {
             LogCallback(sender, e);
         }
 
@@ -101,7 +103,7 @@ namespace CfxTestApplication {
             LogCallback(retval, ex);
         }
 
-        void CfxHelloWorld_Execute(object sender, Chromium.Remote.CfrV8HandlerExecuteEventArgs e) {
+        void CfxHelloWorld_Execute(object sender, CfrV8HandlerExecuteEventArgs e) {
             
             var r1 = e.Arguments[0].IntValue;
             var r2 = e.Arguments[1].StringValue;

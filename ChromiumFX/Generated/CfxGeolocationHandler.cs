@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Implement this structure to handle events related to geolocation permission
     /// requests. The functions of this structure will be called on the browser
@@ -139,126 +141,129 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxOnRequestGeolocationPermissionEventHandler(object sender, CfxOnRequestGeolocationPermissionEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Called when a page requests permission to access geolocation information.
-    /// |RequestingUrl| is the URL requesting permission and |RequestId| is the
-    /// unique ID for the permission request. Return true (1) and call
-    /// CfxGeolocationCallback.Continue() either in this function or at a later
-    /// time to continue or cancel the request. Return false (0) to cancel the
-    /// request immediately.
-    /// </summary>
-    public class CfxOnRequestGeolocationPermissionEventArgs : CfxEventArgs {
+        public delegate void CfxOnRequestGeolocationPermissionEventHandler(object sender, CfxOnRequestGeolocationPermissionEventArgs e);
 
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal IntPtr m_requesting_url_str;
-        internal int m_requesting_url_length;
-        internal string m_requesting_url;
-        internal int m_request_id;
-        internal IntPtr m_callback;
-        internal CfxGeolocationCallback m_callback_wrapped;
+        /// <summary>
+        /// Called when a page requests permission to access geolocation information.
+        /// |RequestingUrl| is the URL requesting permission and |RequestId| is the
+        /// unique ID for the permission request. Return true (1) and call
+        /// CfxGeolocationCallback.Continue() either in this function or at a later
+        /// time to continue or cancel the request. Return false (0) to cancel the
+        /// request immediately.
+        /// </summary>
+        public class CfxOnRequestGeolocationPermissionEventArgs : CfxEventArgs {
 
-        internal bool m_returnValue;
-        private bool returnValueSet;
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_requesting_url_str;
+            internal int m_requesting_url_length;
+            internal string m_requesting_url;
+            internal int m_request_id;
+            internal IntPtr m_callback;
+            internal CfxGeolocationCallback m_callback_wrapped;
 
-        internal CfxOnRequestGeolocationPermissionEventArgs(IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id, IntPtr callback) {
-            m_browser = browser;
-            m_requesting_url_str = requesting_url_str;
-            m_requesting_url_length = requesting_url_length;
-            m_request_id = request_id;
-            m_callback = callback;
-        }
+            internal bool m_returnValue;
+            private bool returnValueSet;
 
-        public CfxBrowser Browser {
-            get {
+            internal CfxOnRequestGeolocationPermissionEventArgs(IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id, IntPtr callback) {
+                m_browser = browser;
+                m_requesting_url_str = requesting_url_str;
+                m_requesting_url_length = requesting_url_length;
+                m_request_id = request_id;
+                m_callback = callback;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public string RequestingUrl {
+                get {
+                    CheckAccess();
+                    if(m_requesting_url == null && m_requesting_url_str != IntPtr.Zero) m_requesting_url = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_requesting_url_str, m_requesting_url_length);
+                    return m_requesting_url;
+                }
+            }
+            public int RequestId {
+                get {
+                    CheckAccess();
+                    return m_request_id;
+                }
+            }
+            public CfxGeolocationCallback Callback {
+                get {
+                    CheckAccess();
+                    if(m_callback_wrapped == null) m_callback_wrapped = CfxGeolocationCallback.Wrap(m_callback);
+                    return m_callback_wrapped;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
                 CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
             }
-        }
-        public string RequestingUrl {
-            get {
-                CheckAccess();
-                if(m_requesting_url == null && m_requesting_url_str != IntPtr.Zero) m_requesting_url = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_requesting_url_str, m_requesting_url_length);
-                return m_requesting_url;
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, RequestingUrl={{{1}}}, RequestId={{{2}}}, Callback={{{3}}}", Browser, RequestingUrl, RequestId, Callback);
             }
-        }
-        public int RequestId {
-            get {
-                CheckAccess();
-                return m_request_id;
-            }
-        }
-        public CfxGeolocationCallback Callback {
-            get {
-                CheckAccess();
-                if(m_callback_wrapped == null) m_callback_wrapped = CfxGeolocationCallback.Wrap(m_callback);
-                return m_callback_wrapped;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
         }
 
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, RequestingUrl={{{1}}}, RequestId={{{2}}}, Callback={{{3}}}", Browser, RequestingUrl, RequestId, Callback);
+        public delegate void CfxOnCancelGeolocationPermissionEventHandler(object sender, CfxOnCancelGeolocationPermissionEventArgs e);
+
+        /// <summary>
+        /// Called when a geolocation access request is canceled. |RequestingUrl| is
+        /// the URL that originally requested permission and |RequestId| is the unique
+        /// ID for the permission request.
+        /// </summary>
+        public class CfxOnCancelGeolocationPermissionEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_requesting_url_str;
+            internal int m_requesting_url_length;
+            internal string m_requesting_url;
+            internal int m_request_id;
+
+            internal CfxOnCancelGeolocationPermissionEventArgs(IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id) {
+                m_browser = browser;
+                m_requesting_url_str = requesting_url_str;
+                m_requesting_url_length = requesting_url_length;
+                m_request_id = request_id;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public string RequestingUrl {
+                get {
+                    CheckAccess();
+                    if(m_requesting_url == null && m_requesting_url_str != IntPtr.Zero) m_requesting_url = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_requesting_url_str, m_requesting_url_length);
+                    return m_requesting_url;
+                }
+            }
+            public int RequestId {
+                get {
+                    CheckAccess();
+                    return m_request_id;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, RequestingUrl={{{1}}}, RequestId={{{2}}}", Browser, RequestingUrl, RequestId);
+            }
         }
+
     }
-
-    public delegate void CfxOnCancelGeolocationPermissionEventHandler(object sender, CfxOnCancelGeolocationPermissionEventArgs e);
-
-    /// <summary>
-    /// Called when a geolocation access request is canceled. |RequestingUrl| is
-    /// the URL that originally requested permission and |RequestId| is the unique
-    /// ID for the permission request.
-    /// </summary>
-    public class CfxOnCancelGeolocationPermissionEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal IntPtr m_requesting_url_str;
-        internal int m_requesting_url_length;
-        internal string m_requesting_url;
-        internal int m_request_id;
-
-        internal CfxOnCancelGeolocationPermissionEventArgs(IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id) {
-            m_browser = browser;
-            m_requesting_url_str = requesting_url_str;
-            m_requesting_url_length = requesting_url_length;
-            m_request_id = request_id;
-        }
-
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-        public string RequestingUrl {
-            get {
-                CheckAccess();
-                if(m_requesting_url == null && m_requesting_url_str != IntPtr.Zero) m_requesting_url = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_requesting_url_str, m_requesting_url_length);
-                return m_requesting_url;
-            }
-        }
-        public int RequestId {
-            get {
-                CheckAccess();
-                return m_request_id;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, RequestingUrl={{{1}}}, RequestId={{{2}}}", Browser, RequestingUrl, RequestId);
-        }
-    }
-
 }

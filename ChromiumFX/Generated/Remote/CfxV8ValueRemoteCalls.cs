@@ -34,6 +34,7 @@
 using System;
 
 namespace Chromium.Remote {
+
     internal class CfxV8ValueCreateUndefinedRenderProcessCall : RenderProcessCall {
 
         internal CfxV8ValueCreateUndefinedRenderProcessCall()

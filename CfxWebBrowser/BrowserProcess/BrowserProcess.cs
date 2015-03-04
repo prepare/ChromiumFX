@@ -32,6 +32,7 @@
 
 using System;
 using Chromium;
+using Chromium.Event;
 
 namespace Chromium.WebBrowser {
     internal class BrowserProcess {

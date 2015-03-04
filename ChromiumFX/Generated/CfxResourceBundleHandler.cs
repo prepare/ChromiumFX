@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Structure used to implement a custom resource bundle structure. The functions
     /// of this structure may be called on multiple threads.
@@ -147,118 +149,121 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxGetLocalizedStringEventHandler(object sender, CfxGetLocalizedStringEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Called to retrieve a localized translation for the string specified by
-    /// |MessageId|. To provide the translation set |String| to the translation
-    /// string and return true (1). To use the default translation return false
-    /// (0). Supported message IDs are listed in cef_pack_strings.h.
-    /// </summary>
-    public class CfxGetLocalizedStringEventArgs : CfxEventArgs {
+        public delegate void CfxGetLocalizedStringEventHandler(object sender, CfxGetLocalizedStringEventArgs e);
 
-        internal int m_message_id;
-        internal IntPtr m_string_str;
-        internal int m_string_length;
-        internal string m_string_wrapped;
-        internal bool m_string_changed;
+        /// <summary>
+        /// Called to retrieve a localized translation for the string specified by
+        /// |MessageId|. To provide the translation set |String| to the translation
+        /// string and return true (1). To use the default translation return false
+        /// (0). Supported message IDs are listed in cef_pack_strings.h.
+        /// </summary>
+        public class CfxGetLocalizedStringEventArgs : CfxEventArgs {
 
-        internal bool m_returnValue;
-        private bool returnValueSet;
+            internal int m_message_id;
+            internal IntPtr m_string_str;
+            internal int m_string_length;
+            internal string m_string_wrapped;
+            internal bool m_string_changed;
 
-        internal CfxGetLocalizedStringEventArgs(int message_id, IntPtr string_str, int string_length) {
-            m_message_id = message_id;
-            m_string_str = string_str;
-            m_string_length = string_length;
-        }
+            internal bool m_returnValue;
+            private bool returnValueSet;
 
-        public int MessageId {
-            get {
-                CheckAccess();
-                return m_message_id;
+            internal CfxGetLocalizedStringEventArgs(int message_id, IntPtr string_str, int string_length) {
+                m_message_id = message_id;
+                m_string_str = string_str;
+                m_string_length = string_length;
             }
-        }
-        public string String {
-            get {
-                CheckAccess();
-                if(!m_string_changed && m_string_wrapped == null && m_string_str != IntPtr.Zero) {
-                    m_string_wrapped = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_string_str, m_string_length);
+
+            public int MessageId {
+                get {
+                    CheckAccess();
+                    return m_message_id;
                 }
-                return m_string_wrapped;
             }
-            set {
+            public string String {
+                get {
+                    CheckAccess();
+                    if(!m_string_changed && m_string_wrapped == null && m_string_str != IntPtr.Zero) {
+                        m_string_wrapped = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_string_str, m_string_length);
+                    }
+                    return m_string_wrapped;
+                }
+                set {
+                    CheckAccess();
+                    m_string_wrapped = value;
+                    m_string_changed = true;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
                 CheckAccess();
-                m_string_wrapped = value;
-                m_string_changed = true;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
             }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
+
+            public override string ToString() {
+                return String.Format("MessageId={{{0}}}, String={{{1}}}", MessageId, String);
             }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
         }
 
-        public override string ToString() {
-            return String.Format("MessageId={{{0}}}, String={{{1}}}", MessageId, String);
+        public delegate void CfxGetDataResourceEventHandler(object sender, CfxGetDataResourceEventArgs e);
+
+        /// <summary>
+        /// Called to retrieve data for the resource specified by |ResourceId|. To
+        /// provide the resource data set |Data| and |DataSize| to the data pointer
+        /// and size respectively and return true (1). To use the default resource data
+        /// return false (0). The resource data will not be copied and must remain
+        /// resident in memory. Supported resource IDs are listed in
+        /// cef_pack_resources.h.
+        /// </summary>
+        public class CfxGetDataResourceEventArgs : CfxEventArgs {
+
+            internal int m_resource_id;
+            internal IntPtr m_data;
+            internal int m_data_size;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxGetDataResourceEventArgs(int resource_id) {
+                m_resource_id = resource_id;
+            }
+
+            public int ResourceId {
+                get {
+                    CheckAccess();
+                    return m_resource_id;
+                }
+            }
+            public IntPtr Data {
+                set {
+                    CheckAccess();
+                    m_data = value;
+                }
+            }
+            public int DataSize {
+                set {
+                    CheckAccess();
+                    m_data_size = value;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("ResourceId={{{0}}}", ResourceId);
+            }
         }
+
     }
-
-    public delegate void CfxGetDataResourceEventHandler(object sender, CfxGetDataResourceEventArgs e);
-
-    /// <summary>
-    /// Called to retrieve data for the resource specified by |ResourceId|. To
-    /// provide the resource data set |Data| and |DataSize| to the data pointer
-    /// and size respectively and return true (1). To use the default resource data
-    /// return false (0). The resource data will not be copied and must remain
-    /// resident in memory. Supported resource IDs are listed in
-    /// cef_pack_resources.h.
-    /// </summary>
-    public class CfxGetDataResourceEventArgs : CfxEventArgs {
-
-        internal int m_resource_id;
-        internal IntPtr m_data;
-        internal int m_data_size;
-
-        internal bool m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxGetDataResourceEventArgs(int resource_id) {
-            m_resource_id = resource_id;
-        }
-
-        public int ResourceId {
-            get {
-                CheckAccess();
-                return m_resource_id;
-            }
-        }
-        public IntPtr Data {
-            set {
-                CheckAccess();
-                m_data = value;
-            }
-        }
-        public int DataSize {
-            set {
-                CheckAccess();
-                m_data_size = value;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-
-        public override string ToString() {
-            return String.Format("ResourceId={{{0}}}", ResourceId);
-        }
-    }
-
 }

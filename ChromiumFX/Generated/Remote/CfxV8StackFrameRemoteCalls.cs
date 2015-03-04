@@ -34,6 +34,7 @@
 using System;
 
 namespace Chromium.Remote {
+
     internal class CfxV8StackFrameIsValidRenderProcessCall : RenderProcessCall {
 
         internal CfxV8StackFrameIsValidRenderProcessCall()

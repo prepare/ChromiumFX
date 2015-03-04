@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Structure the client can implement to provide a custom stream reader. The
     /// functions of this structure may be called on any thread.
@@ -244,175 +246,178 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxReadEventHandler(object sender, CfxReadEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Read raw binary data.
-    /// </summary>
-    public class CfxReadEventArgs : CfxEventArgs {
+        public delegate void CfxReadEventHandler(object sender, CfxReadEventArgs e);
 
-        internal IntPtr m_ptr;
-        internal int m_size;
-        internal int m_n;
+        /// <summary>
+        /// Read raw binary data.
+        /// </summary>
+        public class CfxReadEventArgs : CfxEventArgs {
 
-        internal int m_returnValue;
-        private bool returnValueSet;
+            internal IntPtr m_ptr;
+            internal int m_size;
+            internal int m_n;
 
-        internal CfxReadEventArgs(IntPtr ptr, int size, int n) {
-            m_ptr = ptr;
-            m_size = size;
-            m_n = n;
-        }
+            internal int m_returnValue;
+            private bool returnValueSet;
 
-        public IntPtr Ptr {
-            get {
+            internal CfxReadEventArgs(IntPtr ptr, int size, int n) {
+                m_ptr = ptr;
+                m_size = size;
+                m_n = n;
+            }
+
+            public IntPtr Ptr {
+                get {
+                    CheckAccess();
+                    return m_ptr;
+                }
+            }
+            public int Size {
+                get {
+                    CheckAccess();
+                    return m_size;
+                }
+            }
+            public int N {
+                get {
+                    CheckAccess();
+                    return m_n;
+                }
+            }
+            public void SetReturnValue(int returnValue) {
                 CheckAccess();
-                return m_ptr;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("Ptr={{{0}}}, Size={{{1}}}, N={{{2}}}", Ptr, Size, N);
             }
         }
-        public int Size {
-            get {
+
+        public delegate void CfxSeekEventHandler(object sender, CfxSeekEventArgs e);
+
+        /// <summary>
+        /// Seek to the specified offset position. |Whence| may be any one of SEEK_CUR,
+        /// SEEK_END or SEEK_SET. Return zero on success and non-zero on failure.
+        /// </summary>
+        public class CfxSeekEventArgs : CfxEventArgs {
+
+            internal long m_offset;
+            internal int m_whence;
+
+            internal int m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxSeekEventArgs(long offset, int whence) {
+                m_offset = offset;
+                m_whence = whence;
+            }
+
+            public long Offset {
+                get {
+                    CheckAccess();
+                    return m_offset;
+                }
+            }
+            public int Whence {
+                get {
+                    CheckAccess();
+                    return m_whence;
+                }
+            }
+            public void SetReturnValue(int returnValue) {
                 CheckAccess();
-                return m_size;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("Offset={{{0}}}, Whence={{{1}}}", Offset, Whence);
             }
         }
-        public int N {
-            get {
+
+        public delegate void CfxTellEventHandler(object sender, CfxTellEventArgs e);
+
+        /// <summary>
+        /// Return the current offset position.
+        /// </summary>
+        public class CfxTellEventArgs : CfxEventArgs {
+
+
+            internal long m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxTellEventArgs() {
+            }
+
+            public void SetReturnValue(long returnValue) {
                 CheckAccess();
-                return m_n;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
             }
         }
-        public void SetReturnValue(int returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
+
+        public delegate void CfxReadHandlerEofEventHandler(object sender, CfxReadHandlerEofEventArgs e);
+
+        /// <summary>
+        /// Return non-zero if at end of file.
+        /// </summary>
+        public class CfxReadHandlerEofEventArgs : CfxEventArgs {
+
+
+            internal int m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxReadHandlerEofEventArgs() {
             }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
 
-        public override string ToString() {
-            return String.Format("Ptr={{{0}}}, Size={{{1}}}, N={{{2}}}", Ptr, Size, N);
-        }
-    }
-
-    public delegate void CfxSeekEventHandler(object sender, CfxSeekEventArgs e);
-
-    /// <summary>
-    /// Seek to the specified offset position. |Whence| may be any one of SEEK_CUR,
-    /// SEEK_END or SEEK_SET. Return zero on success and non-zero on failure.
-    /// </summary>
-    public class CfxSeekEventArgs : CfxEventArgs {
-
-        internal long m_offset;
-        internal int m_whence;
-
-        internal int m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxSeekEventArgs(long offset, int whence) {
-            m_offset = offset;
-            m_whence = whence;
-        }
-
-        public long Offset {
-            get {
+            public void SetReturnValue(int returnValue) {
                 CheckAccess();
-                return m_offset;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
             }
         }
-        public int Whence {
-            get {
+
+        public delegate void CfxMayBlockEventHandler(object sender, CfxMayBlockEventArgs e);
+
+        /// <summary>
+        /// Return true (1) if this handler performs work like accessing the file
+        /// system which may block. Used as a hint for determining the thread to access
+        /// the handler from.
+        /// </summary>
+        public class CfxMayBlockEventArgs : CfxEventArgs {
+
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxMayBlockEventArgs() {
+            }
+
+            public void SetReturnValue(bool returnValue) {
                 CheckAccess();
-                return m_whence;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
             }
-        }
-        public void SetReturnValue(int returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
         }
 
-        public override string ToString() {
-            return String.Format("Offset={{{0}}}, Whence={{{1}}}", Offset, Whence);
-        }
     }
-
-    public delegate void CfxTellEventHandler(object sender, CfxTellEventArgs e);
-
-    /// <summary>
-    /// Return the current offset position.
-    /// </summary>
-    public class CfxTellEventArgs : CfxEventArgs {
-
-
-        internal long m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxTellEventArgs() {
-        }
-
-        public void SetReturnValue(long returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
-
-    public delegate void CfxReadHandlerEofEventHandler(object sender, CfxReadHandlerEofEventArgs e);
-
-    /// <summary>
-    /// Return non-zero if at end of file.
-    /// </summary>
-    public class CfxReadHandlerEofEventArgs : CfxEventArgs {
-
-
-        internal int m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxReadHandlerEofEventArgs() {
-        }
-
-        public void SetReturnValue(int returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
-
-    public delegate void CfxMayBlockEventHandler(object sender, CfxMayBlockEventArgs e);
-
-    /// <summary>
-    /// Return true (1) if this handler performs work like accessing the file
-    /// system which may block. Used as a hint for determining the thread to access
-    /// the handler from.
-    /// </summary>
-    public class CfxMayBlockEventArgs : CfxEventArgs {
-
-
-        internal bool m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxMayBlockEventArgs() {
-        }
-
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
-
 }

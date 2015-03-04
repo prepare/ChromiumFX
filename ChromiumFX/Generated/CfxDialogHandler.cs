@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Implement this structure to handle dialog events. The functions of this
     /// structure will be called on the browser process UI thread.
@@ -103,100 +105,103 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxDialogHandlerOnFileDialogEventHandler(object sender, CfxDialogHandlerOnFileDialogEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Called to run a file chooser dialog. |Mode| represents the type of dialog
-    /// to display. |Title| to the title to be used for the dialog and may be NULL
-    /// to show the default title ("Open" or "Save" depending on the mode).
-    /// |DefaultFileName| is the default file name to select in the dialog.
-    /// |AcceptTypes| is a list of valid lower-cased MIME types or file extensions
-    /// specified in an input element and is used to restrict selectable files to
-    /// such types. To display a custom dialog return true (1) and execute
-    /// |Callback| either inline or at a later time. To display the default dialog
-    /// return false (0).
-    /// </summary>
-    public class CfxDialogHandlerOnFileDialogEventArgs : CfxEventArgs {
+        public delegate void CfxDialogHandlerOnFileDialogEventHandler(object sender, CfxDialogHandlerOnFileDialogEventArgs e);
 
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal CfxFileDialogMode m_mode;
-        internal IntPtr m_title_str;
-        internal int m_title_length;
-        internal string m_title;
-        internal IntPtr m_default_file_name_str;
-        internal int m_default_file_name_length;
-        internal string m_default_file_name;
-        internal IntPtr m_accept_types;
-        internal IntPtr m_callback;
-        internal CfxFileDialogCallback m_callback_wrapped;
+        /// <summary>
+        /// Called to run a file chooser dialog. |Mode| represents the type of dialog
+        /// to display. |Title| to the title to be used for the dialog and may be NULL
+        /// to show the default title ("Open" or "Save" depending on the mode).
+        /// |DefaultFileName| is the default file name to select in the dialog.
+        /// |AcceptTypes| is a list of valid lower-cased MIME types or file extensions
+        /// specified in an input element and is used to restrict selectable files to
+        /// such types. To display a custom dialog return true (1) and execute
+        /// |Callback| either inline or at a later time. To display the default dialog
+        /// return false (0).
+        /// </summary>
+        public class CfxDialogHandlerOnFileDialogEventArgs : CfxEventArgs {
 
-        internal bool m_returnValue;
-        private bool returnValueSet;
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal CfxFileDialogMode m_mode;
+            internal IntPtr m_title_str;
+            internal int m_title_length;
+            internal string m_title;
+            internal IntPtr m_default_file_name_str;
+            internal int m_default_file_name_length;
+            internal string m_default_file_name;
+            internal IntPtr m_accept_types;
+            internal IntPtr m_callback;
+            internal CfxFileDialogCallback m_callback_wrapped;
 
-        internal CfxDialogHandlerOnFileDialogEventArgs(IntPtr browser, CfxFileDialogMode mode, IntPtr title_str, int title_length, IntPtr default_file_name_str, int default_file_name_length, IntPtr accept_types, IntPtr callback) {
-            m_browser = browser;
-            m_mode = mode;
-            m_title_str = title_str;
-            m_title_length = title_length;
-            m_default_file_name_str = default_file_name_str;
-            m_default_file_name_length = default_file_name_length;
-            m_accept_types = accept_types;
-            m_callback = callback;
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxDialogHandlerOnFileDialogEventArgs(IntPtr browser, CfxFileDialogMode mode, IntPtr title_str, int title_length, IntPtr default_file_name_str, int default_file_name_length, IntPtr accept_types, IntPtr callback) {
+                m_browser = browser;
+                m_mode = mode;
+                m_title_str = title_str;
+                m_title_length = title_length;
+                m_default_file_name_str = default_file_name_str;
+                m_default_file_name_length = default_file_name_length;
+                m_accept_types = accept_types;
+                m_callback = callback;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public CfxFileDialogMode Mode {
+                get {
+                    CheckAccess();
+                    return m_mode;
+                }
+            }
+            public string Title {
+                get {
+                    CheckAccess();
+                    if(m_title == null && m_title_str != IntPtr.Zero) m_title = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_title_str, m_title_length);
+                    return m_title;
+                }
+            }
+            public string DefaultFileName {
+                get {
+                    CheckAccess();
+                    if(m_default_file_name == null && m_default_file_name_str != IntPtr.Zero) m_default_file_name = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_default_file_name_str, m_default_file_name_length);
+                    return m_default_file_name;
+                }
+            }
+            public System.Collections.Generic.List<string> AcceptTypes {
+                get {
+                    CheckAccess();
+                    return CfxStringCollections.WrapCfxStringList(m_accept_types);
+                }
+            }
+            public CfxFileDialogCallback Callback {
+                get {
+                    CheckAccess();
+                    if(m_callback_wrapped == null) m_callback_wrapped = CfxFileDialogCallback.Wrap(m_callback);
+                    return m_callback_wrapped;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Mode={{{1}}}, Title={{{2}}}, DefaultFileName={{{3}}}, AcceptTypes={{{4}}}, Callback={{{5}}}", Browser, Mode, Title, DefaultFileName, AcceptTypes, Callback);
+            }
         }
 
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-        public CfxFileDialogMode Mode {
-            get {
-                CheckAccess();
-                return m_mode;
-            }
-        }
-        public string Title {
-            get {
-                CheckAccess();
-                if(m_title == null && m_title_str != IntPtr.Zero) m_title = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_title_str, m_title_length);
-                return m_title;
-            }
-        }
-        public string DefaultFileName {
-            get {
-                CheckAccess();
-                if(m_default_file_name == null && m_default_file_name_str != IntPtr.Zero) m_default_file_name = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_default_file_name_str, m_default_file_name_length);
-                return m_default_file_name;
-            }
-        }
-        public System.Collections.Generic.List<string> AcceptTypes {
-            get {
-                CheckAccess();
-                return CfxStringCollections.WrapCfxStringList(m_accept_types);
-            }
-        }
-        public CfxFileDialogCallback Callback {
-            get {
-                CheckAccess();
-                if(m_callback_wrapped == null) m_callback_wrapped = CfxFileDialogCallback.Wrap(m_callback);
-                return m_callback_wrapped;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Mode={{{1}}}, Title={{{2}}}, DefaultFileName={{{3}}}, AcceptTypes={{{4}}}, Callback={{{5}}}", Browser, Mode, Title, DefaultFileName, AcceptTypes, Callback);
-        }
     }
-
 }

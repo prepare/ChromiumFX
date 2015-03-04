@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Structure to implement for visiting cookie values. The functions of this
     /// structure will always be called on the IO thread.
@@ -99,69 +101,72 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxCookieVisitorVisitEventHandler(object sender, CfxCookieVisitorVisitEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Method that will be called once for each cookie. |Count| is the 0-based
-    /// index for the current cookie. |Total| is the total number of cookies. Set
-    /// |DeleteCookie| to true (1) to delete the cookie currently being visited.
-    /// Return false (0) to stop visiting cookies. This function may never be
-    /// called if no cookies are found.
-    /// </summary>
-    public class CfxCookieVisitorVisitEventArgs : CfxEventArgs {
+        public delegate void CfxCookieVisitorVisitEventHandler(object sender, CfxCookieVisitorVisitEventArgs e);
 
-        internal IntPtr m_cookie;
-        internal CfxCookie m_cookie_wrapped;
-        internal int m_count;
-        internal int m_total;
-        internal int m_deleteCookie;
+        /// <summary>
+        /// Method that will be called once for each cookie. |Count| is the 0-based
+        /// index for the current cookie. |Total| is the total number of cookies. Set
+        /// |DeleteCookie| to true (1) to delete the cookie currently being visited.
+        /// Return false (0) to stop visiting cookies. This function may never be
+        /// called if no cookies are found.
+        /// </summary>
+        public class CfxCookieVisitorVisitEventArgs : CfxEventArgs {
 
-        internal bool m_returnValue;
-        private bool returnValueSet;
+            internal IntPtr m_cookie;
+            internal CfxCookie m_cookie_wrapped;
+            internal int m_count;
+            internal int m_total;
+            internal int m_deleteCookie;
 
-        internal CfxCookieVisitorVisitEventArgs(IntPtr cookie, int count, int total) {
-            m_cookie = cookie;
-            m_count = count;
-            m_total = total;
-        }
+            internal bool m_returnValue;
+            private bool returnValueSet;
 
-        public CfxCookie Cookie {
-            get {
+            internal CfxCookieVisitorVisitEventArgs(IntPtr cookie, int count, int total) {
+                m_cookie = cookie;
+                m_count = count;
+                m_total = total;
+            }
+
+            public CfxCookie Cookie {
+                get {
+                    CheckAccess();
+                    if(m_cookie_wrapped == null) m_cookie_wrapped = CfxCookie.Wrap(m_cookie);
+                    return m_cookie_wrapped;
+                }
+            }
+            public int Count {
+                get {
+                    CheckAccess();
+                    return m_count;
+                }
+            }
+            public int Total {
+                get {
+                    CheckAccess();
+                    return m_total;
+                }
+            }
+            public bool DeleteCookie {
+                set {
+                    CheckAccess();
+                    m_deleteCookie = value ? 1 : 0;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
                 CheckAccess();
-                if(m_cookie_wrapped == null) m_cookie_wrapped = CfxCookie.Wrap(m_cookie);
-                return m_cookie_wrapped;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
             }
-        }
-        public int Count {
-            get {
-                CheckAccess();
-                return m_count;
+
+            public override string ToString() {
+                return String.Format("Cookie={{{0}}}, Count={{{1}}}, Total={{{2}}}", Cookie, Count, Total);
             }
-        }
-        public int Total {
-            get {
-                CheckAccess();
-                return m_total;
-            }
-        }
-        public bool DeleteCookie {
-            set {
-                CheckAccess();
-                m_deleteCookie = value ? 1 : 0;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
         }
 
-        public override string ToString() {
-            return String.Format("Cookie={{{0}}}, Count={{{1}}}, Total={{{2}}}", Cookie, Count, Total);
-        }
     }
-
 }

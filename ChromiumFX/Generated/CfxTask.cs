@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Implement this structure for asynchronous task execution. If the task is
     /// posted successfully and if the associated message loop is still running then
@@ -95,5 +97,8 @@ namespace Chromium {
     }
 
 
+    namespace Event {
 
+
+    }
 }

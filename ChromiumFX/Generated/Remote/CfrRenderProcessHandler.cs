@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium.Remote {
+    using Event;
+
     /// <summary>
     /// Structure used to implement render process callbacks. The functions of this
     /// structure will be called on the render process main thread (TID_RENDERER)
@@ -436,552 +438,554 @@ namespace Chromium.Remote {
         }
     }
 
+    namespace Event {
 
-    public delegate void CfrOnRenderThreadCreatedEventHandler(object sender, CfrOnRenderThreadCreatedEventArgs e);
+        public delegate void CfrOnRenderThreadCreatedEventHandler(object sender, CfrOnRenderThreadCreatedEventArgs e);
 
-    /// <summary>
-    /// Called after the render process main thread has been created. |ExtraInfo|
-    /// is a read-only value originating from
-    /// CfrBrowserProcessHandler.OnRenderProcessThreadCreated(). Do not
-    /// keep a reference to |ExtraInfo| outside of this function.
-    /// </summary>
-    public class CfrOnRenderThreadCreatedEventArgs : CfrEventArgs {
+        /// <summary>
+        /// Called after the render process main thread has been created. |ExtraInfo|
+        /// is a read-only value originating from
+        /// CfrBrowserProcessHandler.OnRenderProcessThreadCreated(). Do not
+        /// keep a reference to |ExtraInfo| outside of this function.
+        /// </summary>
+        public class CfrOnRenderThreadCreatedEventArgs : CfrEventArgs {
 
-        bool ExtraInfoFetched;
-        CfrListValue m_ExtraInfo;
+            bool ExtraInfoFetched;
+            CfrListValue m_ExtraInfo;
 
-        internal CfrOnRenderThreadCreatedEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+            internal CfrOnRenderThreadCreatedEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
-        public CfrListValue ExtraInfo {
-            get {
-                if(!ExtraInfoFetched) {
-                    ExtraInfoFetched = true;
-                    var call = new CfxOnRenderThreadCreatedGetExtraInfoRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_ExtraInfo = CfrListValue.Wrap(call.value, remoteRuntime);
+            public CfrListValue ExtraInfo {
+                get {
+                    if(!ExtraInfoFetched) {
+                        ExtraInfoFetched = true;
+                        var call = new CfxOnRenderThreadCreatedGetExtraInfoRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_ExtraInfo = CfrListValue.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_ExtraInfo;
                 }
-                return m_ExtraInfo;
+            }
+
+            public override string ToString() {
+                return String.Format("ExtraInfo={{{0}}}", ExtraInfo);
             }
         }
 
-        public override string ToString() {
-            return String.Format("ExtraInfo={{{0}}}", ExtraInfo);
+
+        public delegate void CfrOnBrowserCreatedEventHandler(object sender, CfrOnBrowserCreatedEventArgs e);
+
+        /// <summary>
+        /// Called after a browser has been created. When browsing cross-origin a new
+        /// browser will be created before the old browser with the same identifier is
+        /// destroyed.
+        /// </summary>
+        public class CfrOnBrowserCreatedEventArgs : CfrEventArgs {
+
+            bool BrowserFetched;
+            CfrBrowser m_Browser;
+
+            internal CfrOnBrowserCreatedEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+
+            public CfrBrowser Browser {
+                get {
+                    if(!BrowserFetched) {
+                        BrowserFetched = true;
+                        var call = new CfxOnBrowserCreatedGetBrowserRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Browser;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}", Browser);
+            }
         }
+
+        public delegate void CfrOnBrowserDestroyedEventHandler(object sender, CfrOnBrowserDestroyedEventArgs e);
+
+        /// <summary>
+        /// Called before a browser is destroyed.
+        /// </summary>
+        public class CfrOnBrowserDestroyedEventArgs : CfrEventArgs {
+
+            bool BrowserFetched;
+            CfrBrowser m_Browser;
+
+            internal CfrOnBrowserDestroyedEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+
+            public CfrBrowser Browser {
+                get {
+                    if(!BrowserFetched) {
+                        BrowserFetched = true;
+                        var call = new CfxOnBrowserDestroyedGetBrowserRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Browser;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}", Browser);
+            }
+        }
+
+        public delegate void CfrGetLoadHandlerEventHandler(object sender, CfrGetLoadHandlerEventArgs e);
+
+        /// <summary>
+        /// Return the handler for browser load status events.
+        /// </summary>
+        public class CfrGetLoadHandlerEventArgs : CfrEventArgs {
+
+
+            internal CfrGetLoadHandlerEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+
+            public void SetReturnValue(CfrLoadHandler returnValue) {
+                var call = new CfxGetLoadHandlerSetReturnValueRenderProcessCall();
+                call.eventArgsId = eventArgsId;
+                call.value = CfrObject.Unwrap(returnValue);
+                call.Execute(remoteRuntime.connection);
+            }
+        }
+
+        public delegate void CfrOnBeforeNavigationEventHandler(object sender, CfrOnBeforeNavigationEventArgs e);
+
+        /// <summary>
+        /// Called before browser navigation. Return true (1) to cancel the navigation
+        /// or false (0) to allow the navigation to proceed. The |Request| object
+        /// cannot be modified in this callback.
+        /// </summary>
+        public class CfrOnBeforeNavigationEventArgs : CfrEventArgs {
+
+            bool BrowserFetched;
+            CfrBrowser m_Browser;
+            bool FrameFetched;
+            CfrFrame m_Frame;
+            bool RequestFetched;
+            CfrRequest m_Request;
+            bool NavigationTypeFetched;
+            CfxNavigationType m_NavigationType;
+            bool IsRedirectFetched;
+            bool m_IsRedirect;
+
+            internal CfrOnBeforeNavigationEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+
+            public CfrBrowser Browser {
+                get {
+                    if(!BrowserFetched) {
+                        BrowserFetched = true;
+                        var call = new CfxOnBeforeNavigationGetBrowserRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Browser;
+                }
+            }
+            public CfrFrame Frame {
+                get {
+                    if(!FrameFetched) {
+                        FrameFetched = true;
+                        var call = new CfxOnBeforeNavigationGetFrameRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Frame = CfrFrame.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Frame;
+                }
+            }
+            public CfrRequest Request {
+                get {
+                    if(!RequestFetched) {
+                        RequestFetched = true;
+                        var call = new CfxOnBeforeNavigationGetRequestRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Request = CfrRequest.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Request;
+                }
+            }
+            public CfxNavigationType NavigationType {
+                get {
+                    if(!NavigationTypeFetched) {
+                        NavigationTypeFetched = true;
+                        var call = new CfxOnBeforeNavigationGetNavigationTypeRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_NavigationType = (CfxNavigationType)call.value;
+                    }
+                    return m_NavigationType;
+                }
+            }
+            public bool IsRedirect {
+                get {
+                    if(!IsRedirectFetched) {
+                        IsRedirectFetched = true;
+                        var call = new CfxOnBeforeNavigationGetIsRedirectRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_IsRedirect = call.value;
+                    }
+                    return m_IsRedirect;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
+                var call = new CfxOnBeforeNavigationSetReturnValueRenderProcessCall();
+                call.eventArgsId = eventArgsId;
+                call.value = returnValue;
+                call.Execute(remoteRuntime.connection);
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, Request={{{2}}}, NavigationType={{{3}}}, IsRedirect={{{4}}}", Browser, Frame, Request, NavigationType, IsRedirect);
+            }
+        }
+
+        public delegate void CfrOnContextCreatedEventHandler(object sender, CfrOnContextCreatedEventArgs e);
+
+        /// <summary>
+        /// Called immediately after the V8 context for a frame has been created. To
+        /// retrieve the JavaScript 'window' object use the
+        /// CfrV8Context.GetGlobal() function. V8 handles can only be accessed
+        /// from the thread on which they are created. A task runner for posting tasks
+        /// on the associated thread can be retrieved via the
+        /// CfrV8Context.GetTaskRunner() function.
+        /// </summary>
+        public class CfrOnContextCreatedEventArgs : CfrEventArgs {
+
+            bool BrowserFetched;
+            CfrBrowser m_Browser;
+            bool FrameFetched;
+            CfrFrame m_Frame;
+            bool ContextFetched;
+            CfrV8Context m_Context;
+
+            internal CfrOnContextCreatedEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+
+            public CfrBrowser Browser {
+                get {
+                    if(!BrowserFetched) {
+                        BrowserFetched = true;
+                        var call = new CfxOnContextCreatedGetBrowserRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Browser;
+                }
+            }
+            public CfrFrame Frame {
+                get {
+                    if(!FrameFetched) {
+                        FrameFetched = true;
+                        var call = new CfxOnContextCreatedGetFrameRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Frame = CfrFrame.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Frame;
+                }
+            }
+            public CfrV8Context Context {
+                get {
+                    if(!ContextFetched) {
+                        ContextFetched = true;
+                        var call = new CfxOnContextCreatedGetContextRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Context = CfrV8Context.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Context;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, Context={{{2}}}", Browser, Frame, Context);
+            }
+        }
+
+        public delegate void CfrOnContextReleasedEventHandler(object sender, CfrOnContextReleasedEventArgs e);
+
+        /// <summary>
+        /// Called immediately before the V8 context for a frame is released. No
+        /// references to the context should be kept after this function is called.
+        /// </summary>
+        public class CfrOnContextReleasedEventArgs : CfrEventArgs {
+
+            bool BrowserFetched;
+            CfrBrowser m_Browser;
+            bool FrameFetched;
+            CfrFrame m_Frame;
+            bool ContextFetched;
+            CfrV8Context m_Context;
+
+            internal CfrOnContextReleasedEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+
+            public CfrBrowser Browser {
+                get {
+                    if(!BrowserFetched) {
+                        BrowserFetched = true;
+                        var call = new CfxOnContextReleasedGetBrowserRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Browser;
+                }
+            }
+            public CfrFrame Frame {
+                get {
+                    if(!FrameFetched) {
+                        FrameFetched = true;
+                        var call = new CfxOnContextReleasedGetFrameRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Frame = CfrFrame.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Frame;
+                }
+            }
+            public CfrV8Context Context {
+                get {
+                    if(!ContextFetched) {
+                        ContextFetched = true;
+                        var call = new CfxOnContextReleasedGetContextRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Context = CfrV8Context.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Context;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, Context={{{2}}}", Browser, Frame, Context);
+            }
+        }
+
+        public delegate void CfrOnUncaughtExceptionEventHandler(object sender, CfrOnUncaughtExceptionEventArgs e);
+
+        /// <summary>
+        /// Called for global uncaught exceptions in a frame. Execution of this
+        /// callback is disabled by default. To enable set
+        /// CfrSettings.UncaughtExceptionStackSize > 0.
+        /// </summary>
+        public class CfrOnUncaughtExceptionEventArgs : CfrEventArgs {
+
+            bool BrowserFetched;
+            CfrBrowser m_Browser;
+            bool FrameFetched;
+            CfrFrame m_Frame;
+            bool ContextFetched;
+            CfrV8Context m_Context;
+            bool ExceptionFetched;
+            CfrV8Exception m_Exception;
+            bool StackTraceFetched;
+            CfrV8StackTrace m_StackTrace;
+
+            internal CfrOnUncaughtExceptionEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+
+            public CfrBrowser Browser {
+                get {
+                    if(!BrowserFetched) {
+                        BrowserFetched = true;
+                        var call = new CfxOnUncaughtExceptionGetBrowserRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Browser;
+                }
+            }
+            public CfrFrame Frame {
+                get {
+                    if(!FrameFetched) {
+                        FrameFetched = true;
+                        var call = new CfxOnUncaughtExceptionGetFrameRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Frame = CfrFrame.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Frame;
+                }
+            }
+            public CfrV8Context Context {
+                get {
+                    if(!ContextFetched) {
+                        ContextFetched = true;
+                        var call = new CfxOnUncaughtExceptionGetContextRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Context = CfrV8Context.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Context;
+                }
+            }
+            public CfrV8Exception Exception {
+                get {
+                    if(!ExceptionFetched) {
+                        ExceptionFetched = true;
+                        var call = new CfxOnUncaughtExceptionGetExceptionRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Exception = CfrV8Exception.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Exception;
+                }
+            }
+            public CfrV8StackTrace StackTrace {
+                get {
+                    if(!StackTraceFetched) {
+                        StackTraceFetched = true;
+                        var call = new CfxOnUncaughtExceptionGetStackTraceRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_StackTrace = CfrV8StackTrace.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_StackTrace;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, Context={{{2}}}, Exception={{{3}}}, StackTrace={{{4}}}", Browser, Frame, Context, Exception, StackTrace);
+            }
+        }
+
+        public delegate void CfrOnFocusedNodeChangedEventHandler(object sender, CfrOnFocusedNodeChangedEventArgs e);
+
+        /// <summary>
+        /// Called when a new node in the the browser gets focus. The |Node| value may
+        /// be NULL if no specific node has gained focus. The node object passed to
+        /// this function represents a snapshot of the DOM at the time this function is
+        /// executed. DOM objects are only valid for the scope of this function. Do not
+        /// keep references to or attempt to access any DOM objects outside the scope
+        /// of this function.
+        /// </summary>
+        public class CfrOnFocusedNodeChangedEventArgs : CfrEventArgs {
+
+            bool BrowserFetched;
+            CfrBrowser m_Browser;
+            bool FrameFetched;
+            CfrFrame m_Frame;
+            bool NodeFetched;
+            CfrDomNode m_Node;
+
+            internal CfrOnFocusedNodeChangedEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+
+            public CfrBrowser Browser {
+                get {
+                    if(!BrowserFetched) {
+                        BrowserFetched = true;
+                        var call = new CfxOnFocusedNodeChangedGetBrowserRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Browser;
+                }
+            }
+            public CfrFrame Frame {
+                get {
+                    if(!FrameFetched) {
+                        FrameFetched = true;
+                        var call = new CfxOnFocusedNodeChangedGetFrameRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Frame = CfrFrame.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Frame;
+                }
+            }
+            public CfrDomNode Node {
+                get {
+                    if(!NodeFetched) {
+                        NodeFetched = true;
+                        var call = new CfxOnFocusedNodeChangedGetNodeRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Node = CfrDomNode.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Node;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, Node={{{2}}}", Browser, Frame, Node);
+            }
+        }
+
+        public delegate void CfrOnProcessMessageReceivedEventHandler(object sender, CfrOnProcessMessageReceivedEventArgs e);
+
+        /// <summary>
+        /// Called when a new message is received from a different process. Return true
+        /// (1) if the message was handled or false (0) otherwise. Do not keep a
+        /// reference to or attempt to access the message outside of this callback.
+        /// </summary>
+        public class CfrOnProcessMessageReceivedEventArgs : CfrEventArgs {
+
+            bool BrowserFetched;
+            CfrBrowser m_Browser;
+            bool SourceProcessFetched;
+            CfxProcessId m_SourceProcess;
+            bool MessageFetched;
+            CfrProcessMessage m_Message;
+
+            internal CfrOnProcessMessageReceivedEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+
+            public CfrBrowser Browser {
+                get {
+                    if(!BrowserFetched) {
+                        BrowserFetched = true;
+                        var call = new CfxOnProcessMessageReceivedGetBrowserRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Browser;
+                }
+            }
+            public CfxProcessId SourceProcess {
+                get {
+                    if(!SourceProcessFetched) {
+                        SourceProcessFetched = true;
+                        var call = new CfxOnProcessMessageReceivedGetSourceProcessRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_SourceProcess = (CfxProcessId)call.value;
+                    }
+                    return m_SourceProcess;
+                }
+            }
+            public CfrProcessMessage Message {
+                get {
+                    if(!MessageFetched) {
+                        MessageFetched = true;
+                        var call = new CfxOnProcessMessageReceivedGetMessageRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Message = CfrProcessMessage.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Message;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
+                var call = new CfxOnProcessMessageReceivedSetReturnValueRenderProcessCall();
+                call.eventArgsId = eventArgsId;
+                call.value = returnValue;
+                call.Execute(remoteRuntime.connection);
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, SourceProcess={{{1}}}, Message={{{2}}}", Browser, SourceProcess, Message);
+            }
+        }
+
     }
-
-
-    public delegate void CfrOnBrowserCreatedEventHandler(object sender, CfrOnBrowserCreatedEventArgs e);
-
-    /// <summary>
-    /// Called after a browser has been created. When browsing cross-origin a new
-    /// browser will be created before the old browser with the same identifier is
-    /// destroyed.
-    /// </summary>
-    public class CfrOnBrowserCreatedEventArgs : CfrEventArgs {
-
-        bool BrowserFetched;
-        CfrBrowser m_Browser;
-
-        internal CfrOnBrowserCreatedEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
-
-        public CfrBrowser Browser {
-            get {
-                if(!BrowserFetched) {
-                    BrowserFetched = true;
-                    var call = new CfxOnBrowserCreatedGetBrowserRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
-                }
-                return m_Browser;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}", Browser);
-        }
-    }
-
-    public delegate void CfrOnBrowserDestroyedEventHandler(object sender, CfrOnBrowserDestroyedEventArgs e);
-
-    /// <summary>
-    /// Called before a browser is destroyed.
-    /// </summary>
-    public class CfrOnBrowserDestroyedEventArgs : CfrEventArgs {
-
-        bool BrowserFetched;
-        CfrBrowser m_Browser;
-
-        internal CfrOnBrowserDestroyedEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
-
-        public CfrBrowser Browser {
-            get {
-                if(!BrowserFetched) {
-                    BrowserFetched = true;
-                    var call = new CfxOnBrowserDestroyedGetBrowserRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
-                }
-                return m_Browser;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}", Browser);
-        }
-    }
-
-    public delegate void CfrGetLoadHandlerEventHandler(object sender, CfrGetLoadHandlerEventArgs e);
-
-    /// <summary>
-    /// Return the handler for browser load status events.
-    /// </summary>
-    public class CfrGetLoadHandlerEventArgs : CfrEventArgs {
-
-
-        internal CfrGetLoadHandlerEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
-
-        public void SetReturnValue(CfrLoadHandler returnValue) {
-            var call = new CfxGetLoadHandlerSetReturnValueRenderProcessCall();
-            call.eventArgsId = eventArgsId;
-            call.value = CfrObject.Unwrap(returnValue);
-            call.Execute(remoteRuntime.connection);
-        }
-    }
-
-    public delegate void CfrOnBeforeNavigationEventHandler(object sender, CfrOnBeforeNavigationEventArgs e);
-
-    /// <summary>
-    /// Called before browser navigation. Return true (1) to cancel the navigation
-    /// or false (0) to allow the navigation to proceed. The |Request| object
-    /// cannot be modified in this callback.
-    /// </summary>
-    public class CfrOnBeforeNavigationEventArgs : CfrEventArgs {
-
-        bool BrowserFetched;
-        CfrBrowser m_Browser;
-        bool FrameFetched;
-        CfrFrame m_Frame;
-        bool RequestFetched;
-        CfrRequest m_Request;
-        bool NavigationTypeFetched;
-        CfxNavigationType m_NavigationType;
-        bool IsRedirectFetched;
-        bool m_IsRedirect;
-
-        internal CfrOnBeforeNavigationEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
-
-        public CfrBrowser Browser {
-            get {
-                if(!BrowserFetched) {
-                    BrowserFetched = true;
-                    var call = new CfxOnBeforeNavigationGetBrowserRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
-                }
-                return m_Browser;
-            }
-        }
-        public CfrFrame Frame {
-            get {
-                if(!FrameFetched) {
-                    FrameFetched = true;
-                    var call = new CfxOnBeforeNavigationGetFrameRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Frame = CfrFrame.Wrap(call.value, remoteRuntime);
-                }
-                return m_Frame;
-            }
-        }
-        public CfrRequest Request {
-            get {
-                if(!RequestFetched) {
-                    RequestFetched = true;
-                    var call = new CfxOnBeforeNavigationGetRequestRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Request = CfrRequest.Wrap(call.value, remoteRuntime);
-                }
-                return m_Request;
-            }
-        }
-        public CfxNavigationType NavigationType {
-            get {
-                if(!NavigationTypeFetched) {
-                    NavigationTypeFetched = true;
-                    var call = new CfxOnBeforeNavigationGetNavigationTypeRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_NavigationType = (CfxNavigationType)call.value;
-                }
-                return m_NavigationType;
-            }
-        }
-        public bool IsRedirect {
-            get {
-                if(!IsRedirectFetched) {
-                    IsRedirectFetched = true;
-                    var call = new CfxOnBeforeNavigationGetIsRedirectRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_IsRedirect = call.value;
-                }
-                return m_IsRedirect;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            var call = new CfxOnBeforeNavigationSetReturnValueRenderProcessCall();
-            call.eventArgsId = eventArgsId;
-            call.value = returnValue;
-            call.Execute(remoteRuntime.connection);
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Frame={{{1}}}, Request={{{2}}}, NavigationType={{{3}}}, IsRedirect={{{4}}}", Browser, Frame, Request, NavigationType, IsRedirect);
-        }
-    }
-
-    public delegate void CfrOnContextCreatedEventHandler(object sender, CfrOnContextCreatedEventArgs e);
-
-    /// <summary>
-    /// Called immediately after the V8 context for a frame has been created. To
-    /// retrieve the JavaScript 'window' object use the
-    /// CfrV8Context.GetGlobal() function. V8 handles can only be accessed
-    /// from the thread on which they are created. A task runner for posting tasks
-    /// on the associated thread can be retrieved via the
-    /// CfrV8Context.GetTaskRunner() function.
-    /// </summary>
-    public class CfrOnContextCreatedEventArgs : CfrEventArgs {
-
-        bool BrowserFetched;
-        CfrBrowser m_Browser;
-        bool FrameFetched;
-        CfrFrame m_Frame;
-        bool ContextFetched;
-        CfrV8Context m_Context;
-
-        internal CfrOnContextCreatedEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
-
-        public CfrBrowser Browser {
-            get {
-                if(!BrowserFetched) {
-                    BrowserFetched = true;
-                    var call = new CfxOnContextCreatedGetBrowserRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
-                }
-                return m_Browser;
-            }
-        }
-        public CfrFrame Frame {
-            get {
-                if(!FrameFetched) {
-                    FrameFetched = true;
-                    var call = new CfxOnContextCreatedGetFrameRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Frame = CfrFrame.Wrap(call.value, remoteRuntime);
-                }
-                return m_Frame;
-            }
-        }
-        public CfrV8Context Context {
-            get {
-                if(!ContextFetched) {
-                    ContextFetched = true;
-                    var call = new CfxOnContextCreatedGetContextRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Context = CfrV8Context.Wrap(call.value, remoteRuntime);
-                }
-                return m_Context;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Frame={{{1}}}, Context={{{2}}}", Browser, Frame, Context);
-        }
-    }
-
-    public delegate void CfrOnContextReleasedEventHandler(object sender, CfrOnContextReleasedEventArgs e);
-
-    /// <summary>
-    /// Called immediately before the V8 context for a frame is released. No
-    /// references to the context should be kept after this function is called.
-    /// </summary>
-    public class CfrOnContextReleasedEventArgs : CfrEventArgs {
-
-        bool BrowserFetched;
-        CfrBrowser m_Browser;
-        bool FrameFetched;
-        CfrFrame m_Frame;
-        bool ContextFetched;
-        CfrV8Context m_Context;
-
-        internal CfrOnContextReleasedEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
-
-        public CfrBrowser Browser {
-            get {
-                if(!BrowserFetched) {
-                    BrowserFetched = true;
-                    var call = new CfxOnContextReleasedGetBrowserRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
-                }
-                return m_Browser;
-            }
-        }
-        public CfrFrame Frame {
-            get {
-                if(!FrameFetched) {
-                    FrameFetched = true;
-                    var call = new CfxOnContextReleasedGetFrameRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Frame = CfrFrame.Wrap(call.value, remoteRuntime);
-                }
-                return m_Frame;
-            }
-        }
-        public CfrV8Context Context {
-            get {
-                if(!ContextFetched) {
-                    ContextFetched = true;
-                    var call = new CfxOnContextReleasedGetContextRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Context = CfrV8Context.Wrap(call.value, remoteRuntime);
-                }
-                return m_Context;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Frame={{{1}}}, Context={{{2}}}", Browser, Frame, Context);
-        }
-    }
-
-    public delegate void CfrOnUncaughtExceptionEventHandler(object sender, CfrOnUncaughtExceptionEventArgs e);
-
-    /// <summary>
-    /// Called for global uncaught exceptions in a frame. Execution of this
-    /// callback is disabled by default. To enable set
-    /// CfrSettings.UncaughtExceptionStackSize > 0.
-    /// </summary>
-    public class CfrOnUncaughtExceptionEventArgs : CfrEventArgs {
-
-        bool BrowserFetched;
-        CfrBrowser m_Browser;
-        bool FrameFetched;
-        CfrFrame m_Frame;
-        bool ContextFetched;
-        CfrV8Context m_Context;
-        bool ExceptionFetched;
-        CfrV8Exception m_Exception;
-        bool StackTraceFetched;
-        CfrV8StackTrace m_StackTrace;
-
-        internal CfrOnUncaughtExceptionEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
-
-        public CfrBrowser Browser {
-            get {
-                if(!BrowserFetched) {
-                    BrowserFetched = true;
-                    var call = new CfxOnUncaughtExceptionGetBrowserRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
-                }
-                return m_Browser;
-            }
-        }
-        public CfrFrame Frame {
-            get {
-                if(!FrameFetched) {
-                    FrameFetched = true;
-                    var call = new CfxOnUncaughtExceptionGetFrameRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Frame = CfrFrame.Wrap(call.value, remoteRuntime);
-                }
-                return m_Frame;
-            }
-        }
-        public CfrV8Context Context {
-            get {
-                if(!ContextFetched) {
-                    ContextFetched = true;
-                    var call = new CfxOnUncaughtExceptionGetContextRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Context = CfrV8Context.Wrap(call.value, remoteRuntime);
-                }
-                return m_Context;
-            }
-        }
-        public CfrV8Exception Exception {
-            get {
-                if(!ExceptionFetched) {
-                    ExceptionFetched = true;
-                    var call = new CfxOnUncaughtExceptionGetExceptionRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Exception = CfrV8Exception.Wrap(call.value, remoteRuntime);
-                }
-                return m_Exception;
-            }
-        }
-        public CfrV8StackTrace StackTrace {
-            get {
-                if(!StackTraceFetched) {
-                    StackTraceFetched = true;
-                    var call = new CfxOnUncaughtExceptionGetStackTraceRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_StackTrace = CfrV8StackTrace.Wrap(call.value, remoteRuntime);
-                }
-                return m_StackTrace;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Frame={{{1}}}, Context={{{2}}}, Exception={{{3}}}, StackTrace={{{4}}}", Browser, Frame, Context, Exception, StackTrace);
-        }
-    }
-
-    public delegate void CfrOnFocusedNodeChangedEventHandler(object sender, CfrOnFocusedNodeChangedEventArgs e);
-
-    /// <summary>
-    /// Called when a new node in the the browser gets focus. The |Node| value may
-    /// be NULL if no specific node has gained focus. The node object passed to
-    /// this function represents a snapshot of the DOM at the time this function is
-    /// executed. DOM objects are only valid for the scope of this function. Do not
-    /// keep references to or attempt to access any DOM objects outside the scope
-    /// of this function.
-    /// </summary>
-    public class CfrOnFocusedNodeChangedEventArgs : CfrEventArgs {
-
-        bool BrowserFetched;
-        CfrBrowser m_Browser;
-        bool FrameFetched;
-        CfrFrame m_Frame;
-        bool NodeFetched;
-        CfrDomNode m_Node;
-
-        internal CfrOnFocusedNodeChangedEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
-
-        public CfrBrowser Browser {
-            get {
-                if(!BrowserFetched) {
-                    BrowserFetched = true;
-                    var call = new CfxOnFocusedNodeChangedGetBrowserRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
-                }
-                return m_Browser;
-            }
-        }
-        public CfrFrame Frame {
-            get {
-                if(!FrameFetched) {
-                    FrameFetched = true;
-                    var call = new CfxOnFocusedNodeChangedGetFrameRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Frame = CfrFrame.Wrap(call.value, remoteRuntime);
-                }
-                return m_Frame;
-            }
-        }
-        public CfrDomNode Node {
-            get {
-                if(!NodeFetched) {
-                    NodeFetched = true;
-                    var call = new CfxOnFocusedNodeChangedGetNodeRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Node = CfrDomNode.Wrap(call.value, remoteRuntime);
-                }
-                return m_Node;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Frame={{{1}}}, Node={{{2}}}", Browser, Frame, Node);
-        }
-    }
-
-    public delegate void CfrOnProcessMessageReceivedEventHandler(object sender, CfrOnProcessMessageReceivedEventArgs e);
-
-    /// <summary>
-    /// Called when a new message is received from a different process. Return true
-    /// (1) if the message was handled or false (0) otherwise. Do not keep a
-    /// reference to or attempt to access the message outside of this callback.
-    /// </summary>
-    public class CfrOnProcessMessageReceivedEventArgs : CfrEventArgs {
-
-        bool BrowserFetched;
-        CfrBrowser m_Browser;
-        bool SourceProcessFetched;
-        CfxProcessId m_SourceProcess;
-        bool MessageFetched;
-        CfrProcessMessage m_Message;
-
-        internal CfrOnProcessMessageReceivedEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
-
-        public CfrBrowser Browser {
-            get {
-                if(!BrowserFetched) {
-                    BrowserFetched = true;
-                    var call = new CfxOnProcessMessageReceivedGetBrowserRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
-                }
-                return m_Browser;
-            }
-        }
-        public CfxProcessId SourceProcess {
-            get {
-                if(!SourceProcessFetched) {
-                    SourceProcessFetched = true;
-                    var call = new CfxOnProcessMessageReceivedGetSourceProcessRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_SourceProcess = (CfxProcessId)call.value;
-                }
-                return m_SourceProcess;
-            }
-        }
-        public CfrProcessMessage Message {
-            get {
-                if(!MessageFetched) {
-                    MessageFetched = true;
-                    var call = new CfxOnProcessMessageReceivedGetMessageRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Message = CfrProcessMessage.Wrap(call.value, remoteRuntime);
-                }
-                return m_Message;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            var call = new CfxOnProcessMessageReceivedSetReturnValueRenderProcessCall();
-            call.eventArgsId = eventArgsId;
-            call.value = returnValue;
-            call.Execute(remoteRuntime.connection);
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, SourceProcess={{{1}}}, Message={{{2}}}", Browser, SourceProcess, Message);
-        }
-    }
-
 }

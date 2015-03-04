@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium.Remote {
+    using Event;
+
     /// <summary>
     /// Structure that should be implemented to handle V8 function calls. The
     /// functions of this structure will be called on the thread associated with the
@@ -108,95 +110,97 @@ namespace Chromium.Remote {
         }
     }
 
+    namespace Event {
 
-    public delegate void CfrV8HandlerExecuteEventHandler(object sender, CfrV8HandlerExecuteEventArgs e);
+        public delegate void CfrV8HandlerExecuteEventHandler(object sender, CfrV8HandlerExecuteEventArgs e);
 
-    /// <summary>
-    /// Handle execution of the function identified by |Name|. |Object| is the
-    /// receiver ('this' object) of the function. |Arguments| is the list of
-    /// arguments passed to the function. If execution succeeds set |Retval| to the
-    /// function return value. If execution fails set |Exception| to the exception
-    /// that will be thrown. Return true (1) if execution was handled.
-    /// </summary>
-    public partial class CfrV8HandlerExecuteEventArgs : CfrEventArgs {
+        /// <summary>
+        /// Handle execution of the function identified by |Name|. |Object| is the
+        /// receiver ('this' object) of the function. |Arguments| is the list of
+        /// arguments passed to the function. If execution succeeds set |Retval| to the
+        /// function return value. If execution fails set |Exception| to the exception
+        /// that will be thrown. Return true (1) if execution was handled.
+        /// </summary>
+        public partial class CfrV8HandlerExecuteEventArgs : CfrEventArgs {
 
-        bool NameFetched;
-        string m_Name;
-        bool ObjectFetched;
-        CfrV8Value m_Object;
-        bool ArgumentsFetched;
-        CfrV8Value[] m_Arguments;
-        bool ExceptionFetched;
-        string m_Exception;
+            bool NameFetched;
+            string m_Name;
+            bool ObjectFetched;
+            CfrV8Value m_Object;
+            bool ArgumentsFetched;
+            CfrV8Value[] m_Arguments;
+            bool ExceptionFetched;
+            string m_Exception;
 
-        internal CfrV8HandlerExecuteEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+            internal CfrV8HandlerExecuteEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
-        public string Name {
-            get {
-                if(!NameFetched) {
-                    NameFetched = true;
-                    var call = new CfxV8HandlerExecuteGetNameRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Name = call.value;
+            public string Name {
+                get {
+                    if(!NameFetched) {
+                        NameFetched = true;
+                        var call = new CfxV8HandlerExecuteGetNameRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Name = call.value;
+                    }
+                    return m_Name;
                 }
-                return m_Name;
             }
-        }
-        public CfrV8Value Object {
-            get {
-                if(!ObjectFetched) {
-                    ObjectFetched = true;
-                    var call = new CfxV8HandlerExecuteGetObjectRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Object = CfrV8Value.Wrap(call.value, remoteRuntime);
+            public CfrV8Value Object {
+                get {
+                    if(!ObjectFetched) {
+                        ObjectFetched = true;
+                        var call = new CfxV8HandlerExecuteGetObjectRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Object = CfrV8Value.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Object;
                 }
-                return m_Object;
             }
-        }
-        public CfrV8Value[] Arguments {
-            get {
-                if(!ArgumentsFetched) {
-                    ArgumentsFetched = true;
-                    var call = new CfxV8HandlerExecuteGetArgumentsRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Arguments = CfxArray.GetCfrObjects<CfrV8Value>(call.value, remoteRuntime, CfrV8Value.Wrap);
+            public CfrV8Value[] Arguments {
+                get {
+                    if(!ArgumentsFetched) {
+                        ArgumentsFetched = true;
+                        var call = new CfxV8HandlerExecuteGetArgumentsRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Arguments = CfxArray.GetCfrObjects<CfrV8Value>(call.value, remoteRuntime, CfrV8Value.Wrap);
+                    }
+                    return m_Arguments;
                 }
-                return m_Arguments;
             }
-        }
-        public string Exception {
-            get {
-                if(!ExceptionFetched) {
+            public string Exception {
+                get {
+                    if(!ExceptionFetched) {
+                        ExceptionFetched = true;
+                        var call = new CfxV8HandlerExecuteGetExceptionRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Exception = call.value;
+                    }
+                    return m_Exception;
+                }
+                set {
+                    m_Exception = value;
                     ExceptionFetched = true;
-                    var call = new CfxV8HandlerExecuteGetExceptionRenderProcessCall();
+                    var call = new CfxV8HandlerExecuteSetExceptionRenderProcessCall();
                     call.eventArgsId = eventArgsId;
+                    call.value = value;
                     call.Execute(remoteRuntime.connection);
-                    m_Exception = call.value;
                 }
-                return m_Exception;
             }
-            set {
-                m_Exception = value;
-                ExceptionFetched = true;
-                var call = new CfxV8HandlerExecuteSetExceptionRenderProcessCall();
+            public void SetReturnValue(CfrV8Value returnValue) {
+                var call = new CfxV8HandlerExecuteSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
-                call.value = value;
+                call.value = CfrObject.Unwrap(returnValue);
                 call.Execute(remoteRuntime.connection);
             }
-        }
-        public void SetReturnValue(CfrV8Value returnValue) {
-            var call = new CfxV8HandlerExecuteSetReturnValueRenderProcessCall();
-            call.eventArgsId = eventArgsId;
-            call.value = CfrObject.Unwrap(returnValue);
-            call.Execute(remoteRuntime.connection);
+
+            public override string ToString() {
+                return String.Format("Name={{{0}}}, Object={{{1}}}, Arguments={{{2}}}, Exception={{{3}}}", Name, Object, Arguments, Exception);
+            }
         }
 
-        public override string ToString() {
-            return String.Format("Name={{{0}}}, Object={{{1}}}, Arguments={{{2}}}, Exception={{{3}}}", Name, Object, Arguments, Exception);
-        }
     }
-
 }

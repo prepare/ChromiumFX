@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Implement this structure to handle events related to browser life span. The
     /// functions of this structure will be called on the UI thread unless otherwise
@@ -314,316 +316,319 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxOnBeforePopupEventHandler(object sender, CfxOnBeforePopupEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Called on the IO thread before a new popup window is created. The |Browser|
-    /// and |Frame| parameters represent the source of the popup request. The
-    /// |TargetUrl| and |TargetFrameName| values may be NULL if none were
-    /// specified with the request. The |PopupFeatures| structure contains
-    /// information about the requested popup window. To allow creation of the
-    /// popup window optionally modify |WindowInfo|, |Client|, |Settings| and
-    /// |NoJavascriptAccess| and return false (0). To cancel creation of the
-    /// popup window return true (1). The |Client| and |Settings| values will
-    /// default to the source browser's values. The |NoJavascriptAccess| value
-    /// indicates whether the new browser window should be scriptable and in the
-    /// same process as the source browser.
-    /// </summary>
-    public class CfxOnBeforePopupEventArgs : CfxEventArgs {
+        public delegate void CfxOnBeforePopupEventHandler(object sender, CfxOnBeforePopupEventArgs e);
 
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal IntPtr m_frame;
-        internal CfxFrame m_frame_wrapped;
-        internal IntPtr m_target_url_str;
-        internal int m_target_url_length;
-        internal string m_target_url;
-        internal IntPtr m_target_frame_name_str;
-        internal int m_target_frame_name_length;
-        internal string m_target_frame_name;
-        internal IntPtr m_popupFeatures;
-        internal CfxPopupFeatures m_popupFeatures_wrapped;
-        internal IntPtr m_windowInfo;
-        internal CfxWindowInfo m_windowInfo_wrapped;
-        internal CfxClient m_client_wrapped;
-        internal IntPtr m_settings;
-        internal CfxBrowserSettings m_settings_wrapped;
-        internal int m_no_javascript_access;
+        /// <summary>
+        /// Called on the IO thread before a new popup window is created. The |Browser|
+        /// and |Frame| parameters represent the source of the popup request. The
+        /// |TargetUrl| and |TargetFrameName| values may be NULL if none were
+        /// specified with the request. The |PopupFeatures| structure contains
+        /// information about the requested popup window. To allow creation of the
+        /// popup window optionally modify |WindowInfo|, |Client|, |Settings| and
+        /// |NoJavascriptAccess| and return false (0). To cancel creation of the
+        /// popup window return true (1). The |Client| and |Settings| values will
+        /// default to the source browser's values. The |NoJavascriptAccess| value
+        /// indicates whether the new browser window should be scriptable and in the
+        /// same process as the source browser.
+        /// </summary>
+        public class CfxOnBeforePopupEventArgs : CfxEventArgs {
 
-        internal bool m_returnValue;
-        private bool returnValueSet;
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_frame;
+            internal CfxFrame m_frame_wrapped;
+            internal IntPtr m_target_url_str;
+            internal int m_target_url_length;
+            internal string m_target_url;
+            internal IntPtr m_target_frame_name_str;
+            internal int m_target_frame_name_length;
+            internal string m_target_frame_name;
+            internal IntPtr m_popupFeatures;
+            internal CfxPopupFeatures m_popupFeatures_wrapped;
+            internal IntPtr m_windowInfo;
+            internal CfxWindowInfo m_windowInfo_wrapped;
+            internal CfxClient m_client_wrapped;
+            internal IntPtr m_settings;
+            internal CfxBrowserSettings m_settings_wrapped;
+            internal int m_no_javascript_access;
 
-        internal CfxOnBeforePopupEventArgs(IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, IntPtr popupFeatures, IntPtr windowInfo, IntPtr settings) {
-            m_browser = browser;
-            m_frame = frame;
-            m_target_url_str = target_url_str;
-            m_target_url_length = target_url_length;
-            m_target_frame_name_str = target_frame_name_str;
-            m_target_frame_name_length = target_frame_name_length;
-            m_popupFeatures = popupFeatures;
-            m_windowInfo = windowInfo;
-            m_settings = settings;
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxOnBeforePopupEventArgs(IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, IntPtr popupFeatures, IntPtr windowInfo, IntPtr settings) {
+                m_browser = browser;
+                m_frame = frame;
+                m_target_url_str = target_url_str;
+                m_target_url_length = target_url_length;
+                m_target_frame_name_str = target_frame_name_str;
+                m_target_frame_name_length = target_frame_name_length;
+                m_popupFeatures = popupFeatures;
+                m_windowInfo = windowInfo;
+                m_settings = settings;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public CfxFrame Frame {
+                get {
+                    CheckAccess();
+                    if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
+                    return m_frame_wrapped;
+                }
+            }
+            public string TargetUrl {
+                get {
+                    CheckAccess();
+                    if(m_target_url == null && m_target_url_str != IntPtr.Zero) m_target_url = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_target_url_str, m_target_url_length);
+                    return m_target_url;
+                }
+            }
+            public string TargetFrameName {
+                get {
+                    CheckAccess();
+                    if(m_target_frame_name == null && m_target_frame_name_str != IntPtr.Zero) m_target_frame_name = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_target_frame_name_str, m_target_frame_name_length);
+                    return m_target_frame_name;
+                }
+            }
+            public CfxPopupFeatures PopupFeatures {
+                get {
+                    CheckAccess();
+                    if(m_popupFeatures_wrapped == null) m_popupFeatures_wrapped = CfxPopupFeatures.Wrap(m_popupFeatures);
+                    return m_popupFeatures_wrapped;
+                }
+            }
+            public CfxWindowInfo WindowInfo {
+                get {
+                    CheckAccess();
+                    if(m_windowInfo_wrapped == null) m_windowInfo_wrapped = CfxWindowInfo.Wrap(m_windowInfo);
+                    return m_windowInfo_wrapped;
+                }
+            }
+            public CfxClient Client {
+                set {
+                    CheckAccess();
+                    m_client_wrapped = value;
+                }
+            }
+            public CfxBrowserSettings Settings {
+                get {
+                    CheckAccess();
+                    if(m_settings_wrapped == null) m_settings_wrapped = CfxBrowserSettings.Wrap(m_settings);
+                    return m_settings_wrapped;
+                }
+            }
+            public bool NoJavascriptAccess {
+                set {
+                    CheckAccess();
+                    m_no_javascript_access = value ? 1 : 0;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, TargetUrl={{{2}}}, TargetFrameName={{{3}}}, PopupFeatures={{{4}}}, WindowInfo={{{5}}}, Settings={{{7}}}", Browser, Frame, TargetUrl, TargetFrameName, PopupFeatures, WindowInfo, Settings);
+            }
         }
 
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
+        public delegate void CfxOnAfterCreatedEventHandler(object sender, CfxOnAfterCreatedEventArgs e);
+
+        /// <summary>
+        /// Called after a new browser is created.
+        /// </summary>
+        public class CfxOnAfterCreatedEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+
+            internal CfxOnAfterCreatedEventArgs(IntPtr browser) {
+                m_browser = browser;
             }
-        }
-        public CfxFrame Frame {
-            get {
-                CheckAccess();
-                if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
-                return m_frame_wrapped;
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
             }
-        }
-        public string TargetUrl {
-            get {
-                CheckAccess();
-                if(m_target_url == null && m_target_url_str != IntPtr.Zero) m_target_url = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_target_url_str, m_target_url_length);
-                return m_target_url;
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}", Browser);
             }
-        }
-        public string TargetFrameName {
-            get {
-                CheckAccess();
-                if(m_target_frame_name == null && m_target_frame_name_str != IntPtr.Zero) m_target_frame_name = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_target_frame_name_str, m_target_frame_name_length);
-                return m_target_frame_name;
-            }
-        }
-        public CfxPopupFeatures PopupFeatures {
-            get {
-                CheckAccess();
-                if(m_popupFeatures_wrapped == null) m_popupFeatures_wrapped = CfxPopupFeatures.Wrap(m_popupFeatures);
-                return m_popupFeatures_wrapped;
-            }
-        }
-        public CfxWindowInfo WindowInfo {
-            get {
-                CheckAccess();
-                if(m_windowInfo_wrapped == null) m_windowInfo_wrapped = CfxWindowInfo.Wrap(m_windowInfo);
-                return m_windowInfo_wrapped;
-            }
-        }
-        public CfxClient Client {
-            set {
-                CheckAccess();
-                m_client_wrapped = value;
-            }
-        }
-        public CfxBrowserSettings Settings {
-            get {
-                CheckAccess();
-                if(m_settings_wrapped == null) m_settings_wrapped = CfxBrowserSettings.Wrap(m_settings);
-                return m_settings_wrapped;
-            }
-        }
-        public bool NoJavascriptAccess {
-            set {
-                CheckAccess();
-                m_no_javascript_access = value ? 1 : 0;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
         }
 
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Frame={{{1}}}, TargetUrl={{{2}}}, TargetFrameName={{{3}}}, PopupFeatures={{{4}}}, WindowInfo={{{5}}}, Settings={{{7}}}", Browser, Frame, TargetUrl, TargetFrameName, PopupFeatures, WindowInfo, Settings);
+        public delegate void CfxRunModalEventHandler(object sender, CfxRunModalEventArgs e);
+
+        /// <summary>
+        /// Called when a modal window is about to display and the modal loop should
+        /// begin running. Return false (0) to use the default modal loop
+        /// implementation or true (1) to use a custom implementation.
+        /// </summary>
+        public class CfxRunModalEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxRunModalEventArgs(IntPtr browser) {
+                m_browser = browser;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}", Browser);
+            }
         }
+
+        public delegate void CfxDoCloseEventHandler(object sender, CfxDoCloseEventArgs e);
+
+        /// <summary>
+        /// Called when a browser has recieved a request to close. This may result
+        /// directly from a call to CfxBrowserHost.CloseBrowser() or indirectly
+        /// if the browser is a top-level OS window created by CEF and the user
+        /// attempts to close the window. This function will be called after the
+        /// JavaScript 'onunload' event has been fired. It will not be called for
+        /// browsers after the associated OS window has been destroyed (for those
+        /// browsers it is no longer possible to cancel the close).
+        /// If CEF created an OS window for the browser returning false (0) will send
+        /// an OS close notification to the browser window's top-level owner (e.g.
+        /// WM_CLOSE on Windows, performClose: on OS-X and "delete_event" on Linux). If
+        /// no OS window exists (window rendering disabled) returning false (0) will
+        /// cause the browser object to be destroyed immediately. Return true (1) if
+        /// the browser is parented to another window and that other window needs to
+        /// receive close notification via some non-standard technique.
+        /// If an application provides its own top-level window it should handle OS
+        /// close notifications by calling CfxBrowserHost.CloseBrowser(false (0))
+        /// instead of immediately closing (see the example below). This gives CEF an
+        /// opportunity to process the 'onbeforeunload' event and optionally cancel the
+        /// close before do_close() is called.
+        /// The CfxLifeSpanHandler.OnBeforeClose() function will be called
+        /// immediately before the browser object is destroyed. The application should
+        /// only exit after on_before_close() has been called for all existing
+        /// browsers.
+        /// If the browser represents a modal window and a custom modal loop
+        /// implementation was provided in CfxLifeSpanHandler.RunModal() this
+        /// callback should be used to restore the opener window to a usable state.
+        /// By way of example consider what should happen during window close when the
+        /// browser is parented to an application-provided top-level OS window. 1.
+        /// User clicks the window close button which sends an OS close
+        /// notification (e.g. WM_CLOSE on Windows, performClose: on OS-X and
+        /// "delete_event" on Linux).
+        /// 2.  Application's top-level window receives the close notification and:
+        /// A. Calls CfxBrowserHost.CloseBrowser(false).
+        /// B. Cancels the window close.
+        /// 3.  JavaScript 'onbeforeunload' handler executes and shows the close
+        /// confirmation dialog (which can be overridden via
+        /// CfxJSDialogHandler.OnBeforeUnloadDialog()).
+        /// 4.  User approves the close. 5.  JavaScript 'onunload' handler executes. 6.
+        /// Application's do_close() handler is called. Application will:
+        /// A. Set a flag to indicate that the next close attempt will be allowed.
+        /// B. Return false.
+        /// 7.  CEF sends an OS close notification. 8.  Application's top-level window
+        /// receives the OS close notification and
+        /// allows the window to close based on the flag from #6B.
+        /// 9.  Browser OS window is destroyed. 10. Application's
+        /// CfxLifeSpanHandler.OnBeforeClose() handler is called and
+        /// the browser object is destroyed.
+        /// 11. Application exits by calling cef_quit_message_loop() if no other
+        /// browsers
+        /// exist.
+        /// </summary>
+        public class CfxDoCloseEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxDoCloseEventArgs(IntPtr browser) {
+                m_browser = browser;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}", Browser);
+            }
+        }
+
+        public delegate void CfxOnBeforeCloseEventHandler(object sender, CfxOnBeforeCloseEventArgs e);
+
+        /// <summary>
+        /// Called just before a browser is destroyed. Release all references to the
+        /// browser object and do not attempt to execute any functions on the browser
+        /// object after this callback returns. If this is a modal window and a custom
+        /// modal loop implementation was provided in run_modal() this callback should
+        /// be used to exit the custom modal loop. See do_close() documentation for
+        /// additional usage information.
+        /// </summary>
+        public class CfxOnBeforeCloseEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+
+            internal CfxOnBeforeCloseEventArgs(IntPtr browser) {
+                m_browser = browser;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}", Browser);
+            }
+        }
+
     }
-
-    public delegate void CfxOnAfterCreatedEventHandler(object sender, CfxOnAfterCreatedEventArgs e);
-
-    /// <summary>
-    /// Called after a new browser is created.
-    /// </summary>
-    public class CfxOnAfterCreatedEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-
-        internal CfxOnAfterCreatedEventArgs(IntPtr browser) {
-            m_browser = browser;
-        }
-
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}", Browser);
-        }
-    }
-
-    public delegate void CfxRunModalEventHandler(object sender, CfxRunModalEventArgs e);
-
-    /// <summary>
-    /// Called when a modal window is about to display and the modal loop should
-    /// begin running. Return false (0) to use the default modal loop
-    /// implementation or true (1) to use a custom implementation.
-    /// </summary>
-    public class CfxRunModalEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-
-        internal bool m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxRunModalEventArgs(IntPtr browser) {
-            m_browser = browser;
-        }
-
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}", Browser);
-        }
-    }
-
-    public delegate void CfxDoCloseEventHandler(object sender, CfxDoCloseEventArgs e);
-
-    /// <summary>
-    /// Called when a browser has recieved a request to close. This may result
-    /// directly from a call to CfxBrowserHost.CloseBrowser() or indirectly
-    /// if the browser is a top-level OS window created by CEF and the user
-    /// attempts to close the window. This function will be called after the
-    /// JavaScript 'onunload' event has been fired. It will not be called for
-    /// browsers after the associated OS window has been destroyed (for those
-    /// browsers it is no longer possible to cancel the close).
-    /// If CEF created an OS window for the browser returning false (0) will send
-    /// an OS close notification to the browser window's top-level owner (e.g.
-    /// WM_CLOSE on Windows, performClose: on OS-X and "delete_event" on Linux). If
-    /// no OS window exists (window rendering disabled) returning false (0) will
-    /// cause the browser object to be destroyed immediately. Return true (1) if
-    /// the browser is parented to another window and that other window needs to
-    /// receive close notification via some non-standard technique.
-    /// If an application provides its own top-level window it should handle OS
-    /// close notifications by calling CfxBrowserHost.CloseBrowser(false (0))
-    /// instead of immediately closing (see the example below). This gives CEF an
-    /// opportunity to process the 'onbeforeunload' event and optionally cancel the
-    /// close before do_close() is called.
-    /// The CfxLifeSpanHandler.OnBeforeClose() function will be called
-    /// immediately before the browser object is destroyed. The application should
-    /// only exit after on_before_close() has been called for all existing
-    /// browsers.
-    /// If the browser represents a modal window and a custom modal loop
-    /// implementation was provided in CfxLifeSpanHandler.RunModal() this
-    /// callback should be used to restore the opener window to a usable state.
-    /// By way of example consider what should happen during window close when the
-    /// browser is parented to an application-provided top-level OS window. 1.
-    /// User clicks the window close button which sends an OS close
-    /// notification (e.g. WM_CLOSE on Windows, performClose: on OS-X and
-    /// "delete_event" on Linux).
-    /// 2.  Application's top-level window receives the close notification and:
-    /// A. Calls CfxBrowserHost.CloseBrowser(false).
-    /// B. Cancels the window close.
-    /// 3.  JavaScript 'onbeforeunload' handler executes and shows the close
-    /// confirmation dialog (which can be overridden via
-    /// CfxJSDialogHandler.OnBeforeUnloadDialog()).
-    /// 4.  User approves the close. 5.  JavaScript 'onunload' handler executes. 6.
-    /// Application's do_close() handler is called. Application will:
-    /// A. Set a flag to indicate that the next close attempt will be allowed.
-    /// B. Return false.
-    /// 7.  CEF sends an OS close notification. 8.  Application's top-level window
-    /// receives the OS close notification and
-    /// allows the window to close based on the flag from #6B.
-    /// 9.  Browser OS window is destroyed. 10. Application's
-    /// CfxLifeSpanHandler.OnBeforeClose() handler is called and
-    /// the browser object is destroyed.
-    /// 11. Application exits by calling cef_quit_message_loop() if no other
-    /// browsers
-    /// exist.
-    /// </summary>
-    public class CfxDoCloseEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-
-        internal bool m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxDoCloseEventArgs(IntPtr browser) {
-            m_browser = browser;
-        }
-
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}", Browser);
-        }
-    }
-
-    public delegate void CfxOnBeforeCloseEventHandler(object sender, CfxOnBeforeCloseEventArgs e);
-
-    /// <summary>
-    /// Called just before a browser is destroyed. Release all references to the
-    /// browser object and do not attempt to execute any functions on the browser
-    /// object after this callback returns. If this is a modal window and a custom
-    /// modal loop implementation was provided in run_modal() this callback should
-    /// be used to exit the custom modal loop. See do_close() documentation for
-    /// additional usage information.
-    /// </summary>
-    public class CfxOnBeforeCloseEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-
-        internal CfxOnBeforeCloseEventArgs(IntPtr browser) {
-            m_browser = browser;
-        }
-
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}", Browser);
-        }
-    }
-
 }

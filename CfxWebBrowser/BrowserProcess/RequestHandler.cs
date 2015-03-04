@@ -35,6 +35,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Chromium.Event;
+
 namespace Chromium.WebBrowser {
     internal class RequestHandler : CfxRequestHandler {
 

@@ -34,6 +34,7 @@
 using System;
 
 namespace Chromium.Remote {
+
     /// <summary>
     /// Structure used to create and/or parse command line arguments. Arguments with
     /// '--', '-' and, on Windows, '/' prefixes are considered switches. Switches

@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Callback structure for CfxBrowserHost.GetNavigationEntries. The
     /// functions of this structure will be called on the browser process UI thread.
@@ -98,70 +100,73 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxNavigationEntryVisitorVisitEventHandler(object sender, CfxNavigationEntryVisitorVisitEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Method that will be executed. Do not keep a reference to |Entry| outside of
-    /// this callback. Return true (1) to continue visiting entries or false (0) to
-    /// stop. |Current| is true (1) if this entry is the currently loaded
-    /// navigation entry. |Index| is the 0-based index of this entry and |Total| is
-    /// the total number of entries.
-    /// </summary>
-    public class CfxNavigationEntryVisitorVisitEventArgs : CfxEventArgs {
+        public delegate void CfxNavigationEntryVisitorVisitEventHandler(object sender, CfxNavigationEntryVisitorVisitEventArgs e);
 
-        internal IntPtr m_entry;
-        internal CfxNavigationEntry m_entry_wrapped;
-        internal int m_current;
-        internal int m_index;
-        internal int m_total;
+        /// <summary>
+        /// Method that will be executed. Do not keep a reference to |Entry| outside of
+        /// this callback. Return true (1) to continue visiting entries or false (0) to
+        /// stop. |Current| is true (1) if this entry is the currently loaded
+        /// navigation entry. |Index| is the 0-based index of this entry and |Total| is
+        /// the total number of entries.
+        /// </summary>
+        public class CfxNavigationEntryVisitorVisitEventArgs : CfxEventArgs {
 
-        internal bool m_returnValue;
-        private bool returnValueSet;
+            internal IntPtr m_entry;
+            internal CfxNavigationEntry m_entry_wrapped;
+            internal int m_current;
+            internal int m_index;
+            internal int m_total;
 
-        internal CfxNavigationEntryVisitorVisitEventArgs(IntPtr entry, int current, int index, int total) {
-            m_entry = entry;
-            m_current = current;
-            m_index = index;
-            m_total = total;
-        }
+            internal bool m_returnValue;
+            private bool returnValueSet;
 
-        public CfxNavigationEntry Entry {
-            get {
+            internal CfxNavigationEntryVisitorVisitEventArgs(IntPtr entry, int current, int index, int total) {
+                m_entry = entry;
+                m_current = current;
+                m_index = index;
+                m_total = total;
+            }
+
+            public CfxNavigationEntry Entry {
+                get {
+                    CheckAccess();
+                    if(m_entry_wrapped == null) m_entry_wrapped = CfxNavigationEntry.Wrap(m_entry);
+                    return m_entry_wrapped;
+                }
+            }
+            public bool Current {
+                get {
+                    CheckAccess();
+                    return 0 != m_current;
+                }
+            }
+            public int Index {
+                get {
+                    CheckAccess();
+                    return m_index;
+                }
+            }
+            public int Total {
+                get {
+                    CheckAccess();
+                    return m_total;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
                 CheckAccess();
-                if(m_entry_wrapped == null) m_entry_wrapped = CfxNavigationEntry.Wrap(m_entry);
-                return m_entry_wrapped;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
             }
-        }
-        public bool Current {
-            get {
-                CheckAccess();
-                return 0 != m_current;
+
+            public override string ToString() {
+                return String.Format("Entry={{{0}}}, Current={{{1}}}, Index={{{2}}}, Total={{{3}}}", Entry, Current, Index, Total);
             }
-        }
-        public int Index {
-            get {
-                CheckAccess();
-                return m_index;
-            }
-        }
-        public int Total {
-            get {
-                CheckAccess();
-                return m_total;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
         }
 
-        public override string ToString() {
-            return String.Format("Entry={{{0}}}, Current={{{1}}}, Index={{{2}}}, Total={{{3}}}", Entry, Current, Index, Total);
-        }
     }
-
 }

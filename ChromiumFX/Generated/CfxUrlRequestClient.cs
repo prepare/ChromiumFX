@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Structure that should be implemented by the CfxUrlRequest client. The
     /// functions of this structure will be called on the same thread that created
@@ -254,265 +256,268 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxOnRequestCompleteEventHandler(object sender, CfxOnRequestCompleteEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Notifies the client that the request has completed. Use the
-    /// CfxUrlRequest.GetRequestStatus function to determine if the request was
-    /// successful or not.
-    /// </summary>
-    public class CfxOnRequestCompleteEventArgs : CfxEventArgs {
+        public delegate void CfxOnRequestCompleteEventHandler(object sender, CfxOnRequestCompleteEventArgs e);
 
-        internal IntPtr m_request;
-        internal CfxUrlRequest m_request_wrapped;
+        /// <summary>
+        /// Notifies the client that the request has completed. Use the
+        /// CfxUrlRequest.GetRequestStatus function to determine if the request was
+        /// successful or not.
+        /// </summary>
+        public class CfxOnRequestCompleteEventArgs : CfxEventArgs {
 
-        internal CfxOnRequestCompleteEventArgs(IntPtr request) {
-            m_request = request;
-        }
+            internal IntPtr m_request;
+            internal CfxUrlRequest m_request_wrapped;
 
-        public CfxUrlRequest Request {
-            get {
-                CheckAccess();
-                if(m_request_wrapped == null) m_request_wrapped = CfxUrlRequest.Wrap(m_request);
-                return m_request_wrapped;
+            internal CfxOnRequestCompleteEventArgs(IntPtr request) {
+                m_request = request;
+            }
+
+            public CfxUrlRequest Request {
+                get {
+                    CheckAccess();
+                    if(m_request_wrapped == null) m_request_wrapped = CfxUrlRequest.Wrap(m_request);
+                    return m_request_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Request={{{0}}}", Request);
             }
         }
 
-        public override string ToString() {
-            return String.Format("Request={{{0}}}", Request);
+        public delegate void CfxOnUploadProgressEventHandler(object sender, CfxOnUploadProgressEventArgs e);
+
+        /// <summary>
+        /// Notifies the client of upload progress. |Current| denotes the number of
+        /// bytes sent so far and |Total| is the total size of uploading data (or -1 if
+        /// chunked upload is enabled). This function will only be called if the
+        /// UR_FLAG_REPORT_UPLOAD_PROGRESS flag is set on the request.
+        /// </summary>
+        public class CfxOnUploadProgressEventArgs : CfxEventArgs {
+
+            internal IntPtr m_request;
+            internal CfxUrlRequest m_request_wrapped;
+            internal ulong m_current;
+            internal ulong m_total;
+
+            internal CfxOnUploadProgressEventArgs(IntPtr request, ulong current, ulong total) {
+                m_request = request;
+                m_current = current;
+                m_total = total;
+            }
+
+            public CfxUrlRequest Request {
+                get {
+                    CheckAccess();
+                    if(m_request_wrapped == null) m_request_wrapped = CfxUrlRequest.Wrap(m_request);
+                    return m_request_wrapped;
+                }
+            }
+            public ulong Current {
+                get {
+                    CheckAccess();
+                    return m_current;
+                }
+            }
+            public ulong Total {
+                get {
+                    CheckAccess();
+                    return m_total;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Request={{{0}}}, Current={{{1}}}, Total={{{2}}}", Request, Current, Total);
+            }
         }
+
+        public delegate void CfxOnDownloadProgressEventHandler(object sender, CfxOnDownloadProgressEventArgs e);
+
+        /// <summary>
+        /// Notifies the client of download progress. |Current| denotes the number of
+        /// bytes received up to the call and |Total| is the expected total size of the
+        /// response (or -1 if not determined).
+        /// </summary>
+        public class CfxOnDownloadProgressEventArgs : CfxEventArgs {
+
+            internal IntPtr m_request;
+            internal CfxUrlRequest m_request_wrapped;
+            internal ulong m_current;
+            internal ulong m_total;
+
+            internal CfxOnDownloadProgressEventArgs(IntPtr request, ulong current, ulong total) {
+                m_request = request;
+                m_current = current;
+                m_total = total;
+            }
+
+            public CfxUrlRequest Request {
+                get {
+                    CheckAccess();
+                    if(m_request_wrapped == null) m_request_wrapped = CfxUrlRequest.Wrap(m_request);
+                    return m_request_wrapped;
+                }
+            }
+            public ulong Current {
+                get {
+                    CheckAccess();
+                    return m_current;
+                }
+            }
+            public ulong Total {
+                get {
+                    CheckAccess();
+                    return m_total;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Request={{{0}}}, Current={{{1}}}, Total={{{2}}}", Request, Current, Total);
+            }
+        }
+
+        public delegate void CfxOnDownloadDataEventHandler(object sender, CfxOnDownloadDataEventArgs e);
+
+        /// <summary>
+        /// Called when some part of the response is read. |Data| contains the current
+        /// bytes received since the last call. This function will not be called if the
+        /// UR_FLAG_NO_DOWNLOAD_DATA flag is set on the request.
+        /// </summary>
+        public class CfxOnDownloadDataEventArgs : CfxEventArgs {
+
+            internal IntPtr m_request;
+            internal CfxUrlRequest m_request_wrapped;
+            internal IntPtr m_data;
+            internal int m_data_length;
+
+            internal CfxOnDownloadDataEventArgs(IntPtr request, IntPtr data, int data_length) {
+                m_request = request;
+                m_data = data;
+                m_data_length = data_length;
+            }
+
+            public CfxUrlRequest Request {
+                get {
+                    CheckAccess();
+                    if(m_request_wrapped == null) m_request_wrapped = CfxUrlRequest.Wrap(m_request);
+                    return m_request_wrapped;
+                }
+            }
+            public IntPtr Data {
+                get {
+                    CheckAccess();
+                    return m_data;
+                }
+            }
+            public int DataLength {
+                get {
+                    CheckAccess();
+                    return m_data_length;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Request={{{0}}}, Data={{{1}}}, DataLength={{{2}}}", Request, Data, DataLength);
+            }
+        }
+
+        public delegate void CfxUrlRequestClientGetAuthCredentialsEventHandler(object sender, CfxUrlRequestClientGetAuthCredentialsEventArgs e);
+
+        /// <summary>
+        /// Called on the IO thread when the browser needs credentials from the user.
+        /// |IsProxy| indicates whether the host is a proxy server. |Host| contains the
+        /// hostname and |Port| contains the port number. Return true (1) to continue
+        /// the request and call CfxAuthCallback.Continue() when the authentication
+        /// information is available. Return false (0) to cancel the request. This
+        /// function will only be called for requests initiated from the browser
+        /// process.
+        /// </summary>
+        public class CfxUrlRequestClientGetAuthCredentialsEventArgs : CfxEventArgs {
+
+            internal int m_isProxy;
+            internal IntPtr m_host_str;
+            internal int m_host_length;
+            internal string m_host;
+            internal int m_port;
+            internal IntPtr m_realm_str;
+            internal int m_realm_length;
+            internal string m_realm;
+            internal IntPtr m_scheme_str;
+            internal int m_scheme_length;
+            internal string m_scheme;
+            internal IntPtr m_callback;
+            internal CfxAuthCallback m_callback_wrapped;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxUrlRequestClientGetAuthCredentialsEventArgs(int isProxy, IntPtr host_str, int host_length, int port, IntPtr realm_str, int realm_length, IntPtr scheme_str, int scheme_length, IntPtr callback) {
+                m_isProxy = isProxy;
+                m_host_str = host_str;
+                m_host_length = host_length;
+                m_port = port;
+                m_realm_str = realm_str;
+                m_realm_length = realm_length;
+                m_scheme_str = scheme_str;
+                m_scheme_length = scheme_length;
+                m_callback = callback;
+            }
+
+            public int IsProxy {
+                get {
+                    CheckAccess();
+                    return m_isProxy;
+                }
+            }
+            public string Host {
+                get {
+                    CheckAccess();
+                    if(m_host == null && m_host_str != IntPtr.Zero) m_host = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_host_str, m_host_length);
+                    return m_host;
+                }
+            }
+            public int Port {
+                get {
+                    CheckAccess();
+                    return m_port;
+                }
+            }
+            public string Realm {
+                get {
+                    CheckAccess();
+                    if(m_realm == null && m_realm_str != IntPtr.Zero) m_realm = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_realm_str, m_realm_length);
+                    return m_realm;
+                }
+            }
+            public string Scheme {
+                get {
+                    CheckAccess();
+                    if(m_scheme == null && m_scheme_str != IntPtr.Zero) m_scheme = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_scheme_str, m_scheme_length);
+                    return m_scheme;
+                }
+            }
+            public CfxAuthCallback Callback {
+                get {
+                    CheckAccess();
+                    if(m_callback_wrapped == null) m_callback_wrapped = CfxAuthCallback.Wrap(m_callback);
+                    return m_callback_wrapped;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("IsProxy={{{0}}}, Host={{{1}}}, Port={{{2}}}, Realm={{{3}}}, Scheme={{{4}}}, Callback={{{5}}}", IsProxy, Host, Port, Realm, Scheme, Callback);
+            }
+        }
+
     }
-
-    public delegate void CfxOnUploadProgressEventHandler(object sender, CfxOnUploadProgressEventArgs e);
-
-    /// <summary>
-    /// Notifies the client of upload progress. |Current| denotes the number of
-    /// bytes sent so far and |Total| is the total size of uploading data (or -1 if
-    /// chunked upload is enabled). This function will only be called if the
-    /// UR_FLAG_REPORT_UPLOAD_PROGRESS flag is set on the request.
-    /// </summary>
-    public class CfxOnUploadProgressEventArgs : CfxEventArgs {
-
-        internal IntPtr m_request;
-        internal CfxUrlRequest m_request_wrapped;
-        internal ulong m_current;
-        internal ulong m_total;
-
-        internal CfxOnUploadProgressEventArgs(IntPtr request, ulong current, ulong total) {
-            m_request = request;
-            m_current = current;
-            m_total = total;
-        }
-
-        public CfxUrlRequest Request {
-            get {
-                CheckAccess();
-                if(m_request_wrapped == null) m_request_wrapped = CfxUrlRequest.Wrap(m_request);
-                return m_request_wrapped;
-            }
-        }
-        public ulong Current {
-            get {
-                CheckAccess();
-                return m_current;
-            }
-        }
-        public ulong Total {
-            get {
-                CheckAccess();
-                return m_total;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Request={{{0}}}, Current={{{1}}}, Total={{{2}}}", Request, Current, Total);
-        }
-    }
-
-    public delegate void CfxOnDownloadProgressEventHandler(object sender, CfxOnDownloadProgressEventArgs e);
-
-    /// <summary>
-    /// Notifies the client of download progress. |Current| denotes the number of
-    /// bytes received up to the call and |Total| is the expected total size of the
-    /// response (or -1 if not determined).
-    /// </summary>
-    public class CfxOnDownloadProgressEventArgs : CfxEventArgs {
-
-        internal IntPtr m_request;
-        internal CfxUrlRequest m_request_wrapped;
-        internal ulong m_current;
-        internal ulong m_total;
-
-        internal CfxOnDownloadProgressEventArgs(IntPtr request, ulong current, ulong total) {
-            m_request = request;
-            m_current = current;
-            m_total = total;
-        }
-
-        public CfxUrlRequest Request {
-            get {
-                CheckAccess();
-                if(m_request_wrapped == null) m_request_wrapped = CfxUrlRequest.Wrap(m_request);
-                return m_request_wrapped;
-            }
-        }
-        public ulong Current {
-            get {
-                CheckAccess();
-                return m_current;
-            }
-        }
-        public ulong Total {
-            get {
-                CheckAccess();
-                return m_total;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Request={{{0}}}, Current={{{1}}}, Total={{{2}}}", Request, Current, Total);
-        }
-    }
-
-    public delegate void CfxOnDownloadDataEventHandler(object sender, CfxOnDownloadDataEventArgs e);
-
-    /// <summary>
-    /// Called when some part of the response is read. |Data| contains the current
-    /// bytes received since the last call. This function will not be called if the
-    /// UR_FLAG_NO_DOWNLOAD_DATA flag is set on the request.
-    /// </summary>
-    public class CfxOnDownloadDataEventArgs : CfxEventArgs {
-
-        internal IntPtr m_request;
-        internal CfxUrlRequest m_request_wrapped;
-        internal IntPtr m_data;
-        internal int m_data_length;
-
-        internal CfxOnDownloadDataEventArgs(IntPtr request, IntPtr data, int data_length) {
-            m_request = request;
-            m_data = data;
-            m_data_length = data_length;
-        }
-
-        public CfxUrlRequest Request {
-            get {
-                CheckAccess();
-                if(m_request_wrapped == null) m_request_wrapped = CfxUrlRequest.Wrap(m_request);
-                return m_request_wrapped;
-            }
-        }
-        public IntPtr Data {
-            get {
-                CheckAccess();
-                return m_data;
-            }
-        }
-        public int DataLength {
-            get {
-                CheckAccess();
-                return m_data_length;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Request={{{0}}}, Data={{{1}}}, DataLength={{{2}}}", Request, Data, DataLength);
-        }
-    }
-
-    public delegate void CfxUrlRequestClientGetAuthCredentialsEventHandler(object sender, CfxUrlRequestClientGetAuthCredentialsEventArgs e);
-
-    /// <summary>
-    /// Called on the IO thread when the browser needs credentials from the user.
-    /// |IsProxy| indicates whether the host is a proxy server. |Host| contains the
-    /// hostname and |Port| contains the port number. Return true (1) to continue
-    /// the request and call CfxAuthCallback.Continue() when the authentication
-    /// information is available. Return false (0) to cancel the request. This
-    /// function will only be called for requests initiated from the browser
-    /// process.
-    /// </summary>
-    public class CfxUrlRequestClientGetAuthCredentialsEventArgs : CfxEventArgs {
-
-        internal int m_isProxy;
-        internal IntPtr m_host_str;
-        internal int m_host_length;
-        internal string m_host;
-        internal int m_port;
-        internal IntPtr m_realm_str;
-        internal int m_realm_length;
-        internal string m_realm;
-        internal IntPtr m_scheme_str;
-        internal int m_scheme_length;
-        internal string m_scheme;
-        internal IntPtr m_callback;
-        internal CfxAuthCallback m_callback_wrapped;
-
-        internal bool m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxUrlRequestClientGetAuthCredentialsEventArgs(int isProxy, IntPtr host_str, int host_length, int port, IntPtr realm_str, int realm_length, IntPtr scheme_str, int scheme_length, IntPtr callback) {
-            m_isProxy = isProxy;
-            m_host_str = host_str;
-            m_host_length = host_length;
-            m_port = port;
-            m_realm_str = realm_str;
-            m_realm_length = realm_length;
-            m_scheme_str = scheme_str;
-            m_scheme_length = scheme_length;
-            m_callback = callback;
-        }
-
-        public int IsProxy {
-            get {
-                CheckAccess();
-                return m_isProxy;
-            }
-        }
-        public string Host {
-            get {
-                CheckAccess();
-                if(m_host == null && m_host_str != IntPtr.Zero) m_host = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_host_str, m_host_length);
-                return m_host;
-            }
-        }
-        public int Port {
-            get {
-                CheckAccess();
-                return m_port;
-            }
-        }
-        public string Realm {
-            get {
-                CheckAccess();
-                if(m_realm == null && m_realm_str != IntPtr.Zero) m_realm = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_realm_str, m_realm_length);
-                return m_realm;
-            }
-        }
-        public string Scheme {
-            get {
-                CheckAccess();
-                if(m_scheme == null && m_scheme_str != IntPtr.Zero) m_scheme = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_scheme_str, m_scheme_length);
-                return m_scheme;
-            }
-        }
-        public CfxAuthCallback Callback {
-            get {
-                CheckAccess();
-                if(m_callback_wrapped == null) m_callback_wrapped = CfxAuthCallback.Wrap(m_callback);
-                return m_callback_wrapped;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-
-        public override string ToString() {
-            return String.Format("IsProxy={{{0}}}, Host={{{1}}}, Port={{{2}}}, Realm={{{3}}}, Scheme={{{4}}}, Callback={{{5}}}", IsProxy, Host, Port, Realm, Scheme, Callback);
-        }
-    }
-
 }

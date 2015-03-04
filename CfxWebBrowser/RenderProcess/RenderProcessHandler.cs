@@ -34,6 +34,7 @@ using System;
 using System.Collections.Generic;
 using Chromium;
 using Chromium.Remote;
+using Chromium.Remote.Event;
 
 namespace Chromium.WebBrowser {
     internal class RenderProcessHandler : CfrRenderProcessHandler {

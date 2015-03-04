@@ -34,6 +34,7 @@
 using System;
 
 namespace Chromium.Remote {
+
     /// <summary>
     /// Structure representing a V8 exception. The functions of this structure may be
     /// called on any render process thread.

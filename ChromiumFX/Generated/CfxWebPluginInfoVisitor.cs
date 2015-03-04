@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Structure to implement for visiting web plugin information. The functions of
     /// this structure will be called on the browser process UI thread.
@@ -97,61 +99,64 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxWebPluginInfoVisitorVisitEventHandler(object sender, CfxWebPluginInfoVisitorVisitEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Method that will be called once for each plugin. |Count| is the 0-based
-    /// index for the current plugin. |Total| is the total number of plugins.
-    /// Return false (0) to stop visiting plugins. This function may never be
-    /// called if no plugins are found.
-    /// </summary>
-    public class CfxWebPluginInfoVisitorVisitEventArgs : CfxEventArgs {
+        public delegate void CfxWebPluginInfoVisitorVisitEventHandler(object sender, CfxWebPluginInfoVisitorVisitEventArgs e);
 
-        internal IntPtr m_info;
-        internal CfxWebPluginInfo m_info_wrapped;
-        internal int m_count;
-        internal int m_total;
+        /// <summary>
+        /// Method that will be called once for each plugin. |Count| is the 0-based
+        /// index for the current plugin. |Total| is the total number of plugins.
+        /// Return false (0) to stop visiting plugins. This function may never be
+        /// called if no plugins are found.
+        /// </summary>
+        public class CfxWebPluginInfoVisitorVisitEventArgs : CfxEventArgs {
 
-        internal bool m_returnValue;
-        private bool returnValueSet;
+            internal IntPtr m_info;
+            internal CfxWebPluginInfo m_info_wrapped;
+            internal int m_count;
+            internal int m_total;
 
-        internal CfxWebPluginInfoVisitorVisitEventArgs(IntPtr info, int count, int total) {
-            m_info = info;
-            m_count = count;
-            m_total = total;
-        }
+            internal bool m_returnValue;
+            private bool returnValueSet;
 
-        public CfxWebPluginInfo Info {
-            get {
+            internal CfxWebPluginInfoVisitorVisitEventArgs(IntPtr info, int count, int total) {
+                m_info = info;
+                m_count = count;
+                m_total = total;
+            }
+
+            public CfxWebPluginInfo Info {
+                get {
+                    CheckAccess();
+                    if(m_info_wrapped == null) m_info_wrapped = CfxWebPluginInfo.Wrap(m_info);
+                    return m_info_wrapped;
+                }
+            }
+            public int Count {
+                get {
+                    CheckAccess();
+                    return m_count;
+                }
+            }
+            public int Total {
+                get {
+                    CheckAccess();
+                    return m_total;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
                 CheckAccess();
-                if(m_info_wrapped == null) m_info_wrapped = CfxWebPluginInfo.Wrap(m_info);
-                return m_info_wrapped;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
             }
-        }
-        public int Count {
-            get {
-                CheckAccess();
-                return m_count;
+
+            public override string ToString() {
+                return String.Format("Info={{{0}}}, Count={{{1}}}, Total={{{2}}}", Info, Count, Total);
             }
-        }
-        public int Total {
-            get {
-                CheckAccess();
-                return m_total;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
         }
 
-        public override string ToString() {
-            return String.Format("Info={{{0}}}, Count={{{1}}}, Total={{{2}}}", Info, Count, Total);
-        }
     }
-
 }

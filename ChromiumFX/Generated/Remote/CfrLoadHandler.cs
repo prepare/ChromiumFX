@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium.Remote {
+    using Event;
+
     /// <summary>
     /// Implement this structure to handle events related to browser load status. The
     /// functions of this structure will be called on the browser process UI thread
@@ -214,282 +216,284 @@ namespace Chromium.Remote {
         }
     }
 
+    namespace Event {
 
-    public delegate void CfrOnLoadingStateChangeEventHandler(object sender, CfrOnLoadingStateChangeEventArgs e);
+        public delegate void CfrOnLoadingStateChangeEventHandler(object sender, CfrOnLoadingStateChangeEventArgs e);
 
-    /// <summary>
-    /// Called when the loading state has changed. This callback will be executed
-    /// twice -- once when loading is initiated either programmatically or by user
-    /// action, and once when loading is terminated due to completion, cancellation
-    /// of failure.
-    /// </summary>
-    public class CfrOnLoadingStateChangeEventArgs : CfrEventArgs {
+        /// <summary>
+        /// Called when the loading state has changed. This callback will be executed
+        /// twice -- once when loading is initiated either programmatically or by user
+        /// action, and once when loading is terminated due to completion, cancellation
+        /// of failure.
+        /// </summary>
+        public class CfrOnLoadingStateChangeEventArgs : CfrEventArgs {
 
-        bool BrowserFetched;
-        CfrBrowser m_Browser;
-        bool IsLoadingFetched;
-        bool m_IsLoading;
-        bool CanGoBackFetched;
-        bool m_CanGoBack;
-        bool CanGoForwardFetched;
-        bool m_CanGoForward;
+            bool BrowserFetched;
+            CfrBrowser m_Browser;
+            bool IsLoadingFetched;
+            bool m_IsLoading;
+            bool CanGoBackFetched;
+            bool m_CanGoBack;
+            bool CanGoForwardFetched;
+            bool m_CanGoForward;
 
-        internal CfrOnLoadingStateChangeEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+            internal CfrOnLoadingStateChangeEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
-        public CfrBrowser Browser {
-            get {
-                if(!BrowserFetched) {
-                    BrowserFetched = true;
-                    var call = new CfxOnLoadingStateChangeGetBrowserRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
+            public CfrBrowser Browser {
+                get {
+                    if(!BrowserFetched) {
+                        BrowserFetched = true;
+                        var call = new CfxOnLoadingStateChangeGetBrowserRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Browser;
                 }
-                return m_Browser;
+            }
+            public bool IsLoading {
+                get {
+                    if(!IsLoadingFetched) {
+                        IsLoadingFetched = true;
+                        var call = new CfxOnLoadingStateChangeGetIsLoadingRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_IsLoading = call.value;
+                    }
+                    return m_IsLoading;
+                }
+            }
+            public bool CanGoBack {
+                get {
+                    if(!CanGoBackFetched) {
+                        CanGoBackFetched = true;
+                        var call = new CfxOnLoadingStateChangeGetCanGoBackRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_CanGoBack = call.value;
+                    }
+                    return m_CanGoBack;
+                }
+            }
+            public bool CanGoForward {
+                get {
+                    if(!CanGoForwardFetched) {
+                        CanGoForwardFetched = true;
+                        var call = new CfxOnLoadingStateChangeGetCanGoForwardRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_CanGoForward = call.value;
+                    }
+                    return m_CanGoForward;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, IsLoading={{{1}}}, CanGoBack={{{2}}}, CanGoForward={{{3}}}", Browser, IsLoading, CanGoBack, CanGoForward);
             }
         }
-        public bool IsLoading {
-            get {
-                if(!IsLoadingFetched) {
-                    IsLoadingFetched = true;
-                    var call = new CfxOnLoadingStateChangeGetIsLoadingRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_IsLoading = call.value;
+
+        public delegate void CfrOnLoadStartEventHandler(object sender, CfrOnLoadStartEventArgs e);
+
+        /// <summary>
+        /// Called when the browser begins loading a frame. The |Frame| value will
+        /// never be NULL -- call the is_main() function to check if this frame is the
+        /// main frame. Multiple frames may be loading at the same time. Sub-frames may
+        /// start or continue loading after the main frame load has ended. This
+        /// function may not be called for a particular frame if the load request for
+        /// that frame fails. For notification of overall browser load status use
+        /// OnLoadingStateChange instead.
+        /// </summary>
+        public class CfrOnLoadStartEventArgs : CfrEventArgs {
+
+            bool BrowserFetched;
+            CfrBrowser m_Browser;
+            bool FrameFetched;
+            CfrFrame m_Frame;
+
+            internal CfrOnLoadStartEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+
+            public CfrBrowser Browser {
+                get {
+                    if(!BrowserFetched) {
+                        BrowserFetched = true;
+                        var call = new CfxOnLoadStartGetBrowserRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Browser;
                 }
-                return m_IsLoading;
             }
-        }
-        public bool CanGoBack {
-            get {
-                if(!CanGoBackFetched) {
-                    CanGoBackFetched = true;
-                    var call = new CfxOnLoadingStateChangeGetCanGoBackRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_CanGoBack = call.value;
+            public CfrFrame Frame {
+                get {
+                    if(!FrameFetched) {
+                        FrameFetched = true;
+                        var call = new CfxOnLoadStartGetFrameRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Frame = CfrFrame.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Frame;
                 }
-                return m_CanGoBack;
             }
-        }
-        public bool CanGoForward {
-            get {
-                if(!CanGoForwardFetched) {
-                    CanGoForwardFetched = true;
-                    var call = new CfxOnLoadingStateChangeGetCanGoForwardRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_CanGoForward = call.value;
-                }
-                return m_CanGoForward;
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}", Browser, Frame);
             }
         }
 
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, IsLoading={{{1}}}, CanGoBack={{{2}}}, CanGoForward={{{3}}}", Browser, IsLoading, CanGoBack, CanGoForward);
+        public delegate void CfrOnLoadEndEventHandler(object sender, CfrOnLoadEndEventArgs e);
+
+        /// <summary>
+        /// Called when the browser is done loading a frame. The |Frame| value will
+        /// never be NULL -- call the is_main() function to check if this frame is the
+        /// main frame. Multiple frames may be loading at the same time. Sub-frames may
+        /// start or continue loading after the main frame load has ended. This
+        /// function will always be called for all frames irrespective of whether the
+        /// request completes successfully.
+        /// </summary>
+        public class CfrOnLoadEndEventArgs : CfrEventArgs {
+
+            bool BrowserFetched;
+            CfrBrowser m_Browser;
+            bool FrameFetched;
+            CfrFrame m_Frame;
+            bool HttpStatusCodeFetched;
+            int m_HttpStatusCode;
+
+            internal CfrOnLoadEndEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+
+            public CfrBrowser Browser {
+                get {
+                    if(!BrowserFetched) {
+                        BrowserFetched = true;
+                        var call = new CfxOnLoadEndGetBrowserRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Browser;
+                }
+            }
+            public CfrFrame Frame {
+                get {
+                    if(!FrameFetched) {
+                        FrameFetched = true;
+                        var call = new CfxOnLoadEndGetFrameRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Frame = CfrFrame.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Frame;
+                }
+            }
+            public int HttpStatusCode {
+                get {
+                    if(!HttpStatusCodeFetched) {
+                        HttpStatusCodeFetched = true;
+                        var call = new CfxOnLoadEndGetHttpStatusCodeRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_HttpStatusCode = call.value;
+                    }
+                    return m_HttpStatusCode;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, HttpStatusCode={{{2}}}", Browser, Frame, HttpStatusCode);
+            }
         }
+
+        public delegate void CfrOnLoadErrorEventHandler(object sender, CfrOnLoadErrorEventArgs e);
+
+        /// <summary>
+        /// Called when the resource load for a navigation fails or is canceled.
+        /// |ErrorCode| is the error code number, |ErrorText| is the error text and
+        /// |FailedUrl| is the URL that failed to load. See net\base\net_error_list.h
+        /// for complete descriptions of the error codes.
+        /// </summary>
+        public class CfrOnLoadErrorEventArgs : CfrEventArgs {
+
+            bool BrowserFetched;
+            CfrBrowser m_Browser;
+            bool FrameFetched;
+            CfrFrame m_Frame;
+            bool ErrorCodeFetched;
+            CfxErrorCode m_ErrorCode;
+            bool ErrorTextFetched;
+            string m_ErrorText;
+            bool FailedUrlFetched;
+            string m_FailedUrl;
+
+            internal CfrOnLoadErrorEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+
+            public CfrBrowser Browser {
+                get {
+                    if(!BrowserFetched) {
+                        BrowserFetched = true;
+                        var call = new CfxOnLoadErrorGetBrowserRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Browser;
+                }
+            }
+            public CfrFrame Frame {
+                get {
+                    if(!FrameFetched) {
+                        FrameFetched = true;
+                        var call = new CfxOnLoadErrorGetFrameRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Frame = CfrFrame.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Frame;
+                }
+            }
+            public CfxErrorCode ErrorCode {
+                get {
+                    if(!ErrorCodeFetched) {
+                        ErrorCodeFetched = true;
+                        var call = new CfxOnLoadErrorGetErrorCodeRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_ErrorCode = (CfxErrorCode)call.value;
+                    }
+                    return m_ErrorCode;
+                }
+            }
+            public string ErrorText {
+                get {
+                    if(!ErrorTextFetched) {
+                        ErrorTextFetched = true;
+                        var call = new CfxOnLoadErrorGetErrorTextRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_ErrorText = call.value;
+                    }
+                    return m_ErrorText;
+                }
+            }
+            public string FailedUrl {
+                get {
+                    if(!FailedUrlFetched) {
+                        FailedUrlFetched = true;
+                        var call = new CfxOnLoadErrorGetFailedUrlRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_FailedUrl = call.value;
+                    }
+                    return m_FailedUrl;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, ErrorCode={{{2}}}, ErrorText={{{3}}}, FailedUrl={{{4}}}", Browser, Frame, ErrorCode, ErrorText, FailedUrl);
+            }
+        }
+
     }
-
-    public delegate void CfrOnLoadStartEventHandler(object sender, CfrOnLoadStartEventArgs e);
-
-    /// <summary>
-    /// Called when the browser begins loading a frame. The |Frame| value will
-    /// never be NULL -- call the is_main() function to check if this frame is the
-    /// main frame. Multiple frames may be loading at the same time. Sub-frames may
-    /// start or continue loading after the main frame load has ended. This
-    /// function may not be called for a particular frame if the load request for
-    /// that frame fails. For notification of overall browser load status use
-    /// OnLoadingStateChange instead.
-    /// </summary>
-    public class CfrOnLoadStartEventArgs : CfrEventArgs {
-
-        bool BrowserFetched;
-        CfrBrowser m_Browser;
-        bool FrameFetched;
-        CfrFrame m_Frame;
-
-        internal CfrOnLoadStartEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
-
-        public CfrBrowser Browser {
-            get {
-                if(!BrowserFetched) {
-                    BrowserFetched = true;
-                    var call = new CfxOnLoadStartGetBrowserRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
-                }
-                return m_Browser;
-            }
-        }
-        public CfrFrame Frame {
-            get {
-                if(!FrameFetched) {
-                    FrameFetched = true;
-                    var call = new CfxOnLoadStartGetFrameRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Frame = CfrFrame.Wrap(call.value, remoteRuntime);
-                }
-                return m_Frame;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Frame={{{1}}}", Browser, Frame);
-        }
-    }
-
-    public delegate void CfrOnLoadEndEventHandler(object sender, CfrOnLoadEndEventArgs e);
-
-    /// <summary>
-    /// Called when the browser is done loading a frame. The |Frame| value will
-    /// never be NULL -- call the is_main() function to check if this frame is the
-    /// main frame. Multiple frames may be loading at the same time. Sub-frames may
-    /// start or continue loading after the main frame load has ended. This
-    /// function will always be called for all frames irrespective of whether the
-    /// request completes successfully.
-    /// </summary>
-    public class CfrOnLoadEndEventArgs : CfrEventArgs {
-
-        bool BrowserFetched;
-        CfrBrowser m_Browser;
-        bool FrameFetched;
-        CfrFrame m_Frame;
-        bool HttpStatusCodeFetched;
-        int m_HttpStatusCode;
-
-        internal CfrOnLoadEndEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
-
-        public CfrBrowser Browser {
-            get {
-                if(!BrowserFetched) {
-                    BrowserFetched = true;
-                    var call = new CfxOnLoadEndGetBrowserRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
-                }
-                return m_Browser;
-            }
-        }
-        public CfrFrame Frame {
-            get {
-                if(!FrameFetched) {
-                    FrameFetched = true;
-                    var call = new CfxOnLoadEndGetFrameRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Frame = CfrFrame.Wrap(call.value, remoteRuntime);
-                }
-                return m_Frame;
-            }
-        }
-        public int HttpStatusCode {
-            get {
-                if(!HttpStatusCodeFetched) {
-                    HttpStatusCodeFetched = true;
-                    var call = new CfxOnLoadEndGetHttpStatusCodeRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_HttpStatusCode = call.value;
-                }
-                return m_HttpStatusCode;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Frame={{{1}}}, HttpStatusCode={{{2}}}", Browser, Frame, HttpStatusCode);
-        }
-    }
-
-    public delegate void CfrOnLoadErrorEventHandler(object sender, CfrOnLoadErrorEventArgs e);
-
-    /// <summary>
-    /// Called when the resource load for a navigation fails or is canceled.
-    /// |ErrorCode| is the error code number, |ErrorText| is the error text and
-    /// |FailedUrl| is the URL that failed to load. See net\base\net_error_list.h
-    /// for complete descriptions of the error codes.
-    /// </summary>
-    public class CfrOnLoadErrorEventArgs : CfrEventArgs {
-
-        bool BrowserFetched;
-        CfrBrowser m_Browser;
-        bool FrameFetched;
-        CfrFrame m_Frame;
-        bool ErrorCodeFetched;
-        CfxErrorCode m_ErrorCode;
-        bool ErrorTextFetched;
-        string m_ErrorText;
-        bool FailedUrlFetched;
-        string m_FailedUrl;
-
-        internal CfrOnLoadErrorEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
-
-        public CfrBrowser Browser {
-            get {
-                if(!BrowserFetched) {
-                    BrowserFetched = true;
-                    var call = new CfxOnLoadErrorGetBrowserRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Browser = CfrBrowser.Wrap(call.value, remoteRuntime);
-                }
-                return m_Browser;
-            }
-        }
-        public CfrFrame Frame {
-            get {
-                if(!FrameFetched) {
-                    FrameFetched = true;
-                    var call = new CfxOnLoadErrorGetFrameRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Frame = CfrFrame.Wrap(call.value, remoteRuntime);
-                }
-                return m_Frame;
-            }
-        }
-        public CfxErrorCode ErrorCode {
-            get {
-                if(!ErrorCodeFetched) {
-                    ErrorCodeFetched = true;
-                    var call = new CfxOnLoadErrorGetErrorCodeRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_ErrorCode = (CfxErrorCode)call.value;
-                }
-                return m_ErrorCode;
-            }
-        }
-        public string ErrorText {
-            get {
-                if(!ErrorTextFetched) {
-                    ErrorTextFetched = true;
-                    var call = new CfxOnLoadErrorGetErrorTextRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_ErrorText = call.value;
-                }
-                return m_ErrorText;
-            }
-        }
-        public string FailedUrl {
-            get {
-                if(!FailedUrlFetched) {
-                    FailedUrlFetched = true;
-                    var call = new CfxOnLoadErrorGetFailedUrlRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_FailedUrl = call.value;
-                }
-                return m_FailedUrl;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Frame={{{1}}}, ErrorCode={{{2}}}, ErrorText={{{3}}}, FailedUrl={{{4}}}", Browser, Frame, ErrorCode, ErrorText, FailedUrl);
-        }
-    }
-
 }

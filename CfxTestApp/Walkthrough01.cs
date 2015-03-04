@@ -3,7 +3,9 @@ using System.Windows.Forms;
 using System.Drawing;
 
 using Chromium;
+using Chromium.Event;
 using Chromium.Remote;
+using Chromium.Remote.Event;
 using Chromium.WebBrowser;
 
 namespace CfxTestApplication {

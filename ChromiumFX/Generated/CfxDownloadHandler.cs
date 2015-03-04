@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Structure used to handle file downloads. The functions of this structure will
     /// called on the browser process UI thread.
@@ -148,118 +150,121 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxOnBeforeDownloadEventHandler(object sender, CfxOnBeforeDownloadEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Called before a download begins. |SuggestedName| is the suggested name for
-    /// the download file. By default the download will be canceled. Execute
-    /// |Callback| either asynchronously or in this function to continue the
-    /// download if desired. Do not keep a reference to |DownloadItem| outside of
-    /// this function.
-    /// </summary>
-    public class CfxOnBeforeDownloadEventArgs : CfxEventArgs {
+        public delegate void CfxOnBeforeDownloadEventHandler(object sender, CfxOnBeforeDownloadEventArgs e);
 
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal IntPtr m_download_item;
-        internal CfxDownloadItem m_download_item_wrapped;
-        internal IntPtr m_suggested_name_str;
-        internal int m_suggested_name_length;
-        internal string m_suggested_name;
-        internal IntPtr m_callback;
-        internal CfxBeforeDownloadCallback m_callback_wrapped;
+        /// <summary>
+        /// Called before a download begins. |SuggestedName| is the suggested name for
+        /// the download file. By default the download will be canceled. Execute
+        /// |Callback| either asynchronously or in this function to continue the
+        /// download if desired. Do not keep a reference to |DownloadItem| outside of
+        /// this function.
+        /// </summary>
+        public class CfxOnBeforeDownloadEventArgs : CfxEventArgs {
 
-        internal CfxOnBeforeDownloadEventArgs(IntPtr browser, IntPtr download_item, IntPtr suggested_name_str, int suggested_name_length, IntPtr callback) {
-            m_browser = browser;
-            m_download_item = download_item;
-            m_suggested_name_str = suggested_name_str;
-            m_suggested_name_length = suggested_name_length;
-            m_callback = callback;
-        }
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_download_item;
+            internal CfxDownloadItem m_download_item_wrapped;
+            internal IntPtr m_suggested_name_str;
+            internal int m_suggested_name_length;
+            internal string m_suggested_name;
+            internal IntPtr m_callback;
+            internal CfxBeforeDownloadCallback m_callback_wrapped;
 
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
+            internal CfxOnBeforeDownloadEventArgs(IntPtr browser, IntPtr download_item, IntPtr suggested_name_str, int suggested_name_length, IntPtr callback) {
+                m_browser = browser;
+                m_download_item = download_item;
+                m_suggested_name_str = suggested_name_str;
+                m_suggested_name_length = suggested_name_length;
+                m_callback = callback;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public CfxDownloadItem DownloadItem {
+                get {
+                    CheckAccess();
+                    if(m_download_item_wrapped == null) m_download_item_wrapped = CfxDownloadItem.Wrap(m_download_item);
+                    return m_download_item_wrapped;
+                }
+            }
+            public string SuggestedName {
+                get {
+                    CheckAccess();
+                    if(m_suggested_name == null && m_suggested_name_str != IntPtr.Zero) m_suggested_name = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_suggested_name_str, m_suggested_name_length);
+                    return m_suggested_name;
+                }
+            }
+            public CfxBeforeDownloadCallback Callback {
+                get {
+                    CheckAccess();
+                    if(m_callback_wrapped == null) m_callback_wrapped = CfxBeforeDownloadCallback.Wrap(m_callback);
+                    return m_callback_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, DownloadItem={{{1}}}, SuggestedName={{{2}}}, Callback={{{3}}}", Browser, DownloadItem, SuggestedName, Callback);
             }
         }
-        public CfxDownloadItem DownloadItem {
-            get {
-                CheckAccess();
-                if(m_download_item_wrapped == null) m_download_item_wrapped = CfxDownloadItem.Wrap(m_download_item);
-                return m_download_item_wrapped;
+
+        public delegate void CfxOnDownloadUpdatedEventHandler(object sender, CfxOnDownloadUpdatedEventArgs e);
+
+        /// <summary>
+        /// Called when a download's status or progress information has been updated.
+        /// This may be called multiple times before and after on_before_download().
+        /// Execute |Callback| either asynchronously or in this function to cancel the
+        /// download if desired. Do not keep a reference to |DownloadItem| outside of
+        /// this function.
+        /// </summary>
+        public class CfxOnDownloadUpdatedEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_download_item;
+            internal CfxDownloadItem m_download_item_wrapped;
+            internal IntPtr m_callback;
+            internal CfxDownloadItemCallback m_callback_wrapped;
+
+            internal CfxOnDownloadUpdatedEventArgs(IntPtr browser, IntPtr download_item, IntPtr callback) {
+                m_browser = browser;
+                m_download_item = download_item;
+                m_callback = callback;
             }
-        }
-        public string SuggestedName {
-            get {
-                CheckAccess();
-                if(m_suggested_name == null && m_suggested_name_str != IntPtr.Zero) m_suggested_name = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_suggested_name_str, m_suggested_name_length);
-                return m_suggested_name;
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
             }
-        }
-        public CfxBeforeDownloadCallback Callback {
-            get {
-                CheckAccess();
-                if(m_callback_wrapped == null) m_callback_wrapped = CfxBeforeDownloadCallback.Wrap(m_callback);
-                return m_callback_wrapped;
+            public CfxDownloadItem DownloadItem {
+                get {
+                    CheckAccess();
+                    if(m_download_item_wrapped == null) m_download_item_wrapped = CfxDownloadItem.Wrap(m_download_item);
+                    return m_download_item_wrapped;
+                }
+            }
+            public CfxDownloadItemCallback Callback {
+                get {
+                    CheckAccess();
+                    if(m_callback_wrapped == null) m_callback_wrapped = CfxDownloadItemCallback.Wrap(m_callback);
+                    return m_callback_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, DownloadItem={{{1}}}, Callback={{{2}}}", Browser, DownloadItem, Callback);
             }
         }
 
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, DownloadItem={{{1}}}, SuggestedName={{{2}}}, Callback={{{3}}}", Browser, DownloadItem, SuggestedName, Callback);
-        }
     }
-
-    public delegate void CfxOnDownloadUpdatedEventHandler(object sender, CfxOnDownloadUpdatedEventArgs e);
-
-    /// <summary>
-    /// Called when a download's status or progress information has been updated.
-    /// This may be called multiple times before and after on_before_download().
-    /// Execute |Callback| either asynchronously or in this function to cancel the
-    /// download if desired. Do not keep a reference to |DownloadItem| outside of
-    /// this function.
-    /// </summary>
-    public class CfxOnDownloadUpdatedEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal IntPtr m_download_item;
-        internal CfxDownloadItem m_download_item_wrapped;
-        internal IntPtr m_callback;
-        internal CfxDownloadItemCallback m_callback_wrapped;
-
-        internal CfxOnDownloadUpdatedEventArgs(IntPtr browser, IntPtr download_item, IntPtr callback) {
-            m_browser = browser;
-            m_download_item = download_item;
-            m_callback = callback;
-        }
-
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-        public CfxDownloadItem DownloadItem {
-            get {
-                CheckAccess();
-                if(m_download_item_wrapped == null) m_download_item_wrapped = CfxDownloadItem.Wrap(m_download_item);
-                return m_download_item_wrapped;
-            }
-        }
-        public CfxDownloadItemCallback Callback {
-            get {
-                CheckAccess();
-                if(m_callback_wrapped == null) m_callback_wrapped = CfxDownloadItemCallback.Wrap(m_callback);
-                return m_callback_wrapped;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, DownloadItem={{{1}}}, Callback={{{2}}}", Browser, DownloadItem, Callback);
-        }
-    }
-
 }
