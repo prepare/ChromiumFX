@@ -53,22 +53,36 @@ namespace Chromium.WebBrowser {
         }
 
         /// <summary>
-        /// Gives the application an opportunity to change initialization settings,
-        /// subscribe to browser process handler events and provide 
-        /// an event handler for OnBeforeCommandLineProcessing events.
+        /// Provides an opportunity to change initialization settings
+        /// and subscribe to browser process handler events.
         /// </summary>
         public static event OnBeforeCfxInitializeEventHandler OnBeforeCfxInitialize;
-        internal static void RaiseOnBeforeCfxInitialize(CfxSettings settings, CfxBrowserProcessHandler processHandler, out CfxOnBeforeCommandLineProcessingEventHandler onBeforeCommandLineProcessingEventHandler) {
+        internal static void RaiseOnBeforeCfxInitialize(CfxSettings settings, CfxBrowserProcessHandler processHandler) {
             var handler = OnBeforeCfxInitialize;
             if(handler != null) {
                 var e = new OnBeforeCfxInitializeEventArgs(settings, processHandler);
                 handler(e);
-                onBeforeCommandLineProcessingEventHandler = e.m_onBeforeCommandLineProcessingEventHandler;
-            } else {
-                onBeforeCommandLineProcessingEventHandler = null;
             }
         }
-        
+
+        /// <summary>
+        /// Provides an opportunity to view and/or modify command-line arguments before
+        /// processing by CEF and Chromium. The |process_type| value will be NULL for
+        /// the browser process. Do not keep a reference to the CfxCommandLine
+        /// object passed to this function. The CfxSettings.CommandLineArgsDisabled
+        /// value can be used to start with an NULL command-line object. Any values
+        /// specified in CfxSettings that equate to command-line arguments will be set
+        /// before this function is called. Be cautious when using this function to
+        /// modify command-line arguments for non-browser processes as this may result
+        /// in undefined behavior including crashes.
+        /// </summary>
+        public static event OnBeforeCommandLineProcessingEventHandler OnBeforeCommandLineProcessing;
+        internal static void RaiseOnBeforeCommandLineProcessing(CfxOnBeforeCommandLineProcessingEventArgs e) {
+            var handler = OnBeforeCommandLineProcessing;
+            if(handler != null) {
+                handler(e);
+            }
+        }
 
         /// <summary>
         /// Initialize the ChromiumWebBrowser and ChromiumFX libraries.
