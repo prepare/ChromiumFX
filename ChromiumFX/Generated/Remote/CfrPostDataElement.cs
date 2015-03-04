@@ -34,6 +34,7 @@
 using System;
 
 namespace Chromium.Remote {
+
     /// <summary>
     /// Structure used to represent a single element in the request post data. The
     /// functions of this structure may be called on any thread.

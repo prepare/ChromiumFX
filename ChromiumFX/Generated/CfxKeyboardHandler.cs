@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Implement this structure to handle events related to keyboard input. The
     /// functions of this structure will be called on the UI thread.
@@ -141,130 +143,133 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxOnPreKeyEventEventHandler(object sender, CfxOnPreKeyEventEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Called before a keyboard event is sent to the renderer. |Event| contains
-    /// information about the keyboard event. |OsEvent| is the operating system
-    /// event message, if any. Return true (1) if the event was handled or false
-    /// (0) otherwise. If the event will be handled in on_key_event() as a keyboard
-    /// shortcut set |IsKeyboardShortcut| to true (1) and return false (0).
-    /// </summary>
-    public class CfxOnPreKeyEventEventArgs : CfxEventArgs {
+        public delegate void CfxOnPreKeyEventEventHandler(object sender, CfxOnPreKeyEventEventArgs e);
 
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal IntPtr m_event;
-        internal CfxKeyEvent m_event_wrapped;
-        internal IntPtr m_os_event;
-        internal int m_is_keyboard_shortcut;
+        /// <summary>
+        /// Called before a keyboard event is sent to the renderer. |Event| contains
+        /// information about the keyboard event. |OsEvent| is the operating system
+        /// event message, if any. Return true (1) if the event was handled or false
+        /// (0) otherwise. If the event will be handled in on_key_event() as a keyboard
+        /// shortcut set |IsKeyboardShortcut| to true (1) and return false (0).
+        /// </summary>
+        public class CfxOnPreKeyEventEventArgs : CfxEventArgs {
 
-        internal bool m_returnValue;
-        private bool returnValueSet;
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_event;
+            internal CfxKeyEvent m_event_wrapped;
+            internal IntPtr m_os_event;
+            internal int m_is_keyboard_shortcut;
 
-        internal CfxOnPreKeyEventEventArgs(IntPtr browser, IntPtr @event, IntPtr os_event) {
-            m_browser = browser;
-            m_event = @event;
-            m_os_event = os_event;
-        }
+            internal bool m_returnValue;
+            private bool returnValueSet;
 
-        public CfxBrowser Browser {
-            get {
+            internal CfxOnPreKeyEventEventArgs(IntPtr browser, IntPtr @event, IntPtr os_event) {
+                m_browser = browser;
+                m_event = @event;
+                m_os_event = os_event;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public CfxKeyEvent Event {
+                get {
+                    CheckAccess();
+                    if(m_event_wrapped == null) m_event_wrapped = CfxKeyEvent.Wrap(m_event);
+                    return m_event_wrapped;
+                }
+            }
+            public IntPtr OsEvent {
+                get {
+                    CheckAccess();
+                    return m_os_event;
+                }
+            }
+            public bool IsKeyboardShortcut {
+                set {
+                    CheckAccess();
+                    m_is_keyboard_shortcut = value ? 1 : 0;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
                 CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
             }
-        }
-        public CfxKeyEvent Event {
-            get {
-                CheckAccess();
-                if(m_event_wrapped == null) m_event_wrapped = CfxKeyEvent.Wrap(m_event);
-                return m_event_wrapped;
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Event={{{1}}}, OsEvent={{{2}}}", Browser, Event, OsEvent);
             }
-        }
-        public IntPtr OsEvent {
-            get {
-                CheckAccess();
-                return m_os_event;
-            }
-        }
-        public bool IsKeyboardShortcut {
-            set {
-                CheckAccess();
-                m_is_keyboard_shortcut = value ? 1 : 0;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
         }
 
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Event={{{1}}}, OsEvent={{{2}}}", Browser, Event, OsEvent);
+        public delegate void CfxOnKeyEventEventHandler(object sender, CfxOnKeyEventEventArgs e);
+
+        /// <summary>
+        /// Called after the renderer and JavaScript in the page has had a chance to
+        /// handle the event. |Event| contains information about the keyboard event.
+        /// |OsEvent| is the operating system event message, if any. Return true (1)
+        /// if the keyboard event was handled or false (0) otherwise.
+        /// </summary>
+        public class CfxOnKeyEventEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_event;
+            internal CfxKeyEvent m_event_wrapped;
+            internal IntPtr m_os_event;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxOnKeyEventEventArgs(IntPtr browser, IntPtr @event, IntPtr os_event) {
+                m_browser = browser;
+                m_event = @event;
+                m_os_event = os_event;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public CfxKeyEvent Event {
+                get {
+                    CheckAccess();
+                    if(m_event_wrapped == null) m_event_wrapped = CfxKeyEvent.Wrap(m_event);
+                    return m_event_wrapped;
+                }
+            }
+            public IntPtr OsEvent {
+                get {
+                    CheckAccess();
+                    return m_os_event;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Event={{{1}}}, OsEvent={{{2}}}", Browser, Event, OsEvent);
+            }
         }
+
     }
-
-    public delegate void CfxOnKeyEventEventHandler(object sender, CfxOnKeyEventEventArgs e);
-
-    /// <summary>
-    /// Called after the renderer and JavaScript in the page has had a chance to
-    /// handle the event. |Event| contains information about the keyboard event.
-    /// |OsEvent| is the operating system event message, if any. Return true (1)
-    /// if the keyboard event was handled or false (0) otherwise.
-    /// </summary>
-    public class CfxOnKeyEventEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal IntPtr m_event;
-        internal CfxKeyEvent m_event_wrapped;
-        internal IntPtr m_os_event;
-
-        internal bool m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxOnKeyEventEventArgs(IntPtr browser, IntPtr @event, IntPtr os_event) {
-            m_browser = browser;
-            m_event = @event;
-            m_os_event = os_event;
-        }
-
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-        public CfxKeyEvent Event {
-            get {
-                CheckAccess();
-                if(m_event_wrapped == null) m_event_wrapped = CfxKeyEvent.Wrap(m_event);
-                return m_event_wrapped;
-            }
-        }
-        public IntPtr OsEvent {
-            get {
-                CheckAccess();
-                return m_os_event;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Event={{{1}}}, OsEvent={{{2}}}", Browser, Event, OsEvent);
-        }
-    }
-
 }

@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Structure used to implement browser process callbacks. The functions of this
     /// structure will be called on the browser process main thread unless otherwise
@@ -219,92 +221,95 @@ namespace Chromium {
     }
 
 
+    namespace Event {
 
-    public delegate void CfxOnBeforeChildProcessLaunchEventHandler(object sender, CfxOnBeforeChildProcessLaunchEventArgs e);
 
-    /// <summary>
-    /// Called before a child process is launched. Will be called on the browser
-    /// process UI thread when launching a render process and on the browser
-    /// process IO thread when launching a GPU or plugin process. Provides an
-    /// opportunity to modify the child process command line. Do not keep a
-    /// reference to |CommandLine| outside of this function.
-    /// </summary>
-    public class CfxOnBeforeChildProcessLaunchEventArgs : CfxEventArgs {
+        public delegate void CfxOnBeforeChildProcessLaunchEventHandler(object sender, CfxOnBeforeChildProcessLaunchEventArgs e);
 
-        internal IntPtr m_command_line;
-        internal CfxCommandLine m_command_line_wrapped;
+        /// <summary>
+        /// Called before a child process is launched. Will be called on the browser
+        /// process UI thread when launching a render process and on the browser
+        /// process IO thread when launching a GPU or plugin process. Provides an
+        /// opportunity to modify the child process command line. Do not keep a
+        /// reference to |CommandLine| outside of this function.
+        /// </summary>
+        public class CfxOnBeforeChildProcessLaunchEventArgs : CfxEventArgs {
 
-        internal CfxOnBeforeChildProcessLaunchEventArgs(IntPtr command_line) {
-            m_command_line = command_line;
+            internal IntPtr m_command_line;
+            internal CfxCommandLine m_command_line_wrapped;
+
+            internal CfxOnBeforeChildProcessLaunchEventArgs(IntPtr command_line) {
+                m_command_line = command_line;
+            }
+
+            public CfxCommandLine CommandLine {
+                get {
+                    CheckAccess();
+                    if(m_command_line_wrapped == null) m_command_line_wrapped = CfxCommandLine.Wrap(m_command_line);
+                    return m_command_line_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("CommandLine={{{0}}}", CommandLine);
+            }
         }
 
-        public CfxCommandLine CommandLine {
-            get {
+        public delegate void CfxOnRenderProcessThreadCreatedEventHandler(object sender, CfxOnRenderProcessThreadCreatedEventArgs e);
+
+        /// <summary>
+        /// Called on the browser process IO thread after the main thread has been
+        /// created for a new render process. Provides an opportunity to specify extra
+        /// information that will be passed to
+        /// CfxRenderProcessHandler.OnRenderThreadCreated() in the render
+        /// process. Do not keep a reference to |ExtraInfo| outside of this function.
+        /// </summary>
+        public class CfxOnRenderProcessThreadCreatedEventArgs : CfxEventArgs {
+
+            internal IntPtr m_extra_info;
+            internal CfxListValue m_extra_info_wrapped;
+
+            internal CfxOnRenderProcessThreadCreatedEventArgs(IntPtr extra_info) {
+                m_extra_info = extra_info;
+            }
+
+            public CfxListValue ExtraInfo {
+                get {
+                    CheckAccess();
+                    if(m_extra_info_wrapped == null) m_extra_info_wrapped = CfxListValue.Wrap(m_extra_info);
+                    return m_extra_info_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("ExtraInfo={{{0}}}", ExtraInfo);
+            }
+        }
+
+        public delegate void CfxGetPrintHandlerEventHandler(object sender, CfxGetPrintHandlerEventArgs e);
+
+        /// <summary>
+        /// Return the handler for printing on Linux. If a print handler is not
+        /// provided then printing will not be supported on the Linux platform.
+        /// </summary>
+        public class CfxGetPrintHandlerEventArgs : CfxEventArgs {
+
+
+            internal CfxPrintHandler m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxGetPrintHandlerEventArgs() {
+            }
+
+            public void SetReturnValue(CfxPrintHandler returnValue) {
                 CheckAccess();
-                if(m_command_line_wrapped == null) m_command_line_wrapped = CfxCommandLine.Wrap(m_command_line);
-                return m_command_line_wrapped;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
             }
         }
 
-        public override string ToString() {
-            return String.Format("CommandLine={{{0}}}", CommandLine);
-        }
     }
-
-    public delegate void CfxOnRenderProcessThreadCreatedEventHandler(object sender, CfxOnRenderProcessThreadCreatedEventArgs e);
-
-    /// <summary>
-    /// Called on the browser process IO thread after the main thread has been
-    /// created for a new render process. Provides an opportunity to specify extra
-    /// information that will be passed to
-    /// CfxRenderProcessHandler.OnRenderThreadCreated() in the render
-    /// process. Do not keep a reference to |ExtraInfo| outside of this function.
-    /// </summary>
-    public class CfxOnRenderProcessThreadCreatedEventArgs : CfxEventArgs {
-
-        internal IntPtr m_extra_info;
-        internal CfxListValue m_extra_info_wrapped;
-
-        internal CfxOnRenderProcessThreadCreatedEventArgs(IntPtr extra_info) {
-            m_extra_info = extra_info;
-        }
-
-        public CfxListValue ExtraInfo {
-            get {
-                CheckAccess();
-                if(m_extra_info_wrapped == null) m_extra_info_wrapped = CfxListValue.Wrap(m_extra_info);
-                return m_extra_info_wrapped;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("ExtraInfo={{{0}}}", ExtraInfo);
-        }
-    }
-
-    public delegate void CfxGetPrintHandlerEventHandler(object sender, CfxGetPrintHandlerEventArgs e);
-
-    /// <summary>
-    /// Return the handler for printing on Linux. If a print handler is not
-    /// provided then printing will not be supported on the Linux platform.
-    /// </summary>
-    public class CfxGetPrintHandlerEventArgs : CfxEventArgs {
-
-
-        internal CfxPrintHandler m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxGetPrintHandlerEventArgs() {
-        }
-
-        public void SetReturnValue(CfxPrintHandler returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
-
 }

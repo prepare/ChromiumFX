@@ -608,6 +608,8 @@ Public Class CfxClassBuilder
 
     Public Sub EmitPublicCallbackClass(b As CodeBuilder)
 
+        b.AppendLine("using Event;")
+        b.AppendLine()
 
         b.AppendSummary(comments, False, True)
 
@@ -745,6 +747,13 @@ Public Class CfxClassBuilder
     End Sub
 
     Public Sub EmitRemoteCalls(b As CodeBuilder, callIds As List(Of String))
+
+        If Category = StructCategory.ApiCallbacks Then
+            b.AppendLine("using Event;")
+            b.AppendLine("using Chromium.Event;")
+        End If
+
+        b.AppendLine()
 
         If NeedsConstructor Then
             b.BeginRemoteCallClass(ClassName & "Ctor", False, callIds)
@@ -966,6 +975,12 @@ Public Class CfxClassBuilder
 
     Public Sub EmitRemoteClass(b As CodeBuilder)
 
+        If Category = StructCategory.ApiCallbacks Then
+            b.AppendLine("using Event;")
+        End If
+
+        b.AppendLine()
+
         b.AppendSummary(comments, True, Category = StructCategory.ApiCallbacks)
         If IsRefCounted Then
             b.BeginClass(RemoteClassName & " : CfrBase", GeneratorConfig.ClassModifiers(RemoteClassName))
@@ -1132,13 +1147,19 @@ Public Class CfxClassBuilder
 
         If Category = StructCategory.ApiCallbacks Then
             b.AppendLine()
+            b.BeginBlock("namespace Event")
             b.AppendLine()
             EmitRemoteEventArgs(b)
+            b.EndBlock()
         End If
 
     End Sub
 
     Public Sub EmitPublicEventArgs(b As CodeBuilder)
+
+        b.BeginBlock("namespace Event")
+        b.AppendLine()
+
 
         For Each sm In StructMembers
             If sm.MemberType.IsCefCallbackType Then
@@ -1146,6 +1167,8 @@ Public Class CfxClassBuilder
                 b.AppendLine()
             End If
         Next
+
+        b.EndBlock()
 
     End Sub
 

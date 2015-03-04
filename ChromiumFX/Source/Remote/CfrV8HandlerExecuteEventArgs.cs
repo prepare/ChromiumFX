@@ -35,7 +35,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Chromium.Remote {
+namespace Chromium.Remote.Event {
     partial class CfrV8HandlerExecuteEventArgs {
 
         public void SetReturnValue(string returnValue) {

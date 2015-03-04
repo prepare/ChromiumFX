@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Structure the client can implement to provide a custom stream writer. The
     /// functions of this structure may be called on any thread.
@@ -244,83 +246,86 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxWriteEventHandler(object sender, CfxWriteEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Write raw binary data.
-    /// </summary>
-    public class CfxWriteEventArgs : CfxEventArgs {
+        public delegate void CfxWriteEventHandler(object sender, CfxWriteEventArgs e);
 
-        internal IntPtr m_ptr;
-        internal int m_size;
-        internal int m_n;
+        /// <summary>
+        /// Write raw binary data.
+        /// </summary>
+        public class CfxWriteEventArgs : CfxEventArgs {
 
-        internal int m_returnValue;
-        private bool returnValueSet;
+            internal IntPtr m_ptr;
+            internal int m_size;
+            internal int m_n;
 
-        internal CfxWriteEventArgs(IntPtr ptr, int size, int n) {
-            m_ptr = ptr;
-            m_size = size;
-            m_n = n;
-        }
+            internal int m_returnValue;
+            private bool returnValueSet;
 
-        public IntPtr Ptr {
-            get {
+            internal CfxWriteEventArgs(IntPtr ptr, int size, int n) {
+                m_ptr = ptr;
+                m_size = size;
+                m_n = n;
+            }
+
+            public IntPtr Ptr {
+                get {
+                    CheckAccess();
+                    return m_ptr;
+                }
+            }
+            public int Size {
+                get {
+                    CheckAccess();
+                    return m_size;
+                }
+            }
+            public int N {
+                get {
+                    CheckAccess();
+                    return m_n;
+                }
+            }
+            public void SetReturnValue(int returnValue) {
                 CheckAccess();
-                return m_ptr;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
             }
-        }
-        public int Size {
-            get {
-                CheckAccess();
-                return m_size;
+
+            public override string ToString() {
+                return String.Format("Ptr={{{0}}}, Size={{{1}}}, N={{{2}}}", Ptr, Size, N);
             }
-        }
-        public int N {
-            get {
-                CheckAccess();
-                return m_n;
-            }
-        }
-        public void SetReturnValue(int returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
         }
 
-        public override string ToString() {
-            return String.Format("Ptr={{{0}}}, Size={{{1}}}, N={{{2}}}", Ptr, Size, N);
+
+
+        public delegate void CfxFlushEventHandler(object sender, CfxFlushEventArgs e);
+
+        /// <summary>
+        /// Flush the stream.
+        /// </summary>
+        public class CfxFlushEventArgs : CfxEventArgs {
+
+
+            internal int m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxFlushEventArgs() {
+            }
+
+            public void SetReturnValue(int returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
         }
+
+
     }
-
-
-
-    public delegate void CfxFlushEventHandler(object sender, CfxFlushEventArgs e);
-
-    /// <summary>
-    /// Flush the stream.
-    /// </summary>
-    public class CfxFlushEventArgs : CfxEventArgs {
-
-
-        internal int m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxFlushEventArgs() {
-        }
-
-        public void SetReturnValue(int returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
-
-
 }

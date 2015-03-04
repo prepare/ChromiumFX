@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Implement this structure to handle printing on Linux. The functions of this
     /// structure will be called on the browser process UI thread.
@@ -209,154 +211,157 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxOnPrintSettingsEventHandler(object sender, CfxOnPrintSettingsEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Synchronize |Settings| with client state. If |GetDefaults| is true (1)
-    /// then populate |Settings| with the default print settings. Do not keep a
-    /// reference to |Settings| outside of this callback.
-    /// </summary>
-    public class CfxOnPrintSettingsEventArgs : CfxEventArgs {
+        public delegate void CfxOnPrintSettingsEventHandler(object sender, CfxOnPrintSettingsEventArgs e);
 
-        internal IntPtr m_settings;
-        internal CfxPrintSettings m_settings_wrapped;
-        internal int m_get_defaults;
+        /// <summary>
+        /// Synchronize |Settings| with client state. If |GetDefaults| is true (1)
+        /// then populate |Settings| with the default print settings. Do not keep a
+        /// reference to |Settings| outside of this callback.
+        /// </summary>
+        public class CfxOnPrintSettingsEventArgs : CfxEventArgs {
 
-        internal CfxOnPrintSettingsEventArgs(IntPtr settings, int get_defaults) {
-            m_settings = settings;
-            m_get_defaults = get_defaults;
-        }
+            internal IntPtr m_settings;
+            internal CfxPrintSettings m_settings_wrapped;
+            internal int m_get_defaults;
 
-        public CfxPrintSettings Settings {
-            get {
-                CheckAccess();
-                if(m_settings_wrapped == null) m_settings_wrapped = CfxPrintSettings.Wrap(m_settings);
-                return m_settings_wrapped;
+            internal CfxOnPrintSettingsEventArgs(IntPtr settings, int get_defaults) {
+                m_settings = settings;
+                m_get_defaults = get_defaults;
+            }
+
+            public CfxPrintSettings Settings {
+                get {
+                    CheckAccess();
+                    if(m_settings_wrapped == null) m_settings_wrapped = CfxPrintSettings.Wrap(m_settings);
+                    return m_settings_wrapped;
+                }
+            }
+            public bool GetDefaults {
+                get {
+                    CheckAccess();
+                    return 0 != m_get_defaults;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Settings={{{0}}}, GetDefaults={{{1}}}", Settings, GetDefaults);
             }
         }
-        public bool GetDefaults {
-            get {
+
+        public delegate void CfxOnPrintDialogEventHandler(object sender, CfxOnPrintDialogEventArgs e);
+
+        /// <summary>
+        /// Show the print dialog. Execute |Callback| once the dialog is dismissed.
+        /// Return true (1) if the dialog will be displayed or false (0) to cancel the
+        /// printing immediately.
+        /// </summary>
+        public class CfxOnPrintDialogEventArgs : CfxEventArgs {
+
+            internal int m_has_selection;
+            internal IntPtr m_callback;
+            internal CfxPrintDialogCallback m_callback_wrapped;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxOnPrintDialogEventArgs(int has_selection, IntPtr callback) {
+                m_has_selection = has_selection;
+                m_callback = callback;
+            }
+
+            public bool HasSelection {
+                get {
+                    CheckAccess();
+                    return 0 != m_has_selection;
+                }
+            }
+            public CfxPrintDialogCallback Callback {
+                get {
+                    CheckAccess();
+                    if(m_callback_wrapped == null) m_callback_wrapped = CfxPrintDialogCallback.Wrap(m_callback);
+                    return m_callback_wrapped;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
                 CheckAccess();
-                return 0 != m_get_defaults;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("HasSelection={{{0}}}, Callback={{{1}}}", HasSelection, Callback);
             }
         }
 
-        public override string ToString() {
-            return String.Format("Settings={{{0}}}, GetDefaults={{{1}}}", Settings, GetDefaults);
+        public delegate void CfxOnPrintJobEventHandler(object sender, CfxOnPrintJobEventArgs e);
+
+        /// <summary>
+        /// Send the print job to the printer. Execute |Callback| once the job is
+        /// completed. Return true (1) if the job will proceed or false (0) to cancel
+        /// the job immediately.
+        /// </summary>
+        public class CfxOnPrintJobEventArgs : CfxEventArgs {
+
+            internal IntPtr m_document_name_str;
+            internal int m_document_name_length;
+            internal string m_document_name;
+            internal IntPtr m_pdf_file_path_str;
+            internal int m_pdf_file_path_length;
+            internal string m_pdf_file_path;
+            internal IntPtr m_callback;
+            internal CfxPrintJobCallback m_callback_wrapped;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxOnPrintJobEventArgs(IntPtr document_name_str, int document_name_length, IntPtr pdf_file_path_str, int pdf_file_path_length, IntPtr callback) {
+                m_document_name_str = document_name_str;
+                m_document_name_length = document_name_length;
+                m_pdf_file_path_str = pdf_file_path_str;
+                m_pdf_file_path_length = pdf_file_path_length;
+                m_callback = callback;
+            }
+
+            public string DocumentName {
+                get {
+                    CheckAccess();
+                    if(m_document_name == null && m_document_name_str != IntPtr.Zero) m_document_name = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_document_name_str, m_document_name_length);
+                    return m_document_name;
+                }
+            }
+            public string PdfFilePath {
+                get {
+                    CheckAccess();
+                    if(m_pdf_file_path == null && m_pdf_file_path_str != IntPtr.Zero) m_pdf_file_path = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_pdf_file_path_str, m_pdf_file_path_length);
+                    return m_pdf_file_path;
+                }
+            }
+            public CfxPrintJobCallback Callback {
+                get {
+                    CheckAccess();
+                    if(m_callback_wrapped == null) m_callback_wrapped = CfxPrintJobCallback.Wrap(m_callback);
+                    return m_callback_wrapped;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("DocumentName={{{0}}}, PdfFilePath={{{1}}}, Callback={{{2}}}", DocumentName, PdfFilePath, Callback);
+            }
         }
+
+
     }
-
-    public delegate void CfxOnPrintDialogEventHandler(object sender, CfxOnPrintDialogEventArgs e);
-
-    /// <summary>
-    /// Show the print dialog. Execute |Callback| once the dialog is dismissed.
-    /// Return true (1) if the dialog will be displayed or false (0) to cancel the
-    /// printing immediately.
-    /// </summary>
-    public class CfxOnPrintDialogEventArgs : CfxEventArgs {
-
-        internal int m_has_selection;
-        internal IntPtr m_callback;
-        internal CfxPrintDialogCallback m_callback_wrapped;
-
-        internal bool m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxOnPrintDialogEventArgs(int has_selection, IntPtr callback) {
-            m_has_selection = has_selection;
-            m_callback = callback;
-        }
-
-        public bool HasSelection {
-            get {
-                CheckAccess();
-                return 0 != m_has_selection;
-            }
-        }
-        public CfxPrintDialogCallback Callback {
-            get {
-                CheckAccess();
-                if(m_callback_wrapped == null) m_callback_wrapped = CfxPrintDialogCallback.Wrap(m_callback);
-                return m_callback_wrapped;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-
-        public override string ToString() {
-            return String.Format("HasSelection={{{0}}}, Callback={{{1}}}", HasSelection, Callback);
-        }
-    }
-
-    public delegate void CfxOnPrintJobEventHandler(object sender, CfxOnPrintJobEventArgs e);
-
-    /// <summary>
-    /// Send the print job to the printer. Execute |Callback| once the job is
-    /// completed. Return true (1) if the job will proceed or false (0) to cancel
-    /// the job immediately.
-    /// </summary>
-    public class CfxOnPrintJobEventArgs : CfxEventArgs {
-
-        internal IntPtr m_document_name_str;
-        internal int m_document_name_length;
-        internal string m_document_name;
-        internal IntPtr m_pdf_file_path_str;
-        internal int m_pdf_file_path_length;
-        internal string m_pdf_file_path;
-        internal IntPtr m_callback;
-        internal CfxPrintJobCallback m_callback_wrapped;
-
-        internal bool m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxOnPrintJobEventArgs(IntPtr document_name_str, int document_name_length, IntPtr pdf_file_path_str, int pdf_file_path_length, IntPtr callback) {
-            m_document_name_str = document_name_str;
-            m_document_name_length = document_name_length;
-            m_pdf_file_path_str = pdf_file_path_str;
-            m_pdf_file_path_length = pdf_file_path_length;
-            m_callback = callback;
-        }
-
-        public string DocumentName {
-            get {
-                CheckAccess();
-                if(m_document_name == null && m_document_name_str != IntPtr.Zero) m_document_name = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_document_name_str, m_document_name_length);
-                return m_document_name;
-            }
-        }
-        public string PdfFilePath {
-            get {
-                CheckAccess();
-                if(m_pdf_file_path == null && m_pdf_file_path_str != IntPtr.Zero) m_pdf_file_path = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_pdf_file_path_str, m_pdf_file_path_length);
-                return m_pdf_file_path;
-            }
-        }
-        public CfxPrintJobCallback Callback {
-            get {
-                CheckAccess();
-                if(m_callback_wrapped == null) m_callback_wrapped = CfxPrintJobCallback.Wrap(m_callback);
-                return m_callback_wrapped;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-
-        public override string ToString() {
-            return String.Format("DocumentName={{{0}}}, PdfFilePath={{{1}}}, Callback={{{2}}}", DocumentName, PdfFilePath, Callback);
-        }
-    }
-
-
 }

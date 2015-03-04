@@ -34,6 +34,7 @@
 using System;
 
 namespace Chromium.Remote {
+
     /// <summary>
     /// Structure that asynchronously executes tasks on the associated thread. It is
     /// safe to call the functions of this structure on any thread.

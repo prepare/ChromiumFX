@@ -34,6 +34,7 @@
 using System;
 
 namespace Chromium.Remote {
+
     /// <summary>
     /// Time information. Values should always be in UTC.
     /// </summary>

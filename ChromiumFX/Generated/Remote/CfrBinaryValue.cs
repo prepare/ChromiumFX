@@ -34,6 +34,7 @@
 using System;
 
 namespace Chromium.Remote {
+
     /// <summary>
     /// Structure representing a binary value. Can be used on any process and thread.
     /// </summary>

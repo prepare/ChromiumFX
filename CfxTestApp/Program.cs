@@ -34,8 +34,11 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using Chromium;
+using Chromium.Event;
 using Chromium.WebBrowser;
 using System.Diagnostics;
+
+using Chromium.WebBrowser.Event;
 
 namespace CfxTestApplication {
 

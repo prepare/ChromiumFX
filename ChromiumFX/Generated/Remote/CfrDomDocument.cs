@@ -34,6 +34,7 @@
 using System;
 
 namespace Chromium.Remote {
+
     /// <summary>
     /// Structure used to represent a DOM document. The functions of this structure
     /// should only be called on the render process main thread thread.

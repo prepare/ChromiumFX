@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Implement this structure to handle events related to focus. The functions of
     /// this structure will be called on the UI thread.
@@ -171,117 +173,120 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxOnTakeFocusEventHandler(object sender, CfxOnTakeFocusEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Called when the browser component is about to loose focus. For instance, if
-    /// focus was on the last HTML element and the user pressed the TAB key. |Next|
-    /// will be true (1) if the browser is giving focus to the next component and
-    /// false (0) if the browser is giving focus to the previous component.
-    /// </summary>
-    public class CfxOnTakeFocusEventArgs : CfxEventArgs {
+        public delegate void CfxOnTakeFocusEventHandler(object sender, CfxOnTakeFocusEventArgs e);
 
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal int m_next;
+        /// <summary>
+        /// Called when the browser component is about to loose focus. For instance, if
+        /// focus was on the last HTML element and the user pressed the TAB key. |Next|
+        /// will be true (1) if the browser is giving focus to the next component and
+        /// false (0) if the browser is giving focus to the previous component.
+        /// </summary>
+        public class CfxOnTakeFocusEventArgs : CfxEventArgs {
 
-        internal CfxOnTakeFocusEventArgs(IntPtr browser, int next) {
-            m_browser = browser;
-            m_next = next;
-        }
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal int m_next;
 
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
+            internal CfxOnTakeFocusEventArgs(IntPtr browser, int next) {
+                m_browser = browser;
+                m_next = next;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public int Next {
+                get {
+                    CheckAccess();
+                    return m_next;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Next={{{1}}}", Browser, Next);
             }
         }
-        public int Next {
-            get {
+
+        public delegate void CfxOnSetFocusEventHandler(object sender, CfxOnSetFocusEventArgs e);
+
+        /// <summary>
+        /// Called when the browser component is requesting focus. |Source| indicates
+        /// where the focus request is originating from. Return false (0) to allow the
+        /// focus to be set or true (1) to cancel setting the focus.
+        /// </summary>
+        public class CfxOnSetFocusEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal CfxFocusSource m_source;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxOnSetFocusEventArgs(IntPtr browser, CfxFocusSource source) {
+                m_browser = browser;
+                m_source = source;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public CfxFocusSource Source {
+                get {
+                    CheckAccess();
+                    return m_source;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
                 CheckAccess();
-                return m_next;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Source={{{1}}}", Browser, Source);
             }
         }
 
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Next={{{1}}}", Browser, Next);
+        public delegate void CfxOnGotFocusEventHandler(object sender, CfxOnGotFocusEventArgs e);
+
+        /// <summary>
+        /// Called when the browser component has received focus.
+        /// </summary>
+        public class CfxOnGotFocusEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+
+            internal CfxOnGotFocusEventArgs(IntPtr browser) {
+                m_browser = browser;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}", Browser);
+            }
         }
+
     }
-
-    public delegate void CfxOnSetFocusEventHandler(object sender, CfxOnSetFocusEventArgs e);
-
-    /// <summary>
-    /// Called when the browser component is requesting focus. |Source| indicates
-    /// where the focus request is originating from. Return false (0) to allow the
-    /// focus to be set or true (1) to cancel setting the focus.
-    /// </summary>
-    public class CfxOnSetFocusEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal CfxFocusSource m_source;
-
-        internal bool m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxOnSetFocusEventArgs(IntPtr browser, CfxFocusSource source) {
-            m_browser = browser;
-            m_source = source;
-        }
-
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-        public CfxFocusSource Source {
-            get {
-                CheckAccess();
-                return m_source;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Source={{{1}}}", Browser, Source);
-        }
-    }
-
-    public delegate void CfxOnGotFocusEventHandler(object sender, CfxOnGotFocusEventArgs e);
-
-    /// <summary>
-    /// Called when the browser component has received focus.
-    /// </summary>
-    public class CfxOnGotFocusEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-
-        internal CfxOnGotFocusEventArgs(IntPtr browser) {
-            m_browser = browser;
-        }
-
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}", Browser);
-        }
-    }
-
 }

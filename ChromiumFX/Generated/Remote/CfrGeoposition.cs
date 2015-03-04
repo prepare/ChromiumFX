@@ -34,6 +34,7 @@
 using System;
 
 namespace Chromium.Remote {
+
     /// <summary>
     /// Structure representing geoposition information. The properties of this
     /// structure correspond to those of the JavaScript Position object although

@@ -34,6 +34,7 @@
 using System;
 
 namespace Chromium.Remote {
+
     /// <summary>
     /// Structure used to represent a browser window. When used in the browser
     /// process the functions of this structure may be called on any thread unless

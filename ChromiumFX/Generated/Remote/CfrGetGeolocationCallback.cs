@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium.Remote {
+    using Event;
+
     /// <summary>
     /// Implement this structure to receive geolocation updates. The functions of
     /// this structure will be called on the browser process UI thread.
@@ -104,36 +106,38 @@ namespace Chromium.Remote {
         }
     }
 
+    namespace Event {
 
-    public delegate void CfrGetGeolocationCallbackOnLocationUpdateEventHandler(object sender, CfrGetGeolocationCallbackOnLocationUpdateEventArgs e);
+        public delegate void CfrGetGeolocationCallbackOnLocationUpdateEventHandler(object sender, CfrGetGeolocationCallbackOnLocationUpdateEventArgs e);
 
-    /// <summary>
-    /// Called with the 'best available' location information or, if the location
-    /// update failed, with error information.
-    /// </summary>
-    public class CfrGetGeolocationCallbackOnLocationUpdateEventArgs : CfrEventArgs {
+        /// <summary>
+        /// Called with the 'best available' location information or, if the location
+        /// update failed, with error information.
+        /// </summary>
+        public class CfrGetGeolocationCallbackOnLocationUpdateEventArgs : CfrEventArgs {
 
-        bool PositionFetched;
-        CfrGeoposition m_Position;
+            bool PositionFetched;
+            CfrGeoposition m_Position;
 
-        internal CfrGetGeolocationCallbackOnLocationUpdateEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+            internal CfrGetGeolocationCallbackOnLocationUpdateEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
-        public CfrGeoposition Position {
-            get {
-                if(!PositionFetched) {
-                    PositionFetched = true;
-                    var call = new CfxGetGeolocationCallbackOnLocationUpdateGetPositionRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Position = CfrGeoposition.Wrap(call.value, remoteRuntime);
+            public CfrGeoposition Position {
+                get {
+                    if(!PositionFetched) {
+                        PositionFetched = true;
+                        var call = new CfxGetGeolocationCallbackOnLocationUpdateGetPositionRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Position = CfrGeoposition.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Position;
                 }
-                return m_Position;
+            }
+
+            public override string ToString() {
+                return String.Format("Position={{{0}}}", Position);
             }
         }
 
-        public override string ToString() {
-            return String.Format("Position={{{0}}}", Position);
-        }
     }
-
 }

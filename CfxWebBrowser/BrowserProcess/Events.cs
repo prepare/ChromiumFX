@@ -30,9 +30,10 @@
 
 using System;
 using Chromium;
+using Chromium.Event;
 using Chromium.Remote;
 
-namespace Chromium.WebBrowser {
+namespace Chromium.WebBrowser.Event {
 
     public delegate void OnBeforeCommandLineProcessingEventHandler(CfxOnBeforeCommandLineProcessingEventArgs e);
     

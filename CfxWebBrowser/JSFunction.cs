@@ -33,6 +33,7 @@
 using System;
 using System.Windows.Forms;
 using Chromium.Remote;
+using Chromium.Remote.Event;
 
 namespace Chromium.WebBrowser {
 

@@ -34,10 +34,18 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Chromium;
+using Chromium.Event;
 using Chromium.Remote;
+using Chromium.Remote.Event;
+
+using Chromium.WebBrowser.Event;
 
 namespace Chromium.WebBrowser {
 
+
+    /// <summary>
+    /// Windows Forms webbrowser control based on ChromiumFX.
+    /// </summary>
     public class ChromiumWebBrowser : Control {
 
         private static CfxBrowserSettings defaultBrowserSettings;
@@ -596,9 +604,10 @@ namespace Chromium.WebBrowser {
 
         /// <summary>
         /// Set a resource to be used for the specified URL.
-        /// Note that those resources are kept in the memory.
-        /// If you need bulk handling of web resources,
+        /// Note that these resources are kept in the memory.
+        /// If you need to handle a lot of custom web resources,
         /// subscribing to RequestHandler.GetResourceHandler
+        /// and loading from disk on demand
         /// might be a better choice.
         /// </summary>
         /// <param name="url"></param>

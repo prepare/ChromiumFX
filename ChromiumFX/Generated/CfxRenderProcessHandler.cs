@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Structure used to implement render process callbacks. The functions of this
     /// structure will be called on the render process main thread (TID_RENDERER)
@@ -504,390 +506,393 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxOnRenderThreadCreatedEventHandler(object sender, CfxOnRenderThreadCreatedEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Called after the render process main thread has been created. |ExtraInfo|
-    /// is a read-only value originating from
-    /// CfxBrowserProcessHandler.OnRenderProcessThreadCreated(). Do not
-    /// keep a reference to |ExtraInfo| outside of this function.
-    /// </summary>
-    public class CfxOnRenderThreadCreatedEventArgs : CfxEventArgs {
+        public delegate void CfxOnRenderThreadCreatedEventHandler(object sender, CfxOnRenderThreadCreatedEventArgs e);
 
-        internal IntPtr m_extra_info;
-        internal CfxListValue m_extra_info_wrapped;
+        /// <summary>
+        /// Called after the render process main thread has been created. |ExtraInfo|
+        /// is a read-only value originating from
+        /// CfxBrowserProcessHandler.OnRenderProcessThreadCreated(). Do not
+        /// keep a reference to |ExtraInfo| outside of this function.
+        /// </summary>
+        public class CfxOnRenderThreadCreatedEventArgs : CfxEventArgs {
 
-        internal CfxOnRenderThreadCreatedEventArgs(IntPtr extra_info) {
-            m_extra_info = extra_info;
-        }
+            internal IntPtr m_extra_info;
+            internal CfxListValue m_extra_info_wrapped;
 
-        public CfxListValue ExtraInfo {
-            get {
-                CheckAccess();
-                if(m_extra_info_wrapped == null) m_extra_info_wrapped = CfxListValue.Wrap(m_extra_info);
-                return m_extra_info_wrapped;
+            internal CfxOnRenderThreadCreatedEventArgs(IntPtr extra_info) {
+                m_extra_info = extra_info;
+            }
+
+            public CfxListValue ExtraInfo {
+                get {
+                    CheckAccess();
+                    if(m_extra_info_wrapped == null) m_extra_info_wrapped = CfxListValue.Wrap(m_extra_info);
+                    return m_extra_info_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("ExtraInfo={{{0}}}", ExtraInfo);
             }
         }
 
-        public override string ToString() {
-            return String.Format("ExtraInfo={{{0}}}", ExtraInfo);
+
+        public delegate void CfxOnBrowserCreatedEventHandler(object sender, CfxOnBrowserCreatedEventArgs e);
+
+        /// <summary>
+        /// Called after a browser has been created. When browsing cross-origin a new
+        /// browser will be created before the old browser with the same identifier is
+        /// destroyed.
+        /// </summary>
+        public class CfxOnBrowserCreatedEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+
+            internal CfxOnBrowserCreatedEventArgs(IntPtr browser) {
+                m_browser = browser;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}", Browser);
+            }
         }
+
+        public delegate void CfxOnBrowserDestroyedEventHandler(object sender, CfxOnBrowserDestroyedEventArgs e);
+
+        /// <summary>
+        /// Called before a browser is destroyed.
+        /// </summary>
+        public class CfxOnBrowserDestroyedEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+
+            internal CfxOnBrowserDestroyedEventArgs(IntPtr browser) {
+                m_browser = browser;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}", Browser);
+            }
+        }
+
+
+        public delegate void CfxOnBeforeNavigationEventHandler(object sender, CfxOnBeforeNavigationEventArgs e);
+
+        /// <summary>
+        /// Called before browser navigation. Return true (1) to cancel the navigation
+        /// or false (0) to allow the navigation to proceed. The |Request| object
+        /// cannot be modified in this callback.
+        /// </summary>
+        public class CfxOnBeforeNavigationEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_frame;
+            internal CfxFrame m_frame_wrapped;
+            internal IntPtr m_request;
+            internal CfxRequest m_request_wrapped;
+            internal CfxNavigationType m_navigation_type;
+            internal int m_is_redirect;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxOnBeforeNavigationEventArgs(IntPtr browser, IntPtr frame, IntPtr request, CfxNavigationType navigation_type, int is_redirect) {
+                m_browser = browser;
+                m_frame = frame;
+                m_request = request;
+                m_navigation_type = navigation_type;
+                m_is_redirect = is_redirect;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public CfxFrame Frame {
+                get {
+                    CheckAccess();
+                    if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
+                    return m_frame_wrapped;
+                }
+            }
+            public CfxRequest Request {
+                get {
+                    CheckAccess();
+                    if(m_request_wrapped == null) m_request_wrapped = CfxRequest.Wrap(m_request);
+                    return m_request_wrapped;
+                }
+            }
+            public CfxNavigationType NavigationType {
+                get {
+                    CheckAccess();
+                    return m_navigation_type;
+                }
+            }
+            public bool IsRedirect {
+                get {
+                    CheckAccess();
+                    return 0 != m_is_redirect;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, Request={{{2}}}, NavigationType={{{3}}}, IsRedirect={{{4}}}", Browser, Frame, Request, NavigationType, IsRedirect);
+            }
+        }
+
+        public delegate void CfxOnContextCreatedEventHandler(object sender, CfxOnContextCreatedEventArgs e);
+
+        /// <summary>
+        /// Called immediately after the V8 context for a frame has been created. To
+        /// retrieve the JavaScript 'window' object use the
+        /// CfxV8Context.GetGlobal() function. V8 handles can only be accessed
+        /// from the thread on which they are created. A task runner for posting tasks
+        /// on the associated thread can be retrieved via the
+        /// CfxV8Context.GetTaskRunner() function.
+        /// </summary>
+        public class CfxOnContextCreatedEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_frame;
+            internal CfxFrame m_frame_wrapped;
+            internal IntPtr m_context;
+            internal CfxV8Context m_context_wrapped;
+
+            internal CfxOnContextCreatedEventArgs(IntPtr browser, IntPtr frame, IntPtr context) {
+                m_browser = browser;
+                m_frame = frame;
+                m_context = context;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public CfxFrame Frame {
+                get {
+                    CheckAccess();
+                    if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
+                    return m_frame_wrapped;
+                }
+            }
+            public CfxV8Context Context {
+                get {
+                    CheckAccess();
+                    if(m_context_wrapped == null) m_context_wrapped = CfxV8Context.Wrap(m_context);
+                    return m_context_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, Context={{{2}}}", Browser, Frame, Context);
+            }
+        }
+
+        public delegate void CfxOnContextReleasedEventHandler(object sender, CfxOnContextReleasedEventArgs e);
+
+        /// <summary>
+        /// Called immediately before the V8 context for a frame is released. No
+        /// references to the context should be kept after this function is called.
+        /// </summary>
+        public class CfxOnContextReleasedEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_frame;
+            internal CfxFrame m_frame_wrapped;
+            internal IntPtr m_context;
+            internal CfxV8Context m_context_wrapped;
+
+            internal CfxOnContextReleasedEventArgs(IntPtr browser, IntPtr frame, IntPtr context) {
+                m_browser = browser;
+                m_frame = frame;
+                m_context = context;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public CfxFrame Frame {
+                get {
+                    CheckAccess();
+                    if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
+                    return m_frame_wrapped;
+                }
+            }
+            public CfxV8Context Context {
+                get {
+                    CheckAccess();
+                    if(m_context_wrapped == null) m_context_wrapped = CfxV8Context.Wrap(m_context);
+                    return m_context_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, Context={{{2}}}", Browser, Frame, Context);
+            }
+        }
+
+        public delegate void CfxOnUncaughtExceptionEventHandler(object sender, CfxOnUncaughtExceptionEventArgs e);
+
+        /// <summary>
+        /// Called for global uncaught exceptions in a frame. Execution of this
+        /// callback is disabled by default. To enable set
+        /// CfxSettings.UncaughtExceptionStackSize > 0.
+        /// </summary>
+        public class CfxOnUncaughtExceptionEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_frame;
+            internal CfxFrame m_frame_wrapped;
+            internal IntPtr m_context;
+            internal CfxV8Context m_context_wrapped;
+            internal IntPtr m_exception;
+            internal CfxV8Exception m_exception_wrapped;
+            internal IntPtr m_stackTrace;
+            internal CfxV8StackTrace m_stackTrace_wrapped;
+
+            internal CfxOnUncaughtExceptionEventArgs(IntPtr browser, IntPtr frame, IntPtr context, IntPtr exception, IntPtr stackTrace) {
+                m_browser = browser;
+                m_frame = frame;
+                m_context = context;
+                m_exception = exception;
+                m_stackTrace = stackTrace;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public CfxFrame Frame {
+                get {
+                    CheckAccess();
+                    if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
+                    return m_frame_wrapped;
+                }
+            }
+            public CfxV8Context Context {
+                get {
+                    CheckAccess();
+                    if(m_context_wrapped == null) m_context_wrapped = CfxV8Context.Wrap(m_context);
+                    return m_context_wrapped;
+                }
+            }
+            public CfxV8Exception Exception {
+                get {
+                    CheckAccess();
+                    if(m_exception_wrapped == null) m_exception_wrapped = CfxV8Exception.Wrap(m_exception);
+                    return m_exception_wrapped;
+                }
+            }
+            public CfxV8StackTrace StackTrace {
+                get {
+                    CheckAccess();
+                    if(m_stackTrace_wrapped == null) m_stackTrace_wrapped = CfxV8StackTrace.Wrap(m_stackTrace);
+                    return m_stackTrace_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, Context={{{2}}}, Exception={{{3}}}, StackTrace={{{4}}}", Browser, Frame, Context, Exception, StackTrace);
+            }
+        }
+
+        public delegate void CfxOnFocusedNodeChangedEventHandler(object sender, CfxOnFocusedNodeChangedEventArgs e);
+
+        /// <summary>
+        /// Called when a new node in the the browser gets focus. The |Node| value may
+        /// be NULL if no specific node has gained focus. The node object passed to
+        /// this function represents a snapshot of the DOM at the time this function is
+        /// executed. DOM objects are only valid for the scope of this function. Do not
+        /// keep references to or attempt to access any DOM objects outside the scope
+        /// of this function.
+        /// </summary>
+        public class CfxOnFocusedNodeChangedEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_frame;
+            internal CfxFrame m_frame_wrapped;
+            internal IntPtr m_node;
+            internal CfxDomNode m_node_wrapped;
+
+            internal CfxOnFocusedNodeChangedEventArgs(IntPtr browser, IntPtr frame, IntPtr node) {
+                m_browser = browser;
+                m_frame = frame;
+                m_node = node;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public CfxFrame Frame {
+                get {
+                    CheckAccess();
+                    if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
+                    return m_frame_wrapped;
+                }
+            }
+            public CfxDomNode Node {
+                get {
+                    CheckAccess();
+                    if(m_node_wrapped == null) m_node_wrapped = CfxDomNode.Wrap(m_node);
+                    return m_node_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, Node={{{2}}}", Browser, Frame, Node);
+            }
+        }
+
+
     }
-
-
-    public delegate void CfxOnBrowserCreatedEventHandler(object sender, CfxOnBrowserCreatedEventArgs e);
-
-    /// <summary>
-    /// Called after a browser has been created. When browsing cross-origin a new
-    /// browser will be created before the old browser with the same identifier is
-    /// destroyed.
-    /// </summary>
-    public class CfxOnBrowserCreatedEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-
-        internal CfxOnBrowserCreatedEventArgs(IntPtr browser) {
-            m_browser = browser;
-        }
-
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}", Browser);
-        }
-    }
-
-    public delegate void CfxOnBrowserDestroyedEventHandler(object sender, CfxOnBrowserDestroyedEventArgs e);
-
-    /// <summary>
-    /// Called before a browser is destroyed.
-    /// </summary>
-    public class CfxOnBrowserDestroyedEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-
-        internal CfxOnBrowserDestroyedEventArgs(IntPtr browser) {
-            m_browser = browser;
-        }
-
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}", Browser);
-        }
-    }
-
-
-    public delegate void CfxOnBeforeNavigationEventHandler(object sender, CfxOnBeforeNavigationEventArgs e);
-
-    /// <summary>
-    /// Called before browser navigation. Return true (1) to cancel the navigation
-    /// or false (0) to allow the navigation to proceed. The |Request| object
-    /// cannot be modified in this callback.
-    /// </summary>
-    public class CfxOnBeforeNavigationEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal IntPtr m_frame;
-        internal CfxFrame m_frame_wrapped;
-        internal IntPtr m_request;
-        internal CfxRequest m_request_wrapped;
-        internal CfxNavigationType m_navigation_type;
-        internal int m_is_redirect;
-
-        internal bool m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxOnBeforeNavigationEventArgs(IntPtr browser, IntPtr frame, IntPtr request, CfxNavigationType navigation_type, int is_redirect) {
-            m_browser = browser;
-            m_frame = frame;
-            m_request = request;
-            m_navigation_type = navigation_type;
-            m_is_redirect = is_redirect;
-        }
-
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-        public CfxFrame Frame {
-            get {
-                CheckAccess();
-                if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
-                return m_frame_wrapped;
-            }
-        }
-        public CfxRequest Request {
-            get {
-                CheckAccess();
-                if(m_request_wrapped == null) m_request_wrapped = CfxRequest.Wrap(m_request);
-                return m_request_wrapped;
-            }
-        }
-        public CfxNavigationType NavigationType {
-            get {
-                CheckAccess();
-                return m_navigation_type;
-            }
-        }
-        public bool IsRedirect {
-            get {
-                CheckAccess();
-                return 0 != m_is_redirect;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Frame={{{1}}}, Request={{{2}}}, NavigationType={{{3}}}, IsRedirect={{{4}}}", Browser, Frame, Request, NavigationType, IsRedirect);
-        }
-    }
-
-    public delegate void CfxOnContextCreatedEventHandler(object sender, CfxOnContextCreatedEventArgs e);
-
-    /// <summary>
-    /// Called immediately after the V8 context for a frame has been created. To
-    /// retrieve the JavaScript 'window' object use the
-    /// CfxV8Context.GetGlobal() function. V8 handles can only be accessed
-    /// from the thread on which they are created. A task runner for posting tasks
-    /// on the associated thread can be retrieved via the
-    /// CfxV8Context.GetTaskRunner() function.
-    /// </summary>
-    public class CfxOnContextCreatedEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal IntPtr m_frame;
-        internal CfxFrame m_frame_wrapped;
-        internal IntPtr m_context;
-        internal CfxV8Context m_context_wrapped;
-
-        internal CfxOnContextCreatedEventArgs(IntPtr browser, IntPtr frame, IntPtr context) {
-            m_browser = browser;
-            m_frame = frame;
-            m_context = context;
-        }
-
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-        public CfxFrame Frame {
-            get {
-                CheckAccess();
-                if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
-                return m_frame_wrapped;
-            }
-        }
-        public CfxV8Context Context {
-            get {
-                CheckAccess();
-                if(m_context_wrapped == null) m_context_wrapped = CfxV8Context.Wrap(m_context);
-                return m_context_wrapped;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Frame={{{1}}}, Context={{{2}}}", Browser, Frame, Context);
-        }
-    }
-
-    public delegate void CfxOnContextReleasedEventHandler(object sender, CfxOnContextReleasedEventArgs e);
-
-    /// <summary>
-    /// Called immediately before the V8 context for a frame is released. No
-    /// references to the context should be kept after this function is called.
-    /// </summary>
-    public class CfxOnContextReleasedEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal IntPtr m_frame;
-        internal CfxFrame m_frame_wrapped;
-        internal IntPtr m_context;
-        internal CfxV8Context m_context_wrapped;
-
-        internal CfxOnContextReleasedEventArgs(IntPtr browser, IntPtr frame, IntPtr context) {
-            m_browser = browser;
-            m_frame = frame;
-            m_context = context;
-        }
-
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-        public CfxFrame Frame {
-            get {
-                CheckAccess();
-                if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
-                return m_frame_wrapped;
-            }
-        }
-        public CfxV8Context Context {
-            get {
-                CheckAccess();
-                if(m_context_wrapped == null) m_context_wrapped = CfxV8Context.Wrap(m_context);
-                return m_context_wrapped;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Frame={{{1}}}, Context={{{2}}}", Browser, Frame, Context);
-        }
-    }
-
-    public delegate void CfxOnUncaughtExceptionEventHandler(object sender, CfxOnUncaughtExceptionEventArgs e);
-
-    /// <summary>
-    /// Called for global uncaught exceptions in a frame. Execution of this
-    /// callback is disabled by default. To enable set
-    /// CfxSettings.UncaughtExceptionStackSize > 0.
-    /// </summary>
-    public class CfxOnUncaughtExceptionEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal IntPtr m_frame;
-        internal CfxFrame m_frame_wrapped;
-        internal IntPtr m_context;
-        internal CfxV8Context m_context_wrapped;
-        internal IntPtr m_exception;
-        internal CfxV8Exception m_exception_wrapped;
-        internal IntPtr m_stackTrace;
-        internal CfxV8StackTrace m_stackTrace_wrapped;
-
-        internal CfxOnUncaughtExceptionEventArgs(IntPtr browser, IntPtr frame, IntPtr context, IntPtr exception, IntPtr stackTrace) {
-            m_browser = browser;
-            m_frame = frame;
-            m_context = context;
-            m_exception = exception;
-            m_stackTrace = stackTrace;
-        }
-
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-        public CfxFrame Frame {
-            get {
-                CheckAccess();
-                if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
-                return m_frame_wrapped;
-            }
-        }
-        public CfxV8Context Context {
-            get {
-                CheckAccess();
-                if(m_context_wrapped == null) m_context_wrapped = CfxV8Context.Wrap(m_context);
-                return m_context_wrapped;
-            }
-        }
-        public CfxV8Exception Exception {
-            get {
-                CheckAccess();
-                if(m_exception_wrapped == null) m_exception_wrapped = CfxV8Exception.Wrap(m_exception);
-                return m_exception_wrapped;
-            }
-        }
-        public CfxV8StackTrace StackTrace {
-            get {
-                CheckAccess();
-                if(m_stackTrace_wrapped == null) m_stackTrace_wrapped = CfxV8StackTrace.Wrap(m_stackTrace);
-                return m_stackTrace_wrapped;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Frame={{{1}}}, Context={{{2}}}, Exception={{{3}}}, StackTrace={{{4}}}", Browser, Frame, Context, Exception, StackTrace);
-        }
-    }
-
-    public delegate void CfxOnFocusedNodeChangedEventHandler(object sender, CfxOnFocusedNodeChangedEventArgs e);
-
-    /// <summary>
-    /// Called when a new node in the the browser gets focus. The |Node| value may
-    /// be NULL if no specific node has gained focus. The node object passed to
-    /// this function represents a snapshot of the DOM at the time this function is
-    /// executed. DOM objects are only valid for the scope of this function. Do not
-    /// keep references to or attempt to access any DOM objects outside the scope
-    /// of this function.
-    /// </summary>
-    public class CfxOnFocusedNodeChangedEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal IntPtr m_frame;
-        internal CfxFrame m_frame_wrapped;
-        internal IntPtr m_node;
-        internal CfxDomNode m_node_wrapped;
-
-        internal CfxOnFocusedNodeChangedEventArgs(IntPtr browser, IntPtr frame, IntPtr node) {
-            m_browser = browser;
-            m_frame = frame;
-            m_node = node;
-        }
-
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-        public CfxFrame Frame {
-            get {
-                CheckAccess();
-                if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
-                return m_frame_wrapped;
-            }
-        }
-        public CfxDomNode Node {
-            get {
-                CheckAccess();
-                if(m_node_wrapped == null) m_node_wrapped = CfxDomNode.Wrap(m_node);
-                return m_node_wrapped;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Frame={{{1}}}, Node={{{2}}}", Browser, Frame, Node);
-        }
-    }
-
-
 }

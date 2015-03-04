@@ -34,6 +34,7 @@
 using System;
 
 namespace Chromium.Remote {
+
     /// <summary>
     /// Implement this structure to receive notification when tracing has completed.
     /// The functions of this structure will be called on the browser process UI

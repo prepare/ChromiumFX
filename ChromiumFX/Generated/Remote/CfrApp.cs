@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium.Remote {
+    using Event;
+
     /// <summary>
     /// Implement this structure to provide handler implementations. Methods will be
     /// called by the process and/or thread indicated.
@@ -211,130 +213,132 @@ namespace Chromium.Remote {
         }
     }
 
+    namespace Event {
 
-    public delegate void CfrOnBeforeCommandLineProcessingEventHandler(object sender, CfrOnBeforeCommandLineProcessingEventArgs e);
+        public delegate void CfrOnBeforeCommandLineProcessingEventHandler(object sender, CfrOnBeforeCommandLineProcessingEventArgs e);
 
-    /// <summary>
-    /// Provides an opportunity to view and/or modify command-line arguments before
-    /// processing by CEF and Chromium. The |ProcessType| value will be NULL for
-    /// the browser process. Do not keep a reference to the CfrCommandLine
-    /// object passed to this function. The CfrSettings.CommandLineArgsDisabled
-    /// value can be used to start with an NULL command-line object. Any values
-    /// specified in CfrSettings that equate to command-line arguments will be set
-    /// before this function is called. Be cautious when using this function to
-    /// modify command-line arguments for non-browser processes as this may result
-    /// in undefined behavior including crashes.
-    /// </summary>
-    public class CfrOnBeforeCommandLineProcessingEventArgs : CfrEventArgs {
+        /// <summary>
+        /// Provides an opportunity to view and/or modify command-line arguments before
+        /// processing by CEF and Chromium. The |ProcessType| value will be NULL for
+        /// the browser process. Do not keep a reference to the CfrCommandLine
+        /// object passed to this function. The CfrSettings.CommandLineArgsDisabled
+        /// value can be used to start with an NULL command-line object. Any values
+        /// specified in CfrSettings that equate to command-line arguments will be set
+        /// before this function is called. Be cautious when using this function to
+        /// modify command-line arguments for non-browser processes as this may result
+        /// in undefined behavior including crashes.
+        /// </summary>
+        public class CfrOnBeforeCommandLineProcessingEventArgs : CfrEventArgs {
 
-        bool ProcessTypeFetched;
-        string m_ProcessType;
-        bool CommandLineFetched;
-        CfrCommandLine m_CommandLine;
+            bool ProcessTypeFetched;
+            string m_ProcessType;
+            bool CommandLineFetched;
+            CfrCommandLine m_CommandLine;
 
-        internal CfrOnBeforeCommandLineProcessingEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+            internal CfrOnBeforeCommandLineProcessingEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
-        public string ProcessType {
-            get {
-                if(!ProcessTypeFetched) {
-                    ProcessTypeFetched = true;
-                    var call = new CfxOnBeforeCommandLineProcessingGetProcessTypeRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_ProcessType = call.value;
+            public string ProcessType {
+                get {
+                    if(!ProcessTypeFetched) {
+                        ProcessTypeFetched = true;
+                        var call = new CfxOnBeforeCommandLineProcessingGetProcessTypeRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_ProcessType = call.value;
+                    }
+                    return m_ProcessType;
                 }
-                return m_ProcessType;
             }
-        }
-        public CfrCommandLine CommandLine {
-            get {
-                if(!CommandLineFetched) {
-                    CommandLineFetched = true;
-                    var call = new CfxOnBeforeCommandLineProcessingGetCommandLineRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_CommandLine = CfrCommandLine.Wrap(call.value, remoteRuntime);
+            public CfrCommandLine CommandLine {
+                get {
+                    if(!CommandLineFetched) {
+                        CommandLineFetched = true;
+                        var call = new CfxOnBeforeCommandLineProcessingGetCommandLineRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_CommandLine = CfrCommandLine.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_CommandLine;
                 }
-                return m_CommandLine;
             }
-        }
 
-        public override string ToString() {
-            return String.Format("ProcessType={{{0}}}, CommandLine={{{1}}}", ProcessType, CommandLine);
-        }
-    }
-
-    public delegate void CfrOnRegisterCustomSchemesEventHandler(object sender, CfrOnRegisterCustomSchemesEventArgs e);
-
-    /// <summary>
-    /// Provides an opportunity to register custom schemes. Do not keep a reference
-    /// to the |Registrar| object. This function is called on the main thread for
-    /// each process and the registered schemes should be the same across all
-    /// processes.
-    /// </summary>
-    public class CfrOnRegisterCustomSchemesEventArgs : CfrEventArgs {
-
-        bool RegistrarFetched;
-        CfrSchemeRegistrar m_Registrar;
-
-        internal CfrOnRegisterCustomSchemesEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
-
-        public CfrSchemeRegistrar Registrar {
-            get {
-                if(!RegistrarFetched) {
-                    RegistrarFetched = true;
-                    var call = new CfxOnRegisterCustomSchemesGetRegistrarRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_Registrar = CfrSchemeRegistrar.Wrap(call.value, remoteRuntime);
-                }
-                return m_Registrar;
+            public override string ToString() {
+                return String.Format("ProcessType={{{0}}}, CommandLine={{{1}}}", ProcessType, CommandLine);
             }
         }
 
-        public override string ToString() {
-            return String.Format("Registrar={{{0}}}", Registrar);
+        public delegate void CfrOnRegisterCustomSchemesEventHandler(object sender, CfrOnRegisterCustomSchemesEventArgs e);
+
+        /// <summary>
+        /// Provides an opportunity to register custom schemes. Do not keep a reference
+        /// to the |Registrar| object. This function is called on the main thread for
+        /// each process and the registered schemes should be the same across all
+        /// processes.
+        /// </summary>
+        public class CfrOnRegisterCustomSchemesEventArgs : CfrEventArgs {
+
+            bool RegistrarFetched;
+            CfrSchemeRegistrar m_Registrar;
+
+            internal CfrOnRegisterCustomSchemesEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+
+            public CfrSchemeRegistrar Registrar {
+                get {
+                    if(!RegistrarFetched) {
+                        RegistrarFetched = true;
+                        var call = new CfxOnRegisterCustomSchemesGetRegistrarRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_Registrar = CfrSchemeRegistrar.Wrap(call.value, remoteRuntime);
+                    }
+                    return m_Registrar;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Registrar={{{0}}}", Registrar);
+            }
         }
-    }
 
-    public delegate void CfrGetResourceBundleHandlerEventHandler(object sender, CfrGetResourceBundleHandlerEventArgs e);
+        public delegate void CfrGetResourceBundleHandlerEventHandler(object sender, CfrGetResourceBundleHandlerEventArgs e);
 
-    /// <summary>
-    /// Return the handler for resource bundle events. If
-    /// CfrSettings.PackLoadingDisabled is true (1) a handler must be returned.
-    /// If no handler is returned resources will be loaded from pack files. This
-    /// function is called by the browser and render processes on multiple threads.
-    /// </summary>
-    public class CfrGetResourceBundleHandlerEventArgs : CfrEventArgs {
+        /// <summary>
+        /// Return the handler for resource bundle events. If
+        /// CfrSettings.PackLoadingDisabled is true (1) a handler must be returned.
+        /// If no handler is returned resources will be loaded from pack files. This
+        /// function is called by the browser and render processes on multiple threads.
+        /// </summary>
+        public class CfrGetResourceBundleHandlerEventArgs : CfrEventArgs {
 
 
-        internal CfrGetResourceBundleHandlerEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+            internal CfrGetResourceBundleHandlerEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
-        public void SetReturnValue(CfrResourceBundleHandler returnValue) {
-            var call = new CfxGetResourceBundleHandlerSetReturnValueRenderProcessCall();
-            call.eventArgsId = eventArgsId;
-            call.value = CfrObject.Unwrap(returnValue);
-            call.Execute(remoteRuntime.connection);
+            public void SetReturnValue(CfrResourceBundleHandler returnValue) {
+                var call = new CfxGetResourceBundleHandlerSetReturnValueRenderProcessCall();
+                call.eventArgsId = eventArgsId;
+                call.value = CfrObject.Unwrap(returnValue);
+                call.Execute(remoteRuntime.connection);
+            }
         }
-    }
 
-    public delegate void CfrGetRenderProcessHandlerEventHandler(object sender, CfrGetRenderProcessHandlerEventArgs e);
+        public delegate void CfrGetRenderProcessHandlerEventHandler(object sender, CfrGetRenderProcessHandlerEventArgs e);
 
-    /// <summary>
-    /// Return the handler for functionality specific to the render process. This
-    /// function is called on the render process main thread.
-    /// </summary>
-    public class CfrGetRenderProcessHandlerEventArgs : CfrEventArgs {
+        /// <summary>
+        /// Return the handler for functionality specific to the render process. This
+        /// function is called on the render process main thread.
+        /// </summary>
+        public class CfrGetRenderProcessHandlerEventArgs : CfrEventArgs {
 
 
-        internal CfrGetRenderProcessHandlerEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+            internal CfrGetRenderProcessHandlerEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
-        public void SetReturnValue(CfrRenderProcessHandler returnValue) {
-            var call = new CfxGetRenderProcessHandlerSetReturnValueRenderProcessCall();
-            call.eventArgsId = eventArgsId;
-            call.value = CfrObject.Unwrap(returnValue);
-            call.Execute(remoteRuntime.connection);
+            public void SetReturnValue(CfrRenderProcessHandler returnValue) {
+                var call = new CfxGetRenderProcessHandlerSetReturnValueRenderProcessCall();
+                call.eventArgsId = eventArgsId;
+                call.value = CfrObject.Unwrap(returnValue);
+                call.Execute(remoteRuntime.connection);
+            }
         }
-    }
 
+    }
 }

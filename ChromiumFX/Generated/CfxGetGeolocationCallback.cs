@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Implement this structure to receive geolocation updates. The functions of
     /// this structure will be called on the browser process UI thread.
@@ -92,32 +94,35 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxGetGeolocationCallbackOnLocationUpdateEventHandler(object sender, CfxGetGeolocationCallbackOnLocationUpdateEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Called with the 'best available' location information or, if the location
-    /// update failed, with error information.
-    /// </summary>
-    public class CfxGetGeolocationCallbackOnLocationUpdateEventArgs : CfxEventArgs {
+        public delegate void CfxGetGeolocationCallbackOnLocationUpdateEventHandler(object sender, CfxGetGeolocationCallbackOnLocationUpdateEventArgs e);
 
-        internal IntPtr m_position;
-        internal CfxGeoposition m_position_wrapped;
+        /// <summary>
+        /// Called with the 'best available' location information or, if the location
+        /// update failed, with error information.
+        /// </summary>
+        public class CfxGetGeolocationCallbackOnLocationUpdateEventArgs : CfxEventArgs {
 
-        internal CfxGetGeolocationCallbackOnLocationUpdateEventArgs(IntPtr position) {
-            m_position = position;
-        }
+            internal IntPtr m_position;
+            internal CfxGeoposition m_position_wrapped;
 
-        public CfxGeoposition Position {
-            get {
-                CheckAccess();
-                if(m_position_wrapped == null) m_position_wrapped = CfxGeoposition.Wrap(m_position);
-                return m_position_wrapped;
+            internal CfxGetGeolocationCallbackOnLocationUpdateEventArgs(IntPtr position) {
+                m_position = position;
+            }
+
+            public CfxGeoposition Position {
+                get {
+                    CheckAccess();
+                    if(m_position_wrapped == null) m_position_wrapped = CfxGeoposition.Wrap(m_position);
+                    return m_position_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Position={{{0}}}", Position);
             }
         }
 
-        public override string ToString() {
-            return String.Format("Position={{{0}}}", Position);
-        }
     }
-
 }

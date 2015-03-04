@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Implement this structure to handle context menu events. The functions of this
     /// structure will be called on the UI thread.
@@ -191,183 +193,186 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxOnBeforeContextMenuEventHandler(object sender, CfxOnBeforeContextMenuEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Called before a context menu is displayed. |Params| provides information
-    /// about the context menu state. |Model| initially contains the default
-    /// context menu. The |Model| can be cleared to show no context menu or
-    /// modified to show a custom menu. Do not keep references to |Params| or
-    /// |Model| outside of this callback.
-    /// </summary>
-    public class CfxOnBeforeContextMenuEventArgs : CfxEventArgs {
+        public delegate void CfxOnBeforeContextMenuEventHandler(object sender, CfxOnBeforeContextMenuEventArgs e);
 
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal IntPtr m_frame;
-        internal CfxFrame m_frame_wrapped;
-        internal IntPtr m_params;
-        internal CfxContextMenuParams m_params_wrapped;
-        internal IntPtr m_model;
-        internal CfxMenuModel m_model_wrapped;
+        /// <summary>
+        /// Called before a context menu is displayed. |Params| provides information
+        /// about the context menu state. |Model| initially contains the default
+        /// context menu. The |Model| can be cleared to show no context menu or
+        /// modified to show a custom menu. Do not keep references to |Params| or
+        /// |Model| outside of this callback.
+        /// </summary>
+        public class CfxOnBeforeContextMenuEventArgs : CfxEventArgs {
 
-        internal CfxOnBeforeContextMenuEventArgs(IntPtr browser, IntPtr frame, IntPtr parameters, IntPtr model) {
-            m_browser = browser;
-            m_frame = frame;
-            m_params = parameters;
-            m_model = model;
-        }
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_frame;
+            internal CfxFrame m_frame_wrapped;
+            internal IntPtr m_params;
+            internal CfxContextMenuParams m_params_wrapped;
+            internal IntPtr m_model;
+            internal CfxMenuModel m_model_wrapped;
 
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
+            internal CfxOnBeforeContextMenuEventArgs(IntPtr browser, IntPtr frame, IntPtr parameters, IntPtr model) {
+                m_browser = browser;
+                m_frame = frame;
+                m_params = parameters;
+                m_model = model;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public CfxFrame Frame {
+                get {
+                    CheckAccess();
+                    if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
+                    return m_frame_wrapped;
+                }
+            }
+            public CfxContextMenuParams Params {
+                get {
+                    CheckAccess();
+                    if(m_params_wrapped == null) m_params_wrapped = CfxContextMenuParams.Wrap(m_params);
+                    return m_params_wrapped;
+                }
+            }
+            public CfxMenuModel Model {
+                get {
+                    CheckAccess();
+                    if(m_model_wrapped == null) m_model_wrapped = CfxMenuModel.Wrap(m_model);
+                    return m_model_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, Params={{{2}}}, Model={{{3}}}", Browser, Frame, Params, Model);
             }
         }
-        public CfxFrame Frame {
-            get {
-                CheckAccess();
-                if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
-                return m_frame_wrapped;
+
+        public delegate void CfxOnContextMenuCommandEventHandler(object sender, CfxOnContextMenuCommandEventArgs e);
+
+        /// <summary>
+        /// Called to execute a command selected from the context menu. Return true (1)
+        /// if the command was handled or false (0) for the default implementation. See
+        /// CfxMenuId for the command ids that have default implementations. All
+        /// user-defined command ids should be between MENU_ID_USER_FIRST and
+        /// MENU_ID_USER_LAST. |Params| will have the same values as what was passed to
+        /// on_before_context_menu(). Do not keep a reference to |Params| outside of
+        /// this callback.
+        /// </summary>
+        public class CfxOnContextMenuCommandEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_frame;
+            internal CfxFrame m_frame_wrapped;
+            internal IntPtr m_params;
+            internal CfxContextMenuParams m_params_wrapped;
+            internal int m_command_id;
+            internal CfxEventFlags m_event_flags;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxOnContextMenuCommandEventArgs(IntPtr browser, IntPtr frame, IntPtr parameters, int command_id, CfxEventFlags event_flags) {
+                m_browser = browser;
+                m_frame = frame;
+                m_params = parameters;
+                m_command_id = command_id;
+                m_event_flags = event_flags;
             }
-        }
-        public CfxContextMenuParams Params {
-            get {
-                CheckAccess();
-                if(m_params_wrapped == null) m_params_wrapped = CfxContextMenuParams.Wrap(m_params);
-                return m_params_wrapped;
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
             }
-        }
-        public CfxMenuModel Model {
-            get {
+            public CfxFrame Frame {
+                get {
+                    CheckAccess();
+                    if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
+                    return m_frame_wrapped;
+                }
+            }
+            public CfxContextMenuParams Params {
+                get {
+                    CheckAccess();
+                    if(m_params_wrapped == null) m_params_wrapped = CfxContextMenuParams.Wrap(m_params);
+                    return m_params_wrapped;
+                }
+            }
+            public int CommandId {
+                get {
+                    CheckAccess();
+                    return m_command_id;
+                }
+            }
+            public CfxEventFlags EventFlags {
+                get {
+                    CheckAccess();
+                    return m_event_flags;
+                }
+            }
+            public void SetReturnValue(bool returnValue) {
                 CheckAccess();
-                if(m_model_wrapped == null) m_model_wrapped = CfxMenuModel.Wrap(m_model);
-                return m_model_wrapped;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, Params={{{2}}}, CommandId={{{3}}}, EventFlags={{{4}}}", Browser, Frame, Params, CommandId, EventFlags);
             }
         }
 
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Frame={{{1}}}, Params={{{2}}}, Model={{{3}}}", Browser, Frame, Params, Model);
+        public delegate void CfxOnContextMenuDismissedEventHandler(object sender, CfxOnContextMenuDismissedEventArgs e);
+
+        /// <summary>
+        /// Called when the context menu is dismissed irregardless of whether the menu
+        /// was NULL or a command was selected.
+        /// </summary>
+        public class CfxOnContextMenuDismissedEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_frame;
+            internal CfxFrame m_frame_wrapped;
+
+            internal CfxOnContextMenuDismissedEventArgs(IntPtr browser, IntPtr frame) {
+                m_browser = browser;
+                m_frame = frame;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public CfxFrame Frame {
+                get {
+                    CheckAccess();
+                    if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
+                    return m_frame_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}", Browser, Frame);
+            }
         }
+
     }
-
-    public delegate void CfxOnContextMenuCommandEventHandler(object sender, CfxOnContextMenuCommandEventArgs e);
-
-    /// <summary>
-    /// Called to execute a command selected from the context menu. Return true (1)
-    /// if the command was handled or false (0) for the default implementation. See
-    /// CfxMenuId for the command ids that have default implementations. All
-    /// user-defined command ids should be between MENU_ID_USER_FIRST and
-    /// MENU_ID_USER_LAST. |Params| will have the same values as what was passed to
-    /// on_before_context_menu(). Do not keep a reference to |Params| outside of
-    /// this callback.
-    /// </summary>
-    public class CfxOnContextMenuCommandEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal IntPtr m_frame;
-        internal CfxFrame m_frame_wrapped;
-        internal IntPtr m_params;
-        internal CfxContextMenuParams m_params_wrapped;
-        internal int m_command_id;
-        internal CfxEventFlags m_event_flags;
-
-        internal bool m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxOnContextMenuCommandEventArgs(IntPtr browser, IntPtr frame, IntPtr parameters, int command_id, CfxEventFlags event_flags) {
-            m_browser = browser;
-            m_frame = frame;
-            m_params = parameters;
-            m_command_id = command_id;
-            m_event_flags = event_flags;
-        }
-
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-        public CfxFrame Frame {
-            get {
-                CheckAccess();
-                if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
-                return m_frame_wrapped;
-            }
-        }
-        public CfxContextMenuParams Params {
-            get {
-                CheckAccess();
-                if(m_params_wrapped == null) m_params_wrapped = CfxContextMenuParams.Wrap(m_params);
-                return m_params_wrapped;
-            }
-        }
-        public int CommandId {
-            get {
-                CheckAccess();
-                return m_command_id;
-            }
-        }
-        public CfxEventFlags EventFlags {
-            get {
-                CheckAccess();
-                return m_event_flags;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Frame={{{1}}}, Params={{{2}}}, CommandId={{{3}}}, EventFlags={{{4}}}", Browser, Frame, Params, CommandId, EventFlags);
-        }
-    }
-
-    public delegate void CfxOnContextMenuDismissedEventHandler(object sender, CfxOnContextMenuDismissedEventArgs e);
-
-    /// <summary>
-    /// Called when the context menu is dismissed irregardless of whether the menu
-    /// was NULL or a command was selected.
-    /// </summary>
-    public class CfxOnContextMenuDismissedEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal IntPtr m_frame;
-        internal CfxFrame m_frame_wrapped;
-
-        internal CfxOnContextMenuDismissedEventArgs(IntPtr browser, IntPtr frame) {
-            m_browser = browser;
-            m_frame = frame;
-        }
-
-        public CfxBrowser Browser {
-            get {
-                CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
-            }
-        }
-        public CfxFrame Frame {
-            get {
-                CheckAccess();
-                if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
-                return m_frame_wrapped;
-            }
-        }
-
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, Frame={{{1}}}", Browser, Frame);
-        }
-    }
-
 }

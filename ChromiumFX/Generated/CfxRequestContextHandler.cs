@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Implement this structure to provide handler implementations.
     /// </summary>
@@ -93,29 +95,32 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxRequestContextHandlerGetCookieManagerEventHandler(object sender, CfxRequestContextHandlerGetCookieManagerEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Called on the IO thread to retrieve the cookie manager. The global cookie
-    /// manager will be used if this function returns NULL.
-    /// </summary>
-    public class CfxRequestContextHandlerGetCookieManagerEventArgs : CfxEventArgs {
+        public delegate void CfxRequestContextHandlerGetCookieManagerEventHandler(object sender, CfxRequestContextHandlerGetCookieManagerEventArgs e);
+
+        /// <summary>
+        /// Called on the IO thread to retrieve the cookie manager. The global cookie
+        /// manager will be used if this function returns NULL.
+        /// </summary>
+        public class CfxRequestContextHandlerGetCookieManagerEventArgs : CfxEventArgs {
 
 
-        internal CfxCookieManager m_returnValue;
-        private bool returnValueSet;
+            internal CfxCookieManager m_returnValue;
+            private bool returnValueSet;
 
-        internal CfxRequestContextHandlerGetCookieManagerEventArgs() {
-        }
-
-        public void SetReturnValue(CfxCookieManager returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
+            internal CfxRequestContextHandlerGetCookieManagerEventArgs() {
             }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
 
+            public void SetReturnValue(CfxCookieManager returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+        }
+
+    }
 }
