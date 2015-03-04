@@ -32,6 +32,9 @@ If you don't want to build ChromiumFX yourself, you can find the current release
 
 Then take a look at the [wiki](https://bitbucket.org/wborgsm/chromiumfx/wiki/Home).
 
+### Warning ###
+The API of this project is not frozen and is subject to change. However, the overall structure of this API will be preserved.
+
 ### Versioning ###
 
 ChromiumFX version numbers consist of four digits. The first three digits are the version number of the underlying CEF binaries. The fourth number is the release number of ChromiumFX for a specific CEF version. Example: 3.1750.1738.0 is the first release of ChromiumFX for CEF 3.1750.1738 and 3.1750.1738.3 would be the fourth release for the same CEF version, and so on.
