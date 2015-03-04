@@ -60,7 +60,7 @@ namespace Chromium {
         internal CfxResponse(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Create a new cef_response_t object.
+        /// Create a new CfxResponse object.
         /// </summary>
         public static CfxResponse Create() {
             return CfxResponse.Wrap(CfxApi.cfx_response_create());

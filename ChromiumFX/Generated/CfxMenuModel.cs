@@ -35,7 +35,7 @@ using System;
 
 namespace Chromium {
     /// <summary>
-    /// Supports creation and modification of menus. See cef_menu_id_t for the
+    /// Supports creation and modification of menus. See CfxMenuId for the
     /// command ids that have default implementations. All user-defined command ids
     /// should be between MENU_ID_USER_FIRST and MENU_ID_USER_LAST. The functions of
     /// this structure can only be accessed on the browser process the UI thread.
@@ -106,7 +106,7 @@ namespace Chromium {
 
         /// <summary>
         /// Add a radio item to the menu. Only a single item with the specified
-        /// |group_id| can be checked at a time. Returns true (1) on success.
+        /// |groupId| can be checked at a time. Returns true (1) on success.
         /// </summary>
         public bool AddRadioItem(int commandId, string label, int groupId) {
             var label_pinned = new PinnedString(label);
@@ -157,7 +157,7 @@ namespace Chromium {
 
         /// <summary>
         /// Insert a radio item in the menu at the specified |index|. Only a single
-        /// item with the specified |group_id| can be checked at a time. Returns true
+        /// item with the specified |groupId| can be checked at a time. Returns true
         /// (1) on success.
         /// </summary>
         public bool InsertRadioItemAt(int index, int commandId, string label, int groupId) {
@@ -179,7 +179,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Removes the item with the specified |command_id|. Returns true (1) on
+        /// Removes the item with the specified |commandId|. Returns true (1) on
         /// success.
         /// </summary>
         public bool Remove(int commandId) {
@@ -194,7 +194,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Returns the index associated with the specified |command_id| or -1 if not
+        /// Returns the index associated with the specified |commandId| or -1 if not
         /// found due to the command id not existing in the menu.
         /// </summary>
         public int GetIndexOf(int commandId) {
@@ -217,7 +217,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Returns the label for the specified |command_id| or NULL if not found.
+        /// Returns the label for the specified |commandId| or NULL if not found.
         /// </summary>
         public String GetLabel(int commandId) {
             return StringUserfree.Convert(CfxApi.cfx_menu_model_get_label(NativePtr, commandId));
@@ -232,7 +232,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Sets the label for the specified |command_id|. Returns true (1) on success.
+        /// Sets the label for the specified |commandId|. Returns true (1) on success.
         /// </summary>
         public bool SetLabel(int commandId, string label) {
             var label_pinned = new PinnedString(label);
@@ -252,7 +252,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Returns the item type for the specified |command_id|.
+        /// Returns the item type for the specified |commandId|.
         /// </summary>
         public CfxMenuItemType GetType(int commandId) {
             return CfxApi.cfx_menu_model_get_type(NativePtr, commandId);
@@ -266,7 +266,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Returns the group id for the specified |command_id| or -1 if invalid.
+        /// Returns the group id for the specified |commandId| or -1 if invalid.
         /// </summary>
         public int GetGroupId(int commandId) {
             return CfxApi.cfx_menu_model_get_group_id(NativePtr, commandId);
@@ -280,7 +280,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Sets the group id for the specified |command_id|. Returns true (1) on
+        /// Sets the group id for the specified |commandId|. Returns true (1) on
         /// success.
         /// </summary>
         public bool SetGroupId(int commandId, int groupId) {
@@ -295,7 +295,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Returns the submenu for the specified |command_id| or NULL if invalid.
+        /// Returns the submenu for the specified |commandId| or NULL if invalid.
         /// </summary>
         public CfxMenuModel GetSubMenu(int commandId) {
             return CfxMenuModel.Wrap(CfxApi.cfx_menu_model_get_sub_menu(NativePtr, commandId));
@@ -309,7 +309,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Returns true (1) if the specified |command_id| is visible.
+        /// Returns true (1) if the specified |commandId| is visible.
         /// </summary>
         public bool IsVisible(bool commandId) {
             return 0 != CfxApi.cfx_menu_model_is_visible(NativePtr, commandId ? 1 : 0);
@@ -323,7 +323,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Change the visibility of the specified |command_id|. Returns true (1) on
+        /// Change the visibility of the specified |commandId|. Returns true (1) on
         /// success.
         /// </summary>
         public bool SetVisible(int commandId, bool visible) {
@@ -339,7 +339,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Returns true (1) if the specified |command_id| is enabled.
+        /// Returns true (1) if the specified |commandId| is enabled.
         /// </summary>
         public bool IsEnabled(bool commandId) {
             return 0 != CfxApi.cfx_menu_model_is_enabled(NativePtr, commandId ? 1 : 0);
@@ -353,7 +353,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Change the enabled status of the specified |command_id|. Returns true (1)
+        /// Change the enabled status of the specified |commandId|. Returns true (1)
         /// on success.
         /// </summary>
         public bool SetEnabled(int commandId, int enabled) {
@@ -369,7 +369,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Returns true (1) if the specified |command_id| is checked. Only applies to
+        /// Returns true (1) if the specified |commandId| is checked. Only applies to
         /// check and radio items.
         /// </summary>
         public bool IsChecked(bool commandId) {
@@ -385,7 +385,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Check the specified |command_id|. Only applies to check and radio items.
+        /// Check the specified |commandId|. Only applies to check and radio items.
         /// Returns true (1) on success.
         /// </summary>
         public bool SetChecked(int commandId, bool @checked) {
@@ -401,7 +401,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Returns true (1) if the specified |command_id| has a keyboard accelerator
+        /// Returns true (1) if the specified |commandId| has a keyboard accelerator
         /// assigned.
         /// </summary>
         public bool HasAccelerator(bool commandId) {
@@ -417,7 +417,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Set the keyboard accelerator for the specified |command_id|. |key_code| can
+        /// Set the keyboard accelerator for the specified |commandId|. |keyCode| can
         /// be any virtual key or character value. Returns true (1) on success.
         /// </summary>
         public bool SetAccelerator(int commandId, int keyCode, int shiftPressed, int ctrlPressed, int altPressed) {
@@ -425,7 +425,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Set the keyboard accelerator at the specified |index|. |key_code| can be
+        /// Set the keyboard accelerator at the specified |index|. |keyCode| can be
         /// any virtual key or character value. Returns true (1) on success.
         /// </summary>
         public bool SetAcceleratorAt(int index, int keyCode, int shiftPressed, int ctrlPressed, int altPressed) {
@@ -433,7 +433,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Remove the keyboard accelerator for the specified |command_id|. Returns
+        /// Remove the keyboard accelerator for the specified |commandId|. Returns
         /// true (1) on success.
         /// </summary>
         public int RemoveAccelerator(int commandId) {
@@ -449,7 +449,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Retrieves the keyboard accelerator for the specified |command_id|. Returns
+        /// Retrieves the keyboard accelerator for the specified |commandId|. Returns
         /// true (1) on success.
         /// </summary>
         public int GetAccelerator(int commandId, int keyCode, int shiftPressed, int ctrlPressed, int altPressed) {

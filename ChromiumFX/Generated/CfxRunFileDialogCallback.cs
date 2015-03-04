@@ -35,7 +35,7 @@ using System;
 
 namespace Chromium {
     /// <summary>
-    /// Callback structure for cef_browser_host_t::RunFileDialog. The functions of
+    /// Callback structure for CfxBrowserHost.RunFileDialog. The functions of
     /// this structure will be called on the browser process UI thread.
     /// </summary>
     public class CfxRunFileDialogCallback : CfxBase {
@@ -61,8 +61,8 @@ namespace Chromium {
 
         /// <summary>
         /// Called asynchronously after the file dialog is dismissed. If the selection
-        /// was successful |file_paths| will be a single value or a list of values
-        /// depending on the dialog mode. If the selection was cancelled |file_paths|
+        /// was successful |filePaths| will be a single value or a list of values
+        /// depending on the dialog mode. If the selection was cancelled |filePaths|
         /// will be NULL.
         /// </summary>
         public void Continue(CfxBrowserHost browserHost, System.Collections.Generic.List<string> filePaths) {

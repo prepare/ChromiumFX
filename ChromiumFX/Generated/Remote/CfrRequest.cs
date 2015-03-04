@@ -56,7 +56,7 @@ namespace Chromium.Remote {
 
 
         /// <summary>
-        /// Create a new cef_request_t object.
+        /// Create a new CfrRequest object.
         /// </summary>
         public static CfrRequest Create(CfrRuntime remoteRuntime) {
             var call = new CfxRequestCreateRenderProcessCall();
@@ -141,11 +141,11 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Get the flags used in combination with cef_urlrequest_t. See
-        /// cef_urlrequest_flags_t for supported values.
+        /// Get the flags used in combination with CfrUrlRequest. See
+        /// CfrUrlRequestFlags for supported values.
         /// 
-        /// Set the flags used in combination with cef_urlrequest_t.  See
-        /// cef_urlrequest_flags_t for supported values.
+        /// Set the flags used in combination with CfrUrlRequest.  See
+        /// CfrUrlRequestFlags for supported values.
         /// </summary>
         public int Flags {
             get {
@@ -164,10 +164,10 @@ namespace Chromium.Remote {
 
         /// <summary>
         /// Set the URL to the first party for cookies used in combination with
-        /// cef_urlrequest_t.
+        /// CfrUrlRequest.
         /// 
         /// Get the URL to the first party for cookies used in combination with
-        /// cef_urlrequest_t.
+        /// CfrUrlRequest.
         /// </summary>
         public String FirstPartyForCookies {
             get {

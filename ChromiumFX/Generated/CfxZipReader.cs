@@ -61,7 +61,7 @@ namespace Chromium {
         internal CfxZipReader(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Create a new cef_zip_reader_t object. The returned object's functions can
+        /// Create a new CfxZipReader object. The returned object's functions can
         /// only be called from the thread that created the object.
         /// </summary>
         public static CfxZipReader Create(CfxStreamReader stream) {

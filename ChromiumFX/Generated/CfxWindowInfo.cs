@@ -161,12 +161,12 @@ namespace Chromium {
         /// <summary>
         /// Set to true (1) to create the browser using windowless (off-screen)
         /// rendering. No window will be created for the browser and all rendering will
-        /// occur via the CefRenderHandler interface. The |parent_window| value will be
+        /// occur via the CfxRenderHandler interface. The |parentWindow| value will be
         /// used to identify monitor info and to act as the parent window for dialogs,
-        /// context menus, etc. If |parent_window| is not provided then the main screen
+        /// context menus, etc. If |parentWindow| is not provided then the main screen
         /// monitor will be used and some functionality that requires a parent window
         /// may not function correctly. In order to create windowless browsers the
-        /// CefSettings.windowless_rendering_enabled value must be set to true.
+        /// CfxSettings.WindowlessRenderingEnabled value must be set to true.
         /// </summary>
         public bool WindowlessRenderingEnabled {
             get {

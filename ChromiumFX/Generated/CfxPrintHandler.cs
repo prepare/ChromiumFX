@@ -102,9 +102,9 @@ namespace Chromium {
         public CfxPrintHandler() : base(CfxApi.cfx_print_handler_ctor) {}
 
         /// <summary>
-        /// Synchronize |settings| with client state. If |get_defaults| is true (1)
-        /// then populate |settings| with the default print settings. Do not keep a
-        /// reference to |settings| outside of this callback.
+        /// Synchronize |Settings| with client state. If |GetDefaults| is true (1)
+        /// then populate |Settings| with the default print settings. Do not keep a
+        /// reference to |Settings| outside of this callback.
         /// </summary>
         public event CfxOnPrintSettingsEventHandler OnPrintSettings {
             add {
@@ -124,7 +124,7 @@ namespace Chromium {
         private CfxOnPrintSettingsEventHandler m_OnPrintSettings;
 
         /// <summary>
-        /// Show the print dialog. Execute |callback| once the dialog is dismissed.
+        /// Show the print dialog. Execute |Callback| once the dialog is dismissed.
         /// Return true (1) if the dialog will be displayed or false (0) to cancel the
         /// printing immediately.
         /// </summary>
@@ -146,7 +146,7 @@ namespace Chromium {
         private CfxOnPrintDialogEventHandler m_OnPrintDialog;
 
         /// <summary>
-        /// Send the print job to the printer. Execute |callback| once the job is
+        /// Send the print job to the printer. Execute |Callback| once the job is
         /// completed. Return true (1) if the job will proceed or false (0) to cancel
         /// the job immediately.
         /// </summary>
@@ -212,9 +212,9 @@ namespace Chromium {
     public delegate void CfxOnPrintSettingsEventHandler(object sender, CfxOnPrintSettingsEventArgs e);
 
     /// <summary>
-    /// Synchronize |settings| with client state. If |get_defaults| is true (1)
-    /// then populate |settings| with the default print settings. Do not keep a
-    /// reference to |settings| outside of this callback.
+    /// Synchronize |Settings| with client state. If |GetDefaults| is true (1)
+    /// then populate |Settings| with the default print settings. Do not keep a
+    /// reference to |Settings| outside of this callback.
     /// </summary>
     public class CfxOnPrintSettingsEventArgs : CfxEventArgs {
 
@@ -249,7 +249,7 @@ namespace Chromium {
     public delegate void CfxOnPrintDialogEventHandler(object sender, CfxOnPrintDialogEventArgs e);
 
     /// <summary>
-    /// Show the print dialog. Execute |callback| once the dialog is dismissed.
+    /// Show the print dialog. Execute |Callback| once the dialog is dismissed.
     /// Return true (1) if the dialog will be displayed or false (0) to cancel the
     /// printing immediately.
     /// </summary>
@@ -297,7 +297,7 @@ namespace Chromium {
     public delegate void CfxOnPrintJobEventHandler(object sender, CfxOnPrintJobEventArgs e);
 
     /// <summary>
-    /// Send the print job to the printer. Execute |callback| once the job is
+    /// Send the print job to the printer. Execute |Callback| once the job is
     /// completed. Return true (1) if the job will proceed or false (0) to cancel
     /// the job immediately.
     /// </summary>

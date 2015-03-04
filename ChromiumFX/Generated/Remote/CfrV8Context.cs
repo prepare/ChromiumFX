@@ -39,7 +39,7 @@ namespace Chromium.Remote {
     /// from the thread on which they are created. Valid threads for creating a V8
     /// handle include the render process main thread (TID_RENDERER) and WebWorker
     /// threads. A task runner for posting tasks on the associated thread can be
-    /// retrieved via the cef_v8context_t::get_task_runner() function.
+    /// retrieved via the CfrV8Context.GetTaskRunner() function.
     /// </summary>
     public class CfrV8Context : CfrBase {
 

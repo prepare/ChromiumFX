@@ -123,15 +123,15 @@ namespace Chromium {
         public CfxLifeSpanHandler() : base(CfxApi.cfx_life_span_handler_ctor) {}
 
         /// <summary>
-        /// Called on the IO thread before a new popup window is created. The |browser|
-        /// and |frame| parameters represent the source of the popup request. The
-        /// |target_url| and |target_frame_name| values may be NULL if none were
-        /// specified with the request. The |popupFeatures| structure contains
+        /// Called on the IO thread before a new popup window is created. The |Browser|
+        /// and |Frame| parameters represent the source of the popup request. The
+        /// |TargetUrl| and |TargetFrameName| values may be NULL if none were
+        /// specified with the request. The |PopupFeatures| structure contains
         /// information about the requested popup window. To allow creation of the
-        /// popup window optionally modify |windowInfo|, |client|, |settings| and
-        /// |no_javascript_access| and return false (0). To cancel creation of the
-        /// popup window return true (1). The |client| and |settings| values will
-        /// default to the source browser's values. The |no_javascript_access| value
+        /// popup window optionally modify |WindowInfo|, |Client|, |Settings| and
+        /// |NoJavascriptAccess| and return false (0). To cancel creation of the
+        /// popup window return true (1). The |Client| and |Settings| values will
+        /// default to the source browser's values. The |NoJavascriptAccess| value
         /// indicates whether the new browser window should be scriptable and in the
         /// same process as the source browser.
         /// </summary>
@@ -196,7 +196,7 @@ namespace Chromium {
 
         /// <summary>
         /// Called when a browser has recieved a request to close. This may result
-        /// directly from a call to cef_browser_host_t::close_browser() or indirectly
+        /// directly from a call to CfxBrowserHost.CloseBrowser() or indirectly
         /// if the browser is a top-level OS window created by CEF and the user
         /// attempts to close the window. This function will be called after the
         /// JavaScript 'onunload' event has been fired. It will not be called for
@@ -210,16 +210,16 @@ namespace Chromium {
         /// the browser is parented to another window and that other window needs to
         /// receive close notification via some non-standard technique.
         /// If an application provides its own top-level window it should handle OS
-        /// close notifications by calling cef_browser_host_t::CloseBrowser(false (0))
+        /// close notifications by calling CfxBrowserHost.CloseBrowser(false (0))
         /// instead of immediately closing (see the example below). This gives CEF an
         /// opportunity to process the 'onbeforeunload' event and optionally cancel the
         /// close before do_close() is called.
-        /// The cef_life_span_handler_t::on_before_close() function will be called
+        /// The CfxLifeSpanHandler.OnBeforeClose() function will be called
         /// immediately before the browser object is destroyed. The application should
         /// only exit after on_before_close() has been called for all existing
         /// browsers.
         /// If the browser represents a modal window and a custom modal loop
-        /// implementation was provided in cef_life_span_handler_t::run_modal() this
+        /// implementation was provided in CfxLifeSpanHandler.RunModal() this
         /// callback should be used to restore the opener window to a usable state.
         /// By way of example consider what should happen during window close when the
         /// browser is parented to an application-provided top-level OS window. 1.
@@ -227,11 +227,11 @@ namespace Chromium {
         /// notification (e.g. WM_CLOSE on Windows, performClose: on OS-X and
         /// "delete_event" on Linux).
         /// 2.  Application's top-level window receives the close notification and:
-        /// A. Calls CefBrowserHost::CloseBrowser(false).
+        /// A. Calls CfxBrowserHost.CloseBrowser(false).
         /// B. Cancels the window close.
         /// 3.  JavaScript 'onbeforeunload' handler executes and shows the close
         /// confirmation dialog (which can be overridden via
-        /// CefJSDialogHandler::OnBeforeUnloadDialog()).
+        /// CfxJSDialogHandler.OnBeforeUnloadDialog()).
         /// 4.  User approves the close. 5.  JavaScript 'onunload' handler executes. 6.
         /// Application's do_close() handler is called. Application will:
         /// A. Set a flag to indicate that the next close attempt will be allowed.
@@ -240,7 +240,7 @@ namespace Chromium {
         /// receives the OS close notification and
         /// allows the window to close based on the flag from #6B.
         /// 9.  Browser OS window is destroyed. 10. Application's
-        /// cef_life_span_handler_t::on_before_close() handler is called and
+        /// CfxLifeSpanHandler.OnBeforeClose() handler is called and
         /// the browser object is destroyed.
         /// 11. Application exits by calling cef_quit_message_loop() if no other
         /// browsers
@@ -317,15 +317,15 @@ namespace Chromium {
     public delegate void CfxOnBeforePopupEventHandler(object sender, CfxOnBeforePopupEventArgs e);
 
     /// <summary>
-    /// Called on the IO thread before a new popup window is created. The |browser|
-    /// and |frame| parameters represent the source of the popup request. The
-    /// |target_url| and |target_frame_name| values may be NULL if none were
-    /// specified with the request. The |popupFeatures| structure contains
+    /// Called on the IO thread before a new popup window is created. The |Browser|
+    /// and |Frame| parameters represent the source of the popup request. The
+    /// |TargetUrl| and |TargetFrameName| values may be NULL if none were
+    /// specified with the request. The |PopupFeatures| structure contains
     /// information about the requested popup window. To allow creation of the
-    /// popup window optionally modify |windowInfo|, |client|, |settings| and
-    /// |no_javascript_access| and return false (0). To cancel creation of the
-    /// popup window return true (1). The |client| and |settings| values will
-    /// default to the source browser's values. The |no_javascript_access| value
+    /// popup window optionally modify |WindowInfo|, |Client|, |Settings| and
+    /// |NoJavascriptAccess| and return false (0). To cancel creation of the
+    /// popup window return true (1). The |Client| and |Settings| values will
+    /// default to the source browser's values. The |NoJavascriptAccess| value
     /// indicates whether the new browser window should be scriptable and in the
     /// same process as the source browser.
     /// </summary>
@@ -511,7 +511,7 @@ namespace Chromium {
 
     /// <summary>
     /// Called when a browser has recieved a request to close. This may result
-    /// directly from a call to cef_browser_host_t::close_browser() or indirectly
+    /// directly from a call to CfxBrowserHost.CloseBrowser() or indirectly
     /// if the browser is a top-level OS window created by CEF and the user
     /// attempts to close the window. This function will be called after the
     /// JavaScript 'onunload' event has been fired. It will not be called for
@@ -525,16 +525,16 @@ namespace Chromium {
     /// the browser is parented to another window and that other window needs to
     /// receive close notification via some non-standard technique.
     /// If an application provides its own top-level window it should handle OS
-    /// close notifications by calling cef_browser_host_t::CloseBrowser(false (0))
+    /// close notifications by calling CfxBrowserHost.CloseBrowser(false (0))
     /// instead of immediately closing (see the example below). This gives CEF an
     /// opportunity to process the 'onbeforeunload' event and optionally cancel the
     /// close before do_close() is called.
-    /// The cef_life_span_handler_t::on_before_close() function will be called
+    /// The CfxLifeSpanHandler.OnBeforeClose() function will be called
     /// immediately before the browser object is destroyed. The application should
     /// only exit after on_before_close() has been called for all existing
     /// browsers.
     /// If the browser represents a modal window and a custom modal loop
-    /// implementation was provided in cef_life_span_handler_t::run_modal() this
+    /// implementation was provided in CfxLifeSpanHandler.RunModal() this
     /// callback should be used to restore the opener window to a usable state.
     /// By way of example consider what should happen during window close when the
     /// browser is parented to an application-provided top-level OS window. 1.
@@ -542,11 +542,11 @@ namespace Chromium {
     /// notification (e.g. WM_CLOSE on Windows, performClose: on OS-X and
     /// "delete_event" on Linux).
     /// 2.  Application's top-level window receives the close notification and:
-    /// A. Calls CefBrowserHost::CloseBrowser(false).
+    /// A. Calls CfxBrowserHost.CloseBrowser(false).
     /// B. Cancels the window close.
     /// 3.  JavaScript 'onbeforeunload' handler executes and shows the close
     /// confirmation dialog (which can be overridden via
-    /// CefJSDialogHandler::OnBeforeUnloadDialog()).
+    /// CfxJSDialogHandler.OnBeforeUnloadDialog()).
     /// 4.  User approves the close. 5.  JavaScript 'onunload' handler executes. 6.
     /// Application's do_close() handler is called. Application will:
     /// A. Set a flag to indicate that the next close attempt will be allowed.
@@ -555,7 +555,7 @@ namespace Chromium {
     /// receives the OS close notification and
     /// allows the window to close based on the flag from #6B.
     /// 9.  Browser OS window is destroyed. 10. Application's
-    /// cef_life_span_handler_t::on_before_close() handler is called and
+    /// CfxLifeSpanHandler.OnBeforeClose() handler is called and
     /// the browser object is destroyed.
     /// 11. Application exits by calling cef_quit_message_loop() if no other
     /// browsers

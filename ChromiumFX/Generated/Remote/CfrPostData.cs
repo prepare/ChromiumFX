@@ -56,7 +56,7 @@ namespace Chromium.Remote {
 
 
         /// <summary>
-        /// Create a new cef_post_data_t object.
+        /// Create a new CfrPostData object.
         /// </summary>
         public static CfrPostData Create(CfrRuntime remoteRuntime) {
             var call = new CfxPostDataCreateRenderProcessCall();

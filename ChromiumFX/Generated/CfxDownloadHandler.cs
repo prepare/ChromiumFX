@@ -87,10 +87,10 @@ namespace Chromium {
         public CfxDownloadHandler() : base(CfxApi.cfx_download_handler_ctor) {}
 
         /// <summary>
-        /// Called before a download begins. |suggested_name| is the suggested name for
+        /// Called before a download begins. |SuggestedName| is the suggested name for
         /// the download file. By default the download will be canceled. Execute
-        /// |callback| either asynchronously or in this function to continue the
-        /// download if desired. Do not keep a reference to |download_item| outside of
+        /// |Callback| either asynchronously or in this function to continue the
+        /// download if desired. Do not keep a reference to |DownloadItem| outside of
         /// this function.
         /// </summary>
         public event CfxOnBeforeDownloadEventHandler OnBeforeDownload {
@@ -113,8 +113,8 @@ namespace Chromium {
         /// <summary>
         /// Called when a download's status or progress information has been updated.
         /// This may be called multiple times before and after on_before_download().
-        /// Execute |callback| either asynchronously or in this function to cancel the
-        /// download if desired. Do not keep a reference to |download_item| outside of
+        /// Execute |Callback| either asynchronously or in this function to cancel the
+        /// download if desired. Do not keep a reference to |DownloadItem| outside of
         /// this function.
         /// </summary>
         public event CfxOnDownloadUpdatedEventHandler OnDownloadUpdated {
@@ -151,10 +151,10 @@ namespace Chromium {
     public delegate void CfxOnBeforeDownloadEventHandler(object sender, CfxOnBeforeDownloadEventArgs e);
 
     /// <summary>
-    /// Called before a download begins. |suggested_name| is the suggested name for
+    /// Called before a download begins. |SuggestedName| is the suggested name for
     /// the download file. By default the download will be canceled. Execute
-    /// |callback| either asynchronously or in this function to continue the
-    /// download if desired. Do not keep a reference to |download_item| outside of
+    /// |Callback| either asynchronously or in this function to continue the
+    /// download if desired. Do not keep a reference to |DownloadItem| outside of
     /// this function.
     /// </summary>
     public class CfxOnBeforeDownloadEventArgs : CfxEventArgs {
@@ -216,8 +216,8 @@ namespace Chromium {
     /// <summary>
     /// Called when a download's status or progress information has been updated.
     /// This may be called multiple times before and after on_before_download().
-    /// Execute |callback| either asynchronously or in this function to cancel the
-    /// download if desired. Do not keep a reference to |download_item| outside of
+    /// Execute |Callback| either asynchronously or in this function to cancel the
+    /// download if desired. Do not keep a reference to |DownloadItem| outside of
     /// this function.
     /// </summary>
     public class CfxOnDownloadUpdatedEventArgs : CfxEventArgs {

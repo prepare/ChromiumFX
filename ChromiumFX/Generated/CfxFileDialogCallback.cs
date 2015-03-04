@@ -59,7 +59,7 @@ namespace Chromium {
         internal CfxFileDialogCallback(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Continue the file selection with the specified |file_paths|. This may be a
+        /// Continue the file selection with the specified |filePaths|. This may be a
         /// single value or a list of values depending on the dialog mode. An NULL
         /// value is treated the same as calling cancel().
         /// </summary>

@@ -244,7 +244,7 @@ Public Class CefCallbackType
         b.AppendLine("public delegate void {0}(object sender, {1} e);", EventHandlerName, PublicEventArgsClassName)
         b.AppendLine()
 
-        b.AppendSummary(comments)
+        b.AppendSummary(comments, False, True)
         b.BeginClass(PublicEventArgsClassName & " : CfxEventArgs", GeneratorConfig.ClassModifiers(PublicEventArgsClassName))
         b.AppendLine()
 
@@ -346,7 +346,7 @@ Public Class CefCallbackType
         b.AppendLine("public delegate void {0}(object sender, {1} e);", RemoteEventHandlerName, RemoteEventArgsClassName)
         b.AppendLine()
 
-        b.AppendSummary(comments)
+        b.AppendSummary(comments, True, True)
         b.BeginClass(RemoteEventArgsClassName & " : CfrEventArgs", GeneratorConfig.ClassModifiers(RemoteEventArgsClassName))
         b.AppendLine()
 
@@ -407,7 +407,7 @@ Public Class CefCallbackType
     Public Sub EmitPublicEvent(b As CodeBuilder, cbIndex As Integer, comments As String())
 
         Dim callbackName = Parent.CfxName & "_" & Name
-        b.AppendSummary(comments)
+        b.AppendSummary(comments, False, True)
         b.BeginBlock("public event {0} {1}", EventHandlerName, CSharp.Escape(PublicName))
         b.BeginBlock("add")
         b.BeginBlock("if(m_{0} == null)", PublicName)
@@ -432,7 +432,7 @@ Public Class CefCallbackType
 
     Public Sub EmitRemoteEvent(b As CodeBuilder, comments As String())
 
-        b.AppendSummary(comments)
+        b.AppendSummary(comments, True, True)
         b.BeginBlock("public event {0} {1}", RemoteEventHandlerName, CSharp.Escape(PublicName))
         b.BeginBlock("add")
         b.BeginBlock("if(m_{0} == null)", PublicName)

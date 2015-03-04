@@ -75,10 +75,10 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Handle execution of the function identified by |name|. |object| is the
-        /// receiver ('this' object) of the function. |arguments| is the list of
-        /// arguments passed to the function. If execution succeeds set |retval| to the
-        /// function return value. If execution fails set |exception| to the exception
+        /// Handle execution of the function identified by |Name|. |Object| is the
+        /// receiver ('this' object) of the function. |Arguments| is the list of
+        /// arguments passed to the function. If execution succeeds set |Retval| to the
+        /// function return value. If execution fails set |Exception| to the exception
         /// that will be thrown. Return true (1) if execution was handled.
         /// </summary>
         public event CfrV8HandlerExecuteEventHandler Execute {
@@ -112,10 +112,10 @@ namespace Chromium.Remote {
     public delegate void CfrV8HandlerExecuteEventHandler(object sender, CfrV8HandlerExecuteEventArgs e);
 
     /// <summary>
-    /// Handle execution of the function identified by |name|. |object| is the
-    /// receiver ('this' object) of the function. |arguments| is the list of
-    /// arguments passed to the function. If execution succeeds set |retval| to the
-    /// function return value. If execution fails set |exception| to the exception
+    /// Handle execution of the function identified by |Name|. |Object| is the
+    /// receiver ('this' object) of the function. |Arguments| is the list of
+    /// arguments passed to the function. If execution succeeds set |Retval| to the
+    /// function return value. If execution fails set |Exception| to the exception
     /// that will be thrown. Return true (1) if execution was handled.
     /// </summary>
     public partial class CfrV8HandlerExecuteEventArgs : CfrEventArgs {

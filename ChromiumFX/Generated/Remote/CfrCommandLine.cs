@@ -62,7 +62,7 @@ namespace Chromium.Remote {
 
 
         /// <summary>
-        /// Create a new cef_command_line_t instance.
+        /// Create a new CfrCommandLine instance.
         /// </summary>
         public static CfrCommandLine Create(CfrRuntime remoteRuntime) {
             var call = new CfxCommandLineCreateRenderProcessCall();
@@ -71,7 +71,7 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Returns the singleton global cef_command_line_t object. The returned object
+        /// Returns the singleton global CfrCommandLine object. The returned object
         /// will be read-only.
         /// </summary>
         public static CfrCommandLine GetGlobal(CfrRuntime remoteRuntime) {

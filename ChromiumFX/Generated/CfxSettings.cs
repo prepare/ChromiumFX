@@ -79,7 +79,7 @@ namespace Chromium {
         /// <summary>
         /// The path to a separate executable that will be launched for sub-processes.
         /// By default the browser process executable is used. See the comments on
-        /// CefExecuteProcess() for details. Also configurable using the
+        /// CfxExecuteProcess() for details. Also configurable using the
         /// "browser-subprocess-path" command-line switch.
         /// </summary>
         public string BrowserSubprocessPath {
@@ -98,7 +98,7 @@ namespace Chromium {
 
         /// <summary>
         /// Set to true (1) to have the browser process message loop run in a separate
-        /// thread. If false (0) than the CefDoMessageLoopWork() function must be
+        /// thread. If false (0) than the CfxDoMessageLoopWork() function must be
         /// called from your application message loop.
         /// </summary>
         public bool MultiThreadedMessageLoop {
@@ -132,7 +132,7 @@ namespace Chromium {
         /// Set to true (1) to disable configuration of browser process features using
         /// standard CEF and Chromium command-line arguments. Configuration can still
         /// be specified using CEF data structures or via the
-        /// CefApp::OnBeforeCommandLineProcessing() method.
+        /// CfxApp.OnBeforeCommandLineProcessing() method.
         /// </summary>
         public bool CommandLineArgsDisabled {
             get {
@@ -169,7 +169,7 @@ namespace Chromium {
         /// To persist session cookies (cookies without an expiry date or validity
         /// interval) by default when using the global cookie manager set this value to
         /// true. Session cookies are generally intended to be transient and most Web
-        /// browsers do not persist them. A |cache_path| value must also be specified to
+        /// browsers do not persist them. A |cachePath| value must also be specified to
         /// enable this feature. Also configurable using the "persist-session-cookies"
         /// command-line switch.
         /// </summary>
@@ -345,7 +345,7 @@ namespace Chromium {
         /// <summary>
         /// Set to true (1) to disable loading of pack files for resources and locales.
         /// A resource bundle handler must be provided for the browser and render
-        /// processes via CefApp::GetResourceBundleHandler() if loading of pack files
+        /// processes via CfxApp.GetResourceBundleHandler() if loading of pack files
         /// is disabled. Also configurable using the "disable-pack-loading" command-
         /// line switch.
         /// </summary>
@@ -380,7 +380,7 @@ namespace Chromium {
 
         /// <summary>
         /// The number of stack trace frames to capture for uncaught exceptions.
-        /// Specify a positive value to enable the CefV8ContextHandler::
+        /// Specify a positive value to enable the CfxV8ContextHandler::
         /// OnUncaughtException() callback. Specify 0 (default value) and
         /// OnUncaughtException() will not be called. Also configurable using the
         /// "uncaught-exception-stack-size" command-line switch.

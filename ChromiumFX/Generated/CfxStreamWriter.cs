@@ -60,7 +60,7 @@ namespace Chromium {
         internal CfxStreamWriter(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Create a new cef_stream_writer_t object for a file.
+        /// Create a new CfxStreamWriter object for a file.
         /// </summary>
         public static CfxStreamWriter CreateForFile(string fileName) {
             var fileName_pinned = new PinnedString(fileName);
@@ -70,7 +70,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Create a new cef_stream_writer_t object for a custom handler.
+        /// Create a new CfxStreamWriter object for a custom handler.
         /// </summary>
         public static CfxStreamWriter CreateForHandler(CfxWriteHandler handler) {
             return CfxStreamWriter.Wrap(CfxApi.cfx_stream_writer_create_for_handler(CfxWriteHandler.Unwrap(handler)));

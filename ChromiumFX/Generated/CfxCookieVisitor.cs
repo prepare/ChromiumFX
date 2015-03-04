@@ -66,9 +66,9 @@ namespace Chromium {
         public CfxCookieVisitor() : base(CfxApi.cfx_cookie_visitor_ctor) {}
 
         /// <summary>
-        /// Method that will be called once for each cookie. |count| is the 0-based
-        /// index for the current cookie. |total| is the total number of cookies. Set
-        /// |deleteCookie| to true (1) to delete the cookie currently being visited.
+        /// Method that will be called once for each cookie. |Count| is the 0-based
+        /// index for the current cookie. |Total| is the total number of cookies. Set
+        /// |DeleteCookie| to true (1) to delete the cookie currently being visited.
         /// Return false (0) to stop visiting cookies. This function may never be
         /// called if no cookies are found.
         /// </summary>
@@ -102,9 +102,9 @@ namespace Chromium {
     public delegate void CfxCookieVisitorVisitEventHandler(object sender, CfxCookieVisitorVisitEventArgs e);
 
     /// <summary>
-    /// Method that will be called once for each cookie. |count| is the 0-based
-    /// index for the current cookie. |total| is the total number of cookies. Set
-    /// |deleteCookie| to true (1) to delete the cookie currently being visited.
+    /// Method that will be called once for each cookie. |Count| is the 0-based
+    /// index for the current cookie. |Total| is the total number of cookies. Set
+    /// |DeleteCookie| to true (1) to delete the cookie currently being visited.
     /// Return false (0) to stop visiting cookies. This function may never be
     /// called if no cookies are found.
     /// </summary>

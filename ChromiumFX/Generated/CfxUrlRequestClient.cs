@@ -35,7 +35,7 @@ using System;
 
 namespace Chromium {
     /// <summary>
-    /// Structure that should be implemented by the cef_urlrequest_t client. The
+    /// Structure that should be implemented by the CfxUrlRequest client. The
     /// functions of this structure will be called on the same thread that created
     /// the request unless otherwise documented.
     /// </summary>
@@ -115,7 +115,7 @@ namespace Chromium {
 
         /// <summary>
         /// Notifies the client that the request has completed. Use the
-        /// cef_urlrequest_t::GetRequestStatus function to determine if the request was
+        /// CfxUrlRequest.GetRequestStatus function to determine if the request was
         /// successful or not.
         /// </summary>
         public event CfxOnRequestCompleteEventHandler OnRequestComplete {
@@ -136,8 +136,8 @@ namespace Chromium {
         private CfxOnRequestCompleteEventHandler m_OnRequestComplete;
 
         /// <summary>
-        /// Notifies the client of upload progress. |current| denotes the number of
-        /// bytes sent so far and |total| is the total size of uploading data (or -1 if
+        /// Notifies the client of upload progress. |Current| denotes the number of
+        /// bytes sent so far and |Total| is the total size of uploading data (or -1 if
         /// chunked upload is enabled). This function will only be called if the
         /// UR_FLAG_REPORT_UPLOAD_PROGRESS flag is set on the request.
         /// </summary>
@@ -159,8 +159,8 @@ namespace Chromium {
         private CfxOnUploadProgressEventHandler m_OnUploadProgress;
 
         /// <summary>
-        /// Notifies the client of download progress. |current| denotes the number of
-        /// bytes received up to the call and |total| is the expected total size of the
+        /// Notifies the client of download progress. |Current| denotes the number of
+        /// bytes received up to the call and |Total| is the expected total size of the
         /// response (or -1 if not determined).
         /// </summary>
         public event CfxOnDownloadProgressEventHandler OnDownloadProgress {
@@ -181,7 +181,7 @@ namespace Chromium {
         private CfxOnDownloadProgressEventHandler m_OnDownloadProgress;
 
         /// <summary>
-        /// Called when some part of the response is read. |data| contains the current
+        /// Called when some part of the response is read. |Data| contains the current
         /// bytes received since the last call. This function will not be called if the
         /// UR_FLAG_NO_DOWNLOAD_DATA flag is set on the request.
         /// </summary>
@@ -204,9 +204,9 @@ namespace Chromium {
 
         /// <summary>
         /// Called on the IO thread when the browser needs credentials from the user.
-        /// |isProxy| indicates whether the host is a proxy server. |host| contains the
-        /// hostname and |port| contains the port number. Return true (1) to continue
-        /// the request and call cef_auth_callback_t::cont() when the authentication
+        /// |IsProxy| indicates whether the host is a proxy server. |Host| contains the
+        /// hostname and |Port| contains the port number. Return true (1) to continue
+        /// the request and call CfxAuthCallback.Continue() when the authentication
         /// information is available. Return false (0) to cancel the request. This
         /// function will only be called for requests initiated from the browser
         /// process.
@@ -258,7 +258,7 @@ namespace Chromium {
 
     /// <summary>
     /// Notifies the client that the request has completed. Use the
-    /// cef_urlrequest_t::GetRequestStatus function to determine if the request was
+    /// CfxUrlRequest.GetRequestStatus function to determine if the request was
     /// successful or not.
     /// </summary>
     public class CfxOnRequestCompleteEventArgs : CfxEventArgs {
@@ -286,8 +286,8 @@ namespace Chromium {
     public delegate void CfxOnUploadProgressEventHandler(object sender, CfxOnUploadProgressEventArgs e);
 
     /// <summary>
-    /// Notifies the client of upload progress. |current| denotes the number of
-    /// bytes sent so far and |total| is the total size of uploading data (or -1 if
+    /// Notifies the client of upload progress. |Current| denotes the number of
+    /// bytes sent so far and |Total| is the total size of uploading data (or -1 if
     /// chunked upload is enabled). This function will only be called if the
     /// UR_FLAG_REPORT_UPLOAD_PROGRESS flag is set on the request.
     /// </summary>
@@ -332,8 +332,8 @@ namespace Chromium {
     public delegate void CfxOnDownloadProgressEventHandler(object sender, CfxOnDownloadProgressEventArgs e);
 
     /// <summary>
-    /// Notifies the client of download progress. |current| denotes the number of
-    /// bytes received up to the call and |total| is the expected total size of the
+    /// Notifies the client of download progress. |Current| denotes the number of
+    /// bytes received up to the call and |Total| is the expected total size of the
     /// response (or -1 if not determined).
     /// </summary>
     public class CfxOnDownloadProgressEventArgs : CfxEventArgs {
@@ -377,7 +377,7 @@ namespace Chromium {
     public delegate void CfxOnDownloadDataEventHandler(object sender, CfxOnDownloadDataEventArgs e);
 
     /// <summary>
-    /// Called when some part of the response is read. |data| contains the current
+    /// Called when some part of the response is read. |Data| contains the current
     /// bytes received since the last call. This function will not be called if the
     /// UR_FLAG_NO_DOWNLOAD_DATA flag is set on the request.
     /// </summary>
@@ -423,9 +423,9 @@ namespace Chromium {
 
     /// <summary>
     /// Called on the IO thread when the browser needs credentials from the user.
-    /// |isProxy| indicates whether the host is a proxy server. |host| contains the
-    /// hostname and |port| contains the port number. Return true (1) to continue
-    /// the request and call cef_auth_callback_t::cont() when the authentication
+    /// |IsProxy| indicates whether the host is a proxy server. |Host| contains the
+    /// hostname and |Port| contains the port number. Return true (1) to continue
+    /// the request and call CfxAuthCallback.Continue() when the authentication
     /// information is available. Return false (0) to cancel the request. This
     /// function will only be called for requests initiated from the browser
     /// process.

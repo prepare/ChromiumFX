@@ -35,7 +35,7 @@ using System;
 
 namespace Chromium {
     /// <summary>
-    /// Structure that creates cef_resource_handler_t instances for handling scheme
+    /// Structure that creates CfxResourceHandler instances for handling scheme
     /// requests. The functions of this structure will always be called on the IO
     /// thread.
     /// </summary>
@@ -65,7 +65,7 @@ namespace Chromium {
         /// reference to allow default handling of the request. |browser| and |frame|
         /// will be the browser window and frame respectively that originated the
         /// request or NULL if the request did not originate from a browser window (for
-        /// example, if the request came from cef_urlrequest_t). The |request| object
+        /// example, if the request came from CfxUrlRequest). The |request| object
         /// passed to this function will not contain cookie data.
         /// </summary>
         public CfxResourceHandler Create(CfxBrowser browser, CfxFrame frame, string schemeName, CfxRequest request) {

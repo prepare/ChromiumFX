@@ -40,13 +40,20 @@ namespace Chromium.WebBrowser {
 
         internal readonly byte[] data;
         internal readonly string mimeType;
-        
+
+        /// <summary>
+        /// Creates a WebResource for registration with a
+        /// ChromiumWebBrowser control.
+        /// </summary>
         public WebResource(byte[] data, string mimeType) {
             this.data = data;
             this.mimeType = mimeType;
         }
 
         public WebResource(Image image) {
+            /// Creates a WebResource from the given image
+            /// for registration with a ChromiumWebBrowser control.
+            /// The mime type will be image/png
             mimeType = "image/png";
             var pngData = new System.IO.MemoryStream();
             image.Save(pngData, ImageFormat.Png);
@@ -54,6 +61,9 @@ namespace Chromium.WebBrowser {
         }
 
         public WebResource(string html) {
+            /// Creates a WebResource from the given text
+            /// for registration with a ChromiumWebBrowser control.
+            /// The mime type will be text/html
             mimeType = "text/html";
             data = System.Text.Encoding.UTF8.GetBytes(html);
         }

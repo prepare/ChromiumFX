@@ -81,11 +81,11 @@ namespace Chromium {
         public CfxKeyboardHandler() : base(CfxApi.cfx_keyboard_handler_ctor) {}
 
         /// <summary>
-        /// Called before a keyboard event is sent to the renderer. |event| contains
-        /// information about the keyboard event. |os_event| is the operating system
+        /// Called before a keyboard event is sent to the renderer. |Event| contains
+        /// information about the keyboard event. |OsEvent| is the operating system
         /// event message, if any. Return true (1) if the event was handled or false
         /// (0) otherwise. If the event will be handled in on_key_event() as a keyboard
-        /// shortcut set |is_keyboard_shortcut| to true (1) and return false (0).
+        /// shortcut set |IsKeyboardShortcut| to true (1) and return false (0).
         /// </summary>
         public event CfxOnPreKeyEventEventHandler OnPreKeyEvent {
             add {
@@ -106,8 +106,8 @@ namespace Chromium {
 
         /// <summary>
         /// Called after the renderer and JavaScript in the page has had a chance to
-        /// handle the event. |event| contains information about the keyboard event.
-        /// |os_event| is the operating system event message, if any. Return true (1)
+        /// handle the event. |Event| contains information about the keyboard event.
+        /// |OsEvent| is the operating system event message, if any. Return true (1)
         /// if the keyboard event was handled or false (0) otherwise.
         /// </summary>
         public event CfxOnKeyEventEventHandler OnKeyEvent {
@@ -144,11 +144,11 @@ namespace Chromium {
     public delegate void CfxOnPreKeyEventEventHandler(object sender, CfxOnPreKeyEventEventArgs e);
 
     /// <summary>
-    /// Called before a keyboard event is sent to the renderer. |event| contains
-    /// information about the keyboard event. |os_event| is the operating system
+    /// Called before a keyboard event is sent to the renderer. |Event| contains
+    /// information about the keyboard event. |OsEvent| is the operating system
     /// event message, if any. Return true (1) if the event was handled or false
     /// (0) otherwise. If the event will be handled in on_key_event() as a keyboard
-    /// shortcut set |is_keyboard_shortcut| to true (1) and return false (0).
+    /// shortcut set |IsKeyboardShortcut| to true (1) and return false (0).
     /// </summary>
     public class CfxOnPreKeyEventEventArgs : CfxEventArgs {
 
@@ -212,8 +212,8 @@ namespace Chromium {
 
     /// <summary>
     /// Called after the renderer and JavaScript in the page has had a chance to
-    /// handle the event. |event| contains information about the keyboard event.
-    /// |os_event| is the operating system event message, if any. Return true (1)
+    /// handle the event. |Event| contains information about the keyboard event.
+    /// |OsEvent| is the operating system event message, if any. Return true (1)
     /// if the keyboard event was handled or false (0) otherwise.
     /// </summary>
     public class CfxOnKeyEventEventArgs : CfxEventArgs {

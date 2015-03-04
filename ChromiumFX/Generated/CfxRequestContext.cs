@@ -37,7 +37,7 @@ namespace Chromium {
     /// <summary>
     /// A request context provides request handling for a set of related browser
     /// objects. A request context is specified when creating a new browser object
-    /// via the cef_browser_host_t static factory functions. Browser objects with
+    /// via the CfxBrowserHost static factory functions. Browser objects with
     /// different request contexts will never be hosted in the same render process.
     /// Browser objects with the same request context may or may not be hosted in the
     /// same render process depending on the process model. Browser objects created
@@ -46,7 +46,7 @@ namespace Chromium {
     /// browser. When running in single-process mode there is only a single render
     /// process (the main process) and so all browsers created in single-process mode
     /// will share the same request context. This will be the first request context
-    /// passed into a cef_browser_host_t static factory function and all other
+    /// passed into a CfxBrowserHost static factory function and all other
     /// request context objects will be ignored.
     /// </summary>
     public class CfxRequestContext : CfxBase {

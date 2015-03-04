@@ -237,11 +237,11 @@ Public Class CodeBuilder
         AppendComment(String.Format(format, pm))
     End Sub
 
-    Sub AppendSummary(summary As String())
+    Sub AppendSummary(summary As String(), Optional forRemote As Boolean = False, Optional forEvent As Boolean = False)
         If summary IsNot Nothing AndAlso Not summary.Length = 0 Then
             AppendLine("/// <summary>")
             For Each line In summary
-                line = Regex.Replace(line, "&(?!\w+;)", "&amp;")
+                line = CSharp.PrepareSummaryLine(line, forRemote, forEvent)
                 AppendLine("/// " & line)
             Next
             AppendLine("/// </summary>")

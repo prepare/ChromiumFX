@@ -60,7 +60,7 @@ namespace Chromium {
         internal CfxPostData(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Create a new cef_post_data_t object.
+        /// Create a new CfxPostData object.
         /// </summary>
         public static CfxPostData Create() {
             return CfxPostData.Wrap(CfxApi.cfx_post_data_create());

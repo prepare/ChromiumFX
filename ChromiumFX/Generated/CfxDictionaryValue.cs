@@ -105,11 +105,11 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Returns a writable copy of this object. If |exclude_NULL_children| is true
+        /// Returns a writable copy of this object. If |excludeNullChildren| is true
         /// (1) any NULL dictionaries or lists will be excluded from the copy.
         /// </summary>
-        public CfxDictionaryValue Copy(int excludeEmptyChildren) {
-            return CfxDictionaryValue.Wrap(CfxApi.cfx_dictionary_value_copy(NativePtr, excludeEmptyChildren));
+        public CfxDictionaryValue Copy(bool excludeEmptyChildren) {
+            return CfxDictionaryValue.Wrap(CfxApi.cfx_dictionary_value_copy(NativePtr, excludeEmptyChildren ? 1 : 0));
         }
 
         /// <summary>

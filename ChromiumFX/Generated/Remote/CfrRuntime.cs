@@ -53,19 +53,19 @@ namespace Chromium.Remote {
         /// JavaScript if both domains set document.domain="example.com".
         /// This function is used to allow access to origins that would otherwise violate
         /// the same-origin policy. Scripts hosted underneath the fully qualified
-        /// |source_origin| URL (like http://www.example.com) will be allowed access to
-        /// all resources hosted on the specified |target_protocol| and |target_domain|.
-        /// If |target_domain| is non-NULL and |allow_target_subdomains| if false (0)
-        /// only exact domain matches will be allowed. If |target_domain| contains a top-
-        /// level domain component (like "example.com") and |allow_target_subdomains| is
-        /// true (1) sub-domain matches will be allowed. If |target_domain| is NULL and
-        /// |allow_target_subdomains| if true (1) all domains and IP addresses will be
+        /// |sourceOrigin| URL (like http://www.example.com) will be allowed access to
+        /// all resources hosted on the specified |targetProtocol| and |targetDomain|.
+        /// If |targetDomain| is non-NULL and |allowTargetSubdomains| if false (0)
+        /// only exact domain matches will be allowed. If |targetDomain| contains a top-
+        /// level domain component (like "example.com") and |allowTargetSubdomains| is
+        /// true (1) sub-domain matches will be allowed. If |targetDomain| is NULL and
+        /// |allowTargetSubdomains| if true (1) all domains and IP addresses will be
         /// allowed.
         /// This function cannot be used to bypass the restrictions on local or display
-        /// isolated schemes. See the comments on CefRegisterCustomScheme for more
+        /// isolated schemes. See the comments on CfrRegisterCustomScheme for more
         /// information.
         /// This function may be called on any thread. Returns false (0) if
-        /// |source_origin| is invalid or the whitelist cannot be accessed.
+        /// |sourceOrigin| is invalid or the whitelist cannot be accessed.
         /// </summary>
         public bool AddCrossOriginWhitelistEntry(string sourceOrigin, string targetProtocol, string targetDomain, bool allowTargetSubdomains) {
             var call = new CfxRuntimeAddCrossOriginWhitelistEntryRenderProcessCall();
@@ -115,10 +115,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Stop tracing events on all processes.
         /// This function will fail and return false (0) if a previous call to
-        /// CefEndTracingAsync is already pending or if CefBeginTracing was not called.
-        /// |tracing_file| is the path at which tracing data will be written and
+        /// CfrEndTracingAsync is already pending or if CfrBeginTracing was not called.
+        /// |tracingFile| is the path at which tracing data will be written and
         /// |callback| is the callback that will be executed once all processes have sent
-        /// their trace data. If |tracing_file| is NULL a new temporary file path will be
+        /// their trace data. If |tracingFile| is NULL a new temporary file path will be
         /// used. If |callback| is NULL no trace data will be written.
         /// This function must be called on the browser process UI thread.
         /// </summary>
@@ -134,12 +134,12 @@ namespace Chromium.Remote {
         /// This function should be called from the application entry point function to
         /// execute a secondary process. It can be used to run secondary processes from
         /// the browser client executable (default behavior) or from a separate
-        /// executable specified by the CefSettings.browser_subprocess_path value. If
+        /// executable specified by the CfrSettings.BrowserSubprocessPath value. If
         /// called for the browser process (identified by no "type" command-line value)
         /// it will return immediately with a value of -1. If called for a recognized
         /// secondary process it will block until the process should exit and then return
         /// the process exit code. The |application| parameter may be NULL. The
-        /// |windows_sandbox_info| parameter is only used on Windows and may be NULL (see
+        /// |windowsSandboxInfo| parameter is only used on Windows and may be NULL (see
         /// cef_sandbox_win.h for details).
         /// </summary>
         public int ExecuteProcess(CfrApp application, RemotePtr windowsSandboxInfo) {
@@ -251,21 +251,21 @@ namespace Chromium.Remote {
         /// (function() {
         /// // Define the function 'example.test.myfunction'.
         /// example.test.myfunction = function() {
-        /// // Call CefV8Handler::Execute() with the function name 'MyFunction'
+        /// // Call CfrV8Handler.Execute() with the function name 'MyFunction'
         /// // and no arguments.
         /// native function MyFunction();
         /// return MyFunction();
         /// };
         /// // Define the getter function for parameter 'example.test.myparam'.
         /// example.test.__defineGetter__('myparam', function() {
-        /// // Call CefV8Handler::Execute() with the function name 'GetMyParam'
+        /// // Call CfrV8Handler.Execute() with the function name 'GetMyParam'
         /// // and no arguments.
         /// native function GetMyParam();
         /// return GetMyParam();
         /// });
         /// // Define the setter function for parameter 'example.test.myparam'.
         /// example.test.__defineSetter__('myparam', function(b) {
-        /// // Call CefV8Handler::Execute() with the function name 'SetMyParam'
+        /// // Call CfrV8Handler.Execute() with the function name 'SetMyParam'
         /// // and a single argument.
         /// native function SetMyParam();
         /// if(b) SetMyParam(b);
@@ -300,7 +300,7 @@ namespace Chromium.Remote {
 
         /// <summary>
         /// Remove an entry from the cross-origin access whitelist. Returns false (0) if
-        /// |source_origin| is invalid or the whitelist cannot be accessed.
+        /// |sourceOrigin| is invalid or the whitelist cannot be accessed.
         /// </summary>
         public bool RemoveCrossOriginWhitelistEntry(string sourceOrigin, string targetProtocol, string targetDomain, bool allowTargetSubdomains) {
             var call = new CfxRuntimeRemoveCrossOriginWhitelistEntryRenderProcessCall();

@@ -53,19 +53,19 @@ namespace Chromium {
         /// JavaScript if both domains set document.domain="example.com".
         /// This function is used to allow access to origins that would otherwise violate
         /// the same-origin policy. Scripts hosted underneath the fully qualified
-        /// |source_origin| URL (like http://www.example.com) will be allowed access to
-        /// all resources hosted on the specified |target_protocol| and |target_domain|.
-        /// If |target_domain| is non-NULL and |allow_target_subdomains| if false (0)
-        /// only exact domain matches will be allowed. If |target_domain| contains a top-
-        /// level domain component (like "example.com") and |allow_target_subdomains| is
-        /// true (1) sub-domain matches will be allowed. If |target_domain| is NULL and
-        /// |allow_target_subdomains| if true (1) all domains and IP addresses will be
+        /// |sourceOrigin| URL (like http://www.example.com) will be allowed access to
+        /// all resources hosted on the specified |targetProtocol| and |targetDomain|.
+        /// If |targetDomain| is non-NULL and |allowTargetSubdomains| if false (0)
+        /// only exact domain matches will be allowed. If |targetDomain| contains a top-
+        /// level domain component (like "example.com") and |allowTargetSubdomains| is
+        /// true (1) sub-domain matches will be allowed. If |targetDomain| is NULL and
+        /// |allowTargetSubdomains| if true (1) all domains and IP addresses will be
         /// allowed.
         /// This function cannot be used to bypass the restrictions on local or display
-        /// isolated schemes. See the comments on CefRegisterCustomScheme for more
+        /// isolated schemes. See the comments on CfxRegisterCustomScheme for more
         /// information.
         /// This function may be called on any thread. Returns false (0) if
-        /// |source_origin| is invalid or the whitelist cannot be accessed.
+        /// |sourceOrigin| is invalid or the whitelist cannot be accessed.
         /// </summary>
         public static bool AddCrossOriginWhitelistEntry(string sourceOrigin, string targetProtocol, string targetDomain, bool allowTargetSubdomains) {
             var sourceOrigin_pinned = new PinnedString(sourceOrigin);
@@ -104,8 +104,8 @@ namespace Chromium {
         /// Start tracing events on all processes. Tracing is initialized asynchronously
         /// and |callback| will be executed on the UI thread after initialization is
         /// complete.
-        /// If CefBeginTracing was called previously, or if a CefEndTracingAsync call is
-        /// pending, CefBeginTracing will fail and return false (0).
+        /// If CfxBeginTracing was called previously, or if a CfxEndTracingAsync call is
+        /// pending, CfxBeginTracing will fail and return false (0).
         /// |categories| is a comma-delimited list of category wildcards. A category can
         /// have an optional '-' prefix to make it an excluded category. Having both
         /// included and excluded categories in the same list is not supported.
@@ -166,7 +166,7 @@ namespace Chromium {
         /// used to integrate the CEF message loop into an existing application message
         /// loop. Care must be taken to balance performance against excessive CPU usage.
         /// This function should only be called on the main application thread and only
-        /// if cef_initialize() is called with a CefSettings.multi_threaded_message_loop
+        /// if cef_initialize() is called with a CfxSettings.MultiThreadedMessageLoop
         /// value of false (0). This function will not block.
         /// </summary>
         public static void DoMessageLoopWork() {
@@ -176,10 +176,10 @@ namespace Chromium {
         /// <summary>
         /// Stop tracing events on all processes.
         /// This function will fail and return false (0) if a previous call to
-        /// CefEndTracingAsync is already pending or if CefBeginTracing was not called.
-        /// |tracing_file| is the path at which tracing data will be written and
+        /// CfxEndTracingAsync is already pending or if CfxBeginTracing was not called.
+        /// |tracingFile| is the path at which tracing data will be written and
         /// |callback| is the callback that will be executed once all processes have sent
-        /// their trace data. If |tracing_file| is NULL a new temporary file path will be
+        /// their trace data. If |tracingFile| is NULL a new temporary file path will be
         /// used. If |callback| is NULL no trace data will be written.
         /// This function must be called on the browser process UI thread.
         /// </summary>
@@ -194,12 +194,12 @@ namespace Chromium {
         /// This function should be called from the application entry point function to
         /// execute a secondary process. It can be used to run secondary processes from
         /// the browser client executable (default behavior) or from a separate
-        /// executable specified by the CefSettings.browser_subprocess_path value. If
+        /// executable specified by the CfxSettings.BrowserSubprocessPath value. If
         /// called for the browser process (identified by no "type" command-line value)
         /// it will return immediately with a value of -1. If called for a recognized
         /// secondary process it will block until the process should exit and then return
         /// the process exit code. The |application| parameter may be NULL. The
-        /// |windows_sandbox_info| parameter is only used on Windows and may be NULL (see
+        /// |windowsSandboxInfo| parameter is only used on Windows and may be NULL (see
         /// cef_sandbox_win.h for details).
         /// </summary>
         public static int ExecuteProcess(CfxApp application, IntPtr windowsSandboxInfo) {
@@ -273,7 +273,7 @@ namespace Chromium {
         /// This function should be called on the main application thread to initialize
         /// the CEF browser process. The |application| parameter may be NULL. A return
         /// value of true (1) indicates that it succeeded and false (0) indicates that it
-        /// failed. The |windows_sandbox_info| parameter is only used on Windows and may
+        /// failed. The |windowsSandboxInfo| parameter is only used on Windows and may
         /// be NULL (see cef_sandbox_win.h for details).
         /// </summary>
         public static bool Initialize(CfxSettings settings, CfxApp application, IntPtr windowsSandboxInfo) {
@@ -291,7 +291,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Launches the process specified via |command_line|. Returns true (1) upon
+        /// Launches the process specified via |commandLine|. Returns true (1) upon
         /// success. Must be called on the browser process TID_PROCESS_LAUNCHER thread.
         /// Unix-specific notes: - All file descriptors open in the parent process will
         /// be closed in the
@@ -374,21 +374,21 @@ namespace Chromium {
         /// (function() {
         /// // Define the function 'example.test.myfunction'.
         /// example.test.myfunction = function() {
-        /// // Call CefV8Handler::Execute() with the function name 'MyFunction'
+        /// // Call CfxV8Handler.Execute() with the function name 'MyFunction'
         /// // and no arguments.
         /// native function MyFunction();
         /// return MyFunction();
         /// };
         /// // Define the getter function for parameter 'example.test.myparam'.
         /// example.test.__defineGetter__('myparam', function() {
-        /// // Call CefV8Handler::Execute() with the function name 'GetMyParam'
+        /// // Call CfxV8Handler.Execute() with the function name 'GetMyParam'
         /// // and no arguments.
         /// native function GetMyParam();
         /// return GetMyParam();
         /// });
         /// // Define the setter function for parameter 'example.test.myparam'.
         /// example.test.__defineSetter__('myparam', function(b) {
-        /// // Call CefV8Handler::Execute() with the function name 'SetMyParam'
+        /// // Call CfxV8Handler.Execute() with the function name 'SetMyParam'
         /// // and a single argument.
         /// native function SetMyParam();
         /// if(b) SetMyParam(b);
@@ -422,15 +422,15 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Register a scheme handler factory for the specified |scheme_name| and
-        /// optional |domain_name|. An NULL |domain_name| value for a standard scheme
-        /// will cause the factory to match all domain names. The |domain_name| value
-        /// will be ignored for non-standard schemes. If |scheme_name| is a built-in
+        /// Register a scheme handler factory for the specified |schemeName| and
+        /// optional |domainName|. An NULL |domainName| value for a standard scheme
+        /// will cause the factory to match all domain names. The |domainName| value
+        /// will be ignored for non-standard schemes. If |schemeName| is a built-in
         /// scheme and no handler is returned by |factory| then the built-in scheme
-        /// handler factory will be called. If |scheme_name| is a custom scheme then also
-        /// implement the cef_app_t::on_register_custom_schemes() function in all
+        /// handler factory will be called. If |schemeName| is a custom scheme then also
+        /// implement the CfxApp.OnRegisterCustomSchemes() function in all
         /// processes. This function may be called multiple times to change or remove the
-        /// factory that matches the specified |scheme_name| and optional |domain_name|.
+        /// factory that matches the specified |schemeName| and optional |domainName|.
         /// Returns false (0) if an error occurs. This function may be called on any
         /// thread in the browser process.
         /// </summary>
@@ -455,7 +455,7 @@ namespace Chromium {
 
         /// <summary>
         /// Remove an entry from the cross-origin access whitelist. Returns false (0) if
-        /// |source_origin| is invalid or the whitelist cannot be accessed.
+        /// |sourceOrigin| is invalid or the whitelist cannot be accessed.
         /// </summary>
         public static bool RemoveCrossOriginWhitelistEntry(string sourceOrigin, string targetProtocol, string targetDomain, bool allowTargetSubdomains) {
             var sourceOrigin_pinned = new PinnedString(sourceOrigin);
@@ -484,7 +484,7 @@ namespace Chromium {
         /// provided message loop to get the best balance between performance and CPU
         /// usage. This function should only be called on the main application thread and
         /// only if cef_initialize() is called with a
-        /// CefSettings.multi_threaded_message_loop value of false (0). This function
+        /// CfxSettings.MultiThreadedMessageLoop value of false (0). This function
         /// will block until a quit message is received by the system.
         /// </summary>
         public static void RunMessageLoop() {

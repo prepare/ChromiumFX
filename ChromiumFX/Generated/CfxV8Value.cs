@@ -39,7 +39,7 @@ namespace Chromium {
     /// from the thread on which they are created. Valid threads for creating a V8
     /// handle include the render process main thread (TID_RENDERER) and WebWorker
     /// threads. A task runner for posting tasks on the associated thread can be
-    /// retrieved via the cef_v8context_t::get_task_runner() function.
+    /// retrieved via the CfxV8Context.GetTaskRunner() function.
     /// </summary>
     public class CfxV8Value : CfxBase {
 
@@ -63,59 +63,59 @@ namespace Chromium {
         internal CfxV8Value(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Create a new cef_v8value_t object of type undefined.
+        /// Create a new CfxV8Value object of type undefined.
         /// </summary>
         public static CfxV8Value CreateUndefined() {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_undefined());
         }
 
         /// <summary>
-        /// Create a new cef_v8value_t object of type null.
+        /// Create a new CfxV8Value object of type null.
         /// </summary>
         public static CfxV8Value CreateNull() {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_null());
         }
 
         /// <summary>
-        /// Create a new cef_v8value_t object of type bool.
+        /// Create a new CfxV8Value object of type bool.
         /// </summary>
         public static CfxV8Value CreateBool(bool value) {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_bool(value ? 1 : 0));
         }
 
         /// <summary>
-        /// Create a new cef_v8value_t object of type int.
+        /// Create a new CfxV8Value object of type int.
         /// </summary>
         public static CfxV8Value CreateInt(int value) {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_int(value));
         }
 
         /// <summary>
-        /// Create a new cef_v8value_t object of type unsigned int.
+        /// Create a new CfxV8Value object of type unsigned int.
         /// </summary>
         public static CfxV8Value CreateUint(uint value) {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_uint(value));
         }
 
         /// <summary>
-        /// Create a new cef_v8value_t object of type double.
+        /// Create a new CfxV8Value object of type double.
         /// </summary>
         public static CfxV8Value CreateDouble(double value) {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_double(value));
         }
 
         /// <summary>
-        /// Create a new cef_v8value_t object of type Date. This function should only be
-        /// called from within the scope of a cef_v8context_tHandler, cef_v8handler_t or
-        /// cef_v8accessor_t callback, or in combination with calling enter() and exit()
-        /// on a stored cef_v8context_t reference.
+        /// Create a new CfxV8Value object of type Date. This function should only be
+        /// called from within the scope of a cef_v8context_tHandler, CfxV8Handler or
+        /// CfxV8Accessor callback, or in combination with calling enter() and exit()
+        /// on a stored CfxV8Context reference.
         /// </summary>
         public static CfxV8Value CreateDate(CfxTime date) {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_date(CfxTime.Unwrap(date)));
         }
 
         /// <summary>
-        /// Create a new cef_v8value_t object of type string.
+        /// Create a new CfxV8Value object of type string.
         /// </summary>
         public static CfxV8Value CreateString(string value) {
             var value_pinned = new PinnedString(value);
@@ -125,10 +125,10 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Create a new cef_v8value_t object of type object with optional accessor. This
+        /// Create a new CfxV8Value object of type object with optional accessor. This
         /// function should only be called from within the scope of a
-        /// cef_v8context_tHandler, cef_v8handler_t or cef_v8accessor_t callback, or in
-        /// combination with calling enter() and exit() on a stored cef_v8context_t
+        /// cef_v8context_tHandler, CfxV8Handler or CfxV8Accessor callback, or in
+        /// combination with calling enter() and exit() on a stored CfxV8Context
         /// reference.
         /// </summary>
         public static CfxV8Value CreateObject(CfxV8Accessor accessor) {
@@ -136,21 +136,21 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Create a new cef_v8value_t object of type array with the specified |length|.
+        /// Create a new CfxV8Value object of type array with the specified |length|.
         /// If |length| is negative the returned array will have length 0. This function
         /// should only be called from within the scope of a cef_v8context_tHandler,
-        /// cef_v8handler_t or cef_v8accessor_t callback, or in combination with calling
-        /// enter() and exit() on a stored cef_v8context_t reference.
+        /// CfxV8Handler or CfxV8Accessor callback, or in combination with calling
+        /// enter() and exit() on a stored CfxV8Context reference.
         /// </summary>
         public static CfxV8Value CreateArray(int length) {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_array(length));
         }
 
         /// <summary>
-        /// Create a new cef_v8value_t object of type function. This function should only
-        /// be called from within the scope of a cef_v8context_tHandler, cef_v8handler_t
-        /// or cef_v8accessor_t callback, or in combination with calling enter() and
-        /// exit() on a stored cef_v8context_t reference.
+        /// Create a new CfxV8Value object of type function. This function should only
+        /// be called from within the scope of a cef_v8context_tHandler, CfxV8Handler
+        /// or CfxV8Accessor callback, or in combination with calling enter() and
+        /// exit() on a stored CfxV8Context reference.
         /// </summary>
         public static CfxV8Value CreateFunction(string name, CfxV8Handler handler) {
             var name_pinned = new PinnedString(name);
@@ -527,8 +527,8 @@ namespace Chromium {
 
         /// <summary>
         /// Registers an identifier and returns true (1) on success. Access to the
-        /// identifier will be forwarded to the cef_v8accessor_t instance passed to
-        /// cef_v8value_t::cef_v8value_create_object(). Returns false (0) if this
+        /// identifier will be forwarded to the CfxV8Accessor instance passed to
+        /// CfxV8Value.CfxV8ValueCreateObject(). Returns false (0) if this
         /// function is called incorrectly or an exception is thrown. For read-only
         /// values this function will return true (1) even though assignment failed.
         /// </summary>
@@ -566,10 +566,10 @@ namespace Chromium {
         /// Adjusts the amount of registered external memory for the object. Used to
         /// give V8 an indication of the amount of externally allocated memory that is
         /// kept alive by JavaScript objects. V8 uses this information to decide when
-        /// to perform global garbage collection. Each cef_v8value_t tracks the amount
+        /// to perform global garbage collection. Each CfxV8Value tracks the amount
         /// of external memory associated with it and automatically decreases the
         /// global total by the appropriate amount on its destruction.
-        /// |change_in_bytes| specifies the number of bytes to adjust by. This function
+        /// |changeInBytes| specifies the number of bytes to adjust by. This function
         /// returns the number of bytes associated with the object after the
         /// adjustment. This function can only be called on user created objects.
         /// </summary>
@@ -579,9 +579,9 @@ namespace Chromium {
 
         /// <summary>
         /// Execute the function using the current V8 context. This function should
-        /// only be called from within the scope of a cef_v8handler_t or
-        /// cef_v8accessor_t callback, or in combination with calling enter() and
-        /// exit() on a stored cef_v8context_t reference. |object| is the receiver
+        /// only be called from within the scope of a CfxV8Handler or
+        /// CfxV8Accessor callback, or in combination with calling enter() and
+        /// exit() on a stored CfxV8Context reference. |object| is the receiver
         /// ('this' object) of the function. If |object| is NULL the current context's
         /// global object will be used. |arguments| is the list of arguments that will
         /// be passed to the function. Returns the function return value on success.

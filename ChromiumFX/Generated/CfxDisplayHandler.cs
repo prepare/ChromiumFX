@@ -161,10 +161,10 @@ namespace Chromium {
         private CfxOnTitleChangeEventHandler m_OnTitleChange;
 
         /// <summary>
-        /// Called when the browser is about to display a tooltip. |text| contains the
+        /// Called when the browser is about to display a tooltip. |Text| contains the
         /// text that will be displayed in the tooltip. To handle the display of the
         /// tooltip yourself return true (1). Otherwise, you can optionally modify
-        /// |text| and then return false (0) to allow the browser to display the
+        /// |Text| and then return false (0) to allow the browser to display the
         /// tooltip. When window rendering is disabled the application is responsible
         /// for drawing tooltips and the return value is ignored.
         /// </summary>
@@ -186,7 +186,7 @@ namespace Chromium {
         private CfxOnTooltipEventHandler m_OnTooltip;
 
         /// <summary>
-        /// Called when the browser receives a status message. |value| contains the
+        /// Called when the browser receives a status message. |Value| contains the
         /// text that will be displayed in the status message.
         /// </summary>
         public event CfxOnStatusMessageEventHandler OnStatusMessage {
@@ -344,10 +344,10 @@ namespace Chromium {
     public delegate void CfxOnTooltipEventHandler(object sender, CfxOnTooltipEventArgs e);
 
     /// <summary>
-    /// Called when the browser is about to display a tooltip. |text| contains the
+    /// Called when the browser is about to display a tooltip. |Text| contains the
     /// text that will be displayed in the tooltip. To handle the display of the
     /// tooltip yourself return true (1). Otherwise, you can optionally modify
-    /// |text| and then return false (0) to allow the browser to display the
+    /// |Text| and then return false (0) to allow the browser to display the
     /// tooltip. When window rendering is disabled the application is responsible
     /// for drawing tooltips and the return value is ignored.
     /// </summary>
@@ -407,7 +407,7 @@ namespace Chromium {
     public delegate void CfxOnStatusMessageEventHandler(object sender, CfxOnStatusMessageEventArgs e);
 
     /// <summary>
-    /// Called when the browser receives a status message. |value| contains the
+    /// Called when the browser receives a status message. |Value| contains the
     /// text that will be displayed in the status message.
     /// </summary>
     public class CfxOnStatusMessageEventArgs : CfxEventArgs {

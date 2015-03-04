@@ -80,9 +80,9 @@ namespace Chromium {
 
         /// <summary>
         /// Called when a page requests permission to access geolocation information.
-        /// |requesting_url| is the URL requesting permission and |request_id| is the
+        /// |RequestingUrl| is the URL requesting permission and |RequestId| is the
         /// unique ID for the permission request. Return true (1) and call
-        /// cef_geolocation_callback_t::cont() either in this function or at a later
+        /// CfxGeolocationCallback.Continue() either in this function or at a later
         /// time to continue or cancel the request. Return false (0) to cancel the
         /// request immediately.
         /// </summary>
@@ -104,8 +104,8 @@ namespace Chromium {
         private CfxOnRequestGeolocationPermissionEventHandler m_OnRequestGeolocationPermission;
 
         /// <summary>
-        /// Called when a geolocation access request is canceled. |requesting_url| is
-        /// the URL that originally requested permission and |request_id| is the unique
+        /// Called when a geolocation access request is canceled. |RequestingUrl| is
+        /// the URL that originally requested permission and |RequestId| is the unique
         /// ID for the permission request.
         /// </summary>
         public event CfxOnCancelGeolocationPermissionEventHandler OnCancelGeolocationPermission {
@@ -143,9 +143,9 @@ namespace Chromium {
 
     /// <summary>
     /// Called when a page requests permission to access geolocation information.
-    /// |requesting_url| is the URL requesting permission and |request_id| is the
+    /// |RequestingUrl| is the URL requesting permission and |RequestId| is the
     /// unique ID for the permission request. Return true (1) and call
-    /// cef_geolocation_callback_t::cont() either in this function or at a later
+    /// CfxGeolocationCallback.Continue() either in this function or at a later
     /// time to continue or cancel the request. Return false (0) to cancel the
     /// request immediately.
     /// </summary>
@@ -215,8 +215,8 @@ namespace Chromium {
     public delegate void CfxOnCancelGeolocationPermissionEventHandler(object sender, CfxOnCancelGeolocationPermissionEventArgs e);
 
     /// <summary>
-    /// Called when a geolocation access request is canceled. |requesting_url| is
-    /// the URL that originally requested permission and |request_id| is the unique
+    /// Called when a geolocation access request is canceled. |RequestingUrl| is
+    /// the URL that originally requested permission and |RequestId| is the unique
     /// ID for the permission request.
     /// </summary>
     public class CfxOnCancelGeolocationPermissionEventArgs : CfxEventArgs {

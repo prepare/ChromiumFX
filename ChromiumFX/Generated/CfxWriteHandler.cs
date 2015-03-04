@@ -136,7 +136,7 @@ namespace Chromium {
         private CfxWriteEventHandler m_Write;
 
         /// <summary>
-        /// Seek to the specified offset position. |whence| may be any one of SEEK_CUR,
+        /// Seek to the specified offset position. |Whence| may be any one of SEEK_CUR,
         /// SEEK_END or SEEK_SET. Return zero on success and non-zero on failure.
         /// </summary>
         public event CfxSeekEventHandler Seek {

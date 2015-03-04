@@ -261,8 +261,8 @@ namespace Chromium {
         private CfxGetScreenPointEventHandler m_GetScreenPoint;
 
         /// <summary>
-        /// Called to allow the client to fill in the CefScreenInfo object with
-        /// appropriate values. Return true (1) if the |screen_info| structure has been
+        /// Called to allow the client to fill in the CfxScreenInfo object with
+        /// appropriate values. Return true (1) if the |ScreenInfo| structure has been
         /// modified.
         /// If the screen info rectangle is left NULL the rectangle from GetViewRect
         /// will be used. If the rectangle is still NULL or invalid popups may not be
@@ -287,7 +287,7 @@ namespace Chromium {
 
         /// <summary>
         /// Called when the browser wants to show or hide the popup widget. The popup
-        /// should be shown if |show| is true (1) and hidden if |show| is false (0).
+        /// should be shown if |Show| is true (1) and hidden if |Show| is false (0).
         /// </summary>
         public event CfxOnPopupShowEventHandler OnPopupShow {
             add {
@@ -307,7 +307,7 @@ namespace Chromium {
         private CfxOnPopupShowEventHandler m_OnPopupShow;
 
         /// <summary>
-        /// Called when the browser wants to move or resize the popup widget. |rect|
+        /// Called when the browser wants to move or resize the popup widget. |Rect|
         /// contains the new location and size.
         /// </summary>
         public event CfxOnPopupSizeEventHandler OnPopupSize {
@@ -328,10 +328,10 @@ namespace Chromium {
         private CfxOnPopupSizeEventHandler m_OnPopupSize;
 
         /// <summary>
-        /// Called when an element should be painted. |type| indicates whether the
-        /// element is the view or the popup widget. |buffer| contains the pixel data
-        /// for the whole image. |dirtyRects| contains the set of rectangles that need
-        /// to be repainted. |buffer| will be |width|*|height|*4 bytes in size and
+        /// Called when an element should be painted. |Type| indicates whether the
+        /// element is the view or the popup widget. |Buffer| contains the pixel data
+        /// for the whole image. |DirtyRects| contains the set of rectangles that need
+        /// to be repainted. |Buffer| will be |Width|*|Height|*4 bytes in size and
         /// represents a BGRA image with an upper-left origin.
         /// </summary>
         public event CfxOnPaintEventHandler OnPaint {
@@ -352,8 +352,8 @@ namespace Chromium {
         private CfxOnPaintEventHandler m_OnPaint;
 
         /// <summary>
-        /// Called when the browser's cursor has changed. If |type| is CT_CUSTOM then
-        /// |custom_cursor_info| will be populated with the custom cursor information.
+        /// Called when the browser's cursor has changed. If |Type| is CT_CUSTOM then
+        /// |CustomCursorInfo| will be populated with the custom cursor information.
         /// </summary>
         public event CfxOnCursorChangeEventHandler OnCursorChange {
             add {
@@ -374,12 +374,12 @@ namespace Chromium {
 
         /// <summary>
         /// Called when the user starts dragging content in the web view. Contextual
-        /// information about the dragged content is supplied by |drag_data|. OS APIs
+        /// information about the dragged content is supplied by |DragData|. OS APIs
         /// that run a system message loop may be used within the StartDragging call.
         /// Return false (0) to abort the drag operation. Don't call any of
-        /// cef_browser_host_t::DragSource*Ended* functions after returning false (0).
+        /// CfxBrowserHost.DragSource*Ended* functions after returning false (0).
         /// Return true (1) to handle the drag operation. Call
-        /// cef_browser_host_t::DragSourceEndedAt and DragSourceSystemDragEnded either
+        /// CfxBrowserHost.DragSourceEndedAt and DragSourceSystemDragEnded either
         /// synchronously or asynchronously to inform the web view that the drag
         /// operation has ended.
         /// </summary>
@@ -402,7 +402,7 @@ namespace Chromium {
 
         /// <summary>
         /// Called when the web view wants to update the mouse cursor during a drag &amp;
-        /// drop operation. |operation| describes the allowed operation (none, move,
+        /// drop operation. |Operation| describes the allowed operation (none, move,
         /// copy, link).
         /// </summary>
         public event CfxUpdateDragCursorEventHandler UpdateDragCursor {
@@ -662,8 +662,8 @@ namespace Chromium {
     public delegate void CfxGetScreenInfoEventHandler(object sender, CfxGetScreenInfoEventArgs e);
 
     /// <summary>
-    /// Called to allow the client to fill in the CefScreenInfo object with
-    /// appropriate values. Return true (1) if the |screen_info| structure has been
+    /// Called to allow the client to fill in the CfxScreenInfo object with
+    /// appropriate values. Return true (1) if the |ScreenInfo| structure has been
     /// modified.
     /// If the screen info rectangle is left NULL the rectangle from GetViewRect
     /// will be used. If the rectangle is still NULL or invalid popups may not be
@@ -716,7 +716,7 @@ namespace Chromium {
 
     /// <summary>
     /// Called when the browser wants to show or hide the popup widget. The popup
-    /// should be shown if |show| is true (1) and hidden if |show| is false (0).
+    /// should be shown if |Show| is true (1) and hidden if |Show| is false (0).
     /// </summary>
     public class CfxOnPopupShowEventArgs : CfxEventArgs {
 
@@ -751,7 +751,7 @@ namespace Chromium {
     public delegate void CfxOnPopupSizeEventHandler(object sender, CfxOnPopupSizeEventArgs e);
 
     /// <summary>
-    /// Called when the browser wants to move or resize the popup widget. |rect|
+    /// Called when the browser wants to move or resize the popup widget. |Rect|
     /// contains the new location and size.
     /// </summary>
     public class CfxOnPopupSizeEventArgs : CfxEventArgs {
@@ -789,10 +789,10 @@ namespace Chromium {
     public delegate void CfxOnPaintEventHandler(object sender, CfxOnPaintEventArgs e);
 
     /// <summary>
-    /// Called when an element should be painted. |type| indicates whether the
-    /// element is the view or the popup widget. |buffer| contains the pixel data
-    /// for the whole image. |dirtyRects| contains the set of rectangles that need
-    /// to be repainted. |buffer| will be |width|*|height|*4 bytes in size and
+    /// Called when an element should be painted. |Type| indicates whether the
+    /// element is the view or the popup widget. |Buffer| contains the pixel data
+    /// for the whole image. |DirtyRects| contains the set of rectangles that need
+    /// to be repainted. |Buffer| will be |Width|*|Height|*4 bytes in size and
     /// represents a BGRA image with an upper-left origin.
     /// </summary>
     public class CfxOnPaintEventArgs : CfxEventArgs {
@@ -877,8 +877,8 @@ namespace Chromium {
     public delegate void CfxOnCursorChangeEventHandler(object sender, CfxOnCursorChangeEventArgs e);
 
     /// <summary>
-    /// Called when the browser's cursor has changed. If |type| is CT_CUSTOM then
-    /// |custom_cursor_info| will be populated with the custom cursor information.
+    /// Called when the browser's cursor has changed. If |Type| is CT_CUSTOM then
+    /// |CustomCursorInfo| will be populated with the custom cursor information.
     /// </summary>
     public class CfxOnCursorChangeEventArgs : CfxEventArgs {
 
@@ -932,12 +932,12 @@ namespace Chromium {
 
     /// <summary>
     /// Called when the user starts dragging content in the web view. Contextual
-    /// information about the dragged content is supplied by |drag_data|. OS APIs
+    /// information about the dragged content is supplied by |DragData|. OS APIs
     /// that run a system message loop may be used within the StartDragging call.
     /// Return false (0) to abort the drag operation. Don't call any of
-    /// cef_browser_host_t::DragSource*Ended* functions after returning false (0).
+    /// CfxBrowserHost.DragSource*Ended* functions after returning false (0).
     /// Return true (1) to handle the drag operation. Call
-    /// cef_browser_host_t::DragSourceEndedAt and DragSourceSystemDragEnded either
+    /// CfxBrowserHost.DragSourceEndedAt and DragSourceSystemDragEnded either
     /// synchronously or asynchronously to inform the web view that the drag
     /// operation has ended.
     /// </summary>
@@ -1012,7 +1012,7 @@ namespace Chromium {
 
     /// <summary>
     /// Called when the web view wants to update the mouse cursor during a drag &amp;
-    /// drop operation. |operation| describes the allowed operation (none, move,
+    /// drop operation. |Operation| describes the allowed operation (none, move,
     /// copy, link).
     /// </summary>
     public class CfxUpdateDragCursorEventArgs : CfxEventArgs {

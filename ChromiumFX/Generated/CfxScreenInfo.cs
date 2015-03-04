@@ -36,7 +36,7 @@ using System;
 namespace Chromium {
     /// <summary>
     /// Screen information used when window rendering is disabled. This structure is
-    /// passed as a parameter to CefRenderHandler::GetScreenInfo and should be filled
+    /// passed as a parameter to CfxRenderHandler.GetScreenInfo and should be filled
     /// in by the client.
     /// </summary>
     public sealed class CfxScreenInfo : CfxStructure {
@@ -119,7 +119,7 @@ namespace Chromium {
         /// expressed in virtual-screen coordinates. Note that if the monitor
         /// is not the primary display monitor, some of the rectangle's
         /// coordinates may be negative values."
-        /// The |rect| and |available_rect| properties are used to determine the
+        /// The |rect| and |availableRect| properties are used to determine the
         /// available surface for rendering popup views.
         /// </summary>
         public CfxRect Rect {
@@ -142,7 +142,7 @@ namespace Chromium {
         /// rcMonitor contains system windows such as the task bar and side
         /// bars. Note that if the monitor is not the primary display monitor,
         /// some of the rectangle's coordinates may be negative values".
-        /// The |rect| and |available_rect| properties are used to determine the
+        /// The |rect| and |availableRect| properties are used to determine the
         /// available surface for rendering popup views.
         /// </summary>
         public CfxRect AvailableRect {

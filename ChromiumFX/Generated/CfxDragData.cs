@@ -60,7 +60,7 @@ namespace Chromium {
         internal CfxDragData(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Create a new cef_drag_data_t object.
+        /// Create a new CfxDragData object.
         /// </summary>
         public static CfxDragData Create() {
             return CfxDragData.Wrap(CfxApi.cfx_drag_data_create());
@@ -241,7 +241,7 @@ namespace Chromium {
 
         /// <summary>
         /// Reset the file contents. You should do this before calling
-        /// cef_browser_host_t::DragTargetDragEnter as the web view does not allow us
+        /// CfxBrowserHost.DragTargetDragEnter as the web view does not allow us
         /// to drag in this kind of data.
         /// </summary>
         public void ResetFileContents() {
