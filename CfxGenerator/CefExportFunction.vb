@@ -111,7 +111,7 @@ Public Class CefExportFunction
     End Sub
 
     Public Sub EmitRemoteFunction(b As CodeBuilder)
-        b.AppendSummary(Comments)
+        b.AppendSummary(Comments, True)
 
         If Parent Is Nothing Then
             b.BeginFunction(PublicFunctionName, ReturnType.RemoteSymbol, Signature.RemoteSignature)

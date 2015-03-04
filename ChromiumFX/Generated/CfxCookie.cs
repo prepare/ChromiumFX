@@ -139,7 +139,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// If |httponly| is true the cookie will only be sent for HTTP requests.
+        /// If |httpOnly| is true the cookie will only be sent for HTTP requests.
         /// </summary>
         public bool HttpOnly {
             get {
@@ -183,7 +183,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// The cookie expiration date is only valid if |has_expires| is true.
+        /// The cookie expiration date is only valid if |hasExpires| is true.
         /// </summary>
         public bool HasExpires {
             get {

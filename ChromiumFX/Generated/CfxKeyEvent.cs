@@ -69,7 +69,7 @@ namespace Chromium {
 
         /// <summary>
         /// Bit flags describing any pressed modifier keys. See
-        /// cef_event_flags_t for values.
+        /// CfxEventFlags for values.
         /// </summary>
         public uint Modifiers {
             get {

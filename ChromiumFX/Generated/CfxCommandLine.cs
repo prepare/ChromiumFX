@@ -66,14 +66,14 @@ namespace Chromium {
         internal CfxCommandLine(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Create a new cef_command_line_t instance.
+        /// Create a new CfxCommandLine instance.
         /// </summary>
         public static CfxCommandLine Create() {
             return CfxCommandLine.Wrap(CfxApi.cfx_command_line_create());
         }
 
         /// <summary>
-        /// Returns the singleton global cef_command_line_t object. The returned object
+        /// Returns the singleton global CfxCommandLine object. The returned object
         /// will be read-only.
         /// </summary>
         public static CfxCommandLine GetGlobal() {

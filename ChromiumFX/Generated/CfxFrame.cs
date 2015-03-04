@@ -239,7 +239,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Load the contents of |string_val| with the specified dummy |url|. |url|
+        /// Load the contents of |stringVal| with the specified dummy |url|. |url|
         /// should have a standard scheme (for example, http scheme) or behaviors like
         /// link clicks and web security restrictions may not behave as expected.
         /// </summary>
@@ -252,10 +252,10 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Execute a string of JavaScript code in this frame. The |script_url|
+        /// Execute a string of JavaScript code in this frame. The |scriptUrl|
         /// parameter is the URL where the script in question can be found, if any. The
         /// renderer may request this URL to show the developer the source of the
-        /// error.  The |start_line| parameter is the base line number to use for error
+        /// error.  The |startLine| parameter is the base line number to use for error
         /// reporting.
         /// </summary>
         public void ExecuteJavaScript(string code, string scriptUrl, int startLine) {

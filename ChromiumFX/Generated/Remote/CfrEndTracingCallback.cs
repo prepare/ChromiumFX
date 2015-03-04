@@ -60,9 +60,9 @@ namespace Chromium.Remote {
         private CfrEndTracingCallback(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) {}
 
         /// <summary>
-        /// Called after all processes have sent their trace data. |tracing_file| is
+        /// Called after all processes have sent their trace data. |tracingFile| is
         /// the path at which tracing data was written. The client is responsible for
-        /// deleting |tracing_file|.
+        /// deleting |tracingFile|.
         /// </summary>
         public void OnEndTracingComplete(string tracingFile) {
             var call = new CfxEndTracingCallbackOnEndTracingCompleteRenderProcessCall();

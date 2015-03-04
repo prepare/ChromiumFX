@@ -139,8 +139,8 @@ namespace Chromium {
 
         /// <summary>
         /// Begin processing the request. To handle the request return true (1) and
-        /// call cef_callback_t::cont() once the response header information is
-        /// available (cef_callback_t::cont() can also be called from inside this
+        /// call CfxCallback.Continue() once the response header information is
+        /// available (CfxCallback.Continue() can also be called from inside this
         /// function if header information is available immediately). To cancel the
         /// request return false (0).
         /// </summary>
@@ -163,12 +163,12 @@ namespace Chromium {
 
         /// <summary>
         /// Retrieve response header information. If the response length is not known
-        /// set |response_length| to -1 and read_response() will be called until it
-        /// returns false (0). If the response length is known set |response_length| to
+        /// set |ResponseLength| to -1 and read_response() will be called until it
+        /// returns false (0). If the response length is known set |ResponseLength| to
         /// a positive value and read_response() will be called until it returns false
-        /// (0) or the specified number of bytes have been read. Use the |response|
+        /// (0) or the specified number of bytes have been read. Use the |Response|
         /// object to set the mime type, http status code and other optional header
-        /// values. To redirect the request to a new URL set |redirectUrl| to the new
+        /// values. To redirect the request to a new URL set |RedirectUrl| to the new
         /// URL.
         /// </summary>
         public event CfxGetResponseHeadersEventHandler GetResponseHeaders {
@@ -190,9 +190,9 @@ namespace Chromium {
 
         /// <summary>
         /// Read response data. If data is available immediately copy up to
-        /// |bytes_to_read| bytes into |data_out|, set |bytes_read| to the number of
+        /// |BytesToRead| bytes into |DataOut|, set |BytesRead| to the number of
         /// bytes copied, and return true (1). To read the data at a later time set
-        /// |bytes_read| to 0, return true (1) and call cef_callback_t::cont() when the
+        /// |BytesRead| to 0, return true (1) and call CfxCallback.Continue() when the
         /// data is available. To indicate response completion return false (0).
         /// </summary>
         public event CfxReadResponseEventHandler ReadResponse {
@@ -309,8 +309,8 @@ namespace Chromium {
 
     /// <summary>
     /// Begin processing the request. To handle the request return true (1) and
-    /// call cef_callback_t::cont() once the response header information is
-    /// available (cef_callback_t::cont() can also be called from inside this
+    /// call CfxCallback.Continue() once the response header information is
+    /// available (CfxCallback.Continue() can also be called from inside this
     /// function if header information is available immediately). To cancel the
     /// request return false (0).
     /// </summary>
@@ -361,12 +361,12 @@ namespace Chromium {
 
     /// <summary>
     /// Retrieve response header information. If the response length is not known
-    /// set |response_length| to -1 and read_response() will be called until it
-    /// returns false (0). If the response length is known set |response_length| to
+    /// set |ResponseLength| to -1 and read_response() will be called until it
+    /// returns false (0). If the response length is known set |ResponseLength| to
     /// a positive value and read_response() will be called until it returns false
-    /// (0) or the specified number of bytes have been read. Use the |response|
+    /// (0) or the specified number of bytes have been read. Use the |Response|
     /// object to set the mime type, http status code and other optional header
-    /// values. To redirect the request to a new URL set |redirectUrl| to the new
+    /// values. To redirect the request to a new URL set |RedirectUrl| to the new
     /// URL.
     /// </summary>
     public class CfxGetResponseHeadersEventArgs : CfxEventArgs {
@@ -422,9 +422,9 @@ namespace Chromium {
 
     /// <summary>
     /// Read response data. If data is available immediately copy up to
-    /// |bytes_to_read| bytes into |data_out|, set |bytes_read| to the number of
+    /// |BytesToRead| bytes into |DataOut|, set |BytesRead| to the number of
     /// bytes copied, and return true (1). To read the data at a later time set
-    /// |bytes_read| to 0, return true (1) and call cef_callback_t::cont() when the
+    /// |BytesRead| to 0, return true (1) and call CfxCallback.Continue() when the
     /// data is available. To indicate response completion return false (0).
     /// </summary>
     public class CfxReadResponseEventArgs : CfxEventArgs {

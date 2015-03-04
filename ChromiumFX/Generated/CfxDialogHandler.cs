@@ -66,14 +66,14 @@ namespace Chromium {
         public CfxDialogHandler() : base(CfxApi.cfx_dialog_handler_ctor) {}
 
         /// <summary>
-        /// Called to run a file chooser dialog. |mode| represents the type of dialog
-        /// to display. |title| to the title to be used for the dialog and may be NULL
+        /// Called to run a file chooser dialog. |Mode| represents the type of dialog
+        /// to display. |Title| to the title to be used for the dialog and may be NULL
         /// to show the default title ("Open" or "Save" depending on the mode).
-        /// |default_file_name| is the default file name to select in the dialog.
-        /// |accept_types| is a list of valid lower-cased MIME types or file extensions
+        /// |DefaultFileName| is the default file name to select in the dialog.
+        /// |AcceptTypes| is a list of valid lower-cased MIME types or file extensions
         /// specified in an input element and is used to restrict selectable files to
         /// such types. To display a custom dialog return true (1) and execute
-        /// |callback| either inline or at a later time. To display the default dialog
+        /// |Callback| either inline or at a later time. To display the default dialog
         /// return false (0).
         /// </summary>
         public event CfxDialogHandlerOnFileDialogEventHandler OnFileDialog {
@@ -106,14 +106,14 @@ namespace Chromium {
     public delegate void CfxDialogHandlerOnFileDialogEventHandler(object sender, CfxDialogHandlerOnFileDialogEventArgs e);
 
     /// <summary>
-    /// Called to run a file chooser dialog. |mode| represents the type of dialog
-    /// to display. |title| to the title to be used for the dialog and may be NULL
+    /// Called to run a file chooser dialog. |Mode| represents the type of dialog
+    /// to display. |Title| to the title to be used for the dialog and may be NULL
     /// to show the default title ("Open" or "Save" depending on the mode).
-    /// |default_file_name| is the default file name to select in the dialog.
-    /// |accept_types| is a list of valid lower-cased MIME types or file extensions
+    /// |DefaultFileName| is the default file name to select in the dialog.
+    /// |AcceptTypes| is a list of valid lower-cased MIME types or file extensions
     /// specified in an input element and is used to restrict selectable files to
     /// such types. To display a custom dialog return true (1) and execute
-    /// |callback| either inline or at a later time. To display the default dialog
+    /// |Callback| either inline or at a later time. To display the default dialog
     /// return false (0).
     /// </summary>
     public class CfxDialogHandlerOnFileDialogEventArgs : CfxEventArgs {

@@ -117,8 +117,8 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Read up to |buffer_size| number of bytes into |buffer|. Reading begins at
-        /// the specified byte |data_offset|. Returns the number of bytes read.
+        /// Read up to |bufferSize| number of bytes into |buffer|. Reading begins at
+        /// the specified byte |dataOffset|. Returns the number of bytes read.
         /// </summary>
         public int GetData(RemotePtr buffer, int bufferSize, int dataOffset) {
             var call = new CfxBinaryValueGetDataRenderProcessCall();

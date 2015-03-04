@@ -102,8 +102,8 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Read up to |buffer_size| number of bytes into |buffer|. Reading begins at
-        /// the specified byte |data_offset|. Returns the number of bytes read.
+        /// Read up to |bufferSize| number of bytes into |buffer|. Reading begins at
+        /// the specified byte |dataOffset|. Returns the number of bytes read.
         /// </summary>
         public int GetData(IntPtr buffer, int bufferSize, int dataOffset) {
             return CfxApi.cfx_binary_value_get_data(NativePtr, buffer, bufferSize, dataOffset);

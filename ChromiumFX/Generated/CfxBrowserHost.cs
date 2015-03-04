@@ -64,7 +64,7 @@ namespace Chromium {
         /// <summary>
         /// Create a new browser window using the window parameters specified by
         /// |windowInfo|. All values will be copied internally and the actual window will
-        /// be created on the UI thread. If |request_context| is NULL the global request
+        /// be created on the UI thread. If |requestContext| is NULL the global request
         /// context will be used. This function can be called on any browser process
         /// thread and will not block.
         /// </summary>
@@ -77,7 +77,7 @@ namespace Chromium {
 
         /// <summary>
         /// Create a new browser window using the window parameters specified by
-        /// |windowInfo|. If |request_context| is NULL the global request context will be
+        /// |windowInfo|. If |requestContext| is NULL the global request context will be
         /// used. This function can only be called on the browser process UI thread.
         /// </summary>
         public static CfxBrowser CreateBrowserSync(CfxWindowInfo windowInfo, CfxClient client, string url, CfxBrowserSettings settings, CfxRequestContext requestContext) {
@@ -181,12 +181,12 @@ namespace Chromium {
 
         /// <summary>
         /// Request that the browser close. The JavaScript 'onbeforeunload' event will
-        /// be fired. If |force_close| is false (0) the event handler, if any, will be
+        /// be fired. If |forceClose| is false (0) the event handler, if any, will be
         /// allowed to prompt the user and the user can optionally cancel the close. If
-        /// |force_close| is true (1) the prompt will not be displayed and the close
-        /// will proceed. Results in a call to cef_life_span_handler_t::do_close() if
-        /// the event handler allows the close or if |force_close| is true (1). See
-        /// cef_life_span_handler_t::do_close() documentation for additional usage
+        /// |forceClose| is true (1) the prompt will not be displayed and the close
+        /// will proceed. Results in a call to CfxLifeSpanHandler.DoClose() if
+        /// the event handler allows the close or if |forceClose| is true (1). See
+        /// CfxLifeSpanHandler.DoClose() documentation for additional usage
         /// information.
         /// </summary>
         public void CloseBrowser(bool forceClose) {
@@ -212,8 +212,8 @@ namespace Chromium {
         /// Call to run a file chooser dialog. Only a single file chooser dialog may be
         /// pending at any given time. |mode| represents the type of dialog to display.
         /// |title| to the title to be used for the dialog and may be NULL to show the
-        /// default title ("Open" or "Save" depending on the mode). |default_file_name|
-        /// is the default file name to select in the dialog. |accept_types| is a list
+        /// default title ("Open" or "Save" depending on the mode). |defaultFileName|
+        /// is the default file name to select in the dialog. |acceptTypes| is a list
         /// of valid lower-cased MIME types or file extensions specified in an input
         /// element and is used to restrict selectable files to such types. |callback|
         /// will be executed after the dialog is dismissed or immediately if another
@@ -234,7 +234,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Download the file at |url| using cef_download_handler_t.
+        /// Download the file at |url| using CfxDownloadHandler.
         /// </summary>
         public void StartDownload(string url) {
             var url_pinned = new PinnedString(url);
@@ -270,7 +270,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Open developer tools in its own window. If |inspect_element_at| is non-
+        /// Open developer tools in its own window. If |inspectElementAt| is non-
         /// NULL the element at the specified (x,y) location will be inspected.
         /// </summary>
         public void ShowDevTools(CfxWindowInfo windowInfo, CfxClient client, CfxBrowserSettings settings, CfxPoint inspectElementAt) {
@@ -287,7 +287,7 @@ namespace Chromium {
 
         /// <summary>
         /// Retrieve a snapshot of current navigation entries as values sent to the
-        /// specified visitor. If |current_only| is true (1) only the current
+        /// specified visitor. If |currentOnly| is true (1) only the current
         /// navigation entry will be sent, otherwise all navigation entries will be
         /// sent.
         /// </summary>
@@ -323,8 +323,8 @@ namespace Chromium {
 
         /// <summary>
         /// Notify the browser that the widget has been resized. The browser will first
-        /// call cef_render_handler_t::GetViewRect to get the new size and then call
-        /// cef_render_handler_t::OnPaint asynchronously with the updated regions. This
+        /// call CfxRenderHandler.GetViewRect to get the new size and then call
+        /// CfxRenderHandler.OnPaint asynchronously with the updated regions. This
         /// function is only used when window rendering is disabled.
         /// </summary>
         public void WasResized() {
@@ -333,7 +333,7 @@ namespace Chromium {
 
         /// <summary>
         /// Notify the browser that it has been hidden or shown. Layouting and
-        /// cef_render_handler_t::OnPaint notification will stop when the browser is
+        /// CfxRenderHandler.OnPaint notification will stop when the browser is
         /// hidden. This function is only used when window rendering is disabled.
         /// </summary>
         public void WasHidden(bool hidden) {
@@ -342,7 +342,7 @@ namespace Chromium {
 
         /// <summary>
         /// Send a notification to the browser that the screen info has changed. The
-        /// browser will then call cef_render_handler_t::GetScreenInfo to update the
+        /// browser will then call CfxRenderHandler.GetScreenInfo to update the
         /// screen information with the new values. This simulates moving the webview
         /// window from one display to another, or changing the properties of the
         /// current display. This function is only used when window rendering is
@@ -353,7 +353,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Invalidate the view. The browser will call cef_render_handler_t::OnPaint
+        /// Invalidate the view. The browser will call CfxRenderHandler.OnPaint
         /// asynchronously. This function is only used when window rendering is
         /// disabled.
         /// </summary>
@@ -389,7 +389,7 @@ namespace Chromium {
         /// relative to the upper-left corner of the view. The |deltaX| and |deltaY|
         /// values represent the movement delta in the X and Y directions respectively.
         /// In order to scroll inside select popups with window rendering disabled
-        /// cef_render_handler_t::GetScreenPoint should be implemented properly.
+        /// CfxRenderHandler.GetScreenPoint should be implemented properly.
         /// </summary>
         public void SendMouseWheelEvent(CfxMouseEvent @event, int deltaX, int deltaY) {
             CfxApi.cfx_browser_host_send_mouse_wheel_event(NativePtr, CfxMouseEvent.Unwrap(@event), deltaX, deltaY);
@@ -434,11 +434,11 @@ namespace Chromium {
 
         /// <summary>
         /// Call this function when the user drags the mouse into the web view (before
-        /// calling DragTargetDragOver/DragTargetLeave/DragTargetDrop). |drag_data|
+        /// calling DragTargetDragOver/DragTargetLeave/DragTargetDrop). |dragData|
         /// should not contain file contents as this type of data is not allowed to be
         /// dragged into the web view. File contents can be removed using
-        /// cef_drag_data_t::ResetFileContents (for example, if |drag_data| comes from
-        /// cef_render_handler_t::StartDragging). This function is only used when
+        /// CfxDragData.ResetFileContents (for example, if |dragData| comes from
+        /// CfxRenderHandler.StartDragging). This function is only used when
         /// window rendering is disabled.
         /// </summary>
         public void DragTargetDragEnter(CfxDragData dragData, CfxMouseEvent @event, CfxDragOperationsMask allowedOps) {
@@ -467,7 +467,7 @@ namespace Chromium {
         /// <summary>
         /// Call this function when the user completes the drag operation by dropping
         /// the object onto the web view (after calling DragTargetDragEnter). The
-        /// object being dropped is |drag_data|, given as an argument to the previous
+        /// object being dropped is |dragData|, given as an argument to the previous
         /// DragTargetDragEnter call. This function is only used when window rendering
         /// is disabled.
         /// </summary>
@@ -477,7 +477,7 @@ namespace Chromium {
 
         /// <summary>
         /// Call this function when the drag operation started by a
-        /// cef_render_handler_t::StartDragging call has ended either in a drop or by
+        /// CfxRenderHandler.StartDragging call has ended either in a drop or by
         /// being cancelled. |x| and |y| are mouse coordinates relative to the upper-
         /// left corner of the view. If the web view is both the drag source and the
         /// drag target then all DragTarget* functions should be called before
@@ -490,7 +490,7 @@ namespace Chromium {
 
         /// <summary>
         /// Call this function when the drag operation started by a
-        /// cef_render_handler_t::StartDragging call has completed. This function may
+        /// CfxRenderHandler.StartDragging call has completed. This function may
         /// be called immediately without first calling DragSourceEndedAt to cancel a
         /// drag operation. If the web view is both the drag source and the drag target
         /// then all DragTarget* functions should be called before DragSource* mthods.

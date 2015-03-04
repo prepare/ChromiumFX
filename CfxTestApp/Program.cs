@@ -82,6 +82,7 @@ namespace CfxTestApplication {
 
 
             Chromium.WebBrowser.ChromiumWebBrowser.OnBeforeCfxInitialize += ChromiumWebBrowser_OnBeforeCfxInitialize;
+            ChromiumWebBrowser.OnBeforeCommandLineProcessing += ChromiumWebBrowser_OnBeforeCommandLineProcessing;
             Chromium.WebBrowser.ChromiumWebBrowser.Initialize();
 
             //Walkthrough01.Main();
@@ -95,6 +96,11 @@ namespace CfxTestApplication {
 
             CfxRuntime.Shutdown();
 
+        }
+
+        static void ChromiumWebBrowser_OnBeforeCommandLineProcessing(CfxOnBeforeCommandLineProcessingEventArgs e) {
+            Console.WriteLine("ChromiumWebBrowser_OnBeforeCommandLineProcessing");
+            Console.WriteLine(e.CommandLine.CommandLineString);
         }
 
         static void ChromiumWebBrowser_OnBeforeCfxInitialize(OnBeforeCfxInitializeEventArgs e) {

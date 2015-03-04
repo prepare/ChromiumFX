@@ -53,22 +53,36 @@ namespace Chromium.WebBrowser {
         }
 
         /// <summary>
-        /// Gives the application an opportunity to change initialization settings,
-        /// subscribe to browser process handler events and provide 
-        /// an event handler for OnBeforeCommandLineProcessing events.
+        /// Provides an opportunity to change initialization settings
+        /// and subscribe to browser process handler events.
         /// </summary>
         public static event OnBeforeCfxInitializeEventHandler OnBeforeCfxInitialize;
-        internal static void RaiseOnBeforeCfxInitialize(CfxSettings settings, CfxBrowserProcessHandler processHandler, out CfxOnBeforeCommandLineProcessingEventHandler onBeforeCommandLineProcessingEventHandler) {
+        internal static void RaiseOnBeforeCfxInitialize(CfxSettings settings, CfxBrowserProcessHandler processHandler) {
             var handler = OnBeforeCfxInitialize;
             if(handler != null) {
                 var e = new OnBeforeCfxInitializeEventArgs(settings, processHandler);
                 handler(e);
-                onBeforeCommandLineProcessingEventHandler = e.m_onBeforeCommandLineProcessingEventHandler;
-            } else {
-                onBeforeCommandLineProcessingEventHandler = null;
             }
         }
-        
+
+        /// <summary>
+        /// Provides an opportunity to view and/or modify command-line arguments before
+        /// processing by CEF and Chromium. The |ProcessType| value will be NULL for
+        /// the browser process. Do not keep a reference to the CfxCommandLine
+        /// object passed to this function. The CfxSettings.CommandLineArgsDisabled
+        /// value can be used to start with an NULL command-line object. Any values
+        /// specified in CfxSettings that equate to command-line arguments will be set
+        /// before this function is called. Be cautious when using this function to
+        /// modify command-line arguments for non-browser processes as this may result
+        /// in undefined behavior including crashes.
+        /// </summary>
+        public static event OnBeforeCommandLineProcessingEventHandler OnBeforeCommandLineProcessing;
+        internal static void RaiseOnBeforeCommandLineProcessing(CfxOnBeforeCommandLineProcessingEventArgs e) {
+            var handler = OnBeforeCommandLineProcessing;
+            if(handler != null) {
+                handler(e);
+            }
+        }
 
         /// <summary>
         /// Initialize the ChromiumWebBrowser and ChromiumFX libraries.
@@ -652,11 +666,11 @@ namespace Chromium.WebBrowser {
 
 
         /// <summary>
-        /// Called before a context menu is displayed. |params| provides information
-        /// about the context menu state. |model| initially contains the default
-        /// context menu. The |model| can be cleared to show no context menu or
-        /// modified to show a custom menu. Do not keep references to |params| or
-        /// |model| outside of this callback.
+        /// Called before a context menu is displayed. |Params| provides information
+        /// about the context menu state. |Model| initially contains the default
+        /// context menu. The |Model| can be cleared to show no context menu or
+        /// modified to show a custom menu. Do not keep references to |Params| or
+        /// |Model| outside of this callback.
         /// The event is executed on the thread that owns this browser control's 
         /// underlying window handle.
         /// </summary>
@@ -689,10 +703,10 @@ namespace Chromium.WebBrowser {
         /// <summary>
         /// Called to execute a command selected from the context menu. Return true (1)
         /// if the command was handled or false (0) for the default implementation. See
-        /// cef_menu_id_t for the command ids that have default implementations. All
+        /// CfxMenuId for the command ids that have default implementations. All
         /// user-defined command ids should be between MENU_ID_USER_FIRST and
-        /// MENU_ID_USER_LAST. |params| will have the same values as what was passed to
-        /// on_before_context_menu(). Do not keep a reference to |params| outside of
+        /// MENU_ID_USER_LAST. |Params| will have the same values as what was passed to
+        /// on_before_context_menu(). Do not keep a reference to |Params| outside of
         /// this callback.
         /// The event is executed on the thread that owns this browser control's 
         /// underlying window handle.

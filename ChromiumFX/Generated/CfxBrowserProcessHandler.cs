@@ -133,7 +133,7 @@ namespace Chromium {
         /// process UI thread when launching a render process and on the browser
         /// process IO thread when launching a GPU or plugin process. Provides an
         /// opportunity to modify the child process command line. Do not keep a
-        /// reference to |command_line| outside of this function.
+        /// reference to |CommandLine| outside of this function.
         /// </summary>
         public event CfxOnBeforeChildProcessLaunchEventHandler OnBeforeChildProcessLaunch {
             add {
@@ -156,8 +156,8 @@ namespace Chromium {
         /// Called on the browser process IO thread after the main thread has been
         /// created for a new render process. Provides an opportunity to specify extra
         /// information that will be passed to
-        /// cef_render_process_handler_t::on_render_thread_created() in the render
-        /// process. Do not keep a reference to |extra_info| outside of this function.
+        /// CfxRenderProcessHandler.OnRenderThreadCreated() in the render
+        /// process. Do not keep a reference to |ExtraInfo| outside of this function.
         /// </summary>
         public event CfxOnRenderProcessThreadCreatedEventHandler OnRenderProcessThreadCreated {
             add {
@@ -227,7 +227,7 @@ namespace Chromium {
     /// process UI thread when launching a render process and on the browser
     /// process IO thread when launching a GPU or plugin process. Provides an
     /// opportunity to modify the child process command line. Do not keep a
-    /// reference to |command_line| outside of this function.
+    /// reference to |CommandLine| outside of this function.
     /// </summary>
     public class CfxOnBeforeChildProcessLaunchEventArgs : CfxEventArgs {
 
@@ -257,8 +257,8 @@ namespace Chromium {
     /// Called on the browser process IO thread after the main thread has been
     /// created for a new render process. Provides an opportunity to specify extra
     /// information that will be passed to
-    /// cef_render_process_handler_t::on_render_thread_created() in the render
-    /// process. Do not keep a reference to |extra_info| outside of this function.
+    /// CfxRenderProcessHandler.OnRenderThreadCreated() in the render
+    /// process. Do not keep a reference to |ExtraInfo| outside of this function.
     /// </summary>
     public class CfxOnRenderProcessThreadCreatedEventArgs : CfxEventArgs {
 

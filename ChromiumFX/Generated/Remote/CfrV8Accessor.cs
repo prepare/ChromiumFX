@@ -36,7 +36,7 @@ using System;
 namespace Chromium.Remote {
     /// <summary>
     /// Structure that should be implemented to handle V8 accessor calls. Accessor
-    /// identifiers are registered by calling cef_v8value_t::set_value_byaccessor().
+    /// identifiers are registered by calling CfrV8Value.SetValueByAccessor().
     /// The functions of this structure will be called on the thread associated with
     /// the V8 accessor.
     /// </summary>
@@ -82,9 +82,9 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Handle retrieval the accessor value identified by |name|. |object| is the
+        /// Handle retrieval the accessor value identified by |Name|. |Object| is the
         /// receiver ('this' object) of the accessor. If retrieval succeeds set
-        /// |retval| to the return value. If retrieval fails set |exception| to the
+        /// |Retval| to the return value. If retrieval fails set |Exception| to the
         /// exception that will be thrown. Return true (1) if accessor retrieval was
         /// handled.
         /// </summary>
@@ -111,9 +111,9 @@ namespace Chromium.Remote {
 
 
         /// <summary>
-        /// Handle assignment of the accessor value identified by |name|. |object| is
-        /// the receiver ('this' object) of the accessor. |value| is the new value
-        /// being assigned to the accessor. If assignment fails set |exception| to the
+        /// Handle assignment of the accessor value identified by |Name|. |Object| is
+        /// the receiver ('this' object) of the accessor. |Value| is the new value
+        /// being assigned to the accessor. If assignment fails set |Exception| to the
         /// exception that will be thrown. Return true (1) if accessor assignment was
         /// handled.
         /// </summary>
@@ -148,9 +148,9 @@ namespace Chromium.Remote {
     public delegate void CfrV8AccessorGetEventHandler(object sender, CfrV8AccessorGetEventArgs e);
 
     /// <summary>
-    /// Handle retrieval the accessor value identified by |name|. |object| is the
+    /// Handle retrieval the accessor value identified by |Name|. |Object| is the
     /// receiver ('this' object) of the accessor. If retrieval succeeds set
-    /// |retval| to the return value. If retrieval fails set |exception| to the
+    /// |Retval| to the return value. If retrieval fails set |Exception| to the
     /// exception that will be thrown. Return true (1) if accessor retrieval was
     /// handled.
     /// </summary>
@@ -237,9 +237,9 @@ namespace Chromium.Remote {
     public delegate void CfrV8AccessorSetEventHandler(object sender, CfrV8AccessorSetEventArgs e);
 
     /// <summary>
-    /// Handle assignment of the accessor value identified by |name|. |object| is
-    /// the receiver ('this' object) of the accessor. |value| is the new value
-    /// being assigned to the accessor. If assignment fails set |exception| to the
+    /// Handle assignment of the accessor value identified by |Name|. |Object| is
+    /// the receiver ('this' object) of the accessor. |Value| is the new value
+    /// being assigned to the accessor. If assignment fails set |Exception| to the
     /// exception that will be thrown. Return true (1) if accessor assignment was
     /// handled.
     /// </summary>

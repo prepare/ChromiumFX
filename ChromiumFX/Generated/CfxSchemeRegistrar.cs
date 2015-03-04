@@ -61,7 +61,7 @@ namespace Chromium {
         /// <summary>
         /// Register a custom scheme. This function should not be called for the built-
         /// in HTTP, HTTPS, FILE, FTP, ABOUT and DATA schemes.
-        /// If |is_standard| is true (1) the scheme will be treated as a standard
+        /// If |isStandard| is true (1) the scheme will be treated as a standard
         /// scheme. Standard schemes are subject to URL canonicalization and parsing
         /// rules as defined in the Common Internet Scheme Syntax RFC 1738 Section 3.1
         /// available at http://www.ietf.org/rfc/rfc1738.txt
@@ -81,21 +81,21 @@ namespace Chromium {
         /// canonicalized. The remainder of the URL will be passed to the handler as-
         /// is. For example, "scheme:///some%20text" will remain the same. Non-standard
         /// scheme URLs cannot be used as a target for form submission.
-        /// If |is_local| is true (1) the scheme will be treated as local (i.e., with
+        /// If |isLocal| is true (1) the scheme will be treated as local (i.e., with
         /// the same security rules as those applied to "file" URLs). Normal pages
         /// cannot link to or access local URLs. Also, by default, local URLs can only
         /// perform XMLHttpRequest calls to the same URL (origin + path) that
         /// originated the request. To allow XMLHttpRequest calls from a local URL to
         /// other URLs with the same origin set the
-        /// CefSettings.file_access_from_file_urls_allowed value to true (1). To allow
+        /// CfxSettings.FileAccessFromFileUrlsAllowed value to true (1). To allow
         /// XMLHttpRequest calls from a local URL to all origins set the
-        /// CefSettings.universal_access_from_file_urls_allowed value to true (1).
-        /// If |is_display_isolated| is true (1) the scheme will be treated as display-
+        /// CfxSettings.UniversalAccessFromFileUrlsAllowed value to true (1).
+        /// If |isDisplayIsolated| is true (1) the scheme will be treated as display-
         /// isolated. This means that pages cannot display these URLs unless they are
         /// from the same scheme. For example, pages in another origin cannot create
         /// iframes or hyperlinks to URLs with this scheme.
         /// This function may be called on any thread. It should only be called once
-        /// per unique |scheme_name| value. If |scheme_name| is already registered or
+        /// per unique |schemeName| value. If |schemeName| is already registered or
         /// if an error occurs this function will return false (0).
         /// </summary>
         public bool AddCustomScheme(string schemeName, bool isStandard, bool isLocal, bool isDisplayIsolated) {

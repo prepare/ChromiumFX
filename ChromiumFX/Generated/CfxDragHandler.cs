@@ -66,8 +66,8 @@ namespace Chromium {
         public CfxDragHandler() : base(CfxApi.cfx_drag_handler_ctor) {}
 
         /// <summary>
-        /// Called when an external drag event enters the browser window. |dragData|
-        /// contains the drag event data and |mask| represents the type of drag
+        /// Called when an external drag event enters the browser window. |DragData|
+        /// contains the drag event data and |Mask| represents the type of drag
         /// operation. Return false (0) for default drag handling behavior or true (1)
         /// to cancel the drag event.
         /// </summary>
@@ -101,8 +101,8 @@ namespace Chromium {
     public delegate void CfxDragHandlerOnDragEnterEventHandler(object sender, CfxDragHandlerOnDragEnterEventArgs e);
 
     /// <summary>
-    /// Called when an external drag event enters the browser window. |dragData|
-    /// contains the drag event data and |mask| represents the type of drag
+    /// Called when an external drag event enters the browser window. |DragData|
+    /// contains the drag event data and |Mask| represents the type of drag
     /// operation. Return false (0) for default drag handling behavior or true (1)
     /// to cancel the drag event.
     /// </summary>

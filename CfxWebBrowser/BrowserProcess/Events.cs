@@ -34,13 +34,13 @@ using Chromium.Remote;
 
 namespace Chromium.WebBrowser {
 
+    public delegate void OnBeforeCommandLineProcessingEventHandler(CfxOnBeforeCommandLineProcessingEventArgs e);
+    
     public delegate void OnBeforeCfxInitializeEventHandler(OnBeforeCfxInitializeEventArgs e);
 
     public class OnBeforeCfxInitializeEventArgs : EventArgs {
         public CfxSettings Settings { get; private set; }
         public CfxBrowserProcessHandler ProcessHandler { get; private set; }
-        public CfxOnBeforeCommandLineProcessingEventHandler OnBeforeCommandLineProcessingEventHandler { set { m_onBeforeCommandLineProcessingEventHandler = value; } }
-        internal CfxOnBeforeCommandLineProcessingEventHandler m_onBeforeCommandLineProcessingEventHandler;
         internal OnBeforeCfxInitializeEventArgs(CfxSettings settings, CfxBrowserProcessHandler processHandler) {
             Settings = settings;
             ProcessHandler = processHandler;

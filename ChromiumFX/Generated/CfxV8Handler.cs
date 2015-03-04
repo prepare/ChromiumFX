@@ -83,10 +83,10 @@ namespace Chromium {
         public CfxV8Handler() : base(CfxApi.cfx_v8handler_ctor) {}
 
         /// <summary>
-        /// Handle execution of the function identified by |name|. |object| is the
-        /// receiver ('this' object) of the function. |arguments| is the list of
-        /// arguments passed to the function. If execution succeeds set |retval| to the
-        /// function return value. If execution fails set |exception| to the exception
+        /// Handle execution of the function identified by |Name|. |Object| is the
+        /// receiver ('this' object) of the function. |Arguments| is the list of
+        /// arguments passed to the function. If execution succeeds set |Retval| to the
+        /// function return value. If execution fails set |Exception| to the exception
         /// that will be thrown. Return true (1) if execution was handled.
         /// </summary>
         public event CfxV8HandlerExecuteEventHandler Execute {
@@ -119,10 +119,10 @@ namespace Chromium {
     public delegate void CfxV8HandlerExecuteEventHandler(object sender, CfxV8HandlerExecuteEventArgs e);
 
     /// <summary>
-    /// Handle execution of the function identified by |name|. |object| is the
-    /// receiver ('this' object) of the function. |arguments| is the list of
-    /// arguments passed to the function. If execution succeeds set |retval| to the
-    /// function return value. If execution fails set |exception| to the exception
+    /// Handle execution of the function identified by |Name|. |Object| is the
+    /// receiver ('this' object) of the function. |Arguments| is the list of
+    /// arguments passed to the function. If execution succeeds set |Retval| to the
+    /// function return value. If execution fails set |Exception| to the exception
     /// that will be thrown. Return true (1) if execution was handled.
     /// </summary>
     public class CfxV8HandlerExecuteEventArgs : CfxEventArgs {

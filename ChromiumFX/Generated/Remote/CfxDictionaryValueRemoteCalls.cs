@@ -156,7 +156,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxDictionaryValueCopyRenderProcessCall) {}
 
         internal ulong self;
-        internal int excludeEmptyChildren;
+        internal bool excludeEmptyChildren;
         internal ulong __retval;
 
         protected override void WriteArgs(StreamHandler h) {
