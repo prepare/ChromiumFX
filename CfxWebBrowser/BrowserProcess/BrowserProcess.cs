@@ -57,26 +57,25 @@ namespace Chromium.WebBrowser {
             app = new CfxApp();
             processHandler = new CfxBrowserProcessHandler();
             
-            app.GetBrowserProcessHandler += new CfxGetBrowserProcessHandlerEventHandler(app_GetBrowserProcessHandler);
+            app.GetBrowserProcessHandler += app_GetBrowserProcessHandler;
+            app.OnBeforeCommandLineProcessing += app_OnBeforeCommandLineProcessing;
             
             CfxRemoting.Initialize(RenderProcess.Startup, processHandler);
-
 
             var settings = new CfxSettings();
             settings.MultiThreadedMessageLoop = true;
             settings.NoSandbox = true;
 
-            CfxOnBeforeCommandLineProcessingEventHandler onBeforeCommandLineProcessingEventHandler;
-
-            ChromiumWebBrowser.RaiseOnBeforeCfxInitialize(settings, processHandler, out onBeforeCommandLineProcessingEventHandler);
-
-            if(onBeforeCommandLineProcessingEventHandler != null)
-                BrowserProcess.app.OnBeforeCommandLineProcessing += onBeforeCommandLineProcessingEventHandler;
+            ChromiumWebBrowser.RaiseOnBeforeCfxInitialize(settings, processHandler);
 
             if(!CfxRuntime.Initialize(settings, app))
                 throw new CfxException("Failed to initialize CEF library.");
 
             initialized = true;
+        }
+
+        static void app_OnBeforeCommandLineProcessing(object sender, CfxOnBeforeCommandLineProcessingEventArgs e) {
+            ChromiumWebBrowser.RaiseOnBeforeCommandLineProcessing(e);
         }
 
         private static void app_GetBrowserProcessHandler(object sender, CfxGetBrowserProcessHandlerEventArgs e) {
