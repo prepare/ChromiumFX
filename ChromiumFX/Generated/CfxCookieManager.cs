@@ -61,7 +61,7 @@ namespace Chromium {
 
         /// <summary>
         /// Returns the global cookie manager. By default data will be stored at
-        /// CefSettings.cache_path if specified or in memory otherwise.
+        /// CfxSettings.CachePath if specified or in memory otherwise.
         /// </summary>
         public static CfxCookieManager GetGlobalManager() {
             return CfxCookieManager.Wrap(CfxApi.cfx_cookie_manager_get_global_manager());
@@ -71,7 +71,7 @@ namespace Chromium {
         /// Creates a new cookie manager. If |path| is NULL data will be stored in memory
         /// only. Otherwise, data will be stored at the specified |path|. To persist
         /// session cookies (cookies without an expiry date or validity interval) set
-        /// |persist_session_cookies| to true (1). Session cookies are generally intended
+        /// |persistSessionCookies| to true (1). Session cookies are generally intended
         /// to be transient and most Web browsers do not persist them. Returns NULL if
         /// creation fails.
         /// </summary>
@@ -135,7 +135,7 @@ namespace Chromium {
 
         /// <summary>
         /// Delete all cookies that match the specified parameters. If both |url| and
-        /// values |cookie_name| are specified all host and domain cookies matching
+        /// values |cookieName| are specified all host and domain cookies matching
         /// both will be deleted. If only |url| is specified all host cookies (but not
         /// domain cookies) irrespective of path will be deleted. If |url| is NULL all
         /// cookies for all hosts and domains will be deleted. Returns false (0) if a
@@ -155,7 +155,7 @@ namespace Chromium {
         /// Sets the directory path that will be used for storing cookie data. If
         /// |path| is NULL data will be stored in memory only. Otherwise, data will be
         /// stored at the specified |path|. To persist session cookies (cookies without
-        /// an expiry date or validity interval) set |persist_session_cookies| to true
+        /// an expiry date or validity interval) set |persistSessionCookies| to true
         /// (1). Session cookies are generally intended to be transient and most Web
         /// browsers do not persist them. Returns false (0) if cookies cannot be
         /// accessed.

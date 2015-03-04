@@ -87,7 +87,7 @@ namespace Chromium {
 
         /// <summary>
         /// Called to retrieve a localized translation for the string specified by
-        /// |message_id|. To provide the translation set |string| to the translation
+        /// |MessageId|. To provide the translation set |String| to the translation
         /// string and return true (1). To use the default translation return false
         /// (0). Supported message IDs are listed in cef_pack_strings.h.
         /// </summary>
@@ -109,8 +109,8 @@ namespace Chromium {
         private CfxGetLocalizedStringEventHandler m_GetLocalizedString;
 
         /// <summary>
-        /// Called to retrieve data for the resource specified by |resource_id|. To
-        /// provide the resource data set |data| and |data_size| to the data pointer
+        /// Called to retrieve data for the resource specified by |ResourceId|. To
+        /// provide the resource data set |Data| and |DataSize| to the data pointer
         /// and size respectively and return true (1). To use the default resource data
         /// return false (0). The resource data will not be copied and must remain
         /// resident in memory. Supported resource IDs are listed in
@@ -151,7 +151,7 @@ namespace Chromium {
 
     /// <summary>
     /// Called to retrieve a localized translation for the string specified by
-    /// |message_id|. To provide the translation set |string| to the translation
+    /// |MessageId|. To provide the translation set |String| to the translation
     /// string and return true (1). To use the default translation return false
     /// (0). Supported message IDs are listed in cef_pack_strings.h.
     /// </summary>
@@ -209,8 +209,8 @@ namespace Chromium {
     public delegate void CfxGetDataResourceEventHandler(object sender, CfxGetDataResourceEventArgs e);
 
     /// <summary>
-    /// Called to retrieve data for the resource specified by |resource_id|. To
-    /// provide the resource data set |data| and |data_size| to the data pointer
+    /// Called to retrieve data for the resource specified by |ResourceId|. To
+    /// provide the resource data set |Data| and |DataSize| to the data pointer
     /// and size respectively and return true (1). To use the default resource data
     /// return false (0). The resource data will not be copied and must remain
     /// resident in memory. Supported resource IDs are listed in

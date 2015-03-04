@@ -59,9 +59,9 @@ namespace Chromium {
         internal CfxBeforeDownloadCallback(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Call to continue the download. Set |download_path| to the full file path
+        /// Call to continue the download. Set |downloadPath| to the full file path
         /// for the download including the file name or leave blank to use the
-        /// suggested name and the default temp directory. Set |show_dialog| to true
+        /// suggested name and the default temp directory. Set |showDialog| to true
         /// (1) if you do wish to show the default "Save As" dialog.
         /// </summary>
         public void Continue(string downloadPath, bool showDialog) {

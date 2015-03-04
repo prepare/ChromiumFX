@@ -65,8 +65,8 @@ namespace Chromium {
         public CfxWebPluginInfoVisitor() : base(CfxApi.cfx_web_plugin_info_visitor_ctor) {}
 
         /// <summary>
-        /// Method that will be called once for each plugin. |count| is the 0-based
-        /// index for the current plugin. |total| is the total number of plugins.
+        /// Method that will be called once for each plugin. |Count| is the 0-based
+        /// index for the current plugin. |Total| is the total number of plugins.
         /// Return false (0) to stop visiting plugins. This function may never be
         /// called if no plugins are found.
         /// </summary>
@@ -100,8 +100,8 @@ namespace Chromium {
     public delegate void CfxWebPluginInfoVisitorVisitEventHandler(object sender, CfxWebPluginInfoVisitorVisitEventArgs e);
 
     /// <summary>
-    /// Method that will be called once for each plugin. |count| is the 0-based
-    /// index for the current plugin. |total| is the total number of plugins.
+    /// Method that will be called once for each plugin. |Count| is the 0-based
+    /// index for the current plugin. |Total| is the total number of plugins.
     /// Return false (0) to stop visiting plugins. This function may never be
     /// called if no plugins are found.
     /// </summary>

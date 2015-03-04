@@ -61,7 +61,7 @@ namespace Chromium {
 
         /// <summary>
         /// Continue the JS dialog request. Set |success| to true (1) if the OK button
-        /// was pressed. The |user_input| value should be specified for prompt dialogs.
+        /// was pressed. The |userInput| value should be specified for prompt dialogs.
         /// </summary>
         public void Continue(bool success, string userInput) {
             var userInput_pinned = new PinnedString(userInput);

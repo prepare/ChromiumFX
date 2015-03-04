@@ -55,7 +55,7 @@ namespace Chromium.Remote {
 
 
         /// <summary>
-        /// Create a new cef_process_message_t object with the specified name.
+        /// Create a new CfrProcessMessage object with the specified name.
         /// </summary>
         public static CfrProcessMessage Create(CfrRuntime remoteRuntime, string name) {
             var call = new CfxProcessMessageCreateRenderProcessCall();

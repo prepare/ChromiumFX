@@ -60,7 +60,7 @@ namespace Chromium {
         internal CfxStreamReader(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Create a new cef_stream_reader_t object from a file.
+        /// Create a new CfxStreamReader object from a file.
         /// </summary>
         public static CfxStreamReader CreateForFile(string fileName) {
             var fileName_pinned = new PinnedString(fileName);
@@ -70,14 +70,14 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Create a new cef_stream_reader_t object from data.
+        /// Create a new CfxStreamReader object from data.
         /// </summary>
         public static CfxStreamReader CreateForData(IntPtr data, int size) {
             return CfxStreamReader.Wrap(CfxApi.cfx_stream_reader_create_for_data(data, size));
         }
 
         /// <summary>
-        /// Create a new cef_stream_reader_t object from a custom handler.
+        /// Create a new CfxStreamReader object from a custom handler.
         /// </summary>
         public static CfxStreamReader CreateForHandler(CfxReadHandler handler) {
             return CfxStreamReader.Wrap(CfxApi.cfx_stream_reader_create_for_handler(CfxReadHandler.Unwrap(handler)));

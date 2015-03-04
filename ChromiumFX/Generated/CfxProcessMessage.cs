@@ -59,7 +59,7 @@ namespace Chromium {
         internal CfxProcessMessage(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Create a new cef_process_message_t object with the specified name.
+        /// Create a new CfxProcessMessage object with the specified name.
         /// </summary>
         public static CfxProcessMessage Create(string name) {
             var name_pinned = new PinnedString(name);

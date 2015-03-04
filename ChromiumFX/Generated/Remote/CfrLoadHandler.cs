@@ -121,7 +121,7 @@ namespace Chromium.Remote {
 
 
         /// <summary>
-        /// Called when the browser begins loading a frame. The |frame| value will
+        /// Called when the browser begins loading a frame. The |Frame| value will
         /// never be NULL -- call the is_main() function to check if this frame is the
         /// main frame. Multiple frames may be loading at the same time. Sub-frames may
         /// start or continue loading after the main frame load has ended. This
@@ -152,7 +152,7 @@ namespace Chromium.Remote {
 
 
         /// <summary>
-        /// Called when the browser is done loading a frame. The |frame| value will
+        /// Called when the browser is done loading a frame. The |Frame| value will
         /// never be NULL -- call the is_main() function to check if this frame is the
         /// main frame. Multiple frames may be loading at the same time. Sub-frames may
         /// start or continue loading after the main frame load has ended. This
@@ -183,8 +183,8 @@ namespace Chromium.Remote {
 
         /// <summary>
         /// Called when the resource load for a navigation fails or is canceled.
-        /// |errorCode| is the error code number, |errorText| is the error text and
-        /// |failedUrl| is the URL that failed to load. See net\base\net_error_list.h
+        /// |ErrorCode| is the error code number, |ErrorText| is the error text and
+        /// |FailedUrl| is the URL that failed to load. See net\base\net_error_list.h
         /// for complete descriptions of the error codes.
         /// </summary>
         public event CfrOnLoadErrorEventHandler OnLoadError {
@@ -293,7 +293,7 @@ namespace Chromium.Remote {
     public delegate void CfrOnLoadStartEventHandler(object sender, CfrOnLoadStartEventArgs e);
 
     /// <summary>
-    /// Called when the browser begins loading a frame. The |frame| value will
+    /// Called when the browser begins loading a frame. The |Frame| value will
     /// never be NULL -- call the is_main() function to check if this frame is the
     /// main frame. Multiple frames may be loading at the same time. Sub-frames may
     /// start or continue loading after the main frame load has ended. This
@@ -343,7 +343,7 @@ namespace Chromium.Remote {
     public delegate void CfrOnLoadEndEventHandler(object sender, CfrOnLoadEndEventArgs e);
 
     /// <summary>
-    /// Called when the browser is done loading a frame. The |frame| value will
+    /// Called when the browser is done loading a frame. The |Frame| value will
     /// never be NULL -- call the is_main() function to check if this frame is the
     /// main frame. Multiple frames may be loading at the same time. Sub-frames may
     /// start or continue loading after the main frame load has ended. This
@@ -407,8 +407,8 @@ namespace Chromium.Remote {
 
     /// <summary>
     /// Called when the resource load for a navigation fails or is canceled.
-    /// |errorCode| is the error code number, |errorText| is the error text and
-    /// |failedUrl| is the URL that failed to load. See net\base\net_error_list.h
+    /// |ErrorCode| is the error code number, |ErrorText| is the error text and
+    /// |FailedUrl| is the URL that failed to load. See net\base\net_error_list.h
     /// for complete descriptions of the error codes.
     /// </summary>
     public class CfrOnLoadErrorEventArgs : CfrEventArgs {

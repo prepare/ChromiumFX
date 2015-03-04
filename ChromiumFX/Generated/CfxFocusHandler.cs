@@ -90,7 +90,7 @@ namespace Chromium {
 
         /// <summary>
         /// Called when the browser component is about to loose focus. For instance, if
-        /// focus was on the last HTML element and the user pressed the TAB key. |next|
+        /// focus was on the last HTML element and the user pressed the TAB key. |Next|
         /// will be true (1) if the browser is giving focus to the next component and
         /// false (0) if the browser is giving focus to the previous component.
         /// </summary>
@@ -112,7 +112,7 @@ namespace Chromium {
         private CfxOnTakeFocusEventHandler m_OnTakeFocus;
 
         /// <summary>
-        /// Called when the browser component is requesting focus. |source| indicates
+        /// Called when the browser component is requesting focus. |Source| indicates
         /// where the focus request is originating from. Return false (0) to allow the
         /// focus to be set or true (1) to cancel setting the focus.
         /// </summary>
@@ -175,7 +175,7 @@ namespace Chromium {
 
     /// <summary>
     /// Called when the browser component is about to loose focus. For instance, if
-    /// focus was on the last HTML element and the user pressed the TAB key. |next|
+    /// focus was on the last HTML element and the user pressed the TAB key. |Next|
     /// will be true (1) if the browser is giving focus to the next component and
     /// false (0) if the browser is giving focus to the previous component.
     /// </summary>
@@ -212,7 +212,7 @@ namespace Chromium {
     public delegate void CfxOnSetFocusEventHandler(object sender, CfxOnSetFocusEventArgs e);
 
     /// <summary>
-    /// Called when the browser component is requesting focus. |source| indicates
+    /// Called when the browser component is requesting focus. |Source| indicates
     /// where the focus request is originating from. Return false (0) to allow the
     /// focus to be set or true (1) to cancel setting the focus.
     /// </summary>

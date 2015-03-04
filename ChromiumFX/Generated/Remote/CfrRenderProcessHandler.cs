@@ -135,10 +135,10 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Called after the render process main thread has been created. |extra_info|
+        /// Called after the render process main thread has been created. |ExtraInfo|
         /// is a read-only value originating from
-        /// cef_browser_process_handler_t::on_render_process_thread_created(). Do not
-        /// keep a reference to |extra_info| outside of this function.
+        /// CfrBrowserProcessHandler.OnRenderProcessThreadCreated(). Do not
+        /// keep a reference to |ExtraInfo| outside of this function.
         /// </summary>
         public event CfrOnRenderThreadCreatedEventHandler OnRenderThreadCreated {
             add {
@@ -266,7 +266,7 @@ namespace Chromium.Remote {
 
         /// <summary>
         /// Called before browser navigation. Return true (1) to cancel the navigation
-        /// or false (0) to allow the navigation to proceed. The |request| object
+        /// or false (0) to allow the navigation to proceed. The |Request| object
         /// cannot be modified in this callback.
         /// </summary>
         public event CfrOnBeforeNavigationEventHandler OnBeforeNavigation {
@@ -294,10 +294,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Called immediately after the V8 context for a frame has been created. To
         /// retrieve the JavaScript 'window' object use the
-        /// cef_v8context_t::get_global() function. V8 handles can only be accessed
+        /// CfrV8Context.GetGlobal() function. V8 handles can only be accessed
         /// from the thread on which they are created. A task runner for posting tasks
         /// on the associated thread can be retrieved via the
-        /// cef_v8context_t::get_task_runner() function.
+        /// CfrV8Context.GetTaskRunner() function.
         /// </summary>
         public event CfrOnContextCreatedEventHandler OnContextCreated {
             add {
@@ -350,7 +350,7 @@ namespace Chromium.Remote {
         /// <summary>
         /// Called for global uncaught exceptions in a frame. Execution of this
         /// callback is disabled by default. To enable set
-        /// CefSettings.uncaught_exception_stack_size > 0.
+        /// CfrSettings.UncaughtExceptionStackSize > 0.
         /// </summary>
         public event CfrOnUncaughtExceptionEventHandler OnUncaughtException {
             add {
@@ -375,7 +375,7 @@ namespace Chromium.Remote {
 
 
         /// <summary>
-        /// Called when a new node in the the browser gets focus. The |node| value may
+        /// Called when a new node in the the browser gets focus. The |Node| value may
         /// be NULL if no specific node has gained focus. The node object passed to
         /// this function represents a snapshot of the DOM at the time this function is
         /// executed. DOM objects are only valid for the scope of this function. Do not
@@ -440,10 +440,10 @@ namespace Chromium.Remote {
     public delegate void CfrOnRenderThreadCreatedEventHandler(object sender, CfrOnRenderThreadCreatedEventArgs e);
 
     /// <summary>
-    /// Called after the render process main thread has been created. |extra_info|
+    /// Called after the render process main thread has been created. |ExtraInfo|
     /// is a read-only value originating from
-    /// cef_browser_process_handler_t::on_render_process_thread_created(). Do not
-    /// keep a reference to |extra_info| outside of this function.
+    /// CfrBrowserProcessHandler.OnRenderProcessThreadCreated(). Do not
+    /// keep a reference to |ExtraInfo| outside of this function.
     /// </summary>
     public class CfrOnRenderThreadCreatedEventArgs : CfrEventArgs {
 
@@ -555,7 +555,7 @@ namespace Chromium.Remote {
 
     /// <summary>
     /// Called before browser navigation. Return true (1) to cancel the navigation
-    /// or false (0) to allow the navigation to proceed. The |request| object
+    /// or false (0) to allow the navigation to proceed. The |Request| object
     /// cannot be modified in this callback.
     /// </summary>
     public class CfrOnBeforeNavigationEventArgs : CfrEventArgs {
@@ -650,10 +650,10 @@ namespace Chromium.Remote {
     /// <summary>
     /// Called immediately after the V8 context for a frame has been created. To
     /// retrieve the JavaScript 'window' object use the
-    /// cef_v8context_t::get_global() function. V8 handles can only be accessed
+    /// CfrV8Context.GetGlobal() function. V8 handles can only be accessed
     /// from the thread on which they are created. A task runner for posting tasks
     /// on the associated thread can be retrieved via the
-    /// cef_v8context_t::get_task_runner() function.
+    /// CfrV8Context.GetTaskRunner() function.
     /// </summary>
     public class CfrOnContextCreatedEventArgs : CfrEventArgs {
 
@@ -772,7 +772,7 @@ namespace Chromium.Remote {
     /// <summary>
     /// Called for global uncaught exceptions in a frame. Execution of this
     /// callback is disabled by default. To enable set
-    /// CefSettings.uncaught_exception_stack_size > 0.
+    /// CfrSettings.UncaughtExceptionStackSize > 0.
     /// </summary>
     public class CfrOnUncaughtExceptionEventArgs : CfrEventArgs {
 
@@ -858,7 +858,7 @@ namespace Chromium.Remote {
     public delegate void CfrOnFocusedNodeChangedEventHandler(object sender, CfrOnFocusedNodeChangedEventArgs e);
 
     /// <summary>
-    /// Called when a new node in the the browser gets focus. The |node| value may
+    /// Called when a new node in the the browser gets focus. The |Node| value may
     /// be NULL if no specific node has gained focus. The node object passed to
     /// this function represents a snapshot of the DOM at the time this function is
     /// executed. DOM objects are only valid for the scope of this function. Do not

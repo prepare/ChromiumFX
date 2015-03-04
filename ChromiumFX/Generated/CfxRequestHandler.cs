@@ -217,11 +217,11 @@ namespace Chromium {
         /// <summary>
         /// Called on the UI thread before browser navigation. Return true (1) to
         /// cancel the navigation or false (0) to allow the navigation to proceed. The
-        /// |request| object cannot be modified in this callback.
-        /// cef_load_handler_t::OnLoadingStateChange will be called twice in all cases.
-        /// If the navigation is allowed cef_load_handler_t::OnLoadStart and
-        /// cef_load_handler_t::OnLoadEnd will be called. If the navigation is canceled
-        /// cef_load_handler_t::OnLoadError will be called with an |errorCode| value of
+        /// |Request| object cannot be modified in this callback.
+        /// CfxLoadHandler.OnLoadingStateChange will be called twice in all cases.
+        /// If the navigation is allowed CfxLoadHandler.OnLoadStart and
+        /// CfxLoadHandler.OnLoadEnd will be called. If the navigation is canceled
+        /// CfxLoadHandler.OnLoadError will be called with an |ErrorCode| value of
         /// ERR_ABORTED.
         /// </summary>
         public event CfxOnBeforeBrowseEventHandler OnBeforeBrowse {
@@ -242,7 +242,7 @@ namespace Chromium {
         private CfxOnBeforeBrowseEventHandler m_OnBeforeBrowse;
 
         /// <summary>
-        /// Called on the IO thread before a resource request is loaded. The |request|
+        /// Called on the IO thread before a resource request is loaded. The |Request|
         /// object may be modified. To cancel the request return true (1) otherwise
         /// return false (0).
         /// </summary>
@@ -266,7 +266,7 @@ namespace Chromium {
         /// <summary>
         /// Called on the IO thread before a resource is loaded. To allow the resource
         /// to load normally return NULL. To specify a handler for the resource return
-        /// a cef_resource_handler_t object. The |request| object should not be
+        /// a CfxResourceHandler object. The |Request| object should not be
         /// modified in this callback.
         /// </summary>
         public event CfxGetResourceHandlerEventHandler GetResourceHandler {
@@ -287,8 +287,8 @@ namespace Chromium {
         private CfxGetResourceHandlerEventHandler m_GetResourceHandler;
 
         /// <summary>
-        /// Called on the IO thread when a resource load is redirected. The |old_url|
-        /// parameter will contain the old URL. The |new_url| parameter will contain
+        /// Called on the IO thread when a resource load is redirected. The |OldUrl|
+        /// parameter will contain the old URL. The |NewUrl| parameter will contain
         /// the new URL and can be changed if desired.
         /// </summary>
         public event CfxOnResourceRedirectEventHandler OnResourceRedirect {
@@ -310,9 +310,9 @@ namespace Chromium {
 
         /// <summary>
         /// Called on the IO thread when the browser needs credentials from the user.
-        /// |isProxy| indicates whether the host is a proxy server. |host| contains the
-        /// hostname and |port| contains the port number. Return true (1) to continue
-        /// the request and call cef_auth_callback_t::cont() when the authentication
+        /// |IsProxy| indicates whether the host is a proxy server. |Host| contains the
+        /// hostname and |Port| contains the port number. Return true (1) to continue
+        /// the request and call CfxAuthCallback.Continue() when the authentication
         /// information is available. Return false (0) to cancel the request.
         /// </summary>
         public event CfxRequestHandlerGetAuthCredentialsEventHandler GetAuthCredentials {
@@ -334,9 +334,9 @@ namespace Chromium {
 
         /// <summary>
         /// Called on the IO thread when JavaScript requests a specific storage quota
-        /// size via the webkitStorageInfo.requestQuota function. |origin_url| is the
-        /// origin of the page making the request. |new_size| is the requested quota
-        /// size in bytes. Return true (1) and call cef_quota_callback_t::cont() either
+        /// size via the webkitStorageInfo.requestQuota function. |OriginUrl| is the
+        /// origin of the page making the request. |NewSize| is the requested quota
+        /// size in bytes. Return true (1) and call CfxQuotaCallback.Continue() either
         /// in this function or at a later time to grant or deny the request. Return
         /// false (0) to cancel the request.
         /// </summary>
@@ -359,7 +359,7 @@ namespace Chromium {
 
         /// <summary>
         /// Called on the UI thread to handle requests for URLs with an unknown
-        /// protocol component. Set |allow_os_execution| to true (1) to attempt
+        /// protocol component. Set |AllowOsExecution| to true (1) to attempt
         /// execution via the registered OS protocol handler, if any. SECURITY WARNING:
         /// YOU SHOULD USE THIS METHOD TO ENFORCE RESTRICTIONS BASED ON SCHEME, HOST OR
         /// OTHER URL ANALYSIS BEFORE ALLOWING OS EXECUTION.
@@ -384,11 +384,11 @@ namespace Chromium {
         /// <summary>
         /// Called on the UI thread to handle requests for URLs with an invalid SSL
         /// certificate. Return true (1) and call
-        /// cef_allow_certificate_error_callback_t:: cont() either in this function or
+        /// CfxAllowCertificateErrorCallback:: cont() either in this function or
         /// at a later time to continue or cancel the request. Return false (0) to
-        /// cancel the request immediately. If |callback| is NULL the error cannot be
+        /// cancel the request immediately. If |Callback| is NULL the error cannot be
         /// recovered from and the request will be canceled automatically. If
-        /// CefSettings.ignore_certificate_errors is set all invalid certificates will
+        /// CfxSettings.IgnoreCertificateErrors is set all invalid certificates will
         /// be accepted without calling this function.
         /// </summary>
         public event CfxOnCertificateErrorEventHandler OnCertificateError {
@@ -431,7 +431,7 @@ namespace Chromium {
 
         /// <summary>
         /// Called on the browser process UI thread when a plugin has crashed.
-        /// |plugin_path| is the path of the plugin that crashed.
+        /// |PluginPath| is the path of the plugin that crashed.
         /// </summary>
         public event CfxOnPluginCrashedEventHandler OnPluginCrashed {
             add {
@@ -452,7 +452,7 @@ namespace Chromium {
 
         /// <summary>
         /// Called on the browser process UI thread when the render process terminates
-        /// unexpectedly. |status| indicates how the process terminated.
+        /// unexpectedly. |Status| indicates how the process terminated.
         /// </summary>
         public event CfxOnRenderProcessTerminatedEventHandler OnRenderProcessTerminated {
             add {
@@ -526,11 +526,11 @@ namespace Chromium {
     /// <summary>
     /// Called on the UI thread before browser navigation. Return true (1) to
     /// cancel the navigation or false (0) to allow the navigation to proceed. The
-    /// |request| object cannot be modified in this callback.
-    /// cef_load_handler_t::OnLoadingStateChange will be called twice in all cases.
-    /// If the navigation is allowed cef_load_handler_t::OnLoadStart and
-    /// cef_load_handler_t::OnLoadEnd will be called. If the navigation is canceled
-    /// cef_load_handler_t::OnLoadError will be called with an |errorCode| value of
+    /// |Request| object cannot be modified in this callback.
+    /// CfxLoadHandler.OnLoadingStateChange will be called twice in all cases.
+    /// If the navigation is allowed CfxLoadHandler.OnLoadStart and
+    /// CfxLoadHandler.OnLoadEnd will be called. If the navigation is canceled
+    /// CfxLoadHandler.OnLoadError will be called with an |ErrorCode| value of
     /// ERR_ABORTED.
     /// </summary>
     public class CfxOnBeforeBrowseEventArgs : CfxEventArgs {
@@ -597,7 +597,7 @@ namespace Chromium {
     public delegate void CfxOnBeforeResourceLoadEventHandler(object sender, CfxOnBeforeResourceLoadEventArgs e);
 
     /// <summary>
-    /// Called on the IO thread before a resource request is loaded. The |request|
+    /// Called on the IO thread before a resource request is loaded. The |Request|
     /// object may be modified. To cancel the request return true (1) otherwise
     /// return false (0).
     /// </summary>
@@ -659,7 +659,7 @@ namespace Chromium {
     /// <summary>
     /// Called on the IO thread before a resource is loaded. To allow the resource
     /// to load normally return NULL. To specify a handler for the resource return
-    /// a cef_resource_handler_t object. The |request| object should not be
+    /// a CfxResourceHandler object. The |Request| object should not be
     /// modified in this callback.
     /// </summary>
     public class CfxGetResourceHandlerEventArgs : CfxEventArgs {
@@ -718,8 +718,8 @@ namespace Chromium {
     public delegate void CfxOnResourceRedirectEventHandler(object sender, CfxOnResourceRedirectEventArgs e);
 
     /// <summary>
-    /// Called on the IO thread when a resource load is redirected. The |old_url|
-    /// parameter will contain the old URL. The |new_url| parameter will contain
+    /// Called on the IO thread when a resource load is redirected. The |OldUrl|
+    /// parameter will contain the old URL. The |NewUrl| parameter will contain
     /// the new URL and can be changed if desired.
     /// </summary>
     public class CfxOnResourceRedirectEventArgs : CfxEventArgs {
@@ -790,9 +790,9 @@ namespace Chromium {
 
     /// <summary>
     /// Called on the IO thread when the browser needs credentials from the user.
-    /// |isProxy| indicates whether the host is a proxy server. |host| contains the
-    /// hostname and |port| contains the port number. Return true (1) to continue
-    /// the request and call cef_auth_callback_t::cont() when the authentication
+    /// |IsProxy| indicates whether the host is a proxy server. |Host| contains the
+    /// hostname and |Port| contains the port number. Return true (1) to continue
+    /// the request and call CfxAuthCallback.Continue() when the authentication
     /// information is available. Return false (0) to cancel the request.
     /// </summary>
     public class CfxRequestHandlerGetAuthCredentialsEventArgs : CfxEventArgs {
@@ -904,9 +904,9 @@ namespace Chromium {
 
     /// <summary>
     /// Called on the IO thread when JavaScript requests a specific storage quota
-    /// size via the webkitStorageInfo.requestQuota function. |origin_url| is the
-    /// origin of the page making the request. |new_size| is the requested quota
-    /// size in bytes. Return true (1) and call cef_quota_callback_t::cont() either
+    /// size via the webkitStorageInfo.requestQuota function. |OriginUrl| is the
+    /// origin of the page making the request. |NewSize| is the requested quota
+    /// size in bytes. Return true (1) and call CfxQuotaCallback.Continue() either
     /// in this function or at a later time to grant or deny the request. Return
     /// false (0) to cancel the request.
     /// </summary>
@@ -977,7 +977,7 @@ namespace Chromium {
 
     /// <summary>
     /// Called on the UI thread to handle requests for URLs with an unknown
-    /// protocol component. Set |allow_os_execution| to true (1) to attempt
+    /// protocol component. Set |AllowOsExecution| to true (1) to attempt
     /// execution via the registered OS protocol handler, if any. SECURITY WARNING:
     /// YOU SHOULD USE THIS METHOD TO ENFORCE RESTRICTIONS BASED ON SCHEME, HOST OR
     /// OTHER URL ANALYSIS BEFORE ALLOWING OS EXECUTION.
@@ -1028,11 +1028,11 @@ namespace Chromium {
     /// <summary>
     /// Called on the UI thread to handle requests for URLs with an invalid SSL
     /// certificate. Return true (1) and call
-    /// cef_allow_certificate_error_callback_t:: cont() either in this function or
+    /// CfxAllowCertificateErrorCallback:: cont() either in this function or
     /// at a later time to continue or cancel the request. Return false (0) to
-    /// cancel the request immediately. If |callback| is NULL the error cannot be
+    /// cancel the request immediately. If |Callback| is NULL the error cannot be
     /// recovered from and the request will be canceled automatically. If
-    /// CefSettings.ignore_certificate_errors is set all invalid certificates will
+    /// CfxSettings.IgnoreCertificateErrors is set all invalid certificates will
     /// be accepted without calling this function.
     /// </summary>
     public class CfxOnCertificateErrorEventArgs : CfxEventArgs {
@@ -1165,7 +1165,7 @@ namespace Chromium {
 
     /// <summary>
     /// Called on the browser process UI thread when a plugin has crashed.
-    /// |plugin_path| is the path of the plugin that crashed.
+    /// |PluginPath| is the path of the plugin that crashed.
     /// </summary>
     public class CfxOnPluginCrashedEventArgs : CfxEventArgs {
 
@@ -1205,7 +1205,7 @@ namespace Chromium {
 
     /// <summary>
     /// Called on the browser process UI thread when the render process terminates
-    /// unexpectedly. |status| indicates how the process terminated.
+    /// unexpectedly. |Status| indicates how the process terminated.
     /// </summary>
     public class CfxOnRenderProcessTerminatedEventArgs : CfxEventArgs {
 

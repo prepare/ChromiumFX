@@ -118,10 +118,10 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Returns a writable copy of this object. If |exclude_NULL_children| is true
+        /// Returns a writable copy of this object. If |excludeNullChildren| is true
         /// (1) any NULL dictionaries or lists will be excluded from the copy.
         /// </summary>
-        public CfrDictionaryValue Copy(int excludeEmptyChildren) {
+        public CfrDictionaryValue Copy(bool excludeEmptyChildren) {
             var call = new CfxDictionaryValueCopyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.excludeEmptyChildren = excludeEmptyChildren;

@@ -61,7 +61,7 @@ namespace Chromium {
         internal CfxXmlReader(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Create a new cef_xml_reader_t object. The returned object's functions can
+        /// Create a new CfxXmlReader object. The returned object's functions can
         /// only be called from the thread that created the object.
         /// </summary>
         public static CfxXmlReader Create(CfxStreamReader stream, CfxXmlEncodingType encodingType, string uri) {

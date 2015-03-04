@@ -43,6 +43,33 @@ Public Class CSharp
         End Select
     End Function
 
+    Public Shared Function PrepareSummaryLine(line As String, Optional forRemote As Boolean = False, Optional forEvent As Boolean = False) As String
+
+        line = Regex.Replace(line, "&(?!\w+;)", "&amp;")
+
+        line = Regex.Replace(line, "\b(cef_\w+)_t\b", AddressOf PrepareSummaryLine_TypeMatch)
+        line = Regex.Replace(line, "\b(Cef\w+)(?:\.|::)(\w+)\b", AddressOf PrepareSummaryLine_MemberMatch)
+
+        PrepareSummaryLine_ArgumentMatch_ForEvent = forEvent
+        line = Regex.Replace(line, "\|(\w+)\|", AddressOf PrepareSummaryLine_ArgumentMatch)
+
+        Dim prefix = If(forRemote, "Cfr", "Cfx")
+        line = Regex.Replace(line, "\bCef(\w+)\b", prefix & "$1")
+        Return line
+    End Function
+
+    Private Shared Function PrepareSummaryLine_TypeMatch(m As Match) As String
+        Return ApplyStyle(m.Groups(1).Value, False)
+    End Function
+
+    Private Shared Function PrepareSummaryLine_MemberMatch(m As Match) As String
+        Return String.Format("{0}.{1}", m.Groups(1).Value, ApplyStyle(m.Groups(2).Value, False))
+    End Function
+
+    Private Shared PrepareSummaryLine_ArgumentMatch_ForEvent As Boolean
+    Private Shared Function PrepareSummaryLine_ArgumentMatch(m As Match) As String
+        Return String.Format("|{0}|", ApplyStyle(m.Groups(1).Value, Not PrepareSummaryLine_ArgumentMatch_ForEvent))
+    End Function
 
     Public Shared Function ApplyStyle(name As String, Optional ByVal firstLower As Boolean = False) As String
 

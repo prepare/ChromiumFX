@@ -67,7 +67,7 @@ namespace Chromium.WebBrowser {
 
         /// <summary>
         /// Provides an opportunity to view and/or modify command-line arguments before
-        /// processing by CEF and Chromium. The |process_type| value will be NULL for
+        /// processing by CEF and Chromium. The |ProcessType| value will be NULL for
         /// the browser process. Do not keep a reference to the CfxCommandLine
         /// object passed to this function. The CfxSettings.CommandLineArgsDisabled
         /// value can be used to start with an NULL command-line object. Any values
@@ -666,11 +666,11 @@ namespace Chromium.WebBrowser {
 
 
         /// <summary>
-        /// Called before a context menu is displayed. |params| provides information
-        /// about the context menu state. |model| initially contains the default
-        /// context menu. The |model| can be cleared to show no context menu or
-        /// modified to show a custom menu. Do not keep references to |params| or
-        /// |model| outside of this callback.
+        /// Called before a context menu is displayed. |Params| provides information
+        /// about the context menu state. |Model| initially contains the default
+        /// context menu. The |Model| can be cleared to show no context menu or
+        /// modified to show a custom menu. Do not keep references to |Params| or
+        /// |Model| outside of this callback.
         /// The event is executed on the thread that owns this browser control's 
         /// underlying window handle.
         /// </summary>
@@ -703,10 +703,10 @@ namespace Chromium.WebBrowser {
         /// <summary>
         /// Called to execute a command selected from the context menu. Return true (1)
         /// if the command was handled or false (0) for the default implementation. See
-        /// cef_menu_id_t for the command ids that have default implementations. All
+        /// CfxMenuId for the command ids that have default implementations. All
         /// user-defined command ids should be between MENU_ID_USER_FIRST and
-        /// MENU_ID_USER_LAST. |params| will have the same values as what was passed to
-        /// on_before_context_menu(). Do not keep a reference to |params| outside of
+        /// MENU_ID_USER_LAST. |Params| will have the same values as what was passed to
+        /// on_before_context_menu(). Do not keep a reference to |Params| outside of
         /// this callback.
         /// The event is executed on the thread that owns this browser control's 
         /// underlying window handle.

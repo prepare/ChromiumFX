@@ -59,7 +59,7 @@ namespace Chromium {
         internal CfxPrintSettings(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Create a new cef_print_settings_t object.
+        /// Create a new CfxPrintSettings object.
         /// </summary>
         public static CfxPrintSettings Create() {
             return CfxPrintSettings.Wrap(CfxApi.cfx_print_settings_create());
@@ -200,7 +200,7 @@ namespace Chromium {
 
         /// <summary>
         /// Set the printer printable area in device units. Some platforms already
-        /// provide flipped area. Set |landscape_needs_flip| to false (0) on those
+        /// provide flipped area. Set |landscapeNeedsFlip| to false (0) on those
         /// platforms to avoid double flipping.
         /// </summary>
         public void SetPrinterPrintableArea(CfxSize physicalSizeDeviceUnits, CfxRect printableAreaDeviceUnits, bool landscapeNeedsFlip) {

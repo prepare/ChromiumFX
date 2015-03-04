@@ -35,7 +35,7 @@ using System;
 
 namespace Chromium {
     /// <summary>
-    /// Callback structure for cef_browser_host_t::GetNavigationEntries. The
+    /// Callback structure for CfxBrowserHost.GetNavigationEntries. The
     /// functions of this structure will be called on the browser process UI thread.
     /// </summary>
     public class CfxNavigationEntryVisitor : CfxBase {
@@ -65,10 +65,10 @@ namespace Chromium {
         public CfxNavigationEntryVisitor() : base(CfxApi.cfx_navigation_entry_visitor_ctor) {}
 
         /// <summary>
-        /// Method that will be executed. Do not keep a reference to |entry| outside of
+        /// Method that will be executed. Do not keep a reference to |Entry| outside of
         /// this callback. Return true (1) to continue visiting entries or false (0) to
-        /// stop. |current| is true (1) if this entry is the currently loaded
-        /// navigation entry. |index| is the 0-based index of this entry and |total| is
+        /// stop. |Current| is true (1) if this entry is the currently loaded
+        /// navigation entry. |Index| is the 0-based index of this entry and |Total| is
         /// the total number of entries.
         /// </summary>
         public event CfxNavigationEntryVisitorVisitEventHandler Visit {
@@ -101,10 +101,10 @@ namespace Chromium {
     public delegate void CfxNavigationEntryVisitorVisitEventHandler(object sender, CfxNavigationEntryVisitorVisitEventArgs e);
 
     /// <summary>
-    /// Method that will be executed. Do not keep a reference to |entry| outside of
+    /// Method that will be executed. Do not keep a reference to |Entry| outside of
     /// this callback. Return true (1) to continue visiting entries or false (0) to
-    /// stop. |current| is true (1) if this entry is the currently loaded
-    /// navigation entry. |index| is the 0-based index of this entry and |total| is
+    /// stop. |Current| is true (1) if this entry is the currently loaded
+    /// navigation entry. |Index| is the 0-based index of this entry and |Total| is
     /// the total number of entries.
     /// </summary>
     public class CfxNavigationEntryVisitorVisitEventArgs : CfxEventArgs {

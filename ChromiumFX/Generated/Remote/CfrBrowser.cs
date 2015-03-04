@@ -270,7 +270,7 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Send a message to the specified |target_process|. Returns true (1) if the
+        /// Send a message to the specified |targetProcess|. Returns true (1) if the
         /// message was sent successfully.
         /// </summary>
         public bool SendProcessMessage(CfxProcessId targetProcess, CfrProcessMessage message) {

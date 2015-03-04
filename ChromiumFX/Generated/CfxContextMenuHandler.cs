@@ -103,11 +103,11 @@ namespace Chromium {
         public CfxContextMenuHandler() : base(CfxApi.cfx_context_menu_handler_ctor) {}
 
         /// <summary>
-        /// Called before a context menu is displayed. |params| provides information
-        /// about the context menu state. |model| initially contains the default
-        /// context menu. The |model| can be cleared to show no context menu or
-        /// modified to show a custom menu. Do not keep references to |params| or
-        /// |model| outside of this callback.
+        /// Called before a context menu is displayed. |Params| provides information
+        /// about the context menu state. |Model| initially contains the default
+        /// context menu. The |Model| can be cleared to show no context menu or
+        /// modified to show a custom menu. Do not keep references to |Params| or
+        /// |Model| outside of this callback.
         /// </summary>
         public event CfxOnBeforeContextMenuEventHandler OnBeforeContextMenu {
             add {
@@ -129,10 +129,10 @@ namespace Chromium {
         /// <summary>
         /// Called to execute a command selected from the context menu. Return true (1)
         /// if the command was handled or false (0) for the default implementation. See
-        /// cef_menu_id_t for the command ids that have default implementations. All
+        /// CfxMenuId for the command ids that have default implementations. All
         /// user-defined command ids should be between MENU_ID_USER_FIRST and
-        /// MENU_ID_USER_LAST. |params| will have the same values as what was passed to
-        /// on_before_context_menu(). Do not keep a reference to |params| outside of
+        /// MENU_ID_USER_LAST. |Params| will have the same values as what was passed to
+        /// on_before_context_menu(). Do not keep a reference to |Params| outside of
         /// this callback.
         /// </summary>
         public event CfxOnContextMenuCommandEventHandler OnContextMenuCommand {
@@ -194,11 +194,11 @@ namespace Chromium {
     public delegate void CfxOnBeforeContextMenuEventHandler(object sender, CfxOnBeforeContextMenuEventArgs e);
 
     /// <summary>
-    /// Called before a context menu is displayed. |params| provides information
-    /// about the context menu state. |model| initially contains the default
-    /// context menu. The |model| can be cleared to show no context menu or
-    /// modified to show a custom menu. Do not keep references to |params| or
-    /// |model| outside of this callback.
+    /// Called before a context menu is displayed. |Params| provides information
+    /// about the context menu state. |Model| initially contains the default
+    /// context menu. The |Model| can be cleared to show no context menu or
+    /// modified to show a custom menu. Do not keep references to |Params| or
+    /// |Model| outside of this callback.
     /// </summary>
     public class CfxOnBeforeContextMenuEventArgs : CfxEventArgs {
 
@@ -257,10 +257,10 @@ namespace Chromium {
     /// <summary>
     /// Called to execute a command selected from the context menu. Return true (1)
     /// if the command was handled or false (0) for the default implementation. See
-    /// cef_menu_id_t for the command ids that have default implementations. All
+    /// CfxMenuId for the command ids that have default implementations. All
     /// user-defined command ids should be between MENU_ID_USER_FIRST and
-    /// MENU_ID_USER_LAST. |params| will have the same values as what was passed to
-    /// on_before_context_menu(). Do not keep a reference to |params| outside of
+    /// MENU_ID_USER_LAST. |Params| will have the same values as what was passed to
+    /// on_before_context_menu(). Do not keep a reference to |Params| outside of
     /// this callback.
     /// </summary>
     public class CfxOnContextMenuCommandEventArgs : CfxEventArgs {

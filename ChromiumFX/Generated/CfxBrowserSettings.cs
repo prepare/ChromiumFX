@@ -57,7 +57,7 @@ namespace Chromium {
         internal CfxBrowserSettings(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         /// <summary>
-        /// The maximum rate in frames per second (fps) that CefRenderHandler::OnPaint
+        /// The maximum rate in frames per second (fps) that CfxRenderHandler.OnPaint
         /// will be called for a windowless browser. The actual fps may be lower if
         /// the browser cannot generate frames at the requested rate. The minimum
         /// value is 1 and the maximum value is 60 (default 30).
@@ -303,7 +303,7 @@ namespace Chromium {
 
         /// <summary>
         /// Controls whether DOM pasting is supported in the editor via
-        /// execCommand("paste"). The |javascript_access_clipboard| setting must also
+        /// execCommand("paste"). The |javascriptAccessClipboard| setting must also
         /// be enabled. Also configurable using the "disable-javascript-dom-paste"
         /// command-line switch.
         /// </summary>
@@ -536,7 +536,7 @@ namespace Chromium {
         /// <summary>
         /// Opaque background color used for the browser before a document is loaded
         /// and when no document color is specified. By default the background color
-        /// will be the same as CefSettings.background_color. Only the RGB compontents
+        /// will be the same as CfxSettings.BackgroundColor. Only the RGB compontents
         /// of the specified value will be used. The alpha component must greater than
         /// 0 to enable use of the background color but will be otherwise ignored.
         /// </summary>
