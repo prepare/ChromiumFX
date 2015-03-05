@@ -38,6 +38,10 @@ namespace Chromium {
     /// Structure used to read data from a stream. The functions of this structure
     /// may be called on any thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+    /// </remarks>
     public class CfxStreamReader : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -62,6 +66,10 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxStreamReader object from a file.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public static CfxStreamReader CreateForFile(string fileName) {
             var fileName_pinned = new PinnedString(fileName);
             var __retval = CfxApi.cfx_stream_reader_create_for_file(fileName_pinned.Obj.PinnedPtr, fileName_pinned.Length);
@@ -72,6 +80,10 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxStreamReader object from data.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public static CfxStreamReader CreateForData(IntPtr data, int size) {
             return CfxStreamReader.Wrap(CfxApi.cfx_stream_reader_create_for_data(data, size));
         }
@@ -79,6 +91,10 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxStreamReader object from a custom handler.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public static CfxStreamReader CreateForHandler(CfxReadHandler handler) {
             return CfxStreamReader.Wrap(CfxApi.cfx_stream_reader_create_for_handler(CfxReadHandler.Unwrap(handler)));
         }
@@ -86,6 +102,10 @@ namespace Chromium {
         /// <summary>
         /// Read raw binary data.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public int Read(IntPtr ptr, int size, int n) {
             return CfxApi.cfx_stream_reader_read(NativePtr, ptr, size, n);
         }
@@ -94,6 +114,10 @@ namespace Chromium {
         /// Seek to the specified offset position. |whence| may be any one of SEEK_CUR,
         /// SEEK_END or SEEK_SET. Returns zero on success and non-zero on failure.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public int Seek(long offset, int whence) {
             return CfxApi.cfx_stream_reader_seek(NativePtr, offset, whence);
         }
@@ -101,6 +125,10 @@ namespace Chromium {
         /// <summary>
         /// Return the current offset position.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public long Tell() {
             return CfxApi.cfx_stream_reader_tell(NativePtr);
         }
@@ -108,6 +136,10 @@ namespace Chromium {
         /// <summary>
         /// Return non-zero if at end of file.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public int Eof() {
             return CfxApi.cfx_stream_reader_eof(NativePtr);
         }
@@ -117,6 +149,10 @@ namespace Chromium {
         /// system which may block. Used as a hint for determining the thread to access
         /// the reader from.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public bool MayBlock() {
             return 0 != CfxApi.cfx_stream_reader_may_block(NativePtr);
         }

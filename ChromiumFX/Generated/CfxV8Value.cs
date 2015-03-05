@@ -41,6 +41,10 @@ namespace Chromium {
     /// threads. A task runner for posting tasks on the associated thread can be
     /// retrieved via the CfxV8Context.GetTaskRunner() function.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+    /// </remarks>
     public class CfxV8Value : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -65,6 +69,10 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxV8Value object of type undefined.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfxV8Value CreateUndefined() {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_undefined());
         }
@@ -72,6 +80,10 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxV8Value object of type null.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfxV8Value CreateNull() {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_null());
         }
@@ -79,6 +91,10 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxV8Value object of type bool.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfxV8Value CreateBool(bool value) {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_bool(value ? 1 : 0));
         }
@@ -86,6 +102,10 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxV8Value object of type int.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfxV8Value CreateInt(int value) {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_int(value));
         }
@@ -93,6 +113,10 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxV8Value object of type unsigned int.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfxV8Value CreateUint(uint value) {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_uint(value));
         }
@@ -100,6 +124,10 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxV8Value object of type double.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfxV8Value CreateDouble(double value) {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_double(value));
         }
@@ -110,6 +138,10 @@ namespace Chromium {
         /// CfxV8Accessor callback, or in combination with calling enter() and exit()
         /// on a stored CfxV8Context reference.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfxV8Value CreateDate(CfxTime date) {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_date(CfxTime.Unwrap(date)));
         }
@@ -117,6 +149,10 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxV8Value object of type string.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfxV8Value CreateString(string value) {
             var value_pinned = new PinnedString(value);
             var __retval = CfxApi.cfx_v8value_create_string(value_pinned.Obj.PinnedPtr, value_pinned.Length);
@@ -131,6 +167,10 @@ namespace Chromium {
         /// combination with calling enter() and exit() on a stored CfxV8Context
         /// reference.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfxV8Value CreateObject(CfxV8Accessor accessor) {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_object(CfxV8Accessor.Unwrap(accessor)));
         }
@@ -142,6 +182,10 @@ namespace Chromium {
         /// CfxV8Handler or CfxV8Accessor callback, or in combination with calling
         /// enter() and exit() on a stored CfxV8Context reference.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfxV8Value CreateArray(int length) {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_array(length));
         }
@@ -152,6 +196,10 @@ namespace Chromium {
         /// or CfxV8Accessor callback, or in combination with calling enter() and
         /// exit() on a stored CfxV8Context reference.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfxV8Value CreateFunction(string name, CfxV8Handler handler) {
             var name_pinned = new PinnedString(name);
             var __retval = CfxApi.cfx_v8value_create_function(name_pinned.Obj.PinnedPtr, name_pinned.Length, CfxV8Handler.Unwrap(handler));
@@ -164,6 +212,10 @@ namespace Chromium {
         /// on the current thread. Do not call any other functions if this function
         /// returns false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 return 0 != CfxApi.cfx_v8value_is_valid(NativePtr);
@@ -173,6 +225,10 @@ namespace Chromium {
         /// <summary>
         /// True if the value type is undefined.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsUndefined {
             get {
                 return 0 != CfxApi.cfx_v8value_is_undefined(NativePtr);
@@ -182,6 +238,10 @@ namespace Chromium {
         /// <summary>
         /// True if the value type is null.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsNull {
             get {
                 return 0 != CfxApi.cfx_v8value_is_null(NativePtr);
@@ -191,6 +251,10 @@ namespace Chromium {
         /// <summary>
         /// True if the value type is bool.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsBool {
             get {
                 return 0 != CfxApi.cfx_v8value_is_bool(NativePtr);
@@ -200,6 +264,10 @@ namespace Chromium {
         /// <summary>
         /// True if the value type is int.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsInt {
             get {
                 return 0 != CfxApi.cfx_v8value_is_int(NativePtr);
@@ -209,6 +277,10 @@ namespace Chromium {
         /// <summary>
         /// True if the value type is unsigned int.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsUint {
             get {
                 return 0 != CfxApi.cfx_v8value_is_uint(NativePtr);
@@ -218,6 +290,10 @@ namespace Chromium {
         /// <summary>
         /// True if the value type is double.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsDouble {
             get {
                 return 0 != CfxApi.cfx_v8value_is_double(NativePtr);
@@ -227,6 +303,10 @@ namespace Chromium {
         /// <summary>
         /// True if the value type is Date.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsDate {
             get {
                 return 0 != CfxApi.cfx_v8value_is_date(NativePtr);
@@ -236,6 +316,10 @@ namespace Chromium {
         /// <summary>
         /// True if the value type is string.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsString {
             get {
                 return 0 != CfxApi.cfx_v8value_is_string(NativePtr);
@@ -245,6 +329,10 @@ namespace Chromium {
         /// <summary>
         /// True if the value type is object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsObject {
             get {
                 return 0 != CfxApi.cfx_v8value_is_object(NativePtr);
@@ -254,6 +342,10 @@ namespace Chromium {
         /// <summary>
         /// True if the value type is array.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsArray {
             get {
                 return 0 != CfxApi.cfx_v8value_is_array(NativePtr);
@@ -263,6 +355,10 @@ namespace Chromium {
         /// <summary>
         /// True if the value type is function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsFunction {
             get {
                 return 0 != CfxApi.cfx_v8value_is_function(NativePtr);
@@ -273,6 +369,10 @@ namespace Chromium {
         /// Return a bool value.  The underlying data will be converted to if
         /// necessary.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int BoolValue {
             get {
                 return CfxApi.cfx_v8value_get_bool_value(NativePtr);
@@ -283,6 +383,10 @@ namespace Chromium {
         /// Return an int value.  The underlying data will be converted to if
         /// necessary.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int IntValue {
             get {
                 return CfxApi.cfx_v8value_get_int_value(NativePtr);
@@ -293,6 +397,10 @@ namespace Chromium {
         /// Return an unisgned int value.  The underlying data will be converted to if
         /// necessary.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public uint UintValue {
             get {
                 return CfxApi.cfx_v8value_get_uint_value(NativePtr);
@@ -303,6 +411,10 @@ namespace Chromium {
         /// Return a double value.  The underlying data will be converted to if
         /// necessary.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public double DoubleValue {
             get {
                 return CfxApi.cfx_v8value_get_double_value(NativePtr);
@@ -313,6 +425,10 @@ namespace Chromium {
         /// Return a Date value.  The underlying data will be converted to if
         /// necessary.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfxTime DateValue {
             get {
                 return CfxTime.WrapOwned(CfxApi.cfx_v8value_get_date_value(NativePtr));
@@ -323,6 +439,10 @@ namespace Chromium {
         /// Return a string value.  The underlying data will be converted to if
         /// necessary.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public String StringValue {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_v8value_get_string_value(NativePtr));
@@ -335,6 +455,10 @@ namespace Chromium {
         /// interchangably with the framework converting between them as necessary.
         /// Returns true (1) if this is a user created object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsUserCreated {
             get {
                 return 0 != CfxApi.cfx_v8value_is_user_created(NativePtr);
@@ -345,6 +469,10 @@ namespace Chromium {
         /// Returns true (1) if the last function call resulted in an exception. This
         /// attribute exists only in the scope of the current CEF value object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool HasException {
             get {
                 return 0 != CfxApi.cfx_v8value_has_exception(NativePtr);
@@ -355,6 +483,10 @@ namespace Chromium {
         /// Returns the exception resulting from the last function call. This attribute
         /// exists only in the scope of the current CEF value object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfxV8Exception Exception {
             get {
                 return CfxV8Exception.Wrap(CfxApi.cfx_v8value_get_exception(NativePtr));
@@ -364,6 +496,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the user data, if any, assigned to this object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfxBase UserData {
             get {
                 return CfxBase.Cast(CfxApi.cfx_v8value_get_user_data(NativePtr));
@@ -374,6 +510,10 @@ namespace Chromium {
         /// Returns the amount of externally allocated memory registered for the
         /// object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int ExternallyAllocatedMemory {
             get {
                 return CfxApi.cfx_v8value_get_externally_allocated_memory(NativePtr);
@@ -384,6 +524,10 @@ namespace Chromium {
         /// ARRAY METHODS - These functions are only available on arrays.
         /// Returns the number of elements in the array.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int ArrayLength {
             get {
                 return CfxApi.cfx_v8value_get_array_length(NativePtr);
@@ -394,6 +538,10 @@ namespace Chromium {
         /// FUNCTION METHODS - These functions are only available on functions.
         /// Returns the function name.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public String FunctionName {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_v8value_get_function_name(NativePtr));
@@ -403,6 +551,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the function handler or NULL if not a CEF-created function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfxV8Handler FunctionHandler {
             get {
                 return CfxV8Handler.Wrap(CfxApi.cfx_v8value_get_function_handler(NativePtr));
@@ -413,6 +565,10 @@ namespace Chromium {
         /// Returns true (1) if this object is pointing to the same handle as |that|
         /// object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsSame(CfxV8Value that) {
             return 0 != CfxApi.cfx_v8value_is_same(NativePtr, CfxV8Value.Unwrap(that));
         }
@@ -420,6 +576,10 @@ namespace Chromium {
         /// <summary>
         /// Clears the last exception and returns true (1) on success.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool ClearException() {
             return 0 != CfxApi.cfx_v8value_clear_exception(NativePtr);
         }
@@ -428,6 +588,10 @@ namespace Chromium {
         /// Returns true (1) if this object will re-throw future exceptions. This
         /// attribute exists only in the scope of the current CEF value object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool WillRethrowExceptions() {
             return 0 != CfxApi.cfx_v8value_will_rethrow_exceptions(NativePtr);
         }
@@ -439,6 +603,10 @@ namespace Chromium {
         /// caught and not re-thrown. Returns true (1) on success. This attribute
         /// exists only in the scope of the current CEF value object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool SetRethrowExceptions(int rethrow) {
             return 0 != CfxApi.cfx_v8value_set_rethrow_exceptions(NativePtr, rethrow);
         }
@@ -446,6 +614,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if the object has a value with the specified identifier.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool HasValueByKey(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_v8value_has_value_bykey(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
@@ -456,6 +628,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if the object has a value with the specified identifier.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool HasValueByIndex(bool index) {
             return 0 != CfxApi.cfx_v8value_has_value_byindex(NativePtr, index ? 1 : 0);
         }
@@ -466,6 +642,10 @@ namespace Chromium {
         /// exception is thrown. For read-only and don't-delete values this function
         /// will return true (1) even though deletion failed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool DeleteValueByKey(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_v8value_delete_value_bykey(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
@@ -479,6 +659,10 @@ namespace Chromium {
         /// fails or an exception is thrown. For read-only and don't-delete values this
         /// function will return true (1) even though deletion failed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool DeleteValueByIndex(bool index) {
             return 0 != CfxApi.cfx_v8value_delete_value_byindex(NativePtr, index ? 1 : 0);
         }
@@ -487,6 +671,10 @@ namespace Chromium {
         /// Returns the value with the specified identifier on success. Returns NULL if
         /// this function is called incorrectly or an exception is thrown.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfxV8Value GetValueByKey(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_v8value_get_value_bykey(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
@@ -498,6 +686,10 @@ namespace Chromium {
         /// Returns the value with the specified identifier on success. Returns NULL if
         /// this function is called incorrectly or an exception is thrown.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfxV8Value GetValueByIndex(int index) {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_get_value_byindex(NativePtr, index));
         }
@@ -508,6 +700,10 @@ namespace Chromium {
         /// exception is thrown. For read-only values this function will return true
         /// (1) even though assignment failed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool SetValueByKey(string key, CfxV8Value value, CfxV8PropertyAttribute attribute) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_v8value_set_value_bykey(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, CfxV8Value.Unwrap(value), attribute);
@@ -521,6 +717,10 @@ namespace Chromium {
         /// exception is thrown. For read-only values this function will return true
         /// (1) even though assignment failed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool SetValueByIndex(bool index, CfxV8Value value) {
             return 0 != CfxApi.cfx_v8value_set_value_byindex(NativePtr, index ? 1 : 0, CfxV8Value.Unwrap(value));
         }
@@ -532,6 +732,10 @@ namespace Chromium {
         /// function is called incorrectly or an exception is thrown. For read-only
         /// values this function will return true (1) even though assignment failed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool SetValueByAccessor(string key, CfxV8AccessControl settings, CfxV8PropertyAttribute attribute) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_v8value_set_value_byaccessor(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, settings, attribute);
@@ -543,6 +747,10 @@ namespace Chromium {
         /// Read the keys for the object's values into the specified vector. Integer-
         /// based keys will also be returned as strings.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int GetKeys(System.Collections.Generic.List<string> keys) {
             PinnedString[] keys_handles;
             var keys_unwrapped = CfxStringCollections.UnwrapCfxStringList(keys, out keys_handles);
@@ -558,6 +766,10 @@ namespace Chromium {
         /// false (0) if this function is called incorrectly. This function can only be
         /// called on user created objects.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool SetUserData(CfxBase userData) {
             return 0 != CfxApi.cfx_v8value_set_user_data(NativePtr, CfxBase.Unwrap(userData));
         }
@@ -573,6 +785,10 @@ namespace Chromium {
         /// returns the number of bytes associated with the object after the
         /// adjustment. This function can only be called on user created objects.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int AdjustExternallyAllocatedMemory(int changeInBytes) {
             return CfxApi.cfx_v8value_adjust_externally_allocated_memory(NativePtr, changeInBytes);
         }
@@ -588,6 +804,10 @@ namespace Chromium {
         /// Returns NULL if this function is called incorrectly or an exception is
         /// thrown.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfxV8Value ExecuteFunction(CfxV8Value @object, CfxV8Value[] arguments) {
             int arguments_length = arguments.Length;
             IntPtr[] arguments_ptrs = new IntPtr[arguments_length];
@@ -608,6 +828,10 @@ namespace Chromium {
         /// success. Returns NULL if this function is called incorrectly or an
         /// exception is thrown.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfxV8Value ExecuteFunctionWithContext(CfxV8Context context, CfxV8Value @object, CfxV8Value[] arguments) {
             int arguments_length = arguments.Length;
             IntPtr[] arguments_ptrs = new IntPtr[arguments_length];

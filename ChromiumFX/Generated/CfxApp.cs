@@ -40,6 +40,10 @@ namespace Chromium {
     /// Implement this structure to provide handler implementations. Methods will be
     /// called by the process and/or thread indicated.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+    /// </remarks>
     public class CfxApp : CfxBase {
 
         internal static CfxApp Wrap(IntPtr nativePtr) {
@@ -134,6 +138,10 @@ namespace Chromium {
         /// modify command-line arguments for non-browser processes as this may result
         /// in undefined behavior including crashes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public event CfxOnBeforeCommandLineProcessingEventHandler OnBeforeCommandLineProcessing {
             add {
                 if(m_OnBeforeCommandLineProcessing == null) {
@@ -157,6 +165,10 @@ namespace Chromium {
         /// each process and the registered schemes should be the same across all
         /// processes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public event CfxOnRegisterCustomSchemesEventHandler OnRegisterCustomSchemes {
             add {
                 if(m_OnRegisterCustomSchemes == null) {
@@ -180,6 +192,10 @@ namespace Chromium {
         /// If no handler is returned resources will be loaded from pack files. This
         /// function is called by the browser and render processes on multiple threads.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public event CfxGetResourceBundleHandlerEventHandler GetResourceBundleHandler {
             add {
                 if(m_GetResourceBundleHandler == null) {
@@ -201,6 +217,10 @@ namespace Chromium {
         /// Return the handler for functionality specific to the browser process. This
         /// function is called on multiple threads in the browser process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public event CfxGetBrowserProcessHandlerEventHandler GetBrowserProcessHandler {
             add {
                 if(m_GetBrowserProcessHandler == null) {
@@ -222,6 +242,10 @@ namespace Chromium {
         /// Return the handler for functionality specific to the render process. This
         /// function is called on the render process main thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public event CfxGetRenderProcessHandlerEventHandler GetRenderProcessHandler {
             add {
                 if(m_GetRenderProcessHandler == null) {
@@ -267,6 +291,21 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Provides an opportunity to view and/or modify command-line arguments before
+        /// processing by CEF and Chromium. The |ProcessType| value will be NULL for
+        /// the browser process. Do not keep a reference to the CfxCommandLine
+        /// object passed to this function. The CfxSettings.CommandLineArgsDisabled
+        /// value can be used to start with an NULL command-line object. Any values
+        /// specified in CfxSettings that equate to command-line arguments will be set
+        /// before this function is called. Be cautious when using this function to
+        /// modify command-line arguments for non-browser processes as this may result
+        /// in undefined behavior including crashes.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnBeforeCommandLineProcessingEventHandler(object sender, CfxOnBeforeCommandLineProcessingEventArgs e);
 
         /// <summary>
@@ -280,6 +319,10 @@ namespace Chromium {
         /// modify command-line arguments for non-browser processes as this may result
         /// in undefined behavior including crashes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public class CfxOnBeforeCommandLineProcessingEventArgs : CfxEventArgs {
 
             internal IntPtr m_process_type_str;
@@ -314,6 +357,16 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Provides an opportunity to register custom schemes. Do not keep a reference
+        /// to the |Registrar| object. This function is called on the main thread for
+        /// each process and the registered schemes should be the same across all
+        /// processes.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnRegisterCustomSchemesEventHandler(object sender, CfxOnRegisterCustomSchemesEventArgs e);
 
         /// <summary>
@@ -322,6 +375,10 @@ namespace Chromium {
         /// each process and the registered schemes should be the same across all
         /// processes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public class CfxOnRegisterCustomSchemesEventArgs : CfxEventArgs {
 
             internal IntPtr m_registrar;
@@ -344,6 +401,16 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Return the handler for resource bundle events. If
+        /// CfxSettings.PackLoadingDisabled is true (1) a handler must be returned.
+        /// If no handler is returned resources will be loaded from pack files. This
+        /// function is called by the browser and render processes on multiple threads.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public delegate void CfxGetResourceBundleHandlerEventHandler(object sender, CfxGetResourceBundleHandlerEventArgs e);
 
         /// <summary>
@@ -352,6 +419,10 @@ namespace Chromium {
         /// If no handler is returned resources will be loaded from pack files. This
         /// function is called by the browser and render processes on multiple threads.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public class CfxGetResourceBundleHandlerEventArgs : CfxEventArgs {
 
 
@@ -361,6 +432,18 @@ namespace Chromium {
             internal CfxGetResourceBundleHandlerEventArgs() {
             }
 
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(CfxResourceBundleHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -371,12 +454,24 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Return the handler for functionality specific to the browser process. This
+        /// function is called on multiple threads in the browser process.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public delegate void CfxGetBrowserProcessHandlerEventHandler(object sender, CfxGetBrowserProcessHandlerEventArgs e);
 
         /// <summary>
         /// Return the handler for functionality specific to the browser process. This
         /// function is called on multiple threads in the browser process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public class CfxGetBrowserProcessHandlerEventArgs : CfxEventArgs {
 
 
@@ -386,6 +481,18 @@ namespace Chromium {
             internal CfxGetBrowserProcessHandlerEventArgs() {
             }
 
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(CfxBrowserProcessHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -396,12 +503,24 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Return the handler for functionality specific to the render process. This
+        /// function is called on the render process main thread.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public delegate void CfxGetRenderProcessHandlerEventHandler(object sender, CfxGetRenderProcessHandlerEventArgs e);
 
         /// <summary>
         /// Return the handler for functionality specific to the render process. This
         /// function is called on the render process main thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public class CfxGetRenderProcessHandlerEventArgs : CfxEventArgs {
 
 
@@ -411,6 +530,18 @@ namespace Chromium {
             internal CfxGetRenderProcessHandlerEventArgs() {
             }
 
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(CfxRenderProcessHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {

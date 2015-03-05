@@ -40,6 +40,10 @@ namespace Chromium.Remote {
     /// structure correspond to those of the JavaScript Position object although
     /// their types may differ.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
     public sealed class CfrGeoposition : CfrStructure {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -74,6 +78,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Latitude in decimal degrees north (WGS84 coordinate frame).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public double Latitude {
             get {
                 if(!m_Latitude_fetched) {
@@ -101,6 +109,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Longitude in decimal degrees west (WGS84 coordinate frame).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public double Longitude {
             get {
                 if(!m_Longitude_fetched) {
@@ -128,6 +140,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Altitude in meters (above WGS84 datum).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public double Altitude {
             get {
                 if(!m_Altitude_fetched) {
@@ -155,6 +171,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Accuracy of horizontal position in meters.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public double Accuracy {
             get {
                 if(!m_Accuracy_fetched) {
@@ -182,6 +202,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Accuracy of altitude in meters.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public double AltitudeAccuracy {
             get {
                 if(!m_AltitudeAccuracy_fetched) {
@@ -209,6 +233,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Heading in decimal degrees clockwise from true north.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public double Heading {
             get {
                 if(!m_Heading_fetched) {
@@ -236,6 +264,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Horizontal component of device velocity in meters per second.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public double Speed {
             get {
                 if(!m_Speed_fetched) {
@@ -264,6 +296,10 @@ namespace Chromium.Remote {
         /// Time of position measurement in miliseconds since Epoch in UTC time. This
         /// is taken from the host computer's system clock.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfrTime Timestamp {
             get {
                 if(!m_Timestamp_fetched) {
@@ -291,6 +327,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Error code, see enum above.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxGeopositionErrorCode ErrorCode {
             get {
                 if(!m_ErrorCode_fetched) {
@@ -318,6 +358,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Human-readable error message.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string ErrorMessage {
             get {
                 if(!m_ErrorMessage_fetched) {

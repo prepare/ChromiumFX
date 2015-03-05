@@ -37,6 +37,10 @@ namespace Chromium {
     /// <summary>
     /// URL component parts.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
     public sealed class CfxUrlParts : CfxStructure {
 
         public CfxUrlParts() : base(CfxApi.cfx_urlparts_ctor, CfxApi.cfx_urlparts_dtor) {}
@@ -44,6 +48,10 @@ namespace Chromium {
         /// <summary>
         /// The complete URL specification.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Spec {
             get {
                 IntPtr value_str;
@@ -61,6 +69,10 @@ namespace Chromium {
         /// <summary>
         /// Scheme component not including the colon (e.g., "http").
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Scheme {
             get {
                 IntPtr value_str;
@@ -78,6 +90,10 @@ namespace Chromium {
         /// <summary>
         /// User name component.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string UserName {
             get {
                 IntPtr value_str;
@@ -95,6 +111,10 @@ namespace Chromium {
         /// <summary>
         /// Password component.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Password {
             get {
                 IntPtr value_str;
@@ -113,6 +133,10 @@ namespace Chromium {
         /// Host component. This may be a hostname, an IPv4 address or an IPv6 literal
         /// surrounded by square brackets (e.g., "[2001:db8::1]").
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Host {
             get {
                 IntPtr value_str;
@@ -130,6 +154,10 @@ namespace Chromium {
         /// <summary>
         /// Port number component.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Port {
             get {
                 IntPtr value_str;
@@ -150,6 +178,10 @@ namespace Chromium {
         /// clearing everything after that. This value will be empty for non-standard
         /// URLs.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Origin {
             get {
                 IntPtr value_str;
@@ -167,6 +199,10 @@ namespace Chromium {
         /// <summary>
         /// Path component including the first slash following the host.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Path {
             get {
                 IntPtr value_str;
@@ -184,6 +220,10 @@ namespace Chromium {
         /// <summary>
         /// Query string component (i.e., everything following the '?').
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Query {
             get {
                 IntPtr value_str;

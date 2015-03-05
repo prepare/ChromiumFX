@@ -38,6 +38,10 @@ namespace Chromium {
     /// Callback structure used for asynchronous continuation of authentication
     /// requests.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_auth_callback_capi.h">cef/include/capi/cef_auth_callback_capi.h</see>.
+    /// </remarks>
     public class CfxAuthCallback : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -62,6 +66,10 @@ namespace Chromium {
         /// <summary>
         /// Continue the authentication request.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_auth_callback_capi.h">cef/include/capi/cef_auth_callback_capi.h</see>.
+        /// </remarks>
         public void Continue(string userName, string password) {
             var userName_pinned = new PinnedString(userName);
             var password_pinned = new PinnedString(password);
@@ -73,6 +81,10 @@ namespace Chromium {
         /// <summary>
         /// Cancel the authentication request.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_auth_callback_capi.h">cef/include/capi/cef_auth_callback_capi.h</see>.
+        /// </remarks>
         public void Cancel() {
             CfxApi.cfx_auth_callback_cancel(NativePtr);
         }

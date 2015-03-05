@@ -38,6 +38,10 @@ namespace Chromium {
     /// Structure used to represent a DOM node. The functions of this structure
     /// should only be called on the render process main thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+    /// </remarks>
     public class CfxDomNode : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -62,6 +66,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the type for this node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfxDomNodeType Type {
             get {
                 return CfxApi.cfx_domnode_get_type(NativePtr);
@@ -71,6 +79,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if this is a text node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool IsText {
             get {
                 return 0 != CfxApi.cfx_domnode_is_text(NativePtr);
@@ -80,6 +92,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if this is an element node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool IsElement {
             get {
                 return 0 != CfxApi.cfx_domnode_is_element(NativePtr);
@@ -89,6 +105,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if this is an editable node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool IsEditable {
             get {
                 return 0 != CfxApi.cfx_domnode_is_editable(NativePtr);
@@ -98,6 +118,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if this is a form control element node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool IsFormControlElement {
             get {
                 return 0 != CfxApi.cfx_domnode_is_form_control_element(NativePtr);
@@ -107,6 +131,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the type of this form control element node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String FormControlElementType {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_domnode_get_form_control_element_type(NativePtr));
@@ -116,6 +144,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the name of this node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String Name {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_domnode_get_name(NativePtr));
@@ -125,6 +157,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the value of this node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String Value {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_domnode_get_value(NativePtr));
@@ -134,6 +170,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the contents of this node as markup.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String AsMarkup {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_domnode_get_as_markup(NativePtr));
@@ -143,6 +183,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the document associated with this node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfxDomDocument Document {
             get {
                 return CfxDomDocument.Wrap(CfxApi.cfx_domnode_get_document(NativePtr));
@@ -152,6 +196,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the parent node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfxDomNode Parent {
             get {
                 return CfxDomNode.Wrap(CfxApi.cfx_domnode_get_parent(NativePtr));
@@ -161,6 +209,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the previous sibling node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfxDomNode PreviousSibling {
             get {
                 return CfxDomNode.Wrap(CfxApi.cfx_domnode_get_previous_sibling(NativePtr));
@@ -170,6 +222,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the next sibling node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfxDomNode NextSibling {
             get {
                 return CfxDomNode.Wrap(CfxApi.cfx_domnode_get_next_sibling(NativePtr));
@@ -179,6 +235,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if this node has child nodes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool HasChildren {
             get {
                 return 0 != CfxApi.cfx_domnode_has_children(NativePtr);
@@ -188,6 +248,10 @@ namespace Chromium {
         /// <summary>
         /// Return the first child node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfxDomNode FirstChild {
             get {
                 return CfxDomNode.Wrap(CfxApi.cfx_domnode_get_first_child(NativePtr));
@@ -197,6 +261,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the last child node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfxDomNode LastChild {
             get {
                 return CfxDomNode.Wrap(CfxApi.cfx_domnode_get_last_child(NativePtr));
@@ -207,6 +275,10 @@ namespace Chromium {
         /// The following functions are valid only for element nodes.
         /// Returns the tag name of this element.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String ElementTagName {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_domnode_get_element_tag_name(NativePtr));
@@ -216,6 +288,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if this element has attributes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool HasElementAttributes {
             get {
                 return 0 != CfxApi.cfx_domnode_has_element_attributes(NativePtr);
@@ -225,6 +301,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the inner text of the element.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String ElementInnerText {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_domnode_get_element_inner_text(NativePtr));
@@ -235,6 +315,10 @@ namespace Chromium {
         /// Returns true (1) if this object is pointing to the same handle as |that|
         /// object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool IsSame(CfxDomNode that) {
             return 0 != CfxApi.cfx_domnode_is_same(NativePtr, CfxDomNode.Unwrap(that));
         }
@@ -242,6 +326,10 @@ namespace Chromium {
         /// <summary>
         /// Set the value of this node. Returns true (1) on success.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool SetValue(string value) {
             var value_pinned = new PinnedString(value);
             var __retval = CfxApi.cfx_domnode_set_value(NativePtr, value_pinned.Obj.PinnedPtr, value_pinned.Length);
@@ -252,6 +340,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if this element has an attribute named |attrName|.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool HasElementAttribute(string attrName) {
             var attrName_pinned = new PinnedString(attrName);
             var __retval = CfxApi.cfx_domnode_has_element_attribute(NativePtr, attrName_pinned.Obj.PinnedPtr, attrName_pinned.Length);
@@ -262,6 +354,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the element attribute named |attrName|.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String GetElementAttribute(string attrName) {
             var attrName_pinned = new PinnedString(attrName);
             var __retval = CfxApi.cfx_domnode_get_element_attribute(NativePtr, attrName_pinned.Obj.PinnedPtr, attrName_pinned.Length);
@@ -272,6 +368,10 @@ namespace Chromium {
         /// <summary>
         /// Returns a map of all element attributes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public void GetElementAttributes(System.Collections.Generic.List<string[]> attrMap) {
             PinnedString[] attrMap_handles;
             var attrMap_unwrapped = CfxStringCollections.UnwrapCfxStringMap(attrMap, out attrMap_handles);
@@ -285,6 +385,10 @@ namespace Chromium {
         /// Set the value for the element attribute named |attrName|. Returns true (1)
         /// on success.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool SetElementAttribute(string attrName, string value) {
             var attrName_pinned = new PinnedString(attrName);
             var value_pinned = new PinnedString(value);

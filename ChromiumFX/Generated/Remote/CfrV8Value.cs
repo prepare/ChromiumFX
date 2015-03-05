@@ -42,6 +42,10 @@ namespace Chromium.Remote {
     /// threads. A task runner for posting tasks on the associated thread can be
     /// retrieved via the CfrV8Context.GetTaskRunner() function.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+    /// </remarks>
     public partial class CfrV8Value : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -62,6 +66,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Create a new CfrV8Value object of type undefined.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfrV8Value CreateUndefined(CfrRuntime remoteRuntime) {
             var call = new CfxV8ValueCreateUndefinedRenderProcessCall();
             call.Execute(remoteRuntime.connection);
@@ -71,6 +79,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Create a new CfrV8Value object of type null.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfrV8Value CreateNull(CfrRuntime remoteRuntime) {
             var call = new CfxV8ValueCreateNullRenderProcessCall();
             call.Execute(remoteRuntime.connection);
@@ -80,6 +92,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Create a new CfrV8Value object of type bool.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfrV8Value CreateBool(CfrRuntime remoteRuntime, bool value) {
             var call = new CfxV8ValueCreateBoolRenderProcessCall();
             call.value = value;
@@ -90,6 +106,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Create a new CfrV8Value object of type int.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfrV8Value CreateInt(CfrRuntime remoteRuntime, int value) {
             var call = new CfxV8ValueCreateIntRenderProcessCall();
             call.value = value;
@@ -100,6 +120,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Create a new CfrV8Value object of type unsigned int.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfrV8Value CreateUint(CfrRuntime remoteRuntime, uint value) {
             var call = new CfxV8ValueCreateUintRenderProcessCall();
             call.value = value;
@@ -110,6 +134,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Create a new CfrV8Value object of type double.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfrV8Value CreateDouble(CfrRuntime remoteRuntime, double value) {
             var call = new CfxV8ValueCreateDoubleRenderProcessCall();
             call.value = value;
@@ -123,6 +151,10 @@ namespace Chromium.Remote {
         /// CfrV8Accessor callback, or in combination with calling enter() and exit()
         /// on a stored CfrV8Context reference.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfrV8Value CreateDate(CfrRuntime remoteRuntime, CfrTime date) {
             var call = new CfxV8ValueCreateDateRenderProcessCall();
             call.date = CfrObject.Unwrap(date);
@@ -133,6 +165,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Create a new CfrV8Value object of type string.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfrV8Value CreateString(CfrRuntime remoteRuntime, string value) {
             var call = new CfxV8ValueCreateStringRenderProcessCall();
             call.value = value;
@@ -147,6 +183,10 @@ namespace Chromium.Remote {
         /// combination with calling enter() and exit() on a stored CfrV8Context
         /// reference.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfrV8Value CreateObject(CfrRuntime remoteRuntime, CfrV8Accessor accessor) {
             var call = new CfxV8ValueCreateObjectRenderProcessCall();
             call.accessor = CfrObject.Unwrap(accessor);
@@ -161,6 +201,10 @@ namespace Chromium.Remote {
         /// CfrV8Handler or CfrV8Accessor callback, or in combination with calling
         /// enter() and exit() on a stored CfrV8Context reference.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfrV8Value CreateArray(CfrRuntime remoteRuntime, int length) {
             var call = new CfxV8ValueCreateArrayRenderProcessCall();
             call.length = length;
@@ -174,6 +218,10 @@ namespace Chromium.Remote {
         /// or CfrV8Accessor callback, or in combination with calling enter() and
         /// exit() on a stored CfrV8Context reference.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfrV8Value CreateFunction(CfrRuntime remoteRuntime, string name, CfrV8Handler handler) {
             var call = new CfxV8ValueCreateFunctionRenderProcessCall();
             call.name = name;
@@ -190,6 +238,10 @@ namespace Chromium.Remote {
         /// on the current thread. Do not call any other functions if this function
         /// returns false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 var call = new CfxV8ValueIsValidRenderProcessCall();
@@ -202,6 +254,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// True if the value type is undefined.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsUndefined {
             get {
                 var call = new CfxV8ValueIsUndefinedRenderProcessCall();
@@ -214,6 +270,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// True if the value type is null.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsNull {
             get {
                 var call = new CfxV8ValueIsNullRenderProcessCall();
@@ -226,6 +286,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// True if the value type is bool.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsBool {
             get {
                 var call = new CfxV8ValueIsBoolRenderProcessCall();
@@ -238,6 +302,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// True if the value type is int.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsInt {
             get {
                 var call = new CfxV8ValueIsIntRenderProcessCall();
@@ -250,6 +318,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// True if the value type is unsigned int.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsUint {
             get {
                 var call = new CfxV8ValueIsUintRenderProcessCall();
@@ -262,6 +334,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// True if the value type is double.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsDouble {
             get {
                 var call = new CfxV8ValueIsDoubleRenderProcessCall();
@@ -274,6 +350,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// True if the value type is Date.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsDate {
             get {
                 var call = new CfxV8ValueIsDateRenderProcessCall();
@@ -286,6 +366,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// True if the value type is string.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsString {
             get {
                 var call = new CfxV8ValueIsStringRenderProcessCall();
@@ -298,6 +382,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// True if the value type is object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsObject {
             get {
                 var call = new CfxV8ValueIsObjectRenderProcessCall();
@@ -310,6 +398,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// True if the value type is array.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsArray {
             get {
                 var call = new CfxV8ValueIsArrayRenderProcessCall();
@@ -322,6 +414,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// True if the value type is function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsFunction {
             get {
                 var call = new CfxV8ValueIsFunctionRenderProcessCall();
@@ -335,6 +431,10 @@ namespace Chromium.Remote {
         /// Return a bool value.  The underlying data will be converted to if
         /// necessary.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int BoolValue {
             get {
                 var call = new CfxV8ValueGetBoolValueRenderProcessCall();
@@ -348,6 +448,10 @@ namespace Chromium.Remote {
         /// Return an int value.  The underlying data will be converted to if
         /// necessary.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int IntValue {
             get {
                 var call = new CfxV8ValueGetIntValueRenderProcessCall();
@@ -361,6 +465,10 @@ namespace Chromium.Remote {
         /// Return an unisgned int value.  The underlying data will be converted to if
         /// necessary.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public uint UintValue {
             get {
                 var call = new CfxV8ValueGetUintValueRenderProcessCall();
@@ -374,6 +482,10 @@ namespace Chromium.Remote {
         /// Return a double value.  The underlying data will be converted to if
         /// necessary.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public double DoubleValue {
             get {
                 var call = new CfxV8ValueGetDoubleValueRenderProcessCall();
@@ -387,6 +499,10 @@ namespace Chromium.Remote {
         /// Return a Date value.  The underlying data will be converted to if
         /// necessary.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfrTime DateValue {
             get {
                 var call = new CfxV8ValueGetDateValueRenderProcessCall();
@@ -400,6 +516,10 @@ namespace Chromium.Remote {
         /// Return a string value.  The underlying data will be converted to if
         /// necessary.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public String StringValue {
             get {
                 var call = new CfxV8ValueGetStringValueRenderProcessCall();
@@ -415,6 +535,10 @@ namespace Chromium.Remote {
         /// interchangably with the framework converting between them as necessary.
         /// Returns true (1) if this is a user created object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsUserCreated {
             get {
                 var call = new CfxV8ValueIsUserCreatedRenderProcessCall();
@@ -428,6 +552,10 @@ namespace Chromium.Remote {
         /// Returns true (1) if the last function call resulted in an exception. This
         /// attribute exists only in the scope of the current CEF value object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool HasException {
             get {
                 var call = new CfxV8ValueHasExceptionRenderProcessCall();
@@ -441,6 +569,10 @@ namespace Chromium.Remote {
         /// Returns the exception resulting from the last function call. This attribute
         /// exists only in the scope of the current CEF value object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfrV8Exception Exception {
             get {
                 var call = new CfxV8ValueGetExceptionRenderProcessCall();
@@ -453,6 +585,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the user data, if any, assigned to this object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public RemotePtr UserData {
             get {
                 var call = new CfxV8ValueGetUserDataRenderProcessCall();
@@ -466,6 +602,10 @@ namespace Chromium.Remote {
         /// Returns the amount of externally allocated memory registered for the
         /// object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int ExternallyAllocatedMemory {
             get {
                 var call = new CfxV8ValueGetExternallyAllocatedMemoryRenderProcessCall();
@@ -479,6 +619,10 @@ namespace Chromium.Remote {
         /// ARRAY METHODS - These functions are only available on arrays.
         /// Returns the number of elements in the array.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int ArrayLength {
             get {
                 var call = new CfxV8ValueGetArrayLengthRenderProcessCall();
@@ -492,6 +636,10 @@ namespace Chromium.Remote {
         /// FUNCTION METHODS - These functions are only available on functions.
         /// Returns the function name.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public String FunctionName {
             get {
                 var call = new CfxV8ValueGetFunctionNameRenderProcessCall();
@@ -504,6 +652,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the function handler or NULL if not a CEF-created function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfrV8Handler FunctionHandler {
             get {
                 var call = new CfxV8ValueGetFunctionHandlerRenderProcessCall();
@@ -517,6 +669,10 @@ namespace Chromium.Remote {
         /// Returns true (1) if this object is pointing to the same handle as |that|
         /// object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsSame(CfrV8Value that) {
             var call = new CfxV8ValueIsSameRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -528,6 +684,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Clears the last exception and returns true (1) on success.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool ClearException() {
             var call = new CfxV8ValueClearExceptionRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -539,6 +699,10 @@ namespace Chromium.Remote {
         /// Returns true (1) if this object will re-throw future exceptions. This
         /// attribute exists only in the scope of the current CEF value object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool WillRethrowExceptions() {
             var call = new CfxV8ValueWillRethrowExceptionsRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -553,6 +717,10 @@ namespace Chromium.Remote {
         /// caught and not re-thrown. Returns true (1) on success. This attribute
         /// exists only in the scope of the current CEF value object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool SetRethrowExceptions(int rethrow) {
             var call = new CfxV8ValueSetRethrowExceptionsRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -564,6 +732,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if the object has a value with the specified identifier.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool HasValueByKey(string key) {
             var call = new CfxV8ValueHasValueByKeyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -575,6 +747,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if the object has a value with the specified identifier.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool HasValueByIndex(bool index) {
             var call = new CfxV8ValueHasValueByIndexRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -589,6 +765,10 @@ namespace Chromium.Remote {
         /// exception is thrown. For read-only and don't-delete values this function
         /// will return true (1) even though deletion failed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool DeleteValueByKey(string key) {
             var call = new CfxV8ValueDeleteValueByKeyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -603,6 +783,10 @@ namespace Chromium.Remote {
         /// fails or an exception is thrown. For read-only and don't-delete values this
         /// function will return true (1) even though deletion failed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool DeleteValueByIndex(bool index) {
             var call = new CfxV8ValueDeleteValueByIndexRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -615,6 +799,10 @@ namespace Chromium.Remote {
         /// Returns the value with the specified identifier on success. Returns NULL if
         /// this function is called incorrectly or an exception is thrown.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfrV8Value GetValueByKey(string key) {
             var call = new CfxV8ValueGetValueByKeyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -627,6 +815,10 @@ namespace Chromium.Remote {
         /// Returns the value with the specified identifier on success. Returns NULL if
         /// this function is called incorrectly or an exception is thrown.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfrV8Value GetValueByIndex(int index) {
             var call = new CfxV8ValueGetValueByIndexRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -641,6 +833,10 @@ namespace Chromium.Remote {
         /// exception is thrown. For read-only values this function will return true
         /// (1) even though assignment failed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool SetValueByKey(string key, CfrV8Value value, CfxV8PropertyAttribute attribute) {
             var call = new CfxV8ValueSetValueByKeyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -657,6 +853,10 @@ namespace Chromium.Remote {
         /// exception is thrown. For read-only values this function will return true
         /// (1) even though assignment failed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool SetValueByIndex(bool index, CfrV8Value value) {
             var call = new CfxV8ValueSetValueByIndexRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -673,6 +873,10 @@ namespace Chromium.Remote {
         /// function is called incorrectly or an exception is thrown. For read-only
         /// values this function will return true (1) even though assignment failed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool SetValueByAccessor(string key, CfxV8AccessControl settings, CfxV8PropertyAttribute attribute) {
             var call = new CfxV8ValueSetValueByAccessorRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -687,6 +891,10 @@ namespace Chromium.Remote {
         /// Read the keys for the object's values into the specified vector. Integer-
         /// based keys will also be returned as strings.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int GetKeys(System.Collections.Generic.List<string> keys) {
             var call = new CfxV8ValueGetKeysRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -700,6 +908,10 @@ namespace Chromium.Remote {
         /// false (0) if this function is called incorrectly. This function can only be
         /// called on user created objects.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool SetUserData(RemotePtr userData) {
             var call = new CfxV8ValueSetUserDataRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -719,6 +931,10 @@ namespace Chromium.Remote {
         /// returns the number of bytes associated with the object after the
         /// adjustment. This function can only be called on user created objects.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int AdjustExternallyAllocatedMemory(int changeInBytes) {
             var call = new CfxV8ValueAdjustExternallyAllocatedMemoryRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -738,6 +954,10 @@ namespace Chromium.Remote {
         /// Returns NULL if this function is called incorrectly or an exception is
         /// thrown.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfrV8Value ExecuteFunction(CfrV8Value @object, CfrV8Value[] arguments) {
             var call = new CfxV8ValueExecuteFunctionRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -760,6 +980,10 @@ namespace Chromium.Remote {
         /// success. Returns NULL if this function is called incorrectly or an
         /// exception is thrown.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfrV8Value ExecuteFunctionWithContext(CfrV8Context context, CfrV8Value @object, CfrV8Value[] arguments) {
             var call = new CfxV8ValueExecuteFunctionWithContextRenderProcessCall();
             call.self = CfrObject.Unwrap(this);

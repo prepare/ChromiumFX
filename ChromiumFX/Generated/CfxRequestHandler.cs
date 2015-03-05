@@ -40,6 +40,10 @@ namespace Chromium {
     /// Implement this structure to handle events related to browser requests. The
     /// functions of this structure will be called on the thread indicated.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+    /// </remarks>
     public class CfxRequestHandler : CfxBase {
 
         internal static CfxRequestHandler Wrap(IntPtr nativePtr) {
@@ -226,6 +230,10 @@ namespace Chromium {
         /// CfxLoadHandler.OnLoadError will be called with an |ErrorCode| value of
         /// ERR_ABORTED.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnBeforeBrowseEventHandler OnBeforeBrowse {
             add {
                 if(m_OnBeforeBrowse == null) {
@@ -248,6 +256,10 @@ namespace Chromium {
         /// object may be modified. To cancel the request return true (1) otherwise
         /// return false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnBeforeResourceLoadEventHandler OnBeforeResourceLoad {
             add {
                 if(m_OnBeforeResourceLoad == null) {
@@ -271,6 +283,10 @@ namespace Chromium {
         /// a CfxResourceHandler object. The |Request| object should not be
         /// modified in this callback.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public event CfxGetResourceHandlerEventHandler GetResourceHandler {
             add {
                 if(m_GetResourceHandler == null) {
@@ -293,6 +309,10 @@ namespace Chromium {
         /// parameter will contain the old URL. The |NewUrl| parameter will contain
         /// the new URL and can be changed if desired.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnResourceRedirectEventHandler OnResourceRedirect {
             add {
                 if(m_OnResourceRedirect == null) {
@@ -317,6 +337,10 @@ namespace Chromium {
         /// the request and call CfxAuthCallback.Continue() when the authentication
         /// information is available. Return false (0) to cancel the request.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public event CfxRequestHandlerGetAuthCredentialsEventHandler GetAuthCredentials {
             add {
                 if(m_GetAuthCredentials == null) {
@@ -342,6 +366,10 @@ namespace Chromium {
         /// in this function or at a later time to grant or deny the request. Return
         /// false (0) to cancel the request.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnQuotaRequestEventHandler OnQuotaRequest {
             add {
                 if(m_OnQuotaRequest == null) {
@@ -366,6 +394,10 @@ namespace Chromium {
         /// YOU SHOULD USE THIS METHOD TO ENFORCE RESTRICTIONS BASED ON SCHEME, HOST OR
         /// OTHER URL ANALYSIS BEFORE ALLOWING OS EXECUTION.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnProtocolExecutionEventHandler OnProtocolExecution {
             add {
                 if(m_OnProtocolExecution == null) {
@@ -393,6 +425,10 @@ namespace Chromium {
         /// CfxSettings.IgnoreCertificateErrors is set all invalid certificates will
         /// be accepted without calling this function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnCertificateErrorEventHandler OnCertificateError {
             add {
                 if(m_OnCertificateError == null) {
@@ -414,6 +450,10 @@ namespace Chromium {
         /// Called on the browser process IO thread before a plugin is loaded. Return
         /// true (1) to block loading of the plugin.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnBeforePluginLoadEventHandler OnBeforePluginLoad {
             add {
                 if(m_OnBeforePluginLoad == null) {
@@ -435,6 +475,10 @@ namespace Chromium {
         /// Called on the browser process UI thread when a plugin has crashed.
         /// |PluginPath| is the path of the plugin that crashed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnPluginCrashedEventHandler OnPluginCrashed {
             add {
                 if(m_OnPluginCrashed == null) {
@@ -456,6 +500,10 @@ namespace Chromium {
         /// Called on the browser process UI thread when the render process terminates
         /// unexpectedly. |Status| indicates how the process terminated.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnRenderProcessTerminatedEventHandler OnRenderProcessTerminated {
             add {
                 if(m_OnRenderProcessTerminated == null) {
@@ -525,6 +573,20 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Called on the UI thread before browser navigation. Return true (1) to
+        /// cancel the navigation or false (0) to allow the navigation to proceed. The
+        /// |Request| object cannot be modified in this callback.
+        /// CfxLoadHandler.OnLoadingStateChange will be called twice in all cases.
+        /// If the navigation is allowed CfxLoadHandler.OnLoadStart and
+        /// CfxLoadHandler.OnLoadEnd will be called. If the navigation is canceled
+        /// CfxLoadHandler.OnLoadError will be called with an |ErrorCode| value of
+        /// ERR_ABORTED.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnBeforeBrowseEventHandler(object sender, CfxOnBeforeBrowseEventArgs e);
 
         /// <summary>
@@ -537,6 +599,10 @@ namespace Chromium {
         /// CfxLoadHandler.OnLoadError will be called with an |ErrorCode| value of
         /// ERR_ABORTED.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnBeforeBrowseEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -584,6 +650,18 @@ namespace Chromium {
                     return 0 != m_is_redirect;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -598,6 +676,15 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called on the IO thread before a resource request is loaded. The |Request|
+        /// object may be modified. To cancel the request return true (1) otherwise
+        /// return false (0).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnBeforeResourceLoadEventHandler(object sender, CfxOnBeforeResourceLoadEventArgs e);
 
         /// <summary>
@@ -605,6 +692,10 @@ namespace Chromium {
         /// object may be modified. To cancel the request return true (1) otherwise
         /// return false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnBeforeResourceLoadEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -644,6 +735,18 @@ namespace Chromium {
                     return m_request_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -658,6 +761,16 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called on the IO thread before a resource is loaded. To allow the resource
+        /// to load normally return NULL. To specify a handler for the resource return
+        /// a CfxResourceHandler object. The |Request| object should not be
+        /// modified in this callback.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxGetResourceHandlerEventHandler(object sender, CfxGetResourceHandlerEventArgs e);
 
         /// <summary>
@@ -666,6 +779,10 @@ namespace Chromium {
         /// a CfxResourceHandler object. The |Request| object should not be
         /// modified in this callback.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public class CfxGetResourceHandlerEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -705,6 +822,18 @@ namespace Chromium {
                     return m_request_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(CfxResourceHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -719,6 +848,15 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called on the IO thread when a resource load is redirected. The |OldUrl|
+        /// parameter will contain the old URL. The |NewUrl| parameter will contain
+        /// the new URL and can be changed if desired.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnResourceRedirectEventHandler(object sender, CfxOnResourceRedirectEventArgs e);
 
         /// <summary>
@@ -726,6 +864,10 @@ namespace Chromium {
         /// parameter will contain the old URL. The |NewUrl| parameter will contain
         /// the new URL and can be changed if desired.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnResourceRedirectEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -790,6 +932,17 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called on the IO thread when the browser needs credentials from the user.
+        /// |IsProxy| indicates whether the host is a proxy server. |Host| contains the
+        /// hostname and |Port| contains the port number. Return true (1) to continue
+        /// the request and call CfxAuthCallback.Continue() when the authentication
+        /// information is available. Return false (0) to cancel the request.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxRequestHandlerGetAuthCredentialsEventHandler(object sender, CfxRequestHandlerGetAuthCredentialsEventArgs e);
 
         /// <summary>
@@ -799,6 +952,10 @@ namespace Chromium {
         /// the request and call CfxAuthCallback.Continue() when the authentication
         /// information is available. Return false (0) to cancel the request.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public class CfxRequestHandlerGetAuthCredentialsEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -890,6 +1047,18 @@ namespace Chromium {
                     return m_callback_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -904,6 +1073,18 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called on the IO thread when JavaScript requests a specific storage quota
+        /// size via the webkitStorageInfo.requestQuota function. |OriginUrl| is the
+        /// origin of the page making the request. |NewSize| is the requested quota
+        /// size in bytes. Return true (1) and call CfxQuotaCallback.Continue() either
+        /// in this function or at a later time to grant or deny the request. Return
+        /// false (0) to cancel the request.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnQuotaRequestEventHandler(object sender, CfxOnQuotaRequestEventArgs e);
 
         /// <summary>
@@ -914,6 +1095,10 @@ namespace Chromium {
         /// in this function or at a later time to grant or deny the request. Return
         /// false (0) to cancel the request.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnQuotaRequestEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -963,6 +1148,18 @@ namespace Chromium {
                     return m_callback_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -977,6 +1174,17 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called on the UI thread to handle requests for URLs with an unknown
+        /// protocol component. Set |AllowOsExecution| to true (1) to attempt
+        /// execution via the registered OS protocol handler, if any. SECURITY WARNING:
+        /// YOU SHOULD USE THIS METHOD TO ENFORCE RESTRICTIONS BASED ON SCHEME, HOST OR
+        /// OTHER URL ANALYSIS BEFORE ALLOWING OS EXECUTION.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnProtocolExecutionEventHandler(object sender, CfxOnProtocolExecutionEventArgs e);
 
         /// <summary>
@@ -986,6 +1194,10 @@ namespace Chromium {
         /// YOU SHOULD USE THIS METHOD TO ENFORCE RESTRICTIONS BASED ON SCHEME, HOST OR
         /// OTHER URL ANALYSIS BEFORE ALLOWING OS EXECUTION.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnProtocolExecutionEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -1027,6 +1239,20 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called on the UI thread to handle requests for URLs with an invalid SSL
+        /// certificate. Return true (1) and call
+        /// CfxAllowCertificateErrorCallback:: cont() either in this function or
+        /// at a later time to continue or cancel the request. Return false (0) to
+        /// cancel the request immediately. If |Callback| is NULL the error cannot be
+        /// recovered from and the request will be canceled automatically. If
+        /// CfxSettings.IgnoreCertificateErrors is set all invalid certificates will
+        /// be accepted without calling this function.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnCertificateErrorEventHandler(object sender, CfxOnCertificateErrorEventArgs e);
 
         /// <summary>
@@ -1039,6 +1265,10 @@ namespace Chromium {
         /// CfxSettings.IgnoreCertificateErrors is set all invalid certificates will
         /// be accepted without calling this function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnCertificateErrorEventArgs : CfxEventArgs {
 
             internal CfxErrorCode m_cert_error;
@@ -1078,6 +1308,18 @@ namespace Chromium {
                     return m_callback_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -1092,12 +1334,24 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called on the browser process IO thread before a plugin is loaded. Return
+        /// true (1) to block loading of the plugin.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnBeforePluginLoadEventHandler(object sender, CfxOnBeforePluginLoadEventArgs e);
 
         /// <summary>
         /// Called on the browser process IO thread before a plugin is loaded. Return
         /// true (1) to block loading of the plugin.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnBeforePluginLoadEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -1151,6 +1405,18 @@ namespace Chromium {
                     return m_info_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(int returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -1165,12 +1431,24 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called on the browser process UI thread when a plugin has crashed.
+        /// |PluginPath| is the path of the plugin that crashed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnPluginCrashedEventHandler(object sender, CfxOnPluginCrashedEventArgs e);
 
         /// <summary>
         /// Called on the browser process UI thread when a plugin has crashed.
         /// |PluginPath| is the path of the plugin that crashed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnPluginCrashedEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -1205,12 +1483,24 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called on the browser process UI thread when the render process terminates
+        /// unexpectedly. |Status| indicates how the process terminated.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnRenderProcessTerminatedEventHandler(object sender, CfxOnRenderProcessTerminatedEventArgs e);
 
         /// <summary>
         /// Called on the browser process UI thread when the render process terminates
         /// unexpectedly. |Status| indicates how the process terminated.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnRenderProcessTerminatedEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;

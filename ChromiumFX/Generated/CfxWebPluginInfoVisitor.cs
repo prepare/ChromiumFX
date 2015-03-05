@@ -40,6 +40,10 @@ namespace Chromium {
     /// Structure to implement for visiting web plugin information. The functions of
     /// this structure will be called on the browser process UI thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+    /// </remarks>
     public class CfxWebPluginInfoVisitor : CfxBase {
 
         internal static CfxWebPluginInfoVisitor Wrap(IntPtr nativePtr) {
@@ -72,6 +76,10 @@ namespace Chromium {
         /// Return false (0) to stop visiting plugins. This function may never be
         /// called if no plugins are found.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// </remarks>
         public event CfxWebPluginInfoVisitorVisitEventHandler Visit {
             add {
                 if(m_Visit == null) {
@@ -101,6 +109,16 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Method that will be called once for each plugin. |Count| is the 0-based
+        /// index for the current plugin. |Total| is the total number of plugins.
+        /// Return false (0) to stop visiting plugins. This function may never be
+        /// called if no plugins are found.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// </remarks>
         public delegate void CfxWebPluginInfoVisitorVisitEventHandler(object sender, CfxWebPluginInfoVisitorVisitEventArgs e);
 
         /// <summary>
@@ -109,6 +127,10 @@ namespace Chromium {
         /// Return false (0) to stop visiting plugins. This function may never be
         /// called if no plugins are found.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// </remarks>
         public class CfxWebPluginInfoVisitorVisitEventArgs : CfxEventArgs {
 
             internal IntPtr m_info;
@@ -144,6 +166,18 @@ namespace Chromium {
                     return m_total;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {

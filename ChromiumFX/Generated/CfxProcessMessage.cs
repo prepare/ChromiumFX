@@ -37,6 +37,10 @@ namespace Chromium {
     /// <summary>
     /// Structure representing a message. Can be used on any process and thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
+    /// </remarks>
     public class CfxProcessMessage : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -61,6 +65,10 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxProcessMessage object with the specified name.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
+        /// </remarks>
         public static CfxProcessMessage Create(string name) {
             var name_pinned = new PinnedString(name);
             var __retval = CfxApi.cfx_process_message_create(name_pinned.Obj.PinnedPtr, name_pinned.Length);
@@ -72,6 +80,10 @@ namespace Chromium {
         /// Returns true (1) if this object is valid. Do not call any other functions
         /// if this function returns false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 return 0 != CfxApi.cfx_process_message_is_valid(NativePtr);
@@ -82,6 +94,10 @@ namespace Chromium {
         /// Returns true (1) if the values of this object are read-only. Some APIs may
         /// expose read-only objects.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
+        /// </remarks>
         public bool IsReadOnly {
             get {
                 return 0 != CfxApi.cfx_process_message_is_read_only(NativePtr);
@@ -91,6 +107,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the message name.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
+        /// </remarks>
         public String Name {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_process_message_get_name(NativePtr));
@@ -100,6 +120,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the list of arguments.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
+        /// </remarks>
         public CfxListValue ArgumentList {
             get {
                 return CfxListValue.Wrap(CfxApi.cfx_process_message_get_argument_list(NativePtr));
@@ -109,6 +133,10 @@ namespace Chromium {
         /// <summary>
         /// Returns a writable copy of this object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
+        /// </remarks>
         public CfxProcessMessage Copy() {
             return CfxProcessMessage.Wrap(CfxApi.cfx_process_message_copy(NativePtr));
         }

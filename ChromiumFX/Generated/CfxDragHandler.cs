@@ -40,6 +40,10 @@ namespace Chromium {
     /// Implement this structure to handle events related to dragging. The functions
     /// of this structure will be called on the UI thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_drag_handler_capi.h">cef/include/capi/cef_drag_handler_capi.h</see>.
+    /// </remarks>
     public class CfxDragHandler : CfxBase {
 
         internal static CfxDragHandler Wrap(IntPtr nativePtr) {
@@ -73,6 +77,10 @@ namespace Chromium {
         /// operation. Return false (0) for default drag handling behavior or true (1)
         /// to cancel the drag event.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_drag_handler_capi.h">cef/include/capi/cef_drag_handler_capi.h</see>.
+        /// </remarks>
         public event CfxDragHandlerOnDragEnterEventHandler OnDragEnter {
             add {
                 if(m_OnDragEnter == null) {
@@ -102,6 +110,16 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Called when an external drag event enters the browser window. |DragData|
+        /// contains the drag event data and |Mask| represents the type of drag
+        /// operation. Return false (0) for default drag handling behavior or true (1)
+        /// to cancel the drag event.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_drag_handler_capi.h">cef/include/capi/cef_drag_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxDragHandlerOnDragEnterEventHandler(object sender, CfxDragHandlerOnDragEnterEventArgs e);
 
         /// <summary>
@@ -110,6 +128,10 @@ namespace Chromium {
         /// operation. Return false (0) for default drag handling behavior or true (1)
         /// to cancel the drag event.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_drag_handler_capi.h">cef/include/capi/cef_drag_handler_capi.h</see>.
+        /// </remarks>
         public class CfxDragHandlerOnDragEnterEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -147,6 +169,18 @@ namespace Chromium {
                     return m_mask;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_drag_handler_capi.h">cef/include/capi/cef_drag_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {

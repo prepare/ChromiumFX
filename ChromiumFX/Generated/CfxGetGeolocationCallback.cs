@@ -40,6 +40,10 @@ namespace Chromium {
     /// Implement this structure to receive geolocation updates. The functions of
     /// this structure will be called on the browser process UI thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_capi.h">cef/include/capi/cef_geolocation_capi.h</see>.
+    /// </remarks>
     public class CfxGetGeolocationCallback : CfxBase {
 
         internal static CfxGetGeolocationCallback Wrap(IntPtr nativePtr) {
@@ -67,6 +71,10 @@ namespace Chromium {
         /// Called with the 'best available' location information or, if the location
         /// update failed, with error information.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_capi.h">cef/include/capi/cef_geolocation_capi.h</see>.
+        /// </remarks>
         public event CfxGetGeolocationCallbackOnLocationUpdateEventHandler OnLocationUpdate {
             add {
                 if(m_OnLocationUpdate == null) {
@@ -96,12 +104,24 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Called with the 'best available' location information or, if the location
+        /// update failed, with error information.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_capi.h">cef/include/capi/cef_geolocation_capi.h</see>.
+        /// </remarks>
         public delegate void CfxGetGeolocationCallbackOnLocationUpdateEventHandler(object sender, CfxGetGeolocationCallbackOnLocationUpdateEventArgs e);
 
         /// <summary>
         /// Called with the 'best available' location information or, if the location
         /// update failed, with error information.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_capi.h">cef/include/capi/cef_geolocation_capi.h</see>.
+        /// </remarks>
         public class CfxGetGeolocationCallbackOnLocationUpdateEventArgs : CfxEventArgs {
 
             internal IntPtr m_position;

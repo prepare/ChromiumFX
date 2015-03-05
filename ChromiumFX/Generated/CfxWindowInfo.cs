@@ -37,6 +37,10 @@ namespace Chromium {
     /// <summary>
     /// Structure representing window information.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types_win.h">cef/include/internal/cef_types_win.h</see>.
+    /// </remarks>
     public sealed class CfxWindowInfo : CfxStructure {
 
         internal static CfxWindowInfo Wrap(IntPtr nativePtr) {
@@ -56,6 +60,10 @@ namespace Chromium {
         /// <summary>
         /// Standard parameters required by CreateWindowEx()
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types_win.h">cef/include/internal/cef_types_win.h</see>.
+        /// </remarks>
         public int ExStyle {
             get {
                 int value;
@@ -168,6 +176,10 @@ namespace Chromium {
         /// may not function correctly. In order to create windowless browsers the
         /// CfxSettings.WindowlessRenderingEnabled value must be set to true.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types_win.h">cef/include/internal/cef_types_win.h</see>.
+        /// </remarks>
         public bool WindowlessRenderingEnabled {
             get {
                 int value;
@@ -185,6 +197,10 @@ namespace Chromium {
         /// color will be used (RGBA=0x00000000). When this value is false the
         /// background will be white and opaque.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types_win.h">cef/include/internal/cef_types_win.h</see>.
+        /// </remarks>
         public bool TransparentPaintingEnabled {
             get {
                 int value;
@@ -199,6 +215,10 @@ namespace Chromium {
         /// <summary>
         /// Handle for the new browser window. Only used with windowed rendering.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types_win.h">cef/include/internal/cef_types_win.h</see>.
+        /// </remarks>
         public IntPtr Window {
             get {
                 IntPtr value;

@@ -42,6 +42,10 @@ namespace Chromium.Remote {
     /// threads. A task runner for posting tasks on the associated thread can be
     /// retrieved via the CfrV8Context.GetTaskRunner() function.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+    /// </remarks>
     public class CfrV8Context : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -62,6 +66,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the current (top) context object in the V8 context stack.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfrV8Context GetCurrentContext(CfrRuntime remoteRuntime) {
             var call = new CfxV8ContextGetCurrentContextRenderProcessCall();
             call.Execute(remoteRuntime.connection);
@@ -71,6 +79,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the entered (bottom) context object in the V8 context stack.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfrV8Context GetEnteredContext(CfrRuntime remoteRuntime) {
             var call = new CfxV8ContextGetEnteredContextRenderProcessCall();
             call.Execute(remoteRuntime.connection);
@@ -80,6 +92,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if V8 is currently inside a context.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static bool InContext(CfrRuntime remoteRuntime) {
             var call = new CfxV8ContextInContextRenderProcessCall();
             call.Execute(remoteRuntime.connection);
@@ -94,6 +110,10 @@ namespace Chromium.Remote {
         /// be accessed from the thread on which they are created. This function can be
         /// called on any render process thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfrTaskRunner TaskRunner {
             get {
                 var call = new CfxV8ContextGetTaskRunnerRenderProcessCall();
@@ -108,6 +128,10 @@ namespace Chromium.Remote {
         /// on the current thread. Do not call any other functions if this function
         /// returns false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 var call = new CfxV8ContextIsValidRenderProcessCall();
@@ -121,6 +145,10 @@ namespace Chromium.Remote {
         /// Returns the browser for this context. This function will return an NULL
         /// reference for WebWorker contexts.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfrBrowser Browser {
             get {
                 var call = new CfxV8ContextGetBrowserRenderProcessCall();
@@ -134,6 +162,10 @@ namespace Chromium.Remote {
         /// Returns the frame for this context. This function will return an NULL
         /// reference for WebWorker contexts.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfrFrame Frame {
             get {
                 var call = new CfxV8ContextGetFrameRenderProcessCall();
@@ -147,6 +179,10 @@ namespace Chromium.Remote {
         /// Returns the global object for this context. The context must be entered
         /// before calling this function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfrV8Value Global {
             get {
                 var call = new CfxV8ContextGetGlobalRenderProcessCall();
@@ -163,6 +199,10 @@ namespace Chromium.Remote {
         /// objects belong to the context in which they are created. Returns true (1)
         /// if the scope was entered successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool Enter() {
             var call = new CfxV8ContextEnterRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -174,6 +214,10 @@ namespace Chromium.Remote {
         /// Exit this context. Call this function only after calling enter(). Returns
         /// true (1) if the scope was exited successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int Exit() {
             var call = new CfxV8ContextExitRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -185,6 +229,10 @@ namespace Chromium.Remote {
         /// Returns true (1) if this object is pointing to the same handle as |that|
         /// object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsSame(CfrV8Context that) {
             var call = new CfxV8ContextIsSameRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -199,6 +247,10 @@ namespace Chromium.Remote {
         /// function will return true (1). On failure |exception| will be set to the
         /// exception, if any, and the function will return false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool Eval(string code, out CfrV8Value retval, out CfrV8Exception exception) {
             var call = new CfxV8ContextEvalRenderProcessCall();
             call.self = CfrObject.Unwrap(this);

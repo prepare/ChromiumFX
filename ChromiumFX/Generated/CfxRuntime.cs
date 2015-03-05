@@ -67,6 +67,10 @@ namespace Chromium {
         /// This function may be called on any thread. Returns false (0) if
         /// |sourceOrigin| is invalid or the whitelist cannot be accessed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_origin_whitelist_capi.h">cef/include/capi/cef_origin_whitelist_capi.h</see>.
+        /// </remarks>
         public static bool AddCrossOriginWhitelistEntry(string sourceOrigin, string targetProtocol, string targetDomain, bool allowTargetSubdomains) {
             var sourceOrigin_pinned = new PinnedString(sourceOrigin);
             var targetProtocol_pinned = new PinnedString(targetProtocol);
@@ -83,6 +87,10 @@ namespace Chromium {
         /// cef_refresh_web_plugins() is called. Can be called on any thread in the
         /// browser process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// </remarks>
         public static void AddWebPluginDirectory(string dir) {
             var dir_pinned = new PinnedString(dir);
             CfxApi.cfx_add_web_plugin_directory(dir_pinned.Obj.PinnedPtr, dir_pinned.Length);
@@ -94,6 +102,10 @@ namespace Chromium {
         /// after cef_refresh_web_plugins() is called. Can be called on any thread in the
         /// browser process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// </remarks>
         public static void AddWebPluginPath(string path) {
             var path_pinned = new PinnedString(path);
             CfxApi.cfx_add_web_plugin_path(path_pinned.Obj.PinnedPtr, path_pinned.Length);
@@ -113,6 +125,10 @@ namespace Chromium {
         /// "-excluded_category1,-excluded_category2"
         /// This function must be called on the browser process UI thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
+        /// </remarks>
         public static bool BeginTracing(string categories, CfxCompletionCallback callback) {
             var categories_pinned = new PinnedString(categories);
             var __retval = CfxApi.cfx_begin_tracing(categories_pinned.Obj.PinnedPtr, categories_pinned.Length, CfxCompletionCallback.Unwrap(callback));
@@ -124,6 +140,10 @@ namespace Chromium {
         /// Remove all entries from the cross-origin access whitelist. Returns false (0)
         /// if the whitelist cannot be accessed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_origin_whitelist_capi.h">cef/include/capi/cef_origin_whitelist_capi.h</see>.
+        /// </remarks>
         public static bool ClearCrossOriginWhitelist() {
             return 0 != CfxApi.cfx_clear_cross_origin_whitelist();
         }
@@ -132,6 +152,10 @@ namespace Chromium {
         /// Clear all registered scheme handler factories. Returns false (0) on error.
         /// This function may be called on any thread in the browser process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
+        /// </remarks>
         public static bool ClearSchemeHandlerFactories() {
             return 0 != CfxApi.cfx_clear_scheme_handler_factories();
         }
@@ -141,6 +165,10 @@ namespace Chromium {
         /// or a non-NULL host and path (at a minimum), but not both. Returns false (0)
         /// if |parts| isn't initialized as described.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
+        /// </remarks>
         public static bool CreateUrl(CfxUrlParts parts, ref string url) {
             var url_pinned = new PinnedString(url);
             IntPtr url_str = url_pinned.Obj.PinnedPtr;
@@ -157,6 +185,10 @@ namespace Chromium {
         /// Returns true (1) if called on the specified thread. Equivalent to using
         /// cef_task_tRunner::GetForThread(threadId)->belongs_to_current_thread().
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public static bool CurrentlyOn(CfxThreadId threadId) {
             return 0 != CfxApi.cfx_currently_on(threadId);
         }
@@ -169,6 +201,10 @@ namespace Chromium {
         /// if cef_initialize() is called with a CfxSettings.MultiThreadedMessageLoop
         /// value of false (0). This function will not block.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public static void DoMessageLoopWork() {
             CfxApi.cfx_do_message_loop_work();
         }
@@ -183,6 +219,10 @@ namespace Chromium {
         /// used. If |callback| is NULL no trace data will be written.
         /// This function must be called on the browser process UI thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
+        /// </remarks>
         public static bool EndTracing(string tracingFile, CfxEndTracingCallback callback) {
             var tracingFile_pinned = new PinnedString(tracingFile);
             var __retval = CfxApi.cfx_end_tracing(tracingFile_pinned.Obj.PinnedPtr, tracingFile_pinned.Length, CfxEndTracingCallback.Unwrap(callback));
@@ -202,6 +242,10 @@ namespace Chromium {
         /// |windowsSandboxInfo| parameter is only used on Windows and may be NULL (see
         /// cef_sandbox_win.h for details).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public static int ExecuteProcess(CfxApp application, IntPtr windowsSandboxInfo) {
             return CfxApi.cfx_execute_process(CfxApp.Unwrap(application), windowsSandboxInfo);
         }
@@ -210,6 +254,10 @@ namespace Chromium {
         /// Force a plugin to shutdown. Can be called on any thread in the browser
         /// process but will be executed on the IO thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// </remarks>
         public static void ForceWebPluginShutdown(string path) {
             var path_pinned = new PinnedString(path);
             CfxApi.cfx_force_web_plugin_shutdown(path_pinned.Obj.PinnedPtr, path_pinned.Length);
@@ -222,6 +270,10 @@ namespace Chromium {
         /// "html,htm" for "text/html", or "txt,text,html,..." for "text/*". Any existing
         /// elements in the provided vector will not be erased.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
+        /// </remarks>
         public static void GetExtensionsForMimeType(string mimeType, System.Collections.Generic.List<string> extensions) {
             var mimeType_pinned = new PinnedString(mimeType);
             PinnedString[] extensions_handles;
@@ -238,6 +290,10 @@ namespace Chromium {
         /// permission checks so should only be used by code that is allowed to access
         /// location information.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_capi.h">cef/include/capi/cef_geolocation_capi.h</see>.
+        /// </remarks>
         public static int GetGeolocation(CfxGetGeolocationCallback callback) {
             return CfxApi.cfx_get_geolocation(CfxGetGeolocationCallback.Unwrap(callback));
         }
@@ -246,6 +302,10 @@ namespace Chromium {
         /// Returns the mime type for the specified file extension or an NULL string if
         /// unknown.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
+        /// </remarks>
         public static String GetMimeType(string extension) {
             var extension_pinned = new PinnedString(extension);
             var __retval = CfxApi.cfx_get_mime_type(extension_pinned.Obj.PinnedPtr, extension_pinned.Length);
@@ -257,6 +317,10 @@ namespace Chromium {
         /// Retrieve the path associated with the specified |key|. Returns true (1) on
         /// success. Can be called on any thread in the browser process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_path_util_capi.h">cef/include/capi/cef_path_util_capi.h</see>.
+        /// </remarks>
         public static bool GetPath(CfxPathKey key, ref string path) {
             var path_pinned = new PinnedString(path);
             IntPtr path_str = path_pinned.Obj.PinnedPtr;
@@ -276,6 +340,10 @@ namespace Chromium {
         /// failed. The |windowsSandboxInfo| parameter is only used on Windows and may
         /// be NULL (see cef_sandbox_win.h for details).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public static bool Initialize(CfxSettings settings, CfxApp application, IntPtr windowsSandboxInfo) {
             return 0 != CfxApi.cfx_initialize(CfxSettings.Unwrap(settings), CfxApp.Unwrap(application), windowsSandboxInfo);
         }
@@ -284,6 +352,10 @@ namespace Chromium {
         /// Query if a plugin is unstable. Can be called on any thread in the browser
         /// process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// </remarks>
         public static void IsWebPluginUnstable(string path, CfxWebPluginUnstableCallback callback) {
             var path_pinned = new PinnedString(path);
             CfxApi.cfx_is_web_plugin_unstable(path_pinned.Obj.PinnedPtr, path_pinned.Length, CfxWebPluginUnstableCallback.Unwrap(callback));
@@ -299,6 +371,10 @@ namespace Chromium {
         /// - If the first argument on the command line does not contain a slash,
         /// PATH will be searched. (See man execvp.)
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_process_util_capi.h">cef/include/capi/cef_process_util_capi.h</see>.
+        /// </remarks>
         public static bool LaunchProcess(CfxCommandLine commandLine) {
             return 0 != CfxApi.cfx_launch_process(CfxCommandLine.Unwrap(commandLine));
         }
@@ -308,6 +384,10 @@ namespace Chromium {
         /// high-res time. Can be used by clients to synchronize with the time
         /// information in trace events.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
+        /// </remarks>
         public static long NowFromSystemTraceTime() {
             return CfxApi.cfx_now_from_system_trace_time();
         }
@@ -316,6 +396,10 @@ namespace Chromium {
         /// Parse the specified |url| into its component parts. Returns false (0) if the
         /// URL is NULL or invalid.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
+        /// </remarks>
         public static bool ParseUrl(string url, CfxUrlParts parts) {
             var url_pinned = new PinnedString(url);
             var __retval = CfxApi.cfx_parse_url(url_pinned.Obj.PinnedPtr, url_pinned.Length, CfxUrlParts.Unwrap(parts));
@@ -328,6 +412,10 @@ namespace Chromium {
         /// using cef_task_tRunner::GetForThread(threadId)->PostDelayedTask(task,
         /// delay_ms).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public static int PostDelayedTask(CfxThreadId threadId, CfxTask task, long delayMs) {
             return CfxApi.cfx_post_delayed_task(threadId, CfxTask.Unwrap(task), delayMs);
         }
@@ -336,6 +424,10 @@ namespace Chromium {
         /// Post a task for execution on the specified thread. Equivalent to using
         /// cef_task_tRunner::GetForThread(threadId)->PostTask(task).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public static int PostTask(CfxThreadId threadId, CfxTask task) {
             return CfxApi.cfx_post_task(threadId, CfxTask.Unwrap(task));
         }
@@ -345,6 +437,10 @@ namespace Chromium {
         /// This function should only be called on the main application thread and only
         /// if cef_run_message_loop() was used.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public static void QuitMessageLoop() {
             CfxApi.cfx_quit_message_loop();
         }
@@ -354,6 +450,10 @@ namespace Chromium {
         /// whether it has already been loaded. Can be called on any thread in the
         /// browser process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// </remarks>
         public static void RefreshWebPlugins() {
             CfxApi.cfx_refresh_web_plugins();
         }
@@ -412,6 +512,10 @@ namespace Chromium {
         /// example.test.increment();
         /// &lt;/pre>
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static int RegisterExtension(string extensionName, string javascriptCode, CfxV8Handler handler) {
             var extensionName_pinned = new PinnedString(extensionName);
             var javascriptCode_pinned = new PinnedString(javascriptCode);
@@ -434,6 +538,10 @@ namespace Chromium {
         /// Returns false (0) if an error occurs. This function may be called on any
         /// thread in the browser process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
+        /// </remarks>
         public static bool RegisterSchemeHandlerFactory(string schemeName, string domainName, CfxSchemeHandlerFactory factory) {
             var schemeName_pinned = new PinnedString(schemeName);
             var domainName_pinned = new PinnedString(domainName);
@@ -447,6 +555,10 @@ namespace Chromium {
         /// Register a plugin crash. Can be called on any thread in the browser process
         /// but will be executed on the IO thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// </remarks>
         public static void RegisterWebPluginCrash(string path) {
             var path_pinned = new PinnedString(path);
             CfxApi.cfx_register_web_plugin_crash(path_pinned.Obj.PinnedPtr, path_pinned.Length);
@@ -457,6 +569,10 @@ namespace Chromium {
         /// Remove an entry from the cross-origin access whitelist. Returns false (0) if
         /// |sourceOrigin| is invalid or the whitelist cannot be accessed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_origin_whitelist_capi.h">cef/include/capi/cef_origin_whitelist_capi.h</see>.
+        /// </remarks>
         public static bool RemoveCrossOriginWhitelistEntry(string sourceOrigin, string targetProtocol, string targetDomain, bool allowTargetSubdomains) {
             var sourceOrigin_pinned = new PinnedString(sourceOrigin);
             var targetProtocol_pinned = new PinnedString(targetProtocol);
@@ -473,6 +589,10 @@ namespace Chromium {
         /// until after cef_refresh_web_plugins() is called. Can be called on any thread
         /// in the browser process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// </remarks>
         public static void RemoveWebPluginPath(string path) {
             var path_pinned = new PinnedString(path);
             CfxApi.cfx_remove_web_plugin_path(path_pinned.Obj.PinnedPtr, path_pinned.Length);
@@ -487,6 +607,10 @@ namespace Chromium {
         /// CfxSettings.MultiThreadedMessageLoop value of false (0). This function
         /// will block until a quit message is received by the system.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public static void RunMessageLoop() {
             CfxApi.cfx_run_message_loop();
         }
@@ -495,6 +619,10 @@ namespace Chromium {
         /// Set to true (1) before calling Windows APIs like TrackPopupMenu that enter a
         /// modal message loop. Set to false (0) after exiting the modal message loop.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public static void SetOsModalLoop(int osModalLoop) {
             CfxApi.cfx_set_osmodal_loop(osModalLoop);
         }
@@ -503,6 +631,10 @@ namespace Chromium {
         /// This function should be called on the main application thread to shut down
         /// the CEF browser process before the application exits.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         private static void ShutdownPrivate() {
             CfxApi.cfx_shutdown();
         }
@@ -512,6 +644,10 @@ namespace Chromium {
         /// cef_refresh_web_plugins() is called. Can be called on any thread in the
         /// browser process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// </remarks>
         public static void UnregisterInternalWebPlugin(string path) {
             var path_pinned = new PinnedString(path);
             CfxApi.cfx_unregister_internal_web_plugin(path_pinned.Obj.PinnedPtr, path_pinned.Length);
@@ -522,6 +658,10 @@ namespace Chromium {
         /// Visit web plugin information. Can be called on any thread in the browser
         /// process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// </remarks>
         public static void VisitWebPluginInfo(CfxWebPluginInfoVisitor visitor) {
             CfxApi.cfx_visit_web_plugin_info(CfxWebPluginInfoVisitor.Unwrap(visitor));
         }

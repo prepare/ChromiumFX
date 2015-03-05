@@ -37,6 +37,10 @@ namespace Chromium {
     /// <summary>
     /// Structure representing a binary value. Can be used on any process and thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+    /// </remarks>
     public partial class CfxBinaryValue : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -62,6 +66,10 @@ namespace Chromium {
         /// Creates a new object that is not owned by any other object. The specified
         /// |data| will be copied.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public static CfxBinaryValue Create(IntPtr data, int dataSize) {
             return CfxBinaryValue.Wrap(CfxApi.cfx_binary_value_create(data, dataSize));
         }
@@ -70,6 +78,10 @@ namespace Chromium {
         /// Returns true (1) if this object is valid. Do not call any other functions
         /// if this function returns false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 return 0 != CfxApi.cfx_binary_value_is_valid(NativePtr);
@@ -79,6 +91,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if this object is currently owned by another object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool IsOwned {
             get {
                 return 0 != CfxApi.cfx_binary_value_is_owned(NativePtr);
@@ -88,6 +104,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the data size.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public int Size {
             get {
                 return CfxApi.cfx_binary_value_get_size(NativePtr);
@@ -97,6 +117,10 @@ namespace Chromium {
         /// <summary>
         /// Returns a copy of this object. The data in this object will also be copied.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public CfxBinaryValue Copy() {
             return CfxBinaryValue.Wrap(CfxApi.cfx_binary_value_copy(NativePtr));
         }
@@ -105,6 +129,10 @@ namespace Chromium {
         /// Read up to |bufferSize| number of bytes into |buffer|. Reading begins at
         /// the specified byte |dataOffset|. Returns the number of bytes read.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public int GetData(IntPtr buffer, int bufferSize, int dataOffset) {
             return CfxApi.cfx_binary_value_get_data(NativePtr, buffer, bufferSize, dataOffset);
         }

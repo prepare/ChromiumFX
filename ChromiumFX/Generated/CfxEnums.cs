@@ -47,15 +47,15 @@ namespace Chromium {
         Rgb,
         Rgb16,
         Rgba,
-        ColormodeColor,
-        ColormodeMonochrome,
+        ColorModeColor,
+        ColorModeMonochrome,
         HpColorColor,
         HpColorBlack,
-        PrintoutmodeNormal,
-        PrintoutmodeNormalGray,
-        ProcesscolormodelCmyk,
-        ProcesscolormodelGreyscale,
-        ProcesscolormodelRgb
+        PrintoutModeNormal,
+        PrintoutModeNormalGray,
+        ProcessColorModelCmyk,
+        ProcessColorModelGreyscale,
+        ProcessColorModelRgb
     }
     [Flags()]
     public enum CfxContextMenuEditStateFlags {

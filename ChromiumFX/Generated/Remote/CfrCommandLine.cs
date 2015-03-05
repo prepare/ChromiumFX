@@ -45,6 +45,10 @@ namespace Chromium.Remote {
     /// arguments. Switch names are considered case-insensitive. This structure can
     /// be used before cef_initialize() is called.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+    /// </remarks>
     public class CfrCommandLine : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -65,6 +69,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Create a new CfrCommandLine instance.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public static CfrCommandLine Create(CfrRuntime remoteRuntime) {
             var call = new CfxCommandLineCreateRenderProcessCall();
             call.Execute(remoteRuntime.connection);
@@ -75,6 +83,10 @@ namespace Chromium.Remote {
         /// Returns the singleton global CfrCommandLine object. The returned object
         /// will be read-only.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public static CfrCommandLine GetGlobal(CfrRuntime remoteRuntime) {
             var call = new CfxCommandLineGetGlobalRenderProcessCall();
             call.Execute(remoteRuntime.connection);
@@ -88,6 +100,10 @@ namespace Chromium.Remote {
         /// Returns true (1) if this object is valid. Do not call any other functions
         /// if this function returns false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 var call = new CfxCommandLineIsValidRenderProcessCall();
@@ -101,6 +117,10 @@ namespace Chromium.Remote {
         /// Returns true (1) if the values of this object are read-only. Some APIs may
         /// expose read-only objects.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public bool IsReadOnly {
             get {
                 var call = new CfxCommandLineIsReadOnlyRenderProcessCall();
@@ -114,6 +134,10 @@ namespace Chromium.Remote {
         /// Constructs and returns the represented command line string. Use this
         /// function cautiously because quoting behavior is unclear.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public String CommandLineString {
             get {
                 var call = new CfxCommandLineGetCommandLineStringRenderProcessCall();
@@ -128,6 +152,10 @@ namespace Chromium.Remote {
         /// 
         /// Set the program part of the command line string (the first item).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public String Program {
             get {
                 var call = new CfxCommandLineGetProgramRenderProcessCall();
@@ -146,6 +174,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if the command line has switches.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public bool HasSwitches {
             get {
                 var call = new CfxCommandLineHasSwitchesRenderProcessCall();
@@ -158,6 +190,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// True if there are remaining command line arguments.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public bool HasArguments {
             get {
                 var call = new CfxCommandLineHasArgumentsRenderProcessCall();
@@ -170,6 +206,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns a writable copy of this object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public CfrCommandLine Copy() {
             var call = new CfxCommandLineCopyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -182,6 +222,10 @@ namespace Chromium.Remote {
         /// The first argument must be the name of the program. This function is only
         /// supported on non-Windows platforms.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public void InitFromArgv(int argc, RemotePtr argv) {
             var call = new CfxCommandLineInitFromArgvRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -194,6 +238,10 @@ namespace Chromium.Remote {
         /// Initialize the command line with the string returned by calling
         /// GetCommandLineW(). This function is only supported on Windows.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public void InitFromString(string commandLine) {
             var call = new CfxCommandLineInitFromStringRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -205,6 +253,10 @@ namespace Chromium.Remote {
         /// Reset the command-line switches and arguments but leave the program
         /// component unchanged.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public void Reset() {
             var call = new CfxCommandLineResetRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -215,6 +267,10 @@ namespace Chromium.Remote {
         /// Retrieve the original command line string as a vector of strings. The argv
         /// array: { program, [(--|-|/)switch[=value]]*, [--], [argument]* }
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public void GetArgv(System.Collections.Generic.List<string> argv) {
             var call = new CfxCommandLineGetArgvRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -225,6 +281,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if the command line contains the given switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public bool HasSwitch(string name) {
             var call = new CfxCommandLineHasSwitchRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -237,6 +297,10 @@ namespace Chromium.Remote {
         /// Returns the value associated with the given switch. If the switch has no
         /// value or isn't present this function returns the NULL string.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public String GetSwitchValue(string name) {
             var call = new CfxCommandLineGetSwitchValueRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -249,6 +313,10 @@ namespace Chromium.Remote {
         /// Returns the map of switch names and values. If a switch has no value an
         /// NULL string is returned.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public void GetSwitches(System.Collections.Generic.List<string[]> switches) {
             var call = new CfxCommandLineGetSwitchesRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -260,6 +328,10 @@ namespace Chromium.Remote {
         /// Add a switch to the end of the command line. If the switch has no value
         /// pass an NULL value string.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public void AppendSwitch(string name) {
             var call = new CfxCommandLineAppendSwitchRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -270,6 +342,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Add a switch with the specified value to the end of the command line.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public void AppendSwitchWithValue(string name, string value) {
             var call = new CfxCommandLineAppendSwitchWithValueRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -281,6 +357,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Get the remaining command line arguments.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public void GetArguments(System.Collections.Generic.List<string> arguments) {
             var call = new CfxCommandLineGetArgumentsRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -291,6 +371,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Add an argument to the end of the command line.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public void AppendArgument(string argument) {
             var call = new CfxCommandLineAppendArgumentRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -302,6 +386,10 @@ namespace Chromium.Remote {
         /// Insert a command before the current command. Common for debuggers, like
         /// "valgrind" or "gdb --args".
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
+        /// </remarks>
         public void PrependWrapper(string wrapper) {
             var call = new CfxCommandLinePrependWrapperRenderProcessCall();
             call.self = CfrObject.Unwrap(this);

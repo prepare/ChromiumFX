@@ -40,6 +40,10 @@ namespace Chromium {
     /// Implement this structure to handle dialog events. The functions of this
     /// structure will be called on the browser process UI thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dialog_handler_capi.h">cef/include/capi/cef_dialog_handler_capi.h</see>.
+    /// </remarks>
     public class CfxDialogHandler : CfxBase {
 
         internal static CfxDialogHandler Wrap(IntPtr nativePtr) {
@@ -78,6 +82,10 @@ namespace Chromium {
         /// |Callback| either inline or at a later time. To display the default dialog
         /// return false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dialog_handler_capi.h">cef/include/capi/cef_dialog_handler_capi.h</see>.
+        /// </remarks>
         public event CfxDialogHandlerOnFileDialogEventHandler OnFileDialog {
             add {
                 if(m_OnFileDialog == null) {
@@ -107,6 +115,21 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Called to run a file chooser dialog. |Mode| represents the type of dialog
+        /// to display. |Title| to the title to be used for the dialog and may be NULL
+        /// to show the default title ("Open" or "Save" depending on the mode).
+        /// |DefaultFileName| is the default file name to select in the dialog.
+        /// |AcceptTypes| is a list of valid lower-cased MIME types or file extensions
+        /// specified in an input element and is used to restrict selectable files to
+        /// such types. To display a custom dialog return true (1) and execute
+        /// |Callback| either inline or at a later time. To display the default dialog
+        /// return false (0).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dialog_handler_capi.h">cef/include/capi/cef_dialog_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxDialogHandlerOnFileDialogEventHandler(object sender, CfxDialogHandlerOnFileDialogEventArgs e);
 
         /// <summary>
@@ -120,6 +143,10 @@ namespace Chromium {
         /// |Callback| either inline or at a later time. To display the default dialog
         /// return false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dialog_handler_capi.h">cef/include/capi/cef_dialog_handler_capi.h</see>.
+        /// </remarks>
         public class CfxDialogHandlerOnFileDialogEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -189,6 +216,18 @@ namespace Chromium {
                     return m_callback_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dialog_handler_capi.h">cef/include/capi/cef_dialog_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {

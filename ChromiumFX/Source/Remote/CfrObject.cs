@@ -33,6 +33,10 @@
 using System;
 
 namespace Chromium.Remote {
+
+    /// <summary>
+    /// Base class for all remote wrapper classes.
+    /// </summary>
     public abstract class CfrObject : IDisposable {
 
         internal static ulong Unwrap(CfrObject remoteObject) {
@@ -59,13 +63,14 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Get the remote runtime this object belongs to.
+        /// The CfrRuntime for the render process 
+        /// this object belongs to.
         /// </summary>
         public CfrRuntime RemoteRuntime { get { return remoteRuntime; }}
 
         /// <summary>
-        /// Get the address of the underlying native CEF object
-        /// in the remote process memory space.
+        /// Address of the underlying native CEF object
+        /// in the render process memory space.
         /// </summary>
         public RemotePtr RemotePtr {
             get {

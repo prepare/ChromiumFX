@@ -41,6 +41,10 @@ namespace Chromium {
     /// structure will be called on the render process main thread (TID_RENDERER)
     /// unless otherwise indicated.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+    /// </remarks>
     public class CfxRenderProcessHandler : CfxBase {
 
         internal static CfxRenderProcessHandler Wrap(IntPtr nativePtr) {
@@ -220,6 +224,10 @@ namespace Chromium {
         /// CfxBrowserProcessHandler.OnRenderProcessThreadCreated(). Do not
         /// keep a reference to |ExtraInfo| outside of this function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnRenderThreadCreatedEventHandler OnRenderThreadCreated {
             add {
                 if(m_OnRenderThreadCreated == null) {
@@ -240,6 +248,10 @@ namespace Chromium {
         /// <summary>
         /// Called after WebKit has been initialized.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public event CfxEventHandler OnWebKitInitialized {
             add {
                 if(m_OnWebKitInitialized == null) {
@@ -262,6 +274,10 @@ namespace Chromium {
         /// browser will be created before the old browser with the same identifier is
         /// destroyed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnBrowserCreatedEventHandler OnBrowserCreated {
             add {
                 if(m_OnBrowserCreated == null) {
@@ -282,6 +298,10 @@ namespace Chromium {
         /// <summary>
         /// Called before a browser is destroyed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnBrowserDestroyedEventHandler OnBrowserDestroyed {
             add {
                 if(m_OnBrowserDestroyed == null) {
@@ -302,6 +322,10 @@ namespace Chromium {
         /// <summary>
         /// Return the handler for browser load status events.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public event CfxGetLoadHandlerEventHandler GetLoadHandler {
             add {
                 if(m_GetLoadHandler == null) {
@@ -324,6 +348,10 @@ namespace Chromium {
         /// or false (0) to allow the navigation to proceed. The |Request| object
         /// cannot be modified in this callback.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnBeforeNavigationEventHandler OnBeforeNavigation {
             add {
                 if(m_OnBeforeNavigation == null) {
@@ -349,6 +377,10 @@ namespace Chromium {
         /// on the associated thread can be retrieved via the
         /// CfxV8Context.GetTaskRunner() function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnContextCreatedEventHandler OnContextCreated {
             add {
                 if(m_OnContextCreated == null) {
@@ -370,6 +402,10 @@ namespace Chromium {
         /// Called immediately before the V8 context for a frame is released. No
         /// references to the context should be kept after this function is called.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnContextReleasedEventHandler OnContextReleased {
             add {
                 if(m_OnContextReleased == null) {
@@ -392,6 +428,10 @@ namespace Chromium {
         /// callback is disabled by default. To enable set
         /// CfxSettings.UncaughtExceptionStackSize > 0.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnUncaughtExceptionEventHandler OnUncaughtException {
             add {
                 if(m_OnUncaughtException == null) {
@@ -417,6 +457,10 @@ namespace Chromium {
         /// keep references to or attempt to access any DOM objects outside the scope
         /// of this function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnFocusedNodeChangedEventHandler OnFocusedNodeChanged {
             add {
                 if(m_OnFocusedNodeChanged == null) {
@@ -439,6 +483,10 @@ namespace Chromium {
         /// (1) if the message was handled or false (0) otherwise. Do not keep a
         /// reference to or attempt to access the message outside of this callback.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnProcessMessageReceivedEventHandler OnProcessMessageReceived {
             add {
                 if(m_OnProcessMessageReceived == null) {
@@ -508,6 +556,16 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Called after the render process main thread has been created. |ExtraInfo|
+        /// is a read-only value originating from
+        /// CfxBrowserProcessHandler.OnRenderProcessThreadCreated(). Do not
+        /// keep a reference to |ExtraInfo| outside of this function.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnRenderThreadCreatedEventHandler(object sender, CfxOnRenderThreadCreatedEventArgs e);
 
         /// <summary>
@@ -516,6 +574,10 @@ namespace Chromium {
         /// CfxBrowserProcessHandler.OnRenderProcessThreadCreated(). Do not
         /// keep a reference to |ExtraInfo| outside of this function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnRenderThreadCreatedEventArgs : CfxEventArgs {
 
             internal IntPtr m_extra_info;
@@ -539,6 +601,15 @@ namespace Chromium {
         }
 
 
+        /// <summary>
+        /// Called after a browser has been created. When browsing cross-origin a new
+        /// browser will be created before the old browser with the same identifier is
+        /// destroyed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnBrowserCreatedEventHandler(object sender, CfxOnBrowserCreatedEventArgs e);
 
         /// <summary>
@@ -546,6 +617,10 @@ namespace Chromium {
         /// browser will be created before the old browser with the same identifier is
         /// destroyed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnBrowserCreatedEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -568,11 +643,22 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called before a browser is destroyed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnBrowserDestroyedEventHandler(object sender, CfxOnBrowserDestroyedEventArgs e);
 
         /// <summary>
         /// Called before a browser is destroyed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnBrowserDestroyedEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -596,6 +682,15 @@ namespace Chromium {
         }
 
 
+        /// <summary>
+        /// Called before browser navigation. Return true (1) to cancel the navigation
+        /// or false (0) to allow the navigation to proceed. The |Request| object
+        /// cannot be modified in this callback.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnBeforeNavigationEventHandler(object sender, CfxOnBeforeNavigationEventArgs e);
 
         /// <summary>
@@ -603,6 +698,10 @@ namespace Chromium {
         /// or false (0) to allow the navigation to proceed. The |Request| object
         /// cannot be modified in this callback.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnBeforeNavigationEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -658,6 +757,18 @@ namespace Chromium {
                     return 0 != m_is_redirect;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -672,6 +783,18 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called immediately after the V8 context for a frame has been created. To
+        /// retrieve the JavaScript 'window' object use the
+        /// CfxV8Context.GetGlobal() function. V8 handles can only be accessed
+        /// from the thread on which they are created. A task runner for posting tasks
+        /// on the associated thread can be retrieved via the
+        /// CfxV8Context.GetTaskRunner() function.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnContextCreatedEventHandler(object sender, CfxOnContextCreatedEventArgs e);
 
         /// <summary>
@@ -682,6 +805,10 @@ namespace Chromium {
         /// on the associated thread can be retrieved via the
         /// CfxV8Context.GetTaskRunner() function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnContextCreatedEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -724,12 +851,24 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called immediately before the V8 context for a frame is released. No
+        /// references to the context should be kept after this function is called.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnContextReleasedEventHandler(object sender, CfxOnContextReleasedEventArgs e);
 
         /// <summary>
         /// Called immediately before the V8 context for a frame is released. No
         /// references to the context should be kept after this function is called.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnContextReleasedEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -772,6 +911,15 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called for global uncaught exceptions in a frame. Execution of this
+        /// callback is disabled by default. To enable set
+        /// CfxSettings.UncaughtExceptionStackSize > 0.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnUncaughtExceptionEventHandler(object sender, CfxOnUncaughtExceptionEventArgs e);
 
         /// <summary>
@@ -779,6 +927,10 @@ namespace Chromium {
         /// callback is disabled by default. To enable set
         /// CfxSettings.UncaughtExceptionStackSize > 0.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnUncaughtExceptionEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -841,6 +993,18 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when a new node in the the browser gets focus. The |Node| value may
+        /// be NULL if no specific node has gained focus. The node object passed to
+        /// this function represents a snapshot of the DOM at the time this function is
+        /// executed. DOM objects are only valid for the scope of this function. Do not
+        /// keep references to or attempt to access any DOM objects outside the scope
+        /// of this function.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnFocusedNodeChangedEventHandler(object sender, CfxOnFocusedNodeChangedEventArgs e);
 
         /// <summary>
@@ -851,6 +1015,10 @@ namespace Chromium {
         /// keep references to or attempt to access any DOM objects outside the scope
         /// of this function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnFocusedNodeChangedEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;

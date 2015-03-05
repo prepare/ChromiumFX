@@ -40,6 +40,10 @@ namespace Chromium {
     /// Implement this structure to handle events when window rendering is disabled.
     /// The functions of this structure will be called on the UI thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+    /// </remarks>
     public class CfxRenderHandler : CfxBase {
 
         internal static CfxRenderHandler Wrap(IntPtr nativePtr) {
@@ -203,6 +207,10 @@ namespace Chromium {
         /// Called to retrieve the root window rectangle in screen coordinates. Return
         /// true (1) if the rectangle was provided.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public event CfxGetRootScreenRectEventHandler GetRootScreenRect {
             add {
                 if(m_GetRootScreenRect == null) {
@@ -224,6 +232,10 @@ namespace Chromium {
         /// Called to retrieve the view rectangle which is relative to screen
         /// coordinates. Return true (1) if the rectangle was provided.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public event CfxGetViewRectEventHandler GetViewRect {
             add {
                 if(m_GetViewRect == null) {
@@ -245,6 +257,10 @@ namespace Chromium {
         /// Called to retrieve the translation from view coordinates to actual screen
         /// coordinates. Return true (1) if the screen coordinates were provided.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public event CfxGetScreenPointEventHandler GetScreenPoint {
             add {
                 if(m_GetScreenPoint == null) {
@@ -270,6 +286,10 @@ namespace Chromium {
         /// will be used. If the rectangle is still NULL or invalid popups may not be
         /// drawn correctly.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public event CfxGetScreenInfoEventHandler GetScreenInfo {
             add {
                 if(m_GetScreenInfo == null) {
@@ -291,6 +311,10 @@ namespace Chromium {
         /// Called when the browser wants to show or hide the popup widget. The popup
         /// should be shown if |Show| is true (1) and hidden if |Show| is false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnPopupShowEventHandler OnPopupShow {
             add {
                 if(m_OnPopupShow == null) {
@@ -312,6 +336,10 @@ namespace Chromium {
         /// Called when the browser wants to move or resize the popup widget. |Rect|
         /// contains the new location and size.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnPopupSizeEventHandler OnPopupSize {
             add {
                 if(m_OnPopupSize == null) {
@@ -336,6 +364,10 @@ namespace Chromium {
         /// to be repainted. |Buffer| will be |Width|*|Height|*4 bytes in size and
         /// represents a BGRA image with an upper-left origin.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnPaintEventHandler OnPaint {
             add {
                 if(m_OnPaint == null) {
@@ -357,6 +389,10 @@ namespace Chromium {
         /// Called when the browser's cursor has changed. If |Type| is CT_CUSTOM then
         /// |CustomCursorInfo| will be populated with the custom cursor information.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnCursorChangeEventHandler OnCursorChange {
             add {
                 if(m_OnCursorChange == null) {
@@ -385,6 +421,10 @@ namespace Chromium {
         /// synchronously or asynchronously to inform the web view that the drag
         /// operation has ended.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public event CfxStartDraggingEventHandler StartDragging {
             add {
                 if(m_StartDragging == null) {
@@ -407,6 +447,10 @@ namespace Chromium {
         /// drop operation. |Operation| describes the allowed operation (none, move,
         /// copy, link).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public event CfxUpdateDragCursorEventHandler UpdateDragCursor {
             add {
                 if(m_UpdateDragCursor == null) {
@@ -427,6 +471,10 @@ namespace Chromium {
         /// <summary>
         /// Called when the scroll offset has changed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnScrollOffsetChangedEventHandler OnScrollOffsetChanged {
             add {
                 if(m_OnScrollOffsetChanged == null) {
@@ -496,12 +544,24 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Called to retrieve the root window rectangle in screen coordinates. Return
+        /// true (1) if the rectangle was provided.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxGetRootScreenRectEventHandler(object sender, CfxGetRootScreenRectEventArgs e);
 
         /// <summary>
         /// Called to retrieve the root window rectangle in screen coordinates. Return
         /// true (1) if the rectangle was provided.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public class CfxGetRootScreenRectEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -531,6 +591,18 @@ namespace Chromium {
                     return m_rect_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(int returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -545,12 +617,24 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called to retrieve the view rectangle which is relative to screen
+        /// coordinates. Return true (1) if the rectangle was provided.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxGetViewRectEventHandler(object sender, CfxGetViewRectEventArgs e);
 
         /// <summary>
         /// Called to retrieve the view rectangle which is relative to screen
         /// coordinates. Return true (1) if the rectangle was provided.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public class CfxGetViewRectEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -580,6 +664,18 @@ namespace Chromium {
                     return m_rect_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -594,12 +690,24 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called to retrieve the translation from view coordinates to actual screen
+        /// coordinates. Return true (1) if the screen coordinates were provided.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxGetScreenPointEventHandler(object sender, CfxGetScreenPointEventArgs e);
 
         /// <summary>
         /// Called to retrieve the translation from view coordinates to actual screen
         /// coordinates. Return true (1) if the screen coordinates were provided.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public class CfxGetScreenPointEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -649,6 +757,18 @@ namespace Chromium {
                     m_screenY = value;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -663,6 +783,18 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called to allow the client to fill in the CfxScreenInfo object with
+        /// appropriate values. Return true (1) if the |ScreenInfo| structure has been
+        /// modified.
+        /// If the screen info rectangle is left NULL the rectangle from GetViewRect
+        /// will be used. If the rectangle is still NULL or invalid popups may not be
+        /// drawn correctly.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxGetScreenInfoEventHandler(object sender, CfxGetScreenInfoEventArgs e);
 
         /// <summary>
@@ -673,6 +805,10 @@ namespace Chromium {
         /// will be used. If the rectangle is still NULL or invalid popups may not be
         /// drawn correctly.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public class CfxGetScreenInfoEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -702,6 +838,18 @@ namespace Chromium {
                     return m_screen_info_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -716,12 +864,24 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when the browser wants to show or hide the popup widget. The popup
+        /// should be shown if |Show| is true (1) and hidden if |Show| is false (0).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnPopupShowEventHandler(object sender, CfxOnPopupShowEventArgs e);
 
         /// <summary>
         /// Called when the browser wants to show or hide the popup widget. The popup
         /// should be shown if |Show| is true (1) and hidden if |Show| is false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnPopupShowEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -752,12 +912,24 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when the browser wants to move or resize the popup widget. |Rect|
+        /// contains the new location and size.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnPopupSizeEventHandler(object sender, CfxOnPopupSizeEventArgs e);
 
         /// <summary>
         /// Called when the browser wants to move or resize the popup widget. |Rect|
         /// contains the new location and size.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnPopupSizeEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -790,6 +962,17 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when an element should be painted. |Type| indicates whether the
+        /// element is the view or the popup widget. |Buffer| contains the pixel data
+        /// for the whole image. |DirtyRects| contains the set of rectangles that need
+        /// to be repainted. |Buffer| will be |Width|*|Height|*4 bytes in size and
+        /// represents a BGRA image with an upper-left origin.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnPaintEventHandler(object sender, CfxOnPaintEventArgs e);
 
         /// <summary>
@@ -799,6 +982,10 @@ namespace Chromium {
         /// to be repainted. |Buffer| will be |Width|*|Height|*4 bytes in size and
         /// represents a BGRA image with an upper-left origin.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnPaintEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -878,12 +1065,24 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when the browser's cursor has changed. If |Type| is CT_CUSTOM then
+        /// |CustomCursorInfo| will be populated with the custom cursor information.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnCursorChangeEventHandler(object sender, CfxOnCursorChangeEventArgs e);
 
         /// <summary>
         /// Called when the browser's cursor has changed. If |Type| is CT_CUSTOM then
         /// |CustomCursorInfo| will be populated with the custom cursor information.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnCursorChangeEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -932,6 +1131,21 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when the user starts dragging content in the web view. Contextual
+        /// information about the dragged content is supplied by |DragData|. OS APIs
+        /// that run a system message loop may be used within the StartDragging call.
+        /// Return false (0) to abort the drag operation. Don't call any of
+        /// CfxBrowserHost.DragSource*Ended* functions after returning false (0).
+        /// Return true (1) to handle the drag operation. Call
+        /// CfxBrowserHost.DragSourceEndedAt and DragSourceSystemDragEnded either
+        /// synchronously or asynchronously to inform the web view that the drag
+        /// operation has ended.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxStartDraggingEventHandler(object sender, CfxStartDraggingEventArgs e);
 
         /// <summary>
@@ -945,6 +1159,10 @@ namespace Chromium {
         /// synchronously or asynchronously to inform the web view that the drag
         /// operation has ended.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public class CfxStartDraggingEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -998,6 +1216,18 @@ namespace Chromium {
                     return m_y;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -1012,6 +1242,15 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when the web view wants to update the mouse cursor during a drag &amp;
+        /// drop operation. |Operation| describes the allowed operation (none, move,
+        /// copy, link).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxUpdateDragCursorEventHandler(object sender, CfxUpdateDragCursorEventArgs e);
 
         /// <summary>
@@ -1019,6 +1258,10 @@ namespace Chromium {
         /// drop operation. |Operation| describes the allowed operation (none, move,
         /// copy, link).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public class CfxUpdateDragCursorEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -1049,11 +1292,22 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when the scroll offset has changed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnScrollOffsetChangedEventHandler(object sender, CfxOnScrollOffsetChangedEventArgs e);
 
         /// <summary>
         /// Called when the scroll offset has changed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnScrollOffsetChangedEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;

@@ -42,6 +42,10 @@ namespace Chromium {
     /// The functions of this structure will be called on the thread associated with
     /// the V8 accessor.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+    /// </remarks>
     public class CfxV8Accessor : CfxBase {
 
         internal static CfxV8Accessor Wrap(IntPtr nativePtr) {
@@ -102,6 +106,10 @@ namespace Chromium {
         /// exception that will be thrown. Return true (1) if accessor retrieval was
         /// handled.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public event CfxV8AccessorGetEventHandler Get {
             add {
                 if(m_Get == null) {
@@ -126,6 +134,10 @@ namespace Chromium {
         /// exception that will be thrown. Return true (1) if accessor assignment was
         /// handled.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public event CfxV8AccessorSetEventHandler Set {
             add {
                 if(m_Set == null) {
@@ -159,6 +171,17 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Handle retrieval the accessor value identified by |Name|. |Object| is the
+        /// receiver ('this' object) of the accessor. If retrieval succeeds set
+        /// |Retval| to the return value. If retrieval fails set |Exception| to the
+        /// exception that will be thrown. Return true (1) if accessor retrieval was
+        /// handled.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public delegate void CfxV8AccessorGetEventHandler(object sender, CfxV8AccessorGetEventArgs e);
 
         /// <summary>
@@ -168,6 +191,10 @@ namespace Chromium {
         /// exception that will be thrown. Return true (1) if accessor retrieval was
         /// handled.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public class CfxV8AccessorGetEventArgs : CfxEventArgs {
 
             internal IntPtr m_name_str;
@@ -226,6 +253,18 @@ namespace Chromium {
                     m_exception_changed = true;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -240,6 +279,17 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Handle assignment of the accessor value identified by |Name|. |Object| is
+        /// the receiver ('this' object) of the accessor. |Value| is the new value
+        /// being assigned to the accessor. If assignment fails set |Exception| to the
+        /// exception that will be thrown. Return true (1) if accessor assignment was
+        /// handled.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public delegate void CfxV8AccessorSetEventHandler(object sender, CfxV8AccessorSetEventArgs e);
 
         /// <summary>
@@ -249,6 +299,10 @@ namespace Chromium {
         /// exception that will be thrown. Return true (1) if accessor assignment was
         /// handled.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public class CfxV8AccessorSetEventArgs : CfxEventArgs {
 
             internal IntPtr m_name_str;
@@ -310,6 +364,18 @@ namespace Chromium {
                     m_exception_changed = true;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {

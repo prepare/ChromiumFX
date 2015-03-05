@@ -39,6 +39,10 @@ namespace Chromium.Remote {
     /// Structure used to represent a single element in the request post data. The
     /// functions of this structure may be called on any thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+    /// </remarks>
     public class CfrPostDataElement : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -59,6 +63,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Create a new CfrPostDataElement object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public static CfrPostDataElement Create(CfrRuntime remoteRuntime) {
             var call = new CfxPostDataElementCreateRenderProcessCall();
             call.Execute(remoteRuntime.connection);
@@ -71,6 +79,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if this object is read-only.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public bool IsReadOnly {
             get {
                 var call = new CfxPostDataElementIsReadOnlyRenderProcessCall();
@@ -83,6 +95,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Return the type of this post data element.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public CfxPostdataElementType Type {
             get {
                 var call = new CfxPostDataElementGetTypeRenderProcessCall();
@@ -95,6 +111,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Return the file name.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public String File {
             get {
                 var call = new CfxPostDataElementGetFileRenderProcessCall();
@@ -107,6 +127,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Return the number of bytes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public int BytesCount {
             get {
                 var call = new CfxPostDataElementGetBytesCountRenderProcessCall();
@@ -119,6 +143,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Remove all contents from the post data element.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public void SetToEmpty() {
             var call = new CfxPostDataElementSetToEmptyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -128,6 +156,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// The post data element will represent a file.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public void SetToFile(string fileName) {
             var call = new CfxPostDataElementSetToFileRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -139,6 +171,10 @@ namespace Chromium.Remote {
         /// The post data element will represent bytes.  The bytes passed in will be
         /// copied.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public void SetToBytes(int size, RemotePtr bytes) {
             var call = new CfxPostDataElementSetToBytesRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -151,6 +187,10 @@ namespace Chromium.Remote {
         /// Read up to |size| bytes into |bytes| and return the number of bytes
         /// actually read.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public int GetBytes(int size, RemotePtr bytes) {
             var call = new CfxPostDataElementGetBytesRenderProcessCall();
             call.self = CfrObject.Unwrap(this);

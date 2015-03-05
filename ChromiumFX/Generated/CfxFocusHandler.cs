@@ -40,6 +40,10 @@ namespace Chromium {
     /// Implement this structure to handle events related to focus. The functions of
     /// this structure will be called on the UI thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_focus_handler_capi.h">cef/include/capi/cef_focus_handler_capi.h</see>.
+    /// </remarks>
     public class CfxFocusHandler : CfxBase {
 
         internal static CfxFocusHandler Wrap(IntPtr nativePtr) {
@@ -96,6 +100,10 @@ namespace Chromium {
         /// will be true (1) if the browser is giving focus to the next component and
         /// false (0) if the browser is giving focus to the previous component.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_focus_handler_capi.h">cef/include/capi/cef_focus_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnTakeFocusEventHandler OnTakeFocus {
             add {
                 if(m_OnTakeFocus == null) {
@@ -118,6 +126,10 @@ namespace Chromium {
         /// where the focus request is originating from. Return false (0) to allow the
         /// focus to be set or true (1) to cancel setting the focus.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_focus_handler_capi.h">cef/include/capi/cef_focus_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnSetFocusEventHandler OnSetFocus {
             add {
                 if(m_OnSetFocus == null) {
@@ -138,6 +150,10 @@ namespace Chromium {
         /// <summary>
         /// Called when the browser component has received focus.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_focus_handler_capi.h">cef/include/capi/cef_focus_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnGotFocusEventHandler OnGotFocus {
             add {
                 if(m_OnGotFocus == null) {
@@ -175,6 +191,16 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Called when the browser component is about to loose focus. For instance, if
+        /// focus was on the last HTML element and the user pressed the TAB key. |Next|
+        /// will be true (1) if the browser is giving focus to the next component and
+        /// false (0) if the browser is giving focus to the previous component.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_focus_handler_capi.h">cef/include/capi/cef_focus_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnTakeFocusEventHandler(object sender, CfxOnTakeFocusEventArgs e);
 
         /// <summary>
@@ -183,6 +209,10 @@ namespace Chromium {
         /// will be true (1) if the browser is giving focus to the next component and
         /// false (0) if the browser is giving focus to the previous component.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_focus_handler_capi.h">cef/include/capi/cef_focus_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnTakeFocusEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -213,6 +243,15 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when the browser component is requesting focus. |Source| indicates
+        /// where the focus request is originating from. Return false (0) to allow the
+        /// focus to be set or true (1) to cancel setting the focus.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_focus_handler_capi.h">cef/include/capi/cef_focus_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnSetFocusEventHandler(object sender, CfxOnSetFocusEventArgs e);
 
         /// <summary>
@@ -220,6 +259,10 @@ namespace Chromium {
         /// where the focus request is originating from. Return false (0) to allow the
         /// focus to be set or true (1) to cancel setting the focus.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_focus_handler_capi.h">cef/include/capi/cef_focus_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnSetFocusEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -247,6 +290,18 @@ namespace Chromium {
                     return m_source;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_focus_handler_capi.h">cef/include/capi/cef_focus_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -261,11 +316,22 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when the browser component has received focus.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_focus_handler_capi.h">cef/include/capi/cef_focus_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnGotFocusEventHandler(object sender, CfxOnGotFocusEventArgs e);
 
         /// <summary>
         /// Called when the browser component has received focus.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_focus_handler_capi.h">cef/include/capi/cef_focus_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnGotFocusEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;

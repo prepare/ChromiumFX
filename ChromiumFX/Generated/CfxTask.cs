@@ -44,6 +44,10 @@ namespace Chromium {
     /// the target thread. For this reason be cautious when performing work in the
     /// task object destructor.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+    /// </remarks>
     public class CfxTask : CfxBase {
 
         internal static CfxTask Wrap(IntPtr nativePtr) {
@@ -70,6 +74,10 @@ namespace Chromium {
         /// <summary>
         /// Method that will be executed on the target thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public event CfxEventHandler Execute {
             add {
                 if(m_Execute == null) {

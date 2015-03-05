@@ -37,6 +37,10 @@ namespace Chromium {
     /// <summary>
     /// Callback structure for asynchronous continuation of print job requests.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+    /// </remarks>
     public class CfxPrintJobCallback : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -61,6 +65,10 @@ namespace Chromium {
         /// <summary>
         /// Indicate completion of the print job.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
         public void Continue() {
             CfxApi.cfx_print_job_callback_cont(NativePtr);
         }

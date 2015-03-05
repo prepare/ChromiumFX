@@ -40,6 +40,10 @@ namespace Chromium {
     /// Implement this structure to handle events related to JavaScript dialogs. The
     /// functions of this structure will be called on the UI thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_jsdialog_handler_capi.h">cef/include/capi/cef_jsdialog_handler_capi.h</see>.
+    /// </remarks>
     public class CfxJsDialogHandler : CfxBase {
 
         internal static CfxJsDialogHandler Wrap(IntPtr nativePtr) {
@@ -123,6 +127,10 @@ namespace Chromium {
         /// the application must execute |Callback| once the custom dialog is
         /// dismissed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_jsdialog_handler_capi.h">cef/include/capi/cef_jsdialog_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnJsDialogEventHandler OnJsDialog {
             add {
                 if(m_OnJsDialog == null) {
@@ -148,6 +156,10 @@ namespace Chromium {
         /// dialog is used the application must execute |Callback| once the custom
         /// dialog is dismissed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_jsdialog_handler_capi.h">cef/include/capi/cef_jsdialog_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnBeforeUnloadDialogEventHandler OnBeforeUnloadDialog {
             add {
                 if(m_OnBeforeUnloadDialog == null) {
@@ -170,6 +182,10 @@ namespace Chromium {
         /// be called due to events like page navigation irregardless of whether any
         /// dialogs are currently pending.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_jsdialog_handler_capi.h">cef/include/capi/cef_jsdialog_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnResetDialogStateEventHandler OnResetDialogState {
             add {
                 if(m_OnResetDialogState == null) {
@@ -190,6 +206,10 @@ namespace Chromium {
         /// <summary>
         /// Called when the default implementation dialog is closed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_jsdialog_handler_capi.h">cef/include/capi/cef_jsdialog_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnDialogClosedEventHandler OnDialogClosed {
             add {
                 if(m_OnDialogClosed == null) {
@@ -231,6 +251,25 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Called to run a JavaScript dialog. The |DefaultPromptText| value will be
+        /// specified for prompt dialogs only. Set |SuppressMessage| to true (1) and
+        /// return false (0) to suppress the message (suppressing messages is
+        /// preferable to immediately executing the callback as this is used to detect
+        /// presumably malicious behavior like spamming alert messages in
+        /// onbeforeunload). Set |SuppressMessage| to false (0) and return false (0)
+        /// to use the default implementation (the default implementation will show one
+        /// modal dialog at a time and suppress any additional dialog requests until
+        /// the displayed dialog is dismissed). Return true (1) if the application will
+        /// use a custom dialog or if the callback has been executed immediately.
+        /// Custom dialogs may be either modal or modeless. If a custom dialog is used
+        /// the application must execute |Callback| once the custom dialog is
+        /// dismissed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_jsdialog_handler_capi.h">cef/include/capi/cef_jsdialog_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnJsDialogEventHandler(object sender, CfxOnJsDialogEventArgs e);
 
         /// <summary>
@@ -248,6 +287,10 @@ namespace Chromium {
         /// the application must execute |Callback| once the custom dialog is
         /// dismissed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_jsdialog_handler_capi.h">cef/include/capi/cef_jsdialog_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnJsDialogEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -340,6 +383,18 @@ namespace Chromium {
                     m_suppress_message = value ? 1 : 0;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_jsdialog_handler_capi.h">cef/include/capi/cef_jsdialog_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -354,6 +409,18 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called to run a dialog asking the user if they want to leave a page. Return
+        /// false (0) to use the default dialog implementation. Return true (1) if the
+        /// application will use a custom dialog or if the callback has been executed
+        /// immediately. Custom dialogs may be either modal or modeless. If a custom
+        /// dialog is used the application must execute |Callback| once the custom
+        /// dialog is dismissed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_jsdialog_handler_capi.h">cef/include/capi/cef_jsdialog_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnBeforeUnloadDialogEventHandler(object sender, CfxOnBeforeUnloadDialogEventArgs e);
 
         /// <summary>
@@ -364,6 +431,10 @@ namespace Chromium {
         /// dialog is used the application must execute |Callback| once the custom
         /// dialog is dismissed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_jsdialog_handler_capi.h">cef/include/capi/cef_jsdialog_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnBeforeUnloadDialogEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -413,6 +484,18 @@ namespace Chromium {
                     return m_callback_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_jsdialog_handler_capi.h">cef/include/capi/cef_jsdialog_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -427,6 +510,15 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called to cancel any pending dialogs and reset any saved dialog state. Will
+        /// be called due to events like page navigation irregardless of whether any
+        /// dialogs are currently pending.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_jsdialog_handler_capi.h">cef/include/capi/cef_jsdialog_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnResetDialogStateEventHandler(object sender, CfxOnResetDialogStateEventArgs e);
 
         /// <summary>
@@ -434,6 +526,10 @@ namespace Chromium {
         /// be called due to events like page navigation irregardless of whether any
         /// dialogs are currently pending.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_jsdialog_handler_capi.h">cef/include/capi/cef_jsdialog_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnResetDialogStateEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -456,11 +552,22 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when the default implementation dialog is closed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_jsdialog_handler_capi.h">cef/include/capi/cef_jsdialog_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnDialogClosedEventHandler(object sender, CfxOnDialogClosedEventArgs e);
 
         /// <summary>
         /// Called when the default implementation dialog is closed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_jsdialog_handler_capi.h">cef/include/capi/cef_jsdialog_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnDialogClosedEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;

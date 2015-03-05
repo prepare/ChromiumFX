@@ -37,6 +37,10 @@ namespace Chromium {
     /// <summary>
     /// Cookie information.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
     public sealed class CfxCookie : CfxStructure {
 
         internal static CfxCookie Wrap(IntPtr nativePtr) {
@@ -56,6 +60,10 @@ namespace Chromium {
         /// <summary>
         /// The cookie name.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Name {
             get {
                 IntPtr value_str;
@@ -73,6 +81,10 @@ namespace Chromium {
         /// <summary>
         /// The cookie value.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Value {
             get {
                 IntPtr value_str;
@@ -92,6 +104,10 @@ namespace Chromium {
         /// cookie. Domain cookies are stored with a leading "." and are visible to
         /// sub-domains whereas host cookies are not.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Domain {
             get {
                 IntPtr value_str;
@@ -110,6 +126,10 @@ namespace Chromium {
         /// If |path| is non-empty only URLs at or below the path will get the cookie
         /// value.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Path {
             get {
                 IntPtr value_str;
@@ -127,6 +147,10 @@ namespace Chromium {
         /// <summary>
         /// If |secure| is true the cookie will only be sent for HTTPS requests.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public bool Secure {
             get {
                 int value;
@@ -141,6 +165,10 @@ namespace Chromium {
         /// <summary>
         /// If |httpOnly| is true the cookie will only be sent for HTTP requests.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public bool HttpOnly {
             get {
                 int value;
@@ -156,6 +184,10 @@ namespace Chromium {
         /// The cookie creation date. This is automatically populated by the system on
         /// cookie creation.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxTime Creation {
             get {
                 IntPtr value;
@@ -171,6 +203,10 @@ namespace Chromium {
         /// The cookie last access date. This is automatically populated by the system
         /// on access.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxTime LastAccess {
             get {
                 IntPtr value;
@@ -185,6 +221,10 @@ namespace Chromium {
         /// <summary>
         /// The cookie expiration date is only valid if |hasExpires| is true.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public bool HasExpires {
             get {
                 int value;

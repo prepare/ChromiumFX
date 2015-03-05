@@ -38,6 +38,10 @@ namespace Chromium {
     /// Structure used to represent a web response. The functions of this structure
     /// may be called on any thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
+    /// </remarks>
     public partial class CfxResponse : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -62,6 +66,10 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxResponse object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
+        /// </remarks>
         public static CfxResponse Create() {
             return CfxResponse.Wrap(CfxApi.cfx_response_create());
         }
@@ -69,6 +77,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if this object is read-only.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
+        /// </remarks>
         public bool IsReadOnly {
             get {
                 return 0 != CfxApi.cfx_response_is_read_only(NativePtr);
@@ -80,6 +92,10 @@ namespace Chromium {
         /// 
         /// Set the response status code.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
+        /// </remarks>
         public int Status {
             get {
                 return CfxApi.cfx_response_get_status(NativePtr);
@@ -94,6 +110,10 @@ namespace Chromium {
         /// 
         /// Set the response status text.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
+        /// </remarks>
         public String StatusText {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_response_get_status_text(NativePtr));
@@ -110,6 +130,10 @@ namespace Chromium {
         /// 
         /// Set the response mime type.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
+        /// </remarks>
         public String MimeType {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_response_get_mime_type(NativePtr));
@@ -124,6 +148,10 @@ namespace Chromium {
         /// <summary>
         /// Get the value for the specified response header field.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
+        /// </remarks>
         public String GetHeader(string name) {
             var name_pinned = new PinnedString(name);
             var __retval = CfxApi.cfx_response_get_header(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length);
@@ -134,6 +162,10 @@ namespace Chromium {
         /// <summary>
         /// Get all response header fields.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
+        /// </remarks>
         public void GetHeaderMap(System.Collections.Generic.List<string[]> headerMap) {
             PinnedString[] headerMap_handles;
             var headerMap_unwrapped = CfxStringCollections.UnwrapCfxStringMultimap(headerMap, out headerMap_handles);
@@ -146,6 +178,10 @@ namespace Chromium {
         /// <summary>
         /// Set all response header fields.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
+        /// </remarks>
         public void SetHeaderMap(System.Collections.Generic.List<string[]> headerMap) {
             PinnedString[] headerMap_handles;
             var headerMap_unwrapped = CfxStringCollections.UnwrapCfxStringMultimap(headerMap, out headerMap_handles);

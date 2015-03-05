@@ -41,6 +41,10 @@ namespace Chromium {
     /// functions of this structure will be called on the same thread that created
     /// the request unless otherwise documented.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+    /// </remarks>
     public class CfxUrlRequestClient : CfxBase {
 
         internal static CfxUrlRequestClient Wrap(IntPtr nativePtr) {
@@ -120,6 +124,10 @@ namespace Chromium {
         /// CfxUrlRequest.GetRequestStatus function to determine if the request was
         /// successful or not.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public event CfxOnRequestCompleteEventHandler OnRequestComplete {
             add {
                 if(m_OnRequestComplete == null) {
@@ -143,6 +151,10 @@ namespace Chromium {
         /// chunked upload is enabled). This function will only be called if the
         /// UR_FLAG_REPORT_UPLOAD_PROGRESS flag is set on the request.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public event CfxOnUploadProgressEventHandler OnUploadProgress {
             add {
                 if(m_OnUploadProgress == null) {
@@ -165,6 +177,10 @@ namespace Chromium {
         /// bytes received up to the call and |Total| is the expected total size of the
         /// response (or -1 if not determined).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public event CfxOnDownloadProgressEventHandler OnDownloadProgress {
             add {
                 if(m_OnDownloadProgress == null) {
@@ -187,6 +203,10 @@ namespace Chromium {
         /// bytes received since the last call. This function will not be called if the
         /// UR_FLAG_NO_DOWNLOAD_DATA flag is set on the request.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public event CfxOnDownloadDataEventHandler OnDownloadData {
             add {
                 if(m_OnDownloadData == null) {
@@ -213,6 +233,10 @@ namespace Chromium {
         /// function will only be called for requests initiated from the browser
         /// process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public event CfxUrlRequestClientGetAuthCredentialsEventHandler GetAuthCredentials {
             add {
                 if(m_GetAuthCredentials == null) {
@@ -258,6 +282,15 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Notifies the client that the request has completed. Use the
+        /// CfxUrlRequest.GetRequestStatus function to determine if the request was
+        /// successful or not.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnRequestCompleteEventHandler(object sender, CfxOnRequestCompleteEventArgs e);
 
         /// <summary>
@@ -265,6 +298,10 @@ namespace Chromium {
         /// CfxUrlRequest.GetRequestStatus function to determine if the request was
         /// successful or not.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public class CfxOnRequestCompleteEventArgs : CfxEventArgs {
 
             internal IntPtr m_request;
@@ -287,6 +324,16 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Notifies the client of upload progress. |Current| denotes the number of
+        /// bytes sent so far and |Total| is the total size of uploading data (or -1 if
+        /// chunked upload is enabled). This function will only be called if the
+        /// UR_FLAG_REPORT_UPLOAD_PROGRESS flag is set on the request.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnUploadProgressEventHandler(object sender, CfxOnUploadProgressEventArgs e);
 
         /// <summary>
@@ -295,6 +342,10 @@ namespace Chromium {
         /// chunked upload is enabled). This function will only be called if the
         /// UR_FLAG_REPORT_UPLOAD_PROGRESS flag is set on the request.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public class CfxOnUploadProgressEventArgs : CfxEventArgs {
 
             internal IntPtr m_request;
@@ -333,6 +384,15 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Notifies the client of download progress. |Current| denotes the number of
+        /// bytes received up to the call and |Total| is the expected total size of the
+        /// response (or -1 if not determined).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnDownloadProgressEventHandler(object sender, CfxOnDownloadProgressEventArgs e);
 
         /// <summary>
@@ -340,6 +400,10 @@ namespace Chromium {
         /// bytes received up to the call and |Total| is the expected total size of the
         /// response (or -1 if not determined).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public class CfxOnDownloadProgressEventArgs : CfxEventArgs {
 
             internal IntPtr m_request;
@@ -378,6 +442,15 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when some part of the response is read. |Data| contains the current
+        /// bytes received since the last call. This function will not be called if the
+        /// UR_FLAG_NO_DOWNLOAD_DATA flag is set on the request.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnDownloadDataEventHandler(object sender, CfxOnDownloadDataEventArgs e);
 
         /// <summary>
@@ -385,6 +458,10 @@ namespace Chromium {
         /// bytes received since the last call. This function will not be called if the
         /// UR_FLAG_NO_DOWNLOAD_DATA flag is set on the request.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public class CfxOnDownloadDataEventArgs : CfxEventArgs {
 
             internal IntPtr m_request;
@@ -423,6 +500,19 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called on the IO thread when the browser needs credentials from the user.
+        /// |IsProxy| indicates whether the host is a proxy server. |Host| contains the
+        /// hostname and |Port| contains the port number. Return true (1) to continue
+        /// the request and call CfxAuthCallback.Continue() when the authentication
+        /// information is available. Return false (0) to cancel the request. This
+        /// function will only be called for requests initiated from the browser
+        /// process.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public delegate void CfxUrlRequestClientGetAuthCredentialsEventHandler(object sender, CfxUrlRequestClientGetAuthCredentialsEventArgs e);
 
         /// <summary>
@@ -434,6 +524,10 @@ namespace Chromium {
         /// function will only be called for requests initiated from the browser
         /// process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public class CfxUrlRequestClientGetAuthCredentialsEventArgs : CfxEventArgs {
 
             internal int m_isProxy;
@@ -505,6 +599,18 @@ namespace Chromium {
                     return m_callback_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {

@@ -39,6 +39,10 @@ namespace Chromium {
     /// passed as a parameter to CfxRenderHandler.GetScreenInfo and should be filled
     /// in by the client.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
     public sealed class CfxScreenInfo : CfxStructure {
 
         internal static CfxScreenInfo Wrap(IntPtr nativePtr) {
@@ -59,6 +63,10 @@ namespace Chromium {
         /// Device scale factor. Specifies the ratio between physical and logical
         /// pixels.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public float DeviceScaleFactor {
             get {
                 float value;
@@ -73,6 +81,10 @@ namespace Chromium {
         /// <summary>
         /// The screen depth in bits per pixel.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public int Depth {
             get {
                 int value;
@@ -88,6 +100,10 @@ namespace Chromium {
         /// The bits per color component. This assumes that the colors are balanced
         /// equally.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public int DepthPerComponent {
             get {
                 int value;
@@ -102,6 +118,10 @@ namespace Chromium {
         /// <summary>
         /// This can be true for black and white printers.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public bool IsMonochrome {
             get {
                 int value;
@@ -122,6 +142,10 @@ namespace Chromium {
         /// The |rect| and |availableRect| properties are used to determine the
         /// available surface for rendering popup views.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxRect Rect {
             get {
                 IntPtr value;
@@ -145,6 +169,10 @@ namespace Chromium {
         /// The |rect| and |availableRect| properties are used to determine the
         /// available surface for rendering popup views.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxRect AvailableRect {
             get {
                 IntPtr value;

@@ -40,6 +40,10 @@ namespace Chromium {
     /// Structure used to implement a custom resource bundle structure. The functions
     /// of this structure may be called on multiple threads.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+    /// </remarks>
     public class CfxResourceBundleHandler : CfxBase {
 
         internal static CfxResourceBundleHandler Wrap(IntPtr nativePtr) {
@@ -93,6 +97,10 @@ namespace Chromium {
         /// string and return true (1). To use the default translation return false
         /// (0). Supported message IDs are listed in cef_pack_strings.h.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+        /// </remarks>
         public event CfxGetLocalizedStringEventHandler GetLocalizedString {
             add {
                 if(m_GetLocalizedString == null) {
@@ -118,6 +126,10 @@ namespace Chromium {
         /// resident in memory. Supported resource IDs are listed in
         /// cef_pack_resources.h.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+        /// </remarks>
         public event CfxGetDataResourceEventHandler GetDataResource {
             add {
                 if(m_GetDataResource == null) {
@@ -151,6 +163,16 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Called to retrieve a localized translation for the string specified by
+        /// |MessageId|. To provide the translation set |String| to the translation
+        /// string and return true (1). To use the default translation return false
+        /// (0). Supported message IDs are listed in cef_pack_strings.h.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxGetLocalizedStringEventHandler(object sender, CfxGetLocalizedStringEventArgs e);
 
         /// <summary>
@@ -159,6 +181,10 @@ namespace Chromium {
         /// string and return true (1). To use the default translation return false
         /// (0). Supported message IDs are listed in cef_pack_strings.h.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+        /// </remarks>
         public class CfxGetLocalizedStringEventArgs : CfxEventArgs {
 
             internal int m_message_id;
@@ -196,6 +222,18 @@ namespace Chromium {
                     m_string_changed = true;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -210,6 +248,18 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called to retrieve data for the resource specified by |ResourceId|. To
+        /// provide the resource data set |Data| and |DataSize| to the data pointer
+        /// and size respectively and return true (1). To use the default resource data
+        /// return false (0). The resource data will not be copied and must remain
+        /// resident in memory. Supported resource IDs are listed in
+        /// cef_pack_resources.h.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxGetDataResourceEventHandler(object sender, CfxGetDataResourceEventArgs e);
 
         /// <summary>
@@ -220,6 +270,10 @@ namespace Chromium {
         /// resident in memory. Supported resource IDs are listed in
         /// cef_pack_resources.h.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+        /// </remarks>
         public class CfxGetDataResourceEventArgs : CfxEventArgs {
 
             internal int m_resource_id;
@@ -251,6 +305,18 @@ namespace Chromium {
                     m_data_size = value;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {

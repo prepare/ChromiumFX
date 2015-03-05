@@ -37,6 +37,10 @@ namespace Chromium {
     /// <summary>
     /// Structure representing print settings.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+    /// </remarks>
     public class CfxPrintSettings : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -61,6 +65,10 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxPrintSettings object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public static CfxPrintSettings Create() {
             return CfxPrintSettings.Wrap(CfxApi.cfx_print_settings_create());
         }
@@ -69,6 +77,10 @@ namespace Chromium {
         /// Returns true (1) if this object is valid. Do not call any other functions
         /// if this function returns false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 return 0 != CfxApi.cfx_print_settings_is_valid(NativePtr);
@@ -79,6 +91,10 @@ namespace Chromium {
         /// Returns true (1) if the values of this object are read-only. Some APIs may
         /// expose read-only objects.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public bool IsReadOnly {
             get {
                 return 0 != CfxApi.cfx_print_settings_is_read_only(NativePtr);
@@ -88,6 +104,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if the orientation is landscape.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public bool IsLandscape {
             get {
                 return 0 != CfxApi.cfx_print_settings_is_landscape(NativePtr);
@@ -99,6 +119,10 @@ namespace Chromium {
         /// 
         /// Set the device name.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public String DeviceName {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_print_settings_get_device_name(NativePtr));
@@ -115,6 +139,10 @@ namespace Chromium {
         /// 
         /// Set the DPI (dots per inch).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public int Dpi {
             get {
                 return CfxApi.cfx_print_settings_get_dpi(NativePtr);
@@ -127,6 +155,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the number of page ranges that currently exist.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public int PageRangesCount {
             get {
                 return CfxApi.cfx_print_settings_get_page_ranges_count(NativePtr);
@@ -136,6 +168,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if only the selection will be printed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public bool IsSelectionOnly {
             get {
                 return 0 != CfxApi.cfx_print_settings_is_selection_only(NativePtr);
@@ -147,6 +183,10 @@ namespace Chromium {
         /// 
         /// Set the color model.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public CfxColorModel ColorModel {
             get {
                 return CfxApi.cfx_print_settings_get_color_model(NativePtr);
@@ -161,6 +201,10 @@ namespace Chromium {
         /// 
         /// Set the number of copies.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public int Copies {
             get {
                 return CfxApi.cfx_print_settings_get_copies(NativePtr);
@@ -175,6 +219,10 @@ namespace Chromium {
         /// 
         /// Set the duplex mode.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public CfxDuplexMode DuplexMode {
             get {
                 return CfxApi.cfx_print_settings_get_duplex_mode(NativePtr);
@@ -187,6 +235,10 @@ namespace Chromium {
         /// <summary>
         /// Returns a writable copy of this object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public CfxPrintSettings Copy() {
             return CfxPrintSettings.Wrap(CfxApi.cfx_print_settings_copy(NativePtr));
         }
@@ -194,6 +246,10 @@ namespace Chromium {
         /// <summary>
         /// Set the page orientation.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public void SetOrientation(int landscape) {
             CfxApi.cfx_print_settings_set_orientation(NativePtr, landscape);
         }
@@ -203,6 +259,10 @@ namespace Chromium {
         /// provide flipped area. Set |landscapeNeedsFlip| to false (0) on those
         /// platforms to avoid double flipping.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public void SetPrinterPrintableArea(CfxSize physicalSizeDeviceUnits, CfxRect printableAreaDeviceUnits, bool landscapeNeedsFlip) {
             CfxApi.cfx_print_settings_set_printer_printable_area(NativePtr, CfxSize.Unwrap(physicalSizeDeviceUnits), CfxRect.Unwrap(printableAreaDeviceUnits), landscapeNeedsFlip ? 1 : 0);
         }
@@ -210,6 +270,10 @@ namespace Chromium {
         /// <summary>
         /// Set the page ranges.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public void SetPageRanges(CfxPageRange[] ranges) {
             int ranges_length = ranges.Length;
             IntPtr[] ranges_ptrs = new IntPtr[ranges_length];
@@ -228,6 +292,10 @@ namespace Chromium {
         /// <summary>
         /// Retrieve the page ranges.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public CfxPageRange[] GetPageRanges() {
             int rangesCount = CfxApi.cfx_print_settings_get_page_ranges_count(NativePtr);
             IntPtr[] pp = new IntPtr[rangesCount];
@@ -248,6 +316,10 @@ namespace Chromium {
         /// <summary>
         /// Set whether only the selection will be printed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public void SetSelectionOnly(int selectionOnly) {
             CfxApi.cfx_print_settings_set_selection_only(NativePtr, selectionOnly);
         }
@@ -255,6 +327,10 @@ namespace Chromium {
         /// <summary>
         /// Set whether pages will be collated.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public void SetCollate(int collate) {
             CfxApi.cfx_print_settings_set_collate(NativePtr, collate);
         }
@@ -262,6 +338,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if pages will be collated.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
+        /// </remarks>
         public bool WillCollate() {
             return 0 != CfxApi.cfx_print_settings_will_collate(NativePtr);
         }

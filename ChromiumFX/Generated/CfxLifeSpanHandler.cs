@@ -41,6 +41,10 @@ namespace Chromium {
     /// functions of this structure will be called on the UI thread unless otherwise
     /// indicated.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+    /// </remarks>
     public class CfxLifeSpanHandler : CfxBase {
 
         internal static CfxLifeSpanHandler Wrap(IntPtr nativePtr) {
@@ -137,6 +141,10 @@ namespace Chromium {
         /// indicates whether the new browser window should be scriptable and in the
         /// same process as the source browser.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnBeforePopupEventHandler OnBeforePopup {
             add {
                 if(m_OnBeforePopup == null) {
@@ -157,6 +165,10 @@ namespace Chromium {
         /// <summary>
         /// Called after a new browser is created.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnAfterCreatedEventHandler OnAfterCreated {
             add {
                 if(m_OnAfterCreated == null) {
@@ -179,6 +191,10 @@ namespace Chromium {
         /// begin running. Return false (0) to use the default modal loop
         /// implementation or true (1) to use a custom implementation.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// </remarks>
         public event CfxRunModalEventHandler RunModal {
             add {
                 if(m_RunModal == null) {
@@ -248,6 +264,10 @@ namespace Chromium {
         /// browsers
         /// exist.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// </remarks>
         public event CfxDoCloseEventHandler DoClose {
             add {
                 if(m_DoClose == null) {
@@ -273,6 +293,10 @@ namespace Chromium {
         /// be used to exit the custom modal loop. See do_close() documentation for
         /// additional usage information.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnBeforeCloseEventHandler OnBeforeClose {
             add {
                 if(m_OnBeforeClose == null) {
@@ -318,6 +342,23 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Called on the IO thread before a new popup window is created. The |Browser|
+        /// and |Frame| parameters represent the source of the popup request. The
+        /// |TargetUrl| and |TargetFrameName| values may be NULL if none were
+        /// specified with the request. The |PopupFeatures| structure contains
+        /// information about the requested popup window. To allow creation of the
+        /// popup window optionally modify |WindowInfo|, |Client|, |Settings| and
+        /// |NoJavascriptAccess| and return false (0). To cancel creation of the
+        /// popup window return true (1). The |Client| and |Settings| values will
+        /// default to the source browser's values. The |NoJavascriptAccess| value
+        /// indicates whether the new browser window should be scriptable and in the
+        /// same process as the source browser.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnBeforePopupEventHandler(object sender, CfxOnBeforePopupEventArgs e);
 
         /// <summary>
@@ -333,6 +374,10 @@ namespace Chromium {
         /// indicates whether the new browser window should be scriptable and in the
         /// same process as the source browser.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnBeforePopupEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -430,6 +475,18 @@ namespace Chromium {
                     m_no_javascript_access = value ? 1 : 0;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -444,11 +501,22 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called after a new browser is created.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnAfterCreatedEventHandler(object sender, CfxOnAfterCreatedEventArgs e);
 
         /// <summary>
         /// Called after a new browser is created.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnAfterCreatedEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -471,6 +539,15 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when a modal window is about to display and the modal loop should
+        /// begin running. Return false (0) to use the default modal loop
+        /// implementation or true (1) to use a custom implementation.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxRunModalEventHandler(object sender, CfxRunModalEventArgs e);
 
         /// <summary>
@@ -478,6 +555,10 @@ namespace Chromium {
         /// begin running. Return false (0) to use the default modal loop
         /// implementation or true (1) to use a custom implementation.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// </remarks>
         public class CfxRunModalEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -497,6 +578,18 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -511,6 +604,62 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when a browser has recieved a request to close. This may result
+        /// directly from a call to CfxBrowserHost.CloseBrowser() or indirectly
+        /// if the browser is a top-level OS window created by CEF and the user
+        /// attempts to close the window. This function will be called after the
+        /// JavaScript 'onunload' event has been fired. It will not be called for
+        /// browsers after the associated OS window has been destroyed (for those
+        /// browsers it is no longer possible to cancel the close).
+        /// If CEF created an OS window for the browser returning false (0) will send
+        /// an OS close notification to the browser window's top-level owner (e.g.
+        /// WM_CLOSE on Windows, performClose: on OS-X and "delete_event" on Linux). If
+        /// no OS window exists (window rendering disabled) returning false (0) will
+        /// cause the browser object to be destroyed immediately. Return true (1) if
+        /// the browser is parented to another window and that other window needs to
+        /// receive close notification via some non-standard technique.
+        /// If an application provides its own top-level window it should handle OS
+        /// close notifications by calling CfxBrowserHost.CloseBrowser(false (0))
+        /// instead of immediately closing (see the example below). This gives CEF an
+        /// opportunity to process the 'onbeforeunload' event and optionally cancel the
+        /// close before do_close() is called.
+        /// The CfxLifeSpanHandler.OnBeforeClose() function will be called
+        /// immediately before the browser object is destroyed. The application should
+        /// only exit after on_before_close() has been called for all existing
+        /// browsers.
+        /// If the browser represents a modal window and a custom modal loop
+        /// implementation was provided in CfxLifeSpanHandler.RunModal() this
+        /// callback should be used to restore the opener window to a usable state.
+        /// By way of example consider what should happen during window close when the
+        /// browser is parented to an application-provided top-level OS window. 1.
+        /// User clicks the window close button which sends an OS close
+        /// notification (e.g. WM_CLOSE on Windows, performClose: on OS-X and
+        /// "delete_event" on Linux).
+        /// 2.  Application's top-level window receives the close notification and:
+        /// A. Calls CfxBrowserHost.CloseBrowser(false).
+        /// B. Cancels the window close.
+        /// 3.  JavaScript 'onbeforeunload' handler executes and shows the close
+        /// confirmation dialog (which can be overridden via
+        /// CfxJSDialogHandler.OnBeforeUnloadDialog()).
+        /// 4.  User approves the close. 5.  JavaScript 'onunload' handler executes. 6.
+        /// Application's do_close() handler is called. Application will:
+        /// A. Set a flag to indicate that the next close attempt will be allowed.
+        /// B. Return false.
+        /// 7.  CEF sends an OS close notification. 8.  Application's top-level window
+        /// receives the OS close notification and
+        /// allows the window to close based on the flag from #6B.
+        /// 9.  Browser OS window is destroyed. 10. Application's
+        /// CfxLifeSpanHandler.OnBeforeClose() handler is called and
+        /// the browser object is destroyed.
+        /// 11. Application exits by calling cef_quit_message_loop() if no other
+        /// browsers
+        /// exist.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxDoCloseEventHandler(object sender, CfxDoCloseEventArgs e);
 
         /// <summary>
@@ -565,6 +714,10 @@ namespace Chromium {
         /// browsers
         /// exist.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// </remarks>
         public class CfxDoCloseEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -584,6 +737,18 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -598,6 +763,18 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called just before a browser is destroyed. Release all references to the
+        /// browser object and do not attempt to execute any functions on the browser
+        /// object after this callback returns. If this is a modal window and a custom
+        /// modal loop implementation was provided in run_modal() this callback should
+        /// be used to exit the custom modal loop. See do_close() documentation for
+        /// additional usage information.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnBeforeCloseEventHandler(object sender, CfxOnBeforeCloseEventArgs e);
 
         /// <summary>
@@ -608,6 +785,10 @@ namespace Chromium {
         /// be used to exit the custom modal loop. See do_close() documentation for
         /// additional usage information.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnBeforeCloseEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;

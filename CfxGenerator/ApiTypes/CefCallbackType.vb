@@ -42,6 +42,20 @@ Public Class CefCallbackType
 
     Private m_callMode As CfxCallMode
 
+    Private Shared setReturnValueComments As CommentData
+
+    Shared Sub New()
+        setReturnValueComments = New CommentData
+        setReturnValueComments.Lines = {
+            "The underlying CEF framework callback for this event has a return value.",
+            "Since .NET style events do not support return values, SetReturnValue()",
+            "is used to set the return value for the callback. Although an application",
+            "may attach various event handlers to a framework callback event,",
+            "only one event handler can set the return value. Trying to call SetReturnValue()",
+            "more then once will cause an exception to be thrown."
+            }
+    End Sub
+
     Public Sub New(parent As CefStructType, structCategory As StructCategory, name As String, sd As Parser.SignatureData, api As ApiTypeBuilder, comments As CommentData)
         MyBase.New(name)
         Me.Parent = parent
@@ -241,6 +255,7 @@ Public Class CefCallbackType
 
         If IsBasicEvent Then Return
 
+        b.AppendSummary(comments, False, True)
         b.AppendLine("public delegate void {0}(object sender, {1} e);", EventHandlerName, PublicEventArgsClassName)
         b.AppendLine()
 
@@ -267,6 +282,8 @@ Public Class CefCallbackType
         Signature.EmitPublicEventArgProperties(b)
 
         If Not Signature.PublicReturnType.IsVoid Then
+            setReturnValueComments.FileName = comments.FileName
+            b.AppendSummary(setReturnValueComments)
             b.BeginBlock("public void SetReturnValue({0} returnValue)", Signature.PublicReturnType.PublicSymbol)
             b.AppendLine("CheckAccess();")
             b.BeginIf("returnValueSet")
@@ -341,8 +358,10 @@ Public Class CefCallbackType
 
     Public Sub EmitRemoteEventArgsAndHandler(b As CodeBuilder, comments As CommentData)
 
+
         If IsBasicEvent Then Return
 
+        b.AppendSummary(comments, True, True)
         b.AppendLine("public delegate void {0}(object sender, {1} e);", RemoteEventHandlerName, RemoteEventArgsClassName)
         b.AppendLine()
 
@@ -388,6 +407,8 @@ Public Class CefCallbackType
             b.EndBlock()
         Next
         If Not Signature.PublicReturnType.IsVoid Then
+            setReturnValueComments.FileName = comments.FileName
+            b.AppendSummary(setReturnValueComments)
             b.BeginBlock("public void SetReturnValue({0} returnValue)", Signature.PublicReturnType.RemoteSymbol)
             b.AppendLine("var call = new {0}SetReturnValueRenderProcessCall();", EventName)
             b.AppendLine("call.eventArgsId = eventArgsId;")

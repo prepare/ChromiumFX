@@ -38,6 +38,10 @@ namespace Chromium {
     /// Structure used for managing cookies. The functions of this structure may be
     /// called on any thread unless otherwise indicated.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
+    /// </remarks>
     public class CfxCookieManager : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -63,6 +67,10 @@ namespace Chromium {
         /// Returns the global cookie manager. By default data will be stored at
         /// CfxSettings.CachePath if specified or in memory otherwise.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
+        /// </remarks>
         public static CfxCookieManager GetGlobalManager() {
             return CfxCookieManager.Wrap(CfxApi.cfx_cookie_manager_get_global_manager());
         }
@@ -75,6 +83,10 @@ namespace Chromium {
         /// to be transient and most Web browsers do not persist them. Returns NULL if
         /// creation fails.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
+        /// </remarks>
         public static CfxCookieManager CreateManager(string path, bool persistSessionCookies) {
             var path_pinned = new PinnedString(path);
             var __retval = CfxApi.cfx_cookie_manager_create_manager(path_pinned.Obj.PinnedPtr, path_pinned.Length, persistSessionCookies ? 1 : 0);
@@ -87,6 +99,10 @@ namespace Chromium {
         /// "https" schemes are supported. Must be called before any cookies are
         /// accessed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
+        /// </remarks>
         public void SetSupportedSchemes(System.Collections.Generic.List<string> schemes) {
             PinnedString[] schemes_handles;
             var schemes_unwrapped = CfxStringCollections.UnwrapCfxStringList(schemes, out schemes_handles);
@@ -100,6 +116,10 @@ namespace Chromium {
         /// Visit all cookies. The returned cookies are ordered by longest path, then
         /// by earliest creation date. Returns false (0) if cookies cannot be accessed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
+        /// </remarks>
         public bool VisitAllCookies(CfxCookieVisitor visitor) {
             return 0 != CfxApi.cfx_cookie_manager_visit_all_cookies(NativePtr, CfxCookieVisitor.Unwrap(visitor));
         }
@@ -111,6 +131,10 @@ namespace Chromium {
         /// ordered by longest path, then by earliest creation date. Returns false (0)
         /// if cookies cannot be accessed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
+        /// </remarks>
         public bool VisitUrlCookies(string url, bool includeHttpOnly, CfxCookieVisitor visitor) {
             var url_pinned = new PinnedString(url);
             var __retval = CfxApi.cfx_cookie_manager_visit_url_cookies(NativePtr, url_pinned.Obj.PinnedPtr, url_pinned.Length, includeHttpOnly ? 1 : 0, CfxCookieVisitor.Unwrap(visitor));
@@ -126,6 +150,10 @@ namespace Chromium {
         /// setting the cookie if such characters are found. This function must be
         /// called on the IO thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
+        /// </remarks>
         public bool SetCookie(string url, CfxCookie cookie) {
             var url_pinned = new PinnedString(url);
             var __retval = CfxApi.cfx_cookie_manager_set_cookie(NativePtr, url_pinned.Obj.PinnedPtr, url_pinned.Length, CfxCookie.Unwrap(cookie));
@@ -142,6 +170,10 @@ namespace Chromium {
         /// non- NULL invalid URL is specified or if cookies cannot be accessed. This
         /// function must be called on the IO thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
+        /// </remarks>
         public bool DeleteCookies(string url, string cookieName) {
             var url_pinned = new PinnedString(url);
             var cookieName_pinned = new PinnedString(cookieName);
@@ -160,6 +192,10 @@ namespace Chromium {
         /// browsers do not persist them. Returns false (0) if cookies cannot be
         /// accessed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
+        /// </remarks>
         public bool SetStoragePath(string path, bool persistSessionCookies) {
             var path_pinned = new PinnedString(path);
             var __retval = CfxApi.cfx_cookie_manager_set_storage_path(NativePtr, path_pinned.Obj.PinnedPtr, path_pinned.Length, persistSessionCookies ? 1 : 0);
@@ -172,6 +208,10 @@ namespace Chromium {
         /// |callback| on the IO thread when done. Returns false (0) if cookies cannot
         /// be accessed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
+        /// </remarks>
         public bool FlushStore(CfxCompletionCallback callback) {
             return 0 != CfxApi.cfx_cookie_manager_flush_store(NativePtr, CfxCompletionCallback.Unwrap(callback));
         }

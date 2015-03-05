@@ -40,6 +40,10 @@ namespace Chromium {
     /// tested. Many of these and other settings can also configured using command-
     /// line switches.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
     public sealed class CfxBrowserSettings : CfxStructure {
 
         internal static CfxBrowserSettings Wrap(IntPtr nativePtr) {
@@ -62,6 +66,10 @@ namespace Chromium {
         /// the browser cannot generate frames at the requested rate. The minimum
         /// value is 1 and the maximum value is 60 (default 30).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public int WindowlessFrameRate {
             get {
                 int value;
@@ -77,6 +85,10 @@ namespace Chromium {
         /// The below values map to WebPreferences settings.
         /// Font settings.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string StandardFontFamily {
             get {
                 IntPtr value_str;
@@ -209,6 +221,10 @@ namespace Chromium {
         /// Default encoding for Web content. If empty "ISO-8859-1" will be used. Also
         /// configurable using the "default-encoding" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string DefaultEncoding {
             get {
                 IntPtr value_str;
@@ -227,6 +243,10 @@ namespace Chromium {
         /// Controls the loading of fonts from remote sources. Also configurable using
         /// the "disable-remote-fonts" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState RemoteFonts {
             get {
                 CfxState value;
@@ -242,6 +262,10 @@ namespace Chromium {
         /// Controls whether JavaScript can be executed. Also configurable using the
         /// "disable-javascript" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState Javascript {
             get {
                 CfxState value;
@@ -258,6 +282,10 @@ namespace Chromium {
         /// configurable using the "disable-javascript-open-windows" command-line
         /// switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState JavascriptOpenWindows {
             get {
                 CfxState value;
@@ -275,6 +303,10 @@ namespace Chromium {
         /// were opened via JavaScript. Also configurable using the
         /// "disable-javascript-close-windows" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState JavascriptCloseWindows {
             get {
                 CfxState value;
@@ -290,6 +322,10 @@ namespace Chromium {
         /// Controls whether JavaScript can access the clipboard. Also configurable
         /// using the "disable-javascript-access-clipboard" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState JavascriptAccessClipboard {
             get {
                 CfxState value;
@@ -307,6 +343,10 @@ namespace Chromium {
         /// be enabled. Also configurable using the "disable-javascript-dom-paste"
         /// command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState JavascriptDomPaste {
             get {
                 CfxState value;
@@ -322,6 +362,10 @@ namespace Chromium {
         /// Controls whether the caret position will be drawn. Also configurable using
         /// the "enable-caret-browsing" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState CaretBrowsing {
             get {
                 CfxState value;
@@ -337,6 +381,10 @@ namespace Chromium {
         /// Controls whether the Java plugin will be loaded. Also configurable using
         /// the "disable-java" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState Java {
             get {
                 CfxState value;
@@ -352,6 +400,10 @@ namespace Chromium {
         /// Controls whether any plugins will be loaded. Also configurable using the
         /// "disable-plugins" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState Plugins {
             get {
                 CfxState value;
@@ -367,6 +419,10 @@ namespace Chromium {
         /// Controls whether file URLs will have access to all URLs. Also configurable
         /// using the "allow-universal-access-from-files" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState UniversalAccessFromFileUrls {
             get {
                 CfxState value;
@@ -382,6 +438,10 @@ namespace Chromium {
         /// Controls whether file URLs will have access to other file URLs. Also
         /// configurable using the "allow-access-from-files" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState FileAccessFromFileUrls {
             get {
                 CfxState value;
@@ -399,6 +459,10 @@ namespace Chromium {
         /// security behavior such as cross-site scripting (XSS). Also configurable
         /// using the "disable-web-security" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState WebSecUrity {
             get {
                 CfxState value;
@@ -415,6 +479,10 @@ namespace Chromium {
         /// will still be rendered if requested. Also configurable using the
         /// "disable-image-loading" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState ImageLoading {
             get {
                 CfxState value;
@@ -431,6 +499,10 @@ namespace Chromium {
         /// configurable using the "image-shrink-standalone-to-fit" command-line
         /// switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState ImageShrinkStandaloneToFit {
             get {
                 CfxState value;
@@ -446,6 +518,10 @@ namespace Chromium {
         /// Controls whether text areas can be resized. Also configurable using the
         /// "disable-text-area-resize" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState TextAreaResize {
             get {
                 CfxState value;
@@ -461,6 +537,10 @@ namespace Chromium {
         /// Controls whether the tab key can advance focus to links. Also configurable
         /// using the "disable-tab-to-links" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState TabToLinks {
             get {
                 CfxState value;
@@ -476,6 +556,10 @@ namespace Chromium {
         /// Controls whether local storage can be used. Also configurable using the
         /// "disable-local-storage" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState LocalStorage {
             get {
                 CfxState value;
@@ -491,6 +575,10 @@ namespace Chromium {
         /// Controls whether databases can be used. Also configurable using the
         /// "disable-databases" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState Databases {
             get {
                 CfxState value;
@@ -506,6 +594,10 @@ namespace Chromium {
         /// Controls whether the application cache can be used. Also configurable using
         /// the "disable-application-cache" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState ApplicationCache {
             get {
                 CfxState value;
@@ -522,6 +614,10 @@ namespace Chromium {
         /// support and may not work on all systems even when enabled. Also
         /// configurable using the "disable-webgl" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxState Webgl {
             get {
                 CfxState value;
@@ -540,6 +636,10 @@ namespace Chromium {
         /// of the specified value will be used. The alpha component must greater than
         /// 0 to enable use of the background color but will be otherwise ignored.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxColor BackgroundColor {
             get {
                 uint value;

@@ -41,6 +41,10 @@ namespace Chromium {
     /// requests. The functions of this structure will be called on the browser
     /// process UI thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_handler_capi.h">cef/include/capi/cef_geolocation_handler_capi.h</see>.
+    /// </remarks>
     public class CfxGeolocationHandler : CfxBase {
 
         internal static CfxGeolocationHandler Wrap(IntPtr nativePtr) {
@@ -88,6 +92,10 @@ namespace Chromium {
         /// time to continue or cancel the request. Return false (0) to cancel the
         /// request immediately.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_handler_capi.h">cef/include/capi/cef_geolocation_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnRequestGeolocationPermissionEventHandler OnRequestGeolocationPermission {
             add {
                 if(m_OnRequestGeolocationPermission == null) {
@@ -110,6 +118,10 @@ namespace Chromium {
         /// the URL that originally requested permission and |RequestId| is the unique
         /// ID for the permission request.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_handler_capi.h">cef/include/capi/cef_geolocation_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnCancelGeolocationPermissionEventHandler OnCancelGeolocationPermission {
             add {
                 if(m_OnCancelGeolocationPermission == null) {
@@ -143,6 +155,18 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Called when a page requests permission to access geolocation information.
+        /// |RequestingUrl| is the URL requesting permission and |RequestId| is the
+        /// unique ID for the permission request. Return true (1) and call
+        /// CfxGeolocationCallback.Continue() either in this function or at a later
+        /// time to continue or cancel the request. Return false (0) to cancel the
+        /// request immediately.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_handler_capi.h">cef/include/capi/cef_geolocation_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnRequestGeolocationPermissionEventHandler(object sender, CfxOnRequestGeolocationPermissionEventArgs e);
 
         /// <summary>
@@ -153,6 +177,10 @@ namespace Chromium {
         /// time to continue or cancel the request. Return false (0) to cancel the
         /// request immediately.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_handler_capi.h">cef/include/capi/cef_geolocation_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnRequestGeolocationPermissionEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -202,6 +230,18 @@ namespace Chromium {
                     return m_callback_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_handler_capi.h">cef/include/capi/cef_geolocation_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -216,6 +256,15 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when a geolocation access request is canceled. |RequestingUrl| is
+        /// the URL that originally requested permission and |RequestId| is the unique
+        /// ID for the permission request.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_handler_capi.h">cef/include/capi/cef_geolocation_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnCancelGeolocationPermissionEventHandler(object sender, CfxOnCancelGeolocationPermissionEventArgs e);
 
         /// <summary>
@@ -223,6 +272,10 @@ namespace Chromium {
         /// the URL that originally requested permission and |RequestId| is the unique
         /// ID for the permission request.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_handler_capi.h">cef/include/capi/cef_geolocation_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnCancelGeolocationPermissionEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;

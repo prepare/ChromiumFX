@@ -40,6 +40,10 @@ namespace Chromium {
     /// Callback structure for CfxBrowserHost.GetNavigationEntries. The
     /// functions of this structure will be called on the browser process UI thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+    /// </remarks>
     public class CfxNavigationEntryVisitor : CfxBase {
 
         internal static CfxNavigationEntryVisitor Wrap(IntPtr nativePtr) {
@@ -73,6 +77,10 @@ namespace Chromium {
         /// navigation entry. |Index| is the 0-based index of this entry and |Total| is
         /// the total number of entries.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public event CfxNavigationEntryVisitorVisitEventHandler Visit {
             add {
                 if(m_Visit == null) {
@@ -102,6 +110,17 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Method that will be executed. Do not keep a reference to |Entry| outside of
+        /// this callback. Return true (1) to continue visiting entries or false (0) to
+        /// stop. |Current| is true (1) if this entry is the currently loaded
+        /// navigation entry. |Index| is the 0-based index of this entry and |Total| is
+        /// the total number of entries.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public delegate void CfxNavigationEntryVisitorVisitEventHandler(object sender, CfxNavigationEntryVisitorVisitEventArgs e);
 
         /// <summary>
@@ -111,6 +130,10 @@ namespace Chromium {
         /// navigation entry. |Index| is the 0-based index of this entry and |Total| is
         /// the total number of entries.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public class CfxNavigationEntryVisitorVisitEventArgs : CfxEventArgs {
 
             internal IntPtr m_entry;
@@ -154,6 +177,18 @@ namespace Chromium {
                     return m_total;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
