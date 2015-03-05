@@ -544,7 +544,7 @@ Public Class CfxClassBuilder
 
     Public Sub EmitPublicCallClass(b As CodeBuilder)
 
-        b.AppendSummary(comments)
+        b.AppendSummaryAndRemarks(comments)
 
         b.BeginClass(ClassName & " : CfxBase", GeneratorConfig.ClassModifiers(ClassName))
         b.AppendLine()
@@ -586,16 +586,16 @@ Public Class CfxClassBuilder
                 Dim summary = New CommentData
                 summary.Lines = summaryLines.ToArray()
                 summary.FileName = p.Getter.Comments.FileName
-                b.AppendSummary(summary)
+                b.AppendSummaryAndRemarks(summary)
             Else
-                b.AppendSummary(p.Getter.Comments)
+                b.AppendSummaryAndRemarks(p.Getter.Comments)
             End If
             p.Getter.MemberType.AsCefCallbackType.EmitPublicProperty(b, If(p.Setter Is Nothing, Nothing, p.Setter.MemberType.AsCefCallbackType))
             b.AppendLine()
         Next
 
         For Each sm In m_structFunctions
-            b.AppendSummary(sm.Comments)
+            b.AppendSummaryAndRemarks(sm.Comments)
             sm.MemberType.AsCefCallbackType.EmitPublicFunction(b)
             b.AppendLine()
         Next
@@ -614,7 +614,7 @@ Public Class CfxClassBuilder
         b.AppendLine("using Event;")
         b.AppendLine()
 
-        b.AppendSummary(comments, False, True)
+        b.AppendSummaryAndRemarks(comments, False, True)
 
         b.BeginClass(ClassName & " : CfxBase", GeneratorConfig.ClassModifiers(ClassName))
         b.AppendLine()
@@ -701,7 +701,7 @@ Public Class CfxClassBuilder
         Next
 
 
-        b.AppendSummary(comments)
+        b.AppendSummaryAndRemarks(comments)
 
         b.BeginClass(ClassName & " : CfxStructure", GeneratorConfig.ClassModifiers(ClassName, "public sealed"))
         b.AppendLine()
@@ -728,7 +728,7 @@ Public Class CfxClassBuilder
 
         For Each sm In StructMembers
             If sm.Name <> "size" Then
-                b.AppendSummary(sm.Comments)
+                b.AppendSummaryAndRemarks(sm.Comments)
                 b.BeginBlock("public {1} {0}", CSharp.Escape(sm.PublicName), sm.MemberType.PublicSymbol)
                 b.BeginBlock("get")
                 sm.MemberType.EmitValueStructGetterVars(b, "value")
@@ -984,7 +984,7 @@ Public Class CfxClassBuilder
 
         b.AppendLine()
 
-        b.AppendSummary(comments, True, Category = StructCategory.ApiCallbacks)
+        b.AppendSummaryAndRemarks(comments, True, Category = StructCategory.ApiCallbacks)
         If IsRefCounted Then
             b.BeginClass(RemoteClassName & " : CfrBase", GeneratorConfig.ClassModifiers(RemoteClassName))
         Else
@@ -1076,9 +1076,9 @@ Public Class CfxClassBuilder
                             summary.Lines = summaryLines.ToArray()
                             summary.FileName = p.Getter.Comments.FileName
                             'If RemoteClassName = "CfrRequest" AndAlso p.Getter.PublicName = "GetFlags" Then Stop
-                            b.AppendSummary(summary, True)
+                            b.AppendSummaryAndRemarks(summary, True)
                         Else
-                            b.AppendSummary(p.Getter.Comments, True)
+                            b.AppendSummaryAndRemarks(p.Getter.Comments, True)
                         End If
 
                         b.BeginBlock("public {0} {1}", cb.RemoteReturnType.RemoteSymbol, p.PropertyName)
@@ -1099,7 +1099,7 @@ Public Class CfxClassBuilder
                 For Each sm In m_structFunctions
                     If GeneratorConfig.CreateRemoteProxy(struct.Name & "::" & sm.Name) Then
                         Dim cb = sm.MemberType.AsCefCallbackType
-                        b.AppendSummary(sm.Comments, True)
+                        b.AppendSummaryAndRemarks(sm.Comments, True)
                         b.BeginFunction(sm.PublicName, cb.RemoteReturnType.RemoteSymbol, cb.Signature.RemoteSignature)
                         cb.Signature.EmitRemoteCall(b)
                         b.EndBlock()
@@ -1116,7 +1116,7 @@ Public Class CfxClassBuilder
                         b.AppendLine("bool m_{0}_fetched;", sm.PublicName)
                         b.AppendLine()
 
-                        b.AppendSummary(sm.Comments, True)
+                        b.AppendSummaryAndRemarks(sm.Comments, True)
                         b.BeginBlock("public {1} {0}", CSharp.Escape(sm.PublicName), sm.MemberType.RemoteSymbol)
                         b.BeginBlock("get")
                         b.BeginIf("!m_{0}_fetched", sm.PublicName)

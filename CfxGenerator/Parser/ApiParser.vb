@@ -51,13 +51,14 @@ Namespace Parser
 
             Dim sb As New Text.StringBuilder
 
+
+            AddFile("cef\include\internal\cef_types.h", sb)
+            AddFile("cef\include\internal\cef_types_win.h", sb)
+
             Dim files = Directory.GetFiles("cef\include\capi")
             For Each f In files
                 AddFile(f, sb)
             Next
-
-            AddFile("cef\include\internal\cef_types.h", sb)
-            AddFile("cef\include\internal\cef_types_win.h", sb)
 
             Dim code = sb.ToString()
 
@@ -267,39 +268,75 @@ Namespace Parser
             Return Nothing
         End Function
 
-        Private commentPattern As String = "((?:\s*^\s*//+.*?$)+)"
-
-        Private Sub ParseFunctionComments(file As String, code As String, comments As Dictionary(Of String, CommentData))
-            ParseComments(file, code, commentPattern & "\s*CEF_EXPORT\s+.*?\b(\w+)\s*\(", comments)
-        End Sub
-
-        Private Sub AssignFunctionComments(comments As Dictionary(Of String, CommentData), functions As IEnumerable(Of FunctionData))
-            For Each f In functions
-                f.Comments = comments(f.Name)
+        Private Function GetEnum(name As String) As EnumData
+            For Each e In api.CefEnums
+                If name.Equals(e.Name) Then
+                    Return e
+                End If
             Next
-        End Sub
+            Return Nothing
+        End Function
+
+        Private commentPattern As String = "((?:\s*^\s*//+.*?$)+)"
 
         Private Sub ParseComments()
 
             Dim comments = New Dictionary(Of String, CommentData)
 
+            Dim regex = New Regex(commentPattern & "\s*CEF_EXPORT\s+.*?\b(\w+)\s*\(", RegexOptions.Multiline)
+
             For Each cf In codeFiles
                 Dim file = cf.Key
                 Dim code = cf.Value
-                ParseFunctionComments(file, code, comments)
+                ParseComments(file, code, regex, comments)
             Next
 
-            AssignFunctionComments(comments, api.CefFunctions)
+            For Each f In api.CefFunctions
+                f.Comments = comments(f.Name)
+            Next
+
             For Each s In api.CefStructs
-                AssignFunctionComments(comments, s.CefFunctions)
+                For Each f In s.CefFunctions
+                    f.Comments = comments(f.Name)
+                Next
             Next
 
             comments.Clear()
 
+
+            regex = New Regex(commentPattern & "\s*typedef\s+enum\s*{[^}]+}\s*(\w+)_t\s*;", RegexOptions.Multiline)
+
+            Dim enumFile = "cef\include\internal\cef_types.h"
+            Dim enumCode = codeFiles(enumFile)
+            ParseComments(enumFile, enumCode, regex, comments)
+
+            For Each e In api.CefEnums
+                comments.TryGetValue(e.Name, e.Comments)
+            Next
+
+            comments.Clear()
+
+            Dim enumBodyEx = New Regex("typedef\s+enum\s*({[^}]+})\s*(\w+)_t\s*;", RegexOptions.Singleline)
+            Dim enumFieldCommentEx = New Regex(commentPattern & "\s*\b(\w+)(?:\s*=\s*\w+)?\s*[,}]", RegexOptions.Multiline)
+
+            Dim mm = enumBodyEx.Matches(enumCode)
+            For Each m As Match In mm
+                Dim body = m.Groups(1).Value
+                Dim name = m.Groups(2).Value
+                ParseComments(enumFile, body, enumFieldCommentEx, comments)
+                Dim e = GetEnum(name)
+                For Each member In e.Members
+                    comments.TryGetValue(member.Name, member.Comments)
+                Next
+                comments.Clear()
+            Next
+
+            regex = New Regex(commentPattern & "\s*typedef\s+struct\s+_(cef_\w+)\b", RegexOptions.Multiline)
+
             For Each cf In codeFiles
                 Dim file = cf.Key
                 Dim code = cf.Value
-                ParseComments(file, code, commentPattern & "\s*typedef\s+struct\s+_(cef_\w+)\b", comments)
+                ParseComments(file, code, regex, comments)
             Next
 
             For Each s In api.CefStructs
@@ -308,17 +345,16 @@ Namespace Parser
 
             comments.Clear()
 
+            Dim structBodyEx = New Regex("typedef\s+struct\s+_(\w+)\s*{(.*?)}\s*\1\s*;", RegexOptions.Singleline)
+            Dim callbackCommentsEx = New Regex(commentPattern & "[^;]*CEF_CALLBACK\s*\*\s*(\w+)", RegexOptions.Multiline Or RegexOptions.Compiled)
+            Dim valueCommentsEx = New Regex(commentPattern & "[^;]*\b(\w+)\s*;", RegexOptions.Multiline Or RegexOptions.Compiled)
+
             For Each cf In codeFiles
                 Dim file = cf.Key
                 Dim code = cf.Value
 
 
-                Dim structBodyEx = New Regex("typedef\s+struct\s+_(\w+)\s*{(.*?)}\s*\1\s*;", RegexOptions.Singleline)
-                Dim callbackCommentsEx = New Regex(commentPattern & "[^;]*CEF_CALLBACK\s*\*\s*(\w+)", RegexOptions.Multiline Or RegexOptions.Compiled)
-                Dim valueCommentsEx = New Regex(commentPattern & "[^;]*\b(\w+)\s*;", RegexOptions.Multiline Or RegexOptions.Compiled)
-
-
-                Dim mm = structBodyEx.Matches(code)
+                mm = structBodyEx.Matches(code)
                 For Each m As Match In mm
                     Dim name = m.Groups(1).Value
                     Dim body = m.Groups(2).Value
@@ -340,10 +376,6 @@ Namespace Parser
 
             Next
 
-        End Sub
-
-        Private Sub ParseComments(file As String, code As String, pattern As String, comments As Dictionary(Of String, CommentData))
-            ParseComments(file, code, New Regex(pattern, RegexOptions.Multiline), comments)
         End Sub
 
         Private Sub ParseComments(file As String, code As String, ex As Regex, comments As Dictionary(Of String, CommentData))
