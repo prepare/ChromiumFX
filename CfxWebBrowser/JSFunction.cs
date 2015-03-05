@@ -46,7 +46,7 @@ namespace Chromium.WebBrowser {
         internal CfrV8Value v8Function;
 
         /// <summary>
-        /// Event to be called for this function.
+        /// Javascript callback event for this function.
         /// </summary>
         public event CfrV8HandlerExecuteEventHandler Execute;
 
