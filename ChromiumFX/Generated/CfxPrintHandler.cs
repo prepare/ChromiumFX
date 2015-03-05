@@ -40,6 +40,10 @@ namespace Chromium {
     /// Implement this structure to handle printing on Linux. The functions of this
     /// structure will be called on the browser process UI thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+    /// </remarks>
     public class CfxPrintHandler : CfxBase {
 
         internal static CfxPrintHandler Wrap(IntPtr nativePtr) {
@@ -108,6 +112,10 @@ namespace Chromium {
         /// then populate |Settings| with the default print settings. Do not keep a
         /// reference to |Settings| outside of this callback.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnPrintSettingsEventHandler OnPrintSettings {
             add {
                 if(m_OnPrintSettings == null) {
@@ -130,6 +138,10 @@ namespace Chromium {
         /// Return true (1) if the dialog will be displayed or false (0) to cancel the
         /// printing immediately.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnPrintDialogEventHandler OnPrintDialog {
             add {
                 if(m_OnPrintDialog == null) {
@@ -152,6 +164,10 @@ namespace Chromium {
         /// completed. Return true (1) if the job will proceed or false (0) to cancel
         /// the job immediately.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnPrintJobEventHandler OnPrintJob {
             add {
                 if(m_OnPrintJob == null) {
@@ -172,6 +188,10 @@ namespace Chromium {
         /// <summary>
         /// Reset client state related to printing.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
         public event CfxEventHandler OnPrintReset {
             add {
                 if(m_OnPrintReset == null) {
@@ -213,6 +233,15 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Synchronize |Settings| with client state. If |GetDefaults| is true (1)
+        /// then populate |Settings| with the default print settings. Do not keep a
+        /// reference to |Settings| outside of this callback.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnPrintSettingsEventHandler(object sender, CfxOnPrintSettingsEventArgs e);
 
         /// <summary>
@@ -220,6 +249,10 @@ namespace Chromium {
         /// then populate |Settings| with the default print settings. Do not keep a
         /// reference to |Settings| outside of this callback.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnPrintSettingsEventArgs : CfxEventArgs {
 
             internal IntPtr m_settings;
@@ -250,6 +283,15 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Show the print dialog. Execute |Callback| once the dialog is dismissed.
+        /// Return true (1) if the dialog will be displayed or false (0) to cancel the
+        /// printing immediately.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnPrintDialogEventHandler(object sender, CfxOnPrintDialogEventArgs e);
 
         /// <summary>
@@ -257,6 +299,10 @@ namespace Chromium {
         /// Return true (1) if the dialog will be displayed or false (0) to cancel the
         /// printing immediately.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnPrintDialogEventArgs : CfxEventArgs {
 
             internal int m_has_selection;
@@ -284,6 +330,18 @@ namespace Chromium {
                     return m_callback_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -298,6 +356,15 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Send the print job to the printer. Execute |Callback| once the job is
+        /// completed. Return true (1) if the job will proceed or false (0) to cancel
+        /// the job immediately.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnPrintJobEventHandler(object sender, CfxOnPrintJobEventArgs e);
 
         /// <summary>
@@ -305,6 +372,10 @@ namespace Chromium {
         /// completed. Return true (1) if the job will proceed or false (0) to cancel
         /// the job immediately.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnPrintJobEventArgs : CfxEventArgs {
 
             internal IntPtr m_document_name_str;
@@ -348,6 +419,18 @@ namespace Chromium {
                     return m_callback_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {

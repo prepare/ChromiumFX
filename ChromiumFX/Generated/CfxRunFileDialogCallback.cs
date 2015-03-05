@@ -38,6 +38,10 @@ namespace Chromium {
     /// Callback structure for CfxBrowserHost.RunFileDialog. The functions of
     /// this structure will be called on the browser process UI thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+    /// </remarks>
     public class CfxRunFileDialogCallback : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -65,6 +69,10 @@ namespace Chromium {
         /// depending on the dialog mode. If the selection was cancelled |filePaths|
         /// will be NULL.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public void Continue(CfxBrowserHost browserHost, System.Collections.Generic.List<string> filePaths) {
             PinnedString[] filePaths_handles;
             var filePaths_unwrapped = CfxStringCollections.UnwrapCfxStringList(filePaths, out filePaths_handles);

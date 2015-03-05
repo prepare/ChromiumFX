@@ -38,6 +38,10 @@ namespace Chromium {
     /// Structure used to represent post data for a web request. The functions of
     /// this structure may be called on any thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+    /// </remarks>
     public class CfxPostData : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -62,6 +66,10 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxPostData object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public static CfxPostData Create() {
             return CfxPostData.Wrap(CfxApi.cfx_post_data_create());
         }
@@ -69,6 +77,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if this object is read-only.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public bool IsReadOnly {
             get {
                 return 0 != CfxApi.cfx_post_data_is_read_only(NativePtr);
@@ -78,6 +90,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the number of existing post data elements.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public int ElementCount {
             get {
                 return CfxApi.cfx_post_data_get_element_count(NativePtr);
@@ -87,6 +103,10 @@ namespace Chromium {
         /// <summary>
         /// Retrieve the post data elements.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public CfxPostDataElement[] Elements {
             get {
                 int count = CfxApi.cfx_post_data_get_element_count(NativePtr);
@@ -107,6 +127,10 @@ namespace Chromium {
         /// Remove the specified post data element.  Returns true (1) if the removal
         /// succeeds.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public bool RemoveElement(CfxPostDataElement element) {
             return 0 != CfxApi.cfx_post_data_remove_element(NativePtr, CfxPostDataElement.Unwrap(element));
         }
@@ -114,6 +138,10 @@ namespace Chromium {
         /// <summary>
         /// Add the specified post data element.  Returns true (1) if the add succeeds.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public bool AddElement(CfxPostDataElement element) {
             return 0 != CfxApi.cfx_post_data_add_element(NativePtr, CfxPostDataElement.Unwrap(element));
         }
@@ -121,6 +149,10 @@ namespace Chromium {
         /// <summary>
         /// Remove all existing post data elements.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public void RemoveElements() {
             CfxApi.cfx_post_data_remove_elements(NativePtr);
         }

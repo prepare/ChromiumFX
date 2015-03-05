@@ -40,6 +40,10 @@ namespace Chromium {
     /// Implement this structure to handle events related to browser display state.
     /// The functions of this structure will be called on the UI thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+    /// </remarks>
     public class CfxDisplayHandler : CfxBase {
 
         internal static CfxDisplayHandler Wrap(IntPtr nativePtr) {
@@ -125,6 +129,10 @@ namespace Chromium {
         /// <summary>
         /// Called when a frame's address has changed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnAddressChangeEventHandler OnAddressChange {
             add {
                 if(m_OnAddressChange == null) {
@@ -145,6 +153,10 @@ namespace Chromium {
         /// <summary>
         /// Called when the page title changes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnTitleChangeEventHandler OnTitleChange {
             add {
                 if(m_OnTitleChange == null) {
@@ -170,6 +182,10 @@ namespace Chromium {
         /// tooltip. When window rendering is disabled the application is responsible
         /// for drawing tooltips and the return value is ignored.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnTooltipEventHandler OnTooltip {
             add {
                 if(m_OnTooltip == null) {
@@ -191,6 +207,10 @@ namespace Chromium {
         /// Called when the browser receives a status message. |Value| contains the
         /// text that will be displayed in the status message.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnStatusMessageEventHandler OnStatusMessage {
             add {
                 if(m_OnStatusMessage == null) {
@@ -212,6 +232,10 @@ namespace Chromium {
         /// Called to display a console message. Return true (1) to stop the message
         /// from being output to the console.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnConsoleMessageEventHandler OnConsoleMessage {
             add {
                 if(m_OnConsoleMessage == null) {
@@ -257,11 +281,22 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Called when a frame's address has changed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnAddressChangeEventHandler(object sender, CfxOnAddressChangeEventArgs e);
 
         /// <summary>
         /// Called when a frame's address has changed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnAddressChangeEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -306,11 +341,22 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when the page title changes.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnTitleChangeEventHandler(object sender, CfxOnTitleChangeEventArgs e);
 
         /// <summary>
         /// Called when the page title changes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnTitleChangeEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -345,6 +391,18 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when the browser is about to display a tooltip. |Text| contains the
+        /// text that will be displayed in the tooltip. To handle the display of the
+        /// tooltip yourself return true (1). Otherwise, you can optionally modify
+        /// |Text| and then return false (0) to allow the browser to display the
+        /// tooltip. When window rendering is disabled the application is responsible
+        /// for drawing tooltips and the return value is ignored.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnTooltipEventHandler(object sender, CfxOnTooltipEventArgs e);
 
         /// <summary>
@@ -355,6 +413,10 @@ namespace Chromium {
         /// tooltip. When window rendering is disabled the application is responsible
         /// for drawing tooltips and the return value is ignored.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnTooltipEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -394,6 +456,18 @@ namespace Chromium {
                     m_text_changed = true;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -408,12 +482,24 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when the browser receives a status message. |Value| contains the
+        /// text that will be displayed in the status message.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnStatusMessageEventHandler(object sender, CfxOnStatusMessageEventArgs e);
 
         /// <summary>
         /// Called when the browser receives a status message. |Value| contains the
         /// text that will be displayed in the status message.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnStatusMessageEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -448,12 +534,24 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called to display a console message. Return true (1) to stop the message
+        /// from being output to the console.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnConsoleMessageEventHandler(object sender, CfxOnConsoleMessageEventArgs e);
 
         /// <summary>
         /// Called to display a console message. Return true (1) to stop the message
         /// from being output to the console.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnConsoleMessageEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -505,6 +603,18 @@ namespace Chromium {
                     return m_line;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {

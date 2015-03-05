@@ -39,6 +39,10 @@ namespace Chromium {
     /// values. Many of these and other settings can also configured using command-
     /// line switches.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
     public sealed class CfxSettings : CfxStructure {
 
         public CfxSettings() : base(CfxApi.cfx_settings_ctor, CfxApi.cfx_settings_dtor) {}
@@ -49,6 +53,10 @@ namespace Chromium {
         /// the multi-process default. Also configurable using the "single-process"
         /// command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public bool SingleProcess {
             get {
                 int value;
@@ -65,6 +73,10 @@ namespace Chromium {
         /// cef_sandbox_win.h for requirements to enable the sandbox on Windows. Also
         /// configurable using the "no-sandbox" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public bool NoSandbox {
             get {
                 int value;
@@ -82,6 +94,10 @@ namespace Chromium {
         /// CfxExecuteProcess() for details. Also configurable using the
         /// "browser-subprocess-path" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string BrowserSubprocessPath {
             get {
                 IntPtr value_str;
@@ -101,6 +117,10 @@ namespace Chromium {
         /// thread. If false (0) than the CfxDoMessageLoopWork() function must be
         /// called from your application message loop.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public bool MultiThreadedMessageLoop {
             get {
                 int value;
@@ -117,6 +137,10 @@ namespace Chromium {
         /// enable this value if the application does not use windowless rendering as
         /// it may reduce rendering performance on some systems.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public bool WindowlessRenderingEnabled {
             get {
                 int value;
@@ -134,6 +158,10 @@ namespace Chromium {
         /// be specified using CEF data structures or via the
         /// CfxApp.OnBeforeCommandLineProcessing() method.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public bool CommandLineArgsDisabled {
             get {
                 int value;
@@ -151,6 +179,10 @@ namespace Chromium {
         /// HTML5 databases such as localStorage will only persist across sessions if a
         /// cache path is specified.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string CachePath {
             get {
                 IntPtr value_str;
@@ -173,6 +205,10 @@ namespace Chromium {
         /// enable this feature. Also configurable using the "persist-session-cookies"
         /// command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public bool PersistSessionCookies {
             get {
                 int value;
@@ -189,6 +225,10 @@ namespace Chromium {
         /// default User-Agent string will be used. Also configurable using the
         /// "user-agent" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string UserAgent {
             get {
                 IntPtr value_str;
@@ -209,6 +249,10 @@ namespace Chromium {
         /// |userAgent| is specified this value will be ignored. Also configurable
         /// using the "product-version" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string ProductVersion {
             get {
                 IntPtr value_str;
@@ -230,6 +274,10 @@ namespace Chromium {
         /// LANGUAGE, LC_ALL, LC_MESSAGES and LANG. Also configurable using the "lang"
         /// command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Locale {
             get {
                 IntPtr value_str;
@@ -250,6 +298,10 @@ namespace Chromium {
         /// to the application directory. Also configurable using the "log-file"
         /// command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string LogFile {
             get {
                 IntPtr value_str;
@@ -270,6 +322,10 @@ namespace Chromium {
         /// a value of "verbose", "info", "warning", "error", "error-report" or
         /// "disable".
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxLogSeverity LogSeverity {
             get {
                 CfxLogSeverity value;
@@ -286,6 +342,10 @@ namespace Chromium {
         /// The consequences of using custom flags may not be well tested. Also
         /// configurable using the "js-flags" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string JavascriptFlags {
             get {
                 IntPtr value_str;
@@ -307,6 +367,10 @@ namespace Chromium {
         /// on Mac OS X. Also configurable using the "resources-dir-path" command-line
         /// switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string ResourcesDirPath {
             get {
                 IntPtr value_str;
@@ -328,6 +392,10 @@ namespace Chromium {
         /// bundle Resources directory. Also configurable using the "locales-dir-path"
         /// command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string LocalesDirPath {
             get {
                 IntPtr value_str;
@@ -349,6 +417,10 @@ namespace Chromium {
         /// is disabled. Also configurable using the "disable-pack-loading" command-
         /// line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public bool PackLoadingDisabled {
             get {
                 int value;
@@ -367,6 +439,10 @@ namespace Chromium {
         /// Chrome browser window. Also configurable using the "remote-debugging-port"
         /// command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public int RemoteDebuggingPort {
             get {
                 int value;
@@ -385,6 +461,10 @@ namespace Chromium {
         /// OnUncaughtException() will not be called. Also configurable using the
         /// "uncaught-exception-stack-size" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public int UncaughtExceptionStackSize {
             get {
                 int value;
@@ -413,6 +493,10 @@ namespace Chromium {
         /// Also configurable using the "context-safety-implementation" command-line
         /// switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public bool ContextSafetyImplementation {
             get {
                 int value;
@@ -431,6 +515,10 @@ namespace Chromium {
         /// internet should not enable this setting. Also configurable using the
         /// "ignore-certificate-errors" command-line switch.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public bool IgnoreCertificateErrors {
             get {
                 int value;
@@ -448,6 +536,10 @@ namespace Chromium {
         /// value will be used. The alpha component must greater than 0 to enable use
         /// of the background color but will be otherwise ignored.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxColor BackgroundColor {
             get {
                 uint value;

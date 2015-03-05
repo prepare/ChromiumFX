@@ -40,6 +40,10 @@ namespace Chromium {
     /// Structure used to handle file downloads. The functions of this structure will
     /// called on the browser process UI thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_handler_capi.h">cef/include/capi/cef_download_handler_capi.h</see>.
+    /// </remarks>
     public class CfxDownloadHandler : CfxBase {
 
         internal static CfxDownloadHandler Wrap(IntPtr nativePtr) {
@@ -95,6 +99,10 @@ namespace Chromium {
         /// download if desired. Do not keep a reference to |DownloadItem| outside of
         /// this function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_handler_capi.h">cef/include/capi/cef_download_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnBeforeDownloadEventHandler OnBeforeDownload {
             add {
                 if(m_OnBeforeDownload == null) {
@@ -119,6 +127,10 @@ namespace Chromium {
         /// download if desired. Do not keep a reference to |DownloadItem| outside of
         /// this function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_handler_capi.h">cef/include/capi/cef_download_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnDownloadUpdatedEventHandler OnDownloadUpdated {
             add {
                 if(m_OnDownloadUpdated == null) {
@@ -152,6 +164,17 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Called before a download begins. |SuggestedName| is the suggested name for
+        /// the download file. By default the download will be canceled. Execute
+        /// |Callback| either asynchronously or in this function to continue the
+        /// download if desired. Do not keep a reference to |DownloadItem| outside of
+        /// this function.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_handler_capi.h">cef/include/capi/cef_download_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnBeforeDownloadEventHandler(object sender, CfxOnBeforeDownloadEventArgs e);
 
         /// <summary>
@@ -161,6 +184,10 @@ namespace Chromium {
         /// download if desired. Do not keep a reference to |DownloadItem| outside of
         /// this function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_handler_capi.h">cef/include/capi/cef_download_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnBeforeDownloadEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -215,6 +242,17 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when a download's status or progress information has been updated.
+        /// This may be called multiple times before and after on_before_download().
+        /// Execute |Callback| either asynchronously or in this function to cancel the
+        /// download if desired. Do not keep a reference to |DownloadItem| outside of
+        /// this function.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_handler_capi.h">cef/include/capi/cef_download_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnDownloadUpdatedEventHandler(object sender, CfxOnDownloadUpdatedEventArgs e);
 
         /// <summary>
@@ -224,6 +262,10 @@ namespace Chromium {
         /// download if desired. Do not keep a reference to |DownloadItem| outside of
         /// this function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_handler_capi.h">cef/include/capi/cef_download_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnDownloadUpdatedEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;

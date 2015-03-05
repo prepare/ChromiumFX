@@ -38,6 +38,10 @@ namespace Chromium {
     /// Callback structure used for asynchronous continuation of JavaScript dialog
     /// requests.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_jsdialog_handler_capi.h">cef/include/capi/cef_jsdialog_handler_capi.h</see>.
+    /// </remarks>
     public class CfxJsDialogCallback : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -63,6 +67,10 @@ namespace Chromium {
         /// Continue the JS dialog request. Set |success| to true (1) if the OK button
         /// was pressed. The |userInput| value should be specified for prompt dialogs.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_jsdialog_handler_capi.h">cef/include/capi/cef_jsdialog_handler_capi.h</see>.
+        /// </remarks>
         public void Continue(bool success, string userInput) {
             var userInput_pinned = new PinnedString(userInput);
             CfxApi.cfx_jsdialog_callback_cont(NativePtr, success ? 1 : 0, userInput_pinned.Obj.PinnedPtr, userInput_pinned.Length);

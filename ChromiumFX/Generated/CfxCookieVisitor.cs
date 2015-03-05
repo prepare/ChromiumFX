@@ -40,6 +40,10 @@ namespace Chromium {
     /// Structure to implement for visiting cookie values. The functions of this
     /// structure will always be called on the IO thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
+    /// </remarks>
     public class CfxCookieVisitor : CfxBase {
 
         internal static CfxCookieVisitor Wrap(IntPtr nativePtr) {
@@ -74,6 +78,10 @@ namespace Chromium {
         /// Return false (0) to stop visiting cookies. This function may never be
         /// called if no cookies are found.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
+        /// </remarks>
         public event CfxCookieVisitorVisitEventHandler Visit {
             add {
                 if(m_Visit == null) {
@@ -103,6 +111,17 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Method that will be called once for each cookie. |Count| is the 0-based
+        /// index for the current cookie. |Total| is the total number of cookies. Set
+        /// |DeleteCookie| to true (1) to delete the cookie currently being visited.
+        /// Return false (0) to stop visiting cookies. This function may never be
+        /// called if no cookies are found.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
+        /// </remarks>
         public delegate void CfxCookieVisitorVisitEventHandler(object sender, CfxCookieVisitorVisitEventArgs e);
 
         /// <summary>
@@ -112,6 +131,10 @@ namespace Chromium {
         /// Return false (0) to stop visiting cookies. This function may never be
         /// called if no cookies are found.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
+        /// </remarks>
         public class CfxCookieVisitorVisitEventArgs : CfxEventArgs {
 
             internal IntPtr m_cookie;
@@ -154,6 +177,18 @@ namespace Chromium {
                     m_deleteCookie = value ? 1 : 0;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {

@@ -40,6 +40,10 @@ namespace Chromium.Remote {
     /// Implement this structure to provide handler implementations. Methods will be
     /// called by the process and/or thread indicated.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+    /// </remarks>
     public class CfrApp : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -104,6 +108,10 @@ namespace Chromium.Remote {
         /// modify command-line arguments for non-browser processes as this may result
         /// in undefined behavior including crashes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public event CfrOnBeforeCommandLineProcessingEventHandler OnBeforeCommandLineProcessing {
             add {
                 if(m_OnBeforeCommandLineProcessing == null) {
@@ -132,6 +140,10 @@ namespace Chromium.Remote {
         /// each process and the registered schemes should be the same across all
         /// processes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public event CfrOnRegisterCustomSchemesEventHandler OnRegisterCustomSchemes {
             add {
                 if(m_OnRegisterCustomSchemes == null) {
@@ -160,6 +172,10 @@ namespace Chromium.Remote {
         /// If no handler is returned resources will be loaded from pack files. This
         /// function is called by the browser and render processes on multiple threads.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public event CfrGetResourceBundleHandlerEventHandler GetResourceBundleHandler {
             add {
                 if(m_GetResourceBundleHandler == null) {
@@ -186,6 +202,10 @@ namespace Chromium.Remote {
         /// Return the handler for functionality specific to the render process. This
         /// function is called on the render process main thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public event CfrGetRenderProcessHandlerEventHandler GetRenderProcessHandler {
             add {
                 if(m_GetRenderProcessHandler == null) {
@@ -215,6 +235,21 @@ namespace Chromium.Remote {
 
     namespace Event {
 
+        /// <summary>
+        /// Provides an opportunity to view and/or modify command-line arguments before
+        /// processing by CEF and Chromium. The |ProcessType| value will be NULL for
+        /// the browser process. Do not keep a reference to the CfrCommandLine
+        /// object passed to this function. The CfrSettings.CommandLineArgsDisabled
+        /// value can be used to start with an NULL command-line object. Any values
+        /// specified in CfrSettings that equate to command-line arguments will be set
+        /// before this function is called. Be cautious when using this function to
+        /// modify command-line arguments for non-browser processes as this may result
+        /// in undefined behavior including crashes.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public delegate void CfrOnBeforeCommandLineProcessingEventHandler(object sender, CfrOnBeforeCommandLineProcessingEventArgs e);
 
         /// <summary>
@@ -228,6 +263,10 @@ namespace Chromium.Remote {
         /// modify command-line arguments for non-browser processes as this may result
         /// in undefined behavior including crashes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public class CfrOnBeforeCommandLineProcessingEventArgs : CfrEventArgs {
 
             bool ProcessTypeFetched;
@@ -267,6 +306,16 @@ namespace Chromium.Remote {
             }
         }
 
+        /// <summary>
+        /// Provides an opportunity to register custom schemes. Do not keep a reference
+        /// to the |Registrar| object. This function is called on the main thread for
+        /// each process and the registered schemes should be the same across all
+        /// processes.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public delegate void CfrOnRegisterCustomSchemesEventHandler(object sender, CfrOnRegisterCustomSchemesEventArgs e);
 
         /// <summary>
@@ -275,6 +324,10 @@ namespace Chromium.Remote {
         /// each process and the registered schemes should be the same across all
         /// processes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public class CfrOnRegisterCustomSchemesEventArgs : CfrEventArgs {
 
             bool RegistrarFetched;
@@ -300,6 +353,16 @@ namespace Chromium.Remote {
             }
         }
 
+        /// <summary>
+        /// Return the handler for resource bundle events. If
+        /// CfrSettings.PackLoadingDisabled is true (1) a handler must be returned.
+        /// If no handler is returned resources will be loaded from pack files. This
+        /// function is called by the browser and render processes on multiple threads.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public delegate void CfrGetResourceBundleHandlerEventHandler(object sender, CfrGetResourceBundleHandlerEventArgs e);
 
         /// <summary>
@@ -308,11 +371,27 @@ namespace Chromium.Remote {
         /// If no handler is returned resources will be loaded from pack files. This
         /// function is called by the browser and render processes on multiple threads.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public class CfrGetResourceBundleHandlerEventArgs : CfrEventArgs {
 
 
             internal CfrGetResourceBundleHandlerEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(CfrResourceBundleHandler returnValue) {
                 var call = new CfxGetResourceBundleHandlerSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
@@ -321,17 +400,41 @@ namespace Chromium.Remote {
             }
         }
 
+        /// <summary>
+        /// Return the handler for functionality specific to the render process. This
+        /// function is called on the render process main thread.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public delegate void CfrGetRenderProcessHandlerEventHandler(object sender, CfrGetRenderProcessHandlerEventArgs e);
 
         /// <summary>
         /// Return the handler for functionality specific to the render process. This
         /// function is called on the render process main thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public class CfrGetRenderProcessHandlerEventArgs : CfrEventArgs {
 
 
             internal CfrGetRenderProcessHandlerEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(CfrRenderProcessHandler returnValue) {
                 var call = new CfxGetRenderProcessHandlerSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;

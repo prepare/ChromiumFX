@@ -43,6 +43,10 @@ namespace Chromium.Remote {
     /// cef_types.h list the common CEF threads. Task runners are also available for
     /// other CEF threads as appropriate (for example, V8 WebWorker threads).
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+    /// </remarks>
     public class CfrTaskRunner : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -65,6 +69,10 @@ namespace Chromium.Remote {
         /// task runners. An NULL reference will be returned if this function is called
         /// on an invalid thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public static CfrTaskRunner GetForCurrentThread(CfrRuntime remoteRuntime) {
             var call = new CfxTaskRunnerGetForCurrentThreadRenderProcessCall();
             call.Execute(remoteRuntime.connection);
@@ -74,6 +82,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the task runner for the specified CEF thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public static CfrTaskRunner GetForThread(CfrRuntime remoteRuntime, CfxThreadId threadId) {
             var call = new CfxTaskRunnerGetForThreadRenderProcessCall();
             call.threadId = (int)threadId;
@@ -88,6 +100,10 @@ namespace Chromium.Remote {
         /// Returns true (1) if this object is pointing to the same task runner as
         /// |that| object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public bool IsSame(CfrTaskRunner that) {
             var call = new CfxTaskRunnerIsSameRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -99,6 +115,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if this task runner belongs to the current thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public bool BelongsToCurrentThread() {
             var call = new CfxTaskRunnerBelongsToCurrentThreadRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -109,6 +129,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if this task runner is for the specified CEF thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public bool BelongsToThread(CfxThreadId threadId) {
             var call = new CfxTaskRunnerBelongsToThreadRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -121,6 +145,10 @@ namespace Chromium.Remote {
         /// Post a task for execution on the thread associated with this task runner.
         /// Execution will occur asynchronously.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public int PostTask(CfrTask task) {
             var call = new CfxTaskRunnerPostTaskRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -135,6 +163,10 @@ namespace Chromium.Remote {
         /// supported on V8 WebWorker threads and will be executed without the
         /// specified delay.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public int PostDelayedTask(CfrTask task, long delayMs) {
             var call = new CfxTaskRunnerPostDelayedTaskRenderProcessCall();
             call.self = CfrObject.Unwrap(this);

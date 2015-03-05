@@ -39,6 +39,10 @@ namespace Chromium.Remote {
     /// Structure used to represent a DOM node. The functions of this structure
     /// should only be called on the render process main thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+    /// </remarks>
     public class CfrDomNode : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -62,6 +66,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the type for this node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfxDomNodeType Type {
             get {
                 var call = new CfxDomNodeGetTypeRenderProcessCall();
@@ -74,6 +82,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if this is a text node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool IsText {
             get {
                 var call = new CfxDomNodeIsTextRenderProcessCall();
@@ -86,6 +98,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if this is an element node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool IsElement {
             get {
                 var call = new CfxDomNodeIsElementRenderProcessCall();
@@ -98,6 +114,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if this is an editable node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool IsEditable {
             get {
                 var call = new CfxDomNodeIsEditableRenderProcessCall();
@@ -110,6 +130,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if this is a form control element node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool IsFormControlElement {
             get {
                 var call = new CfxDomNodeIsFormControlElementRenderProcessCall();
@@ -122,6 +146,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the type of this form control element node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String FormControlElementType {
             get {
                 var call = new CfxDomNodeGetFormControlElementTypeRenderProcessCall();
@@ -134,6 +162,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the name of this node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String Name {
             get {
                 var call = new CfxDomNodeGetNameRenderProcessCall();
@@ -146,6 +178,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the value of this node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String Value {
             get {
                 var call = new CfxDomNodeGetValueRenderProcessCall();
@@ -158,6 +194,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the contents of this node as markup.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String AsMarkup {
             get {
                 var call = new CfxDomNodeGetAsMarkupRenderProcessCall();
@@ -170,6 +210,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the document associated with this node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfrDomDocument Document {
             get {
                 var call = new CfxDomNodeGetDocumentRenderProcessCall();
@@ -182,6 +226,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the parent node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfrDomNode Parent {
             get {
                 var call = new CfxDomNodeGetParentRenderProcessCall();
@@ -194,6 +242,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the previous sibling node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfrDomNode PreviousSibling {
             get {
                 var call = new CfxDomNodeGetPreviousSiblingRenderProcessCall();
@@ -206,6 +258,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the next sibling node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfrDomNode NextSibling {
             get {
                 var call = new CfxDomNodeGetNextSiblingRenderProcessCall();
@@ -218,6 +274,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if this node has child nodes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool HasChildren {
             get {
                 var call = new CfxDomNodeHasChildrenRenderProcessCall();
@@ -230,6 +290,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Return the first child node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfrDomNode FirstChild {
             get {
                 var call = new CfxDomNodeGetFirstChildRenderProcessCall();
@@ -242,6 +306,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the last child node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfrDomNode LastChild {
             get {
                 var call = new CfxDomNodeGetLastChildRenderProcessCall();
@@ -255,6 +323,10 @@ namespace Chromium.Remote {
         /// The following functions are valid only for element nodes.
         /// Returns the tag name of this element.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String ElementTagName {
             get {
                 var call = new CfxDomNodeGetElementTagNameRenderProcessCall();
@@ -267,6 +339,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if this element has attributes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool HasElementAttributes {
             get {
                 var call = new CfxDomNodeHasElementAttributesRenderProcessCall();
@@ -279,6 +355,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the inner text of the element.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String ElementInnerText {
             get {
                 var call = new CfxDomNodeGetElementInnerTextRenderProcessCall();
@@ -292,6 +372,10 @@ namespace Chromium.Remote {
         /// Returns true (1) if this object is pointing to the same handle as |that|
         /// object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool IsSame(CfrDomNode that) {
             var call = new CfxDomNodeIsSameRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -303,6 +387,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Set the value of this node. Returns true (1) on success.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool SetValue(string value) {
             var call = new CfxDomNodeSetValueRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -314,6 +402,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if this element has an attribute named |attrName|.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool HasElementAttribute(string attrName) {
             var call = new CfxDomNodeHasElementAttributeRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -325,6 +417,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the element attribute named |attrName|.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String GetElementAttribute(string attrName) {
             var call = new CfxDomNodeGetElementAttributeRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -336,6 +432,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns a map of all element attributes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public void GetElementAttributes(System.Collections.Generic.List<string[]> attrMap) {
             var call = new CfxDomNodeGetElementAttributesRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -347,6 +447,10 @@ namespace Chromium.Remote {
         /// Set the value for the element attribute named |attrName|. Returns true (1)
         /// on success.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool SetElementAttribute(string attrName, string value) {
             var call = new CfxDomNodeSetElementAttributeRenderProcessCall();
             call.self = CfrObject.Unwrap(this);

@@ -38,6 +38,10 @@ namespace Chromium.Remote {
     /// <summary>
     /// Structure representing a message. Can be used on any process and thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
+    /// </remarks>
     public class CfrProcessMessage : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -58,6 +62,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Create a new CfrProcessMessage object with the specified name.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
+        /// </remarks>
         public static CfrProcessMessage Create(CfrRuntime remoteRuntime, string name) {
             var call = new CfxProcessMessageCreateRenderProcessCall();
             call.name = name;
@@ -72,6 +80,10 @@ namespace Chromium.Remote {
         /// Returns true (1) if this object is valid. Do not call any other functions
         /// if this function returns false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 var call = new CfxProcessMessageIsValidRenderProcessCall();
@@ -85,6 +97,10 @@ namespace Chromium.Remote {
         /// Returns true (1) if the values of this object are read-only. Some APIs may
         /// expose read-only objects.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
+        /// </remarks>
         public bool IsReadOnly {
             get {
                 var call = new CfxProcessMessageIsReadOnlyRenderProcessCall();
@@ -97,6 +113,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the message name.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
+        /// </remarks>
         public String Name {
             get {
                 var call = new CfxProcessMessageGetNameRenderProcessCall();
@@ -109,6 +129,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the list of arguments.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
+        /// </remarks>
         public CfrListValue ArgumentList {
             get {
                 var call = new CfxProcessMessageGetArgumentListRenderProcessCall();
@@ -121,6 +145,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns a writable copy of this object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
+        /// </remarks>
         public CfrProcessMessage Copy() {
             var call = new CfxProcessMessageCopyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);

@@ -38,6 +38,10 @@ namespace Chromium {
     /// Structure representing a V8 exception. The functions of this structure may be
     /// called on any render process thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+    /// </remarks>
     public class CfxV8Exception : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -62,6 +66,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the exception message.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public String Message {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_v8exception_get_message(NativePtr));
@@ -71,6 +79,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the line of source code that the exception occurred within.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public String SourceLine {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_v8exception_get_source_line(NativePtr));
@@ -81,6 +93,10 @@ namespace Chromium {
         /// Returns the resource name for the script from where the function causing
         /// the error originates.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public String ScriptResourceName {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_v8exception_get_script_resource_name(NativePtr));
@@ -91,6 +107,10 @@ namespace Chromium {
         /// Returns the 1-based number of the line where the error occurred or 0 if the
         /// line number is unknown.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int LineNumber {
             get {
                 return CfxApi.cfx_v8exception_get_line_number(NativePtr);
@@ -101,6 +121,10 @@ namespace Chromium {
         /// Returns the index within the script of the first character where the error
         /// occurred.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int StartPosition {
             get {
                 return CfxApi.cfx_v8exception_get_start_position(NativePtr);
@@ -111,6 +135,10 @@ namespace Chromium {
         /// Returns the index within the script of the last character where the error
         /// occurred.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int EndPosition {
             get {
                 return CfxApi.cfx_v8exception_get_end_position(NativePtr);
@@ -121,6 +149,10 @@ namespace Chromium {
         /// Returns the index within the line of the first character where the error
         /// occurred.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int StartColumn {
             get {
                 return CfxApi.cfx_v8exception_get_start_column(NativePtr);
@@ -131,6 +163,10 @@ namespace Chromium {
         /// Returns the index within the line of the last character where the error
         /// occurred.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int EndColumn {
             get {
                 return CfxApi.cfx_v8exception_get_end_column(NativePtr);

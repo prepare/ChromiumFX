@@ -39,6 +39,10 @@ namespace Chromium.Remote {
     /// Structure used to represent a DOM document. The functions of this structure
     /// should only be called on the render process main thread thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+    /// </remarks>
     public class CfrDomDocument : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -62,6 +66,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the document type.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfxDomDocumentType Type {
             get {
                 var call = new CfxDomDocumentGetTypeRenderProcessCall();
@@ -74,6 +82,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the root document node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfrDomNode Document {
             get {
                 var call = new CfxDomDocumentGetDocumentRenderProcessCall();
@@ -86,6 +98,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the BODY node of an HTML document.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfrDomNode Body {
             get {
                 var call = new CfxDomDocumentGetBodyRenderProcessCall();
@@ -98,6 +114,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the HEAD node of an HTML document.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfrDomNode Head {
             get {
                 var call = new CfxDomDocumentGetHeadRenderProcessCall();
@@ -110,6 +130,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the title of an HTML document.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String Title {
             get {
                 var call = new CfxDomDocumentGetTitleRenderProcessCall();
@@ -122,6 +146,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the node that currently has keyboard focus.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfrDomNode FocusedNode {
             get {
                 var call = new CfxDomDocumentGetFocusedNodeRenderProcessCall();
@@ -134,6 +162,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if a portion of the document is selected.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public bool HasSelection {
             get {
                 var call = new CfxDomDocumentHasSelectionRenderProcessCall();
@@ -146,6 +178,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the selection start node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfrDomNode SelectionStartNode {
             get {
                 var call = new CfxDomDocumentGetSelectionStartNodeRenderProcessCall();
@@ -158,6 +194,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the selection offset within the start node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public int SelectionStartOffset {
             get {
                 var call = new CfxDomDocumentGetSelectionStartOffsetRenderProcessCall();
@@ -170,6 +210,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the selection end node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfrDomNode SelectionEndNode {
             get {
                 var call = new CfxDomDocumentGetSelectionEndNodeRenderProcessCall();
@@ -182,6 +226,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the selection offset within the end node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public int SelectionEndOffset {
             get {
                 var call = new CfxDomDocumentGetSelectionEndOffsetRenderProcessCall();
@@ -194,6 +242,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the contents of this selection as markup.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String SelectionAsMarkup {
             get {
                 var call = new CfxDomDocumentGetSelectionAsMarkupRenderProcessCall();
@@ -206,6 +258,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the contents of this selection as text.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String SelectionAsText {
             get {
                 var call = new CfxDomDocumentGetSelectionAsTextRenderProcessCall();
@@ -218,6 +274,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the base URL for the document.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String BaseUrl {
             get {
                 var call = new CfxDomDocumentGetBaseUrlRenderProcessCall();
@@ -230,6 +290,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the document element with the specified ID value.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public CfrDomNode GetElementById(string id) {
             var call = new CfxDomDocumentGetElementByIdRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -242,6 +306,10 @@ namespace Chromium.Remote {
         /// Returns a complete URL based on the document base URL and the specified
         /// partial URL.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public String GetCompleteUrl(string partialURL) {
             var call = new CfxDomDocumentGetCompleteUrlRenderProcessCall();
             call.self = CfrObject.Unwrap(this);

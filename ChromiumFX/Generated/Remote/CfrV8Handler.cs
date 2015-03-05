@@ -41,6 +41,10 @@ namespace Chromium.Remote {
     /// functions of this structure will be called on the thread associated with the
     /// V8 function.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+    /// </remarks>
     public class CfrV8Handler : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -83,6 +87,10 @@ namespace Chromium.Remote {
         /// function return value. If execution fails set |Exception| to the exception
         /// that will be thrown. Return true (1) if execution was handled.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public event CfrV8HandlerExecuteEventHandler Execute {
             add {
                 if(m_Execute == null) {
@@ -112,6 +120,17 @@ namespace Chromium.Remote {
 
     namespace Event {
 
+        /// <summary>
+        /// Handle execution of the function identified by |Name|. |Object| is the
+        /// receiver ('this' object) of the function. |Arguments| is the list of
+        /// arguments passed to the function. If execution succeeds set |Retval| to the
+        /// function return value. If execution fails set |Exception| to the exception
+        /// that will be thrown. Return true (1) if execution was handled.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public delegate void CfrV8HandlerExecuteEventHandler(object sender, CfrV8HandlerExecuteEventArgs e);
 
         /// <summary>
@@ -121,6 +140,10 @@ namespace Chromium.Remote {
         /// function return value. If execution fails set |Exception| to the exception
         /// that will be thrown. Return true (1) if execution was handled.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public partial class CfrV8HandlerExecuteEventArgs : CfrEventArgs {
 
             bool NameFetched;
@@ -190,6 +213,18 @@ namespace Chromium.Remote {
                     call.Execute(remoteRuntime.connection);
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(CfrV8Value returnValue) {
                 var call = new CfxV8HandlerExecuteSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;

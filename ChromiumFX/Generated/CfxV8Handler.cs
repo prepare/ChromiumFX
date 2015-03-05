@@ -41,6 +41,10 @@ namespace Chromium {
     /// functions of this structure will be called on the thread associated with the
     /// V8 function.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+    /// </remarks>
     public class CfxV8Handler : CfxBase {
 
         internal static CfxV8Handler Wrap(IntPtr nativePtr) {
@@ -91,6 +95,10 @@ namespace Chromium {
         /// function return value. If execution fails set |Exception| to the exception
         /// that will be thrown. Return true (1) if execution was handled.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public event CfxV8HandlerExecuteEventHandler Execute {
             add {
                 if(m_Execute == null) {
@@ -120,6 +128,17 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Handle execution of the function identified by |Name|. |Object| is the
+        /// receiver ('this' object) of the function. |Arguments| is the list of
+        /// arguments passed to the function. If execution succeeds set |Retval| to the
+        /// function return value. If execution fails set |Exception| to the exception
+        /// that will be thrown. Return true (1) if execution was handled.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public delegate void CfxV8HandlerExecuteEventHandler(object sender, CfxV8HandlerExecuteEventArgs e);
 
         /// <summary>
@@ -129,6 +148,10 @@ namespace Chromium {
         /// function return value. If execution fails set |Exception| to the exception
         /// that will be thrown. Return true (1) if execution was handled.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public class CfxV8HandlerExecuteEventArgs : CfxEventArgs {
 
             internal IntPtr m_name_str;
@@ -198,6 +221,18 @@ namespace Chromium {
                     m_exception_changed = true;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(CfxV8Value returnValue) {
                 CheckAccess();
                 if(returnValueSet) {

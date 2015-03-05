@@ -164,6 +164,9 @@ skip_to_lower:
         name = name.Replace("enum", "Enum")
         name = name.Replace("key", "Key")
         name = name.Replace("Byident", "ByIdentifier")
+        name = name.Replace("model", "Model")
+        name = name.Replace("color", "Color")
+        name = name.Replace("mode", "Mode")
 
         name = name.Replace("ConText", "Context")
 

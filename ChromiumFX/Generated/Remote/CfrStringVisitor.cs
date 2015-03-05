@@ -39,6 +39,10 @@ namespace Chromium.Remote {
     /// <summary>
     /// Implement this structure to receive string values asynchronously.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_string_visitor_capi.h">cef/include/capi/cef_string_visitor_capi.h</see>.
+    /// </remarks>
     public class CfrStringVisitor : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -77,6 +81,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Method that will be executed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_string_visitor_capi.h">cef/include/capi/cef_string_visitor_capi.h</see>.
+        /// </remarks>
         public event CfrStringVisitorVisitEventHandler Visit {
             add {
                 if(m_Visit == null) {
@@ -106,11 +114,22 @@ namespace Chromium.Remote {
 
     namespace Event {
 
+        /// <summary>
+        /// Method that will be executed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_string_visitor_capi.h">cef/include/capi/cef_string_visitor_capi.h</see>.
+        /// </remarks>
         public delegate void CfrStringVisitorVisitEventHandler(object sender, CfrStringVisitorVisitEventArgs e);
 
         /// <summary>
         /// Method that will be executed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_string_visitor_capi.h">cef/include/capi/cef_string_visitor_capi.h</see>.
+        /// </remarks>
         public class CfrStringVisitorVisitEventArgs : CfrEventArgs {
 
             bool StringFetched;

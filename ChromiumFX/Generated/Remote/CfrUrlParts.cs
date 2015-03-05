@@ -38,6 +38,10 @@ namespace Chromium.Remote {
     /// <summary>
     /// URL component parts.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
     public sealed class CfrUrlParts : CfrStructure {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -72,6 +76,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// The complete URL specification.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Spec {
             get {
                 if(!m_Spec_fetched) {
@@ -99,6 +107,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Scheme component not including the colon (e.g., "http").
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Scheme {
             get {
                 if(!m_Scheme_fetched) {
@@ -126,6 +138,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// User name component.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string UserName {
             get {
                 if(!m_UserName_fetched) {
@@ -153,6 +169,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Password component.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Password {
             get {
                 if(!m_Password_fetched) {
@@ -181,6 +201,10 @@ namespace Chromium.Remote {
         /// Host component. This may be a hostname, an IPv4 address or an IPv6 literal
         /// surrounded by square brackets (e.g., "[2001:db8::1]").
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Host {
             get {
                 if(!m_Host_fetched) {
@@ -208,6 +232,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Port number component.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Port {
             get {
                 if(!m_Port_fetched) {
@@ -238,6 +266,10 @@ namespace Chromium.Remote {
         /// clearing everything after that. This value will be empty for non-standard
         /// URLs.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Origin {
             get {
                 if(!m_Origin_fetched) {
@@ -265,6 +297,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Path component including the first slash following the host.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Path {
             get {
                 if(!m_Path_fetched) {
@@ -292,6 +328,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Query string component (i.e., everything following the '?').
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string Query {
             get {
                 if(!m_Query_fetched) {

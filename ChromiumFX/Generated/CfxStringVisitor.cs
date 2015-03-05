@@ -39,6 +39,10 @@ namespace Chromium {
     /// <summary>
     /// Implement this structure to receive string values asynchronously.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_string_visitor_capi.h">cef/include/capi/cef_string_visitor_capi.h</see>.
+    /// </remarks>
     public class CfxStringVisitor : CfxBase {
 
         internal static CfxStringVisitor Wrap(IntPtr nativePtr) {
@@ -65,6 +69,10 @@ namespace Chromium {
         /// <summary>
         /// Method that will be executed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_string_visitor_capi.h">cef/include/capi/cef_string_visitor_capi.h</see>.
+        /// </remarks>
         public event CfxStringVisitorVisitEventHandler Visit {
             add {
                 if(m_Visit == null) {
@@ -94,11 +102,22 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Method that will be executed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_string_visitor_capi.h">cef/include/capi/cef_string_visitor_capi.h</see>.
+        /// </remarks>
         public delegate void CfxStringVisitorVisitEventHandler(object sender, CfxStringVisitorVisitEventArgs e);
 
         /// <summary>
         /// Method that will be executed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_string_visitor_capi.h">cef/include/capi/cef_string_visitor_capi.h</see>.
+        /// </remarks>
         public class CfxStringVisitorVisitEventArgs : CfxEventArgs {
 
             internal IntPtr m_string_str;

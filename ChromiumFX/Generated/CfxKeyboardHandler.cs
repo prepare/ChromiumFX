@@ -40,6 +40,10 @@ namespace Chromium {
     /// Implement this structure to handle events related to keyboard input. The
     /// functions of this structure will be called on the UI thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
+    /// </remarks>
     public class CfxKeyboardHandler : CfxBase {
 
         internal static CfxKeyboardHandler Wrap(IntPtr nativePtr) {
@@ -89,6 +93,10 @@ namespace Chromium {
         /// (0) otherwise. If the event will be handled in on_key_event() as a keyboard
         /// shortcut set |IsKeyboardShortcut| to true (1) and return false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnPreKeyEventEventHandler OnPreKeyEvent {
             add {
                 if(m_OnPreKeyEvent == null) {
@@ -112,6 +120,10 @@ namespace Chromium {
         /// |OsEvent| is the operating system event message, if any. Return true (1)
         /// if the keyboard event was handled or false (0) otherwise.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnKeyEventEventHandler OnKeyEvent {
             add {
                 if(m_OnKeyEvent == null) {
@@ -145,6 +157,17 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Called before a keyboard event is sent to the renderer. |Event| contains
+        /// information about the keyboard event. |OsEvent| is the operating system
+        /// event message, if any. Return true (1) if the event was handled or false
+        /// (0) otherwise. If the event will be handled in on_key_event() as a keyboard
+        /// shortcut set |IsKeyboardShortcut| to true (1) and return false (0).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnPreKeyEventEventHandler(object sender, CfxOnPreKeyEventEventArgs e);
 
         /// <summary>
@@ -154,6 +177,10 @@ namespace Chromium {
         /// (0) otherwise. If the event will be handled in on_key_event() as a keyboard
         /// shortcut set |IsKeyboardShortcut| to true (1) and return false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnPreKeyEventEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -198,6 +225,18 @@ namespace Chromium {
                     m_is_keyboard_shortcut = value ? 1 : 0;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -212,6 +251,16 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called after the renderer and JavaScript in the page has had a chance to
+        /// handle the event. |Event| contains information about the keyboard event.
+        /// |OsEvent| is the operating system event message, if any. Return true (1)
+        /// if the keyboard event was handled or false (0) otherwise.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnKeyEventEventHandler(object sender, CfxOnKeyEventEventArgs e);
 
         /// <summary>
@@ -220,6 +269,10 @@ namespace Chromium {
         /// |OsEvent| is the operating system event message, if any. Return true (1)
         /// if the keyboard event was handled or false (0) otherwise.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnKeyEventEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -257,6 +310,18 @@ namespace Chromium {
                     return m_os_event;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {

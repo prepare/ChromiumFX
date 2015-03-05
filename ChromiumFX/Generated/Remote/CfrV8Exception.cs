@@ -39,6 +39,10 @@ namespace Chromium.Remote {
     /// Structure representing a V8 exception. The functions of this structure may be
     /// called on any render process thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+    /// </remarks>
     public class CfrV8Exception : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -62,6 +66,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the exception message.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public String Message {
             get {
                 var call = new CfxV8ExceptionGetMessageRenderProcessCall();
@@ -74,6 +82,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the line of source code that the exception occurred within.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public String SourceLine {
             get {
                 var call = new CfxV8ExceptionGetSourceLineRenderProcessCall();
@@ -87,6 +99,10 @@ namespace Chromium.Remote {
         /// Returns the resource name for the script from where the function causing
         /// the error originates.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public String ScriptResourceName {
             get {
                 var call = new CfxV8ExceptionGetScriptResourceNameRenderProcessCall();
@@ -100,6 +116,10 @@ namespace Chromium.Remote {
         /// Returns the 1-based number of the line where the error occurred or 0 if the
         /// line number is unknown.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int LineNumber {
             get {
                 var call = new CfxV8ExceptionGetLineNumberRenderProcessCall();
@@ -113,6 +133,10 @@ namespace Chromium.Remote {
         /// Returns the index within the script of the first character where the error
         /// occurred.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int StartPosition {
             get {
                 var call = new CfxV8ExceptionGetStartPositionRenderProcessCall();
@@ -126,6 +150,10 @@ namespace Chromium.Remote {
         /// Returns the index within the script of the last character where the error
         /// occurred.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int EndPosition {
             get {
                 var call = new CfxV8ExceptionGetEndPositionRenderProcessCall();
@@ -139,6 +167,10 @@ namespace Chromium.Remote {
         /// Returns the index within the line of the first character where the error
         /// occurred.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int StartColumn {
             get {
                 var call = new CfxV8ExceptionGetStartColumnRenderProcessCall();
@@ -152,6 +184,10 @@ namespace Chromium.Remote {
         /// Returns the index within the line of the last character where the error
         /// occurred.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int EndColumn {
             get {
                 var call = new CfxV8ExceptionGetEndColumnRenderProcessCall();

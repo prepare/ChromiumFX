@@ -40,6 +40,10 @@ namespace Chromium {
     /// Implement this structure to handle context menu events. The functions of this
     /// structure will be called on the UI thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+    /// </remarks>
     public class CfxContextMenuHandler : CfxBase {
 
         internal static CfxContextMenuHandler Wrap(IntPtr nativePtr) {
@@ -111,6 +115,10 @@ namespace Chromium {
         /// modified to show a custom menu. Do not keep references to |Params| or
         /// |Model| outside of this callback.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnBeforeContextMenuEventHandler OnBeforeContextMenu {
             add {
                 if(m_OnBeforeContextMenu == null) {
@@ -137,6 +145,10 @@ namespace Chromium {
         /// on_before_context_menu(). Do not keep a reference to |Params| outside of
         /// this callback.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnContextMenuCommandEventHandler OnContextMenuCommand {
             add {
                 if(m_OnContextMenuCommand == null) {
@@ -158,6 +170,10 @@ namespace Chromium {
         /// Called when the context menu is dismissed irregardless of whether the menu
         /// was NULL or a command was selected.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnContextMenuDismissedEventHandler OnContextMenuDismissed {
             add {
                 if(m_OnContextMenuDismissed == null) {
@@ -195,6 +211,17 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Called before a context menu is displayed. |Params| provides information
+        /// about the context menu state. |Model| initially contains the default
+        /// context menu. The |Model| can be cleared to show no context menu or
+        /// modified to show a custom menu. Do not keep references to |Params| or
+        /// |Model| outside of this callback.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnBeforeContextMenuEventHandler(object sender, CfxOnBeforeContextMenuEventArgs e);
 
         /// <summary>
@@ -204,6 +231,10 @@ namespace Chromium {
         /// modified to show a custom menu. Do not keep references to |Params| or
         /// |Model| outside of this callback.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnBeforeContextMenuEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -256,6 +287,19 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called to execute a command selected from the context menu. Return true (1)
+        /// if the command was handled or false (0) for the default implementation. See
+        /// CfxMenuId for the command ids that have default implementations. All
+        /// user-defined command ids should be between MENU_ID_USER_FIRST and
+        /// MENU_ID_USER_LAST. |Params| will have the same values as what was passed to
+        /// on_before_context_menu(). Do not keep a reference to |Params| outside of
+        /// this callback.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnContextMenuCommandEventHandler(object sender, CfxOnContextMenuCommandEventArgs e);
 
         /// <summary>
@@ -267,6 +311,10 @@ namespace Chromium {
         /// on_before_context_menu(). Do not keep a reference to |Params| outside of
         /// this callback.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnContextMenuCommandEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -322,6 +370,18 @@ namespace Chromium {
                     return m_event_flags;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -336,12 +396,24 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when the context menu is dismissed irregardless of whether the menu
+        /// was NULL or a command was selected.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnContextMenuDismissedEventHandler(object sender, CfxOnContextMenuDismissedEventArgs e);
 
         /// <summary>
         /// Called when the context menu is dismissed irregardless of whether the menu
         /// was NULL or a command was selected.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnContextMenuDismissedEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;

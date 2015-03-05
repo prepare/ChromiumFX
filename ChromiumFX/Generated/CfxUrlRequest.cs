@@ -41,6 +41,10 @@ namespace Chromium {
     /// process. Once created the functions of the URL request object must be
     /// accessed on the same thread that created it.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+    /// </remarks>
     public class CfxUrlRequest : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -74,6 +78,10 @@ namespace Chromium {
         /// the URL request code path). The |request| object will be marked as read-only
         /// after calling this function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public static CfxUrlRequest Create(CfxRequest request, CfxUrlRequestClient client) {
             return CfxUrlRequest.Wrap(CfxApi.cfx_urlrequest_create(CfxRequest.Unwrap(request), CfxUrlRequestClient.Unwrap(client)));
         }
@@ -82,6 +90,10 @@ namespace Chromium {
         /// Returns the request object used to create this URL request. The returned
         /// object is read-only and should not be modified.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public CfxRequest Request {
             get {
                 return CfxRequest.Wrap(CfxApi.cfx_urlrequest_get_request(NativePtr));
@@ -91,6 +103,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the client.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public CfxUrlRequestClient Client {
             get {
                 return CfxUrlRequestClient.Wrap(CfxApi.cfx_urlrequest_get_client(NativePtr));
@@ -100,6 +116,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the request status.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public CfxUrlRequestStatus RequestStatus {
             get {
                 return CfxApi.cfx_urlrequest_get_request_status(NativePtr);
@@ -110,6 +130,10 @@ namespace Chromium {
         /// Returns the request error if status is UR_CANCELED or UR_FAILED, or 0
         /// otherwise.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public CfxErrorCode RequestError {
             get {
                 return CfxApi.cfx_urlrequest_get_request_error(NativePtr);
@@ -121,6 +145,10 @@ namespace Chromium {
         /// Response information will only be available after the upload has completed.
         /// The returned object is read-only and should not be modified.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public CfxResponse Response {
             get {
                 return CfxResponse.Wrap(CfxApi.cfx_urlrequest_get_response(NativePtr));
@@ -130,6 +158,10 @@ namespace Chromium {
         /// <summary>
         /// Cancel the request.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
+        /// </remarks>
         public void Cancel() {
             CfxApi.cfx_urlrequest_cancel(NativePtr);
         }

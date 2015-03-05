@@ -37,6 +37,10 @@ namespace Chromium {
     /// <summary>
     /// Structure used to represent an entry in navigation history.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
+    /// </remarks>
     public class CfxNavigationEntry : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -62,6 +66,10 @@ namespace Chromium {
         /// Returns true (1) if this object is valid. Do not call any other functions
         /// if this function returns false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 return 0 != CfxApi.cfx_navigation_entry_is_valid(NativePtr);
@@ -72,6 +80,10 @@ namespace Chromium {
         /// Returns the actual URL of the page. For some pages this may be data: URL or
         /// similar. Use get_display_url() to return a display-friendly version.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
+        /// </remarks>
         public String Url {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_navigation_entry_get_url(NativePtr));
@@ -81,6 +93,10 @@ namespace Chromium {
         /// <summary>
         /// Returns a display-friendly version of the URL.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
+        /// </remarks>
         public String DisplayUrl {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_navigation_entry_get_display_url(NativePtr));
@@ -90,6 +106,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the original URL that was entered by the user before any redirects.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
+        /// </remarks>
         public String OriginalUrl {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_navigation_entry_get_original_url(NativePtr));
@@ -99,6 +119,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the title set by the page. This value may be NULL.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
+        /// </remarks>
         public String Title {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_navigation_entry_get_title(NativePtr));
@@ -109,6 +133,10 @@ namespace Chromium {
         /// Returns the transition type which indicates what the user did to move to
         /// this page from the previous page.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
+        /// </remarks>
         public CfxTransitionType TransitionType {
             get {
                 return CfxApi.cfx_navigation_entry_get_transition_type(NativePtr);
@@ -118,6 +146,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if this navigation includes post data.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
+        /// </remarks>
         public bool HasPostData {
             get {
                 return 0 != CfxApi.cfx_navigation_entry_has_post_data(NativePtr);
@@ -128,6 +160,10 @@ namespace Chromium {
         /// Returns the name of the sub-frame that navigated or an NULL value if the
         /// main frame navigated.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
+        /// </remarks>
         public String FrameName {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_navigation_entry_get_frame_name(NativePtr));
@@ -139,6 +175,10 @@ namespace Chromium {
         /// navigation may be completed more than once if the page is reloaded. May be
         /// 0 if the navigation has not yet completed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
+        /// </remarks>
         public CfxTime CompletionTime {
             get {
                 return CfxTime.WrapOwned(CfxApi.cfx_navigation_entry_get_completion_time(NativePtr));
@@ -150,6 +190,10 @@ namespace Chromium {
         /// response. May be 0 if the response has not yet been received or if the
         /// navigation has not yet completed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
+        /// </remarks>
         public int HttpStatusCode {
             get {
                 return CfxApi.cfx_navigation_entry_get_http_status_code(NativePtr);

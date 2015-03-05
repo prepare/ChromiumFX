@@ -39,6 +39,10 @@ namespace Chromium {
     /// requests. The functions of this structure will always be called on the IO
     /// thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
+    /// </remarks>
     public class CfxSchemeHandlerFactory : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -68,6 +72,10 @@ namespace Chromium {
         /// example, if the request came from CfxUrlRequest). The |request| object
         /// passed to this function will not contain cookie data.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
+        /// </remarks>
         public CfxResourceHandler Create(CfxBrowser browser, CfxFrame frame, string schemeName, CfxRequest request) {
             var schemeName_pinned = new PinnedString(schemeName);
             var __retval = CfxApi.cfx_scheme_handler_factory_create(NativePtr, CfxBrowser.Unwrap(browser), CfxFrame.Unwrap(frame), schemeName_pinned.Obj.PinnedPtr, schemeName_pinned.Length, CfxRequest.Unwrap(request));

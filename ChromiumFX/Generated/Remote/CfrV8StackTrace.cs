@@ -42,6 +42,10 @@ namespace Chromium.Remote {
     /// and WebWorker threads. A task runner for posting tasks on the associated
     /// thread can be retrieved via the CfrV8Context.GetTaskRunner() function.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+    /// </remarks>
     public class CfrV8StackTrace : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -63,6 +67,10 @@ namespace Chromium.Remote {
         /// Returns the stack trace for the currently active context. |frameLimit| is
         /// the maximum number of frames that will be captured.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfrV8StackTrace GetCurrent(CfrRuntime remoteRuntime, int frameLimit) {
             var call = new CfxV8StackTraceGetCurrentRenderProcessCall();
             call.frameLimit = frameLimit;
@@ -78,6 +86,10 @@ namespace Chromium.Remote {
         /// on the current thread. Do not call any other functions if this function
         /// returns false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 var call = new CfxV8StackTraceIsValidRenderProcessCall();
@@ -90,6 +102,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the number of stack frames.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int FrameCount {
             get {
                 var call = new CfxV8StackTraceGetFrameCountRenderProcessCall();
@@ -102,6 +118,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the stack frame at the specified 0-based index.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfrV8StackFrame GetFrame(int index) {
             var call = new CfxV8StackTraceGetFrameRenderProcessCall();
             call.self = CfrObject.Unwrap(this);

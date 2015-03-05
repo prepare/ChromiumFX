@@ -38,6 +38,10 @@ namespace Chromium.Remote {
     /// <summary>
     /// Structure representing a binary value. Can be used on any process and thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+    /// </remarks>
     public partial class CfrBinaryValue : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -59,6 +63,10 @@ namespace Chromium.Remote {
         /// Creates a new object that is not owned by any other object. The specified
         /// |data| will be copied.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public static CfrBinaryValue Create(CfrRuntime remoteRuntime, RemotePtr data, int dataSize) {
             var call = new CfxBinaryValueCreateRenderProcessCall();
             call.data = data.ptr;
@@ -74,6 +82,10 @@ namespace Chromium.Remote {
         /// Returns true (1) if this object is valid. Do not call any other functions
         /// if this function returns false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 var call = new CfxBinaryValueIsValidRenderProcessCall();
@@ -86,6 +98,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if this object is currently owned by another object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool IsOwned {
             get {
                 var call = new CfxBinaryValueIsOwnedRenderProcessCall();
@@ -98,6 +114,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the data size.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public int Size {
             get {
                 var call = new CfxBinaryValueGetSizeRenderProcessCall();
@@ -110,6 +130,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns a copy of this object. The data in this object will also be copied.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public CfrBinaryValue Copy() {
             var call = new CfxBinaryValueCopyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -121,6 +145,10 @@ namespace Chromium.Remote {
         /// Read up to |bufferSize| number of bytes into |buffer|. Reading begins at
         /// the specified byte |dataOffset|. Returns the number of bytes read.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public int GetData(RemotePtr buffer, int bufferSize, int dataOffset) {
             var call = new CfxBinaryValueGetDataRenderProcessCall();
             call.self = CfrObject.Unwrap(this);

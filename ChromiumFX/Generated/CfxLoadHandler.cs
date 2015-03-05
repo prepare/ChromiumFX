@@ -41,6 +41,10 @@ namespace Chromium {
     /// functions of this structure will be called on the browser process UI thread
     /// or render process main thread (TID_RENDERER).
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_load_handler_capi.h">cef/include/capi/cef_load_handler_capi.h</see>.
+    /// </remarks>
     public class CfxLoadHandler : CfxBase {
 
         internal static CfxLoadHandler Wrap(IntPtr nativePtr) {
@@ -110,6 +114,10 @@ namespace Chromium {
         /// action, and once when loading is terminated due to completion, cancellation
         /// of failure.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_load_handler_capi.h">cef/include/capi/cef_load_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnLoadingStateChangeEventHandler OnLoadingStateChange {
             add {
                 if(m_OnLoadingStateChange == null) {
@@ -136,6 +144,10 @@ namespace Chromium {
         /// that frame fails. For notification of overall browser load status use
         /// OnLoadingStateChange instead.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_load_handler_capi.h">cef/include/capi/cef_load_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnLoadStartEventHandler OnLoadStart {
             add {
                 if(m_OnLoadStart == null) {
@@ -161,6 +173,10 @@ namespace Chromium {
         /// function will always be called for all frames irrespective of whether the
         /// request completes successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_load_handler_capi.h">cef/include/capi/cef_load_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnLoadEndEventHandler OnLoadEnd {
             add {
                 if(m_OnLoadEnd == null) {
@@ -184,6 +200,10 @@ namespace Chromium {
         /// |FailedUrl| is the URL that failed to load. See net\base\net_error_list.h
         /// for complete descriptions of the error codes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_load_handler_capi.h">cef/include/capi/cef_load_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnLoadErrorEventHandler OnLoadError {
             add {
                 if(m_OnLoadError == null) {
@@ -225,6 +245,16 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Called when the loading state has changed. This callback will be executed
+        /// twice -- once when loading is initiated either programmatically or by user
+        /// action, and once when loading is terminated due to completion, cancellation
+        /// of failure.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_load_handler_capi.h">cef/include/capi/cef_load_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnLoadingStateChangeEventHandler(object sender, CfxOnLoadingStateChangeEventArgs e);
 
         /// <summary>
@@ -233,6 +263,10 @@ namespace Chromium {
         /// action, and once when loading is terminated due to completion, cancellation
         /// of failure.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_load_handler_capi.h">cef/include/capi/cef_load_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnLoadingStateChangeEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -279,6 +313,19 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when the browser begins loading a frame. The |Frame| value will
+        /// never be NULL -- call the is_main() function to check if this frame is the
+        /// main frame. Multiple frames may be loading at the same time. Sub-frames may
+        /// start or continue loading after the main frame load has ended. This
+        /// function may not be called for a particular frame if the load request for
+        /// that frame fails. For notification of overall browser load status use
+        /// OnLoadingStateChange instead.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_load_handler_capi.h">cef/include/capi/cef_load_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnLoadStartEventHandler(object sender, CfxOnLoadStartEventArgs e);
 
         /// <summary>
@@ -290,6 +337,10 @@ namespace Chromium {
         /// that frame fails. For notification of overall browser load status use
         /// OnLoadingStateChange instead.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_load_handler_capi.h">cef/include/capi/cef_load_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnLoadStartEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -322,6 +373,18 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when the browser is done loading a frame. The |Frame| value will
+        /// never be NULL -- call the is_main() function to check if this frame is the
+        /// main frame. Multiple frames may be loading at the same time. Sub-frames may
+        /// start or continue loading after the main frame load has ended. This
+        /// function will always be called for all frames irrespective of whether the
+        /// request completes successfully.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_load_handler_capi.h">cef/include/capi/cef_load_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnLoadEndEventHandler(object sender, CfxOnLoadEndEventArgs e);
 
         /// <summary>
@@ -332,6 +395,10 @@ namespace Chromium {
         /// function will always be called for all frames irrespective of whether the
         /// request completes successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_load_handler_capi.h">cef/include/capi/cef_load_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnLoadEndEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
@@ -372,6 +439,16 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called when the resource load for a navigation fails or is canceled.
+        /// |ErrorCode| is the error code number, |ErrorText| is the error text and
+        /// |FailedUrl| is the URL that failed to load. See net\base\net_error_list.h
+        /// for complete descriptions of the error codes.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_load_handler_capi.h">cef/include/capi/cef_load_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnLoadErrorEventHandler(object sender, CfxOnLoadErrorEventArgs e);
 
         /// <summary>
@@ -380,6 +457,10 @@ namespace Chromium {
         /// |FailedUrl| is the URL that failed to load. See net\base\net_error_list.h
         /// for complete descriptions of the error codes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_load_handler_capi.h">cef/include/capi/cef_load_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnLoadErrorEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;

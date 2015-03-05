@@ -41,6 +41,10 @@ namespace Chromium.Remote {
     /// otherwise indicated in the comments. When used in the render process the
     /// functions of this structure may only be called on the main thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+    /// </remarks>
     public class CfrBrowser : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -64,6 +68,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if the browser can navigate backwards.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public bool CanGoBack {
             get {
                 var call = new CfxBrowserCanGoBackRenderProcessCall();
@@ -76,6 +84,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if the browser can navigate forwards.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public bool CanGoForward {
             get {
                 var call = new CfxBrowserCanGoForwardRenderProcessCall();
@@ -88,6 +100,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if the browser is currently loading.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public bool IsLoading {
             get {
                 var call = new CfxBrowserIsLoadingRenderProcessCall();
@@ -100,6 +116,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the globally unique identifier for this browser.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public int Identifier {
             get {
                 var call = new CfxBrowserGetIdentifierRenderProcessCall();
@@ -112,6 +132,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if the window is a popup window.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public bool IsPopup {
             get {
                 var call = new CfxBrowserIsPopupRenderProcessCall();
@@ -124,6 +148,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if a document has been loaded in the browser.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public bool HasDocument {
             get {
                 var call = new CfxBrowserHasDocumentRenderProcessCall();
@@ -136,6 +164,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the main (top-level) frame for the browser window.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public CfrFrame MainFrame {
             get {
                 var call = new CfxBrowserGetMainFrameRenderProcessCall();
@@ -148,6 +180,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the focused frame for the browser window.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public CfrFrame FocusedFrame {
             get {
                 var call = new CfxBrowserGetFocusedFrameRenderProcessCall();
@@ -160,6 +196,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the number of frames that currently exist.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public int FrameCount {
             get {
                 var call = new CfxBrowserGetFrameCountRenderProcessCall();
@@ -172,6 +212,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the identifiers of all existing frames.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public long[] FrameIdentifiers {
             get {
                 var call = new CfxBrowserGetFrameIdentifiersRenderProcessCall();
@@ -184,6 +228,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Navigate backwards.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public void GoBack() {
             var call = new CfxBrowserGoBackRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -193,6 +241,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Navigate forwards.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public void GoForward() {
             var call = new CfxBrowserGoForwardRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -202,6 +254,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Reload the current page.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public void Reload() {
             var call = new CfxBrowserReloadRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -211,6 +267,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Reload the current page ignoring any cached data.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public void ReloadIgnoreCache() {
             var call = new CfxBrowserReloadIgnoreCacheRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -220,6 +280,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Stop loading the page.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public void StopLoad() {
             var call = new CfxBrowserStopLoadRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -230,6 +294,10 @@ namespace Chromium.Remote {
         /// Returns true (1) if this object is pointing to the same handle as |that|
         /// object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public bool IsSame(CfrBrowser that) {
             var call = new CfxBrowserIsSameRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -241,6 +309,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the frame with the specified identifier, or NULL if not found.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public CfrFrame GetFrameByIdentifier(long identifier) {
             var call = new CfxBrowserGetFrameByIdentifierRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -252,6 +324,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the frame with the specified name, or NULL if not found.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public CfrFrame GetFrame(string name) {
             var call = new CfxBrowserGetFrameRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -263,6 +339,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the names of all existing frames.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public void GetFrameNames(System.Collections.Generic.List<string> names) {
             var call = new CfxBrowserGetFrameNamesRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -274,6 +354,10 @@ namespace Chromium.Remote {
         /// Send a message to the specified |targetProcess|. Returns true (1) if the
         /// message was sent successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public bool SendProcessMessage(CfxProcessId targetProcess, CfrProcessMessage message) {
             var call = new CfxBrowserSendProcessMessageRenderProcessCall();
             call.self = CfrObject.Unwrap(this);

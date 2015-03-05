@@ -40,6 +40,10 @@ namespace Chromium {
     /// otherwise indicated in the comments. When used in the render process the
     /// functions of this structure may only be called on the main thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+    /// </remarks>
     public class CfxBrowser : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -65,6 +69,10 @@ namespace Chromium {
         /// Returns the browser host object. This function can only be called in the
         /// browser process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public CfxBrowserHost Host {
             get {
                 return CfxBrowserHost.Wrap(CfxApi.cfx_browser_get_host(NativePtr));
@@ -74,6 +82,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if the browser can navigate backwards.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public bool CanGoBack {
             get {
                 return 0 != CfxApi.cfx_browser_can_go_back(NativePtr);
@@ -83,6 +95,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if the browser can navigate forwards.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public bool CanGoForward {
             get {
                 return 0 != CfxApi.cfx_browser_can_go_forward(NativePtr);
@@ -92,6 +108,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if the browser is currently loading.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public bool IsLoading {
             get {
                 return 0 != CfxApi.cfx_browser_is_loading(NativePtr);
@@ -101,6 +121,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the globally unique identifier for this browser.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public int Identifier {
             get {
                 return CfxApi.cfx_browser_get_identifier(NativePtr);
@@ -110,6 +134,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if the window is a popup window.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public bool IsPopup {
             get {
                 return 0 != CfxApi.cfx_browser_is_popup(NativePtr);
@@ -119,6 +147,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if a document has been loaded in the browser.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public bool HasDocument {
             get {
                 return 0 != CfxApi.cfx_browser_has_document(NativePtr);
@@ -128,6 +160,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the main (top-level) frame for the browser window.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public CfxFrame MainFrame {
             get {
                 return CfxFrame.Wrap(CfxApi.cfx_browser_get_main_frame(NativePtr));
@@ -137,6 +173,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the focused frame for the browser window.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public CfxFrame FocusedFrame {
             get {
                 return CfxFrame.Wrap(CfxApi.cfx_browser_get_focused_frame(NativePtr));
@@ -146,6 +186,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the number of frames that currently exist.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public int FrameCount {
             get {
                 return CfxApi.cfx_browser_get_frame_count(NativePtr);
@@ -155,6 +199,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the identifiers of all existing frames.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public long[] FrameIdentifiers {
             get {
                 int identifiersCount = FrameCount;
@@ -170,6 +218,10 @@ namespace Chromium {
         /// <summary>
         /// Navigate backwards.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public void GoBack() {
             CfxApi.cfx_browser_go_back(NativePtr);
         }
@@ -177,6 +229,10 @@ namespace Chromium {
         /// <summary>
         /// Navigate forwards.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public void GoForward() {
             CfxApi.cfx_browser_go_forward(NativePtr);
         }
@@ -184,6 +240,10 @@ namespace Chromium {
         /// <summary>
         /// Reload the current page.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public void Reload() {
             CfxApi.cfx_browser_reload(NativePtr);
         }
@@ -191,6 +251,10 @@ namespace Chromium {
         /// <summary>
         /// Reload the current page ignoring any cached data.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public void ReloadIgnoreCache() {
             CfxApi.cfx_browser_reload_ignore_cache(NativePtr);
         }
@@ -198,6 +262,10 @@ namespace Chromium {
         /// <summary>
         /// Stop loading the page.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public void StopLoad() {
             CfxApi.cfx_browser_stop_load(NativePtr);
         }
@@ -206,6 +274,10 @@ namespace Chromium {
         /// Returns true (1) if this object is pointing to the same handle as |that|
         /// object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public bool IsSame(CfxBrowser that) {
             return 0 != CfxApi.cfx_browser_is_same(NativePtr, CfxBrowser.Unwrap(that));
         }
@@ -213,6 +285,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the frame with the specified identifier, or NULL if not found.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public CfxFrame GetFrameByIdentifier(long identifier) {
             return CfxFrame.Wrap(CfxApi.cfx_browser_get_frame_byident(NativePtr, identifier));
         }
@@ -220,6 +296,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the frame with the specified name, or NULL if not found.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public CfxFrame GetFrame(string name) {
             var name_pinned = new PinnedString(name);
             var __retval = CfxApi.cfx_browser_get_frame(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length);
@@ -230,6 +310,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the names of all existing frames.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public void GetFrameNames(System.Collections.Generic.List<string> names) {
             PinnedString[] names_handles;
             var names_unwrapped = CfxStringCollections.UnwrapCfxStringList(names, out names_handles);
@@ -243,6 +327,10 @@ namespace Chromium {
         /// Send a message to the specified |targetProcess|. Returns true (1) if the
         /// message was sent successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
         public bool SendProcessMessage(CfxProcessId targetProcess, CfxProcessMessage message) {
             return 0 != CfxApi.cfx_browser_send_process_message(NativePtr, targetProcess, CfxProcessMessage.Unwrap(message));
         }

@@ -37,6 +37,10 @@ namespace Chromium {
     /// <summary>
     /// Popup window features.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
     public sealed class CfxPopupFeatures : CfxStructure {
 
         internal static CfxPopupFeatures Wrap(IntPtr nativePtr) {

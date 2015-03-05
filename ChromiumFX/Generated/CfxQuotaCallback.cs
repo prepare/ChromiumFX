@@ -37,6 +37,10 @@ namespace Chromium {
     /// <summary>
     /// Callback structure used for asynchronous continuation of quota requests.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+    /// </remarks>
     public class CfxQuotaCallback : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -62,6 +66,10 @@ namespace Chromium {
         /// Continue the quota request. If |allow| is true (1) the request will be
         /// allowed. Otherwise, the request will be denied.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public void Continue(bool allow) {
             CfxApi.cfx_quota_callback_cont(NativePtr, allow ? 1 : 0);
         }
@@ -69,6 +77,10 @@ namespace Chromium {
         /// <summary>
         /// Cancel the quota request.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
         public void Cancel() {
             CfxApi.cfx_quota_callback_cancel(NativePtr);
         }

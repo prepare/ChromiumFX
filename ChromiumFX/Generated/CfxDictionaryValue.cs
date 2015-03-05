@@ -38,6 +38,10 @@ namespace Chromium {
     /// Structure representing a dictionary value. Can be used on any process and
     /// thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+    /// </remarks>
     public class CfxDictionaryValue : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -62,6 +66,10 @@ namespace Chromium {
         /// <summary>
         /// Creates a new object that is not owned by any other object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public static CfxDictionaryValue Create() {
             return CfxDictionaryValue.Wrap(CfxApi.cfx_dictionary_value_create());
         }
@@ -70,6 +78,10 @@ namespace Chromium {
         /// Returns true (1) if this object is valid. Do not call any other functions
         /// if this function returns false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 return 0 != CfxApi.cfx_dictionary_value_is_valid(NativePtr);
@@ -79,6 +91,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if this object is currently owned by another object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool IsOwned {
             get {
                 return 0 != CfxApi.cfx_dictionary_value_is_owned(NativePtr);
@@ -89,6 +105,10 @@ namespace Chromium {
         /// Returns true (1) if the values of this object are read-only. Some APIs may
         /// expose read-only objects.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool IsReadOnly {
             get {
                 return 0 != CfxApi.cfx_dictionary_value_is_read_only(NativePtr);
@@ -98,6 +118,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the number of values.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public int Size {
             get {
                 return CfxApi.cfx_dictionary_value_get_size(NativePtr);
@@ -108,6 +132,10 @@ namespace Chromium {
         /// Returns a writable copy of this object. If |excludeNullChildren| is true
         /// (1) any NULL dictionaries or lists will be excluded from the copy.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public CfxDictionaryValue Copy(bool excludeEmptyChildren) {
             return CfxDictionaryValue.Wrap(CfxApi.cfx_dictionary_value_copy(NativePtr, excludeEmptyChildren ? 1 : 0));
         }
@@ -115,6 +143,10 @@ namespace Chromium {
         /// <summary>
         /// Removes all values. Returns true (1) on success.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool Clear() {
             return 0 != CfxApi.cfx_dictionary_value_clear(NativePtr);
         }
@@ -122,6 +154,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if the current dictionary has a value for the given key.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool HasKey(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_has_key(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
@@ -132,6 +168,10 @@ namespace Chromium {
         /// <summary>
         /// Reads all keys for this dictionary into the specified vector.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public int GetKeys(System.Collections.Generic.List<string> keys) {
             PinnedString[] keys_handles;
             var keys_unwrapped = CfxStringCollections.UnwrapCfxStringList(keys, out keys_handles);
@@ -146,6 +186,10 @@ namespace Chromium {
         /// Removes the value at the specified key. Returns true (1) is the value was
         /// removed successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool Remove(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_remove(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
@@ -156,6 +200,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the value type for the specified key.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public CfxValueType GetType(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_get_type(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
@@ -166,6 +214,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the value at the specified key as type bool.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public int GetBool(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_get_bool(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
@@ -176,6 +228,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the value at the specified key as type int.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public int GetInt(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_get_int(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
@@ -186,6 +242,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the value at the specified key as type double.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public double GetDouble(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_get_double(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
@@ -196,6 +256,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the value at the specified key as type string.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public String GetString(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_get_string(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
@@ -206,6 +270,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the value at the specified key as type binary.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public CfxBinaryValue GetBinary(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_get_binary(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
@@ -216,6 +284,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the value at the specified key as type dictionary.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public CfxDictionaryValue GetDictionary(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_get_dictionary(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
@@ -226,6 +298,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the value at the specified key as type list.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public CfxListValue GetList(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_get_list(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
@@ -237,6 +313,10 @@ namespace Chromium {
         /// Sets the value at the specified key as type null. Returns true (1) if the
         /// value was set successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool SetNull(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_set_null(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
@@ -248,6 +328,10 @@ namespace Chromium {
         /// Sets the value at the specified key as type bool. Returns true (1) if the
         /// value was set successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool SetBool(string key, int value) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_set_bool(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, value);
@@ -259,6 +343,10 @@ namespace Chromium {
         /// Sets the value at the specified key as type int. Returns true (1) if the
         /// value was set successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool SetInt(string key, int value) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_set_int(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, value);
@@ -270,6 +358,10 @@ namespace Chromium {
         /// Sets the value at the specified key as type double. Returns true (1) if the
         /// value was set successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool SetDouble(string key, double value) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_set_double(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, value);
@@ -281,6 +373,10 @@ namespace Chromium {
         /// Sets the value at the specified key as type string. Returns true (1) if the
         /// value was set successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool SetString(string key, string value) {
             var key_pinned = new PinnedString(key);
             var value_pinned = new PinnedString(value);
@@ -297,6 +393,10 @@ namespace Chromium {
         /// Otherwise, ownership will be transferred to this object and the |value|
         /// reference will be invalidated.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool SetBinary(string key, CfxBinaryValue value) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_set_binary(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, CfxBinaryValue.Unwrap(value));
@@ -312,6 +412,10 @@ namespace Chromium {
         /// Otherwise, ownership will be transferred to this object and the |value|
         /// reference will be invalidated.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool SetDictionary(string key, CfxDictionaryValue value) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_set_dictionary(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, CfxDictionaryValue.Unwrap(value));
@@ -327,6 +431,10 @@ namespace Chromium {
         /// Otherwise, ownership will be transferred to this object and the |value|
         /// reference will be invalidated.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool SetList(string key, CfxListValue value) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_set_list(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, CfxListValue.Unwrap(value));

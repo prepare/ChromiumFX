@@ -40,6 +40,10 @@ namespace Chromium {
     /// Structure the client can implement to provide a custom stream reader. The
     /// functions of this structure may be called on any thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+    /// </remarks>
     public class CfxReadHandler : CfxBase {
 
         internal static CfxReadHandler Wrap(IntPtr nativePtr) {
@@ -120,6 +124,10 @@ namespace Chromium {
         /// <summary>
         /// Read raw binary data.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public event CfxReadEventHandler Read {
             add {
                 if(m_Read == null) {
@@ -141,6 +149,10 @@ namespace Chromium {
         /// Seek to the specified offset position. |Whence| may be any one of SEEK_CUR,
         /// SEEK_END or SEEK_SET. Return zero on success and non-zero on failure.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public event CfxSeekEventHandler Seek {
             add {
                 if(m_Seek == null) {
@@ -161,6 +173,10 @@ namespace Chromium {
         /// <summary>
         /// Return the current offset position.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public event CfxTellEventHandler Tell {
             add {
                 if(m_Tell == null) {
@@ -181,6 +197,10 @@ namespace Chromium {
         /// <summary>
         /// Return non-zero if at end of file.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public event CfxReadHandlerEofEventHandler Eof {
             add {
                 if(m_Eof == null) {
@@ -203,6 +223,10 @@ namespace Chromium {
         /// system which may block. Used as a hint for determining the thread to access
         /// the handler from.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public event CfxMayBlockEventHandler MayBlock {
             add {
                 if(m_MayBlock == null) {
@@ -248,11 +272,22 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Read raw binary data.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public delegate void CfxReadEventHandler(object sender, CfxReadEventArgs e);
 
         /// <summary>
         /// Read raw binary data.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public class CfxReadEventArgs : CfxEventArgs {
 
             internal IntPtr m_ptr;
@@ -286,6 +321,18 @@ namespace Chromium {
                     return m_n;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(int returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -300,12 +347,24 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Seek to the specified offset position. |Whence| may be any one of SEEK_CUR,
+        /// SEEK_END or SEEK_SET. Return zero on success and non-zero on failure.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public delegate void CfxSeekEventHandler(object sender, CfxSeekEventArgs e);
 
         /// <summary>
         /// Seek to the specified offset position. |Whence| may be any one of SEEK_CUR,
         /// SEEK_END or SEEK_SET. Return zero on success and non-zero on failure.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public class CfxSeekEventArgs : CfxEventArgs {
 
             internal long m_offset;
@@ -331,6 +390,18 @@ namespace Chromium {
                     return m_whence;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(int returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -345,11 +416,22 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Return the current offset position.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public delegate void CfxTellEventHandler(object sender, CfxTellEventArgs e);
 
         /// <summary>
         /// Return the current offset position.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public class CfxTellEventArgs : CfxEventArgs {
 
 
@@ -359,6 +441,18 @@ namespace Chromium {
             internal CfxTellEventArgs() {
             }
 
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(long returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -369,11 +463,22 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Return non-zero if at end of file.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public delegate void CfxReadHandlerEofEventHandler(object sender, CfxReadHandlerEofEventArgs e);
 
         /// <summary>
         /// Return non-zero if at end of file.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public class CfxReadHandlerEofEventArgs : CfxEventArgs {
 
 
@@ -383,6 +488,18 @@ namespace Chromium {
             internal CfxReadHandlerEofEventArgs() {
             }
 
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(int returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -393,6 +510,15 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Return true (1) if this handler performs work like accessing the file
+        /// system which may block. Used as a hint for determining the thread to access
+        /// the handler from.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public delegate void CfxMayBlockEventHandler(object sender, CfxMayBlockEventArgs e);
 
         /// <summary>
@@ -400,6 +526,10 @@ namespace Chromium {
         /// system which may block. Used as a hint for determining the thread to access
         /// the handler from.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+        /// </remarks>
         public class CfxMayBlockEventArgs : CfxEventArgs {
 
 
@@ -409,6 +539,18 @@ namespace Chromium {
             internal CfxMayBlockEventArgs() {
             }
 
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {

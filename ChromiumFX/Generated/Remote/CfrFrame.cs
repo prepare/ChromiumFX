@@ -41,6 +41,10 @@ namespace Chromium.Remote {
     /// unless otherwise indicated in the comments. When used in the render process
     /// the functions of this structure may only be called on the main thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+    /// </remarks>
     public class CfrFrame : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -64,6 +68,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// True if this object is currently attached to a valid frame.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 var call = new CfxFrameIsValidRenderProcessCall();
@@ -76,6 +84,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if this is the main (top-level) frame.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public bool IsMain {
             get {
                 var call = new CfxFrameIsMainRenderProcessCall();
@@ -88,6 +100,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if this is the focused frame.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public bool IsFocused {
             get {
                 var call = new CfxFrameIsFocusedRenderProcessCall();
@@ -104,6 +120,10 @@ namespace Chromium.Remote {
         /// parent hierarchy. The main (top-level) frame will always have an NULL name
         /// value.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public String Name {
             get {
                 var call = new CfxFrameGetNameRenderProcessCall();
@@ -116,6 +136,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the globally unique identifier for this frame.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public long Identifier {
             get {
                 var call = new CfxFrameGetIdentifierRenderProcessCall();
@@ -129,6 +153,10 @@ namespace Chromium.Remote {
         /// Returns the parent of this frame or NULL if this is the main (top-level)
         /// frame.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public CfrFrame Parent {
             get {
                 var call = new CfxFrameGetParentRenderProcessCall();
@@ -141,6 +169,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the URL currently loaded in this frame.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public String Url {
             get {
                 var call = new CfxFrameGetUrlRenderProcessCall();
@@ -153,6 +185,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the browser that this frame belongs to.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public CfrBrowser Browser {
             get {
                 var call = new CfxFrameGetBrowserRenderProcessCall();
@@ -166,6 +202,10 @@ namespace Chromium.Remote {
         /// Get the V8 context associated with the frame. This function can only be
         /// called from the render process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public CfrV8Context V8Context {
             get {
                 var call = new CfxFrameGetV8ContextRenderProcessCall();
@@ -178,6 +218,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Execute undo in this frame.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public void Undo() {
             var call = new CfxFrameUndoRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -187,6 +231,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Execute redo in this frame.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public void Redo() {
             var call = new CfxFrameRedoRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -196,6 +244,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Execute cut in this frame.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public void Cut() {
             var call = new CfxFrameCutRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -205,6 +257,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Execute copy in this frame.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public void Copy() {
             var call = new CfxFrameCopyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -214,6 +270,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Execute paste in this frame.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public void Paste() {
             var call = new CfxFramePasteRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -223,6 +283,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Execute delete in this frame.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public void Del() {
             var call = new CfxFrameDelRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -232,6 +296,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Execute select all in this frame.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public void SelectAll() {
             var call = new CfxFrameSelectAllRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -242,6 +310,10 @@ namespace Chromium.Remote {
         /// Retrieve this frame's HTML source as a string sent to the specified
         /// visitor.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public void GetSource(CfrStringVisitor visitor) {
             var call = new CfxFrameGetSourceRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -253,6 +325,10 @@ namespace Chromium.Remote {
         /// Retrieve this frame's display text as a string sent to the specified
         /// visitor.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public void GetText(CfrStringVisitor visitor) {
             var call = new CfxFrameGetTextRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -263,6 +339,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Load the request represented by the |request| object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public void LoadRequest(CfrRequest request) {
             var call = new CfxFrameLoadRequestRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -273,6 +353,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Load the specified |url|.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public void LoadUrl(string url) {
             var call = new CfxFrameLoadUrlRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -285,6 +369,10 @@ namespace Chromium.Remote {
         /// should have a standard scheme (for example, http scheme) or behaviors like
         /// link clicks and web security restrictions may not behave as expected.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public void LoadString(string stringVal, string url) {
             var call = new CfxFrameLoadStringRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -300,6 +388,10 @@ namespace Chromium.Remote {
         /// error.  The |startLine| parameter is the base line number to use for error
         /// reporting.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public void ExecuteJavaScript(string code, string scriptUrl, int startLine) {
             var call = new CfxFrameExecuteJavaScriptRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -313,6 +405,10 @@ namespace Chromium.Remote {
         /// Visit the DOM document. This function can only be called from the render
         /// process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
+        /// </remarks>
         public void VisitDom(CfrDomVisitor visitor) {
             var call = new CfxFrameVisitDomRenderProcessCall();
             call.self = CfrObject.Unwrap(this);

@@ -37,6 +37,10 @@ namespace Chromium {
     /// <summary>
     /// Time information. Values should always be in UTC.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_time.h">cef/include/internal/cef_time.h</see>.
+    /// </remarks>
     public sealed partial class CfxTime : CfxStructure {
 
         internal static CfxTime Wrap(IntPtr nativePtr) {
@@ -133,6 +137,10 @@ namespace Chromium {
         /// <summary>
         /// seconds which may take it up to 60).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_time.h">cef/include/internal/cef_time.h</see>.
+        /// </remarks>
         public int Millisecond {
             get {
                 int value;

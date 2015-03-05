@@ -38,6 +38,10 @@ namespace Chromium {
     /// Structure to implement for receiving unstable plugin information. The
     /// functions of this structure will be called on the browser process IO thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+    /// </remarks>
     public class CfxWebPluginUnstableCallback : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -64,6 +68,10 @@ namespace Chromium {
         /// true (1) if the plugin has reached the crash count threshold of 3 times in
         /// 120 seconds.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// </remarks>
         public void IsUnstable(string path, bool unstable) {
             var path_pinned = new PinnedString(path);
             CfxApi.cfx_web_plugin_unstable_callback_is_unstable(NativePtr, path_pinned.Obj.PinnedPtr, path_pinned.Length, unstable ? 1 : 0);

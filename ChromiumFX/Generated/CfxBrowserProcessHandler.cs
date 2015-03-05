@@ -41,6 +41,10 @@ namespace Chromium {
     /// structure will be called on the browser process main thread unless otherwise
     /// indicated.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_process_handler_capi.h">cef/include/capi/cef_browser_process_handler_capi.h</see>.
+    /// </remarks>
     public class CfxBrowserProcessHandler : CfxBase {
 
         internal static CfxBrowserProcessHandler Wrap(IntPtr nativePtr) {
@@ -113,6 +117,10 @@ namespace Chromium {
         /// Called on the browser process UI thread immediately after the CEF context
         /// has been initialized.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_process_handler_capi.h">cef/include/capi/cef_browser_process_handler_capi.h</see>.
+        /// </remarks>
         public event CfxEventHandler OnContextInitialized {
             add {
                 if(m_OnContextInitialized == null) {
@@ -137,6 +145,10 @@ namespace Chromium {
         /// opportunity to modify the child process command line. Do not keep a
         /// reference to |CommandLine| outside of this function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_process_handler_capi.h">cef/include/capi/cef_browser_process_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnBeforeChildProcessLaunchEventHandler OnBeforeChildProcessLaunch {
             add {
                 if(m_OnBeforeChildProcessLaunch == null) {
@@ -161,6 +173,10 @@ namespace Chromium {
         /// CfxRenderProcessHandler.OnRenderThreadCreated() in the render
         /// process. Do not keep a reference to |ExtraInfo| outside of this function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_process_handler_capi.h">cef/include/capi/cef_browser_process_handler_capi.h</see>.
+        /// </remarks>
         public event CfxOnRenderProcessThreadCreatedEventHandler OnRenderProcessThreadCreated {
             add {
                 if(m_OnRenderProcessThreadCreated == null) {
@@ -182,6 +198,10 @@ namespace Chromium {
         /// Return the handler for printing on Linux. If a print handler is not
         /// provided then printing will not be supported on the Linux platform.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_process_handler_capi.h">cef/include/capi/cef_browser_process_handler_capi.h</see>.
+        /// </remarks>
         public event CfxGetPrintHandlerEventHandler GetPrintHandler {
             add {
                 if(m_GetPrintHandler == null) {
@@ -224,6 +244,17 @@ namespace Chromium {
     namespace Event {
 
 
+        /// <summary>
+        /// Called before a child process is launched. Will be called on the browser
+        /// process UI thread when launching a render process and on the browser
+        /// process IO thread when launching a GPU or plugin process. Provides an
+        /// opportunity to modify the child process command line. Do not keep a
+        /// reference to |CommandLine| outside of this function.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_process_handler_capi.h">cef/include/capi/cef_browser_process_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnBeforeChildProcessLaunchEventHandler(object sender, CfxOnBeforeChildProcessLaunchEventArgs e);
 
         /// <summary>
@@ -233,6 +264,10 @@ namespace Chromium {
         /// opportunity to modify the child process command line. Do not keep a
         /// reference to |CommandLine| outside of this function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_process_handler_capi.h">cef/include/capi/cef_browser_process_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnBeforeChildProcessLaunchEventArgs : CfxEventArgs {
 
             internal IntPtr m_command_line;
@@ -255,6 +290,17 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Called on the browser process IO thread after the main thread has been
+        /// created for a new render process. Provides an opportunity to specify extra
+        /// information that will be passed to
+        /// CfxRenderProcessHandler.OnRenderThreadCreated() in the render
+        /// process. Do not keep a reference to |ExtraInfo| outside of this function.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_process_handler_capi.h">cef/include/capi/cef_browser_process_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxOnRenderProcessThreadCreatedEventHandler(object sender, CfxOnRenderProcessThreadCreatedEventArgs e);
 
         /// <summary>
@@ -264,6 +310,10 @@ namespace Chromium {
         /// CfxRenderProcessHandler.OnRenderThreadCreated() in the render
         /// process. Do not keep a reference to |ExtraInfo| outside of this function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_process_handler_capi.h">cef/include/capi/cef_browser_process_handler_capi.h</see>.
+        /// </remarks>
         public class CfxOnRenderProcessThreadCreatedEventArgs : CfxEventArgs {
 
             internal IntPtr m_extra_info;
@@ -286,12 +336,24 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Return the handler for printing on Linux. If a print handler is not
+        /// provided then printing will not be supported on the Linux platform.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_process_handler_capi.h">cef/include/capi/cef_browser_process_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxGetPrintHandlerEventHandler(object sender, CfxGetPrintHandlerEventArgs e);
 
         /// <summary>
         /// Return the handler for printing on Linux. If a print handler is not
         /// provided then printing will not be supported on the Linux platform.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_process_handler_capi.h">cef/include/capi/cef_browser_process_handler_capi.h</see>.
+        /// </remarks>
         public class CfxGetPrintHandlerEventArgs : CfxEventArgs {
 
 
@@ -301,6 +363,18 @@ namespace Chromium {
             internal CfxGetPrintHandlerEventArgs() {
             }
 
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_process_handler_capi.h">cef/include/capi/cef_browser_process_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(CfxPrintHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {

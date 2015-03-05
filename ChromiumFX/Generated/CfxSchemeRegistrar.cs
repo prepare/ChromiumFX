@@ -37,6 +37,10 @@ namespace Chromium {
     /// <summary>
     /// Structure that manages custom scheme registrations.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
+    /// </remarks>
     public class CfxSchemeRegistrar : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -98,6 +102,10 @@ namespace Chromium {
         /// per unique |schemeName| value. If |schemeName| is already registered or
         /// if an error occurs this function will return false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
+        /// </remarks>
         public bool AddCustomScheme(string schemeName, bool isStandard, bool isLocal, bool isDisplayIsolated) {
             var schemeName_pinned = new PinnedString(schemeName);
             var __retval = CfxApi.cfx_scheme_registrar_add_custom_scheme(NativePtr, schemeName_pinned.Obj.PinnedPtr, schemeName_pinned.Length, isStandard ? 1 : 0, isLocal ? 1 : 0, isDisplayIsolated ? 1 : 0);

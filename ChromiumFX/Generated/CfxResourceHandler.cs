@@ -40,6 +40,10 @@ namespace Chromium {
     /// Structure used to implement a custom request handler structure. The functions
     /// of this structure will always be called on the IO thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+    /// </remarks>
     public class CfxResourceHandler : CfxBase {
 
         internal static CfxResourceHandler Wrap(IntPtr nativePtr) {
@@ -146,6 +150,10 @@ namespace Chromium {
         /// function if header information is available immediately). To cancel the
         /// request return false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public event CfxProcessRequestEventHandler ProcessRequest {
             add {
                 if(m_ProcessRequest == null) {
@@ -173,6 +181,10 @@ namespace Chromium {
         /// values. To redirect the request to a new URL set |RedirectUrl| to the new
         /// URL.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public event CfxGetResponseHeadersEventHandler GetResponseHeaders {
             add {
                 if(m_GetResponseHeaders == null) {
@@ -197,6 +209,10 @@ namespace Chromium {
         /// |BytesRead| to 0, return true (1) and call CfxCallback.Continue() when the
         /// data is available. To indicate response completion return false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public event CfxReadResponseEventHandler ReadResponse {
             add {
                 if(m_ReadResponse == null) {
@@ -219,6 +235,10 @@ namespace Chromium {
         /// false (0) otherwise. If false (0) is returned for any cookie then no
         /// cookies will be sent with the request.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public event CfxCanGetCookieEventHandler CanGetCookie {
             add {
                 if(m_CanGetCookie == null) {
@@ -240,6 +260,10 @@ namespace Chromium {
         /// Return true (1) if the specified cookie returned with the response can be
         /// set or false (0) otherwise.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public event CfxCanSetCookieEventHandler CanSetCookie {
             add {
                 if(m_CanSetCookie == null) {
@@ -260,6 +284,10 @@ namespace Chromium {
         /// <summary>
         /// Request processing has been canceled.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public event CfxEventHandler Cancel {
             add {
                 if(m_Cancel == null) {
@@ -309,6 +337,17 @@ namespace Chromium {
 
     namespace Event {
 
+        /// <summary>
+        /// Begin processing the request. To handle the request return true (1) and
+        /// call CfxCallback.Continue() once the response header information is
+        /// available (CfxCallback.Continue() can also be called from inside this
+        /// function if header information is available immediately). To cancel the
+        /// request return false (0).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxProcessRequestEventHandler(object sender, CfxProcessRequestEventArgs e);
 
         /// <summary>
@@ -318,6 +357,10 @@ namespace Chromium {
         /// function if header information is available immediately). To cancel the
         /// request return false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public class CfxProcessRequestEventArgs : CfxEventArgs {
 
             internal IntPtr m_request;
@@ -347,6 +390,18 @@ namespace Chromium {
                     return m_callback_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -361,6 +416,20 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Retrieve response header information. If the response length is not known
+        /// set |ResponseLength| to -1 and read_response() will be called until it
+        /// returns false (0). If the response length is known set |ResponseLength| to
+        /// a positive value and read_response() will be called until it returns false
+        /// (0) or the specified number of bytes have been read. Use the |Response|
+        /// object to set the mime type, http status code and other optional header
+        /// values. To redirect the request to a new URL set |RedirectUrl| to the new
+        /// URL.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxGetResponseHeadersEventHandler(object sender, CfxGetResponseHeadersEventArgs e);
 
         /// <summary>
@@ -373,6 +442,10 @@ namespace Chromium {
         /// values. To redirect the request to a new URL set |RedirectUrl| to the new
         /// URL.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public class CfxGetResponseHeadersEventArgs : CfxEventArgs {
 
             internal IntPtr m_response;
@@ -422,6 +495,17 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Read response data. If data is available immediately copy up to
+        /// |BytesToRead| bytes into |DataOut|, set |BytesRead| to the number of
+        /// bytes copied, and return true (1). To read the data at a later time set
+        /// |BytesRead| to 0, return true (1) and call CfxCallback.Continue() when the
+        /// data is available. To indicate response completion return false (0).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxReadResponseEventHandler(object sender, CfxReadResponseEventArgs e);
 
         /// <summary>
@@ -431,6 +515,10 @@ namespace Chromium {
         /// |BytesRead| to 0, return true (1) and call CfxCallback.Continue() when the
         /// data is available. To indicate response completion return false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public class CfxReadResponseEventArgs : CfxEventArgs {
 
             internal IntPtr m_data_out;
@@ -473,6 +561,18 @@ namespace Chromium {
                     return m_callback_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -487,6 +587,15 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Return true (1) if the specified cookie can be sent with the request or
+        /// false (0) otherwise. If false (0) is returned for any cookie then no
+        /// cookies will be sent with the request.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxCanGetCookieEventHandler(object sender, CfxCanGetCookieEventArgs e);
 
         /// <summary>
@@ -494,6 +603,10 @@ namespace Chromium {
         /// false (0) otherwise. If false (0) is returned for any cookie then no
         /// cookies will be sent with the request.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public class CfxCanGetCookieEventArgs : CfxEventArgs {
 
             internal IntPtr m_cookie;
@@ -513,6 +626,18 @@ namespace Chromium {
                     return m_cookie_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -527,12 +652,24 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Return true (1) if the specified cookie returned with the response can be
+        /// set or false (0) otherwise.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public delegate void CfxCanSetCookieEventHandler(object sender, CfxCanSetCookieEventArgs e);
 
         /// <summary>
         /// Return true (1) if the specified cookie returned with the response can be
         /// set or false (0) otherwise.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public class CfxCanSetCookieEventArgs : CfxEventArgs {
 
             internal IntPtr m_cookie;
@@ -552,6 +689,18 @@ namespace Chromium {
                     return m_cookie_wrapped;
                 }
             }
+            /// <summary>
+            /// The underlying CEF framework callback for this event has a return value.
+            /// Since .NET style events do not support return values, SetReturnValue()
+            /// is used to set the return value for the callback. Although an application
+            /// may attach various event handlers to a framework callback event,
+            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {

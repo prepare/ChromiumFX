@@ -37,6 +37,10 @@ namespace Chromium {
     /// <summary>
     /// Callback structure for asynchronous continuation of file dialog requests.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dialog_handler_capi.h">cef/include/capi/cef_dialog_handler_capi.h</see>.
+    /// </remarks>
     public class CfxFileDialogCallback : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -63,6 +67,10 @@ namespace Chromium {
         /// single value or a list of values depending on the dialog mode. An NULL
         /// value is treated the same as calling cancel().
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dialog_handler_capi.h">cef/include/capi/cef_dialog_handler_capi.h</see>.
+        /// </remarks>
         public void Continue(System.Collections.Generic.List<string> filePaths) {
             PinnedString[] filePaths_handles;
             var filePaths_unwrapped = CfxStringCollections.UnwrapCfxStringList(filePaths, out filePaths_handles);
@@ -75,6 +83,10 @@ namespace Chromium {
         /// <summary>
         /// Cancel the file selection.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dialog_handler_capi.h">cef/include/capi/cef_dialog_handler_capi.h</see>.
+        /// </remarks>
         public void Cancel() {
             CfxApi.cfx_file_dialog_callback_cancel(NativePtr);
         }

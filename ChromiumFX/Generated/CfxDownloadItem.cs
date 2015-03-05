@@ -37,6 +37,10 @@ namespace Chromium {
     /// <summary>
     /// Structure used to represent a download item.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
+    /// </remarks>
     public class CfxDownloadItem : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -62,6 +66,10 @@ namespace Chromium {
         /// Returns true (1) if this object is valid. Do not call any other functions
         /// if this function returns false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 return 0 != CfxApi.cfx_download_item_is_valid(NativePtr);
@@ -71,6 +79,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if the download is in progress.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
+        /// </remarks>
         public bool IsInProgress {
             get {
                 return 0 != CfxApi.cfx_download_item_is_in_progress(NativePtr);
@@ -80,6 +92,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if the download is complete.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
+        /// </remarks>
         public bool IsComplete {
             get {
                 return 0 != CfxApi.cfx_download_item_is_complete(NativePtr);
@@ -89,6 +105,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if the download has been canceled or interrupted.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
+        /// </remarks>
         public bool IsCanceled {
             get {
                 return 0 != CfxApi.cfx_download_item_is_canceled(NativePtr);
@@ -98,6 +118,10 @@ namespace Chromium {
         /// <summary>
         /// Returns a simple speed estimate in bytes/s.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
+        /// </remarks>
         public long CurrentSpeed {
             get {
                 return CfxApi.cfx_download_item_get_current_speed(NativePtr);
@@ -108,6 +132,10 @@ namespace Chromium {
         /// Returns the rough percent complete or -1 if the receive total size is
         /// unknown.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
+        /// </remarks>
         public int PercentComplete {
             get {
                 return CfxApi.cfx_download_item_get_percent_complete(NativePtr);
@@ -117,6 +145,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the total number of bytes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
+        /// </remarks>
         public long TotalBytes {
             get {
                 return CfxApi.cfx_download_item_get_total_bytes(NativePtr);
@@ -126,6 +158,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the number of received bytes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
+        /// </remarks>
         public long ReceivedBytes {
             get {
                 return CfxApi.cfx_download_item_get_received_bytes(NativePtr);
@@ -135,6 +171,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the time that the download started.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
+        /// </remarks>
         public CfxTime StartTime {
             get {
                 return CfxTime.WrapOwned(CfxApi.cfx_download_item_get_start_time(NativePtr));
@@ -144,6 +184,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the time that the download ended.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
+        /// </remarks>
         public CfxTime EndTime {
             get {
                 return CfxTime.WrapOwned(CfxApi.cfx_download_item_get_end_time(NativePtr));
@@ -153,6 +197,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the full path to the downloaded or downloading file.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
+        /// </remarks>
         public String FullPath {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_download_item_get_full_path(NativePtr));
@@ -162,6 +210,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the unique identifier for this download.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
+        /// </remarks>
         public uint Id {
             get {
                 return CfxApi.cfx_download_item_get_id(NativePtr);
@@ -171,6 +223,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the URL.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
+        /// </remarks>
         public String Url {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_download_item_get_url(NativePtr));
@@ -180,6 +236,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the suggested file name.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
+        /// </remarks>
         public String SuggestedFileName {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_download_item_get_suggested_file_name(NativePtr));
@@ -189,6 +249,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the content disposition.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
+        /// </remarks>
         public String ContentDisposition {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_download_item_get_content_disposition(NativePtr));
@@ -198,6 +262,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the mime type.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
+        /// </remarks>
         public String MimeType {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_download_item_get_mime_type(NativePtr));

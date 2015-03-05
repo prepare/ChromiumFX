@@ -39,6 +39,10 @@ namespace Chromium.Remote {
     /// Structure used to represent a web request. The functions of this structure
     /// may be called on any thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+    /// </remarks>
     public class CfrRequest : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -59,6 +63,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Create a new CfrRequest object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public static CfrRequest Create(CfrRuntime remoteRuntime) {
             var call = new CfxRequestCreateRenderProcessCall();
             call.Execute(remoteRuntime.connection);
@@ -71,6 +79,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if this object is read-only.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public bool IsReadOnly {
             get {
                 var call = new CfxRequestIsReadOnlyRenderProcessCall();
@@ -85,6 +97,10 @@ namespace Chromium.Remote {
         /// 
         /// Set the fully qualified URL.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public String Url {
             get {
                 var call = new CfxRequestGetUrlRenderProcessCall();
@@ -106,6 +122,10 @@ namespace Chromium.Remote {
         /// 
         /// Set the request function type.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public String Method {
             get {
                 var call = new CfxRequestGetMethodRenderProcessCall();
@@ -126,6 +146,10 @@ namespace Chromium.Remote {
         /// 
         /// Set the post data.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public CfrPostData PostData {
             get {
                 var call = new CfxRequestGetPostDataRenderProcessCall();
@@ -148,6 +172,10 @@ namespace Chromium.Remote {
         /// Set the flags used in combination with CfrUrlRequest.  See
         /// CfrUrlRequestFlags for supported values.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public int Flags {
             get {
                 var call = new CfxRequestGetFlagsRenderProcessCall();
@@ -170,6 +198,10 @@ namespace Chromium.Remote {
         /// Get the URL to the first party for cookies used in combination with
         /// CfrUrlRequest.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public String FirstPartyForCookies {
             get {
                 var call = new CfxRequestGetFirstPartyForCookiesRenderProcessCall();
@@ -189,6 +221,10 @@ namespace Chromium.Remote {
         /// Get the resource type for this request. Only available in the browser
         /// process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public CfxResourceType ResourceType {
             get {
                 var call = new CfxRequestGetResourceTypeRenderProcessCall();
@@ -203,6 +239,10 @@ namespace Chromium.Remote {
         /// process and only applies to requests that represent a main frame or sub-
         /// frame navigation.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public CfxTransitionType TransitionType {
             get {
                 var call = new CfxRequestGetTransitionTypeRenderProcessCall();
@@ -215,6 +255,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Get the header values.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public void GetHeaderMap(System.Collections.Generic.List<string[]> headerMap) {
             var call = new CfxRequestGetHeaderMapRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -225,6 +269,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Set the header values.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public void SetHeaderMap(System.Collections.Generic.List<string[]> headerMap) {
             var call = new CfxRequestSetHeaderMapRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -235,6 +283,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Set all values at one time.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public void Set(string url, string method, CfrPostData postData, System.Collections.Generic.List<string[]> headerMap) {
             var call = new CfxRequestSetRenderProcessCall();
             call.self = CfrObject.Unwrap(this);

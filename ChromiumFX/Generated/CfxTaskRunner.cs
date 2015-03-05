@@ -42,6 +42,10 @@ namespace Chromium {
     /// cef_types.h list the common CEF threads. Task runners are also available for
     /// other CEF threads as appropriate (for example, V8 WebWorker threads).
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+    /// </remarks>
     public class CfxTaskRunner : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -68,6 +72,10 @@ namespace Chromium {
         /// task runners. An NULL reference will be returned if this function is called
         /// on an invalid thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public static CfxTaskRunner GetForCurrentThread() {
             return CfxTaskRunner.Wrap(CfxApi.cfx_task_runner_get_for_current_thread());
         }
@@ -75,6 +83,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the task runner for the specified CEF thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public static CfxTaskRunner GetForThread(CfxThreadId threadId) {
             return CfxTaskRunner.Wrap(CfxApi.cfx_task_runner_get_for_thread(threadId));
         }
@@ -83,6 +95,10 @@ namespace Chromium {
         /// Returns true (1) if this object is pointing to the same task runner as
         /// |that| object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public bool IsSame(CfxTaskRunner that) {
             return 0 != CfxApi.cfx_task_runner_is_same(NativePtr, CfxTaskRunner.Unwrap(that));
         }
@@ -90,6 +106,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if this task runner belongs to the current thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public bool BelongsToCurrentThread() {
             return 0 != CfxApi.cfx_task_runner_belongs_to_current_thread(NativePtr);
         }
@@ -97,6 +117,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if this task runner is for the specified CEF thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public bool BelongsToThread(CfxThreadId threadId) {
             return 0 != CfxApi.cfx_task_runner_belongs_to_thread(NativePtr, threadId);
         }
@@ -105,6 +129,10 @@ namespace Chromium {
         /// Post a task for execution on the thread associated with this task runner.
         /// Execution will occur asynchronously.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public int PostTask(CfxTask task) {
             return CfxApi.cfx_task_runner_post_task(NativePtr, CfxTask.Unwrap(task));
         }
@@ -115,6 +143,10 @@ namespace Chromium {
         /// supported on V8 WebWorker threads and will be executed without the
         /// specified delay.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public int PostDelayedTask(CfxTask task, long delayMs) {
             return CfxApi.cfx_task_runner_post_delayed_task(NativePtr, CfxTask.Unwrap(task), delayMs);
         }
