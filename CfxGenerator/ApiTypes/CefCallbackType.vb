@@ -36,13 +36,13 @@ Public Class CefCallbackType
 
     Public ReadOnly Signature As Signature
     Public ReadOnly Parent As CefStructType
-    Public ReadOnly Comments As String()
+    Public ReadOnly Comments As CommentData
 
     Public PropertyName As String
 
     Private m_callMode As CfxCallMode
 
-    Public Sub New(parent As CefStructType, structCategory As StructCategory, name As String, sd As Parser.SignatureData, api As ApiTypeBuilder, comments As String())
+    Public Sub New(parent As CefStructType, structCategory As StructCategory, name As String, sd As Parser.SignatureData, api As ApiTypeBuilder, comments As CommentData)
         MyBase.New(name)
         Me.Parent = parent
         Me.Comments = comments
@@ -218,18 +218,18 @@ Public Class CefCallbackType
         b.EndBlock()
     End Sub
 
-    Private Shared emittedHandlers As New Dictionary(Of String, String())
+    Private Shared emittedHandlers As New Dictionary(Of String, CommentData)
 
-    Public Sub EmitPublicEventArgsAndHandler(b As CodeBuilder, comments As String())
+    Public Sub EmitPublicEventArgsAndHandler(b As CodeBuilder, comments As CommentData)
 
         If emittedHandlers.ContainsKey(EventName) Then
             Dim c0 = emittedHandlers(EventName)
             If c0 IsNot Nothing Then
-                If c0.Length <> comments.Length Then
+                If c0.Lines.Length <> comments.Lines.Length Then
                     Stop
                 End If
-                For i = 0 To c0.Length - 1
-                    If c0(i) <> comments(i) Then
+                For i = 0 To c0.Lines.Length - 1
+                    If c0.Lines(i) <> comments.Lines(i) Then
                         ' two handlers use same event but with different comments
                         Stop
                     End If
@@ -339,7 +339,7 @@ Public Class CefCallbackType
 
     'End Sub
 
-    Public Sub EmitRemoteEventArgsAndHandler(b As CodeBuilder, comments As String())
+    Public Sub EmitRemoteEventArgsAndHandler(b As CodeBuilder, comments As CommentData)
 
         If IsBasicEvent Then Return
 
@@ -404,7 +404,7 @@ Public Class CefCallbackType
 
     End Sub
 
-    Public Sub EmitPublicEvent(b As CodeBuilder, cbIndex As Integer, comments As String())
+    Public Sub EmitPublicEvent(b As CodeBuilder, cbIndex As Integer, comments As CommentData)
 
         Dim callbackName = Parent.CfxName & "_" & Name
         b.AppendSummary(comments, False, True)
@@ -430,7 +430,7 @@ Public Class CefCallbackType
     End Sub
 
 
-    Public Sub EmitRemoteEvent(b As CodeBuilder, comments As String())
+    Public Sub EmitRemoteEvent(b As CodeBuilder, comments As CommentData)
 
         b.AppendSummary(comments, True, True)
         b.BeginBlock("public event {0} {1}", RemoteEventHandlerName, CSharp.Escape(PublicName))
@@ -457,7 +457,7 @@ Public Class CefCallbackType
 
     End Sub
 
-    Public Sub EmitRemoteRaiseEventFunction(b As CodeBuilder, comments As String())
+    Public Sub EmitRemoteRaiseEventFunction(b As CodeBuilder, comments As CommentData)
         'b.AppendLine("internal {0} m_{1};", ProxyEventHandlerName, PublicName)
         b.BeginBlock("internal void raise_{0}(object sender, {1} e)", PublicName, RemoteEventArgsClassName)
         b.AppendLine("var handler = m_{0};", PublicName)
@@ -548,7 +548,7 @@ Public Class CefCallbackType
         End Get
     End Property
 
-    Public ReadOnly Property Comments1 As String() Implements ISignatureParent.Comments
+    Public ReadOnly Property Comments1 As CommentData Implements ISignatureParent.Comments
         Get
             Return Comments
         End Get
