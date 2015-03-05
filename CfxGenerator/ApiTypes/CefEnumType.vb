@@ -36,9 +36,12 @@ Public Class CefEnumType
     Public Class EnumMember
         Public ReadOnly Name As String
         Public ReadOnly Value As String
-        Sub New(ByVal name As String, ByVal value As String)
+        Public ReadOnly Comments As CommentData
+
+        Sub New(ByVal name As String, ByVal value As String, Comments As CommentData)
             Me.Name = name
             If value.Length > 0 Then Me.Value = value
+            Me.Comments = Comments
         End Sub
         Public Overrides Function ToString() As String
             If Value IsNot Nothing Then
@@ -50,13 +53,15 @@ Public Class CefEnumType
     End Class
 
     Private ReadOnly members As EnumMember()
+    Private ReadOnly comments As CommentData
 
     Sub New(data As Parser.EnumData)
         MyBase.New(data.Name)
         members = New EnumMember(data.Members.Count - 1) {}
         For i = 0 To data.Members.Count - 1
-            members(i) = New EnumMember(data.Members(i).Name, data.Members(i).Value)
+            members(i) = New EnumMember(data.Members(i).Name, data.Members(i).Value, data.Members(i).Comments)
         Next
+        comments = data.Comments
     End Sub
 
     Public Overrides ReadOnly Property OriginalSymbol As String
@@ -120,6 +125,8 @@ Public Class CefEnumType
 
         Dim enumName = CSharp.ApplyStyle(CfxName)
 
+        b.AppendSummaryAndRemarks(comments)
+
         If Name.Contains("_flags") OrElse additionalFlags.Contains(enumName) Then
             b.AppendLine("[Flags()]")
         End If
@@ -142,7 +149,7 @@ Public Class CefEnumType
         b.BeginBlock("public enum {0}", enumName)
         For Each m In members
             Dim var = CSharp.ApplyStyle(m.Name.Substring(varPrefix.Length))
-            If var = "Dontdelete" Then Stop
+            b.AppendSummary(m.Comments)
             b.Append(var)
             If m.Value IsNot Nothing Then
                 b.Append(" = unchecked((int){0})", m.Value)
