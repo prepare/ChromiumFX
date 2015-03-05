@@ -35,7 +35,7 @@ Public Class CefStructType
 
     Private m_classBuilder As CfxClassBuilder
 
-    Public Sub New(name As String, comments As String())
+    Public Sub New(name As String, comments As CommentData)
         MyBase.New(name)
     End Sub
 

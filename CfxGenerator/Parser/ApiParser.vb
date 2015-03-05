@@ -39,6 +39,8 @@ Namespace Parser
 
         Private api As CefApiData
 
+        Private codeFiles As New Dictionary(Of String, String)
+
         Public Function Parse() As CefApiData
 
             api = New CefApiData
@@ -62,8 +64,6 @@ Namespace Parser
             sb.Clear()
             AddFile("cef\include\internal\cef_time.h", sb)
             Dim structOnlyCode = sb.ToString()
-
-            Dim commentCode = code & structOnlyCode
 
             code = commentRegex.Replace(code, "$1")
             structOnlyCode = commentRegex.Replace(structOnlyCode, "$1")
@@ -109,12 +109,12 @@ Namespace Parser
             api.CefStringMapFunctions = ParseFunctions(stringMapCode)
             api.CefStringMultimapFunctions = ParseFunctions(stringMultiMapCode)
 
-            Dim comments = ParseFunctionComments(stringListCode & stringMapCode & stringMultiMapCode)
-            AssignFunctionComments(comments, api.CefStringListFunctions)
-            AssignFunctionComments(comments, api.CefStringMapFunctions)
-            AssignFunctionComments(comments, api.CefStringMultimapFunctions)
+            'Dim comments = ParseFunctionComments(stringListCode & stringMapCode & stringMultiMapCode)
+            'AssignFunctionComments(comments, api.CefStringListFunctions)
+            'AssignFunctionComments(comments, api.CefStringMapFunctions)
+            'AssignFunctionComments(comments, api.CefStringMultimapFunctions)
 
-            ParseComments(commentCode)
+            ParseComments()
 
             Return api
 
@@ -123,6 +123,7 @@ Namespace Parser
         Sub AddFile(filename As String, sb As Text.StringBuilder)
             Dim fcode = File.ReadAllText(filename)
             sb.AppendLine(fcode)
+            codeFiles.Add(filename, fcode)
         End Sub
 
         Private Function ParseFunctions(code As String) As FunctionData()
@@ -268,21 +269,26 @@ Namespace Parser
 
         Private commentPattern As String = "((?:\s*^\s*//+.*?$)+)"
 
-        Private Function ParseFunctionComments(code As String) As Dictionary(Of String, String())
-            Dim comments = New Dictionary(Of String, String())
-            ParseComments(code, commentPattern & "\s*CEF_EXPORT\s+.*?\b(\w+)\s*\(", comments)
-            Return comments
-        End Function
+        Private Sub ParseFunctionComments(file As String, code As String, comments As Dictionary(Of String, CommentData))
+            ParseComments(file, code, commentPattern & "\s*CEF_EXPORT\s+.*?\b(\w+)\s*\(", comments)
+        End Sub
 
-        Private Sub AssignFunctionComments(comments As Dictionary(Of String, String()), functions As IEnumerable(Of FunctionData))
+        Private Sub AssignFunctionComments(comments As Dictionary(Of String, CommentData), functions As IEnumerable(Of FunctionData))
             For Each f In functions
                 f.Comments = comments(f.Name)
             Next
         End Sub
 
-        Private Sub ParseComments(code As String)
+        Private Sub ParseComments()
 
-            Dim comments = ParseFunctionComments(code)
+            Dim comments = New Dictionary(Of String, CommentData)
+
+            For Each cf In codeFiles
+                Dim file = cf.Key
+                Dim code = cf.Value
+                ParseFunctionComments(file, code, comments)
+            Next
+
             AssignFunctionComments(comments, api.CefFunctions)
             For Each s In api.CefStructs
                 AssignFunctionComments(comments, s.CefFunctions)
@@ -290,53 +296,68 @@ Namespace Parser
 
             comments.Clear()
 
-            ParseComments(code, commentPattern & "\s*typedef\s+struct\s+_(cef_\w+)\b", comments)
+            For Each cf In codeFiles
+                Dim file = cf.Key
+                Dim code = cf.Value
+                ParseComments(file, code, commentPattern & "\s*typedef\s+struct\s+_(cef_\w+)\b", comments)
+            Next
+
             For Each s In api.CefStructs
                 s.Comments = comments(s.Name)
             Next
 
             comments.Clear()
 
-            Dim structBodyEx = New Regex("typedef\s+struct\s+_(\w+)\s*{(.*?)}\s*\1\s*;", RegexOptions.Singleline)
-            Dim callbackCommentsEx = New Regex(commentPattern & "[^;]*CEF_CALLBACK\s*\*\s*(\w+)", RegexOptions.Multiline Or RegexOptions.Compiled)
-            Dim valueCommentsEx = New Regex(commentPattern & "[^;]*\b(\w+)\s*;", RegexOptions.Multiline Or RegexOptions.Compiled)
+            For Each cf In codeFiles
+                Dim file = cf.Key
+                Dim code = cf.Value
 
-            Dim mm = structBodyEx.Matches(code)
-            For Each m As Match In mm
-                Dim name = m.Groups(1).Value
-                Dim body = m.Groups(2).Value
-                Dim t = GetStruct(name)
 
-                ParseComments(body, callbackCommentsEx, comments)
-                For Each sm In t.StructMembers
-                    comments.TryGetValue(sm.Name, sm.Comments)
+                Dim structBodyEx = New Regex("typedef\s+struct\s+_(\w+)\s*{(.*?)}\s*\1\s*;", RegexOptions.Singleline)
+                Dim callbackCommentsEx = New Regex(commentPattern & "[^;]*CEF_CALLBACK\s*\*\s*(\w+)", RegexOptions.Multiline Or RegexOptions.Compiled)
+                Dim valueCommentsEx = New Regex(commentPattern & "[^;]*\b(\w+)\s*;", RegexOptions.Multiline Or RegexOptions.Compiled)
+
+
+                Dim mm = structBodyEx.Matches(code)
+                For Each m As Match In mm
+                    Dim name = m.Groups(1).Value
+                    Dim body = m.Groups(2).Value
+                    Dim t = GetStruct(name)
+
+                    ParseComments(file, body, callbackCommentsEx, comments)
+                    For Each sm In t.StructMembers
+                        comments.TryGetValue(sm.Name, sm.Comments)
+                    Next
+                    comments.Clear()
+
+                    ParseComments(file, body, valueCommentsEx, comments)
+                    For Each sm In t.StructMembers
+                        If sm.Comments Is Nothing Then comments.TryGetValue(sm.Name, sm.Comments)
+                    Next
+                    comments.Clear()
+
                 Next
-                comments.Clear()
-
-                ParseComments(body, valueCommentsEx, comments)
-                For Each sm In t.StructMembers
-                    If sm.Comments Is Nothing Then comments.TryGetValue(sm.Name, sm.Comments)
-                Next
-                comments.Clear()
 
             Next
 
         End Sub
 
-        Private Sub ParseComments(code As String, pattern As String, comments As Dictionary(Of String, String()))
-            ParseComments(code, New Regex(pattern, RegexOptions.Multiline), comments)
+        Private Sub ParseComments(file As String, code As String, pattern As String, comments As Dictionary(Of String, CommentData))
+            ParseComments(file, code, New Regex(pattern, RegexOptions.Multiline), comments)
         End Sub
 
-        Private Sub ParseComments(code As String, ex As Regex, comments As Dictionary(Of String, String()))
+        Private Sub ParseComments(file As String, code As String, ex As Regex, comments As Dictionary(Of String, CommentData))
             Dim mm = ex.Matches(code)
             For Each m As Match In mm
                 Dim commentLines = m.Groups(1).Value
                 Dim name = m.Groups(2).Value
-                comments.Add(name, GetCommentArray(commentLines))
+                Dim cdat = GetCommentArray(commentLines)
+                cdat.FileName = file
+                comments.Add(name, cdat)
             Next
         End Sub
 
-        Private Function GetCommentArray(comments As String) As String()
+        Private Function GetCommentArray(comments As String) As CommentData
             Static ex As New Regex("^\s*//+(.*?)$", RegexOptions.Multiline)
             Static l As New List(Of String)
             Dim mm = ex.Matches(comments)
@@ -350,7 +371,9 @@ Namespace Parser
                     End If
                 End If
             Next
-            Return l.ToArray()
+            Dim cc = New CommentData
+            cc.Lines = l.ToArray()
+            Return cc
         End Function
 
     End Class

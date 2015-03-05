@@ -36,7 +36,7 @@ Public Class StructMember
     Public ReadOnly MemberType As ApiType
     Public ReadOnly Name As String
 
-    Public ReadOnly Comments As String()
+    Public ReadOnly Comments As CommentData
 
 
     Public IsProperty As Boolean
@@ -98,7 +98,7 @@ Public Class CfxClassBuilder
 
     Public ReadOnly ExportFunctions As CefExportFunction()
     Public ReadOnly StructMembers As StructMember()
-    Private ReadOnly comments As String()
+    Private ReadOnly comments As CommentData
 
     Private ReadOnly StructCallbacks As StructMember()
 
@@ -579,11 +579,14 @@ Public Class CfxClassBuilder
 
         For Each p In m_structProperties
             If p.Setter IsNot Nothing AndAlso p.Setter.Comments IsNot Nothing Then
-                Dim summary As New List(Of String)
-                summary.AddRange(p.Getter.Comments)
-                summary.Add("")
-                summary.AddRange(p.Setter.Comments)
-                b.AppendSummary(summary.ToArray())
+                Dim summaryLines As New List(Of String)
+                summaryLines.AddRange(p.Getter.Comments.Lines)
+                summaryLines.Add("")
+                summaryLines.AddRange(p.Setter.Comments.Lines)
+                Dim summary = New CommentData
+                summary.Lines = summaryLines.ToArray()
+                summary.FileName = p.Getter.Comments.FileName
+                b.AppendSummary(summary)
             Else
                 b.AppendSummary(p.Getter.Comments)
             End If
@@ -1065,11 +1068,15 @@ Public Class CfxClassBuilder
                         Dim cb = p.Getter.MemberType.AsCefCallbackType
 
                         If p.Setter IsNot Nothing AndAlso p.Setter.Comments IsNot Nothing Then
-                            Dim summary As New List(Of String)
-                            summary.AddRange(p.Getter.Comments)
-                            summary.Add("")
-                            summary.AddRange(p.Setter.Comments)
-                            b.AppendSummary(summary.ToArray(), True)
+                            Dim summaryLines As New List(Of String)
+                            summaryLines.AddRange(p.Getter.Comments.Lines)
+                            summaryLines.Add("")
+                            summaryLines.AddRange(p.Setter.Comments.Lines)
+                            Dim summary = New CommentData
+                            summary.Lines = summaryLines.ToArray()
+                            summary.FileName = p.Getter.Comments.FileName
+                            'If RemoteClassName = "CfrRequest" AndAlso p.Getter.PublicName = "GetFlags" Then Stop
+                            b.AppendSummary(summary, True)
                         Else
                             b.AppendSummary(p.Getter.Comments, True)
                         End If

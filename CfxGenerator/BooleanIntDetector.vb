@@ -33,9 +33,9 @@
 Public Class BooleanIntDetector
 
 
-    Public Shared Function HasCommentHintForBooleanRetval(comments As String()) As Boolean
+    Public Shared Function HasCommentHintForBooleanRetval(comments As CommentData) As Boolean
         If comments Is Nothing Then Return False
-        For Each c In comments
+        For Each c In comments.Lines
             If c.Contains("eturns true") OrElse c.Contains("eturns false") OrElse c.Contains("eturn true") OrElse c.Contains("eturn false") Then
                 Return True
             End If
@@ -43,9 +43,9 @@ Public Class BooleanIntDetector
         Return False
     End Function
 
-    Public Shared Function HasCommentHintForBooleanValue(comments As String()) As Boolean
+    Public Shared Function HasCommentHintForBooleanValue(comments As CommentData) As Boolean
         If comments Is Nothing Then Return False
-        For Each c In comments
+        For Each c In comments.Lines
             If c.Contains("true") OrElse c.Contains("false") Then
                 Return True
             End If
@@ -54,9 +54,10 @@ Public Class BooleanIntDetector
     End Function
 
 
-    Public Shared Function GetBooleanArgumentsFromCommentHints(comments As String()) As String()
+    Public Shared Function GetBooleanArgumentsFromCommentHints(comments As CommentData) As String()
+        If comments Is Nothing Then Return {}
         Static regex As New System.Text.RegularExpressions.Regex("\|(\w+)\|\s+(?:to|is)\s+(?:true|false)")
-        Dim c1 = String.Join(" ", comments)
+        Dim c1 = String.Join(" ", comments.Lines)
         Dim mm = regex.Matches(c1)
         If mm.Count > 0 Then
             Dim result(mm.Count - 1) As String

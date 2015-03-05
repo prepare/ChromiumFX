@@ -36,7 +36,7 @@ Namespace Parser
         Public Name As String
         Public MemberType As TypeData
         Public CallbackSignature As SignatureData
-        Public Comments As String()
+        Public Comments As CommentData
         Public Overrides Function ToString() As String
             Return Name
         End Function
