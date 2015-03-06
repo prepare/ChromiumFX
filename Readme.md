@@ -3,37 +3,30 @@
 ### .NET bindings for the [Chromium Embedded Framework](https://code.google.com/p/chromiumembedded/). ###
 ----------
 
-### Home ###
+## Home ##
 [https://bitbucket.org/wborgsm/chromiumfx]()
 
-### Overview ###
+## Overview ##
 
-* **Managed wrapper for the CEF API**
+### ChromiumFX.dll ###
 
-ChromiumFX provides a complete managed wrapper for CEF, based on it's C API. The bindings are realized through three layers designed for good performance: the **native layer** deals with subclassing and refcounting, providing a clean interface between CEF and ChromiumFX with opaque structs. The **pinvoke layer** is built on top of the native layer, takes care of optimized marshaling and deals exclusively with blittable types provided by the native layer. The **public layer** wraps it all up in .NET style classes prefixed with "Cfx": CfxApp, CfxBrowser, CfxBrowserHost, etc.
+* **[Managed wrapper](http://chromiumfx.bitbucket.org/api/html/N_Chromium.htm) for the complete CEF API**
+* **[Remote wrapper](http://chromiumfx.bitbucket.org/api/html/N_Chromium_Remote.htm) for full access to DOM and V8 from within the browser process**
 
-* **A transparent bridge between the browser process and the render process**
+### ChromiumWebBrowser.dll ###
 
-Due to the multi-process architecture of Chromium, CEF applications which deal with advanced features like DOM and V8 access have to split their logic between the browser process and the render process. ChromiumFX implements a fourth layer, the **remote layer**, providing a complete API of .NET style classes for **transparently accessing** the render process **from within the browser process**: CfrApp, CfrBrowser, CfrFrame, etc. Application logic can deal with CfrDomDocument, CfrV8Context, CfrV8Handler and so on directly in the browser process, ChromiumFX will marshal application calls and framework callbacks to and from the render process using IPC. **All Application logic can be kept in the browser process.** To get started with remoting, check this [walkthrough](https://bitbucket.org/wborgsm/chromiumfx/wiki/Walkthrough_02) in the wiki. 
+* **[Windows Forms control](http://chromiumfx.bitbucket.org/api/html/N_Chromium_WebBrowser.htm) based on ChromiumFX**
 
-* **WebBrowser control**
+### See Also ###
 
-Built upon ChromiumFX, **ChromiumWebBrowser** is an easy to use Windows Forms control. Using the remote layer, it provides injection of **javascript functions with C# callback in the browser process**, access to the **DOM from within the browser process**, and so on. To get started with the webbrowser control, check this [walkthrough](https://bitbucket.org/wborgsm/chromiumfx/wiki/Walkthrough_01) in the wiki.
-
-### Getting started ###
-
-* **Building ChromiumFX**
-
-Pull the repo and build ChromiumFX.sln with Visual Studio 2013 Community Edition. You also have to download or build the CEF binaries. For the appropriate version of CEF binaries, see cef/README.txt.
-
-* **Using ChromiumFX**
-
-If you don't want to build ChromiumFX yourself, you can find the current release binaries in the download section. For the required CEF version, see CefVersion.txt in the download package.
-
-Then take a look at the [wiki](https://bitbucket.org/wborgsm/chromiumfx/wiki/Home).
+* [Project Setup and Description](https://bitbucket.org/wborgsm/chromiumfx/wiki/Project)
+* [Getting started with the Browser Control](https://bitbucket.org/wborgsm/chromiumfx/wiki/Walkthrough_01) 
+* [Getting started with the Remoting Framework](https://bitbucket.org/wborgsm/chromiumfx/wiki/Walkthrough_02)
+* [API Reference](http://chromiumfx.bitbucket.org/api/)
+* [Binary releases](https://bitbucket.org/wborgsm/chromiumfx/downloads)
 
 ### Warning ###
-The API of this project is not frozen and is subject to change. However, the overall structure of this API will be preserved.
+<font color=red>The API of this project is not frozen and is subject to change. The overall structure will be kept though.</font>
 
 ### Versioning ###
 
@@ -44,3 +37,12 @@ ChromiumFX version numbers consist of four digits. The first three digits are th
 ChromiumFX is BSD licensed. The CEF project is BSD licensed. Please visit
 "about:credits" in a CEF-based application for complete Chromium and third-party
 licensing information. See also cef/LICENSE.txt and cef/README.txt.
+
+
+## Changes ##
+
+
+### Version 3.2171.1979.5 ###
+
+* The event handler and event arg classes for the framework callback events moved into their own namespaces. If you get errors, add `using Chromium.Event` and/or `using Chromium.Remote.Event` directives.
+* A Sandcastle Help File Builder project was added and the xml documentation comments were improved for the new API reference.  
