@@ -678,11 +678,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// The underlying CEF framework callback for this event has a return value.
-            /// Since .NET style events do not support return values, SetReturnValue()
-            /// is used to set the return value for the callback. Although an application
-            /// may attach various event handlers to a framework callback event,
-            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
             /// more then once will cause an exception to be thrown.
             /// </summary>
             /// <remarks>
@@ -727,11 +725,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// The underlying CEF framework callback for this event has a return value.
-            /// Since .NET style events do not support return values, SetReturnValue()
-            /// is used to set the return value for the callback. Although an application
-            /// may attach various event handlers to a framework callback event,
-            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
             /// more then once will cause an exception to be thrown.
             /// </summary>
             /// <remarks>
@@ -774,11 +770,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// The underlying CEF framework callback for this event has a return value.
-            /// Since .NET style events do not support return values, SetReturnValue()
-            /// is used to set the return value for the callback. Although an application
-            /// may attach various event handlers to a framework callback event,
-            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
             /// more then once will cause an exception to be thrown.
             /// </summary>
             /// <remarks>
@@ -823,11 +817,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// The underlying CEF framework callback for this event has a return value.
-            /// Since .NET style events do not support return values, SetReturnValue()
-            /// is used to set the return value for the callback. Although an application
-            /// may attach various event handlers to a framework callback event,
-            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
             /// more then once will cause an exception to be thrown.
             /// </summary>
             /// <remarks>
@@ -870,11 +862,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// The underlying CEF framework callback for this event has a return value.
-            /// Since .NET style events do not support return values, SetReturnValue()
-            /// is used to set the return value for the callback. Although an application
-            /// may attach various event handlers to a framework callback event,
-            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
             /// more then once will cause an exception to be thrown.
             /// </summary>
             /// <remarks>
@@ -917,11 +907,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// The underlying CEF framework callback for this event has a return value.
-            /// Since .NET style events do not support return values, SetReturnValue()
-            /// is used to set the return value for the callback. Although an application
-            /// may attach various event handlers to a framework callback event,
-            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
             /// more then once will cause an exception to be thrown.
             /// </summary>
             /// <remarks>
@@ -966,11 +954,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// The underlying CEF framework callback for this event has a return value.
-            /// Since .NET style events do not support return values, SetReturnValue()
-            /// is used to set the return value for the callback. Although an application
-            /// may attach various event handlers to a framework callback event,
-            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
             /// more then once will cause an exception to be thrown.
             /// </summary>
             /// <remarks>
@@ -1015,11 +1001,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// The underlying CEF framework callback for this event has a return value.
-            /// Since .NET style events do not support return values, SetReturnValue()
-            /// is used to set the return value for the callback. Although an application
-            /// may attach various event handlers to a framework callback event,
-            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
             /// more then once will cause an exception to be thrown.
             /// </summary>
             /// <remarks>
@@ -1062,11 +1046,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// The underlying CEF framework callback for this event has a return value.
-            /// Since .NET style events do not support return values, SetReturnValue()
-            /// is used to set the return value for the callback. Although an application
-            /// may attach various event handlers to a framework callback event,
-            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
             /// more then once will cause an exception to be thrown.
             /// </summary>
             /// <remarks>
@@ -1109,11 +1091,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// The underlying CEF framework callback for this event has a return value.
-            /// Since .NET style events do not support return values, SetReturnValue()
-            /// is used to set the return value for the callback. Although an application
-            /// may attach various event handlers to a framework callback event,
-            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
             /// more then once will cause an exception to be thrown.
             /// </summary>
             /// <remarks>
@@ -1156,11 +1136,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// The underlying CEF framework callback for this event has a return value.
-            /// Since .NET style events do not support return values, SetReturnValue()
-            /// is used to set the return value for the callback. Although an application
-            /// may attach various event handlers to a framework callback event,
-            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
             /// more then once will cause an exception to be thrown.
             /// </summary>
             /// <remarks>
@@ -1203,11 +1181,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// The underlying CEF framework callback for this event has a return value.
-            /// Since .NET style events do not support return values, SetReturnValue()
-            /// is used to set the return value for the callback. Although an application
-            /// may attach various event handlers to a framework callback event,
-            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
             /// more then once will cause an exception to be thrown.
             /// </summary>
             /// <remarks>
@@ -1250,11 +1226,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// The underlying CEF framework callback for this event has a return value.
-            /// Since .NET style events do not support return values, SetReturnValue()
-            /// is used to set the return value for the callback. Although an application
-            /// may attach various event handlers to a framework callback event,
-            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
             /// more then once will cause an exception to be thrown.
             /// </summary>
             /// <remarks>
@@ -1329,11 +1303,9 @@ namespace Chromium {
                 }
             }
             /// <summary>
-            /// The underlying CEF framework callback for this event has a return value.
-            /// Since .NET style events do not support return values, SetReturnValue()
-            /// is used to set the return value for the callback. Although an application
-            /// may attach various event handlers to a framework callback event,
-            /// only one event handler can set the return value. Trying to call SetReturnValue()
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
             /// more then once will cause an exception to be thrown.
             /// </summary>
             /// <remarks>
