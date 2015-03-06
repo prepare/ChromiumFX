@@ -167,8 +167,19 @@ skip_to_lower:
         name = name.Replace("model", "Model")
         name = name.Replace("color", "Color")
         name = name.Replace("mode", "Mode")
+        name = name.Replace("resize", "Resize")
+        name = name.Replace("panning", "Panning")
+        name = name.Replace("drop", "Drop")
+        name = name.Replace("allowed", "Allowed")
+        name = name.Replace("menu", "Menu")
+        name = name.Replace("south", "South")
+        name = name.Replace("astwest", "astWest")
+        name = name.Replace("oomout", "oomOut")
+        name = name.Replace("oomin", "oomIn")
 
         name = name.Replace("ConText", "Context")
+        name = name.Replace("isAllowed", "isallowed")
+        name = name.Replace("ubMenu", "ubmenu")
 
         Return name
     End Function

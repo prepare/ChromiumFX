@@ -150,7 +150,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public CfxMenuModel AddSubMenu(int commandId, string label) {
+        public CfxMenuModel AddSubmenu(int commandId, string label) {
             var label_pinned = new PinnedString(label);
             var __retval = CfxApi.cfx_menu_model_add_sub_menu(NativePtr, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length);
             label_pinned.Obj.Free();
@@ -223,7 +223,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public CfxMenuModel InsertSubMenuAt(int index, int commandId, string label) {
+        public CfxMenuModel InsertSubmenuAt(int index, int commandId, string label) {
             var label_pinned = new PinnedString(label);
             var __retval = CfxApi.cfx_menu_model_insert_sub_menu_at(NativePtr, index, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length);
             label_pinned.Obj.Free();
@@ -413,7 +413,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public CfxMenuModel GetSubMenu(int commandId) {
+        public CfxMenuModel GetSubmenu(int commandId) {
             return CfxMenuModel.Wrap(CfxApi.cfx_menu_model_get_sub_menu(NativePtr, commandId));
         }
 
@@ -424,7 +424,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public CfxMenuModel GetSubMenuAt(int index) {
+        public CfxMenuModel GetSubmenuAt(int index) {
             return CfxMenuModel.Wrap(CfxApi.cfx_menu_model_get_sub_menu_at(NativePtr, index));
         }
 
