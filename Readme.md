@@ -26,7 +26,7 @@
 * [Binary releases](https://bitbucket.org/wborgsm/chromiumfx/downloads)
 
 ### Warning ###
-<font color=red>The API of this project is not frozen and is subject to change. The overall structure will be kept though.</font>
+The API of this project is not frozen and is subject to change. The overall structure will be kept though.
 
 ### Versioning ###
 
@@ -45,4 +45,4 @@ licensing information. See also cef/LICENSE.txt and cef/README.txt.
 ### Version 3.2171.1979.5 ###
 
 * The event handler and event arg classes for the framework callback events moved into their own namespaces. If you get errors, add `using Chromium.Event` and/or `using Chromium.Remote.Event` directives.
-* A Sandcastle Help File Builder project was added and the xml documentation comments were improved for the new API reference.  
+* A Sandcastle Help File Builder project was added and the xml documentation comments were improved for the new API reference.
