@@ -34,10 +34,16 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Implement this structure to handle events related to dragging. The functions
     /// of this structure will be called on the UI thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_drag_handler_capi.h">cef/include/capi/cef_drag_handler_capi.h</see>.
+    /// </remarks>
     public class CfxDragHandler : CfxBase {
 
         internal static CfxDragHandler Wrap(IntPtr nativePtr) {
@@ -71,6 +77,10 @@ namespace Chromium {
         /// operation. Return false (0) for default drag handling behavior or true (1)
         /// to cancel the drag event.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_drag_handler_capi.h">cef/include/capi/cef_drag_handler_capi.h</see>.
+        /// </remarks>
         public event CfxDragHandlerOnDragEnterEventHandler OnDragEnter {
             add {
                 if(m_OnDragEnter == null) {
@@ -98,63 +108,90 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxDragHandlerOnDragEnterEventHandler(object sender, CfxDragHandlerOnDragEnterEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Called when an external drag event enters the browser window. |DragData|
-    /// contains the drag event data and |Mask| represents the type of drag
-    /// operation. Return false (0) for default drag handling behavior or true (1)
-    /// to cancel the drag event.
-    /// </summary>
-    public class CfxDragHandlerOnDragEnterEventArgs : CfxEventArgs {
+        /// <summary>
+        /// Called when an external drag event enters the browser window. |DragData|
+        /// contains the drag event data and |Mask| represents the type of drag
+        /// operation. Return false (0) for default drag handling behavior or true (1)
+        /// to cancel the drag event.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_drag_handler_capi.h">cef/include/capi/cef_drag_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxDragHandlerOnDragEnterEventHandler(object sender, CfxDragHandlerOnDragEnterEventArgs e);
 
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal IntPtr m_dragData;
-        internal CfxDragData m_dragData_wrapped;
-        internal CfxDragOperationsMask m_mask;
+        /// <summary>
+        /// Called when an external drag event enters the browser window. |DragData|
+        /// contains the drag event data and |Mask| represents the type of drag
+        /// operation. Return false (0) for default drag handling behavior or true (1)
+        /// to cancel the drag event.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_drag_handler_capi.h">cef/include/capi/cef_drag_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxDragHandlerOnDragEnterEventArgs : CfxEventArgs {
 
-        internal bool m_returnValue;
-        private bool returnValueSet;
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_dragData;
+            internal CfxDragData m_dragData_wrapped;
+            internal CfxDragOperationsMask m_mask;
 
-        internal CfxDragHandlerOnDragEnterEventArgs(IntPtr browser, IntPtr dragData, CfxDragOperationsMask mask) {
-            m_browser = browser;
-            m_dragData = dragData;
-            m_mask = mask;
-        }
+            internal bool m_returnValue;
+            private bool returnValueSet;
 
-        public CfxBrowser Browser {
-            get {
+            internal CfxDragHandlerOnDragEnterEventArgs(IntPtr browser, IntPtr dragData, CfxDragOperationsMask mask) {
+                m_browser = browser;
+                m_dragData = dragData;
+                m_mask = mask;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public CfxDragData DragData {
+                get {
+                    CheckAccess();
+                    if(m_dragData_wrapped == null) m_dragData_wrapped = CfxDragData.Wrap(m_dragData);
+                    return m_dragData_wrapped;
+                }
+            }
+            public CfxDragOperationsMask Mask {
+                get {
+                    CheckAccess();
+                    return m_mask;
+                }
+            }
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_drag_handler_capi.h">cef/include/capi/cef_drag_handler_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(bool returnValue) {
                 CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
             }
-        }
-        public CfxDragData DragData {
-            get {
-                CheckAccess();
-                if(m_dragData_wrapped == null) m_dragData_wrapped = CfxDragData.Wrap(m_dragData);
-                return m_dragData_wrapped;
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, DragData={{{1}}}, Mask={{{2}}}", Browser, DragData, Mask);
             }
-        }
-        public CfxDragOperationsMask Mask {
-            get {
-                CheckAccess();
-                return m_mask;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
         }
 
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, DragData={{{1}}}, Mask={{{2}}}", Browser, DragData, Mask);
-        }
     }
-
 }

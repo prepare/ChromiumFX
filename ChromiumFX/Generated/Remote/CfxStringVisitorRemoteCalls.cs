@@ -34,6 +34,9 @@
 using System;
 
 namespace Chromium.Remote {
+    using Event;
+    using Chromium.Event;
+
     internal class CfxStringVisitorCtorRenderProcessCall : RenderProcessCall {
 
         internal CfxStringVisitorCtorRenderProcessCall()

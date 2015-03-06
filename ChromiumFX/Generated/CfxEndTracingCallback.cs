@@ -39,6 +39,10 @@ namespace Chromium {
     /// The functions of this structure will be called on the browser process UI
     /// thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
+    /// </remarks>
     public class CfxEndTracingCallback : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -65,6 +69,10 @@ namespace Chromium {
         /// the path at which tracing data was written. The client is responsible for
         /// deleting |tracingFile|.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
+        /// </remarks>
         public void OnEndTracingComplete(string tracingFile) {
             var tracingFile_pinned = new PinnedString(tracingFile);
             CfxApi.cfx_end_tracing_callback_on_end_tracing_complete(NativePtr, tracingFile_pinned.Obj.PinnedPtr, tracingFile_pinned.Length);

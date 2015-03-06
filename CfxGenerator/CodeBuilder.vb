@@ -237,14 +237,24 @@ Public Class CodeBuilder
         AppendComment(String.Format(format, pm))
     End Sub
 
-    Sub AppendSummary(summary As String(), Optional forRemote As Boolean = False, Optional forEvent As Boolean = False)
-        If summary IsNot Nothing AndAlso Not summary.Length = 0 Then
+    Sub AppendSummary(summary As CommentData, Optional forRemote As Boolean = False, Optional forEvent As Boolean = False)
+        If summary IsNot Nothing AndAlso Not summary.Lines.Length = 0 Then
             AppendLine("/// <summary>")
-            For Each line In summary
+            For Each line In summary.Lines
                 line = CSharp.PrepareSummaryLine(line, forRemote, forEvent)
                 AppendLine("/// " & line)
             Next
             AppendLine("/// </summary>")
+        End If
+    End Sub
+
+    Sub AppendSummaryAndRemarks(summary As CommentData, Optional forRemote As Boolean = False, Optional forEvent As Boolean = False)
+        If summary IsNot Nothing AndAlso Not summary.Lines.Length = 0 Then
+            AppendSummary(summary, forRemote, forEvent)
+            AppendLine("/// <remarks>")
+            AppendLine("/// See also the original CEF documentation in")
+            AppendLine("/// <see href=""https://bitbucket.org/wborgsm/chromiumfx/src/tip/{0}"">{0}</see>.", summary.FileName.Replace("\", "/"))
+            AppendLine("/// </remarks>")
         End If
     End Sub
 

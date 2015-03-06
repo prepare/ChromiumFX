@@ -32,6 +32,7 @@
 
 using System;
 using Chromium.Remote;
+using Chromium.Remote.Event;
 
 namespace Chromium.WebBrowser {
     internal class RenderProcess {

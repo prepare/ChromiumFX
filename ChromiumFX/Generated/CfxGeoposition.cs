@@ -39,6 +39,10 @@ namespace Chromium {
     /// structure correspond to those of the JavaScript Position object although
     /// their types may differ.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
     public sealed class CfxGeoposition : CfxStructure {
 
         internal static CfxGeoposition Wrap(IntPtr nativePtr) {
@@ -58,6 +62,10 @@ namespace Chromium {
         /// <summary>
         /// Latitude in decimal degrees north (WGS84 coordinate frame).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public double Latitude {
             get {
                 double value;
@@ -72,6 +80,10 @@ namespace Chromium {
         /// <summary>
         /// Longitude in decimal degrees west (WGS84 coordinate frame).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public double Longitude {
             get {
                 double value;
@@ -86,6 +98,10 @@ namespace Chromium {
         /// <summary>
         /// Altitude in meters (above WGS84 datum).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public double Altitude {
             get {
                 double value;
@@ -100,6 +116,10 @@ namespace Chromium {
         /// <summary>
         /// Accuracy of horizontal position in meters.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public double Accuracy {
             get {
                 double value;
@@ -114,6 +134,10 @@ namespace Chromium {
         /// <summary>
         /// Accuracy of altitude in meters.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public double AltitudeAccuracy {
             get {
                 double value;
@@ -128,6 +152,10 @@ namespace Chromium {
         /// <summary>
         /// Heading in decimal degrees clockwise from true north.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public double Heading {
             get {
                 double value;
@@ -142,6 +170,10 @@ namespace Chromium {
         /// <summary>
         /// Horizontal component of device velocity in meters per second.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public double Speed {
             get {
                 double value;
@@ -157,6 +189,10 @@ namespace Chromium {
         /// Time of position measurement in miliseconds since Epoch in UTC time. This
         /// is taken from the host computer's system clock.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxTime Timestamp {
             get {
                 IntPtr value;
@@ -171,6 +207,10 @@ namespace Chromium {
         /// <summary>
         /// Error code, see enum above.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public CfxGeopositionErrorCode ErrorCode {
             get {
                 CfxGeopositionErrorCode value;
@@ -185,6 +225,10 @@ namespace Chromium {
         /// <summary>
         /// Human-readable error message.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
         public string ErrorMessage {
             get {
                 IntPtr value_str;

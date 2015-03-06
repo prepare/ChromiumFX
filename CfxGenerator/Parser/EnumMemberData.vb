@@ -35,5 +35,6 @@ Namespace Parser
     Public Class EnumMemberData
         Public Name As String
         Public Value As String
+        Public Comments As CommentData
     End Class
 End Namespace

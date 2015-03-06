@@ -34,10 +34,16 @@
 using System;
 
 namespace Chromium.Remote {
+    using Event;
+
     /// <summary>
     /// Structure used to implement a custom resource bundle structure. The functions
     /// of this structure may be called on multiple threads.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+    /// </remarks>
     public class CfrResourceBundleHandler : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -85,6 +91,10 @@ namespace Chromium.Remote {
         /// string and return true (1). To use the default translation return false
         /// (0). Supported message IDs are listed in cef_pack_strings.h.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+        /// </remarks>
         public event CfrGetLocalizedStringEventHandler GetLocalizedString {
             add {
                 if(m_GetLocalizedString == null) {
@@ -115,6 +125,10 @@ namespace Chromium.Remote {
         /// resident in memory. Supported resource IDs are listed in
         /// cef_pack_resources.h.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+        /// </remarks>
         public event CfrGetDataResourceEventHandler GetDataResource {
             add {
                 if(m_GetDataResource == null) {
@@ -142,133 +156,185 @@ namespace Chromium.Remote {
         }
     }
 
+    namespace Event {
 
-    public delegate void CfrGetLocalizedStringEventHandler(object sender, CfrGetLocalizedStringEventArgs e);
+        /// <summary>
+        /// Called to retrieve a localized translation for the string specified by
+        /// |MessageId|. To provide the translation set |String| to the translation
+        /// string and return true (1). To use the default translation return false
+        /// (0). Supported message IDs are listed in cef_pack_strings.h.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfrGetLocalizedStringEventHandler(object sender, CfrGetLocalizedStringEventArgs e);
 
-    /// <summary>
-    /// Called to retrieve a localized translation for the string specified by
-    /// |MessageId|. To provide the translation set |String| to the translation
-    /// string and return true (1). To use the default translation return false
-    /// (0). Supported message IDs are listed in cef_pack_strings.h.
-    /// </summary>
-    public class CfrGetLocalizedStringEventArgs : CfrEventArgs {
+        /// <summary>
+        /// Called to retrieve a localized translation for the string specified by
+        /// |MessageId|. To provide the translation set |String| to the translation
+        /// string and return true (1). To use the default translation return false
+        /// (0). Supported message IDs are listed in cef_pack_strings.h.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+        /// </remarks>
+        public class CfrGetLocalizedStringEventArgs : CfrEventArgs {
 
-        bool MessageIdFetched;
-        int m_MessageId;
-        bool StringFetched;
-        string m_String;
+            bool MessageIdFetched;
+            int m_MessageId;
+            bool StringFetched;
+            string m_String;
 
-        internal CfrGetLocalizedStringEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+            internal CfrGetLocalizedStringEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
-        public int MessageId {
-            get {
-                if(!MessageIdFetched) {
-                    MessageIdFetched = true;
-                    var call = new CfxGetLocalizedStringGetMessageIdRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_MessageId = call.value;
+            public int MessageId {
+                get {
+                    if(!MessageIdFetched) {
+                        MessageIdFetched = true;
+                        var call = new CfxGetLocalizedStringGetMessageIdRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_MessageId = call.value;
+                    }
+                    return m_MessageId;
                 }
-                return m_MessageId;
             }
-        }
-        public string String {
-            get {
-                if(!StringFetched) {
+            public string String {
+                get {
+                    if(!StringFetched) {
+                        StringFetched = true;
+                        var call = new CfxGetLocalizedStringGetStringRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_String = call.value;
+                    }
+                    return m_String;
+                }
+                set {
+                    m_String = value;
                     StringFetched = true;
-                    var call = new CfxGetLocalizedStringGetStringRenderProcessCall();
+                    var call = new CfxGetLocalizedStringSetStringRenderProcessCall();
                     call.eventArgsId = eventArgsId;
+                    call.value = value;
                     call.Execute(remoteRuntime.connection);
-                    m_String = call.value;
                 }
-                return m_String;
             }
-            set {
-                m_String = value;
-                StringFetched = true;
-                var call = new CfxGetLocalizedStringSetStringRenderProcessCall();
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(bool returnValue) {
+                var call = new CfxGetLocalizedStringSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
-                call.value = value;
+                call.value = returnValue;
                 call.Execute(remoteRuntime.connection);
             }
-        }
-        public void SetReturnValue(bool returnValue) {
-            var call = new CfxGetLocalizedStringSetReturnValueRenderProcessCall();
-            call.eventArgsId = eventArgsId;
-            call.value = returnValue;
-            call.Execute(remoteRuntime.connection);
+
+            public override string ToString() {
+                return String.Format("MessageId={{{0}}}, String={{{1}}}", MessageId, String);
+            }
         }
 
-        public override string ToString() {
-            return String.Format("MessageId={{{0}}}, String={{{1}}}", MessageId, String);
-        }
-    }
+        /// <summary>
+        /// Called to retrieve data for the resource specified by |ResourceId|. To
+        /// provide the resource data set |Data| and |DataSize| to the data pointer
+        /// and size respectively and return true (1). To use the default resource data
+        /// return false (0). The resource data will not be copied and must remain
+        /// resident in memory. Supported resource IDs are listed in
+        /// cef_pack_resources.h.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfrGetDataResourceEventHandler(object sender, CfrGetDataResourceEventArgs e);
 
-    public delegate void CfrGetDataResourceEventHandler(object sender, CfrGetDataResourceEventArgs e);
+        /// <summary>
+        /// Called to retrieve data for the resource specified by |ResourceId|. To
+        /// provide the resource data set |Data| and |DataSize| to the data pointer
+        /// and size respectively and return true (1). To use the default resource data
+        /// return false (0). The resource data will not be copied and must remain
+        /// resident in memory. Supported resource IDs are listed in
+        /// cef_pack_resources.h.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+        /// </remarks>
+        public class CfrGetDataResourceEventArgs : CfrEventArgs {
 
-    /// <summary>
-    /// Called to retrieve data for the resource specified by |ResourceId|. To
-    /// provide the resource data set |Data| and |DataSize| to the data pointer
-    /// and size respectively and return true (1). To use the default resource data
-    /// return false (0). The resource data will not be copied and must remain
-    /// resident in memory. Supported resource IDs are listed in
-    /// cef_pack_resources.h.
-    /// </summary>
-    public class CfrGetDataResourceEventArgs : CfrEventArgs {
+            bool ResourceIdFetched;
+            int m_ResourceId;
+            RemotePtr m_Data;
+            int m_DataSize;
 
-        bool ResourceIdFetched;
-        int m_ResourceId;
-        RemotePtr m_Data;
-        int m_DataSize;
+            internal CfrGetDataResourceEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
-        internal CfrGetDataResourceEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
-
-        public int ResourceId {
-            get {
-                if(!ResourceIdFetched) {
-                    ResourceIdFetched = true;
-                    var call = new CfxGetDataResourceGetResourceIdRenderProcessCall();
+            public int ResourceId {
+                get {
+                    if(!ResourceIdFetched) {
+                        ResourceIdFetched = true;
+                        var call = new CfxGetDataResourceGetResourceIdRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_ResourceId = call.value;
+                    }
+                    return m_ResourceId;
+                }
+            }
+            public RemotePtr Data {
+                get {
+                    return m_Data;
+                }
+                set {
+                    m_Data = value;
+                    var call = new CfxGetDataResourceSetDataRenderProcessCall();
                     call.eventArgsId = eventArgsId;
+                    call.value = value.ptr;
                     call.Execute(remoteRuntime.connection);
-                    m_ResourceId = call.value;
                 }
-                return m_ResourceId;
             }
-        }
-        public RemotePtr Data {
-            get {
-                return m_Data;
+            public int DataSize {
+                get {
+                    return m_DataSize;
+                }
+                set {
+                    m_DataSize = value;
+                    var call = new CfxGetDataResourceSetDataSizeRenderProcessCall();
+                    call.eventArgsId = eventArgsId;
+                    call.value = value;
+                    call.Execute(remoteRuntime.connection);
+                }
             }
-            set {
-                m_Data = value;
-                var call = new CfxGetDataResourceSetDataRenderProcessCall();
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(bool returnValue) {
+                var call = new CfxGetDataResourceSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
-                call.value = value.ptr;
+                call.value = returnValue;
                 call.Execute(remoteRuntime.connection);
             }
-        }
-        public int DataSize {
-            get {
-                return m_DataSize;
+
+            public override string ToString() {
+                return String.Format("ResourceId={{{0}}}", ResourceId);
             }
-            set {
-                m_DataSize = value;
-                var call = new CfxGetDataResourceSetDataSizeRenderProcessCall();
-                call.eventArgsId = eventArgsId;
-                call.value = value;
-                call.Execute(remoteRuntime.connection);
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            var call = new CfxGetDataResourceSetReturnValueRenderProcessCall();
-            call.eventArgsId = eventArgsId;
-            call.value = returnValue;
-            call.Execute(remoteRuntime.connection);
         }
 
-        public override string ToString() {
-            return String.Format("ResourceId={{{0}}}", ResourceId);
-        }
     }
-
 }

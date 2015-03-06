@@ -34,6 +34,7 @@
 using System;
 
 namespace Chromium.Remote {
+
     internal class CfxV8StackTraceGetCurrentRenderProcessCall : RenderProcessCall {
 
         internal CfxV8StackTraceGetCurrentRenderProcessCall()

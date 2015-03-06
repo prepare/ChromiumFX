@@ -38,6 +38,10 @@ namespace Chromium {
     /// Structure used to represent a single element in the request post data. The
     /// functions of this structure may be called on any thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+    /// </remarks>
     public class CfxPostDataElement : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -62,6 +66,10 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxPostDataElement object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public static CfxPostDataElement Create() {
             return CfxPostDataElement.Wrap(CfxApi.cfx_post_data_element_create());
         }
@@ -69,6 +77,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if this object is read-only.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public bool IsReadOnly {
             get {
                 return 0 != CfxApi.cfx_post_data_element_is_read_only(NativePtr);
@@ -78,6 +90,10 @@ namespace Chromium {
         /// <summary>
         /// Return the type of this post data element.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public CfxPostdataElementType Type {
             get {
                 return CfxApi.cfx_post_data_element_get_type(NativePtr);
@@ -87,6 +103,10 @@ namespace Chromium {
         /// <summary>
         /// Return the file name.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public String File {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_post_data_element_get_file(NativePtr));
@@ -96,6 +116,10 @@ namespace Chromium {
         /// <summary>
         /// Return the number of bytes.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public int BytesCount {
             get {
                 return CfxApi.cfx_post_data_element_get_bytes_count(NativePtr);
@@ -105,6 +129,10 @@ namespace Chromium {
         /// <summary>
         /// Remove all contents from the post data element.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public void SetToEmpty() {
             CfxApi.cfx_post_data_element_set_to_empty(NativePtr);
         }
@@ -112,6 +140,10 @@ namespace Chromium {
         /// <summary>
         /// The post data element will represent a file.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public void SetToFile(string fileName) {
             var fileName_pinned = new PinnedString(fileName);
             CfxApi.cfx_post_data_element_set_to_file(NativePtr, fileName_pinned.Obj.PinnedPtr, fileName_pinned.Length);
@@ -122,6 +154,10 @@ namespace Chromium {
         /// The post data element will represent bytes.  The bytes passed in will be
         /// copied.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public void SetToBytes(int size, IntPtr bytes) {
             CfxApi.cfx_post_data_element_set_to_bytes(NativePtr, size, bytes);
         }
@@ -130,6 +166,10 @@ namespace Chromium {
         /// Read up to |size| bytes into |bytes| and return the number of bytes
         /// actually read.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public int GetBytes(int size, IntPtr bytes) {
             return CfxApi.cfx_post_data_element_get_bytes(NativePtr, size, bytes);
         }

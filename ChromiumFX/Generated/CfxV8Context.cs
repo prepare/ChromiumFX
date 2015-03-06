@@ -41,6 +41,10 @@ namespace Chromium {
     /// threads. A task runner for posting tasks on the associated thread can be
     /// retrieved via the CfxV8Context.GetTaskRunner() function.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+    /// </remarks>
     public class CfxV8Context : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -65,6 +69,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the current (top) context object in the V8 context stack.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfxV8Context GetCurrentContext() {
             return CfxV8Context.Wrap(CfxApi.cfx_v8context_get_current_context());
         }
@@ -72,6 +80,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the entered (bottom) context object in the V8 context stack.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfxV8Context GetEnteredContext() {
             return CfxV8Context.Wrap(CfxApi.cfx_v8context_get_entered_context());
         }
@@ -79,6 +91,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if V8 is currently inside a context.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static bool InContext() {
             return 0 != CfxApi.cfx_v8context_in_context();
         }
@@ -88,6 +104,10 @@ namespace Chromium {
         /// be accessed from the thread on which they are created. This function can be
         /// called on any render process thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfxTaskRunner TaskRunner {
             get {
                 return CfxTaskRunner.Wrap(CfxApi.cfx_v8context_get_task_runner(NativePtr));
@@ -99,6 +119,10 @@ namespace Chromium {
         /// on the current thread. Do not call any other functions if this function
         /// returns false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 return 0 != CfxApi.cfx_v8context_is_valid(NativePtr);
@@ -109,6 +133,10 @@ namespace Chromium {
         /// Returns the browser for this context. This function will return an NULL
         /// reference for WebWorker contexts.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfxBrowser Browser {
             get {
                 return CfxBrowser.Wrap(CfxApi.cfx_v8context_get_browser(NativePtr));
@@ -119,6 +147,10 @@ namespace Chromium {
         /// Returns the frame for this context. This function will return an NULL
         /// reference for WebWorker contexts.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfxFrame Frame {
             get {
                 return CfxFrame.Wrap(CfxApi.cfx_v8context_get_frame(NativePtr));
@@ -129,6 +161,10 @@ namespace Chromium {
         /// Returns the global object for this context. The context must be entered
         /// before calling this function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfxV8Value Global {
             get {
                 return CfxV8Value.Wrap(CfxApi.cfx_v8context_get_global(NativePtr));
@@ -142,6 +178,10 @@ namespace Chromium {
         /// objects belong to the context in which they are created. Returns true (1)
         /// if the scope was entered successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool Enter() {
             return 0 != CfxApi.cfx_v8context_enter(NativePtr);
         }
@@ -150,6 +190,10 @@ namespace Chromium {
         /// Exit this context. Call this function only after calling enter(). Returns
         /// true (1) if the scope was exited successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int Exit() {
             return CfxApi.cfx_v8context_exit(NativePtr);
         }
@@ -158,6 +202,10 @@ namespace Chromium {
         /// Returns true (1) if this object is pointing to the same handle as |that|
         /// object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsSame(CfxV8Context that) {
             return 0 != CfxApi.cfx_v8context_is_same(NativePtr, CfxV8Context.Unwrap(that));
         }
@@ -168,6 +216,10 @@ namespace Chromium {
         /// function will return true (1). On failure |exception| will be set to the
         /// exception, if any, and the function will return false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool Eval(string code, out CfxV8Value retval, out CfxV8Exception exception) {
             var code_pinned = new PinnedString(code);
             IntPtr retval_ptr;

@@ -37,6 +37,10 @@ namespace Chromium {
     /// <summary>
     /// Callback structure for asynchronous continuation of print dialog requests.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+    /// </remarks>
     public class CfxPrintDialogCallback : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -61,6 +65,10 @@ namespace Chromium {
         /// <summary>
         /// Continue printing with the specified |settings|.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
         public void Continue(CfxPrintSettings settings) {
             CfxApi.cfx_print_dialog_callback_cont(NativePtr, CfxPrintSettings.Unwrap(settings));
         }
@@ -68,6 +76,10 @@ namespace Chromium {
         /// <summary>
         /// Cancel the printing.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
         public void Cancel() {
             CfxApi.cfx_print_dialog_callback_cancel(NativePtr);
         }

@@ -34,10 +34,16 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Structure used to implement a custom request handler structure. The functions
     /// of this structure will always be called on the IO thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+    /// </remarks>
     public class CfxResourceHandler : CfxBase {
 
         internal static CfxResourceHandler Wrap(IntPtr nativePtr) {
@@ -144,6 +150,10 @@ namespace Chromium {
         /// function if header information is available immediately). To cancel the
         /// request return false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public event CfxProcessRequestEventHandler ProcessRequest {
             add {
                 if(m_ProcessRequest == null) {
@@ -171,6 +181,10 @@ namespace Chromium {
         /// values. To redirect the request to a new URL set |RedirectUrl| to the new
         /// URL.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public event CfxGetResponseHeadersEventHandler GetResponseHeaders {
             add {
                 if(m_GetResponseHeaders == null) {
@@ -195,6 +209,10 @@ namespace Chromium {
         /// |BytesRead| to 0, return true (1) and call CfxCallback.Continue() when the
         /// data is available. To indicate response completion return false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public event CfxReadResponseEventHandler ReadResponse {
             add {
                 if(m_ReadResponse == null) {
@@ -217,6 +235,10 @@ namespace Chromium {
         /// false (0) otherwise. If false (0) is returned for any cookie then no
         /// cookies will be sent with the request.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public event CfxCanGetCookieEventHandler CanGetCookie {
             add {
                 if(m_CanGetCookie == null) {
@@ -238,6 +260,10 @@ namespace Chromium {
         /// Return true (1) if the specified cookie returned with the response can be
         /// set or false (0) otherwise.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public event CfxCanSetCookieEventHandler CanSetCookie {
             add {
                 if(m_CanSetCookie == null) {
@@ -258,6 +284,10 @@ namespace Chromium {
         /// <summary>
         /// Request processing has been canceled.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
         public event CfxEventHandler Cancel {
             add {
                 if(m_Cancel == null) {
@@ -305,262 +335,378 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxProcessRequestEventHandler(object sender, CfxProcessRequestEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Begin processing the request. To handle the request return true (1) and
-    /// call CfxCallback.Continue() once the response header information is
-    /// available (CfxCallback.Continue() can also be called from inside this
-    /// function if header information is available immediately). To cancel the
-    /// request return false (0).
-    /// </summary>
-    public class CfxProcessRequestEventArgs : CfxEventArgs {
+        /// <summary>
+        /// Begin processing the request. To handle the request return true (1) and
+        /// call CfxCallback.Continue() once the response header information is
+        /// available (CfxCallback.Continue() can also be called from inside this
+        /// function if header information is available immediately). To cancel the
+        /// request return false (0).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxProcessRequestEventHandler(object sender, CfxProcessRequestEventArgs e);
 
-        internal IntPtr m_request;
-        internal CfxRequest m_request_wrapped;
-        internal IntPtr m_callback;
-        internal CfxCallback m_callback_wrapped;
+        /// <summary>
+        /// Begin processing the request. To handle the request return true (1) and
+        /// call CfxCallback.Continue() once the response header information is
+        /// available (CfxCallback.Continue() can also be called from inside this
+        /// function if header information is available immediately). To cancel the
+        /// request return false (0).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxProcessRequestEventArgs : CfxEventArgs {
 
-        internal bool m_returnValue;
-        private bool returnValueSet;
+            internal IntPtr m_request;
+            internal CfxRequest m_request_wrapped;
+            internal IntPtr m_callback;
+            internal CfxCallback m_callback_wrapped;
 
-        internal CfxProcessRequestEventArgs(IntPtr request, IntPtr callback) {
-            m_request = request;
-            m_callback = callback;
-        }
+            internal bool m_returnValue;
+            private bool returnValueSet;
 
-        public CfxRequest Request {
-            get {
-                CheckAccess();
-                if(m_request_wrapped == null) m_request_wrapped = CfxRequest.Wrap(m_request);
-                return m_request_wrapped;
+            internal CfxProcessRequestEventArgs(IntPtr request, IntPtr callback) {
+                m_request = request;
+                m_callback = callback;
             }
-        }
-        public CfxCallback Callback {
-            get {
-                CheckAccess();
-                if(m_callback_wrapped == null) m_callback_wrapped = CfxCallback.Wrap(m_callback);
-                return m_callback_wrapped;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
 
-        public override string ToString() {
-            return String.Format("Request={{{0}}}, Callback={{{1}}}", Request, Callback);
-        }
-    }
-
-    public delegate void CfxGetResponseHeadersEventHandler(object sender, CfxGetResponseHeadersEventArgs e);
-
-    /// <summary>
-    /// Retrieve response header information. If the response length is not known
-    /// set |ResponseLength| to -1 and read_response() will be called until it
-    /// returns false (0). If the response length is known set |ResponseLength| to
-    /// a positive value and read_response() will be called until it returns false
-    /// (0) or the specified number of bytes have been read. Use the |Response|
-    /// object to set the mime type, http status code and other optional header
-    /// values. To redirect the request to a new URL set |RedirectUrl| to the new
-    /// URL.
-    /// </summary>
-    public class CfxGetResponseHeadersEventArgs : CfxEventArgs {
-
-        internal IntPtr m_response;
-        internal CfxResponse m_response_wrapped;
-        internal long m_response_length;
-        internal IntPtr m_redirectUrl_str;
-        internal int m_redirectUrl_length;
-        internal string m_redirectUrl_wrapped;
-        internal bool m_redirectUrl_changed;
-
-        internal CfxGetResponseHeadersEventArgs(IntPtr response, IntPtr redirectUrl_str, int redirectUrl_length) {
-            m_response = response;
-            m_redirectUrl_str = redirectUrl_str;
-            m_redirectUrl_length = redirectUrl_length;
-        }
-
-        public CfxResponse Response {
-            get {
-                CheckAccess();
-                if(m_response_wrapped == null) m_response_wrapped = CfxResponse.Wrap(m_response);
-                return m_response_wrapped;
-            }
-        }
-        public long ResponseLength {
-            set {
-                CheckAccess();
-                m_response_length = value;
-            }
-        }
-        public string RedirectUrl {
-            get {
-                CheckAccess();
-                if(!m_redirectUrl_changed && m_redirectUrl_wrapped == null && m_redirectUrl_str != IntPtr.Zero) {
-                    m_redirectUrl_wrapped = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_redirectUrl_str, m_redirectUrl_length);
+            public CfxRequest Request {
+                get {
+                    CheckAccess();
+                    if(m_request_wrapped == null) m_request_wrapped = CfxRequest.Wrap(m_request);
+                    return m_request_wrapped;
                 }
-                return m_redirectUrl_wrapped;
             }
-            set {
+            public CfxCallback Callback {
+                get {
+                    CheckAccess();
+                    if(m_callback_wrapped == null) m_callback_wrapped = CfxCallback.Wrap(m_callback);
+                    return m_callback_wrapped;
+                }
+            }
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(bool returnValue) {
                 CheckAccess();
-                m_redirectUrl_wrapped = value;
-                m_redirectUrl_changed = true;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("Request={{{0}}}, Callback={{{1}}}", Request, Callback);
             }
         }
 
-        public override string ToString() {
-            return String.Format("Response={{{0}}}, RedirectUrl={{{2}}}", Response, RedirectUrl);
+        /// <summary>
+        /// Retrieve response header information. If the response length is not known
+        /// set |ResponseLength| to -1 and read_response() will be called until it
+        /// returns false (0). If the response length is known set |ResponseLength| to
+        /// a positive value and read_response() will be called until it returns false
+        /// (0) or the specified number of bytes have been read. Use the |Response|
+        /// object to set the mime type, http status code and other optional header
+        /// values. To redirect the request to a new URL set |RedirectUrl| to the new
+        /// URL.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxGetResponseHeadersEventHandler(object sender, CfxGetResponseHeadersEventArgs e);
+
+        /// <summary>
+        /// Retrieve response header information. If the response length is not known
+        /// set |ResponseLength| to -1 and read_response() will be called until it
+        /// returns false (0). If the response length is known set |ResponseLength| to
+        /// a positive value and read_response() will be called until it returns false
+        /// (0) or the specified number of bytes have been read. Use the |Response|
+        /// object to set the mime type, http status code and other optional header
+        /// values. To redirect the request to a new URL set |RedirectUrl| to the new
+        /// URL.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxGetResponseHeadersEventArgs : CfxEventArgs {
+
+            internal IntPtr m_response;
+            internal CfxResponse m_response_wrapped;
+            internal long m_response_length;
+            internal IntPtr m_redirectUrl_str;
+            internal int m_redirectUrl_length;
+            internal string m_redirectUrl_wrapped;
+            internal bool m_redirectUrl_changed;
+
+            internal CfxGetResponseHeadersEventArgs(IntPtr response, IntPtr redirectUrl_str, int redirectUrl_length) {
+                m_response = response;
+                m_redirectUrl_str = redirectUrl_str;
+                m_redirectUrl_length = redirectUrl_length;
+            }
+
+            public CfxResponse Response {
+                get {
+                    CheckAccess();
+                    if(m_response_wrapped == null) m_response_wrapped = CfxResponse.Wrap(m_response);
+                    return m_response_wrapped;
+                }
+            }
+            public long ResponseLength {
+                set {
+                    CheckAccess();
+                    m_response_length = value;
+                }
+            }
+            public string RedirectUrl {
+                get {
+                    CheckAccess();
+                    if(!m_redirectUrl_changed && m_redirectUrl_wrapped == null && m_redirectUrl_str != IntPtr.Zero) {
+                        m_redirectUrl_wrapped = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_redirectUrl_str, m_redirectUrl_length);
+                    }
+                    return m_redirectUrl_wrapped;
+                }
+                set {
+                    CheckAccess();
+                    m_redirectUrl_wrapped = value;
+                    m_redirectUrl_changed = true;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Response={{{0}}}, RedirectUrl={{{2}}}", Response, RedirectUrl);
+            }
         }
+
+        /// <summary>
+        /// Read response data. If data is available immediately copy up to
+        /// |BytesToRead| bytes into |DataOut|, set |BytesRead| to the number of
+        /// bytes copied, and return true (1). To read the data at a later time set
+        /// |BytesRead| to 0, return true (1) and call CfxCallback.Continue() when the
+        /// data is available. To indicate response completion return false (0).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxReadResponseEventHandler(object sender, CfxReadResponseEventArgs e);
+
+        /// <summary>
+        /// Read response data. If data is available immediately copy up to
+        /// |BytesToRead| bytes into |DataOut|, set |BytesRead| to the number of
+        /// bytes copied, and return true (1). To read the data at a later time set
+        /// |BytesRead| to 0, return true (1) and call CfxCallback.Continue() when the
+        /// data is available. To indicate response completion return false (0).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxReadResponseEventArgs : CfxEventArgs {
+
+            internal IntPtr m_data_out;
+            internal int m_bytes_to_read;
+            internal int m_bytes_read;
+            internal IntPtr m_callback;
+            internal CfxCallback m_callback_wrapped;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxReadResponseEventArgs(IntPtr data_out, int bytes_to_read, IntPtr callback) {
+                m_data_out = data_out;
+                m_bytes_to_read = bytes_to_read;
+                m_callback = callback;
+            }
+
+            public IntPtr DataOut {
+                get {
+                    CheckAccess();
+                    return m_data_out;
+                }
+            }
+            public int BytesToRead {
+                get {
+                    CheckAccess();
+                    return m_bytes_to_read;
+                }
+            }
+            public int BytesRead {
+                set {
+                    CheckAccess();
+                    m_bytes_read = value;
+                }
+            }
+            public CfxCallback Callback {
+                get {
+                    CheckAccess();
+                    if(m_callback_wrapped == null) m_callback_wrapped = CfxCallback.Wrap(m_callback);
+                    return m_callback_wrapped;
+                }
+            }
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(bool returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("DataOut={{{0}}}, BytesToRead={{{1}}}, Callback={{{3}}}", DataOut, BytesToRead, Callback);
+            }
+        }
+
+        /// <summary>
+        /// Return true (1) if the specified cookie can be sent with the request or
+        /// false (0) otherwise. If false (0) is returned for any cookie then no
+        /// cookies will be sent with the request.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxCanGetCookieEventHandler(object sender, CfxCanGetCookieEventArgs e);
+
+        /// <summary>
+        /// Return true (1) if the specified cookie can be sent with the request or
+        /// false (0) otherwise. If false (0) is returned for any cookie then no
+        /// cookies will be sent with the request.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxCanGetCookieEventArgs : CfxEventArgs {
+
+            internal IntPtr m_cookie;
+            internal CfxCookie m_cookie_wrapped;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxCanGetCookieEventArgs(IntPtr cookie) {
+                m_cookie = cookie;
+            }
+
+            public CfxCookie Cookie {
+                get {
+                    CheckAccess();
+                    if(m_cookie_wrapped == null) m_cookie_wrapped = CfxCookie.Wrap(m_cookie);
+                    return m_cookie_wrapped;
+                }
+            }
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(bool returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("Cookie={{{0}}}", Cookie);
+            }
+        }
+
+        /// <summary>
+        /// Return true (1) if the specified cookie returned with the response can be
+        /// set or false (0) otherwise.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxCanSetCookieEventHandler(object sender, CfxCanSetCookieEventArgs e);
+
+        /// <summary>
+        /// Return true (1) if the specified cookie returned with the response can be
+        /// set or false (0) otherwise.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxCanSetCookieEventArgs : CfxEventArgs {
+
+            internal IntPtr m_cookie;
+            internal CfxCookie m_cookie_wrapped;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxCanSetCookieEventArgs(IntPtr cookie) {
+                m_cookie = cookie;
+            }
+
+            public CfxCookie Cookie {
+                get {
+                    CheckAccess();
+                    if(m_cookie_wrapped == null) m_cookie_wrapped = CfxCookie.Wrap(m_cookie);
+                    return m_cookie_wrapped;
+                }
+            }
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_resource_handler_capi.h">cef/include/capi/cef_resource_handler_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(bool returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("Cookie={{{0}}}", Cookie);
+            }
+        }
+
+
     }
-
-    public delegate void CfxReadResponseEventHandler(object sender, CfxReadResponseEventArgs e);
-
-    /// <summary>
-    /// Read response data. If data is available immediately copy up to
-    /// |BytesToRead| bytes into |DataOut|, set |BytesRead| to the number of
-    /// bytes copied, and return true (1). To read the data at a later time set
-    /// |BytesRead| to 0, return true (1) and call CfxCallback.Continue() when the
-    /// data is available. To indicate response completion return false (0).
-    /// </summary>
-    public class CfxReadResponseEventArgs : CfxEventArgs {
-
-        internal IntPtr m_data_out;
-        internal int m_bytes_to_read;
-        internal int m_bytes_read;
-        internal IntPtr m_callback;
-        internal CfxCallback m_callback_wrapped;
-
-        internal bool m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxReadResponseEventArgs(IntPtr data_out, int bytes_to_read, IntPtr callback) {
-            m_data_out = data_out;
-            m_bytes_to_read = bytes_to_read;
-            m_callback = callback;
-        }
-
-        public IntPtr DataOut {
-            get {
-                CheckAccess();
-                return m_data_out;
-            }
-        }
-        public int BytesToRead {
-            get {
-                CheckAccess();
-                return m_bytes_to_read;
-            }
-        }
-        public int BytesRead {
-            set {
-                CheckAccess();
-                m_bytes_read = value;
-            }
-        }
-        public CfxCallback Callback {
-            get {
-                CheckAccess();
-                if(m_callback_wrapped == null) m_callback_wrapped = CfxCallback.Wrap(m_callback);
-                return m_callback_wrapped;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-
-        public override string ToString() {
-            return String.Format("DataOut={{{0}}}, BytesToRead={{{1}}}, Callback={{{3}}}", DataOut, BytesToRead, Callback);
-        }
-    }
-
-    public delegate void CfxCanGetCookieEventHandler(object sender, CfxCanGetCookieEventArgs e);
-
-    /// <summary>
-    /// Return true (1) if the specified cookie can be sent with the request or
-    /// false (0) otherwise. If false (0) is returned for any cookie then no
-    /// cookies will be sent with the request.
-    /// </summary>
-    public class CfxCanGetCookieEventArgs : CfxEventArgs {
-
-        internal IntPtr m_cookie;
-        internal CfxCookie m_cookie_wrapped;
-
-        internal bool m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxCanGetCookieEventArgs(IntPtr cookie) {
-            m_cookie = cookie;
-        }
-
-        public CfxCookie Cookie {
-            get {
-                CheckAccess();
-                if(m_cookie_wrapped == null) m_cookie_wrapped = CfxCookie.Wrap(m_cookie);
-                return m_cookie_wrapped;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-
-        public override string ToString() {
-            return String.Format("Cookie={{{0}}}", Cookie);
-        }
-    }
-
-    public delegate void CfxCanSetCookieEventHandler(object sender, CfxCanSetCookieEventArgs e);
-
-    /// <summary>
-    /// Return true (1) if the specified cookie returned with the response can be
-    /// set or false (0) otherwise.
-    /// </summary>
-    public class CfxCanSetCookieEventArgs : CfxEventArgs {
-
-        internal IntPtr m_cookie;
-        internal CfxCookie m_cookie_wrapped;
-
-        internal bool m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxCanSetCookieEventArgs(IntPtr cookie) {
-            m_cookie = cookie;
-        }
-
-        public CfxCookie Cookie {
-            get {
-                CheckAccess();
-                if(m_cookie_wrapped == null) m_cookie_wrapped = CfxCookie.Wrap(m_cookie);
-                return m_cookie_wrapped;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-
-        public override string ToString() {
-            return String.Format("Cookie={{{0}}}", Cookie);
-        }
-    }
-
-
 }

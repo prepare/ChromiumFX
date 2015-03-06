@@ -47,7 +47,7 @@ namespace Chromium.Remote {
             browserProcessHandler.OnBeforeChildProcessLaunch += OnBeforeChildProcessLaunch;
         }
 
-        private static void OnBeforeChildProcessLaunch(object sender, Chromium.CfxOnBeforeChildProcessLaunchEventArgs e) {
+        private static void OnBeforeChildProcessLaunch(object sender, Chromium.Event.CfxOnBeforeChildProcessLaunchEventArgs e) {
 
             if(e.CommandLine.HasSwitch("type") && e.CommandLine.GetSwitchValue("type") == "renderer") {
                 var pipeName = "cfx" + Guid.NewGuid().ToString().Replace("-", string.Empty);

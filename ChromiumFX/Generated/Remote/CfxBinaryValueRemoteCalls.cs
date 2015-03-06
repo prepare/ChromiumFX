@@ -34,6 +34,7 @@
 using System;
 
 namespace Chromium.Remote {
+
     internal class CfxBinaryValueCreateRenderProcessCall : RenderProcessCall {
 
         internal CfxBinaryValueCreateRenderProcessCall()

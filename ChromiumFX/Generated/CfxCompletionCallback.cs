@@ -37,6 +37,10 @@ namespace Chromium {
     /// <summary>
     /// Generic callback structure used for asynchronous completion.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_callback_capi.h">cef/include/capi/cef_callback_capi.h</see>.
+    /// </remarks>
     public class CfxCompletionCallback : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -61,6 +65,10 @@ namespace Chromium {
         /// <summary>
         /// Method that will be called once the task is complete.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_callback_capi.h">cef/include/capi/cef_callback_capi.h</see>.
+        /// </remarks>
         public void OnComplete() {
             CfxApi.cfx_completion_callback_on_complete(NativePtr);
         }

@@ -34,10 +34,16 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Implement this structure to receive geolocation updates. The functions of
     /// this structure will be called on the browser process UI thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_capi.h">cef/include/capi/cef_geolocation_capi.h</see>.
+    /// </remarks>
     public class CfxGetGeolocationCallback : CfxBase {
 
         internal static CfxGetGeolocationCallback Wrap(IntPtr nativePtr) {
@@ -65,6 +71,10 @@ namespace Chromium {
         /// Called with the 'best available' location information or, if the location
         /// update failed, with error information.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_capi.h">cef/include/capi/cef_geolocation_capi.h</see>.
+        /// </remarks>
         public event CfxGetGeolocationCallbackOnLocationUpdateEventHandler OnLocationUpdate {
             add {
                 if(m_OnLocationUpdate == null) {
@@ -92,32 +102,47 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxGetGeolocationCallbackOnLocationUpdateEventHandler(object sender, CfxGetGeolocationCallbackOnLocationUpdateEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Called with the 'best available' location information or, if the location
-    /// update failed, with error information.
-    /// </summary>
-    public class CfxGetGeolocationCallbackOnLocationUpdateEventArgs : CfxEventArgs {
+        /// <summary>
+        /// Called with the 'best available' location information or, if the location
+        /// update failed, with error information.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_capi.h">cef/include/capi/cef_geolocation_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxGetGeolocationCallbackOnLocationUpdateEventHandler(object sender, CfxGetGeolocationCallbackOnLocationUpdateEventArgs e);
 
-        internal IntPtr m_position;
-        internal CfxGeoposition m_position_wrapped;
+        /// <summary>
+        /// Called with the 'best available' location information or, if the location
+        /// update failed, with error information.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_capi.h">cef/include/capi/cef_geolocation_capi.h</see>.
+        /// </remarks>
+        public class CfxGetGeolocationCallbackOnLocationUpdateEventArgs : CfxEventArgs {
 
-        internal CfxGetGeolocationCallbackOnLocationUpdateEventArgs(IntPtr position) {
-            m_position = position;
-        }
+            internal IntPtr m_position;
+            internal CfxGeoposition m_position_wrapped;
 
-        public CfxGeoposition Position {
-            get {
-                CheckAccess();
-                if(m_position_wrapped == null) m_position_wrapped = CfxGeoposition.Wrap(m_position);
-                return m_position_wrapped;
+            internal CfxGetGeolocationCallbackOnLocationUpdateEventArgs(IntPtr position) {
+                m_position = position;
+            }
+
+            public CfxGeoposition Position {
+                get {
+                    CheckAccess();
+                    if(m_position_wrapped == null) m_position_wrapped = CfxGeoposition.Wrap(m_position);
+                    return m_position_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Position={{{0}}}", Position);
             }
         }
 
-        public override string ToString() {
-            return String.Format("Position={{{0}}}", Position);
-        }
     }
-
 }

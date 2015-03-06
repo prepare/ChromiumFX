@@ -36,7 +36,7 @@ Public Class StructMember
     Public ReadOnly MemberType As ApiType
     Public ReadOnly Name As String
 
-    Public ReadOnly Comments As String()
+    Public ReadOnly Comments As CommentData
 
 
     Public IsProperty As Boolean
@@ -98,7 +98,7 @@ Public Class CfxClassBuilder
 
     Public ReadOnly ExportFunctions As CefExportFunction()
     Public ReadOnly StructMembers As StructMember()
-    Private ReadOnly comments As String()
+    Private ReadOnly comments As CommentData
 
     Private ReadOnly StructCallbacks As StructMember()
 
@@ -544,7 +544,7 @@ Public Class CfxClassBuilder
 
     Public Sub EmitPublicCallClass(b As CodeBuilder)
 
-        b.AppendSummary(comments)
+        b.AppendSummaryAndRemarks(comments)
 
         b.BeginClass(ClassName & " : CfxBase", GeneratorConfig.ClassModifiers(ClassName))
         b.AppendLine()
@@ -579,20 +579,23 @@ Public Class CfxClassBuilder
 
         For Each p In m_structProperties
             If p.Setter IsNot Nothing AndAlso p.Setter.Comments IsNot Nothing Then
-                Dim summary As New List(Of String)
-                summary.AddRange(p.Getter.Comments)
-                summary.Add("")
-                summary.AddRange(p.Setter.Comments)
-                b.AppendSummary(summary.ToArray())
+                Dim summaryLines As New List(Of String)
+                summaryLines.AddRange(p.Getter.Comments.Lines)
+                summaryLines.Add("")
+                summaryLines.AddRange(p.Setter.Comments.Lines)
+                Dim summary = New CommentData
+                summary.Lines = summaryLines.ToArray()
+                summary.FileName = p.Getter.Comments.FileName
+                b.AppendSummaryAndRemarks(summary)
             Else
-                b.AppendSummary(p.Getter.Comments)
+                b.AppendSummaryAndRemarks(p.Getter.Comments)
             End If
             p.Getter.MemberType.AsCefCallbackType.EmitPublicProperty(b, If(p.Setter Is Nothing, Nothing, p.Setter.MemberType.AsCefCallbackType))
             b.AppendLine()
         Next
 
         For Each sm In m_structFunctions
-            b.AppendSummary(sm.Comments)
+            b.AppendSummaryAndRemarks(sm.Comments)
             sm.MemberType.AsCefCallbackType.EmitPublicFunction(b)
             b.AppendLine()
         Next
@@ -608,8 +611,10 @@ Public Class CfxClassBuilder
 
     Public Sub EmitPublicCallbackClass(b As CodeBuilder)
 
+        b.AppendLine("using Event;")
+        b.AppendLine()
 
-        b.AppendSummary(comments, False, True)
+        b.AppendSummaryAndRemarks(comments, False, True)
 
         b.BeginClass(ClassName & " : CfxBase", GeneratorConfig.ClassModifiers(ClassName))
         b.AppendLine()
@@ -696,7 +701,7 @@ Public Class CfxClassBuilder
         Next
 
 
-        b.AppendSummary(comments)
+        b.AppendSummaryAndRemarks(comments)
 
         b.BeginClass(ClassName & " : CfxStructure", GeneratorConfig.ClassModifiers(ClassName, "public sealed"))
         b.AppendLine()
@@ -723,7 +728,7 @@ Public Class CfxClassBuilder
 
         For Each sm In StructMembers
             If sm.Name <> "size" Then
-                b.AppendSummary(sm.Comments)
+                b.AppendSummaryAndRemarks(sm.Comments)
                 b.BeginBlock("public {1} {0}", CSharp.Escape(sm.PublicName), sm.MemberType.PublicSymbol)
                 b.BeginBlock("get")
                 sm.MemberType.EmitValueStructGetterVars(b, "value")
@@ -745,6 +750,13 @@ Public Class CfxClassBuilder
     End Sub
 
     Public Sub EmitRemoteCalls(b As CodeBuilder, callIds As List(Of String))
+
+        If Category = StructCategory.ApiCallbacks Then
+            b.AppendLine("using Event;")
+            b.AppendLine("using Chromium.Event;")
+        End If
+
+        b.AppendLine()
 
         If NeedsConstructor Then
             b.BeginRemoteCallClass(ClassName & "Ctor", False, callIds)
@@ -966,7 +978,13 @@ Public Class CfxClassBuilder
 
     Public Sub EmitRemoteClass(b As CodeBuilder)
 
-        b.AppendSummary(comments, True, Category = StructCategory.ApiCallbacks)
+        If Category = StructCategory.ApiCallbacks Then
+            b.AppendLine("using Event;")
+        End If
+
+        b.AppendLine()
+
+        b.AppendSummaryAndRemarks(comments, True, Category = StructCategory.ApiCallbacks)
         If IsRefCounted Then
             b.BeginClass(RemoteClassName & " : CfrBase", GeneratorConfig.ClassModifiers(RemoteClassName))
         Else
@@ -1050,13 +1068,17 @@ Public Class CfxClassBuilder
                         Dim cb = p.Getter.MemberType.AsCefCallbackType
 
                         If p.Setter IsNot Nothing AndAlso p.Setter.Comments IsNot Nothing Then
-                            Dim summary As New List(Of String)
-                            summary.AddRange(p.Getter.Comments)
-                            summary.Add("")
-                            summary.AddRange(p.Setter.Comments)
-                            b.AppendSummary(summary.ToArray(), True)
+                            Dim summaryLines As New List(Of String)
+                            summaryLines.AddRange(p.Getter.Comments.Lines)
+                            summaryLines.Add("")
+                            summaryLines.AddRange(p.Setter.Comments.Lines)
+                            Dim summary = New CommentData
+                            summary.Lines = summaryLines.ToArray()
+                            summary.FileName = p.Getter.Comments.FileName
+                            'If RemoteClassName = "CfrRequest" AndAlso p.Getter.PublicName = "GetFlags" Then Stop
+                            b.AppendSummaryAndRemarks(summary, True)
                         Else
-                            b.AppendSummary(p.Getter.Comments, True)
+                            b.AppendSummaryAndRemarks(p.Getter.Comments, True)
                         End If
 
                         b.BeginBlock("public {0} {1}", cb.RemoteReturnType.RemoteSymbol, p.PropertyName)
@@ -1077,7 +1099,7 @@ Public Class CfxClassBuilder
                 For Each sm In m_structFunctions
                     If GeneratorConfig.CreateRemoteProxy(struct.Name & "::" & sm.Name) Then
                         Dim cb = sm.MemberType.AsCefCallbackType
-                        b.AppendSummary(sm.Comments, True)
+                        b.AppendSummaryAndRemarks(sm.Comments, True)
                         b.BeginFunction(sm.PublicName, cb.RemoteReturnType.RemoteSymbol, cb.Signature.RemoteSignature)
                         cb.Signature.EmitRemoteCall(b)
                         b.EndBlock()
@@ -1094,7 +1116,7 @@ Public Class CfxClassBuilder
                         b.AppendLine("bool m_{0}_fetched;", sm.PublicName)
                         b.AppendLine()
 
-                        b.AppendSummary(sm.Comments, True)
+                        b.AppendSummaryAndRemarks(sm.Comments, True)
                         b.BeginBlock("public {1} {0}", CSharp.Escape(sm.PublicName), sm.MemberType.RemoteSymbol)
                         b.BeginBlock("get")
                         b.BeginIf("!m_{0}_fetched", sm.PublicName)
@@ -1132,13 +1154,19 @@ Public Class CfxClassBuilder
 
         If Category = StructCategory.ApiCallbacks Then
             b.AppendLine()
+            b.BeginBlock("namespace Event")
             b.AppendLine()
             EmitRemoteEventArgs(b)
+            b.EndBlock()
         End If
 
     End Sub
 
     Public Sub EmitPublicEventArgs(b As CodeBuilder)
+
+        b.BeginBlock("namespace Event")
+        b.AppendLine()
+
 
         For Each sm In StructMembers
             If sm.MemberType.IsCefCallbackType Then
@@ -1146,6 +1174,8 @@ Public Class CfxClassBuilder
                 b.AppendLine()
             End If
         Next
+
+        b.EndBlock()
 
     End Sub
 

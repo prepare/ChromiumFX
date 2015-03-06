@@ -33,6 +33,9 @@
 using System;
 namespace Chromium.Remote
 {
+    /// <summary>
+    /// Base class for all remote callback event args.
+    /// </summary>
     public class CfrEventArgs : EventArgs {
         
         internal readonly ulong eventArgsId;
@@ -43,6 +46,10 @@ namespace Chromium.Remote
             this.eventArgsId = eventArgsId;
         }
 
+        /// <summary>
+        /// The CfrRuntime for the render process that
+        /// originated this remote callback event.
+        /// </summary>
         public CfrRuntime RemoteRuntime { get { return remoteRuntime; }}
 
     }

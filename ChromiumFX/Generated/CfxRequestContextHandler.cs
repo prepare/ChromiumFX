@@ -34,9 +34,15 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Implement this structure to provide handler implementations.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_context_handler_capi.h">cef/include/capi/cef_request_context_handler_capi.h</see>.
+    /// </remarks>
     public class CfxRequestContextHandler : CfxBase {
 
         internal static CfxRequestContextHandler Wrap(IntPtr nativePtr) {
@@ -66,6 +72,10 @@ namespace Chromium {
         /// Called on the IO thread to retrieve the cookie manager. The global cookie
         /// manager will be used if this function returns NULL.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_context_handler_capi.h">cef/include/capi/cef_request_context_handler_capi.h</see>.
+        /// </remarks>
         public event CfxRequestContextHandlerGetCookieManagerEventHandler GetCookieManager {
             add {
                 if(m_GetCookieManager == null) {
@@ -93,29 +103,54 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxRequestContextHandlerGetCookieManagerEventHandler(object sender, CfxRequestContextHandlerGetCookieManagerEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Called on the IO thread to retrieve the cookie manager. The global cookie
-    /// manager will be used if this function returns NULL.
-    /// </summary>
-    public class CfxRequestContextHandlerGetCookieManagerEventArgs : CfxEventArgs {
+        /// <summary>
+        /// Called on the IO thread to retrieve the cookie manager. The global cookie
+        /// manager will be used if this function returns NULL.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_context_handler_capi.h">cef/include/capi/cef_request_context_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxRequestContextHandlerGetCookieManagerEventHandler(object sender, CfxRequestContextHandlerGetCookieManagerEventArgs e);
+
+        /// <summary>
+        /// Called on the IO thread to retrieve the cookie manager. The global cookie
+        /// manager will be used if this function returns NULL.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_context_handler_capi.h">cef/include/capi/cef_request_context_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxRequestContextHandlerGetCookieManagerEventArgs : CfxEventArgs {
 
 
-        internal CfxCookieManager m_returnValue;
-        private bool returnValueSet;
+            internal CfxCookieManager m_returnValue;
+            private bool returnValueSet;
 
-        internal CfxRequestContextHandlerGetCookieManagerEventArgs() {
-        }
-
-        public void SetReturnValue(CfxCookieManager returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
+            internal CfxRequestContextHandlerGetCookieManagerEventArgs() {
             }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
 
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_context_handler_capi.h">cef/include/capi/cef_request_context_handler_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(CfxCookieManager returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+        }
+
+    }
 }

@@ -37,6 +37,10 @@ namespace Chromium {
     /// <summary>
     /// Information about a specific web plugin.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+    /// </remarks>
     public class CfxWebPluginInfo : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -61,6 +65,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the plugin name (i.e. Flash).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// </remarks>
         public String Name {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_web_plugin_info_get_name(NativePtr));
@@ -70,6 +78,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the plugin file path (DLL/bundle/library).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// </remarks>
         public String Path {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_web_plugin_info_get_path(NativePtr));
@@ -79,6 +91,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the version of the plugin (may be OS-specific).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// </remarks>
         public String Version {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_web_plugin_info_get_version(NativePtr));
@@ -88,6 +104,10 @@ namespace Chromium {
         /// <summary>
         /// Returns a description of the plugin from the version information.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// </remarks>
         public String Description {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_web_plugin_info_get_description(NativePtr));

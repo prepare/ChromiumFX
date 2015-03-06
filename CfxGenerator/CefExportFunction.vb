@@ -43,7 +43,7 @@ Public Class CefExportFunction
     Public ReadOnly Name As String
     Public ReadOnly Signature As Signature
     Public ReadOnly PrivateWrapper As Boolean
-    Public ReadOnly Comments As String()
+    Public ReadOnly Comments As CommentData
 
     Public ReadOnly Parent As CefType
 
@@ -96,7 +96,7 @@ Public Class CefExportFunction
 
     Public Sub EmitWrapperFunction(b As CodeBuilder)
 
-        b.AppendSummary(Comments)
+        b.AppendSummaryAndRemarks(Comments)
 
         Dim modifiers = If(PrivateWrapper, "private", "public")
 
@@ -111,7 +111,7 @@ Public Class CefExportFunction
     End Sub
 
     Public Sub EmitRemoteFunction(b As CodeBuilder)
-        b.AppendSummary(Comments, True)
+        b.AppendSummaryAndRemarks(Comments, True)
 
         If Parent Is Nothing Then
             b.BeginFunction(PublicFunctionName, ReturnType.RemoteSymbol, Signature.RemoteSignature)
@@ -211,7 +211,7 @@ Public Class CefExportFunction
         End Get
     End Property
 
-    Public ReadOnly Property Comments1 As String() Implements ISignatureParent.Comments
+    Public ReadOnly Property Comments1 As CommentData Implements ISignatureParent.Comments
         Get
             Return Comments
         End Get

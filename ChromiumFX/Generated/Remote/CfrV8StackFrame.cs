@@ -34,6 +34,7 @@
 using System;
 
 namespace Chromium.Remote {
+
     /// <summary>
     /// Structure representing a V8 stack frame handle. V8 handles can only be
     /// accessed from the thread on which they are created. Valid threads for
@@ -41,6 +42,10 @@ namespace Chromium.Remote {
     /// and WebWorker threads. A task runner for posting tasks on the associated
     /// thread can be retrieved via the CfrV8Context.GetTaskRunner() function.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+    /// </remarks>
     public class CfrV8StackFrame : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -66,6 +71,10 @@ namespace Chromium.Remote {
         /// on the current thread. Do not call any other functions if this function
         /// returns false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 var call = new CfxV8StackFrameIsValidRenderProcessCall();
@@ -78,6 +87,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the name of the resource script that contains the function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public String ScriptName {
             get {
                 var call = new CfxV8StackFrameGetScriptNameRenderProcessCall();
@@ -92,6 +105,10 @@ namespace Chromium.Remote {
         /// sourceURL value if the script name is undefined and its source ends with a
         /// "//@ sourceURL=..." string.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public String ScriptNameOrSourceUrl {
             get {
                 var call = new CfxV8StackFrameGetScriptNameOrSourceUrlRenderProcessCall();
@@ -104,6 +121,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the name of the function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public String FunctionName {
             get {
                 var call = new CfxV8StackFrameGetFunctionNameRenderProcessCall();
@@ -116,6 +137,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the 1-based line number for the function call or 0 if unknown.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int LineNumber {
             get {
                 var call = new CfxV8StackFrameGetLineNumberRenderProcessCall();
@@ -129,6 +154,10 @@ namespace Chromium.Remote {
         /// Returns the 1-based column offset on the line for the function call or 0 if
         /// unknown.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int Column {
             get {
                 var call = new CfxV8StackFrameGetColumnRenderProcessCall();
@@ -141,6 +170,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if the function was compiled using eval().
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsEval {
             get {
                 var call = new CfxV8StackFrameIsEvalRenderProcessCall();
@@ -153,6 +186,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if the function was called as a constructor via "new".
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsConstructor {
             get {
                 var call = new CfxV8StackFrameIsConstructorRenderProcessCall();

@@ -38,6 +38,10 @@ namespace Chromium {
     /// Provides information about the context menu state. The ethods of this
     /// structure can only be accessed on browser process the UI thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+    /// </remarks>
     public class CfxContextMenuParams : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -63,6 +67,10 @@ namespace Chromium {
         /// Returns the X coordinate of the mouse where the context menu was invoked.
         /// Coords are relative to the associated RenderView's origin.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public int Xcoord {
             get {
                 return CfxApi.cfx_context_menu_params_get_xcoord(NativePtr);
@@ -73,6 +81,10 @@ namespace Chromium {
         /// Returns the Y coordinate of the mouse where the context menu was invoked.
         /// Coords are relative to the associated RenderView's origin.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public int Ycoord {
             get {
                 return CfxApi.cfx_context_menu_params_get_ycoord(NativePtr);
@@ -83,6 +95,10 @@ namespace Chromium {
         /// Returns flags representing the type of node that the context menu was
         /// invoked on.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public CfxContextMenuTypeFlags TypeFlags {
             get {
                 return CfxApi.cfx_context_menu_params_get_type_flags(NativePtr);
@@ -93,6 +109,10 @@ namespace Chromium {
         /// Returns the URL of the link, if any, that encloses the node that the
         /// context menu was invoked on.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public String LinkUrl {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_context_menu_params_get_link_url(NativePtr));
@@ -103,6 +123,10 @@ namespace Chromium {
         /// Returns the link URL, if any, to be used ONLY for "copy link address". We
         /// don't validate this field in the frontend process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public String UnfilteredLinkUrl {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_context_menu_params_get_unfiltered_link_url(NativePtr));
@@ -113,6 +137,10 @@ namespace Chromium {
         /// Returns the source URL, if any, for the element that the context menu was
         /// invoked on. Example of elements with source URLs are img, audio, and video.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public String SourceUrl {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_context_menu_params_get_source_url(NativePtr));
@@ -123,6 +151,10 @@ namespace Chromium {
         /// Returns true (1) if the context menu was invoked on an image which has non-
         /// NULL contents.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public bool HasImageContents {
             get {
                 return 0 != CfxApi.cfx_context_menu_params_has_image_contents(NativePtr);
@@ -132,6 +164,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the URL of the top level page that the context menu was invoked on.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public String PageUrl {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_context_menu_params_get_page_url(NativePtr));
@@ -141,6 +177,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the URL of the subframe that the context menu was invoked on.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public String FrameUrl {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_context_menu_params_get_frame_url(NativePtr));
@@ -151,6 +191,10 @@ namespace Chromium {
         /// Returns the character encoding of the subframe that the context menu was
         /// invoked on.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public String FrameCharset {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_context_menu_params_get_frame_charset(NativePtr));
@@ -160,6 +204,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the type of context node that the context menu was invoked on.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public CfxContextMenuMediaType MediaType {
             get {
                 return CfxApi.cfx_context_menu_params_get_media_type(NativePtr);
@@ -170,6 +218,10 @@ namespace Chromium {
         /// Returns flags representing the actions supported by the media element, if
         /// any, that the context menu was invoked on.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public CfxContextMenuMediaStateFlags MediaStateFlags {
             get {
                 return CfxApi.cfx_context_menu_params_get_media_state_flags(NativePtr);
@@ -180,6 +232,10 @@ namespace Chromium {
         /// Returns the text of the selection, if any, that the context menu was
         /// invoked on.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public String SelectionText {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_context_menu_params_get_selection_text(NativePtr));
@@ -190,6 +246,10 @@ namespace Chromium {
         /// Returns the text of the misspelled word, if any, that the context menu was
         /// invoked on.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public String MisspelledWord {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_context_menu_params_get_misspelled_word(NativePtr));
@@ -200,6 +260,10 @@ namespace Chromium {
         /// Returns the hash of the misspelled word, if any, that the context menu was
         /// invoked on.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public int MisspellingHash {
             get {
                 return CfxApi.cfx_context_menu_params_get_misspelling_hash(NativePtr);
@@ -209,6 +273,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if the context menu was invoked on an editable node.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public bool IsEditable {
             get {
                 return 0 != CfxApi.cfx_context_menu_params_is_editable(NativePtr);
@@ -219,6 +287,10 @@ namespace Chromium {
         /// Returns true (1) if the context menu was invoked on an editable node where
         /// spell-check is enabled.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public bool IsSpellCheckEnabled {
             get {
                 return 0 != CfxApi.cfx_context_menu_params_is_spell_check_enabled(NativePtr);
@@ -229,6 +301,10 @@ namespace Chromium {
         /// Returns flags representing the actions supported by the editable node, if
         /// any, that the context menu was invoked on.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public CfxContextMenuEditStateFlags EditStateFlags {
             get {
                 return CfxApi.cfx_context_menu_params_get_edit_state_flags(NativePtr);
@@ -240,6 +316,10 @@ namespace Chromium {
         /// |suggestions| from the spell check service for the misspelled word if there
         /// is one.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
         public bool GetDictionarySuggestions(System.Collections.Generic.List<string> suggestions) {
             PinnedString[] suggestions_handles;
             var suggestions_unwrapped = CfxStringCollections.UnwrapCfxStringList(suggestions, out suggestions_handles);

@@ -36,13 +36,25 @@ Public Class CefCallbackType
 
     Public ReadOnly Signature As Signature
     Public ReadOnly Parent As CefStructType
-    Public ReadOnly Comments As String()
+    Public ReadOnly Comments As CommentData
 
     Public PropertyName As String
 
     Private m_callMode As CfxCallMode
 
-    Public Sub New(parent As CefStructType, structCategory As StructCategory, name As String, sd As Parser.SignatureData, api As ApiTypeBuilder, comments As String())
+    Private Shared setReturnValueComments As CommentData
+
+    Shared Sub New()
+        setReturnValueComments = New CommentData
+        setReturnValueComments.Lines = {
+            "Sets the return value for the underlying CEF framework callback.",
+            "Applications may attach more than one event handler to a framework callback event,",
+            "but only one event handler can set the return value. Calling SetReturnValue()",
+            "more then once will cause an exception to be thrown."
+            }
+    End Sub
+
+    Public Sub New(parent As CefStructType, structCategory As StructCategory, name As String, sd As Parser.SignatureData, api As ApiTypeBuilder, comments As CommentData)
         MyBase.New(name)
         Me.Parent = parent
         Me.Comments = comments
@@ -218,18 +230,18 @@ Public Class CefCallbackType
         b.EndBlock()
     End Sub
 
-    Private Shared emittedHandlers As New Dictionary(Of String, String())
+    Private Shared emittedHandlers As New Dictionary(Of String, CommentData)
 
-    Public Sub EmitPublicEventArgsAndHandler(b As CodeBuilder, comments As String())
+    Public Sub EmitPublicEventArgsAndHandler(b As CodeBuilder, comments As CommentData)
 
         If emittedHandlers.ContainsKey(EventName) Then
             Dim c0 = emittedHandlers(EventName)
             If c0 IsNot Nothing Then
-                If c0.Length <> comments.Length Then
+                If c0.Lines.Length <> comments.Lines.Length Then
                     Stop
                 End If
-                For i = 0 To c0.Length - 1
-                    If c0(i) <> comments(i) Then
+                For i = 0 To c0.Lines.Length - 1
+                    If c0.Lines(i) <> comments.Lines(i) Then
                         ' two handlers use same event but with different comments
                         Stop
                     End If
@@ -241,10 +253,11 @@ Public Class CefCallbackType
 
         If IsBasicEvent Then Return
 
+        b.AppendSummaryAndRemarks(comments, False, True)
         b.AppendLine("public delegate void {0}(object sender, {1} e);", EventHandlerName, PublicEventArgsClassName)
         b.AppendLine()
 
-        b.AppendSummary(comments, False, True)
+        b.AppendSummaryAndRemarks(comments, False, True)
         b.BeginClass(PublicEventArgsClassName & " : CfxEventArgs", GeneratorConfig.ClassModifiers(PublicEventArgsClassName))
         b.AppendLine()
 
@@ -267,6 +280,8 @@ Public Class CefCallbackType
         Signature.EmitPublicEventArgProperties(b)
 
         If Not Signature.PublicReturnType.IsVoid Then
+            setReturnValueComments.FileName = comments.FileName
+            b.AppendSummaryAndRemarks(setReturnValueComments)
             b.BeginBlock("public void SetReturnValue({0} returnValue)", Signature.PublicReturnType.PublicSymbol)
             b.AppendLine("CheckAccess();")
             b.BeginIf("returnValueSet")
@@ -339,14 +354,16 @@ Public Class CefCallbackType
 
     'End Sub
 
-    Public Sub EmitRemoteEventArgsAndHandler(b As CodeBuilder, comments As String())
+    Public Sub EmitRemoteEventArgsAndHandler(b As CodeBuilder, comments As CommentData)
+
 
         If IsBasicEvent Then Return
 
+        b.AppendSummaryAndRemarks(comments, True, True)
         b.AppendLine("public delegate void {0}(object sender, {1} e);", RemoteEventHandlerName, RemoteEventArgsClassName)
         b.AppendLine()
 
-        b.AppendSummary(comments, True, True)
+        b.AppendSummaryAndRemarks(comments, True, True)
         b.BeginClass(RemoteEventArgsClassName & " : CfrEventArgs", GeneratorConfig.ClassModifiers(RemoteEventArgsClassName))
         b.AppendLine()
 
@@ -388,6 +405,8 @@ Public Class CefCallbackType
             b.EndBlock()
         Next
         If Not Signature.PublicReturnType.IsVoid Then
+            setReturnValueComments.FileName = comments.FileName
+            b.AppendSummaryAndRemarks(setReturnValueComments)
             b.BeginBlock("public void SetReturnValue({0} returnValue)", Signature.PublicReturnType.RemoteSymbol)
             b.AppendLine("var call = new {0}SetReturnValueRenderProcessCall();", EventName)
             b.AppendLine("call.eventArgsId = eventArgsId;")
@@ -404,10 +423,10 @@ Public Class CefCallbackType
 
     End Sub
 
-    Public Sub EmitPublicEvent(b As CodeBuilder, cbIndex As Integer, comments As String())
+    Public Sub EmitPublicEvent(b As CodeBuilder, cbIndex As Integer, comments As CommentData)
 
         Dim callbackName = Parent.CfxName & "_" & Name
-        b.AppendSummary(comments, False, True)
+        b.AppendSummaryAndRemarks(comments, False, True)
         b.BeginBlock("public event {0} {1}", EventHandlerName, CSharp.Escape(PublicName))
         b.BeginBlock("add")
         b.BeginBlock("if(m_{0} == null)", PublicName)
@@ -430,9 +449,9 @@ Public Class CefCallbackType
     End Sub
 
 
-    Public Sub EmitRemoteEvent(b As CodeBuilder, comments As String())
+    Public Sub EmitRemoteEvent(b As CodeBuilder, comments As CommentData)
 
-        b.AppendSummary(comments, True, True)
+        b.AppendSummaryAndRemarks(comments, True, True)
         b.BeginBlock("public event {0} {1}", RemoteEventHandlerName, CSharp.Escape(PublicName))
         b.BeginBlock("add")
         b.BeginBlock("if(m_{0} == null)", PublicName)
@@ -457,7 +476,7 @@ Public Class CefCallbackType
 
     End Sub
 
-    Public Sub EmitRemoteRaiseEventFunction(b As CodeBuilder, comments As String())
+    Public Sub EmitRemoteRaiseEventFunction(b As CodeBuilder, comments As CommentData)
         'b.AppendLine("internal {0} m_{1};", ProxyEventHandlerName, PublicName)
         b.BeginBlock("internal void raise_{0}(object sender, {1} e)", PublicName, RemoteEventArgsClassName)
         b.AppendLine("var handler = m_{0};", PublicName)
@@ -548,7 +567,7 @@ Public Class CefCallbackType
         End Get
     End Property
 
-    Public ReadOnly Property Comments1 As String() Implements ISignatureParent.Comments
+    Public ReadOnly Property Comments1 As CommentData Implements ISignatureParent.Comments
         Get
             Return Comments
         End Get

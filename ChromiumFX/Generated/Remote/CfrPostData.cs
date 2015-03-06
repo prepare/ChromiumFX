@@ -34,10 +34,15 @@
 using System;
 
 namespace Chromium.Remote {
+
     /// <summary>
     /// Structure used to represent post data for a web request. The functions of
     /// this structure may be called on any thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+    /// </remarks>
     public class CfrPostData : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -58,6 +63,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Create a new CfrPostData object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public static CfrPostData Create(CfrRuntime remoteRuntime) {
             var call = new CfxPostDataCreateRenderProcessCall();
             call.Execute(remoteRuntime.connection);
@@ -70,6 +79,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if this object is read-only.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public bool IsReadOnly {
             get {
                 var call = new CfxPostDataIsReadOnlyRenderProcessCall();
@@ -82,6 +95,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the number of existing post data elements.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public int ElementCount {
             get {
                 var call = new CfxPostDataGetElementCountRenderProcessCall();
@@ -94,6 +111,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Retrieve the post data elements.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public CfrPostDataElement[] Elements {
             get {
                 var call = new CfxPostDataGetElementsRenderProcessCall();
@@ -112,6 +133,10 @@ namespace Chromium.Remote {
         /// Remove the specified post data element.  Returns true (1) if the removal
         /// succeeds.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public bool RemoveElement(CfrPostDataElement element) {
             var call = new CfxPostDataRemoveElementRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -123,6 +148,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Add the specified post data element.  Returns true (1) if the add succeeds.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public bool AddElement(CfrPostDataElement element) {
             var call = new CfxPostDataAddElementRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -134,6 +163,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Remove all existing post data elements.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public void RemoveElements() {
             var call = new CfxPostDataRemoveElementsRenderProcessCall();
             call.self = CfrObject.Unwrap(this);

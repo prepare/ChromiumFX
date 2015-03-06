@@ -34,11 +34,17 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Structure that should be implemented to handle V8 function calls. The
     /// functions of this structure will be called on the thread associated with the
     /// V8 function.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+    /// </remarks>
     public class CfxV8Handler : CfxBase {
 
         internal static CfxV8Handler Wrap(IntPtr nativePtr) {
@@ -89,6 +95,10 @@ namespace Chromium {
         /// function return value. If execution fails set |Exception| to the exception
         /// that will be thrown. Return true (1) if execution was handled.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public event CfxV8HandlerExecuteEventHandler Execute {
             add {
                 if(m_Execute == null) {
@@ -116,96 +126,124 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxV8HandlerExecuteEventHandler(object sender, CfxV8HandlerExecuteEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Handle execution of the function identified by |Name|. |Object| is the
-    /// receiver ('this' object) of the function. |Arguments| is the list of
-    /// arguments passed to the function. If execution succeeds set |Retval| to the
-    /// function return value. If execution fails set |Exception| to the exception
-    /// that will be thrown. Return true (1) if execution was handled.
-    /// </summary>
-    public class CfxV8HandlerExecuteEventArgs : CfxEventArgs {
+        /// <summary>
+        /// Handle execution of the function identified by |Name|. |Object| is the
+        /// receiver ('this' object) of the function. |Arguments| is the list of
+        /// arguments passed to the function. If execution succeeds set |Retval| to the
+        /// function return value. If execution fails set |Exception| to the exception
+        /// that will be thrown. Return true (1) if execution was handled.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxV8HandlerExecuteEventHandler(object sender, CfxV8HandlerExecuteEventArgs e);
 
-        internal IntPtr m_name_str;
-        internal int m_name_length;
-        internal string m_name;
-        internal IntPtr m_object;
-        internal CfxV8Value m_object_wrapped;
-        internal IntPtr[] m_arguments;
-        internal CfxV8Value[] m_arguments_managed;
-        internal IntPtr m_exception_str;
-        internal int m_exception_length;
-        internal string m_exception_wrapped;
-        internal bool m_exception_changed;
+        /// <summary>
+        /// Handle execution of the function identified by |Name|. |Object| is the
+        /// receiver ('this' object) of the function. |Arguments| is the list of
+        /// arguments passed to the function. If execution succeeds set |Retval| to the
+        /// function return value. If execution fails set |Exception| to the exception
+        /// that will be thrown. Return true (1) if execution was handled.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
+        public class CfxV8HandlerExecuteEventArgs : CfxEventArgs {
 
-        internal CfxV8Value m_returnValue;
-        private bool returnValueSet;
+            internal IntPtr m_name_str;
+            internal int m_name_length;
+            internal string m_name;
+            internal IntPtr m_object;
+            internal CfxV8Value m_object_wrapped;
+            internal IntPtr[] m_arguments;
+            internal CfxV8Value[] m_arguments_managed;
+            internal IntPtr m_exception_str;
+            internal int m_exception_length;
+            internal string m_exception_wrapped;
+            internal bool m_exception_changed;
 
-        internal CfxV8HandlerExecuteEventArgs(IntPtr name_str, int name_length, IntPtr @object, IntPtr arguments, int argumentsCount, IntPtr exception_str, int exception_length) {
-            m_name_str = name_str;
-            m_name_length = name_length;
-            m_object = @object;
-            m_arguments = new IntPtr[argumentsCount];
-            if(argumentsCount > 0) {
-                System.Runtime.InteropServices.Marshal.Copy(arguments, m_arguments, 0, argumentsCount);
+            internal CfxV8Value m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxV8HandlerExecuteEventArgs(IntPtr name_str, int name_length, IntPtr @object, IntPtr arguments, int argumentsCount, IntPtr exception_str, int exception_length) {
+                m_name_str = name_str;
+                m_name_length = name_length;
+                m_object = @object;
+                m_arguments = new IntPtr[argumentsCount];
+                if(argumentsCount > 0) {
+                    System.Runtime.InteropServices.Marshal.Copy(arguments, m_arguments, 0, argumentsCount);
+                }
+                m_exception_str = exception_str;
+                m_exception_length = exception_length;
             }
-            m_exception_str = exception_str;
-            m_exception_length = exception_length;
-        }
 
-        public string Name {
-            get {
-                CheckAccess();
-                if(m_name == null && m_name_str != IntPtr.Zero) m_name = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_name_str, m_name_length);
-                return m_name;
+            public string Name {
+                get {
+                    CheckAccess();
+                    if(m_name == null && m_name_str != IntPtr.Zero) m_name = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_name_str, m_name_length);
+                    return m_name;
+                }
             }
-        }
-        public CfxV8Value Object {
-            get {
-                CheckAccess();
-                if(m_object_wrapped == null) m_object_wrapped = CfxV8Value.Wrap(m_object);
-                return m_object_wrapped;
+            public CfxV8Value Object {
+                get {
+                    CheckAccess();
+                    if(m_object_wrapped == null) m_object_wrapped = CfxV8Value.Wrap(m_object);
+                    return m_object_wrapped;
+                }
             }
-        }
-        public CfxV8Value[] Arguments {
-            get {
-                CheckAccess();
-                if(m_arguments_managed == null) {
-                    m_arguments_managed = new CfxV8Value[m_arguments.Length];
-                    for(int i = 0; i < m_arguments.Length; ++i) {
-                        m_arguments_managed[i] = CfxV8Value.Wrap(m_arguments[i]);
+            public CfxV8Value[] Arguments {
+                get {
+                    CheckAccess();
+                    if(m_arguments_managed == null) {
+                        m_arguments_managed = new CfxV8Value[m_arguments.Length];
+                        for(int i = 0; i < m_arguments.Length; ++i) {
+                            m_arguments_managed[i] = CfxV8Value.Wrap(m_arguments[i]);
+                        }
                     }
+                    return m_arguments_managed;
                 }
-                return m_arguments_managed;
             }
-        }
-        public string Exception {
-            get {
-                CheckAccess();
-                if(!m_exception_changed && m_exception_wrapped == null && m_exception_str != IntPtr.Zero) {
-                    m_exception_wrapped = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_exception_str, m_exception_length);
+            public string Exception {
+                get {
+                    CheckAccess();
+                    if(!m_exception_changed && m_exception_wrapped == null && m_exception_str != IntPtr.Zero) {
+                        m_exception_wrapped = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_exception_str, m_exception_length);
+                    }
+                    return m_exception_wrapped;
                 }
-                return m_exception_wrapped;
+                set {
+                    CheckAccess();
+                    m_exception_wrapped = value;
+                    m_exception_changed = true;
+                }
             }
-            set {
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(CfxV8Value returnValue) {
                 CheckAccess();
-                m_exception_wrapped = value;
-                m_exception_changed = true;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
             }
-        }
-        public void SetReturnValue(CfxV8Value returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
+
+            public override string ToString() {
+                return String.Format("Name={{{0}}}, Object={{{1}}}, Arguments={{{2}}}, Exception={{{3}}}", Name, Object, Arguments, Exception);
             }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
         }
 
-        public override string ToString() {
-            return String.Format("Name={{{0}}}, Object={{{1}}}, Arguments={{{2}}}, Exception={{{3}}}", Name, Object, Arguments, Exception);
-        }
     }
-
 }

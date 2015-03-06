@@ -41,6 +41,10 @@ namespace Chromium {
     /// and WebWorker threads. A task runner for posting tasks on the associated
     /// thread can be retrieved via the CfxV8Context.GetTaskRunner() function.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+    /// </remarks>
     public class CfxV8StackFrame : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -67,6 +71,10 @@ namespace Chromium {
         /// on the current thread. Do not call any other functions if this function
         /// returns false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 return 0 != CfxApi.cfx_v8stack_frame_is_valid(NativePtr);
@@ -76,6 +84,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the name of the resource script that contains the function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public String ScriptName {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_v8stack_frame_get_script_name(NativePtr));
@@ -87,6 +99,10 @@ namespace Chromium {
         /// sourceURL value if the script name is undefined and its source ends with a
         /// "//@ sourceURL=..." string.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public String ScriptNameOrSourceUrl {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_v8stack_frame_get_script_name_or_source_url(NativePtr));
@@ -96,6 +112,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the name of the function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public String FunctionName {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_v8stack_frame_get_function_name(NativePtr));
@@ -105,6 +125,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the 1-based line number for the function call or 0 if unknown.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int LineNumber {
             get {
                 return CfxApi.cfx_v8stack_frame_get_line_number(NativePtr);
@@ -115,6 +139,10 @@ namespace Chromium {
         /// Returns the 1-based column offset on the line for the function call or 0 if
         /// unknown.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int Column {
             get {
                 return CfxApi.cfx_v8stack_frame_get_column(NativePtr);
@@ -124,6 +152,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if the function was compiled using eval().
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsEval {
             get {
                 return 0 != CfxApi.cfx_v8stack_frame_is_eval(NativePtr);
@@ -133,6 +165,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if the function was called as a constructor via "new".
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsConstructor {
             get {
                 return 0 != CfxApi.cfx_v8stack_frame_is_constructor(NativePtr);

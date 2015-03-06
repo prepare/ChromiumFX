@@ -41,6 +41,10 @@ namespace Chromium {
     /// and WebWorker threads. A task runner for posting tasks on the associated
     /// thread can be retrieved via the CfxV8Context.GetTaskRunner() function.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+    /// </remarks>
     public class CfxV8StackTrace : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -66,6 +70,10 @@ namespace Chromium {
         /// Returns the stack trace for the currently active context. |frameLimit| is
         /// the maximum number of frames that will be captured.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public static CfxV8StackTrace GetCurrent(int frameLimit) {
             return CfxV8StackTrace.Wrap(CfxApi.cfx_v8stack_trace_get_current(frameLimit));
         }
@@ -75,6 +83,10 @@ namespace Chromium {
         /// on the current thread. Do not call any other functions if this function
         /// returns false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 return 0 != CfxApi.cfx_v8stack_trace_is_valid(NativePtr);
@@ -84,6 +96,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the number of stack frames.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int FrameCount {
             get {
                 return CfxApi.cfx_v8stack_trace_get_frame_count(NativePtr);
@@ -93,6 +109,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the stack frame at the specified 0-based index.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public CfxV8StackFrame GetFrame(int index) {
             return CfxV8StackFrame.Wrap(CfxApi.cfx_v8stack_trace_get_frame(NativePtr, index));
         }

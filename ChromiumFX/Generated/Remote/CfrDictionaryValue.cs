@@ -34,10 +34,15 @@
 using System;
 
 namespace Chromium.Remote {
+
     /// <summary>
     /// Structure representing a dictionary value. Can be used on any process and
     /// thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+    /// </remarks>
     public class CfrDictionaryValue : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -58,6 +63,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Creates a new object that is not owned by any other object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public static CfrDictionaryValue Create(CfrRuntime remoteRuntime) {
             var call = new CfxDictionaryValueCreateRenderProcessCall();
             call.Execute(remoteRuntime.connection);
@@ -71,6 +80,10 @@ namespace Chromium.Remote {
         /// Returns true (1) if this object is valid. Do not call any other functions
         /// if this function returns false (0).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool IsValid {
             get {
                 var call = new CfxDictionaryValueIsValidRenderProcessCall();
@@ -83,6 +96,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if this object is currently owned by another object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool IsOwned {
             get {
                 var call = new CfxDictionaryValueIsOwnedRenderProcessCall();
@@ -96,6 +113,10 @@ namespace Chromium.Remote {
         /// Returns true (1) if the values of this object are read-only. Some APIs may
         /// expose read-only objects.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool IsReadOnly {
             get {
                 var call = new CfxDictionaryValueIsReadOnlyRenderProcessCall();
@@ -108,6 +129,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the number of values.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public int Size {
             get {
                 var call = new CfxDictionaryValueGetSizeRenderProcessCall();
@@ -121,6 +146,10 @@ namespace Chromium.Remote {
         /// Returns a writable copy of this object. If |excludeNullChildren| is true
         /// (1) any NULL dictionaries or lists will be excluded from the copy.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public CfrDictionaryValue Copy(bool excludeEmptyChildren) {
             var call = new CfxDictionaryValueCopyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -132,6 +161,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Removes all values. Returns true (1) on success.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool Clear() {
             var call = new CfxDictionaryValueClearRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -142,6 +175,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns true (1) if the current dictionary has a value for the given key.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool HasKey(string key) {
             var call = new CfxDictionaryValueHasKeyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -153,6 +190,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Reads all keys for this dictionary into the specified vector.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public int GetKeys(System.Collections.Generic.List<string> keys) {
             var call = new CfxDictionaryValueGetKeysRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -165,6 +206,10 @@ namespace Chromium.Remote {
         /// Removes the value at the specified key. Returns true (1) is the value was
         /// removed successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool Remove(string key) {
             var call = new CfxDictionaryValueRemoveRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -176,6 +221,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the value type for the specified key.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public CfxValueType GetType(string key) {
             var call = new CfxDictionaryValueGetTypeRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -187,6 +236,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the value at the specified key as type bool.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public int GetBool(string key) {
             var call = new CfxDictionaryValueGetBoolRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -198,6 +251,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the value at the specified key as type int.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public int GetInt(string key) {
             var call = new CfxDictionaryValueGetIntRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -209,6 +266,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the value at the specified key as type double.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public double GetDouble(string key) {
             var call = new CfxDictionaryValueGetDoubleRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -220,6 +281,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the value at the specified key as type string.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public String GetString(string key) {
             var call = new CfxDictionaryValueGetStringRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -231,6 +296,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the value at the specified key as type binary.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public CfrBinaryValue GetBinary(string key) {
             var call = new CfxDictionaryValueGetBinaryRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -242,6 +311,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the value at the specified key as type dictionary.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public CfrDictionaryValue GetDictionary(string key) {
             var call = new CfxDictionaryValueGetDictionaryRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -253,6 +326,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Returns the value at the specified key as type list.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public CfrListValue GetList(string key) {
             var call = new CfxDictionaryValueGetListRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -265,6 +342,10 @@ namespace Chromium.Remote {
         /// Sets the value at the specified key as type null. Returns true (1) if the
         /// value was set successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool SetNull(string key) {
             var call = new CfxDictionaryValueSetNullRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -277,6 +358,10 @@ namespace Chromium.Remote {
         /// Sets the value at the specified key as type bool. Returns true (1) if the
         /// value was set successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool SetBool(string key, int value) {
             var call = new CfxDictionaryValueSetBoolRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -290,6 +375,10 @@ namespace Chromium.Remote {
         /// Sets the value at the specified key as type int. Returns true (1) if the
         /// value was set successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool SetInt(string key, int value) {
             var call = new CfxDictionaryValueSetIntRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -303,6 +392,10 @@ namespace Chromium.Remote {
         /// Sets the value at the specified key as type double. Returns true (1) if the
         /// value was set successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool SetDouble(string key, double value) {
             var call = new CfxDictionaryValueSetDoubleRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -316,6 +409,10 @@ namespace Chromium.Remote {
         /// Sets the value at the specified key as type string. Returns true (1) if the
         /// value was set successfully.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool SetString(string key, string value) {
             var call = new CfxDictionaryValueSetStringRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -332,6 +429,10 @@ namespace Chromium.Remote {
         /// Otherwise, ownership will be transferred to this object and the |value|
         /// reference will be invalidated.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool SetBinary(string key, CfrBinaryValue value) {
             var call = new CfxDictionaryValueSetBinaryRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -349,6 +450,10 @@ namespace Chromium.Remote {
         /// Otherwise, ownership will be transferred to this object and the |value|
         /// reference will be invalidated.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool SetDictionary(string key, CfrDictionaryValue value) {
             var call = new CfxDictionaryValueSetDictionaryRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
@@ -366,6 +471,10 @@ namespace Chromium.Remote {
         /// Otherwise, ownership will be transferred to this object and the |value|
         /// reference will be invalidated.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
         public bool SetList(string key, CfrListValue value) {
             var call = new CfxDictionaryValueSetListRenderProcessCall();
             call.self = CfrObject.Unwrap(this);

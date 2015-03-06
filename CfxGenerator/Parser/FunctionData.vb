@@ -35,7 +35,7 @@ Namespace Parser
     Public Class FunctionData
         Public Name As String
         Public Signature As SignatureData
-        Public Comments As String()
+        Public Comments As CommentData
     End Class
 End Namespace
 

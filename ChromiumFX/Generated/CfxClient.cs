@@ -34,9 +34,15 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Implement this structure to provide handler implementations.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+    /// </remarks>
     public class CfxClient : CfxBase {
 
         internal static CfxClient Wrap(IntPtr nativePtr) {
@@ -241,6 +247,10 @@ namespace Chromium {
         /// Return the handler for context menus. If no handler is provided the default
         /// implementation will be used.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
         public event CfxGetContextMenuHandlerEventHandler GetContextMenuHandler {
             add {
                 if(m_GetContextMenuHandler == null) {
@@ -262,6 +272,10 @@ namespace Chromium {
         /// Return the handler for dialogs. If no handler is provided the default
         /// implementation will be used.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
         public event CfxGetDialogHandlerEventHandler GetDialogHandler {
             add {
                 if(m_GetDialogHandler == null) {
@@ -282,6 +296,10 @@ namespace Chromium {
         /// <summary>
         /// Return the handler for browser display state events.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
         public event CfxGetDisplayHandlerEventHandler GetDisplayHandler {
             add {
                 if(m_GetDisplayHandler == null) {
@@ -303,6 +321,10 @@ namespace Chromium {
         /// Return the handler for download events. If no handler is returned downloads
         /// will not be allowed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
         public event CfxGetDownloadHandlerEventHandler GetDownloadHandler {
             add {
                 if(m_GetDownloadHandler == null) {
@@ -323,6 +345,10 @@ namespace Chromium {
         /// <summary>
         /// Return the handler for drag events.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
         public event CfxGetDragHandlerEventHandler GetDragHandler {
             add {
                 if(m_GetDragHandler == null) {
@@ -343,6 +369,10 @@ namespace Chromium {
         /// <summary>
         /// Return the handler for focus events.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
         public event CfxGetFocusHandlerEventHandler GetFocusHandler {
             add {
                 if(m_GetFocusHandler == null) {
@@ -364,6 +394,10 @@ namespace Chromium {
         /// Return the handler for geolocation permissions requests. If no handler is
         /// provided geolocation access will be denied by default.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
         public event CfxGetGeolocationHandlerEventHandler GetGeolocationHandler {
             add {
                 if(m_GetGeolocationHandler == null) {
@@ -385,6 +419,10 @@ namespace Chromium {
         /// Return the handler for JavaScript dialogs. If no handler is provided the
         /// default implementation will be used.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
         public event CfxGetJsDialogHandlerEventHandler GetJsDialogHandler {
             add {
                 if(m_GetJsDialogHandler == null) {
@@ -405,6 +443,10 @@ namespace Chromium {
         /// <summary>
         /// Return the handler for keyboard events.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
         public event CfxGetKeyboardHandlerEventHandler GetKeyboardHandler {
             add {
                 if(m_GetKeyboardHandler == null) {
@@ -425,6 +467,10 @@ namespace Chromium {
         /// <summary>
         /// Return the handler for browser life span events.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
         public event CfxGetLifeSpanHandlerEventHandler GetLifeSpanHandler {
             add {
                 if(m_GetLifeSpanHandler == null) {
@@ -445,6 +491,10 @@ namespace Chromium {
         /// <summary>
         /// Return the handler for browser load status events.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
         public event CfxGetLoadHandlerEventHandler GetLoadHandler {
             add {
                 if(m_GetLoadHandler == null) {
@@ -465,6 +515,10 @@ namespace Chromium {
         /// <summary>
         /// Return the handler for off-screen rendering events.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
         public event CfxGetRenderHandlerEventHandler GetRenderHandler {
             add {
                 if(m_GetRenderHandler == null) {
@@ -485,6 +539,10 @@ namespace Chromium {
         /// <summary>
         /// Return the handler for browser request events.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
         public event CfxGetRequestHandlerEventHandler GetRequestHandler {
             add {
                 if(m_GetRequestHandler == null) {
@@ -507,6 +565,10 @@ namespace Chromium {
         /// (1) if the message was handled or false (0) otherwise. Do not keep a
         /// reference to or attempt to access the message outside of this callback.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
         public event CfxOnProcessMessageReceivedEventHandler OnProcessMessageReceived {
             add {
                 if(m_OnProcessMessageReceived == null) {
@@ -586,379 +648,683 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxGetContextMenuHandlerEventHandler(object sender, CfxGetContextMenuHandlerEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Return the handler for context menus. If no handler is provided the default
-    /// implementation will be used.
-    /// </summary>
-    public class CfxGetContextMenuHandlerEventArgs : CfxEventArgs {
+        /// <summary>
+        /// Return the handler for context menus. If no handler is provided the default
+        /// implementation will be used.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxGetContextMenuHandlerEventHandler(object sender, CfxGetContextMenuHandlerEventArgs e);
+
+        /// <summary>
+        /// Return the handler for context menus. If no handler is provided the default
+        /// implementation will be used.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public class CfxGetContextMenuHandlerEventArgs : CfxEventArgs {
 
 
-        internal CfxContextMenuHandler m_returnValue;
-        private bool returnValueSet;
+            internal CfxContextMenuHandler m_returnValue;
+            private bool returnValueSet;
 
-        internal CfxGetContextMenuHandlerEventArgs() {
-        }
-
-        public void SetReturnValue(CfxContextMenuHandler returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
+            internal CfxGetContextMenuHandlerEventArgs() {
             }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
 
-    public delegate void CfxGetDialogHandlerEventHandler(object sender, CfxGetDialogHandlerEventArgs e);
-
-    /// <summary>
-    /// Return the handler for dialogs. If no handler is provided the default
-    /// implementation will be used.
-    /// </summary>
-    public class CfxGetDialogHandlerEventArgs : CfxEventArgs {
-
-
-        internal CfxDialogHandler m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxGetDialogHandlerEventArgs() {
-        }
-
-        public void SetReturnValue(CfxDialogHandler returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
-
-    public delegate void CfxGetDisplayHandlerEventHandler(object sender, CfxGetDisplayHandlerEventArgs e);
-
-    /// <summary>
-    /// Return the handler for browser display state events.
-    /// </summary>
-    public class CfxGetDisplayHandlerEventArgs : CfxEventArgs {
-
-
-        internal CfxDisplayHandler m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxGetDisplayHandlerEventArgs() {
-        }
-
-        public void SetReturnValue(CfxDisplayHandler returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
-
-    public delegate void CfxGetDownloadHandlerEventHandler(object sender, CfxGetDownloadHandlerEventArgs e);
-
-    /// <summary>
-    /// Return the handler for download events. If no handler is returned downloads
-    /// will not be allowed.
-    /// </summary>
-    public class CfxGetDownloadHandlerEventArgs : CfxEventArgs {
-
-
-        internal CfxDownloadHandler m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxGetDownloadHandlerEventArgs() {
-        }
-
-        public void SetReturnValue(CfxDownloadHandler returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
-
-    public delegate void CfxGetDragHandlerEventHandler(object sender, CfxGetDragHandlerEventArgs e);
-
-    /// <summary>
-    /// Return the handler for drag events.
-    /// </summary>
-    public class CfxGetDragHandlerEventArgs : CfxEventArgs {
-
-
-        internal CfxDragHandler m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxGetDragHandlerEventArgs() {
-        }
-
-        public void SetReturnValue(CfxDragHandler returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
-
-    public delegate void CfxGetFocusHandlerEventHandler(object sender, CfxGetFocusHandlerEventArgs e);
-
-    /// <summary>
-    /// Return the handler for focus events.
-    /// </summary>
-    public class CfxGetFocusHandlerEventArgs : CfxEventArgs {
-
-
-        internal CfxFocusHandler m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxGetFocusHandlerEventArgs() {
-        }
-
-        public void SetReturnValue(CfxFocusHandler returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
-
-    public delegate void CfxGetGeolocationHandlerEventHandler(object sender, CfxGetGeolocationHandlerEventArgs e);
-
-    /// <summary>
-    /// Return the handler for geolocation permissions requests. If no handler is
-    /// provided geolocation access will be denied by default.
-    /// </summary>
-    public class CfxGetGeolocationHandlerEventArgs : CfxEventArgs {
-
-
-        internal CfxGeolocationHandler m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxGetGeolocationHandlerEventArgs() {
-        }
-
-        public void SetReturnValue(CfxGeolocationHandler returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
-
-    public delegate void CfxGetJsDialogHandlerEventHandler(object sender, CfxGetJsDialogHandlerEventArgs e);
-
-    /// <summary>
-    /// Return the handler for JavaScript dialogs. If no handler is provided the
-    /// default implementation will be used.
-    /// </summary>
-    public class CfxGetJsDialogHandlerEventArgs : CfxEventArgs {
-
-
-        internal CfxJsDialogHandler m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxGetJsDialogHandlerEventArgs() {
-        }
-
-        public void SetReturnValue(CfxJsDialogHandler returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
-
-    public delegate void CfxGetKeyboardHandlerEventHandler(object sender, CfxGetKeyboardHandlerEventArgs e);
-
-    /// <summary>
-    /// Return the handler for keyboard events.
-    /// </summary>
-    public class CfxGetKeyboardHandlerEventArgs : CfxEventArgs {
-
-
-        internal CfxKeyboardHandler m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxGetKeyboardHandlerEventArgs() {
-        }
-
-        public void SetReturnValue(CfxKeyboardHandler returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
-
-    public delegate void CfxGetLifeSpanHandlerEventHandler(object sender, CfxGetLifeSpanHandlerEventArgs e);
-
-    /// <summary>
-    /// Return the handler for browser life span events.
-    /// </summary>
-    public class CfxGetLifeSpanHandlerEventArgs : CfxEventArgs {
-
-
-        internal CfxLifeSpanHandler m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxGetLifeSpanHandlerEventArgs() {
-        }
-
-        public void SetReturnValue(CfxLifeSpanHandler returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
-
-    public delegate void CfxGetLoadHandlerEventHandler(object sender, CfxGetLoadHandlerEventArgs e);
-
-    /// <summary>
-    /// Return the handler for browser load status events.
-    /// </summary>
-    public class CfxGetLoadHandlerEventArgs : CfxEventArgs {
-
-
-        internal CfxLoadHandler m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxGetLoadHandlerEventArgs() {
-        }
-
-        public void SetReturnValue(CfxLoadHandler returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
-
-    public delegate void CfxGetRenderHandlerEventHandler(object sender, CfxGetRenderHandlerEventArgs e);
-
-    /// <summary>
-    /// Return the handler for off-screen rendering events.
-    /// </summary>
-    public class CfxGetRenderHandlerEventArgs : CfxEventArgs {
-
-
-        internal CfxRenderHandler m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxGetRenderHandlerEventArgs() {
-        }
-
-        public void SetReturnValue(CfxRenderHandler returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
-
-    public delegate void CfxGetRequestHandlerEventHandler(object sender, CfxGetRequestHandlerEventArgs e);
-
-    /// <summary>
-    /// Return the handler for browser request events.
-    /// </summary>
-    public class CfxGetRequestHandlerEventArgs : CfxEventArgs {
-
-
-        internal CfxRequestHandler m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxGetRequestHandlerEventArgs() {
-        }
-
-        public void SetReturnValue(CfxRequestHandler returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
-        }
-    }
-
-    public delegate void CfxOnProcessMessageReceivedEventHandler(object sender, CfxOnProcessMessageReceivedEventArgs e);
-
-    /// <summary>
-    /// Called when a new message is received from a different process. Return true
-    /// (1) if the message was handled or false (0) otherwise. Do not keep a
-    /// reference to or attempt to access the message outside of this callback.
-    /// </summary>
-    public class CfxOnProcessMessageReceivedEventArgs : CfxEventArgs {
-
-        internal IntPtr m_browser;
-        internal CfxBrowser m_browser_wrapped;
-        internal CfxProcessId m_source_process;
-        internal IntPtr m_message;
-        internal CfxProcessMessage m_message_wrapped;
-
-        internal bool m_returnValue;
-        private bool returnValueSet;
-
-        internal CfxOnProcessMessageReceivedEventArgs(IntPtr browser, CfxProcessId source_process, IntPtr message) {
-            m_browser = browser;
-            m_source_process = source_process;
-            m_message = message;
-        }
-
-        public CfxBrowser Browser {
-            get {
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(CfxContextMenuHandler returnValue) {
                 CheckAccess();
-                if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                return m_browser_wrapped;
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
             }
-        }
-        public CfxProcessId SourceProcess {
-            get {
-                CheckAccess();
-                return m_source_process;
-            }
-        }
-        public CfxProcessMessage Message {
-            get {
-                CheckAccess();
-                if(m_message_wrapped == null) m_message_wrapped = CfxProcessMessage.Wrap(m_message);
-                return m_message_wrapped;
-            }
-        }
-        public void SetReturnValue(bool returnValue) {
-            CheckAccess();
-            if(returnValueSet) {
-                throw new CfxException("The return value has already been set");
-            }
-            returnValueSet = true;
-            this.m_returnValue = returnValue;
         }
 
-        public override string ToString() {
-            return String.Format("Browser={{{0}}}, SourceProcess={{{1}}}, Message={{{2}}}", Browser, SourceProcess, Message);
+        /// <summary>
+        /// Return the handler for dialogs. If no handler is provided the default
+        /// implementation will be used.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxGetDialogHandlerEventHandler(object sender, CfxGetDialogHandlerEventArgs e);
+
+        /// <summary>
+        /// Return the handler for dialogs. If no handler is provided the default
+        /// implementation will be used.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public class CfxGetDialogHandlerEventArgs : CfxEventArgs {
+
+
+            internal CfxDialogHandler m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxGetDialogHandlerEventArgs() {
+            }
+
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(CfxDialogHandler returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
         }
+
+        /// <summary>
+        /// Return the handler for browser display state events.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxGetDisplayHandlerEventHandler(object sender, CfxGetDisplayHandlerEventArgs e);
+
+        /// <summary>
+        /// Return the handler for browser display state events.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public class CfxGetDisplayHandlerEventArgs : CfxEventArgs {
+
+
+            internal CfxDisplayHandler m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxGetDisplayHandlerEventArgs() {
+            }
+
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(CfxDisplayHandler returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+        }
+
+        /// <summary>
+        /// Return the handler for download events. If no handler is returned downloads
+        /// will not be allowed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxGetDownloadHandlerEventHandler(object sender, CfxGetDownloadHandlerEventArgs e);
+
+        /// <summary>
+        /// Return the handler for download events. If no handler is returned downloads
+        /// will not be allowed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public class CfxGetDownloadHandlerEventArgs : CfxEventArgs {
+
+
+            internal CfxDownloadHandler m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxGetDownloadHandlerEventArgs() {
+            }
+
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(CfxDownloadHandler returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+        }
+
+        /// <summary>
+        /// Return the handler for drag events.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxGetDragHandlerEventHandler(object sender, CfxGetDragHandlerEventArgs e);
+
+        /// <summary>
+        /// Return the handler for drag events.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public class CfxGetDragHandlerEventArgs : CfxEventArgs {
+
+
+            internal CfxDragHandler m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxGetDragHandlerEventArgs() {
+            }
+
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(CfxDragHandler returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+        }
+
+        /// <summary>
+        /// Return the handler for focus events.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxGetFocusHandlerEventHandler(object sender, CfxGetFocusHandlerEventArgs e);
+
+        /// <summary>
+        /// Return the handler for focus events.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public class CfxGetFocusHandlerEventArgs : CfxEventArgs {
+
+
+            internal CfxFocusHandler m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxGetFocusHandlerEventArgs() {
+            }
+
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(CfxFocusHandler returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+        }
+
+        /// <summary>
+        /// Return the handler for geolocation permissions requests. If no handler is
+        /// provided geolocation access will be denied by default.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxGetGeolocationHandlerEventHandler(object sender, CfxGetGeolocationHandlerEventArgs e);
+
+        /// <summary>
+        /// Return the handler for geolocation permissions requests. If no handler is
+        /// provided geolocation access will be denied by default.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public class CfxGetGeolocationHandlerEventArgs : CfxEventArgs {
+
+
+            internal CfxGeolocationHandler m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxGetGeolocationHandlerEventArgs() {
+            }
+
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(CfxGeolocationHandler returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+        }
+
+        /// <summary>
+        /// Return the handler for JavaScript dialogs. If no handler is provided the
+        /// default implementation will be used.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxGetJsDialogHandlerEventHandler(object sender, CfxGetJsDialogHandlerEventArgs e);
+
+        /// <summary>
+        /// Return the handler for JavaScript dialogs. If no handler is provided the
+        /// default implementation will be used.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public class CfxGetJsDialogHandlerEventArgs : CfxEventArgs {
+
+
+            internal CfxJsDialogHandler m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxGetJsDialogHandlerEventArgs() {
+            }
+
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(CfxJsDialogHandler returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+        }
+
+        /// <summary>
+        /// Return the handler for keyboard events.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxGetKeyboardHandlerEventHandler(object sender, CfxGetKeyboardHandlerEventArgs e);
+
+        /// <summary>
+        /// Return the handler for keyboard events.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public class CfxGetKeyboardHandlerEventArgs : CfxEventArgs {
+
+
+            internal CfxKeyboardHandler m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxGetKeyboardHandlerEventArgs() {
+            }
+
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(CfxKeyboardHandler returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+        }
+
+        /// <summary>
+        /// Return the handler for browser life span events.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxGetLifeSpanHandlerEventHandler(object sender, CfxGetLifeSpanHandlerEventArgs e);
+
+        /// <summary>
+        /// Return the handler for browser life span events.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public class CfxGetLifeSpanHandlerEventArgs : CfxEventArgs {
+
+
+            internal CfxLifeSpanHandler m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxGetLifeSpanHandlerEventArgs() {
+            }
+
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(CfxLifeSpanHandler returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+        }
+
+        /// <summary>
+        /// Return the handler for browser load status events.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxGetLoadHandlerEventHandler(object sender, CfxGetLoadHandlerEventArgs e);
+
+        /// <summary>
+        /// Return the handler for browser load status events.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public class CfxGetLoadHandlerEventArgs : CfxEventArgs {
+
+
+            internal CfxLoadHandler m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxGetLoadHandlerEventArgs() {
+            }
+
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(CfxLoadHandler returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+        }
+
+        /// <summary>
+        /// Return the handler for off-screen rendering events.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxGetRenderHandlerEventHandler(object sender, CfxGetRenderHandlerEventArgs e);
+
+        /// <summary>
+        /// Return the handler for off-screen rendering events.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public class CfxGetRenderHandlerEventArgs : CfxEventArgs {
+
+
+            internal CfxRenderHandler m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxGetRenderHandlerEventArgs() {
+            }
+
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(CfxRenderHandler returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+        }
+
+        /// <summary>
+        /// Return the handler for browser request events.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxGetRequestHandlerEventHandler(object sender, CfxGetRequestHandlerEventArgs e);
+
+        /// <summary>
+        /// Return the handler for browser request events.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public class CfxGetRequestHandlerEventArgs : CfxEventArgs {
+
+
+            internal CfxRequestHandler m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxGetRequestHandlerEventArgs() {
+            }
+
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(CfxRequestHandler returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+        }
+
+        /// <summary>
+        /// Called when a new message is received from a different process. Return true
+        /// (1) if the message was handled or false (0) otherwise. Do not keep a
+        /// reference to or attempt to access the message outside of this callback.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxOnProcessMessageReceivedEventHandler(object sender, CfxOnProcessMessageReceivedEventArgs e);
+
+        /// <summary>
+        /// Called when a new message is received from a different process. Return true
+        /// (1) if the message was handled or false (0) otherwise. Do not keep a
+        /// reference to or attempt to access the message outside of this callback.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+        /// </remarks>
+        public class CfxOnProcessMessageReceivedEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal CfxProcessId m_source_process;
+            internal IntPtr m_message;
+            internal CfxProcessMessage m_message_wrapped;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxOnProcessMessageReceivedEventArgs(IntPtr browser, CfxProcessId source_process, IntPtr message) {
+                m_browser = browser;
+                m_source_process = source_process;
+                m_message = message;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public CfxProcessId SourceProcess {
+                get {
+                    CheckAccess();
+                    return m_source_process;
+                }
+            }
+            public CfxProcessMessage Message {
+                get {
+                    CheckAccess();
+                    if(m_message_wrapped == null) m_message_wrapped = CfxProcessMessage.Wrap(m_message);
+                    return m_message_wrapped;
+                }
+            }
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(bool returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, SourceProcess={{{1}}}, Message={{{2}}}", Browser, SourceProcess, Message);
+            }
+        }
+
     }
-
 }

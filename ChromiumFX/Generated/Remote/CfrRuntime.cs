@@ -67,6 +67,10 @@ namespace Chromium.Remote {
         /// This function may be called on any thread. Returns false (0) if
         /// |sourceOrigin| is invalid or the whitelist cannot be accessed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_origin_whitelist_capi.h">cef/include/capi/cef_origin_whitelist_capi.h</see>.
+        /// </remarks>
         public bool AddCrossOriginWhitelistEntry(string sourceOrigin, string targetProtocol, string targetDomain, bool allowTargetSubdomains) {
             var call = new CfxRuntimeAddCrossOriginWhitelistEntryRenderProcessCall();
             call.sourceOrigin = sourceOrigin;
@@ -81,6 +85,10 @@ namespace Chromium.Remote {
         /// Remove all entries from the cross-origin access whitelist. Returns false (0)
         /// if the whitelist cannot be accessed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_origin_whitelist_capi.h">cef/include/capi/cef_origin_whitelist_capi.h</see>.
+        /// </remarks>
         public bool ClearCrossOriginWhitelist() {
             var call = new CfxRuntimeClearCrossOriginWhitelistRenderProcessCall();
             call.Execute(connection);
@@ -92,6 +100,10 @@ namespace Chromium.Remote {
         /// or a non-NULL host and path (at a minimum), but not both. Returns false (0)
         /// if |parts| isn't initialized as described.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
+        /// </remarks>
         public bool CreateUrl(CfrUrlParts parts, string url) {
             var call = new CfxRuntimeCreateUrlRenderProcessCall();
             call.parts = CfrObject.Unwrap(parts);
@@ -105,6 +117,10 @@ namespace Chromium.Remote {
         /// Returns true (1) if called on the specified thread. Equivalent to using
         /// cef_task_tRunner::GetForThread(threadId)->belongs_to_current_thread().
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public bool CurrentlyOn(CfxThreadId threadId) {
             var call = new CfxRuntimeCurrentlyOnRenderProcessCall();
             call.threadId = (int)threadId;
@@ -122,6 +138,10 @@ namespace Chromium.Remote {
         /// used. If |callback| is NULL no trace data will be written.
         /// This function must be called on the browser process UI thread.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
+        /// </remarks>
         public bool EndTracing(string tracingFile, CfrEndTracingCallback callback) {
             var call = new CfxRuntimeEndTracingRenderProcessCall();
             call.tracingFile = tracingFile;
@@ -142,6 +162,10 @@ namespace Chromium.Remote {
         /// |windowsSandboxInfo| parameter is only used on Windows and may be NULL (see
         /// cef_sandbox_win.h for details).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public int ExecuteProcess(CfrApp application, RemotePtr windowsSandboxInfo) {
             var call = new CfxRuntimeExecuteProcessRenderProcessCall();
             call.application = CfrObject.Unwrap(application);
@@ -156,6 +180,10 @@ namespace Chromium.Remote {
         /// "html,htm" for "text/html", or "txt,text,html,..." for "text/*". Any existing
         /// elements in the provided vector will not be erased.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
+        /// </remarks>
         public void GetExtensionsForMimeType(string mimeType, System.Collections.Generic.List<string> extensions) {
             var call = new CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall();
             call.mimeType = mimeType;
@@ -168,6 +196,10 @@ namespace Chromium.Remote {
         /// permission checks so should only be used by code that is allowed to access
         /// location information.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_capi.h">cef/include/capi/cef_geolocation_capi.h</see>.
+        /// </remarks>
         public int GetGeolocation(CfrGetGeolocationCallback callback) {
             var call = new CfxRuntimeGetGeolocationRenderProcessCall();
             call.callback = CfrObject.Unwrap(callback);
@@ -179,6 +211,10 @@ namespace Chromium.Remote {
         /// Returns the mime type for the specified file extension or an NULL string if
         /// unknown.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
+        /// </remarks>
         public String GetMimeType(string extension) {
             var call = new CfxRuntimeGetMimeTypeRenderProcessCall();
             call.extension = extension;
@@ -191,6 +227,10 @@ namespace Chromium.Remote {
         /// high-res time. Can be used by clients to synchronize with the time
         /// information in trace events.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
+        /// </remarks>
         public long NowFromSystemTraceTime() {
             var call = new CfxRuntimeNowFromSystemTraceTimeRenderProcessCall();
             call.Execute(connection);
@@ -201,6 +241,10 @@ namespace Chromium.Remote {
         /// Parse the specified |url| into its component parts. Returns false (0) if the
         /// URL is NULL or invalid.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
+        /// </remarks>
         public bool ParseUrl(string url, CfrUrlParts parts) {
             var call = new CfxRuntimeParseUrlRenderProcessCall();
             call.url = url;
@@ -214,6 +258,10 @@ namespace Chromium.Remote {
         /// using cef_task_tRunner::GetForThread(threadId)->PostDelayedTask(task,
         /// delay_ms).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public int PostDelayedTask(CfxThreadId threadId, CfrTask task, long delayMs) {
             var call = new CfxRuntimePostDelayedTaskRenderProcessCall();
             call.threadId = (int)threadId;
@@ -227,6 +275,10 @@ namespace Chromium.Remote {
         /// Post a task for execution on the specified thread. Equivalent to using
         /// cef_task_tRunner::GetForThread(threadId)->PostTask(task).
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
         public int PostTask(CfxThreadId threadId, CfrTask task) {
             var call = new CfxRuntimePostTaskRenderProcessCall();
             call.threadId = (int)threadId;
@@ -289,6 +341,10 @@ namespace Chromium.Remote {
         /// example.test.increment();
         /// &lt;/pre>
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
         public int RegisterExtension(string extensionName, string javascriptCode, CfrV8Handler handler) {
             var call = new CfxRuntimeRegisterExtensionRenderProcessCall();
             call.extensionName = extensionName;
@@ -302,6 +358,10 @@ namespace Chromium.Remote {
         /// Remove an entry from the cross-origin access whitelist. Returns false (0) if
         /// |sourceOrigin| is invalid or the whitelist cannot be accessed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_origin_whitelist_capi.h">cef/include/capi/cef_origin_whitelist_capi.h</see>.
+        /// </remarks>
         public bool RemoveCrossOriginWhitelistEntry(string sourceOrigin, string targetProtocol, string targetDomain, bool allowTargetSubdomains) {
             var call = new CfxRuntimeRemoveCrossOriginWhitelistEntryRenderProcessCall();
             call.sourceOrigin = sourceOrigin;
@@ -316,6 +376,10 @@ namespace Chromium.Remote {
         /// Set to true (1) before calling Windows APIs like TrackPopupMenu that enter a
         /// modal message loop. Set to false (0) after exiting the modal message loop.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
         public void SetOsModalLoop(int osModalLoop) {
             var call = new CfxRuntimeSetOsModalLoopRenderProcessCall();
             call.osModalLoop = osModalLoop;

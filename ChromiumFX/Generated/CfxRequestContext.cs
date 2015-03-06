@@ -49,6 +49,10 @@ namespace Chromium {
     /// passed into a CfxBrowserHost static factory function and all other
     /// request context objects will be ignored.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+    /// </remarks>
     public class CfxRequestContext : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -73,6 +77,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the global context object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
         public static CfxRequestContext GetGlobalContext() {
             return CfxRequestContext.Wrap(CfxApi.cfx_request_context_get_global_context());
         }
@@ -80,6 +88,10 @@ namespace Chromium {
         /// <summary>
         /// Creates a new context object with the specified handler.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
         public static CfxRequestContext CreateContext(CfxRequestContextHandler handler) {
             return CfxRequestContext.Wrap(CfxApi.cfx_request_context_create_context(CfxRequestContextHandler.Unwrap(handler)));
         }
@@ -87,6 +99,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if this object is the global context.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
         public bool IsGlobal {
             get {
                 return 0 != CfxApi.cfx_request_context_is_global(NativePtr);
@@ -96,6 +112,10 @@ namespace Chromium {
         /// <summary>
         /// Returns the handler for this context if any.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
         public CfxRequestContextHandler Handler {
             get {
                 return CfxRequestContextHandler.Wrap(CfxApi.cfx_request_context_get_handler(NativePtr));
@@ -106,6 +126,10 @@ namespace Chromium {
         /// Returns true (1) if this object is pointing to the same context as |that|
         /// object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
         public bool IsSame(CfxRequestContext other) {
             return 0 != CfxApi.cfx_request_context_is_same(NativePtr, CfxRequestContext.Unwrap(other));
         }

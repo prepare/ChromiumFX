@@ -33,6 +33,10 @@
 using System;
 
 namespace Chromium {
+
+    /// <summary>
+    /// Base class for all CEF wrapper classes.
+    /// </summary>
     public abstract class CfxObject : IDisposable {
 
         private IntPtr m_nativePtr;

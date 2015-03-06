@@ -38,6 +38,10 @@ namespace Chromium {
     /// Structure used to represent a web request. The functions of this structure
     /// may be called on any thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+    /// </remarks>
     public class CfxRequest : CfxBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
@@ -62,6 +66,10 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxRequest object.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public static CfxRequest Create() {
             return CfxRequest.Wrap(CfxApi.cfx_request_create());
         }
@@ -69,6 +77,10 @@ namespace Chromium {
         /// <summary>
         /// Returns true (1) if this object is read-only.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public bool IsReadOnly {
             get {
                 return 0 != CfxApi.cfx_request_is_read_only(NativePtr);
@@ -80,6 +92,10 @@ namespace Chromium {
         /// 
         /// Set the fully qualified URL.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public String Url {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_request_get_url(NativePtr));
@@ -97,6 +113,10 @@ namespace Chromium {
         /// 
         /// Set the request function type.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public String Method {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_request_get_method(NativePtr));
@@ -113,6 +133,10 @@ namespace Chromium {
         /// 
         /// Set the post data.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public CfxPostData PostData {
             get {
                 return CfxPostData.Wrap(CfxApi.cfx_request_get_post_data(NativePtr));
@@ -129,6 +153,10 @@ namespace Chromium {
         /// Set the flags used in combination with CfxUrlRequest.  See
         /// CfxUrlRequestFlags for supported values.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public int Flags {
             get {
                 return CfxApi.cfx_request_get_flags(NativePtr);
@@ -145,6 +173,10 @@ namespace Chromium {
         /// Get the URL to the first party for cookies used in combination with
         /// CfxUrlRequest.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public String FirstPartyForCookies {
             get {
                 return StringUserfree.Convert(CfxApi.cfx_request_get_first_party_for_cookies(NativePtr));
@@ -160,6 +192,10 @@ namespace Chromium {
         /// Get the resource type for this request. Only available in the browser
         /// process.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public CfxResourceType ResourceType {
             get {
                 return CfxApi.cfx_request_get_resource_type(NativePtr);
@@ -171,6 +207,10 @@ namespace Chromium {
         /// process and only applies to requests that represent a main frame or sub-
         /// frame navigation.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public CfxTransitionType TransitionType {
             get {
                 return CfxApi.cfx_request_get_transition_type(NativePtr);
@@ -180,6 +220,10 @@ namespace Chromium {
         /// <summary>
         /// Get the header values.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public void GetHeaderMap(System.Collections.Generic.List<string[]> headerMap) {
             PinnedString[] headerMap_handles;
             var headerMap_unwrapped = CfxStringCollections.UnwrapCfxStringMultimap(headerMap, out headerMap_handles);
@@ -192,6 +236,10 @@ namespace Chromium {
         /// <summary>
         /// Set the header values.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public void SetHeaderMap(System.Collections.Generic.List<string[]> headerMap) {
             PinnedString[] headerMap_handles;
             var headerMap_unwrapped = CfxStringCollections.UnwrapCfxStringMultimap(headerMap, out headerMap_handles);
@@ -204,6 +252,10 @@ namespace Chromium {
         /// <summary>
         /// Set all values at one time.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
         public void Set(string url, string method, CfxPostData postData, System.Collections.Generic.List<string[]> headerMap) {
             var url_pinned = new PinnedString(url);
             var method_pinned = new PinnedString(method);

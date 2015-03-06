@@ -34,10 +34,16 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Structure to implement for visiting the DOM. The functions of this structure
     /// will be called on the render process main thread.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+    /// </remarks>
     public class CfxDomVisitor : CfxBase {
 
         internal static CfxDomVisitor Wrap(IntPtr nativePtr) {
@@ -73,6 +79,10 @@ namespace Chromium {
         /// keep references to or attempt to access any DOM objects outside the scope
         /// of this function.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
         public event CfxDomVisitorVisitEventHandler Visit {
             add {
                 if(m_Visit == null) {
@@ -100,35 +110,53 @@ namespace Chromium {
     }
 
 
-    public delegate void CfxDomVisitorVisitEventHandler(object sender, CfxDomVisitorVisitEventArgs e);
+    namespace Event {
 
-    /// <summary>
-    /// Method executed for visiting the DOM. The document object passed to this
-    /// function represents a snapshot of the DOM at the time this function is
-    /// executed. DOM objects are only valid for the scope of this function. Do not
-    /// keep references to or attempt to access any DOM objects outside the scope
-    /// of this function.
-    /// </summary>
-    public class CfxDomVisitorVisitEventArgs : CfxEventArgs {
+        /// <summary>
+        /// Method executed for visiting the DOM. The document object passed to this
+        /// function represents a snapshot of the DOM at the time this function is
+        /// executed. DOM objects are only valid for the scope of this function. Do not
+        /// keep references to or attempt to access any DOM objects outside the scope
+        /// of this function.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxDomVisitorVisitEventHandler(object sender, CfxDomVisitorVisitEventArgs e);
 
-        internal IntPtr m_document;
-        internal CfxDomDocument m_document_wrapped;
+        /// <summary>
+        /// Method executed for visiting the DOM. The document object passed to this
+        /// function represents a snapshot of the DOM at the time this function is
+        /// executed. DOM objects are only valid for the scope of this function. Do not
+        /// keep references to or attempt to access any DOM objects outside the scope
+        /// of this function.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
+        public class CfxDomVisitorVisitEventArgs : CfxEventArgs {
 
-        internal CfxDomVisitorVisitEventArgs(IntPtr document) {
-            m_document = document;
-        }
+            internal IntPtr m_document;
+            internal CfxDomDocument m_document_wrapped;
 
-        public CfxDomDocument Document {
-            get {
-                CheckAccess();
-                if(m_document_wrapped == null) m_document_wrapped = CfxDomDocument.Wrap(m_document);
-                return m_document_wrapped;
+            internal CfxDomVisitorVisitEventArgs(IntPtr document) {
+                m_document = document;
+            }
+
+            public CfxDomDocument Document {
+                get {
+                    CheckAccess();
+                    if(m_document_wrapped == null) m_document_wrapped = CfxDomDocument.Wrap(m_document);
+                    return m_document_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Document={{{0}}}", Document);
             }
         }
 
-        public override string ToString() {
-            return String.Format("Document={{{0}}}", Document);
-        }
     }
-
 }

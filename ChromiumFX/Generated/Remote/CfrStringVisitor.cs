@@ -34,9 +34,15 @@
 using System;
 
 namespace Chromium.Remote {
+    using Event;
+
     /// <summary>
     /// Implement this structure to receive string values asynchronously.
     /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_string_visitor_capi.h">cef/include/capi/cef_string_visitor_capi.h</see>.
+    /// </remarks>
     public class CfrStringVisitor : CfrBase {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
@@ -75,6 +81,10 @@ namespace Chromium.Remote {
         /// <summary>
         /// Method that will be executed.
         /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_string_visitor_capi.h">cef/include/capi/cef_string_visitor_capi.h</see>.
+        /// </remarks>
         public event CfrStringVisitorVisitEventHandler Visit {
             add {
                 if(m_Visit == null) {
@@ -102,35 +112,48 @@ namespace Chromium.Remote {
         }
     }
 
+    namespace Event {
 
-    public delegate void CfrStringVisitorVisitEventHandler(object sender, CfrStringVisitorVisitEventArgs e);
+        /// <summary>
+        /// Method that will be executed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_string_visitor_capi.h">cef/include/capi/cef_string_visitor_capi.h</see>.
+        /// </remarks>
+        public delegate void CfrStringVisitorVisitEventHandler(object sender, CfrStringVisitorVisitEventArgs e);
 
-    /// <summary>
-    /// Method that will be executed.
-    /// </summary>
-    public class CfrStringVisitorVisitEventArgs : CfrEventArgs {
+        /// <summary>
+        /// Method that will be executed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_string_visitor_capi.h">cef/include/capi/cef_string_visitor_capi.h</see>.
+        /// </remarks>
+        public class CfrStringVisitorVisitEventArgs : CfrEventArgs {
 
-        bool StringFetched;
-        string m_String;
+            bool StringFetched;
+            string m_String;
 
-        internal CfrStringVisitorVisitEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+            internal CfrStringVisitorVisitEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
-        public string String {
-            get {
-                if(!StringFetched) {
-                    StringFetched = true;
-                    var call = new CfxStringVisitorVisitGetStringRenderProcessCall();
-                    call.eventArgsId = eventArgsId;
-                    call.Execute(remoteRuntime.connection);
-                    m_String = call.value;
+            public string String {
+                get {
+                    if(!StringFetched) {
+                        StringFetched = true;
+                        var call = new CfxStringVisitorVisitGetStringRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.Execute(remoteRuntime.connection);
+                        m_String = call.value;
+                    }
+                    return m_String;
                 }
-                return m_String;
+            }
+
+            public override string ToString() {
+                return String.Format("String={{{0}}}", String);
             }
         }
 
-        public override string ToString() {
-            return String.Format("String={{{0}}}", String);
-        }
     }
-
 }

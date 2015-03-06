@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topics>
+  <Topic id="4e660bac-ef8a-421b-a9d3-f4d01eb8cf6b" visible="True" isDefault="true" isSelected="true" title="Welcome to the ChromiumFX API Reference">
+    <HelpKeywords>
+      <HelpKeyword index="K" term="Welcome" />
+    </HelpKeywords>
+  </Topic>
+</Topics>
