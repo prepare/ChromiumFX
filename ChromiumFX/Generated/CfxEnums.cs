@@ -258,7 +258,7 @@ namespace Chromium {
     /// </remarks>
     public enum CfxDomEventPhase {
         Unknown = unchecked((int)0),
-        CaptUring,
+        Capturing,
         AtTarget,
         Bubbling
     }

@@ -178,9 +178,9 @@ skip_to_lower:
         name = name.Replace("oomin", "oomIn")
 
         name = name.Replace("ConText", "Context")
-        name = name.Replace("isAllowed", "isallowed")
+        name = name.Replace("DisAllowed", "Disallowed")
         name = name.Replace("ubMenu", "ubmenu")
-
+        name = name.Replace("Uring", "uring")
         Return name
     End Function
 
