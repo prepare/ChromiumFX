@@ -78,13 +78,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CfxWebBrowser\ChromiumWebBrowser.csproj">
-      <Project>{F94EAB75-C33F-4F69-9E26-8C3B48141DAA}</Project>
-      <Name>ChromiumWebBrowser</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ChromiumFX\ChromiumFX.csproj">
       <Project>{36972B7C-3A3A-465F-B064-51B525FD4C14}</Project>
       <Name>ChromiumFX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChromiumWebBrowser\ChromiumWebBrowser.csproj">
+      <Project>{f94eab75-c33f-4f69-9e26-8c3b48141daa}</Project>
+      <Name>ChromiumWebBrowser</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
