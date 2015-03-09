@@ -83,7 +83,7 @@ namespace Chromium {
         /// No sandbox info is provided.
         /// </summary>
         public static int ExecuteProcess(CfxApp application) {
-            return ExecuteProcess(application, IntPtr.Zero);
+            return ExecuteProcessPrivate(application, IntPtr.Zero);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Chromium {
         /// No sandbox info is provided.
         /// </summary>
         public static bool Initialize(CfxSettings settings, CfxApp application) {
-            return Initialize(settings, application, IntPtr.Zero);
+            return InitializePrivate(settings, application, IntPtr.Zero);
         }
 
         /// <summary>
