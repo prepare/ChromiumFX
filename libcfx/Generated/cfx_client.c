@@ -265,67 +265,79 @@ int CEF_CALLBACK cfx_client_on_process_message_received(cef_client_t* self, cef_
 }
 
 
-CFX_EXPORT void cfx_client_activate_callback(cef_client_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_client_set_managed_callback(cef_client_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->get_context_menu_handler = is_active ? cfx_client_get_context_menu_handler : 0;
+        if(callback && !cfx_client_get_context_menu_handler_callback)
+            cfx_client_get_context_menu_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_context_menu_handler_t** __retval)) callback;
+        self->get_context_menu_handler = callback ? cfx_client_get_context_menu_handler : 0;
         break;
     case 1:
-        self->get_dialog_handler = is_active ? cfx_client_get_dialog_handler : 0;
+        if(callback && !cfx_client_get_dialog_handler_callback)
+            cfx_client_get_dialog_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_dialog_handler_t** __retval)) callback;
+        self->get_dialog_handler = callback ? cfx_client_get_dialog_handler : 0;
         break;
     case 2:
-        self->get_display_handler = is_active ? cfx_client_get_display_handler : 0;
+        if(callback && !cfx_client_get_display_handler_callback)
+            cfx_client_get_display_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_display_handler_t** __retval)) callback;
+        self->get_display_handler = callback ? cfx_client_get_display_handler : 0;
         break;
     case 3:
-        self->get_download_handler = is_active ? cfx_client_get_download_handler : 0;
+        if(callback && !cfx_client_get_download_handler_callback)
+            cfx_client_get_download_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_download_handler_t** __retval)) callback;
+        self->get_download_handler = callback ? cfx_client_get_download_handler : 0;
         break;
     case 4:
-        self->get_drag_handler = is_active ? cfx_client_get_drag_handler : 0;
+        if(callback && !cfx_client_get_drag_handler_callback)
+            cfx_client_get_drag_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_drag_handler_t** __retval)) callback;
+        self->get_drag_handler = callback ? cfx_client_get_drag_handler : 0;
         break;
     case 5:
-        self->get_focus_handler = is_active ? cfx_client_get_focus_handler : 0;
+        if(callback && !cfx_client_get_focus_handler_callback)
+            cfx_client_get_focus_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_focus_handler_t** __retval)) callback;
+        self->get_focus_handler = callback ? cfx_client_get_focus_handler : 0;
         break;
     case 6:
-        self->get_geolocation_handler = is_active ? cfx_client_get_geolocation_handler : 0;
+        if(callback && !cfx_client_get_geolocation_handler_callback)
+            cfx_client_get_geolocation_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_geolocation_handler_t** __retval)) callback;
+        self->get_geolocation_handler = callback ? cfx_client_get_geolocation_handler : 0;
         break;
     case 7:
-        self->get_jsdialog_handler = is_active ? cfx_client_get_jsdialog_handler : 0;
+        if(callback && !cfx_client_get_jsdialog_handler_callback)
+            cfx_client_get_jsdialog_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_jsdialog_handler_t** __retval)) callback;
+        self->get_jsdialog_handler = callback ? cfx_client_get_jsdialog_handler : 0;
         break;
     case 8:
-        self->get_keyboard_handler = is_active ? cfx_client_get_keyboard_handler : 0;
+        if(callback && !cfx_client_get_keyboard_handler_callback)
+            cfx_client_get_keyboard_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_keyboard_handler_t** __retval)) callback;
+        self->get_keyboard_handler = callback ? cfx_client_get_keyboard_handler : 0;
         break;
     case 9:
-        self->get_life_span_handler = is_active ? cfx_client_get_life_span_handler : 0;
+        if(callback && !cfx_client_get_life_span_handler_callback)
+            cfx_client_get_life_span_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_life_span_handler_t** __retval)) callback;
+        self->get_life_span_handler = callback ? cfx_client_get_life_span_handler : 0;
         break;
     case 10:
-        self->get_load_handler = is_active ? cfx_client_get_load_handler : 0;
+        if(callback && !cfx_client_get_load_handler_callback)
+            cfx_client_get_load_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_load_handler_t** __retval)) callback;
+        self->get_load_handler = callback ? cfx_client_get_load_handler : 0;
         break;
     case 11:
-        self->get_render_handler = is_active ? cfx_client_get_render_handler : 0;
+        if(callback && !cfx_client_get_render_handler_callback)
+            cfx_client_get_render_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_render_handler_t** __retval)) callback;
+        self->get_render_handler = callback ? cfx_client_get_render_handler : 0;
         break;
     case 12:
-        self->get_request_handler = is_active ? cfx_client_get_request_handler : 0;
+        if(callback && !cfx_client_get_request_handler_callback)
+            cfx_client_get_request_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_request_handler_t** __retval)) callback;
+        self->get_request_handler = callback ? cfx_client_get_request_handler : 0;
         break;
     case 13:
-        self->on_process_message_received = is_active ? cfx_client_on_process_message_received : 0;
+        if(callback && !cfx_client_on_process_message_received_callback)
+            cfx_client_on_process_message_received_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_process_id_t source_process, cef_process_message_t* message)) callback;
+        self->on_process_message_received = callback ? cfx_client_on_process_message_received : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_client_set_callback_ptrs(void *cb_0, void *cb_1, void *cb_2, void *cb_3, void *cb_4, void *cb_5, void *cb_6, void *cb_7, void *cb_8, void *cb_9, void *cb_10, void *cb_11, void *cb_12, void *cb_13) {
-    cfx_client_get_context_menu_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_context_menu_handler_t** __retval)) cb_0;
-    cfx_client_get_dialog_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_dialog_handler_t** __retval)) cb_1;
-    cfx_client_get_display_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_display_handler_t** __retval)) cb_2;
-    cfx_client_get_download_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_download_handler_t** __retval)) cb_3;
-    cfx_client_get_drag_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_drag_handler_t** __retval)) cb_4;
-    cfx_client_get_focus_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_focus_handler_t** __retval)) cb_5;
-    cfx_client_get_geolocation_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_geolocation_handler_t** __retval)) cb_6;
-    cfx_client_get_jsdialog_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_jsdialog_handler_t** __retval)) cb_7;
-    cfx_client_get_keyboard_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_keyboard_handler_t** __retval)) cb_8;
-    cfx_client_get_life_span_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_life_span_handler_t** __retval)) cb_9;
-    cfx_client_get_load_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_load_handler_t** __retval)) cb_10;
-    cfx_client_get_render_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_render_handler_t** __retval)) cb_11;
-    cfx_client_get_request_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_request_handler_t** __retval)) cb_12;
-    cfx_client_on_process_message_received_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_process_id_t source_process, cef_process_message_t* message)) cb_13;
 }
 
 #ifdef __cplusplus

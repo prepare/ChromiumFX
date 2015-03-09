@@ -83,15 +83,14 @@ int CEF_CALLBACK cfx_navigation_entry_visitor_visit(cef_navigation_entry_visitor
 }
 
 
-CFX_EXPORT void cfx_navigation_entry_visitor_activate_callback(cef_navigation_entry_visitor_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_navigation_entry_visitor_set_managed_callback(cef_navigation_entry_visitor_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->visit = is_active ? cfx_navigation_entry_visitor_visit : 0;
+        if(callback && !cfx_navigation_entry_visitor_visit_callback)
+            cfx_navigation_entry_visitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_navigation_entry_t* entry, int current, int index, int total)) callback;
+        self->visit = callback ? cfx_navigation_entry_visitor_visit : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_navigation_entry_visitor_set_callback_ptrs(void *cb_0) {
-    cfx_navigation_entry_visitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_navigation_entry_t* entry, int current, int index, int total)) cb_0;
 }
 
 #ifdef __cplusplus

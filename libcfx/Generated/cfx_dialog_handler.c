@@ -83,15 +83,14 @@ int CEF_CALLBACK cfx_dialog_handler_on_file_dialog(cef_dialog_handler_t* self, c
 }
 
 
-CFX_EXPORT void cfx_dialog_handler_activate_callback(cef_dialog_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_dialog_handler_set_managed_callback(cef_dialog_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_file_dialog = is_active ? cfx_dialog_handler_on_file_dialog : 0;
+        if(callback && !cfx_dialog_handler_on_file_dialog_callback)
+            cfx_dialog_handler_on_file_dialog_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_file_dialog_mode_t mode, char16 *title_str, int title_length, char16 *default_file_name_str, int default_file_name_length, cef_string_list_t accept_types, cef_file_dialog_callback_t* callback)) callback;
+        self->on_file_dialog = callback ? cfx_dialog_handler_on_file_dialog : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_dialog_handler_set_callback_ptrs(void *cb_0) {
-    cfx_dialog_handler_on_file_dialog_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_file_dialog_mode_t mode, char16 *title_str, int title_length, char16 *default_file_name_str, int default_file_name_length, cef_string_list_t accept_types, cef_file_dialog_callback_t* callback)) cb_0;
 }
 
 #ifdef __cplusplus

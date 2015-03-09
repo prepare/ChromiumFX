@@ -81,15 +81,14 @@ void CEF_CALLBACK cfx_domvisitor_visit(cef_domvisitor_t* self, cef_domdocument_t
 }
 
 
-CFX_EXPORT void cfx_domvisitor_activate_callback(cef_domvisitor_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_domvisitor_set_managed_callback(cef_domvisitor_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->visit = is_active ? cfx_domvisitor_visit : 0;
+        if(callback && !cfx_domvisitor_visit_callback)
+            cfx_domvisitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_domdocument_t* document)) callback;
+        self->visit = callback ? cfx_domvisitor_visit : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_domvisitor_set_callback_ptrs(void *cb_0) {
-    cfx_domvisitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_domdocument_t* document)) cb_0;
 }
 
 #ifdef __cplusplus

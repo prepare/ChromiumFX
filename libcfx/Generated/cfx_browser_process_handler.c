@@ -113,27 +113,29 @@ cef_print_handler_t* CEF_CALLBACK cfx_browser_process_handler_get_print_handler(
 }
 
 
-CFX_EXPORT void cfx_browser_process_handler_activate_callback(cef_browser_process_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_browser_process_handler_set_managed_callback(cef_browser_process_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_context_initialized = is_active ? cfx_browser_process_handler_on_context_initialized : 0;
+        if(callback && !cfx_browser_process_handler_on_context_initialized_callback)
+            cfx_browser_process_handler_on_context_initialized_callback = (void (CEF_CALLBACK *)(gc_handle_t self)) callback;
+        self->on_context_initialized = callback ? cfx_browser_process_handler_on_context_initialized : 0;
         break;
     case 1:
-        self->on_before_child_process_launch = is_active ? cfx_browser_process_handler_on_before_child_process_launch : 0;
+        if(callback && !cfx_browser_process_handler_on_before_child_process_launch_callback)
+            cfx_browser_process_handler_on_before_child_process_launch_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_command_line_t* command_line)) callback;
+        self->on_before_child_process_launch = callback ? cfx_browser_process_handler_on_before_child_process_launch : 0;
         break;
     case 2:
-        self->on_render_process_thread_created = is_active ? cfx_browser_process_handler_on_render_process_thread_created : 0;
+        if(callback && !cfx_browser_process_handler_on_render_process_thread_created_callback)
+            cfx_browser_process_handler_on_render_process_thread_created_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_list_value_t* extra_info)) callback;
+        self->on_render_process_thread_created = callback ? cfx_browser_process_handler_on_render_process_thread_created : 0;
         break;
     case 3:
-        self->get_print_handler = is_active ? cfx_browser_process_handler_get_print_handler : 0;
+        if(callback && !cfx_browser_process_handler_get_print_handler_callback)
+            cfx_browser_process_handler_get_print_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_print_handler_t** __retval)) callback;
+        self->get_print_handler = callback ? cfx_browser_process_handler_get_print_handler : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_browser_process_handler_set_callback_ptrs(void *cb_0, void *cb_1, void *cb_2, void *cb_3) {
-    cfx_browser_process_handler_on_context_initialized_callback = (void (CEF_CALLBACK *)(gc_handle_t self)) cb_0;
-    cfx_browser_process_handler_on_before_child_process_launch_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_command_line_t* command_line)) cb_1;
-    cfx_browser_process_handler_on_render_process_thread_created_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_list_value_t* extra_info)) cb_2;
-    cfx_browser_process_handler_get_print_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_print_handler_t** __retval)) cb_3;
 }
 
 #ifdef __cplusplus

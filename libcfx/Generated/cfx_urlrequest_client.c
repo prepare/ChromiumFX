@@ -119,31 +119,34 @@ int CEF_CALLBACK cfx_urlrequest_client_get_auth_credentials(cef_urlrequest_clien
 }
 
 
-CFX_EXPORT void cfx_urlrequest_client_activate_callback(cef_urlrequest_client_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_urlrequest_client_set_managed_callback(cef_urlrequest_client_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_request_complete = is_active ? cfx_urlrequest_client_on_request_complete : 0;
+        if(callback && !cfx_urlrequest_client_on_request_complete_callback)
+            cfx_urlrequest_client_on_request_complete_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_urlrequest_t* request)) callback;
+        self->on_request_complete = callback ? cfx_urlrequest_client_on_request_complete : 0;
         break;
     case 1:
-        self->on_upload_progress = is_active ? cfx_urlrequest_client_on_upload_progress : 0;
+        if(callback && !cfx_urlrequest_client_on_upload_progress_callback)
+            cfx_urlrequest_client_on_upload_progress_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_urlrequest_t* request, uint64 current, uint64 total)) callback;
+        self->on_upload_progress = callback ? cfx_urlrequest_client_on_upload_progress : 0;
         break;
     case 2:
-        self->on_download_progress = is_active ? cfx_urlrequest_client_on_download_progress : 0;
+        if(callback && !cfx_urlrequest_client_on_download_progress_callback)
+            cfx_urlrequest_client_on_download_progress_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_urlrequest_t* request, uint64 current, uint64 total)) callback;
+        self->on_download_progress = callback ? cfx_urlrequest_client_on_download_progress : 0;
         break;
     case 3:
-        self->on_download_data = is_active ? cfx_urlrequest_client_on_download_data : 0;
+        if(callback && !cfx_urlrequest_client_on_download_data_callback)
+            cfx_urlrequest_client_on_download_data_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_urlrequest_t* request, const void* data, int data_length)) callback;
+        self->on_download_data = callback ? cfx_urlrequest_client_on_download_data : 0;
         break;
     case 4:
-        self->get_auth_credentials = is_active ? cfx_urlrequest_client_get_auth_credentials : 0;
+        if(callback && !cfx_urlrequest_client_get_auth_credentials_callback)
+            cfx_urlrequest_client_get_auth_credentials_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int isProxy, char16 *host_str, int host_length, int port, char16 *realm_str, int realm_length, char16 *scheme_str, int scheme_length, cef_auth_callback_t* callback)) callback;
+        self->get_auth_credentials = callback ? cfx_urlrequest_client_get_auth_credentials : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_urlrequest_client_set_callback_ptrs(void *cb_0, void *cb_1, void *cb_2, void *cb_3, void *cb_4) {
-    cfx_urlrequest_client_on_request_complete_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_urlrequest_t* request)) cb_0;
-    cfx_urlrequest_client_on_upload_progress_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_urlrequest_t* request, uint64 current, uint64 total)) cb_1;
-    cfx_urlrequest_client_on_download_progress_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_urlrequest_t* request, uint64 current, uint64 total)) cb_2;
-    cfx_urlrequest_client_on_download_data_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_urlrequest_t* request, const void* data, int data_length)) cb_3;
-    cfx_urlrequest_client_get_auth_credentials_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int isProxy, char16 *host_str, int host_length, int port, char16 *realm_str, int realm_length, char16 *scheme_str, int scheme_length, cef_auth_callback_t* callback)) cb_4;
 }
 
 #ifdef __cplusplus

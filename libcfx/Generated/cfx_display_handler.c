@@ -127,31 +127,34 @@ int CEF_CALLBACK cfx_display_handler_on_console_message(cef_display_handler_t* s
 }
 
 
-CFX_EXPORT void cfx_display_handler_activate_callback(cef_display_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_display_handler_set_managed_callback(cef_display_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_address_change = is_active ? cfx_display_handler_on_address_change : 0;
+        if(callback && !cfx_display_handler_on_address_change_callback)
+            cfx_display_handler_on_address_change_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, char16 *url_str, int url_length)) callback;
+        self->on_address_change = callback ? cfx_display_handler_on_address_change : 0;
         break;
     case 1:
-        self->on_title_change = is_active ? cfx_display_handler_on_title_change : 0;
+        if(callback && !cfx_display_handler_on_title_change_callback)
+            cfx_display_handler_on_title_change_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, char16 *title_str, int title_length)) callback;
+        self->on_title_change = callback ? cfx_display_handler_on_title_change : 0;
         break;
     case 2:
-        self->on_tooltip = is_active ? cfx_display_handler_on_tooltip : 0;
+        if(callback && !cfx_display_handler_on_tooltip_callback)
+            cfx_display_handler_on_tooltip_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 **text_str, int *text_length)) callback;
+        self->on_tooltip = callback ? cfx_display_handler_on_tooltip : 0;
         break;
     case 3:
-        self->on_status_message = is_active ? cfx_display_handler_on_status_message : 0;
+        if(callback && !cfx_display_handler_on_status_message_callback)
+            cfx_display_handler_on_status_message_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, char16 *value_str, int value_length)) callback;
+        self->on_status_message = callback ? cfx_display_handler_on_status_message : 0;
         break;
     case 4:
-        self->on_console_message = is_active ? cfx_display_handler_on_console_message : 0;
+        if(callback && !cfx_display_handler_on_console_message_callback)
+            cfx_display_handler_on_console_message_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *message_str, int message_length, char16 *source_str, int source_length, int line)) callback;
+        self->on_console_message = callback ? cfx_display_handler_on_console_message : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_display_handler_set_callback_ptrs(void *cb_0, void *cb_1, void *cb_2, void *cb_3, void *cb_4) {
-    cfx_display_handler_on_address_change_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, char16 *url_str, int url_length)) cb_0;
-    cfx_display_handler_on_title_change_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, char16 *title_str, int title_length)) cb_1;
-    cfx_display_handler_on_tooltip_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 **text_str, int *text_length)) cb_2;
-    cfx_display_handler_on_status_message_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, char16 *value_str, int value_length)) cb_3;
-    cfx_display_handler_on_console_message_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *message_str, int message_length, char16 *source_str, int source_length, int line)) cb_4;
 }
 
 #ifdef __cplusplus

@@ -53,6 +53,14 @@ namespace Chromium {
         }
 
 
+        private static object eventLock = new object();
+
+        // on_before_browse
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_request_handler_on_before_browse_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr request, int is_redirect);
+        private static cfx_request_handler_on_before_browse_delegate cfx_request_handler_on_before_browse;
+        private static IntPtr cfx_request_handler_on_before_browse_ptr;
+
         internal static void on_before_browse(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr request, int is_redirect) {
             var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -68,6 +76,12 @@ namespace Chromium {
             if(e.m_request_wrapped == null) CfxApi.cfx_release(e.m_request);
             __retval = e.m_returnValue ? 1 : 0;
         }
+
+        // on_before_resource_load
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_request_handler_on_before_resource_load_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr request);
+        private static cfx_request_handler_on_before_resource_load_delegate cfx_request_handler_on_before_resource_load;
+        private static IntPtr cfx_request_handler_on_before_resource_load_ptr;
 
         internal static void on_before_resource_load(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr request) {
             var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -85,6 +99,12 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
+        // get_resource_handler
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_request_handler_get_resource_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval, IntPtr browser, IntPtr frame, IntPtr request);
+        private static cfx_request_handler_get_resource_handler_delegate cfx_request_handler_get_resource_handler;
+        private static IntPtr cfx_request_handler_get_resource_handler_ptr;
+
         internal static void get_resource_handler(IntPtr gcHandlePtr, out IntPtr __retval, IntPtr browser, IntPtr frame, IntPtr request) {
             var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -100,6 +120,12 @@ namespace Chromium {
             if(e.m_request_wrapped == null) CfxApi.cfx_release(e.m_request);
             __retval = CfxResourceHandler.Unwrap(e.m_returnValue);
         }
+
+        // on_resource_redirect
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_request_handler_on_resource_redirect_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr old_url_str, int old_url_length, ref IntPtr new_url_str, ref int new_url_length);
+        private static cfx_request_handler_on_resource_redirect_delegate cfx_request_handler_on_resource_redirect;
+        private static IntPtr cfx_request_handler_on_resource_redirect_ptr;
 
         internal static void on_resource_redirect(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr old_url_str, int old_url_length, ref IntPtr new_url_str, ref int new_url_length) {
             var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -119,6 +145,12 @@ namespace Chromium {
             }
         }
 
+        // get_auth_credentials
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_request_handler_get_auth_credentials_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, int isProxy, IntPtr host_str, int host_length, int port, IntPtr realm_str, int realm_length, IntPtr scheme_str, int scheme_length, IntPtr callback);
+        private static cfx_request_handler_get_auth_credentials_delegate cfx_request_handler_get_auth_credentials;
+        private static IntPtr cfx_request_handler_get_auth_credentials_ptr;
+
         internal static void get_auth_credentials(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, int isProxy, IntPtr host_str, int host_length, int port, IntPtr realm_str, int realm_length, IntPtr scheme_str, int scheme_length, IntPtr callback) {
             var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -135,6 +167,12 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
+        // on_quota_request
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_request_handler_on_quota_request_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr origin_url_str, int origin_url_length, long new_size, IntPtr callback);
+        private static cfx_request_handler_on_quota_request_delegate cfx_request_handler_on_quota_request;
+        private static IntPtr cfx_request_handler_on_quota_request_ptr;
+
         internal static void on_quota_request(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr origin_url_str, int origin_url_length, long new_size, IntPtr callback) {
             var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -150,6 +188,12 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
+        // on_protocol_execution
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_request_handler_on_protocol_execution_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr url_str, int url_length, out int allow_os_execution);
+        private static cfx_request_handler_on_protocol_execution_delegate cfx_request_handler_on_protocol_execution;
+        private static IntPtr cfx_request_handler_on_protocol_execution_ptr;
+
         internal static void on_protocol_execution(IntPtr gcHandlePtr, IntPtr browser, IntPtr url_str, int url_length, out int allow_os_execution) {
             var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -164,6 +208,12 @@ namespace Chromium {
             allow_os_execution = e.m_allow_os_execution;
         }
 
+        // on_certificate_error
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_request_handler_on_certificate_error_delegate(IntPtr gcHandlePtr, out int __retval, CfxErrorCode cert_error, IntPtr request_url_str, int request_url_length, IntPtr callback);
+        private static cfx_request_handler_on_certificate_error_delegate cfx_request_handler_on_certificate_error;
+        private static IntPtr cfx_request_handler_on_certificate_error_ptr;
+
         internal static void on_certificate_error(IntPtr gcHandlePtr, out int __retval, CfxErrorCode cert_error, IntPtr request_url_str, int request_url_length, IntPtr callback) {
             var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -177,6 +227,12 @@ namespace Chromium {
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
             __retval = e.m_returnValue ? 1 : 0;
         }
+
+        // on_before_plugin_load
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_request_handler_on_before_plugin_load_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr url_str, int url_length, IntPtr policy_url_str, int policy_url_length, IntPtr info);
+        private static cfx_request_handler_on_before_plugin_load_delegate cfx_request_handler_on_before_plugin_load;
+        private static IntPtr cfx_request_handler_on_before_plugin_load_ptr;
 
         internal static void on_before_plugin_load(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr url_str, int url_length, IntPtr policy_url_str, int policy_url_length, IntPtr info) {
             var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -193,6 +249,12 @@ namespace Chromium {
             __retval = e.m_returnValue;
         }
 
+        // on_plugin_crashed
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_request_handler_on_plugin_crashed_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr plugin_path_str, int plugin_path_length);
+        private static cfx_request_handler_on_plugin_crashed_delegate cfx_request_handler_on_plugin_crashed;
+        private static IntPtr cfx_request_handler_on_plugin_crashed_ptr;
+
         internal static void on_plugin_crashed(IntPtr gcHandlePtr, IntPtr browser, IntPtr plugin_path_str, int plugin_path_length) {
             var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -204,6 +266,12 @@ namespace Chromium {
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
+
+        // on_render_process_terminated
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_request_handler_on_render_process_terminated_delegate(IntPtr gcHandlePtr, IntPtr browser, CfxTerminationStatus status);
+        private static cfx_request_handler_on_render_process_terminated_delegate cfx_request_handler_on_render_process_terminated;
+        private static IntPtr cfx_request_handler_on_render_process_terminated_ptr;
 
         internal static void on_render_process_terminated(IntPtr gcHandlePtr, IntPtr browser, CfxTerminationStatus status) {
             var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -236,15 +304,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnBeforeBrowseEventHandler OnBeforeBrowse {
             add {
-                if(m_OnBeforeBrowse == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 0, 1);
+                lock(eventLock) {
+                    if(m_OnBeforeBrowse == null) {
+                        if(cfx_request_handler_on_before_browse == null) {
+                            cfx_request_handler_on_before_browse = on_before_browse;
+                            cfx_request_handler_on_before_browse_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_before_browse);
+                        }
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 0, cfx_request_handler_on_before_browse_ptr);
+                    }
+                    m_OnBeforeBrowse += value;
                 }
-                m_OnBeforeBrowse += value;
             }
             remove {
-                m_OnBeforeBrowse -= value;
-                if(m_OnBeforeBrowse == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 0, 0);
+                lock(eventLock) {
+                    m_OnBeforeBrowse -= value;
+                    if(m_OnBeforeBrowse == null) {
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -262,15 +338,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnBeforeResourceLoadEventHandler OnBeforeResourceLoad {
             add {
-                if(m_OnBeforeResourceLoad == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 1, 1);
+                lock(eventLock) {
+                    if(m_OnBeforeResourceLoad == null) {
+                        if(cfx_request_handler_on_before_resource_load == null) {
+                            cfx_request_handler_on_before_resource_load = on_before_resource_load;
+                            cfx_request_handler_on_before_resource_load_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_before_resource_load);
+                        }
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 1, cfx_request_handler_on_before_resource_load_ptr);
+                    }
+                    m_OnBeforeResourceLoad += value;
                 }
-                m_OnBeforeResourceLoad += value;
             }
             remove {
-                m_OnBeforeResourceLoad -= value;
-                if(m_OnBeforeResourceLoad == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 1, 0);
+                lock(eventLock) {
+                    m_OnBeforeResourceLoad -= value;
+                    if(m_OnBeforeResourceLoad == null) {
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -289,15 +373,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxGetResourceHandlerEventHandler GetResourceHandler {
             add {
-                if(m_GetResourceHandler == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 2, 1);
+                lock(eventLock) {
+                    if(m_GetResourceHandler == null) {
+                        if(cfx_request_handler_get_resource_handler == null) {
+                            cfx_request_handler_get_resource_handler = get_resource_handler;
+                            cfx_request_handler_get_resource_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_get_resource_handler);
+                        }
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 2, cfx_request_handler_get_resource_handler_ptr);
+                    }
+                    m_GetResourceHandler += value;
                 }
-                m_GetResourceHandler += value;
             }
             remove {
-                m_GetResourceHandler -= value;
-                if(m_GetResourceHandler == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 2, 0);
+                lock(eventLock) {
+                    m_GetResourceHandler -= value;
+                    if(m_GetResourceHandler == null) {
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -315,15 +407,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnResourceRedirectEventHandler OnResourceRedirect {
             add {
-                if(m_OnResourceRedirect == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 3, 1);
+                lock(eventLock) {
+                    if(m_OnResourceRedirect == null) {
+                        if(cfx_request_handler_on_resource_redirect == null) {
+                            cfx_request_handler_on_resource_redirect = on_resource_redirect;
+                            cfx_request_handler_on_resource_redirect_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_resource_redirect);
+                        }
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 3, cfx_request_handler_on_resource_redirect_ptr);
+                    }
+                    m_OnResourceRedirect += value;
                 }
-                m_OnResourceRedirect += value;
             }
             remove {
-                m_OnResourceRedirect -= value;
-                if(m_OnResourceRedirect == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 3, 0);
+                lock(eventLock) {
+                    m_OnResourceRedirect -= value;
+                    if(m_OnResourceRedirect == null) {
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -343,15 +443,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxRequestHandlerGetAuthCredentialsEventHandler GetAuthCredentials {
             add {
-                if(m_GetAuthCredentials == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 4, 1);
+                lock(eventLock) {
+                    if(m_GetAuthCredentials == null) {
+                        if(cfx_request_handler_get_auth_credentials == null) {
+                            cfx_request_handler_get_auth_credentials = get_auth_credentials;
+                            cfx_request_handler_get_auth_credentials_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_get_auth_credentials);
+                        }
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 4, cfx_request_handler_get_auth_credentials_ptr);
+                    }
+                    m_GetAuthCredentials += value;
                 }
-                m_GetAuthCredentials += value;
             }
             remove {
-                m_GetAuthCredentials -= value;
-                if(m_GetAuthCredentials == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 4, 0);
+                lock(eventLock) {
+                    m_GetAuthCredentials -= value;
+                    if(m_GetAuthCredentials == null) {
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -372,15 +480,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnQuotaRequestEventHandler OnQuotaRequest {
             add {
-                if(m_OnQuotaRequest == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 5, 1);
+                lock(eventLock) {
+                    if(m_OnQuotaRequest == null) {
+                        if(cfx_request_handler_on_quota_request == null) {
+                            cfx_request_handler_on_quota_request = on_quota_request;
+                            cfx_request_handler_on_quota_request_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_quota_request);
+                        }
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 5, cfx_request_handler_on_quota_request_ptr);
+                    }
+                    m_OnQuotaRequest += value;
                 }
-                m_OnQuotaRequest += value;
             }
             remove {
-                m_OnQuotaRequest -= value;
-                if(m_OnQuotaRequest == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 5, 0);
+                lock(eventLock) {
+                    m_OnQuotaRequest -= value;
+                    if(m_OnQuotaRequest == null) {
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 5, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -400,15 +516,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnProtocolExecutionEventHandler OnProtocolExecution {
             add {
-                if(m_OnProtocolExecution == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 6, 1);
+                lock(eventLock) {
+                    if(m_OnProtocolExecution == null) {
+                        if(cfx_request_handler_on_protocol_execution == null) {
+                            cfx_request_handler_on_protocol_execution = on_protocol_execution;
+                            cfx_request_handler_on_protocol_execution_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_protocol_execution);
+                        }
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 6, cfx_request_handler_on_protocol_execution_ptr);
+                    }
+                    m_OnProtocolExecution += value;
                 }
-                m_OnProtocolExecution += value;
             }
             remove {
-                m_OnProtocolExecution -= value;
-                if(m_OnProtocolExecution == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 6, 0);
+                lock(eventLock) {
+                    m_OnProtocolExecution -= value;
+                    if(m_OnProtocolExecution == null) {
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 6, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -431,15 +555,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnCertificateErrorEventHandler OnCertificateError {
             add {
-                if(m_OnCertificateError == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 7, 1);
+                lock(eventLock) {
+                    if(m_OnCertificateError == null) {
+                        if(cfx_request_handler_on_certificate_error == null) {
+                            cfx_request_handler_on_certificate_error = on_certificate_error;
+                            cfx_request_handler_on_certificate_error_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_certificate_error);
+                        }
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 7, cfx_request_handler_on_certificate_error_ptr);
+                    }
+                    m_OnCertificateError += value;
                 }
-                m_OnCertificateError += value;
             }
             remove {
-                m_OnCertificateError -= value;
-                if(m_OnCertificateError == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 7, 0);
+                lock(eventLock) {
+                    m_OnCertificateError -= value;
+                    if(m_OnCertificateError == null) {
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 7, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -456,15 +588,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnBeforePluginLoadEventHandler OnBeforePluginLoad {
             add {
-                if(m_OnBeforePluginLoad == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 8, 1);
+                lock(eventLock) {
+                    if(m_OnBeforePluginLoad == null) {
+                        if(cfx_request_handler_on_before_plugin_load == null) {
+                            cfx_request_handler_on_before_plugin_load = on_before_plugin_load;
+                            cfx_request_handler_on_before_plugin_load_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_before_plugin_load);
+                        }
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 8, cfx_request_handler_on_before_plugin_load_ptr);
+                    }
+                    m_OnBeforePluginLoad += value;
                 }
-                m_OnBeforePluginLoad += value;
             }
             remove {
-                m_OnBeforePluginLoad -= value;
-                if(m_OnBeforePluginLoad == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 8, 0);
+                lock(eventLock) {
+                    m_OnBeforePluginLoad -= value;
+                    if(m_OnBeforePluginLoad == null) {
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 8, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -481,15 +621,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnPluginCrashedEventHandler OnPluginCrashed {
             add {
-                if(m_OnPluginCrashed == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 9, 1);
+                lock(eventLock) {
+                    if(m_OnPluginCrashed == null) {
+                        if(cfx_request_handler_on_plugin_crashed == null) {
+                            cfx_request_handler_on_plugin_crashed = on_plugin_crashed;
+                            cfx_request_handler_on_plugin_crashed_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_plugin_crashed);
+                        }
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 9, cfx_request_handler_on_plugin_crashed_ptr);
+                    }
+                    m_OnPluginCrashed += value;
                 }
-                m_OnPluginCrashed += value;
             }
             remove {
-                m_OnPluginCrashed -= value;
-                if(m_OnPluginCrashed == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 9, 0);
+                lock(eventLock) {
+                    m_OnPluginCrashed -= value;
+                    if(m_OnPluginCrashed == null) {
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 9, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -506,15 +654,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnRenderProcessTerminatedEventHandler OnRenderProcessTerminated {
             add {
-                if(m_OnRenderProcessTerminated == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 10, 1);
+                lock(eventLock) {
+                    if(m_OnRenderProcessTerminated == null) {
+                        if(cfx_request_handler_on_render_process_terminated == null) {
+                            cfx_request_handler_on_render_process_terminated = on_render_process_terminated;
+                            cfx_request_handler_on_render_process_terminated_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_render_process_terminated);
+                        }
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 10, cfx_request_handler_on_render_process_terminated_ptr);
+                    }
+                    m_OnRenderProcessTerminated += value;
                 }
-                m_OnRenderProcessTerminated += value;
             }
             remove {
-                m_OnRenderProcessTerminated -= value;
-                if(m_OnRenderProcessTerminated == null) {
-                    CfxApi.cfx_request_handler_activate_callback(NativePtr, 10, 0);
+                lock(eventLock) {
+                    m_OnRenderProcessTerminated -= value;
+                    if(m_OnRenderProcessTerminated == null) {
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 10, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -524,47 +680,47 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnBeforeBrowse != null) {
                 m_OnBeforeBrowse = null;
-                CfxApi.cfx_request_handler_activate_callback(NativePtr, 0, 0);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_OnBeforeResourceLoad != null) {
                 m_OnBeforeResourceLoad = null;
-                CfxApi.cfx_request_handler_activate_callback(NativePtr, 1, 0);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
             if(m_GetResourceHandler != null) {
                 m_GetResourceHandler = null;
-                CfxApi.cfx_request_handler_activate_callback(NativePtr, 2, 0);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
             }
             if(m_OnResourceRedirect != null) {
                 m_OnResourceRedirect = null;
-                CfxApi.cfx_request_handler_activate_callback(NativePtr, 3, 0);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
             }
             if(m_GetAuthCredentials != null) {
                 m_GetAuthCredentials = null;
-                CfxApi.cfx_request_handler_activate_callback(NativePtr, 4, 0);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
             }
             if(m_OnQuotaRequest != null) {
                 m_OnQuotaRequest = null;
-                CfxApi.cfx_request_handler_activate_callback(NativePtr, 5, 0);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 5, IntPtr.Zero);
             }
             if(m_OnProtocolExecution != null) {
                 m_OnProtocolExecution = null;
-                CfxApi.cfx_request_handler_activate_callback(NativePtr, 6, 0);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 6, IntPtr.Zero);
             }
             if(m_OnCertificateError != null) {
                 m_OnCertificateError = null;
-                CfxApi.cfx_request_handler_activate_callback(NativePtr, 7, 0);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 7, IntPtr.Zero);
             }
             if(m_OnBeforePluginLoad != null) {
                 m_OnBeforePluginLoad = null;
-                CfxApi.cfx_request_handler_activate_callback(NativePtr, 8, 0);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 8, IntPtr.Zero);
             }
             if(m_OnPluginCrashed != null) {
                 m_OnPluginCrashed = null;
-                CfxApi.cfx_request_handler_activate_callback(NativePtr, 9, 0);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 9, IntPtr.Zero);
             }
             if(m_OnRenderProcessTerminated != null) {
                 m_OnRenderProcessTerminated = null;
-                CfxApi.cfx_request_handler_activate_callback(NativePtr, 10, 0);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 10, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

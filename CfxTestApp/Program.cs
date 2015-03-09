@@ -60,12 +60,12 @@ namespace CfxTestApplication {
 
             Environment.CurrentDirectory = System.IO.Path.Combine(assemblyDir, @"..\..\");
             
-#if DEBUG
-            //CfxRuntime.LoadLibraries(@"cef\Debug");
-            CfxRuntime.LoadLibraries();
-#else
+//#if DEBUG
+//            //CfxRuntime.LoadLibraries(@"cef\Debug");
+//            CfxRuntime.LoadLibraries();
+//#else
             CfxRuntime.LoadLibraries(@"cef\Release");
-#endif
+//#endif
 
 
             //for(int i = 0; i < 1000000; i++) {

@@ -181,55 +181,64 @@ void CEF_CALLBACK cfx_render_handler_on_scroll_offset_changed(cef_render_handler
 }
 
 
-CFX_EXPORT void cfx_render_handler_activate_callback(cef_render_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_render_handler_set_managed_callback(cef_render_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->get_root_screen_rect = is_active ? cfx_render_handler_get_root_screen_rect : 0;
+        if(callback && !cfx_render_handler_get_root_screen_rect_callback)
+            cfx_render_handler_get_root_screen_rect_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_rect_t* rect)) callback;
+        self->get_root_screen_rect = callback ? cfx_render_handler_get_root_screen_rect : 0;
         break;
     case 1:
-        self->get_view_rect = is_active ? cfx_render_handler_get_view_rect : 0;
+        if(callback && !cfx_render_handler_get_view_rect_callback)
+            cfx_render_handler_get_view_rect_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_rect_t* rect)) callback;
+        self->get_view_rect = callback ? cfx_render_handler_get_view_rect : 0;
         break;
     case 2:
-        self->get_screen_point = is_active ? cfx_render_handler_get_screen_point : 0;
+        if(callback && !cfx_render_handler_get_screen_point_callback)
+            cfx_render_handler_get_screen_point_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, int viewX, int viewY, int* screenX, int* screenY)) callback;
+        self->get_screen_point = callback ? cfx_render_handler_get_screen_point : 0;
         break;
     case 3:
-        self->get_screen_info = is_active ? cfx_render_handler_get_screen_info : 0;
+        if(callback && !cfx_render_handler_get_screen_info_callback)
+            cfx_render_handler_get_screen_info_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_screen_info_t* screen_info)) callback;
+        self->get_screen_info = callback ? cfx_render_handler_get_screen_info : 0;
         break;
     case 4:
-        self->on_popup_show = is_active ? cfx_render_handler_on_popup_show : 0;
+        if(callback && !cfx_render_handler_on_popup_show_callback)
+            cfx_render_handler_on_popup_show_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int show)) callback;
+        self->on_popup_show = callback ? cfx_render_handler_on_popup_show : 0;
         break;
     case 5:
-        self->on_popup_size = is_active ? cfx_render_handler_on_popup_size : 0;
+        if(callback && !cfx_render_handler_on_popup_size_callback)
+            cfx_render_handler_on_popup_size_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, const cef_rect_t* rect)) callback;
+        self->on_popup_size = callback ? cfx_render_handler_on_popup_size : 0;
         break;
     case 6:
-        self->on_paint = is_active ? cfx_render_handler_on_paint : 0;
+        if(callback && !cfx_render_handler_on_paint_callback)
+            cfx_render_handler_on_paint_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_paint_element_type_t type, int dirtyRectsCount, cef_rect_t const* dirtyRects, const void* buffer, int width, int height)) callback;
+        self->on_paint = callback ? cfx_render_handler_on_paint : 0;
         break;
     case 7:
-        self->on_cursor_change = is_active ? cfx_render_handler_on_cursor_change : 0;
+        if(callback && !cfx_render_handler_on_cursor_change_callback)
+            cfx_render_handler_on_cursor_change_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_cursor_handle_t cursor, cef_cursor_type_t type, const cef_cursor_info_t* custom_cursor_info)) callback;
+        self->on_cursor_change = callback ? cfx_render_handler_on_cursor_change : 0;
         break;
     case 8:
-        self->start_dragging = is_active ? cfx_render_handler_start_dragging : 0;
+        if(callback && !cfx_render_handler_start_dragging_callback)
+            cfx_render_handler_start_dragging_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_drag_data_t* drag_data, cef_drag_operations_mask_t allowed_ops, int x, int y)) callback;
+        self->start_dragging = callback ? cfx_render_handler_start_dragging : 0;
         break;
     case 9:
-        self->update_drag_cursor = is_active ? cfx_render_handler_update_drag_cursor : 0;
+        if(callback && !cfx_render_handler_update_drag_cursor_callback)
+            cfx_render_handler_update_drag_cursor_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_drag_operations_mask_t operation)) callback;
+        self->update_drag_cursor = callback ? cfx_render_handler_update_drag_cursor : 0;
         break;
     case 10:
-        self->on_scroll_offset_changed = is_active ? cfx_render_handler_on_scroll_offset_changed : 0;
+        if(callback && !cfx_render_handler_on_scroll_offset_changed_callback)
+            cfx_render_handler_on_scroll_offset_changed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) callback;
+        self->on_scroll_offset_changed = callback ? cfx_render_handler_on_scroll_offset_changed : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_render_handler_set_callback_ptrs(void *cb_0, void *cb_1, void *cb_2, void *cb_3, void *cb_4, void *cb_5, void *cb_6, void *cb_7, void *cb_8, void *cb_9, void *cb_10) {
-    cfx_render_handler_get_root_screen_rect_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_rect_t* rect)) cb_0;
-    cfx_render_handler_get_view_rect_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_rect_t* rect)) cb_1;
-    cfx_render_handler_get_screen_point_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, int viewX, int viewY, int* screenX, int* screenY)) cb_2;
-    cfx_render_handler_get_screen_info_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_screen_info_t* screen_info)) cb_3;
-    cfx_render_handler_on_popup_show_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int show)) cb_4;
-    cfx_render_handler_on_popup_size_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, const cef_rect_t* rect)) cb_5;
-    cfx_render_handler_on_paint_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_paint_element_type_t type, int dirtyRectsCount, cef_rect_t const* dirtyRects, const void* buffer, int width, int height)) cb_6;
-    cfx_render_handler_on_cursor_change_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_cursor_handle_t cursor, cef_cursor_type_t type, const cef_cursor_info_t* custom_cursor_info)) cb_7;
-    cfx_render_handler_start_dragging_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_drag_data_t* drag_data, cef_drag_operations_mask_t allowed_ops, int x, int y)) cb_8;
-    cfx_render_handler_update_drag_cursor_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_drag_operations_mask_t operation)) cb_9;
-    cfx_render_handler_on_scroll_offset_changed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) cb_10;
 }
 
 #ifdef __cplusplus

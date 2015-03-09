@@ -140,35 +140,39 @@ void CEF_CALLBACK cfx_resource_handler_cancel(cef_resource_handler_t* self) {
 }
 
 
-CFX_EXPORT void cfx_resource_handler_activate_callback(cef_resource_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_resource_handler_set_managed_callback(cef_resource_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->process_request = is_active ? cfx_resource_handler_process_request : 0;
+        if(callback && !cfx_resource_handler_process_request_callback)
+            cfx_resource_handler_process_request_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_request_t* request, cef_callback_t* callback)) callback;
+        self->process_request = callback ? cfx_resource_handler_process_request : 0;
         break;
     case 1:
-        self->get_response_headers = is_active ? cfx_resource_handler_get_response_headers : 0;
+        if(callback && !cfx_resource_handler_get_response_headers_callback)
+            cfx_resource_handler_get_response_headers_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_response_t* response, int64* response_length, char16 **redirectUrl_str, int *redirectUrl_length)) callback;
+        self->get_response_headers = callback ? cfx_resource_handler_get_response_headers : 0;
         break;
     case 2:
-        self->read_response = is_active ? cfx_resource_handler_read_response : 0;
+        if(callback && !cfx_resource_handler_read_response_callback)
+            cfx_resource_handler_read_response_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, void* data_out, int bytes_to_read, int* bytes_read, cef_callback_t* callback)) callback;
+        self->read_response = callback ? cfx_resource_handler_read_response : 0;
         break;
     case 3:
-        self->can_get_cookie = is_active ? cfx_resource_handler_can_get_cookie : 0;
+        if(callback && !cfx_resource_handler_can_get_cookie_callback)
+            cfx_resource_handler_can_get_cookie_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, const cef_cookie_t* cookie)) callback;
+        self->can_get_cookie = callback ? cfx_resource_handler_can_get_cookie : 0;
         break;
     case 4:
-        self->can_set_cookie = is_active ? cfx_resource_handler_can_set_cookie : 0;
+        if(callback && !cfx_resource_handler_can_set_cookie_callback)
+            cfx_resource_handler_can_set_cookie_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, const cef_cookie_t* cookie)) callback;
+        self->can_set_cookie = callback ? cfx_resource_handler_can_set_cookie : 0;
         break;
     case 5:
-        self->cancel = is_active ? cfx_resource_handler_cancel : 0;
+        if(callback && !cfx_resource_handler_cancel_callback)
+            cfx_resource_handler_cancel_callback = (void (CEF_CALLBACK *)(gc_handle_t self)) callback;
+        self->cancel = callback ? cfx_resource_handler_cancel : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_resource_handler_set_callback_ptrs(void *cb_0, void *cb_1, void *cb_2, void *cb_3, void *cb_4, void *cb_5) {
-    cfx_resource_handler_process_request_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_request_t* request, cef_callback_t* callback)) cb_0;
-    cfx_resource_handler_get_response_headers_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_response_t* response, int64* response_length, char16 **redirectUrl_str, int *redirectUrl_length)) cb_1;
-    cfx_resource_handler_read_response_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, void* data_out, int bytes_to_read, int* bytes_read, cef_callback_t* callback)) cb_2;
-    cfx_resource_handler_can_get_cookie_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, const cef_cookie_t* cookie)) cb_3;
-    cfx_resource_handler_can_set_cookie_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, const cef_cookie_t* cookie)) cb_4;
-    cfx_resource_handler_cancel_callback = (void (CEF_CALLBACK *)(gc_handle_t self)) cb_5;
 }
 
 #ifdef __cplusplus

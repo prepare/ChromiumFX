@@ -92,19 +92,19 @@ void CEF_CALLBACK cfx_geolocation_handler_on_cancel_geolocation_permission(cef_g
 }
 
 
-CFX_EXPORT void cfx_geolocation_handler_activate_callback(cef_geolocation_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_geolocation_handler_set_managed_callback(cef_geolocation_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_request_geolocation_permission = is_active ? cfx_geolocation_handler_on_request_geolocation_permission : 0;
+        if(callback && !cfx_geolocation_handler_on_request_geolocation_permission_callback)
+            cfx_geolocation_handler_on_request_geolocation_permission_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *requesting_url_str, int requesting_url_length, int request_id, cef_geolocation_callback_t* callback)) callback;
+        self->on_request_geolocation_permission = callback ? cfx_geolocation_handler_on_request_geolocation_permission : 0;
         break;
     case 1:
-        self->on_cancel_geolocation_permission = is_active ? cfx_geolocation_handler_on_cancel_geolocation_permission : 0;
+        if(callback && !cfx_geolocation_handler_on_cancel_geolocation_permission_callback)
+            cfx_geolocation_handler_on_cancel_geolocation_permission_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, char16 *requesting_url_str, int requesting_url_length, int request_id)) callback;
+        self->on_cancel_geolocation_permission = callback ? cfx_geolocation_handler_on_cancel_geolocation_permission : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_geolocation_handler_set_callback_ptrs(void *cb_0, void *cb_1) {
-    cfx_geolocation_handler_on_request_geolocation_permission_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *requesting_url_str, int requesting_url_length, int request_id, cef_geolocation_callback_t* callback)) cb_0;
-    cfx_geolocation_handler_on_cancel_geolocation_permission_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, char16 *requesting_url_str, int requesting_url_length, int request_id)) cb_1;
 }
 
 #ifdef __cplusplus

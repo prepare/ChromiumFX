@@ -124,31 +124,34 @@ void CEF_CALLBACK cfx_life_span_handler_on_before_close(cef_life_span_handler_t*
 }
 
 
-CFX_EXPORT void cfx_life_span_handler_activate_callback(cef_life_span_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_life_span_handler_set_managed_callback(cef_life_span_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_before_popup = is_active ? cfx_life_span_handler_on_before_popup : 0;
+        if(callback && !cfx_life_span_handler_on_before_popup_callback)
+            cfx_life_span_handler_on_before_popup_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, char16 *target_url_str, int target_url_length, char16 *target_frame_name_str, int target_frame_name_length, const cef_popup_features_t* popupFeatures, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, int* no_javascript_access)) callback;
+        self->on_before_popup = callback ? cfx_life_span_handler_on_before_popup : 0;
         break;
     case 1:
-        self->on_after_created = is_active ? cfx_life_span_handler_on_after_created : 0;
+        if(callback && !cfx_life_span_handler_on_after_created_callback)
+            cfx_life_span_handler_on_after_created_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) callback;
+        self->on_after_created = callback ? cfx_life_span_handler_on_after_created : 0;
         break;
     case 2:
-        self->run_modal = is_active ? cfx_life_span_handler_run_modal : 0;
+        if(callback && !cfx_life_span_handler_run_modal_callback)
+            cfx_life_span_handler_run_modal_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser)) callback;
+        self->run_modal = callback ? cfx_life_span_handler_run_modal : 0;
         break;
     case 3:
-        self->do_close = is_active ? cfx_life_span_handler_do_close : 0;
+        if(callback && !cfx_life_span_handler_do_close_callback)
+            cfx_life_span_handler_do_close_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser)) callback;
+        self->do_close = callback ? cfx_life_span_handler_do_close : 0;
         break;
     case 4:
-        self->on_before_close = is_active ? cfx_life_span_handler_on_before_close : 0;
+        if(callback && !cfx_life_span_handler_on_before_close_callback)
+            cfx_life_span_handler_on_before_close_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) callback;
+        self->on_before_close = callback ? cfx_life_span_handler_on_before_close : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_life_span_handler_set_callback_ptrs(void *cb_0, void *cb_1, void *cb_2, void *cb_3, void *cb_4) {
-    cfx_life_span_handler_on_before_popup_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, char16 *target_url_str, int target_url_length, char16 *target_frame_name_str, int target_frame_name_length, const cef_popup_features_t* popupFeatures, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, int* no_javascript_access)) cb_0;
-    cfx_life_span_handler_on_after_created_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) cb_1;
-    cfx_life_span_handler_run_modal_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser)) cb_2;
-    cfx_life_span_handler_do_close_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser)) cb_3;
-    cfx_life_span_handler_on_before_close_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) cb_4;
 }
 
 #ifdef __cplusplus

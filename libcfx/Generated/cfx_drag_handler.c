@@ -83,15 +83,14 @@ int CEF_CALLBACK cfx_drag_handler_on_drag_enter(cef_drag_handler_t* self, cef_br
 }
 
 
-CFX_EXPORT void cfx_drag_handler_activate_callback(cef_drag_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_drag_handler_set_managed_callback(cef_drag_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_drag_enter = is_active ? cfx_drag_handler_on_drag_enter : 0;
+        if(callback && !cfx_drag_handler_on_drag_enter_callback)
+            cfx_drag_handler_on_drag_enter_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_drag_data_t* dragData, cef_drag_operations_mask_t mask)) callback;
+        self->on_drag_enter = callback ? cfx_drag_handler_on_drag_enter : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_drag_handler_set_callback_ptrs(void *cb_0) {
-    cfx_drag_handler_on_drag_enter_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_drag_data_t* dragData, cef_drag_operations_mask_t mask)) cb_0;
 }
 
 #ifdef __cplusplus

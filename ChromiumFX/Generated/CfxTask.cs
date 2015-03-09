@@ -57,6 +57,14 @@ namespace Chromium {
         }
 
 
+        private static object eventLock = new object();
+
+        // execute
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_task_execute_delegate(IntPtr gcHandlePtr);
+        private static cfx_task_execute_delegate cfx_task_execute;
+        private static IntPtr cfx_task_execute_ptr;
+
         internal static void execute(IntPtr gcHandlePtr) {
             var self = (CfxTask)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -80,15 +88,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxEventHandler Execute {
             add {
-                if(m_Execute == null) {
-                    CfxApi.cfx_task_activate_callback(NativePtr, 0, 1);
+                lock(eventLock) {
+                    if(m_Execute == null) {
+                        if(cfx_task_execute == null) {
+                            cfx_task_execute = execute;
+                            cfx_task_execute_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_task_execute);
+                        }
+                        CfxApi.cfx_task_set_managed_callback(NativePtr, 0, cfx_task_execute_ptr);
+                    }
+                    m_Execute += value;
                 }
-                m_Execute += value;
             }
             remove {
-                m_Execute -= value;
-                if(m_Execute == null) {
-                    CfxApi.cfx_task_activate_callback(NativePtr, 0, 0);
+                lock(eventLock) {
+                    m_Execute -= value;
+                    if(m_Execute == null) {
+                        CfxApi.cfx_task_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -98,7 +114,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_Execute != null) {
                 m_Execute = null;
-                CfxApi.cfx_task_activate_callback(NativePtr, 0, 0);
+                CfxApi.cfx_task_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

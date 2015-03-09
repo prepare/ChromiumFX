@@ -81,15 +81,14 @@ void CEF_CALLBACK cfx_task_execute(cef_task_t* self) {
 }
 
 
-CFX_EXPORT void cfx_task_activate_callback(cef_task_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_task_set_managed_callback(cef_task_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->execute = is_active ? cfx_task_execute : 0;
+        if(callback && !cfx_task_execute_callback)
+            cfx_task_execute_callback = (void (CEF_CALLBACK *)(gc_handle_t self)) callback;
+        self->execute = callback ? cfx_task_execute : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_task_set_callback_ptrs(void *cb_0) {
-    cfx_task_execute_callback = (void (CEF_CALLBACK *)(gc_handle_t self)) cb_0;
 }
 
 #ifdef __cplusplus

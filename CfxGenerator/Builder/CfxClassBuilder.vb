@@ -333,10 +333,7 @@ Public Class CfxClassBuilder
             End If
         Next
 
-        Dim setCallbackSignature = New List(Of String)
-        Dim setCallbackStatements = New List(Of String)
-
-        b.BeginBlock("CFX_EXPORT void {0}_activate_callback({1}* self, int index, int is_active)", CfxName, OriginalSymbol)
+        b.BeginBlock("CFX_EXPORT void {0}_set_managed_callback({1}* self, int index, void* callback)", CfxName, OriginalSymbol)
         b.BeginBlock("switch(index)")
         Dim index = 0
         For Each sm In StructMembers
@@ -344,22 +341,17 @@ Public Class CfxClassBuilder
                 b.DecreaseIndent()
                 b.AppendLine("case {0}:", index)
                 b.IncreaseIndent()
-                b.AppendLine("self->{0} = is_active ? {1} : 0;", sm.Name, sm.MemberType.AsCefCallbackType.NativeCallbackName)
+                b.AppendLine("if(callback && !{0}_callback)", sm.MemberType.AsCefCallbackType.NativeCallbackName)
+                b.IncreaseIndent()
+                b.AppendLine("{0}_callback = (void (CEF_CALLBACK *)({1})) callback;", sm.MemberType.AsCefCallbackType.NativeCallbackName, sm.MemberType.AsCefCallbackType.Signature.NativeCallbackPtrSignature, index)
+                b.DecreaseIndent()
+                b.AppendLine("self->{0} = callback ? {1} : 0;", sm.Name, sm.MemberType.AsCefCallbackType.NativeCallbackName)
                 b.AppendLine("break;")
-
-                setCallbackSignature.Add("void *cb_" & index)
-                setCallbackStatements.Add(String.Format("{0}_callback = (void (CEF_CALLBACK *)({1})) cb_{2};", sm.MemberType.AsCefCallbackType.NativeCallbackName, sm.MemberType.AsCefCallbackType.Signature.NativeCallbackPtrSignature, index))
 
                 index += 1
             End If
         Next
         b.EndBlock()
-        b.EndBlock()
-
-        b.BeginBlock("CFX_EXPORT void {0}_set_callback_ptrs({1})", CfxName, String.Join(", ", setCallbackSignature.ToArray))
-        For Each stmt In setCallbackStatements
-            b.AppendLine(stmt)
-        Next
         b.EndBlock()
 
     End Sub
@@ -418,53 +410,52 @@ Public Class CfxClassBuilder
             b.AppendLine()
         End If
 
-        If Category = StructCategory.Values Then
+        Select Case Category
 
-            b.AppendComment("CFX_EXPORT {0}* {1}_ctor()", OriginalSymbol, CfxName)
-            b.AppendLine("public static cfx_ctor_delegate {0}_ctor;", CfxName)
-            b.AppendComment("CFX_EXPORT void {1}_dtor({0}* ptr)", OriginalSymbol, CfxName)
-            b.AppendLine("public static cfx_dtor_delegate {0}_dtor;", CfxName)
-            b.AppendLine()
+            Case StructCategory.Values
 
-            For Each sm In StructMembers
-                If sm.Name <> "size" Then
-                    b.AppendComment("CFX_EXPORT void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeCallSignature(sm.Name, False))
-                    b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]")
-                    b.AppendLine("public delegate void {0}_set_{1}_delegate(IntPtr self, {2});", CfxName, sm.Name, sm.MemberType.PInvokeCallSignature(sm.Name))
-                    b.AppendLine("public static {0}_set_{1}_delegate {0}_set_{1};", CfxName, sm.Name)
-                    b.AppendComment("CFX_EXPORT void {0}_get_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name))
-                    b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]")
-                    b.AppendLine("public delegate void {0}_get_{1}_delegate(IntPtr self, {2});", CfxName, sm.Name, sm.MemberType.PInvokeOutSignature(sm.Name))
-                    b.AppendLine("public static {0}_get_{1}_delegate {0}_get_{1};", CfxName, sm.Name)
-                    b.AppendLine()
-                End If
-            Next
-
-        Else
-
-            If Category = StructCategory.ApiCallbacks Then
-                b.AppendComment("CFX_EXPORT {0}* {1}_ctor();", CfxNativeSymbol, CfxName)
-                b.AppendLine("public static cfx_ctor_with_gc_handle_delegate {0}_ctor;", CfxName)
-                b.AppendLine("public static cfx_get_gc_handle_delegate {0}_get_gc_handle;", CfxName)
-                b.AppendLine("public static cfx_activate_callback_delegate {0}_activate_callback;", CfxName)
+                b.AppendComment("CFX_EXPORT {0}* {1}_ctor()", OriginalSymbol, CfxName)
+                b.AppendLine("public static cfx_ctor_delegate {0}_ctor;", CfxName)
+                b.AppendComment("CFX_EXPORT void {1}_dtor({0}* ptr)", OriginalSymbol, CfxName)
+                b.AppendLine("public static cfx_dtor_delegate {0}_dtor;", CfxName)
                 b.AppendLine()
-            End If
 
-            For Each sm In StructMembers
-                If sm.MemberType.IsCefCallbackType Then
-                    Dim cb = sm.MemberType.AsCefCallbackType
-                    If Category = StructCategory.ApiCallbacks Then
-                        b.AppendComment(cb.ToString())
-                        CodeSnippets.EmitPInvokeCallbackDelegate(b, CfxName & "_" & sm.Name, cb.Signature)
-                        b.AppendLine("public static {0}_{1}_delegate {0}_{1};", CfxName, sm.Name)
-                    Else
+                For Each sm In StructMembers
+                    If sm.Name <> "size" Then
+                        b.AppendComment("CFX_EXPORT void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeCallSignature(sm.Name, False))
+                        b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]")
+                        b.AppendLine("public delegate void {0}_set_{1}_delegate(IntPtr self, {2});", CfxName, sm.Name, sm.MemberType.PInvokeCallSignature(sm.Name))
+                        b.AppendLine("public static {0}_set_{1}_delegate {0}_set_{1};", CfxName, sm.Name)
+                        b.AppendComment("CFX_EXPORT void {0}_get_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name))
+                        b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]")
+                        b.AppendLine("public delegate void {0}_get_{1}_delegate(IntPtr self, {2});", CfxName, sm.Name, sm.MemberType.PInvokeOutSignature(sm.Name))
+                        b.AppendLine("public static {0}_get_{1}_delegate {0}_get_{1};", CfxName, sm.Name)
+                        b.AppendLine()
+                    End If
+                Next
+
+            Case StructCategory.ApiCalls
+
+                For Each sm In StructMembers
+                    If sm.MemberType.IsCefCallbackType Then
+                        Dim cb = sm.MemberType.AsCefCallbackType
                         b.AppendComment(cb.Signature.NativeExportSignature(CfxName & "_" & sm.Name))
                         CodeSnippets.EmitPInvokeDelegate(b, CfxName & "_" & sm.Name, cb.Signature)
+                        b.AppendLine()
                     End If
+                Next
+
+            Case StructCategory.ApiCallbacks
+
+                If Category = StructCategory.ApiCallbacks Then
+                    b.AppendComment("CFX_EXPORT {0}* {1}_ctor();", CfxNativeSymbol, CfxName)
+                    b.AppendLine("public static cfx_ctor_with_gc_handle_delegate {0}_ctor;", CfxName)
+                    b.AppendLine("public static cfx_get_gc_handle_delegate {0}_get_gc_handle;", CfxName)
+                    b.AppendLine("public static cfx_set_callback_delegate {0}_set_managed_callback;", CfxName)
                     b.AppendLine()
                 End If
-            Next
-        End If
+
+        End Select
 
     End Sub
 
@@ -503,27 +494,8 @@ Public Class CfxClassBuilder
 
             b.AppendLine("{0}_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, ""{0}_ctor"", typeof(cfx_ctor_with_gc_handle_delegate));", CfxName)
             b.AppendLine("{0}_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, ""{0}_get_gc_handle"", typeof(cfx_get_gc_handle_delegate));", CfxName)
-            b.AppendLine("{0}_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, ""{0}_activate_callback"", typeof(cfx_activate_callback_delegate));", CfxName)
-            b.AppendLine()
+            b.AppendLine("{0}_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, ""{0}_set_managed_callback"", typeof(cfx_set_callback_delegate));", CfxName)
 
-            Dim args = New List(Of String)
-            For Each sm In StructMembers
-                If sm.MemberType.IsCefCallbackType Then
-                    b.AppendLine("{0}_{1} = {2}.{1};", CfxName, sm.Name, ClassName)
-                    args.Add(String.Format("Marshal.GetFunctionPointerForDelegate({0}_{1})", CfxName, sm.Name))
-                End If
-            Next
-            b.AppendLine()
-
-            b.AppendLine("var {1}_set_callback_ptrs = (cfx_set_{0}_callback_ptrs_delegate)GetDelegate(libcfxPtr, ""{1}_set_callback_ptrs"", typeof(cfx_set_{0}_callback_ptrs_delegate));", StructMembers.Count - 1, CfxName)
-            b.AppendLine("{0}_set_callback_ptrs(", CfxName)
-            b.IncreaseIndent()
-            For i = 0 To args.Count - 2
-                b.AppendLine("{0},", args(i))
-            Next
-            b.AppendLine("{0}", args(args.Count - 1))
-            b.DecreaseIndent()
-            b.AppendLine(");")
         End If
 
     End Sub
@@ -627,9 +599,19 @@ Public Class CfxClassBuilder
         b.AppendLine()
         b.AppendLine()
 
+        b.AppendLine("private static object eventLock = new object();")
+        b.AppendLine()
+
         For Each sm In StructCallbacks
             Dim cb = sm.Callback
             Dim sig = cb.Signature
+
+            b.AppendComment(cb.ToString())
+            CodeSnippets.EmitPInvokeCallbackDelegate(b, CfxName & "_" & sm.Name, cb.Signature)
+            b.AppendLine("private static {0}_{1}_delegate {0}_{1};", CfxName, sm.Name)
+            b.AppendLine("private static IntPtr {0}_{1}_ptr;", CfxName, sm.Name)
+            b.AppendLine()
+
             b.BeginFunction(sm.Name, "void", sig.PInvokeCallbackSignature, "internal static")
             'b.AppendLine("var handle = System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr);")
             b.AppendLine("var self = ({0})System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;", ClassName)
@@ -672,7 +654,7 @@ Public Class CfxClassBuilder
         For Each sm In StructCallbacks
             b.BeginIf("m_{0} != null", sm.PublicName)
             b.AppendLine("m_{0} = null;", sm.PublicName)
-            b.AppendLine("CfxApi.{0}_activate_callback(NativePtr, {1}, 0);", CfxName, cbIndex)
+            b.AppendLine("CfxApi.{0}_set_managed_callback(NativePtr, {1}, IntPtr.Zero);", CfxName, cbIndex)
             b.EndBlock()
             cbIndex += 1
         Next

@@ -90,19 +90,19 @@ void CEF_CALLBACK cfx_download_handler_on_download_updated(cef_download_handler_
 }
 
 
-CFX_EXPORT void cfx_download_handler_activate_callback(cef_download_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_download_handler_set_managed_callback(cef_download_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_before_download = is_active ? cfx_download_handler_on_before_download : 0;
+        if(callback && !cfx_download_handler_on_before_download_callback)
+            cfx_download_handler_on_before_download_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_download_item_t* download_item, char16 *suggested_name_str, int suggested_name_length, cef_before_download_callback_t* callback)) callback;
+        self->on_before_download = callback ? cfx_download_handler_on_before_download : 0;
         break;
     case 1:
-        self->on_download_updated = is_active ? cfx_download_handler_on_download_updated : 0;
+        if(callback && !cfx_download_handler_on_download_updated_callback)
+            cfx_download_handler_on_download_updated_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_download_item_t* download_item, cef_download_item_callback_t* callback)) callback;
+        self->on_download_updated = callback ? cfx_download_handler_on_download_updated : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_download_handler_set_callback_ptrs(void *cb_0, void *cb_1) {
-    cfx_download_handler_on_before_download_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_download_item_t* download_item, char16 *suggested_name_str, int suggested_name_length, cef_before_download_callback_t* callback)) cb_0;
-    cfx_download_handler_on_download_updated_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_download_item_t* download_item, cef_download_item_callback_t* callback)) cb_1;
 }
 
 #ifdef __cplusplus
