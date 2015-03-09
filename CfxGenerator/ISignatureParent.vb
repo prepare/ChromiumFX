@@ -38,6 +38,5 @@ Public Interface ISignatureParent
     ReadOnly Property PublicFunctionName As String
     ReadOnly Property PropertyName As String
     ReadOnly Property RemoteCallId As String
-    ReadOnly Property ProxyCallName As String
     ReadOnly Property Comments As CommentData
 End Interface

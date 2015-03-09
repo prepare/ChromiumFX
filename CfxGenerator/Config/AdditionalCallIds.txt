@@ -8,3 +8,5 @@ CfrMarshalCopyToNativeRenderProcessCall
 CfrMarshalCopyToManagedRenderProcessCall
 
 CfxBinaryValueCreateFromArrayRenderProcessCall
+
+CfxRuntimeExecuteProcessRenderProcessCall
