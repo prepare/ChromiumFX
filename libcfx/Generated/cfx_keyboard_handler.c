@@ -94,19 +94,19 @@ int CEF_CALLBACK cfx_keyboard_handler_on_key_event(cef_keyboard_handler_t* self,
 }
 
 
-CFX_EXPORT void cfx_keyboard_handler_activate_callback(cef_keyboard_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_keyboard_handler_set_managed_callback(cef_keyboard_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_pre_key_event = is_active ? cfx_keyboard_handler_on_pre_key_event : 0;
+        if(callback && !cfx_keyboard_handler_on_pre_key_event_callback)
+            cfx_keyboard_handler_on_pre_key_event_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, const cef_key_event_t* event, cef_event_handle_t os_event, int* is_keyboard_shortcut)) callback;
+        self->on_pre_key_event = callback ? cfx_keyboard_handler_on_pre_key_event : 0;
         break;
     case 1:
-        self->on_key_event = is_active ? cfx_keyboard_handler_on_key_event : 0;
+        if(callback && !cfx_keyboard_handler_on_key_event_callback)
+            cfx_keyboard_handler_on_key_event_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, const cef_key_event_t* event, cef_event_handle_t os_event)) callback;
+        self->on_key_event = callback ? cfx_keyboard_handler_on_key_event : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_keyboard_handler_set_callback_ptrs(void *cb_0, void *cb_1) {
-    cfx_keyboard_handler_on_pre_key_event_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, const cef_key_event_t* event, cef_event_handle_t os_event, int* is_keyboard_shortcut)) cb_0;
-    cfx_keyboard_handler_on_key_event_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, const cef_key_event_t* event, cef_event_handle_t os_event)) cb_1;
 }
 
 #ifdef __cplusplus

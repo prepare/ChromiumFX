@@ -194,55 +194,64 @@ void CEF_CALLBACK cfx_request_handler_on_render_process_terminated(cef_request_h
 }
 
 
-CFX_EXPORT void cfx_request_handler_activate_callback(cef_request_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_request_handler_set_managed_callback(cef_request_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_before_browse = is_active ? cfx_request_handler_on_before_browse : 0;
+        if(callback && !cfx_request_handler_on_before_browse_callback)
+            cfx_request_handler_on_before_browse_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int is_redirect)) callback;
+        self->on_before_browse = callback ? cfx_request_handler_on_before_browse : 0;
         break;
     case 1:
-        self->on_before_resource_load = is_active ? cfx_request_handler_on_before_resource_load : 0;
+        if(callback && !cfx_request_handler_on_before_resource_load_callback)
+            cfx_request_handler_on_before_resource_load_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request)) callback;
+        self->on_before_resource_load = callback ? cfx_request_handler_on_before_resource_load : 0;
         break;
     case 2:
-        self->get_resource_handler = is_active ? cfx_request_handler_get_resource_handler : 0;
+        if(callback && !cfx_request_handler_get_resource_handler_callback)
+            cfx_request_handler_get_resource_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_resource_handler_t** __retval, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request)) callback;
+        self->get_resource_handler = callback ? cfx_request_handler_get_resource_handler : 0;
         break;
     case 3:
-        self->on_resource_redirect = is_active ? cfx_request_handler_on_resource_redirect : 0;
+        if(callback && !cfx_request_handler_on_resource_redirect_callback)
+            cfx_request_handler_on_resource_redirect_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, char16 *old_url_str, int old_url_length, char16 **new_url_str, int *new_url_length)) callback;
+        self->on_resource_redirect = callback ? cfx_request_handler_on_resource_redirect : 0;
         break;
     case 4:
-        self->get_auth_credentials = is_active ? cfx_request_handler_get_auth_credentials : 0;
+        if(callback && !cfx_request_handler_get_auth_credentials_callback)
+            cfx_request_handler_get_auth_credentials_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, int isProxy, char16 *host_str, int host_length, int port, char16 *realm_str, int realm_length, char16 *scheme_str, int scheme_length, cef_auth_callback_t* callback)) callback;
+        self->get_auth_credentials = callback ? cfx_request_handler_get_auth_credentials : 0;
         break;
     case 5:
-        self->on_quota_request = is_active ? cfx_request_handler_on_quota_request : 0;
+        if(callback && !cfx_request_handler_on_quota_request_callback)
+            cfx_request_handler_on_quota_request_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *origin_url_str, int origin_url_length, int64 new_size, cef_quota_callback_t* callback)) callback;
+        self->on_quota_request = callback ? cfx_request_handler_on_quota_request : 0;
         break;
     case 6:
-        self->on_protocol_execution = is_active ? cfx_request_handler_on_protocol_execution : 0;
+        if(callback && !cfx_request_handler_on_protocol_execution_callback)
+            cfx_request_handler_on_protocol_execution_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, char16 *url_str, int url_length, int* allow_os_execution)) callback;
+        self->on_protocol_execution = callback ? cfx_request_handler_on_protocol_execution : 0;
         break;
     case 7:
-        self->on_certificate_error = is_active ? cfx_request_handler_on_certificate_error : 0;
+        if(callback && !cfx_request_handler_on_certificate_error_callback)
+            cfx_request_handler_on_certificate_error_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_errorcode_t cert_error, char16 *request_url_str, int request_url_length, cef_allow_certificate_error_callback_t* callback)) callback;
+        self->on_certificate_error = callback ? cfx_request_handler_on_certificate_error : 0;
         break;
     case 8:
-        self->on_before_plugin_load = is_active ? cfx_request_handler_on_before_plugin_load : 0;
+        if(callback && !cfx_request_handler_on_before_plugin_load_callback)
+            cfx_request_handler_on_before_plugin_load_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *url_str, int url_length, char16 *policy_url_str, int policy_url_length, cef_web_plugin_info_t* info)) callback;
+        self->on_before_plugin_load = callback ? cfx_request_handler_on_before_plugin_load : 0;
         break;
     case 9:
-        self->on_plugin_crashed = is_active ? cfx_request_handler_on_plugin_crashed : 0;
+        if(callback && !cfx_request_handler_on_plugin_crashed_callback)
+            cfx_request_handler_on_plugin_crashed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, char16 *plugin_path_str, int plugin_path_length)) callback;
+        self->on_plugin_crashed = callback ? cfx_request_handler_on_plugin_crashed : 0;
         break;
     case 10:
-        self->on_render_process_terminated = is_active ? cfx_request_handler_on_render_process_terminated : 0;
+        if(callback && !cfx_request_handler_on_render_process_terminated_callback)
+            cfx_request_handler_on_render_process_terminated_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_termination_status_t status)) callback;
+        self->on_render_process_terminated = callback ? cfx_request_handler_on_render_process_terminated : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_request_handler_set_callback_ptrs(void *cb_0, void *cb_1, void *cb_2, void *cb_3, void *cb_4, void *cb_5, void *cb_6, void *cb_7, void *cb_8, void *cb_9, void *cb_10) {
-    cfx_request_handler_on_before_browse_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int is_redirect)) cb_0;
-    cfx_request_handler_on_before_resource_load_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request)) cb_1;
-    cfx_request_handler_get_resource_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_resource_handler_t** __retval, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request)) cb_2;
-    cfx_request_handler_on_resource_redirect_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, char16 *old_url_str, int old_url_length, char16 **new_url_str, int *new_url_length)) cb_3;
-    cfx_request_handler_get_auth_credentials_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, int isProxy, char16 *host_str, int host_length, int port, char16 *realm_str, int realm_length, char16 *scheme_str, int scheme_length, cef_auth_callback_t* callback)) cb_4;
-    cfx_request_handler_on_quota_request_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *origin_url_str, int origin_url_length, int64 new_size, cef_quota_callback_t* callback)) cb_5;
-    cfx_request_handler_on_protocol_execution_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, char16 *url_str, int url_length, int* allow_os_execution)) cb_6;
-    cfx_request_handler_on_certificate_error_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_errorcode_t cert_error, char16 *request_url_str, int request_url_length, cef_allow_certificate_error_callback_t* callback)) cb_7;
-    cfx_request_handler_on_before_plugin_load_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *url_str, int url_length, char16 *policy_url_str, int policy_url_length, cef_web_plugin_info_t* info)) cb_8;
-    cfx_request_handler_on_plugin_crashed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, char16 *plugin_path_str, int plugin_path_length)) cb_9;
-    cfx_request_handler_on_render_process_terminated_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_termination_status_t status)) cb_10;
 }
 
 #ifdef __cplusplus

@@ -279,36 +279,6 @@ namespace Chromium {
         public delegate void cfx_string_multimap_free_delegate(IntPtr map);
         public static cfx_string_multimap_free_delegate cfx_string_multimap_free;
 
-        // callback setters
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_set_1_callback_ptrs_delegate(IntPtr cb_0);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_set_2_callback_ptrs_delegate(IntPtr cb_0, IntPtr cb_1);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_set_3_callback_ptrs_delegate(IntPtr cb_0, IntPtr cb_1, IntPtr cb_2);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_set_4_callback_ptrs_delegate(IntPtr cb_0, IntPtr cb_1, IntPtr cb_2, IntPtr cb_3);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_set_5_callback_ptrs_delegate(IntPtr cb_0, IntPtr cb_1, IntPtr cb_2, IntPtr cb_3, IntPtr cb_4);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_set_6_callback_ptrs_delegate(IntPtr cb_0, IntPtr cb_1, IntPtr cb_2, IntPtr cb_3, IntPtr cb_4, IntPtr cb_5);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_set_7_callback_ptrs_delegate(IntPtr cb_0, IntPtr cb_1, IntPtr cb_2, IntPtr cb_3, IntPtr cb_4, IntPtr cb_5, IntPtr cb_6);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_set_8_callback_ptrs_delegate(IntPtr cb_0, IntPtr cb_1, IntPtr cb_2, IntPtr cb_3, IntPtr cb_4, IntPtr cb_5, IntPtr cb_6, IntPtr cb_7);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_set_9_callback_ptrs_delegate(IntPtr cb_0, IntPtr cb_1, IntPtr cb_2, IntPtr cb_3, IntPtr cb_4, IntPtr cb_5, IntPtr cb_6, IntPtr cb_7, IntPtr cb_8);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_set_10_callback_ptrs_delegate(IntPtr cb_0, IntPtr cb_1, IntPtr cb_2, IntPtr cb_3, IntPtr cb_4, IntPtr cb_5, IntPtr cb_6, IntPtr cb_7, IntPtr cb_8, IntPtr cb_9);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_set_11_callback_ptrs_delegate(IntPtr cb_0, IntPtr cb_1, IntPtr cb_2, IntPtr cb_3, IntPtr cb_4, IntPtr cb_5, IntPtr cb_6, IntPtr cb_7, IntPtr cb_8, IntPtr cb_9, IntPtr cb_10);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_set_12_callback_ptrs_delegate(IntPtr cb_0, IntPtr cb_1, IntPtr cb_2, IntPtr cb_3, IntPtr cb_4, IntPtr cb_5, IntPtr cb_6, IntPtr cb_7, IntPtr cb_8, IntPtr cb_9, IntPtr cb_10, IntPtr cb_11);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_set_13_callback_ptrs_delegate(IntPtr cb_0, IntPtr cb_1, IntPtr cb_2, IntPtr cb_3, IntPtr cb_4, IntPtr cb_5, IntPtr cb_6, IntPtr cb_7, IntPtr cb_8, IntPtr cb_9, IntPtr cb_10, IntPtr cb_11, IntPtr cb_12);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_set_14_callback_ptrs_delegate(IntPtr cb_0, IntPtr cb_1, IntPtr cb_2, IntPtr cb_3, IntPtr cb_4, IntPtr cb_5, IntPtr cb_6, IntPtr cb_7, IntPtr cb_8, IntPtr cb_9, IntPtr cb_10, IntPtr cb_11, IntPtr cb_12, IntPtr cb_13);
-
 
         // CfxAllowCertificateErrorCallback
 
@@ -323,32 +293,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_app_t* cfx_app_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_app_ctor;
         public static cfx_get_gc_handle_delegate cfx_app_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_app_activate_callback;
-
-        // on_before_command_line_processing
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_app_on_before_command_line_processing_delegate(IntPtr gcHandlePtr, IntPtr process_type_str, int process_type_length, IntPtr command_line);
-        public static cfx_app_on_before_command_line_processing_delegate cfx_app_on_before_command_line_processing;
-
-        // on_register_custom_schemes
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_app_on_register_custom_schemes_delegate(IntPtr gcHandlePtr, IntPtr registrar);
-        public static cfx_app_on_register_custom_schemes_delegate cfx_app_on_register_custom_schemes;
-
-        // get_resource_bundle_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_app_get_resource_bundle_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_app_get_resource_bundle_handler_delegate cfx_app_get_resource_bundle_handler;
-
-        // get_browser_process_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_app_get_browser_process_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_app_get_browser_process_handler_delegate cfx_app_get_browser_process_handler;
-
-        // get_render_process_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_app_get_render_process_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_app_get_render_process_handler_delegate cfx_app_get_render_process_handler;
+        public static cfx_set_callback_delegate cfx_app_set_managed_callback;
 
 
         // CfxAuthCallback
@@ -745,27 +690,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_browser_process_handler_t* cfx_browser_process_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_browser_process_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_browser_process_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_browser_process_handler_activate_callback;
-
-        // on_context_initialized
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_browser_process_handler_on_context_initialized_delegate(IntPtr gcHandlePtr);
-        public static cfx_browser_process_handler_on_context_initialized_delegate cfx_browser_process_handler_on_context_initialized;
-
-        // on_before_child_process_launch
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_browser_process_handler_on_before_child_process_launch_delegate(IntPtr gcHandlePtr, IntPtr command_line);
-        public static cfx_browser_process_handler_on_before_child_process_launch_delegate cfx_browser_process_handler_on_before_child_process_launch;
-
-        // on_render_process_thread_created
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_browser_process_handler_on_render_process_thread_created_delegate(IntPtr gcHandlePtr, IntPtr extra_info);
-        public static cfx_browser_process_handler_on_render_process_thread_created_delegate cfx_browser_process_handler_on_render_process_thread_created;
-
-        // get_print_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_browser_process_handler_get_print_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_browser_process_handler_get_print_handler_delegate cfx_browser_process_handler_get_print_handler;
+        public static cfx_set_callback_delegate cfx_browser_process_handler_set_managed_callback;
 
 
         // CfxBrowserSettings
@@ -1091,77 +1016,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_client_t* cfx_client_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_client_ctor;
         public static cfx_get_gc_handle_delegate cfx_client_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_client_activate_callback;
-
-        // get_context_menu_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_client_get_context_menu_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_client_get_context_menu_handler_delegate cfx_client_get_context_menu_handler;
-
-        // get_dialog_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_client_get_dialog_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_client_get_dialog_handler_delegate cfx_client_get_dialog_handler;
-
-        // get_display_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_client_get_display_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_client_get_display_handler_delegate cfx_client_get_display_handler;
-
-        // get_download_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_client_get_download_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_client_get_download_handler_delegate cfx_client_get_download_handler;
-
-        // get_drag_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_client_get_drag_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_client_get_drag_handler_delegate cfx_client_get_drag_handler;
-
-        // get_focus_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_client_get_focus_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_client_get_focus_handler_delegate cfx_client_get_focus_handler;
-
-        // get_geolocation_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_client_get_geolocation_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_client_get_geolocation_handler_delegate cfx_client_get_geolocation_handler;
-
-        // get_jsdialog_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_client_get_jsdialog_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_client_get_jsdialog_handler_delegate cfx_client_get_jsdialog_handler;
-
-        // get_keyboard_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_client_get_keyboard_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_client_get_keyboard_handler_delegate cfx_client_get_keyboard_handler;
-
-        // get_life_span_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_client_get_life_span_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_client_get_life_span_handler_delegate cfx_client_get_life_span_handler;
-
-        // get_load_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_client_get_load_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_client_get_load_handler_delegate cfx_client_get_load_handler;
-
-        // get_render_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_client_get_render_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_client_get_render_handler_delegate cfx_client_get_render_handler;
-
-        // get_request_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_client_get_request_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_client_get_request_handler_delegate cfx_client_get_request_handler;
-
-        // on_process_message_received
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_client_on_process_message_received_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxProcessId source_process, IntPtr message);
-        public static cfx_client_on_process_message_received_delegate cfx_client_on_process_message_received;
+        public static cfx_set_callback_delegate cfx_client_set_managed_callback;
 
 
         // CfxCommandLine
@@ -1289,22 +1144,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_context_menu_handler_t* cfx_context_menu_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_context_menu_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_context_menu_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_context_menu_handler_activate_callback;
-
-        // on_before_context_menu
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_context_menu_handler_on_before_context_menu_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr parameters, IntPtr model);
-        public static cfx_context_menu_handler_on_before_context_menu_delegate cfx_context_menu_handler_on_before_context_menu;
-
-        // on_context_menu_command
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_context_menu_handler_on_context_menu_command_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr parameters, int command_id, CfxEventFlags event_flags);
-        public static cfx_context_menu_handler_on_context_menu_command_delegate cfx_context_menu_handler_on_context_menu_command;
-
-        // on_context_menu_dismissed
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_context_menu_handler_on_context_menu_dismissed_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame);
-        public static cfx_context_menu_handler_on_context_menu_dismissed_delegate cfx_context_menu_handler_on_context_menu_dismissed;
+        public static cfx_set_callback_delegate cfx_context_menu_handler_set_managed_callback;
 
 
         // CfxContextMenuParams
@@ -1555,12 +1395,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_cookie_visitor_t* cfx_cookie_visitor_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_cookie_visitor_ctor;
         public static cfx_get_gc_handle_delegate cfx_cookie_visitor_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_cookie_visitor_activate_callback;
-
-        // visit
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_cookie_visitor_visit_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr cookie, int count, int total, out int deleteCookie);
-        public static cfx_cookie_visitor_visit_delegate cfx_cookie_visitor_visit;
+        public static cfx_set_callback_delegate cfx_cookie_visitor_set_managed_callback;
 
 
         // CfxCursorInfo
@@ -1603,12 +1438,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_dialog_handler_t* cfx_dialog_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_dialog_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_dialog_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_dialog_handler_activate_callback;
-
-        // on_file_dialog
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_dialog_handler_on_file_dialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxFileDialogMode mode, IntPtr title_str, int title_length, IntPtr default_file_name_str, int default_file_name_length, IntPtr accept_types, IntPtr callback);
-        public static cfx_dialog_handler_on_file_dialog_delegate cfx_dialog_handler_on_file_dialog;
+        public static cfx_set_callback_delegate cfx_dialog_handler_set_managed_callback;
 
 
         // CfxDictionaryValue
@@ -1749,32 +1579,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_display_handler_t* cfx_display_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_display_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_display_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_display_handler_activate_callback;
-
-        // on_address_change
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_display_handler_on_address_change_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr url_str, int url_length);
-        public static cfx_display_handler_on_address_change_delegate cfx_display_handler_on_address_change;
-
-        // on_title_change
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_display_handler_on_title_change_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr title_str, int title_length);
-        public static cfx_display_handler_on_title_change_delegate cfx_display_handler_on_title_change;
-
-        // on_tooltip
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_display_handler_on_tooltip_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, ref IntPtr text_str, ref int text_length);
-        public static cfx_display_handler_on_tooltip_delegate cfx_display_handler_on_tooltip;
-
-        // on_status_message
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_display_handler_on_status_message_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr value_str, int value_length);
-        public static cfx_display_handler_on_status_message_delegate cfx_display_handler_on_status_message;
-
-        // on_console_message
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_display_handler_on_console_message_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr message_str, int message_length, IntPtr source_str, int source_length, int line);
-        public static cfx_display_handler_on_console_message_delegate cfx_display_handler_on_console_message;
+        public static cfx_set_callback_delegate cfx_display_handler_set_managed_callback;
 
 
         // CfxDomDocument
@@ -1993,12 +1798,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_domvisitor_t* cfx_domvisitor_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_domvisitor_ctor;
         public static cfx_get_gc_handle_delegate cfx_domvisitor_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_domvisitor_activate_callback;
-
-        // visit
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_domvisitor_visit_delegate(IntPtr gcHandlePtr, IntPtr document);
-        public static cfx_domvisitor_visit_delegate cfx_domvisitor_visit;
+        public static cfx_set_callback_delegate cfx_domvisitor_set_managed_callback;
 
 
         // CfxDownloadHandler
@@ -2006,17 +1806,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_download_handler_t* cfx_download_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_download_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_download_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_download_handler_activate_callback;
-
-        // on_before_download
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_download_handler_on_before_download_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr download_item, IntPtr suggested_name_str, int suggested_name_length, IntPtr callback);
-        public static cfx_download_handler_on_before_download_delegate cfx_download_handler_on_before_download;
-
-        // on_download_updated
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_download_handler_on_download_updated_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr download_item, IntPtr callback);
-        public static cfx_download_handler_on_download_updated_delegate cfx_download_handler_on_download_updated;
+        public static cfx_set_callback_delegate cfx_download_handler_set_managed_callback;
 
 
         // CfxDownloadItem
@@ -2233,12 +2023,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_drag_handler_t* cfx_drag_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_drag_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_drag_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_drag_handler_activate_callback;
-
-        // on_drag_enter
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_drag_handler_on_drag_enter_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr dragData, CfxDragOperationsMask mask);
-        public static cfx_drag_handler_on_drag_enter_delegate cfx_drag_handler_on_drag_enter;
+        public static cfx_set_callback_delegate cfx_drag_handler_set_managed_callback;
 
 
         // CfxEndTracingCallback
@@ -2267,22 +2052,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_focus_handler_t* cfx_focus_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_focus_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_focus_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_focus_handler_activate_callback;
-
-        // on_take_focus
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_focus_handler_on_take_focus_delegate(IntPtr gcHandlePtr, IntPtr browser, int next);
-        public static cfx_focus_handler_on_take_focus_delegate cfx_focus_handler_on_take_focus;
-
-        // on_set_focus
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_focus_handler_on_set_focus_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxFocusSource source);
-        public static cfx_focus_handler_on_set_focus_delegate cfx_focus_handler_on_set_focus;
-
-        // on_got_focus
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_focus_handler_on_got_focus_delegate(IntPtr gcHandlePtr, IntPtr browser);
-        public static cfx_focus_handler_on_got_focus_delegate cfx_focus_handler_on_got_focus;
+        public static cfx_set_callback_delegate cfx_focus_handler_set_managed_callback;
 
 
         // CfxFrame
@@ -2421,17 +2191,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_geolocation_handler_t* cfx_geolocation_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_geolocation_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_geolocation_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_geolocation_handler_activate_callback;
-
-        // on_request_geolocation_permission
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_geolocation_handler_on_request_geolocation_permission_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id, IntPtr callback);
-        public static cfx_geolocation_handler_on_request_geolocation_permission_delegate cfx_geolocation_handler_on_request_geolocation_permission;
-
-        // on_cancel_geolocation_permission
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_geolocation_handler_on_cancel_geolocation_permission_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id);
-        public static cfx_geolocation_handler_on_cancel_geolocation_permission_delegate cfx_geolocation_handler_on_cancel_geolocation_permission;
+        public static cfx_set_callback_delegate cfx_geolocation_handler_set_managed_callback;
 
 
         // CfxGeoposition
@@ -2537,12 +2297,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_get_geolocation_callback_t* cfx_get_geolocation_callback_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_get_geolocation_callback_ctor;
         public static cfx_get_gc_handle_delegate cfx_get_geolocation_callback_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_get_geolocation_callback_activate_callback;
-
-        // on_location_update
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_get_geolocation_callback_on_location_update_delegate(IntPtr gcHandlePtr, IntPtr position);
-        public static cfx_get_geolocation_callback_on_location_update_delegate cfx_get_geolocation_callback_on_location_update;
+        public static cfx_set_callback_delegate cfx_get_geolocation_callback_set_managed_callback;
 
 
         // CfxJsDialogCallback
@@ -2558,27 +2313,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_jsdialog_handler_t* cfx_jsdialog_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_jsdialog_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_jsdialog_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_jsdialog_handler_activate_callback;
-
-        // on_jsdialog
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_jsdialog_handler_on_jsdialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr origin_url_str, int origin_url_length, IntPtr accept_lang_str, int accept_lang_length, CfxJsDialogType dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback, out int suppress_message);
-        public static cfx_jsdialog_handler_on_jsdialog_delegate cfx_jsdialog_handler_on_jsdialog;
-
-        // on_before_unload_dialog
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_jsdialog_handler_on_before_unload_dialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr message_text_str, int message_text_length, int is_reload, IntPtr callback);
-        public static cfx_jsdialog_handler_on_before_unload_dialog_delegate cfx_jsdialog_handler_on_before_unload_dialog;
-
-        // on_reset_dialog_state
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_jsdialog_handler_on_reset_dialog_state_delegate(IntPtr gcHandlePtr, IntPtr browser);
-        public static cfx_jsdialog_handler_on_reset_dialog_state_delegate cfx_jsdialog_handler_on_reset_dialog_state;
-
-        // on_dialog_closed
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_jsdialog_handler_on_dialog_closed_delegate(IntPtr gcHandlePtr, IntPtr browser);
-        public static cfx_jsdialog_handler_on_dialog_closed_delegate cfx_jsdialog_handler_on_dialog_closed;
+        public static cfx_set_callback_delegate cfx_jsdialog_handler_set_managed_callback;
 
 
         // CfxKeyEvent
@@ -2666,17 +2401,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_keyboard_handler_t* cfx_keyboard_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_keyboard_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_keyboard_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_keyboard_handler_activate_callback;
-
-        // on_pre_key_event
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_keyboard_handler_on_pre_key_event_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr @event, IntPtr os_event, out int is_keyboard_shortcut);
-        public static cfx_keyboard_handler_on_pre_key_event_delegate cfx_keyboard_handler_on_pre_key_event;
-
-        // on_key_event
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_keyboard_handler_on_key_event_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr @event, IntPtr os_event);
-        public static cfx_keyboard_handler_on_key_event_delegate cfx_keyboard_handler_on_key_event;
+        public static cfx_set_callback_delegate cfx_keyboard_handler_set_managed_callback;
 
 
         // CfxLifeSpanHandler
@@ -2684,32 +2409,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_life_span_handler_t* cfx_life_span_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_life_span_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_life_span_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_life_span_handler_activate_callback;
-
-        // on_before_popup
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_life_span_handler_on_before_popup_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access);
-        public static cfx_life_span_handler_on_before_popup_delegate cfx_life_span_handler_on_before_popup;
-
-        // on_after_created
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_life_span_handler_on_after_created_delegate(IntPtr gcHandlePtr, IntPtr browser);
-        public static cfx_life_span_handler_on_after_created_delegate cfx_life_span_handler_on_after_created;
-
-        // run_modal
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_life_span_handler_run_modal_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser);
-        public static cfx_life_span_handler_run_modal_delegate cfx_life_span_handler_run_modal;
-
-        // do_close
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_life_span_handler_do_close_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser);
-        public static cfx_life_span_handler_do_close_delegate cfx_life_span_handler_do_close;
-
-        // on_before_close
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_life_span_handler_on_before_close_delegate(IntPtr gcHandlePtr, IntPtr browser);
-        public static cfx_life_span_handler_on_before_close_delegate cfx_life_span_handler_on_before_close;
+        public static cfx_set_callback_delegate cfx_life_span_handler_set_managed_callback;
 
 
         // CfxListValue
@@ -2845,27 +2545,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_load_handler_t* cfx_load_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_load_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_load_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_load_handler_activate_callback;
-
-        // on_loading_state_change
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_load_handler_on_loading_state_change_delegate(IntPtr gcHandlePtr, IntPtr browser, int isLoading, int canGoBack, int canGoForward);
-        public static cfx_load_handler_on_loading_state_change_delegate cfx_load_handler_on_loading_state_change;
-
-        // on_load_start
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_load_handler_on_load_start_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame);
-        public static cfx_load_handler_on_load_start_delegate cfx_load_handler_on_load_start;
-
-        // on_load_end
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_load_handler_on_load_end_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, int httpStatusCode);
-        public static cfx_load_handler_on_load_end_delegate cfx_load_handler_on_load_end;
-
-        // on_load_error
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_load_handler_on_load_error_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, CfxErrorCode errorCode, IntPtr errorText_str, int errorText_length, IntPtr failedUrl_str, int failedUrl_length);
-        public static cfx_load_handler_on_load_error_delegate cfx_load_handler_on_load_error;
+        public static cfx_set_callback_delegate cfx_load_handler_set_managed_callback;
 
 
         // CfxMenuModel
@@ -3209,12 +2889,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_navigation_entry_visitor_t* cfx_navigation_entry_visitor_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_navigation_entry_visitor_ctor;
         public static cfx_get_gc_handle_delegate cfx_navigation_entry_visitor_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_navigation_entry_visitor_activate_callback;
-
-        // visit
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_navigation_entry_visitor_visit_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr entry, int current, int index, int total);
-        public static cfx_navigation_entry_visitor_visit_delegate cfx_navigation_entry_visitor_visit;
+        public static cfx_set_callback_delegate cfx_navigation_entry_visitor_set_managed_callback;
 
 
         // CfxPageRange
@@ -3534,27 +3209,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_print_handler_t* cfx_print_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_print_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_print_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_print_handler_activate_callback;
-
-        // on_print_settings
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_print_handler_on_print_settings_delegate(IntPtr gcHandlePtr, IntPtr settings, int get_defaults);
-        public static cfx_print_handler_on_print_settings_delegate cfx_print_handler_on_print_settings;
-
-        // on_print_dialog
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_print_handler_on_print_dialog_delegate(IntPtr gcHandlePtr, out int __retval, int has_selection, IntPtr callback);
-        public static cfx_print_handler_on_print_dialog_delegate cfx_print_handler_on_print_dialog;
-
-        // on_print_job
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_print_handler_on_print_job_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr document_name_str, int document_name_length, IntPtr pdf_file_path_str, int pdf_file_path_length, IntPtr callback);
-        public static cfx_print_handler_on_print_job_delegate cfx_print_handler_on_print_job;
-
-        // on_print_reset
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_print_handler_on_print_reset_delegate(IntPtr gcHandlePtr);
-        public static cfx_print_handler_on_print_reset_delegate cfx_print_handler_on_print_reset;
+        public static cfx_set_callback_delegate cfx_print_handler_set_managed_callback;
 
 
         // CfxPrintJobCallback
@@ -3739,32 +3394,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_read_handler_t* cfx_read_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_read_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_read_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_read_handler_activate_callback;
-
-        // read
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_read_handler_read_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr ptr, int size, int n);
-        public static cfx_read_handler_read_delegate cfx_read_handler_read;
-
-        // seek
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_read_handler_seek_delegate(IntPtr gcHandlePtr, out int __retval, long offset, int whence);
-        public static cfx_read_handler_seek_delegate cfx_read_handler_seek;
-
-        // tell
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_read_handler_tell_delegate(IntPtr gcHandlePtr, out long __retval);
-        public static cfx_read_handler_tell_delegate cfx_read_handler_tell;
-
-        // eof
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_read_handler_eof_delegate(IntPtr gcHandlePtr, out int __retval);
-        public static cfx_read_handler_eof_delegate cfx_read_handler_eof;
-
-        // may_block
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_read_handler_may_block_delegate(IntPtr gcHandlePtr, out int __retval);
-        public static cfx_read_handler_may_block_delegate cfx_read_handler_may_block;
+        public static cfx_set_callback_delegate cfx_read_handler_set_managed_callback;
 
 
         // CfxRect
@@ -3816,62 +3446,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_render_handler_t* cfx_render_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_render_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_render_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_render_handler_activate_callback;
-
-        // get_root_screen_rect
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_handler_get_root_screen_rect_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr rect);
-        public static cfx_render_handler_get_root_screen_rect_delegate cfx_render_handler_get_root_screen_rect;
-
-        // get_view_rect
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_handler_get_view_rect_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr rect);
-        public static cfx_render_handler_get_view_rect_delegate cfx_render_handler_get_view_rect;
-
-        // get_screen_point
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_handler_get_screen_point_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int viewX, int viewY, out int screenX, out int screenY);
-        public static cfx_render_handler_get_screen_point_delegate cfx_render_handler_get_screen_point;
-
-        // get_screen_info
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_handler_get_screen_info_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr screen_info);
-        public static cfx_render_handler_get_screen_info_delegate cfx_render_handler_get_screen_info;
-
-        // on_popup_show
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_handler_on_popup_show_delegate(IntPtr gcHandlePtr, IntPtr browser, int show);
-        public static cfx_render_handler_on_popup_show_delegate cfx_render_handler_on_popup_show;
-
-        // on_popup_size
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_handler_on_popup_size_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr rect);
-        public static cfx_render_handler_on_popup_size_delegate cfx_render_handler_on_popup_size;
-
-        // on_paint
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_handler_on_paint_delegate(IntPtr gcHandlePtr, IntPtr browser, CfxPaintElementType type, int dirtyRectsCount, IntPtr dirtyRects, IntPtr buffer, int width, int height);
-        public static cfx_render_handler_on_paint_delegate cfx_render_handler_on_paint;
-
-        // on_cursor_change
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_handler_on_cursor_change_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr cursor, CfxCursorType type, IntPtr custom_cursor_info);
-        public static cfx_render_handler_on_cursor_change_delegate cfx_render_handler_on_cursor_change;
-
-        // start_dragging
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_handler_start_dragging_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr drag_data, CfxDragOperationsMask allowed_ops, int x, int y);
-        public static cfx_render_handler_start_dragging_delegate cfx_render_handler_start_dragging;
-
-        // update_drag_cursor
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_handler_update_drag_cursor_delegate(IntPtr gcHandlePtr, IntPtr browser, CfxDragOperationsMask operation);
-        public static cfx_render_handler_update_drag_cursor_delegate cfx_render_handler_update_drag_cursor;
-
-        // on_scroll_offset_changed
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_handler_on_scroll_offset_changed_delegate(IntPtr gcHandlePtr, IntPtr browser);
-        public static cfx_render_handler_on_scroll_offset_changed_delegate cfx_render_handler_on_scroll_offset_changed;
+        public static cfx_set_callback_delegate cfx_render_handler_set_managed_callback;
 
 
         // CfxRenderProcessHandler
@@ -3879,62 +3454,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_render_process_handler_t* cfx_render_process_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_render_process_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_render_process_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_render_process_handler_activate_callback;
-
-        // on_render_thread_created
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_process_handler_on_render_thread_created_delegate(IntPtr gcHandlePtr, IntPtr extra_info);
-        public static cfx_render_process_handler_on_render_thread_created_delegate cfx_render_process_handler_on_render_thread_created;
-
-        // on_web_kit_initialized
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_process_handler_on_web_kit_initialized_delegate(IntPtr gcHandlePtr);
-        public static cfx_render_process_handler_on_web_kit_initialized_delegate cfx_render_process_handler_on_web_kit_initialized;
-
-        // on_browser_created
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_process_handler_on_browser_created_delegate(IntPtr gcHandlePtr, IntPtr browser);
-        public static cfx_render_process_handler_on_browser_created_delegate cfx_render_process_handler_on_browser_created;
-
-        // on_browser_destroyed
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_process_handler_on_browser_destroyed_delegate(IntPtr gcHandlePtr, IntPtr browser);
-        public static cfx_render_process_handler_on_browser_destroyed_delegate cfx_render_process_handler_on_browser_destroyed;
-
-        // get_load_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_process_handler_get_load_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_render_process_handler_get_load_handler_delegate cfx_render_process_handler_get_load_handler;
-
-        // on_before_navigation
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_process_handler_on_before_navigation_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr request, CfxNavigationType navigation_type, int is_redirect);
-        public static cfx_render_process_handler_on_before_navigation_delegate cfx_render_process_handler_on_before_navigation;
-
-        // on_context_created
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_process_handler_on_context_created_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr context);
-        public static cfx_render_process_handler_on_context_created_delegate cfx_render_process_handler_on_context_created;
-
-        // on_context_released
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_process_handler_on_context_released_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr context);
-        public static cfx_render_process_handler_on_context_released_delegate cfx_render_process_handler_on_context_released;
-
-        // on_uncaught_exception
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_process_handler_on_uncaught_exception_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr context, IntPtr exception, IntPtr stackTrace);
-        public static cfx_render_process_handler_on_uncaught_exception_delegate cfx_render_process_handler_on_uncaught_exception;
-
-        // on_focused_node_changed
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_process_handler_on_focused_node_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr node);
-        public static cfx_render_process_handler_on_focused_node_changed_delegate cfx_render_process_handler_on_focused_node_changed;
-
-        // on_process_message_received
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_render_process_handler_on_process_message_received_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxProcessId source_process, IntPtr message);
-        public static cfx_render_process_handler_on_process_message_received_delegate cfx_render_process_handler_on_process_message_received;
+        public static cfx_set_callback_delegate cfx_render_process_handler_set_managed_callback;
 
 
         // CfxRequest
@@ -4057,12 +3577,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_request_context_handler_t* cfx_request_context_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_request_context_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_request_context_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_request_context_handler_activate_callback;
-
-        // get_cookie_manager
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_request_context_handler_get_cookie_manager_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        public static cfx_request_context_handler_get_cookie_manager_delegate cfx_request_context_handler_get_cookie_manager;
+        public static cfx_set_callback_delegate cfx_request_context_handler_set_managed_callback;
 
 
         // CfxRequestHandler
@@ -4070,62 +3585,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_request_handler_t* cfx_request_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_request_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_request_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_request_handler_activate_callback;
-
-        // on_before_browse
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_request_handler_on_before_browse_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr request, int is_redirect);
-        public static cfx_request_handler_on_before_browse_delegate cfx_request_handler_on_before_browse;
-
-        // on_before_resource_load
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_request_handler_on_before_resource_load_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr request);
-        public static cfx_request_handler_on_before_resource_load_delegate cfx_request_handler_on_before_resource_load;
-
-        // get_resource_handler
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_request_handler_get_resource_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval, IntPtr browser, IntPtr frame, IntPtr request);
-        public static cfx_request_handler_get_resource_handler_delegate cfx_request_handler_get_resource_handler;
-
-        // on_resource_redirect
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_request_handler_on_resource_redirect_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr old_url_str, int old_url_length, ref IntPtr new_url_str, ref int new_url_length);
-        public static cfx_request_handler_on_resource_redirect_delegate cfx_request_handler_on_resource_redirect;
-
-        // get_auth_credentials
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_request_handler_get_auth_credentials_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, int isProxy, IntPtr host_str, int host_length, int port, IntPtr realm_str, int realm_length, IntPtr scheme_str, int scheme_length, IntPtr callback);
-        public static cfx_request_handler_get_auth_credentials_delegate cfx_request_handler_get_auth_credentials;
-
-        // on_quota_request
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_request_handler_on_quota_request_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr origin_url_str, int origin_url_length, long new_size, IntPtr callback);
-        public static cfx_request_handler_on_quota_request_delegate cfx_request_handler_on_quota_request;
-
-        // on_protocol_execution
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_request_handler_on_protocol_execution_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr url_str, int url_length, out int allow_os_execution);
-        public static cfx_request_handler_on_protocol_execution_delegate cfx_request_handler_on_protocol_execution;
-
-        // on_certificate_error
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_request_handler_on_certificate_error_delegate(IntPtr gcHandlePtr, out int __retval, CfxErrorCode cert_error, IntPtr request_url_str, int request_url_length, IntPtr callback);
-        public static cfx_request_handler_on_certificate_error_delegate cfx_request_handler_on_certificate_error;
-
-        // on_before_plugin_load
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_request_handler_on_before_plugin_load_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr url_str, int url_length, IntPtr policy_url_str, int policy_url_length, IntPtr info);
-        public static cfx_request_handler_on_before_plugin_load_delegate cfx_request_handler_on_before_plugin_load;
-
-        // on_plugin_crashed
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_request_handler_on_plugin_crashed_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr plugin_path_str, int plugin_path_length);
-        public static cfx_request_handler_on_plugin_crashed_delegate cfx_request_handler_on_plugin_crashed;
-
-        // on_render_process_terminated
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_request_handler_on_render_process_terminated_delegate(IntPtr gcHandlePtr, IntPtr browser, CfxTerminationStatus status);
-        public static cfx_request_handler_on_render_process_terminated_delegate cfx_request_handler_on_render_process_terminated;
+        public static cfx_set_callback_delegate cfx_request_handler_set_managed_callback;
 
 
         // CfxResourceBundleHandler
@@ -4133,17 +3593,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_resource_bundle_handler_t* cfx_resource_bundle_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_resource_bundle_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_resource_bundle_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_resource_bundle_handler_activate_callback;
-
-        // get_localized_string
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_resource_bundle_handler_get_localized_string_delegate(IntPtr gcHandlePtr, out int __retval, int message_id, ref IntPtr string_str, ref int string_length);
-        public static cfx_resource_bundle_handler_get_localized_string_delegate cfx_resource_bundle_handler_get_localized_string;
-
-        // get_data_resource
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_resource_bundle_handler_get_data_resource_delegate(IntPtr gcHandlePtr, out int __retval, int resource_id, out IntPtr data, out int data_size);
-        public static cfx_resource_bundle_handler_get_data_resource_delegate cfx_resource_bundle_handler_get_data_resource;
+        public static cfx_set_callback_delegate cfx_resource_bundle_handler_set_managed_callback;
 
 
         // CfxResourceHandler
@@ -4151,37 +3601,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_resource_handler_t* cfx_resource_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_resource_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_resource_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_resource_handler_activate_callback;
-
-        // process_request
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_resource_handler_process_request_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr request, IntPtr callback);
-        public static cfx_resource_handler_process_request_delegate cfx_resource_handler_process_request;
-
-        // get_response_headers
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_resource_handler_get_response_headers_delegate(IntPtr gcHandlePtr, IntPtr response, out long response_length, ref IntPtr redirectUrl_str, ref int redirectUrl_length);
-        public static cfx_resource_handler_get_response_headers_delegate cfx_resource_handler_get_response_headers;
-
-        // read_response
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_resource_handler_read_response_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr data_out, int bytes_to_read, out int bytes_read, IntPtr callback);
-        public static cfx_resource_handler_read_response_delegate cfx_resource_handler_read_response;
-
-        // can_get_cookie
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_resource_handler_can_get_cookie_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr cookie);
-        public static cfx_resource_handler_can_get_cookie_delegate cfx_resource_handler_can_get_cookie;
-
-        // can_set_cookie
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_resource_handler_can_set_cookie_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr cookie);
-        public static cfx_resource_handler_can_set_cookie_delegate cfx_resource_handler_can_set_cookie;
-
-        // cancel
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_resource_handler_cancel_delegate(IntPtr gcHandlePtr);
-        public static cfx_resource_handler_cancel_delegate cfx_resource_handler_cancel;
+        public static cfx_set_callback_delegate cfx_resource_handler_set_managed_callback;
 
 
         // CfxResponse
@@ -4643,12 +4063,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_string_visitor_t* cfx_string_visitor_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_string_visitor_ctor;
         public static cfx_get_gc_handle_delegate cfx_string_visitor_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_string_visitor_activate_callback;
-
-        // visit
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_string_visitor_visit_delegate(IntPtr gcHandlePtr, IntPtr string_str, int string_length);
-        public static cfx_string_visitor_visit_delegate cfx_string_visitor_visit;
+        public static cfx_set_callback_delegate cfx_string_visitor_set_managed_callback;
 
 
         // CfxTask
@@ -4656,12 +4071,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_task_t* cfx_task_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_task_ctor;
         public static cfx_get_gc_handle_delegate cfx_task_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_task_activate_callback;
-
-        // execute
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_task_execute_delegate(IntPtr gcHandlePtr);
-        public static cfx_task_execute_delegate cfx_task_execute;
+        public static cfx_set_callback_delegate cfx_task_set_managed_callback;
 
 
         // CfxTaskRunner
@@ -4913,32 +4323,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_urlrequest_client_t* cfx_urlrequest_client_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_urlrequest_client_ctor;
         public static cfx_get_gc_handle_delegate cfx_urlrequest_client_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_urlrequest_client_activate_callback;
-
-        // on_request_complete
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_urlrequest_client_on_request_complete_delegate(IntPtr gcHandlePtr, IntPtr request);
-        public static cfx_urlrequest_client_on_request_complete_delegate cfx_urlrequest_client_on_request_complete;
-
-        // on_upload_progress
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_urlrequest_client_on_upload_progress_delegate(IntPtr gcHandlePtr, IntPtr request, ulong current, ulong total);
-        public static cfx_urlrequest_client_on_upload_progress_delegate cfx_urlrequest_client_on_upload_progress;
-
-        // on_download_progress
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_urlrequest_client_on_download_progress_delegate(IntPtr gcHandlePtr, IntPtr request, ulong current, ulong total);
-        public static cfx_urlrequest_client_on_download_progress_delegate cfx_urlrequest_client_on_download_progress;
-
-        // on_download_data
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_urlrequest_client_on_download_data_delegate(IntPtr gcHandlePtr, IntPtr request, IntPtr data, int data_length);
-        public static cfx_urlrequest_client_on_download_data_delegate cfx_urlrequest_client_on_download_data;
-
-        // get_auth_credentials
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_urlrequest_client_get_auth_credentials_delegate(IntPtr gcHandlePtr, out int __retval, int isProxy, IntPtr host_str, int host_length, int port, IntPtr realm_str, int realm_length, IntPtr scheme_str, int scheme_length, IntPtr callback);
-        public static cfx_urlrequest_client_get_auth_credentials_delegate cfx_urlrequest_client_get_auth_credentials;
+        public static cfx_set_callback_delegate cfx_urlrequest_client_set_managed_callback;
 
 
         // CfxV8Accessor
@@ -4946,17 +4331,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_v8accessor_t* cfx_v8accessor_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_v8accessor_ctor;
         public static cfx_get_gc_handle_delegate cfx_v8accessor_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_v8accessor_activate_callback;
-
-        // get
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_v8accessor_get_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out IntPtr retval, ref IntPtr exception_str, ref int exception_length);
-        public static cfx_v8accessor_get_delegate cfx_v8accessor_get;
-
-        // set
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_v8accessor_set_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, IntPtr value, ref IntPtr exception_str, ref int exception_length);
-        public static cfx_v8accessor_set_delegate cfx_v8accessor_set;
+        public static cfx_set_callback_delegate cfx_v8accessor_set_managed_callback;
 
 
         // CfxV8Context
@@ -5068,12 +4443,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_v8handler_t* cfx_v8handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_v8handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_v8handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_v8handler_activate_callback;
-
-        // execute
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_v8handler_execute_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, int argumentsCount, IntPtr arguments, out IntPtr retval, ref IntPtr exception_str, ref int exception_length);
-        public static cfx_v8handler_execute_delegate cfx_v8handler_execute;
+        public static cfx_set_callback_delegate cfx_v8handler_set_managed_callback;
 
 
         // CfxV8StackFrame
@@ -5438,12 +4808,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_web_plugin_info_visitor_t* cfx_web_plugin_info_visitor_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_web_plugin_info_visitor_ctor;
         public static cfx_get_gc_handle_delegate cfx_web_plugin_info_visitor_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_web_plugin_info_visitor_activate_callback;
-
-        // visit
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_web_plugin_info_visitor_visit_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr info, int count, int total);
-        public static cfx_web_plugin_info_visitor_visit_delegate cfx_web_plugin_info_visitor_visit;
+        public static cfx_set_callback_delegate cfx_web_plugin_info_visitor_set_managed_callback;
 
 
         // CfxWebPluginUnstableCallback
@@ -5575,32 +4940,7 @@ namespace Chromium {
         // CFX_EXPORT cfx_write_handler_t* cfx_write_handler_ctor();
         public static cfx_ctor_with_gc_handle_delegate cfx_write_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_write_handler_get_gc_handle;
-        public static cfx_activate_callback_delegate cfx_write_handler_activate_callback;
-
-        // write
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_write_handler_write_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr ptr, int size, int n);
-        public static cfx_write_handler_write_delegate cfx_write_handler_write;
-
-        // seek
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_write_handler_seek_delegate(IntPtr gcHandlePtr, out int __retval, long offset, int whence);
-        public static cfx_write_handler_seek_delegate cfx_write_handler_seek;
-
-        // tell
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_write_handler_tell_delegate(IntPtr gcHandlePtr, out long __retval);
-        public static cfx_write_handler_tell_delegate cfx_write_handler_tell;
-
-        // flush
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_write_handler_flush_delegate(IntPtr gcHandlePtr, out int __retval);
-        public static cfx_write_handler_flush_delegate cfx_write_handler_flush;
-
-        // may_block
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        public delegate void cfx_write_handler_may_block_delegate(IntPtr gcHandlePtr, out int __retval);
-        public static cfx_write_handler_may_block_delegate cfx_write_handler_may_block;
+        public static cfx_set_callback_delegate cfx_write_handler_set_managed_callback;
 
 
         // CfxXmlReader

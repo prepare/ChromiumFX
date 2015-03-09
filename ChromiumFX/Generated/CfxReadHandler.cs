@@ -53,6 +53,14 @@ namespace Chromium {
         }
 
 
+        private static object eventLock = new object();
+
+        // read
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_read_handler_read_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr ptr, int size, int n);
+        private static cfx_read_handler_read_delegate cfx_read_handler_read;
+        private static IntPtr cfx_read_handler_read_ptr;
+
         internal static void read(IntPtr gcHandlePtr, out int __retval, IntPtr ptr, int size, int n) {
             var self = (CfxReadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -65,6 +73,12 @@ namespace Chromium {
             e.m_isInvalid = true;
             __retval = e.m_returnValue;
         }
+
+        // seek
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_read_handler_seek_delegate(IntPtr gcHandlePtr, out int __retval, long offset, int whence);
+        private static cfx_read_handler_seek_delegate cfx_read_handler_seek;
+        private static IntPtr cfx_read_handler_seek_ptr;
 
         internal static void seek(IntPtr gcHandlePtr, out int __retval, long offset, int whence) {
             var self = (CfxReadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -79,6 +93,12 @@ namespace Chromium {
             __retval = e.m_returnValue;
         }
 
+        // tell
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_read_handler_tell_delegate(IntPtr gcHandlePtr, out long __retval);
+        private static cfx_read_handler_tell_delegate cfx_read_handler_tell;
+        private static IntPtr cfx_read_handler_tell_ptr;
+
         internal static void tell(IntPtr gcHandlePtr, out long __retval) {
             var self = (CfxReadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -92,6 +112,12 @@ namespace Chromium {
             __retval = e.m_returnValue;
         }
 
+        // eof
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_read_handler_eof_delegate(IntPtr gcHandlePtr, out int __retval);
+        private static cfx_read_handler_eof_delegate cfx_read_handler_eof;
+        private static IntPtr cfx_read_handler_eof_ptr;
+
         internal static void eof(IntPtr gcHandlePtr, out int __retval) {
             var self = (CfxReadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -104,6 +130,12 @@ namespace Chromium {
             e.m_isInvalid = true;
             __retval = e.m_returnValue;
         }
+
+        // may_block
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_read_handler_may_block_delegate(IntPtr gcHandlePtr, out int __retval);
+        private static cfx_read_handler_may_block_delegate cfx_read_handler_may_block;
+        private static IntPtr cfx_read_handler_may_block_ptr;
 
         internal static void may_block(IntPtr gcHandlePtr, out int __retval) {
             var self = (CfxReadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -130,15 +162,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxReadEventHandler Read {
             add {
-                if(m_Read == null) {
-                    CfxApi.cfx_read_handler_activate_callback(NativePtr, 0, 1);
+                lock(eventLock) {
+                    if(m_Read == null) {
+                        if(cfx_read_handler_read == null) {
+                            cfx_read_handler_read = read;
+                            cfx_read_handler_read_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_read_handler_read);
+                        }
+                        CfxApi.cfx_read_handler_set_managed_callback(NativePtr, 0, cfx_read_handler_read_ptr);
+                    }
+                    m_Read += value;
                 }
-                m_Read += value;
             }
             remove {
-                m_Read -= value;
-                if(m_Read == null) {
-                    CfxApi.cfx_read_handler_activate_callback(NativePtr, 0, 0);
+                lock(eventLock) {
+                    m_Read -= value;
+                    if(m_Read == null) {
+                        CfxApi.cfx_read_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -155,15 +195,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxSeekEventHandler Seek {
             add {
-                if(m_Seek == null) {
-                    CfxApi.cfx_read_handler_activate_callback(NativePtr, 1, 1);
+                lock(eventLock) {
+                    if(m_Seek == null) {
+                        if(cfx_read_handler_seek == null) {
+                            cfx_read_handler_seek = seek;
+                            cfx_read_handler_seek_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_read_handler_seek);
+                        }
+                        CfxApi.cfx_read_handler_set_managed_callback(NativePtr, 1, cfx_read_handler_seek_ptr);
+                    }
+                    m_Seek += value;
                 }
-                m_Seek += value;
             }
             remove {
-                m_Seek -= value;
-                if(m_Seek == null) {
-                    CfxApi.cfx_read_handler_activate_callback(NativePtr, 1, 0);
+                lock(eventLock) {
+                    m_Seek -= value;
+                    if(m_Seek == null) {
+                        CfxApi.cfx_read_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -179,15 +227,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxTellEventHandler Tell {
             add {
-                if(m_Tell == null) {
-                    CfxApi.cfx_read_handler_activate_callback(NativePtr, 2, 1);
+                lock(eventLock) {
+                    if(m_Tell == null) {
+                        if(cfx_read_handler_tell == null) {
+                            cfx_read_handler_tell = tell;
+                            cfx_read_handler_tell_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_read_handler_tell);
+                        }
+                        CfxApi.cfx_read_handler_set_managed_callback(NativePtr, 2, cfx_read_handler_tell_ptr);
+                    }
+                    m_Tell += value;
                 }
-                m_Tell += value;
             }
             remove {
-                m_Tell -= value;
-                if(m_Tell == null) {
-                    CfxApi.cfx_read_handler_activate_callback(NativePtr, 2, 0);
+                lock(eventLock) {
+                    m_Tell -= value;
+                    if(m_Tell == null) {
+                        CfxApi.cfx_read_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -203,15 +259,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxReadHandlerEofEventHandler Eof {
             add {
-                if(m_Eof == null) {
-                    CfxApi.cfx_read_handler_activate_callback(NativePtr, 3, 1);
+                lock(eventLock) {
+                    if(m_Eof == null) {
+                        if(cfx_read_handler_eof == null) {
+                            cfx_read_handler_eof = eof;
+                            cfx_read_handler_eof_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_read_handler_eof);
+                        }
+                        CfxApi.cfx_read_handler_set_managed_callback(NativePtr, 3, cfx_read_handler_eof_ptr);
+                    }
+                    m_Eof += value;
                 }
-                m_Eof += value;
             }
             remove {
-                m_Eof -= value;
-                if(m_Eof == null) {
-                    CfxApi.cfx_read_handler_activate_callback(NativePtr, 3, 0);
+                lock(eventLock) {
+                    m_Eof -= value;
+                    if(m_Eof == null) {
+                        CfxApi.cfx_read_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -229,15 +293,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxMayBlockEventHandler MayBlock {
             add {
-                if(m_MayBlock == null) {
-                    CfxApi.cfx_read_handler_activate_callback(NativePtr, 4, 1);
+                lock(eventLock) {
+                    if(m_MayBlock == null) {
+                        if(cfx_read_handler_may_block == null) {
+                            cfx_read_handler_may_block = may_block;
+                            cfx_read_handler_may_block_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_read_handler_may_block);
+                        }
+                        CfxApi.cfx_read_handler_set_managed_callback(NativePtr, 4, cfx_read_handler_may_block_ptr);
+                    }
+                    m_MayBlock += value;
                 }
-                m_MayBlock += value;
             }
             remove {
-                m_MayBlock -= value;
-                if(m_MayBlock == null) {
-                    CfxApi.cfx_read_handler_activate_callback(NativePtr, 4, 0);
+                lock(eventLock) {
+                    m_MayBlock -= value;
+                    if(m_MayBlock == null) {
+                        CfxApi.cfx_read_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -247,23 +319,23 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_Read != null) {
                 m_Read = null;
-                CfxApi.cfx_read_handler_activate_callback(NativePtr, 0, 0);
+                CfxApi.cfx_read_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_Seek != null) {
                 m_Seek = null;
-                CfxApi.cfx_read_handler_activate_callback(NativePtr, 1, 0);
+                CfxApi.cfx_read_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
             if(m_Tell != null) {
                 m_Tell = null;
-                CfxApi.cfx_read_handler_activate_callback(NativePtr, 2, 0);
+                CfxApi.cfx_read_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
             }
             if(m_Eof != null) {
                 m_Eof = null;
-                CfxApi.cfx_read_handler_activate_callback(NativePtr, 3, 0);
+                CfxApi.cfx_read_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
             }
             if(m_MayBlock != null) {
                 m_MayBlock = null;
-                CfxApi.cfx_read_handler_activate_callback(NativePtr, 4, 0);
+                CfxApi.cfx_read_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

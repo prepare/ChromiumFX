@@ -54,6 +54,14 @@ namespace Chromium {
         }
 
 
+        private static object eventLock = new object();
+
+        // on_before_popup
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_life_span_handler_on_before_popup_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access);
+        private static cfx_life_span_handler_on_before_popup_delegate cfx_life_span_handler_on_before_popup;
+        private static IntPtr cfx_life_span_handler_on_before_popup_ptr;
+
         internal static void on_before_popup(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -73,6 +81,12 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
+        // on_after_created
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_life_span_handler_on_after_created_delegate(IntPtr gcHandlePtr, IntPtr browser);
+        private static cfx_life_span_handler_on_after_created_delegate cfx_life_span_handler_on_after_created;
+        private static IntPtr cfx_life_span_handler_on_after_created_ptr;
+
         internal static void on_after_created(IntPtr gcHandlePtr, IntPtr browser) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -84,6 +98,12 @@ namespace Chromium {
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
+
+        // run_modal
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_life_span_handler_run_modal_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser);
+        private static cfx_life_span_handler_run_modal_delegate cfx_life_span_handler_run_modal;
+        private static IntPtr cfx_life_span_handler_run_modal_ptr;
 
         internal static void run_modal(IntPtr gcHandlePtr, out int __retval, IntPtr browser) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -99,6 +119,12 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
+        // do_close
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_life_span_handler_do_close_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser);
+        private static cfx_life_span_handler_do_close_delegate cfx_life_span_handler_do_close;
+        private static IntPtr cfx_life_span_handler_do_close_ptr;
+
         internal static void do_close(IntPtr gcHandlePtr, out int __retval, IntPtr browser) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -112,6 +138,12 @@ namespace Chromium {
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             __retval = e.m_returnValue ? 1 : 0;
         }
+
+        // on_before_close
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_life_span_handler_on_before_close_delegate(IntPtr gcHandlePtr, IntPtr browser);
+        private static cfx_life_span_handler_on_before_close_delegate cfx_life_span_handler_on_before_close;
+        private static IntPtr cfx_life_span_handler_on_before_close_ptr;
 
         internal static void on_before_close(IntPtr gcHandlePtr, IntPtr browser) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -147,15 +179,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnBeforePopupEventHandler OnBeforePopup {
             add {
-                if(m_OnBeforePopup == null) {
-                    CfxApi.cfx_life_span_handler_activate_callback(NativePtr, 0, 1);
+                lock(eventLock) {
+                    if(m_OnBeforePopup == null) {
+                        if(cfx_life_span_handler_on_before_popup == null) {
+                            cfx_life_span_handler_on_before_popup = on_before_popup;
+                            cfx_life_span_handler_on_before_popup_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_life_span_handler_on_before_popup);
+                        }
+                        CfxApi.cfx_life_span_handler_set_managed_callback(NativePtr, 0, cfx_life_span_handler_on_before_popup_ptr);
+                    }
+                    m_OnBeforePopup += value;
                 }
-                m_OnBeforePopup += value;
             }
             remove {
-                m_OnBeforePopup -= value;
-                if(m_OnBeforePopup == null) {
-                    CfxApi.cfx_life_span_handler_activate_callback(NativePtr, 0, 0);
+                lock(eventLock) {
+                    m_OnBeforePopup -= value;
+                    if(m_OnBeforePopup == null) {
+                        CfxApi.cfx_life_span_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -171,15 +211,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnAfterCreatedEventHandler OnAfterCreated {
             add {
-                if(m_OnAfterCreated == null) {
-                    CfxApi.cfx_life_span_handler_activate_callback(NativePtr, 1, 1);
+                lock(eventLock) {
+                    if(m_OnAfterCreated == null) {
+                        if(cfx_life_span_handler_on_after_created == null) {
+                            cfx_life_span_handler_on_after_created = on_after_created;
+                            cfx_life_span_handler_on_after_created_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_life_span_handler_on_after_created);
+                        }
+                        CfxApi.cfx_life_span_handler_set_managed_callback(NativePtr, 1, cfx_life_span_handler_on_after_created_ptr);
+                    }
+                    m_OnAfterCreated += value;
                 }
-                m_OnAfterCreated += value;
             }
             remove {
-                m_OnAfterCreated -= value;
-                if(m_OnAfterCreated == null) {
-                    CfxApi.cfx_life_span_handler_activate_callback(NativePtr, 1, 0);
+                lock(eventLock) {
+                    m_OnAfterCreated -= value;
+                    if(m_OnAfterCreated == null) {
+                        CfxApi.cfx_life_span_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -197,15 +245,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxRunModalEventHandler RunModal {
             add {
-                if(m_RunModal == null) {
-                    CfxApi.cfx_life_span_handler_activate_callback(NativePtr, 2, 1);
+                lock(eventLock) {
+                    if(m_RunModal == null) {
+                        if(cfx_life_span_handler_run_modal == null) {
+                            cfx_life_span_handler_run_modal = run_modal;
+                            cfx_life_span_handler_run_modal_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_life_span_handler_run_modal);
+                        }
+                        CfxApi.cfx_life_span_handler_set_managed_callback(NativePtr, 2, cfx_life_span_handler_run_modal_ptr);
+                    }
+                    m_RunModal += value;
                 }
-                m_RunModal += value;
             }
             remove {
-                m_RunModal -= value;
-                if(m_RunModal == null) {
-                    CfxApi.cfx_life_span_handler_activate_callback(NativePtr, 2, 0);
+                lock(eventLock) {
+                    m_RunModal -= value;
+                    if(m_RunModal == null) {
+                        CfxApi.cfx_life_span_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -270,15 +326,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxDoCloseEventHandler DoClose {
             add {
-                if(m_DoClose == null) {
-                    CfxApi.cfx_life_span_handler_activate_callback(NativePtr, 3, 1);
+                lock(eventLock) {
+                    if(m_DoClose == null) {
+                        if(cfx_life_span_handler_do_close == null) {
+                            cfx_life_span_handler_do_close = do_close;
+                            cfx_life_span_handler_do_close_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_life_span_handler_do_close);
+                        }
+                        CfxApi.cfx_life_span_handler_set_managed_callback(NativePtr, 3, cfx_life_span_handler_do_close_ptr);
+                    }
+                    m_DoClose += value;
                 }
-                m_DoClose += value;
             }
             remove {
-                m_DoClose -= value;
-                if(m_DoClose == null) {
-                    CfxApi.cfx_life_span_handler_activate_callback(NativePtr, 3, 0);
+                lock(eventLock) {
+                    m_DoClose -= value;
+                    if(m_DoClose == null) {
+                        CfxApi.cfx_life_span_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -299,15 +363,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnBeforeCloseEventHandler OnBeforeClose {
             add {
-                if(m_OnBeforeClose == null) {
-                    CfxApi.cfx_life_span_handler_activate_callback(NativePtr, 4, 1);
+                lock(eventLock) {
+                    if(m_OnBeforeClose == null) {
+                        if(cfx_life_span_handler_on_before_close == null) {
+                            cfx_life_span_handler_on_before_close = on_before_close;
+                            cfx_life_span_handler_on_before_close_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_life_span_handler_on_before_close);
+                        }
+                        CfxApi.cfx_life_span_handler_set_managed_callback(NativePtr, 4, cfx_life_span_handler_on_before_close_ptr);
+                    }
+                    m_OnBeforeClose += value;
                 }
-                m_OnBeforeClose += value;
             }
             remove {
-                m_OnBeforeClose -= value;
-                if(m_OnBeforeClose == null) {
-                    CfxApi.cfx_life_span_handler_activate_callback(NativePtr, 4, 0);
+                lock(eventLock) {
+                    m_OnBeforeClose -= value;
+                    if(m_OnBeforeClose == null) {
+                        CfxApi.cfx_life_span_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -317,23 +389,23 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnBeforePopup != null) {
                 m_OnBeforePopup = null;
-                CfxApi.cfx_life_span_handler_activate_callback(NativePtr, 0, 0);
+                CfxApi.cfx_life_span_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_OnAfterCreated != null) {
                 m_OnAfterCreated = null;
-                CfxApi.cfx_life_span_handler_activate_callback(NativePtr, 1, 0);
+                CfxApi.cfx_life_span_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
             if(m_RunModal != null) {
                 m_RunModal = null;
-                CfxApi.cfx_life_span_handler_activate_callback(NativePtr, 2, 0);
+                CfxApi.cfx_life_span_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
             }
             if(m_DoClose != null) {
                 m_DoClose = null;
-                CfxApi.cfx_life_span_handler_activate_callback(NativePtr, 3, 0);
+                CfxApi.cfx_life_span_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
             }
             if(m_OnBeforeClose != null) {
                 m_OnBeforeClose = null;
-                CfxApi.cfx_life_span_handler_activate_callback(NativePtr, 4, 0);
+                CfxApi.cfx_life_span_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

@@ -101,23 +101,24 @@ void CEF_CALLBACK cfx_context_menu_handler_on_context_menu_dismissed(cef_context
 }
 
 
-CFX_EXPORT void cfx_context_menu_handler_activate_callback(cef_context_menu_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_context_menu_handler_set_managed_callback(cef_context_menu_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_before_context_menu = is_active ? cfx_context_menu_handler_on_before_context_menu : 0;
+        if(callback && !cfx_context_menu_handler_on_before_context_menu_callback)
+            cfx_context_menu_handler_on_before_context_menu_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* params, cef_menu_model_t* model)) callback;
+        self->on_before_context_menu = callback ? cfx_context_menu_handler_on_before_context_menu : 0;
         break;
     case 1:
-        self->on_context_menu_command = is_active ? cfx_context_menu_handler_on_context_menu_command : 0;
+        if(callback && !cfx_context_menu_handler_on_context_menu_command_callback)
+            cfx_context_menu_handler_on_context_menu_command_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* params, int command_id, cef_event_flags_t event_flags)) callback;
+        self->on_context_menu_command = callback ? cfx_context_menu_handler_on_context_menu_command : 0;
         break;
     case 2:
-        self->on_context_menu_dismissed = is_active ? cfx_context_menu_handler_on_context_menu_dismissed : 0;
+        if(callback && !cfx_context_menu_handler_on_context_menu_dismissed_callback)
+            cfx_context_menu_handler_on_context_menu_dismissed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame)) callback;
+        self->on_context_menu_dismissed = callback ? cfx_context_menu_handler_on_context_menu_dismissed : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_context_menu_handler_set_callback_ptrs(void *cb_0, void *cb_1, void *cb_2) {
-    cfx_context_menu_handler_on_before_context_menu_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* params, cef_menu_model_t* model)) cb_0;
-    cfx_context_menu_handler_on_context_menu_command_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* params, int command_id, cef_event_flags_t event_flags)) cb_1;
-    cfx_context_menu_handler_on_context_menu_dismissed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame)) cb_2;
 }
 
 #ifdef __cplusplus

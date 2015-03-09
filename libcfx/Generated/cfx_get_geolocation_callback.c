@@ -81,15 +81,14 @@ void CEF_CALLBACK cfx_get_geolocation_callback_on_location_update(cef_get_geoloc
 }
 
 
-CFX_EXPORT void cfx_get_geolocation_callback_activate_callback(cef_get_geolocation_callback_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_get_geolocation_callback_set_managed_callback(cef_get_geolocation_callback_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_location_update = is_active ? cfx_get_geolocation_callback_on_location_update : 0;
+        if(callback && !cfx_get_geolocation_callback_on_location_update_callback)
+            cfx_get_geolocation_callback_on_location_update_callback = (void (CEF_CALLBACK *)(gc_handle_t self, const cef_geoposition_t* position)) callback;
+        self->on_location_update = callback ? cfx_get_geolocation_callback_on_location_update : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_get_geolocation_callback_set_callback_ptrs(void *cb_0) {
-    cfx_get_geolocation_callback_on_location_update_callback = (void (CEF_CALLBACK *)(gc_handle_t self, const cef_geoposition_t* position)) cb_0;
 }
 
 #ifdef __cplusplus

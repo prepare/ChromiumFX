@@ -112,27 +112,29 @@ void CEF_CALLBACK cfx_print_handler_on_print_reset(cef_print_handler_t* self) {
 }
 
 
-CFX_EXPORT void cfx_print_handler_activate_callback(cef_print_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_print_handler_set_managed_callback(cef_print_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_print_settings = is_active ? cfx_print_handler_on_print_settings : 0;
+        if(callback && !cfx_print_handler_on_print_settings_callback)
+            cfx_print_handler_on_print_settings_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_print_settings_t* settings, int get_defaults)) callback;
+        self->on_print_settings = callback ? cfx_print_handler_on_print_settings : 0;
         break;
     case 1:
-        self->on_print_dialog = is_active ? cfx_print_handler_on_print_dialog : 0;
+        if(callback && !cfx_print_handler_on_print_dialog_callback)
+            cfx_print_handler_on_print_dialog_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int has_selection, cef_print_dialog_callback_t* callback)) callback;
+        self->on_print_dialog = callback ? cfx_print_handler_on_print_dialog : 0;
         break;
     case 2:
-        self->on_print_job = is_active ? cfx_print_handler_on_print_job : 0;
+        if(callback && !cfx_print_handler_on_print_job_callback)
+            cfx_print_handler_on_print_job_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, char16 *document_name_str, int document_name_length, char16 *pdf_file_path_str, int pdf_file_path_length, cef_print_job_callback_t* callback)) callback;
+        self->on_print_job = callback ? cfx_print_handler_on_print_job : 0;
         break;
     case 3:
-        self->on_print_reset = is_active ? cfx_print_handler_on_print_reset : 0;
+        if(callback && !cfx_print_handler_on_print_reset_callback)
+            cfx_print_handler_on_print_reset_callback = (void (CEF_CALLBACK *)(gc_handle_t self)) callback;
+        self->on_print_reset = callback ? cfx_print_handler_on_print_reset : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_print_handler_set_callback_ptrs(void *cb_0, void *cb_1, void *cb_2, void *cb_3) {
-    cfx_print_handler_on_print_settings_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_print_settings_t* settings, int get_defaults)) cb_0;
-    cfx_print_handler_on_print_dialog_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int has_selection, cef_print_dialog_callback_t* callback)) cb_1;
-    cfx_print_handler_on_print_job_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, char16 *document_name_str, int document_name_length, char16 *pdf_file_path_str, int pdf_file_path_length, cef_print_job_callback_t* callback)) cb_2;
-    cfx_print_handler_on_print_reset_callback = (void (CEF_CALLBACK *)(gc_handle_t self)) cb_3;
 }
 
 #ifdef __cplusplus

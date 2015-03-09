@@ -127,31 +127,34 @@ int CEF_CALLBACK cfx_read_handler_may_block(cef_read_handler_t* self) {
 }
 
 
-CFX_EXPORT void cfx_read_handler_activate_callback(cef_read_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_read_handler_set_managed_callback(cef_read_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->read = is_active ? cfx_read_handler_read : 0;
+        if(callback && !cfx_read_handler_read_callback)
+            cfx_read_handler_read_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, void* ptr, int size, int n)) callback;
+        self->read = callback ? cfx_read_handler_read : 0;
         break;
     case 1:
-        self->seek = is_active ? cfx_read_handler_seek : 0;
+        if(callback && !cfx_read_handler_seek_callback)
+            cfx_read_handler_seek_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int64 offset, int whence)) callback;
+        self->seek = callback ? cfx_read_handler_seek : 0;
         break;
     case 2:
-        self->tell = is_active ? cfx_read_handler_tell : 0;
+        if(callback && !cfx_read_handler_tell_callback)
+            cfx_read_handler_tell_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int64* __retval)) callback;
+        self->tell = callback ? cfx_read_handler_tell : 0;
         break;
     case 3:
-        self->eof = is_active ? cfx_read_handler_eof : 0;
+        if(callback && !cfx_read_handler_eof_callback)
+            cfx_read_handler_eof_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval)) callback;
+        self->eof = callback ? cfx_read_handler_eof : 0;
         break;
     case 4:
-        self->may_block = is_active ? cfx_read_handler_may_block : 0;
+        if(callback && !cfx_read_handler_may_block_callback)
+            cfx_read_handler_may_block_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval)) callback;
+        self->may_block = callback ? cfx_read_handler_may_block : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_read_handler_set_callback_ptrs(void *cb_0, void *cb_1, void *cb_2, void *cb_3, void *cb_4) {
-    cfx_read_handler_read_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, void* ptr, int size, int n)) cb_0;
-    cfx_read_handler_seek_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int64 offset, int whence)) cb_1;
-    cfx_read_handler_tell_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int64* __retval)) cb_2;
-    cfx_read_handler_eof_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval)) cb_3;
-    cfx_read_handler_may_block_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval)) cb_4;
 }
 
 #ifdef __cplusplus

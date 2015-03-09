@@ -54,6 +54,14 @@ namespace Chromium {
         }
 
 
+        private static object eventLock = new object();
+
+        // on_request_geolocation_permission
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_geolocation_handler_on_request_geolocation_permission_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id, IntPtr callback);
+        private static cfx_geolocation_handler_on_request_geolocation_permission_delegate cfx_geolocation_handler_on_request_geolocation_permission;
+        private static IntPtr cfx_geolocation_handler_on_request_geolocation_permission_ptr;
+
         internal static void on_request_geolocation_permission(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id, IntPtr callback) {
             var self = (CfxGeolocationHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -68,6 +76,12 @@ namespace Chromium {
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
             __retval = e.m_returnValue ? 1 : 0;
         }
+
+        // on_cancel_geolocation_permission
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_geolocation_handler_on_cancel_geolocation_permission_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id);
+        private static cfx_geolocation_handler_on_cancel_geolocation_permission_delegate cfx_geolocation_handler_on_cancel_geolocation_permission;
+        private static IntPtr cfx_geolocation_handler_on_cancel_geolocation_permission_ptr;
 
         internal static void on_cancel_geolocation_permission(IntPtr gcHandlePtr, IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id) {
             var self = (CfxGeolocationHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -98,15 +112,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnRequestGeolocationPermissionEventHandler OnRequestGeolocationPermission {
             add {
-                if(m_OnRequestGeolocationPermission == null) {
-                    CfxApi.cfx_geolocation_handler_activate_callback(NativePtr, 0, 1);
+                lock(eventLock) {
+                    if(m_OnRequestGeolocationPermission == null) {
+                        if(cfx_geolocation_handler_on_request_geolocation_permission == null) {
+                            cfx_geolocation_handler_on_request_geolocation_permission = on_request_geolocation_permission;
+                            cfx_geolocation_handler_on_request_geolocation_permission_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_geolocation_handler_on_request_geolocation_permission);
+                        }
+                        CfxApi.cfx_geolocation_handler_set_managed_callback(NativePtr, 0, cfx_geolocation_handler_on_request_geolocation_permission_ptr);
+                    }
+                    m_OnRequestGeolocationPermission += value;
                 }
-                m_OnRequestGeolocationPermission += value;
             }
             remove {
-                m_OnRequestGeolocationPermission -= value;
-                if(m_OnRequestGeolocationPermission == null) {
-                    CfxApi.cfx_geolocation_handler_activate_callback(NativePtr, 0, 0);
+                lock(eventLock) {
+                    m_OnRequestGeolocationPermission -= value;
+                    if(m_OnRequestGeolocationPermission == null) {
+                        CfxApi.cfx_geolocation_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -124,15 +146,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnCancelGeolocationPermissionEventHandler OnCancelGeolocationPermission {
             add {
-                if(m_OnCancelGeolocationPermission == null) {
-                    CfxApi.cfx_geolocation_handler_activate_callback(NativePtr, 1, 1);
+                lock(eventLock) {
+                    if(m_OnCancelGeolocationPermission == null) {
+                        if(cfx_geolocation_handler_on_cancel_geolocation_permission == null) {
+                            cfx_geolocation_handler_on_cancel_geolocation_permission = on_cancel_geolocation_permission;
+                            cfx_geolocation_handler_on_cancel_geolocation_permission_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_geolocation_handler_on_cancel_geolocation_permission);
+                        }
+                        CfxApi.cfx_geolocation_handler_set_managed_callback(NativePtr, 1, cfx_geolocation_handler_on_cancel_geolocation_permission_ptr);
+                    }
+                    m_OnCancelGeolocationPermission += value;
                 }
-                m_OnCancelGeolocationPermission += value;
             }
             remove {
-                m_OnCancelGeolocationPermission -= value;
-                if(m_OnCancelGeolocationPermission == null) {
-                    CfxApi.cfx_geolocation_handler_activate_callback(NativePtr, 1, 0);
+                lock(eventLock) {
+                    m_OnCancelGeolocationPermission -= value;
+                    if(m_OnCancelGeolocationPermission == null) {
+                        CfxApi.cfx_geolocation_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -142,11 +172,11 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnRequestGeolocationPermission != null) {
                 m_OnRequestGeolocationPermission = null;
-                CfxApi.cfx_geolocation_handler_activate_callback(NativePtr, 0, 0);
+                CfxApi.cfx_geolocation_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_OnCancelGeolocationPermission != null) {
                 m_OnCancelGeolocationPermission = null;
-                CfxApi.cfx_geolocation_handler_activate_callback(NativePtr, 1, 0);
+                CfxApi.cfx_geolocation_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

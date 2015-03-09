@@ -257,15 +257,8 @@ Public Class WrapperGenerator
             b.AppendLine()
         Next
 
-        b.AppendComment("callback setters")
-        Dim args = New List(Of String)
-        For i = 0 To maxCallbackCount - 1
-            args.Add("IntPtr cb_" & i)
-            b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]")
-            b.AppendLine("public delegate void cfx_set_{0}_callback_ptrs_delegate({1});", i + 1, String.Join(", ", args))
-        Next
         b.AppendLine()
-        b.AppendLine()
+
 
         For Each t In decls.CefStructTypes
             t.ClassBuilder.EmitApiDeclarations(b)

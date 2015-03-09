@@ -36,27 +36,31 @@ Public Class CodeSnippets
         EmitPInvokeDelegate(b, signature.PInvokeSignature(functionName & "_delegate"), functionName)
     End Sub
 
-    Shared Sub EmitPInvokeDelegate(b As CodeBuilder, functionName As String, returnType As String, arguments As String)
-        EmitPInvokeDelegate(b, String.Format("{0} {1}_delegate({2})", returnType, functionName, arguments), functionName)
-    End Sub
-
     Shared Sub EmitPInvokeDelegate(b As CodeBuilder, delegateSignature As String, functionName As String)
-        EmitDelegate(b, delegateSignature, "Cdecl")
+        EmitDelegate(b, delegateSignature, "Cdecl", False, False)
         b.AppendLine("public static {0}_delegate {0};", functionName)
     End Sub
 
     Shared Sub EmitPInvokeCallbackDelegate(b As CodeBuilder, functionName As String, signature As Signature)
-        EmitDelegate(b, functionName, "void", signature.PInvokeCallbackSignature, "StdCall")
+        EmitDelegate(b, functionName, "void", signature.PInvokeCallbackSignature, "StdCall", True, True)
     End Sub
 
-    Shared Sub EmitDelegate(b As CodeBuilder, functionName As String, returnType As String, arguments As String, callingConvention As String)
+    Shared Sub EmitDelegate(b As CodeBuilder, functionName As String, returnType As String, arguments As String, callingConvention As String, fullyQualified As Boolean, priv As Boolean)
         If String.IsNullOrWhiteSpace(returnType) Then Stop
-        EmitDelegate(b, String.Format("{0} {1}_delegate({2})", returnType, functionName, arguments), callingConvention)
+        EmitDelegate(b, String.Format("{0} {1}_delegate({2})", returnType, functionName, arguments), callingConvention, fullyQualified, priv)
     End Sub
 
-    Shared Sub EmitDelegate(b As CodeBuilder, delegateSignature As String, callingConvention As String)
-        b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.{0}, SetLastError = false)]", callingConvention)
-        b.AppendLine("public delegate {0};", delegateSignature)
+    Shared Sub EmitDelegate(b As CodeBuilder, delegateSignature As String, callingConvention As String, fullyQualified As Boolean, priv As Boolean)
+        If fullyQualified Then
+            b.AppendLine("[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.{0}, SetLastError = false)]", callingConvention)
+        Else
+            b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.{0}, SetLastError = false)]", callingConvention)
+        End If
+        If priv Then
+            b.AppendLine("private delegate {0};", delegateSignature)
+        Else
+            b.AppendLine("public delegate {0};", delegateSignature)
+        End If
     End Sub
 
     Shared Sub EmitPInvokeDelegateInitialization(b As CodeBuilder, functionName As String)

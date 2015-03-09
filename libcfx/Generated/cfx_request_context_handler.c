@@ -86,15 +86,14 @@ cef_cookie_manager_t* CEF_CALLBACK cfx_request_context_handler_get_cookie_manage
 }
 
 
-CFX_EXPORT void cfx_request_context_handler_activate_callback(cef_request_context_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_request_context_handler_set_managed_callback(cef_request_context_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->get_cookie_manager = is_active ? cfx_request_context_handler_get_cookie_manager : 0;
+        if(callback && !cfx_request_context_handler_get_cookie_manager_callback)
+            cfx_request_context_handler_get_cookie_manager_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_cookie_manager_t** __retval)) callback;
+        self->get_cookie_manager = callback ? cfx_request_context_handler_get_cookie_manager : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_request_context_handler_set_callback_ptrs(void *cb_0) {
-    cfx_request_context_handler_get_cookie_manager_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_cookie_manager_t** __retval)) cb_0;
 }
 
 #ifdef __cplusplus

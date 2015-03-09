@@ -53,6 +53,14 @@ namespace Chromium {
         }
 
 
+        private static object eventLock = new object();
+
+        // on_pre_key_event
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_keyboard_handler_on_pre_key_event_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr @event, IntPtr os_event, out int is_keyboard_shortcut);
+        private static cfx_keyboard_handler_on_pre_key_event_delegate cfx_keyboard_handler_on_pre_key_event;
+        private static IntPtr cfx_keyboard_handler_on_pre_key_event_ptr;
+
         internal static void on_pre_key_event(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr @event, IntPtr os_event, out int is_keyboard_shortcut) {
             var self = (CfxKeyboardHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -68,6 +76,12 @@ namespace Chromium {
             is_keyboard_shortcut = e.m_is_keyboard_shortcut;
             __retval = e.m_returnValue ? 1 : 0;
         }
+
+        // on_key_event
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_keyboard_handler_on_key_event_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr @event, IntPtr os_event);
+        private static cfx_keyboard_handler_on_key_event_delegate cfx_keyboard_handler_on_key_event;
+        private static IntPtr cfx_keyboard_handler_on_key_event_ptr;
 
         internal static void on_key_event(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr @event, IntPtr os_event) {
             var self = (CfxKeyboardHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -99,15 +113,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnPreKeyEventEventHandler OnPreKeyEvent {
             add {
-                if(m_OnPreKeyEvent == null) {
-                    CfxApi.cfx_keyboard_handler_activate_callback(NativePtr, 0, 1);
+                lock(eventLock) {
+                    if(m_OnPreKeyEvent == null) {
+                        if(cfx_keyboard_handler_on_pre_key_event == null) {
+                            cfx_keyboard_handler_on_pre_key_event = on_pre_key_event;
+                            cfx_keyboard_handler_on_pre_key_event_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_keyboard_handler_on_pre_key_event);
+                        }
+                        CfxApi.cfx_keyboard_handler_set_managed_callback(NativePtr, 0, cfx_keyboard_handler_on_pre_key_event_ptr);
+                    }
+                    m_OnPreKeyEvent += value;
                 }
-                m_OnPreKeyEvent += value;
             }
             remove {
-                m_OnPreKeyEvent -= value;
-                if(m_OnPreKeyEvent == null) {
-                    CfxApi.cfx_keyboard_handler_activate_callback(NativePtr, 0, 0);
+                lock(eventLock) {
+                    m_OnPreKeyEvent -= value;
+                    if(m_OnPreKeyEvent == null) {
+                        CfxApi.cfx_keyboard_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -126,15 +148,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnKeyEventEventHandler OnKeyEvent {
             add {
-                if(m_OnKeyEvent == null) {
-                    CfxApi.cfx_keyboard_handler_activate_callback(NativePtr, 1, 1);
+                lock(eventLock) {
+                    if(m_OnKeyEvent == null) {
+                        if(cfx_keyboard_handler_on_key_event == null) {
+                            cfx_keyboard_handler_on_key_event = on_key_event;
+                            cfx_keyboard_handler_on_key_event_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_keyboard_handler_on_key_event);
+                        }
+                        CfxApi.cfx_keyboard_handler_set_managed_callback(NativePtr, 1, cfx_keyboard_handler_on_key_event_ptr);
+                    }
+                    m_OnKeyEvent += value;
                 }
-                m_OnKeyEvent += value;
             }
             remove {
-                m_OnKeyEvent -= value;
-                if(m_OnKeyEvent == null) {
-                    CfxApi.cfx_keyboard_handler_activate_callback(NativePtr, 1, 0);
+                lock(eventLock) {
+                    m_OnKeyEvent -= value;
+                    if(m_OnKeyEvent == null) {
+                        CfxApi.cfx_keyboard_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -144,11 +174,11 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnPreKeyEvent != null) {
                 m_OnPreKeyEvent = null;
-                CfxApi.cfx_keyboard_handler_activate_callback(NativePtr, 0, 0);
+                CfxApi.cfx_keyboard_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_OnKeyEvent != null) {
                 m_OnKeyEvent = null;
-                CfxApi.cfx_keyboard_handler_activate_callback(NativePtr, 1, 0);
+                CfxApi.cfx_keyboard_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

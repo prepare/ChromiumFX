@@ -55,6 +55,14 @@ namespace Chromium {
         }
 
 
+        private static object eventLock = new object();
+
+        // get
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_v8accessor_get_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out IntPtr retval, ref IntPtr exception_str, ref int exception_length);
+        private static cfx_v8accessor_get_delegate cfx_v8accessor_get;
+        private static IntPtr cfx_v8accessor_get_ptr;
+
         internal static void get(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out IntPtr retval, ref IntPtr exception_str, ref int exception_length) {
             var self = (CfxV8Accessor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -75,6 +83,12 @@ namespace Chromium {
             }
             __retval = e.m_returnValue ? 1 : 0;
         }
+
+        // set
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_v8accessor_set_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, IntPtr value, ref IntPtr exception_str, ref int exception_length);
+        private static cfx_v8accessor_set_delegate cfx_v8accessor_set;
+        private static IntPtr cfx_v8accessor_set_ptr;
 
         internal static void set(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, IntPtr value, ref IntPtr exception_str, ref int exception_length) {
             var self = (CfxV8Accessor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -112,15 +126,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxV8AccessorGetEventHandler Get {
             add {
-                if(m_Get == null) {
-                    CfxApi.cfx_v8accessor_activate_callback(NativePtr, 0, 1);
+                lock(eventLock) {
+                    if(m_Get == null) {
+                        if(cfx_v8accessor_get == null) {
+                            cfx_v8accessor_get = get;
+                            cfx_v8accessor_get_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_v8accessor_get);
+                        }
+                        CfxApi.cfx_v8accessor_set_managed_callback(NativePtr, 0, cfx_v8accessor_get_ptr);
+                    }
+                    m_Get += value;
                 }
-                m_Get += value;
             }
             remove {
-                m_Get -= value;
-                if(m_Get == null) {
-                    CfxApi.cfx_v8accessor_activate_callback(NativePtr, 0, 0);
+                lock(eventLock) {
+                    m_Get -= value;
+                    if(m_Get == null) {
+                        CfxApi.cfx_v8accessor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -140,15 +162,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxV8AccessorSetEventHandler Set {
             add {
-                if(m_Set == null) {
-                    CfxApi.cfx_v8accessor_activate_callback(NativePtr, 1, 1);
+                lock(eventLock) {
+                    if(m_Set == null) {
+                        if(cfx_v8accessor_set == null) {
+                            cfx_v8accessor_set = set;
+                            cfx_v8accessor_set_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_v8accessor_set);
+                        }
+                        CfxApi.cfx_v8accessor_set_managed_callback(NativePtr, 1, cfx_v8accessor_set_ptr);
+                    }
+                    m_Set += value;
                 }
-                m_Set += value;
             }
             remove {
-                m_Set -= value;
-                if(m_Set == null) {
-                    CfxApi.cfx_v8accessor_activate_callback(NativePtr, 1, 0);
+                lock(eventLock) {
+                    m_Set -= value;
+                    if(m_Set == null) {
+                        CfxApi.cfx_v8accessor_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -158,11 +188,11 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_Get != null) {
                 m_Get = null;
-                CfxApi.cfx_v8accessor_activate_callback(NativePtr, 0, 0);
+                CfxApi.cfx_v8accessor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_Set != null) {
                 m_Set = null;
-                CfxApi.cfx_v8accessor_activate_callback(NativePtr, 1, 0);
+                CfxApi.cfx_v8accessor_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

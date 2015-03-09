@@ -180,55 +180,64 @@ int CEF_CALLBACK cfx_render_process_handler_on_process_message_received(cef_rend
 }
 
 
-CFX_EXPORT void cfx_render_process_handler_activate_callback(cef_render_process_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_render_process_handler_set_managed_callback(cef_render_process_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_render_thread_created = is_active ? cfx_render_process_handler_on_render_thread_created : 0;
+        if(callback && !cfx_render_process_handler_on_render_thread_created_callback)
+            cfx_render_process_handler_on_render_thread_created_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_list_value_t* extra_info)) callback;
+        self->on_render_thread_created = callback ? cfx_render_process_handler_on_render_thread_created : 0;
         break;
     case 1:
-        self->on_web_kit_initialized = is_active ? cfx_render_process_handler_on_web_kit_initialized : 0;
+        if(callback && !cfx_render_process_handler_on_web_kit_initialized_callback)
+            cfx_render_process_handler_on_web_kit_initialized_callback = (void (CEF_CALLBACK *)(gc_handle_t self)) callback;
+        self->on_web_kit_initialized = callback ? cfx_render_process_handler_on_web_kit_initialized : 0;
         break;
     case 2:
-        self->on_browser_created = is_active ? cfx_render_process_handler_on_browser_created : 0;
+        if(callback && !cfx_render_process_handler_on_browser_created_callback)
+            cfx_render_process_handler_on_browser_created_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) callback;
+        self->on_browser_created = callback ? cfx_render_process_handler_on_browser_created : 0;
         break;
     case 3:
-        self->on_browser_destroyed = is_active ? cfx_render_process_handler_on_browser_destroyed : 0;
+        if(callback && !cfx_render_process_handler_on_browser_destroyed_callback)
+            cfx_render_process_handler_on_browser_destroyed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) callback;
+        self->on_browser_destroyed = callback ? cfx_render_process_handler_on_browser_destroyed : 0;
         break;
     case 4:
-        self->get_load_handler = is_active ? cfx_render_process_handler_get_load_handler : 0;
+        if(callback && !cfx_render_process_handler_get_load_handler_callback)
+            cfx_render_process_handler_get_load_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_load_handler_t** __retval)) callback;
+        self->get_load_handler = callback ? cfx_render_process_handler_get_load_handler : 0;
         break;
     case 5:
-        self->on_before_navigation = is_active ? cfx_render_process_handler_on_before_navigation : 0;
+        if(callback && !cfx_render_process_handler_on_before_navigation_callback)
+            cfx_render_process_handler_on_before_navigation_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_navigation_type_t navigation_type, int is_redirect)) callback;
+        self->on_before_navigation = callback ? cfx_render_process_handler_on_before_navigation : 0;
         break;
     case 6:
-        self->on_context_created = is_active ? cfx_render_process_handler_on_context_created : 0;
+        if(callback && !cfx_render_process_handler_on_context_created_callback)
+            cfx_render_process_handler_on_context_created_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context)) callback;
+        self->on_context_created = callback ? cfx_render_process_handler_on_context_created : 0;
         break;
     case 7:
-        self->on_context_released = is_active ? cfx_render_process_handler_on_context_released : 0;
+        if(callback && !cfx_render_process_handler_on_context_released_callback)
+            cfx_render_process_handler_on_context_released_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context)) callback;
+        self->on_context_released = callback ? cfx_render_process_handler_on_context_released : 0;
         break;
     case 8:
-        self->on_uncaught_exception = is_active ? cfx_render_process_handler_on_uncaught_exception : 0;
+        if(callback && !cfx_render_process_handler_on_uncaught_exception_callback)
+            cfx_render_process_handler_on_uncaught_exception_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context, cef_v8exception_t* exception, cef_v8stack_trace_t* stackTrace)) callback;
+        self->on_uncaught_exception = callback ? cfx_render_process_handler_on_uncaught_exception : 0;
         break;
     case 9:
-        self->on_focused_node_changed = is_active ? cfx_render_process_handler_on_focused_node_changed : 0;
+        if(callback && !cfx_render_process_handler_on_focused_node_changed_callback)
+            cfx_render_process_handler_on_focused_node_changed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_domnode_t* node)) callback;
+        self->on_focused_node_changed = callback ? cfx_render_process_handler_on_focused_node_changed : 0;
         break;
     case 10:
-        self->on_process_message_received = is_active ? cfx_render_process_handler_on_process_message_received : 0;
+        if(callback && !cfx_render_process_handler_on_process_message_received_callback)
+            cfx_render_process_handler_on_process_message_received_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_process_id_t source_process, cef_process_message_t* message)) callback;
+        self->on_process_message_received = callback ? cfx_render_process_handler_on_process_message_received : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_render_process_handler_set_callback_ptrs(void *cb_0, void *cb_1, void *cb_2, void *cb_3, void *cb_4, void *cb_5, void *cb_6, void *cb_7, void *cb_8, void *cb_9, void *cb_10) {
-    cfx_render_process_handler_on_render_thread_created_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_list_value_t* extra_info)) cb_0;
-    cfx_render_process_handler_on_web_kit_initialized_callback = (void (CEF_CALLBACK *)(gc_handle_t self)) cb_1;
-    cfx_render_process_handler_on_browser_created_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) cb_2;
-    cfx_render_process_handler_on_browser_destroyed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) cb_3;
-    cfx_render_process_handler_get_load_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_load_handler_t** __retval)) cb_4;
-    cfx_render_process_handler_on_before_navigation_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_navigation_type_t navigation_type, int is_redirect)) cb_5;
-    cfx_render_process_handler_on_context_created_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context)) cb_6;
-    cfx_render_process_handler_on_context_released_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context)) cb_7;
-    cfx_render_process_handler_on_uncaught_exception_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context, cef_v8exception_t* exception, cef_v8stack_trace_t* stackTrace)) cb_8;
-    cfx_render_process_handler_on_focused_node_changed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_domnode_t* node)) cb_9;
-    cfx_render_process_handler_on_process_message_received_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_process_id_t source_process, cef_process_message_t* message)) cb_10;
 }
 
 #ifdef __cplusplus

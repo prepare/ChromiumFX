@@ -108,27 +108,29 @@ void CEF_CALLBACK cfx_load_handler_on_load_error(cef_load_handler_t* self, cef_b
 }
 
 
-CFX_EXPORT void cfx_load_handler_activate_callback(cef_load_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_load_handler_set_managed_callback(cef_load_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_loading_state_change = is_active ? cfx_load_handler_on_loading_state_change : 0;
+        if(callback && !cfx_load_handler_on_loading_state_change_callback)
+            cfx_load_handler_on_loading_state_change_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int isLoading, int canGoBack, int canGoForward)) callback;
+        self->on_loading_state_change = callback ? cfx_load_handler_on_loading_state_change : 0;
         break;
     case 1:
-        self->on_load_start = is_active ? cfx_load_handler_on_load_start : 0;
+        if(callback && !cfx_load_handler_on_load_start_callback)
+            cfx_load_handler_on_load_start_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame)) callback;
+        self->on_load_start = callback ? cfx_load_handler_on_load_start : 0;
         break;
     case 2:
-        self->on_load_end = is_active ? cfx_load_handler_on_load_end : 0;
+        if(callback && !cfx_load_handler_on_load_end_callback)
+            cfx_load_handler_on_load_end_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, int httpStatusCode)) callback;
+        self->on_load_end = callback ? cfx_load_handler_on_load_end : 0;
         break;
     case 3:
-        self->on_load_error = is_active ? cfx_load_handler_on_load_error : 0;
+        if(callback && !cfx_load_handler_on_load_error_callback)
+            cfx_load_handler_on_load_error_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_errorcode_t errorCode, char16 *errorText_str, int errorText_length, char16 *failedUrl_str, int failedUrl_length)) callback;
+        self->on_load_error = callback ? cfx_load_handler_on_load_error : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_load_handler_set_callback_ptrs(void *cb_0, void *cb_1, void *cb_2, void *cb_3) {
-    cfx_load_handler_on_loading_state_change_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int isLoading, int canGoBack, int canGoForward)) cb_0;
-    cfx_load_handler_on_load_start_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame)) cb_1;
-    cfx_load_handler_on_load_end_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, int httpStatusCode)) cb_2;
-    cfx_load_handler_on_load_error_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_errorcode_t errorCode, char16 *errorText_str, int errorText_length, char16 *failedUrl_str, int failedUrl_length)) cb_3;
 }
 
 #ifdef __cplusplus

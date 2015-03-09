@@ -112,22 +112,7 @@ namespace Chromium {
 
             cfx_app_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_app_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_app_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_app_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_app_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_app_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_app_on_before_command_line_processing = CfxApp.on_before_command_line_processing;
-            cfx_app_on_register_custom_schemes = CfxApp.on_register_custom_schemes;
-            cfx_app_get_resource_bundle_handler = CfxApp.get_resource_bundle_handler;
-            cfx_app_get_browser_process_handler = CfxApp.get_browser_process_handler;
-            cfx_app_get_render_process_handler = CfxApp.get_render_process_handler;
-
-            var cfx_app_set_callback_ptrs = (cfx_set_5_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_app_set_callback_ptrs", typeof(cfx_set_5_callback_ptrs_delegate));
-            cfx_app_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_app_on_before_command_line_processing),
-                Marshal.GetFunctionPointerForDelegate(cfx_app_on_register_custom_schemes),
-                Marshal.GetFunctionPointerForDelegate(cfx_app_get_resource_bundle_handler),
-                Marshal.GetFunctionPointerForDelegate(cfx_app_get_browser_process_handler),
-                Marshal.GetFunctionPointerForDelegate(cfx_app_get_render_process_handler)
-            );
+            cfx_app_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_app_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_auth_callback
@@ -231,20 +216,7 @@ namespace Chromium {
 
             cfx_browser_process_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_browser_process_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_browser_process_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_browser_process_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_browser_process_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_browser_process_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_browser_process_handler_on_context_initialized = CfxBrowserProcessHandler.on_context_initialized;
-            cfx_browser_process_handler_on_before_child_process_launch = CfxBrowserProcessHandler.on_before_child_process_launch;
-            cfx_browser_process_handler_on_render_process_thread_created = CfxBrowserProcessHandler.on_render_process_thread_created;
-            cfx_browser_process_handler_get_print_handler = CfxBrowserProcessHandler.get_print_handler;
-
-            var cfx_browser_process_handler_set_callback_ptrs = (cfx_set_4_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_browser_process_handler_set_callback_ptrs", typeof(cfx_set_4_callback_ptrs_delegate));
-            cfx_browser_process_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_browser_process_handler_on_context_initialized),
-                Marshal.GetFunctionPointerForDelegate(cfx_browser_process_handler_on_before_child_process_launch),
-                Marshal.GetFunctionPointerForDelegate(cfx_browser_process_handler_on_render_process_thread_created),
-                Marshal.GetFunctionPointerForDelegate(cfx_browser_process_handler_get_print_handler)
-            );
+            cfx_browser_process_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_browser_process_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_browser_settings
@@ -331,40 +303,7 @@ namespace Chromium {
 
             cfx_client_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_client_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_client_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_client_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_client_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_client_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_client_get_context_menu_handler = CfxClient.get_context_menu_handler;
-            cfx_client_get_dialog_handler = CfxClient.get_dialog_handler;
-            cfx_client_get_display_handler = CfxClient.get_display_handler;
-            cfx_client_get_download_handler = CfxClient.get_download_handler;
-            cfx_client_get_drag_handler = CfxClient.get_drag_handler;
-            cfx_client_get_focus_handler = CfxClient.get_focus_handler;
-            cfx_client_get_geolocation_handler = CfxClient.get_geolocation_handler;
-            cfx_client_get_jsdialog_handler = CfxClient.get_jsdialog_handler;
-            cfx_client_get_keyboard_handler = CfxClient.get_keyboard_handler;
-            cfx_client_get_life_span_handler = CfxClient.get_life_span_handler;
-            cfx_client_get_load_handler = CfxClient.get_load_handler;
-            cfx_client_get_render_handler = CfxClient.get_render_handler;
-            cfx_client_get_request_handler = CfxClient.get_request_handler;
-            cfx_client_on_process_message_received = CfxClient.on_process_message_received;
-
-            var cfx_client_set_callback_ptrs = (cfx_set_14_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_client_set_callback_ptrs", typeof(cfx_set_14_callback_ptrs_delegate));
-            cfx_client_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_client_get_context_menu_handler),
-                Marshal.GetFunctionPointerForDelegate(cfx_client_get_dialog_handler),
-                Marshal.GetFunctionPointerForDelegate(cfx_client_get_display_handler),
-                Marshal.GetFunctionPointerForDelegate(cfx_client_get_download_handler),
-                Marshal.GetFunctionPointerForDelegate(cfx_client_get_drag_handler),
-                Marshal.GetFunctionPointerForDelegate(cfx_client_get_focus_handler),
-                Marshal.GetFunctionPointerForDelegate(cfx_client_get_geolocation_handler),
-                Marshal.GetFunctionPointerForDelegate(cfx_client_get_jsdialog_handler),
-                Marshal.GetFunctionPointerForDelegate(cfx_client_get_keyboard_handler),
-                Marshal.GetFunctionPointerForDelegate(cfx_client_get_life_span_handler),
-                Marshal.GetFunctionPointerForDelegate(cfx_client_get_load_handler),
-                Marshal.GetFunctionPointerForDelegate(cfx_client_get_render_handler),
-                Marshal.GetFunctionPointerForDelegate(cfx_client_get_request_handler),
-                Marshal.GetFunctionPointerForDelegate(cfx_client_on_process_message_received)
-            );
+            cfx_client_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_client_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_command_line
@@ -403,18 +342,7 @@ namespace Chromium {
 
             cfx_context_menu_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_context_menu_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_context_menu_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_context_menu_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_context_menu_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_context_menu_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_context_menu_handler_on_before_context_menu = CfxContextMenuHandler.on_before_context_menu;
-            cfx_context_menu_handler_on_context_menu_command = CfxContextMenuHandler.on_context_menu_command;
-            cfx_context_menu_handler_on_context_menu_dismissed = CfxContextMenuHandler.on_context_menu_dismissed;
-
-            var cfx_context_menu_handler_set_callback_ptrs = (cfx_set_3_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_context_menu_handler_set_callback_ptrs", typeof(cfx_set_3_callback_ptrs_delegate));
-            cfx_context_menu_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_context_menu_handler_on_before_context_menu),
-                Marshal.GetFunctionPointerForDelegate(cfx_context_menu_handler_on_context_menu_command),
-                Marshal.GetFunctionPointerForDelegate(cfx_context_menu_handler_on_context_menu_dismissed)
-            );
+            cfx_context_menu_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_context_menu_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_context_menu_params
@@ -486,14 +414,7 @@ namespace Chromium {
 
             cfx_cookie_visitor_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_cookie_visitor_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_cookie_visitor_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_cookie_visitor_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_cookie_visitor_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_cookie_visitor_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_cookie_visitor_visit = CfxCookieVisitor.visit;
-
-            var cfx_cookie_visitor_set_callback_ptrs = (cfx_set_1_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_cookie_visitor_set_callback_ptrs", typeof(cfx_set_1_callback_ptrs_delegate));
-            cfx_cookie_visitor_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_cookie_visitor_visit)
-            );
+            cfx_cookie_visitor_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_cookie_visitor_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_cursor_info
@@ -514,14 +435,7 @@ namespace Chromium {
 
             cfx_dialog_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_dialog_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_dialog_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_dialog_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_dialog_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_dialog_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_dialog_handler_on_file_dialog = CfxDialogHandler.on_file_dialog;
-
-            var cfx_dialog_handler_set_callback_ptrs = (cfx_set_1_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_dialog_handler_set_callback_ptrs", typeof(cfx_set_1_callback_ptrs_delegate));
-            cfx_dialog_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_dialog_handler_on_file_dialog)
-            );
+            cfx_dialog_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_dialog_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_dictionary_value
@@ -559,22 +473,7 @@ namespace Chromium {
 
             cfx_display_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_display_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_display_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_display_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_display_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_display_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_display_handler_on_address_change = CfxDisplayHandler.on_address_change;
-            cfx_display_handler_on_title_change = CfxDisplayHandler.on_title_change;
-            cfx_display_handler_on_tooltip = CfxDisplayHandler.on_tooltip;
-            cfx_display_handler_on_status_message = CfxDisplayHandler.on_status_message;
-            cfx_display_handler_on_console_message = CfxDisplayHandler.on_console_message;
-
-            var cfx_display_handler_set_callback_ptrs = (cfx_set_5_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_display_handler_set_callback_ptrs", typeof(cfx_set_5_callback_ptrs_delegate));
-            cfx_display_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_display_handler_on_address_change),
-                Marshal.GetFunctionPointerForDelegate(cfx_display_handler_on_title_change),
-                Marshal.GetFunctionPointerForDelegate(cfx_display_handler_on_tooltip),
-                Marshal.GetFunctionPointerForDelegate(cfx_display_handler_on_status_message),
-                Marshal.GetFunctionPointerForDelegate(cfx_display_handler_on_console_message)
-            );
+            cfx_display_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_display_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_domdocument
@@ -630,30 +529,14 @@ namespace Chromium {
 
             cfx_domvisitor_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_domvisitor_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_domvisitor_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_domvisitor_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_domvisitor_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_domvisitor_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_domvisitor_visit = CfxDomVisitor.visit;
-
-            var cfx_domvisitor_set_callback_ptrs = (cfx_set_1_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_domvisitor_set_callback_ptrs", typeof(cfx_set_1_callback_ptrs_delegate));
-            cfx_domvisitor_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_domvisitor_visit)
-            );
+            cfx_domvisitor_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_domvisitor_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_download_handler
 
             cfx_download_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_download_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_download_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_download_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_download_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_download_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_download_handler_on_before_download = CfxDownloadHandler.on_before_download;
-            cfx_download_handler_on_download_updated = CfxDownloadHandler.on_download_updated;
-
-            var cfx_download_handler_set_callback_ptrs = (cfx_set_2_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_download_handler_set_callback_ptrs", typeof(cfx_set_2_callback_ptrs_delegate));
-            cfx_download_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_download_handler_on_before_download),
-                Marshal.GetFunctionPointerForDelegate(cfx_download_handler_on_download_updated)
-            );
+            cfx_download_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_download_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_download_item
@@ -713,14 +596,7 @@ namespace Chromium {
 
             cfx_drag_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_drag_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_drag_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_drag_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_drag_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_drag_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_drag_handler_on_drag_enter = CfxDragHandler.on_drag_enter;
-
-            var cfx_drag_handler_set_callback_ptrs = (cfx_set_1_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_drag_handler_set_callback_ptrs", typeof(cfx_set_1_callback_ptrs_delegate));
-            cfx_drag_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_drag_handler_on_drag_enter)
-            );
+            cfx_drag_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_drag_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_end_tracing_callback
@@ -738,18 +614,7 @@ namespace Chromium {
 
             cfx_focus_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_focus_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_focus_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_focus_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_focus_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_focus_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_focus_handler_on_take_focus = CfxFocusHandler.on_take_focus;
-            cfx_focus_handler_on_set_focus = CfxFocusHandler.on_set_focus;
-            cfx_focus_handler_on_got_focus = CfxFocusHandler.on_got_focus;
-
-            var cfx_focus_handler_set_callback_ptrs = (cfx_set_3_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_focus_handler_set_callback_ptrs", typeof(cfx_set_3_callback_ptrs_delegate));
-            cfx_focus_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_focus_handler_on_take_focus),
-                Marshal.GetFunctionPointerForDelegate(cfx_focus_handler_on_set_focus),
-                Marshal.GetFunctionPointerForDelegate(cfx_focus_handler_on_got_focus)
-            );
+            cfx_focus_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_focus_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_frame
@@ -789,16 +654,7 @@ namespace Chromium {
 
             cfx_geolocation_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_geolocation_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_geolocation_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_geolocation_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_geolocation_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_geolocation_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_geolocation_handler_on_request_geolocation_permission = CfxGeolocationHandler.on_request_geolocation_permission;
-            cfx_geolocation_handler_on_cancel_geolocation_permission = CfxGeolocationHandler.on_cancel_geolocation_permission;
-
-            var cfx_geolocation_handler_set_callback_ptrs = (cfx_set_2_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_geolocation_handler_set_callback_ptrs", typeof(cfx_set_2_callback_ptrs_delegate));
-            cfx_geolocation_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_geolocation_handler_on_request_geolocation_permission),
-                Marshal.GetFunctionPointerForDelegate(cfx_geolocation_handler_on_cancel_geolocation_permission)
-            );
+            cfx_geolocation_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_geolocation_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_geoposition
@@ -833,14 +689,7 @@ namespace Chromium {
 
             cfx_get_geolocation_callback_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_get_geolocation_callback_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_get_geolocation_callback_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_get_geolocation_callback_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_get_geolocation_callback_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_get_geolocation_callback_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_get_geolocation_callback_on_location_update = CfxGetGeolocationCallback.on_location_update;
-
-            var cfx_get_geolocation_callback_set_callback_ptrs = (cfx_set_1_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_get_geolocation_callback_set_callback_ptrs", typeof(cfx_set_1_callback_ptrs_delegate));
-            cfx_get_geolocation_callback_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_get_geolocation_callback_on_location_update)
-            );
+            cfx_get_geolocation_callback_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_get_geolocation_callback_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_jsdialog_callback
@@ -852,20 +701,7 @@ namespace Chromium {
 
             cfx_jsdialog_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_jsdialog_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_jsdialog_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_jsdialog_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_jsdialog_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_jsdialog_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_jsdialog_handler_on_jsdialog = CfxJsDialogHandler.on_jsdialog;
-            cfx_jsdialog_handler_on_before_unload_dialog = CfxJsDialogHandler.on_before_unload_dialog;
-            cfx_jsdialog_handler_on_reset_dialog_state = CfxJsDialogHandler.on_reset_dialog_state;
-            cfx_jsdialog_handler_on_dialog_closed = CfxJsDialogHandler.on_dialog_closed;
-
-            var cfx_jsdialog_handler_set_callback_ptrs = (cfx_set_4_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_jsdialog_handler_set_callback_ptrs", typeof(cfx_set_4_callback_ptrs_delegate));
-            cfx_jsdialog_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_jsdialog_handler_on_jsdialog),
-                Marshal.GetFunctionPointerForDelegate(cfx_jsdialog_handler_on_before_unload_dialog),
-                Marshal.GetFunctionPointerForDelegate(cfx_jsdialog_handler_on_reset_dialog_state),
-                Marshal.GetFunctionPointerForDelegate(cfx_jsdialog_handler_on_dialog_closed)
-            );
+            cfx_jsdialog_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_jsdialog_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_key_event
@@ -896,38 +732,14 @@ namespace Chromium {
 
             cfx_keyboard_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_keyboard_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_keyboard_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_keyboard_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_keyboard_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_keyboard_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_keyboard_handler_on_pre_key_event = CfxKeyboardHandler.on_pre_key_event;
-            cfx_keyboard_handler_on_key_event = CfxKeyboardHandler.on_key_event;
-
-            var cfx_keyboard_handler_set_callback_ptrs = (cfx_set_2_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_keyboard_handler_set_callback_ptrs", typeof(cfx_set_2_callback_ptrs_delegate));
-            cfx_keyboard_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_keyboard_handler_on_pre_key_event),
-                Marshal.GetFunctionPointerForDelegate(cfx_keyboard_handler_on_key_event)
-            );
+            cfx_keyboard_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_keyboard_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_life_span_handler
 
             cfx_life_span_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_life_span_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_life_span_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_life_span_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_life_span_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_life_span_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_life_span_handler_on_before_popup = CfxLifeSpanHandler.on_before_popup;
-            cfx_life_span_handler_on_after_created = CfxLifeSpanHandler.on_after_created;
-            cfx_life_span_handler_run_modal = CfxLifeSpanHandler.run_modal;
-            cfx_life_span_handler_do_close = CfxLifeSpanHandler.do_close;
-            cfx_life_span_handler_on_before_close = CfxLifeSpanHandler.on_before_close;
-
-            var cfx_life_span_handler_set_callback_ptrs = (cfx_set_5_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_life_span_handler_set_callback_ptrs", typeof(cfx_set_5_callback_ptrs_delegate));
-            cfx_life_span_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_life_span_handler_on_before_popup),
-                Marshal.GetFunctionPointerForDelegate(cfx_life_span_handler_on_after_created),
-                Marshal.GetFunctionPointerForDelegate(cfx_life_span_handler_run_modal),
-                Marshal.GetFunctionPointerForDelegate(cfx_life_span_handler_do_close),
-                Marshal.GetFunctionPointerForDelegate(cfx_life_span_handler_on_before_close)
-            );
+            cfx_life_span_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_life_span_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_list_value
@@ -964,20 +776,7 @@ namespace Chromium {
 
             cfx_load_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_load_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_load_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_load_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_load_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_load_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_load_handler_on_loading_state_change = CfxLoadHandler.on_loading_state_change;
-            cfx_load_handler_on_load_start = CfxLoadHandler.on_load_start;
-            cfx_load_handler_on_load_end = CfxLoadHandler.on_load_end;
-            cfx_load_handler_on_load_error = CfxLoadHandler.on_load_error;
-
-            var cfx_load_handler_set_callback_ptrs = (cfx_set_4_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_load_handler_set_callback_ptrs", typeof(cfx_set_4_callback_ptrs_delegate));
-            cfx_load_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_load_handler_on_loading_state_change),
-                Marshal.GetFunctionPointerForDelegate(cfx_load_handler_on_load_start),
-                Marshal.GetFunctionPointerForDelegate(cfx_load_handler_on_load_end),
-                Marshal.GetFunctionPointerForDelegate(cfx_load_handler_on_load_error)
-            );
+            cfx_load_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_load_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_menu_model
@@ -1065,14 +864,7 @@ namespace Chromium {
 
             cfx_navigation_entry_visitor_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_navigation_entry_visitor_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_navigation_entry_visitor_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_navigation_entry_visitor_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_navigation_entry_visitor_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_navigation_entry_visitor_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_navigation_entry_visitor_visit = CfxNavigationEntryVisitor.visit;
-
-            var cfx_navigation_entry_visitor_set_callback_ptrs = (cfx_set_1_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_navigation_entry_visitor_set_callback_ptrs", typeof(cfx_set_1_callback_ptrs_delegate));
-            cfx_navigation_entry_visitor_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_navigation_entry_visitor_visit)
-            );
+            cfx_navigation_entry_visitor_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_navigation_entry_visitor_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_page_range
@@ -1177,20 +969,7 @@ namespace Chromium {
 
             cfx_print_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_print_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_print_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_print_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_print_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_print_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_print_handler_on_print_settings = CfxPrintHandler.on_print_settings;
-            cfx_print_handler_on_print_dialog = CfxPrintHandler.on_print_dialog;
-            cfx_print_handler_on_print_job = CfxPrintHandler.on_print_job;
-            cfx_print_handler_on_print_reset = CfxPrintHandler.on_print_reset;
-
-            var cfx_print_handler_set_callback_ptrs = (cfx_set_4_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_print_handler_set_callback_ptrs", typeof(cfx_set_4_callback_ptrs_delegate));
-            cfx_print_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_print_handler_on_print_settings),
-                Marshal.GetFunctionPointerForDelegate(cfx_print_handler_on_print_dialog),
-                Marshal.GetFunctionPointerForDelegate(cfx_print_handler_on_print_job),
-                Marshal.GetFunctionPointerForDelegate(cfx_print_handler_on_print_reset)
-            );
+            cfx_print_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_print_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_print_job_callback
@@ -1248,22 +1027,7 @@ namespace Chromium {
 
             cfx_read_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_read_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_read_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_read_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_read_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_read_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_read_handler_read = CfxReadHandler.read;
-            cfx_read_handler_seek = CfxReadHandler.seek;
-            cfx_read_handler_tell = CfxReadHandler.tell;
-            cfx_read_handler_eof = CfxReadHandler.eof;
-            cfx_read_handler_may_block = CfxReadHandler.may_block;
-
-            var cfx_read_handler_set_callback_ptrs = (cfx_set_5_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_read_handler_set_callback_ptrs", typeof(cfx_set_5_callback_ptrs_delegate));
-            cfx_read_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_read_handler_read),
-                Marshal.GetFunctionPointerForDelegate(cfx_read_handler_seek),
-                Marshal.GetFunctionPointerForDelegate(cfx_read_handler_tell),
-                Marshal.GetFunctionPointerForDelegate(cfx_read_handler_eof),
-                Marshal.GetFunctionPointerForDelegate(cfx_read_handler_may_block)
-            );
+            cfx_read_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_read_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_rect
@@ -1286,68 +1050,14 @@ namespace Chromium {
 
             cfx_render_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_render_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_render_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_render_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_render_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_render_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_render_handler_get_root_screen_rect = CfxRenderHandler.get_root_screen_rect;
-            cfx_render_handler_get_view_rect = CfxRenderHandler.get_view_rect;
-            cfx_render_handler_get_screen_point = CfxRenderHandler.get_screen_point;
-            cfx_render_handler_get_screen_info = CfxRenderHandler.get_screen_info;
-            cfx_render_handler_on_popup_show = CfxRenderHandler.on_popup_show;
-            cfx_render_handler_on_popup_size = CfxRenderHandler.on_popup_size;
-            cfx_render_handler_on_paint = CfxRenderHandler.on_paint;
-            cfx_render_handler_on_cursor_change = CfxRenderHandler.on_cursor_change;
-            cfx_render_handler_start_dragging = CfxRenderHandler.start_dragging;
-            cfx_render_handler_update_drag_cursor = CfxRenderHandler.update_drag_cursor;
-            cfx_render_handler_on_scroll_offset_changed = CfxRenderHandler.on_scroll_offset_changed;
-
-            var cfx_render_handler_set_callback_ptrs = (cfx_set_11_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_render_handler_set_callback_ptrs", typeof(cfx_set_11_callback_ptrs_delegate));
-            cfx_render_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_render_handler_get_root_screen_rect),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_handler_get_view_rect),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_handler_get_screen_point),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_handler_get_screen_info),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_handler_on_popup_show),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_handler_on_popup_size),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_handler_on_paint),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_handler_on_cursor_change),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_handler_start_dragging),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_handler_update_drag_cursor),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_handler_on_scroll_offset_changed)
-            );
+            cfx_render_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_render_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_render_process_handler
 
             cfx_render_process_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_render_process_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_render_process_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_render_process_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_render_process_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_render_process_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_render_process_handler_on_render_thread_created = CfxRenderProcessHandler.on_render_thread_created;
-            cfx_render_process_handler_on_web_kit_initialized = CfxRenderProcessHandler.on_web_kit_initialized;
-            cfx_render_process_handler_on_browser_created = CfxRenderProcessHandler.on_browser_created;
-            cfx_render_process_handler_on_browser_destroyed = CfxRenderProcessHandler.on_browser_destroyed;
-            cfx_render_process_handler_get_load_handler = CfxRenderProcessHandler.get_load_handler;
-            cfx_render_process_handler_on_before_navigation = CfxRenderProcessHandler.on_before_navigation;
-            cfx_render_process_handler_on_context_created = CfxRenderProcessHandler.on_context_created;
-            cfx_render_process_handler_on_context_released = CfxRenderProcessHandler.on_context_released;
-            cfx_render_process_handler_on_uncaught_exception = CfxRenderProcessHandler.on_uncaught_exception;
-            cfx_render_process_handler_on_focused_node_changed = CfxRenderProcessHandler.on_focused_node_changed;
-            cfx_render_process_handler_on_process_message_received = CfxRenderProcessHandler.on_process_message_received;
-
-            var cfx_render_process_handler_set_callback_ptrs = (cfx_set_11_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_render_process_handler_set_callback_ptrs", typeof(cfx_set_11_callback_ptrs_delegate));
-            cfx_render_process_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_render_process_handler_on_render_thread_created),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_process_handler_on_web_kit_initialized),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_process_handler_on_browser_created),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_process_handler_on_browser_destroyed),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_process_handler_get_load_handler),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_process_handler_on_before_navigation),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_process_handler_on_context_created),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_process_handler_on_context_released),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_process_handler_on_uncaught_exception),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_process_handler_on_focused_node_changed),
-                Marshal.GetFunctionPointerForDelegate(cfx_render_process_handler_on_process_message_received)
-            );
+            cfx_render_process_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_render_process_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_request
@@ -1386,88 +1096,28 @@ namespace Chromium {
 
             cfx_request_context_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_request_context_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_request_context_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_request_context_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_request_context_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_request_context_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_request_context_handler_get_cookie_manager = CfxRequestContextHandler.get_cookie_manager;
-
-            var cfx_request_context_handler_set_callback_ptrs = (cfx_set_1_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_request_context_handler_set_callback_ptrs", typeof(cfx_set_1_callback_ptrs_delegate));
-            cfx_request_context_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_request_context_handler_get_cookie_manager)
-            );
+            cfx_request_context_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_request_context_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_request_handler
 
             cfx_request_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_request_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_request_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_request_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_request_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_request_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_request_handler_on_before_browse = CfxRequestHandler.on_before_browse;
-            cfx_request_handler_on_before_resource_load = CfxRequestHandler.on_before_resource_load;
-            cfx_request_handler_get_resource_handler = CfxRequestHandler.get_resource_handler;
-            cfx_request_handler_on_resource_redirect = CfxRequestHandler.on_resource_redirect;
-            cfx_request_handler_get_auth_credentials = CfxRequestHandler.get_auth_credentials;
-            cfx_request_handler_on_quota_request = CfxRequestHandler.on_quota_request;
-            cfx_request_handler_on_protocol_execution = CfxRequestHandler.on_protocol_execution;
-            cfx_request_handler_on_certificate_error = CfxRequestHandler.on_certificate_error;
-            cfx_request_handler_on_before_plugin_load = CfxRequestHandler.on_before_plugin_load;
-            cfx_request_handler_on_plugin_crashed = CfxRequestHandler.on_plugin_crashed;
-            cfx_request_handler_on_render_process_terminated = CfxRequestHandler.on_render_process_terminated;
-
-            var cfx_request_handler_set_callback_ptrs = (cfx_set_11_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_request_handler_set_callback_ptrs", typeof(cfx_set_11_callback_ptrs_delegate));
-            cfx_request_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_before_browse),
-                Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_before_resource_load),
-                Marshal.GetFunctionPointerForDelegate(cfx_request_handler_get_resource_handler),
-                Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_resource_redirect),
-                Marshal.GetFunctionPointerForDelegate(cfx_request_handler_get_auth_credentials),
-                Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_quota_request),
-                Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_protocol_execution),
-                Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_certificate_error),
-                Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_before_plugin_load),
-                Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_plugin_crashed),
-                Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_render_process_terminated)
-            );
+            cfx_request_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_request_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_resource_bundle_handler
 
             cfx_resource_bundle_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_resource_bundle_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_resource_bundle_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_resource_bundle_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_resource_bundle_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_resource_bundle_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_resource_bundle_handler_get_localized_string = CfxResourceBundleHandler.get_localized_string;
-            cfx_resource_bundle_handler_get_data_resource = CfxResourceBundleHandler.get_data_resource;
-
-            var cfx_resource_bundle_handler_set_callback_ptrs = (cfx_set_2_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_resource_bundle_handler_set_callback_ptrs", typeof(cfx_set_2_callback_ptrs_delegate));
-            cfx_resource_bundle_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_resource_bundle_handler_get_localized_string),
-                Marshal.GetFunctionPointerForDelegate(cfx_resource_bundle_handler_get_data_resource)
-            );
+            cfx_resource_bundle_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_resource_bundle_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_resource_handler
 
             cfx_resource_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_resource_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_resource_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_resource_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_resource_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_resource_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_resource_handler_process_request = CfxResourceHandler.process_request;
-            cfx_resource_handler_get_response_headers = CfxResourceHandler.get_response_headers;
-            cfx_resource_handler_read_response = CfxResourceHandler.read_response;
-            cfx_resource_handler_can_get_cookie = CfxResourceHandler.can_get_cookie;
-            cfx_resource_handler_can_set_cookie = CfxResourceHandler.can_set_cookie;
-            cfx_resource_handler_cancel = CfxResourceHandler.cancel;
-
-            var cfx_resource_handler_set_callback_ptrs = (cfx_set_6_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_resource_handler_set_callback_ptrs", typeof(cfx_set_6_callback_ptrs_delegate));
-            cfx_resource_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_resource_handler_process_request),
-                Marshal.GetFunctionPointerForDelegate(cfx_resource_handler_get_response_headers),
-                Marshal.GetFunctionPointerForDelegate(cfx_resource_handler_read_response),
-                Marshal.GetFunctionPointerForDelegate(cfx_resource_handler_can_get_cookie),
-                Marshal.GetFunctionPointerForDelegate(cfx_resource_handler_can_set_cookie),
-                Marshal.GetFunctionPointerForDelegate(cfx_resource_handler_cancel)
-            );
+            cfx_resource_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_resource_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_response
@@ -1614,28 +1264,14 @@ namespace Chromium {
 
             cfx_string_visitor_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_string_visitor_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_string_visitor_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_string_visitor_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_string_visitor_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_string_visitor_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_string_visitor_visit = CfxStringVisitor.visit;
-
-            var cfx_string_visitor_set_callback_ptrs = (cfx_set_1_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_string_visitor_set_callback_ptrs", typeof(cfx_set_1_callback_ptrs_delegate));
-            cfx_string_visitor_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_string_visitor_visit)
-            );
+            cfx_string_visitor_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_string_visitor_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_task
 
             cfx_task_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_task_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_task_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_task_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_task_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_task_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_task_execute = CfxTask.execute;
-
-            var cfx_task_set_callback_ptrs = (cfx_set_1_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_task_set_callback_ptrs", typeof(cfx_set_1_callback_ptrs_delegate));
-            cfx_task_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_task_execute)
-            );
+            cfx_task_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_task_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_task_runner
@@ -1716,38 +1352,14 @@ namespace Chromium {
 
             cfx_urlrequest_client_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_urlrequest_client_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_urlrequest_client_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_urlrequest_client_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_urlrequest_client_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_urlrequest_client_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_urlrequest_client_on_request_complete = CfxUrlRequestClient.on_request_complete;
-            cfx_urlrequest_client_on_upload_progress = CfxUrlRequestClient.on_upload_progress;
-            cfx_urlrequest_client_on_download_progress = CfxUrlRequestClient.on_download_progress;
-            cfx_urlrequest_client_on_download_data = CfxUrlRequestClient.on_download_data;
-            cfx_urlrequest_client_get_auth_credentials = CfxUrlRequestClient.get_auth_credentials;
-
-            var cfx_urlrequest_client_set_callback_ptrs = (cfx_set_5_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_urlrequest_client_set_callback_ptrs", typeof(cfx_set_5_callback_ptrs_delegate));
-            cfx_urlrequest_client_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_urlrequest_client_on_request_complete),
-                Marshal.GetFunctionPointerForDelegate(cfx_urlrequest_client_on_upload_progress),
-                Marshal.GetFunctionPointerForDelegate(cfx_urlrequest_client_on_download_progress),
-                Marshal.GetFunctionPointerForDelegate(cfx_urlrequest_client_on_download_data),
-                Marshal.GetFunctionPointerForDelegate(cfx_urlrequest_client_get_auth_credentials)
-            );
+            cfx_urlrequest_client_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_urlrequest_client_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_v8accessor
 
             cfx_v8accessor_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_v8accessor_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_v8accessor_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_v8accessor_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_v8accessor_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_v8accessor_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_v8accessor_get = CfxV8Accessor.get;
-            cfx_v8accessor_set = CfxV8Accessor.set;
-
-            var cfx_v8accessor_set_callback_ptrs = (cfx_set_2_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_v8accessor_set_callback_ptrs", typeof(cfx_set_2_callback_ptrs_delegate));
-            cfx_v8accessor_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_v8accessor_get),
-                Marshal.GetFunctionPointerForDelegate(cfx_v8accessor_set)
-            );
+            cfx_v8accessor_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_v8accessor_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_v8context
@@ -1783,14 +1395,7 @@ namespace Chromium {
 
             cfx_v8handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_v8handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_v8handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_v8handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_v8handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_v8handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_v8handler_execute = CfxV8Handler.execute;
-
-            var cfx_v8handler_set_callback_ptrs = (cfx_set_1_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_v8handler_set_callback_ptrs", typeof(cfx_set_1_callback_ptrs_delegate));
-            cfx_v8handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_v8handler_execute)
-            );
+            cfx_v8handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_v8handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_v8stack_frame
@@ -1886,14 +1491,7 @@ namespace Chromium {
 
             cfx_web_plugin_info_visitor_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_web_plugin_info_visitor_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_web_plugin_info_visitor_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_web_plugin_info_visitor_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_web_plugin_info_visitor_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_web_plugin_info_visitor_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_web_plugin_info_visitor_visit = CfxWebPluginInfoVisitor.visit;
-
-            var cfx_web_plugin_info_visitor_set_callback_ptrs = (cfx_set_1_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_web_plugin_info_visitor_set_callback_ptrs", typeof(cfx_set_1_callback_ptrs_delegate));
-            cfx_web_plugin_info_visitor_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_web_plugin_info_visitor_visit)
-            );
+            cfx_web_plugin_info_visitor_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_web_plugin_info_visitor_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_web_plugin_unstable_callback
@@ -1937,22 +1535,7 @@ namespace Chromium {
 
             cfx_write_handler_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_write_handler_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
             cfx_write_handler_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_write_handler_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
-            cfx_write_handler_activate_callback = (cfx_activate_callback_delegate)GetDelegate(libcfxPtr, "cfx_write_handler_activate_callback", typeof(cfx_activate_callback_delegate));
-
-            cfx_write_handler_write = CfxWriteHandler.write;
-            cfx_write_handler_seek = CfxWriteHandler.seek;
-            cfx_write_handler_tell = CfxWriteHandler.tell;
-            cfx_write_handler_flush = CfxWriteHandler.flush;
-            cfx_write_handler_may_block = CfxWriteHandler.may_block;
-
-            var cfx_write_handler_set_callback_ptrs = (cfx_set_5_callback_ptrs_delegate)GetDelegate(libcfxPtr, "cfx_write_handler_set_callback_ptrs", typeof(cfx_set_5_callback_ptrs_delegate));
-            cfx_write_handler_set_callback_ptrs(
-                Marshal.GetFunctionPointerForDelegate(cfx_write_handler_write),
-                Marshal.GetFunctionPointerForDelegate(cfx_write_handler_seek),
-                Marshal.GetFunctionPointerForDelegate(cfx_write_handler_tell),
-                Marshal.GetFunctionPointerForDelegate(cfx_write_handler_flush),
-                Marshal.GetFunctionPointerForDelegate(cfx_write_handler_may_block)
-            );
+            cfx_write_handler_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_write_handler_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_xml_reader

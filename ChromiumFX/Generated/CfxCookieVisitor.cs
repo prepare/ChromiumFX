@@ -53,6 +53,14 @@ namespace Chromium {
         }
 
 
+        private static object eventLock = new object();
+
+        // visit
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_cookie_visitor_visit_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr cookie, int count, int total, out int deleteCookie);
+        private static cfx_cookie_visitor_visit_delegate cfx_cookie_visitor_visit;
+        private static IntPtr cfx_cookie_visitor_visit_ptr;
+
         internal static void visit(IntPtr gcHandlePtr, out int __retval, IntPtr cookie, int count, int total, out int deleteCookie) {
             var self = (CfxCookieVisitor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -84,15 +92,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxCookieVisitorVisitEventHandler Visit {
             add {
-                if(m_Visit == null) {
-                    CfxApi.cfx_cookie_visitor_activate_callback(NativePtr, 0, 1);
+                lock(eventLock) {
+                    if(m_Visit == null) {
+                        if(cfx_cookie_visitor_visit == null) {
+                            cfx_cookie_visitor_visit = visit;
+                            cfx_cookie_visitor_visit_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_cookie_visitor_visit);
+                        }
+                        CfxApi.cfx_cookie_visitor_set_managed_callback(NativePtr, 0, cfx_cookie_visitor_visit_ptr);
+                    }
+                    m_Visit += value;
                 }
-                m_Visit += value;
             }
             remove {
-                m_Visit -= value;
-                if(m_Visit == null) {
-                    CfxApi.cfx_cookie_visitor_activate_callback(NativePtr, 0, 0);
+                lock(eventLock) {
+                    m_Visit -= value;
+                    if(m_Visit == null) {
+                        CfxApi.cfx_cookie_visitor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -102,7 +118,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_Visit != null) {
                 m_Visit = null;
-                CfxApi.cfx_cookie_visitor_activate_callback(NativePtr, 0, 0);
+                CfxApi.cfx_cookie_visitor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
