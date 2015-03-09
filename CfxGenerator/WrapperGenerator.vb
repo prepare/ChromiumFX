@@ -160,7 +160,7 @@ Public Class WrapperGenerator
         b.AppendLine()
 
         For Each f In decls.ExportFunctions
-            f.EmitNativeWrapperFunction(b)
+            f.EmitNativeFunction(b)
             b.AppendLine()
         Next
         b.AppendLine()
@@ -182,7 +182,7 @@ Public Class WrapperGenerator
             CodeSnippets.BeginExternC(b)
             b.AppendLine()
             For Each f In t.ExportFunctions
-                f.EmitNativeWrapperFunction(b)
+                f.EmitNativeFunction(b)
                 b.AppendLine()
             Next
             CodeSnippets.EndExternC(b)
@@ -208,7 +208,7 @@ Public Class WrapperGenerator
         b.BeginClass("CfxRuntime", "public partial")
         b.AppendLine()
         For Each f In decls.ExportFunctions
-            f.EmitWrapperFunction(b)
+            f.EmitPublicFunction(b)
             b.AppendLine()
         Next
         b.EndBlock()
@@ -225,8 +225,10 @@ Public Class WrapperGenerator
         b.AppendLine()
 
         For Each f In remoteDecls.ExportFunctions
-            f.EmitRemoteFunction(b)
-            b.AppendLine()
+            If Not f.PrivateWrapper Then
+                f.EmitRemoteFunction(b)
+                b.AppendLine()
+            End If
         Next
         b.EndBlock()
         b.EndBlock()
@@ -335,10 +337,12 @@ Public Class WrapperGenerator
         Dim b = New CodeBuilder
         b.BeginCfxNamespace(".Remote")
         For Each f In remoteDecls.ExportFunctions
-            b.BeginRemoteCallClass("CfxRuntime" & f.PublicName, False, callIds)
-            f.Signature.EmitRemoteCallClassBody(b)
-            b.EndBlock()
-            b.AppendLine()
+            If Not f.PrivateWrapper Then
+                b.BeginRemoteCallClass("CfxRuntime" & f.PublicName, False, callIds)
+                f.Signature.EmitRemoteCallClassBody(b)
+                b.EndBlock()
+                b.AppendLine()
+            End If
         Next
         b.EndBlock()
         fileManager.WriteFileIfContentChanged("CfxRuntimeRemoteCalls.cs", b.ToString())

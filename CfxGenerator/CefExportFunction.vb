@@ -87,14 +87,14 @@ Public Class CefExportFunction
         CodeSnippets.EmitPInvokeDelegate(b, CfxName, Signature)
     End Sub
 
-    Public Sub EmitNativeWrapperFunction(b As CodeBuilder)
+    Public Sub EmitNativeFunction(b As CodeBuilder)
         b.AppendComment(Me.ToString())
         b.BeginBlock(Signature.NativeExportSignature(CfxName))
         Signature.EmitNativeCall(b, Name)
         b.EndBlock()
     End Sub
 
-    Public Sub EmitWrapperFunction(b As CodeBuilder)
+    Public Sub EmitPublicFunction(b As CodeBuilder)
 
         b.AppendSummaryAndRemarks(Comments)
 
@@ -111,6 +111,7 @@ Public Class CefExportFunction
     End Sub
 
     Public Sub EmitRemoteFunction(b As CodeBuilder)
+
         b.AppendSummaryAndRemarks(Comments, True)
 
         If Parent Is Nothing Then
@@ -130,26 +131,6 @@ Public Class CefExportFunction
 
     End Sub
 
-    'Public Sub EmitProxyFunction(b As CodeBuilder)
-
-    '    b.AppendSummary(Comments)
-
-    '    If Parent Is Nothing Then
-    '        b.BeginFunction(PublicFunctionName, ReturnType.RemoteSymbol, Signature.RemoteSignature)
-    '        Signature.EmitProxyCall(b)
-    '    Else
-    '        Dim sig = Signature.RemoteSignature
-    '        If String.IsNullOrWhiteSpace(sig) Then
-    '            sig = "CfrRuntime remoteRuntime"
-    '        Else
-    '            sig = "CfrRuntime remoteRuntime, " & sig
-    '        End If
-    '        b.BeginFunction(PublicFunctionName, ReturnType.RemoteSymbol, sig, "public static")
-    '        Signature.EmitProxyCall(b)
-    '    End If
-    '    b.EndBlock()
-
-    'End Sub
 
     Public Overrides Function ToString() As String
         Return String.Format("CEF_EXPORT {1} {0}({2});", Name, ReturnType, Signature)
@@ -158,16 +139,6 @@ Public Class CefExportFunction
     Public ReadOnly Property CallType As CfxCallMode Implements ISignatureParent.CallMode
         Get
             Return CfxCallMode.FunctionCall
-        End Get
-    End Property
-
-    Public ReadOnly Property ProxyCallName As String Implements ISignatureParent.ProxyCallName
-        Get
-            If Parent IsNot Nothing Then
-                Return String.Format("{0}.{1}", Parent.ClassName, PublicName)
-            Else
-                Return String.Concat("CfxRuntime.", PublicName)
-            End If
         End Get
     End Property
 

@@ -246,7 +246,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
-        public static int ExecuteProcess(CfxApp application, IntPtr windowsSandboxInfo) {
+        private static int ExecuteProcessPrivate(CfxApp application, IntPtr windowsSandboxInfo) {
             return CfxApi.cfx_execute_process(CfxApp.Unwrap(application), windowsSandboxInfo);
         }
 
@@ -344,7 +344,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
-        public static bool Initialize(CfxSettings settings, CfxApp application, IntPtr windowsSandboxInfo) {
+        private static bool InitializePrivate(CfxSettings settings, CfxApp application, IntPtr windowsSandboxInfo) {
             return 0 != CfxApi.cfx_initialize(CfxSettings.Unwrap(settings), CfxApp.Unwrap(application), windowsSandboxInfo);
         }
 

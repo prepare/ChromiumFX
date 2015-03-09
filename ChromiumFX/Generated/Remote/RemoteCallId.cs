@@ -40,7 +40,6 @@ namespace Chromium.Remote {
         CfxRuntimeCreateUrlRenderProcessCall,
         CfxRuntimeCurrentlyOnRenderProcessCall,
         CfxRuntimeEndTracingRenderProcessCall,
-        CfxRuntimeExecuteProcessRenderProcessCall,
         CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall,
         CfxRuntimeGetGeolocationRenderProcessCall,
         CfxRuntimeGetMimeTypeRenderProcessCall,
@@ -583,6 +582,7 @@ namespace Chromium.Remote {
         CfrMarshalFreeHGlobalRenderProcessCall,
         CfrMarshalCopyToNativeRenderProcessCall,
         CfrMarshalCopyToManagedRenderProcessCall,
-        CfxBinaryValueCreateFromArrayRenderProcessCall
+        CfxBinaryValueCreateFromArrayRenderProcessCall,
+        CfxRuntimeExecuteProcessRenderProcessCall
     }
 }

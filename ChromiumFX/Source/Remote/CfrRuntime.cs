@@ -58,8 +58,14 @@ namespace Chromium.Remote {
         /// No sandbox info is provided.
         /// </summary>
         public int ExecuteProcess(CfrApp application) {
-            return ExecuteProcess(application, RemotePtr.Zero);
+            var call = new CfxRuntimeExecuteProcessRenderProcessCall();
+            call.application = CfrObject.Unwrap(application);
+            call.Execute(connection);
+            return call.__retval;
         }
+
+
+
 
     }
 }

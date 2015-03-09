@@ -151,30 +151,6 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// This function should be called from the application entry point function to
-        /// execute a secondary process. It can be used to run secondary processes from
-        /// the browser client executable (default behavior) or from a separate
-        /// executable specified by the CfrSettings.BrowserSubprocessPath value. If
-        /// called for the browser process (identified by no "type" command-line value)
-        /// it will return immediately with a value of -1. If called for a recognized
-        /// secondary process it will block until the process should exit and then return
-        /// the process exit code. The |application| parameter may be NULL. The
-        /// |windowsSandboxInfo| parameter is only used on Windows and may be NULL (see
-        /// cef_sandbox_win.h for details).
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
-        /// </remarks>
-        public int ExecuteProcess(CfrApp application, RemotePtr windowsSandboxInfo) {
-            var call = new CfxRuntimeExecuteProcessRenderProcessCall();
-            call.application = CfrObject.Unwrap(application);
-            call.windowsSandboxInfo = windowsSandboxInfo.ptr;
-            call.Execute(connection);
-            return call.__retval;
-        }
-
-        /// <summary>
         /// Get the extensions associated with the given mime type. This should be passed
         /// in lower case. There could be multiple extensions for a given mime type, like
         /// "html,htm" for "text/html", or "txt,text,html,..." for "text/*". Any existing

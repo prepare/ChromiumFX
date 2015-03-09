@@ -236,7 +236,7 @@ Public Class CfxClassBuilder
     Private Sub EmitNativeCallStruct(b As CodeBuilder)
 
         For Each f In ExportFunctions
-            f.EmitNativeWrapperFunction(b)
+            f.EmitNativeFunction(b)
         Next
 
         For Each sm In StructMembers
@@ -573,7 +573,7 @@ Public Class CfxClassBuilder
 
 
         For Each f In ExportFunctions
-            f.EmitWrapperFunction(b)
+            f.EmitPublicFunction(b)
             b.AppendLine()
         Next
 
@@ -953,10 +953,12 @@ Public Class CfxClassBuilder
 
             For Each f In ExportFunctions
                 If Not GeneratorConfig.IsBrowserProcessOnly(f.Name) Then
-                    b.BeginRemoteCallClass(ClassName & f.PublicName, False, callIds)
-                    f.Signature.EmitRemoteCallClassBody(b)
-                    b.EndBlock()
-                    b.AppendLine()
+                    If Not f.PrivateWrapper Then
+                        b.BeginRemoteCallClass(ClassName & f.PublicName, False, callIds)
+                        f.Signature.EmitRemoteCallClassBody(b)
+                        b.EndBlock()
+                        b.AppendLine()
+                    End If
                 End If
             Next
 
@@ -1018,10 +1020,10 @@ Public Class CfxClassBuilder
         End If
 
         For Each f In ExportFunctions
-            If Not GeneratorConfig.IsBrowserProcessOnly(f.Name) Then
+            If Not GeneratorConfig.IsBrowserProcessOnly(f.Name) AndAlso Not f.PrivateWrapper Then
                 f.EmitRemoteFunction(b)
+                b.AppendLine()
             End If
-            b.AppendLine()
         Next
 
         If Category = StructCategory.ApiCallbacks Then

@@ -517,16 +517,6 @@ Public Class CefCallbackType
         End Get
     End Property
 
-    Public ReadOnly Property ProxyCallName As String Implements ISignatureParent.ProxyCallName
-        Get
-            If m_callMode = Global.CfxCallMode.FunctionCall Then
-                Return String.Format("(({0})localObject).{1}", Parent.ClassName, PublicName)
-            Else
-                Return String.Format("(({0})localObject).{1}", Parent.ClassName, PropertyName)
-            End If
-        End Get
-    End Property
-
     Public ReadOnly Property CefName As String Implements ISignatureParent.CefName
         Get
             Return Parent.Name & "::" & Name
