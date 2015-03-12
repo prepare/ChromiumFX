@@ -36,10 +36,46 @@ using System.Linq;
 using System.Text;
 
 namespace Chromium.Remote {
+    /// <summary>
+    /// Marshals a call from the browser process to the render process.
+    /// </summary>
     abstract class RenderProcessCall : RemoteCall {
 
         internal RenderProcessCall(RemoteCallId callId) : base(callId) { }
         internal RenderProcessCall(RemoteCallId callId, bool returnImmediately) : base(callId, returnImmediately) { }
 
     }
+
+    // custom calls
+
+    internal class CfxRuntimeExecuteProcessRenderProcessCall : RenderProcessCall {
+
+        internal CfxRuntimeExecuteProcessRenderProcessCall()
+            : base(RemoteCallId.CfxRuntimeExecuteProcessRenderProcessCall) { }
+
+        internal ulong application;
+        internal int __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(application);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out application);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            __retval = CfxRuntime.ExecuteProcess((CfxApp)RemoteProxy.Unwrap(application));
+        }
+    }
+
+
 }

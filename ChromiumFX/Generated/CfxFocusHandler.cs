@@ -53,6 +53,14 @@ namespace Chromium {
         }
 
 
+        private static object eventLock = new object();
+
+        // on_take_focus
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_focus_handler_on_take_focus_delegate(IntPtr gcHandlePtr, IntPtr browser, int next);
+        private static cfx_focus_handler_on_take_focus_delegate cfx_focus_handler_on_take_focus;
+        private static IntPtr cfx_focus_handler_on_take_focus_ptr;
+
         internal static void on_take_focus(IntPtr gcHandlePtr, IntPtr browser, int next) {
             var self = (CfxFocusHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
@@ -64,6 +72,12 @@ namespace Chromium {
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
+
+        // on_set_focus
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_focus_handler_on_set_focus_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxFocusSource source);
+        private static cfx_focus_handler_on_set_focus_delegate cfx_focus_handler_on_set_focus;
+        private static IntPtr cfx_focus_handler_on_set_focus_ptr;
 
         internal static void on_set_focus(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxFocusSource source) {
             var self = (CfxFocusHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -78,6 +92,12 @@ namespace Chromium {
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             __retval = e.m_returnValue ? 1 : 0;
         }
+
+        // on_got_focus
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_focus_handler_on_got_focus_delegate(IntPtr gcHandlePtr, IntPtr browser);
+        private static cfx_focus_handler_on_got_focus_delegate cfx_focus_handler_on_got_focus;
+        private static IntPtr cfx_focus_handler_on_got_focus_ptr;
 
         internal static void on_got_focus(IntPtr gcHandlePtr, IntPtr browser) {
             var self = (CfxFocusHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -106,15 +126,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnTakeFocusEventHandler OnTakeFocus {
             add {
-                if(m_OnTakeFocus == null) {
-                    CfxApi.cfx_focus_handler_activate_callback(NativePtr, 0, 1);
+                lock(eventLock) {
+                    if(m_OnTakeFocus == null) {
+                        if(cfx_focus_handler_on_take_focus == null) {
+                            cfx_focus_handler_on_take_focus = on_take_focus;
+                            cfx_focus_handler_on_take_focus_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_focus_handler_on_take_focus);
+                        }
+                        CfxApi.cfx_focus_handler_set_managed_callback(NativePtr, 0, cfx_focus_handler_on_take_focus_ptr);
+                    }
+                    m_OnTakeFocus += value;
                 }
-                m_OnTakeFocus += value;
             }
             remove {
-                m_OnTakeFocus -= value;
-                if(m_OnTakeFocus == null) {
-                    CfxApi.cfx_focus_handler_activate_callback(NativePtr, 0, 0);
+                lock(eventLock) {
+                    m_OnTakeFocus -= value;
+                    if(m_OnTakeFocus == null) {
+                        CfxApi.cfx_focus_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -132,15 +160,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnSetFocusEventHandler OnSetFocus {
             add {
-                if(m_OnSetFocus == null) {
-                    CfxApi.cfx_focus_handler_activate_callback(NativePtr, 1, 1);
+                lock(eventLock) {
+                    if(m_OnSetFocus == null) {
+                        if(cfx_focus_handler_on_set_focus == null) {
+                            cfx_focus_handler_on_set_focus = on_set_focus;
+                            cfx_focus_handler_on_set_focus_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_focus_handler_on_set_focus);
+                        }
+                        CfxApi.cfx_focus_handler_set_managed_callback(NativePtr, 1, cfx_focus_handler_on_set_focus_ptr);
+                    }
+                    m_OnSetFocus += value;
                 }
-                m_OnSetFocus += value;
             }
             remove {
-                m_OnSetFocus -= value;
-                if(m_OnSetFocus == null) {
-                    CfxApi.cfx_focus_handler_activate_callback(NativePtr, 1, 0);
+                lock(eventLock) {
+                    m_OnSetFocus -= value;
+                    if(m_OnSetFocus == null) {
+                        CfxApi.cfx_focus_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -156,15 +192,23 @@ namespace Chromium {
         /// </remarks>
         public event CfxOnGotFocusEventHandler OnGotFocus {
             add {
-                if(m_OnGotFocus == null) {
-                    CfxApi.cfx_focus_handler_activate_callback(NativePtr, 2, 1);
+                lock(eventLock) {
+                    if(m_OnGotFocus == null) {
+                        if(cfx_focus_handler_on_got_focus == null) {
+                            cfx_focus_handler_on_got_focus = on_got_focus;
+                            cfx_focus_handler_on_got_focus_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_focus_handler_on_got_focus);
+                        }
+                        CfxApi.cfx_focus_handler_set_managed_callback(NativePtr, 2, cfx_focus_handler_on_got_focus_ptr);
+                    }
+                    m_OnGotFocus += value;
                 }
-                m_OnGotFocus += value;
             }
             remove {
-                m_OnGotFocus -= value;
-                if(m_OnGotFocus == null) {
-                    CfxApi.cfx_focus_handler_activate_callback(NativePtr, 2, 0);
+                lock(eventLock) {
+                    m_OnGotFocus -= value;
+                    if(m_OnGotFocus == null) {
+                        CfxApi.cfx_focus_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                    }
                 }
             }
         }
@@ -174,15 +218,15 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnTakeFocus != null) {
                 m_OnTakeFocus = null;
-                CfxApi.cfx_focus_handler_activate_callback(NativePtr, 0, 0);
+                CfxApi.cfx_focus_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_OnSetFocus != null) {
                 m_OnSetFocus = null;
-                CfxApi.cfx_focus_handler_activate_callback(NativePtr, 1, 0);
+                CfxApi.cfx_focus_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
             if(m_OnGotFocus != null) {
                 m_OnGotFocus = null;
-                CfxApi.cfx_focus_handler_activate_callback(NativePtr, 2, 0);
+                CfxApi.cfx_focus_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

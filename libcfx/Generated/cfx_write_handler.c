@@ -127,31 +127,34 @@ int CEF_CALLBACK cfx_write_handler_may_block(cef_write_handler_t* self) {
 }
 
 
-CFX_EXPORT void cfx_write_handler_activate_callback(cef_write_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_write_handler_set_managed_callback(cef_write_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->write = is_active ? cfx_write_handler_write : 0;
+        if(callback && !cfx_write_handler_write_callback)
+            cfx_write_handler_write_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, const void* ptr, int size, int n)) callback;
+        self->write = callback ? cfx_write_handler_write : 0;
         break;
     case 1:
-        self->seek = is_active ? cfx_write_handler_seek : 0;
+        if(callback && !cfx_write_handler_seek_callback)
+            cfx_write_handler_seek_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int64 offset, int whence)) callback;
+        self->seek = callback ? cfx_write_handler_seek : 0;
         break;
     case 2:
-        self->tell = is_active ? cfx_write_handler_tell : 0;
+        if(callback && !cfx_write_handler_tell_callback)
+            cfx_write_handler_tell_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int64* __retval)) callback;
+        self->tell = callback ? cfx_write_handler_tell : 0;
         break;
     case 3:
-        self->flush = is_active ? cfx_write_handler_flush : 0;
+        if(callback && !cfx_write_handler_flush_callback)
+            cfx_write_handler_flush_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval)) callback;
+        self->flush = callback ? cfx_write_handler_flush : 0;
         break;
     case 4:
-        self->may_block = is_active ? cfx_write_handler_may_block : 0;
+        if(callback && !cfx_write_handler_may_block_callback)
+            cfx_write_handler_may_block_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval)) callback;
+        self->may_block = callback ? cfx_write_handler_may_block : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_write_handler_set_callback_ptrs(void *cb_0, void *cb_1, void *cb_2, void *cb_3, void *cb_4) {
-    cfx_write_handler_write_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, const void* ptr, int size, int n)) cb_0;
-    cfx_write_handler_seek_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int64 offset, int whence)) cb_1;
-    cfx_write_handler_tell_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int64* __retval)) cb_2;
-    cfx_write_handler_flush_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval)) cb_3;
-    cfx_write_handler_may_block_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval)) cb_4;
 }
 
 #ifdef __cplusplus

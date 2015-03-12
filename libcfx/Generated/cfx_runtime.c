@@ -55,11 +55,21 @@ CFX_EXPORT void cfx_add_web_plugin_path(char16 *path_str, int path_length) {
     cef_add_web_plugin_path(&path);
 }
 
+// CEF_EXPORT char* cef_api_hash(int entry);
+CFX_EXPORT const char* cfx_api_hash(int entry) {
+    return cef_api_hash(entry);
+}
+
 // CEF_EXPORT int cef_begin_tracing(const cef_string_t* categories, cef_completion_callback_t* callback);
 CFX_EXPORT int cfx_begin_tracing(char16 *categories_str, int categories_length, cef_completion_callback_t* callback) {
     cef_string_t categories = { categories_str, categories_length, 0 };
     if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
     return cef_begin_tracing(&categories, callback);
+}
+
+// CEF_EXPORT int cef_build_revision();
+CFX_EXPORT int cfx_build_revision() {
+    return cef_build_revision();
 }
 
 // CEF_EXPORT int cef_clear_cross_origin_whitelist();
@@ -244,6 +254,11 @@ CFX_EXPORT void cfx_shutdown() {
 CFX_EXPORT void cfx_unregister_internal_web_plugin(char16 *path_str, int path_length) {
     cef_string_t path = { path_str, path_length, 0 };
     cef_unregister_internal_web_plugin(&path);
+}
+
+// CEF_EXPORT int cef_version_info(int entry);
+CFX_EXPORT int cfx_version_info(int entry) {
+    return cef_version_info(entry);
 }
 
 // CEF_EXPORT void cef_visit_web_plugin_info(cef_web_plugin_info_visitor_t* visitor);

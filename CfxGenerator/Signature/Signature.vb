@@ -59,6 +59,7 @@ Public Class Signature
     Public ReadOnly Parent As ISignatureParent
     Public ReadOnly Arguments As Argument()
     Public ReadOnly ReturnType As ApiType
+    Public ReadOnly ConstReturnValue As Boolean
 
     Protected args As New ArgList
 
@@ -73,7 +74,7 @@ Public Class Signature
 
         Me.Arguments = args.ToArray()
         Me.ReturnType = api.GetApiType(sd.ReturnType, False)
-
+        Me.ConstReturnValue = sd.ConstReturnValue
         Dim comments = parent.Comments
 
         If Me.ReturnType.Name.StartsWith("int") Then
@@ -198,12 +199,18 @@ Public Class Signature
         End Get
     End Property
 
-    Public Overridable ReadOnly Property NativeExportSignature(functionName As String) As String
+    Public Overridable ReadOnly Property NativeSignature(functionName As String) As String
         Get
             For i = 0 To Arguments.Length - 1
                 args.Add(Arguments(i).NativeCallSignature)
             Next
-            Return String.Format("CFX_EXPORT {0} {1}({2})", ReturnType.NativeSymbol, functionName, args.Join())
+
+            Dim retType = ReturnType.NativeSymbol
+            If ConstReturnValue Then
+                retType = "const " & retType
+            End If
+
+            Return String.Format("CFX_EXPORT {0} {1}({2})", retType, functionName, args.Join())
         End Get
     End Property
 

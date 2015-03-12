@@ -101,23 +101,24 @@ void CEF_CALLBACK cfx_focus_handler_on_got_focus(cef_focus_handler_t* self, cef_
 }
 
 
-CFX_EXPORT void cfx_focus_handler_activate_callback(cef_focus_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_focus_handler_set_managed_callback(cef_focus_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_take_focus = is_active ? cfx_focus_handler_on_take_focus : 0;
+        if(callback && !cfx_focus_handler_on_take_focus_callback)
+            cfx_focus_handler_on_take_focus_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int next)) callback;
+        self->on_take_focus = callback ? cfx_focus_handler_on_take_focus : 0;
         break;
     case 1:
-        self->on_set_focus = is_active ? cfx_focus_handler_on_set_focus : 0;
+        if(callback && !cfx_focus_handler_on_set_focus_callback)
+            cfx_focus_handler_on_set_focus_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_focus_source_t source)) callback;
+        self->on_set_focus = callback ? cfx_focus_handler_on_set_focus : 0;
         break;
     case 2:
-        self->on_got_focus = is_active ? cfx_focus_handler_on_got_focus : 0;
+        if(callback && !cfx_focus_handler_on_got_focus_callback)
+            cfx_focus_handler_on_got_focus_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) callback;
+        self->on_got_focus = callback ? cfx_focus_handler_on_got_focus : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_focus_handler_set_callback_ptrs(void *cb_0, void *cb_1, void *cb_2) {
-    cfx_focus_handler_on_take_focus_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int next)) cb_0;
-    cfx_focus_handler_on_set_focus_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_focus_source_t source)) cb_1;
-    cfx_focus_handler_on_got_focus_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) cb_2;
 }
 
 #ifdef __cplusplus

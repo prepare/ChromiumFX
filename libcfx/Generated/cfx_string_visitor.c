@@ -81,15 +81,14 @@ void CEF_CALLBACK cfx_string_visitor_visit(cef_string_visitor_t* self, const cef
 }
 
 
-CFX_EXPORT void cfx_string_visitor_activate_callback(cef_string_visitor_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_string_visitor_set_managed_callback(cef_string_visitor_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->visit = is_active ? cfx_string_visitor_visit : 0;
+        if(callback && !cfx_string_visitor_visit_callback)
+            cfx_string_visitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, char16 *string_str, int string_length)) callback;
+        self->visit = callback ? cfx_string_visitor_visit : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_string_visitor_set_callback_ptrs(void *cb_0) {
-    cfx_string_visitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, char16 *string_str, int string_length)) cb_0;
 }
 
 #ifdef __cplusplus

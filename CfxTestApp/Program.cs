@@ -40,6 +40,15 @@ using System.Diagnostics;
 
 using Chromium.WebBrowser.Event;
 
+namespace Chromium {
+    internal class SandboxStarter {
+        static int SandboxMain() {
+            CfxTestApplication.Program.Main();
+            return 0;
+        }
+    }
+}
+
 namespace CfxTestApplication {
 
     public class Program {
@@ -52,7 +61,8 @@ namespace CfxTestApplication {
             Environment.CurrentDirectory = System.IO.Path.Combine(assemblyDir, @"..\..\");
             
 //#if DEBUG
-//            CfxRuntime.LoadLibraries(@"cef\Debug");
+//            //CfxRuntime.LoadLibraries(@"cef\Debug");
+//            CfxRuntime.LoadLibraries();
 //#else
             CfxRuntime.LoadLibraries(@"cef\Release");
 //#endif

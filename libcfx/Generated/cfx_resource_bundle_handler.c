@@ -100,19 +100,19 @@ int CEF_CALLBACK cfx_resource_bundle_handler_get_data_resource(cef_resource_bund
 }
 
 
-CFX_EXPORT void cfx_resource_bundle_handler_activate_callback(cef_resource_bundle_handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_resource_bundle_handler_set_managed_callback(cef_resource_bundle_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->get_localized_string = is_active ? cfx_resource_bundle_handler_get_localized_string : 0;
+        if(callback && !cfx_resource_bundle_handler_get_localized_string_callback)
+            cfx_resource_bundle_handler_get_localized_string_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int message_id, char16 **string_str, int *string_length)) callback;
+        self->get_localized_string = callback ? cfx_resource_bundle_handler_get_localized_string : 0;
         break;
     case 1:
-        self->get_data_resource = is_active ? cfx_resource_bundle_handler_get_data_resource : 0;
+        if(callback && !cfx_resource_bundle_handler_get_data_resource_callback)
+            cfx_resource_bundle_handler_get_data_resource_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int resource_id, void** data, size_t* data_size)) callback;
+        self->get_data_resource = callback ? cfx_resource_bundle_handler_get_data_resource : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_resource_bundle_handler_set_callback_ptrs(void *cb_0, void *cb_1) {
-    cfx_resource_bundle_handler_get_localized_string_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int message_id, char16 **string_str, int *string_length)) cb_0;
-    cfx_resource_bundle_handler_get_data_resource_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int resource_id, void** data, size_t* data_size)) cb_1;
 }
 
 #ifdef __cplusplus

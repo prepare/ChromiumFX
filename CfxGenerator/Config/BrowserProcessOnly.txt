@@ -19,6 +19,9 @@ cef_run_message_loop
 cef_shutdown
 cef_unregister_internal_web_plugin
 cef_visit_web_plugin_info
+cef_build_revision
+cef_version_info
+cef_api_hash
 cef_app::get_browser_process_handler
 cef_browser::get_host
 cef_frame::view_source

@@ -83,7 +83,7 @@ namespace Chromium {
         /// No sandbox info is provided.
         /// </summary>
         public static int ExecuteProcess(CfxApp application) {
-            return ExecuteProcess(application, IntPtr.Zero);
+            return ExecuteProcessPrivate(application, IntPtr.Zero);
         }
 
         /// <summary>
@@ -94,7 +94,15 @@ namespace Chromium {
         /// No sandbox info is provided.
         /// </summary>
         public static bool Initialize(CfxSettings settings, CfxApp application) {
-            return Initialize(settings, application, IntPtr.Zero);
+            return InitializePrivate(settings, application, IntPtr.Zero);
+        }
+
+        public static string GetCefVersion() {
+                return String.Format("{0}.{1}.{2}", VersionInfo(0), VersionInfo(4), BuildRevision());
+        }
+
+        public static string GetChromeVersion() {
+            return String.Format("{0}.{1}.{2}.{3}", VersionInfo(2), VersionInfo(3), VersionInfo(4), VersionInfo(5));
         }
 
         /// <summary>

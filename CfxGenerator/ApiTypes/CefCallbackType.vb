@@ -429,17 +429,23 @@ Public Class CefCallbackType
         b.AppendSummaryAndRemarks(comments, False, True)
         b.BeginBlock("public event {0} {1}", EventHandlerName, CSharp.Escape(PublicName))
         b.BeginBlock("add")
+        b.BeginBlock("lock(eventLock)")
         b.BeginBlock("if(m_{0} == null)", PublicName)
-        b.AppendLine("CfxApi.{0}_activate_callback(NativePtr, {1}, 1);", Parent.CfxName, cbIndex)
+        b.BeginBlock("if({0}_{1} == null)", Parent.CfxName, Name)
+        b.AppendLine("{0}_{1} = {1};", Parent.CfxName, Name)
+        b.AppendLine("{0}_{1}_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate({0}_{1});", Parent.CfxName, Name)
         b.EndBlock()
-        'b.AppendLine("m_{0} = ({1})System.Delegate.Combine(m_{0}, value);", PublicName, EventHandlerName)
+        b.AppendLine("CfxApi.{0}_set_managed_callback(NativePtr, {1}, {0}_{2}_ptr);", Parent.CfxName, cbIndex, Name)
+        b.EndBlock()
         b.AppendLine("m_{0} += value;", PublicName)
         b.EndBlock()
+        b.EndBlock()
         b.BeginBlock("remove")
-        'b.AppendLine("m_{0} = ({1})System.Delegate.Remove(m_{0}, value);", PublicName, EventHandlerName)
+        b.BeginBlock("lock(eventLock)")
         b.AppendLine("m_{0} -= value;", PublicName)
         b.BeginBlock("if(m_{0} == null)", PublicName)
-        b.AppendLine("CfxApi.{0}_activate_callback(NativePtr, {1}, 0);", Parent.CfxName, cbIndex)
+        b.AppendLine("CfxApi.{0}_set_managed_callback(NativePtr, {1}, IntPtr.Zero);", Parent.CfxName, cbIndex)
+        b.EndBlock()
         b.EndBlock()
         b.EndBlock()
         b.EndBlock()
@@ -514,16 +520,6 @@ Public Class CefCallbackType
     Public ReadOnly Property CallMode As CfxCallMode Implements ISignatureParent.CallMode
         Get
             Return Me.m_callMode
-        End Get
-    End Property
-
-    Public ReadOnly Property ProxyCallName As String Implements ISignatureParent.ProxyCallName
-        Get
-            If m_callMode = Global.CfxCallMode.FunctionCall Then
-                Return String.Format("(({0})localObject).{1}", Parent.ClassName, PublicName)
-            Else
-                Return String.Format("(({0})localObject).{1}", Parent.ClassName, PropertyName)
-            End If
         End Get
     End Property
 

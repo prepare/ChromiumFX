@@ -90,15 +90,14 @@ int CEF_CALLBACK cfx_v8handler_execute(cef_v8handler_t* self, const cef_string_t
 }
 
 
-CFX_EXPORT void cfx_v8handler_activate_callback(cef_v8handler_t* self, int index, int is_active) {
+CFX_EXPORT void cfx_v8handler_set_managed_callback(cef_v8handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->execute = is_active ? cfx_v8handler_execute : 0;
+        if(callback && !cfx_v8handler_execute_callback)
+            cfx_v8handler_execute_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, int argumentsCount, cef_v8value_t* const* arguments, cef_v8value_t** retval, char16 **exception_str, int *exception_length)) callback;
+        self->execute = callback ? cfx_v8handler_execute : 0;
         break;
     }
-}
-CFX_EXPORT void cfx_v8handler_set_callback_ptrs(void *cb_0) {
-    cfx_v8handler_execute_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, int argumentsCount, cef_v8value_t* const* arguments, cef_v8value_t** retval, char16 **exception_str, int *exception_length)) cb_0;
 }
 
 #ifdef __cplusplus

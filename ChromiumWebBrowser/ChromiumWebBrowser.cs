@@ -637,6 +637,10 @@ namespace Chromium.WebBrowser {
         /// browser will be created before the old browser is destroyed.
         /// The event is executed on the thread that owns this browser control's 
         /// underlying window handle, preserving affinity to the render thread.
+        /// 
+        /// Applications may keep a reference to the CfrBrowser object outside the scope 
+        /// of this event, but you have to be aware that those objects become invalid as soon
+        /// as the framework swaps render processes and/or recreates browsers.
         /// </summary>
         public event RemoteBrowserCreatedEventHandler RemoteBrowserCreated;
 

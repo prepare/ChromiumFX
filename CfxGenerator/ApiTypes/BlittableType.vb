@@ -54,6 +54,27 @@ Public Class BlittableType
         End Get
     End Property
 
+    Public Overrides ReadOnly Property PInvokeSymbol As String
+        Get
+            Return PInvokeType
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property PublicSymbol As String
+        Get
+            Select Case Name
+                Case "bool", "BOOL"
+                    Return "bool"
+                Case "void"
+                    Return String.Empty
+                Case "char*"
+                    Return "string"
+                Case Else
+                    Return MyBase.PublicSymbol
+            End Select
+        End Get
+    End Property
+
     Public Overrides ReadOnly Property NativeWrapExpression(var As String) As String
         Get
             Select Case Name
@@ -99,31 +120,13 @@ Public Class BlittableType
             Select Case Name
                 Case "bool", "BOOL"
                     Return String.Format("0 != {0}", var)
+                Case "char*"
+                    Return String.Format("System.Runtime.InteropServices.Marshal.PtrToStringAnsi({0})", var)
                 Case Else
                     Return MyBase.PublicWrapExpression(var)
             End Select
         End Get
     End Property
-
-    Public Overrides ReadOnly Property PublicSymbol As String
-        Get
-            Select Case Name
-                Case "bool", "BOOL"
-                    Return "bool"
-                Case "void"
-                    Return String.Empty
-                Case Else
-                    Return MyBase.PublicSymbol
-            End Select
-        End Get
-    End Property
-
-    Public Overrides ReadOnly Property PInvokeSymbol As String
-        Get
-            Return PInvokeType
-        End Get
-    End Property
-
 
     Public Overrides ReadOnly Property IsBlittableType As Boolean
         Get
