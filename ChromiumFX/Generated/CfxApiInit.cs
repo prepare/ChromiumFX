@@ -42,7 +42,9 @@ namespace Chromium {
             cfx_add_cross_origin_whitelist_entry = (cfx_add_cross_origin_whitelist_entry_delegate)GetDelegate(libcfxPtr, "cfx_add_cross_origin_whitelist_entry", typeof(cfx_add_cross_origin_whitelist_entry_delegate));
             cfx_add_web_plugin_directory = (cfx_add_web_plugin_directory_delegate)GetDelegate(libcfxPtr, "cfx_add_web_plugin_directory", typeof(cfx_add_web_plugin_directory_delegate));
             cfx_add_web_plugin_path = (cfx_add_web_plugin_path_delegate)GetDelegate(libcfxPtr, "cfx_add_web_plugin_path", typeof(cfx_add_web_plugin_path_delegate));
+            cfx_api_hash = (cfx_api_hash_delegate)GetDelegate(libcfxPtr, "cfx_api_hash", typeof(cfx_api_hash_delegate));
             cfx_begin_tracing = (cfx_begin_tracing_delegate)GetDelegate(libcfxPtr, "cfx_begin_tracing", typeof(cfx_begin_tracing_delegate));
+            cfx_build_revision = (cfx_build_revision_delegate)GetDelegate(libcfxPtr, "cfx_build_revision", typeof(cfx_build_revision_delegate));
             cfx_clear_cross_origin_whitelist = (cfx_clear_cross_origin_whitelist_delegate)GetDelegate(libcfxPtr, "cfx_clear_cross_origin_whitelist", typeof(cfx_clear_cross_origin_whitelist_delegate));
             cfx_clear_scheme_handler_factories = (cfx_clear_scheme_handler_factories_delegate)GetDelegate(libcfxPtr, "cfx_clear_scheme_handler_factories", typeof(cfx_clear_scheme_handler_factories_delegate));
             cfx_create_url = (cfx_create_url_delegate)GetDelegate(libcfxPtr, "cfx_create_url", typeof(cfx_create_url_delegate));
@@ -73,6 +75,7 @@ namespace Chromium {
             cfx_set_osmodal_loop = (cfx_set_osmodal_loop_delegate)GetDelegate(libcfxPtr, "cfx_set_osmodal_loop", typeof(cfx_set_osmodal_loop_delegate));
             cfx_shutdown = (cfx_shutdown_delegate)GetDelegate(libcfxPtr, "cfx_shutdown", typeof(cfx_shutdown_delegate));
             cfx_unregister_internal_web_plugin = (cfx_unregister_internal_web_plugin_delegate)GetDelegate(libcfxPtr, "cfx_unregister_internal_web_plugin", typeof(cfx_unregister_internal_web_plugin_delegate));
+            cfx_version_info = (cfx_version_info_delegate)GetDelegate(libcfxPtr, "cfx_version_info", typeof(cfx_version_info_delegate));
             cfx_visit_web_plugin_info = (cfx_visit_web_plugin_info_delegate)GetDelegate(libcfxPtr, "cfx_visit_web_plugin_info", typeof(cfx_visit_web_plugin_info_delegate));
             cfx_string_list_alloc = (cfx_string_list_alloc_delegate)GetDelegate(libcfxPtr, "cfx_string_list_alloc", typeof(cfx_string_list_alloc_delegate));
             cfx_string_list_size = (cfx_string_list_size_delegate)GetDelegate(libcfxPtr, "cfx_string_list_size", typeof(cfx_string_list_size_delegate));

@@ -89,7 +89,7 @@ Public Class CefExportFunction
 
     Public Sub EmitNativeFunction(b As CodeBuilder)
         b.AppendComment(Me.ToString())
-        b.BeginBlock(Signature.NativeExportSignature(CfxName))
+        b.BeginBlock(Signature.NativeSignature(CfxName))
         Signature.EmitNativeCall(b, Name)
         b.EndBlock()
     End Sub

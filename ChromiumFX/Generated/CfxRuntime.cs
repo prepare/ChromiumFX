@@ -113,6 +113,21 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Returns CEF API hashes for the libcef library. The returned string is owned
+        /// by the library and should not be freed. The |entry| parameter describes which
+        /// hash value will be returned:
+        /// 0 - CEF_API_HASH_PLATFORM
+        /// 1 - CEF_API_HASH_UNIVERSAL
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/cef_version.h">cef/include/cef_version.h</see>.
+        /// </remarks>
+        public static string ApiHash(int entry) {
+            return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(CfxApi.cfx_api_hash(entry));
+        }
+
+        /// <summary>
         /// Start tracing events on all processes. Tracing is initialized asynchronously
         /// and |callback| will be executed on the UI thread after initialization is
         /// complete.
@@ -134,6 +149,17 @@ namespace Chromium {
             var __retval = CfxApi.cfx_begin_tracing(categories_pinned.Obj.PinnedPtr, categories_pinned.Length, CfxCompletionCallback.Unwrap(callback));
             categories_pinned.Obj.Free();
             return 0 != __retval;
+        }
+
+        /// <summary>
+        /// Returns the CEF build revision for the libcef library.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/cef_version.h">cef/include/cef_version.h</see>.
+        /// </remarks>
+        public static int BuildRevision() {
+            return CfxApi.cfx_build_revision();
         }
 
         /// <summary>
@@ -652,6 +678,24 @@ namespace Chromium {
             var path_pinned = new PinnedString(path);
             CfxApi.cfx_unregister_internal_web_plugin(path_pinned.Obj.PinnedPtr, path_pinned.Length);
             path_pinned.Obj.Free();
+        }
+
+        /// <summary>
+        /// Returns CEF version information for the libcef library. The |entry|
+        /// parameter describes which version component will be returned:
+        /// 0 - CEF_VERSION_MAJOR
+        /// 1 - CEF_REVISION
+        /// 2 - CHROME_VERSION_MAJOR
+        /// 3 - CHROME_VERSION_MINOR
+        /// 4 - CHROME_VERSION_BUILD
+        /// 5 - CHROME_VERSION_PATCH
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/cef_version.h">cef/include/cef_version.h</see>.
+        /// </remarks>
+        public static int VersionInfo(int entry) {
+            return CfxApi.cfx_version_info(entry);
         }
 
         /// <summary>

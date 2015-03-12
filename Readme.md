@@ -41,6 +41,13 @@ licensing information. See also cef/LICENSE.txt and cef/README.txt.
 
 ## Changes ##
 
+This is a summary of the most important changes and those relevant to embedders (API changes etc.).
+
+### Version 3.2171.1979.6 ###
+
+* Removed the `CfxRuntime.Initialize()` and `CfxRuntime.ExecuteProcess()` functions with sandbox parameter from the public API. Currently there is no way to start this within a sandbox. 
+* Internally, the callback delegates and native function pointers are now created on demand, reducing the work load at startup. Most applications won't use all callbacks anyway. 
+* Version information functions added to CfxRuntime.
 
 ### Version 3.2171.1979.5 ###
 

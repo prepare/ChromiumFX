@@ -243,7 +243,7 @@ Public Class CfxClassBuilder
             b.AppendLine("// {0}", sm)
             If sm.MemberType.IsCefCallbackType Then
                 Dim cb = sm.MemberType.AsCefCallbackType
-                b.BeginBlock(cb.Signature.NativeExportSignature(CfxName & "_" & sm.Name))
+                b.BeginBlock(cb.Signature.NativeSignature(CfxName & "_" & sm.Name))
                 cb.Signature.EmitNativeCall(b, "self->" & sm.Name)
                 b.EndBlock()
             End If
@@ -439,7 +439,7 @@ Public Class CfxClassBuilder
                 For Each sm In StructMembers
                     If sm.MemberType.IsCefCallbackType Then
                         Dim cb = sm.MemberType.AsCefCallbackType
-                        b.AppendComment(cb.Signature.NativeExportSignature(CfxName & "_" & sm.Name))
+                        b.AppendComment(cb.Signature.NativeSignature(CfxName & "_" & sm.Name))
                         CodeSnippets.EmitPInvokeDelegate(b, CfxName & "_" & sm.Name, cb.Signature)
                         b.AppendLine()
                     End If

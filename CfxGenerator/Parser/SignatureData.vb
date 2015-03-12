@@ -35,6 +35,7 @@ Namespace Parser
     Public Class SignatureData
         Public ReadOnly Arguments As New List(Of ArgumentData)
         Public ReturnType As TypeData
+        Public ConstReturnValue As Boolean
     End Class
 End Namespace
 
