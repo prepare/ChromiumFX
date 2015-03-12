@@ -51,10 +51,18 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_add_web_plugin_path_delegate(IntPtr path_str, int path_length);
         public static cfx_add_web_plugin_path_delegate cfx_add_web_plugin_path;
+        // CEF_EXPORT char* cef_api_hash(int entry);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate IntPtr cfx_api_hash_delegate(int entry);
+        public static cfx_api_hash_delegate cfx_api_hash;
         // CEF_EXPORT int cef_begin_tracing(const cef_string_t* categories, cef_completion_callback_t* callback);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate int cfx_begin_tracing_delegate(IntPtr categories_str, int categories_length, IntPtr callback);
         public static cfx_begin_tracing_delegate cfx_begin_tracing;
+        // CEF_EXPORT int cef_build_revision();
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate int cfx_build_revision_delegate();
+        public static cfx_build_revision_delegate cfx_build_revision;
         // CEF_EXPORT int cef_clear_cross_origin_whitelist();
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate int cfx_clear_cross_origin_whitelist_delegate();
@@ -175,6 +183,10 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_unregister_internal_web_plugin_delegate(IntPtr path_str, int path_length);
         public static cfx_unregister_internal_web_plugin_delegate cfx_unregister_internal_web_plugin;
+        // CEF_EXPORT int cef_version_info(int entry);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate int cfx_version_info_delegate(int entry);
+        public static cfx_version_info_delegate cfx_version_info;
         // CEF_EXPORT void cef_visit_web_plugin_info(cef_web_plugin_info_visitor_t* visitor);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_visit_web_plugin_info_delegate(IntPtr visitor);

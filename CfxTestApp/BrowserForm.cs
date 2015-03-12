@@ -46,6 +46,12 @@ namespace CfxTestApplication {
         public BrowserForm() {
             InitializeComponent();
 
+            LogMessage("CfxRuntime.ApiHash(0): " + CfxRuntime.ApiHash(0));
+            LogMessage("CfxRuntime.ApiHash(1): " + CfxRuntime.ApiHash(1));
+            LogMessage("CfxRuntime.GetCefVersion(): " + CfxRuntime.GetCefVersion());
+            LogMessage("CfxRuntime.GetChromeVersion(): " + CfxRuntime.GetChromeVersion());
+            LogMessage("");
+
             LoadUrlButton.Click += new EventHandler(LoadUrlButton_Click);
             UrlTextBox.KeyDown += new KeyEventHandler(UrlTextBox_KeyDown);
 

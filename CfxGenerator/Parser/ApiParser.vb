@@ -55,6 +55,8 @@ Namespace Parser
             AddFile("cef\include\internal\cef_types.h", sb)
             AddFile("cef\include\internal\cef_types_win.h", sb)
 
+            AddFile("cef\include\cef_version.h", sb)
+
             Dim files = Directory.GetFiles("cef\include\capi")
             For Each f In files
                 AddFile(f, sb)
@@ -135,7 +137,7 @@ Namespace Parser
                 Dim f = New FunctionData
                 f.Name = m.Groups(2).Value
                 f.Signature = New SignatureData
-                f.Signature.ReturnType = ParseTypeDecl(m.Groups(1).Value, False)
+                f.Signature.ReturnType = ParseTypeDecl(m.Groups(1).Value, f.Signature.ConstReturnValue)
                 ParseArgumentList(f.Signature, m.Groups(3).Value)
                 list.Add(f)
             Next
@@ -240,7 +242,7 @@ Namespace Parser
             Dim cb = New StructMemberData
             cb.Name = m.Groups(2).Value
             cb.CallbackSignature = New SignatureData
-            cb.CallbackSignature.ReturnType = ParseTypeDecl(m.Groups(1).Value.Trim(), False)
+            cb.CallbackSignature.ReturnType = ParseTypeDecl(m.Groups(1).Value.Trim(), cb.CallbackSignature.ConstReturnValue)
             ParseArgumentList(cb.CallbackSignature, m.Groups(3).Value)
             Return cb
 

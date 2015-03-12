@@ -97,6 +97,14 @@ namespace Chromium {
             return InitializePrivate(settings, application, IntPtr.Zero);
         }
 
+        public static string GetCefVersion() {
+                return String.Format("{0}.{1}.{2}", VersionInfo(0), VersionInfo(4), BuildRevision());
+        }
+
+        public static string GetChromeVersion() {
+            return String.Format("{0}.{1}.{2}.{3}", VersionInfo(2), VersionInfo(3), VersionInfo(4), VersionInfo(5));
+        }
+
         /// <summary>
         /// This function should be called on the main application thread to shut down
         /// the CEF browser process before the application exits.
