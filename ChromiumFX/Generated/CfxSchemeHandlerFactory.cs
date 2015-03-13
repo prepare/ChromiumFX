@@ -34,6 +34,8 @@
 using System;
 
 namespace Chromium {
+    using Event;
+
     /// <summary>
     /// Structure that creates CfxResourceHandler instances for handling scheme
     /// requests. The functions of this structure will always be called on the IO
@@ -45,47 +47,189 @@ namespace Chromium {
     /// </remarks>
     public class CfxSchemeHandlerFactory : CfxBase {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxSchemeHandlerFactory Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            lock(weakCache) {
-                var wrapper = (CfxSchemeHandlerFactory)weakCache.Get(nativePtr);
-                if(wrapper == null) {
-                    wrapper = new CfxSchemeHandlerFactory(nativePtr);
-                    weakCache.Add(wrapper);
-                } else {
-                    CfxApi.cfx_release(nativePtr);
-                }
-                return wrapper;
-            }
+            var handlePtr = CfxApi.cfx_scheme_handler_factory_get_gc_handle(nativePtr);
+            return (CfxSchemeHandlerFactory)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
 
+        private static object eventLock = new object();
+
+        // create
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_scheme_handler_factory_create_delegate(IntPtr gcHandlePtr, out IntPtr __retval, IntPtr browser, IntPtr frame, IntPtr scheme_name_str, int scheme_name_length, IntPtr request);
+        private static cfx_scheme_handler_factory_create_delegate cfx_scheme_handler_factory_create;
+        private static IntPtr cfx_scheme_handler_factory_create_ptr;
+
+        internal static void create(IntPtr gcHandlePtr, out IntPtr __retval, IntPtr browser, IntPtr frame, IntPtr scheme_name_str, int scheme_name_length, IntPtr request) {
+            var self = (CfxSchemeHandlerFactory)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null) {
+                __retval = default(IntPtr);
+                return;
+            }
+            var e = new CfxSchemeHandlerFactoryCreateEventArgs(browser, frame, scheme_name_str, scheme_name_length, request);
+            var eventHandler = self.m_Create;
+            if(eventHandler != null) eventHandler(self, e);
+            e.m_isInvalid = true;
+            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
+            if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
+            if(e.m_request_wrapped == null) CfxApi.cfx_release(e.m_request);
+            __retval = CfxResourceHandler.Unwrap(e.m_returnValue);
+        }
+
         internal CfxSchemeHandlerFactory(IntPtr nativePtr) : base(nativePtr) {}
+        public CfxSchemeHandlerFactory() : base(CfxApi.cfx_scheme_handler_factory_ctor) {}
 
         /// <summary>
         /// Return a new resource handler instance to handle the request or an NULL
-        /// reference to allow default handling of the request. |browser| and |frame|
+        /// reference to allow default handling of the request. |Browser| and |Frame|
         /// will be the browser window and frame respectively that originated the
         /// request or NULL if the request did not originate from a browser window (for
-        /// example, if the request came from CfxUrlRequest). The |request| object
+        /// example, if the request came from CfxUrlRequest). The |Request| object
         /// passed to this function will not contain cookie data.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
         /// </remarks>
-        public CfxResourceHandler Create(CfxBrowser browser, CfxFrame frame, string schemeName, CfxRequest request) {
-            var schemeName_pinned = new PinnedString(schemeName);
-            var __retval = CfxApi.cfx_scheme_handler_factory_create(NativePtr, CfxBrowser.Unwrap(browser), CfxFrame.Unwrap(frame), schemeName_pinned.Obj.PinnedPtr, schemeName_pinned.Length, CfxRequest.Unwrap(request));
-            schemeName_pinned.Obj.Free();
-            return CfxResourceHandler.Wrap(__retval);
+        public event CfxSchemeHandlerFactoryCreateEventHandler Create {
+            add {
+                lock(eventLock) {
+                    if(m_Create == null) {
+                        if(cfx_scheme_handler_factory_create == null) {
+                            cfx_scheme_handler_factory_create = create;
+                            cfx_scheme_handler_factory_create_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_scheme_handler_factory_create);
+                        }
+                        CfxApi.cfx_scheme_handler_factory_set_managed_callback(NativePtr, 0, cfx_scheme_handler_factory_create_ptr);
+                    }
+                    m_Create += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_Create -= value;
+                    if(m_Create == null) {
+                        CfxApi.cfx_scheme_handler_factory_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                    }
+                }
+            }
         }
 
+        private CfxSchemeHandlerFactoryCreateEventHandler m_Create;
+
         internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
+            if(m_Create != null) {
+                m_Create = null;
+                CfxApi.cfx_scheme_handler_factory_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+            }
             base.OnDispose(nativePtr);
         }
+    }
+
+
+    namespace Event {
+
+        /// <summary>
+        /// Return a new resource handler instance to handle the request or an NULL
+        /// reference to allow default handling of the request. |Browser| and |Frame|
+        /// will be the browser window and frame respectively that originated the
+        /// request or NULL if the request did not originate from a browser window (for
+        /// example, if the request came from CfxUrlRequest). The |Request| object
+        /// passed to this function will not contain cookie data.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxSchemeHandlerFactoryCreateEventHandler(object sender, CfxSchemeHandlerFactoryCreateEventArgs e);
+
+        /// <summary>
+        /// Return a new resource handler instance to handle the request or an NULL
+        /// reference to allow default handling of the request. |Browser| and |Frame|
+        /// will be the browser window and frame respectively that originated the
+        /// request or NULL if the request did not originate from a browser window (for
+        /// example, if the request came from CfxUrlRequest). The |Request| object
+        /// passed to this function will not contain cookie data.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
+        /// </remarks>
+        public class CfxSchemeHandlerFactoryCreateEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_frame;
+            internal CfxFrame m_frame_wrapped;
+            internal IntPtr m_scheme_name_str;
+            internal int m_scheme_name_length;
+            internal string m_scheme_name;
+            internal IntPtr m_request;
+            internal CfxRequest m_request_wrapped;
+
+            internal CfxResourceHandler m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxSchemeHandlerFactoryCreateEventArgs(IntPtr browser, IntPtr frame, IntPtr scheme_name_str, int scheme_name_length, IntPtr request) {
+                m_browser = browser;
+                m_frame = frame;
+                m_scheme_name_str = scheme_name_str;
+                m_scheme_name_length = scheme_name_length;
+                m_request = request;
+            }
+
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            public CfxFrame Frame {
+                get {
+                    CheckAccess();
+                    if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
+                    return m_frame_wrapped;
+                }
+            }
+            public string SchemeName {
+                get {
+                    CheckAccess();
+                    if(m_scheme_name == null && m_scheme_name_str != IntPtr.Zero) m_scheme_name = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_scheme_name_str, m_scheme_name_length);
+                    return m_scheme_name;
+                }
+            }
+            public CfxRequest Request {
+                get {
+                    CheckAccess();
+                    if(m_request_wrapped == null) m_request_wrapped = CfxRequest.Wrap(m_request);
+                    return m_request_wrapped;
+                }
+            }
+            /// <summary>
+            /// Sets the return value for the underlying CEF framework callback.
+            /// Applications may attach more than one event handler to a framework callback event,
+            /// but only one event handler can set the return value. Calling SetReturnValue()
+            /// more then once will cause an exception to be thrown.
+            /// </summary>
+            /// <remarks>
+            /// See also the original CEF documentation in
+            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
+            /// </remarks>
+            public void SetReturnValue(CfxResourceHandler returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, SchemeName={{{2}}}, Request={{{3}}}", Browser, Frame, SchemeName, Request);
+            }
+        }
+
     }
 }
