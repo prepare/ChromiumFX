@@ -218,11 +218,11 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public int GetBool(string key) {
+        public bool GetBool(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_get_bool(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
-            return __retval;
+            return 0 != __retval;
         }
 
         /// <summary>
@@ -332,9 +332,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public bool SetBool(string key, int value) {
+        public bool SetBool(string key, bool value) {
             var key_pinned = new PinnedString(key);
-            var __retval = CfxApi.cfx_dictionary_value_set_bool(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, value);
+            var __retval = CfxApi.cfx_dictionary_value_set_bool(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, value ? 1 : 0);
             key_pinned.Obj.Free();
             return 0 != __retval;
         }
