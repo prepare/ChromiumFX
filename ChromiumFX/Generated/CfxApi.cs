@@ -3676,10 +3676,10 @@ namespace Chromium {
 
         // CfxRunFileDialogCallback
 
-        // CFX_EXPORT void cfx_run_file_dialog_callback_cont(cef_run_file_dialog_callback_t* self, cef_browser_host_t* browser_host, cef_string_list_t file_paths)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_run_file_dialog_callback_cont_delegate(IntPtr self, IntPtr browser_host, IntPtr file_paths);
-        public static cfx_run_file_dialog_callback_cont_delegate cfx_run_file_dialog_callback_cont;
+        // CFX_EXPORT cfx_run_file_dialog_callback_t* cfx_run_file_dialog_callback_ctor();
+        public static cfx_ctor_with_gc_handle_delegate cfx_run_file_dialog_callback_ctor;
+        public static cfx_get_gc_handle_delegate cfx_run_file_dialog_callback_get_gc_handle;
+        public static cfx_set_callback_delegate cfx_run_file_dialog_callback_set_managed_callback;
 
 
         // CfxSchemeHandlerFactory

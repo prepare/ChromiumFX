@@ -1145,7 +1145,9 @@ namespace Chromium {
 
             // cef_run_file_dialog_callback
 
-            cfx_run_file_dialog_callback_cont = (cfx_run_file_dialog_callback_cont_delegate)GetDelegate(libcfxPtr, "cfx_run_file_dialog_callback_cont", typeof(cfx_run_file_dialog_callback_cont_delegate));
+            cfx_run_file_dialog_callback_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_run_file_dialog_callback_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
+            cfx_run_file_dialog_callback_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_run_file_dialog_callback_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
+            cfx_run_file_dialog_callback_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_run_file_dialog_callback_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_scheme_handler_factory
