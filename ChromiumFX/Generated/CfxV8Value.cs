@@ -373,9 +373,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public int BoolValue {
+        public bool BoolValue {
             get {
-                return CfxApi.cfx_v8value_get_bool_value(NativePtr);
+                return 0 != CfxApi.cfx_v8value_get_bool_value(NativePtr);
             }
         }
 

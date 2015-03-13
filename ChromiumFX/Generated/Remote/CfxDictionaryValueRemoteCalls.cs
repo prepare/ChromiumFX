@@ -383,7 +383,7 @@ namespace Chromium.Remote {
 
         internal ulong self;
         internal string key;
-        internal int __retval;
+        internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -647,7 +647,7 @@ namespace Chromium.Remote {
 
         internal ulong self;
         internal string key;
-        internal int value;
+        internal bool value;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {

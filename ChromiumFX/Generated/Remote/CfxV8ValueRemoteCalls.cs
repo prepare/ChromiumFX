@@ -750,7 +750,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxV8ValueGetBoolValueRenderProcessCall) {}
 
         internal ulong self;
-        internal int __retval;
+        internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);

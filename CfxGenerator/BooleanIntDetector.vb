@@ -70,7 +70,7 @@ Public Class BooleanIntDetector
     End Function
 
     Private Shared prefixes As String() = {"is_", "can_", "has_", "allow_", "will_", "belongs_to",
-                                           "cef_v8value::set_value_by", "cef_v8value::delete_value_by"}
+                                           "cef_v8value::set_value_by", "cef_v8value::delete_value_by", "get_bool", "set_bool"}
 
 
     Private Shared vars As String() = {"allow", "success", "httponly", "enable", "cef_create_url", "cef_currently_on", "cef_get_path", "focus", "checked",
