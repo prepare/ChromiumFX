@@ -37,17 +37,64 @@
 extern "C" {
 #endif
 
-// cef_base_t base
+typedef struct _cfx_scheme_handler_factory_t {
+    cef_scheme_handler_factory_t cef_scheme_handler_factory;
+    unsigned int ref_count;
+    gc_handle_t gc_handle;
+} cfx_scheme_handler_factory_t;
 
-// create
-CFX_EXPORT cef_resource_handler_t* cfx_scheme_handler_factory_create(cef_scheme_handler_factory_t* self, cef_browser_t* browser, cef_frame_t* frame, char16 *scheme_name_str, int scheme_name_length, cef_request_t* request) {
-    if(browser) ((cef_base_t*)browser)->add_ref((cef_base_t*)browser);
-    if(frame) ((cef_base_t*)frame)->add_ref((cef_base_t*)frame);
-    cef_string_t scheme_name = { scheme_name_str, scheme_name_length, 0 };
-    if(request) ((cef_base_t*)request)->add_ref((cef_base_t*)request);
-    return self->create(self, browser, frame, &scheme_name, request);
+void CEF_CALLBACK _cfx_scheme_handler_factory_add_ref(struct _cef_base_t* base) {
+    cfx_scheme_handler_factory_t* ptr = (cfx_scheme_handler_factory_t*)base;
+    InterlockedIncrement(&ptr->ref_count);
+}
+int CEF_CALLBACK _cfx_scheme_handler_factory_release(struct _cef_base_t* base) {
+    cfx_scheme_handler_factory_t* ptr = (cfx_scheme_handler_factory_t*)base;
+    int count = InterlockedDecrement(&((cfx_scheme_handler_factory_t*)ptr)->ref_count);
+    if(!count) {
+        cfx_gc_handle_free(((cfx_scheme_handler_factory_t*)ptr)->gc_handle);
+        free(ptr);
+    }
+    return count;
 }
 
+CFX_EXPORT cfx_scheme_handler_factory_t* cfx_scheme_handler_factory_ctor(gc_handle_t gc_handle) {
+    cfx_scheme_handler_factory_t* ptr = (cfx_scheme_handler_factory_t*)calloc(1, sizeof(cfx_scheme_handler_factory_t));
+    if(!ptr) return 0;
+    ptr->cef_scheme_handler_factory.base.size = sizeof(cef_scheme_handler_factory_t);
+    ptr->cef_scheme_handler_factory.base.add_ref = _cfx_scheme_handler_factory_add_ref;
+    ptr->cef_scheme_handler_factory.base.release = _cfx_scheme_handler_factory_release;
+    ptr->ref_count = 1;
+    ptr->gc_handle = gc_handle;
+    return ptr;
+}
+
+CFX_EXPORT gc_handle_t cfx_scheme_handler_factory_get_gc_handle(cfx_scheme_handler_factory_t* self) {
+    return self->gc_handle;
+}
+
+// create
+
+void (CEF_CALLBACK *cfx_scheme_handler_factory_create_callback)(gc_handle_t self, cef_resource_handler_t** __retval, cef_browser_t* browser, cef_frame_t* frame, char16 *scheme_name_str, int scheme_name_length, cef_request_t* request);
+
+cef_resource_handler_t* CEF_CALLBACK cfx_scheme_handler_factory_create(cef_scheme_handler_factory_t* self, cef_browser_t* browser, cef_frame_t* frame, const cef_string_t* scheme_name, cef_request_t* request) {
+    cef_resource_handler_t* __retval;
+    cfx_scheme_handler_factory_create_callback(((cfx_scheme_handler_factory_t*)self)->gc_handle, &__retval, browser, frame, scheme_name ? scheme_name->str : 0, scheme_name ? scheme_name->length : 0, request);
+    if(__retval) {
+        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
+    }
+    return __retval;
+}
+
+
+CFX_EXPORT void cfx_scheme_handler_factory_set_managed_callback(cef_scheme_handler_factory_t* self, int index, void* callback) {
+    switch(index) {
+    case 0:
+        if(callback && !cfx_scheme_handler_factory_create_callback)
+            cfx_scheme_handler_factory_create_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_resource_handler_t** __retval, cef_browser_t* browser, cef_frame_t* frame, char16 *scheme_name_str, int scheme_name_length, cef_request_t* request)) callback;
+        self->create = callback ? cfx_scheme_handler_factory_create : 0;
+        break;
+    }
+}
 
 #ifdef __cplusplus
 } // extern "C"

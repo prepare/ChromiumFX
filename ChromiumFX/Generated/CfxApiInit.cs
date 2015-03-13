@@ -1152,7 +1152,9 @@ namespace Chromium {
 
             // cef_scheme_handler_factory
 
-            cfx_scheme_handler_factory_create = (cfx_scheme_handler_factory_create_delegate)GetDelegate(libcfxPtr, "cfx_scheme_handler_factory_create", typeof(cfx_scheme_handler_factory_create_delegate));
+            cfx_scheme_handler_factory_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_scheme_handler_factory_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
+            cfx_scheme_handler_factory_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_scheme_handler_factory_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
+            cfx_scheme_handler_factory_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_scheme_handler_factory_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_scheme_registrar

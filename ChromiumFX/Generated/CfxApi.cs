@@ -3684,10 +3684,10 @@ namespace Chromium {
 
         // CfxSchemeHandlerFactory
 
-        // CFX_EXPORT cef_resource_handler_t* cfx_scheme_handler_factory_create(cef_scheme_handler_factory_t* self, cef_browser_t* browser, cef_frame_t* frame, char16 *scheme_name_str, int scheme_name_length, cef_request_t* request)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate IntPtr cfx_scheme_handler_factory_create_delegate(IntPtr self, IntPtr browser, IntPtr frame, IntPtr scheme_name_str, int scheme_name_length, IntPtr request);
-        public static cfx_scheme_handler_factory_create_delegate cfx_scheme_handler_factory_create;
+        // CFX_EXPORT cfx_scheme_handler_factory_t* cfx_scheme_handler_factory_ctor();
+        public static cfx_ctor_with_gc_handle_delegate cfx_scheme_handler_factory_ctor;
+        public static cfx_get_gc_handle_delegate cfx_scheme_handler_factory_get_gc_handle;
+        public static cfx_set_callback_delegate cfx_scheme_handler_factory_set_managed_callback;
 
 
         // CfxSchemeRegistrar
