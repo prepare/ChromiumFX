@@ -33,7 +33,9 @@
 using System;
 namespace Chromium
 {
-    [Serializable]
+    /// <summary>
+    /// Class for ChromiumFX related exceptions.
+    /// </summary>
     public class CfxException : Exception {
         public CfxException() : base() {}
         public CfxException(string message) : base(message)    {}
