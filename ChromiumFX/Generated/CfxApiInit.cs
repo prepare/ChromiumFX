@@ -1507,7 +1507,9 @@ namespace Chromium {
 
             // cef_web_plugin_unstable_callback
 
-            cfx_web_plugin_unstable_callback_is_unstable = (cfx_web_plugin_unstable_callback_is_unstable_delegate)GetDelegate(libcfxPtr, "cfx_web_plugin_unstable_callback_is_unstable", typeof(cfx_web_plugin_unstable_callback_is_unstable_delegate));
+            cfx_web_plugin_unstable_callback_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_web_plugin_unstable_callback_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
+            cfx_web_plugin_unstable_callback_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_web_plugin_unstable_callback_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
+            cfx_web_plugin_unstable_callback_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_web_plugin_unstable_callback_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_window_info

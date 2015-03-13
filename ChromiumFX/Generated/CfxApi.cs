@@ -4825,10 +4825,10 @@ namespace Chromium {
 
         // CfxWebPluginUnstableCallback
 
-        // CFX_EXPORT void cfx_web_plugin_unstable_callback_is_unstable(cef_web_plugin_unstable_callback_t* self, char16 *path_str, int path_length, int unstable)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_web_plugin_unstable_callback_is_unstable_delegate(IntPtr self, IntPtr path_str, int path_length, int unstable);
-        public static cfx_web_plugin_unstable_callback_is_unstable_delegate cfx_web_plugin_unstable_callback_is_unstable;
+        // CFX_EXPORT cfx_web_plugin_unstable_callback_t* cfx_web_plugin_unstable_callback_ctor();
+        public static cfx_ctor_with_gc_handle_delegate cfx_web_plugin_unstable_callback_ctor;
+        public static cfx_get_gc_handle_delegate cfx_web_plugin_unstable_callback_get_gc_handle;
+        public static cfx_set_callback_delegate cfx_web_plugin_unstable_callback_set_managed_callback;
 
 
         // CfxWindowInfo
