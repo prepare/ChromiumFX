@@ -33,6 +33,9 @@
 using System;
 
 namespace Chromium.Remote {
+    /// <summary>
+    /// Collection of global static CEF functions acessible in the render process.
+    /// </summary>
     public partial class CfrRuntime {
 
         internal readonly RemoteConnection connection;
