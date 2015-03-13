@@ -37,14 +37,59 @@
 extern "C" {
 #endif
 
-// cef_base_t base
+typedef struct _cfx_end_tracing_callback_t {
+    cef_end_tracing_callback_t cef_end_tracing_callback;
+    unsigned int ref_count;
+    gc_handle_t gc_handle;
+} cfx_end_tracing_callback_t;
 
-// on_end_tracing_complete
-CFX_EXPORT void cfx_end_tracing_callback_on_end_tracing_complete(cef_end_tracing_callback_t* self, char16 *tracing_file_str, int tracing_file_length) {
-    cef_string_t tracing_file = { tracing_file_str, tracing_file_length, 0 };
-    self->on_end_tracing_complete(self, &tracing_file);
+void CEF_CALLBACK _cfx_end_tracing_callback_add_ref(struct _cef_base_t* base) {
+    cfx_end_tracing_callback_t* ptr = (cfx_end_tracing_callback_t*)base;
+    InterlockedIncrement(&ptr->ref_count);
+}
+int CEF_CALLBACK _cfx_end_tracing_callback_release(struct _cef_base_t* base) {
+    cfx_end_tracing_callback_t* ptr = (cfx_end_tracing_callback_t*)base;
+    int count = InterlockedDecrement(&((cfx_end_tracing_callback_t*)ptr)->ref_count);
+    if(!count) {
+        cfx_gc_handle_free(((cfx_end_tracing_callback_t*)ptr)->gc_handle);
+        free(ptr);
+    }
+    return count;
 }
 
+CFX_EXPORT cfx_end_tracing_callback_t* cfx_end_tracing_callback_ctor(gc_handle_t gc_handle) {
+    cfx_end_tracing_callback_t* ptr = (cfx_end_tracing_callback_t*)calloc(1, sizeof(cfx_end_tracing_callback_t));
+    if(!ptr) return 0;
+    ptr->cef_end_tracing_callback.base.size = sizeof(cef_end_tracing_callback_t);
+    ptr->cef_end_tracing_callback.base.add_ref = _cfx_end_tracing_callback_add_ref;
+    ptr->cef_end_tracing_callback.base.release = _cfx_end_tracing_callback_release;
+    ptr->ref_count = 1;
+    ptr->gc_handle = gc_handle;
+    return ptr;
+}
+
+CFX_EXPORT gc_handle_t cfx_end_tracing_callback_get_gc_handle(cfx_end_tracing_callback_t* self) {
+    return self->gc_handle;
+}
+
+// on_end_tracing_complete
+
+void (CEF_CALLBACK *cfx_end_tracing_callback_on_end_tracing_complete_callback)(gc_handle_t self, char16 *tracing_file_str, int tracing_file_length);
+
+void CEF_CALLBACK cfx_end_tracing_callback_on_end_tracing_complete(cef_end_tracing_callback_t* self, const cef_string_t* tracing_file) {
+    cfx_end_tracing_callback_on_end_tracing_complete_callback(((cfx_end_tracing_callback_t*)self)->gc_handle, tracing_file ? tracing_file->str : 0, tracing_file ? tracing_file->length : 0);
+}
+
+
+CFX_EXPORT void cfx_end_tracing_callback_set_managed_callback(cef_end_tracing_callback_t* self, int index, void* callback) {
+    switch(index) {
+    case 0:
+        if(callback && !cfx_end_tracing_callback_on_end_tracing_complete_callback)
+            cfx_end_tracing_callback_on_end_tracing_complete_callback = (void (CEF_CALLBACK *)(gc_handle_t self, char16 *tracing_file_str, int tracing_file_length)) callback;
+        self->on_end_tracing_complete = callback ? cfx_end_tracing_callback_on_end_tracing_complete : 0;
+        break;
+    }
+}
 
 #ifdef __cplusplus
 } // extern "C"

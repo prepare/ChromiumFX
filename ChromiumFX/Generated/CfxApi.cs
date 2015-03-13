@@ -2040,10 +2040,10 @@ namespace Chromium {
 
         // CfxEndTracingCallback
 
-        // CFX_EXPORT void cfx_end_tracing_callback_on_end_tracing_complete(cef_end_tracing_callback_t* self, char16 *tracing_file_str, int tracing_file_length)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_end_tracing_callback_on_end_tracing_complete_delegate(IntPtr self, IntPtr tracing_file_str, int tracing_file_length);
-        public static cfx_end_tracing_callback_on_end_tracing_complete_delegate cfx_end_tracing_callback_on_end_tracing_complete;
+        // CFX_EXPORT cfx_end_tracing_callback_t* cfx_end_tracing_callback_ctor();
+        public static cfx_ctor_with_gc_handle_delegate cfx_end_tracing_callback_ctor;
+        public static cfx_get_gc_handle_delegate cfx_end_tracing_callback_get_gc_handle;
+        public static cfx_set_callback_delegate cfx_end_tracing_callback_set_managed_callback;
 
 
         // CfxFileDialogCallback

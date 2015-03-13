@@ -604,7 +604,9 @@ namespace Chromium {
 
             // cef_end_tracing_callback
 
-            cfx_end_tracing_callback_on_end_tracing_complete = (cfx_end_tracing_callback_on_end_tracing_complete_delegate)GetDelegate(libcfxPtr, "cfx_end_tracing_callback_on_end_tracing_complete", typeof(cfx_end_tracing_callback_on_end_tracing_complete_delegate));
+            cfx_end_tracing_callback_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_end_tracing_callback_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
+            cfx_end_tracing_callback_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_end_tracing_callback_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
+            cfx_end_tracing_callback_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_end_tracing_callback_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_file_dialog_callback
