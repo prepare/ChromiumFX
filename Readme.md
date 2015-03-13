@@ -43,6 +43,12 @@ licensing information. See also cef/LICENSE.txt and cef/README.txt.
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2171.1979.7 ###
+
+* Some of the framework callback container classes were not recognized as such by the code generator. This has been fixed. `CfxEndTracingCallback`, `CfxCompletionCallback`, `CfxRunFileDialogCallback` and `CfxSchemeHandlerFactory` are now correctly wrapped as framework callbacks.
+* Removed browser-only `EndTracing` and `CfxEndTracingCallback` from remote layer.
+* Fixed int to bool conversion for `GetBool` and `SetBool` functions in several classes.
+
 ### Version 3.2171.1979.6 ###
 
 * Removed the `CfxRuntime.Initialize()` and `CfxRuntime.ExecuteProcess()` functions with sandbox parameter from the public API. Currently there is no way to start this within a sandbox. 
