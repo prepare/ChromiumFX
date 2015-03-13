@@ -45,8 +45,6 @@ namespace Chromium.Remote {
                     return new CfxRuntimeCreateUrlRenderProcessCall();
                 case RemoteCallId.CfxRuntimeCurrentlyOnRenderProcessCall:
                     return new CfxRuntimeCurrentlyOnRenderProcessCall();
-                case RemoteCallId.CfxRuntimeEndTracingRenderProcessCall:
-                    return new CfxRuntimeEndTracingRenderProcessCall();
                 case RemoteCallId.CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall:
                     return new CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall();
                 case RemoteCallId.CfxRuntimeGetGeolocationRenderProcessCall:
@@ -343,8 +341,6 @@ namespace Chromium.Remote {
                     return new CfxDomVisitorVisitDeactivateRenderProcessCall();
                 case RemoteCallId.CfxDomVisitorVisitGetDocumentRenderProcessCall:
                     return new CfxDomVisitorVisitGetDocumentRenderProcessCall();
-                case RemoteCallId.CfxEndTracingCallbackOnEndTracingCompleteRenderProcessCall:
-                    return new CfxEndTracingCallbackOnEndTracingCompleteRenderProcessCall();
                 case RemoteCallId.CfxFrameIsValidRenderProcessCall:
                     return new CfxFrameIsValidRenderProcessCall();
                 case RemoteCallId.CfxFrameUndoRenderProcessCall:

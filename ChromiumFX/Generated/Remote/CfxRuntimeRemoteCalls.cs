@@ -161,38 +161,6 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxRuntimeEndTracingRenderProcessCall : RenderProcessCall {
-
-        internal CfxRuntimeEndTracingRenderProcessCall()
-            : base(RemoteCallId.CfxRuntimeEndTracingRenderProcessCall) {}
-
-        internal string tracingFile;
-        internal ulong callback;
-        internal bool __retval;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(tracingFile);
-            h.Write(callback);
-        }
-
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out tracingFile);
-            h.Read(out callback);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-            h.Write(__retval);
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
-            h.Read(out __retval);
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxRuntime.EndTracing(tracingFile, (CfxEndTracingCallback)RemoteProxy.Unwrap(callback));
-        }
-    }
-
     internal class CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall : RenderProcessCall {
 
         internal CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall()
