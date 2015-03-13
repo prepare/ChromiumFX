@@ -37,13 +37,59 @@
 extern "C" {
 #endif
 
-// cef_base_t base
+typedef struct _cfx_completion_callback_t {
+    cef_completion_callback_t cef_completion_callback;
+    unsigned int ref_count;
+    gc_handle_t gc_handle;
+} cfx_completion_callback_t;
 
-// on_complete
-CFX_EXPORT void cfx_completion_callback_on_complete(cef_completion_callback_t* self) {
-    self->on_complete(self);
+void CEF_CALLBACK _cfx_completion_callback_add_ref(struct _cef_base_t* base) {
+    cfx_completion_callback_t* ptr = (cfx_completion_callback_t*)base;
+    InterlockedIncrement(&ptr->ref_count);
+}
+int CEF_CALLBACK _cfx_completion_callback_release(struct _cef_base_t* base) {
+    cfx_completion_callback_t* ptr = (cfx_completion_callback_t*)base;
+    int count = InterlockedDecrement(&((cfx_completion_callback_t*)ptr)->ref_count);
+    if(!count) {
+        cfx_gc_handle_free(((cfx_completion_callback_t*)ptr)->gc_handle);
+        free(ptr);
+    }
+    return count;
 }
 
+CFX_EXPORT cfx_completion_callback_t* cfx_completion_callback_ctor(gc_handle_t gc_handle) {
+    cfx_completion_callback_t* ptr = (cfx_completion_callback_t*)calloc(1, sizeof(cfx_completion_callback_t));
+    if(!ptr) return 0;
+    ptr->cef_completion_callback.base.size = sizeof(cef_completion_callback_t);
+    ptr->cef_completion_callback.base.add_ref = _cfx_completion_callback_add_ref;
+    ptr->cef_completion_callback.base.release = _cfx_completion_callback_release;
+    ptr->ref_count = 1;
+    ptr->gc_handle = gc_handle;
+    return ptr;
+}
+
+CFX_EXPORT gc_handle_t cfx_completion_callback_get_gc_handle(cfx_completion_callback_t* self) {
+    return self->gc_handle;
+}
+
+// on_complete
+
+void (CEF_CALLBACK *cfx_completion_callback_on_complete_callback)(gc_handle_t self);
+
+void CEF_CALLBACK cfx_completion_callback_on_complete(cef_completion_callback_t* self) {
+    cfx_completion_callback_on_complete_callback(((cfx_completion_callback_t*)self)->gc_handle);
+}
+
+
+CFX_EXPORT void cfx_completion_callback_set_managed_callback(cef_completion_callback_t* self, int index, void* callback) {
+    switch(index) {
+    case 0:
+        if(callback && !cfx_completion_callback_on_complete_callback)
+            cfx_completion_callback_on_complete_callback = (void (CEF_CALLBACK *)(gc_handle_t self)) callback;
+        self->on_complete = callback ? cfx_completion_callback_on_complete : 0;
+        break;
+    }
+}
 
 #ifdef __cplusplus
 } // extern "C"
