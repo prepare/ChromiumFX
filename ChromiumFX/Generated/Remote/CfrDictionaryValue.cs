@@ -240,7 +240,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public int GetBool(string key) {
+        public bool GetBool(string key) {
             var call = new CfxDictionaryValueGetBoolRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;
@@ -362,7 +362,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public bool SetBool(string key, int value) {
+        public bool SetBool(string key, bool value) {
             var call = new CfxDictionaryValueSetBoolRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;

@@ -129,28 +129,6 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Stop tracing events on all processes.
-        /// This function will fail and return false (0) if a previous call to
-        /// CfrEndTracingAsync is already pending or if CfrBeginTracing was not called.
-        /// |tracingFile| is the path at which tracing data will be written and
-        /// |callback| is the callback that will be executed once all processes have sent
-        /// their trace data. If |tracingFile| is NULL a new temporary file path will be
-        /// used. If |callback| is NULL no trace data will be written.
-        /// This function must be called on the browser process UI thread.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
-        /// </remarks>
-        public bool EndTracing(string tracingFile, CfrEndTracingCallback callback) {
-            var call = new CfxRuntimeEndTracingRenderProcessCall();
-            call.tracingFile = tracingFile;
-            call.callback = CfrObject.Unwrap(callback);
-            call.Execute(connection);
-            return call.__retval;
-        }
-
-        /// <summary>
         /// Get the extensions associated with the given mime type. This should be passed
         /// in lower case. There could be multiple extensions for a given mime type, like
         /// "html,htm" for "text/html", or "txt,text,html,..." for "text/*". Any existing
@@ -165,22 +143,6 @@ namespace Chromium.Remote {
             call.mimeType = mimeType;
             call.extensions = extensions;
             call.Execute(connection);
-        }
-
-        /// <summary>
-        /// Request a one-time geolocation update. This function bypasses any user
-        /// permission checks so should only be used by code that is allowed to access
-        /// location information.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_capi.h">cef/include/capi/cef_geolocation_capi.h</see>.
-        /// </remarks>
-        public int GetGeolocation(CfrGetGeolocationCallback callback) {
-            var call = new CfxRuntimeGetGeolocationRenderProcessCall();
-            call.callback = CfrObject.Unwrap(callback);
-            call.Execute(connection);
-            return call.__retval;
         }
 
         /// <summary>

@@ -45,12 +45,8 @@ namespace Chromium.Remote {
                     return new CfxRuntimeCreateUrlRenderProcessCall();
                 case RemoteCallId.CfxRuntimeCurrentlyOnRenderProcessCall:
                     return new CfxRuntimeCurrentlyOnRenderProcessCall();
-                case RemoteCallId.CfxRuntimeEndTracingRenderProcessCall:
-                    return new CfxRuntimeEndTracingRenderProcessCall();
                 case RemoteCallId.CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall:
                     return new CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall();
-                case RemoteCallId.CfxRuntimeGetGeolocationRenderProcessCall:
-                    return new CfxRuntimeGetGeolocationRenderProcessCall();
                 case RemoteCallId.CfxRuntimeGetMimeTypeRenderProcessCall:
                     return new CfxRuntimeGetMimeTypeRenderProcessCall();
                 case RemoteCallId.CfxRuntimeNowFromSystemTraceTimeRenderProcessCall:
@@ -343,8 +339,6 @@ namespace Chromium.Remote {
                     return new CfxDomVisitorVisitDeactivateRenderProcessCall();
                 case RemoteCallId.CfxDomVisitorVisitGetDocumentRenderProcessCall:
                     return new CfxDomVisitorVisitGetDocumentRenderProcessCall();
-                case RemoteCallId.CfxEndTracingCallbackOnEndTracingCompleteRenderProcessCall:
-                    return new CfxEndTracingCallbackOnEndTracingCompleteRenderProcessCall();
                 case RemoteCallId.CfxFrameIsValidRenderProcessCall:
                     return new CfxFrameIsValidRenderProcessCall();
                 case RemoteCallId.CfxFrameUndoRenderProcessCall:
@@ -391,58 +385,6 @@ namespace Chromium.Remote {
                     return new CfxFrameGetV8ContextRenderProcessCall();
                 case RemoteCallId.CfxFrameVisitDomRenderProcessCall:
                     return new CfxFrameVisitDomRenderProcessCall();
-                case RemoteCallId.CfxGeopositionCtorRenderProcessCall:
-                    return new CfxGeopositionCtorRenderProcessCall();
-                case RemoteCallId.CfxGeopositionGetLatitudeRenderProcessCall:
-                    return new CfxGeopositionGetLatitudeRenderProcessCall();
-                case RemoteCallId.CfxGeopositionSetLatitudeRenderProcessCall:
-                    return new CfxGeopositionSetLatitudeRenderProcessCall();
-                case RemoteCallId.CfxGeopositionGetLongitudeRenderProcessCall:
-                    return new CfxGeopositionGetLongitudeRenderProcessCall();
-                case RemoteCallId.CfxGeopositionSetLongitudeRenderProcessCall:
-                    return new CfxGeopositionSetLongitudeRenderProcessCall();
-                case RemoteCallId.CfxGeopositionGetAltitudeRenderProcessCall:
-                    return new CfxGeopositionGetAltitudeRenderProcessCall();
-                case RemoteCallId.CfxGeopositionSetAltitudeRenderProcessCall:
-                    return new CfxGeopositionSetAltitudeRenderProcessCall();
-                case RemoteCallId.CfxGeopositionGetAccuracyRenderProcessCall:
-                    return new CfxGeopositionGetAccuracyRenderProcessCall();
-                case RemoteCallId.CfxGeopositionSetAccuracyRenderProcessCall:
-                    return new CfxGeopositionSetAccuracyRenderProcessCall();
-                case RemoteCallId.CfxGeopositionGetAltitudeAccuracyRenderProcessCall:
-                    return new CfxGeopositionGetAltitudeAccuracyRenderProcessCall();
-                case RemoteCallId.CfxGeopositionSetAltitudeAccuracyRenderProcessCall:
-                    return new CfxGeopositionSetAltitudeAccuracyRenderProcessCall();
-                case RemoteCallId.CfxGeopositionGetHeadingRenderProcessCall:
-                    return new CfxGeopositionGetHeadingRenderProcessCall();
-                case RemoteCallId.CfxGeopositionSetHeadingRenderProcessCall:
-                    return new CfxGeopositionSetHeadingRenderProcessCall();
-                case RemoteCallId.CfxGeopositionGetSpeedRenderProcessCall:
-                    return new CfxGeopositionGetSpeedRenderProcessCall();
-                case RemoteCallId.CfxGeopositionSetSpeedRenderProcessCall:
-                    return new CfxGeopositionSetSpeedRenderProcessCall();
-                case RemoteCallId.CfxGeopositionGetTimestampRenderProcessCall:
-                    return new CfxGeopositionGetTimestampRenderProcessCall();
-                case RemoteCallId.CfxGeopositionSetTimestampRenderProcessCall:
-                    return new CfxGeopositionSetTimestampRenderProcessCall();
-                case RemoteCallId.CfxGeopositionGetErrorCodeRenderProcessCall:
-                    return new CfxGeopositionGetErrorCodeRenderProcessCall();
-                case RemoteCallId.CfxGeopositionSetErrorCodeRenderProcessCall:
-                    return new CfxGeopositionSetErrorCodeRenderProcessCall();
-                case RemoteCallId.CfxGeopositionGetErrorMessageRenderProcessCall:
-                    return new CfxGeopositionGetErrorMessageRenderProcessCall();
-                case RemoteCallId.CfxGeopositionSetErrorMessageRenderProcessCall:
-                    return new CfxGeopositionSetErrorMessageRenderProcessCall();
-                case RemoteCallId.CfxGetGeolocationCallbackCtorRenderProcessCall:
-                    return new CfxGetGeolocationCallbackCtorRenderProcessCall();
-                case RemoteCallId.CfxGetGeolocationCallbackOnLocationUpdateBrowserProcessCall:
-                    return new CfxGetGeolocationCallbackOnLocationUpdateBrowserProcessCall();
-                case RemoteCallId.CfxGetGeolocationCallbackOnLocationUpdateActivateRenderProcessCall:
-                    return new CfxGetGeolocationCallbackOnLocationUpdateActivateRenderProcessCall();
-                case RemoteCallId.CfxGetGeolocationCallbackOnLocationUpdateDeactivateRenderProcessCall:
-                    return new CfxGetGeolocationCallbackOnLocationUpdateDeactivateRenderProcessCall();
-                case RemoteCallId.CfxGetGeolocationCallbackOnLocationUpdateGetPositionRenderProcessCall:
-                    return new CfxGetGeolocationCallbackOnLocationUpdateGetPositionRenderProcessCall();
                 case RemoteCallId.CfxListValueCreateRenderProcessCall:
                     return new CfxListValueCreateRenderProcessCall();
                 case RemoteCallId.CfxListValueIsValidRenderProcessCall:

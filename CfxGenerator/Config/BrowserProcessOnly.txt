@@ -3,8 +3,10 @@ cef_add_web_plugin_path
 cef_begin_tracing
 cef_clear_scheme_handler_factories
 cef_do_message_loop_work
+cef_end_tracing
 cef_end_tracing_async
 cef_force_web_plugin_shutdown
+cef_get_geolocation
 cef_get_path
 cef_get_trace_buffer_percent_full_async
 cef_initialize
