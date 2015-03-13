@@ -1145,10 +1145,10 @@ namespace Chromium {
 
         // CfxCompletionCallback
 
-        // CFX_EXPORT void cfx_completion_callback_on_complete(cef_completion_callback_t* self)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_completion_callback_on_complete_delegate(IntPtr self);
-        public static cfx_completion_callback_on_complete_delegate cfx_completion_callback_on_complete;
+        // CFX_EXPORT cfx_completion_callback_t* cfx_completion_callback_ctor();
+        public static cfx_ctor_with_gc_handle_delegate cfx_completion_callback_ctor;
+        public static cfx_get_gc_handle_delegate cfx_completion_callback_get_gc_handle;
+        public static cfx_set_callback_delegate cfx_completion_callback_set_managed_callback;
 
 
         // CfxContextMenuHandler

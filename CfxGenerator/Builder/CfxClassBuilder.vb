@@ -128,6 +128,7 @@ Public Class CfxClassBuilder
         If struct.Name.Equals("cef_app") OrElse
                 struct.Name.Equals("cef_get_geolocation_callback") OrElse
                 struct.Name.Equals("cef_end_tracing_callback") OrElse
+                struct.Name.Equals("cef_completion_callback") OrElse
                 struct.Name.EndsWith("handler") OrElse
                 struct.Name.EndsWith("_client") OrElse
                 struct.Name.EndsWith("visitor") OrElse

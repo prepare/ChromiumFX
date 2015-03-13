@@ -338,7 +338,9 @@ namespace Chromium {
 
             // cef_completion_callback
 
-            cfx_completion_callback_on_complete = (cfx_completion_callback_on_complete_delegate)GetDelegate(libcfxPtr, "cfx_completion_callback_on_complete", typeof(cfx_completion_callback_on_complete_delegate));
+            cfx_completion_callback_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_completion_callback_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
+            cfx_completion_callback_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_completion_callback_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
+            cfx_completion_callback_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_completion_callback_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_context_menu_handler
