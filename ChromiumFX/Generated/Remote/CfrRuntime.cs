@@ -146,22 +146,6 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Request a one-time geolocation update. This function bypasses any user
-        /// permission checks so should only be used by code that is allowed to access
-        /// location information.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_capi.h">cef/include/capi/cef_geolocation_capi.h</see>.
-        /// </remarks>
-        public int GetGeolocation(CfrGetGeolocationCallback callback) {
-            var call = new CfxRuntimeGetGeolocationRenderProcessCall();
-            call.callback = CfrObject.Unwrap(callback);
-            call.Execute(connection);
-            return call.__retval;
-        }
-
-        /// <summary>
         /// Returns the mime type for the specified file extension or an NULL string if
         /// unknown.
         /// </summary>
