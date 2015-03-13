@@ -154,8 +154,6 @@
     <Compile Include="Generated\Remote\CfrDomNode.cs" />
     <Compile Include="Generated\Remote\CfrDomVisitor.cs" />
     <Compile Include="Generated\Remote\CfrFrame.cs" />
-    <Compile Include="Generated\Remote\CfrGeoposition.cs" />
-    <Compile Include="Generated\Remote\CfrGetGeolocationCallback.cs" />
     <Compile Include="Generated\Remote\CfrListValue.cs" />
     <Compile Include="Generated\Remote\CfrLoadHandler.cs" />
     <Compile Include="Generated\Remote\CfrPostData.cs" />
@@ -187,8 +185,6 @@
     <Compile Include="Generated\Remote\CfxDomNodeRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxDomVisitorRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxFrameRemoteCalls.cs" />
-    <Compile Include="Generated\Remote\CfxGeopositionRemoteCalls.cs" />
-    <Compile Include="Generated\Remote\CfxGetGeolocationCallbackRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxListValueRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxLoadHandlerRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxPostDataElementRemoteCalls.cs" />
