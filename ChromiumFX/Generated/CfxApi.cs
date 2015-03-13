@@ -1145,10 +1145,10 @@ namespace Chromium {
 
         // CfxCompletionCallback
 
-        // CFX_EXPORT void cfx_completion_callback_on_complete(cef_completion_callback_t* self)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_completion_callback_on_complete_delegate(IntPtr self);
-        public static cfx_completion_callback_on_complete_delegate cfx_completion_callback_on_complete;
+        // CFX_EXPORT cfx_completion_callback_t* cfx_completion_callback_ctor();
+        public static cfx_ctor_with_gc_handle_delegate cfx_completion_callback_ctor;
+        public static cfx_get_gc_handle_delegate cfx_completion_callback_get_gc_handle;
+        public static cfx_set_callback_delegate cfx_completion_callback_set_managed_callback;
 
 
         // CfxContextMenuHandler
@@ -2040,10 +2040,10 @@ namespace Chromium {
 
         // CfxEndTracingCallback
 
-        // CFX_EXPORT void cfx_end_tracing_callback_on_end_tracing_complete(cef_end_tracing_callback_t* self, char16 *tracing_file_str, int tracing_file_length)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_end_tracing_callback_on_end_tracing_complete_delegate(IntPtr self, IntPtr tracing_file_str, int tracing_file_length);
-        public static cfx_end_tracing_callback_on_end_tracing_complete_delegate cfx_end_tracing_callback_on_end_tracing_complete;
+        // CFX_EXPORT cfx_end_tracing_callback_t* cfx_end_tracing_callback_ctor();
+        public static cfx_ctor_with_gc_handle_delegate cfx_end_tracing_callback_ctor;
+        public static cfx_get_gc_handle_delegate cfx_end_tracing_callback_get_gc_handle;
+        public static cfx_set_callback_delegate cfx_end_tracing_callback_set_managed_callback;
 
 
         // CfxFileDialogCallback
@@ -3676,18 +3676,18 @@ namespace Chromium {
 
         // CfxRunFileDialogCallback
 
-        // CFX_EXPORT void cfx_run_file_dialog_callback_cont(cef_run_file_dialog_callback_t* self, cef_browser_host_t* browser_host, cef_string_list_t file_paths)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_run_file_dialog_callback_cont_delegate(IntPtr self, IntPtr browser_host, IntPtr file_paths);
-        public static cfx_run_file_dialog_callback_cont_delegate cfx_run_file_dialog_callback_cont;
+        // CFX_EXPORT cfx_run_file_dialog_callback_t* cfx_run_file_dialog_callback_ctor();
+        public static cfx_ctor_with_gc_handle_delegate cfx_run_file_dialog_callback_ctor;
+        public static cfx_get_gc_handle_delegate cfx_run_file_dialog_callback_get_gc_handle;
+        public static cfx_set_callback_delegate cfx_run_file_dialog_callback_set_managed_callback;
 
 
         // CfxSchemeHandlerFactory
 
-        // CFX_EXPORT cef_resource_handler_t* cfx_scheme_handler_factory_create(cef_scheme_handler_factory_t* self, cef_browser_t* browser, cef_frame_t* frame, char16 *scheme_name_str, int scheme_name_length, cef_request_t* request)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate IntPtr cfx_scheme_handler_factory_create_delegate(IntPtr self, IntPtr browser, IntPtr frame, IntPtr scheme_name_str, int scheme_name_length, IntPtr request);
-        public static cfx_scheme_handler_factory_create_delegate cfx_scheme_handler_factory_create;
+        // CFX_EXPORT cfx_scheme_handler_factory_t* cfx_scheme_handler_factory_ctor();
+        public static cfx_ctor_with_gc_handle_delegate cfx_scheme_handler_factory_ctor;
+        public static cfx_get_gc_handle_delegate cfx_scheme_handler_factory_get_gc_handle;
+        public static cfx_set_callback_delegate cfx_scheme_handler_factory_set_managed_callback;
 
 
         // CfxSchemeRegistrar
@@ -4825,10 +4825,10 @@ namespace Chromium {
 
         // CfxWebPluginUnstableCallback
 
-        // CFX_EXPORT void cfx_web_plugin_unstable_callback_is_unstable(cef_web_plugin_unstable_callback_t* self, char16 *path_str, int path_length, int unstable)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_web_plugin_unstable_callback_is_unstable_delegate(IntPtr self, IntPtr path_str, int path_length, int unstable);
-        public static cfx_web_plugin_unstable_callback_is_unstable_delegate cfx_web_plugin_unstable_callback_is_unstable;
+        // CFX_EXPORT cfx_web_plugin_unstable_callback_t* cfx_web_plugin_unstable_callback_ctor();
+        public static cfx_ctor_with_gc_handle_delegate cfx_web_plugin_unstable_callback_ctor;
+        public static cfx_get_gc_handle_delegate cfx_web_plugin_unstable_callback_get_gc_handle;
+        public static cfx_set_callback_delegate cfx_web_plugin_unstable_callback_set_managed_callback;
 
 
         // CfxWindowInfo

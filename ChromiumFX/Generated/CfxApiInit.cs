@@ -338,7 +338,9 @@ namespace Chromium {
 
             // cef_completion_callback
 
-            cfx_completion_callback_on_complete = (cfx_completion_callback_on_complete_delegate)GetDelegate(libcfxPtr, "cfx_completion_callback_on_complete", typeof(cfx_completion_callback_on_complete_delegate));
+            cfx_completion_callback_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_completion_callback_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
+            cfx_completion_callback_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_completion_callback_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
+            cfx_completion_callback_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_completion_callback_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_context_menu_handler
@@ -604,7 +606,9 @@ namespace Chromium {
 
             // cef_end_tracing_callback
 
-            cfx_end_tracing_callback_on_end_tracing_complete = (cfx_end_tracing_callback_on_end_tracing_complete_delegate)GetDelegate(libcfxPtr, "cfx_end_tracing_callback_on_end_tracing_complete", typeof(cfx_end_tracing_callback_on_end_tracing_complete_delegate));
+            cfx_end_tracing_callback_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_end_tracing_callback_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
+            cfx_end_tracing_callback_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_end_tracing_callback_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
+            cfx_end_tracing_callback_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_end_tracing_callback_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_file_dialog_callback
@@ -1141,12 +1145,16 @@ namespace Chromium {
 
             // cef_run_file_dialog_callback
 
-            cfx_run_file_dialog_callback_cont = (cfx_run_file_dialog_callback_cont_delegate)GetDelegate(libcfxPtr, "cfx_run_file_dialog_callback_cont", typeof(cfx_run_file_dialog_callback_cont_delegate));
+            cfx_run_file_dialog_callback_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_run_file_dialog_callback_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
+            cfx_run_file_dialog_callback_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_run_file_dialog_callback_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
+            cfx_run_file_dialog_callback_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_run_file_dialog_callback_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_scheme_handler_factory
 
-            cfx_scheme_handler_factory_create = (cfx_scheme_handler_factory_create_delegate)GetDelegate(libcfxPtr, "cfx_scheme_handler_factory_create", typeof(cfx_scheme_handler_factory_create_delegate));
+            cfx_scheme_handler_factory_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_scheme_handler_factory_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
+            cfx_scheme_handler_factory_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_scheme_handler_factory_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
+            cfx_scheme_handler_factory_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_scheme_handler_factory_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_scheme_registrar
@@ -1499,7 +1507,9 @@ namespace Chromium {
 
             // cef_web_plugin_unstable_callback
 
-            cfx_web_plugin_unstable_callback_is_unstable = (cfx_web_plugin_unstable_callback_is_unstable_delegate)GetDelegate(libcfxPtr, "cfx_web_plugin_unstable_callback_is_unstable", typeof(cfx_web_plugin_unstable_callback_is_unstable_delegate));
+            cfx_web_plugin_unstable_callback_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_web_plugin_unstable_callback_ctor", typeof(cfx_ctor_with_gc_handle_delegate));
+            cfx_web_plugin_unstable_callback_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, "cfx_web_plugin_unstable_callback_get_gc_handle", typeof(cfx_get_gc_handle_delegate));
+            cfx_web_plugin_unstable_callback_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_web_plugin_unstable_callback_set_managed_callback", typeof(cfx_set_callback_delegate));
 
 
             // cef_window_info

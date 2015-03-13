@@ -35,7 +35,7 @@ using System;
 namespace Chromium.Remote {
 
     /// <summary>
-    /// Base class for all remote wrapper classes.
+    /// Base class for all remote wrapper classes for CEF structs.
     /// </summary>
     public abstract class CfrObject : IDisposable {
 

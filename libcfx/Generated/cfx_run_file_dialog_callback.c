@@ -37,14 +37,59 @@
 extern "C" {
 #endif
 
-// cef_base_t base
+typedef struct _cfx_run_file_dialog_callback_t {
+    cef_run_file_dialog_callback_t cef_run_file_dialog_callback;
+    unsigned int ref_count;
+    gc_handle_t gc_handle;
+} cfx_run_file_dialog_callback_t;
 
-// cont
-CFX_EXPORT void cfx_run_file_dialog_callback_cont(cef_run_file_dialog_callback_t* self, cef_browser_host_t* browser_host, cef_string_list_t file_paths) {
-    if(browser_host) ((cef_base_t*)browser_host)->add_ref((cef_base_t*)browser_host);
-    self->cont(self, browser_host, file_paths);
+void CEF_CALLBACK _cfx_run_file_dialog_callback_add_ref(struct _cef_base_t* base) {
+    cfx_run_file_dialog_callback_t* ptr = (cfx_run_file_dialog_callback_t*)base;
+    InterlockedIncrement(&ptr->ref_count);
+}
+int CEF_CALLBACK _cfx_run_file_dialog_callback_release(struct _cef_base_t* base) {
+    cfx_run_file_dialog_callback_t* ptr = (cfx_run_file_dialog_callback_t*)base;
+    int count = InterlockedDecrement(&((cfx_run_file_dialog_callback_t*)ptr)->ref_count);
+    if(!count) {
+        cfx_gc_handle_free(((cfx_run_file_dialog_callback_t*)ptr)->gc_handle);
+        free(ptr);
+    }
+    return count;
 }
 
+CFX_EXPORT cfx_run_file_dialog_callback_t* cfx_run_file_dialog_callback_ctor(gc_handle_t gc_handle) {
+    cfx_run_file_dialog_callback_t* ptr = (cfx_run_file_dialog_callback_t*)calloc(1, sizeof(cfx_run_file_dialog_callback_t));
+    if(!ptr) return 0;
+    ptr->cef_run_file_dialog_callback.base.size = sizeof(cef_run_file_dialog_callback_t);
+    ptr->cef_run_file_dialog_callback.base.add_ref = _cfx_run_file_dialog_callback_add_ref;
+    ptr->cef_run_file_dialog_callback.base.release = _cfx_run_file_dialog_callback_release;
+    ptr->ref_count = 1;
+    ptr->gc_handle = gc_handle;
+    return ptr;
+}
+
+CFX_EXPORT gc_handle_t cfx_run_file_dialog_callback_get_gc_handle(cfx_run_file_dialog_callback_t* self) {
+    return self->gc_handle;
+}
+
+// cont
+
+void (CEF_CALLBACK *cfx_run_file_dialog_callback_cont_callback)(gc_handle_t self, cef_browser_host_t* browser_host, cef_string_list_t file_paths);
+
+void CEF_CALLBACK cfx_run_file_dialog_callback_cont(cef_run_file_dialog_callback_t* self, cef_browser_host_t* browser_host, cef_string_list_t file_paths) {
+    cfx_run_file_dialog_callback_cont_callback(((cfx_run_file_dialog_callback_t*)self)->gc_handle, browser_host, file_paths);
+}
+
+
+CFX_EXPORT void cfx_run_file_dialog_callback_set_managed_callback(cef_run_file_dialog_callback_t* self, int index, void* callback) {
+    switch(index) {
+    case 0:
+        if(callback && !cfx_run_file_dialog_callback_cont_callback)
+            cfx_run_file_dialog_callback_cont_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_host_t* browser_host, cef_string_list_t file_paths)) callback;
+        self->cont = callback ? cfx_run_file_dialog_callback_cont : 0;
+        break;
+    }
+}
 
 #ifdef __cplusplus
 } // extern "C"

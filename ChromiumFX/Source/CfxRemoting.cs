@@ -37,6 +37,9 @@ namespace Chromium {
 
     public delegate int CfxRenderProcessStartupDelegate(CfrRuntime remoteRumtime);
 
+    /// <summary>
+    /// Provides methods to setup the remoting interface for the render processes.
+    /// </summary>
     public class CfxRemoting {
 
         /// <summary>

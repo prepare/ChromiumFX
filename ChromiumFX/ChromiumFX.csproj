@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -153,10 +153,7 @@
     <Compile Include="Generated\Remote\CfrDomDocument.cs" />
     <Compile Include="Generated\Remote\CfrDomNode.cs" />
     <Compile Include="Generated\Remote\CfrDomVisitor.cs" />
-    <Compile Include="Generated\Remote\CfrEndTracingCallback.cs" />
     <Compile Include="Generated\Remote\CfrFrame.cs" />
-    <Compile Include="Generated\Remote\CfrGeoposition.cs" />
-    <Compile Include="Generated\Remote\CfrGetGeolocationCallback.cs" />
     <Compile Include="Generated\Remote\CfrListValue.cs" />
     <Compile Include="Generated\Remote\CfrLoadHandler.cs" />
     <Compile Include="Generated\Remote\CfrPostData.cs" />
@@ -187,10 +184,7 @@
     <Compile Include="Generated\Remote\CfxDomDocumentRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxDomNodeRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxDomVisitorRemoteCalls.cs" />
-    <Compile Include="Generated\Remote\CfxEndTracingCallbackRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxFrameRemoteCalls.cs" />
-    <Compile Include="Generated\Remote\CfxGeopositionRemoteCalls.cs" />
-    <Compile Include="Generated\Remote\CfxGetGeolocationCallbackRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxListValueRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxLoadHandlerRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxPostDataElementRemoteCalls.cs" />

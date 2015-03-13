@@ -32,6 +32,9 @@
 
 using System;
 namespace Chromium {
+    /// <summary>
+    /// Base class for all wrapper classes for ref counted CEF structs.
+    /// </summary>
     public abstract class CfxBase : CfxObject {
 
         static internal CfxBase Cast(IntPtr nativePtr) {
