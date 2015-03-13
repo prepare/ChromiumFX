@@ -35,7 +35,7 @@ using System;
 namespace Chromium {
 
     /// <summary>
-    /// Base class for all CEF wrapper classes.
+    /// Base class for all wrapper classes for CEF structs.
     /// </summary>
     public abstract class CfxObject : IDisposable {
 
