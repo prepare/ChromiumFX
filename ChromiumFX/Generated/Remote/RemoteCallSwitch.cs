@@ -61,8 +61,6 @@ namespace Chromium.Remote {
                     return new CfxRuntimeRegisterExtensionRenderProcessCall();
                 case RemoteCallId.CfxRuntimeRemoveCrossOriginWhitelistEntryRenderProcessCall:
                     return new CfxRuntimeRemoveCrossOriginWhitelistEntryRenderProcessCall();
-                case RemoteCallId.CfxRuntimeSetOsModalLoopRenderProcessCall:
-                    return new CfxRuntimeSetOsModalLoopRenderProcessCall();
                 case RemoteCallId.CfxAppCtorRenderProcessCall:
                     return new CfxAppCtorRenderProcessCall();
                 case RemoteCallId.CfxOnBeforeCommandLineProcessingBrowserProcessCall:
