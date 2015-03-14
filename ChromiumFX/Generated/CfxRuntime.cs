@@ -649,8 +649,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
-        public static void SetOsModalLoop(int osModalLoop) {
-            CfxApi.cfx_set_osmodal_loop(osModalLoop);
+        public static void SetOsModalLoop(bool osModalLoop) {
+            CfxApi.cfx_set_osmodal_loop(osModalLoop ? 1 : 0);
         }
 
         /// <summary>
