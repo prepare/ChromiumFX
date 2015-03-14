@@ -18,6 +18,7 @@ cef_register_scheme_handler_factory
 cef_register_web_plugin_crash
 cef_remove_web_plugin_path
 cef_run_message_loop
+cef_set_osmodal_loop
 cef_shutdown
 cef_unregister_internal_web_plugin
 cef_visit_web_plugin_info

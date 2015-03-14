@@ -417,30 +417,4 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxRuntimeSetOsModalLoopRenderProcessCall : RenderProcessCall {
-
-        internal CfxRuntimeSetOsModalLoopRenderProcessCall()
-            : base(RemoteCallId.CfxRuntimeSetOsModalLoopRenderProcessCall) {}
-
-        internal bool osModalLoop;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(osModalLoop);
-        }
-
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out osModalLoop);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            CfxRuntime.SetOsModalLoop(osModalLoop);
-        }
-    }
-
 }

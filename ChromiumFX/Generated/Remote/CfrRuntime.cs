@@ -310,19 +310,5 @@ namespace Chromium.Remote {
             return call.__retval;
         }
 
-        /// <summary>
-        /// Set to true (1) before calling Windows APIs like TrackPopupMenu that enter a
-        /// modal message loop. Set to false (0) after exiting the modal message loop.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
-        /// </remarks>
-        public void SetOsModalLoop(bool osModalLoop) {
-            var call = new CfxRuntimeSetOsModalLoopRenderProcessCall();
-            call.osModalLoop = osModalLoop;
-            call.Execute(connection);
-        }
-
     }
 }
