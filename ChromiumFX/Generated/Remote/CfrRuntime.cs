@@ -318,7 +318,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
-        public void SetOsModalLoop(int osModalLoop) {
+        public void SetOsModalLoop(bool osModalLoop) {
             var call = new CfxRuntimeSetOsModalLoopRenderProcessCall();
             call.osModalLoop = osModalLoop;
             call.Execute(connection);

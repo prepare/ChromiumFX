@@ -81,7 +81,7 @@ Public Class BooleanIntDetector
                                        "isLoading", "canGoBack", "canGoForward",
                                        "on_before_resource_load", "process_request", "read_response",
                                        "forward", "matchCase", "findNext", "visible", "hidden", "mouseUp", "mouseLeave", "setFocus",
-                                       "no_javascript_access", "exclude_empty_children"}
+                                       "no_javascript_access", "exclude_empty_children", "osModalLoop"}
 
     Public Shared Function BooleanContext(context As String) As Boolean
 

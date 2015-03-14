@@ -422,7 +422,7 @@ namespace Chromium.Remote {
         internal CfxRuntimeSetOsModalLoopRenderProcessCall()
             : base(RemoteCallId.CfxRuntimeSetOsModalLoopRenderProcessCall) {}
 
-        internal int osModalLoop;
+        internal bool osModalLoop;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(osModalLoop);
