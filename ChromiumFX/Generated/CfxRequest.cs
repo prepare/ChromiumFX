@@ -108,9 +108,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Get the fully qualified URL.
-        /// 
-        /// Set the fully qualified URL.
+        /// Get or set the fully qualified URL.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -149,9 +147,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Get the post data.
-        /// 
-        /// Set the post data.
+        /// Get or set the post data.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

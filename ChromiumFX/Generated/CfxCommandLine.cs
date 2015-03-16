@@ -160,9 +160,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Get the program part of the command line string (the first item).
-        /// 
-        /// Set the program part of the command line string (the first item).
+        /// Get or set the program part of the command line string (the first item).
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

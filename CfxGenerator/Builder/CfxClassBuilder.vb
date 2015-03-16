@@ -530,13 +530,25 @@ Public Class CfxClassBuilder
 
         For Each p In m_structProperties
             If p.Setter IsNot Nothing AndAlso p.Setter.Comments IsNot Nothing Then
-                Dim summaryLines As New List(Of String)
-                summaryLines.AddRange(p.Getter.Comments.Lines)
-                summaryLines.Add("")
-                summaryLines.AddRange(p.Setter.Comments.Lines)
+
                 Dim summary = New CommentData
-                summary.Lines = summaryLines.ToArray()
                 summary.FileName = p.Getter.Comments.FileName
+
+                If p.Getter.Comments.Lines.Length = 1 AndAlso
+                        p.Setter.Comments.Lines.Length = 1 AndAlso
+                        p.Getter.Comments.Lines(0).StartsWith("Get ") AndAlso
+                        p.Setter.Comments.Lines(0).StartsWith("Set ") AndAlso
+                        p.Getter.Comments.Lines(0).Substring(4).Equals(p.Setter.Comments.Lines(0).Substring(4)) Then
+
+                    summary.Lines = {"Get or set " & p.Getter.Comments.Lines(0).Substring(4)}
+                Else
+                    Dim summaryLines As New List(Of String)
+                    summaryLines.AddRange(p.Getter.Comments.Lines)
+                    summaryLines.Add("")
+                    summaryLines.AddRange(p.Setter.Comments.Lines)
+                    summary.Lines = summaryLines.ToArray()
+                End If
+
                 b.AppendSummaryAndRemarks(summary)
             Else
                 b.AppendSummaryAndRemarks(p.Getter.Comments)
