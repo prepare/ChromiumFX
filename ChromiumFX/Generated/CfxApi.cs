@@ -37,6 +37,72 @@ using System;
 
 namespace Chromium {
     internal partial class CfxApi {
+
+        private static void InstantiateRuntimeDelegates() {
+            CfxApi.cfx_add_cross_origin_whitelist_entry = (CfxApi.cfx_add_cross_origin_whitelist_entry_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_add_cross_origin_whitelist_entry", typeof(CfxApi.cfx_add_cross_origin_whitelist_entry_delegate));
+            CfxApi.cfx_add_web_plugin_directory = (CfxApi.cfx_add_web_plugin_directory_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_add_web_plugin_directory", typeof(CfxApi.cfx_add_web_plugin_directory_delegate));
+            CfxApi.cfx_add_web_plugin_path = (CfxApi.cfx_add_web_plugin_path_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_add_web_plugin_path", typeof(CfxApi.cfx_add_web_plugin_path_delegate));
+            CfxApi.cfx_api_hash = (CfxApi.cfx_api_hash_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_api_hash", typeof(CfxApi.cfx_api_hash_delegate));
+            CfxApi.cfx_begin_tracing = (CfxApi.cfx_begin_tracing_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_begin_tracing", typeof(CfxApi.cfx_begin_tracing_delegate));
+            CfxApi.cfx_build_revision = (CfxApi.cfx_build_revision_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_build_revision", typeof(CfxApi.cfx_build_revision_delegate));
+            CfxApi.cfx_clear_cross_origin_whitelist = (CfxApi.cfx_clear_cross_origin_whitelist_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_clear_cross_origin_whitelist", typeof(CfxApi.cfx_clear_cross_origin_whitelist_delegate));
+            CfxApi.cfx_clear_scheme_handler_factories = (CfxApi.cfx_clear_scheme_handler_factories_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_clear_scheme_handler_factories", typeof(CfxApi.cfx_clear_scheme_handler_factories_delegate));
+            CfxApi.cfx_create_url = (CfxApi.cfx_create_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_create_url", typeof(CfxApi.cfx_create_url_delegate));
+            CfxApi.cfx_currently_on = (CfxApi.cfx_currently_on_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_currently_on", typeof(CfxApi.cfx_currently_on_delegate));
+            CfxApi.cfx_do_message_loop_work = (CfxApi.cfx_do_message_loop_work_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_do_message_loop_work", typeof(CfxApi.cfx_do_message_loop_work_delegate));
+            CfxApi.cfx_end_tracing = (CfxApi.cfx_end_tracing_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_end_tracing", typeof(CfxApi.cfx_end_tracing_delegate));
+            CfxApi.cfx_execute_process = (CfxApi.cfx_execute_process_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_execute_process", typeof(CfxApi.cfx_execute_process_delegate));
+            CfxApi.cfx_force_web_plugin_shutdown = (CfxApi.cfx_force_web_plugin_shutdown_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_force_web_plugin_shutdown", typeof(CfxApi.cfx_force_web_plugin_shutdown_delegate));
+            CfxApi.cfx_get_extensions_for_mime_type = (CfxApi.cfx_get_extensions_for_mime_type_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_get_extensions_for_mime_type", typeof(CfxApi.cfx_get_extensions_for_mime_type_delegate));
+            CfxApi.cfx_get_geolocation = (CfxApi.cfx_get_geolocation_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_get_geolocation", typeof(CfxApi.cfx_get_geolocation_delegate));
+            CfxApi.cfx_get_mime_type = (CfxApi.cfx_get_mime_type_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_get_mime_type", typeof(CfxApi.cfx_get_mime_type_delegate));
+            CfxApi.cfx_get_path = (CfxApi.cfx_get_path_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_get_path", typeof(CfxApi.cfx_get_path_delegate));
+            CfxApi.cfx_initialize = (CfxApi.cfx_initialize_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_initialize", typeof(CfxApi.cfx_initialize_delegate));
+            CfxApi.cfx_is_web_plugin_unstable = (CfxApi.cfx_is_web_plugin_unstable_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_is_web_plugin_unstable", typeof(CfxApi.cfx_is_web_plugin_unstable_delegate));
+            CfxApi.cfx_launch_process = (CfxApi.cfx_launch_process_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_launch_process", typeof(CfxApi.cfx_launch_process_delegate));
+            CfxApi.cfx_now_from_system_trace_time = (CfxApi.cfx_now_from_system_trace_time_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_now_from_system_trace_time", typeof(CfxApi.cfx_now_from_system_trace_time_delegate));
+            CfxApi.cfx_parse_url = (CfxApi.cfx_parse_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_parse_url", typeof(CfxApi.cfx_parse_url_delegate));
+            CfxApi.cfx_post_delayed_task = (CfxApi.cfx_post_delayed_task_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_post_delayed_task", typeof(CfxApi.cfx_post_delayed_task_delegate));
+            CfxApi.cfx_post_task = (CfxApi.cfx_post_task_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_post_task", typeof(CfxApi.cfx_post_task_delegate));
+            CfxApi.cfx_quit_message_loop = (CfxApi.cfx_quit_message_loop_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_quit_message_loop", typeof(CfxApi.cfx_quit_message_loop_delegate));
+            CfxApi.cfx_refresh_web_plugins = (CfxApi.cfx_refresh_web_plugins_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_refresh_web_plugins", typeof(CfxApi.cfx_refresh_web_plugins_delegate));
+            CfxApi.cfx_register_extension = (CfxApi.cfx_register_extension_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_register_extension", typeof(CfxApi.cfx_register_extension_delegate));
+            CfxApi.cfx_register_scheme_handler_factory = (CfxApi.cfx_register_scheme_handler_factory_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_register_scheme_handler_factory", typeof(CfxApi.cfx_register_scheme_handler_factory_delegate));
+            CfxApi.cfx_register_web_plugin_crash = (CfxApi.cfx_register_web_plugin_crash_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_register_web_plugin_crash", typeof(CfxApi.cfx_register_web_plugin_crash_delegate));
+            CfxApi.cfx_remove_cross_origin_whitelist_entry = (CfxApi.cfx_remove_cross_origin_whitelist_entry_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_remove_cross_origin_whitelist_entry", typeof(CfxApi.cfx_remove_cross_origin_whitelist_entry_delegate));
+            CfxApi.cfx_remove_web_plugin_path = (CfxApi.cfx_remove_web_plugin_path_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_remove_web_plugin_path", typeof(CfxApi.cfx_remove_web_plugin_path_delegate));
+            CfxApi.cfx_run_message_loop = (CfxApi.cfx_run_message_loop_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_run_message_loop", typeof(CfxApi.cfx_run_message_loop_delegate));
+            CfxApi.cfx_set_osmodal_loop = (CfxApi.cfx_set_osmodal_loop_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_set_osmodal_loop", typeof(CfxApi.cfx_set_osmodal_loop_delegate));
+            CfxApi.cfx_shutdown = (CfxApi.cfx_shutdown_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_shutdown", typeof(CfxApi.cfx_shutdown_delegate));
+            CfxApi.cfx_unregister_internal_web_plugin = (CfxApi.cfx_unregister_internal_web_plugin_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_unregister_internal_web_plugin", typeof(CfxApi.cfx_unregister_internal_web_plugin_delegate));
+            CfxApi.cfx_version_info = (CfxApi.cfx_version_info_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_version_info", typeof(CfxApi.cfx_version_info_delegate));
+            CfxApi.cfx_visit_web_plugin_info = (CfxApi.cfx_visit_web_plugin_info_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_visit_web_plugin_info", typeof(CfxApi.cfx_visit_web_plugin_info_delegate));
+            CfxApi.cfx_string_list_alloc = (CfxApi.cfx_string_list_alloc_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_list_alloc", typeof(CfxApi.cfx_string_list_alloc_delegate));
+            CfxApi.cfx_string_list_size = (CfxApi.cfx_string_list_size_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_list_size", typeof(CfxApi.cfx_string_list_size_delegate));
+            CfxApi.cfx_string_list_value = (CfxApi.cfx_string_list_value_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_list_value", typeof(CfxApi.cfx_string_list_value_delegate));
+            CfxApi.cfx_string_list_append = (CfxApi.cfx_string_list_append_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_list_append", typeof(CfxApi.cfx_string_list_append_delegate));
+            CfxApi.cfx_string_list_clear = (CfxApi.cfx_string_list_clear_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_list_clear", typeof(CfxApi.cfx_string_list_clear_delegate));
+            CfxApi.cfx_string_list_free = (CfxApi.cfx_string_list_free_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_list_free", typeof(CfxApi.cfx_string_list_free_delegate));
+            CfxApi.cfx_string_list_copy = (CfxApi.cfx_string_list_copy_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_list_copy", typeof(CfxApi.cfx_string_list_copy_delegate));
+            CfxApi.cfx_string_map_alloc = (CfxApi.cfx_string_map_alloc_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_map_alloc", typeof(CfxApi.cfx_string_map_alloc_delegate));
+            CfxApi.cfx_string_map_size = (CfxApi.cfx_string_map_size_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_map_size", typeof(CfxApi.cfx_string_map_size_delegate));
+            CfxApi.cfx_string_map_find = (CfxApi.cfx_string_map_find_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_map_find", typeof(CfxApi.cfx_string_map_find_delegate));
+            CfxApi.cfx_string_map_key = (CfxApi.cfx_string_map_key_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_map_key", typeof(CfxApi.cfx_string_map_key_delegate));
+            CfxApi.cfx_string_map_value = (CfxApi.cfx_string_map_value_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_map_value", typeof(CfxApi.cfx_string_map_value_delegate));
+            CfxApi.cfx_string_map_append = (CfxApi.cfx_string_map_append_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_map_append", typeof(CfxApi.cfx_string_map_append_delegate));
+            CfxApi.cfx_string_map_clear = (CfxApi.cfx_string_map_clear_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_map_clear", typeof(CfxApi.cfx_string_map_clear_delegate));
+            CfxApi.cfx_string_map_free = (CfxApi.cfx_string_map_free_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_map_free", typeof(CfxApi.cfx_string_map_free_delegate));
+            CfxApi.cfx_string_multimap_alloc = (CfxApi.cfx_string_multimap_alloc_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_multimap_alloc", typeof(CfxApi.cfx_string_multimap_alloc_delegate));
+            CfxApi.cfx_string_multimap_size = (CfxApi.cfx_string_multimap_size_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_multimap_size", typeof(CfxApi.cfx_string_multimap_size_delegate));
+            CfxApi.cfx_string_multimap_find_count = (CfxApi.cfx_string_multimap_find_count_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_multimap_find_count", typeof(CfxApi.cfx_string_multimap_find_count_delegate));
+            CfxApi.cfx_string_multimap_enumerate = (CfxApi.cfx_string_multimap_enumerate_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_multimap_enumerate", typeof(CfxApi.cfx_string_multimap_enumerate_delegate));
+            CfxApi.cfx_string_multimap_key = (CfxApi.cfx_string_multimap_key_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_multimap_key", typeof(CfxApi.cfx_string_multimap_key_delegate));
+            CfxApi.cfx_string_multimap_value = (CfxApi.cfx_string_multimap_value_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_multimap_value", typeof(CfxApi.cfx_string_multimap_value_delegate));
+            CfxApi.cfx_string_multimap_append = (CfxApi.cfx_string_multimap_append_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_multimap_append", typeof(CfxApi.cfx_string_multimap_append_delegate));
+            CfxApi.cfx_string_multimap_clear = (CfxApi.cfx_string_multimap_clear_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_multimap_clear", typeof(CfxApi.cfx_string_multimap_clear_delegate));
+            CfxApi.cfx_string_multimap_free = (CfxApi.cfx_string_multimap_free_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_multimap_free", typeof(CfxApi.cfx_string_multimap_free_delegate));
+        }
+
         // global cef export functions
 
         // CEF_EXPORT int cef_add_cross_origin_whitelist_entry(const cef_string_t* source_origin, const cef_string_t* target_protocol, const cef_string_t* target_domain, int allow_target_subdomains);

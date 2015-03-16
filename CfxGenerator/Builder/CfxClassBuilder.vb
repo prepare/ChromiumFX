@@ -464,24 +464,6 @@ Public Class CfxClassBuilder
 
     End Sub
 
-    Public Sub EmitApiInitialization(b As CodeBuilder)
-
-        b.AppendComment(struct.Name)
-        b.AppendLine()
-
-        If Category = StructCategory.Values Then
-            
-            b.AppendLine()
-
-        ElseIf Category = StructCategory.ApiCalls Then
-            
-        Else
-
-
-        End If
-
-    End Sub
-
     Public Sub EmitPublicClass(b As CodeBuilder)
 
         Select Case Category
