@@ -247,7 +247,6 @@
     <Compile Include="Source\Remote\RemoteClient.cs" />
     <Compile Include="Source\Remote\RemoteService.cs" />
     <Compile Include="Source\CfxRuntime.cs" />
-    <Compile Include="Source\StringUserfree.cs" />
     <Compile Include="Source\CfxStructure.cs" />
     <Compile Include="Source\WeakCache.cs" />
     <Compile Include="Source\WinAPI.cs" />

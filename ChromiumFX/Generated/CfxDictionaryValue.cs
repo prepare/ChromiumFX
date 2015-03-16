@@ -293,7 +293,7 @@ namespace Chromium {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_get_string(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
-            return StringUserfree.Convert(__retval);
+            return StringFunctions.ConvertStringUserfree(__retval);
         }
 
         /// <summary>

@@ -130,7 +130,7 @@ namespace Chromium {
         /// </remarks>
         public String StatusText {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_response_get_status_text(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_response_get_status_text(NativePtr));
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -150,7 +150,7 @@ namespace Chromium {
         /// </remarks>
         public String MimeType {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_response_get_mime_type(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_response_get_mime_type(NativePtr));
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -170,7 +170,7 @@ namespace Chromium {
             var name_pinned = new PinnedString(name);
             var __retval = CfxApi.cfx_response_get_header(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length);
             name_pinned.Obj.Free();
-            return StringUserfree.Convert(__retval);
+            return StringFunctions.ConvertStringUserfree(__retval);
         }
 
         /// <summary>

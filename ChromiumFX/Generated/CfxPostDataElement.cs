@@ -121,7 +121,7 @@ namespace Chromium {
         /// </remarks>
         public String File {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_post_data_element_get_file(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_post_data_element_get_file(NativePtr));
             }
         }
 

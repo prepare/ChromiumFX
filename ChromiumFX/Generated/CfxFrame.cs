@@ -144,7 +144,7 @@ namespace Chromium {
         /// </remarks>
         public String Name {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_frame_get_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_frame_get_name(NativePtr));
             }
         }
 
@@ -184,7 +184,7 @@ namespace Chromium {
         /// </remarks>
         public String Url {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_frame_get_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_frame_get_url(NativePtr));
             }
         }
 

@@ -102,7 +102,7 @@ namespace Chromium {
         /// </remarks>
         public String FileName {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_zip_reader_get_file_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_zip_reader_get_file_name(NativePtr));
             }
         }
 

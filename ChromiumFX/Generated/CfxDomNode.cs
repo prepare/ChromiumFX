@@ -165,7 +165,7 @@ namespace Chromium {
         /// </remarks>
         public String FormControlElementType {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_domnode_get_form_control_element_type(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_form_control_element_type(NativePtr));
             }
         }
 
@@ -178,7 +178,7 @@ namespace Chromium {
         /// </remarks>
         public String Name {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_domnode_get_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_name(NativePtr));
             }
         }
 
@@ -191,7 +191,7 @@ namespace Chromium {
         /// </remarks>
         public String Value {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_domnode_get_value(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_value(NativePtr));
             }
         }
 
@@ -204,7 +204,7 @@ namespace Chromium {
         /// </remarks>
         public String AsMarkup {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_domnode_get_as_markup(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_as_markup(NativePtr));
             }
         }
 
@@ -309,7 +309,7 @@ namespace Chromium {
         /// </remarks>
         public String ElementTagName {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_domnode_get_element_tag_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_element_tag_name(NativePtr));
             }
         }
 
@@ -335,7 +335,7 @@ namespace Chromium {
         /// </remarks>
         public String ElementInnerText {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_domnode_get_element_inner_text(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_element_inner_text(NativePtr));
             }
         }
 
@@ -390,7 +390,7 @@ namespace Chromium {
             var attrName_pinned = new PinnedString(attrName);
             var __retval = CfxApi.cfx_domnode_get_element_attribute(NativePtr, attrName_pinned.Obj.PinnedPtr, attrName_pinned.Length);
             attrName_pinned.Obj.Free();
-            return StringUserfree.Convert(__retval);
+            return StringFunctions.ConvertStringUserfree(__retval);
         }
 
         /// <summary>

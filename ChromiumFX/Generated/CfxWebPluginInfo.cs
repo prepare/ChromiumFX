@@ -78,7 +78,7 @@ namespace Chromium {
         /// </remarks>
         public String Name {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_web_plugin_info_get_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_web_plugin_info_get_name(NativePtr));
             }
         }
 
@@ -91,7 +91,7 @@ namespace Chromium {
         /// </remarks>
         public String Path {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_web_plugin_info_get_path(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_web_plugin_info_get_path(NativePtr));
             }
         }
 
@@ -104,7 +104,7 @@ namespace Chromium {
         /// </remarks>
         public String Version {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_web_plugin_info_get_version(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_web_plugin_info_get_version(NativePtr));
             }
         }
 
@@ -117,7 +117,7 @@ namespace Chromium {
         /// </remarks>
         public String Description {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_web_plugin_info_get_description(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_web_plugin_info_get_description(NativePtr));
             }
         }
 

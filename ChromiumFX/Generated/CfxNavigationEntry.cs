@@ -99,7 +99,7 @@ namespace Chromium {
         /// </remarks>
         public String Url {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_navigation_entry_get_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_navigation_entry_get_url(NativePtr));
             }
         }
 
@@ -112,7 +112,7 @@ namespace Chromium {
         /// </remarks>
         public String DisplayUrl {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_navigation_entry_get_display_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_navigation_entry_get_display_url(NativePtr));
             }
         }
 
@@ -125,7 +125,7 @@ namespace Chromium {
         /// </remarks>
         public String OriginalUrl {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_navigation_entry_get_original_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_navigation_entry_get_original_url(NativePtr));
             }
         }
 
@@ -138,7 +138,7 @@ namespace Chromium {
         /// </remarks>
         public String Title {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_navigation_entry_get_title(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_navigation_entry_get_title(NativePtr));
             }
         }
 
@@ -179,7 +179,7 @@ namespace Chromium {
         /// </remarks>
         public String FrameName {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_navigation_entry_get_frame_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_navigation_entry_get_frame_name(NativePtr));
             }
         }
 

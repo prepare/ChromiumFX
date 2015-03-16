@@ -348,7 +348,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public String GetLabel(int commandId) {
-            return StringUserfree.Convert(CfxApi.cfx_menu_model_get_label(NativePtr, commandId));
+            return StringFunctions.ConvertStringUserfree(CfxApi.cfx_menu_model_get_label(NativePtr, commandId));
         }
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public String GetLabelAt(int index) {
-            return StringUserfree.Convert(CfxApi.cfx_menu_model_get_label_at(NativePtr, index));
+            return StringFunctions.ConvertStringUserfree(CfxApi.cfx_menu_model_get_label_at(NativePtr, index));
         }
 
         /// <summary>
