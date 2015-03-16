@@ -43,6 +43,19 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxRect : CfxStructure {
 
+        static CfxRect () {
+            CfxApi.cfx_rect_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_rect_ctor", typeof(CfxApi.cfx_ctor_delegate));
+            CfxApi.cfx_rect_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_rect_dtor", typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_rect_set_x = (CfxApi.cfx_rect_set_x_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_rect_set_x", typeof(CfxApi.cfx_rect_set_x_delegate));
+            CfxApi.cfx_rect_get_x = (CfxApi.cfx_rect_get_x_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_rect_get_x", typeof(CfxApi.cfx_rect_get_x_delegate));
+            CfxApi.cfx_rect_set_y = (CfxApi.cfx_rect_set_y_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_rect_set_y", typeof(CfxApi.cfx_rect_set_y_delegate));
+            CfxApi.cfx_rect_get_y = (CfxApi.cfx_rect_get_y_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_rect_get_y", typeof(CfxApi.cfx_rect_get_y_delegate));
+            CfxApi.cfx_rect_set_width = (CfxApi.cfx_rect_set_width_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_rect_set_width", typeof(CfxApi.cfx_rect_set_width_delegate));
+            CfxApi.cfx_rect_get_width = (CfxApi.cfx_rect_get_width_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_rect_get_width", typeof(CfxApi.cfx_rect_get_width_delegate));
+            CfxApi.cfx_rect_set_height = (CfxApi.cfx_rect_set_height_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_rect_set_height", typeof(CfxApi.cfx_rect_set_height_delegate));
+            CfxApi.cfx_rect_get_height = (CfxApi.cfx_rect_get_height_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_rect_get_height", typeof(CfxApi.cfx_rect_get_height_delegate));
+        }
+
         internal static CfxRect Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxRect(nativePtr);

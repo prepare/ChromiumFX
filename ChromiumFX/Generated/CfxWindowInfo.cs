@@ -43,6 +43,35 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxWindowInfo : CfxStructure {
 
+        static CfxWindowInfo () {
+            CfxApi.cfx_window_info_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_ctor", typeof(CfxApi.cfx_ctor_delegate));
+            CfxApi.cfx_window_info_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_dtor", typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_window_info_set_ex_style = (CfxApi.cfx_window_info_set_ex_style_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_set_ex_style", typeof(CfxApi.cfx_window_info_set_ex_style_delegate));
+            CfxApi.cfx_window_info_get_ex_style = (CfxApi.cfx_window_info_get_ex_style_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_get_ex_style", typeof(CfxApi.cfx_window_info_get_ex_style_delegate));
+            CfxApi.cfx_window_info_set_window_name = (CfxApi.cfx_window_info_set_window_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_set_window_name", typeof(CfxApi.cfx_window_info_set_window_name_delegate));
+            CfxApi.cfx_window_info_get_window_name = (CfxApi.cfx_window_info_get_window_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_get_window_name", typeof(CfxApi.cfx_window_info_get_window_name_delegate));
+            CfxApi.cfx_window_info_set_style = (CfxApi.cfx_window_info_set_style_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_set_style", typeof(CfxApi.cfx_window_info_set_style_delegate));
+            CfxApi.cfx_window_info_get_style = (CfxApi.cfx_window_info_get_style_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_get_style", typeof(CfxApi.cfx_window_info_get_style_delegate));
+            CfxApi.cfx_window_info_set_x = (CfxApi.cfx_window_info_set_x_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_set_x", typeof(CfxApi.cfx_window_info_set_x_delegate));
+            CfxApi.cfx_window_info_get_x = (CfxApi.cfx_window_info_get_x_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_get_x", typeof(CfxApi.cfx_window_info_get_x_delegate));
+            CfxApi.cfx_window_info_set_y = (CfxApi.cfx_window_info_set_y_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_set_y", typeof(CfxApi.cfx_window_info_set_y_delegate));
+            CfxApi.cfx_window_info_get_y = (CfxApi.cfx_window_info_get_y_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_get_y", typeof(CfxApi.cfx_window_info_get_y_delegate));
+            CfxApi.cfx_window_info_set_width = (CfxApi.cfx_window_info_set_width_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_set_width", typeof(CfxApi.cfx_window_info_set_width_delegate));
+            CfxApi.cfx_window_info_get_width = (CfxApi.cfx_window_info_get_width_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_get_width", typeof(CfxApi.cfx_window_info_get_width_delegate));
+            CfxApi.cfx_window_info_set_height = (CfxApi.cfx_window_info_set_height_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_set_height", typeof(CfxApi.cfx_window_info_set_height_delegate));
+            CfxApi.cfx_window_info_get_height = (CfxApi.cfx_window_info_get_height_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_get_height", typeof(CfxApi.cfx_window_info_get_height_delegate));
+            CfxApi.cfx_window_info_set_parent_window = (CfxApi.cfx_window_info_set_parent_window_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_set_parent_window", typeof(CfxApi.cfx_window_info_set_parent_window_delegate));
+            CfxApi.cfx_window_info_get_parent_window = (CfxApi.cfx_window_info_get_parent_window_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_get_parent_window", typeof(CfxApi.cfx_window_info_get_parent_window_delegate));
+            CfxApi.cfx_window_info_set_menu = (CfxApi.cfx_window_info_set_menu_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_set_menu", typeof(CfxApi.cfx_window_info_set_menu_delegate));
+            CfxApi.cfx_window_info_get_menu = (CfxApi.cfx_window_info_get_menu_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_get_menu", typeof(CfxApi.cfx_window_info_get_menu_delegate));
+            CfxApi.cfx_window_info_set_windowless_rendering_enabled = (CfxApi.cfx_window_info_set_windowless_rendering_enabled_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_set_windowless_rendering_enabled", typeof(CfxApi.cfx_window_info_set_windowless_rendering_enabled_delegate));
+            CfxApi.cfx_window_info_get_windowless_rendering_enabled = (CfxApi.cfx_window_info_get_windowless_rendering_enabled_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_get_windowless_rendering_enabled", typeof(CfxApi.cfx_window_info_get_windowless_rendering_enabled_delegate));
+            CfxApi.cfx_window_info_set_transparent_painting_enabled = (CfxApi.cfx_window_info_set_transparent_painting_enabled_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_set_transparent_painting_enabled", typeof(CfxApi.cfx_window_info_set_transparent_painting_enabled_delegate));
+            CfxApi.cfx_window_info_get_transparent_painting_enabled = (CfxApi.cfx_window_info_get_transparent_painting_enabled_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_get_transparent_painting_enabled", typeof(CfxApi.cfx_window_info_get_transparent_painting_enabled_delegate));
+            CfxApi.cfx_window_info_set_window = (CfxApi.cfx_window_info_set_window_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_set_window", typeof(CfxApi.cfx_window_info_set_window_delegate));
+            CfxApi.cfx_window_info_get_window = (CfxApi.cfx_window_info_get_window_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_window_info_get_window", typeof(CfxApi.cfx_window_info_get_window_delegate));
+        }
+
         internal static CfxWindowInfo Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxWindowInfo(nativePtr);

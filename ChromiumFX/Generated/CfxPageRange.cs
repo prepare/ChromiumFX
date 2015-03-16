@@ -43,6 +43,15 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxPageRange : CfxStructure {
 
+        static CfxPageRange () {
+            CfxApi.cfx_page_range_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_page_range_ctor", typeof(CfxApi.cfx_ctor_delegate));
+            CfxApi.cfx_page_range_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_page_range_dtor", typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_page_range_set_from = (CfxApi.cfx_page_range_set_from_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_page_range_set_from", typeof(CfxApi.cfx_page_range_set_from_delegate));
+            CfxApi.cfx_page_range_get_from = (CfxApi.cfx_page_range_get_from_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_page_range_get_from", typeof(CfxApi.cfx_page_range_get_from_delegate));
+            CfxApi.cfx_page_range_set_to = (CfxApi.cfx_page_range_set_to_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_page_range_set_to", typeof(CfxApi.cfx_page_range_set_to_delegate));
+            CfxApi.cfx_page_range_get_to = (CfxApi.cfx_page_range_get_to_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_page_range_get_to", typeof(CfxApi.cfx_page_range_get_to_delegate));
+        }
+
         internal static CfxPageRange Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxPageRange(nativePtr);

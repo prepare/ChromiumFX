@@ -43,6 +43,27 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxKeyEvent : CfxStructure {
 
+        static CfxKeyEvent () {
+            CfxApi.cfx_key_event_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_key_event_ctor", typeof(CfxApi.cfx_ctor_delegate));
+            CfxApi.cfx_key_event_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_key_event_dtor", typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_key_event_set_type = (CfxApi.cfx_key_event_set_type_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_key_event_set_type", typeof(CfxApi.cfx_key_event_set_type_delegate));
+            CfxApi.cfx_key_event_get_type = (CfxApi.cfx_key_event_get_type_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_key_event_get_type", typeof(CfxApi.cfx_key_event_get_type_delegate));
+            CfxApi.cfx_key_event_set_modifiers = (CfxApi.cfx_key_event_set_modifiers_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_key_event_set_modifiers", typeof(CfxApi.cfx_key_event_set_modifiers_delegate));
+            CfxApi.cfx_key_event_get_modifiers = (CfxApi.cfx_key_event_get_modifiers_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_key_event_get_modifiers", typeof(CfxApi.cfx_key_event_get_modifiers_delegate));
+            CfxApi.cfx_key_event_set_windows_key_code = (CfxApi.cfx_key_event_set_windows_key_code_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_key_event_set_windows_key_code", typeof(CfxApi.cfx_key_event_set_windows_key_code_delegate));
+            CfxApi.cfx_key_event_get_windows_key_code = (CfxApi.cfx_key_event_get_windows_key_code_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_key_event_get_windows_key_code", typeof(CfxApi.cfx_key_event_get_windows_key_code_delegate));
+            CfxApi.cfx_key_event_set_native_key_code = (CfxApi.cfx_key_event_set_native_key_code_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_key_event_set_native_key_code", typeof(CfxApi.cfx_key_event_set_native_key_code_delegate));
+            CfxApi.cfx_key_event_get_native_key_code = (CfxApi.cfx_key_event_get_native_key_code_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_key_event_get_native_key_code", typeof(CfxApi.cfx_key_event_get_native_key_code_delegate));
+            CfxApi.cfx_key_event_set_is_system_key = (CfxApi.cfx_key_event_set_is_system_key_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_key_event_set_is_system_key", typeof(CfxApi.cfx_key_event_set_is_system_key_delegate));
+            CfxApi.cfx_key_event_get_is_system_key = (CfxApi.cfx_key_event_get_is_system_key_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_key_event_get_is_system_key", typeof(CfxApi.cfx_key_event_get_is_system_key_delegate));
+            CfxApi.cfx_key_event_set_character = (CfxApi.cfx_key_event_set_character_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_key_event_set_character", typeof(CfxApi.cfx_key_event_set_character_delegate));
+            CfxApi.cfx_key_event_get_character = (CfxApi.cfx_key_event_get_character_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_key_event_get_character", typeof(CfxApi.cfx_key_event_get_character_delegate));
+            CfxApi.cfx_key_event_set_unmodified_character = (CfxApi.cfx_key_event_set_unmodified_character_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_key_event_set_unmodified_character", typeof(CfxApi.cfx_key_event_set_unmodified_character_delegate));
+            CfxApi.cfx_key_event_get_unmodified_character = (CfxApi.cfx_key_event_get_unmodified_character_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_key_event_get_unmodified_character", typeof(CfxApi.cfx_key_event_get_unmodified_character_delegate));
+            CfxApi.cfx_key_event_set_focus_on_editable_field = (CfxApi.cfx_key_event_set_focus_on_editable_field_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_key_event_set_focus_on_editable_field", typeof(CfxApi.cfx_key_event_set_focus_on_editable_field_delegate));
+            CfxApi.cfx_key_event_get_focus_on_editable_field = (CfxApi.cfx_key_event_get_focus_on_editable_field_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_key_event_get_focus_on_editable_field", typeof(CfxApi.cfx_key_event_get_focus_on_editable_field_delegate));
+        }
+
         internal static CfxKeyEvent Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxKeyEvent(nativePtr);
