@@ -102,9 +102,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Get the response status code.
-        /// 
-        /// Set the response status code.
+        /// Get or set the response status code.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -120,9 +118,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Get the response status text.
-        /// 
-        /// Set the response status text.
+        /// Get or set the response status text.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -140,9 +136,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Get the response mime type.
-        /// 
-        /// Set the response mime type.
+        /// Get or set the response mime type.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

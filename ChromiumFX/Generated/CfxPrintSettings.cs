@@ -142,9 +142,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Get the device name.
-        /// 
-        /// Set the device name.
+        /// Get or set the device name.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -162,9 +160,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Get the DPI (dots per inch).
-        /// 
-        /// Set the DPI (dots per inch).
+        /// Get or set the DPI (dots per inch).
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -206,9 +202,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Get the color model.
-        /// 
-        /// Set the color model.
+        /// Get or set the color model.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -224,9 +218,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Get the number of copies.
-        /// 
-        /// Set the number of copies.
+        /// Get or set the number of copies.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -242,9 +234,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Get the duplex mode.
-        /// 
-        /// Set the duplex mode.
+        /// Get or set the duplex mode.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
