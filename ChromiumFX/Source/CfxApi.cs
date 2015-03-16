@@ -175,8 +175,8 @@ namespace Chromium
                 = (cfx_gc_handle_free_set_callback_delegate)GetDelegate(libcfxPtr, "cfx_gc_handle_free_set_callback", typeof(cfx_gc_handle_free_set_callback_delegate));
 
             cfx_gc_handle_free_set_callback(Marshal.GetFunctionPointerForDelegate(cfx_free_gc_handle));
-            
-            InitializeDelegates();
+
+            InstantiateRuntimeDelegates();
             librariesLoaded = true;
 
         }

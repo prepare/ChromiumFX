@@ -242,6 +242,24 @@ Public Class WrapperGenerator
         b.AppendLine()
         b.BeginCfxNamespace()
         b.BeginClass("CfxApi", "internal partial")
+
+        b.AppendLine()
+
+        b.BeginFunction("void InstantiateRuntimeDelegates()", "private static")
+
+        For Each f In decls.ExportFunctions
+            CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
+        Next
+
+        For Each o In decls.StringCollectionTypes
+            For Each f In o.ExportFunctions
+                CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
+            Next
+        Next
+
+        b.EndBlock()
+        b.AppendLine()
+
         b.AppendComment("global cef export functions")
         b.AppendLine()
 
@@ -269,42 +287,6 @@ Public Class WrapperGenerator
         b.EndBlock()
 
         fileManager.WriteFileIfContentChanged("CfxApi.cs", b.ToString())
-
-        b.Clear()
-
-        b.AppendLine("using System.Runtime.InteropServices;")
-        b.AppendLine()
-        b.BeginCfxNamespace()
-        b.BeginClass("CfxApi", "internal partial")
-        b.BeginFunction("void InitializeDelegates()", "private static")
-
-        b.AppendLine()
-
-        For Each f In decls.ExportFunctions
-            CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
-        Next
-
-        For Each o In decls.StringCollectionTypes
-            For Each f In o.ExportFunctions
-                CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
-            Next
-            b.AppendLine()
-        Next
-
-        b.AppendLine()
-        b.AppendLine()
-
-        For Each t In decls.CefStructTypes
-            t.ClassBuilder.EmitApiInitialization(b)
-            b.AppendLine()
-            b.AppendLine()
-        Next
-
-        b.EndBlock()
-        b.EndBlock()
-        b.EndBlock()
-
-        fileManager.WriteFileIfContentChanged("CfxApiInit.cs", b.ToString())
 
     End Sub
 
