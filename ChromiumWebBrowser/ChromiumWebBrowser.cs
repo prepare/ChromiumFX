@@ -49,6 +49,12 @@ namespace Chromium.WebBrowser {
     public class ChromiumWebBrowser : Control {
 
         private static CfxBrowserSettings defaultBrowserSettings;
+
+        /// <summary>
+        /// The CfxBrowserSettings applied for new instances of ChromiumWebBrowser.
+        /// Any changes to these settings will only apply to new browsers,
+        /// leaving already created browsers unaffected.
+        /// </summary>
         public static CfxBrowserSettings DefaultBrowserSettings {
             get {
                 if(defaultBrowserSettings == null) {
@@ -109,7 +115,10 @@ namespace Chromium.WebBrowser {
             CfxRuntime.Shutdown();
         }
 
-
+        /// <summary>
+        /// The CfxBrowserProcessHandler for this browser process.
+        /// Do not access this property before calling ChromiumWebBrowser.Initialize()
+        /// </summary>
         public static CfxBrowserProcessHandler BrowserProcessHandler {
             get {
                 return BrowserProcess.processHandler;
@@ -125,7 +134,16 @@ namespace Chromium.WebBrowser {
 
         private BrowserClient client;
 
+        /// <summary>
+        /// Returns the CfxBrowser object for this ChromiumWebBrowser.
+        /// Might be null if the browser has not yet been created 
+        /// </summary>
         public CfxBrowser Browser { get; private set; }
+
+        /// <summary>
+        /// Returns the CfxBrowserHost object for this ChromiumWebBrowser.
+        /// Might be null if the browser has not yet been created 
+        /// </summary>
         public CfxBrowserHost BrowserHost { get; private set; }
 
 
@@ -145,30 +163,30 @@ namespace Chromium.WebBrowser {
 
         /// <summary>
         /// Creates a ChromiumWebBrowser object with about:blank as initial URL.
-        /// The underlying CfxBrowser is created immediately with null
-        /// as CfxRequestContext.
+        /// The underlying CfxBrowser is created immediately with the
+        /// default CfxRequestContext.
         /// </summary>
         public ChromiumWebBrowser() : this(null, true) {}
 
         /// <summary>
         /// Creates a ChromiumWebBrowser object with about:blank as initial URL.
         /// If createImmediately is true, then the underlying CfxBrowser is 
-        /// created immediately with null as CfxRequestContext.
+        /// created immediately with the default CfxRequestContext.
         /// </summary>
         /// <param name="createImmediately"></param>
         public ChromiumWebBrowser(bool createImmediately) : this(null, createImmediately) {}
 
         /// <summary>
         /// Creates a ChromiumWebBrowser object with the given initial URL.
-        /// The underlying CfxBrowser is created immediately with null
-        /// as CfxRequestContext.
+        /// The underlying CfxBrowser is created immediately with the
+        /// default CfxRequestContext.
         /// </summary>
         public ChromiumWebBrowser(string initialUrl) : this(initialUrl, true) { }
 
         /// <summary>
         /// Creates a ChromiumWebBrowser object with the given initial URL.
         /// If createImmediately is true, then the underlying CfxBrowser is 
-        /// created immediately with null as CfxRequestContext.
+        /// created immediately with the default CfxRequestContext.
         /// </summary>
         public ChromiumWebBrowser(string initialUrl, bool createImmediately) {
 
@@ -216,11 +234,20 @@ namespace Chromium.WebBrowser {
             }
         }
 
-
+        /// <summary>
+        /// Creates the underlying CfxBrowser with the default CfxRequestContext.
+        /// This method should only be called if this ChromiumWebBrowser
+        /// was instanciated with createImmediately == false.
+        /// </summary>
         public void CreateBrowser() {
             CreateBrowser(null);
         }
 
+        /// <summary>
+        /// Creates the underlying CfxBrowser with the given CfxRequestContext.
+        /// This method should only be called if this ChromiumWebBrowser
+        /// was instanciated with createImmediately == false.
+        /// </summary>
         public void CreateBrowser(CfxRequestContext requestContext) {
 
             var windowInfo = new CfxWindowInfo();
