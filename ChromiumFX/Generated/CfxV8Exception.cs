@@ -44,6 +44,17 @@ namespace Chromium {
     /// </remarks>
     public class CfxV8Exception : CfxBase {
 
+        static CfxV8Exception () {
+            CfxApi.cfx_v8exception_get_message = (CfxApi.cfx_v8exception_get_message_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8exception_get_message", typeof(CfxApi.cfx_v8exception_get_message_delegate));
+            CfxApi.cfx_v8exception_get_source_line = (CfxApi.cfx_v8exception_get_source_line_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8exception_get_source_line", typeof(CfxApi.cfx_v8exception_get_source_line_delegate));
+            CfxApi.cfx_v8exception_get_script_resource_name = (CfxApi.cfx_v8exception_get_script_resource_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8exception_get_script_resource_name", typeof(CfxApi.cfx_v8exception_get_script_resource_name_delegate));
+            CfxApi.cfx_v8exception_get_line_number = (CfxApi.cfx_v8exception_get_line_number_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8exception_get_line_number", typeof(CfxApi.cfx_v8exception_get_line_number_delegate));
+            CfxApi.cfx_v8exception_get_start_position = (CfxApi.cfx_v8exception_get_start_position_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8exception_get_start_position", typeof(CfxApi.cfx_v8exception_get_start_position_delegate));
+            CfxApi.cfx_v8exception_get_end_position = (CfxApi.cfx_v8exception_get_end_position_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8exception_get_end_position", typeof(CfxApi.cfx_v8exception_get_end_position_delegate));
+            CfxApi.cfx_v8exception_get_start_column = (CfxApi.cfx_v8exception_get_start_column_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8exception_get_start_column", typeof(CfxApi.cfx_v8exception_get_start_column_delegate));
+            CfxApi.cfx_v8exception_get_end_column = (CfxApi.cfx_v8exception_get_end_column_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8exception_get_end_column", typeof(CfxApi.cfx_v8exception_get_end_column_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxV8Exception Wrap(IntPtr nativePtr) {

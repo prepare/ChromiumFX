@@ -44,6 +44,32 @@ namespace Chromium {
     /// </remarks>
     public class CfxDragData : CfxBase {
 
+        static CfxDragData () {
+            CfxApi.cfx_drag_data_create = (CfxApi.cfx_drag_data_create_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_create", typeof(CfxApi.cfx_drag_data_create_delegate));
+            CfxApi.cfx_drag_data_clone = (CfxApi.cfx_drag_data_clone_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_clone", typeof(CfxApi.cfx_drag_data_clone_delegate));
+            CfxApi.cfx_drag_data_is_read_only = (CfxApi.cfx_drag_data_is_read_only_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_is_read_only", typeof(CfxApi.cfx_drag_data_is_read_only_delegate));
+            CfxApi.cfx_drag_data_is_link = (CfxApi.cfx_drag_data_is_link_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_is_link", typeof(CfxApi.cfx_drag_data_is_link_delegate));
+            CfxApi.cfx_drag_data_is_fragment = (CfxApi.cfx_drag_data_is_fragment_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_is_fragment", typeof(CfxApi.cfx_drag_data_is_fragment_delegate));
+            CfxApi.cfx_drag_data_is_file = (CfxApi.cfx_drag_data_is_file_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_is_file", typeof(CfxApi.cfx_drag_data_is_file_delegate));
+            CfxApi.cfx_drag_data_get_link_url = (CfxApi.cfx_drag_data_get_link_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_get_link_url", typeof(CfxApi.cfx_drag_data_get_link_url_delegate));
+            CfxApi.cfx_drag_data_get_link_title = (CfxApi.cfx_drag_data_get_link_title_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_get_link_title", typeof(CfxApi.cfx_drag_data_get_link_title_delegate));
+            CfxApi.cfx_drag_data_get_link_metadata = (CfxApi.cfx_drag_data_get_link_metadata_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_get_link_metadata", typeof(CfxApi.cfx_drag_data_get_link_metadata_delegate));
+            CfxApi.cfx_drag_data_get_fragment_text = (CfxApi.cfx_drag_data_get_fragment_text_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_get_fragment_text", typeof(CfxApi.cfx_drag_data_get_fragment_text_delegate));
+            CfxApi.cfx_drag_data_get_fragment_html = (CfxApi.cfx_drag_data_get_fragment_html_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_get_fragment_html", typeof(CfxApi.cfx_drag_data_get_fragment_html_delegate));
+            CfxApi.cfx_drag_data_get_fragment_base_url = (CfxApi.cfx_drag_data_get_fragment_base_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_get_fragment_base_url", typeof(CfxApi.cfx_drag_data_get_fragment_base_url_delegate));
+            CfxApi.cfx_drag_data_get_file_name = (CfxApi.cfx_drag_data_get_file_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_get_file_name", typeof(CfxApi.cfx_drag_data_get_file_name_delegate));
+            CfxApi.cfx_drag_data_get_file_contents = (CfxApi.cfx_drag_data_get_file_contents_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_get_file_contents", typeof(CfxApi.cfx_drag_data_get_file_contents_delegate));
+            CfxApi.cfx_drag_data_get_file_names = (CfxApi.cfx_drag_data_get_file_names_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_get_file_names", typeof(CfxApi.cfx_drag_data_get_file_names_delegate));
+            CfxApi.cfx_drag_data_set_link_url = (CfxApi.cfx_drag_data_set_link_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_set_link_url", typeof(CfxApi.cfx_drag_data_set_link_url_delegate));
+            CfxApi.cfx_drag_data_set_link_title = (CfxApi.cfx_drag_data_set_link_title_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_set_link_title", typeof(CfxApi.cfx_drag_data_set_link_title_delegate));
+            CfxApi.cfx_drag_data_set_link_metadata = (CfxApi.cfx_drag_data_set_link_metadata_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_set_link_metadata", typeof(CfxApi.cfx_drag_data_set_link_metadata_delegate));
+            CfxApi.cfx_drag_data_set_fragment_text = (CfxApi.cfx_drag_data_set_fragment_text_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_set_fragment_text", typeof(CfxApi.cfx_drag_data_set_fragment_text_delegate));
+            CfxApi.cfx_drag_data_set_fragment_html = (CfxApi.cfx_drag_data_set_fragment_html_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_set_fragment_html", typeof(CfxApi.cfx_drag_data_set_fragment_html_delegate));
+            CfxApi.cfx_drag_data_set_fragment_base_url = (CfxApi.cfx_drag_data_set_fragment_base_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_set_fragment_base_url", typeof(CfxApi.cfx_drag_data_set_fragment_base_url_delegate));
+            CfxApi.cfx_drag_data_reset_file_contents = (CfxApi.cfx_drag_data_reset_file_contents_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_reset_file_contents", typeof(CfxApi.cfx_drag_data_reset_file_contents_delegate));
+            CfxApi.cfx_drag_data_add_file = (CfxApi.cfx_drag_data_add_file_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_drag_data_add_file", typeof(CfxApi.cfx_drag_data_add_file_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxDragData Wrap(IntPtr nativePtr) {

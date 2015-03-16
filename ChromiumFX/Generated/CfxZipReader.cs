@@ -45,6 +45,22 @@ namespace Chromium {
     /// </remarks>
     public partial class CfxZipReader : CfxBase {
 
+        static CfxZipReader () {
+            CfxApi.cfx_zip_reader_create = (CfxApi.cfx_zip_reader_create_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_zip_reader_create", typeof(CfxApi.cfx_zip_reader_create_delegate));
+            CfxApi.cfx_zip_reader_move_to_first_file = (CfxApi.cfx_zip_reader_move_to_first_file_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_zip_reader_move_to_first_file", typeof(CfxApi.cfx_zip_reader_move_to_first_file_delegate));
+            CfxApi.cfx_zip_reader_move_to_next_file = (CfxApi.cfx_zip_reader_move_to_next_file_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_zip_reader_move_to_next_file", typeof(CfxApi.cfx_zip_reader_move_to_next_file_delegate));
+            CfxApi.cfx_zip_reader_move_to_file = (CfxApi.cfx_zip_reader_move_to_file_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_zip_reader_move_to_file", typeof(CfxApi.cfx_zip_reader_move_to_file_delegate));
+            CfxApi.cfx_zip_reader_close = (CfxApi.cfx_zip_reader_close_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_zip_reader_close", typeof(CfxApi.cfx_zip_reader_close_delegate));
+            CfxApi.cfx_zip_reader_get_file_name = (CfxApi.cfx_zip_reader_get_file_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_zip_reader_get_file_name", typeof(CfxApi.cfx_zip_reader_get_file_name_delegate));
+            CfxApi.cfx_zip_reader_get_file_size = (CfxApi.cfx_zip_reader_get_file_size_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_zip_reader_get_file_size", typeof(CfxApi.cfx_zip_reader_get_file_size_delegate));
+            CfxApi.cfx_zip_reader_get_file_last_modified = (CfxApi.cfx_zip_reader_get_file_last_modified_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_zip_reader_get_file_last_modified", typeof(CfxApi.cfx_zip_reader_get_file_last_modified_delegate));
+            CfxApi.cfx_zip_reader_open_file = (CfxApi.cfx_zip_reader_open_file_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_zip_reader_open_file", typeof(CfxApi.cfx_zip_reader_open_file_delegate));
+            CfxApi.cfx_zip_reader_close_file = (CfxApi.cfx_zip_reader_close_file_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_zip_reader_close_file", typeof(CfxApi.cfx_zip_reader_close_file_delegate));
+            CfxApi.cfx_zip_reader_read_file = (CfxApi.cfx_zip_reader_read_file_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_zip_reader_read_file", typeof(CfxApi.cfx_zip_reader_read_file_delegate));
+            CfxApi.cfx_zip_reader_tell = (CfxApi.cfx_zip_reader_tell_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_zip_reader_tell", typeof(CfxApi.cfx_zip_reader_tell_delegate));
+            CfxApi.cfx_zip_reader_eof = (CfxApi.cfx_zip_reader_eof_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_zip_reader_eof", typeof(CfxApi.cfx_zip_reader_eof_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxZipReader Wrap(IntPtr nativePtr) {

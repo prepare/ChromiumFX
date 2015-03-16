@@ -47,6 +47,16 @@ namespace Chromium {
     /// </remarks>
     public class CfxUrlRequest : CfxBase {
 
+        static CfxUrlRequest () {
+            CfxApi.cfx_urlrequest_create = (CfxApi.cfx_urlrequest_create_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_urlrequest_create", typeof(CfxApi.cfx_urlrequest_create_delegate));
+            CfxApi.cfx_urlrequest_get_request = (CfxApi.cfx_urlrequest_get_request_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_urlrequest_get_request", typeof(CfxApi.cfx_urlrequest_get_request_delegate));
+            CfxApi.cfx_urlrequest_get_client = (CfxApi.cfx_urlrequest_get_client_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_urlrequest_get_client", typeof(CfxApi.cfx_urlrequest_get_client_delegate));
+            CfxApi.cfx_urlrequest_get_request_status = (CfxApi.cfx_urlrequest_get_request_status_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_urlrequest_get_request_status", typeof(CfxApi.cfx_urlrequest_get_request_status_delegate));
+            CfxApi.cfx_urlrequest_get_request_error = (CfxApi.cfx_urlrequest_get_request_error_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_urlrequest_get_request_error", typeof(CfxApi.cfx_urlrequest_get_request_error_delegate));
+            CfxApi.cfx_urlrequest_get_response = (CfxApi.cfx_urlrequest_get_response_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_urlrequest_get_response", typeof(CfxApi.cfx_urlrequest_get_response_delegate));
+            CfxApi.cfx_urlrequest_cancel = (CfxApi.cfx_urlrequest_cancel_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_urlrequest_cancel", typeof(CfxApi.cfx_urlrequest_cancel_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxUrlRequest Wrap(IntPtr nativePtr) {

@@ -44,6 +44,20 @@ namespace Chromium {
     /// </remarks>
     public partial class CfxResponse : CfxBase {
 
+        static CfxResponse () {
+            CfxApi.cfx_response_create = (CfxApi.cfx_response_create_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_response_create", typeof(CfxApi.cfx_response_create_delegate));
+            CfxApi.cfx_response_is_read_only = (CfxApi.cfx_response_is_read_only_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_response_is_read_only", typeof(CfxApi.cfx_response_is_read_only_delegate));
+            CfxApi.cfx_response_get_status = (CfxApi.cfx_response_get_status_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_response_get_status", typeof(CfxApi.cfx_response_get_status_delegate));
+            CfxApi.cfx_response_set_status = (CfxApi.cfx_response_set_status_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_response_set_status", typeof(CfxApi.cfx_response_set_status_delegate));
+            CfxApi.cfx_response_get_status_text = (CfxApi.cfx_response_get_status_text_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_response_get_status_text", typeof(CfxApi.cfx_response_get_status_text_delegate));
+            CfxApi.cfx_response_set_status_text = (CfxApi.cfx_response_set_status_text_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_response_set_status_text", typeof(CfxApi.cfx_response_set_status_text_delegate));
+            CfxApi.cfx_response_get_mime_type = (CfxApi.cfx_response_get_mime_type_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_response_get_mime_type", typeof(CfxApi.cfx_response_get_mime_type_delegate));
+            CfxApi.cfx_response_set_mime_type = (CfxApi.cfx_response_set_mime_type_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_response_set_mime_type", typeof(CfxApi.cfx_response_set_mime_type_delegate));
+            CfxApi.cfx_response_get_header = (CfxApi.cfx_response_get_header_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_response_get_header", typeof(CfxApi.cfx_response_get_header_delegate));
+            CfxApi.cfx_response_get_header_map = (CfxApi.cfx_response_get_header_map_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_response_get_header_map", typeof(CfxApi.cfx_response_get_header_map_delegate));
+            CfxApi.cfx_response_set_header_map = (CfxApi.cfx_response_set_header_map_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_response_set_header_map", typeof(CfxApi.cfx_response_set_header_map_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxResponse Wrap(IntPtr nativePtr) {

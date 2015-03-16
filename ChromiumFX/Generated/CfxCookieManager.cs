@@ -44,6 +44,18 @@ namespace Chromium {
     /// </remarks>
     public class CfxCookieManager : CfxBase {
 
+        static CfxCookieManager () {
+            CfxApi.cfx_cookie_manager_get_global_manager = (CfxApi.cfx_cookie_manager_get_global_manager_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_manager_get_global_manager", typeof(CfxApi.cfx_cookie_manager_get_global_manager_delegate));
+            CfxApi.cfx_cookie_manager_create_manager = (CfxApi.cfx_cookie_manager_create_manager_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_manager_create_manager", typeof(CfxApi.cfx_cookie_manager_create_manager_delegate));
+            CfxApi.cfx_cookie_manager_set_supported_schemes = (CfxApi.cfx_cookie_manager_set_supported_schemes_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_manager_set_supported_schemes", typeof(CfxApi.cfx_cookie_manager_set_supported_schemes_delegate));
+            CfxApi.cfx_cookie_manager_visit_all_cookies = (CfxApi.cfx_cookie_manager_visit_all_cookies_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_manager_visit_all_cookies", typeof(CfxApi.cfx_cookie_manager_visit_all_cookies_delegate));
+            CfxApi.cfx_cookie_manager_visit_url_cookies = (CfxApi.cfx_cookie_manager_visit_url_cookies_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_manager_visit_url_cookies", typeof(CfxApi.cfx_cookie_manager_visit_url_cookies_delegate));
+            CfxApi.cfx_cookie_manager_set_cookie = (CfxApi.cfx_cookie_manager_set_cookie_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_manager_set_cookie", typeof(CfxApi.cfx_cookie_manager_set_cookie_delegate));
+            CfxApi.cfx_cookie_manager_delete_cookies = (CfxApi.cfx_cookie_manager_delete_cookies_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_manager_delete_cookies", typeof(CfxApi.cfx_cookie_manager_delete_cookies_delegate));
+            CfxApi.cfx_cookie_manager_set_storage_path = (CfxApi.cfx_cookie_manager_set_storage_path_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_manager_set_storage_path", typeof(CfxApi.cfx_cookie_manager_set_storage_path_delegate));
+            CfxApi.cfx_cookie_manager_flush_store = (CfxApi.cfx_cookie_manager_flush_store_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_manager_flush_store", typeof(CfxApi.cfx_cookie_manager_flush_store_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxCookieManager Wrap(IntPtr nativePtr) {

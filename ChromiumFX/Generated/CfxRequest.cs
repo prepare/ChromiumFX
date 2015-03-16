@@ -44,6 +44,26 @@ namespace Chromium {
     /// </remarks>
     public class CfxRequest : CfxBase {
 
+        static CfxRequest () {
+            CfxApi.cfx_request_create = (CfxApi.cfx_request_create_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_request_create", typeof(CfxApi.cfx_request_create_delegate));
+            CfxApi.cfx_request_is_read_only = (CfxApi.cfx_request_is_read_only_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_request_is_read_only", typeof(CfxApi.cfx_request_is_read_only_delegate));
+            CfxApi.cfx_request_get_url = (CfxApi.cfx_request_get_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_request_get_url", typeof(CfxApi.cfx_request_get_url_delegate));
+            CfxApi.cfx_request_set_url = (CfxApi.cfx_request_set_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_request_set_url", typeof(CfxApi.cfx_request_set_url_delegate));
+            CfxApi.cfx_request_get_method = (CfxApi.cfx_request_get_method_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_request_get_method", typeof(CfxApi.cfx_request_get_method_delegate));
+            CfxApi.cfx_request_set_method = (CfxApi.cfx_request_set_method_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_request_set_method", typeof(CfxApi.cfx_request_set_method_delegate));
+            CfxApi.cfx_request_get_post_data = (CfxApi.cfx_request_get_post_data_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_request_get_post_data", typeof(CfxApi.cfx_request_get_post_data_delegate));
+            CfxApi.cfx_request_set_post_data = (CfxApi.cfx_request_set_post_data_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_request_set_post_data", typeof(CfxApi.cfx_request_set_post_data_delegate));
+            CfxApi.cfx_request_get_header_map = (CfxApi.cfx_request_get_header_map_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_request_get_header_map", typeof(CfxApi.cfx_request_get_header_map_delegate));
+            CfxApi.cfx_request_set_header_map = (CfxApi.cfx_request_set_header_map_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_request_set_header_map", typeof(CfxApi.cfx_request_set_header_map_delegate));
+            CfxApi.cfx_request_set = (CfxApi.cfx_request_set_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_request_set", typeof(CfxApi.cfx_request_set_delegate));
+            CfxApi.cfx_request_get_flags = (CfxApi.cfx_request_get_flags_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_request_get_flags", typeof(CfxApi.cfx_request_get_flags_delegate));
+            CfxApi.cfx_request_set_flags = (CfxApi.cfx_request_set_flags_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_request_set_flags", typeof(CfxApi.cfx_request_set_flags_delegate));
+            CfxApi.cfx_request_get_first_party_for_cookies = (CfxApi.cfx_request_get_first_party_for_cookies_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_request_get_first_party_for_cookies", typeof(CfxApi.cfx_request_get_first_party_for_cookies_delegate));
+            CfxApi.cfx_request_set_first_party_for_cookies = (CfxApi.cfx_request_set_first_party_for_cookies_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_request_set_first_party_for_cookies", typeof(CfxApi.cfx_request_set_first_party_for_cookies_delegate));
+            CfxApi.cfx_request_get_resource_type = (CfxApi.cfx_request_get_resource_type_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_request_get_resource_type", typeof(CfxApi.cfx_request_get_resource_type_delegate));
+            CfxApi.cfx_request_get_transition_type = (CfxApi.cfx_request_get_transition_type_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_request_get_transition_type", typeof(CfxApi.cfx_request_get_transition_type_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxRequest Wrap(IntPtr nativePtr) {

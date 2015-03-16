@@ -44,6 +44,11 @@ namespace Chromium {
     /// </remarks>
     public class CfxAuthCallback : CfxBase {
 
+        static CfxAuthCallback () {
+            CfxApi.cfx_auth_callback_cont = (CfxApi.cfx_auth_callback_cont_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_auth_callback_cont", typeof(CfxApi.cfx_auth_callback_cont_delegate));
+            CfxApi.cfx_auth_callback_cancel = (CfxApi.cfx_auth_callback_cancel_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_auth_callback_cancel", typeof(CfxApi.cfx_auth_callback_cancel_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxAuthCallback Wrap(IntPtr nativePtr) {

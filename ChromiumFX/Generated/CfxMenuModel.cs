@@ -46,6 +46,58 @@ namespace Chromium {
     /// </remarks>
     public class CfxMenuModel : CfxBase {
 
+        static CfxMenuModel () {
+            CfxApi.cfx_menu_model_clear = (CfxApi.cfx_menu_model_clear_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_clear", typeof(CfxApi.cfx_menu_model_clear_delegate));
+            CfxApi.cfx_menu_model_get_count = (CfxApi.cfx_menu_model_get_count_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_get_count", typeof(CfxApi.cfx_menu_model_get_count_delegate));
+            CfxApi.cfx_menu_model_add_separator = (CfxApi.cfx_menu_model_add_separator_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_add_separator", typeof(CfxApi.cfx_menu_model_add_separator_delegate));
+            CfxApi.cfx_menu_model_add_item = (CfxApi.cfx_menu_model_add_item_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_add_item", typeof(CfxApi.cfx_menu_model_add_item_delegate));
+            CfxApi.cfx_menu_model_add_check_item = (CfxApi.cfx_menu_model_add_check_item_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_add_check_item", typeof(CfxApi.cfx_menu_model_add_check_item_delegate));
+            CfxApi.cfx_menu_model_add_radio_item = (CfxApi.cfx_menu_model_add_radio_item_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_add_radio_item", typeof(CfxApi.cfx_menu_model_add_radio_item_delegate));
+            CfxApi.cfx_menu_model_add_sub_menu = (CfxApi.cfx_menu_model_add_sub_menu_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_add_sub_menu", typeof(CfxApi.cfx_menu_model_add_sub_menu_delegate));
+            CfxApi.cfx_menu_model_insert_separator_at = (CfxApi.cfx_menu_model_insert_separator_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_insert_separator_at", typeof(CfxApi.cfx_menu_model_insert_separator_at_delegate));
+            CfxApi.cfx_menu_model_insert_item_at = (CfxApi.cfx_menu_model_insert_item_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_insert_item_at", typeof(CfxApi.cfx_menu_model_insert_item_at_delegate));
+            CfxApi.cfx_menu_model_insert_check_item_at = (CfxApi.cfx_menu_model_insert_check_item_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_insert_check_item_at", typeof(CfxApi.cfx_menu_model_insert_check_item_at_delegate));
+            CfxApi.cfx_menu_model_insert_radio_item_at = (CfxApi.cfx_menu_model_insert_radio_item_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_insert_radio_item_at", typeof(CfxApi.cfx_menu_model_insert_radio_item_at_delegate));
+            CfxApi.cfx_menu_model_insert_sub_menu_at = (CfxApi.cfx_menu_model_insert_sub_menu_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_insert_sub_menu_at", typeof(CfxApi.cfx_menu_model_insert_sub_menu_at_delegate));
+            CfxApi.cfx_menu_model_remove = (CfxApi.cfx_menu_model_remove_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_remove", typeof(CfxApi.cfx_menu_model_remove_delegate));
+            CfxApi.cfx_menu_model_remove_at = (CfxApi.cfx_menu_model_remove_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_remove_at", typeof(CfxApi.cfx_menu_model_remove_at_delegate));
+            CfxApi.cfx_menu_model_get_index_of = (CfxApi.cfx_menu_model_get_index_of_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_get_index_of", typeof(CfxApi.cfx_menu_model_get_index_of_delegate));
+            CfxApi.cfx_menu_model_get_command_id_at = (CfxApi.cfx_menu_model_get_command_id_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_get_command_id_at", typeof(CfxApi.cfx_menu_model_get_command_id_at_delegate));
+            CfxApi.cfx_menu_model_set_command_id_at = (CfxApi.cfx_menu_model_set_command_id_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_set_command_id_at", typeof(CfxApi.cfx_menu_model_set_command_id_at_delegate));
+            CfxApi.cfx_menu_model_get_label = (CfxApi.cfx_menu_model_get_label_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_get_label", typeof(CfxApi.cfx_menu_model_get_label_delegate));
+            CfxApi.cfx_menu_model_get_label_at = (CfxApi.cfx_menu_model_get_label_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_get_label_at", typeof(CfxApi.cfx_menu_model_get_label_at_delegate));
+            CfxApi.cfx_menu_model_set_label = (CfxApi.cfx_menu_model_set_label_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_set_label", typeof(CfxApi.cfx_menu_model_set_label_delegate));
+            CfxApi.cfx_menu_model_set_label_at = (CfxApi.cfx_menu_model_set_label_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_set_label_at", typeof(CfxApi.cfx_menu_model_set_label_at_delegate));
+            CfxApi.cfx_menu_model_get_type = (CfxApi.cfx_menu_model_get_type_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_get_type", typeof(CfxApi.cfx_menu_model_get_type_delegate));
+            CfxApi.cfx_menu_model_get_type_at = (CfxApi.cfx_menu_model_get_type_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_get_type_at", typeof(CfxApi.cfx_menu_model_get_type_at_delegate));
+            CfxApi.cfx_menu_model_get_group_id = (CfxApi.cfx_menu_model_get_group_id_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_get_group_id", typeof(CfxApi.cfx_menu_model_get_group_id_delegate));
+            CfxApi.cfx_menu_model_get_group_id_at = (CfxApi.cfx_menu_model_get_group_id_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_get_group_id_at", typeof(CfxApi.cfx_menu_model_get_group_id_at_delegate));
+            CfxApi.cfx_menu_model_set_group_id = (CfxApi.cfx_menu_model_set_group_id_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_set_group_id", typeof(CfxApi.cfx_menu_model_set_group_id_delegate));
+            CfxApi.cfx_menu_model_set_group_id_at = (CfxApi.cfx_menu_model_set_group_id_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_set_group_id_at", typeof(CfxApi.cfx_menu_model_set_group_id_at_delegate));
+            CfxApi.cfx_menu_model_get_sub_menu = (CfxApi.cfx_menu_model_get_sub_menu_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_get_sub_menu", typeof(CfxApi.cfx_menu_model_get_sub_menu_delegate));
+            CfxApi.cfx_menu_model_get_sub_menu_at = (CfxApi.cfx_menu_model_get_sub_menu_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_get_sub_menu_at", typeof(CfxApi.cfx_menu_model_get_sub_menu_at_delegate));
+            CfxApi.cfx_menu_model_is_visible = (CfxApi.cfx_menu_model_is_visible_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_is_visible", typeof(CfxApi.cfx_menu_model_is_visible_delegate));
+            CfxApi.cfx_menu_model_is_visible_at = (CfxApi.cfx_menu_model_is_visible_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_is_visible_at", typeof(CfxApi.cfx_menu_model_is_visible_at_delegate));
+            CfxApi.cfx_menu_model_set_visible = (CfxApi.cfx_menu_model_set_visible_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_set_visible", typeof(CfxApi.cfx_menu_model_set_visible_delegate));
+            CfxApi.cfx_menu_model_set_visible_at = (CfxApi.cfx_menu_model_set_visible_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_set_visible_at", typeof(CfxApi.cfx_menu_model_set_visible_at_delegate));
+            CfxApi.cfx_menu_model_is_enabled = (CfxApi.cfx_menu_model_is_enabled_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_is_enabled", typeof(CfxApi.cfx_menu_model_is_enabled_delegate));
+            CfxApi.cfx_menu_model_is_enabled_at = (CfxApi.cfx_menu_model_is_enabled_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_is_enabled_at", typeof(CfxApi.cfx_menu_model_is_enabled_at_delegate));
+            CfxApi.cfx_menu_model_set_enabled = (CfxApi.cfx_menu_model_set_enabled_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_set_enabled", typeof(CfxApi.cfx_menu_model_set_enabled_delegate));
+            CfxApi.cfx_menu_model_set_enabled_at = (CfxApi.cfx_menu_model_set_enabled_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_set_enabled_at", typeof(CfxApi.cfx_menu_model_set_enabled_at_delegate));
+            CfxApi.cfx_menu_model_is_checked = (CfxApi.cfx_menu_model_is_checked_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_is_checked", typeof(CfxApi.cfx_menu_model_is_checked_delegate));
+            CfxApi.cfx_menu_model_is_checked_at = (CfxApi.cfx_menu_model_is_checked_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_is_checked_at", typeof(CfxApi.cfx_menu_model_is_checked_at_delegate));
+            CfxApi.cfx_menu_model_set_checked = (CfxApi.cfx_menu_model_set_checked_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_set_checked", typeof(CfxApi.cfx_menu_model_set_checked_delegate));
+            CfxApi.cfx_menu_model_set_checked_at = (CfxApi.cfx_menu_model_set_checked_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_set_checked_at", typeof(CfxApi.cfx_menu_model_set_checked_at_delegate));
+            CfxApi.cfx_menu_model_has_accelerator = (CfxApi.cfx_menu_model_has_accelerator_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_has_accelerator", typeof(CfxApi.cfx_menu_model_has_accelerator_delegate));
+            CfxApi.cfx_menu_model_has_accelerator_at = (CfxApi.cfx_menu_model_has_accelerator_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_has_accelerator_at", typeof(CfxApi.cfx_menu_model_has_accelerator_at_delegate));
+            CfxApi.cfx_menu_model_set_accelerator = (CfxApi.cfx_menu_model_set_accelerator_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_set_accelerator", typeof(CfxApi.cfx_menu_model_set_accelerator_delegate));
+            CfxApi.cfx_menu_model_set_accelerator_at = (CfxApi.cfx_menu_model_set_accelerator_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_set_accelerator_at", typeof(CfxApi.cfx_menu_model_set_accelerator_at_delegate));
+            CfxApi.cfx_menu_model_remove_accelerator = (CfxApi.cfx_menu_model_remove_accelerator_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_remove_accelerator", typeof(CfxApi.cfx_menu_model_remove_accelerator_delegate));
+            CfxApi.cfx_menu_model_remove_accelerator_at = (CfxApi.cfx_menu_model_remove_accelerator_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_remove_accelerator_at", typeof(CfxApi.cfx_menu_model_remove_accelerator_at_delegate));
+            CfxApi.cfx_menu_model_get_accelerator = (CfxApi.cfx_menu_model_get_accelerator_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_get_accelerator", typeof(CfxApi.cfx_menu_model_get_accelerator_delegate));
+            CfxApi.cfx_menu_model_get_accelerator_at = (CfxApi.cfx_menu_model_get_accelerator_at_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_menu_model_get_accelerator_at", typeof(CfxApi.cfx_menu_model_get_accelerator_at_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxMenuModel Wrap(IntPtr nativePtr) {

@@ -44,6 +44,10 @@ namespace Chromium {
     /// </remarks>
     public class CfxJsDialogCallback : CfxBase {
 
+        static CfxJsDialogCallback () {
+            CfxApi.cfx_jsdialog_callback_cont = (CfxApi.cfx_jsdialog_callback_cont_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_jsdialog_callback_cont", typeof(CfxApi.cfx_jsdialog_callback_cont_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxJsDialogCallback Wrap(IntPtr nativePtr) {

@@ -44,6 +44,28 @@ namespace Chromium {
     /// </remarks>
     public class CfxContextMenuParams : CfxBase {
 
+        static CfxContextMenuParams () {
+            CfxApi.cfx_context_menu_params_get_xcoord = (CfxApi.cfx_context_menu_params_get_xcoord_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_get_xcoord", typeof(CfxApi.cfx_context_menu_params_get_xcoord_delegate));
+            CfxApi.cfx_context_menu_params_get_ycoord = (CfxApi.cfx_context_menu_params_get_ycoord_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_get_ycoord", typeof(CfxApi.cfx_context_menu_params_get_ycoord_delegate));
+            CfxApi.cfx_context_menu_params_get_type_flags = (CfxApi.cfx_context_menu_params_get_type_flags_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_get_type_flags", typeof(CfxApi.cfx_context_menu_params_get_type_flags_delegate));
+            CfxApi.cfx_context_menu_params_get_link_url = (CfxApi.cfx_context_menu_params_get_link_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_get_link_url", typeof(CfxApi.cfx_context_menu_params_get_link_url_delegate));
+            CfxApi.cfx_context_menu_params_get_unfiltered_link_url = (CfxApi.cfx_context_menu_params_get_unfiltered_link_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_get_unfiltered_link_url", typeof(CfxApi.cfx_context_menu_params_get_unfiltered_link_url_delegate));
+            CfxApi.cfx_context_menu_params_get_source_url = (CfxApi.cfx_context_menu_params_get_source_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_get_source_url", typeof(CfxApi.cfx_context_menu_params_get_source_url_delegate));
+            CfxApi.cfx_context_menu_params_has_image_contents = (CfxApi.cfx_context_menu_params_has_image_contents_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_has_image_contents", typeof(CfxApi.cfx_context_menu_params_has_image_contents_delegate));
+            CfxApi.cfx_context_menu_params_get_page_url = (CfxApi.cfx_context_menu_params_get_page_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_get_page_url", typeof(CfxApi.cfx_context_menu_params_get_page_url_delegate));
+            CfxApi.cfx_context_menu_params_get_frame_url = (CfxApi.cfx_context_menu_params_get_frame_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_get_frame_url", typeof(CfxApi.cfx_context_menu_params_get_frame_url_delegate));
+            CfxApi.cfx_context_menu_params_get_frame_charset = (CfxApi.cfx_context_menu_params_get_frame_charset_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_get_frame_charset", typeof(CfxApi.cfx_context_menu_params_get_frame_charset_delegate));
+            CfxApi.cfx_context_menu_params_get_media_type = (CfxApi.cfx_context_menu_params_get_media_type_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_get_media_type", typeof(CfxApi.cfx_context_menu_params_get_media_type_delegate));
+            CfxApi.cfx_context_menu_params_get_media_state_flags = (CfxApi.cfx_context_menu_params_get_media_state_flags_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_get_media_state_flags", typeof(CfxApi.cfx_context_menu_params_get_media_state_flags_delegate));
+            CfxApi.cfx_context_menu_params_get_selection_text = (CfxApi.cfx_context_menu_params_get_selection_text_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_get_selection_text", typeof(CfxApi.cfx_context_menu_params_get_selection_text_delegate));
+            CfxApi.cfx_context_menu_params_get_misspelled_word = (CfxApi.cfx_context_menu_params_get_misspelled_word_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_get_misspelled_word", typeof(CfxApi.cfx_context_menu_params_get_misspelled_word_delegate));
+            CfxApi.cfx_context_menu_params_get_misspelling_hash = (CfxApi.cfx_context_menu_params_get_misspelling_hash_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_get_misspelling_hash", typeof(CfxApi.cfx_context_menu_params_get_misspelling_hash_delegate));
+            CfxApi.cfx_context_menu_params_get_dictionary_suggestions = (CfxApi.cfx_context_menu_params_get_dictionary_suggestions_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_get_dictionary_suggestions", typeof(CfxApi.cfx_context_menu_params_get_dictionary_suggestions_delegate));
+            CfxApi.cfx_context_menu_params_is_editable = (CfxApi.cfx_context_menu_params_is_editable_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_is_editable", typeof(CfxApi.cfx_context_menu_params_is_editable_delegate));
+            CfxApi.cfx_context_menu_params_is_spell_check_enabled = (CfxApi.cfx_context_menu_params_is_spell_check_enabled_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_is_spell_check_enabled", typeof(CfxApi.cfx_context_menu_params_is_spell_check_enabled_delegate));
+            CfxApi.cfx_context_menu_params_get_edit_state_flags = (CfxApi.cfx_context_menu_params_get_edit_state_flags_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_params_get_edit_state_flags", typeof(CfxApi.cfx_context_menu_params_get_edit_state_flags_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxContextMenuParams Wrap(IntPtr nativePtr) {

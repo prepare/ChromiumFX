@@ -43,6 +43,33 @@ namespace Chromium {
     /// </remarks>
     public class CfxPrintSettings : CfxBase {
 
+        static CfxPrintSettings () {
+            CfxApi.cfx_print_settings_create = (CfxApi.cfx_print_settings_create_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_create", typeof(CfxApi.cfx_print_settings_create_delegate));
+            CfxApi.cfx_print_settings_is_valid = (CfxApi.cfx_print_settings_is_valid_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_is_valid", typeof(CfxApi.cfx_print_settings_is_valid_delegate));
+            CfxApi.cfx_print_settings_is_read_only = (CfxApi.cfx_print_settings_is_read_only_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_is_read_only", typeof(CfxApi.cfx_print_settings_is_read_only_delegate));
+            CfxApi.cfx_print_settings_copy = (CfxApi.cfx_print_settings_copy_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_copy", typeof(CfxApi.cfx_print_settings_copy_delegate));
+            CfxApi.cfx_print_settings_set_orientation = (CfxApi.cfx_print_settings_set_orientation_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_set_orientation", typeof(CfxApi.cfx_print_settings_set_orientation_delegate));
+            CfxApi.cfx_print_settings_is_landscape = (CfxApi.cfx_print_settings_is_landscape_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_is_landscape", typeof(CfxApi.cfx_print_settings_is_landscape_delegate));
+            CfxApi.cfx_print_settings_set_printer_printable_area = (CfxApi.cfx_print_settings_set_printer_printable_area_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_set_printer_printable_area", typeof(CfxApi.cfx_print_settings_set_printer_printable_area_delegate));
+            CfxApi.cfx_print_settings_set_device_name = (CfxApi.cfx_print_settings_set_device_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_set_device_name", typeof(CfxApi.cfx_print_settings_set_device_name_delegate));
+            CfxApi.cfx_print_settings_get_device_name = (CfxApi.cfx_print_settings_get_device_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_get_device_name", typeof(CfxApi.cfx_print_settings_get_device_name_delegate));
+            CfxApi.cfx_print_settings_set_dpi = (CfxApi.cfx_print_settings_set_dpi_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_set_dpi", typeof(CfxApi.cfx_print_settings_set_dpi_delegate));
+            CfxApi.cfx_print_settings_get_dpi = (CfxApi.cfx_print_settings_get_dpi_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_get_dpi", typeof(CfxApi.cfx_print_settings_get_dpi_delegate));
+            CfxApi.cfx_print_settings_set_page_ranges = (CfxApi.cfx_print_settings_set_page_ranges_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_set_page_ranges", typeof(CfxApi.cfx_print_settings_set_page_ranges_delegate));
+            CfxApi.cfx_print_settings_get_page_ranges_count = (CfxApi.cfx_print_settings_get_page_ranges_count_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_get_page_ranges_count", typeof(CfxApi.cfx_print_settings_get_page_ranges_count_delegate));
+            CfxApi.cfx_print_settings_get_page_ranges = (CfxApi.cfx_print_settings_get_page_ranges_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_get_page_ranges", typeof(CfxApi.cfx_print_settings_get_page_ranges_delegate));
+            CfxApi.cfx_print_settings_set_selection_only = (CfxApi.cfx_print_settings_set_selection_only_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_set_selection_only", typeof(CfxApi.cfx_print_settings_set_selection_only_delegate));
+            CfxApi.cfx_print_settings_is_selection_only = (CfxApi.cfx_print_settings_is_selection_only_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_is_selection_only", typeof(CfxApi.cfx_print_settings_is_selection_only_delegate));
+            CfxApi.cfx_print_settings_set_collate = (CfxApi.cfx_print_settings_set_collate_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_set_collate", typeof(CfxApi.cfx_print_settings_set_collate_delegate));
+            CfxApi.cfx_print_settings_will_collate = (CfxApi.cfx_print_settings_will_collate_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_will_collate", typeof(CfxApi.cfx_print_settings_will_collate_delegate));
+            CfxApi.cfx_print_settings_set_color_model = (CfxApi.cfx_print_settings_set_color_model_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_set_color_model", typeof(CfxApi.cfx_print_settings_set_color_model_delegate));
+            CfxApi.cfx_print_settings_get_color_model = (CfxApi.cfx_print_settings_get_color_model_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_get_color_model", typeof(CfxApi.cfx_print_settings_get_color_model_delegate));
+            CfxApi.cfx_print_settings_set_copies = (CfxApi.cfx_print_settings_set_copies_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_set_copies", typeof(CfxApi.cfx_print_settings_set_copies_delegate));
+            CfxApi.cfx_print_settings_get_copies = (CfxApi.cfx_print_settings_get_copies_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_get_copies", typeof(CfxApi.cfx_print_settings_get_copies_delegate));
+            CfxApi.cfx_print_settings_set_duplex_mode = (CfxApi.cfx_print_settings_set_duplex_mode_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_set_duplex_mode", typeof(CfxApi.cfx_print_settings_set_duplex_mode_delegate));
+            CfxApi.cfx_print_settings_get_duplex_mode = (CfxApi.cfx_print_settings_get_duplex_mode_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_settings_get_duplex_mode", typeof(CfxApi.cfx_print_settings_get_duplex_mode_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxPrintSettings Wrap(IntPtr nativePtr) {
