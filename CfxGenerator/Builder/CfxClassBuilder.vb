@@ -470,16 +470,7 @@ Public Class CfxClassBuilder
         b.AppendLine()
 
         If Category = StructCategory.Values Then
-            CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_ctor", "cfx_ctor_delegate")
-            CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_dtor", "cfx_dtor_delegate")
-            b.AppendLine()
-
-            For Each sm In StructMembers
-                If sm.Name <> "size" Then
-                    CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_set_" & sm.Name)
-                    CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_get_" & sm.Name)
-                End If
-            Next
+            
             b.AppendLine()
 
         ElseIf Category = StructCategory.ApiCalls Then
@@ -601,7 +592,6 @@ Public Class CfxClassBuilder
         b.AppendLine("CfxApi.{0}_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, ""{0}_ctor"", typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));", CfxName)
         b.AppendLine("CfxApi.{0}_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, ""{0}_get_gc_handle"", typeof(CfxApi.cfx_get_gc_handle_delegate));", CfxName)
         b.AppendLine("CfxApi.{0}_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, ""{0}_set_managed_callback"", typeof(CfxApi.cfx_set_callback_delegate));", CfxName)
-
         If ExportFunctions.Count > 0 Then
             Stop
         End If
@@ -704,6 +694,22 @@ Public Class CfxClassBuilder
         b.AppendSummaryAndRemarks(comments)
 
         b.BeginClass(ClassName & " : CfxStructure", GeneratorConfig.ClassModifiers(ClassName, "public sealed"))
+        b.AppendLine()
+
+        b.BeginBlock("static {0} ()", ClassName)
+        CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_ctor", "cfx_ctor_delegate")
+        CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_dtor", "cfx_dtor_delegate")
+
+        For Each sm In StructMembers
+            If sm.Name <> "size" Then
+                CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_set_" & sm.Name)
+                CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_get_" & sm.Name)
+            End If
+        Next
+        If ExportFunctions.Count > 0 Then
+            Stop
+        End If
+        b.EndBlock()
         b.AppendLine()
 
         If NeedsWrapping Then

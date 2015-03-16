@@ -45,6 +45,23 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxScreenInfo : CfxStructure {
 
+        static CfxScreenInfo () {
+            CfxApi.cfx_screen_info_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_screen_info_ctor", typeof(CfxApi.cfx_ctor_delegate));
+            CfxApi.cfx_screen_info_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_screen_info_dtor", typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_screen_info_set_device_scale_factor = (CfxApi.cfx_screen_info_set_device_scale_factor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_screen_info_set_device_scale_factor", typeof(CfxApi.cfx_screen_info_set_device_scale_factor_delegate));
+            CfxApi.cfx_screen_info_get_device_scale_factor = (CfxApi.cfx_screen_info_get_device_scale_factor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_screen_info_get_device_scale_factor", typeof(CfxApi.cfx_screen_info_get_device_scale_factor_delegate));
+            CfxApi.cfx_screen_info_set_depth = (CfxApi.cfx_screen_info_set_depth_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_screen_info_set_depth", typeof(CfxApi.cfx_screen_info_set_depth_delegate));
+            CfxApi.cfx_screen_info_get_depth = (CfxApi.cfx_screen_info_get_depth_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_screen_info_get_depth", typeof(CfxApi.cfx_screen_info_get_depth_delegate));
+            CfxApi.cfx_screen_info_set_depth_per_component = (CfxApi.cfx_screen_info_set_depth_per_component_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_screen_info_set_depth_per_component", typeof(CfxApi.cfx_screen_info_set_depth_per_component_delegate));
+            CfxApi.cfx_screen_info_get_depth_per_component = (CfxApi.cfx_screen_info_get_depth_per_component_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_screen_info_get_depth_per_component", typeof(CfxApi.cfx_screen_info_get_depth_per_component_delegate));
+            CfxApi.cfx_screen_info_set_is_monochrome = (CfxApi.cfx_screen_info_set_is_monochrome_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_screen_info_set_is_monochrome", typeof(CfxApi.cfx_screen_info_set_is_monochrome_delegate));
+            CfxApi.cfx_screen_info_get_is_monochrome = (CfxApi.cfx_screen_info_get_is_monochrome_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_screen_info_get_is_monochrome", typeof(CfxApi.cfx_screen_info_get_is_monochrome_delegate));
+            CfxApi.cfx_screen_info_set_rect = (CfxApi.cfx_screen_info_set_rect_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_screen_info_set_rect", typeof(CfxApi.cfx_screen_info_set_rect_delegate));
+            CfxApi.cfx_screen_info_get_rect = (CfxApi.cfx_screen_info_get_rect_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_screen_info_get_rect", typeof(CfxApi.cfx_screen_info_get_rect_delegate));
+            CfxApi.cfx_screen_info_set_available_rect = (CfxApi.cfx_screen_info_set_available_rect_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_screen_info_set_available_rect", typeof(CfxApi.cfx_screen_info_set_available_rect_delegate));
+            CfxApi.cfx_screen_info_get_available_rect = (CfxApi.cfx_screen_info_get_available_rect_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_screen_info_get_available_rect", typeof(CfxApi.cfx_screen_info_get_available_rect_delegate));
+        }
+
         internal static CfxScreenInfo Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxScreenInfo(nativePtr);

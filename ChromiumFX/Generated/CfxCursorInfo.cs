@@ -45,6 +45,17 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxCursorInfo : CfxStructure {
 
+        static CfxCursorInfo () {
+            CfxApi.cfx_cursor_info_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cursor_info_ctor", typeof(CfxApi.cfx_ctor_delegate));
+            CfxApi.cfx_cursor_info_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cursor_info_dtor", typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_cursor_info_set_hotspot = (CfxApi.cfx_cursor_info_set_hotspot_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cursor_info_set_hotspot", typeof(CfxApi.cfx_cursor_info_set_hotspot_delegate));
+            CfxApi.cfx_cursor_info_get_hotspot = (CfxApi.cfx_cursor_info_get_hotspot_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cursor_info_get_hotspot", typeof(CfxApi.cfx_cursor_info_get_hotspot_delegate));
+            CfxApi.cfx_cursor_info_set_image_scale_factor = (CfxApi.cfx_cursor_info_set_image_scale_factor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cursor_info_set_image_scale_factor", typeof(CfxApi.cfx_cursor_info_set_image_scale_factor_delegate));
+            CfxApi.cfx_cursor_info_get_image_scale_factor = (CfxApi.cfx_cursor_info_get_image_scale_factor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cursor_info_get_image_scale_factor", typeof(CfxApi.cfx_cursor_info_get_image_scale_factor_delegate));
+            CfxApi.cfx_cursor_info_set_buffer = (CfxApi.cfx_cursor_info_set_buffer_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cursor_info_set_buffer", typeof(CfxApi.cfx_cursor_info_set_buffer_delegate));
+            CfxApi.cfx_cursor_info_get_buffer = (CfxApi.cfx_cursor_info_get_buffer_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cursor_info_get_buffer", typeof(CfxApi.cfx_cursor_info_get_buffer_delegate));
+        }
+
         internal static CfxCursorInfo Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxCursorInfo(nativePtr);

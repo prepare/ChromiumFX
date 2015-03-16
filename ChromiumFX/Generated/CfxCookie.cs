@@ -43,6 +43,31 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxCookie : CfxStructure {
 
+        static CfxCookie () {
+            CfxApi.cfx_cookie_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_ctor", typeof(CfxApi.cfx_ctor_delegate));
+            CfxApi.cfx_cookie_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_dtor", typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_cookie_set_name = (CfxApi.cfx_cookie_set_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_set_name", typeof(CfxApi.cfx_cookie_set_name_delegate));
+            CfxApi.cfx_cookie_get_name = (CfxApi.cfx_cookie_get_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_get_name", typeof(CfxApi.cfx_cookie_get_name_delegate));
+            CfxApi.cfx_cookie_set_value = (CfxApi.cfx_cookie_set_value_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_set_value", typeof(CfxApi.cfx_cookie_set_value_delegate));
+            CfxApi.cfx_cookie_get_value = (CfxApi.cfx_cookie_get_value_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_get_value", typeof(CfxApi.cfx_cookie_get_value_delegate));
+            CfxApi.cfx_cookie_set_domain = (CfxApi.cfx_cookie_set_domain_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_set_domain", typeof(CfxApi.cfx_cookie_set_domain_delegate));
+            CfxApi.cfx_cookie_get_domain = (CfxApi.cfx_cookie_get_domain_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_get_domain", typeof(CfxApi.cfx_cookie_get_domain_delegate));
+            CfxApi.cfx_cookie_set_path = (CfxApi.cfx_cookie_set_path_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_set_path", typeof(CfxApi.cfx_cookie_set_path_delegate));
+            CfxApi.cfx_cookie_get_path = (CfxApi.cfx_cookie_get_path_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_get_path", typeof(CfxApi.cfx_cookie_get_path_delegate));
+            CfxApi.cfx_cookie_set_secure = (CfxApi.cfx_cookie_set_secure_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_set_secure", typeof(CfxApi.cfx_cookie_set_secure_delegate));
+            CfxApi.cfx_cookie_get_secure = (CfxApi.cfx_cookie_get_secure_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_get_secure", typeof(CfxApi.cfx_cookie_get_secure_delegate));
+            CfxApi.cfx_cookie_set_httponly = (CfxApi.cfx_cookie_set_httponly_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_set_httponly", typeof(CfxApi.cfx_cookie_set_httponly_delegate));
+            CfxApi.cfx_cookie_get_httponly = (CfxApi.cfx_cookie_get_httponly_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_get_httponly", typeof(CfxApi.cfx_cookie_get_httponly_delegate));
+            CfxApi.cfx_cookie_set_creation = (CfxApi.cfx_cookie_set_creation_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_set_creation", typeof(CfxApi.cfx_cookie_set_creation_delegate));
+            CfxApi.cfx_cookie_get_creation = (CfxApi.cfx_cookie_get_creation_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_get_creation", typeof(CfxApi.cfx_cookie_get_creation_delegate));
+            CfxApi.cfx_cookie_set_last_access = (CfxApi.cfx_cookie_set_last_access_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_set_last_access", typeof(CfxApi.cfx_cookie_set_last_access_delegate));
+            CfxApi.cfx_cookie_get_last_access = (CfxApi.cfx_cookie_get_last_access_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_get_last_access", typeof(CfxApi.cfx_cookie_get_last_access_delegate));
+            CfxApi.cfx_cookie_set_has_expires = (CfxApi.cfx_cookie_set_has_expires_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_set_has_expires", typeof(CfxApi.cfx_cookie_set_has_expires_delegate));
+            CfxApi.cfx_cookie_get_has_expires = (CfxApi.cfx_cookie_get_has_expires_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_get_has_expires", typeof(CfxApi.cfx_cookie_get_has_expires_delegate));
+            CfxApi.cfx_cookie_set_expires = (CfxApi.cfx_cookie_set_expires_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_set_expires", typeof(CfxApi.cfx_cookie_set_expires_delegate));
+            CfxApi.cfx_cookie_get_expires = (CfxApi.cfx_cookie_get_expires_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cookie_get_expires", typeof(CfxApi.cfx_cookie_get_expires_delegate));
+        }
+
         internal static CfxCookie Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxCookie(nativePtr);

@@ -45,6 +45,31 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxGeoposition : CfxStructure {
 
+        static CfxGeoposition () {
+            CfxApi.cfx_geoposition_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_ctor", typeof(CfxApi.cfx_ctor_delegate));
+            CfxApi.cfx_geoposition_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_dtor", typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_geoposition_set_latitude = (CfxApi.cfx_geoposition_set_latitude_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_set_latitude", typeof(CfxApi.cfx_geoposition_set_latitude_delegate));
+            CfxApi.cfx_geoposition_get_latitude = (CfxApi.cfx_geoposition_get_latitude_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_get_latitude", typeof(CfxApi.cfx_geoposition_get_latitude_delegate));
+            CfxApi.cfx_geoposition_set_longitude = (CfxApi.cfx_geoposition_set_longitude_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_set_longitude", typeof(CfxApi.cfx_geoposition_set_longitude_delegate));
+            CfxApi.cfx_geoposition_get_longitude = (CfxApi.cfx_geoposition_get_longitude_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_get_longitude", typeof(CfxApi.cfx_geoposition_get_longitude_delegate));
+            CfxApi.cfx_geoposition_set_altitude = (CfxApi.cfx_geoposition_set_altitude_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_set_altitude", typeof(CfxApi.cfx_geoposition_set_altitude_delegate));
+            CfxApi.cfx_geoposition_get_altitude = (CfxApi.cfx_geoposition_get_altitude_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_get_altitude", typeof(CfxApi.cfx_geoposition_get_altitude_delegate));
+            CfxApi.cfx_geoposition_set_accuracy = (CfxApi.cfx_geoposition_set_accuracy_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_set_accuracy", typeof(CfxApi.cfx_geoposition_set_accuracy_delegate));
+            CfxApi.cfx_geoposition_get_accuracy = (CfxApi.cfx_geoposition_get_accuracy_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_get_accuracy", typeof(CfxApi.cfx_geoposition_get_accuracy_delegate));
+            CfxApi.cfx_geoposition_set_altitude_accuracy = (CfxApi.cfx_geoposition_set_altitude_accuracy_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_set_altitude_accuracy", typeof(CfxApi.cfx_geoposition_set_altitude_accuracy_delegate));
+            CfxApi.cfx_geoposition_get_altitude_accuracy = (CfxApi.cfx_geoposition_get_altitude_accuracy_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_get_altitude_accuracy", typeof(CfxApi.cfx_geoposition_get_altitude_accuracy_delegate));
+            CfxApi.cfx_geoposition_set_heading = (CfxApi.cfx_geoposition_set_heading_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_set_heading", typeof(CfxApi.cfx_geoposition_set_heading_delegate));
+            CfxApi.cfx_geoposition_get_heading = (CfxApi.cfx_geoposition_get_heading_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_get_heading", typeof(CfxApi.cfx_geoposition_get_heading_delegate));
+            CfxApi.cfx_geoposition_set_speed = (CfxApi.cfx_geoposition_set_speed_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_set_speed", typeof(CfxApi.cfx_geoposition_set_speed_delegate));
+            CfxApi.cfx_geoposition_get_speed = (CfxApi.cfx_geoposition_get_speed_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_get_speed", typeof(CfxApi.cfx_geoposition_get_speed_delegate));
+            CfxApi.cfx_geoposition_set_timestamp = (CfxApi.cfx_geoposition_set_timestamp_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_set_timestamp", typeof(CfxApi.cfx_geoposition_set_timestamp_delegate));
+            CfxApi.cfx_geoposition_get_timestamp = (CfxApi.cfx_geoposition_get_timestamp_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_get_timestamp", typeof(CfxApi.cfx_geoposition_get_timestamp_delegate));
+            CfxApi.cfx_geoposition_set_error_code = (CfxApi.cfx_geoposition_set_error_code_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_set_error_code", typeof(CfxApi.cfx_geoposition_set_error_code_delegate));
+            CfxApi.cfx_geoposition_get_error_code = (CfxApi.cfx_geoposition_get_error_code_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_get_error_code", typeof(CfxApi.cfx_geoposition_get_error_code_delegate));
+            CfxApi.cfx_geoposition_set_error_message = (CfxApi.cfx_geoposition_set_error_message_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_set_error_message", typeof(CfxApi.cfx_geoposition_set_error_message_delegate));
+            CfxApi.cfx_geoposition_get_error_message = (CfxApi.cfx_geoposition_get_error_message_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_geoposition_get_error_message", typeof(CfxApi.cfx_geoposition_get_error_message_delegate));
+        }
+
         internal static CfxGeoposition Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxGeoposition(nativePtr);

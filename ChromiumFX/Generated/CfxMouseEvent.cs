@@ -43,6 +43,17 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxMouseEvent : CfxStructure {
 
+        static CfxMouseEvent () {
+            CfxApi.cfx_mouse_event_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_mouse_event_ctor", typeof(CfxApi.cfx_ctor_delegate));
+            CfxApi.cfx_mouse_event_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_mouse_event_dtor", typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_mouse_event_set_x = (CfxApi.cfx_mouse_event_set_x_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_mouse_event_set_x", typeof(CfxApi.cfx_mouse_event_set_x_delegate));
+            CfxApi.cfx_mouse_event_get_x = (CfxApi.cfx_mouse_event_get_x_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_mouse_event_get_x", typeof(CfxApi.cfx_mouse_event_get_x_delegate));
+            CfxApi.cfx_mouse_event_set_y = (CfxApi.cfx_mouse_event_set_y_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_mouse_event_set_y", typeof(CfxApi.cfx_mouse_event_set_y_delegate));
+            CfxApi.cfx_mouse_event_get_y = (CfxApi.cfx_mouse_event_get_y_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_mouse_event_get_y", typeof(CfxApi.cfx_mouse_event_get_y_delegate));
+            CfxApi.cfx_mouse_event_set_modifiers = (CfxApi.cfx_mouse_event_set_modifiers_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_mouse_event_set_modifiers", typeof(CfxApi.cfx_mouse_event_set_modifiers_delegate));
+            CfxApi.cfx_mouse_event_get_modifiers = (CfxApi.cfx_mouse_event_get_modifiers_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_mouse_event_get_modifiers", typeof(CfxApi.cfx_mouse_event_get_modifiers_delegate));
+        }
+
         public CfxMouseEvent() : base(CfxApi.cfx_mouse_event_ctor, CfxApi.cfx_mouse_event_dtor) {}
 
         /// <summary>
