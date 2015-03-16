@@ -486,9 +486,6 @@ Public Class CfxClassBuilder
             
         Else
 
-            b.AppendLine("{0}_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, ""{0}_ctor"", typeof(cfx_ctor_with_gc_handle_delegate));", CfxName)
-            b.AppendLine("{0}_get_gc_handle = (cfx_get_gc_handle_delegate)GetDelegate(libcfxPtr, ""{0}_get_gc_handle"", typeof(cfx_get_gc_handle_delegate));", CfxName)
-            b.AppendLine("{0}_set_managed_callback = (cfx_set_callback_delegate)GetDelegate(libcfxPtr, ""{0}_set_managed_callback"", typeof(cfx_set_callback_delegate));", CfxName)
 
         End If
 
@@ -599,6 +596,18 @@ Public Class CfxClassBuilder
 
         b.BeginClass(ClassName & " : CfxBase", GeneratorConfig.ClassModifiers(ClassName))
         b.AppendLine()
+
+        b.BeginBlock("static {0} ()", ClassName)
+        b.AppendLine("CfxApi.{0}_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, ""{0}_ctor"", typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));", CfxName)
+        b.AppendLine("CfxApi.{0}_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, ""{0}_get_gc_handle"", typeof(CfxApi.cfx_get_gc_handle_delegate));", CfxName)
+        b.AppendLine("CfxApi.{0}_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, ""{0}_set_managed_callback"", typeof(CfxApi.cfx_set_callback_delegate));", CfxName)
+
+        If ExportFunctions.Count > 0 Then
+            Stop
+        End If
+        b.EndBlock()
+        b.AppendLine()
+
 
         b.BeginFunction("Wrap", ClassName, "IntPtr nativePtr", "internal static")
         b.AppendLine("if(nativePtr == IntPtr.Zero) return null;")

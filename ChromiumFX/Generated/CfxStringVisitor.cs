@@ -45,6 +45,12 @@ namespace Chromium {
     /// </remarks>
     public class CfxStringVisitor : CfxBase {
 
+        static CfxStringVisitor () {
+            CfxApi.cfx_string_visitor_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_visitor_ctor", typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
+            CfxApi.cfx_string_visitor_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_visitor_get_gc_handle", typeof(CfxApi.cfx_get_gc_handle_delegate));
+            CfxApi.cfx_string_visitor_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_visitor_set_managed_callback", typeof(CfxApi.cfx_set_callback_delegate));
+        }
+
         internal static CfxStringVisitor Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             var handlePtr = CfxApi.cfx_string_visitor_get_gc_handle(nativePtr);

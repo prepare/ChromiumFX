@@ -46,6 +46,12 @@ namespace Chromium {
     /// </remarks>
     public class CfxDisplayHandler : CfxBase {
 
+        static CfxDisplayHandler () {
+            CfxApi.cfx_display_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_display_handler_ctor", typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
+            CfxApi.cfx_display_handler_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_display_handler_get_gc_handle", typeof(CfxApi.cfx_get_gc_handle_delegate));
+            CfxApi.cfx_display_handler_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_display_handler_set_managed_callback", typeof(CfxApi.cfx_set_callback_delegate));
+        }
+
         internal static CfxDisplayHandler Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             var handlePtr = CfxApi.cfx_display_handler_get_gc_handle(nativePtr);

@@ -47,6 +47,12 @@ namespace Chromium {
     /// </remarks>
     public class CfxEndTracingCallback : CfxBase {
 
+        static CfxEndTracingCallback () {
+            CfxApi.cfx_end_tracing_callback_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_end_tracing_callback_ctor", typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
+            CfxApi.cfx_end_tracing_callback_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_end_tracing_callback_get_gc_handle", typeof(CfxApi.cfx_get_gc_handle_delegate));
+            CfxApi.cfx_end_tracing_callback_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_end_tracing_callback_set_managed_callback", typeof(CfxApi.cfx_set_callback_delegate));
+        }
+
         internal static CfxEndTracingCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             var handlePtr = CfxApi.cfx_end_tracing_callback_get_gc_handle(nativePtr);

@@ -50,6 +50,12 @@ namespace Chromium {
     /// </remarks>
     public class CfxTask : CfxBase {
 
+        static CfxTask () {
+            CfxApi.cfx_task_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_task_ctor", typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
+            CfxApi.cfx_task_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_task_get_gc_handle", typeof(CfxApi.cfx_get_gc_handle_delegate));
+            CfxApi.cfx_task_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_task_set_managed_callback", typeof(CfxApi.cfx_set_callback_delegate));
+        }
+
         internal static CfxTask Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             var handlePtr = CfxApi.cfx_task_get_gc_handle(nativePtr);
