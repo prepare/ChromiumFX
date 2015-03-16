@@ -155,7 +155,7 @@ namespace Chromium {
         /// </remarks>
         public String CommandLineString {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_command_line_get_command_line_string(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_command_line_get_command_line_string(NativePtr));
             }
         }
 
@@ -170,7 +170,7 @@ namespace Chromium {
         /// </remarks>
         public String Program {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_command_line_get_program(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_command_line_get_program(NativePtr));
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -298,7 +298,7 @@ namespace Chromium {
             var name_pinned = new PinnedString(name);
             var __retval = CfxApi.cfx_command_line_get_switch_value(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length);
             name_pinned.Obj.Free();
-            return StringUserfree.Convert(__retval);
+            return StringFunctions.ConvertStringUserfree(__retval);
         }
 
         /// <summary>

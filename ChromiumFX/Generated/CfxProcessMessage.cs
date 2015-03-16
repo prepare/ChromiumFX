@@ -122,7 +122,7 @@ namespace Chromium {
         /// </remarks>
         public String Name {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_process_message_get_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_process_message_get_name(NativePtr));
             }
         }
 

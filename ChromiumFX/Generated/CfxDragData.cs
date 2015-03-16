@@ -163,7 +163,7 @@ namespace Chromium {
         /// </remarks>
         public String LinkUrl {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_drag_data_get_link_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_link_url(NativePtr));
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -183,7 +183,7 @@ namespace Chromium {
         /// </remarks>
         public String LinkTitle {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_drag_data_get_link_title(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_link_title(NativePtr));
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -203,7 +203,7 @@ namespace Chromium {
         /// </remarks>
         public String LinkMetadata {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_drag_data_get_link_metadata(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_link_metadata(NativePtr));
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -223,7 +223,7 @@ namespace Chromium {
         /// </remarks>
         public String FragmentText {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_drag_data_get_fragment_text(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_fragment_text(NativePtr));
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -243,7 +243,7 @@ namespace Chromium {
         /// </remarks>
         public String FragmentHtml {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_drag_data_get_fragment_html(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_fragment_html(NativePtr));
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -264,7 +264,7 @@ namespace Chromium {
         /// </remarks>
         public String FragmentBaseUrl {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_drag_data_get_fragment_base_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_fragment_base_url(NativePtr));
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -282,7 +282,7 @@ namespace Chromium {
         /// </remarks>
         public String FileName {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_drag_data_get_file_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_file_name(NativePtr));
             }
         }
 

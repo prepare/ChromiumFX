@@ -503,7 +503,7 @@ namespace Chromium {
         /// </remarks>
         public String StringValue {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_v8value_get_string_value(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8value_get_string_value(NativePtr));
             }
         }
 
@@ -602,7 +602,7 @@ namespace Chromium {
         /// </remarks>
         public String FunctionName {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_v8value_get_function_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8value_get_function_name(NativePtr));
             }
         }
 

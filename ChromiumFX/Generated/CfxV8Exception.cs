@@ -83,7 +83,7 @@ namespace Chromium {
         /// </remarks>
         public String Message {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_v8exception_get_message(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8exception_get_message(NativePtr));
             }
         }
 
@@ -96,7 +96,7 @@ namespace Chromium {
         /// </remarks>
         public String SourceLine {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_v8exception_get_source_line(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8exception_get_source_line(NativePtr));
             }
         }
 
@@ -110,7 +110,7 @@ namespace Chromium {
         /// </remarks>
         public String ScriptResourceName {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_v8exception_get_script_resource_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8exception_get_script_resource_name(NativePtr));
             }
         }
 

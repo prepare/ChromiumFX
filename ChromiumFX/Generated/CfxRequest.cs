@@ -118,7 +118,7 @@ namespace Chromium {
         /// </remarks>
         public String Url {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_request_get_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_request_get_url(NativePtr));
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -139,7 +139,7 @@ namespace Chromium {
         /// </remarks>
         public String Method {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_request_get_method(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_request_get_method(NativePtr));
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -199,7 +199,7 @@ namespace Chromium {
         /// </remarks>
         public String FirstPartyForCookies {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_request_get_first_party_for_cookies(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_request_get_first_party_for_cookies(NativePtr));
             }
             set {
                 var value_pinned = new PinnedString(value);

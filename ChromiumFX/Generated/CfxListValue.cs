@@ -252,7 +252,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public String GetString(int index) {
-            return StringUserfree.Convert(CfxApi.cfx_list_value_get_string(NativePtr, index));
+            return StringFunctions.ConvertStringUserfree(CfxApi.cfx_list_value_get_string(NativePtr, index));
         }
 
         /// <summary>

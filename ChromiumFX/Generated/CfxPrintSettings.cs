@@ -152,7 +152,7 @@ namespace Chromium {
         /// </remarks>
         public String DeviceName {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_print_settings_get_device_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_print_settings_get_device_name(NativePtr));
             }
             set {
                 var value_pinned = new PinnedString(value);

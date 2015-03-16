@@ -143,7 +143,7 @@ namespace Chromium {
         /// </remarks>
         public String Title {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_domdocument_get_title(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domdocument_get_title(NativePtr));
             }
         }
 
@@ -234,7 +234,7 @@ namespace Chromium {
         /// </remarks>
         public String SelectionAsMarkup {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_domdocument_get_selection_as_markup(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domdocument_get_selection_as_markup(NativePtr));
             }
         }
 
@@ -247,7 +247,7 @@ namespace Chromium {
         /// </remarks>
         public String SelectionAsText {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_domdocument_get_selection_as_text(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domdocument_get_selection_as_text(NativePtr));
             }
         }
 
@@ -260,7 +260,7 @@ namespace Chromium {
         /// </remarks>
         public String BaseUrl {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_domdocument_get_base_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domdocument_get_base_url(NativePtr));
             }
         }
 
@@ -290,7 +290,7 @@ namespace Chromium {
             var partialURL_pinned = new PinnedString(partialURL);
             var __retval = CfxApi.cfx_domdocument_get_complete_url(NativePtr, partialURL_pinned.Obj.PinnedPtr, partialURL_pinned.Length);
             partialURL_pinned.Obj.Free();
-            return StringUserfree.Convert(__retval);
+            return StringFunctions.ConvertStringUserfree(__retval);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

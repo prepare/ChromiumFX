@@ -41,6 +41,27 @@ namespace Chromium {
             CfxApi.InstantiateStringCollectionDelegates();
         }
 
+
+        internal static string PtrToStringUni(IntPtr str, int length) {
+            return
+                str == IntPtr.Zero ? null
+                : (length == 0 ? String.Empty : Marshal.PtrToStringUni(str, length));
+        }
+
+
+        public static string ConvertStringUserfree(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return string.Empty;
+
+            int length = 0;
+            var str = CfxApi.cfx_string_get_ptr(nativePtr, ref length);
+            if(str.Equals(IntPtr.Zero))
+                return string.Empty;
+            var retval = Marshal.PtrToStringUni(str, length);
+            CfxApi.cef_string_userfree_utf16_free(nativePtr);
+            return retval;
+        }
+
+
         //TODO: string list and string map
 
 
@@ -96,13 +117,6 @@ namespace Chromium {
 
         internal static void FreePinnedStrings(PinnedString[] handles) {
             foreach(var h in handles) h.Obj.Free();
-        }
-
-
-        internal static string PtrToStringUni(IntPtr str, int length) {
-            return
-                str == IntPtr.Zero ? null
-                : (length == 0 ? String.Empty : Marshal.PtrToStringUni(str, length));
         }
 
         internal static void CfxStringListCopyToManaged(IntPtr source, List<string> target) {

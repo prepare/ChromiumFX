@@ -222,7 +222,7 @@ namespace Chromium {
         /// </remarks>
         public String FullPath {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_download_item_get_full_path(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_download_item_get_full_path(NativePtr));
             }
         }
 
@@ -248,7 +248,7 @@ namespace Chromium {
         /// </remarks>
         public String Url {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_download_item_get_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_download_item_get_url(NativePtr));
             }
         }
 
@@ -261,7 +261,7 @@ namespace Chromium {
         /// </remarks>
         public String SuggestedFileName {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_download_item_get_suggested_file_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_download_item_get_suggested_file_name(NativePtr));
             }
         }
 
@@ -274,7 +274,7 @@ namespace Chromium {
         /// </remarks>
         public String ContentDisposition {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_download_item_get_content_disposition(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_download_item_get_content_disposition(NativePtr));
             }
         }
 
@@ -287,7 +287,7 @@ namespace Chromium {
         /// </remarks>
         public String MimeType {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_download_item_get_mime_type(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_download_item_get_mime_type(NativePtr));
             }
         }
 

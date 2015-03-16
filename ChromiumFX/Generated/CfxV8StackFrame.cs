@@ -101,7 +101,7 @@ namespace Chromium {
         /// </remarks>
         public String ScriptName {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_v8stack_frame_get_script_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8stack_frame_get_script_name(NativePtr));
             }
         }
 
@@ -116,7 +116,7 @@ namespace Chromium {
         /// </remarks>
         public String ScriptNameOrSourceUrl {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_v8stack_frame_get_script_name_or_source_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8stack_frame_get_script_name_or_source_url(NativePtr));
             }
         }
 
@@ -129,7 +129,7 @@ namespace Chromium {
         /// </remarks>
         public String FunctionName {
             get {
-                return StringUserfree.Convert(CfxApi.cfx_v8stack_frame_get_function_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8stack_frame_get_function_name(NativePtr));
             }
         }
 

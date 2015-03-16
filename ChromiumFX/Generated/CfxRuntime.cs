@@ -336,7 +336,7 @@ namespace Chromium {
             var extension_pinned = new PinnedString(extension);
             var __retval = CfxApi.cfx_get_mime_type(extension_pinned.Obj.PinnedPtr, extension_pinned.Length);
             extension_pinned.Obj.Free();
-            return StringUserfree.Convert(__retval);
+            return StringFunctions.ConvertStringUserfree(__retval);
         }
 
         /// <summary>
