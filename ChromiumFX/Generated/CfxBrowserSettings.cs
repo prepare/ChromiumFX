@@ -165,7 +165,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_browser_settings_get_standard_font_family(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -179,7 +179,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_browser_settings_get_fixed_font_family(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -193,7 +193,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_browser_settings_get_serif_font_family(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -207,7 +207,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_browser_settings_get_sans_serif_font_family(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -221,7 +221,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_browser_settings_get_cursive_font_family(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -235,7 +235,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_browser_settings_get_fantasy_font_family(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -301,7 +301,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_browser_settings_get_default_encoding(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);

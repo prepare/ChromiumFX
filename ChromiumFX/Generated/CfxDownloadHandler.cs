@@ -261,7 +261,7 @@ namespace Chromium {
             public string SuggestedName {
                 get {
                     CheckAccess();
-                    if(m_suggested_name == null && m_suggested_name_str != IntPtr.Zero) m_suggested_name = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_suggested_name_str, m_suggested_name_length);
+                    m_suggested_name = StringFunctions.PtrToStringUni(m_suggested_name_str, m_suggested_name_length);
                     return m_suggested_name;
                 }
             }

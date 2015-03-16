@@ -150,8 +150,8 @@ Public Class CefStringPtrType
 
 
     Public Overrides Sub EmitPublicEventArgGetterStatements(b As CodeBuilder, var As String)
-        b.BeginIf("!m_{0}_changed && m_{0}_wrapped == null && m_{0}_str != IntPtr.Zero", var)
-        b.AppendLine("m_{0}_wrapped = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_{0}_str, m_{0}_length);", var)
+        b.BeginIf("!m_{0}_changed && m_{0}_wrapped == null", var)
+        b.AppendLine("m_{0}_wrapped = StringFunctions.PtrToStringUni(m_{0}_str, m_{0}_length);", var)
         b.EndBlock()
         b.AppendLine("return m_{0}_wrapped;", var)
     End Sub

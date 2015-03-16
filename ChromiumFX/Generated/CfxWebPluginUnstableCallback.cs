@@ -163,7 +163,7 @@ namespace Chromium {
             public string Path {
                 get {
                     CheckAccess();
-                    if(m_path == null && m_path_str != IntPtr.Zero) m_path = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_path_str, m_path_length);
+                    m_path = StringFunctions.PtrToStringUni(m_path_str, m_path_length);
                     return m_path;
                 }
             }

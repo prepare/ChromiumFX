@@ -572,14 +572,14 @@ namespace Chromium {
             public string ErrorText {
                 get {
                     CheckAccess();
-                    if(m_errorText == null && m_errorText_str != IntPtr.Zero) m_errorText = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_errorText_str, m_errorText_length);
+                    m_errorText = StringFunctions.PtrToStringUni(m_errorText_str, m_errorText_length);
                     return m_errorText;
                 }
             }
             public string FailedUrl {
                 get {
                     CheckAccess();
-                    if(m_failedUrl == null && m_failedUrl_str != IntPtr.Zero) m_failedUrl = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_failedUrl_str, m_failedUrl_length);
+                    m_failedUrl = StringFunctions.PtrToStringUni(m_failedUrl_str, m_failedUrl_length);
                     return m_failedUrl;
                 }
             }

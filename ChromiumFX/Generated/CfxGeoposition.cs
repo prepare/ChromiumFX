@@ -259,7 +259,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_geoposition_get_error_message(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);

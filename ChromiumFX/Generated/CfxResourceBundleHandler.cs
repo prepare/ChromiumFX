@@ -247,8 +247,8 @@ namespace Chromium {
             public string String {
                 get {
                     CheckAccess();
-                    if(!m_string_changed && m_string_wrapped == null && m_string_str != IntPtr.Zero) {
-                        m_string_wrapped = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_string_str, m_string_length);
+                    if(!m_string_changed && m_string_wrapped == null) {
+                        m_string_wrapped = StringFunctions.PtrToStringUni(m_string_str, m_string_length);
                     }
                     return m_string_wrapped;
                 }

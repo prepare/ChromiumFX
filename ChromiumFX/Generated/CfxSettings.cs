@@ -152,7 +152,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_settings_get_browser_subprocess_path(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -237,7 +237,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_settings_get_cache_path(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -283,7 +283,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_settings_get_user_agent(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -307,7 +307,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_settings_get_product_version(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -332,7 +332,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_settings_get_locale(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -356,7 +356,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_settings_get_log_file(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -400,7 +400,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_settings_get_javascript_flags(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -425,7 +425,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_settings_get_resources_dir_path(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -450,7 +450,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_settings_get_locales_dir_path(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);

@@ -568,8 +568,8 @@ namespace Chromium {
             public string RedirectUrl {
                 get {
                     CheckAccess();
-                    if(!m_redirectUrl_changed && m_redirectUrl_wrapped == null && m_redirectUrl_str != IntPtr.Zero) {
-                        m_redirectUrl_wrapped = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_redirectUrl_str, m_redirectUrl_length);
+                    if(!m_redirectUrl_changed && m_redirectUrl_wrapped == null) {
+                        m_redirectUrl_wrapped = StringFunctions.PtrToStringUni(m_redirectUrl_str, m_redirectUrl_length);
                     }
                     return m_redirectUrl_wrapped;
                 }

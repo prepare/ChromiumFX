@@ -202,7 +202,7 @@ namespace Chromium {
             public string SchemeName {
                 get {
                     CheckAccess();
-                    if(m_scheme_name == null && m_scheme_name_str != IntPtr.Zero) m_scheme_name = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_scheme_name_str, m_scheme_name_length);
+                    m_scheme_name = StringFunctions.PtrToStringUni(m_scheme_name_str, m_scheme_name_length);
                     return m_scheme_name;
                 }
             }

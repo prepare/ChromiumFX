@@ -463,14 +463,14 @@ namespace Chromium {
             public string DocumentName {
                 get {
                     CheckAccess();
-                    if(m_document_name == null && m_document_name_str != IntPtr.Zero) m_document_name = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_document_name_str, m_document_name_length);
+                    m_document_name = StringFunctions.PtrToStringUni(m_document_name_str, m_document_name_length);
                     return m_document_name;
                 }
             }
             public string PdfFilePath {
                 get {
                     CheckAccess();
-                    if(m_pdf_file_path == null && m_pdf_file_path_str != IntPtr.Zero) m_pdf_file_path = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_pdf_file_path_str, m_pdf_file_path_length);
+                    m_pdf_file_path = StringFunctions.PtrToStringUni(m_pdf_file_path_str, m_pdf_file_path_length);
                     return m_pdf_file_path;
                 }
             }

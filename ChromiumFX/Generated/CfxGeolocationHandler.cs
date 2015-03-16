@@ -249,7 +249,7 @@ namespace Chromium {
             public string RequestingUrl {
                 get {
                     CheckAccess();
-                    if(m_requesting_url == null && m_requesting_url_str != IntPtr.Zero) m_requesting_url = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_requesting_url_str, m_requesting_url_length);
+                    m_requesting_url = StringFunctions.PtrToStringUni(m_requesting_url_str, m_requesting_url_length);
                     return m_requesting_url;
                 }
             }
@@ -336,7 +336,7 @@ namespace Chromium {
             public string RequestingUrl {
                 get {
                     CheckAccess();
-                    if(m_requesting_url == null && m_requesting_url_str != IntPtr.Zero) m_requesting_url = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_requesting_url_str, m_requesting_url_length);
+                    m_requesting_url = StringFunctions.PtrToStringUni(m_requesting_url_str, m_requesting_url_length);
                     return m_requesting_url;
                 }
             }

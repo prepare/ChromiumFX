@@ -105,7 +105,7 @@ Public Class CefStringPtrTypeConst
     End Sub
 
     Public Overrides Sub EmitPublicEventArgGetterStatements(b As CodeBuilder, var As String)
-        b.AppendLine("if(m_{0} == null && m_{0}_str != IntPtr.Zero) m_{0} = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_{0}_str, m_{0}_length);", var)
+        b.AppendLine("m_{0} = StringFunctions.PtrToStringUni(m_{0}_str, m_{0}_length);", var)
         b.AppendLine("return m_{0};", var)
     End Sub
 

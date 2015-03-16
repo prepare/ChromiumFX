@@ -418,7 +418,7 @@ namespace Chromium {
             public string ProcessType {
                 get {
                     CheckAccess();
-                    if(m_process_type == null && m_process_type_str != IntPtr.Zero) m_process_type = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_process_type_str, m_process_type_length);
+                    m_process_type = StringFunctions.PtrToStringUni(m_process_type_str, m_process_type_length);
                     return m_process_type;
                 }
             }

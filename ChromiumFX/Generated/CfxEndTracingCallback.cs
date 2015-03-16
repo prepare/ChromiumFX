@@ -162,7 +162,7 @@ namespace Chromium {
             public string TracingFile {
                 get {
                     CheckAccess();
-                    if(m_tracing_file == null && m_tracing_file_str != IntPtr.Zero) m_tracing_file = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_tracing_file_str, m_tracing_file_length);
+                    m_tracing_file = StringFunctions.PtrToStringUni(m_tracing_file_str, m_tracing_file_length);
                     return m_tracing_file;
                 }
             }
