@@ -646,7 +646,7 @@ namespace Chromium {
             public string Host {
                 get {
                     CheckAccess();
-                    if(m_host == null && m_host_str != IntPtr.Zero) m_host = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_host_str, m_host_length);
+                    m_host = StringFunctions.PtrToStringUni(m_host_str, m_host_length);
                     return m_host;
                 }
             }
@@ -659,14 +659,14 @@ namespace Chromium {
             public string Realm {
                 get {
                     CheckAccess();
-                    if(m_realm == null && m_realm_str != IntPtr.Zero) m_realm = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_realm_str, m_realm_length);
+                    m_realm = StringFunctions.PtrToStringUni(m_realm_str, m_realm_length);
                     return m_realm;
                 }
             }
             public string Scheme {
                 get {
                     CheckAccess();
-                    if(m_scheme == null && m_scheme_str != IntPtr.Zero) m_scheme = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_scheme_str, m_scheme_length);
+                    m_scheme = StringFunctions.PtrToStringUni(m_scheme_str, m_scheme_length);
                     return m_scheme;
                 }
             }

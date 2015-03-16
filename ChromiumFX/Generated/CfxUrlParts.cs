@@ -80,7 +80,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_urlparts_get_spec(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -101,7 +101,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_urlparts_get_scheme(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -122,7 +122,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_urlparts_get_username(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -143,7 +143,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_urlparts_get_password(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -165,7 +165,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_urlparts_get_host(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -186,7 +186,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_urlparts_get_port(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -210,7 +210,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_urlparts_get_origin(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -231,7 +231,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_urlparts_get_path(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
@@ -252,7 +252,7 @@ namespace Chromium {
                 IntPtr value_str;
                 int value_length;
                 CfxApi.cfx_urlparts_get_query(nativePtrUnchecked, out value_str, out value_length);
-                return value_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni(value_str, value_length) : String.Empty;;
+                return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);

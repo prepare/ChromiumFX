@@ -509,14 +509,14 @@ namespace Chromium {
             public string TargetUrl {
                 get {
                     CheckAccess();
-                    if(m_target_url == null && m_target_url_str != IntPtr.Zero) m_target_url = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_target_url_str, m_target_url_length);
+                    m_target_url = StringFunctions.PtrToStringUni(m_target_url_str, m_target_url_length);
                     return m_target_url;
                 }
             }
             public string TargetFrameName {
                 get {
                     CheckAccess();
-                    if(m_target_frame_name == null && m_target_frame_name_str != IntPtr.Zero) m_target_frame_name = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_target_frame_name_str, m_target_frame_name_length);
+                    m_target_frame_name = StringFunctions.PtrToStringUni(m_target_frame_name_str, m_target_frame_name_length);
                     return m_target_frame_name;
                 }
             }

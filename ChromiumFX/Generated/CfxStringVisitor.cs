@@ -154,7 +154,7 @@ namespace Chromium {
             public string String {
                 get {
                     CheckAccess();
-                    if(m_string == null && m_string_str != IntPtr.Zero) m_string = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_string_str, m_string_length);
+                    m_string = StringFunctions.PtrToStringUni(m_string_str, m_string_length);
                     return m_string;
                 }
             }

@@ -214,14 +214,14 @@ namespace Chromium {
             public string Title {
                 get {
                     CheckAccess();
-                    if(m_title == null && m_title_str != IntPtr.Zero) m_title = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_title_str, m_title_length);
+                    m_title = StringFunctions.PtrToStringUni(m_title_str, m_title_length);
                     return m_title;
                 }
             }
             public string DefaultFileName {
                 get {
                     CheckAccess();
-                    if(m_default_file_name == null && m_default_file_name_str != IntPtr.Zero) m_default_file_name = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_default_file_name_str, m_default_file_name_length);
+                    m_default_file_name = StringFunctions.PtrToStringUni(m_default_file_name_str, m_default_file_name_length);
                     return m_default_file_name;
                 }
             }

@@ -409,7 +409,7 @@ namespace Chromium {
             public string Url {
                 get {
                     CheckAccess();
-                    if(m_url == null && m_url_str != IntPtr.Zero) m_url = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_url_str, m_url_length);
+                    m_url = StringFunctions.PtrToStringUni(m_url_str, m_url_length);
                     return m_url;
                 }
             }
@@ -459,7 +459,7 @@ namespace Chromium {
             public string Title {
                 get {
                     CheckAccess();
-                    if(m_title == null && m_title_str != IntPtr.Zero) m_title = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_title_str, m_title_length);
+                    m_title = StringFunctions.PtrToStringUni(m_title_str, m_title_length);
                     return m_title;
                 }
             }
@@ -523,8 +523,8 @@ namespace Chromium {
             public string Text {
                 get {
                     CheckAccess();
-                    if(!m_text_changed && m_text_wrapped == null && m_text_str != IntPtr.Zero) {
-                        m_text_wrapped = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_text_str, m_text_length);
+                    if(!m_text_changed && m_text_wrapped == null) {
+                        m_text_wrapped = StringFunctions.PtrToStringUni(m_text_str, m_text_length);
                     }
                     return m_text_wrapped;
                 }
@@ -600,7 +600,7 @@ namespace Chromium {
             public string Value {
                 get {
                     CheckAccess();
-                    if(m_value == null && m_value_str != IntPtr.Zero) m_value = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_value_str, m_value_length);
+                    m_value = StringFunctions.PtrToStringUni(m_value_str, m_value_length);
                     return m_value;
                 }
             }
@@ -662,14 +662,14 @@ namespace Chromium {
             public string Message {
                 get {
                     CheckAccess();
-                    if(m_message == null && m_message_str != IntPtr.Zero) m_message = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_message_str, m_message_length);
+                    m_message = StringFunctions.PtrToStringUni(m_message_str, m_message_length);
                     return m_message;
                 }
             }
             public string Source {
                 get {
                     CheckAccess();
-                    if(m_source == null && m_source_str != IntPtr.Zero) m_source = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_source_str, m_source_length);
+                    m_source = StringFunctions.PtrToStringUni(m_source_str, m_source_length);
                     return m_source;
                 }
             }

@@ -403,14 +403,14 @@ namespace Chromium {
             public string OriginUrl {
                 get {
                     CheckAccess();
-                    if(m_origin_url == null && m_origin_url_str != IntPtr.Zero) m_origin_url = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_origin_url_str, m_origin_url_length);
+                    m_origin_url = StringFunctions.PtrToStringUni(m_origin_url_str, m_origin_url_length);
                     return m_origin_url;
                 }
             }
             public string AcceptLang {
                 get {
                     CheckAccess();
-                    if(m_accept_lang == null && m_accept_lang_str != IntPtr.Zero) m_accept_lang = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_accept_lang_str, m_accept_lang_length);
+                    m_accept_lang = StringFunctions.PtrToStringUni(m_accept_lang_str, m_accept_lang_length);
                     return m_accept_lang;
                 }
             }
@@ -423,14 +423,14 @@ namespace Chromium {
             public string MessageText {
                 get {
                     CheckAccess();
-                    if(m_message_text == null && m_message_text_str != IntPtr.Zero) m_message_text = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_message_text_str, m_message_text_length);
+                    m_message_text = StringFunctions.PtrToStringUni(m_message_text_str, m_message_text_length);
                     return m_message_text;
                 }
             }
             public string DefaultPromptText {
                 get {
                     CheckAccess();
-                    if(m_default_prompt_text == null && m_default_prompt_text_str != IntPtr.Zero) m_default_prompt_text = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_default_prompt_text_str, m_default_prompt_text_length);
+                    m_default_prompt_text = StringFunctions.PtrToStringUni(m_default_prompt_text_str, m_default_prompt_text_length);
                     return m_default_prompt_text;
                 }
             }
@@ -529,7 +529,7 @@ namespace Chromium {
             public string MessageText {
                 get {
                     CheckAccess();
-                    if(m_message_text == null && m_message_text_str != IntPtr.Zero) m_message_text = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_message_text_str, m_message_text_length);
+                    m_message_text = StringFunctions.PtrToStringUni(m_message_text_str, m_message_text_length);
                     return m_message_text;
                 }
             }

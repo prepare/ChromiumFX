@@ -206,7 +206,7 @@ namespace Chromium {
             public string Name {
                 get {
                     CheckAccess();
-                    if(m_name == null && m_name_str != IntPtr.Zero) m_name = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_name_str, m_name_length);
+                    m_name = StringFunctions.PtrToStringUni(m_name_str, m_name_length);
                     return m_name;
                 }
             }
@@ -232,8 +232,8 @@ namespace Chromium {
             public string Exception {
                 get {
                     CheckAccess();
-                    if(!m_exception_changed && m_exception_wrapped == null && m_exception_str != IntPtr.Zero) {
-                        m_exception_wrapped = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_exception_str, m_exception_length);
+                    if(!m_exception_changed && m_exception_wrapped == null) {
+                        m_exception_wrapped = StringFunctions.PtrToStringUni(m_exception_str, m_exception_length);
                     }
                     return m_exception_wrapped;
                 }

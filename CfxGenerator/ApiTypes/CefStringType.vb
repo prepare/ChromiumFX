@@ -68,7 +68,7 @@ Public Class CefStringType
 
     Public Overrides ReadOnly Property PublicWrapExpression(var As String) As String
         Get
-            Return String.Format("{0}_str != IntPtr.Zero ? System.Runtime.InteropServices.Marshal.PtrToStringUni({0}_str, {0}_length) : String.Empty;", var)
+            Return String.Format("StringFunctions.PtrToStringUni({0}_str, {0}_length)", var)
         End Get
     End Property
 

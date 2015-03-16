@@ -1064,15 +1064,15 @@ namespace Chromium {
             public string OldUrl {
                 get {
                     CheckAccess();
-                    if(m_old_url == null && m_old_url_str != IntPtr.Zero) m_old_url = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_old_url_str, m_old_url_length);
+                    m_old_url = StringFunctions.PtrToStringUni(m_old_url_str, m_old_url_length);
                     return m_old_url;
                 }
             }
             public string NewUrl {
                 get {
                     CheckAccess();
-                    if(!m_new_url_changed && m_new_url_wrapped == null && m_new_url_str != IntPtr.Zero) {
-                        m_new_url_wrapped = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_new_url_str, m_new_url_length);
+                    if(!m_new_url_changed && m_new_url_wrapped == null) {
+                        m_new_url_wrapped = StringFunctions.PtrToStringUni(m_new_url_str, m_new_url_length);
                     }
                     return m_new_url_wrapped;
                 }
@@ -1172,7 +1172,7 @@ namespace Chromium {
             public string Host {
                 get {
                     CheckAccess();
-                    if(m_host == null && m_host_str != IntPtr.Zero) m_host = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_host_str, m_host_length);
+                    m_host = StringFunctions.PtrToStringUni(m_host_str, m_host_length);
                     return m_host;
                 }
             }
@@ -1185,14 +1185,14 @@ namespace Chromium {
             public string Realm {
                 get {
                     CheckAccess();
-                    if(m_realm == null && m_realm_str != IntPtr.Zero) m_realm = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_realm_str, m_realm_length);
+                    m_realm = StringFunctions.PtrToStringUni(m_realm_str, m_realm_length);
                     return m_realm;
                 }
             }
             public string Scheme {
                 get {
                     CheckAccess();
-                    if(m_scheme == null && m_scheme_str != IntPtr.Zero) m_scheme = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_scheme_str, m_scheme_length);
+                    m_scheme = StringFunctions.PtrToStringUni(m_scheme_str, m_scheme_length);
                     return m_scheme;
                 }
             }
@@ -1285,7 +1285,7 @@ namespace Chromium {
             public string OriginUrl {
                 get {
                     CheckAccess();
-                    if(m_origin_url == null && m_origin_url_str != IntPtr.Zero) m_origin_url = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_origin_url_str, m_origin_url_length);
+                    m_origin_url = StringFunctions.PtrToStringUni(m_origin_url_str, m_origin_url_length);
                     return m_origin_url;
                 }
             }
@@ -1375,7 +1375,7 @@ namespace Chromium {
             public string Url {
                 get {
                     CheckAccess();
-                    if(m_url == null && m_url_str != IntPtr.Zero) m_url = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_url_str, m_url_length);
+                    m_url = StringFunctions.PtrToStringUni(m_url_str, m_url_length);
                     return m_url;
                 }
             }
@@ -1449,7 +1449,7 @@ namespace Chromium {
             public string RequestUrl {
                 get {
                     CheckAccess();
-                    if(m_request_url == null && m_request_url_str != IntPtr.Zero) m_request_url = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_request_url_str, m_request_url_length);
+                    m_request_url = StringFunctions.PtrToStringUni(m_request_url_str, m_request_url_length);
                     return m_request_url;
                 }
             }
@@ -1537,14 +1537,14 @@ namespace Chromium {
             public string Url {
                 get {
                     CheckAccess();
-                    if(m_url == null && m_url_str != IntPtr.Zero) m_url = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_url_str, m_url_length);
+                    m_url = StringFunctions.PtrToStringUni(m_url_str, m_url_length);
                     return m_url;
                 }
             }
             public string PolicyUrl {
                 get {
                     CheckAccess();
-                    if(m_policy_url == null && m_policy_url_str != IntPtr.Zero) m_policy_url = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_policy_url_str, m_policy_url_length);
+                    m_policy_url = StringFunctions.PtrToStringUni(m_policy_url_str, m_policy_url_length);
                     return m_policy_url;
                 }
             }
@@ -1621,7 +1621,7 @@ namespace Chromium {
             public string PluginPath {
                 get {
                     CheckAccess();
-                    if(m_plugin_path == null && m_plugin_path_str != IntPtr.Zero) m_plugin_path = System.Runtime.InteropServices.Marshal.PtrToStringUni(m_plugin_path_str, m_plugin_path_length);
+                    m_plugin_path = StringFunctions.PtrToStringUni(m_plugin_path_str, m_plugin_path_length);
                     return m_plugin_path;
                 }
             }
