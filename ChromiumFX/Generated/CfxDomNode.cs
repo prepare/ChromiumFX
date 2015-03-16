@@ -44,6 +44,34 @@ namespace Chromium {
     /// </remarks>
     public class CfxDomNode : CfxBase {
 
+        static CfxDomNode () {
+            CfxApi.cfx_domnode_get_type = (CfxApi.cfx_domnode_get_type_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_get_type", typeof(CfxApi.cfx_domnode_get_type_delegate));
+            CfxApi.cfx_domnode_is_text = (CfxApi.cfx_domnode_is_text_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_is_text", typeof(CfxApi.cfx_domnode_is_text_delegate));
+            CfxApi.cfx_domnode_is_element = (CfxApi.cfx_domnode_is_element_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_is_element", typeof(CfxApi.cfx_domnode_is_element_delegate));
+            CfxApi.cfx_domnode_is_editable = (CfxApi.cfx_domnode_is_editable_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_is_editable", typeof(CfxApi.cfx_domnode_is_editable_delegate));
+            CfxApi.cfx_domnode_is_form_control_element = (CfxApi.cfx_domnode_is_form_control_element_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_is_form_control_element", typeof(CfxApi.cfx_domnode_is_form_control_element_delegate));
+            CfxApi.cfx_domnode_get_form_control_element_type = (CfxApi.cfx_domnode_get_form_control_element_type_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_get_form_control_element_type", typeof(CfxApi.cfx_domnode_get_form_control_element_type_delegate));
+            CfxApi.cfx_domnode_is_same = (CfxApi.cfx_domnode_is_same_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_is_same", typeof(CfxApi.cfx_domnode_is_same_delegate));
+            CfxApi.cfx_domnode_get_name = (CfxApi.cfx_domnode_get_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_get_name", typeof(CfxApi.cfx_domnode_get_name_delegate));
+            CfxApi.cfx_domnode_get_value = (CfxApi.cfx_domnode_get_value_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_get_value", typeof(CfxApi.cfx_domnode_get_value_delegate));
+            CfxApi.cfx_domnode_set_value = (CfxApi.cfx_domnode_set_value_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_set_value", typeof(CfxApi.cfx_domnode_set_value_delegate));
+            CfxApi.cfx_domnode_get_as_markup = (CfxApi.cfx_domnode_get_as_markup_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_get_as_markup", typeof(CfxApi.cfx_domnode_get_as_markup_delegate));
+            CfxApi.cfx_domnode_get_document = (CfxApi.cfx_domnode_get_document_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_get_document", typeof(CfxApi.cfx_domnode_get_document_delegate));
+            CfxApi.cfx_domnode_get_parent = (CfxApi.cfx_domnode_get_parent_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_get_parent", typeof(CfxApi.cfx_domnode_get_parent_delegate));
+            CfxApi.cfx_domnode_get_previous_sibling = (CfxApi.cfx_domnode_get_previous_sibling_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_get_previous_sibling", typeof(CfxApi.cfx_domnode_get_previous_sibling_delegate));
+            CfxApi.cfx_domnode_get_next_sibling = (CfxApi.cfx_domnode_get_next_sibling_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_get_next_sibling", typeof(CfxApi.cfx_domnode_get_next_sibling_delegate));
+            CfxApi.cfx_domnode_has_children = (CfxApi.cfx_domnode_has_children_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_has_children", typeof(CfxApi.cfx_domnode_has_children_delegate));
+            CfxApi.cfx_domnode_get_first_child = (CfxApi.cfx_domnode_get_first_child_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_get_first_child", typeof(CfxApi.cfx_domnode_get_first_child_delegate));
+            CfxApi.cfx_domnode_get_last_child = (CfxApi.cfx_domnode_get_last_child_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_get_last_child", typeof(CfxApi.cfx_domnode_get_last_child_delegate));
+            CfxApi.cfx_domnode_get_element_tag_name = (CfxApi.cfx_domnode_get_element_tag_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_get_element_tag_name", typeof(CfxApi.cfx_domnode_get_element_tag_name_delegate));
+            CfxApi.cfx_domnode_has_element_attributes = (CfxApi.cfx_domnode_has_element_attributes_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_has_element_attributes", typeof(CfxApi.cfx_domnode_has_element_attributes_delegate));
+            CfxApi.cfx_domnode_has_element_attribute = (CfxApi.cfx_domnode_has_element_attribute_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_has_element_attribute", typeof(CfxApi.cfx_domnode_has_element_attribute_delegate));
+            CfxApi.cfx_domnode_get_element_attribute = (CfxApi.cfx_domnode_get_element_attribute_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_get_element_attribute", typeof(CfxApi.cfx_domnode_get_element_attribute_delegate));
+            CfxApi.cfx_domnode_get_element_attributes = (CfxApi.cfx_domnode_get_element_attributes_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_get_element_attributes", typeof(CfxApi.cfx_domnode_get_element_attributes_delegate));
+            CfxApi.cfx_domnode_set_element_attribute = (CfxApi.cfx_domnode_set_element_attribute_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_set_element_attribute", typeof(CfxApi.cfx_domnode_set_element_attribute_delegate));
+            CfxApi.cfx_domnode_get_element_inner_text = (CfxApi.cfx_domnode_get_element_inner_text_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domnode_get_element_inner_text", typeof(CfxApi.cfx_domnode_get_element_inner_text_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxDomNode Wrap(IntPtr nativePtr) {

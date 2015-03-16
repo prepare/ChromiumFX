@@ -204,7 +204,7 @@ namespace CfxTestApplication {
             windowInfo.Width = 800;
             windowInfo.Height = 600;
 
-            WebBrowser.BrowserHost.ShowDevTools(windowInfo, new CfxClient(), ChromiumWebBrowser.DefaultBrowserSettings, null);
+            WebBrowser.BrowserHost.ShowDevTools(windowInfo, new CfxClient(), new CfxBrowserSettings(), null);
 
         }
 

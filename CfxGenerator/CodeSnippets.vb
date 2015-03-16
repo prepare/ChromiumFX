@@ -74,7 +74,7 @@ Public Class CodeSnippets
         Else
             hmodule = "libcfxPtr"
         End If
-        b.AppendLine("{1} = ({2})GetDelegate({0}, ""{1}"", typeof({2}));", hmodule, functionName, delegateName)
+        b.AppendLine("CfxApi.{1} = (CfxApi.{2})CfxApi.GetDelegate(CfxApi.{0}, ""{1}"", typeof(CfxApi.{2}));", hmodule, functionName, delegateName)
     End Sub
 
 

@@ -43,6 +43,15 @@ namespace Chromium {
     /// </remarks>
     public partial class CfxBinaryValue : CfxBase {
 
+        static CfxBinaryValue () {
+            CfxApi.cfx_binary_value_create = (CfxApi.cfx_binary_value_create_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_binary_value_create", typeof(CfxApi.cfx_binary_value_create_delegate));
+            CfxApi.cfx_binary_value_is_valid = (CfxApi.cfx_binary_value_is_valid_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_binary_value_is_valid", typeof(CfxApi.cfx_binary_value_is_valid_delegate));
+            CfxApi.cfx_binary_value_is_owned = (CfxApi.cfx_binary_value_is_owned_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_binary_value_is_owned", typeof(CfxApi.cfx_binary_value_is_owned_delegate));
+            CfxApi.cfx_binary_value_copy = (CfxApi.cfx_binary_value_copy_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_binary_value_copy", typeof(CfxApi.cfx_binary_value_copy_delegate));
+            CfxApi.cfx_binary_value_get_size = (CfxApi.cfx_binary_value_get_size_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_binary_value_get_size", typeof(CfxApi.cfx_binary_value_get_size_delegate));
+            CfxApi.cfx_binary_value_get_data = (CfxApi.cfx_binary_value_get_data_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_binary_value_get_data", typeof(CfxApi.cfx_binary_value_get_data_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxBinaryValue Wrap(IntPtr nativePtr) {

@@ -469,13 +469,6 @@ Public Class CfxClassBuilder
         b.AppendComment(struct.Name)
         b.AppendLine()
 
-        If ExportFunctions.Count > 0 Then
-            For Each f In Me.ExportFunctions
-                CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
-            Next
-            b.AppendLine()
-        End If
-
         If Category = StructCategory.Values Then
             CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_ctor", "cfx_ctor_delegate")
             CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_dtor", "cfx_dtor_delegate")
@@ -490,11 +483,7 @@ Public Class CfxClassBuilder
             b.AppendLine()
 
         ElseIf Category = StructCategory.ApiCalls Then
-            For Each sm In StructMembers
-                If sm.MemberType.IsCefCallbackType Then
-                    CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_" & sm.Name)
-                End If
-            Next
+            
         Else
 
             b.AppendLine("{0}_ctor = (cfx_ctor_with_gc_handle_delegate)GetDelegate(libcfxPtr, ""{0}_ctor"", typeof(cfx_ctor_with_gc_handle_delegate));", CfxName)
@@ -525,6 +514,21 @@ Public Class CfxClassBuilder
 
         b.BeginClass(ClassName & " : CfxBase", GeneratorConfig.ClassModifiers(ClassName))
         b.AppendLine()
+
+        b.BeginBlock("static {0} ()", ClassName)
+        If ExportFunctions.Count > 0 Then
+            For Each f In Me.ExportFunctions
+                CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
+            Next
+        End If
+        For Each sm In StructMembers
+            If sm.MemberType.IsCefCallbackType Then
+                CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_" & sm.Name)
+            End If
+        Next
+        b.EndBlock()
+        b.AppendLine()
+
         b.AppendLine("private static readonly WeakCache weakCache = new WeakCache();")
         b.AppendLine()
         b.BeginFunction("Wrap", ClassName, "IntPtr nativePtr", "internal static")

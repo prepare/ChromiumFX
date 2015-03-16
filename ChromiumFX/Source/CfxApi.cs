@@ -38,8 +38,8 @@ namespace Chromium
     partial class CfxApi
     {
 
-        private static IntPtr libcfxPtr;
-        private static IntPtr libcefPtr;
+        internal static IntPtr libcfxPtr;
+        internal static IntPtr libcefPtr;
 
         private static string cefDir;
         private static string cfxDir;
@@ -181,7 +181,7 @@ namespace Chromium
 
         }
 
-        private static Delegate GetDelegate(IntPtr hModule, string procName, Type delegateType)
+        internal static Delegate GetDelegate(IntPtr hModule, string procName, Type delegateType)
         {
             IntPtr procAdress = WinAPI.GetProcAddress(hModule, procName);
             if (procAdress == IntPtr.Zero) {

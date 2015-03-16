@@ -44,6 +44,17 @@ namespace Chromium {
     /// </remarks>
     public class CfxStreamReader : CfxBase {
 
+        static CfxStreamReader () {
+            CfxApi.cfx_stream_reader_create_for_file = (CfxApi.cfx_stream_reader_create_for_file_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_stream_reader_create_for_file", typeof(CfxApi.cfx_stream_reader_create_for_file_delegate));
+            CfxApi.cfx_stream_reader_create_for_data = (CfxApi.cfx_stream_reader_create_for_data_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_stream_reader_create_for_data", typeof(CfxApi.cfx_stream_reader_create_for_data_delegate));
+            CfxApi.cfx_stream_reader_create_for_handler = (CfxApi.cfx_stream_reader_create_for_handler_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_stream_reader_create_for_handler", typeof(CfxApi.cfx_stream_reader_create_for_handler_delegate));
+            CfxApi.cfx_stream_reader_read = (CfxApi.cfx_stream_reader_read_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_stream_reader_read", typeof(CfxApi.cfx_stream_reader_read_delegate));
+            CfxApi.cfx_stream_reader_seek = (CfxApi.cfx_stream_reader_seek_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_stream_reader_seek", typeof(CfxApi.cfx_stream_reader_seek_delegate));
+            CfxApi.cfx_stream_reader_tell = (CfxApi.cfx_stream_reader_tell_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_stream_reader_tell", typeof(CfxApi.cfx_stream_reader_tell_delegate));
+            CfxApi.cfx_stream_reader_eof = (CfxApi.cfx_stream_reader_eof_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_stream_reader_eof", typeof(CfxApi.cfx_stream_reader_eof_delegate));
+            CfxApi.cfx_stream_reader_may_block = (CfxApi.cfx_stream_reader_may_block_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_stream_reader_may_block", typeof(CfxApi.cfx_stream_reader_may_block_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxStreamReader Wrap(IntPtr nativePtr) {

@@ -43,6 +43,15 @@ namespace Chromium {
     /// </remarks>
     public class CfxProcessMessage : CfxBase {
 
+        static CfxProcessMessage () {
+            CfxApi.cfx_process_message_create = (CfxApi.cfx_process_message_create_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_process_message_create", typeof(CfxApi.cfx_process_message_create_delegate));
+            CfxApi.cfx_process_message_is_valid = (CfxApi.cfx_process_message_is_valid_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_process_message_is_valid", typeof(CfxApi.cfx_process_message_is_valid_delegate));
+            CfxApi.cfx_process_message_is_read_only = (CfxApi.cfx_process_message_is_read_only_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_process_message_is_read_only", typeof(CfxApi.cfx_process_message_is_read_only_delegate));
+            CfxApi.cfx_process_message_copy = (CfxApi.cfx_process_message_copy_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_process_message_copy", typeof(CfxApi.cfx_process_message_copy_delegate));
+            CfxApi.cfx_process_message_get_name = (CfxApi.cfx_process_message_get_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_process_message_get_name", typeof(CfxApi.cfx_process_message_get_name_delegate));
+            CfxApi.cfx_process_message_get_argument_list = (CfxApi.cfx_process_message_get_argument_list_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_process_message_get_argument_list", typeof(CfxApi.cfx_process_message_get_argument_list_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxProcessMessage Wrap(IntPtr nativePtr) {

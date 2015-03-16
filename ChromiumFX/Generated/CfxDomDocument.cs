@@ -44,6 +44,25 @@ namespace Chromium {
     /// </remarks>
     public class CfxDomDocument : CfxBase {
 
+        static CfxDomDocument () {
+            CfxApi.cfx_domdocument_get_type = (CfxApi.cfx_domdocument_get_type_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domdocument_get_type", typeof(CfxApi.cfx_domdocument_get_type_delegate));
+            CfxApi.cfx_domdocument_get_document = (CfxApi.cfx_domdocument_get_document_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domdocument_get_document", typeof(CfxApi.cfx_domdocument_get_document_delegate));
+            CfxApi.cfx_domdocument_get_body = (CfxApi.cfx_domdocument_get_body_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domdocument_get_body", typeof(CfxApi.cfx_domdocument_get_body_delegate));
+            CfxApi.cfx_domdocument_get_head = (CfxApi.cfx_domdocument_get_head_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domdocument_get_head", typeof(CfxApi.cfx_domdocument_get_head_delegate));
+            CfxApi.cfx_domdocument_get_title = (CfxApi.cfx_domdocument_get_title_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domdocument_get_title", typeof(CfxApi.cfx_domdocument_get_title_delegate));
+            CfxApi.cfx_domdocument_get_element_by_id = (CfxApi.cfx_domdocument_get_element_by_id_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domdocument_get_element_by_id", typeof(CfxApi.cfx_domdocument_get_element_by_id_delegate));
+            CfxApi.cfx_domdocument_get_focused_node = (CfxApi.cfx_domdocument_get_focused_node_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domdocument_get_focused_node", typeof(CfxApi.cfx_domdocument_get_focused_node_delegate));
+            CfxApi.cfx_domdocument_has_selection = (CfxApi.cfx_domdocument_has_selection_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domdocument_has_selection", typeof(CfxApi.cfx_domdocument_has_selection_delegate));
+            CfxApi.cfx_domdocument_get_selection_start_node = (CfxApi.cfx_domdocument_get_selection_start_node_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domdocument_get_selection_start_node", typeof(CfxApi.cfx_domdocument_get_selection_start_node_delegate));
+            CfxApi.cfx_domdocument_get_selection_start_offset = (CfxApi.cfx_domdocument_get_selection_start_offset_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domdocument_get_selection_start_offset", typeof(CfxApi.cfx_domdocument_get_selection_start_offset_delegate));
+            CfxApi.cfx_domdocument_get_selection_end_node = (CfxApi.cfx_domdocument_get_selection_end_node_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domdocument_get_selection_end_node", typeof(CfxApi.cfx_domdocument_get_selection_end_node_delegate));
+            CfxApi.cfx_domdocument_get_selection_end_offset = (CfxApi.cfx_domdocument_get_selection_end_offset_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domdocument_get_selection_end_offset", typeof(CfxApi.cfx_domdocument_get_selection_end_offset_delegate));
+            CfxApi.cfx_domdocument_get_selection_as_markup = (CfxApi.cfx_domdocument_get_selection_as_markup_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domdocument_get_selection_as_markup", typeof(CfxApi.cfx_domdocument_get_selection_as_markup_delegate));
+            CfxApi.cfx_domdocument_get_selection_as_text = (CfxApi.cfx_domdocument_get_selection_as_text_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domdocument_get_selection_as_text", typeof(CfxApi.cfx_domdocument_get_selection_as_text_delegate));
+            CfxApi.cfx_domdocument_get_base_url = (CfxApi.cfx_domdocument_get_base_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domdocument_get_base_url", typeof(CfxApi.cfx_domdocument_get_base_url_delegate));
+            CfxApi.cfx_domdocument_get_complete_url = (CfxApi.cfx_domdocument_get_complete_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_domdocument_get_complete_url", typeof(CfxApi.cfx_domdocument_get_complete_url_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxDomDocument Wrap(IntPtr nativePtr) {

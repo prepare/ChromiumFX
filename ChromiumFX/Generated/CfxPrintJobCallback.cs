@@ -43,6 +43,10 @@ namespace Chromium {
     /// </remarks>
     public class CfxPrintJobCallback : CfxBase {
 
+        static CfxPrintJobCallback () {
+            CfxApi.cfx_print_job_callback_cont = (CfxApi.cfx_print_job_callback_cont_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_job_callback_cont", typeof(CfxApi.cfx_print_job_callback_cont_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxPrintJobCallback Wrap(IntPtr nativePtr) {

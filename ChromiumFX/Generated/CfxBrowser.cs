@@ -46,6 +46,30 @@ namespace Chromium {
     /// </remarks>
     public class CfxBrowser : CfxBase {
 
+        static CfxBrowser () {
+            CfxApi.cfx_browser_get_host = (CfxApi.cfx_browser_get_host_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_get_host", typeof(CfxApi.cfx_browser_get_host_delegate));
+            CfxApi.cfx_browser_can_go_back = (CfxApi.cfx_browser_can_go_back_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_can_go_back", typeof(CfxApi.cfx_browser_can_go_back_delegate));
+            CfxApi.cfx_browser_go_back = (CfxApi.cfx_browser_go_back_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_go_back", typeof(CfxApi.cfx_browser_go_back_delegate));
+            CfxApi.cfx_browser_can_go_forward = (CfxApi.cfx_browser_can_go_forward_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_can_go_forward", typeof(CfxApi.cfx_browser_can_go_forward_delegate));
+            CfxApi.cfx_browser_go_forward = (CfxApi.cfx_browser_go_forward_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_go_forward", typeof(CfxApi.cfx_browser_go_forward_delegate));
+            CfxApi.cfx_browser_is_loading = (CfxApi.cfx_browser_is_loading_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_is_loading", typeof(CfxApi.cfx_browser_is_loading_delegate));
+            CfxApi.cfx_browser_reload = (CfxApi.cfx_browser_reload_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_reload", typeof(CfxApi.cfx_browser_reload_delegate));
+            CfxApi.cfx_browser_reload_ignore_cache = (CfxApi.cfx_browser_reload_ignore_cache_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_reload_ignore_cache", typeof(CfxApi.cfx_browser_reload_ignore_cache_delegate));
+            CfxApi.cfx_browser_stop_load = (CfxApi.cfx_browser_stop_load_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_stop_load", typeof(CfxApi.cfx_browser_stop_load_delegate));
+            CfxApi.cfx_browser_get_identifier = (CfxApi.cfx_browser_get_identifier_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_get_identifier", typeof(CfxApi.cfx_browser_get_identifier_delegate));
+            CfxApi.cfx_browser_is_same = (CfxApi.cfx_browser_is_same_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_is_same", typeof(CfxApi.cfx_browser_is_same_delegate));
+            CfxApi.cfx_browser_is_popup = (CfxApi.cfx_browser_is_popup_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_is_popup", typeof(CfxApi.cfx_browser_is_popup_delegate));
+            CfxApi.cfx_browser_has_document = (CfxApi.cfx_browser_has_document_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_has_document", typeof(CfxApi.cfx_browser_has_document_delegate));
+            CfxApi.cfx_browser_get_main_frame = (CfxApi.cfx_browser_get_main_frame_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_get_main_frame", typeof(CfxApi.cfx_browser_get_main_frame_delegate));
+            CfxApi.cfx_browser_get_focused_frame = (CfxApi.cfx_browser_get_focused_frame_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_get_focused_frame", typeof(CfxApi.cfx_browser_get_focused_frame_delegate));
+            CfxApi.cfx_browser_get_frame_byident = (CfxApi.cfx_browser_get_frame_byident_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_get_frame_byident", typeof(CfxApi.cfx_browser_get_frame_byident_delegate));
+            CfxApi.cfx_browser_get_frame = (CfxApi.cfx_browser_get_frame_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_get_frame", typeof(CfxApi.cfx_browser_get_frame_delegate));
+            CfxApi.cfx_browser_get_frame_count = (CfxApi.cfx_browser_get_frame_count_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_get_frame_count", typeof(CfxApi.cfx_browser_get_frame_count_delegate));
+            CfxApi.cfx_browser_get_frame_identifiers = (CfxApi.cfx_browser_get_frame_identifiers_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_get_frame_identifiers", typeof(CfxApi.cfx_browser_get_frame_identifiers_delegate));
+            CfxApi.cfx_browser_get_frame_names = (CfxApi.cfx_browser_get_frame_names_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_get_frame_names", typeof(CfxApi.cfx_browser_get_frame_names_delegate));
+            CfxApi.cfx_browser_send_process_message = (CfxApi.cfx_browser_send_process_message_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_browser_send_process_message", typeof(CfxApi.cfx_browser_send_process_message_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxBrowser Wrap(IntPtr nativePtr) {

@@ -46,6 +46,33 @@ namespace Chromium {
     /// </remarks>
     public class CfxFrame : CfxBase {
 
+        static CfxFrame () {
+            CfxApi.cfx_frame_is_valid = (CfxApi.cfx_frame_is_valid_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_is_valid", typeof(CfxApi.cfx_frame_is_valid_delegate));
+            CfxApi.cfx_frame_undo = (CfxApi.cfx_frame_undo_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_undo", typeof(CfxApi.cfx_frame_undo_delegate));
+            CfxApi.cfx_frame_redo = (CfxApi.cfx_frame_redo_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_redo", typeof(CfxApi.cfx_frame_redo_delegate));
+            CfxApi.cfx_frame_cut = (CfxApi.cfx_frame_cut_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_cut", typeof(CfxApi.cfx_frame_cut_delegate));
+            CfxApi.cfx_frame_copy = (CfxApi.cfx_frame_copy_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_copy", typeof(CfxApi.cfx_frame_copy_delegate));
+            CfxApi.cfx_frame_paste = (CfxApi.cfx_frame_paste_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_paste", typeof(CfxApi.cfx_frame_paste_delegate));
+            CfxApi.cfx_frame_del = (CfxApi.cfx_frame_del_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_del", typeof(CfxApi.cfx_frame_del_delegate));
+            CfxApi.cfx_frame_select_all = (CfxApi.cfx_frame_select_all_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_select_all", typeof(CfxApi.cfx_frame_select_all_delegate));
+            CfxApi.cfx_frame_view_source = (CfxApi.cfx_frame_view_source_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_view_source", typeof(CfxApi.cfx_frame_view_source_delegate));
+            CfxApi.cfx_frame_get_source = (CfxApi.cfx_frame_get_source_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_get_source", typeof(CfxApi.cfx_frame_get_source_delegate));
+            CfxApi.cfx_frame_get_text = (CfxApi.cfx_frame_get_text_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_get_text", typeof(CfxApi.cfx_frame_get_text_delegate));
+            CfxApi.cfx_frame_load_request = (CfxApi.cfx_frame_load_request_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_load_request", typeof(CfxApi.cfx_frame_load_request_delegate));
+            CfxApi.cfx_frame_load_url = (CfxApi.cfx_frame_load_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_load_url", typeof(CfxApi.cfx_frame_load_url_delegate));
+            CfxApi.cfx_frame_load_string = (CfxApi.cfx_frame_load_string_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_load_string", typeof(CfxApi.cfx_frame_load_string_delegate));
+            CfxApi.cfx_frame_execute_java_script = (CfxApi.cfx_frame_execute_java_script_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_execute_java_script", typeof(CfxApi.cfx_frame_execute_java_script_delegate));
+            CfxApi.cfx_frame_is_main = (CfxApi.cfx_frame_is_main_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_is_main", typeof(CfxApi.cfx_frame_is_main_delegate));
+            CfxApi.cfx_frame_is_focused = (CfxApi.cfx_frame_is_focused_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_is_focused", typeof(CfxApi.cfx_frame_is_focused_delegate));
+            CfxApi.cfx_frame_get_name = (CfxApi.cfx_frame_get_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_get_name", typeof(CfxApi.cfx_frame_get_name_delegate));
+            CfxApi.cfx_frame_get_identifier = (CfxApi.cfx_frame_get_identifier_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_get_identifier", typeof(CfxApi.cfx_frame_get_identifier_delegate));
+            CfxApi.cfx_frame_get_parent = (CfxApi.cfx_frame_get_parent_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_get_parent", typeof(CfxApi.cfx_frame_get_parent_delegate));
+            CfxApi.cfx_frame_get_url = (CfxApi.cfx_frame_get_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_get_url", typeof(CfxApi.cfx_frame_get_url_delegate));
+            CfxApi.cfx_frame_get_browser = (CfxApi.cfx_frame_get_browser_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_get_browser", typeof(CfxApi.cfx_frame_get_browser_delegate));
+            CfxApi.cfx_frame_get_v8context = (CfxApi.cfx_frame_get_v8context_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_get_v8context", typeof(CfxApi.cfx_frame_get_v8context_delegate));
+            CfxApi.cfx_frame_visit_dom = (CfxApi.cfx_frame_visit_dom_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_frame_visit_dom", typeof(CfxApi.cfx_frame_visit_dom_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxFrame Wrap(IntPtr nativePtr) {

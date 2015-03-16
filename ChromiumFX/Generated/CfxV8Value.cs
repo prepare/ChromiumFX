@@ -47,6 +47,64 @@ namespace Chromium {
     /// </remarks>
     public class CfxV8Value : CfxBase {
 
+        static CfxV8Value () {
+            CfxApi.cfx_v8value_create_undefined = (CfxApi.cfx_v8value_create_undefined_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_create_undefined", typeof(CfxApi.cfx_v8value_create_undefined_delegate));
+            CfxApi.cfx_v8value_create_null = (CfxApi.cfx_v8value_create_null_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_create_null", typeof(CfxApi.cfx_v8value_create_null_delegate));
+            CfxApi.cfx_v8value_create_bool = (CfxApi.cfx_v8value_create_bool_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_create_bool", typeof(CfxApi.cfx_v8value_create_bool_delegate));
+            CfxApi.cfx_v8value_create_int = (CfxApi.cfx_v8value_create_int_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_create_int", typeof(CfxApi.cfx_v8value_create_int_delegate));
+            CfxApi.cfx_v8value_create_uint = (CfxApi.cfx_v8value_create_uint_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_create_uint", typeof(CfxApi.cfx_v8value_create_uint_delegate));
+            CfxApi.cfx_v8value_create_double = (CfxApi.cfx_v8value_create_double_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_create_double", typeof(CfxApi.cfx_v8value_create_double_delegate));
+            CfxApi.cfx_v8value_create_date = (CfxApi.cfx_v8value_create_date_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_create_date", typeof(CfxApi.cfx_v8value_create_date_delegate));
+            CfxApi.cfx_v8value_create_string = (CfxApi.cfx_v8value_create_string_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_create_string", typeof(CfxApi.cfx_v8value_create_string_delegate));
+            CfxApi.cfx_v8value_create_object = (CfxApi.cfx_v8value_create_object_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_create_object", typeof(CfxApi.cfx_v8value_create_object_delegate));
+            CfxApi.cfx_v8value_create_array = (CfxApi.cfx_v8value_create_array_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_create_array", typeof(CfxApi.cfx_v8value_create_array_delegate));
+            CfxApi.cfx_v8value_create_function = (CfxApi.cfx_v8value_create_function_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_create_function", typeof(CfxApi.cfx_v8value_create_function_delegate));
+            CfxApi.cfx_v8value_is_valid = (CfxApi.cfx_v8value_is_valid_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_is_valid", typeof(CfxApi.cfx_v8value_is_valid_delegate));
+            CfxApi.cfx_v8value_is_undefined = (CfxApi.cfx_v8value_is_undefined_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_is_undefined", typeof(CfxApi.cfx_v8value_is_undefined_delegate));
+            CfxApi.cfx_v8value_is_null = (CfxApi.cfx_v8value_is_null_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_is_null", typeof(CfxApi.cfx_v8value_is_null_delegate));
+            CfxApi.cfx_v8value_is_bool = (CfxApi.cfx_v8value_is_bool_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_is_bool", typeof(CfxApi.cfx_v8value_is_bool_delegate));
+            CfxApi.cfx_v8value_is_int = (CfxApi.cfx_v8value_is_int_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_is_int", typeof(CfxApi.cfx_v8value_is_int_delegate));
+            CfxApi.cfx_v8value_is_uint = (CfxApi.cfx_v8value_is_uint_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_is_uint", typeof(CfxApi.cfx_v8value_is_uint_delegate));
+            CfxApi.cfx_v8value_is_double = (CfxApi.cfx_v8value_is_double_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_is_double", typeof(CfxApi.cfx_v8value_is_double_delegate));
+            CfxApi.cfx_v8value_is_date = (CfxApi.cfx_v8value_is_date_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_is_date", typeof(CfxApi.cfx_v8value_is_date_delegate));
+            CfxApi.cfx_v8value_is_string = (CfxApi.cfx_v8value_is_string_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_is_string", typeof(CfxApi.cfx_v8value_is_string_delegate));
+            CfxApi.cfx_v8value_is_object = (CfxApi.cfx_v8value_is_object_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_is_object", typeof(CfxApi.cfx_v8value_is_object_delegate));
+            CfxApi.cfx_v8value_is_array = (CfxApi.cfx_v8value_is_array_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_is_array", typeof(CfxApi.cfx_v8value_is_array_delegate));
+            CfxApi.cfx_v8value_is_function = (CfxApi.cfx_v8value_is_function_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_is_function", typeof(CfxApi.cfx_v8value_is_function_delegate));
+            CfxApi.cfx_v8value_is_same = (CfxApi.cfx_v8value_is_same_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_is_same", typeof(CfxApi.cfx_v8value_is_same_delegate));
+            CfxApi.cfx_v8value_get_bool_value = (CfxApi.cfx_v8value_get_bool_value_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_get_bool_value", typeof(CfxApi.cfx_v8value_get_bool_value_delegate));
+            CfxApi.cfx_v8value_get_int_value = (CfxApi.cfx_v8value_get_int_value_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_get_int_value", typeof(CfxApi.cfx_v8value_get_int_value_delegate));
+            CfxApi.cfx_v8value_get_uint_value = (CfxApi.cfx_v8value_get_uint_value_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_get_uint_value", typeof(CfxApi.cfx_v8value_get_uint_value_delegate));
+            CfxApi.cfx_v8value_get_double_value = (CfxApi.cfx_v8value_get_double_value_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_get_double_value", typeof(CfxApi.cfx_v8value_get_double_value_delegate));
+            CfxApi.cfx_v8value_get_date_value = (CfxApi.cfx_v8value_get_date_value_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_get_date_value", typeof(CfxApi.cfx_v8value_get_date_value_delegate));
+            CfxApi.cfx_v8value_get_string_value = (CfxApi.cfx_v8value_get_string_value_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_get_string_value", typeof(CfxApi.cfx_v8value_get_string_value_delegate));
+            CfxApi.cfx_v8value_is_user_created = (CfxApi.cfx_v8value_is_user_created_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_is_user_created", typeof(CfxApi.cfx_v8value_is_user_created_delegate));
+            CfxApi.cfx_v8value_has_exception = (CfxApi.cfx_v8value_has_exception_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_has_exception", typeof(CfxApi.cfx_v8value_has_exception_delegate));
+            CfxApi.cfx_v8value_get_exception = (CfxApi.cfx_v8value_get_exception_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_get_exception", typeof(CfxApi.cfx_v8value_get_exception_delegate));
+            CfxApi.cfx_v8value_clear_exception = (CfxApi.cfx_v8value_clear_exception_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_clear_exception", typeof(CfxApi.cfx_v8value_clear_exception_delegate));
+            CfxApi.cfx_v8value_will_rethrow_exceptions = (CfxApi.cfx_v8value_will_rethrow_exceptions_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_will_rethrow_exceptions", typeof(CfxApi.cfx_v8value_will_rethrow_exceptions_delegate));
+            CfxApi.cfx_v8value_set_rethrow_exceptions = (CfxApi.cfx_v8value_set_rethrow_exceptions_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_set_rethrow_exceptions", typeof(CfxApi.cfx_v8value_set_rethrow_exceptions_delegate));
+            CfxApi.cfx_v8value_has_value_bykey = (CfxApi.cfx_v8value_has_value_bykey_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_has_value_bykey", typeof(CfxApi.cfx_v8value_has_value_bykey_delegate));
+            CfxApi.cfx_v8value_has_value_byindex = (CfxApi.cfx_v8value_has_value_byindex_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_has_value_byindex", typeof(CfxApi.cfx_v8value_has_value_byindex_delegate));
+            CfxApi.cfx_v8value_delete_value_bykey = (CfxApi.cfx_v8value_delete_value_bykey_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_delete_value_bykey", typeof(CfxApi.cfx_v8value_delete_value_bykey_delegate));
+            CfxApi.cfx_v8value_delete_value_byindex = (CfxApi.cfx_v8value_delete_value_byindex_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_delete_value_byindex", typeof(CfxApi.cfx_v8value_delete_value_byindex_delegate));
+            CfxApi.cfx_v8value_get_value_bykey = (CfxApi.cfx_v8value_get_value_bykey_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_get_value_bykey", typeof(CfxApi.cfx_v8value_get_value_bykey_delegate));
+            CfxApi.cfx_v8value_get_value_byindex = (CfxApi.cfx_v8value_get_value_byindex_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_get_value_byindex", typeof(CfxApi.cfx_v8value_get_value_byindex_delegate));
+            CfxApi.cfx_v8value_set_value_bykey = (CfxApi.cfx_v8value_set_value_bykey_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_set_value_bykey", typeof(CfxApi.cfx_v8value_set_value_bykey_delegate));
+            CfxApi.cfx_v8value_set_value_byindex = (CfxApi.cfx_v8value_set_value_byindex_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_set_value_byindex", typeof(CfxApi.cfx_v8value_set_value_byindex_delegate));
+            CfxApi.cfx_v8value_set_value_byaccessor = (CfxApi.cfx_v8value_set_value_byaccessor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_set_value_byaccessor", typeof(CfxApi.cfx_v8value_set_value_byaccessor_delegate));
+            CfxApi.cfx_v8value_get_keys = (CfxApi.cfx_v8value_get_keys_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_get_keys", typeof(CfxApi.cfx_v8value_get_keys_delegate));
+            CfxApi.cfx_v8value_set_user_data = (CfxApi.cfx_v8value_set_user_data_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_set_user_data", typeof(CfxApi.cfx_v8value_set_user_data_delegate));
+            CfxApi.cfx_v8value_get_user_data = (CfxApi.cfx_v8value_get_user_data_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_get_user_data", typeof(CfxApi.cfx_v8value_get_user_data_delegate));
+            CfxApi.cfx_v8value_get_externally_allocated_memory = (CfxApi.cfx_v8value_get_externally_allocated_memory_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_get_externally_allocated_memory", typeof(CfxApi.cfx_v8value_get_externally_allocated_memory_delegate));
+            CfxApi.cfx_v8value_adjust_externally_allocated_memory = (CfxApi.cfx_v8value_adjust_externally_allocated_memory_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_adjust_externally_allocated_memory", typeof(CfxApi.cfx_v8value_adjust_externally_allocated_memory_delegate));
+            CfxApi.cfx_v8value_get_array_length = (CfxApi.cfx_v8value_get_array_length_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_get_array_length", typeof(CfxApi.cfx_v8value_get_array_length_delegate));
+            CfxApi.cfx_v8value_get_function_name = (CfxApi.cfx_v8value_get_function_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_get_function_name", typeof(CfxApi.cfx_v8value_get_function_name_delegate));
+            CfxApi.cfx_v8value_get_function_handler = (CfxApi.cfx_v8value_get_function_handler_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_get_function_handler", typeof(CfxApi.cfx_v8value_get_function_handler_delegate));
+            CfxApi.cfx_v8value_execute_function = (CfxApi.cfx_v8value_execute_function_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_execute_function", typeof(CfxApi.cfx_v8value_execute_function_delegate));
+            CfxApi.cfx_v8value_execute_function_with_context = (CfxApi.cfx_v8value_execute_function_with_context_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8value_execute_function_with_context", typeof(CfxApi.cfx_v8value_execute_function_with_context_delegate));
+        }
+
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxV8Value Wrap(IntPtr nativePtr) {
