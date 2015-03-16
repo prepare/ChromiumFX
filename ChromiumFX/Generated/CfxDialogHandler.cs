@@ -228,7 +228,7 @@ namespace Chromium {
             public System.Collections.Generic.List<string> AcceptTypes {
                 get {
                     CheckAccess();
-                    return CfxStringCollections.WrapCfxStringList(m_accept_types);
+                    return StringFunctions.WrapCfxStringList(m_accept_types);
                 }
             }
             public CfxFileDialogCallback Callback {

@@ -344,10 +344,10 @@ namespace Chromium {
         /// </remarks>
         public bool GetDictionarySuggestions(System.Collections.Generic.List<string> suggestions) {
             PinnedString[] suggestions_handles;
-            var suggestions_unwrapped = CfxStringCollections.UnwrapCfxStringList(suggestions, out suggestions_handles);
+            var suggestions_unwrapped = StringFunctions.UnwrapCfxStringList(suggestions, out suggestions_handles);
             var __retval = CfxApi.cfx_context_menu_params_get_dictionary_suggestions(NativePtr, suggestions_unwrapped);
-            CfxStringCollections.FreePinnedStrings(suggestions_handles);
-            CfxStringCollections.CfxStringListCopyToManaged(suggestions_unwrapped, suggestions);
+            StringFunctions.FreePinnedStrings(suggestions_handles);
+            StringFunctions.CfxStringListCopyToManaged(suggestions_unwrapped, suggestions);
             CfxApi.cfx_string_list_free(suggestions_unwrapped);
             return 0 != __retval;
         }

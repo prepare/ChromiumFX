@@ -276,14 +276,14 @@ namespace Chromium {
             get {
                 IntPtr value;
                 CfxApi.cfx_popup_features_get_additionalFeatures(nativePtrUnchecked, out value);
-                return CfxStringCollections.WrapCfxStringList(value);
+                return StringFunctions.WrapCfxStringList(value);
             }
             set {
                 PinnedString[] value_handles;
-                var value_unwrapped = CfxStringCollections.UnwrapCfxStringList(value, out value_handles);
+                var value_unwrapped = StringFunctions.UnwrapCfxStringList(value, out value_handles);
                 CfxApi.cfx_popup_features_set_additionalFeatures(nativePtrUnchecked, value_unwrapped);
-                CfxStringCollections.FreePinnedStrings(value_handles);
-                CfxStringCollections.CfxStringListCopyToManaged(value_unwrapped, value);
+                StringFunctions.FreePinnedStrings(value_handles);
+                StringFunctions.CfxStringListCopyToManaged(value_unwrapped, value);
                 CfxApi.cfx_string_list_free(value_unwrapped);
             }
         }

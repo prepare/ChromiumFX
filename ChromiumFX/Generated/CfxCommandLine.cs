@@ -265,10 +265,10 @@ namespace Chromium {
         /// </remarks>
         public void GetArgv(System.Collections.Generic.List<string> argv) {
             PinnedString[] argv_handles;
-            var argv_unwrapped = CfxStringCollections.UnwrapCfxStringList(argv, out argv_handles);
+            var argv_unwrapped = StringFunctions.UnwrapCfxStringList(argv, out argv_handles);
             CfxApi.cfx_command_line_get_argv(NativePtr, argv_unwrapped);
-            CfxStringCollections.FreePinnedStrings(argv_handles);
-            CfxStringCollections.CfxStringListCopyToManaged(argv_unwrapped, argv);
+            StringFunctions.FreePinnedStrings(argv_handles);
+            StringFunctions.CfxStringListCopyToManaged(argv_unwrapped, argv);
             CfxApi.cfx_string_list_free(argv_unwrapped);
         }
 
@@ -311,10 +311,10 @@ namespace Chromium {
         /// </remarks>
         public void GetSwitches(System.Collections.Generic.List<string[]> switches) {
             PinnedString[] switches_handles;
-            var switches_unwrapped = CfxStringCollections.UnwrapCfxStringMap(switches, out switches_handles);
+            var switches_unwrapped = StringFunctions.UnwrapCfxStringMap(switches, out switches_handles);
             CfxApi.cfx_command_line_get_switches(NativePtr, switches_unwrapped);
-            CfxStringCollections.FreePinnedStrings(switches_handles);
-            CfxStringCollections.CfxStringMapCopyToManaged(switches_unwrapped, switches);
+            StringFunctions.FreePinnedStrings(switches_handles);
+            StringFunctions.CfxStringMapCopyToManaged(switches_unwrapped, switches);
             CfxApi.cfx_string_map_free(switches_unwrapped);
         }
 
@@ -356,10 +356,10 @@ namespace Chromium {
         /// </remarks>
         public void GetArguments(System.Collections.Generic.List<string> arguments) {
             PinnedString[] arguments_handles;
-            var arguments_unwrapped = CfxStringCollections.UnwrapCfxStringList(arguments, out arguments_handles);
+            var arguments_unwrapped = StringFunctions.UnwrapCfxStringList(arguments, out arguments_handles);
             CfxApi.cfx_command_line_get_arguments(NativePtr, arguments_unwrapped);
-            CfxStringCollections.FreePinnedStrings(arguments_handles);
-            CfxStringCollections.CfxStringListCopyToManaged(arguments_unwrapped, arguments);
+            StringFunctions.FreePinnedStrings(arguments_handles);
+            StringFunctions.CfxStringListCopyToManaged(arguments_unwrapped, arguments);
             CfxApi.cfx_string_list_free(arguments_unwrapped);
         }
 

@@ -303,11 +303,11 @@ namespace Chromium {
         public static void GetExtensionsForMimeType(string mimeType, System.Collections.Generic.List<string> extensions) {
             var mimeType_pinned = new PinnedString(mimeType);
             PinnedString[] extensions_handles;
-            var extensions_unwrapped = CfxStringCollections.UnwrapCfxStringList(extensions, out extensions_handles);
+            var extensions_unwrapped = StringFunctions.UnwrapCfxStringList(extensions, out extensions_handles);
             CfxApi.cfx_get_extensions_for_mime_type(mimeType_pinned.Obj.PinnedPtr, mimeType_pinned.Length, extensions_unwrapped);
             mimeType_pinned.Obj.Free();
-            CfxStringCollections.FreePinnedStrings(extensions_handles);
-            CfxStringCollections.CfxStringListCopyToManaged(extensions_unwrapped, extensions);
+            StringFunctions.FreePinnedStrings(extensions_handles);
+            StringFunctions.CfxStringListCopyToManaged(extensions_unwrapped, extensions);
             CfxApi.cfx_string_list_free(extensions_unwrapped);
         }
 

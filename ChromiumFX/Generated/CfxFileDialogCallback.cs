@@ -78,10 +78,10 @@ namespace Chromium {
         /// </remarks>
         public void Continue(System.Collections.Generic.List<string> filePaths) {
             PinnedString[] filePaths_handles;
-            var filePaths_unwrapped = CfxStringCollections.UnwrapCfxStringList(filePaths, out filePaths_handles);
+            var filePaths_unwrapped = StringFunctions.UnwrapCfxStringList(filePaths, out filePaths_handles);
             CfxApi.cfx_file_dialog_callback_cont(NativePtr, filePaths_unwrapped);
-            CfxStringCollections.FreePinnedStrings(filePaths_handles);
-            CfxStringCollections.CfxStringListCopyToManaged(filePaths_unwrapped, filePaths);
+            StringFunctions.FreePinnedStrings(filePaths_handles);
+            StringFunctions.CfxStringListCopyToManaged(filePaths_unwrapped, filePaths);
             CfxApi.cfx_string_list_free(filePaths_unwrapped);
         }
 

@@ -203,10 +203,10 @@ namespace Chromium {
         /// </remarks>
         public int GetKeys(System.Collections.Generic.List<string> keys) {
             PinnedString[] keys_handles;
-            var keys_unwrapped = CfxStringCollections.UnwrapCfxStringList(keys, out keys_handles);
+            var keys_unwrapped = StringFunctions.UnwrapCfxStringList(keys, out keys_handles);
             var __retval = CfxApi.cfx_dictionary_value_get_keys(NativePtr, keys_unwrapped);
-            CfxStringCollections.FreePinnedStrings(keys_handles);
-            CfxStringCollections.CfxStringListCopyToManaged(keys_unwrapped, keys);
+            StringFunctions.FreePinnedStrings(keys_handles);
+            StringFunctions.CfxStringListCopyToManaged(keys_unwrapped, keys);
             CfxApi.cfx_string_list_free(keys_unwrapped);
             return __retval;
         }

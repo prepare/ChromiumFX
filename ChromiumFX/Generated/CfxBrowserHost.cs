@@ -336,12 +336,12 @@ namespace Chromium {
             var title_pinned = new PinnedString(title);
             var defaultFileName_pinned = new PinnedString(defaultFileName);
             PinnedString[] acceptTypes_handles;
-            var acceptTypes_unwrapped = CfxStringCollections.UnwrapCfxStringList(acceptTypes, out acceptTypes_handles);
+            var acceptTypes_unwrapped = StringFunctions.UnwrapCfxStringList(acceptTypes, out acceptTypes_handles);
             CfxApi.cfx_browser_host_run_file_dialog(NativePtr, mode, title_pinned.Obj.PinnedPtr, title_pinned.Length, defaultFileName_pinned.Obj.PinnedPtr, defaultFileName_pinned.Length, acceptTypes_unwrapped, CfxRunFileDialogCallback.Unwrap(callback));
             title_pinned.Obj.Free();
             defaultFileName_pinned.Obj.Free();
-            CfxStringCollections.FreePinnedStrings(acceptTypes_handles);
-            CfxStringCollections.CfxStringListCopyToManaged(acceptTypes_unwrapped, acceptTypes);
+            StringFunctions.FreePinnedStrings(acceptTypes_handles);
+            StringFunctions.CfxStringListCopyToManaged(acceptTypes_unwrapped, acceptTypes);
             CfxApi.cfx_string_list_free(acceptTypes_unwrapped);
         }
 

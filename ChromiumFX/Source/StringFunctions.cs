@@ -35,7 +35,11 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace Chromium {
-    internal class CfxStringCollections {
+    internal class StringFunctions {
+
+        static StringFunctions() {
+            CfxApi.InstantiateStringCollectionDelegates();
+        }
 
         //TODO: string list and string map
 
@@ -95,11 +99,10 @@ namespace Chromium {
         }
 
 
-        private static string PtrToStringUni(IntPtr str, int length) {
-            if(length == 0)
-                return String.Empty;
-            else
-                return Marshal.PtrToStringUni(str, length);
+        internal static string PtrToStringUni(IntPtr str, int length) {
+            return
+                str == IntPtr.Zero ? null
+                : (length == 0 ? String.Empty : Marshal.PtrToStringUni(str, length));
         }
 
         internal static void CfxStringListCopyToManaged(IntPtr source, List<string> target) {
