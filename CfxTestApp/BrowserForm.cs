@@ -38,7 +38,7 @@ using Chromium;
 using Chromium.Event;
 using Chromium.Remote;
 using Chromium.Remote.Event;
-
+using Chromium.WebBrowser;
 
 namespace CfxTestApplication {
     public partial class BrowserForm : Form {
@@ -189,6 +189,22 @@ namespace CfxTestApplication {
             LogTextBox.AppendText(msg);
             LogTextBox.SelectionStart = LogTextBox.TextLength - 1;
             LogTextBox.ScrollToCaret();
+
+        }
+
+        private void ShowDevToolsButton_Click(object sender, EventArgs e) {
+
+            CfxWindowInfo windowInfo = new CfxWindowInfo();
+
+            windowInfo.Style = (int)(WindowStyles.WS_OVERLAPPEDWINDOW | WindowStyles.WS_CLIPCHILDREN | WindowStyles.WS_CLIPSIBLINGS | WindowStyles.WS_VISIBLE);
+            windowInfo.ParentWindow = IntPtr.Zero;
+            windowInfo.WindowName = "Dev Tools";
+            windowInfo.X = 200;
+            windowInfo.Y = 200;
+            windowInfo.Width = 800;
+            windowInfo.Height = 600;
+
+            WebBrowser.BrowserHost.ShowDevTools(windowInfo, new CfxClient(), ChromiumWebBrowser.DefaultBrowserSettings, null);
 
         }
 

@@ -65,11 +65,12 @@ namespace CfxTestApplication {
             this.JSHelloWorldButton = new System.Windows.Forms.ToolStripButton();
             this.ResourcesTestButton = new System.Windows.Forms.ToolStripButton();
             this.VisitDomButton = new System.Windows.Forms.ToolStripButton();
-            this.WebBrowser = new Chromium.WebBrowser.ChromiumWebBrowser();
+            this.CountFramesButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.LogTextBox = new System.Windows.Forms.TextBox();
-            this.CountFramesButton = new System.Windows.Forms.ToolStripButton();
+            this.ShowDevToolsButton = new System.Windows.Forms.ToolStripButton();
+            this.WebBrowser = new Chromium.WebBrowser.ChromiumWebBrowser();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -92,7 +93,8 @@ namespace CfxTestApplication {
             this.JSHelloWorldButton,
             this.ResourcesTestButton,
             this.VisitDomButton,
-            this.CountFramesButton});
+            this.CountFramesButton,
+            this.ShowDevToolsButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1261, 25);
@@ -164,15 +166,15 @@ namespace CfxTestApplication {
             this.VisitDomButton.Size = new System.Drawing.Size(64, 22);
             this.VisitDomButton.Text = "Visit DOM";
             // 
-            // WebBrowser
+            // CountFramesButton
             // 
-            this.WebBrowser.BackColor = System.Drawing.Color.White;
-            this.WebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.WebBrowser.Location = new System.Drawing.Point(0, 0);
-            this.WebBrowser.Name = "WebBrowser";
-            this.WebBrowser.Size = new System.Drawing.Size(1261, 448);
-            this.WebBrowser.TabIndex = 2;
-            this.WebBrowser.Text = "cfxWebBrowser2";
+            this.CountFramesButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.CountFramesButton.Image = ((System.Drawing.Image)(resources.GetObject("CountFramesButton.Image")));
+            this.CountFramesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CountFramesButton.Name = "CountFramesButton";
+            this.CountFramesButton.Size = new System.Drawing.Size(85, 22);
+            this.CountFramesButton.Text = "Count Frames";
+            this.CountFramesButton.Click += new System.EventHandler(this.CountFramesButton_Click);
             // 
             // splitContainer1
             // 
@@ -215,15 +217,25 @@ namespace CfxTestApplication {
             this.LogTextBox.Size = new System.Drawing.Size(1261, 121);
             this.LogTextBox.TabIndex = 0;
             // 
-            // CountFramesButton
+            // ShowDevToolsButton
             // 
-            this.CountFramesButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.CountFramesButton.Image = ((System.Drawing.Image)(resources.GetObject("CountFramesButton.Image")));
-            this.CountFramesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.CountFramesButton.Name = "CountFramesButton";
-            this.CountFramesButton.Size = new System.Drawing.Size(85, 22);
-            this.CountFramesButton.Text = "Count Frames";
-            this.CountFramesButton.Click += new System.EventHandler(this.CountFramesButton_Click);
+            this.ShowDevToolsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.ShowDevToolsButton.Image = ((System.Drawing.Image)(resources.GetObject("ShowDevToolsButton.Image")));
+            this.ShowDevToolsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ShowDevToolsButton.Name = "ShowDevToolsButton";
+            this.ShowDevToolsButton.Size = new System.Drawing.Size(89, 22);
+            this.ShowDevToolsButton.Text = "ShowDevTools";
+            this.ShowDevToolsButton.Click += new System.EventHandler(this.ShowDevToolsButton_Click);
+            // 
+            // WebBrowser
+            // 
+            this.WebBrowser.BackColor = System.Drawing.Color.White;
+            this.WebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.WebBrowser.Location = new System.Drawing.Point(0, 0);
+            this.WebBrowser.Name = "WebBrowser";
+            this.WebBrowser.Size = new System.Drawing.Size(1261, 448);
+            this.WebBrowser.TabIndex = 2;
+            this.WebBrowser.Text = "cfxWebBrowser2";
             // 
             // BrowserForm
             // 
@@ -265,5 +277,6 @@ namespace CfxTestApplication {
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TextBox LogTextBox;
         private System.Windows.Forms.ToolStripButton CountFramesButton;
+        private System.Windows.Forms.ToolStripButton ShowDevToolsButton;
     }
 }
