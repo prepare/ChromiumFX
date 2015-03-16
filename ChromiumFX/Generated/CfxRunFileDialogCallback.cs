@@ -172,7 +172,7 @@ namespace Chromium {
             public System.Collections.Generic.List<string> FilePaths {
                 get {
                     CheckAccess();
-                    return CfxStringCollections.WrapCfxStringList(m_file_paths);
+                    return StringFunctions.WrapCfxStringList(m_file_paths);
                 }
             }
 

@@ -340,10 +340,10 @@ namespace Chromium {
         /// </remarks>
         public void GetFrameNames(System.Collections.Generic.List<string> names) {
             PinnedString[] names_handles;
-            var names_unwrapped = CfxStringCollections.UnwrapCfxStringList(names, out names_handles);
+            var names_unwrapped = StringFunctions.UnwrapCfxStringList(names, out names_handles);
             CfxApi.cfx_browser_get_frame_names(NativePtr, names_unwrapped);
-            CfxStringCollections.FreePinnedStrings(names_handles);
-            CfxStringCollections.CfxStringListCopyToManaged(names_unwrapped, names);
+            StringFunctions.FreePinnedStrings(names_handles);
+            StringFunctions.CfxStringListCopyToManaged(names_unwrapped, names);
             CfxApi.cfx_string_list_free(names_unwrapped);
         }
 

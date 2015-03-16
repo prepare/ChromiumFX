@@ -77,6 +77,9 @@ namespace Chromium {
             CfxApi.cfx_unregister_internal_web_plugin = (CfxApi.cfx_unregister_internal_web_plugin_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_unregister_internal_web_plugin", typeof(CfxApi.cfx_unregister_internal_web_plugin_delegate));
             CfxApi.cfx_version_info = (CfxApi.cfx_version_info_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_version_info", typeof(CfxApi.cfx_version_info_delegate));
             CfxApi.cfx_visit_web_plugin_info = (CfxApi.cfx_visit_web_plugin_info_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_visit_web_plugin_info", typeof(CfxApi.cfx_visit_web_plugin_info_delegate));
+        }
+
+        internal static void InstantiateStringCollectionDelegates() {
             CfxApi.cfx_string_list_alloc = (CfxApi.cfx_string_list_alloc_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_list_alloc", typeof(CfxApi.cfx_string_list_alloc_delegate));
             CfxApi.cfx_string_list_size = (CfxApi.cfx_string_list_size_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_list_size", typeof(CfxApi.cfx_string_list_size_delegate));
             CfxApi.cfx_string_list_value = (CfxApi.cfx_string_list_value_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_string_list_value", typeof(CfxApi.cfx_string_list_value_delegate));

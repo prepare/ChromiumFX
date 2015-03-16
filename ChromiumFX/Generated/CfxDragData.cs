@@ -321,10 +321,10 @@ namespace Chromium {
         /// </remarks>
         public int GetFileNames(System.Collections.Generic.List<string> names) {
             PinnedString[] names_handles;
-            var names_unwrapped = CfxStringCollections.UnwrapCfxStringList(names, out names_handles);
+            var names_unwrapped = StringFunctions.UnwrapCfxStringList(names, out names_handles);
             var __retval = CfxApi.cfx_drag_data_get_file_names(NativePtr, names_unwrapped);
-            CfxStringCollections.FreePinnedStrings(names_handles);
-            CfxStringCollections.CfxStringListCopyToManaged(names_unwrapped, names);
+            StringFunctions.FreePinnedStrings(names_handles);
+            StringFunctions.CfxStringListCopyToManaged(names_unwrapped, names);
             CfxApi.cfx_string_list_free(names_unwrapped);
             return __retval;
         }

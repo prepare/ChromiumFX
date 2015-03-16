@@ -402,10 +402,10 @@ namespace Chromium {
         /// </remarks>
         public void GetElementAttributes(System.Collections.Generic.List<string[]> attrMap) {
             PinnedString[] attrMap_handles;
-            var attrMap_unwrapped = CfxStringCollections.UnwrapCfxStringMap(attrMap, out attrMap_handles);
+            var attrMap_unwrapped = StringFunctions.UnwrapCfxStringMap(attrMap, out attrMap_handles);
             CfxApi.cfx_domnode_get_element_attributes(NativePtr, attrMap_unwrapped);
-            CfxStringCollections.FreePinnedStrings(attrMap_handles);
-            CfxStringCollections.CfxStringMapCopyToManaged(attrMap_unwrapped, attrMap);
+            StringFunctions.FreePinnedStrings(attrMap_handles);
+            StringFunctions.CfxStringMapCopyToManaged(attrMap_unwrapped, attrMap);
             CfxApi.cfx_string_map_free(attrMap_unwrapped);
         }
 

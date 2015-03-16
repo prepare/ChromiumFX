@@ -246,17 +246,18 @@ Public Class WrapperGenerator
         b.AppendLine()
 
         b.BeginFunction("void InstantiateRuntimeDelegates()", "private static")
-
         For Each f In decls.ExportFunctions
             CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
         Next
+        b.EndBlock()
+        b.AppendLine()
 
+        b.BeginFunction("void InstantiateStringCollectionDelegates()", "internal static")
         For Each o In decls.StringCollectionTypes
             For Each f In o.ExportFunctions
                 CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
             Next
         Next
-
         b.EndBlock()
         b.AppendLine()
 

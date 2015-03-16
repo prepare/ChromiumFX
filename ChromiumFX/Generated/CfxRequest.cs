@@ -246,10 +246,10 @@ namespace Chromium {
         /// </remarks>
         public void GetHeaderMap(System.Collections.Generic.List<string[]> headerMap) {
             PinnedString[] headerMap_handles;
-            var headerMap_unwrapped = CfxStringCollections.UnwrapCfxStringMultimap(headerMap, out headerMap_handles);
+            var headerMap_unwrapped = StringFunctions.UnwrapCfxStringMultimap(headerMap, out headerMap_handles);
             CfxApi.cfx_request_get_header_map(NativePtr, headerMap_unwrapped);
-            CfxStringCollections.FreePinnedStrings(headerMap_handles);
-            CfxStringCollections.CfxStringMultimapCopyToManaged(headerMap_unwrapped, headerMap);
+            StringFunctions.FreePinnedStrings(headerMap_handles);
+            StringFunctions.CfxStringMultimapCopyToManaged(headerMap_unwrapped, headerMap);
             CfxApi.cfx_string_multimap_free(headerMap_unwrapped);
         }
 
@@ -262,10 +262,10 @@ namespace Chromium {
         /// </remarks>
         public void SetHeaderMap(System.Collections.Generic.List<string[]> headerMap) {
             PinnedString[] headerMap_handles;
-            var headerMap_unwrapped = CfxStringCollections.UnwrapCfxStringMultimap(headerMap, out headerMap_handles);
+            var headerMap_unwrapped = StringFunctions.UnwrapCfxStringMultimap(headerMap, out headerMap_handles);
             CfxApi.cfx_request_set_header_map(NativePtr, headerMap_unwrapped);
-            CfxStringCollections.FreePinnedStrings(headerMap_handles);
-            CfxStringCollections.CfxStringMultimapCopyToManaged(headerMap_unwrapped, headerMap);
+            StringFunctions.FreePinnedStrings(headerMap_handles);
+            StringFunctions.CfxStringMultimapCopyToManaged(headerMap_unwrapped, headerMap);
             CfxApi.cfx_string_multimap_free(headerMap_unwrapped);
         }
 
@@ -280,12 +280,12 @@ namespace Chromium {
             var url_pinned = new PinnedString(url);
             var method_pinned = new PinnedString(method);
             PinnedString[] headerMap_handles;
-            var headerMap_unwrapped = CfxStringCollections.UnwrapCfxStringMultimap(headerMap, out headerMap_handles);
+            var headerMap_unwrapped = StringFunctions.UnwrapCfxStringMultimap(headerMap, out headerMap_handles);
             CfxApi.cfx_request_set(NativePtr, url_pinned.Obj.PinnedPtr, url_pinned.Length, method_pinned.Obj.PinnedPtr, method_pinned.Length, CfxPostData.Unwrap(postData), headerMap_unwrapped);
             url_pinned.Obj.Free();
             method_pinned.Obj.Free();
-            CfxStringCollections.FreePinnedStrings(headerMap_handles);
-            CfxStringCollections.CfxStringMultimapCopyToManaged(headerMap_unwrapped, headerMap);
+            StringFunctions.FreePinnedStrings(headerMap_handles);
+            StringFunctions.CfxStringMultimapCopyToManaged(headerMap_unwrapped, headerMap);
             CfxApi.cfx_string_multimap_free(headerMap_unwrapped);
         }
 

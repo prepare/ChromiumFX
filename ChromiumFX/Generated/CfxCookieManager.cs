@@ -117,10 +117,10 @@ namespace Chromium {
         /// </remarks>
         public void SetSupportedSchemes(System.Collections.Generic.List<string> schemes) {
             PinnedString[] schemes_handles;
-            var schemes_unwrapped = CfxStringCollections.UnwrapCfxStringList(schemes, out schemes_handles);
+            var schemes_unwrapped = StringFunctions.UnwrapCfxStringList(schemes, out schemes_handles);
             CfxApi.cfx_cookie_manager_set_supported_schemes(NativePtr, schemes_unwrapped);
-            CfxStringCollections.FreePinnedStrings(schemes_handles);
-            CfxStringCollections.CfxStringListCopyToManaged(schemes_unwrapped, schemes);
+            StringFunctions.FreePinnedStrings(schemes_handles);
+            StringFunctions.CfxStringListCopyToManaged(schemes_unwrapped, schemes);
             CfxApi.cfx_string_list_free(schemes_unwrapped);
         }
 
