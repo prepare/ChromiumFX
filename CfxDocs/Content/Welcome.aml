@@ -11,7 +11,7 @@
 				<para>
           CEF-related documentation extracted from the <legacyBold>CEF C API header files</legacyBold>
           and adapted to ChromiumFX. All credits for the excellent documentation go to the author and maintainers of the 
-          <externalLink><linkText>Chromium Embedded Framework</linkText><linkUri>https://code.google.com/p/chromiumembedded/</linkUri></externalLink>.
+          <externalLink><linkText>Chromium Embedded Framework</linkText><linkUri>https://bitbucket.org/chromiumembedded/cef/</linkUri></externalLink>.
       </para>
       <para/><para/>
        </content>
@@ -21,7 +21,7 @@
       <content>
         <para>
           The contents of this reference documentation are covered by the source code licenses of the
-          <externalLink><linkText>Chromium Embedded Framework</linkText><linkUri>https://code.google.com/p/chromiumembedded/</linkUri></externalLink>
+          <externalLink><linkText>Chromium Embedded Framework</linkText><linkUri>https://bitbucket.org/chromiumembedded/cef/</linkUri></externalLink>
           and <externalLink><linkText>ChromiumFX</linkText><linkUri>https://bitbucket.org/wborgsm/chromiumfx/</linkUri></externalLink>. See also the
           <externalLink><linkText>CEF Readme File</linkText><linkUri>https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/README.txt</linkUri></externalLink>,
           the <externalLink><linkText>CEF License</linkText><linkUri>https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/LICENSE.txt</linkUri></externalLink>
@@ -51,7 +51,7 @@
         </listItem>
         <listItem>
           <para>
-            <externalLink><linkText>The Chromium Embedded Framework</linkText><linkUri>https://code.google.com/p/chromiumembedded/</linkUri></externalLink>
+            <externalLink><linkText>The Chromium Embedded Framework</linkText><linkUri>https://bitbucket.org/chromiumembedded/cef/</linkUri></externalLink>
           </para>
         </listItem>
         </list>
