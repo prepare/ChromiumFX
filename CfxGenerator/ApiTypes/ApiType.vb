@@ -362,6 +362,9 @@ Public Class ApiType
         b.AppendLine("*{0} = {1};", var, NativeWrapExpression(String.Format("{0}->{1}", struct, var)))
     End Sub
 
+    Public Overridable Sub EmitNativeValueStructDtorStatements(b As CodeBuilder, var As String)
+    End Sub
+
     Public ReadOnly Property IsVoid As Boolean
         Get
             Return Name = "void"
