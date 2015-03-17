@@ -74,7 +74,6 @@
   <ItemGroup>
     <Compile Include="ApiTypeBuilder.vb" />
     <Compile Include="ApiTypes\ApiType.vb" />
-    <Compile Include="ApiTypes\ArrayCountType.vb" />
     <Compile Include="ApiTypes\BlittableType.vb" />
     <Compile Include="ApiTypes\BooleanInteger.vb" />
     <Compile Include="ApiTypes\CefBasePtrType.vb" />

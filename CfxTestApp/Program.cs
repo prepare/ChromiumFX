@@ -114,10 +114,10 @@ namespace CfxTestApplication {
         static void ChromiumWebBrowser_OnBeforeCommandLineProcessing(CfxOnBeforeCommandLineProcessingEventArgs e) {
             Console.WriteLine("ChromiumWebBrowser_OnBeforeCommandLineProcessing");
             Console.WriteLine(e.CommandLine.CommandLineString);
-            var switches = e.CommandLine.Switches;
+            var switches = e.CommandLine.GetSwitches();
             e.CommandLine.AppendArgument("arg001");
             e.CommandLine.AppendArgument("arg002");
-            var args = e.CommandLine.Arguments;
+            var args = e.CommandLine.GetArguments();
 
         }
 

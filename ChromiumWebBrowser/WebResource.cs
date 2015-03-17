@@ -108,9 +108,9 @@ namespace Chromium.WebBrowser {
             e.ResponseLength = webResource.data.Length;
             e.Response.MimeType = webResource.mimeType;
             if(webResource.mimeType.Equals("text/html")) {
-                var headerMap = e.Response.HeaderMap;
+                var headerMap = e.Response.GetHeaderMap();
                 headerMap.Add(new string[2]{"Content-Type", "text/html; charset=utf-8"});
-                e.Response.HeaderMap = headerMap;
+                e.Response.SetHeaderMap (headerMap);
             }
             
             e.Response.Status = 200;
