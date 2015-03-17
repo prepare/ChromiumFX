@@ -72,9 +72,24 @@ namespace Chromium {
         /// </summary>
         public uint Argb { get { return color; } }
 
+        /// <summary>
+        /// Get the A value of this CfxColor.
+        /// </summary>
         public byte A { get { return (byte)((color >> 24) & 0xFF); } }
+
+        /// <summary>
+        /// Get the R value of this CfxColor.
+        /// </summary>
         public byte R { get { return (byte)((color >> 16) & 0xFF); } }
+
+        /// <summary>
+        /// Get the G value of this CfxColor.
+        /// </summary>
         public byte G { get { return (byte)((color >> 8) & 0xFF); } }
+
+        /// <summary>
+        /// Get the B value of this CfxColor.
+        /// </summary>
         public byte B { get { return (byte)(color & 0xFF); } }
 
     }
