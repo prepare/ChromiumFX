@@ -379,9 +379,7 @@ Public Class CfxClassBuilder
 
         b.BeginBlock("CFX_EXPORT void {1}_dtor({0}* self)", OriginalSymbol, CfxName)
         For Each sm In StructMembers
-            If sm.MemberType.IsCefStringType Then
-                b.AppendLine("if(self->{0}.dtor) self->{0}.dtor(self->{0}.str);", sm.Name)
-            End If
+            sm.MemberType.EmitNativeValueStructDtorStatements(b, sm.Name)
         Next
         b.AppendLine("free(self);", OriginalSymbol)
         b.EndBlock()

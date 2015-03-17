@@ -106,6 +106,10 @@ Public Class CefStringType
         b.AppendLine("*{0}_length = {1}->{0}.length;", var, struct)
     End Sub
 
+    Public Overrides Sub EmitNativeValueStructDtorStatements(b As CodeBuilder, var As String)
+        b.AppendLine("if(self->{0}.dtor) self->{0}.dtor(self->{0}.str);", var)
+    End Sub
+
     Public Overrides ReadOnly Property IsCefStringType As Boolean
         Get
             Return True

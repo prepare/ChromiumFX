@@ -42,6 +42,10 @@ CFX_EXPORT cef_popup_features_t* cfx_popup_features_ctor() {
 }
 
 CFX_EXPORT void cfx_popup_features_dtor(cef_popup_features_t* self) {
+    if(self->additionalFeatures) {
+        cef_string_list_clear(self->additionalFeatures);
+        cef_string_list_free(self->additionalFeatures);
+    }
     free(self);
 }
 

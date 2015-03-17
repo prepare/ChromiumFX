@@ -87,6 +87,12 @@ Public Class StringCollectionType
         b.AppendLine("CfxApi.{0}_free({1}_unwrapped);", CfxName, var)
     End Sub
 
+    Public Overrides Sub EmitNativeValueStructDtorStatements(b As CodeBuilder, var As String)
+        b.BeginBlock("if(self->{0})", var)
+        b.AppendLine("{0}_clear(self->{1});", Name, var)
+        b.AppendLine("{0}_free(self->{1});", Name, var)
+        b.EndBlock()
+    End Sub
 
     Public Overrides ReadOnly Property IsStringCollectionType As Boolean
         Get
