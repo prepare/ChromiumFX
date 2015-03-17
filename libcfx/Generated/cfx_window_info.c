@@ -41,9 +41,9 @@ CFX_EXPORT cef_window_info_t* cfx_window_info_ctor() {
     return (cef_window_info_t*)calloc(1, sizeof(cef_window_info_t));
 }
 
-CFX_EXPORT void cfx_window_info_dtor(cef_window_info_t* ptr) {
-    if(ptr->window_name.dtor) ptr->window_name.dtor(ptr->window_name.str);
-    free(ptr);
+CFX_EXPORT void cfx_window_info_dtor(cef_window_info_t* self) {
+    if(self->window_name.dtor) self->window_name.dtor(self->window_name.str);
+    free(self);
 }
 
 // cef_window_info_t->ex_style

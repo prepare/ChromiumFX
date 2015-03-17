@@ -41,9 +41,9 @@ CFX_EXPORT cef_geoposition_t* cfx_geoposition_ctor() {
     return (cef_geoposition_t*)calloc(1, sizeof(cef_geoposition_t));
 }
 
-CFX_EXPORT void cfx_geoposition_dtor(cef_geoposition_t* ptr) {
-    if(ptr->error_message.dtor) ptr->error_message.dtor(ptr->error_message.str);
-    free(ptr);
+CFX_EXPORT void cfx_geoposition_dtor(cef_geoposition_t* self) {
+    if(self->error_message.dtor) self->error_message.dtor(self->error_message.str);
+    free(self);
 }
 
 // cef_geoposition_t->latitude

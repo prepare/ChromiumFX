@@ -41,8 +41,8 @@ CFX_EXPORT cef_rect_t* cfx_rect_ctor() {
     return (cef_rect_t*)calloc(1, sizeof(cef_rect_t));
 }
 
-CFX_EXPORT void cfx_rect_dtor(cef_rect_t* ptr) {
-    free(ptr);
+CFX_EXPORT void cfx_rect_dtor(cef_rect_t* self) {
+    free(self);
 }
 
 // cef_rect_t->x

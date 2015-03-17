@@ -41,8 +41,8 @@ CFX_EXPORT cef_screen_info_t* cfx_screen_info_ctor() {
     return (cef_screen_info_t*)calloc(1, sizeof(cef_screen_info_t));
 }
 
-CFX_EXPORT void cfx_screen_info_dtor(cef_screen_info_t* ptr) {
-    free(ptr);
+CFX_EXPORT void cfx_screen_info_dtor(cef_screen_info_t* self) {
+    free(self);
 }
 
 // cef_screen_info_t->device_scale_factor

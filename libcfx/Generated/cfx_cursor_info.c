@@ -41,8 +41,8 @@ CFX_EXPORT cef_cursor_info_t* cfx_cursor_info_ctor() {
     return (cef_cursor_info_t*)calloc(1, sizeof(cef_cursor_info_t));
 }
 
-CFX_EXPORT void cfx_cursor_info_dtor(cef_cursor_info_t* ptr) {
-    free(ptr);
+CFX_EXPORT void cfx_cursor_info_dtor(cef_cursor_info_t* self) {
+    free(self);
 }
 
 // cef_cursor_info_t->hotspot

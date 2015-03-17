@@ -38,21 +38,21 @@ extern "C" {
 #endif
 
 CFX_EXPORT cef_browser_settings_t* cfx_browser_settings_ctor() {
-    cef_browser_settings_t* ptr = (cef_browser_settings_t*)calloc(1, sizeof(cef_browser_settings_t));
-    if(!ptr) return 0;
-    ptr->size = sizeof(cef_browser_settings_t);
-    return ptr;
+    cef_browser_settings_t* self = (cef_browser_settings_t*)calloc(1, sizeof(cef_browser_settings_t));
+    if(!self) return 0;
+    self->size = sizeof(cef_browser_settings_t);
+    return self;
 }
 
-CFX_EXPORT void cfx_browser_settings_dtor(cef_browser_settings_t* ptr) {
-    if(ptr->standard_font_family.dtor) ptr->standard_font_family.dtor(ptr->standard_font_family.str);
-    if(ptr->fixed_font_family.dtor) ptr->fixed_font_family.dtor(ptr->fixed_font_family.str);
-    if(ptr->serif_font_family.dtor) ptr->serif_font_family.dtor(ptr->serif_font_family.str);
-    if(ptr->sans_serif_font_family.dtor) ptr->sans_serif_font_family.dtor(ptr->sans_serif_font_family.str);
-    if(ptr->cursive_font_family.dtor) ptr->cursive_font_family.dtor(ptr->cursive_font_family.str);
-    if(ptr->fantasy_font_family.dtor) ptr->fantasy_font_family.dtor(ptr->fantasy_font_family.str);
-    if(ptr->default_encoding.dtor) ptr->default_encoding.dtor(ptr->default_encoding.str);
-    free(ptr);
+CFX_EXPORT void cfx_browser_settings_dtor(cef_browser_settings_t* self) {
+    if(self->standard_font_family.dtor) self->standard_font_family.dtor(self->standard_font_family.str);
+    if(self->fixed_font_family.dtor) self->fixed_font_family.dtor(self->fixed_font_family.str);
+    if(self->serif_font_family.dtor) self->serif_font_family.dtor(self->serif_font_family.str);
+    if(self->sans_serif_font_family.dtor) self->sans_serif_font_family.dtor(self->sans_serif_font_family.str);
+    if(self->cursive_font_family.dtor) self->cursive_font_family.dtor(self->cursive_font_family.str);
+    if(self->fantasy_font_family.dtor) self->fantasy_font_family.dtor(self->fantasy_font_family.str);
+    if(self->default_encoding.dtor) self->default_encoding.dtor(self->default_encoding.str);
+    free(self);
 }
 
 // cef_browser_settings_t->windowless_frame_rate

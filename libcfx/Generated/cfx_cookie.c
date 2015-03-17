@@ -41,12 +41,12 @@ CFX_EXPORT cef_cookie_t* cfx_cookie_ctor() {
     return (cef_cookie_t*)calloc(1, sizeof(cef_cookie_t));
 }
 
-CFX_EXPORT void cfx_cookie_dtor(cef_cookie_t* ptr) {
-    if(ptr->name.dtor) ptr->name.dtor(ptr->name.str);
-    if(ptr->value.dtor) ptr->value.dtor(ptr->value.str);
-    if(ptr->domain.dtor) ptr->domain.dtor(ptr->domain.str);
-    if(ptr->path.dtor) ptr->path.dtor(ptr->path.str);
-    free(ptr);
+CFX_EXPORT void cfx_cookie_dtor(cef_cookie_t* self) {
+    if(self->name.dtor) self->name.dtor(self->name.str);
+    if(self->value.dtor) self->value.dtor(self->value.str);
+    if(self->domain.dtor) self->domain.dtor(self->domain.str);
+    if(self->path.dtor) self->path.dtor(self->path.str);
+    free(self);
 }
 
 // cef_cookie_t->name
