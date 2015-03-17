@@ -436,11 +436,11 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public void GetElementAttributes(System.Collections.Generic.List<string[]> attrMap) {
+        public System.Collections.Generic.List<string[]> GetElementAttributes() {
             var call = new CfxDomNodeGetElementAttributesRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.attrMap = attrMap;
             call.Execute(remoteRuntime.connection);
+            return call.__retval;
         }
 
         /// <summary>

@@ -338,13 +338,15 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public void GetFrameNames(System.Collections.Generic.List<string> names) {
+        public System.Collections.Generic.List<string> GetFrameNames() {
+            System.Collections.Generic.List<string> names = new System.Collections.Generic.List<string>();
             PinnedString[] names_handles;
             var names_unwrapped = StringFunctions.UnwrapCfxStringList(names, out names_handles);
             CfxApi.cfx_browser_get_frame_names(NativePtr, names_unwrapped);
             StringFunctions.FreePinnedStrings(names_handles);
             StringFunctions.CfxStringListCopyToManaged(names_unwrapped, names);
             CfxApi.cfx_string_list_free(names_unwrapped);
+            return names;
         }
 
         /// <summary>

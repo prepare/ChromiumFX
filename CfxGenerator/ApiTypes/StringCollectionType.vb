@@ -87,4 +87,11 @@ Public Class StringCollectionType
         b.AppendLine("CfxApi.{0}_free({1}_unwrapped);", CfxName, var)
     End Sub
 
+
+    Public Overrides ReadOnly Property IsStringCollectionType As Boolean
+        Get
+            Return True
+        End Get
+    End Property
+
 End Class

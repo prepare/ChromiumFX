@@ -400,13 +400,15 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public void GetElementAttributes(System.Collections.Generic.List<string[]> attrMap) {
+        public System.Collections.Generic.List<string[]> GetElementAttributes() {
+            System.Collections.Generic.List<string[]> attrMap = new System.Collections.Generic.List<string[]>();
             PinnedString[] attrMap_handles;
             var attrMap_unwrapped = StringFunctions.UnwrapCfxStringMap(attrMap, out attrMap_handles);
             CfxApi.cfx_domnode_get_element_attributes(NativePtr, attrMap_unwrapped);
             StringFunctions.FreePinnedStrings(attrMap_handles);
             StringFunctions.CfxStringMapCopyToManaged(attrMap_unwrapped, attrMap);
             CfxApi.cfx_string_map_free(attrMap_unwrapped);
+            return attrMap;
         }
 
         /// <summary>

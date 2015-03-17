@@ -271,11 +271,11 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
         /// </remarks>
-        public void GetArgv(System.Collections.Generic.List<string> argv) {
+        public System.Collections.Generic.List<string> GetArgv() {
             var call = new CfxCommandLineGetArgvRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.argv = argv;
             call.Execute(remoteRuntime.connection);
+            return call.__retval;
         }
 
         /// <summary>
@@ -317,11 +317,11 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
         /// </remarks>
-        public void GetSwitches(System.Collections.Generic.List<string[]> switches) {
+        public System.Collections.Generic.List<string[]> GetSwitches() {
             var call = new CfxCommandLineGetSwitchesRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.switches = switches;
             call.Execute(remoteRuntime.connection);
+            return call.__retval;
         }
 
         /// <summary>
@@ -361,11 +361,11 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
         /// </remarks>
-        public void GetArguments(System.Collections.Generic.List<string> arguments) {
+        public System.Collections.Generic.List<string> GetArguments() {
             var call = new CfxCommandLineGetArgumentsRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.arguments = arguments;
             call.Execute(remoteRuntime.connection);
+            return call.__retval;
         }
 
         /// <summary>

@@ -277,27 +277,27 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxRequestGetHeaderMapRenderProcessCall) {}
 
         internal ulong self;
-        internal System.Collections.Generic.List<string[]> headerMap;
+        internal System.Collections.Generic.List<string[]> __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
-            h.Write(headerMap);
         }
 
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out self);
-            h.Read(out headerMap);
         }
 
         protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
         }
 
         protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxRequest)RemoteProxy.Unwrap(self);
-            self_local.GetHeaderMap(headerMap);
+            __retval = self_local.GetHeaderMap();
         }
     }
 

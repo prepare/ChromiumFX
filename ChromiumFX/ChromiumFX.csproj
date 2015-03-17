@@ -215,7 +215,6 @@
     <Compile Include="Source\CfxBinaryValue.cs" />
     <Compile Include="Source\CfxColor.cs" />
     <Compile Include="Source\CfxDebug.cs" />
-    <Compile Include="Source\CfxResponse.cs" />
     <Compile Include="Source\CfxTime.cs" />
     <Compile Include="Source\StringFunctions.cs" />
     <Compile Include="Source\CfxZipReader.cs" />
