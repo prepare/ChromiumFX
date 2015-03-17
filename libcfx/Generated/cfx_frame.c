@@ -1,0 +1,175 @@
+// Copyright (c) 2014-2015 Wolfgang Borgsmüller
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without 
+// modification, are permitted provided that the following conditions 
+// are met:
+// 
+// 1. Redistributions of source code must retain the above copyright 
+//    notice, this list of conditions and the following disclaimer.
+// 
+// 2. Redistributions in binary form must reproduce the above copyright 
+//    notice, this list of conditions and the following disclaimer in the 
+//    documentation and/or other materials provided with the distribution.
+// 
+// 3. Neither the name of the copyright holder nor the names of its 
+//    contributors may be used to endorse or promote products derived 
+//    from this software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS 
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+// COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, 
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
+// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS 
+// OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND 
+// ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR 
+// TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE 
+// USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+// Generated file. Do not edit.
+
+
+// cef_frame
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+// cef_base_t base
+
+// is_valid
+CFX_EXPORT int cfx_frame_is_valid(cef_frame_t* self) {
+    return self->is_valid(self);
+}
+
+// undo
+CFX_EXPORT void cfx_frame_undo(cef_frame_t* self) {
+    self->undo(self);
+}
+
+// redo
+CFX_EXPORT void cfx_frame_redo(cef_frame_t* self) {
+    self->redo(self);
+}
+
+// cut
+CFX_EXPORT void cfx_frame_cut(cef_frame_t* self) {
+    self->cut(self);
+}
+
+// copy
+CFX_EXPORT void cfx_frame_copy(cef_frame_t* self) {
+    self->copy(self);
+}
+
+// paste
+CFX_EXPORT void cfx_frame_paste(cef_frame_t* self) {
+    self->paste(self);
+}
+
+// del
+CFX_EXPORT void cfx_frame_del(cef_frame_t* self) {
+    self->del(self);
+}
+
+// select_all
+CFX_EXPORT void cfx_frame_select_all(cef_frame_t* self) {
+    self->select_all(self);
+}
+
+// view_source
+CFX_EXPORT void cfx_frame_view_source(cef_frame_t* self) {
+    self->view_source(self);
+}
+
+// get_source
+CFX_EXPORT void cfx_frame_get_source(cef_frame_t* self, cef_string_visitor_t* visitor) {
+    if(visitor) ((cef_base_t*)visitor)->add_ref((cef_base_t*)visitor);
+    self->get_source(self, visitor);
+}
+
+// get_text
+CFX_EXPORT void cfx_frame_get_text(cef_frame_t* self, cef_string_visitor_t* visitor) {
+    if(visitor) ((cef_base_t*)visitor)->add_ref((cef_base_t*)visitor);
+    self->get_text(self, visitor);
+}
+
+// load_request
+CFX_EXPORT void cfx_frame_load_request(cef_frame_t* self, cef_request_t* request) {
+    if(request) ((cef_base_t*)request)->add_ref((cef_base_t*)request);
+    self->load_request(self, request);
+}
+
+// load_url
+CFX_EXPORT void cfx_frame_load_url(cef_frame_t* self, char16 *url_str, int url_length) {
+    cef_string_t url = { url_str, url_length, 0 };
+    self->load_url(self, &url);
+}
+
+// load_string
+CFX_EXPORT void cfx_frame_load_string(cef_frame_t* self, char16 *string_val_str, int string_val_length, char16 *url_str, int url_length) {
+    cef_string_t string_val = { string_val_str, string_val_length, 0 };
+    cef_string_t url = { url_str, url_length, 0 };
+    self->load_string(self, &string_val, &url);
+}
+
+// execute_java_script
+CFX_EXPORT void cfx_frame_execute_java_script(cef_frame_t* self, char16 *code_str, int code_length, char16 *script_url_str, int script_url_length, int start_line) {
+    cef_string_t code = { code_str, code_length, 0 };
+    cef_string_t script_url = { script_url_str, script_url_length, 0 };
+    self->execute_java_script(self, &code, &script_url, start_line);
+}
+
+// is_main
+CFX_EXPORT int cfx_frame_is_main(cef_frame_t* self) {
+    return self->is_main(self);
+}
+
+// is_focused
+CFX_EXPORT int cfx_frame_is_focused(cef_frame_t* self) {
+    return self->is_focused(self);
+}
+
+// get_name
+CFX_EXPORT cef_string_userfree_t cfx_frame_get_name(cef_frame_t* self) {
+    return self->get_name(self);
+}
+
+// get_identifier
+CFX_EXPORT int64 cfx_frame_get_identifier(cef_frame_t* self) {
+    return self->get_identifier(self);
+}
+
+// get_parent
+CFX_EXPORT cef_frame_t* cfx_frame_get_parent(cef_frame_t* self) {
+    return self->get_parent(self);
+}
+
+// get_url
+CFX_EXPORT cef_string_userfree_t cfx_frame_get_url(cef_frame_t* self) {
+    return self->get_url(self);
+}
+
+// get_browser
+CFX_EXPORT cef_browser_t* cfx_frame_get_browser(cef_frame_t* self) {
+    return self->get_browser(self);
+}
+
+// get_v8context
+CFX_EXPORT cef_v8context_t* cfx_frame_get_v8context(cef_frame_t* self) {
+    return self->get_v8context(self);
+}
+
+// visit_dom
+CFX_EXPORT void cfx_frame_visit_dom(cef_frame_t* self, cef_domvisitor_t* visitor) {
+    if(visitor) ((cef_base_t*)visitor)->add_ref((cef_base_t*)visitor);
+    self->visit_dom(self, visitor);
+}
+
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
+
