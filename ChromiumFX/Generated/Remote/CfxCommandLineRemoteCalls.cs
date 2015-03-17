@@ -273,27 +273,27 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxCommandLineGetArgvRenderProcessCall) {}
 
         internal ulong self;
-        internal System.Collections.Generic.List<string> argv;
+        internal System.Collections.Generic.List<string> __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
-            h.Write(argv);
         }
 
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out self);
-            h.Read(out argv);
         }
 
         protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
         }
 
         protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxCommandLine)RemoteProxy.Unwrap(self);
-            self_local.GetArgv(argv);
+            __retval = self_local.GetArgv();
         }
     }
 
@@ -489,27 +489,27 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxCommandLineGetSwitchesRenderProcessCall) {}
 
         internal ulong self;
-        internal System.Collections.Generic.List<string[]> switches;
+        internal System.Collections.Generic.List<string[]> __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
-            h.Write(switches);
         }
 
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out self);
-            h.Read(out switches);
         }
 
         protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
         }
 
         protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxCommandLine)RemoteProxy.Unwrap(self);
-            self_local.GetSwitches(switches);
+            __retval = self_local.GetSwitches();
         }
     }
 
@@ -612,27 +612,27 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxCommandLineGetArgumentsRenderProcessCall) {}
 
         internal ulong self;
-        internal System.Collections.Generic.List<string> arguments;
+        internal System.Collections.Generic.List<string> __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
-            h.Write(arguments);
         }
 
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out self);
-            h.Read(out arguments);
         }
 
         protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
         }
 
         protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxCommandLine)RemoteProxy.Unwrap(self);
-            self_local.GetArguments(arguments);
+            __retval = self_local.GetArguments();
         }
     }
 

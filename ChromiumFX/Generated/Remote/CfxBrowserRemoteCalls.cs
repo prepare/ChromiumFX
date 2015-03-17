@@ -575,27 +575,27 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxBrowserGetFrameNamesRenderProcessCall) {}
 
         internal ulong self;
-        internal System.Collections.Generic.List<string> names;
+        internal System.Collections.Generic.List<string> __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
-            h.Write(names);
         }
 
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out self);
-            h.Read(out names);
         }
 
         protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
         }
 
         protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxBrowser)RemoteProxy.Unwrap(self);
-            self_local.GetFrameNames(names);
+            __retval = self_local.GetFrameNames();
         }
     }
 

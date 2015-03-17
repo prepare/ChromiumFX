@@ -343,11 +343,11 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public void GetFrameNames(System.Collections.Generic.List<string> names) {
+        public System.Collections.Generic.List<string> GetFrameNames() {
             var call = new CfxBrowserGetFrameNamesRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.names = names;
             call.Execute(remoteRuntime.connection);
+            return call.__retval;
         }
 
         /// <summary>

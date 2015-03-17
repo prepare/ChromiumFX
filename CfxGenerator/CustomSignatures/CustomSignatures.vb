@@ -33,6 +33,16 @@
 Public Class CustomSignatures
 
     Public Shared Function ForFunction(parent As ISignatureParent, sd As Parser.SignatureData, api As ApiTypeBuilder) As Signature
+
+        If parent.CefName.Contains("::get_") AndAlso sd.Arguments.Count = 2 Then
+            If sd.ReturnType.Name = "void" AndAlso String.IsNullOrEmpty(sd.ReturnType.Indirection) Then
+                If sd.Arguments(1).ArgumentType.Name.StartsWith("cef_string_list") OrElse
+                        sd.Arguments(1).ArgumentType.Name.StartsWith("cef_string_m") Then
+                    Return New StringCollectionAsRetvalSignature(parent, sd, api)
+                End If
+            End If
+        End If
+
         Select Case parent.CefName
             Case "cef_browser::get_frame_identifiers"
                 Return New GetFrameIdentifiersSignature(parent, sd, api)

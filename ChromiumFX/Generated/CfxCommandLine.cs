@@ -261,13 +261,15 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
         /// </remarks>
-        public void GetArgv(System.Collections.Generic.List<string> argv) {
+        public System.Collections.Generic.List<string> GetArgv() {
+            System.Collections.Generic.List<string> argv = new System.Collections.Generic.List<string>();
             PinnedString[] argv_handles;
             var argv_unwrapped = StringFunctions.UnwrapCfxStringList(argv, out argv_handles);
             CfxApi.cfx_command_line_get_argv(NativePtr, argv_unwrapped);
             StringFunctions.FreePinnedStrings(argv_handles);
             StringFunctions.CfxStringListCopyToManaged(argv_unwrapped, argv);
             CfxApi.cfx_string_list_free(argv_unwrapped);
+            return argv;
         }
 
         /// <summary>
@@ -307,13 +309,15 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
         /// </remarks>
-        public void GetSwitches(System.Collections.Generic.List<string[]> switches) {
+        public System.Collections.Generic.List<string[]> GetSwitches() {
+            System.Collections.Generic.List<string[]> switches = new System.Collections.Generic.List<string[]>();
             PinnedString[] switches_handles;
             var switches_unwrapped = StringFunctions.UnwrapCfxStringMap(switches, out switches_handles);
             CfxApi.cfx_command_line_get_switches(NativePtr, switches_unwrapped);
             StringFunctions.FreePinnedStrings(switches_handles);
             StringFunctions.CfxStringMapCopyToManaged(switches_unwrapped, switches);
             CfxApi.cfx_string_map_free(switches_unwrapped);
+            return switches;
         }
 
         /// <summary>
@@ -352,13 +356,15 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
         /// </remarks>
-        public void GetArguments(System.Collections.Generic.List<string> arguments) {
+        public System.Collections.Generic.List<string> GetArguments() {
+            System.Collections.Generic.List<string> arguments = new System.Collections.Generic.List<string>();
             PinnedString[] arguments_handles;
             var arguments_unwrapped = StringFunctions.UnwrapCfxStringList(arguments, out arguments_handles);
             CfxApi.cfx_command_line_get_arguments(NativePtr, arguments_unwrapped);
             StringFunctions.FreePinnedStrings(arguments_handles);
             StringFunctions.CfxStringListCopyToManaged(arguments_unwrapped, arguments);
             CfxApi.cfx_string_list_free(arguments_unwrapped);
+            return arguments;
         }
 
         /// <summary>

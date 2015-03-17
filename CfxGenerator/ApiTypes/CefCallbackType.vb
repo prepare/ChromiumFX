@@ -100,6 +100,8 @@ Public Class CefCallbackType
     Private Function IsPropertyGetterPrivate(ByRef isBoolean As Boolean) As Boolean
 
         If Signature.PublicReturnType.IsVoid Then Return False
+        If Signature.PublicReturnType.IsStringCollectionType Then Return False
+
         If Signature.ManagedArguments.Length <> 1 Then Return False
 
         If Name.StartsWith("has_") Then isBoolean = True : Return True

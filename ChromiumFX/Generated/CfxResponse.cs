@@ -42,7 +42,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
     /// </remarks>
-    public partial class CfxResponse : CfxBase {
+    public class CfxResponse : CfxBase {
 
         static CfxResponse () {
             CfxApi.cfx_response_create = (CfxApi.cfx_response_create_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_response_create", typeof(CfxApi.cfx_response_create_delegate));
@@ -174,13 +174,15 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
         /// </remarks>
-        public void GetHeaderMap(System.Collections.Generic.List<string[]> headerMap) {
+        public System.Collections.Generic.List<string[]> GetHeaderMap() {
+            System.Collections.Generic.List<string[]> headerMap = new System.Collections.Generic.List<string[]>();
             PinnedString[] headerMap_handles;
             var headerMap_unwrapped = StringFunctions.UnwrapCfxStringMultimap(headerMap, out headerMap_handles);
             CfxApi.cfx_response_get_header_map(NativePtr, headerMap_unwrapped);
             StringFunctions.FreePinnedStrings(headerMap_handles);
             StringFunctions.CfxStringMultimapCopyToManaged(headerMap_unwrapped, headerMap);
             CfxApi.cfx_string_multimap_free(headerMap_unwrapped);
+            return headerMap;
         }
 
         /// <summary>

@@ -455,6 +455,11 @@ Public Class ApiType
             Throw New Exception
         End Get
     End Property
+    Public Overridable ReadOnly Property IsStringCollectionType As Boolean
+        Get
+            Return False
+        End Get
+    End Property
 
     Public Overrides Function ToString() As String
         Return OriginalSymbol

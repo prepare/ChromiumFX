@@ -142,8 +142,7 @@ namespace CfxTestApplication {
             LogMessage("WebBrowser.Browser.FrameCount = " + b.FrameCount);
             var ids = b.FrameIdentifiers;
             LogMessage("FrameIdentifiers: " + string.Join<long>(", ", ids));
-            var names = new System.Collections.Generic.List<string>();
-            b.GetFrameNames(names);
+            var names = b.FrameNames;
             LogMessage("FrameNames: " + string.Join(" | ", names));
         }
 
