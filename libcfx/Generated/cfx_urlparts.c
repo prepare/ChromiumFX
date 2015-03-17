@@ -41,17 +41,17 @@ CFX_EXPORT cef_urlparts_t* cfx_urlparts_ctor() {
     return (cef_urlparts_t*)calloc(1, sizeof(cef_urlparts_t));
 }
 
-CFX_EXPORT void cfx_urlparts_dtor(cef_urlparts_t* ptr) {
-    if(ptr->spec.dtor) ptr->spec.dtor(ptr->spec.str);
-    if(ptr->scheme.dtor) ptr->scheme.dtor(ptr->scheme.str);
-    if(ptr->username.dtor) ptr->username.dtor(ptr->username.str);
-    if(ptr->password.dtor) ptr->password.dtor(ptr->password.str);
-    if(ptr->host.dtor) ptr->host.dtor(ptr->host.str);
-    if(ptr->port.dtor) ptr->port.dtor(ptr->port.str);
-    if(ptr->origin.dtor) ptr->origin.dtor(ptr->origin.str);
-    if(ptr->path.dtor) ptr->path.dtor(ptr->path.str);
-    if(ptr->query.dtor) ptr->query.dtor(ptr->query.str);
-    free(ptr);
+CFX_EXPORT void cfx_urlparts_dtor(cef_urlparts_t* self) {
+    if(self->spec.dtor) self->spec.dtor(self->spec.str);
+    if(self->scheme.dtor) self->scheme.dtor(self->scheme.str);
+    if(self->username.dtor) self->username.dtor(self->username.str);
+    if(self->password.dtor) self->password.dtor(self->password.str);
+    if(self->host.dtor) self->host.dtor(self->host.str);
+    if(self->port.dtor) self->port.dtor(self->port.str);
+    if(self->origin.dtor) self->origin.dtor(self->origin.str);
+    if(self->path.dtor) self->path.dtor(self->path.str);
+    if(self->query.dtor) self->query.dtor(self->query.str);
+    free(self);
 }
 
 // cef_urlparts_t->spec

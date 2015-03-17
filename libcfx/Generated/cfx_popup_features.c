@@ -41,8 +41,8 @@ CFX_EXPORT cef_popup_features_t* cfx_popup_features_ctor() {
     return (cef_popup_features_t*)calloc(1, sizeof(cef_popup_features_t));
 }
 
-CFX_EXPORT void cfx_popup_features_dtor(cef_popup_features_t* ptr) {
-    free(ptr);
+CFX_EXPORT void cfx_popup_features_dtor(cef_popup_features_t* self) {
+    free(self);
 }
 
 // cef_popup_features_t->x

@@ -38,23 +38,23 @@ extern "C" {
 #endif
 
 CFX_EXPORT cef_settings_t* cfx_settings_ctor() {
-    cef_settings_t* ptr = (cef_settings_t*)calloc(1, sizeof(cef_settings_t));
-    if(!ptr) return 0;
-    ptr->size = sizeof(cef_settings_t);
-    return ptr;
+    cef_settings_t* self = (cef_settings_t*)calloc(1, sizeof(cef_settings_t));
+    if(!self) return 0;
+    self->size = sizeof(cef_settings_t);
+    return self;
 }
 
-CFX_EXPORT void cfx_settings_dtor(cef_settings_t* ptr) {
-    if(ptr->browser_subprocess_path.dtor) ptr->browser_subprocess_path.dtor(ptr->browser_subprocess_path.str);
-    if(ptr->cache_path.dtor) ptr->cache_path.dtor(ptr->cache_path.str);
-    if(ptr->user_agent.dtor) ptr->user_agent.dtor(ptr->user_agent.str);
-    if(ptr->product_version.dtor) ptr->product_version.dtor(ptr->product_version.str);
-    if(ptr->locale.dtor) ptr->locale.dtor(ptr->locale.str);
-    if(ptr->log_file.dtor) ptr->log_file.dtor(ptr->log_file.str);
-    if(ptr->javascript_flags.dtor) ptr->javascript_flags.dtor(ptr->javascript_flags.str);
-    if(ptr->resources_dir_path.dtor) ptr->resources_dir_path.dtor(ptr->resources_dir_path.str);
-    if(ptr->locales_dir_path.dtor) ptr->locales_dir_path.dtor(ptr->locales_dir_path.str);
-    free(ptr);
+CFX_EXPORT void cfx_settings_dtor(cef_settings_t* self) {
+    if(self->browser_subprocess_path.dtor) self->browser_subprocess_path.dtor(self->browser_subprocess_path.str);
+    if(self->cache_path.dtor) self->cache_path.dtor(self->cache_path.str);
+    if(self->user_agent.dtor) self->user_agent.dtor(self->user_agent.str);
+    if(self->product_version.dtor) self->product_version.dtor(self->product_version.str);
+    if(self->locale.dtor) self->locale.dtor(self->locale.str);
+    if(self->log_file.dtor) self->log_file.dtor(self->log_file.str);
+    if(self->javascript_flags.dtor) self->javascript_flags.dtor(self->javascript_flags.str);
+    if(self->resources_dir_path.dtor) self->resources_dir_path.dtor(self->resources_dir_path.str);
+    if(self->locales_dir_path.dtor) self->locales_dir_path.dtor(self->locales_dir_path.str);
+    free(self);
 }
 
 // cef_settings_t->single_process

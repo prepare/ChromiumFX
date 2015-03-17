@@ -367,23 +367,23 @@ Public Class CfxClassBuilder
 
         b.BeginBlock("CFX_EXPORT {0}* {1}_ctor()", OriginalSymbol, CfxName)
         If StructMembers.Length > 0 AndAlso StructMembers(0).Name = "size" Then
-            b.AppendLine("{0}* ptr = ({0}*)calloc(1, sizeof({0}));", OriginalSymbol)
-            b.AppendLine("if(!ptr) return 0;")
-            b.AppendLine("ptr->size = sizeof({0});", OriginalSymbol)
-            b.AppendLine("return ptr;")
+            b.AppendLine("{0}* self = ({0}*)calloc(1, sizeof({0}));", OriginalSymbol)
+            b.AppendLine("if(!self) return 0;")
+            b.AppendLine("self->size = sizeof({0});", OriginalSymbol)
+            b.AppendLine("return self;")
         Else
             b.AppendLine("return ({0}*)calloc(1, sizeof({0}));", OriginalSymbol)
         End If
         b.EndBlock()
         b.AppendLine()
 
-        b.BeginBlock("CFX_EXPORT void {1}_dtor({0}* ptr)", OriginalSymbol, CfxName)
+        b.BeginBlock("CFX_EXPORT void {1}_dtor({0}* self)", OriginalSymbol, CfxName)
         For Each sm In StructMembers
             If sm.MemberType.IsCefStringType Then
-                b.AppendLine("if(ptr->{0}.dtor) ptr->{0}.dtor(ptr->{0}.str);", sm.Name)
+                b.AppendLine("if(self->{0}.dtor) self->{0}.dtor(self->{0}.str);", sm.Name)
             End If
         Next
-        b.AppendLine("free(ptr);", OriginalSymbol)
+        b.AppendLine("free(self);", OriginalSymbol)
         b.EndBlock()
         b.AppendLine()
 

@@ -41,8 +41,8 @@ CFX_EXPORT cef_key_event_t* cfx_key_event_ctor() {
     return (cef_key_event_t*)calloc(1, sizeof(cef_key_event_t));
 }
 
-CFX_EXPORT void cfx_key_event_dtor(cef_key_event_t* ptr) {
-    free(ptr);
+CFX_EXPORT void cfx_key_event_dtor(cef_key_event_t* self) {
+    free(self);
 }
 
 // cef_key_event_t->type

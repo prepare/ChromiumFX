@@ -41,8 +41,8 @@ CFX_EXPORT cef_page_range_t* cfx_page_range_ctor() {
     return (cef_page_range_t*)calloc(1, sizeof(cef_page_range_t));
 }
 
-CFX_EXPORT void cfx_page_range_dtor(cef_page_range_t* ptr) {
-    free(ptr);
+CFX_EXPORT void cfx_page_range_dtor(cef_page_range_t* self) {
+    free(self);
 }
 
 // cef_page_range_t->from

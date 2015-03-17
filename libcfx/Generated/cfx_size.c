@@ -41,8 +41,8 @@ CFX_EXPORT cef_size_t* cfx_size_ctor() {
     return (cef_size_t*)calloc(1, sizeof(cef_size_t));
 }
 
-CFX_EXPORT void cfx_size_dtor(cef_size_t* ptr) {
-    free(ptr);
+CFX_EXPORT void cfx_size_dtor(cef_size_t* self) {
+    free(self);
 }
 
 // cef_size_t->width

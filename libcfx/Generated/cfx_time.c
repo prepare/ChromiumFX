@@ -41,8 +41,8 @@ CFX_EXPORT cef_time_t* cfx_time_ctor() {
     return (cef_time_t*)calloc(1, sizeof(cef_time_t));
 }
 
-CFX_EXPORT void cfx_time_dtor(cef_time_t* ptr) {
-    free(ptr);
+CFX_EXPORT void cfx_time_dtor(cef_time_t* self) {
+    free(self);
 }
 
 // cef_time_t->year
