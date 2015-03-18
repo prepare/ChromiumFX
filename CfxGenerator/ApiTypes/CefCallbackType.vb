@@ -331,6 +331,10 @@ Public Class CefCallbackType
         Next
         b.AppendLine()
 
+        If Not Signature.PublicReturnType.IsVoid Then
+            b.AppendLine("private bool returnValueSet;")
+            b.AppendLine()
+        End If
 
         b.AppendLine("internal {0}(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {{}}", RemoteEventArgsClassName)
         b.AppendLine()
@@ -377,10 +381,14 @@ Public Class CefCallbackType
                         "Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown."}
             b.AppendSummary(cd)
             b.BeginBlock("public void SetReturnValue({0} returnValue)", Signature.PublicReturnType.RemoteSymbol)
+            b.BeginIf("returnValueSet")
+            b.AppendLine("throw new CfxException(""The return value has already been set"");")
+            b.EndBlock()
             b.AppendLine("var call = new {0}SetReturnValueRenderProcessCall();", EventName)
             b.AppendLine("call.eventArgsId = eventArgsId;")
             b.AppendLine("call.value = {0};", Signature.PublicReturnType.RemoteUnwrapExpression("returnValue"))
             b.AppendLine("call.Execute(remoteRuntime.connection);")
+            b.AppendLine("returnValueSet = true;")
             b.EndBlock()
         End If
 
