@@ -194,6 +194,8 @@ namespace Chromium.Remote {
             bool ExceptionFetched;
             string m_Exception;
 
+            private bool returnValueSet;
+
             internal CfrV8AccessorGetEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
             /// <summary>
@@ -269,10 +271,14 @@ namespace Chromium.Remote {
             /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
             public void SetReturnValue(bool returnValue) {
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
                 var call = new CfxV8AccessorGetSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
                 call.value = returnValue;
                 call.Execute(remoteRuntime.connection);
+                returnValueSet = true;
             }
 
             public override string ToString() {
@@ -314,6 +320,8 @@ namespace Chromium.Remote {
             CfrV8Value m_Value;
             bool ExceptionFetched;
             string m_Exception;
+
+            private bool returnValueSet;
 
             internal CfrV8AccessorSetEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
@@ -390,10 +398,14 @@ namespace Chromium.Remote {
             /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
             public void SetReturnValue(bool returnValue) {
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
                 var call = new CfxV8AccessorSetSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
                 call.value = returnValue;
                 call.Execute(remoteRuntime.connection);
+                returnValueSet = true;
             }
 
             public override string ToString() {

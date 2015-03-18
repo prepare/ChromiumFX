@@ -650,6 +650,8 @@ namespace Chromium.Remote {
         public class CfrGetLoadHandlerEventArgs : CfrEventArgs {
 
 
+            private bool returnValueSet;
+
             internal CfrGetLoadHandlerEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
             /// <summary>
@@ -657,10 +659,14 @@ namespace Chromium.Remote {
             /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
             public void SetReturnValue(CfrLoadHandler returnValue) {
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
                 var call = new CfxGetLoadHandlerSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
                 call.value = CfrObject.Unwrap(returnValue);
                 call.Execute(remoteRuntime.connection);
+                returnValueSet = true;
             }
         }
 
@@ -696,6 +702,8 @@ namespace Chromium.Remote {
             CfxNavigationType m_NavigationType;
             bool IsRedirectFetched;
             bool m_IsRedirect;
+
+            private bool returnValueSet;
 
             internal CfrOnBeforeNavigationEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
@@ -779,10 +787,14 @@ namespace Chromium.Remote {
             /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
             public void SetReturnValue(bool returnValue) {
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
                 var call = new CfxOnBeforeNavigationSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
                 call.value = returnValue;
                 call.Execute(remoteRuntime.connection);
+                returnValueSet = true;
             }
 
             public override string ToString() {
@@ -1191,6 +1203,8 @@ namespace Chromium.Remote {
             bool MessageFetched;
             CfrProcessMessage m_Message;
 
+            private bool returnValueSet;
+
             internal CfrOnProcessMessageReceivedEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
             /// <summary>
@@ -1243,10 +1257,14 @@ namespace Chromium.Remote {
             /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
             public void SetReturnValue(bool returnValue) {
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
                 var call = new CfxOnProcessMessageReceivedSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
                 call.value = returnValue;
                 call.Execute(remoteRuntime.connection);
+                returnValueSet = true;
             }
 
             public override string ToString() {

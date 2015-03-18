@@ -387,6 +387,8 @@ namespace Chromium.Remote {
         public class CfrGetResourceBundleHandlerEventArgs : CfrEventArgs {
 
 
+            private bool returnValueSet;
+
             internal CfrGetResourceBundleHandlerEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
             /// <summary>
@@ -394,10 +396,14 @@ namespace Chromium.Remote {
             /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
             public void SetReturnValue(CfrResourceBundleHandler returnValue) {
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
                 var call = new CfxGetResourceBundleHandlerSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
                 call.value = CfrObject.Unwrap(returnValue);
                 call.Execute(remoteRuntime.connection);
+                returnValueSet = true;
             }
         }
 
@@ -422,6 +428,8 @@ namespace Chromium.Remote {
         public class CfrGetRenderProcessHandlerEventArgs : CfrEventArgs {
 
 
+            private bool returnValueSet;
+
             internal CfrGetRenderProcessHandlerEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
             /// <summary>
@@ -429,10 +437,14 @@ namespace Chromium.Remote {
             /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
             public void SetReturnValue(CfrRenderProcessHandler returnValue) {
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
                 var call = new CfxGetRenderProcessHandlerSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
                 call.value = CfrObject.Unwrap(returnValue);
                 call.Execute(remoteRuntime.connection);
+                returnValueSet = true;
             }
         }
 
