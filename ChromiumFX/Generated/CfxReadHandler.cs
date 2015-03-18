@@ -381,18 +381,27 @@ namespace Chromium {
                 m_n = n;
             }
 
+            /// <summary>
+            /// Get the Ptr parameter for the <see cref="CfxReadHandler.Read"/> callback.
+            /// </summary>
             public IntPtr Ptr {
                 get {
                     CheckAccess();
                     return m_ptr;
                 }
             }
+            /// <summary>
+            /// Get the Size parameter for the <see cref="CfxReadHandler.Read"/> callback.
+            /// </summary>
             public int Size {
                 get {
                     CheckAccess();
                     return m_size;
                 }
             }
+            /// <summary>
+            /// Get the N parameter for the <see cref="CfxReadHandler.Read"/> callback.
+            /// </summary>
             public int N {
                 get {
                     CheckAccess();
@@ -454,12 +463,18 @@ namespace Chromium {
                 m_whence = whence;
             }
 
+            /// <summary>
+            /// Get the Offset parameter for the <see cref="CfxReadHandler.Seek"/> callback.
+            /// </summary>
             public long Offset {
                 get {
                     CheckAccess();
                     return m_offset;
                 }
             }
+            /// <summary>
+            /// Get the Whence parameter for the <see cref="CfxReadHandler.Seek"/> callback.
+            /// </summary>
             public int Whence {
                 get {
                     CheckAccess();

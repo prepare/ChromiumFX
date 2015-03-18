@@ -159,6 +159,9 @@ namespace Chromium {
                 m_tracing_file_length = tracing_file_length;
             }
 
+            /// <summary>
+            /// Get the TracingFile parameter for the <see cref="CfxEndTracingCallback.OnEndTracingComplete"/> callback.
+            /// </summary>
             public string TracingFile {
                 get {
                     CheckAccess();

@@ -273,6 +273,9 @@ namespace Chromium.Remote {
 
             internal CfrOnLoadingStateChangeEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfrLoadHandler.OnLoadingStateChange"/> render process callback.
+            /// </summary>
             public CfrBrowser Browser {
                 get {
                     if(!BrowserFetched) {
@@ -285,6 +288,9 @@ namespace Chromium.Remote {
                     return m_Browser;
                 }
             }
+            /// <summary>
+            /// Get the IsLoading parameter for the <see cref="CfrLoadHandler.OnLoadingStateChange"/> render process callback.
+            /// </summary>
             public bool IsLoading {
                 get {
                     if(!IsLoadingFetched) {
@@ -297,6 +303,9 @@ namespace Chromium.Remote {
                     return m_IsLoading;
                 }
             }
+            /// <summary>
+            /// Get the CanGoBack parameter for the <see cref="CfrLoadHandler.OnLoadingStateChange"/> render process callback.
+            /// </summary>
             public bool CanGoBack {
                 get {
                     if(!CanGoBackFetched) {
@@ -309,6 +318,9 @@ namespace Chromium.Remote {
                     return m_CanGoBack;
                 }
             }
+            /// <summary>
+            /// Get the CanGoForward parameter for the <see cref="CfrLoadHandler.OnLoadingStateChange"/> render process callback.
+            /// </summary>
             public bool CanGoForward {
                 get {
                     if(!CanGoForwardFetched) {
@@ -364,6 +376,9 @@ namespace Chromium.Remote {
 
             internal CfrOnLoadStartEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfrLoadHandler.OnLoadStart"/> render process callback.
+            /// </summary>
             public CfrBrowser Browser {
                 get {
                     if(!BrowserFetched) {
@@ -376,6 +391,9 @@ namespace Chromium.Remote {
                     return m_Browser;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfrLoadHandler.OnLoadStart"/> render process callback.
+            /// </summary>
             public CfrFrame Frame {
                 get {
                     if(!FrameFetched) {
@@ -431,6 +449,9 @@ namespace Chromium.Remote {
 
             internal CfrOnLoadEndEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfrLoadHandler.OnLoadEnd"/> render process callback.
+            /// </summary>
             public CfrBrowser Browser {
                 get {
                     if(!BrowserFetched) {
@@ -443,6 +464,9 @@ namespace Chromium.Remote {
                     return m_Browser;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfrLoadHandler.OnLoadEnd"/> render process callback.
+            /// </summary>
             public CfrFrame Frame {
                 get {
                     if(!FrameFetched) {
@@ -455,6 +479,9 @@ namespace Chromium.Remote {
                     return m_Frame;
                 }
             }
+            /// <summary>
+            /// Get the HttpStatusCode parameter for the <see cref="CfrLoadHandler.OnLoadEnd"/> render process callback.
+            /// </summary>
             public int HttpStatusCode {
                 get {
                     if(!HttpStatusCodeFetched) {
@@ -510,6 +537,9 @@ namespace Chromium.Remote {
 
             internal CfrOnLoadErrorEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfrLoadHandler.OnLoadError"/> render process callback.
+            /// </summary>
             public CfrBrowser Browser {
                 get {
                     if(!BrowserFetched) {
@@ -522,6 +552,9 @@ namespace Chromium.Remote {
                     return m_Browser;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfrLoadHandler.OnLoadError"/> render process callback.
+            /// </summary>
             public CfrFrame Frame {
                 get {
                     if(!FrameFetched) {
@@ -534,6 +567,9 @@ namespace Chromium.Remote {
                     return m_Frame;
                 }
             }
+            /// <summary>
+            /// Get the ErrorCode parameter for the <see cref="CfrLoadHandler.OnLoadError"/> render process callback.
+            /// </summary>
             public CfxErrorCode ErrorCode {
                 get {
                     if(!ErrorCodeFetched) {
@@ -546,6 +582,9 @@ namespace Chromium.Remote {
                     return m_ErrorCode;
                 }
             }
+            /// <summary>
+            /// Get the ErrorText parameter for the <see cref="CfrLoadHandler.OnLoadError"/> render process callback.
+            /// </summary>
             public string ErrorText {
                 get {
                     if(!ErrorTextFetched) {
@@ -558,6 +597,9 @@ namespace Chromium.Remote {
                     return m_ErrorText;
                 }
             }
+            /// <summary>
+            /// Get the FailedUrl parameter for the <see cref="CfrLoadHandler.OnLoadError"/> render process callback.
+            /// </summary>
             public string FailedUrl {
                 get {
                     if(!FailedUrlFetched) {

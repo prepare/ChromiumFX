@@ -244,6 +244,9 @@ namespace Chromium {
                 m_callback = callback;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxDownloadHandler.OnBeforeDownload"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -251,6 +254,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the DownloadItem parameter for the <see cref="CfxDownloadHandler.OnBeforeDownload"/> callback.
+            /// </summary>
             public CfxDownloadItem DownloadItem {
                 get {
                     CheckAccess();
@@ -258,6 +264,9 @@ namespace Chromium {
                     return m_download_item_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the SuggestedName parameter for the <see cref="CfxDownloadHandler.OnBeforeDownload"/> callback.
+            /// </summary>
             public string SuggestedName {
                 get {
                     CheckAccess();
@@ -265,6 +274,9 @@ namespace Chromium {
                     return m_suggested_name;
                 }
             }
+            /// <summary>
+            /// Get the Callback parameter for the <see cref="CfxDownloadHandler.OnBeforeDownload"/> callback.
+            /// </summary>
             public CfxBeforeDownloadCallback Callback {
                 get {
                     CheckAccess();
@@ -317,6 +329,9 @@ namespace Chromium {
                 m_callback = callback;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxDownloadHandler.OnDownloadUpdated"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -324,6 +339,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the DownloadItem parameter for the <see cref="CfxDownloadHandler.OnDownloadUpdated"/> callback.
+            /// </summary>
             public CfxDownloadItem DownloadItem {
                 get {
                     CheckAccess();
@@ -331,6 +349,9 @@ namespace Chromium {
                     return m_download_item_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Callback parameter for the <see cref="CfxDownloadHandler.OnDownloadUpdated"/> callback.
+            /// </summary>
             public CfxDownloadItemCallback Callback {
                 get {
                     CheckAccess();

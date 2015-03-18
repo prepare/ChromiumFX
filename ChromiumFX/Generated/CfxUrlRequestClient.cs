@@ -389,6 +389,9 @@ namespace Chromium {
                 m_request = request;
             }
 
+            /// <summary>
+            /// Get the Request parameter for the <see cref="CfxUrlRequestClient.OnRequestComplete"/> callback.
+            /// </summary>
             public CfxUrlRequest Request {
                 get {
                     CheckAccess();
@@ -437,6 +440,9 @@ namespace Chromium {
                 m_total = total;
             }
 
+            /// <summary>
+            /// Get the Request parameter for the <see cref="CfxUrlRequestClient.OnUploadProgress"/> callback.
+            /// </summary>
             public CfxUrlRequest Request {
                 get {
                     CheckAccess();
@@ -444,12 +450,18 @@ namespace Chromium {
                     return m_request_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Current parameter for the <see cref="CfxUrlRequestClient.OnUploadProgress"/> callback.
+            /// </summary>
             public ulong Current {
                 get {
                     CheckAccess();
                     return m_current;
                 }
             }
+            /// <summary>
+            /// Get the Total parameter for the <see cref="CfxUrlRequestClient.OnUploadProgress"/> callback.
+            /// </summary>
             public ulong Total {
                 get {
                     CheckAccess();
@@ -495,6 +507,9 @@ namespace Chromium {
                 m_total = total;
             }
 
+            /// <summary>
+            /// Get the Request parameter for the <see cref="CfxUrlRequestClient.OnDownloadProgress"/> callback.
+            /// </summary>
             public CfxUrlRequest Request {
                 get {
                     CheckAccess();
@@ -502,12 +517,18 @@ namespace Chromium {
                     return m_request_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Current parameter for the <see cref="CfxUrlRequestClient.OnDownloadProgress"/> callback.
+            /// </summary>
             public ulong Current {
                 get {
                     CheckAccess();
                     return m_current;
                 }
             }
+            /// <summary>
+            /// Get the Total parameter for the <see cref="CfxUrlRequestClient.OnDownloadProgress"/> callback.
+            /// </summary>
             public ulong Total {
                 get {
                     CheckAccess();
@@ -553,6 +574,9 @@ namespace Chromium {
                 m_data_length = data_length;
             }
 
+            /// <summary>
+            /// Get the Request parameter for the <see cref="CfxUrlRequestClient.OnDownloadData"/> callback.
+            /// </summary>
             public CfxUrlRequest Request {
                 get {
                     CheckAccess();
@@ -560,12 +584,18 @@ namespace Chromium {
                     return m_request_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Data parameter for the <see cref="CfxUrlRequestClient.OnDownloadData"/> callback.
+            /// </summary>
             public IntPtr Data {
                 get {
                     CheckAccess();
                     return m_data;
                 }
             }
+            /// <summary>
+            /// Get the DataLength parameter for the <see cref="CfxUrlRequestClient.OnDownloadData"/> callback.
+            /// </summary>
             public int DataLength {
                 get {
                     CheckAccess();
@@ -637,12 +667,18 @@ namespace Chromium {
                 m_callback = callback;
             }
 
+            /// <summary>
+            /// Get the IsProxy parameter for the <see cref="CfxUrlRequestClient.GetAuthCredentials"/> callback.
+            /// </summary>
             public int IsProxy {
                 get {
                     CheckAccess();
                     return m_isProxy;
                 }
             }
+            /// <summary>
+            /// Get the Host parameter for the <see cref="CfxUrlRequestClient.GetAuthCredentials"/> callback.
+            /// </summary>
             public string Host {
                 get {
                     CheckAccess();
@@ -650,12 +686,18 @@ namespace Chromium {
                     return m_host;
                 }
             }
+            /// <summary>
+            /// Get the Port parameter for the <see cref="CfxUrlRequestClient.GetAuthCredentials"/> callback.
+            /// </summary>
             public int Port {
                 get {
                     CheckAccess();
                     return m_port;
                 }
             }
+            /// <summary>
+            /// Get the Realm parameter for the <see cref="CfxUrlRequestClient.GetAuthCredentials"/> callback.
+            /// </summary>
             public string Realm {
                 get {
                     CheckAccess();
@@ -663,6 +705,9 @@ namespace Chromium {
                     return m_realm;
                 }
             }
+            /// <summary>
+            /// Get the Scheme parameter for the <see cref="CfxUrlRequestClient.GetAuthCredentials"/> callback.
+            /// </summary>
             public string Scheme {
                 get {
                     CheckAccess();
@@ -670,6 +715,9 @@ namespace Chromium {
                     return m_scheme;
                 }
             }
+            /// <summary>
+            /// Get the Callback parameter for the <see cref="CfxUrlRequestClient.GetAuthCredentials"/> callback.
+            /// </summary>
             public CfxAuthCallback Callback {
                 get {
                     CheckAccess();

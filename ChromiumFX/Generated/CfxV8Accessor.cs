@@ -255,6 +255,9 @@ namespace Chromium {
                 m_exception_length = exception_length;
             }
 
+            /// <summary>
+            /// Get the Name parameter for the <see cref="CfxV8Accessor.Get"/> callback.
+            /// </summary>
             public string Name {
                 get {
                     CheckAccess();
@@ -262,6 +265,9 @@ namespace Chromium {
                     return m_name;
                 }
             }
+            /// <summary>
+            /// Get the Object parameter for the <see cref="CfxV8Accessor.Get"/> callback.
+            /// </summary>
             public CfxV8Value Object {
                 get {
                     CheckAccess();
@@ -269,12 +275,18 @@ namespace Chromium {
                     return m_object_wrapped;
                 }
             }
+            /// <summary>
+            /// Set the Retval out parameter for the <see cref="CfxV8Accessor.Get"/> callback.
+            /// </summary>
             public CfxV8Value Retval {
                 set {
                     CheckAccess();
                     m_retval_wrapped = value;
                 }
             }
+            /// <summary>
+            /// Get or set the Exception parameter for the <see cref="CfxV8Accessor.Get"/> callback.
+            /// </summary>
             public string Exception {
                 get {
                     CheckAccess();
@@ -363,6 +375,9 @@ namespace Chromium {
                 m_exception_length = exception_length;
             }
 
+            /// <summary>
+            /// Get the Name parameter for the <see cref="CfxV8Accessor.Set"/> callback.
+            /// </summary>
             public string Name {
                 get {
                     CheckAccess();
@@ -370,6 +385,9 @@ namespace Chromium {
                     return m_name;
                 }
             }
+            /// <summary>
+            /// Get the Object parameter for the <see cref="CfxV8Accessor.Set"/> callback.
+            /// </summary>
             public CfxV8Value Object {
                 get {
                     CheckAccess();
@@ -377,6 +395,9 @@ namespace Chromium {
                     return m_object_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Value parameter for the <see cref="CfxV8Accessor.Set"/> callback.
+            /// </summary>
             public CfxV8Value Value {
                 get {
                     CheckAccess();
@@ -384,6 +405,9 @@ namespace Chromium {
                     return m_value_wrapped;
                 }
             }
+            /// <summary>
+            /// Get or set the Exception parameter for the <see cref="CfxV8Accessor.Set"/> callback.
+            /// </summary>
             public string Exception {
                 get {
                     CheckAccess();

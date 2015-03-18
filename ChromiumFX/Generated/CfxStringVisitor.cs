@@ -151,6 +151,9 @@ namespace Chromium {
                 m_string_length = string_length;
             }
 
+            /// <summary>
+            /// Get the String parameter for the <see cref="CfxStringVisitor.Visit"/> callback.
+            /// </summary>
             public string String {
                 get {
                     CheckAccess();

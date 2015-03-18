@@ -157,6 +157,9 @@ namespace Chromium.Remote {
 
             internal CfrV8HandlerExecuteEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
+            /// <summary>
+            /// Get the Name parameter for the <see cref="CfrV8Handler.Execute"/> render process callback.
+            /// </summary>
             public string Name {
                 get {
                     if(!NameFetched) {
@@ -169,6 +172,9 @@ namespace Chromium.Remote {
                     return m_Name;
                 }
             }
+            /// <summary>
+            /// Get the Object parameter for the <see cref="CfrV8Handler.Execute"/> render process callback.
+            /// </summary>
             public CfrV8Value Object {
                 get {
                     if(!ObjectFetched) {
@@ -181,6 +187,9 @@ namespace Chromium.Remote {
                     return m_Object;
                 }
             }
+            /// <summary>
+            /// Get the Arguments parameter for the <see cref="CfrV8Handler.Execute"/> render process callback.
+            /// </summary>
             public CfrV8Value[] Arguments {
                 get {
                     if(!ArgumentsFetched) {
@@ -193,6 +202,9 @@ namespace Chromium.Remote {
                     return m_Arguments;
                 }
             }
+            /// <summary>
+            /// Get or set the Exception parameter for the <see cref="CfrV8Handler.Execute"/> render process callback.
+            /// </summary>
             public string Exception {
                 get {
                     if(!ExceptionFetched) {

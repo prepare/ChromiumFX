@@ -1486,6 +1486,9 @@ namespace Chromium {
                 m_message = message;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxClient.OnProcessMessageReceived"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -1493,12 +1496,18 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the SourceProcess parameter for the <see cref="CfxClient.OnProcessMessageReceived"/> callback.
+            /// </summary>
             public CfxProcessId SourceProcess {
                 get {
                     CheckAccess();
                     return m_source_process;
                 }
             }
+            /// <summary>
+            /// Get the Message parameter for the <see cref="CfxClient.OnProcessMessageReceived"/> callback.
+            /// </summary>
             public CfxProcessMessage Message {
                 get {
                     CheckAccess();

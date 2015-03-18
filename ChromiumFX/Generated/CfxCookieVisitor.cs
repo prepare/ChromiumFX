@@ -174,6 +174,9 @@ namespace Chromium {
                 m_total = total;
             }
 
+            /// <summary>
+            /// Get the Cookie parameter for the <see cref="CfxCookieVisitor.Visit"/> callback.
+            /// </summary>
             public CfxCookie Cookie {
                 get {
                     CheckAccess();
@@ -181,18 +184,27 @@ namespace Chromium {
                     return m_cookie_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Count parameter for the <see cref="CfxCookieVisitor.Visit"/> callback.
+            /// </summary>
             public int Count {
                 get {
                     CheckAccess();
                     return m_count;
                 }
             }
+            /// <summary>
+            /// Get the Total parameter for the <see cref="CfxCookieVisitor.Visit"/> callback.
+            /// </summary>
             public int Total {
                 get {
                     CheckAccess();
                     return m_total;
                 }
             }
+            /// <summary>
+            /// Set the DeleteCookie out parameter for the <see cref="CfxCookieVisitor.Visit"/> callback.
+            /// </summary>
             public bool DeleteCookie {
                 set {
                     CheckAccess();

@@ -328,6 +328,9 @@ namespace Chromium {
                 m_get_defaults = get_defaults;
             }
 
+            /// <summary>
+            /// Get the Settings parameter for the <see cref="CfxPrintHandler.OnPrintSettings"/> callback.
+            /// </summary>
             public CfxPrintSettings Settings {
                 get {
                     CheckAccess();
@@ -335,6 +338,9 @@ namespace Chromium {
                     return m_settings_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the GetDefaults parameter for the <see cref="CfxPrintHandler.OnPrintSettings"/> callback.
+            /// </summary>
             public bool GetDefaults {
                 get {
                     CheckAccess();
@@ -381,12 +387,18 @@ namespace Chromium {
                 m_callback = callback;
             }
 
+            /// <summary>
+            /// Get the HasSelection parameter for the <see cref="CfxPrintHandler.OnPrintDialog"/> callback.
+            /// </summary>
             public bool HasSelection {
                 get {
                     CheckAccess();
                     return 0 != m_has_selection;
                 }
             }
+            /// <summary>
+            /// Get the Callback parameter for the <see cref="CfxPrintHandler.OnPrintDialog"/> callback.
+            /// </summary>
             public CfxPrintDialogCallback Callback {
                 get {
                     CheckAccess();
@@ -460,6 +472,9 @@ namespace Chromium {
                 m_callback = callback;
             }
 
+            /// <summary>
+            /// Get the DocumentName parameter for the <see cref="CfxPrintHandler.OnPrintJob"/> callback.
+            /// </summary>
             public string DocumentName {
                 get {
                     CheckAccess();
@@ -467,6 +482,9 @@ namespace Chromium {
                     return m_document_name;
                 }
             }
+            /// <summary>
+            /// Get the PdfFilePath parameter for the <see cref="CfxPrintHandler.OnPrintJob"/> callback.
+            /// </summary>
             public string PdfFilePath {
                 get {
                     CheckAccess();
@@ -474,6 +492,9 @@ namespace Chromium {
                     return m_pdf_file_path;
                 }
             }
+            /// <summary>
+            /// Get the Callback parameter for the <see cref="CfxPrintHandler.OnPrintJob"/> callback.
+            /// </summary>
             public CfxPrintJobCallback Callback {
                 get {
                     CheckAccess();

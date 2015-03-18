@@ -303,6 +303,9 @@ namespace Chromium {
                 m_model = model;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxContextMenuHandler.OnBeforeContextMenu"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -310,6 +313,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxContextMenuHandler.OnBeforeContextMenu"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();
@@ -317,6 +323,9 @@ namespace Chromium {
                     return m_frame_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Params parameter for the <see cref="CfxContextMenuHandler.OnBeforeContextMenu"/> callback.
+            /// </summary>
             public CfxContextMenuParams Params {
                 get {
                     CheckAccess();
@@ -324,6 +333,9 @@ namespace Chromium {
                     return m_params_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Model parameter for the <see cref="CfxContextMenuHandler.OnBeforeContextMenu"/> callback.
+            /// </summary>
             public CfxMenuModel Model {
                 get {
                     CheckAccess();
@@ -387,6 +399,9 @@ namespace Chromium {
                 m_event_flags = event_flags;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxContextMenuHandler.OnContextMenuCommand"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -394,6 +409,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxContextMenuHandler.OnContextMenuCommand"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();
@@ -401,6 +419,9 @@ namespace Chromium {
                     return m_frame_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Params parameter for the <see cref="CfxContextMenuHandler.OnContextMenuCommand"/> callback.
+            /// </summary>
             public CfxContextMenuParams Params {
                 get {
                     CheckAccess();
@@ -408,12 +429,18 @@ namespace Chromium {
                     return m_params_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the CommandId parameter for the <see cref="CfxContextMenuHandler.OnContextMenuCommand"/> callback.
+            /// </summary>
             public int CommandId {
                 get {
                     CheckAccess();
                     return m_command_id;
                 }
             }
+            /// <summary>
+            /// Get the EventFlags parameter for the <see cref="CfxContextMenuHandler.OnContextMenuCommand"/> callback.
+            /// </summary>
             public CfxEventFlags EventFlags {
                 get {
                     CheckAccess();
@@ -474,6 +501,9 @@ namespace Chromium {
                 m_frame = frame;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxContextMenuHandler.OnContextMenuDismissed"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -481,6 +511,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxContextMenuHandler.OnContextMenuDismissed"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();

@@ -169,6 +169,9 @@ namespace Chromium {
                 m_total = total;
             }
 
+            /// <summary>
+            /// Get the Info parameter for the <see cref="CfxWebPluginInfoVisitor.Visit"/> callback.
+            /// </summary>
             public CfxWebPluginInfo Info {
                 get {
                     CheckAccess();
@@ -176,12 +179,18 @@ namespace Chromium {
                     return m_info_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Count parameter for the <see cref="CfxWebPluginInfoVisitor.Visit"/> callback.
+            /// </summary>
             public int Count {
                 get {
                     CheckAccess();
                     return m_count;
                 }
             }
+            /// <summary>
+            /// Get the Total parameter for the <see cref="CfxWebPluginInfoVisitor.Visit"/> callback.
+            /// </summary>
             public int Total {
                 get {
                     CheckAccess();

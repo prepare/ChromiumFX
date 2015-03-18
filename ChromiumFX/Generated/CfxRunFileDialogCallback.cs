@@ -162,6 +162,9 @@ namespace Chromium {
                 m_file_paths = file_paths;
             }
 
+            /// <summary>
+            /// Get the BrowserHost parameter for the <see cref="CfxRunFileDialogCallback.Continue"/> callback.
+            /// </summary>
             public CfxBrowserHost BrowserHost {
                 get {
                     CheckAccess();
@@ -169,6 +172,9 @@ namespace Chromium {
                     return m_browser_host_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the FilePaths parameter for the <see cref="CfxRunFileDialogCallback.Continue"/> callback.
+            /// </summary>
             public System.Collections.Generic.List<string> FilePaths {
                 get {
                     CheckAccess();
