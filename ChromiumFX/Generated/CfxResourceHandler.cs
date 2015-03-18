@@ -581,7 +581,7 @@ namespace Chromium {
             }
 
             public override string ToString() {
-                return String.Format("Response={{{0}}}, RedirectUrl={{{2}}}", Response, RedirectUrl);
+                return String.Format("Response={{{0}}}, RedirectUrl={{{1}}}", Response, RedirectUrl);
             }
         }
 
@@ -671,7 +671,7 @@ namespace Chromium {
             }
 
             public override string ToString() {
-                return String.Format("DataOut={{{0}}}, BytesToRead={{{1}}}, Callback={{{3}}}", DataOut, BytesToRead, Callback);
+                return String.Format("DataOut={{{0}}}, BytesToRead={{{1}}}, Callback={{{2}}}", DataOut, BytesToRead, Callback);
             }
         }
 

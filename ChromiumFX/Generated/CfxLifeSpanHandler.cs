@@ -573,7 +573,7 @@ namespace Chromium {
             }
 
             public override string ToString() {
-                return String.Format("Browser={{{0}}}, Frame={{{1}}}, TargetUrl={{{2}}}, TargetFrameName={{{3}}}, PopupFeatures={{{4}}}, WindowInfo={{{5}}}, Settings={{{7}}}", Browser, Frame, TargetUrl, TargetFrameName, PopupFeatures, WindowInfo, Settings);
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, TargetUrl={{{2}}}, TargetFrameName={{{3}}}, PopupFeatures={{{4}}}, WindowInfo={{{5}}}, Settings={{{6}}}", Browser, Frame, TargetUrl, TargetFrameName, PopupFeatures, WindowInfo, Settings);
             }
         }
 

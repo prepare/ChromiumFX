@@ -270,7 +270,7 @@ namespace Chromium.Remote {
             }
 
             public override string ToString() {
-                return String.Format("Name={{{0}}}, Object={{{1}}}, Exception={{{3}}}", Name, Object, Exception);
+                return String.Format("Name={{{0}}}, Object={{{1}}}, Exception={{{2}}}", Name, Object, Exception);
             }
         }
 
