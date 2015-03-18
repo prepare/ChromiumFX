@@ -307,11 +307,13 @@ Public Class CefCallbackType
         b.BeginBlock("public override string ToString()")
         Dim format = New List(Of String)
         Dim vars = New List(Of String)
+        Dim formatIndex = 0
         For i = 1 To Signature.ManagedArguments.Count - 1
             Dim arg = Signature.ManagedArguments(i)
             If arg.ArgumentType.IsIn Then
-                format.Add(String.Format("{0}={{{{{{{1}}}}}}}", arg.PublicPropertyName, i - 1))
+                format.Add(String.Format("{0}={{{{{{{1}}}}}}}", arg.PublicPropertyName, formatIndex))
                 vars.Add(arg.PublicPropertyName)
+                formatIndex += 1
             End If
         Next
         b.AppendLine("return String.Format(""{0}"", {1});", String.Join(", ", format.ToArray()), String.Join(", ", vars.ToArray()))
