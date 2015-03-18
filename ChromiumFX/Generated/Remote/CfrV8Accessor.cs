@@ -265,15 +265,9 @@ namespace Chromium.Remote {
                 }
             }
             /// <summary>
-            /// Sets the return value for the underlying CEF framework callback.
-            /// Applications may attach more than one event handler to a framework callback event,
-            /// but only one event handler can set the return value. Calling SetReturnValue()
-            /// more then once will cause an exception to be thrown.
+            /// Set the return value for the <see cref="CfrV8Accessor.Get"/> render process callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
-            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 var call = new CfxV8AccessorGetSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
@@ -392,15 +386,9 @@ namespace Chromium.Remote {
                 }
             }
             /// <summary>
-            /// Sets the return value for the underlying CEF framework callback.
-            /// Applications may attach more than one event handler to a framework callback event,
-            /// but only one event handler can set the return value. Calling SetReturnValue()
-            /// more then once will cause an exception to be thrown.
+            /// Set the return value for the <see cref="CfrV8Accessor.Set"/> render process callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
-            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 var call = new CfxV8AccessorSetSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
