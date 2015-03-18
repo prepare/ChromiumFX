@@ -415,6 +415,9 @@ namespace Chromium {
                 m_command_line = command_line;
             }
 
+            /// <summary>
+            /// Get the ProcessType parameter for the <see cref="CfxApp.OnBeforeCommandLineProcessing"/> callback.
+            /// </summary>
             public string ProcessType {
                 get {
                     CheckAccess();
@@ -422,6 +425,9 @@ namespace Chromium {
                     return m_process_type;
                 }
             }
+            /// <summary>
+            /// Get the CommandLine parameter for the <see cref="CfxApp.OnBeforeCommandLineProcessing"/> callback.
+            /// </summary>
             public CfxCommandLine CommandLine {
                 get {
                     CheckAccess();
@@ -466,6 +472,9 @@ namespace Chromium {
                 m_registrar = registrar;
             }
 
+            /// <summary>
+            /// Get the Registrar parameter for the <see cref="CfxApp.OnRegisterCustomSchemes"/> callback.
+            /// </summary>
             public CfxSchemeRegistrar Registrar {
                 get {
                     CheckAccess();

@@ -153,6 +153,9 @@ namespace Chromium {
                 m_position = position;
             }
 
+            /// <summary>
+            /// Get the Position parameter for the <see cref="CfxGetGeolocationCallback.OnLocationUpdate"/> callback.
+            /// </summary>
             public CfxGeoposition Position {
                 get {
                     CheckAccess();

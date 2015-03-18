@@ -341,6 +341,9 @@ namespace Chromium {
                 m_command_line = command_line;
             }
 
+            /// <summary>
+            /// Get the CommandLine parameter for the <see cref="CfxBrowserProcessHandler.OnBeforeChildProcessLaunch"/> callback.
+            /// </summary>
             public CfxCommandLine CommandLine {
                 get {
                     CheckAccess();
@@ -387,6 +390,9 @@ namespace Chromium {
                 m_extra_info = extra_info;
             }
 
+            /// <summary>
+            /// Get the ExtraInfo parameter for the <see cref="CfxBrowserProcessHandler.OnRenderProcessThreadCreated"/> callback.
+            /// </summary>
             public CfxListValue ExtraInfo {
                 get {
                     CheckAccess();

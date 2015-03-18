@@ -189,6 +189,9 @@ namespace Chromium.Remote {
 
             internal CfrGetLocalizedStringEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
+            /// <summary>
+            /// Get the MessageId parameter for the <see cref="CfrResourceBundleHandler.GetLocalizedString"/> render process callback.
+            /// </summary>
             public int MessageId {
                 get {
                     if(!MessageIdFetched) {
@@ -201,6 +204,9 @@ namespace Chromium.Remote {
                     return m_MessageId;
                 }
             }
+            /// <summary>
+            /// Get or set the String parameter for the <see cref="CfrResourceBundleHandler.GetLocalizedString"/> render process callback.
+            /// </summary>
             public string String {
                 get {
                     if(!StringFetched) {
@@ -278,6 +284,9 @@ namespace Chromium.Remote {
 
             internal CfrGetDataResourceEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
+            /// <summary>
+            /// Get the ResourceId parameter for the <see cref="CfrResourceBundleHandler.GetDataResource"/> render process callback.
+            /// </summary>
             public int ResourceId {
                 get {
                     if(!ResourceIdFetched) {
@@ -290,6 +299,9 @@ namespace Chromium.Remote {
                     return m_ResourceId;
                 }
             }
+            /// <summary>
+            /// Set the Data out parameter for the <see cref="CfrResourceBundleHandler.GetDataResource"/> render process callback.
+            /// </summary>
             public RemotePtr Data {
                 get {
                     return m_Data;
@@ -302,6 +314,9 @@ namespace Chromium.Remote {
                     call.Execute(remoteRuntime.connection);
                 }
             }
+            /// <summary>
+            /// Set the DataSize out parameter for the <see cref="CfrResourceBundleHandler.GetDataResource"/> render process callback.
+            /// </summary>
             public int DataSize {
                 get {
                     return m_DataSize;

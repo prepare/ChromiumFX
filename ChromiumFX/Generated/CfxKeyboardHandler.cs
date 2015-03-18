@@ -235,6 +235,9 @@ namespace Chromium {
                 m_os_event = os_event;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxKeyboardHandler.OnPreKeyEvent"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -242,6 +245,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Event parameter for the <see cref="CfxKeyboardHandler.OnPreKeyEvent"/> callback.
+            /// </summary>
             public CfxKeyEvent Event {
                 get {
                     CheckAccess();
@@ -249,12 +255,18 @@ namespace Chromium {
                     return m_event_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the OsEvent parameter for the <see cref="CfxKeyboardHandler.OnPreKeyEvent"/> callback.
+            /// </summary>
             public IntPtr OsEvent {
                 get {
                     CheckAccess();
                     return m_os_event;
                 }
             }
+            /// <summary>
+            /// Set the IsKeyboardShortcut out parameter for the <see cref="CfxKeyboardHandler.OnPreKeyEvent"/> callback.
+            /// </summary>
             public bool IsKeyboardShortcut {
                 set {
                     CheckAccess();
@@ -324,6 +336,9 @@ namespace Chromium {
                 m_os_event = os_event;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxKeyboardHandler.OnKeyEvent"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -331,6 +346,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Event parameter for the <see cref="CfxKeyboardHandler.OnKeyEvent"/> callback.
+            /// </summary>
             public CfxKeyEvent Event {
                 get {
                     CheckAccess();
@@ -338,6 +356,9 @@ namespace Chromium {
                     return m_event_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the OsEvent parameter for the <see cref="CfxKeyboardHandler.OnKeyEvent"/> callback.
+            /// </summary>
             public IntPtr OsEvent {
                 get {
                     CheckAccess();

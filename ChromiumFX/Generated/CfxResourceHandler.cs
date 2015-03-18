@@ -468,6 +468,9 @@ namespace Chromium {
                 m_callback = callback;
             }
 
+            /// <summary>
+            /// Get the Request parameter for the <see cref="CfxResourceHandler.ProcessRequest"/> callback.
+            /// </summary>
             public CfxRequest Request {
                 get {
                     CheckAccess();
@@ -475,6 +478,9 @@ namespace Chromium {
                     return m_request_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Callback parameter for the <see cref="CfxResourceHandler.ProcessRequest"/> callback.
+            /// </summary>
             public CfxCallback Callback {
                 get {
                     CheckAccess();
@@ -552,6 +558,9 @@ namespace Chromium {
                 m_redirectUrl_length = redirectUrl_length;
             }
 
+            /// <summary>
+            /// Get the Response parameter for the <see cref="CfxResourceHandler.GetResponseHeaders"/> callback.
+            /// </summary>
             public CfxResponse Response {
                 get {
                     CheckAccess();
@@ -559,12 +568,18 @@ namespace Chromium {
                     return m_response_wrapped;
                 }
             }
+            /// <summary>
+            /// Set the ResponseLength out parameter for the <see cref="CfxResourceHandler.GetResponseHeaders"/> callback.
+            /// </summary>
             public long ResponseLength {
                 set {
                     CheckAccess();
                     m_response_length = value;
                 }
             }
+            /// <summary>
+            /// Get or set the RedirectUrl parameter for the <see cref="CfxResourceHandler.GetResponseHeaders"/> callback.
+            /// </summary>
             public string RedirectUrl {
                 get {
                     CheckAccess();
@@ -626,24 +641,36 @@ namespace Chromium {
                 m_callback = callback;
             }
 
+            /// <summary>
+            /// Get the DataOut parameter for the <see cref="CfxResourceHandler.ReadResponse"/> callback.
+            /// </summary>
             public IntPtr DataOut {
                 get {
                     CheckAccess();
                     return m_data_out;
                 }
             }
+            /// <summary>
+            /// Get the BytesToRead parameter for the <see cref="CfxResourceHandler.ReadResponse"/> callback.
+            /// </summary>
             public int BytesToRead {
                 get {
                     CheckAccess();
                     return m_bytes_to_read;
                 }
             }
+            /// <summary>
+            /// Set the BytesRead out parameter for the <see cref="CfxResourceHandler.ReadResponse"/> callback.
+            /// </summary>
             public int BytesRead {
                 set {
                     CheckAccess();
                     m_bytes_read = value;
                 }
             }
+            /// <summary>
+            /// Get the Callback parameter for the <see cref="CfxResourceHandler.ReadResponse"/> callback.
+            /// </summary>
             public CfxCallback Callback {
                 get {
                     CheckAccess();
@@ -707,6 +734,9 @@ namespace Chromium {
                 m_cookie = cookie;
             }
 
+            /// <summary>
+            /// Get the Cookie parameter for the <see cref="CfxResourceHandler.CanGetCookie"/> callback.
+            /// </summary>
             public CfxCookie Cookie {
                 get {
                     CheckAccess();
@@ -768,6 +798,9 @@ namespace Chromium {
                 m_cookie = cookie;
             }
 
+            /// <summary>
+            /// Get the Cookie parameter for the <see cref="CfxResourceHandler.CanSetCookie"/> callback.
+            /// </summary>
             public CfxCookie Cookie {
                 get {
                     CheckAccess();

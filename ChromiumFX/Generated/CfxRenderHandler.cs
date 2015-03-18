@@ -739,6 +739,9 @@ namespace Chromium {
                 m_rect = rect;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderHandler.GetRootScreenRect"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -746,6 +749,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Rect parameter for the <see cref="CfxRenderHandler.GetRootScreenRect"/> callback.
+            /// </summary>
             public CfxRect Rect {
                 get {
                     CheckAccess();
@@ -810,6 +816,9 @@ namespace Chromium {
                 m_rect = rect;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderHandler.GetViewRect"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -817,6 +826,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Rect parameter for the <see cref="CfxRenderHandler.GetViewRect"/> callback.
+            /// </summary>
             public CfxRect Rect {
                 get {
                     CheckAccess();
@@ -884,6 +896,9 @@ namespace Chromium {
                 m_viewY = viewY;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderHandler.GetScreenPoint"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -891,24 +906,36 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the ViewX parameter for the <see cref="CfxRenderHandler.GetScreenPoint"/> callback.
+            /// </summary>
             public int ViewX {
                 get {
                     CheckAccess();
                     return m_viewX;
                 }
             }
+            /// <summary>
+            /// Get the ViewY parameter for the <see cref="CfxRenderHandler.GetScreenPoint"/> callback.
+            /// </summary>
             public int ViewY {
                 get {
                     CheckAccess();
                     return m_viewY;
                 }
             }
+            /// <summary>
+            /// Set the ScreenX out parameter for the <see cref="CfxRenderHandler.GetScreenPoint"/> callback.
+            /// </summary>
             public int ScreenX {
                 set {
                     CheckAccess();
                     m_screenX = value;
                 }
             }
+            /// <summary>
+            /// Set the ScreenY out parameter for the <see cref="CfxRenderHandler.GetScreenPoint"/> callback.
+            /// </summary>
             public int ScreenY {
                 set {
                     CheckAccess();
@@ -980,6 +1007,9 @@ namespace Chromium {
                 m_screen_info = screen_info;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderHandler.GetScreenInfo"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -987,6 +1017,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the ScreenInfo parameter for the <see cref="CfxRenderHandler.GetScreenInfo"/> callback.
+            /// </summary>
             public CfxScreenInfo ScreenInfo {
                 get {
                     CheckAccess();
@@ -1047,6 +1080,9 @@ namespace Chromium {
                 m_show = show;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderHandler.OnPopupShow"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -1054,6 +1090,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Show parameter for the <see cref="CfxRenderHandler.OnPopupShow"/> callback.
+            /// </summary>
             public bool Show {
                 get {
                     CheckAccess();
@@ -1096,6 +1135,9 @@ namespace Chromium {
                 m_rect = rect;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderHandler.OnPopupSize"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -1103,6 +1145,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Rect parameter for the <see cref="CfxRenderHandler.OnPopupSize"/> callback.
+            /// </summary>
             public CfxRect Rect {
                 get {
                     CheckAccess();
@@ -1162,6 +1207,9 @@ namespace Chromium {
                 m_height = height;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderHandler.OnPaint"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -1169,12 +1217,18 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Type parameter for the <see cref="CfxRenderHandler.OnPaint"/> callback.
+            /// </summary>
             public CfxPaintElementType Type {
                 get {
                     CheckAccess();
                     return m_type;
                 }
             }
+            /// <summary>
+            /// Get the DirtyRects parameter for the <see cref="CfxRenderHandler.OnPaint"/> callback.
+            /// </summary>
             public CfxRect[] DirtyRects {
                 get {
                     CheckAccess();
@@ -1195,18 +1249,27 @@ namespace Chromium {
                     return m_dirtyRects_managed;
                 }
             }
+            /// <summary>
+            /// Get the Buffer parameter for the <see cref="CfxRenderHandler.OnPaint"/> callback.
+            /// </summary>
             public IntPtr Buffer {
                 get {
                     CheckAccess();
                     return m_buffer;
                 }
             }
+            /// <summary>
+            /// Get the Width parameter for the <see cref="CfxRenderHandler.OnPaint"/> callback.
+            /// </summary>
             public int Width {
                 get {
                     CheckAccess();
                     return m_width;
                 }
             }
+            /// <summary>
+            /// Get the Height parameter for the <see cref="CfxRenderHandler.OnPaint"/> callback.
+            /// </summary>
             public int Height {
                 get {
                     CheckAccess();
@@ -1253,6 +1316,9 @@ namespace Chromium {
                 m_custom_cursor_info = custom_cursor_info;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderHandler.OnCursorChange"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -1260,18 +1326,27 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Cursor parameter for the <see cref="CfxRenderHandler.OnCursorChange"/> callback.
+            /// </summary>
             public IntPtr Cursor {
                 get {
                     CheckAccess();
                     return m_cursor;
                 }
             }
+            /// <summary>
+            /// Get the Type parameter for the <see cref="CfxRenderHandler.OnCursorChange"/> callback.
+            /// </summary>
             public CfxCursorType Type {
                 get {
                     CheckAccess();
                     return m_type;
                 }
             }
+            /// <summary>
+            /// Get the CustomCursorInfo parameter for the <see cref="CfxRenderHandler.OnCursorChange"/> callback.
+            /// </summary>
             public CfxCursorInfo CustomCursorInfo {
                 get {
                     CheckAccess();
@@ -1338,6 +1413,9 @@ namespace Chromium {
                 m_y = y;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderHandler.StartDragging"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -1345,6 +1423,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the DragData parameter for the <see cref="CfxRenderHandler.StartDragging"/> callback.
+            /// </summary>
             public CfxDragData DragData {
                 get {
                     CheckAccess();
@@ -1352,18 +1433,27 @@ namespace Chromium {
                     return m_drag_data_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the AllowedOps parameter for the <see cref="CfxRenderHandler.StartDragging"/> callback.
+            /// </summary>
             public CfxDragOperationsMask AllowedOps {
                 get {
                     CheckAccess();
                     return m_allowed_ops;
                 }
             }
+            /// <summary>
+            /// Get the X parameter for the <see cref="CfxRenderHandler.StartDragging"/> callback.
+            /// </summary>
             public int X {
                 get {
                     CheckAccess();
                     return m_x;
                 }
             }
+            /// <summary>
+            /// Get the Y parameter for the <see cref="CfxRenderHandler.StartDragging"/> callback.
+            /// </summary>
             public int Y {
                 get {
                     CheckAccess();
@@ -1425,6 +1515,9 @@ namespace Chromium {
                 m_operation = operation;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderHandler.UpdateDragCursor"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -1432,6 +1525,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Operation parameter for the <see cref="CfxRenderHandler.UpdateDragCursor"/> callback.
+            /// </summary>
             public CfxDragOperationsMask Operation {
                 get {
                     CheckAccess();
@@ -1469,6 +1565,9 @@ namespace Chromium {
                 m_browser = browser;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderHandler.OnScrollOffsetChanged"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();

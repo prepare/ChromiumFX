@@ -492,6 +492,9 @@ namespace Chromium {
                 m_settings = settings;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxLifeSpanHandler.OnBeforePopup"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -499,6 +502,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxLifeSpanHandler.OnBeforePopup"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();
@@ -506,6 +512,9 @@ namespace Chromium {
                     return m_frame_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the TargetUrl parameter for the <see cref="CfxLifeSpanHandler.OnBeforePopup"/> callback.
+            /// </summary>
             public string TargetUrl {
                 get {
                     CheckAccess();
@@ -513,6 +522,9 @@ namespace Chromium {
                     return m_target_url;
                 }
             }
+            /// <summary>
+            /// Get the TargetFrameName parameter for the <see cref="CfxLifeSpanHandler.OnBeforePopup"/> callback.
+            /// </summary>
             public string TargetFrameName {
                 get {
                     CheckAccess();
@@ -520,6 +532,9 @@ namespace Chromium {
                     return m_target_frame_name;
                 }
             }
+            /// <summary>
+            /// Get the PopupFeatures parameter for the <see cref="CfxLifeSpanHandler.OnBeforePopup"/> callback.
+            /// </summary>
             public CfxPopupFeatures PopupFeatures {
                 get {
                     CheckAccess();
@@ -527,6 +542,9 @@ namespace Chromium {
                     return m_popupFeatures_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the WindowInfo parameter for the <see cref="CfxLifeSpanHandler.OnBeforePopup"/> callback.
+            /// </summary>
             public CfxWindowInfo WindowInfo {
                 get {
                     CheckAccess();
@@ -534,12 +552,18 @@ namespace Chromium {
                     return m_windowInfo_wrapped;
                 }
             }
+            /// <summary>
+            /// Set the Client out parameter for the <see cref="CfxLifeSpanHandler.OnBeforePopup"/> callback.
+            /// </summary>
             public CfxClient Client {
                 set {
                     CheckAccess();
                     m_client_wrapped = value;
                 }
             }
+            /// <summary>
+            /// Get the Settings parameter for the <see cref="CfxLifeSpanHandler.OnBeforePopup"/> callback.
+            /// </summary>
             public CfxBrowserSettings Settings {
                 get {
                     CheckAccess();
@@ -547,6 +571,9 @@ namespace Chromium {
                     return m_settings_wrapped;
                 }
             }
+            /// <summary>
+            /// Set the NoJavascriptAccess out parameter for the <see cref="CfxLifeSpanHandler.OnBeforePopup"/> callback.
+            /// </summary>
             public bool NoJavascriptAccess {
                 set {
                     CheckAccess();
@@ -602,6 +629,9 @@ namespace Chromium {
                 m_browser = browser;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxLifeSpanHandler.OnAfterCreated"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -647,6 +677,9 @@ namespace Chromium {
                 m_browser = browser;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxLifeSpanHandler.RunModal"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -804,6 +837,9 @@ namespace Chromium {
                 m_browser = browser;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxLifeSpanHandler.DoClose"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -870,6 +906,9 @@ namespace Chromium {
                 m_browser = browser;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxLifeSpanHandler.OnBeforeClose"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();

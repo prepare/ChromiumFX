@@ -346,6 +346,9 @@ namespace Chromium {
                 m_canGoForward = canGoForward;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxLoadHandler.OnLoadingStateChange"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -353,18 +356,27 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the IsLoading parameter for the <see cref="CfxLoadHandler.OnLoadingStateChange"/> callback.
+            /// </summary>
             public bool IsLoading {
                 get {
                     CheckAccess();
                     return 0 != m_isLoading;
                 }
             }
+            /// <summary>
+            /// Get the CanGoBack parameter for the <see cref="CfxLoadHandler.OnLoadingStateChange"/> callback.
+            /// </summary>
             public bool CanGoBack {
                 get {
                     CheckAccess();
                     return 0 != m_canGoBack;
                 }
             }
+            /// <summary>
+            /// Get the CanGoForward parameter for the <see cref="CfxLoadHandler.OnLoadingStateChange"/> callback.
+            /// </summary>
             public bool CanGoForward {
                 get {
                     CheckAccess();
@@ -417,6 +429,9 @@ namespace Chromium {
                 m_frame = frame;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxLoadHandler.OnLoadStart"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -424,6 +439,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxLoadHandler.OnLoadStart"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();
@@ -477,6 +495,9 @@ namespace Chromium {
                 m_httpStatusCode = httpStatusCode;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxLoadHandler.OnLoadEnd"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -484,6 +505,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxLoadHandler.OnLoadEnd"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();
@@ -491,6 +515,9 @@ namespace Chromium {
                     return m_frame_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the HttpStatusCode parameter for the <see cref="CfxLoadHandler.OnLoadEnd"/> callback.
+            /// </summary>
             public int HttpStatusCode {
                 get {
                     CheckAccess();
@@ -549,6 +576,9 @@ namespace Chromium {
                 m_failedUrl_length = failedUrl_length;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxLoadHandler.OnLoadError"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -556,6 +586,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxLoadHandler.OnLoadError"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();
@@ -563,12 +596,18 @@ namespace Chromium {
                     return m_frame_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the ErrorCode parameter for the <see cref="CfxLoadHandler.OnLoadError"/> callback.
+            /// </summary>
             public CfxErrorCode ErrorCode {
                 get {
                     CheckAccess();
                     return m_errorCode;
                 }
             }
+            /// <summary>
+            /// Get the ErrorText parameter for the <see cref="CfxLoadHandler.OnLoadError"/> callback.
+            /// </summary>
             public string ErrorText {
                 get {
                     CheckAccess();
@@ -576,6 +615,9 @@ namespace Chromium {
                     return m_errorText;
                 }
             }
+            /// <summary>
+            /// Get the FailedUrl parameter for the <see cref="CfxLoadHandler.OnLoadError"/> callback.
+            /// </summary>
             public string FailedUrl {
                 get {
                     CheckAccess();

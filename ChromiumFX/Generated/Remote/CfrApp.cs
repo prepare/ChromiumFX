@@ -276,6 +276,9 @@ namespace Chromium.Remote {
 
             internal CfrOnBeforeCommandLineProcessingEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
+            /// <summary>
+            /// Get the ProcessType parameter for the <see cref="CfrApp.OnBeforeCommandLineProcessing"/> render process callback.
+            /// </summary>
             public string ProcessType {
                 get {
                     if(!ProcessTypeFetched) {
@@ -288,6 +291,9 @@ namespace Chromium.Remote {
                     return m_ProcessType;
                 }
             }
+            /// <summary>
+            /// Get the CommandLine parameter for the <see cref="CfrApp.OnBeforeCommandLineProcessing"/> render process callback.
+            /// </summary>
             public CfrCommandLine CommandLine {
                 get {
                     if(!CommandLineFetched) {
@@ -335,6 +341,9 @@ namespace Chromium.Remote {
 
             internal CfrOnRegisterCustomSchemesEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
+            /// <summary>
+            /// Get the Registrar parameter for the <see cref="CfrApp.OnRegisterCustomSchemes"/> render process callback.
+            /// </summary>
             public CfrSchemeRegistrar Registrar {
                 get {
                     if(!RegistrarFetched) {

@@ -203,6 +203,9 @@ namespace Chromium {
                 m_exception_length = exception_length;
             }
 
+            /// <summary>
+            /// Get the Name parameter for the <see cref="CfxV8Handler.Execute"/> callback.
+            /// </summary>
             public string Name {
                 get {
                     CheckAccess();
@@ -210,6 +213,9 @@ namespace Chromium {
                     return m_name;
                 }
             }
+            /// <summary>
+            /// Get the Object parameter for the <see cref="CfxV8Handler.Execute"/> callback.
+            /// </summary>
             public CfxV8Value Object {
                 get {
                     CheckAccess();
@@ -217,6 +223,9 @@ namespace Chromium {
                     return m_object_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Arguments parameter for the <see cref="CfxV8Handler.Execute"/> callback.
+            /// </summary>
             public CfxV8Value[] Arguments {
                 get {
                     CheckAccess();
@@ -229,6 +238,9 @@ namespace Chromium {
                     return m_arguments_managed;
                 }
             }
+            /// <summary>
+            /// Get or set the Exception parameter for the <see cref="CfxV8Handler.Execute"/> callback.
+            /// </summary>
             public string Exception {
                 get {
                     CheckAccess();

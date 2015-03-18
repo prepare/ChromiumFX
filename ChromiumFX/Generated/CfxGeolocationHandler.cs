@@ -239,6 +239,9 @@ namespace Chromium {
                 m_callback = callback;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxGeolocationHandler.OnRequestGeolocationPermission"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -246,6 +249,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the RequestingUrl parameter for the <see cref="CfxGeolocationHandler.OnRequestGeolocationPermission"/> callback.
+            /// </summary>
             public string RequestingUrl {
                 get {
                     CheckAccess();
@@ -253,12 +259,18 @@ namespace Chromium {
                     return m_requesting_url;
                 }
             }
+            /// <summary>
+            /// Get the RequestId parameter for the <see cref="CfxGeolocationHandler.OnRequestGeolocationPermission"/> callback.
+            /// </summary>
             public int RequestId {
                 get {
                     CheckAccess();
                     return m_request_id;
                 }
             }
+            /// <summary>
+            /// Get the Callback parameter for the <see cref="CfxGeolocationHandler.OnRequestGeolocationPermission"/> callback.
+            /// </summary>
             public CfxGeolocationCallback Callback {
                 get {
                     CheckAccess();
@@ -326,6 +338,9 @@ namespace Chromium {
                 m_request_id = request_id;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxGeolocationHandler.OnCancelGeolocationPermission"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -333,6 +348,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the RequestingUrl parameter for the <see cref="CfxGeolocationHandler.OnCancelGeolocationPermission"/> callback.
+            /// </summary>
             public string RequestingUrl {
                 get {
                     CheckAccess();
@@ -340,6 +358,9 @@ namespace Chromium {
                     return m_requesting_url;
                 }
             }
+            /// <summary>
+            /// Get the RequestId parameter for the <see cref="CfxGeolocationHandler.OnCancelGeolocationPermission"/> callback.
+            /// </summary>
             public int RequestId {
                 get {
                     CheckAccess();

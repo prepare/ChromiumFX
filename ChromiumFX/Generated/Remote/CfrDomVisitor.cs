@@ -150,6 +150,9 @@ namespace Chromium.Remote {
 
             internal CfrDomVisitorVisitEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
+            /// <summary>
+            /// Get the Document parameter for the <see cref="CfrDomVisitor.Visit"/> render process callback.
+            /// </summary>
             public CfrDomDocument Document {
                 get {
                     if(!DocumentFetched) {

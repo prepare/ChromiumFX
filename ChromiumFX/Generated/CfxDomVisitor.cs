@@ -167,6 +167,9 @@ namespace Chromium {
                 m_document = document;
             }
 
+            /// <summary>
+            /// Get the Document parameter for the <see cref="CfxDomVisitor.Visit"/> callback.
+            /// </summary>
             public CfxDomDocument Document {
                 get {
                     CheckAccess();

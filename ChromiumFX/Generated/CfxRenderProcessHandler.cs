@@ -749,6 +749,9 @@ namespace Chromium {
                 m_extra_info = extra_info;
             }
 
+            /// <summary>
+            /// Get the ExtraInfo parameter for the <see cref="CfxRenderProcessHandler.OnRenderThreadCreated"/> callback.
+            /// </summary>
             public CfxListValue ExtraInfo {
                 get {
                     CheckAccess();
@@ -792,6 +795,9 @@ namespace Chromium {
                 m_browser = browser;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderProcessHandler.OnBrowserCreated"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -830,6 +836,9 @@ namespace Chromium {
                 m_browser = browser;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderProcessHandler.OnBrowserDestroyed"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -886,6 +895,9 @@ namespace Chromium {
                 m_is_redirect = is_redirect;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderProcessHandler.OnBeforeNavigation"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -893,6 +905,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxRenderProcessHandler.OnBeforeNavigation"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();
@@ -900,6 +915,9 @@ namespace Chromium {
                     return m_frame_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Request parameter for the <see cref="CfxRenderProcessHandler.OnBeforeNavigation"/> callback.
+            /// </summary>
             public CfxRequest Request {
                 get {
                     CheckAccess();
@@ -907,12 +925,18 @@ namespace Chromium {
                     return m_request_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the NavigationType parameter for the <see cref="CfxRenderProcessHandler.OnBeforeNavigation"/> callback.
+            /// </summary>
             public CfxNavigationType NavigationType {
                 get {
                     CheckAccess();
                     return m_navigation_type;
                 }
             }
+            /// <summary>
+            /// Get the IsRedirect parameter for the <see cref="CfxRenderProcessHandler.OnBeforeNavigation"/> callback.
+            /// </summary>
             public bool IsRedirect {
                 get {
                     CheckAccess();
@@ -984,6 +1008,9 @@ namespace Chromium {
                 m_context = context;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderProcessHandler.OnContextCreated"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -991,6 +1018,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxRenderProcessHandler.OnContextCreated"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();
@@ -998,6 +1028,9 @@ namespace Chromium {
                     return m_frame_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Context parameter for the <see cref="CfxRenderProcessHandler.OnContextCreated"/> callback.
+            /// </summary>
             public CfxV8Context Context {
                 get {
                     CheckAccess();
@@ -1044,6 +1077,9 @@ namespace Chromium {
                 m_context = context;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderProcessHandler.OnContextReleased"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -1051,6 +1087,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxRenderProcessHandler.OnContextReleased"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();
@@ -1058,6 +1097,9 @@ namespace Chromium {
                     return m_frame_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Context parameter for the <see cref="CfxRenderProcessHandler.OnContextReleased"/> callback.
+            /// </summary>
             public CfxV8Context Context {
                 get {
                     CheckAccess();
@@ -1112,6 +1154,9 @@ namespace Chromium {
                 m_stackTrace = stackTrace;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderProcessHandler.OnUncaughtException"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -1119,6 +1164,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxRenderProcessHandler.OnUncaughtException"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();
@@ -1126,6 +1174,9 @@ namespace Chromium {
                     return m_frame_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Context parameter for the <see cref="CfxRenderProcessHandler.OnUncaughtException"/> callback.
+            /// </summary>
             public CfxV8Context Context {
                 get {
                     CheckAccess();
@@ -1133,6 +1184,9 @@ namespace Chromium {
                     return m_context_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Exception parameter for the <see cref="CfxRenderProcessHandler.OnUncaughtException"/> callback.
+            /// </summary>
             public CfxV8Exception Exception {
                 get {
                     CheckAccess();
@@ -1140,6 +1194,9 @@ namespace Chromium {
                     return m_exception_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the StackTrace parameter for the <see cref="CfxRenderProcessHandler.OnUncaughtException"/> callback.
+            /// </summary>
             public CfxV8StackTrace StackTrace {
                 get {
                     CheckAccess();
@@ -1194,6 +1251,9 @@ namespace Chromium {
                 m_node = node;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderProcessHandler.OnFocusedNodeChanged"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -1201,6 +1261,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxRenderProcessHandler.OnFocusedNodeChanged"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();
@@ -1208,6 +1271,9 @@ namespace Chromium {
                     return m_frame_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Node parameter for the <see cref="CfxRenderProcessHandler.OnFocusedNodeChanged"/> callback.
+            /// </summary>
             public CfxDomNode Node {
                 get {
                     CheckAccess();

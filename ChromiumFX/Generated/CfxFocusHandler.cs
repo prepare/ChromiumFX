@@ -274,6 +274,9 @@ namespace Chromium {
                 m_next = next;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxFocusHandler.OnTakeFocus"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -281,6 +284,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Next parameter for the <see cref="CfxFocusHandler.OnTakeFocus"/> callback.
+            /// </summary>
             public int Next {
                 get {
                     CheckAccess();
@@ -327,6 +333,9 @@ namespace Chromium {
                 m_source = source;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxFocusHandler.OnSetFocus"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -334,6 +343,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Source parameter for the <see cref="CfxFocusHandler.OnSetFocus"/> callback.
+            /// </summary>
             public CfxFocusSource Source {
                 get {
                     CheckAccess();
@@ -389,6 +401,9 @@ namespace Chromium {
                 m_browser = browser;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxFocusHandler.OnGotFocus"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();

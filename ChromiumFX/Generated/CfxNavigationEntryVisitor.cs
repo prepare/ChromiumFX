@@ -174,6 +174,9 @@ namespace Chromium {
                 m_total = total;
             }
 
+            /// <summary>
+            /// Get the Entry parameter for the <see cref="CfxNavigationEntryVisitor.Visit"/> callback.
+            /// </summary>
             public CfxNavigationEntry Entry {
                 get {
                     CheckAccess();
@@ -181,18 +184,27 @@ namespace Chromium {
                     return m_entry_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Current parameter for the <see cref="CfxNavigationEntryVisitor.Visit"/> callback.
+            /// </summary>
             public bool Current {
                 get {
                     CheckAccess();
                     return 0 != m_current;
                 }
             }
+            /// <summary>
+            /// Get the Index parameter for the <see cref="CfxNavigationEntryVisitor.Visit"/> callback.
+            /// </summary>
             public int Index {
                 get {
                     CheckAccess();
                     return m_index;
                 }
             }
+            /// <summary>
+            /// Get the Total parameter for the <see cref="CfxNavigationEntryVisitor.Visit"/> callback.
+            /// </summary>
             public int Total {
                 get {
                     CheckAccess();

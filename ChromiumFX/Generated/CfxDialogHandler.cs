@@ -198,6 +198,9 @@ namespace Chromium {
                 m_callback = callback;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxDialogHandler.OnFileDialog"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -205,12 +208,18 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Mode parameter for the <see cref="CfxDialogHandler.OnFileDialog"/> callback.
+            /// </summary>
             public CfxFileDialogMode Mode {
                 get {
                     CheckAccess();
                     return m_mode;
                 }
             }
+            /// <summary>
+            /// Get the Title parameter for the <see cref="CfxDialogHandler.OnFileDialog"/> callback.
+            /// </summary>
             public string Title {
                 get {
                     CheckAccess();
@@ -218,6 +227,9 @@ namespace Chromium {
                     return m_title;
                 }
             }
+            /// <summary>
+            /// Get the DefaultFileName parameter for the <see cref="CfxDialogHandler.OnFileDialog"/> callback.
+            /// </summary>
             public string DefaultFileName {
                 get {
                     CheckAccess();
@@ -225,12 +237,18 @@ namespace Chromium {
                     return m_default_file_name;
                 }
             }
+            /// <summary>
+            /// Get the AcceptTypes parameter for the <see cref="CfxDialogHandler.OnFileDialog"/> callback.
+            /// </summary>
             public System.Collections.Generic.List<string> AcceptTypes {
                 get {
                     CheckAccess();
                     return StringFunctions.WrapCfxStringList(m_accept_types);
                 }
             }
+            /// <summary>
+            /// Get the Callback parameter for the <see cref="CfxDialogHandler.OnFileDialog"/> callback.
+            /// </summary>
             public CfxFileDialogCallback Callback {
                 get {
                     CheckAccess();

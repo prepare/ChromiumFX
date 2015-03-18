@@ -361,6 +361,15 @@ Public Class Signature
     Public Sub EmitPublicEventArgProperties(b As CodeBuilder)
         For i = 1 To ManagedArguments.Count - 1
             Dim arg = ManagedArguments(i)
+            Dim cd = New CommentData
+            If arg.ArgumentType.IsIn AndAlso arg.ArgumentType.IsOut Then
+                cd.Lines = {String.Format("Get or set the {0} parameter for the <see cref=""{1}.{2}""/> callback.", arg.PublicPropertyName, Parent.PublicClassName, Parent.PublicFunctionName)}
+            ElseIf arg.ArgumentType.IsIn Then
+                cd.Lines = {String.Format("Get the {0} parameter for the <see cref=""{1}.{2}""/> callback.", arg.PublicPropertyName, Parent.PublicClassName, Parent.PublicFunctionName)}
+            Else
+                cd.Lines = {String.Format("Set the {0} out parameter for the <see cref=""{1}.{2}""/> callback.", arg.PublicPropertyName, Parent.PublicClassName, Parent.PublicFunctionName)}
+            End If
+            b.AppendSummary(cd)
             b.BeginBlock("public {0} {1}", arg.ArgumentType.PublicSymbol, arg.PublicPropertyName)
             If arg.ArgumentType.IsIn Then
                 b.BeginBlock("get")
@@ -475,7 +484,6 @@ Public Class Signature
         b.EndBlock()
 
     End Sub
-
 
     Public Overridable Sub EmitNativeCall(b As CodeBuilder, functionName As String)
 

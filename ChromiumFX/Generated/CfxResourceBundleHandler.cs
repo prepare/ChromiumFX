@@ -238,12 +238,18 @@ namespace Chromium {
                 m_string_length = string_length;
             }
 
+            /// <summary>
+            /// Get the MessageId parameter for the <see cref="CfxResourceBundleHandler.GetLocalizedString"/> callback.
+            /// </summary>
             public int MessageId {
                 get {
                     CheckAccess();
                     return m_message_id;
                 }
             }
+            /// <summary>
+            /// Get or set the String parameter for the <see cref="CfxResourceBundleHandler.GetLocalizedString"/> callback.
+            /// </summary>
             public string String {
                 get {
                     CheckAccess();
@@ -321,18 +327,27 @@ namespace Chromium {
                 m_resource_id = resource_id;
             }
 
+            /// <summary>
+            /// Get the ResourceId parameter for the <see cref="CfxResourceBundleHandler.GetDataResource"/> callback.
+            /// </summary>
             public int ResourceId {
                 get {
                     CheckAccess();
                     return m_resource_id;
                 }
             }
+            /// <summary>
+            /// Set the Data out parameter for the <see cref="CfxResourceBundleHandler.GetDataResource"/> callback.
+            /// </summary>
             public IntPtr Data {
                 set {
                     CheckAccess();
                     m_data = value;
                 }
             }
+            /// <summary>
+            /// Set the DataSize out parameter for the <see cref="CfxResourceBundleHandler.GetDataResource"/> callback.
+            /// </summary>
             public int DataSize {
                 set {
                     CheckAccess();

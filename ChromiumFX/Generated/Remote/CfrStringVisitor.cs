@@ -137,6 +137,9 @@ namespace Chromium.Remote {
 
             internal CfrStringVisitorVisitEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
+            /// <summary>
+            /// Get the String parameter for the <see cref="CfrStringVisitor.Visit"/> render process callback.
+            /// </summary>
             public string String {
                 get {
                     if(!StringFetched) {

@@ -171,6 +171,9 @@ namespace Chromium {
                 m_mask = mask;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxDragHandler.OnDragEnter"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -178,6 +181,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the DragData parameter for the <see cref="CfxDragHandler.OnDragEnter"/> callback.
+            /// </summary>
             public CfxDragData DragData {
                 get {
                     CheckAccess();
@@ -185,6 +191,9 @@ namespace Chromium {
                     return m_dragData_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Mask parameter for the <see cref="CfxDragHandler.OnDragEnter"/> callback.
+            /// </summary>
             public CfxDragOperationsMask Mask {
                 get {
                     CheckAccess();

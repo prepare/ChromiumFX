@@ -160,6 +160,9 @@ namespace Chromium {
                 m_unstable = unstable;
             }
 
+            /// <summary>
+            /// Get the Path parameter for the <see cref="CfxWebPluginUnstableCallback.IsUnstable"/> callback.
+            /// </summary>
             public string Path {
                 get {
                     CheckAccess();
@@ -167,6 +170,9 @@ namespace Chromium {
                     return m_path;
                 }
             }
+            /// <summary>
+            /// Get the Unstable parameter for the <see cref="CfxWebPluginUnstableCallback.IsUnstable"/> callback.
+            /// </summary>
             public bool Unstable {
                 get {
                     CheckAccess();

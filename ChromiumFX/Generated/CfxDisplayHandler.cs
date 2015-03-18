@@ -392,6 +392,9 @@ namespace Chromium {
                 m_url_length = url_length;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxDisplayHandler.OnAddressChange"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -399,6 +402,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxDisplayHandler.OnAddressChange"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();
@@ -406,6 +412,9 @@ namespace Chromium {
                     return m_frame_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Url parameter for the <see cref="CfxDisplayHandler.OnAddressChange"/> callback.
+            /// </summary>
             public string Url {
                 get {
                     CheckAccess();
@@ -449,6 +458,9 @@ namespace Chromium {
                 m_title_length = title_length;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxDisplayHandler.OnTitleChange"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -456,6 +468,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Title parameter for the <see cref="CfxDisplayHandler.OnTitleChange"/> callback.
+            /// </summary>
             public string Title {
                 get {
                     CheckAccess();
@@ -513,6 +528,9 @@ namespace Chromium {
                 m_text_length = text_length;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxDisplayHandler.OnTooltip"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -520,6 +538,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get or set the Text parameter for the <see cref="CfxDisplayHandler.OnTooltip"/> callback.
+            /// </summary>
             public string Text {
                 get {
                     CheckAccess();
@@ -590,6 +611,9 @@ namespace Chromium {
                 m_value_length = value_length;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxDisplayHandler.OnStatusMessage"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -597,6 +621,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Value parameter for the <see cref="CfxDisplayHandler.OnStatusMessage"/> callback.
+            /// </summary>
             public string Value {
                 get {
                     CheckAccess();
@@ -652,6 +679,9 @@ namespace Chromium {
                 m_line = line;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxDisplayHandler.OnConsoleMessage"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -659,6 +689,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Message parameter for the <see cref="CfxDisplayHandler.OnConsoleMessage"/> callback.
+            /// </summary>
             public string Message {
                 get {
                     CheckAccess();
@@ -666,6 +699,9 @@ namespace Chromium {
                     return m_message;
                 }
             }
+            /// <summary>
+            /// Get the Source parameter for the <see cref="CfxDisplayHandler.OnConsoleMessage"/> callback.
+            /// </summary>
             public string Source {
                 get {
                     CheckAccess();
@@ -673,6 +709,9 @@ namespace Chromium {
                     return m_source;
                 }
             }
+            /// <summary>
+            /// Get the Line parameter for the <see cref="CfxDisplayHandler.OnConsoleMessage"/> callback.
+            /// </summary>
             public int Line {
                 get {
                     CheckAccess();

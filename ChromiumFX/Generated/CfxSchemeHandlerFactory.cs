@@ -185,6 +185,9 @@ namespace Chromium {
                 m_request = request;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxSchemeHandlerFactory.Create"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -192,6 +195,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxSchemeHandlerFactory.Create"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();
@@ -199,6 +205,9 @@ namespace Chromium {
                     return m_frame_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the SchemeName parameter for the <see cref="CfxSchemeHandlerFactory.Create"/> callback.
+            /// </summary>
             public string SchemeName {
                 get {
                     CheckAccess();
@@ -206,6 +215,9 @@ namespace Chromium {
                     return m_scheme_name;
                 }
             }
+            /// <summary>
+            /// Get the Request parameter for the <see cref="CfxSchemeHandlerFactory.Create"/> callback.
+            /// </summary>
             public CfxRequest Request {
                 get {
                     CheckAccess();

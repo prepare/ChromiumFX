@@ -785,6 +785,9 @@ namespace Chromium {
                 m_is_redirect = is_redirect;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRequestHandler.OnBeforeBrowse"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -792,6 +795,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxRequestHandler.OnBeforeBrowse"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();
@@ -799,6 +805,9 @@ namespace Chromium {
                     return m_frame_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Request parameter for the <see cref="CfxRequestHandler.OnBeforeBrowse"/> callback.
+            /// </summary>
             public CfxRequest Request {
                 get {
                     CheckAccess();
@@ -806,6 +815,9 @@ namespace Chromium {
                     return m_request_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the IsRedirect parameter for the <see cref="CfxRequestHandler.OnBeforeBrowse"/> callback.
+            /// </summary>
             public bool IsRedirect {
                 get {
                     CheckAccess();
@@ -874,6 +886,9 @@ namespace Chromium {
                 m_request = request;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRequestHandler.OnBeforeResourceLoad"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -881,6 +896,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxRequestHandler.OnBeforeResourceLoad"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();
@@ -888,6 +906,9 @@ namespace Chromium {
                     return m_frame_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Request parameter for the <see cref="CfxRequestHandler.OnBeforeResourceLoad"/> callback.
+            /// </summary>
             public CfxRequest Request {
                 get {
                     CheckAccess();
@@ -959,6 +980,9 @@ namespace Chromium {
                 m_request = request;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRequestHandler.GetResourceHandler"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -966,6 +990,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxRequestHandler.GetResourceHandler"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();
@@ -973,6 +1000,9 @@ namespace Chromium {
                     return m_frame_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Request parameter for the <see cref="CfxRequestHandler.GetResourceHandler"/> callback.
+            /// </summary>
             public CfxRequest Request {
                 get {
                     CheckAccess();
@@ -1047,6 +1077,9 @@ namespace Chromium {
                 m_new_url_length = new_url_length;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRequestHandler.OnResourceRedirect"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -1054,6 +1087,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxRequestHandler.OnResourceRedirect"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();
@@ -1061,6 +1097,9 @@ namespace Chromium {
                     return m_frame_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the OldUrl parameter for the <see cref="CfxRequestHandler.OnResourceRedirect"/> callback.
+            /// </summary>
             public string OldUrl {
                 get {
                     CheckAccess();
@@ -1068,6 +1107,9 @@ namespace Chromium {
                     return m_old_url;
                 }
             }
+            /// <summary>
+            /// Get or set the NewUrl parameter for the <see cref="CfxRequestHandler.OnResourceRedirect"/> callback.
+            /// </summary>
             public string NewUrl {
                 get {
                     CheckAccess();
@@ -1149,6 +1191,9 @@ namespace Chromium {
                 m_callback = callback;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRequestHandler.GetAuthCredentials"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -1156,6 +1201,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxRequestHandler.GetAuthCredentials"/> callback.
+            /// </summary>
             public CfxFrame Frame {
                 get {
                     CheckAccess();
@@ -1163,12 +1211,18 @@ namespace Chromium {
                     return m_frame_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the IsProxy parameter for the <see cref="CfxRequestHandler.GetAuthCredentials"/> callback.
+            /// </summary>
             public int IsProxy {
                 get {
                     CheckAccess();
                     return m_isProxy;
                 }
             }
+            /// <summary>
+            /// Get the Host parameter for the <see cref="CfxRequestHandler.GetAuthCredentials"/> callback.
+            /// </summary>
             public string Host {
                 get {
                     CheckAccess();
@@ -1176,12 +1230,18 @@ namespace Chromium {
                     return m_host;
                 }
             }
+            /// <summary>
+            /// Get the Port parameter for the <see cref="CfxRequestHandler.GetAuthCredentials"/> callback.
+            /// </summary>
             public int Port {
                 get {
                     CheckAccess();
                     return m_port;
                 }
             }
+            /// <summary>
+            /// Get the Realm parameter for the <see cref="CfxRequestHandler.GetAuthCredentials"/> callback.
+            /// </summary>
             public string Realm {
                 get {
                     CheckAccess();
@@ -1189,6 +1249,9 @@ namespace Chromium {
                     return m_realm;
                 }
             }
+            /// <summary>
+            /// Get the Scheme parameter for the <see cref="CfxRequestHandler.GetAuthCredentials"/> callback.
+            /// </summary>
             public string Scheme {
                 get {
                     CheckAccess();
@@ -1196,6 +1259,9 @@ namespace Chromium {
                     return m_scheme;
                 }
             }
+            /// <summary>
+            /// Get the Callback parameter for the <see cref="CfxRequestHandler.GetAuthCredentials"/> callback.
+            /// </summary>
             public CfxAuthCallback Callback {
                 get {
                     CheckAccess();
@@ -1275,6 +1341,9 @@ namespace Chromium {
                 m_callback = callback;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRequestHandler.OnQuotaRequest"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -1282,6 +1351,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the OriginUrl parameter for the <see cref="CfxRequestHandler.OnQuotaRequest"/> callback.
+            /// </summary>
             public string OriginUrl {
                 get {
                     CheckAccess();
@@ -1289,12 +1361,18 @@ namespace Chromium {
                     return m_origin_url;
                 }
             }
+            /// <summary>
+            /// Get the NewSize parameter for the <see cref="CfxRequestHandler.OnQuotaRequest"/> callback.
+            /// </summary>
             public long NewSize {
                 get {
                     CheckAccess();
                     return m_new_size;
                 }
             }
+            /// <summary>
+            /// Get the Callback parameter for the <see cref="CfxRequestHandler.OnQuotaRequest"/> callback.
+            /// </summary>
             public CfxQuotaCallback Callback {
                 get {
                     CheckAccess();
@@ -1365,6 +1443,9 @@ namespace Chromium {
                 m_url_length = url_length;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRequestHandler.OnProtocolExecution"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -1372,6 +1453,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Url parameter for the <see cref="CfxRequestHandler.OnProtocolExecution"/> callback.
+            /// </summary>
             public string Url {
                 get {
                     CheckAccess();
@@ -1379,6 +1463,9 @@ namespace Chromium {
                     return m_url;
                 }
             }
+            /// <summary>
+            /// Set the AllowOsExecution out parameter for the <see cref="CfxRequestHandler.OnProtocolExecution"/> callback.
+            /// </summary>
             public bool AllowOsExecution {
                 set {
                     CheckAccess();
@@ -1440,12 +1527,18 @@ namespace Chromium {
                 m_callback = callback;
             }
 
+            /// <summary>
+            /// Get the CertError parameter for the <see cref="CfxRequestHandler.OnCertificateError"/> callback.
+            /// </summary>
             public CfxErrorCode CertError {
                 get {
                     CheckAccess();
                     return m_cert_error;
                 }
             }
+            /// <summary>
+            /// Get the RequestUrl parameter for the <see cref="CfxRequestHandler.OnCertificateError"/> callback.
+            /// </summary>
             public string RequestUrl {
                 get {
                     CheckAccess();
@@ -1453,6 +1546,9 @@ namespace Chromium {
                     return m_request_url;
                 }
             }
+            /// <summary>
+            /// Get the Callback parameter for the <see cref="CfxRequestHandler.OnCertificateError"/> callback.
+            /// </summary>
             public CfxAllowCertificateErrorCallback Callback {
                 get {
                     CheckAccess();
@@ -1527,6 +1623,9 @@ namespace Chromium {
                 m_info = info;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRequestHandler.OnBeforePluginLoad"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -1534,6 +1633,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Url parameter for the <see cref="CfxRequestHandler.OnBeforePluginLoad"/> callback.
+            /// </summary>
             public string Url {
                 get {
                     CheckAccess();
@@ -1541,6 +1643,9 @@ namespace Chromium {
                     return m_url;
                 }
             }
+            /// <summary>
+            /// Get the PolicyUrl parameter for the <see cref="CfxRequestHandler.OnBeforePluginLoad"/> callback.
+            /// </summary>
             public string PolicyUrl {
                 get {
                     CheckAccess();
@@ -1548,6 +1653,9 @@ namespace Chromium {
                     return m_policy_url;
                 }
             }
+            /// <summary>
+            /// Get the Info parameter for the <see cref="CfxRequestHandler.OnBeforePluginLoad"/> callback.
+            /// </summary>
             public CfxWebPluginInfo Info {
                 get {
                     CheckAccess();
@@ -1611,6 +1719,9 @@ namespace Chromium {
                 m_plugin_path_length = plugin_path_length;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRequestHandler.OnPluginCrashed"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -1618,6 +1729,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the PluginPath parameter for the <see cref="CfxRequestHandler.OnPluginCrashed"/> callback.
+            /// </summary>
             public string PluginPath {
                 get {
                     CheckAccess();
@@ -1660,6 +1774,9 @@ namespace Chromium {
                 m_status = status;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRequestHandler.OnRenderProcessTerminated"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -1667,6 +1784,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the Status parameter for the <see cref="CfxRequestHandler.OnRenderProcessTerminated"/> callback.
+            /// </summary>
             public CfxTerminationStatus Status {
                 get {
                     CheckAccess();

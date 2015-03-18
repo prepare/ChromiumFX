@@ -393,6 +393,9 @@ namespace Chromium {
                 m_callback = callback;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxJsDialogHandler.OnJsDialog"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -400,6 +403,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the OriginUrl parameter for the <see cref="CfxJsDialogHandler.OnJsDialog"/> callback.
+            /// </summary>
             public string OriginUrl {
                 get {
                     CheckAccess();
@@ -407,6 +413,9 @@ namespace Chromium {
                     return m_origin_url;
                 }
             }
+            /// <summary>
+            /// Get the AcceptLang parameter for the <see cref="CfxJsDialogHandler.OnJsDialog"/> callback.
+            /// </summary>
             public string AcceptLang {
                 get {
                     CheckAccess();
@@ -414,12 +423,18 @@ namespace Chromium {
                     return m_accept_lang;
                 }
             }
+            /// <summary>
+            /// Get the DialogType parameter for the <see cref="CfxJsDialogHandler.OnJsDialog"/> callback.
+            /// </summary>
             public CfxJsDialogType DialogType {
                 get {
                     CheckAccess();
                     return m_dialog_type;
                 }
             }
+            /// <summary>
+            /// Get the MessageText parameter for the <see cref="CfxJsDialogHandler.OnJsDialog"/> callback.
+            /// </summary>
             public string MessageText {
                 get {
                     CheckAccess();
@@ -427,6 +442,9 @@ namespace Chromium {
                     return m_message_text;
                 }
             }
+            /// <summary>
+            /// Get the DefaultPromptText parameter for the <see cref="CfxJsDialogHandler.OnJsDialog"/> callback.
+            /// </summary>
             public string DefaultPromptText {
                 get {
                     CheckAccess();
@@ -434,6 +452,9 @@ namespace Chromium {
                     return m_default_prompt_text;
                 }
             }
+            /// <summary>
+            /// Get the Callback parameter for the <see cref="CfxJsDialogHandler.OnJsDialog"/> callback.
+            /// </summary>
             public CfxJsDialogCallback Callback {
                 get {
                     CheckAccess();
@@ -441,6 +462,9 @@ namespace Chromium {
                     return m_callback_wrapped;
                 }
             }
+            /// <summary>
+            /// Set the SuppressMessage out parameter for the <see cref="CfxJsDialogHandler.OnJsDialog"/> callback.
+            /// </summary>
             public bool SuppressMessage {
                 set {
                     CheckAccess();
@@ -519,6 +543,9 @@ namespace Chromium {
                 m_callback = callback;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxJsDialogHandler.OnBeforeUnloadDialog"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -526,6 +553,9 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the MessageText parameter for the <see cref="CfxJsDialogHandler.OnBeforeUnloadDialog"/> callback.
+            /// </summary>
             public string MessageText {
                 get {
                     CheckAccess();
@@ -533,12 +563,18 @@ namespace Chromium {
                     return m_message_text;
                 }
             }
+            /// <summary>
+            /// Get the IsReload parameter for the <see cref="CfxJsDialogHandler.OnBeforeUnloadDialog"/> callback.
+            /// </summary>
             public bool IsReload {
                 get {
                     CheckAccess();
                     return 0 != m_is_reload;
                 }
             }
+            /// <summary>
+            /// Get the Callback parameter for the <see cref="CfxJsDialogHandler.OnBeforeUnloadDialog"/> callback.
+            /// </summary>
             public CfxJsDialogCallback Callback {
                 get {
                     CheckAccess();
@@ -599,6 +635,9 @@ namespace Chromium {
                 m_browser = browser;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxJsDialogHandler.OnResetDialogState"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();
@@ -637,6 +676,9 @@ namespace Chromium {
                 m_browser = browser;
             }
 
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxJsDialogHandler.OnDialogClosed"/> callback.
+            /// </summary>
             public CfxBrowser Browser {
                 get {
                     CheckAccess();

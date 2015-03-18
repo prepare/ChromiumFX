@@ -196,6 +196,9 @@ namespace Chromium.Remote {
 
             internal CfrV8AccessorGetEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
+            /// <summary>
+            /// Get the Name parameter for the <see cref="CfrV8Accessor.Get"/> render process callback.
+            /// </summary>
             public string Name {
                 get {
                     if(!NameFetched) {
@@ -208,6 +211,9 @@ namespace Chromium.Remote {
                     return m_Name;
                 }
             }
+            /// <summary>
+            /// Get the Object parameter for the <see cref="CfrV8Accessor.Get"/> render process callback.
+            /// </summary>
             public CfrV8Value Object {
                 get {
                     if(!ObjectFetched) {
@@ -220,6 +226,9 @@ namespace Chromium.Remote {
                     return m_Object;
                 }
             }
+            /// <summary>
+            /// Set the Retval out parameter for the <see cref="CfrV8Accessor.Get"/> render process callback.
+            /// </summary>
             public CfrV8Value Retval {
                 get {
                     return m_Retval;
@@ -232,6 +241,9 @@ namespace Chromium.Remote {
                     call.Execute(remoteRuntime.connection);
                 }
             }
+            /// <summary>
+            /// Get or set the Exception parameter for the <see cref="CfrV8Accessor.Get"/> render process callback.
+            /// </summary>
             public string Exception {
                 get {
                     if(!ExceptionFetched) {
@@ -311,6 +323,9 @@ namespace Chromium.Remote {
 
             internal CfrV8AccessorSetEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
 
+            /// <summary>
+            /// Get the Name parameter for the <see cref="CfrV8Accessor.Set"/> render process callback.
+            /// </summary>
             public string Name {
                 get {
                     if(!NameFetched) {
@@ -323,6 +338,9 @@ namespace Chromium.Remote {
                     return m_Name;
                 }
             }
+            /// <summary>
+            /// Get the Object parameter for the <see cref="CfrV8Accessor.Set"/> render process callback.
+            /// </summary>
             public CfrV8Value Object {
                 get {
                     if(!ObjectFetched) {
@@ -335,6 +353,9 @@ namespace Chromium.Remote {
                     return m_Object;
                 }
             }
+            /// <summary>
+            /// Get the Value parameter for the <see cref="CfrV8Accessor.Set"/> render process callback.
+            /// </summary>
             public CfrV8Value Value {
                 get {
                     if(!ValueFetched) {
@@ -347,6 +368,9 @@ namespace Chromium.Remote {
                     return m_Value;
                 }
             }
+            /// <summary>
+            /// Get or set the Exception parameter for the <see cref="CfrV8Accessor.Set"/> render process callback.
+            /// </summary>
             public string Exception {
                 get {
                     if(!ExceptionFetched) {
