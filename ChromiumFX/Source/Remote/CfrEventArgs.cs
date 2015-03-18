@@ -40,10 +40,16 @@ namespace Chromium.Remote
         
         internal readonly ulong eventArgsId;
         internal readonly CfrRuntime remoteRuntime;
+        internal bool m_isInvalid = false;
 
         internal CfrEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) {
             this.remoteRuntime = remoteRuntime;
             this.eventArgsId = eventArgsId;
+        }
+
+        internal void CheckAccess() {
+            if(m_isInvalid)
+                throw new CfxException("Do not keep/use a reference to callback event arguments outside the scope of the event handler.");
         }
 
         /// <summary>

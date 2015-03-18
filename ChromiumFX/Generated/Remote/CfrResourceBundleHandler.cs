@@ -71,12 +71,14 @@ namespace Chromium.Remote {
             var handler = m_GetLocalizedString;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
         internal void raise_GetDataResource(object sender, CfrGetDataResourceEventArgs e) {
             var handler = m_GetDataResource;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
 
@@ -196,6 +198,7 @@ namespace Chromium.Remote {
             /// </summary>
             public int MessageId {
                 get {
+                    CheckAccess();
                     if(!MessageIdFetched) {
                         MessageIdFetched = true;
                         var call = new CfxGetLocalizedStringGetMessageIdRenderProcessCall();
@@ -211,6 +214,7 @@ namespace Chromium.Remote {
             /// </summary>
             public string String {
                 get {
+                    CheckAccess();
                     if(!StringFetched) {
                         StringFetched = true;
                         var call = new CfxGetLocalizedStringGetStringRenderProcessCall();
@@ -221,6 +225,7 @@ namespace Chromium.Remote {
                     return m_String;
                 }
                 set {
+                    CheckAccess();
                     m_String = value;
                     StringFetched = true;
                     var call = new CfxGetLocalizedStringSetStringRenderProcessCall();
@@ -291,6 +296,7 @@ namespace Chromium.Remote {
             /// </summary>
             public int ResourceId {
                 get {
+                    CheckAccess();
                     if(!ResourceIdFetched) {
                         ResourceIdFetched = true;
                         var call = new CfxGetDataResourceGetResourceIdRenderProcessCall();
@@ -305,10 +311,8 @@ namespace Chromium.Remote {
             /// Set the Data out parameter for the <see cref="CfrResourceBundleHandler.GetDataResource"/> render process callback.
             /// </summary>
             public RemotePtr Data {
-                get {
-                    return m_Data;
-                }
                 set {
+                    CheckAccess();
                     m_Data = value;
                     var call = new CfxGetDataResourceSetDataRenderProcessCall();
                     call.eventArgsId = eventArgsId;
@@ -320,10 +324,8 @@ namespace Chromium.Remote {
             /// Set the DataSize out parameter for the <see cref="CfrResourceBundleHandler.GetDataResource"/> render process callback.
             /// </summary>
             public int DataSize {
-                get {
-                    return m_DataSize;
-                }
                 set {
+                    CheckAccess();
                     m_DataSize = value;
                     var call = new CfxGetDataResourceSetDataSizeRenderProcessCall();
                     call.eventArgsId = eventArgsId;

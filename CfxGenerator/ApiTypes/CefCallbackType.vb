@@ -351,8 +351,9 @@ Public Class CefCallbackType
             End If
             b.AppendSummary(cd)
             b.BeginBlock("public {0} {1}", arg.ArgumentType.RemoteSymbol, arg.PublicPropertyName)
-            b.BeginBlock("get")
             If arg.ArgumentType.IsIn Then
+                b.BeginBlock("get")
+                b.AppendLine("CheckAccess();")
                 b.BeginBlock("if(!{0}Fetched)", arg.PublicPropertyName)
                 b.AppendLine("{0}Fetched = true;", arg.PublicPropertyName)
                 b.AppendLine("var call = new {0}Get{1}RenderProcessCall();", EventName, arg.PublicPropertyName)
@@ -360,11 +361,12 @@ Public Class CefCallbackType
                 b.AppendLine("call.Execute(remoteRuntime.connection);")
                 b.AppendLine("m_{0} = {1};", arg.PublicPropertyName, arg.ArgumentType.RemoteWrapExpression("call.value"))
                 b.EndBlock()
+                b.AppendLine("return m_{0};", arg.PublicPropertyName)
+                b.EndBlock()
             End If
-            b.AppendLine("return m_{0};", arg.PublicPropertyName)
-            b.EndBlock()
             If arg.ArgumentType.IsOut Then
                 b.BeginBlock("set")
+                b.AppendLine("CheckAccess();")
                 b.AppendLine("m_{0} = value;", arg.PublicPropertyName)
                 If arg.ArgumentType.IsIn Then b.AppendLine("{0}Fetched = true;", arg.PublicPropertyName)
                 b.AppendLine("var call = new {0}Set{1}RenderProcessCall();", EventName, arg.PublicPropertyName)
@@ -465,6 +467,7 @@ Public Class CefCallbackType
         b.AppendLine("var handler = m_{0};", PublicName)
         b.AppendLine("if(handler == null) return;")
         b.AppendLine("handler(this, e);")
+        b.AppendLine("e.m_isInvalid = true;")
         b.EndBlock()
         b.AppendLine()
 

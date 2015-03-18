@@ -72,24 +72,28 @@ namespace Chromium.Remote {
             var handler = m_OnLoadingStateChange;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
         internal void raise_OnLoadStart(object sender, CfrOnLoadStartEventArgs e) {
             var handler = m_OnLoadStart;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
         internal void raise_OnLoadEnd(object sender, CfrOnLoadEndEventArgs e) {
             var handler = m_OnLoadEnd;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
         internal void raise_OnLoadError(object sender, CfrOnLoadErrorEventArgs e) {
             var handler = m_OnLoadError;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
 
@@ -278,6 +282,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrBrowser Browser {
                 get {
+                    CheckAccess();
                     if(!BrowserFetched) {
                         BrowserFetched = true;
                         var call = new CfxOnLoadingStateChangeGetBrowserRenderProcessCall();
@@ -293,6 +298,7 @@ namespace Chromium.Remote {
             /// </summary>
             public bool IsLoading {
                 get {
+                    CheckAccess();
                     if(!IsLoadingFetched) {
                         IsLoadingFetched = true;
                         var call = new CfxOnLoadingStateChangeGetIsLoadingRenderProcessCall();
@@ -308,6 +314,7 @@ namespace Chromium.Remote {
             /// </summary>
             public bool CanGoBack {
                 get {
+                    CheckAccess();
                     if(!CanGoBackFetched) {
                         CanGoBackFetched = true;
                         var call = new CfxOnLoadingStateChangeGetCanGoBackRenderProcessCall();
@@ -323,6 +330,7 @@ namespace Chromium.Remote {
             /// </summary>
             public bool CanGoForward {
                 get {
+                    CheckAccess();
                     if(!CanGoForwardFetched) {
                         CanGoForwardFetched = true;
                         var call = new CfxOnLoadingStateChangeGetCanGoForwardRenderProcessCall();
@@ -381,6 +389,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrBrowser Browser {
                 get {
+                    CheckAccess();
                     if(!BrowserFetched) {
                         BrowserFetched = true;
                         var call = new CfxOnLoadStartGetBrowserRenderProcessCall();
@@ -396,6 +405,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrFrame Frame {
                 get {
+                    CheckAccess();
                     if(!FrameFetched) {
                         FrameFetched = true;
                         var call = new CfxOnLoadStartGetFrameRenderProcessCall();
@@ -454,6 +464,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrBrowser Browser {
                 get {
+                    CheckAccess();
                     if(!BrowserFetched) {
                         BrowserFetched = true;
                         var call = new CfxOnLoadEndGetBrowserRenderProcessCall();
@@ -469,6 +480,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrFrame Frame {
                 get {
+                    CheckAccess();
                     if(!FrameFetched) {
                         FrameFetched = true;
                         var call = new CfxOnLoadEndGetFrameRenderProcessCall();
@@ -484,6 +496,7 @@ namespace Chromium.Remote {
             /// </summary>
             public int HttpStatusCode {
                 get {
+                    CheckAccess();
                     if(!HttpStatusCodeFetched) {
                         HttpStatusCodeFetched = true;
                         var call = new CfxOnLoadEndGetHttpStatusCodeRenderProcessCall();
@@ -542,6 +555,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrBrowser Browser {
                 get {
+                    CheckAccess();
                     if(!BrowserFetched) {
                         BrowserFetched = true;
                         var call = new CfxOnLoadErrorGetBrowserRenderProcessCall();
@@ -557,6 +571,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrFrame Frame {
                 get {
+                    CheckAccess();
                     if(!FrameFetched) {
                         FrameFetched = true;
                         var call = new CfxOnLoadErrorGetFrameRenderProcessCall();
@@ -572,6 +587,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfxErrorCode ErrorCode {
                 get {
+                    CheckAccess();
                     if(!ErrorCodeFetched) {
                         ErrorCodeFetched = true;
                         var call = new CfxOnLoadErrorGetErrorCodeRenderProcessCall();
@@ -587,6 +603,7 @@ namespace Chromium.Remote {
             /// </summary>
             public string ErrorText {
                 get {
+                    CheckAccess();
                     if(!ErrorTextFetched) {
                         ErrorTextFetched = true;
                         var call = new CfxOnLoadErrorGetErrorTextRenderProcessCall();
@@ -602,6 +619,7 @@ namespace Chromium.Remote {
             /// </summary>
             public string FailedUrl {
                 get {
+                    CheckAccess();
                     if(!FailedUrlFetched) {
                         FailedUrlFetched = true;
                         var call = new CfxOnLoadErrorGetFailedUrlRenderProcessCall();
