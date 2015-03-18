@@ -46,11 +46,11 @@ namespace CfxTestApplication {
         public BrowserForm() {
             InitializeComponent();
 
-            LogMessage("CfxRuntime.ApiHash(0): " + CfxRuntime.ApiHash(0));
-            LogMessage("CfxRuntime.ApiHash(1): " + CfxRuntime.ApiHash(1));
-            LogMessage("CfxRuntime.GetCefVersion(): " + CfxRuntime.GetCefVersion());
-            LogMessage("CfxRuntime.GetChromeVersion(): " + CfxRuntime.GetChromeVersion());
-            LogMessage("");
+            LogWriteLine("CfxRuntime.ApiHash(0): " + CfxRuntime.ApiHash(0));
+            LogWriteLine("CfxRuntime.ApiHash(1): " + CfxRuntime.ApiHash(1));
+            LogWriteLine("CfxRuntime.GetCefVersion(): " + CfxRuntime.GetCefVersion());
+            LogWriteLine("CfxRuntime.GetChromeVersion(): " + CfxRuntime.GetChromeVersion());
+            LogWriteLine();
 
             LoadUrlButton.Click += new EventHandler(LoadUrlButton_Click);
             UrlTextBox.KeyDown += new KeyEventHandler(UrlTextBox_KeyDown);
@@ -61,21 +61,30 @@ namespace CfxTestApplication {
 
             WebBrowser.AddGlobalJSFunction("CfxHelloWorld").Execute += CfxHelloWorld_Execute;
 
-            var html = "<html><body> Test ã çç<br><img src='http://localresource/image'>";
+            var html = @"
+                <html><body>
+                    Local resource test page.<br><br>
+                    Local resource image:<br>
+                    <img src='http://localresource/image'><br><br>
+                    <a href='about:credits' onclick=""window.open('http://www.google.com/', 'Popup test', 'width=800,height=600,scrollbars=yes'); return false;"">open popup</a>";
+            
             WebBrowser.SetWebResource("http://localresource/text.html", new Chromium.WebBrowser.WebResource(html));
 
             var bm = new System.Drawing.Bitmap(100, 100);
             using(var g = System.Drawing.Graphics.FromImage(bm)) {
-                g.DrawLine(System.Drawing.Pens.Black, 0, 0, 100, 100);
+                g.FillRectangle(System.Drawing.Brushes.Yellow, 0, 0, 99, 99);
+                g.DrawRectangle(System.Drawing.Pens.Black, 0, 0, 99, 99);
+                g.DrawLine(System.Drawing.Pens.Black, 0, 0, 99, 99);
             }
-
             WebBrowser.SetWebResource("http://localresource/image", new Chromium.WebBrowser.WebResource(bm));
-            
+
             WebBrowser.DisplayHandler.OnConsoleMessage += DisplayHandler_OnConsoleMessage;
             WebBrowser.DisplayHandler.OnTitleChange += DisplayHandler_OnTitleChange;
-            
+
+            WebBrowser.LifeSpanHandler.OnBeforePopup += LifeSpanHandler_OnBeforePopup;
 
         }
+
 
         void DisplayHandler_OnTitleChange(object sender, CfxOnTitleChangeEventArgs e) {
             LogCallback(sender, e);
@@ -85,17 +94,25 @@ namespace CfxTestApplication {
             LogCallback(sender, e);
         }
 
+        void LifeSpanHandler_OnBeforePopup(object sender, CfxOnBeforePopupEventArgs e) {
+            LogCallback(sender, e);
+            var ff = e.PopupFeatures.AdditionalFeatures;
+            if(ff != null) foreach(var f in ff) {
+                LogWriteLine("Additional popup feature: {0}", f);
+            }
+        }
+
         void VisitDomButton_Click(object sender, EventArgs e) {
             var retval = WebBrowser.VisitDom(VisitDOMCallback);
-            if(!retval) LogMessage("Remote browser not available");
+            if(!retval) LogWriteLine("Remote browser not available");
         }
 
         void VisitDOMCallback(CfrDomDocument doc, CfrBrowser browser) {
             LogCallback(doc, browser);
             if(doc.Body.HasChildren)
-                LogMessage("DOM: document.Body.FirstChild.ElementTagName = " + doc.Body.FirstChild.ElementTagName);
+                LogWriteLine("DOM: document.Body.FirstChild.ElementTagName = " + doc.Body.FirstChild.ElementTagName);
             if(doc.HasSelection) {
-                LogMessage("DOM: document.SelectionAsText = " + doc.SelectionAsText);
+                LogWriteLine("DOM: document.SelectionAsText = " + doc.SelectionAsText);
             }
         }
 
@@ -114,7 +131,7 @@ namespace CfxTestApplication {
             var r1 = e.Arguments[0].IntValue;
             var r2 = e.Arguments[1].StringValue;
 
-            LogMessage("CfxHelloWorld_Execute arguments: " + r1 + ", '" + r2 + "'");
+            LogWriteLine("CfxHelloWorld_Execute arguments: " + r1 + ", '" + r2 + "'");
 
             LogCallback(sender, e);
             var context = Chromium.Remote.CfrV8Context.GetEnteredContext(e.RemoteRuntime);
@@ -139,11 +156,11 @@ namespace CfxTestApplication {
 
         private void CountFramesButton_Click(object sender, EventArgs e) {
             var b = WebBrowser.Browser;
-            LogMessage("WebBrowser.Browser.FrameCount = " + b.FrameCount);
+            LogWriteLine("WebBrowser.Browser.FrameCount = " + b.FrameCount);
             var ids = b.FrameIdentifiers;
-            LogMessage("FrameIdentifiers: " + string.Join<long>(", ", ids));
+            LogWriteLine("FrameIdentifiers: " + string.Join<long>(", ", ids));
             var names = b.GetFrameNames();
-            LogMessage("FrameNames: " + string.Join(" | ", names));
+            LogWriteLine("FrameNames: " + string.Join(" | ", names));
         }
 
         void LogCallback(params object[] parameters) {
@@ -170,19 +187,31 @@ namespace CfxTestApplication {
                 }
             }
             sb.Append(")");
-            sb.Append(Environment.NewLine);
-            LogMessage(sb.ToString(), false);
+            LogWriteLine(sb.ToString());
         }
 
-        public void LogMessage(string msg, bool newLineBefore = true) {
+
+        public void LogWriteLine() {
+            LogWrite(Environment.NewLine);
+        }
+
+        public void LogWriteLine(string msg) {
+            LogWrite(msg + Environment.NewLine);
+        }
+
+        public void LogWriteLine(string msg, params object[] parameters) {
+            LogWrite(msg + Environment.NewLine, parameters);
+        }
+
+        public void LogWrite(string msg, params object[] parameters) {
+            LogWrite(string.Format(msg, parameters));
+        }
+
+        public void LogWrite(string msg) {
 
             if(InvokeRequired) {
-                Invoke((MethodInvoker)(() => { LogMessage("(*)" + msg, newLineBefore); }));
+                Invoke((MethodInvoker)(() => { LogWrite("(*)" + msg); }));
                 return;
-            }
-
-            if(newLineBefore) {
-                LogTextBox.AppendText(Environment.NewLine);
             }
 
             LogTextBox.AppendText(msg);
@@ -206,7 +235,5 @@ namespace CfxTestApplication {
             WebBrowser.BrowserHost.ShowDevTools(windowInfo, new CfxClient(), new CfxBrowserSettings(), null);
 
         }
-
-        
     }
 }
