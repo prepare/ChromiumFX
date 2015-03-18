@@ -66,10 +66,10 @@ namespace CfxTestApplication {
             this.ResourcesTestButton = new System.Windows.Forms.ToolStripButton();
             this.VisitDomButton = new System.Windows.Forms.ToolStripButton();
             this.CountFramesButton = new System.Windows.Forms.ToolStripButton();
+            this.ShowDevToolsButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.LogTextBox = new System.Windows.Forms.TextBox();
-            this.ShowDevToolsButton = new System.Windows.Forms.ToolStripButton();
             this.WebBrowser = new Chromium.WebBrowser.ChromiumWebBrowser();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -176,6 +176,16 @@ namespace CfxTestApplication {
             this.CountFramesButton.Text = "Count Frames";
             this.CountFramesButton.Click += new System.EventHandler(this.CountFramesButton_Click);
             // 
+            // ShowDevToolsButton
+            // 
+            this.ShowDevToolsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.ShowDevToolsButton.Image = ((System.Drawing.Image)(resources.GetObject("ShowDevToolsButton.Image")));
+            this.ShowDevToolsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ShowDevToolsButton.Name = "ShowDevToolsButton";
+            this.ShowDevToolsButton.Size = new System.Drawing.Size(89, 22);
+            this.ShowDevToolsButton.Text = "ShowDevTools";
+            this.ShowDevToolsButton.Click += new System.EventHandler(this.ShowDevToolsButton_Click);
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -214,18 +224,9 @@ namespace CfxTestApplication {
             this.LogTextBox.Location = new System.Drawing.Point(0, 0);
             this.LogTextBox.Multiline = true;
             this.LogTextBox.Name = "LogTextBox";
+            this.LogTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.LogTextBox.Size = new System.Drawing.Size(1261, 121);
             this.LogTextBox.TabIndex = 0;
-            // 
-            // ShowDevToolsButton
-            // 
-            this.ShowDevToolsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.ShowDevToolsButton.Image = ((System.Drawing.Image)(resources.GetObject("ShowDevToolsButton.Image")));
-            this.ShowDevToolsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ShowDevToolsButton.Name = "ShowDevToolsButton";
-            this.ShowDevToolsButton.Size = new System.Drawing.Size(89, 22);
-            this.ShowDevToolsButton.Text = "ShowDevTools";
-            this.ShowDevToolsButton.Click += new System.EventHandler(this.ShowDevToolsButton_Click);
             // 
             // WebBrowser
             // 
