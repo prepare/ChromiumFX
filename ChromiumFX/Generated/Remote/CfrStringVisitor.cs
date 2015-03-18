@@ -70,6 +70,7 @@ namespace Chromium.Remote {
             var handler = m_Visit;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
 
@@ -142,6 +143,7 @@ namespace Chromium.Remote {
             /// </summary>
             public string String {
                 get {
+                    CheckAccess();
                     if(!StringFetched) {
                         StringFetched = true;
                         var call = new CfxStringVisitorVisitGetStringRenderProcessCall();

@@ -42,7 +42,7 @@ namespace Chromium
         internal void CheckAccess()
         {
             if (m_isInvalid)
-                throw new CfxException("Do not keep/use a reference to callback event arguments outside of the event handler.");
+                throw new CfxException("Do not keep/use a reference to callback event arguments outside the scope of the event handler.");
         }
     }
 

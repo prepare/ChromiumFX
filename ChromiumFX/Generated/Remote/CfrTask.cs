@@ -75,6 +75,7 @@ namespace Chromium.Remote {
             var handler = m_Execute;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
 

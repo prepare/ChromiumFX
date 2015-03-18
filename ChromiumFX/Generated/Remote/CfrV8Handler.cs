@@ -72,6 +72,7 @@ namespace Chromium.Remote {
             var handler = m_Execute;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
 
@@ -164,6 +165,7 @@ namespace Chromium.Remote {
             /// </summary>
             public string Name {
                 get {
+                    CheckAccess();
                     if(!NameFetched) {
                         NameFetched = true;
                         var call = new CfxV8HandlerExecuteGetNameRenderProcessCall();
@@ -179,6 +181,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrV8Value Object {
                 get {
+                    CheckAccess();
                     if(!ObjectFetched) {
                         ObjectFetched = true;
                         var call = new CfxV8HandlerExecuteGetObjectRenderProcessCall();
@@ -194,6 +197,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrV8Value[] Arguments {
                 get {
+                    CheckAccess();
                     if(!ArgumentsFetched) {
                         ArgumentsFetched = true;
                         var call = new CfxV8HandlerExecuteGetArgumentsRenderProcessCall();
@@ -209,6 +213,7 @@ namespace Chromium.Remote {
             /// </summary>
             public string Exception {
                 get {
+                    CheckAccess();
                     if(!ExceptionFetched) {
                         ExceptionFetched = true;
                         var call = new CfxV8HandlerExecuteGetExceptionRenderProcessCall();
@@ -219,6 +224,7 @@ namespace Chromium.Remote {
                     return m_Exception;
                 }
                 set {
+                    CheckAccess();
                     m_Exception = value;
                     ExceptionFetched = true;
                     var call = new CfxV8HandlerExecuteSetExceptionRenderProcessCall();

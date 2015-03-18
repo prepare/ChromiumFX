@@ -72,66 +72,77 @@ namespace Chromium.Remote {
             var handler = m_OnRenderThreadCreated;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
         internal void raise_OnWebKitInitialized(object sender, CfrEventArgs e) {
             var handler = m_OnWebKitInitialized;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
         internal void raise_OnBrowserCreated(object sender, CfrOnBrowserCreatedEventArgs e) {
             var handler = m_OnBrowserCreated;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
         internal void raise_OnBrowserDestroyed(object sender, CfrOnBrowserDestroyedEventArgs e) {
             var handler = m_OnBrowserDestroyed;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
         internal void raise_GetLoadHandler(object sender, CfrGetLoadHandlerEventArgs e) {
             var handler = m_GetLoadHandler;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
         internal void raise_OnBeforeNavigation(object sender, CfrOnBeforeNavigationEventArgs e) {
             var handler = m_OnBeforeNavigation;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
         internal void raise_OnContextCreated(object sender, CfrOnContextCreatedEventArgs e) {
             var handler = m_OnContextCreated;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
         internal void raise_OnContextReleased(object sender, CfrOnContextReleasedEventArgs e) {
             var handler = m_OnContextReleased;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
         internal void raise_OnUncaughtException(object sender, CfrOnUncaughtExceptionEventArgs e) {
             var handler = m_OnUncaughtException;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
         internal void raise_OnFocusedNodeChanged(object sender, CfrOnFocusedNodeChangedEventArgs e) {
             var handler = m_OnFocusedNodeChanged;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
         internal void raise_OnProcessMessageReceived(object sender, CfrOnProcessMessageReceivedEventArgs e) {
             var handler = m_OnProcessMessageReceived;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
 
@@ -522,6 +533,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrListValue ExtraInfo {
                 get {
+                    CheckAccess();
                     if(!ExtraInfoFetched) {
                         ExtraInfoFetched = true;
                         var call = new CfxOnRenderThreadCreatedGetExtraInfoRenderProcessCall();
@@ -571,6 +583,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrBrowser Browser {
                 get {
+                    CheckAccess();
                     if(!BrowserFetched) {
                         BrowserFetched = true;
                         var call = new CfxOnBrowserCreatedGetBrowserRenderProcessCall();
@@ -615,6 +628,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrBrowser Browser {
                 get {
+                    CheckAccess();
                     if(!BrowserFetched) {
                         BrowserFetched = true;
                         var call = new CfxOnBrowserDestroyedGetBrowserRenderProcessCall();
@@ -712,6 +726,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrBrowser Browser {
                 get {
+                    CheckAccess();
                     if(!BrowserFetched) {
                         BrowserFetched = true;
                         var call = new CfxOnBeforeNavigationGetBrowserRenderProcessCall();
@@ -727,6 +742,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrFrame Frame {
                 get {
+                    CheckAccess();
                     if(!FrameFetched) {
                         FrameFetched = true;
                         var call = new CfxOnBeforeNavigationGetFrameRenderProcessCall();
@@ -742,6 +758,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrRequest Request {
                 get {
+                    CheckAccess();
                     if(!RequestFetched) {
                         RequestFetched = true;
                         var call = new CfxOnBeforeNavigationGetRequestRenderProcessCall();
@@ -757,6 +774,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfxNavigationType NavigationType {
                 get {
+                    CheckAccess();
                     if(!NavigationTypeFetched) {
                         NavigationTypeFetched = true;
                         var call = new CfxOnBeforeNavigationGetNavigationTypeRenderProcessCall();
@@ -772,6 +790,7 @@ namespace Chromium.Remote {
             /// </summary>
             public bool IsRedirect {
                 get {
+                    CheckAccess();
                     if(!IsRedirectFetched) {
                         IsRedirectFetched = true;
                         var call = new CfxOnBeforeNavigationGetIsRedirectRenderProcessCall();
@@ -844,6 +863,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrBrowser Browser {
                 get {
+                    CheckAccess();
                     if(!BrowserFetched) {
                         BrowserFetched = true;
                         var call = new CfxOnContextCreatedGetBrowserRenderProcessCall();
@@ -859,6 +879,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrFrame Frame {
                 get {
+                    CheckAccess();
                     if(!FrameFetched) {
                         FrameFetched = true;
                         var call = new CfxOnContextCreatedGetFrameRenderProcessCall();
@@ -874,6 +895,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrV8Context Context {
                 get {
+                    CheckAccess();
                     if(!ContextFetched) {
                         ContextFetched = true;
                         var call = new CfxOnContextCreatedGetContextRenderProcessCall();
@@ -924,6 +946,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrBrowser Browser {
                 get {
+                    CheckAccess();
                     if(!BrowserFetched) {
                         BrowserFetched = true;
                         var call = new CfxOnContextReleasedGetBrowserRenderProcessCall();
@@ -939,6 +962,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrFrame Frame {
                 get {
+                    CheckAccess();
                     if(!FrameFetched) {
                         FrameFetched = true;
                         var call = new CfxOnContextReleasedGetFrameRenderProcessCall();
@@ -954,6 +978,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrV8Context Context {
                 get {
+                    CheckAccess();
                     if(!ContextFetched) {
                         ContextFetched = true;
                         var call = new CfxOnContextReleasedGetContextRenderProcessCall();
@@ -1010,6 +1035,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrBrowser Browser {
                 get {
+                    CheckAccess();
                     if(!BrowserFetched) {
                         BrowserFetched = true;
                         var call = new CfxOnUncaughtExceptionGetBrowserRenderProcessCall();
@@ -1025,6 +1051,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrFrame Frame {
                 get {
+                    CheckAccess();
                     if(!FrameFetched) {
                         FrameFetched = true;
                         var call = new CfxOnUncaughtExceptionGetFrameRenderProcessCall();
@@ -1040,6 +1067,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrV8Context Context {
                 get {
+                    CheckAccess();
                     if(!ContextFetched) {
                         ContextFetched = true;
                         var call = new CfxOnUncaughtExceptionGetContextRenderProcessCall();
@@ -1055,6 +1083,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrV8Exception Exception {
                 get {
+                    CheckAccess();
                     if(!ExceptionFetched) {
                         ExceptionFetched = true;
                         var call = new CfxOnUncaughtExceptionGetExceptionRenderProcessCall();
@@ -1070,6 +1099,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrV8StackTrace StackTrace {
                 get {
+                    CheckAccess();
                     if(!StackTraceFetched) {
                         StackTraceFetched = true;
                         var call = new CfxOnUncaughtExceptionGetStackTraceRenderProcessCall();
@@ -1128,6 +1158,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrBrowser Browser {
                 get {
+                    CheckAccess();
                     if(!BrowserFetched) {
                         BrowserFetched = true;
                         var call = new CfxOnFocusedNodeChangedGetBrowserRenderProcessCall();
@@ -1143,6 +1174,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrFrame Frame {
                 get {
+                    CheckAccess();
                     if(!FrameFetched) {
                         FrameFetched = true;
                         var call = new CfxOnFocusedNodeChangedGetFrameRenderProcessCall();
@@ -1158,6 +1190,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrDomNode Node {
                 get {
+                    CheckAccess();
                     if(!NodeFetched) {
                         NodeFetched = true;
                         var call = new CfxOnFocusedNodeChangedGetNodeRenderProcessCall();
@@ -1212,6 +1245,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrBrowser Browser {
                 get {
+                    CheckAccess();
                     if(!BrowserFetched) {
                         BrowserFetched = true;
                         var call = new CfxOnProcessMessageReceivedGetBrowserRenderProcessCall();
@@ -1227,6 +1261,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfxProcessId SourceProcess {
                 get {
+                    CheckAccess();
                     if(!SourceProcessFetched) {
                         SourceProcessFetched = true;
                         var call = new CfxOnProcessMessageReceivedGetSourceProcessRenderProcessCall();
@@ -1242,6 +1277,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrProcessMessage Message {
                 get {
+                    CheckAccess();
                     if(!MessageFetched) {
                         MessageFetched = true;
                         var call = new CfxOnProcessMessageReceivedGetMessageRenderProcessCall();

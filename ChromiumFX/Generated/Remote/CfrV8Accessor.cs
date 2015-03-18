@@ -73,12 +73,14 @@ namespace Chromium.Remote {
             var handler = m_Get;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
         internal void raise_Set(object sender, CfrV8AccessorSetEventArgs e) {
             var handler = m_Set;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
 
@@ -203,6 +205,7 @@ namespace Chromium.Remote {
             /// </summary>
             public string Name {
                 get {
+                    CheckAccess();
                     if(!NameFetched) {
                         NameFetched = true;
                         var call = new CfxV8AccessorGetGetNameRenderProcessCall();
@@ -218,6 +221,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrV8Value Object {
                 get {
+                    CheckAccess();
                     if(!ObjectFetched) {
                         ObjectFetched = true;
                         var call = new CfxV8AccessorGetGetObjectRenderProcessCall();
@@ -232,10 +236,8 @@ namespace Chromium.Remote {
             /// Set the Retval out parameter for the <see cref="CfrV8Accessor.Get"/> render process callback.
             /// </summary>
             public CfrV8Value Retval {
-                get {
-                    return m_Retval;
-                }
                 set {
+                    CheckAccess();
                     m_Retval = value;
                     var call = new CfxV8AccessorGetSetRetvalRenderProcessCall();
                     call.eventArgsId = eventArgsId;
@@ -248,6 +250,7 @@ namespace Chromium.Remote {
             /// </summary>
             public string Exception {
                 get {
+                    CheckAccess();
                     if(!ExceptionFetched) {
                         ExceptionFetched = true;
                         var call = new CfxV8AccessorGetGetExceptionRenderProcessCall();
@@ -258,6 +261,7 @@ namespace Chromium.Remote {
                     return m_Exception;
                 }
                 set {
+                    CheckAccess();
                     m_Exception = value;
                     ExceptionFetched = true;
                     var call = new CfxV8AccessorGetSetExceptionRenderProcessCall();
@@ -330,6 +334,7 @@ namespace Chromium.Remote {
             /// </summary>
             public string Name {
                 get {
+                    CheckAccess();
                     if(!NameFetched) {
                         NameFetched = true;
                         var call = new CfxV8AccessorSetGetNameRenderProcessCall();
@@ -345,6 +350,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrV8Value Object {
                 get {
+                    CheckAccess();
                     if(!ObjectFetched) {
                         ObjectFetched = true;
                         var call = new CfxV8AccessorSetGetObjectRenderProcessCall();
@@ -360,6 +366,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrV8Value Value {
                 get {
+                    CheckAccess();
                     if(!ValueFetched) {
                         ValueFetched = true;
                         var call = new CfxV8AccessorSetGetValueRenderProcessCall();
@@ -375,6 +382,7 @@ namespace Chromium.Remote {
             /// </summary>
             public string Exception {
                 get {
+                    CheckAccess();
                     if(!ExceptionFetched) {
                         ExceptionFetched = true;
                         var call = new CfxV8AccessorSetGetExceptionRenderProcessCall();
@@ -385,6 +393,7 @@ namespace Chromium.Remote {
                     return m_Exception;
                 }
                 set {
+                    CheckAccess();
                     m_Exception = value;
                     ExceptionFetched = true;
                     var call = new CfxV8AccessorSetSetExceptionRenderProcessCall();

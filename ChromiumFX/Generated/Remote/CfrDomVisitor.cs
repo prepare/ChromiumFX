@@ -71,6 +71,7 @@ namespace Chromium.Remote {
             var handler = m_Visit;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
 
@@ -155,6 +156,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrDomDocument Document {
                 get {
+                    CheckAccess();
                     if(!DocumentFetched) {
                         DocumentFetched = true;
                         var call = new CfxDomVisitorVisitGetDocumentRenderProcessCall();

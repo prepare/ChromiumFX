@@ -71,24 +71,28 @@ namespace Chromium.Remote {
             var handler = m_OnBeforeCommandLineProcessing;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
         internal void raise_OnRegisterCustomSchemes(object sender, CfrOnRegisterCustomSchemesEventArgs e) {
             var handler = m_OnRegisterCustomSchemes;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
         internal void raise_GetResourceBundleHandler(object sender, CfrGetResourceBundleHandlerEventArgs e) {
             var handler = m_GetResourceBundleHandler;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
         internal void raise_GetRenderProcessHandler(object sender, CfrGetRenderProcessHandlerEventArgs e) {
             var handler = m_GetRenderProcessHandler;
             if(handler == null) return;
             handler(this, e);
+            e.m_isInvalid = true;
         }
 
 
@@ -281,6 +285,7 @@ namespace Chromium.Remote {
             /// </summary>
             public string ProcessType {
                 get {
+                    CheckAccess();
                     if(!ProcessTypeFetched) {
                         ProcessTypeFetched = true;
                         var call = new CfxOnBeforeCommandLineProcessingGetProcessTypeRenderProcessCall();
@@ -296,6 +301,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrCommandLine CommandLine {
                 get {
+                    CheckAccess();
                     if(!CommandLineFetched) {
                         CommandLineFetched = true;
                         var call = new CfxOnBeforeCommandLineProcessingGetCommandLineRenderProcessCall();
@@ -346,6 +352,7 @@ namespace Chromium.Remote {
             /// </summary>
             public CfrSchemeRegistrar Registrar {
                 get {
+                    CheckAccess();
                     if(!RegistrarFetched) {
                         RegistrarFetched = true;
                         var call = new CfxOnRegisterCustomSchemesGetRegistrarRenderProcessCall();
