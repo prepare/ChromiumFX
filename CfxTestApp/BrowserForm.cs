@@ -66,7 +66,7 @@ namespace CfxTestApplication {
                     Local resource test page.<br><br>
                     Local resource image:<br>
                     <img src='http://localresource/image'><br><br>
-                    <a href='about:credits' onclick=""window.open('http://www.google.com/', 'Popup test', 'width=800,height=600,scrollbars=yes'); return false;"">open popup</a>";
+                    <a href='http://www.google.com/' onclick=""window.open('http://www.google.com/', 'Popup test', 'width=800,height=600,scrollbars=yes'); return false;"">open popup</a>";
             
             WebBrowser.SetWebResource("http://localresource/text.html", new Chromium.WebBrowser.WebResource(html));
 
@@ -80,9 +80,14 @@ namespace CfxTestApplication {
 
             WebBrowser.DisplayHandler.OnConsoleMessage += DisplayHandler_OnConsoleMessage;
             WebBrowser.DisplayHandler.OnTitleChange += DisplayHandler_OnTitleChange;
+            WebBrowser.DisplayHandler.OnStatusMessage += DisplayHandler_OnStatusMessage;
 
             WebBrowser.LifeSpanHandler.OnBeforePopup += LifeSpanHandler_OnBeforePopup;
 
+        }
+
+        void DisplayHandler_OnStatusMessage(object sender, CfxOnStatusMessageEventArgs e) {
+            LogCallback(sender, e);
         }
 
 
@@ -234,6 +239,18 @@ namespace CfxTestApplication {
 
             WebBrowser.BrowserHost.ShowDevTools(windowInfo, new CfxClient(), new CfxBrowserSettings(), null);
 
+        }
+
+        private void CreditsButton_Click(object sender, EventArgs e) {
+            WebBrowser.LoadUrl("about:credits");
+        }
+
+        private void BackButton_Click(object sender, EventArgs e) {
+            WebBrowser.GoBack();
+        }
+
+        private void FwdButton_Click(object sender, EventArgs e) {
+            WebBrowser.GoForward();
         }
     }
 }

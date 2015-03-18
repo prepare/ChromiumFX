@@ -68,9 +68,10 @@ namespace CfxTestApplication {
             this.CountFramesButton = new System.Windows.Forms.ToolStripButton();
             this.ShowDevToolsButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.WebBrowser = new Chromium.WebBrowser.ChromiumWebBrowser();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.LogTextBox = new System.Windows.Forms.TextBox();
-            this.WebBrowser = new Chromium.WebBrowser.ChromiumWebBrowser();
+            this.CreditsButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -94,7 +95,8 @@ namespace CfxTestApplication {
             this.ResourcesTestButton,
             this.VisitDomButton,
             this.CountFramesButton,
-            this.ShowDevToolsButton});
+            this.ShowDevToolsButton,
+            this.CreditsButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1261, 25);
@@ -109,6 +111,7 @@ namespace CfxTestApplication {
             this.BackButton.Name = "BackButton";
             this.BackButton.Size = new System.Drawing.Size(36, 22);
             this.BackButton.Text = "Back";
+            this.BackButton.Click += new System.EventHandler(this.BackButton_Click);
             // 
             // FwdButton
             // 
@@ -118,6 +121,7 @@ namespace CfxTestApplication {
             this.FwdButton.Name = "FwdButton";
             this.FwdButton.Size = new System.Drawing.Size(33, 22);
             this.FwdButton.Text = "Fwd";
+            this.FwdButton.Click += new System.EventHandler(this.FwdButton_Click);
             // 
             // UrlTextBox
             // 
@@ -200,6 +204,16 @@ namespace CfxTestApplication {
             this.splitContainer1.SplitterDistance = 873;
             this.splitContainer1.TabIndex = 3;
             // 
+            // WebBrowser
+            // 
+            this.WebBrowser.BackColor = System.Drawing.Color.White;
+            this.WebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.WebBrowser.Location = new System.Drawing.Point(0, 0);
+            this.WebBrowser.Name = "WebBrowser";
+            this.WebBrowser.Size = new System.Drawing.Size(1261, 448);
+            this.WebBrowser.TabIndex = 2;
+            this.WebBrowser.Text = "cfxWebBrowser2";
+            // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -228,15 +242,16 @@ namespace CfxTestApplication {
             this.LogTextBox.Size = new System.Drawing.Size(1261, 121);
             this.LogTextBox.TabIndex = 0;
             // 
-            // WebBrowser
+            // CreditsButton
             // 
-            this.WebBrowser.BackColor = System.Drawing.Color.White;
-            this.WebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.WebBrowser.Location = new System.Drawing.Point(0, 0);
-            this.WebBrowser.Name = "WebBrowser";
-            this.WebBrowser.Size = new System.Drawing.Size(1261, 448);
-            this.WebBrowser.TabIndex = 2;
-            this.WebBrowser.Text = "cfxWebBrowser2";
+            this.CreditsButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.CreditsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.CreditsButton.Image = ((System.Drawing.Image)(resources.GetObject("CreditsButton.Image")));
+            this.CreditsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CreditsButton.Name = "CreditsButton";
+            this.CreditsButton.Size = new System.Drawing.Size(80, 22);
+            this.CreditsButton.Text = "about:credits";
+            this.CreditsButton.Click += new System.EventHandler(this.CreditsButton_Click);
             // 
             // BrowserForm
             // 
@@ -279,5 +294,6 @@ namespace CfxTestApplication {
         private System.Windows.Forms.TextBox LogTextBox;
         private System.Windows.Forms.ToolStripButton CountFramesButton;
         private System.Windows.Forms.ToolStripButton ShowDevToolsButton;
+        private System.Windows.Forms.ToolStripButton CreditsButton;
     }
 }
