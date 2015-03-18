@@ -65,9 +65,11 @@ namespace Chromium {
         //TODO: string list and string map
 
 
-        // used in CfxPopupFeatures.CopyToManaged
+        // used in CfxPopupFeatures.AdditionalFeatures
         // the data is not meant to be modified by the application
         internal static List<string> WrapCfxStringList(IntPtr list) {
+            if(list == IntPtr.Zero)
+                return null;
             var size = CfxApi.cfx_string_list_size(list);
             var target = new List<string>(size);
             CfxStringListCopyToManaged(list, target);
