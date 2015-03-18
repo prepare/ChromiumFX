@@ -409,15 +409,9 @@ namespace Chromium {
                 }
             }
             /// <summary>
-            /// Sets the return value for the underlying CEF framework callback.
-            /// Applications may attach more than one event handler to a framework callback event,
-            /// but only one event handler can set the return value. Calling SetReturnValue()
-            /// more then once will cause an exception to be thrown.
+            /// Set the return value for the <see cref="CfxWriteHandler.Write"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
-            /// </remarks>
             public void SetReturnValue(int returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -460,15 +454,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// Sets the return value for the underlying CEF framework callback.
-            /// Applications may attach more than one event handler to a framework callback event,
-            /// but only one event handler can set the return value. Calling SetReturnValue()
-            /// more then once will cause an exception to be thrown.
+            /// Set the return value for the <see cref="CfxWriteHandler.Flush"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
-            /// </remarks>
             public void SetReturnValue(int returnValue) {
                 CheckAccess();
                 if(returnValueSet) {

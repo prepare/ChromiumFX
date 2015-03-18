@@ -42,18 +42,6 @@ Public Class CefCallbackType
 
     Private m_callMode As CfxCallMode
 
-    Private Shared setReturnValueComments As CommentData
-
-    Shared Sub New()
-        setReturnValueComments = New CommentData
-        setReturnValueComments.Lines = {
-            "Sets the return value for the underlying CEF framework callback.",
-            "Applications may attach more than one event handler to a framework callback event,",
-            "but only one event handler can set the return value. Calling SetReturnValue()",
-            "more then once will cause an exception to be thrown."
-            }
-    End Sub
-
     Public Sub New(parent As CefStructType, structCategory As StructCategory, name As String, sd As Parser.SignatureData, api As ApiTypeBuilder, comments As CommentData)
         MyBase.New(name)
         Me.Parent = parent
@@ -283,8 +271,10 @@ Public Class CefCallbackType
         Signature.EmitPublicEventArgProperties(b)
 
         If Not Signature.PublicReturnType.IsVoid Then
-            setReturnValueComments.FileName = comments.FileName
-            b.AppendSummaryAndRemarks(setReturnValueComments)
+            Dim cd = New CommentData
+            cd.Lines = {String.Format("Set the return value for the <see cref=""{0}.{1}""/> callback.", Parent.ClassName, PublicFunctionName),
+                        "Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown."}
+            b.AppendSummary(cd)
             b.BeginBlock("public void SetReturnValue({0} returnValue)", Signature.PublicReturnType.PublicSymbol)
             b.AppendLine("CheckAccess();")
             b.BeginIf("returnValueSet")
@@ -321,43 +311,6 @@ Public Class CefCallbackType
         b.EndBlock()
     End Sub
 
-
-
-    'Public Sub EmitProxyEventArgsAndHandler(b As CodeBuilder)
-
-    '    If IsBasicEvent Then Return
-
-    '    b.AppendLine("internal delegate void {0}(object sender, {1} e);", ProxyEventHandlerName, ProxyEventArgsClassName)
-    '    b.AppendLine()
-
-    '    b.BeginBlock("internal class {0} : CfrEventArgsProxy", ProxyEventArgsClassName)
-    '    b.AppendLine()
-
-    '    b.AppendLine("private {0} localEventArgs;", PublicEventArgsClassName)
-    '    b.AppendLine()
-
-    '    b.BeginBlock("internal {0}({1} localEventArgs)", ProxyEventArgsClassName, PublicEventArgsClassName)
-    '    b.AppendLine("this.localEventArgs = localEventArgs;")
-    '    b.EndBlock()
-    '    b.AppendLine()
-
-    '    For i = 1 To Signature.PublicArguments.Count - 1
-    '        Dim arg = Signature.PublicArguments(i)
-    '        b.BeginBlock("public {1} {0}", arg.PublicPropertyName, arg.ArgumentType.ProxySymbol)
-    '        b.BeginBlock("get")
-    '        arg.EmitProxyEventArgGetterStatements(b)
-    '        b.EndBlock()
-    '        arg.EmitProxyEventArgSetter(b)
-    '        b.EndBlock()
-    '    Next
-    '    If Not Signature.PublicReturnType.IsVoid Then
-    '        b.BeginBlock("public void SetReturnValue({0} returnValue)", Signature.PublicReturnType.ProxySymbol)
-    '        b.AppendLine("localEventArgs.SetReturnValue({0});", Signature.PublicReturnType.ProxyUnwrapExpression("returnValue"))
-    '        b.EndBlock()
-    '    End If
-    '    b.EndBlock()
-
-    'End Sub
 
     Public Sub EmitRemoteEventArgsAndHandler(b As CodeBuilder, comments As CommentData)
 
@@ -419,8 +372,10 @@ Public Class CefCallbackType
             b.EndBlock()
         Next
         If Not Signature.PublicReturnType.IsVoid Then
-            setReturnValueComments.FileName = comments.FileName
-            b.AppendSummaryAndRemarks(setReturnValueComments)
+            Dim cd = New CommentData
+            cd.Lines = {String.Format("Set the return value for the <see cref=""{0}.{1}""/> render process callback.", Parent.RemoteClassName, PublicFunctionName),
+                        "Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown."}
+            b.AppendSummary(cd)
             b.BeginBlock("public void SetReturnValue({0} returnValue)", Signature.PublicReturnType.RemoteSymbol)
             b.AppendLine("var call = new {0}SetReturnValueRenderProcessCall();", EventName)
             b.AppendLine("call.eventArgsId = eventArgsId;")

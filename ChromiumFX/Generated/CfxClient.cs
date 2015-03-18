@@ -882,15 +882,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// Sets the return value for the underlying CEF framework callback.
-            /// Applications may attach more than one event handler to a framework callback event,
-            /// but only one event handler can set the return value. Calling SetReturnValue()
-            /// more then once will cause an exception to be thrown.
+            /// Set the return value for the <see cref="CfxClient.GetContextMenuHandler"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
-            /// </remarks>
             public void SetReturnValue(CfxContextMenuHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -929,15 +923,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// Sets the return value for the underlying CEF framework callback.
-            /// Applications may attach more than one event handler to a framework callback event,
-            /// but only one event handler can set the return value. Calling SetReturnValue()
-            /// more then once will cause an exception to be thrown.
+            /// Set the return value for the <see cref="CfxClient.GetDialogHandler"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
-            /// </remarks>
             public void SetReturnValue(CfxDialogHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -974,15 +962,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// Sets the return value for the underlying CEF framework callback.
-            /// Applications may attach more than one event handler to a framework callback event,
-            /// but only one event handler can set the return value. Calling SetReturnValue()
-            /// more then once will cause an exception to be thrown.
+            /// Set the return value for the <see cref="CfxClient.GetDisplayHandler"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
-            /// </remarks>
             public void SetReturnValue(CfxDisplayHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -1021,15 +1003,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// Sets the return value for the underlying CEF framework callback.
-            /// Applications may attach more than one event handler to a framework callback event,
-            /// but only one event handler can set the return value. Calling SetReturnValue()
-            /// more then once will cause an exception to be thrown.
+            /// Set the return value for the <see cref="CfxClient.GetDownloadHandler"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
-            /// </remarks>
             public void SetReturnValue(CfxDownloadHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -1066,15 +1042,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// Sets the return value for the underlying CEF framework callback.
-            /// Applications may attach more than one event handler to a framework callback event,
-            /// but only one event handler can set the return value. Calling SetReturnValue()
-            /// more then once will cause an exception to be thrown.
+            /// Set the return value for the <see cref="CfxClient.GetDragHandler"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
-            /// </remarks>
             public void SetReturnValue(CfxDragHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -1111,15 +1081,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// Sets the return value for the underlying CEF framework callback.
-            /// Applications may attach more than one event handler to a framework callback event,
-            /// but only one event handler can set the return value. Calling SetReturnValue()
-            /// more then once will cause an exception to be thrown.
+            /// Set the return value for the <see cref="CfxClient.GetFocusHandler"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
-            /// </remarks>
             public void SetReturnValue(CfxFocusHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -1158,15 +1122,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// Sets the return value for the underlying CEF framework callback.
-            /// Applications may attach more than one event handler to a framework callback event,
-            /// but only one event handler can set the return value. Calling SetReturnValue()
-            /// more then once will cause an exception to be thrown.
+            /// Set the return value for the <see cref="CfxClient.GetGeolocationHandler"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
-            /// </remarks>
             public void SetReturnValue(CfxGeolocationHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -1205,15 +1163,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// Sets the return value for the underlying CEF framework callback.
-            /// Applications may attach more than one event handler to a framework callback event,
-            /// but only one event handler can set the return value. Calling SetReturnValue()
-            /// more then once will cause an exception to be thrown.
+            /// Set the return value for the <see cref="CfxClient.GetJsDialogHandler"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
-            /// </remarks>
             public void SetReturnValue(CfxJsDialogHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -1250,15 +1202,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// Sets the return value for the underlying CEF framework callback.
-            /// Applications may attach more than one event handler to a framework callback event,
-            /// but only one event handler can set the return value. Calling SetReturnValue()
-            /// more then once will cause an exception to be thrown.
+            /// Set the return value for the <see cref="CfxClient.GetKeyboardHandler"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
-            /// </remarks>
             public void SetReturnValue(CfxKeyboardHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -1295,15 +1241,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// Sets the return value for the underlying CEF framework callback.
-            /// Applications may attach more than one event handler to a framework callback event,
-            /// but only one event handler can set the return value. Calling SetReturnValue()
-            /// more then once will cause an exception to be thrown.
+            /// Set the return value for the <see cref="CfxClient.GetLifeSpanHandler"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
-            /// </remarks>
             public void SetReturnValue(CfxLifeSpanHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -1340,15 +1280,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// Sets the return value for the underlying CEF framework callback.
-            /// Applications may attach more than one event handler to a framework callback event,
-            /// but only one event handler can set the return value. Calling SetReturnValue()
-            /// more then once will cause an exception to be thrown.
+            /// Set the return value for the <see cref="CfxClient.GetLoadHandler"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
-            /// </remarks>
             public void SetReturnValue(CfxLoadHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -1385,15 +1319,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// Sets the return value for the underlying CEF framework callback.
-            /// Applications may attach more than one event handler to a framework callback event,
-            /// but only one event handler can set the return value. Calling SetReturnValue()
-            /// more then once will cause an exception to be thrown.
+            /// Set the return value for the <see cref="CfxClient.GetRenderHandler"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
-            /// </remarks>
             public void SetReturnValue(CfxRenderHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -1430,15 +1358,9 @@ namespace Chromium {
             }
 
             /// <summary>
-            /// Sets the return value for the underlying CEF framework callback.
-            /// Applications may attach more than one event handler to a framework callback event,
-            /// but only one event handler can set the return value. Calling SetReturnValue()
-            /// more then once will cause an exception to be thrown.
+            /// Set the return value for the <see cref="CfxClient.GetRequestHandler"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
-            /// </remarks>
             public void SetReturnValue(CfxRequestHandler returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
@@ -1516,15 +1438,9 @@ namespace Chromium {
                 }
             }
             /// <summary>
-            /// Sets the return value for the underlying CEF framework callback.
-            /// Applications may attach more than one event handler to a framework callback event,
-            /// but only one event handler can set the return value. Calling SetReturnValue()
-            /// more then once will cause an exception to be thrown.
+            /// Set the return value for the <see cref="CfxClient.OnProcessMessageReceived"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
-            /// </remarks>
             public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
