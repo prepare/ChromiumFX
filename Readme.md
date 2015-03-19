@@ -10,12 +10,12 @@
 
 ### ChromiumFX.dll ###
 
-* **[Managed wrapper](http://chromiumfx.bitbucket.org/api/html/N_Chromium.htm) for the complete CEF API**
-* **[Remote wrapper](http://chromiumfx.bitbucket.org/api/html/N_Chromium_Remote.htm) for full access to DOM and V8 from within the browser process**
+* **[Managed wrapper](https://bitbucket.org/wborgsm/chromiumfx/wiki/Project) for the complete CEF API**
+* **[Remote wrapper](https://bitbucket.org/wborgsm/chromiumfx/wiki/Walkthrough_02) for full access to DOM and V8 from within the browser process**
 
 ### ChromiumWebBrowser.dll ###
 
-* **[Windows Forms control](http://chromiumfx.bitbucket.org/api/html/N_Chromium_WebBrowser.htm) based on ChromiumFX**
+* **[Windows Forms control](https://bitbucket.org/wborgsm/chromiumfx/wiki/Walkthrough_01) based on ChromiumFX**
 
 ### See Also ###
 
