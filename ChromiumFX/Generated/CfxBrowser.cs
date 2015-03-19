@@ -313,7 +313,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public CfxFrame GetFrameByIdentifier(long identifier) {
+        public CfxFrame GetFrame(long identifier) {
             return CfxFrame.Wrap(CfxApi.cfx_browser_get_frame_byident(NativePtr, identifier));
         }
 

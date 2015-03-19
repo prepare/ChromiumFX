@@ -736,7 +736,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool HasValueByKey(string key) {
+        public bool HasValue(string key) {
             var call = new CfxV8ValueHasValueByKeyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;
@@ -751,7 +751,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool HasValueByIndex(int index) {
+        public bool HasValue(int index) {
             var call = new CfxV8ValueHasValueByIndexRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.index = index;
@@ -769,7 +769,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool DeleteValueByKey(string key) {
+        public bool DeleteValue(string key) {
             var call = new CfxV8ValueDeleteValueByKeyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;
@@ -787,7 +787,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool DeleteValueByIndex(int index) {
+        public bool DeleteValue(int index) {
             var call = new CfxV8ValueDeleteValueByIndexRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.index = index;
@@ -803,7 +803,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public CfrV8Value GetValueByKey(string key) {
+        public CfrV8Value GetValue(string key) {
             var call = new CfxV8ValueGetValueByKeyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;
@@ -819,7 +819,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public CfrV8Value GetValueByIndex(int index) {
+        public CfrV8Value GetValue(int index) {
             var call = new CfxV8ValueGetValueByIndexRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.index = index;
@@ -837,7 +837,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool SetValueByKey(string key, CfrV8Value value, CfxV8PropertyAttribute attribute) {
+        public bool SetValue(string key, CfrV8Value value, CfxV8PropertyAttribute attribute) {
             var call = new CfxV8ValueSetValueByKeyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;
@@ -857,7 +857,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool SetValueByIndex(int index, CfrV8Value value) {
+        public bool SetValue(int index, CfrV8Value value) {
             var call = new CfxV8ValueSetValueByIndexRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.index = index;
@@ -877,7 +877,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool SetValueByAccessor(string key, CfxV8AccessControl settings, CfxV8PropertyAttribute attribute) {
+        public bool SetValue(string key, CfxV8AccessControl settings, CfxV8PropertyAttribute attribute) {
             var call = new CfxV8ValueSetValueByAccessorRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;

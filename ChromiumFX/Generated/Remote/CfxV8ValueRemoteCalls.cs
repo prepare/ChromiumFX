@@ -1136,7 +1136,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxV8Value)RemoteProxy.Unwrap(self);
-            __retval = self_local.HasValueByKey(key);
+            __retval = self_local.HasValue(key);
         }
     }
 
@@ -1169,7 +1169,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxV8Value)RemoteProxy.Unwrap(self);
-            __retval = self_local.HasValueByIndex(index);
+            __retval = self_local.HasValue(index);
         }
     }
 
@@ -1202,7 +1202,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxV8Value)RemoteProxy.Unwrap(self);
-            __retval = self_local.DeleteValueByKey(key);
+            __retval = self_local.DeleteValue(key);
         }
     }
 
@@ -1235,7 +1235,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxV8Value)RemoteProxy.Unwrap(self);
-            __retval = self_local.DeleteValueByIndex(index);
+            __retval = self_local.DeleteValue(index);
         }
     }
 
@@ -1268,7 +1268,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxV8Value)RemoteProxy.Unwrap(self);
-            __retval = RemoteProxy.Wrap(self_local.GetValueByKey(key));
+            __retval = RemoteProxy.Wrap(self_local.GetValue(key));
         }
     }
 
@@ -1301,7 +1301,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxV8Value)RemoteProxy.Unwrap(self);
-            __retval = RemoteProxy.Wrap(self_local.GetValueByIndex(index));
+            __retval = RemoteProxy.Wrap(self_local.GetValue(index));
         }
     }
 
@@ -1340,7 +1340,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxV8Value)RemoteProxy.Unwrap(self);
-            __retval = self_local.SetValueByKey(key, (CfxV8Value)RemoteProxy.Unwrap(value), (CfxV8PropertyAttribute)attribute);
+            __retval = self_local.SetValue(key, (CfxV8Value)RemoteProxy.Unwrap(value), (CfxV8PropertyAttribute)attribute);
         }
     }
 
@@ -1376,7 +1376,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxV8Value)RemoteProxy.Unwrap(self);
-            __retval = self_local.SetValueByIndex(index, (CfxV8Value)RemoteProxy.Unwrap(value));
+            __retval = self_local.SetValue(index, (CfxV8Value)RemoteProxy.Unwrap(value));
         }
     }
 
@@ -1415,7 +1415,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxV8Value)RemoteProxy.Unwrap(self);
-            __retval = self_local.SetValueByAccessor(key, (CfxV8AccessControl)settings, (CfxV8PropertyAttribute)attribute);
+            __retval = self_local.SetValue(key, (CfxV8AccessControl)settings, (CfxV8PropertyAttribute)attribute);
         }
     }
 

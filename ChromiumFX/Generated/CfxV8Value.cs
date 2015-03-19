@@ -676,7 +676,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool HasValueByKey(string key) {
+        public bool HasValue(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_v8value_has_value_bykey(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
@@ -690,7 +690,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool HasValueByIndex(int index) {
+        public bool HasValue(int index) {
             return 0 != CfxApi.cfx_v8value_has_value_byindex(NativePtr, index);
         }
 
@@ -704,7 +704,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool DeleteValueByKey(string key) {
+        public bool DeleteValue(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_v8value_delete_value_bykey(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
@@ -721,7 +721,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool DeleteValueByIndex(int index) {
+        public bool DeleteValue(int index) {
             return 0 != CfxApi.cfx_v8value_delete_value_byindex(NativePtr, index);
         }
 
@@ -733,7 +733,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public CfxV8Value GetValueByKey(string key) {
+        public CfxV8Value GetValue(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_v8value_get_value_bykey(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
@@ -748,7 +748,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public CfxV8Value GetValueByIndex(int index) {
+        public CfxV8Value GetValue(int index) {
             return CfxV8Value.Wrap(CfxApi.cfx_v8value_get_value_byindex(NativePtr, index));
         }
 
@@ -762,7 +762,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool SetValueByKey(string key, CfxV8Value value, CfxV8PropertyAttribute attribute) {
+        public bool SetValue(string key, CfxV8Value value, CfxV8PropertyAttribute attribute) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_v8value_set_value_bykey(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, CfxV8Value.Unwrap(value), attribute);
             key_pinned.Obj.Free();
@@ -779,7 +779,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool SetValueByIndex(int index, CfxV8Value value) {
+        public bool SetValue(int index, CfxV8Value value) {
             return 0 != CfxApi.cfx_v8value_set_value_byindex(NativePtr, index, CfxV8Value.Unwrap(value));
         }
 
@@ -794,7 +794,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool SetValueByAccessor(string key, CfxV8AccessControl settings, CfxV8PropertyAttribute attribute) {
+        public bool SetValue(string key, CfxV8AccessControl settings, CfxV8PropertyAttribute attribute) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_v8value_set_value_byaccessor(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, settings, attribute);
             key_pinned.Obj.Free();

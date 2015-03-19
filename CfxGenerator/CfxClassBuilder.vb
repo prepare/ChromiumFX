@@ -38,6 +38,7 @@ Public Class StructMember
 
     Public ReadOnly Comments As CommentData
 
+    Private ReadOnly cppApiName As String
 
     Public IsProperty As Boolean
 
@@ -45,6 +46,7 @@ Public Class StructMember
 
         Name = smd.Name
         Comments = smd.Comments
+        cppApiName = smd.cppApiName
 
         If smd.MemberType IsNot Nothing Then
             MemberType = api.GetApiType(smd.MemberType, False)
@@ -56,15 +58,24 @@ Public Class StructMember
                 Next
             End If
         Else
-            MemberType = New CefCallbackType(parent, structCategory, smd.Name, smd.CallbackSignature, api, smd.Comments)
+            MemberType = New CefCallbackType(parent, structCategory, smd.Name, smd.cppApiName, smd.CallbackSignature, api, smd.Comments)
         End If
         
     End Sub
 
     Public ReadOnly Property PublicName As String
         Get
-            Static _name As String = CSharp.ApplyStyle(Name)
-            Return _name
+            If cppApiName IsNot Nothing Then
+                Return cppApiName
+            Else
+                Return CSharp.ApplyStyle(Name)
+            End If
+        End Get
+    End Property
+
+    Public ReadOnly Property RemoteCallClassName As String
+        Get
+            Return CSharp.ApplyStyle(Name)
         End Get
     End Property
 
@@ -966,7 +977,7 @@ Public Class CfxClassBuilder
 
             For i = 1 To StructMembers.Length - 1
                 If Not GeneratorConfig.IsBrowserProcessOnly(struct.Name & "::" & StructMembers(i).Name) Then
-                    b.BeginRemoteCallClass(ClassName & StructMembers(i).PublicName, False, callIds)
+                    b.BeginRemoteCallClass(ClassName & StructMembers(i).RemoteCallClassName, False, callIds)
                     StructMembers(i).CallbackSignature.EmitRemoteCallClassBody(b)
                     b.EndBlock()
                     b.AppendLine()

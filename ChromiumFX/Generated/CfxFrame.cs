@@ -277,7 +277,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
-        public void Del() {
+        public void Delete() {
             CfxApi.cfx_frame_del(NativePtr);
         }
 

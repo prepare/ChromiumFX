@@ -313,7 +313,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public CfrFrame GetFrameByIdentifier(long identifier) {
+        public CfrFrame GetFrame(long identifier) {
             var call = new CfxBrowserGetFrameByIdentifierRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.identifier = identifier;

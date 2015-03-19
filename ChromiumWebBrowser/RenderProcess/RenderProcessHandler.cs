@@ -88,7 +88,7 @@ namespace Chromium.WebBrowser {
                 f.v8Handler = new CfrV8Handler(context.RemoteRuntime);
                 f.v8Function = CfrV8Value.CreateFunction(context.RemoteRuntime, f.FunctionName, f.v8Handler);
                 f.SetV8Handler(f.v8Handler);
-                context.Global.SetValueByKey(f.FunctionName, f.v8Function, CfxV8PropertyAttribute.DontDelete | CfxV8PropertyAttribute.ReadOnly);
+                context.Global.SetValue(f.FunctionName, f.v8Function, CfxV8PropertyAttribute.DontDelete | CfxV8PropertyAttribute.ReadOnly);
             }
         }
     }

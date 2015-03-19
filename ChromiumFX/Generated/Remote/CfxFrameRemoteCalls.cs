@@ -223,7 +223,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxFrame)RemoteProxy.Unwrap(self);
-            self_local.Del();
+            self_local.Delete();
         }
     }
 
