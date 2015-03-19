@@ -1080,7 +1080,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxV8ValueSetRethrowExceptionsRenderProcessCall) {}
 
         internal ulong self;
-        internal int rethrow;
+        internal bool rethrow;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -1146,7 +1146,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxV8ValueHasValueByIndexRenderProcessCall) {}
 
         internal ulong self;
-        internal bool index;
+        internal int index;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -1212,7 +1212,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxV8ValueDeleteValueByIndexRenderProcessCall) {}
 
         internal ulong self;
-        internal bool index;
+        internal int index;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -1350,7 +1350,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxV8ValueSetValueByIndexRenderProcessCall) {}
 
         internal ulong self;
-        internal bool index;
+        internal int index;
         internal ulong value;
         internal bool __retval;
 
@@ -1426,7 +1426,7 @@ namespace Chromium.Remote {
 
         internal ulong self;
         internal System.Collections.Generic.List<string> keys;
-        internal int __retval;
+        internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);

@@ -218,7 +218,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public int Exit() {
+        public bool Exit() {
             var call = new CfxV8ContextExitRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.Execute(remoteRuntime.connection);

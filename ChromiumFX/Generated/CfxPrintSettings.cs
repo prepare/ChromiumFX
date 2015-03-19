@@ -267,8 +267,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
         /// </remarks>
-        public void SetOrientation(int landscape) {
-            CfxApi.cfx_print_settings_set_orientation(NativePtr, landscape);
+        public void SetOrientation(bool landscape) {
+            CfxApi.cfx_print_settings_set_orientation(NativePtr, landscape ? 1 : 0);
         }
 
         /// <summary>
@@ -337,8 +337,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
         /// </remarks>
-        public void SetSelectionOnly(int selectionOnly) {
-            CfxApi.cfx_print_settings_set_selection_only(NativePtr, selectionOnly);
+        public void SetSelectionOnly(bool selectionOnly) {
+            CfxApi.cfx_print_settings_set_selection_only(NativePtr, selectionOnly ? 1 : 0);
         }
 
         /// <summary>
@@ -348,8 +348,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
         /// </remarks>
-        public void SetCollate(int collate) {
-            CfxApi.cfx_print_settings_set_collate(NativePtr, collate);
+        public void SetCollate(bool collate) {
+            CfxApi.cfx_print_settings_set_collate(NativePtr, collate ? 1 : 0);
         }
 
         /// <summary>

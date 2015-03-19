@@ -320,8 +320,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_capi.h">cef/include/capi/cef_geolocation_capi.h</see>.
         /// </remarks>
-        public static int GetGeolocation(CfxGetGeolocationCallback callback) {
-            return CfxApi.cfx_get_geolocation(CfxGetGeolocationCallback.Unwrap(callback));
+        public static bool GetGeolocation(CfxGetGeolocationCallback callback) {
+            return 0 != CfxApi.cfx_get_geolocation(CfxGetGeolocationCallback.Unwrap(callback));
         }
 
         /// <summary>
@@ -442,8 +442,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
-        public static int PostDelayedTask(CfxThreadId threadId, CfxTask task, long delayMs) {
-            return CfxApi.cfx_post_delayed_task(threadId, CfxTask.Unwrap(task), delayMs);
+        public static bool PostDelayedTask(CfxThreadId threadId, CfxTask task, long delayMs) {
+            return 0 != CfxApi.cfx_post_delayed_task(threadId, CfxTask.Unwrap(task), delayMs);
         }
 
         /// <summary>
@@ -454,8 +454,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
-        public static int PostTask(CfxThreadId threadId, CfxTask task) {
-            return CfxApi.cfx_post_task(threadId, CfxTask.Unwrap(task));
+        public static bool PostTask(CfxThreadId threadId, CfxTask task) {
+            return 0 != CfxApi.cfx_post_task(threadId, CfxTask.Unwrap(task));
         }
 
         /// <summary>
@@ -542,13 +542,13 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public static int RegisterExtension(string extensionName, string javascriptCode, CfxV8Handler handler) {
+        public static bool RegisterExtension(string extensionName, string javascriptCode, CfxV8Handler handler) {
             var extensionName_pinned = new PinnedString(extensionName);
             var javascriptCode_pinned = new PinnedString(javascriptCode);
             var __retval = CfxApi.cfx_register_extension(extensionName_pinned.Obj.PinnedPtr, extensionName_pinned.Length, javascriptCode_pinned.Obj.PinnedPtr, javascriptCode_pinned.Length, CfxV8Handler.Unwrap(handler));
             extensionName_pinned.Obj.Free();
             javascriptCode_pinned.Obj.Free();
-            return __retval;
+            return 0 != __retval;
         }
 
         /// <summary>

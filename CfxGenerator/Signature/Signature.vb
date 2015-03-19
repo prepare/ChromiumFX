@@ -79,23 +79,6 @@ Public Class Signature
         Me.ReturnValueIsConst = sd.ReturnValueIsConst
         Dim comments = parent.Comments
 
-        If Me.ReturnType.Name.StartsWith("int") Then
-            If BooleanIntDetector.HasCommentHintForBooleanRetval(comments) OrElse BooleanIntDetector.BooleanContext(parent.CefName) Then
-                Me.ReturnType = BooleanInteger.Convert(Me.ReturnType)
-            End If
-        End If
-
-
-        Dim bools = BooleanIntDetector.GetBooleanArgumentsFromCommentHints(comments)
-
-        For i = 0 To Arguments.Length - 1
-            If Arguments(i).ArgumentType.Name.StartsWith("int") Then
-                If bools.Contains(Arguments(i).VarName) OrElse BooleanIntDetector.BooleanContext(String.Concat(parent.CefName, "::", Arguments(i).VarName)) Then
-                    Arguments(i) = New Argument(Arguments(i), BooleanInteger.Convert(Arguments(i).ArgumentType))
-                End If
-            End If
-        Next
-
         DebugPrintUnhandledArrayArguments()
 
     End Sub

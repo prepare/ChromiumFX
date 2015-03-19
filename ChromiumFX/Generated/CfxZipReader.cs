@@ -180,8 +180,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_zip_reader_capi.h">cef/include/capi/cef_zip_reader_capi.h</see>.
         /// </remarks>
-        public int Close() {
-            return CfxApi.cfx_zip_reader_close(NativePtr);
+        public bool Close() {
+            return 0 != CfxApi.cfx_zip_reader_close(NativePtr);
         }
 
         /// <summary>
@@ -192,11 +192,11 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_zip_reader_capi.h">cef/include/capi/cef_zip_reader_capi.h</see>.
         /// </remarks>
-        public int OpenFile(string password) {
+        public bool OpenFile(string password) {
             var password_pinned = new PinnedString(password);
             var __retval = CfxApi.cfx_zip_reader_open_file(NativePtr, password_pinned.Obj.PinnedPtr, password_pinned.Length);
             password_pinned.Obj.Free();
-            return __retval;
+            return 0 != __retval;
         }
 
         /// <summary>
@@ -206,8 +206,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_zip_reader_capi.h">cef/include/capi/cef_zip_reader_capi.h</see>.
         /// </remarks>
-        public int CloseFile() {
-            return CfxApi.cfx_zip_reader_close_file(NativePtr);
+        public bool CloseFile() {
+            return 0 != CfxApi.cfx_zip_reader_close_file(NativePtr);
         }
 
         /// <summary>

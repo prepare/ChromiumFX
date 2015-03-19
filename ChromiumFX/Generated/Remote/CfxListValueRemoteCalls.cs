@@ -281,7 +281,7 @@ namespace Chromium.Remote {
 
         internal ulong self;
         internal int index;
-        internal int __retval;
+        internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -346,7 +346,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxListValueGetBoolRenderProcessCall) {}
 
         internal ulong self;
-        internal bool index;
+        internal int index;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -610,7 +610,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxListValueSetBoolRenderProcessCall) {}
 
         internal ulong self;
-        internal bool index;
+        internal int index;
         internal bool value;
         internal bool __retval;
 

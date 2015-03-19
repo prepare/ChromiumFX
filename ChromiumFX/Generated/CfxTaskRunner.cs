@@ -143,8 +143,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
-        public int PostTask(CfxTask task) {
-            return CfxApi.cfx_task_runner_post_task(NativePtr, CfxTask.Unwrap(task));
+        public bool PostTask(CfxTask task) {
+            return 0 != CfxApi.cfx_task_runner_post_task(NativePtr, CfxTask.Unwrap(task));
         }
 
         /// <summary>
@@ -157,8 +157,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
-        public int PostDelayedTask(CfxTask task, long delayMs) {
-            return CfxApi.cfx_task_runner_post_delayed_task(NativePtr, CfxTask.Unwrap(task), delayMs);
+        public bool PostDelayedTask(CfxTask task, long delayMs) {
+            return 0 != CfxApi.cfx_task_runner_post_delayed_task(NativePtr, CfxTask.Unwrap(task), delayMs);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

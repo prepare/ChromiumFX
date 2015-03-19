@@ -285,7 +285,7 @@ namespace Chromium.Remote {
         internal int threadId;
         internal ulong task;
         internal long delayMs;
-        internal int __retval;
+        internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(threadId);
@@ -319,7 +319,7 @@ namespace Chromium.Remote {
 
         internal int threadId;
         internal ulong task;
-        internal int __retval;
+        internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(threadId);
@@ -352,7 +352,7 @@ namespace Chromium.Remote {
         internal string extensionName;
         internal string javascriptCode;
         internal ulong handler;
-        internal int __retval;
+        internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(extensionName);

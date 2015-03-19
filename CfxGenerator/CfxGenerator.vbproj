@@ -113,7 +113,6 @@
     <EmbeddedResource Include="Config\VolatileEventArgs.txt" />
     <EmbeddedResource Include="Config\RenderProcessThreadAffinity.txt" />
     <Compile Include="ApiTypes\CefStringMultimapType.vb" />
-    <Compile Include="BooleanIntDetector.vb" />
     <Compile Include="CfxCallMode.vb" />
     <Compile Include="CustomSignatures\CefV8HandlerExecuteSignature.vb" />
     <Compile Include="CustomSignatures\OnPaintSignature.vb" />

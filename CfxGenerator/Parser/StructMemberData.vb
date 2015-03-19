@@ -34,6 +34,7 @@ Namespace Parser
     <Serializable()>
     Public Class StructMemberData
         Public Name As String
+        Public cppApiName As String
         Public MemberType As TypeData
         Public CallbackSignature As SignatureData
         Public Comments As CommentData

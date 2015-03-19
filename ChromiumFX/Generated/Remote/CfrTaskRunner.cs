@@ -149,7 +149,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
-        public int PostTask(CfrTask task) {
+        public bool PostTask(CfrTask task) {
             var call = new CfxTaskRunnerPostTaskRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.task = CfrObject.Unwrap(task);
@@ -167,7 +167,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
-        public int PostDelayedTask(CfrTask task, long delayMs) {
+        public bool PostDelayedTask(CfrTask task, long delayMs) {
             var call = new CfxTaskRunnerPostDelayedTaskRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.task = CfrObject.Unwrap(task);

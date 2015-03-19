@@ -69,6 +69,12 @@ Public Class BooleanInteger
         End Get
     End Property
 
+    Public Overrides ReadOnly Property ParserMatches As String()
+        Get
+            Return {"bool"}
+        End Get
+    End Property
+
 End Class
 
 
@@ -85,9 +91,34 @@ Public Class BooleanIntegerOutType
         End Get
     End Property
 
+    Public Overrides ReadOnly Property PublicCallSignature(var As String) As String
+        Get
+            Return "out bool " & var
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
+        Get
+            Return String.Format("out {0}_unwrapped", var)
+        End Get
+    End Property
+
     Public Overrides Sub EmitPublicEventArgSetterStatements(b As CodeBuilder, var As String)
         b.AppendLine("m_{0} = value ? 1 : 0;", var)
     End Sub
 
+    Public Overrides Sub EmitPrePublicCallStatements(b As CodeBuilder, var As String)
+        b.AppendLine("int {0}_unwrapped;", var)
+    End Sub
+
+    Public Overrides Sub EmitPostPublicCallStatements(b As CodeBuilder, var As String)
+        b.AppendLine("{0} = {0}_unwrapped != 0;", var)
+    End Sub
+
+    Public Overrides ReadOnly Property ParserMatches As String()
+        Get
+            Return {"bool*"}
+        End Get
+    End Property
 
 End Class

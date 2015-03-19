@@ -196,8 +196,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public int Remove(int index) {
-            return CfxApi.cfx_list_value_remove(NativePtr, index);
+        public bool Remove(int index) {
+            return 0 != CfxApi.cfx_list_value_remove(NativePtr, index);
         }
 
         /// <summary>
@@ -218,8 +218,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public bool GetBool(bool index) {
-            return 0 != CfxApi.cfx_list_value_get_bool(NativePtr, index ? 1 : 0);
+        public bool GetBool(int index) {
+            return 0 != CfxApi.cfx_list_value_get_bool(NativePtr, index);
         }
 
         /// <summary>
@@ -308,8 +308,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public bool SetBool(bool index, bool value) {
-            return 0 != CfxApi.cfx_list_value_set_bool(NativePtr, index ? 1 : 0, value ? 1 : 0);
+        public bool SetBool(int index, bool value) {
+            return 0 != CfxApi.cfx_list_value_set_bool(NativePtr, index, value ? 1 : 0);
         }
 
         /// <summary>

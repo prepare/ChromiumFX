@@ -487,8 +487,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public bool IsVisible(bool commandId) {
-            return 0 != CfxApi.cfx_menu_model_is_visible(NativePtr, commandId ? 1 : 0);
+        public bool IsVisible(int commandId) {
+            return 0 != CfxApi.cfx_menu_model_is_visible(NativePtr, commandId);
         }
 
         /// <summary>
@@ -498,8 +498,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public bool IsVisibleAt(bool index) {
-            return 0 != CfxApi.cfx_menu_model_is_visible_at(NativePtr, index ? 1 : 0);
+        public bool IsVisibleAt(int index) {
+            return 0 != CfxApi.cfx_menu_model_is_visible_at(NativePtr, index);
         }
 
         /// <summary>
@@ -533,8 +533,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public bool IsEnabled(bool commandId) {
-            return 0 != CfxApi.cfx_menu_model_is_enabled(NativePtr, commandId ? 1 : 0);
+        public bool IsEnabled(int commandId) {
+            return 0 != CfxApi.cfx_menu_model_is_enabled(NativePtr, commandId);
         }
 
         /// <summary>
@@ -544,8 +544,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public bool IsEnabledAt(bool index) {
-            return 0 != CfxApi.cfx_menu_model_is_enabled_at(NativePtr, index ? 1 : 0);
+        public bool IsEnabledAt(int index) {
+            return 0 != CfxApi.cfx_menu_model_is_enabled_at(NativePtr, index);
         }
 
         /// <summary>
@@ -556,8 +556,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public bool SetEnabled(int commandId, int enabled) {
-            return 0 != CfxApi.cfx_menu_model_set_enabled(NativePtr, commandId, enabled);
+        public bool SetEnabled(int commandId, bool enabled) {
+            return 0 != CfxApi.cfx_menu_model_set_enabled(NativePtr, commandId, enabled ? 1 : 0);
         }
 
         /// <summary>
@@ -568,8 +568,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public bool SetEnabledAt(int index, int enabled) {
-            return 0 != CfxApi.cfx_menu_model_set_enabled_at(NativePtr, index, enabled);
+        public bool SetEnabledAt(int index, bool enabled) {
+            return 0 != CfxApi.cfx_menu_model_set_enabled_at(NativePtr, index, enabled ? 1 : 0);
         }
 
         /// <summary>
@@ -580,8 +580,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public bool IsChecked(bool commandId) {
-            return 0 != CfxApi.cfx_menu_model_is_checked(NativePtr, commandId ? 1 : 0);
+        public bool IsChecked(int commandId) {
+            return 0 != CfxApi.cfx_menu_model_is_checked(NativePtr, commandId);
         }
 
         /// <summary>
@@ -592,8 +592,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public bool IsCheckedAt(bool index) {
-            return 0 != CfxApi.cfx_menu_model_is_checked_at(NativePtr, index ? 1 : 0);
+        public bool IsCheckedAt(int index) {
+            return 0 != CfxApi.cfx_menu_model_is_checked_at(NativePtr, index);
         }
 
         /// <summary>
@@ -616,8 +616,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public int SetCheckedAt(int index, bool @checked) {
-            return CfxApi.cfx_menu_model_set_checked_at(NativePtr, index, @checked ? 1 : 0);
+        public bool SetCheckedAt(int index, bool @checked) {
+            return 0 != CfxApi.cfx_menu_model_set_checked_at(NativePtr, index, @checked ? 1 : 0);
         }
 
         /// <summary>
@@ -628,8 +628,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public bool HasAccelerator(bool commandId) {
-            return 0 != CfxApi.cfx_menu_model_has_accelerator(NativePtr, commandId ? 1 : 0);
+        public bool HasAccelerator(int commandId) {
+            return 0 != CfxApi.cfx_menu_model_has_accelerator(NativePtr, commandId);
         }
 
         /// <summary>
@@ -640,8 +640,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public bool HasAcceleratorAt(bool index) {
-            return 0 != CfxApi.cfx_menu_model_has_accelerator_at(NativePtr, index ? 1 : 0);
+        public bool HasAcceleratorAt(int index) {
+            return 0 != CfxApi.cfx_menu_model_has_accelerator_at(NativePtr, index);
         }
 
         /// <summary>
@@ -652,8 +652,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public bool SetAccelerator(int commandId, int keyCode, int shiftPressed, int ctrlPressed, int altPressed) {
-            return 0 != CfxApi.cfx_menu_model_set_accelerator(NativePtr, commandId, keyCode, shiftPressed, ctrlPressed, altPressed);
+        public bool SetAccelerator(int commandId, int keyCode, bool shiftPressed, bool ctrlPressed, bool altPressed) {
+            return 0 != CfxApi.cfx_menu_model_set_accelerator(NativePtr, commandId, keyCode, shiftPressed ? 1 : 0, ctrlPressed ? 1 : 0, altPressed ? 1 : 0);
         }
 
         /// <summary>
@@ -664,8 +664,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public bool SetAcceleratorAt(int index, int keyCode, int shiftPressed, int ctrlPressed, int altPressed) {
-            return 0 != CfxApi.cfx_menu_model_set_accelerator_at(NativePtr, index, keyCode, shiftPressed, ctrlPressed, altPressed);
+        public bool SetAcceleratorAt(int index, int keyCode, bool shiftPressed, bool ctrlPressed, bool altPressed) {
+            return 0 != CfxApi.cfx_menu_model_set_accelerator_at(NativePtr, index, keyCode, shiftPressed ? 1 : 0, ctrlPressed ? 1 : 0, altPressed ? 1 : 0);
         }
 
         /// <summary>
@@ -676,8 +676,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public int RemoveAccelerator(int commandId) {
-            return CfxApi.cfx_menu_model_remove_accelerator(NativePtr, commandId);
+        public bool RemoveAccelerator(int commandId) {
+            return 0 != CfxApi.cfx_menu_model_remove_accelerator(NativePtr, commandId);
         }
 
         /// <summary>
@@ -700,8 +700,15 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public int GetAccelerator(int commandId, int keyCode, int shiftPressed, int ctrlPressed, int altPressed) {
-            return CfxApi.cfx_menu_model_get_accelerator(NativePtr, commandId, out keyCode, out shiftPressed, out ctrlPressed, out altPressed);
+        public bool GetAccelerator(int commandId, out int keyCode, out bool shiftPressed, out bool ctrlPressed, out bool altPressed) {
+            int shiftPressed_unwrapped;
+            int ctrlPressed_unwrapped;
+            int altPressed_unwrapped;
+            var __retval = CfxApi.cfx_menu_model_get_accelerator(NativePtr, commandId, out keyCode, out shiftPressed_unwrapped, out ctrlPressed_unwrapped, out altPressed_unwrapped);
+            shiftPressed = shiftPressed_unwrapped != 0;
+            ctrlPressed = ctrlPressed_unwrapped != 0;
+            altPressed = altPressed_unwrapped != 0;
+            return 0 != __retval;
         }
 
         /// <summary>
@@ -712,8 +719,15 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public bool GetAcceleratorAt(int index, int keyCode, int shiftPressed, int ctrlPressed, int altPressed) {
-            return 0 != CfxApi.cfx_menu_model_get_accelerator_at(NativePtr, index, out keyCode, out shiftPressed, out ctrlPressed, out altPressed);
+        public bool GetAcceleratorAt(int index, out int keyCode, out bool shiftPressed, out bool ctrlPressed, out bool altPressed) {
+            int shiftPressed_unwrapped;
+            int ctrlPressed_unwrapped;
+            int altPressed_unwrapped;
+            var __retval = CfxApi.cfx_menu_model_get_accelerator_at(NativePtr, index, out keyCode, out shiftPressed_unwrapped, out ctrlPressed_unwrapped, out altPressed_unwrapped);
+            shiftPressed = shiftPressed_unwrapped != 0;
+            ctrlPressed = ctrlPressed_unwrapped != 0;
+            altPressed = altPressed_unwrapped != 0;
+            return 0 != __retval;
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

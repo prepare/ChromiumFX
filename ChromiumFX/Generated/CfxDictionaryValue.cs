@@ -201,14 +201,14 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public int GetKeys(System.Collections.Generic.List<string> keys) {
+        public bool GetKeys(System.Collections.Generic.List<string> keys) {
             PinnedString[] keys_handles;
             var keys_unwrapped = StringFunctions.UnwrapCfxStringList(keys, out keys_handles);
             var __retval = CfxApi.cfx_dictionary_value_get_keys(NativePtr, keys_unwrapped);
             StringFunctions.FreePinnedStrings(keys_handles);
             StringFunctions.CfxStringListCopyToManaged(keys_unwrapped, keys);
             CfxApi.cfx_string_list_free(keys_unwrapped);
-            return __retval;
+            return 0 != __retval;
         }
 
         /// <summary>
