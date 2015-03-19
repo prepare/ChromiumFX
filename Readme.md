@@ -43,6 +43,12 @@ licensing information. See also cef/LICENSE.txt and cef/README.txt.
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2171.1979.9 ###
+
+* The generator tool now extracts additional information about the public CEF C++ API to help translation of the C API:
+ * The translation from C int (0/1) to C# bool (false/true) is now based on the signatures found in the C++ header files. This should have fixed the remaining issues with the int to bool translation.
+ * Some CEF C functions have different names in the CEF C++ API. The C# translation now prefers the C++ names, including overloads like `CfxV8Value.HasValue()` for both `cef_v8value->has_value_bykey()` and `cef_v8value->has_value_byindex()`.
+
 ### Version 3.2171.1979.8 ###
 
 * ChromiumFX and ChromiumWebBrowser assemblies are now built for platform x86 instead of AnyCPU, so the compiler will complain if you reference them from AnyCPU projects.
