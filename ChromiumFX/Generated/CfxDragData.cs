@@ -319,14 +319,14 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_drag_data_capi.h">cef/include/capi/cef_drag_data_capi.h</see>.
         /// </remarks>
-        public int GetFileNames(System.Collections.Generic.List<string> names) {
+        public bool GetFileNames(System.Collections.Generic.List<string> names) {
             PinnedString[] names_handles;
             var names_unwrapped = StringFunctions.UnwrapCfxStringList(names, out names_handles);
             var __retval = CfxApi.cfx_drag_data_get_file_names(NativePtr, names_unwrapped);
             StringFunctions.FreePinnedStrings(names_handles);
             StringFunctions.CfxStringListCopyToManaged(names_unwrapped, names);
             CfxApi.cfx_string_list_free(names_unwrapped);
-            return __retval;
+            return 0 != __retval;
         }
 
         /// <summary>

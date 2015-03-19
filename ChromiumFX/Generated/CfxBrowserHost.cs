@@ -393,8 +393,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public void StopFinding(int clearSelection) {
-            CfxApi.cfx_browser_host_stop_finding(NativePtr, clearSelection);
+        public void StopFinding(bool clearSelection) {
+            CfxApi.cfx_browser_host_stop_finding(NativePtr, clearSelection ? 1 : 0);
         }
 
         /// <summary>
@@ -442,8 +442,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public void SetMouseCursorChangeDisabled(int disabled) {
-            CfxApi.cfx_browser_host_set_mouse_cursor_change_disabled(NativePtr, disabled);
+        public void SetMouseCursorChangeDisabled(bool disabled) {
+            CfxApi.cfx_browser_host_set_mouse_cursor_change_disabled(NativePtr, disabled ? 1 : 0);
         }
 
         /// <summary>

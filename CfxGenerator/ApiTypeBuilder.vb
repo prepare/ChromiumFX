@@ -92,6 +92,9 @@ Public Class ApiTypeBuilder
 
         AddType(New CefColorType)
 
+        AddType(New BooleanInteger)
+        AddType(New BooleanIntegerOutType)
+
         Dim tStr As ApiType = New CefStringType
         AddType(tStr)
         AddType(New CefStringPtrType(tStr.AsCefStringType))

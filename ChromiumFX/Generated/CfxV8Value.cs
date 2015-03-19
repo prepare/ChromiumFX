@@ -665,8 +665,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool SetRethrowExceptions(int rethrow) {
-            return 0 != CfxApi.cfx_v8value_set_rethrow_exceptions(NativePtr, rethrow);
+        public bool SetRethrowExceptions(bool rethrow) {
+            return 0 != CfxApi.cfx_v8value_set_rethrow_exceptions(NativePtr, rethrow ? 1 : 0);
         }
 
         /// <summary>
@@ -690,8 +690,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool HasValueByIndex(bool index) {
-            return 0 != CfxApi.cfx_v8value_has_value_byindex(NativePtr, index ? 1 : 0);
+        public bool HasValueByIndex(int index) {
+            return 0 != CfxApi.cfx_v8value_has_value_byindex(NativePtr, index);
         }
 
         /// <summary>
@@ -721,8 +721,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool DeleteValueByIndex(bool index) {
-            return 0 != CfxApi.cfx_v8value_delete_value_byindex(NativePtr, index ? 1 : 0);
+        public bool DeleteValueByIndex(int index) {
+            return 0 != CfxApi.cfx_v8value_delete_value_byindex(NativePtr, index);
         }
 
         /// <summary>
@@ -779,8 +779,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool SetValueByIndex(bool index, CfxV8Value value) {
-            return 0 != CfxApi.cfx_v8value_set_value_byindex(NativePtr, index ? 1 : 0, CfxV8Value.Unwrap(value));
+        public bool SetValueByIndex(int index, CfxV8Value value) {
+            return 0 != CfxApi.cfx_v8value_set_value_byindex(NativePtr, index, CfxV8Value.Unwrap(value));
         }
 
         /// <summary>
@@ -809,14 +809,14 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public int GetKeys(System.Collections.Generic.List<string> keys) {
+        public bool GetKeys(System.Collections.Generic.List<string> keys) {
             PinnedString[] keys_handles;
             var keys_unwrapped = StringFunctions.UnwrapCfxStringList(keys, out keys_handles);
             var __retval = CfxApi.cfx_v8value_get_keys(NativePtr, keys_unwrapped);
             StringFunctions.FreePinnedStrings(keys_handles);
             StringFunctions.CfxStringListCopyToManaged(keys_unwrapped, keys);
             CfxApi.cfx_string_list_free(keys_unwrapped);
-            return __retval;
+            return 0 != __retval;
         }
 
         /// <summary>

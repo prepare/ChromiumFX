@@ -363,8 +363,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public int Close() {
-            return CfxApi.cfx_xml_reader_close(NativePtr);
+        public bool Close() {
+            return 0 != CfxApi.cfx_xml_reader_close(NativePtr);
         }
 
         /// <summary>
@@ -432,8 +432,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public int MoveToAttributeByIndex(int index) {
-            return CfxApi.cfx_xml_reader_move_to_attribute_byindex(NativePtr, index);
+        public bool MoveToAttributeByIndex(int index) {
+            return 0 != CfxApi.cfx_xml_reader_move_to_attribute_byindex(NativePtr, index);
         }
 
         /// <summary>
@@ -477,8 +477,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public int MoveToFirstAttribute() {
-            return CfxApi.cfx_xml_reader_move_to_first_attribute(NativePtr);
+        public bool MoveToFirstAttribute() {
+            return 0 != CfxApi.cfx_xml_reader_move_to_first_attribute(NativePtr);
         }
 
         /// <summary>

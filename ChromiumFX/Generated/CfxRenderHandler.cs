@@ -78,7 +78,7 @@ namespace Chromium {
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            __retval = e.m_returnValue;
+            __retval = e.m_returnValue ? 1 : 0;
         }
 
         // get_view_rect
@@ -731,7 +731,7 @@ namespace Chromium {
             internal IntPtr m_rect;
             internal CfxRect m_rect_wrapped;
 
-            internal int m_returnValue;
+            internal bool m_returnValue;
             private bool returnValueSet;
 
             internal CfxGetRootScreenRectEventArgs(IntPtr browser, IntPtr rect) {
@@ -763,7 +763,7 @@ namespace Chromium {
             /// Set the return value for the <see cref="CfxRenderHandler.GetRootScreenRect"/> callback.
             /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            public void SetReturnValue(int returnValue) {
+            public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
                     throw new CfxException("The return value has already been set");

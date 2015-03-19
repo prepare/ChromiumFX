@@ -52,6 +52,12 @@ Public Class NumericOutType
         End Get
     End Property
 
+    Public Overrides ReadOnly Property PublicCallSignature(var As String) As String
+        Get
+            Return "out " & BaseType.PublicCallSignature(var)
+        End Get
+    End Property
+
     Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
         Get
             Return "out " & var

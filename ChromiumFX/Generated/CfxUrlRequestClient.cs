@@ -670,10 +670,10 @@ namespace Chromium {
             /// <summary>
             /// Get the IsProxy parameter for the <see cref="CfxUrlRequestClient.GetAuthCredentials"/> callback.
             /// </summary>
-            public int IsProxy {
+            public bool IsProxy {
                 get {
                     CheckAccess();
-                    return m_isProxy;
+                    return 0 != m_isProxy;
                 }
             }
             /// <summary>

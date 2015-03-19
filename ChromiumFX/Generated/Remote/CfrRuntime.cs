@@ -200,7 +200,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
-        public int PostDelayedTask(CfxThreadId threadId, CfrTask task, long delayMs) {
+        public bool PostDelayedTask(CfxThreadId threadId, CfrTask task, long delayMs) {
             var call = new CfxRuntimePostDelayedTaskRenderProcessCall();
             call.threadId = (int)threadId;
             call.task = CfrObject.Unwrap(task);
@@ -217,7 +217,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
-        public int PostTask(CfxThreadId threadId, CfrTask task) {
+        public bool PostTask(CfxThreadId threadId, CfrTask task) {
             var call = new CfxRuntimePostTaskRenderProcessCall();
             call.threadId = (int)threadId;
             call.task = CfrObject.Unwrap(task);
@@ -283,7 +283,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public int RegisterExtension(string extensionName, string javascriptCode, CfrV8Handler handler) {
+        public bool RegisterExtension(string extensionName, string javascriptCode, CfrV8Handler handler) {
             var call = new CfxRuntimeRegisterExtensionRenderProcessCall();
             call.extensionName = extensionName;
             call.javascriptCode = javascriptCode;

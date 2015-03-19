@@ -287,10 +287,10 @@ namespace Chromium {
             /// <summary>
             /// Get the Next parameter for the <see cref="CfxFocusHandler.OnTakeFocus"/> callback.
             /// </summary>
-            public int Next {
+            public bool Next {
                 get {
                     CheckAccess();
-                    return m_next;
+                    return 0 != m_next;
                 }
             }
 

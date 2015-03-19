@@ -37,13 +37,16 @@ Imports System.Runtime.Serialization.Formatters.Binary
 Namespace Parser
     Public Class ApiParser
 
-        Private api As CefApiData
+        Private api As New CefApiData
+        Private booleanRetvals As New HashSet(Of String)
+        Private booleanParameters As New HashSet(Of String)
+        Private cppApiNames As New Dictionary(Of String, String)
 
         Private codeFiles As New Dictionary(Of String, String)
 
         Public Function Parse() As CefApiData
 
-            api = New CefApiData
+            ParseCppHeaders()
 
             Dim c1 = "/\*.*?\*/([\r\n]+)?"
             Dim c2 = "//.*?([\r\n]+)"
@@ -96,13 +99,61 @@ Namespace Parser
 
             Dim ff = ParseFunctions(code)
             For Each f In ff
+
                 Dim struct = MatchCefStructPrefix(f.Name)
                 If struct Is Nothing Then
                     api.CefFunctions.Add(f)
                 Else
                     struct.CefFunctions.Add(f)
                 End If
+
+                Dim token = ReduceToken(f.Name)
+                If booleanRetvals.Contains(token) Then
+                    f.Signature.ReturnType.Name = "bool"
+                    'booleanRetvals.Remove(token)
+                End If
+                For Each arg In f.Signature.Arguments
+                    Dim t1 = token & ReduceToken(arg.Var)
+                    If booleanParameters.Contains(t1) Then
+                        arg.ArgumentType.Name = "bool"
+                        'booleanParameters.Remove(t1)
+                    End If
+                Next
+
             Next
+
+            For Each struct In api.CefStructs
+                For Each sm In struct.StructMembers
+                    If sm.CallbackSignature IsNot Nothing Then
+                        Dim token = ReduceToken(struct.Name.Substring(0, struct.Name.Length - 2) & sm.Name)
+
+                        If cppApiNames.ContainsKey(token) Then
+                            sm.cppApiName = cppApiNames(token)
+                            token = ReduceToken(struct.Name.Substring(0, struct.Name.Length - 2) & sm.cppApiName)
+                        End If
+
+                        If booleanRetvals.Contains(token) Then
+                            sm.CallbackSignature.ReturnType.Name = "bool"
+                            'booleanRetvals.Remove(token)
+                        End If
+                        For Each arg In sm.CallbackSignature.Arguments
+                            Dim t1 = token & ReduceToken(arg.Var)
+                            If booleanParameters.Contains(t1) Then
+                                arg.ArgumentType.Name = "bool"
+                                'booleanParameters.Remove(t1)
+                            End If
+                        Next
+                    End If
+                Next
+            Next
+
+            'If booleanRetvals.Count > 0 Then
+            '    Stop
+            'End If
+
+            'If booleanParameters.Count > 0 Then
+            '    Stop
+            'End If
 
             Dim stringListCode = File.ReadAllText("cef\include\internal\cef_string_list.h")
             Dim stringMapCode = File.ReadAllText("cef\include\internal\cef_string_map.h")
@@ -137,7 +188,7 @@ Namespace Parser
                 Dim f = New FunctionData
                 f.Name = m.Groups(2).Value
                 f.Signature = New SignatureData
-                f.Signature.ReturnType = ParseTypeDecl(m.Groups(1).Value, f.Signature.ConstReturnValue)
+                f.Signature.ReturnType = ParseTypeDecl(m.Groups(1).Value, f.Signature.ReturnValueIsConst)
                 ParseArgumentList(f.Signature, m.Groups(3).Value)
                 list.Add(f)
             Next
@@ -179,6 +230,7 @@ Namespace Parser
                     parent.StructMembers.Add(sm)
                 End If
             Next
+
         End Sub
 
         Private Sub ParseArgumentList(signature As SignatureData, argsString As String)
@@ -242,7 +294,7 @@ Namespace Parser
             Dim cb = New StructMemberData
             cb.Name = m.Groups(2).Value
             cb.CallbackSignature = New SignatureData
-            cb.CallbackSignature.ReturnType = ParseTypeDecl(m.Groups(1).Value.Trim(), cb.CallbackSignature.ConstReturnValue)
+            cb.CallbackSignature.ReturnType = ParseTypeDecl(m.Groups(1).Value.Trim(), cb.CallbackSignature.ReturnValueIsConst)
             ParseArgumentList(cb.CallbackSignature, m.Groups(3).Value)
             Return cb
 
@@ -409,6 +461,72 @@ Namespace Parser
             cc.Lines = l.ToArray()
             Return cc
         End Function
+
+
+        Private Sub ParseCppHeaders()
+
+            Dim classEx = New Regex("class\s+(\w+)\s*(?::\s*public\s+virtual\s+CefBase\s*)?{(.+?)};", RegexOptions.Singleline)
+            Dim boolRetvalEx = New Regex("\bbool\b\s+(\w+)\s*\(")
+            Dim funcEx = New Regex("(\w+)\s*\((.*?)\)", RegexOptions.Singleline)
+            Dim boolParamEx = New Regex("\bbool\b(?:\s*[&*])?\s*\b(\w+)\b")
+
+            Dim cppNamesEx = New Regex("--cef\([^)]*\bcapi_name=(\w+)[^)]*\)--[^(]*\b(\w+)\s*\(")
+
+            Dim files = Directory.GetFiles("cef\include")
+            For Each f In files
+                Dim code = File.ReadAllText(f)
+
+                Dim mmClasses = classEx.Matches(code)
+                For Each m As Match In mmClasses
+                    Dim className = m.Groups(1).Value
+                    Dim body = m.Groups(2).Value
+
+                    Dim mmAlt = cppNamesEx.Matches(body)
+                    For Each m1 As Match In mmAlt
+                        cppApiNames.Add(ReduceToken(className & m1.Groups(1).Value), m1.Groups(2).Value)
+                    Next
+
+                    Dim mmRetvals = boolRetvalEx.Matches(body)
+                    For Each m1 As Match In mmRetvals
+                        booleanRetvals.Add(ReduceToken(className & m1.Groups(1).Value))
+                    Next
+                    Dim mmFunc = funcEx.Matches(body)
+                    For Each m1 As Match In mmFunc
+                        Dim funcName = m1.Groups(1).Value
+                        Dim mmParam = boolParamEx.Matches(m1.Groups(2).Value)
+                        For Each m2 As Match In mmParam
+                            booleanParameters.Add(ReduceToken(className & funcName & m2.Groups(1).Value))
+                        Next
+                    Next
+                Next
+
+                code = classEx.Replace(code, "")
+
+                If f.EndsWith("cef_app.h") Then Stop
+
+                Dim mmRetvalsGlob = boolRetvalEx.Matches(code)
+                For Each m As Match In mmRetvalsGlob
+                    booleanRetvals.Add(ReduceToken(m.Groups(1).Value))
+                Next
+
+                Dim mmFuncGlob = funcEx.Matches(code)
+                For Each m1 As Match In mmFuncGlob
+                    Dim funcName = m1.Groups(1).Value
+                    Dim mmParam = boolParamEx.Matches(m1.Groups(2).Value)
+                    For Each m2 As Match In mmParam
+                        booleanParameters.Add(ReduceToken(funcName & m2.Groups(1).Value))
+                    Next
+                Next
+
+            Next
+
+        End Sub
+
+        Private Function ReduceToken(token As String) As String
+            ' Reduce the token to lowercase characters for matching against the C api
+            Return token.Replace("_", "").ToLowerInvariant()
+        End Function
+
 
     End Class
 End Namespace

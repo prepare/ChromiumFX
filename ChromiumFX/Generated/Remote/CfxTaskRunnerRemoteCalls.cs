@@ -193,7 +193,7 @@ namespace Chromium.Remote {
 
         internal ulong self;
         internal ulong task;
-        internal int __retval;
+        internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -227,7 +227,7 @@ namespace Chromium.Remote {
         internal ulong self;
         internal ulong task;
         internal long delayMs;
-        internal int __retval;
+        internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);

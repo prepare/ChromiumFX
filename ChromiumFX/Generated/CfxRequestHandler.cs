@@ -252,7 +252,7 @@ namespace Chromium {
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_info_wrapped == null) CfxApi.cfx_release(e.m_info);
-            __retval = e.m_returnValue;
+            __retval = e.m_returnValue ? 1 : 0;
         }
 
         // on_plugin_crashed
@@ -1196,10 +1196,10 @@ namespace Chromium {
             /// <summary>
             /// Get the IsProxy parameter for the <see cref="CfxRequestHandler.GetAuthCredentials"/> callback.
             /// </summary>
-            public int IsProxy {
+            public bool IsProxy {
                 get {
                     CheckAccess();
-                    return m_isProxy;
+                    return 0 != m_isProxy;
                 }
             }
             /// <summary>
@@ -1575,7 +1575,7 @@ namespace Chromium {
             internal IntPtr m_info;
             internal CfxWebPluginInfo m_info_wrapped;
 
-            internal int m_returnValue;
+            internal bool m_returnValue;
             private bool returnValueSet;
 
             internal CfxOnBeforePluginLoadEventArgs(IntPtr browser, IntPtr url_str, int url_length, IntPtr policy_url_str, int policy_url_length, IntPtr info) {
@@ -1631,7 +1631,7 @@ namespace Chromium {
             /// Set the return value for the <see cref="CfxRequestHandler.OnBeforePluginLoad"/> callback.
             /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            public void SetReturnValue(int returnValue) {
+            public void SetReturnValue(bool returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
                     throw new CfxException("The return value has already been set");

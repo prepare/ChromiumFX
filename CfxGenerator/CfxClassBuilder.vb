@@ -43,18 +43,22 @@ Public Class StructMember
 
     Sub New(parent As CefStructType, structCategory As StructCategory, smd As Parser.StructMemberData, api As ApiTypeBuilder)
 
+        Name = smd.Name
+        Comments = smd.Comments
+
         If smd.MemberType IsNot Nothing Then
             MemberType = api.GetApiType(smd.MemberType, False)
-            If MemberType.Name = "int" Then
-                If BooleanIntDetector.HasCommentHintForBooleanValue(smd.Comments) Then
-                    MemberType = BooleanInteger.Convert(MemberType)
-                End If
+            If MemberType.Name = "int" AndAlso Comments IsNot Nothing Then
+                For Each c In Comments.Lines
+                    If c.Contains("true") OrElse c.Contains("false") Then
+                        MemberType = BooleanInteger.Convert(MemberType)
+                    End If
+                Next
             End If
         Else
             MemberType = New CefCallbackType(parent, structCategory, smd.Name, smd.CallbackSignature, api, smd.Comments)
         End If
-        Name = smd.Name
-        Comments = smd.Comments
+        
     End Sub
 
     Public ReadOnly Property PublicName As String
