@@ -472,7 +472,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxBrowser)RemoteProxy.Unwrap(self);
-            __retval = RemoteProxy.Wrap(self_local.GetFrameByIdentifier(identifier));
+            __retval = RemoteProxy.Wrap(self_local.GetFrame(identifier));
         }
     }
 

@@ -72,8 +72,8 @@ namespace Chromium {
             if(self == null) {
                 return;
             }
-            var e = new CfxRunFileDialogCallbackContinueEventArgs(browser_host, file_paths);
-            var eventHandler = self.m_Continue;
+            var e = new CfxRunFileDialogCallbackOnFileDialogDismissedEventArgs(browser_host, file_paths);
+            var eventHandler = self.m_OnFileDialogDismissed;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_host_wrapped == null) CfxApi.cfx_release(e.m_browser_host);
@@ -92,34 +92,34 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public event CfxRunFileDialogCallbackContinueEventHandler Continue {
+        public event CfxRunFileDialogCallbackOnFileDialogDismissedEventHandler OnFileDialogDismissed {
             add {
                 lock(eventLock) {
-                    if(m_Continue == null) {
+                    if(m_OnFileDialogDismissed == null) {
                         if(cfx_run_file_dialog_callback_cont == null) {
                             cfx_run_file_dialog_callback_cont = cont;
                             cfx_run_file_dialog_callback_cont_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_run_file_dialog_callback_cont);
                         }
                         CfxApi.cfx_run_file_dialog_callback_set_managed_callback(NativePtr, 0, cfx_run_file_dialog_callback_cont_ptr);
                     }
-                    m_Continue += value;
+                    m_OnFileDialogDismissed += value;
                 }
             }
             remove {
                 lock(eventLock) {
-                    m_Continue -= value;
-                    if(m_Continue == null) {
+                    m_OnFileDialogDismissed -= value;
+                    if(m_OnFileDialogDismissed == null) {
                         CfxApi.cfx_run_file_dialog_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
         }
 
-        private CfxRunFileDialogCallbackContinueEventHandler m_Continue;
+        private CfxRunFileDialogCallbackOnFileDialogDismissedEventHandler m_OnFileDialogDismissed;
 
         internal override void OnDispose(IntPtr nativePtr) {
-            if(m_Continue != null) {
-                m_Continue = null;
+            if(m_OnFileDialogDismissed != null) {
+                m_OnFileDialogDismissed = null;
                 CfxApi.cfx_run_file_dialog_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
@@ -139,7 +139,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public delegate void CfxRunFileDialogCallbackContinueEventHandler(object sender, CfxRunFileDialogCallbackContinueEventArgs e);
+        public delegate void CfxRunFileDialogCallbackOnFileDialogDismissedEventHandler(object sender, CfxRunFileDialogCallbackOnFileDialogDismissedEventArgs e);
 
         /// <summary>
         /// Called asynchronously after the file dialog is dismissed. If the selection
@@ -151,19 +151,19 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public class CfxRunFileDialogCallbackContinueEventArgs : CfxEventArgs {
+        public class CfxRunFileDialogCallbackOnFileDialogDismissedEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser_host;
             internal CfxBrowserHost m_browser_host_wrapped;
             internal IntPtr m_file_paths;
 
-            internal CfxRunFileDialogCallbackContinueEventArgs(IntPtr browser_host, IntPtr file_paths) {
+            internal CfxRunFileDialogCallbackOnFileDialogDismissedEventArgs(IntPtr browser_host, IntPtr file_paths) {
                 m_browser_host = browser_host;
                 m_file_paths = file_paths;
             }
 
             /// <summary>
-            /// Get the BrowserHost parameter for the <see cref="CfxRunFileDialogCallback.Continue"/> callback.
+            /// Get the BrowserHost parameter for the <see cref="CfxRunFileDialogCallback.OnFileDialogDismissed"/> callback.
             /// </summary>
             public CfxBrowserHost BrowserHost {
                 get {
@@ -173,7 +173,7 @@ namespace Chromium {
                 }
             }
             /// <summary>
-            /// Get the FilePaths parameter for the <see cref="CfxRunFileDialogCallback.Continue"/> callback.
+            /// Get the FilePaths parameter for the <see cref="CfxRunFileDialogCallback.OnFileDialogDismissed"/> callback.
             /// </summary>
             public System.Collections.Generic.List<string> FilePaths {
                 get {

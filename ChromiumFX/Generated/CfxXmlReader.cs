@@ -385,7 +385,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public String GetAttributeByIndex(int index) {
+        public String GetAttribute(int index) {
             return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_attribute_byindex(NativePtr, index));
         }
 
@@ -396,7 +396,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public String GetAttributeByQName(string qualifiedName) {
+        public String GetAttribute(string qualifiedName) {
             var qualifiedName_pinned = new PinnedString(qualifiedName);
             var __retval = CfxApi.cfx_xml_reader_get_attribute_byqname(NativePtr, qualifiedName_pinned.Obj.PinnedPtr, qualifiedName_pinned.Length);
             qualifiedName_pinned.Obj.Free();
@@ -411,7 +411,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public String GetAttributeByLName(string localName, string namespaceURI) {
+        public String GetAttribute(string localName, string namespaceURI) {
             var localName_pinned = new PinnedString(localName);
             var namespaceURI_pinned = new PinnedString(namespaceURI);
             var __retval = CfxApi.cfx_xml_reader_get_attribute_bylname(NativePtr, localName_pinned.Obj.PinnedPtr, localName_pinned.Length, namespaceURI_pinned.Obj.PinnedPtr, namespaceURI_pinned.Length);
@@ -432,7 +432,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public bool MoveToAttributeByIndex(int index) {
+        public bool MoveToAttribute(int index) {
             return 0 != CfxApi.cfx_xml_reader_move_to_attribute_byindex(NativePtr, index);
         }
 
@@ -444,7 +444,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public bool MoveToAttributeByQName(string qualifiedName) {
+        public bool MoveToAttribute(string qualifiedName) {
             var qualifiedName_pinned = new PinnedString(qualifiedName);
             var __retval = CfxApi.cfx_xml_reader_move_to_attribute_byqname(NativePtr, qualifiedName_pinned.Obj.PinnedPtr, qualifiedName_pinned.Length);
             qualifiedName_pinned.Obj.Free();
@@ -460,7 +460,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public bool MoveToAttributeByLName(string localName, string namespaceURI) {
+        public bool MoveToAttribute(string localName, string namespaceURI) {
             var localName_pinned = new PinnedString(localName);
             var namespaceURI_pinned = new PinnedString(namespaceURI);
             var __retval = CfxApi.cfx_xml_reader_move_to_attribute_bylname(NativePtr, localName_pinned.Obj.PinnedPtr, localName_pinned.Length, namespaceURI_pinned.Obj.PinnedPtr, namespaceURI_pinned.Length);

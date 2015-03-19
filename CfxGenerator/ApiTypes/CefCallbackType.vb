@@ -42,10 +42,14 @@ Public Class CefCallbackType
 
     Private m_callMode As CfxCallMode
 
-    Public Sub New(parent As CefStructType, structCategory As StructCategory, name As String, sd As Parser.SignatureData, api As ApiTypeBuilder, comments As CommentData)
+    Private ReadOnly cppApiName As String
+
+    Public Sub New(parent As CefStructType, structCategory As StructCategory, name As String, cppApiName As String, sd As Parser.SignatureData, api As ApiTypeBuilder, comments As CommentData)
         MyBase.New(name)
         Me.Parent = parent
         Me.Comments = comments
+        Me.cppApiName = cppApiName
+
         If structCategory = structCategory.ApiCallbacks Then
             m_callMode = CfxCallMode.Callback
         Else
@@ -74,8 +78,17 @@ Public Class CefCallbackType
 
     Public ReadOnly Property PublicName() As String
         Get
-            Static _name As String = CSharp.ApplyStyle(Name)
-            Return _name
+            If cppApiName IsNot Nothing Then
+                Return cppApiName
+            Else
+                Return CSharp.ApplyStyle(Name)
+            End If
+        End Get
+    End Property
+
+    Public ReadOnly Property RemoteCallClassName As String
+        Get
+            Return CSharp.ApplyStyle(Name)
         End Get
     End Property
 
@@ -530,9 +543,9 @@ Public Class CefCallbackType
     Public ReadOnly Property RemoteCallId As String Implements ISignatureParent.RemoteCallId
         Get
             If Parent.ClassBuilder.Category = StructCategory.ApiCallbacks Then
-                Return Parent.ClassName & PublicName & "BrowserProcessCall"
+                Return Parent.ClassName & RemoteCallClassName & "BrowserProcessCall"
             Else
-                Return Parent.ClassName & PublicName & "RenderProcessCall"
+                Return Parent.ClassName & RemoteCallClassName & "RenderProcessCall"
             End If
         End Get
     End Property
