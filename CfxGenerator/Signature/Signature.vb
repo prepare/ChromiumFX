@@ -59,7 +59,7 @@ Public Class Signature
     Public ReadOnly Parent As ISignatureParent
     Public ReadOnly Arguments As Argument()
     Public ReadOnly ReturnType As ApiType
-    Public ReadOnly ConstReturnValue As Boolean
+    Public ReadOnly ReturnValueIsConst As Boolean
 
     Protected args As New ArgList
 
@@ -68,13 +68,15 @@ Public Class Signature
         Dim args = New List(Of Argument)
         Dim index = 0
         For Each arg In sd.Arguments
+
             args.Add(New Argument(arg, api, index))
             index += 1
         Next
 
         Me.Arguments = args.ToArray()
+
         Me.ReturnType = api.GetApiType(sd.ReturnType, False)
-        Me.ConstReturnValue = sd.ConstReturnValue
+        Me.ReturnValueIsConst = sd.ReturnValueIsConst
         Dim comments = parent.Comments
 
         If Me.ReturnType.Name.StartsWith("int") Then
@@ -206,7 +208,7 @@ Public Class Signature
             Next
 
             Dim retType = ReturnType.NativeSymbol
-            If ConstReturnValue Then
+            If ReturnValueIsConst Then
                 retType = "const " & retType
             End If
 
