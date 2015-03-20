@@ -91,7 +91,6 @@
     <Compile Include="ApiTypes\CefStructPtrPtrType.vb" />
     <Compile Include="ApiTypes\CefStructPtrType.vb" />
     <Compile Include="ApiTypes\CefMainArgsType.vb" />
-    <Compile Include="ApiTypes\CefStructRefType.vb" />
     <Compile Include="ApiTypes\CefStringPtrType.vb" />
     <Compile Include="ApiTypes\BlittablePtrType.vb" />
     <Compile Include="ApiTypes\NumericOutType.vb" />
