@@ -124,7 +124,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
-        public String Name {
+        public string Name {
             get {
                 var call = new CfxFrameGetNameRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
@@ -173,7 +173,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
-        public String Url {
+        public string Url {
             get {
                 var call = new CfxFrameGetUrlRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);

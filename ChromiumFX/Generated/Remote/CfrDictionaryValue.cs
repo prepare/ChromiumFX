@@ -285,7 +285,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public String GetString(string key) {
+        public string GetString(string key) {
             var call = new CfxDictionaryValueGetStringRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;

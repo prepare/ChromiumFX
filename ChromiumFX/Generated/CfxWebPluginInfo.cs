@@ -76,7 +76,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
-        public String Name {
+        public string Name {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_web_plugin_info_get_name(NativePtr));
             }
@@ -89,7 +89,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
-        public String Path {
+        public string Path {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_web_plugin_info_get_path(NativePtr));
             }
@@ -102,7 +102,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
-        public String Version {
+        public string Version {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_web_plugin_info_get_version(NativePtr));
             }
@@ -115,7 +115,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
-        public String Description {
+        public string Description {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_web_plugin_info_get_description(NativePtr));
             }

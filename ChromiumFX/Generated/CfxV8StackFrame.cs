@@ -99,7 +99,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public String ScriptName {
+        public string ScriptName {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8stack_frame_get_script_name(NativePtr));
             }
@@ -114,7 +114,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public String ScriptNameOrSourceUrl {
+        public string ScriptNameOrSourceUrl {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8stack_frame_get_script_name_or_source_url(NativePtr));
             }
@@ -127,7 +127,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public String FunctionName {
+        public string FunctionName {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8stack_frame_get_function_name(NativePtr));
             }

@@ -153,7 +153,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
         /// </remarks>
-        public String CommandLineString {
+        public string CommandLineString {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_command_line_get_command_line_string(NativePtr));
             }
@@ -166,7 +166,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
         /// </remarks>
-        public String Program {
+        public string Program {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_command_line_get_program(NativePtr));
             }
@@ -294,7 +294,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
         /// </remarks>
-        public String GetSwitchValue(string name) {
+        public string GetSwitchValue(string name) {
             var name_pinned = new PinnedString(name);
             var __retval = CfxApi.cfx_command_line_get_switch_value(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length);
             name_pinned.Obj.Free();

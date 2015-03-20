@@ -161,7 +161,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public String LocalName {
+        public string LocalName {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_local_name(NativePtr));
             }
@@ -175,7 +175,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public String Prefix {
+        public string Prefix {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_prefix(NativePtr));
             }
@@ -189,7 +189,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public String QualifiedName {
+        public string QualifiedName {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_qualified_name(NativePtr));
             }
@@ -203,7 +203,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public String NamespaceUri {
+        public string NamespaceUri {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_namespace_uri(NativePtr));
             }
@@ -217,7 +217,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public String BaseUri {
+        public string BaseUri {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_base_uri(NativePtr));
             }
@@ -231,7 +231,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public String XmlLang {
+        public string XmlLang {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_xml_lang(NativePtr));
             }
@@ -271,7 +271,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public String Value {
+        public string Value {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_value(NativePtr));
             }
@@ -310,7 +310,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public String InnerXml {
+        public string InnerXml {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_inner_xml(NativePtr));
             }
@@ -323,7 +323,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public String OuterXml {
+        public string OuterXml {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_outer_xml(NativePtr));
             }
@@ -374,7 +374,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public String GetError() {
+        public string GetError() {
             return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_error(NativePtr));
         }
 
@@ -385,7 +385,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public String GetAttribute(int index) {
+        public string GetAttribute(int index) {
             return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_attribute_byindex(NativePtr, index));
         }
 
@@ -396,7 +396,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public String GetAttribute(string qualifiedName) {
+        public string GetAttribute(string qualifiedName) {
             var qualifiedName_pinned = new PinnedString(qualifiedName);
             var __retval = CfxApi.cfx_xml_reader_get_attribute_byqname(NativePtr, qualifiedName_pinned.Obj.PinnedPtr, qualifiedName_pinned.Length);
             qualifiedName_pinned.Obj.Free();
@@ -411,7 +411,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public String GetAttribute(string localName, string namespaceURI) {
+        public string GetAttribute(string localName, string namespaceURI) {
             var localName_pinned = new PinnedString(localName);
             var namespaceURI_pinned = new PinnedString(namespaceURI);
             var __retval = CfxApi.cfx_xml_reader_get_attribute_bylname(NativePtr, localName_pinned.Obj.PinnedPtr, localName_pinned.Length, namespaceURI_pinned.Obj.PinnedPtr, namespaceURI_pinned.Length);

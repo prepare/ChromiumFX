@@ -289,7 +289,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public String GetString(string key) {
+        public string GetString(string key) {
             var key_pinned = new PinnedString(key);
             var __retval = CfxApi.cfx_dictionary_value_get_string(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();

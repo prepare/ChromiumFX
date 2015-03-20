@@ -520,7 +520,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public String StringValue {
+        public string StringValue {
             get {
                 var call = new CfxV8ValueGetStringValueRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
@@ -640,7 +640,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public String FunctionName {
+        public string FunctionName {
             get {
                 var call = new CfxV8ValueGetFunctionNameRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);

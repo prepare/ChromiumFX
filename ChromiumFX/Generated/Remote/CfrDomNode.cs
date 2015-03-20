@@ -150,7 +150,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String FormControlElementType {
+        public string FormControlElementType {
             get {
                 var call = new CfxDomNodeGetFormControlElementTypeRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
@@ -166,7 +166,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String Name {
+        public string Name {
             get {
                 var call = new CfxDomNodeGetNameRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
@@ -182,7 +182,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String Value {
+        public string Value {
             get {
                 var call = new CfxDomNodeGetValueRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
@@ -198,7 +198,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String AsMarkup {
+        public string AsMarkup {
             get {
                 var call = new CfxDomNodeGetAsMarkupRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
@@ -327,7 +327,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String ElementTagName {
+        public string ElementTagName {
             get {
                 var call = new CfxDomNodeGetElementTagNameRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
@@ -359,7 +359,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String ElementInnerText {
+        public string ElementInnerText {
             get {
                 var call = new CfxDomNodeGetElementInnerTextRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
@@ -421,7 +421,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String GetElementAttribute(string attrName) {
+        public string GetElementAttribute(string attrName) {
             var call = new CfxDomNodeGetElementAttributeRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.attrName = attrName;

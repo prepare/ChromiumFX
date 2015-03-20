@@ -332,7 +332,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
         /// </remarks>
-        public static String GetMimeType(string extension) {
+        public static string GetMimeType(string extension) {
             var extension_pinned = new PinnedString(extension);
             var __retval = CfxApi.cfx_get_mime_type(extension_pinned.Obj.PinnedPtr, extension_pinned.Length);
             extension_pinned.Obj.Free();

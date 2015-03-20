@@ -501,7 +501,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public String StringValue {
+        public string StringValue {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8value_get_string_value(NativePtr));
             }
@@ -600,7 +600,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public String FunctionName {
+        public string FunctionName {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8value_get_function_name(NativePtr));
             }

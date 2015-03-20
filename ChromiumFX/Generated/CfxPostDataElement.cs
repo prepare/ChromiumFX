@@ -119,7 +119,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
-        public String File {
+        public string File {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_post_data_element_get_file(NativePtr));
             }

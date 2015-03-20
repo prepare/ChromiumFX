@@ -303,7 +303,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxCommandLineGetCommandLineStringRenderProcessCall) {}
 
         internal ulong self;
-        internal String __retval;
+        internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -333,7 +333,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxCommandLineGetProgramRenderProcessCall) {}
 
         internal ulong self;
-        internal String __retval;
+        internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -457,7 +457,7 @@ namespace Chromium.Remote {
 
         internal ulong self;
         internal string name;
-        internal String __retval;
+        internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
