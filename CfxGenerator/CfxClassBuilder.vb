@@ -38,7 +38,16 @@ Public Class StructMember
 
     Public ReadOnly Comments As CommentData
 
-    Private ReadOnly cppApiName As String
+    Private ReadOnly cefConfig As CefConfigData
+    Private ReadOnly Property cppApiName As String
+        Get
+            If cefConfig IsNot Nothing Then
+                Return cefConfig.CppApiName
+            Else
+                Return Nothing
+            End If
+        End Get
+    End Property
 
     Public IsProperty As Boolean
 
@@ -46,7 +55,7 @@ Public Class StructMember
 
         Name = smd.Name
         Comments = smd.Comments
-        cppApiName = smd.cppApiName
+        cefConfig = smd.CefConfig
 
         If smd.MemberType IsNot Nothing Then
             MemberType = api.GetApiType(smd.MemberType, False)
@@ -58,9 +67,9 @@ Public Class StructMember
                 Next
             End If
         Else
-            MemberType = New CefCallbackType(parent, structCategory, smd.Name, smd.cppApiName, smd.CallbackSignature, api, smd.Comments)
+            MemberType = New CefCallbackType(parent, structCategory, smd.Name, smd.CefConfig, smd.CallbackSignature, api, smd.Comments)
         End If
-        
+
     End Sub
 
     Public ReadOnly Property PublicName As String

@@ -42,13 +42,22 @@ Public Class CefCallbackType
 
     Private m_callMode As CfxCallMode
 
-    Private ReadOnly cppApiName As String
+    Private ReadOnly cefConfig As CefConfigData
+    Private ReadOnly Property cppApiName As String
+        Get
+            If cefConfig IsNot Nothing Then
+                Return cefConfig.CppApiName
+            Else
+                Return Nothing
+            End If
+        End Get
+    End Property
 
-    Public Sub New(parent As CefStructType, structCategory As StructCategory, name As String, cppApiName As String, sd As Parser.SignatureData, api As ApiTypeBuilder, comments As CommentData)
+    Public Sub New(parent As CefStructType, structCategory As StructCategory, name As String, cefConfig As CefConfigData, sd As Parser.SignatureData, api As ApiTypeBuilder, comments As CommentData)
         MyBase.New(name)
         Me.Parent = parent
         Me.Comments = comments
-        Me.cppApiName = cppApiName
+        Me.cefConfig = cefConfig
 
         If structCategory = structCategory.ApiCallbacks Then
             m_callMode = CfxCallMode.Callback

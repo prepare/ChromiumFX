@@ -1,4 +1,4 @@
-'' Copyright (c) 2014-2015 Wolfgang Borgsmüller
+﻿'' Copyright (c) 2014-2015 Wolfgang Borgsmüller
 '' All rights reserved.
 '' 
 '' Redistribution and use in source and binary forms, with or without 
@@ -29,19 +29,12 @@
 '' USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-
-Namespace Parser
-    <Serializable()>
-    Public Class StructMemberData
-        Public Name As String
-        Public CefConfig As CefConfigData
-        Public MemberType As TypeData
-        Public CallbackSignature As SignatureData
-        Public Comments As CommentData
-        Public Overrides Function ToString() As String
-            Return Name
-        End Function
-
-    End Class
-End Namespace
-
+<Serializable()>
+Public Class CefConfigData
+    Public CppApiName As String
+    Public IndexParameter As String
+    Public OptionalParameters As String()
+    Public CountFunction As String
+    Public DefaultRetval As String
+    Public ApiHashCheck As Boolean
+End Class

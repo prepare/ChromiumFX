@@ -107,6 +107,7 @@
     <Compile Include="CustomSignatures\GetPageRangesSignature.vb" />
     <Compile Include="CustomSignatures\SignatureWithStructArray.vb" />
     <Compile Include="CustomSignatures\StringCollectionAsRetvalSignature.vb" />
+    <Compile Include="Parser\CefConfigData.vb" />
     <Compile Include="Parser\CommentData.vb" />
     <Compile Include="Signature\Argument.vb" />
     <EmbeddedResource Include="Config\VolatileEventArgs.txt" />
