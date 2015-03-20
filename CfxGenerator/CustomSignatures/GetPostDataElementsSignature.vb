@@ -33,7 +33,7 @@
 Public Class GetPostDataElementsSignature
     Inherits Signature
 
-    Public Sub New(parent As ISignatureParent, sd As Parser.SignatureData, api As ApiTypeBuilder)
+    Public Sub New(parent As ISignatureOwner, sd As Parser.SignatureData, api As ApiTypeBuilder)
         MyBase.New(parent, sd, api)
     End Sub
 

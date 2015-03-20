@@ -33,7 +33,7 @@
 Public Class OutStringToRetvalSignature
     Inherits Signature
 
-    Public Sub New(parent As ISignatureParent, sd As Parser.SignatureData, api As ApiTypeBuilder, arrayIndex As Integer, countIndex As Integer)
+    Public Sub New(parent As ISignatureOwner, sd As Parser.SignatureData, api As ApiTypeBuilder, arrayIndex As Integer, countIndex As Integer)
         MyBase.New(parent, sd, api)
         If Me.ReturnType.Name <> "int" Then Stop
 

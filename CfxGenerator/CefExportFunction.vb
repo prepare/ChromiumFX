@@ -31,7 +31,7 @@
 
 
 Public Class CefExportFunction
-    Implements ISignatureParent
+    Implements ISignatureOwner
 
     Public Class Comparer
         Implements IComparer(Of CefExportFunction)
@@ -136,43 +136,43 @@ Public Class CefExportFunction
         Return String.Format("CEF_EXPORT {1} {0}({2});", Name, ReturnType, Signature)
     End Function
 
-    Public ReadOnly Property CallType As CfxCallMode Implements ISignatureParent.CallMode
+    Public ReadOnly Property CallType As CfxCallMode Implements ISignatureOwner.CallMode
         Get
             Return CfxCallMode.FunctionCall
         End Get
     End Property
 
-    Public ReadOnly Property CefName As String Implements ISignatureParent.CefName
+    Public ReadOnly Property CefName As String Implements ISignatureOwner.CefName
         Get
             Return Name
         End Get
     End Property
 
-    Public ReadOnly Property CfxApiFunctionName As String Implements ISignatureParent.CfxApiFunctionName
+    Public ReadOnly Property CfxApiFunctionName As String Implements ISignatureOwner.CfxApiFunctionName
         Get
             Return CfxName
         End Get
     End Property
 
-    Public ReadOnly Property PublicFunctionName As String Implements ISignatureParent.PublicFunctionName
+    Public ReadOnly Property PublicFunctionName As String Implements ISignatureOwner.PublicFunctionName
         Get
             Return PublicName
         End Get
     End Property
 
-    Public ReadOnly Property PropertyName As String Implements ISignatureParent.PropertyName
+    Public ReadOnly Property PropertyName As String Implements ISignatureOwner.PropertyName
         Get
             Return Nothing
         End Get
     End Property
 
-    Public ReadOnly Property RemoteCallId As String Implements ISignatureParent.RemoteCallId
+    Public ReadOnly Property RemoteCallId As String Implements ISignatureOwner.RemoteCallId
         Get
             Return PublicClassName & PublicName & "RenderProcessCall"
         End Get
     End Property
 
-    Public ReadOnly Property PublicClassName As String Implements ISignatureParent.PublicClassName
+    Public ReadOnly Property PublicClassName As String Implements ISignatureOwner.PublicClassName
         Get
             If Parent IsNot Nothing Then
                 Return Parent.ClassName
@@ -182,9 +182,15 @@ Public Class CefExportFunction
         End Get
     End Property
 
-    Public ReadOnly Property Comments1 As CommentData Implements ISignatureParent.Comments
+    Public ReadOnly Property Comments1 As CommentData Implements ISignatureOwner.Comments
         Get
             Return Comments
+        End Get
+    End Property
+
+    Public ReadOnly Property CefConfig As CefConfigData Implements ISignatureOwner.CefConfig
+        Get
+            Return Nothing
         End Get
     End Property
 End Class

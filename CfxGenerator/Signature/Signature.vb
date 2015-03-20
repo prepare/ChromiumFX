@@ -32,10 +32,10 @@
 
 Public Class Signature
 
-    Public Shared Function Create(parent As ISignatureParent, sd As Parser.SignatureData, api As ApiTypeBuilder) As Signature
-        Dim s = CustomSignatures.ForFunction(parent, sd, api)
+    Public Shared Function Create(owner As ISignatureOwner, sd As Parser.SignatureData, api As ApiTypeBuilder) As Signature
+        Dim s = CustomSignatures.ForFunction(owner, sd, api)
         If s Is Nothing Then
-            Return New Signature(parent, sd, api)
+            Return New Signature(owner, sd, api)
         Else
             Return s
         End If
@@ -56,15 +56,15 @@ Public Class Signature
         End Function
     End Class
 
-    Public ReadOnly Parent As ISignatureParent
+    Public ReadOnly Owner As ISignatureOwner
     Public ReadOnly Arguments As Argument()
     Public ReadOnly ReturnType As ApiType
     Public ReadOnly ReturnValueIsConst As Boolean
 
     Protected args As New ArgList
 
-    Protected Sub New(parent As ISignatureParent, sd As Parser.SignatureData, api As ApiTypeBuilder)
-        Me.Parent = parent
+    Protected Sub New(owner As ISignatureOwner, sd As Parser.SignatureData, api As ApiTypeBuilder)
+        Me.Owner = owner
         Dim args = New List(Of Argument)
         Dim index = 0
         For Each arg In sd.Arguments
@@ -77,7 +77,7 @@ Public Class Signature
 
         Me.ReturnType = api.GetApiType(sd.ReturnType, False)
         Me.ReturnValueIsConst = sd.ReturnValueIsConst
-        Dim comments = parent.Comments
+        Dim comments = owner.Comments
 
         DebugPrintUnhandledArrayArguments()
 
@@ -250,7 +250,7 @@ Public Class Signature
         Next
         Dim callArgs = args.Join()
 
-        Dim apiCall = String.Format("CfxApi.{0}({1})", Parent.CfxApiFunctionName, callArgs)
+        Dim apiCall = String.Format("CfxApi.{0}({1})", Owner.CfxApiFunctionName, callArgs)
 
         For i = 0 To ManagedArguments.Length - 1
             ManagedArguments(i).EmitPrePublicCallStatements(b)
@@ -279,7 +279,7 @@ Public Class Signature
 
     Protected Overridable Sub EmitExecuteInTargetProcess(b As CodeBuilder)
 
-        Select Case Parent.CallMode
+        Select Case Owner.CallMode
             Case CfxCallMode.FunctionCall
 
                 For Each arg In ManagedArguments
@@ -292,9 +292,9 @@ Public Class Signature
                 Dim fCall As String
                 If ManagedArguments.Length > 0 AndAlso ManagedArguments(0).IsThisArgument Then
                     b.AppendLine("var self_local = ({0})RemoteProxy.Unwrap(self);", ManagedArguments(0).ArgumentType.PublicSymbol)
-                    fCall = String.Format("self_local.{0}({1})", Parent.PublicFunctionName, args.Join())
+                    fCall = String.Format("self_local.{0}({1})", Owner.PublicFunctionName, args.Join())
                 Else
-                    fCall = String.Format("{0}.{1}({2})", Parent.PublicClassName, Parent.PublicFunctionName, args.Join())
+                    fCall = String.Format("{0}.{1}({2})", Owner.PublicClassName, Owner.PublicFunctionName, args.Join())
                 End If
 
                 If Not PublicReturnType.IsVoid Then
@@ -311,10 +311,10 @@ Public Class Signature
 
             Case CfxCallMode.PropertyGetter
                 b.AppendLine("var self_local = ({0})RemoteProxy.Unwrap(self);", ManagedArguments(0).ArgumentType.PublicSymbol)
-                b.AppendLine("__retval = {0};", PublicReturnType.ProxyWrapExpression("self_local." & Parent.PropertyName))
+                b.AppendLine("__retval = {0};", PublicReturnType.ProxyWrapExpression("self_local." & Owner.PropertyName))
             Case CfxCallMode.PropertySetter
                 b.AppendLine("var self_local = ({0})RemoteProxy.Unwrap(self);", ManagedArguments(0).ArgumentType.PublicSymbol)
-                b.AppendLine("self_local.{0} = {1};", Parent.PropertyName, ManagedArguments(1).ProxyUnwrapExpression)
+                b.AppendLine("self_local.{0} = {1};", Owner.PropertyName, ManagedArguments(1).ProxyUnwrapExpression)
         End Select
 
     End Sub
@@ -329,7 +329,7 @@ Public Class Signature
         For i = 1 To ManagedArguments.Count - 1
             ManagedArguments(i).EmitPostPublicRaiseEventStatements(b)
             If ManagedArguments(i).TypeIsRefCounted Then
-                If GeneratorConfig.IsVolatileEventArg(DirectCast(Parent, CefCallbackType), ManagedArguments(i)) Then
+                If GeneratorConfig.IsVolatileEventArg(DirectCast(Owner, CefCallbackType), ManagedArguments(i)) Then
                     b.BeginIf("e.m_{0}_wrapped == null", ManagedArguments(i).VarName)
                     b.AppendLine("CfxApi.cfx_release(e.m_{0});", ManagedArguments(i).VarName)
                     b.BeginElse()
@@ -348,11 +348,11 @@ Public Class Signature
             Dim arg = ManagedArguments(i)
             Dim cd = New CommentData
             If arg.ArgumentType.IsIn AndAlso arg.ArgumentType.IsOut Then
-                cd.Lines = {String.Format("Get or set the {0} parameter for the <see cref=""{1}.{2}""/> callback.", arg.PublicPropertyName, Parent.PublicClassName, Parent.PublicFunctionName)}
+                cd.Lines = {String.Format("Get or set the {0} parameter for the <see cref=""{1}.{2}""/> callback.", arg.PublicPropertyName, Owner.PublicClassName, Owner.PublicFunctionName)}
             ElseIf arg.ArgumentType.IsIn Then
-                cd.Lines = {String.Format("Get the {0} parameter for the <see cref=""{1}.{2}""/> callback.", arg.PublicPropertyName, Parent.PublicClassName, Parent.PublicFunctionName)}
+                cd.Lines = {String.Format("Get the {0} parameter for the <see cref=""{1}.{2}""/> callback.", arg.PublicPropertyName, Owner.PublicClassName, Owner.PublicFunctionName)}
             Else
-                cd.Lines = {String.Format("Set the {0} out parameter for the <see cref=""{1}.{2}""/> callback.", arg.PublicPropertyName, Parent.PublicClassName, Parent.PublicFunctionName)}
+                cd.Lines = {String.Format("Set the {0} out parameter for the <see cref=""{1}.{2}""/> callback.", arg.PublicPropertyName, Owner.PublicClassName, Owner.PublicFunctionName)}
             End If
             b.AppendSummary(cd)
             b.BeginBlock("public {0} {1}", arg.ArgumentType.PublicSymbol, arg.PublicPropertyName)
@@ -382,7 +382,7 @@ Public Class Signature
 
     Public Overridable Sub EmitRemoteCall(b As CodeBuilder)
 
-        b.AppendLine("var call = new {0}();", Parent.RemoteCallId)
+        b.AppendLine("var call = new {0}();", Owner.RemoteCallId)
 
         For Each arg In ManagedArguments
             If arg.ArgumentType.IsIn Then
@@ -390,7 +390,7 @@ Public Class Signature
             End If
         Next
 
-        If Parent.RemoteCallId.StartsWith("CfxRuntime") Then
+        If Owner.RemoteCallId.StartsWith("CfxRuntime") Then
             b.AppendLine("call.Execute(connection);")
         Else
             b.AppendLine("call.Execute(remoteRuntime.connection);")
@@ -485,21 +485,21 @@ Public Class Signature
 
     Public Overridable Sub DebugPrintUnhandledArrayArguments()
 
-        If Parent.CefName = "cef_binary_value_create" Then Return
-        If Parent.CefName = "cef_binary_value::get_data" Then Return
-        If Parent.CefName = "cef_resource_handler::get_response_headers" Then Return
-        If Parent.CefName = "cef_resource_bundle_handler::get_data_resource" Then Return
-        If Parent.CefName = "cef_urlrequest_client::on_download_data" Then Return
-        If Parent.CefName = "cef_zip_reader::read_file" Then Return
+        If Owner.CefName = "cef_binary_value_create" Then Return
+        If Owner.CefName = "cef_binary_value::get_data" Then Return
+        If Owner.CefName = "cef_resource_handler::get_response_headers" Then Return
+        If Owner.CefName = "cef_resource_bundle_handler::get_data_resource" Then Return
+        If Owner.CefName = "cef_urlrequest_client::on_download_data" Then Return
+        If Owner.CefName = "cef_zip_reader::read_file" Then Return
 
         For i = 0 To Arguments.Length - 1
             Dim suffixLength = CountArgumentSuffixLength(Arguments(i))
             If suffixLength > 0 Then
                 Dim arrName = Arguments(i).VarName.Substring(0, Arguments(i).VarName.Length - suffixLength)
                 If i > 0 AndAlso Arguments(i - 1).VarName.StartsWith(arrName) Then
-                    Debug.Print("{0} {1} {2} {3}", Parent.CallMode, Parent.CefName, Arguments(i - 1), Arguments(i))
+                    Debug.Print("{0} {1} {2} {3}", Owner.CallMode, Owner.CefName, Arguments(i - 1), Arguments(i))
                 ElseIf i < Arguments.Length - 1 AndAlso Arguments(i + 1).VarName.StartsWith(arrName) Then
-                    Debug.Print("{0} {1} {2} {3}", Parent.CallMode, Parent.CefName, Arguments(i), Arguments(i + 1))
+                    Debug.Print("{0} {1} {2} {3}", Owner.CallMode, Owner.CefName, Arguments(i), Arguments(i + 1))
                 Else
 
                 End If
