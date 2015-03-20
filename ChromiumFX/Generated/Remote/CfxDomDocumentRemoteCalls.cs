@@ -161,7 +161,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxDomDocumentGetTitleRenderProcessCall) {}
 
         internal ulong self;
-        internal String __retval;
+        internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -404,7 +404,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxDomDocumentGetSelectionAsMarkupRenderProcessCall) {}
 
         internal ulong self;
-        internal String __retval;
+        internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -434,7 +434,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxDomDocumentGetSelectionAsTextRenderProcessCall) {}
 
         internal ulong self;
-        internal String __retval;
+        internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -464,7 +464,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxDomDocumentGetBaseUrlRenderProcessCall) {}
 
         internal ulong self;
-        internal String __retval;
+        internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -495,7 +495,7 @@ namespace Chromium.Remote {
 
         internal ulong self;
         internal string partialURL;
-        internal String __retval;
+        internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);

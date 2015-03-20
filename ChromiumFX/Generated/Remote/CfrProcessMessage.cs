@@ -117,7 +117,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
         /// </remarks>
-        public String Name {
+        public string Name {
             get {
                 var call = new CfxProcessMessageGetNameRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);

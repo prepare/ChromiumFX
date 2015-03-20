@@ -347,7 +347,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public String GetLabel(int commandId) {
+        public string GetLabel(int commandId) {
             return StringFunctions.ConvertStringUserfree(CfxApi.cfx_menu_model_get_label(NativePtr, commandId));
         }
 
@@ -359,7 +359,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
-        public String GetLabelAt(int index) {
+        public string GetLabelAt(int index) {
             return StringFunctions.ConvertStringUserfree(CfxApi.cfx_menu_model_get_label_at(NativePtr, index));
         }
 

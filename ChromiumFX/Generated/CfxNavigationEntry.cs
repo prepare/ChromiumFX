@@ -97,7 +97,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
         /// </remarks>
-        public String Url {
+        public string Url {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_navigation_entry_get_url(NativePtr));
             }
@@ -110,7 +110,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
         /// </remarks>
-        public String DisplayUrl {
+        public string DisplayUrl {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_navigation_entry_get_display_url(NativePtr));
             }
@@ -123,7 +123,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
         /// </remarks>
-        public String OriginalUrl {
+        public string OriginalUrl {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_navigation_entry_get_original_url(NativePtr));
             }
@@ -136,7 +136,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
         /// </remarks>
-        public String Title {
+        public string Title {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_navigation_entry_get_title(NativePtr));
             }
@@ -177,7 +177,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
         /// </remarks>
-        public String FrameName {
+        public string FrameName {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_navigation_entry_get_frame_name(NativePtr));
             }

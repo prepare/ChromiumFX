@@ -196,7 +196,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxRuntimeGetMimeTypeRenderProcessCall) {}
 
         internal string extension;
-        internal String __retval;
+        internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(extension);

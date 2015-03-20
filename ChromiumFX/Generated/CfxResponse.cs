@@ -124,7 +124,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
         /// </remarks>
-        public String StatusText {
+        public string StatusText {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_response_get_status_text(NativePtr));
             }
@@ -142,7 +142,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
         /// </remarks>
-        public String MimeType {
+        public string MimeType {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_response_get_mime_type(NativePtr));
             }
@@ -160,7 +160,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
         /// </remarks>
-        public String GetHeader(string name) {
+        public string GetHeader(string name) {
             var name_pinned = new PinnedString(name);
             var __retval = CfxApi.cfx_response_get_header(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length);
             name_pinned.Obj.Free();

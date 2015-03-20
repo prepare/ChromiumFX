@@ -141,7 +141,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String Title {
+        public string Title {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domdocument_get_title(NativePtr));
             }
@@ -232,7 +232,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String SelectionAsMarkup {
+        public string SelectionAsMarkup {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domdocument_get_selection_as_markup(NativePtr));
             }
@@ -245,7 +245,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String SelectionAsText {
+        public string SelectionAsText {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domdocument_get_selection_as_text(NativePtr));
             }
@@ -258,7 +258,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String BaseUrl {
+        public string BaseUrl {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domdocument_get_base_url(NativePtr));
             }
@@ -286,7 +286,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String GetCompleteUrl(string partialURL) {
+        public string GetCompleteUrl(string partialURL) {
             var partialURL_pinned = new PinnedString(partialURL);
             var __retval = CfxApi.cfx_domdocument_get_complete_url(NativePtr, partialURL_pinned.Obj.PinnedPtr, partialURL_pinned.Length);
             partialURL_pinned.Obj.Free();

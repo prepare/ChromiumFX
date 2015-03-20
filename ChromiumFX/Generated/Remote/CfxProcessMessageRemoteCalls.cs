@@ -160,7 +160,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxProcessMessageGetNameRenderProcessCall) {}
 
         internal ulong self;
-        internal String __retval;
+        internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);

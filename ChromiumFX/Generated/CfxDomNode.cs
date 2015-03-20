@@ -163,7 +163,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String FormControlElementType {
+        public string FormControlElementType {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_form_control_element_type(NativePtr));
             }
@@ -176,7 +176,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String Name {
+        public string Name {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_name(NativePtr));
             }
@@ -189,7 +189,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String Value {
+        public string Value {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_value(NativePtr));
             }
@@ -202,7 +202,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String AsMarkup {
+        public string AsMarkup {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_as_markup(NativePtr));
             }
@@ -307,7 +307,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String ElementTagName {
+        public string ElementTagName {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_element_tag_name(NativePtr));
             }
@@ -333,7 +333,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String ElementInnerText {
+        public string ElementInnerText {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_element_inner_text(NativePtr));
             }
@@ -386,7 +386,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String GetElementAttribute(string attrName) {
+        public string GetElementAttribute(string attrName) {
             var attrName_pinned = new PinnedString(attrName);
             var __retval = CfxApi.cfx_domnode_get_element_attribute(NativePtr, attrName_pinned.Obj.PinnedPtr, attrName_pinned.Length);
             attrName_pinned.Obj.Free();

@@ -134,7 +134,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String Title {
+        public string Title {
             get {
                 var call = new CfxDomDocumentGetTitleRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
@@ -246,7 +246,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String SelectionAsMarkup {
+        public string SelectionAsMarkup {
             get {
                 var call = new CfxDomDocumentGetSelectionAsMarkupRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
@@ -262,7 +262,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String SelectionAsText {
+        public string SelectionAsText {
             get {
                 var call = new CfxDomDocumentGetSelectionAsTextRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
@@ -278,7 +278,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String BaseUrl {
+        public string BaseUrl {
             get {
                 var call = new CfxDomDocumentGetBaseUrlRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
@@ -310,7 +310,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
-        public String GetCompleteUrl(string partialURL) {
+        public string GetCompleteUrl(string partialURL) {
             var call = new CfxDomDocumentGetCompleteUrlRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.partialURL = partialURL;

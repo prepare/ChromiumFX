@@ -120,7 +120,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
         /// </remarks>
-        public String Name {
+        public string Name {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_process_message_get_name(NativePtr));
             }

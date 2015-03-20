@@ -220,7 +220,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
         /// </remarks>
-        public String FullPath {
+        public string FullPath {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_download_item_get_full_path(NativePtr));
             }
@@ -246,7 +246,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
         /// </remarks>
-        public String Url {
+        public string Url {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_download_item_get_url(NativePtr));
             }
@@ -259,7 +259,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
         /// </remarks>
-        public String SuggestedFileName {
+        public string SuggestedFileName {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_download_item_get_suggested_file_name(NativePtr));
             }
@@ -272,7 +272,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
         /// </remarks>
-        public String ContentDisposition {
+        public string ContentDisposition {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_download_item_get_content_disposition(NativePtr));
             }
@@ -285,7 +285,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
         /// </remarks>
-        public String MimeType {
+        public string MimeType {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_download_item_get_mime_type(NativePtr));
             }

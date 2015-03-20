@@ -101,7 +101,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
-        public String Url {
+        public string Url {
             get {
                 var call = new CfxRequestGetUrlRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
@@ -126,7 +126,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
-        public String Method {
+        public string Method {
             get {
                 var call = new CfxRequestGetMethodRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
@@ -202,7 +202,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
-        public String FirstPartyForCookies {
+        public string FirstPartyForCookies {
             get {
                 var call = new CfxRequestGetFirstPartyForCookiesRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);

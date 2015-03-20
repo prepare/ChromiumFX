@@ -135,7 +135,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
         /// </remarks>
-        public String LinkUrl {
+        public string LinkUrl {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_context_menu_params_get_link_url(NativePtr));
             }
@@ -149,7 +149,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
         /// </remarks>
-        public String UnfilteredLinkUrl {
+        public string UnfilteredLinkUrl {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_context_menu_params_get_unfiltered_link_url(NativePtr));
             }
@@ -163,7 +163,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
         /// </remarks>
-        public String SourceUrl {
+        public string SourceUrl {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_context_menu_params_get_source_url(NativePtr));
             }
@@ -190,7 +190,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
         /// </remarks>
-        public String PageUrl {
+        public string PageUrl {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_context_menu_params_get_page_url(NativePtr));
             }
@@ -203,7 +203,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
         /// </remarks>
-        public String FrameUrl {
+        public string FrameUrl {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_context_menu_params_get_frame_url(NativePtr));
             }
@@ -217,7 +217,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
         /// </remarks>
-        public String FrameCharset {
+        public string FrameCharset {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_context_menu_params_get_frame_charset(NativePtr));
             }
@@ -258,7 +258,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
         /// </remarks>
-        public String SelectionText {
+        public string SelectionText {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_context_menu_params_get_selection_text(NativePtr));
             }
@@ -272,7 +272,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
         /// </remarks>
-        public String MisspelledWord {
+        public string MisspelledWord {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_context_menu_params_get_misspelled_word(NativePtr));
             }

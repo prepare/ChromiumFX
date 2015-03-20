@@ -91,7 +91,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public String ScriptName {
+        public string ScriptName {
             get {
                 var call = new CfxV8StackFrameGetScriptNameRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
@@ -109,7 +109,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public String ScriptNameOrSourceUrl {
+        public string ScriptNameOrSourceUrl {
             get {
                 var call = new CfxV8StackFrameGetScriptNameOrSourceUrlRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
@@ -125,7 +125,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public String FunctionName {
+        public string FunctionName {
             get {
                 var call = new CfxV8StackFrameGetFunctionNameRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);

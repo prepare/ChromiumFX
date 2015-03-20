@@ -138,7 +138,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
         /// </remarks>
-        public String CommandLineString {
+        public string CommandLineString {
             get {
                 var call = new CfxCommandLineGetCommandLineStringRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
@@ -156,7 +156,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
         /// </remarks>
-        public String Program {
+        public string Program {
             get {
                 var call = new CfxCommandLineGetProgramRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
@@ -301,7 +301,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
         /// </remarks>
-        public String GetSwitchValue(string name) {
+        public string GetSwitchValue(string name) {
             var call = new CfxCommandLineGetSwitchValueRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.name = name;

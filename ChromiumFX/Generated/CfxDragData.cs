@@ -161,7 +161,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_drag_data_capi.h">cef/include/capi/cef_drag_data_capi.h</see>.
         /// </remarks>
-        public String LinkUrl {
+        public string LinkUrl {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_link_url(NativePtr));
             }
@@ -181,7 +181,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_drag_data_capi.h">cef/include/capi/cef_drag_data_capi.h</see>.
         /// </remarks>
-        public String LinkTitle {
+        public string LinkTitle {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_link_title(NativePtr));
             }
@@ -201,7 +201,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_drag_data_capi.h">cef/include/capi/cef_drag_data_capi.h</see>.
         /// </remarks>
-        public String LinkMetadata {
+        public string LinkMetadata {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_link_metadata(NativePtr));
             }
@@ -221,7 +221,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_drag_data_capi.h">cef/include/capi/cef_drag_data_capi.h</see>.
         /// </remarks>
-        public String FragmentText {
+        public string FragmentText {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_fragment_text(NativePtr));
             }
@@ -241,7 +241,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_drag_data_capi.h">cef/include/capi/cef_drag_data_capi.h</see>.
         /// </remarks>
-        public String FragmentHtml {
+        public string FragmentHtml {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_fragment_html(NativePtr));
             }
@@ -262,7 +262,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_drag_data_capi.h">cef/include/capi/cef_drag_data_capi.h</see>.
         /// </remarks>
-        public String FragmentBaseUrl {
+        public string FragmentBaseUrl {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_fragment_base_url(NativePtr));
             }
@@ -280,7 +280,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_drag_data_capi.h">cef/include/capi/cef_drag_data_capi.h</see>.
         /// </remarks>
-        public String FileName {
+        public string FileName {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_file_name(NativePtr));
             }

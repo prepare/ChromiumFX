@@ -38,7 +38,7 @@ Public Class CefStringUserFreeType
 
     Public Overrides ReadOnly Property PublicSymbol As String
         Get
-            Return "String"
+            Return "string"
         End Get
     End Property
 

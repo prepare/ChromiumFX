@@ -114,7 +114,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
-        public String Url {
+        public string Url {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_request_get_url(NativePtr));
             }
@@ -135,7 +135,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
-        public String Method {
+        public string Method {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_request_get_method(NativePtr));
             }
@@ -193,7 +193,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
-        public String FirstPartyForCookies {
+        public string FirstPartyForCookies {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_request_get_first_party_for_cookies(NativePtr));
             }

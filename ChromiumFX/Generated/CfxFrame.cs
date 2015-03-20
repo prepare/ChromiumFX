@@ -142,7 +142,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
-        public String Name {
+        public string Name {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_frame_get_name(NativePtr));
             }
@@ -182,7 +182,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
-        public String Url {
+        public string Url {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_frame_get_url(NativePtr));
             }

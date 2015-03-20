@@ -71,7 +71,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxV8StackFrameGetScriptNameRenderProcessCall) {}
 
         internal ulong self;
-        internal String __retval;
+        internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -101,7 +101,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxV8StackFrameGetScriptNameOrSourceUrlRenderProcessCall) {}
 
         internal ulong self;
-        internal String __retval;
+        internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -131,7 +131,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxV8StackFrameGetFunctionNameRenderProcessCall) {}
 
         internal ulong self;
-        internal String __retval;
+        internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
