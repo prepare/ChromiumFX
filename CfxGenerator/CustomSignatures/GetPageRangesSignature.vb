@@ -1,7 +1,7 @@
 ﻿Public Class GetPageRangesSignature
     Inherits SignatureWithStructArray
 
-    Public Sub New(parent As ISignatureParent, sd As Parser.SignatureData, api As ApiTypeBuilder, arrayIndex As Integer, countIndex As Integer)
+    Public Sub New(parent As ISignatureOwner, sd As Parser.SignatureData, api As ApiTypeBuilder, arrayIndex As Integer, countIndex As Integer)
         MyBase.New(parent, sd, api, arrayIndex, countIndex)
 
     End Sub

@@ -30,7 +30,7 @@
 
 
 
-Public Interface ISignatureParent
+Public Interface ISignatureOwner
     ReadOnly Property CefName As String
     ReadOnly Property CallMode As CfxCallMode
     ReadOnly Property CfxApiFunctionName As String
@@ -39,4 +39,5 @@ Public Interface ISignatureParent
     ReadOnly Property PropertyName As String
     ReadOnly Property RemoteCallId As String
     ReadOnly Property Comments As CommentData
+    ReadOnly Property CefConfig As CefConfigData
 End Interface

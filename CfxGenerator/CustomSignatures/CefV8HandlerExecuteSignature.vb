@@ -35,8 +35,8 @@ Public Class CefV8HandlerExecuteSignature
 
     Private m_publicArguments As Argument()
 
-    Public Sub New(parent As ISignatureParent, sd As Parser.SignatureData, api As ApiTypeBuilder)
-        MyBase.New(parent, sd, api, 4, 3)
+    Public Sub New(owner As ISignatureOwner, sd As Parser.SignatureData, api As ApiTypeBuilder)
+        MyBase.New(owner, sd, api, 4, 3)
 
         Dim list = New List(Of Argument)
         For Each arg In MyBase.ManagedArguments

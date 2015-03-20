@@ -121,7 +121,7 @@
     <Compile Include="CustomSignatures\CustomSignatures.vb" />
     <Compile Include="CustomSignatures\GetFrameIdentifiersSignature.vb" />
     <Compile Include="CustomSignatures\SignatureWithStructPtrArray.vb" />
-    <Compile Include="ISignatureParent.vb" />
+    <Compile Include="ISignatureOwner.vb" />
     <Compile Include="Parser\ArgumentData.vb" />
     <Compile Include="Parser\CefApiData.vb" />
     <Compile Include="Parser\EnumData.vb" />

@@ -32,7 +32,7 @@
 
 Public Class CefCallbackType
     Inherits ApiType
-    Implements ISignatureParent
+    Implements ISignatureOwner
 
     Public ReadOnly Signature As Signature
     Public ReadOnly Parent As CefStructType
@@ -519,37 +519,37 @@ Public Class CefCallbackType
         End Get
     End Property
 
-    Public ReadOnly Property CallMode As CfxCallMode Implements ISignatureParent.CallMode
+    Public ReadOnly Property CallMode As CfxCallMode Implements ISignatureOwner.CallMode
         Get
             Return Me.m_callMode
         End Get
     End Property
 
-    Public ReadOnly Property CefName As String Implements ISignatureParent.CefName
+    Public ReadOnly Property CefName As String Implements ISignatureOwner.CefName
         Get
             Return Parent.Name & "::" & Name
         End Get
     End Property
 
-    Public ReadOnly Property CfxApiFunctionName As String Implements ISignatureParent.CfxApiFunctionName
+    Public ReadOnly Property CfxApiFunctionName As String Implements ISignatureOwner.CfxApiFunctionName
         Get
             Return String.Concat(Parent.CfxName, "_", Name)
         End Get
     End Property
 
-    Public ReadOnly Property PublicFunctionName As String Implements ISignatureParent.PublicFunctionName
+    Public ReadOnly Property PublicFunctionName As String Implements ISignatureOwner.PublicFunctionName
         Get
             Return PublicName
         End Get
     End Property
 
-    Public ReadOnly Property PublicPropertyName As String Implements ISignatureParent.PropertyName
+    Public ReadOnly Property PublicPropertyName As String Implements ISignatureOwner.PropertyName
         Get
             Return PropertyName
         End Get
     End Property
 
-    Public ReadOnly Property RemoteCallId As String Implements ISignatureParent.RemoteCallId
+    Public ReadOnly Property RemoteCallId As String Implements ISignatureOwner.RemoteCallId
         Get
             If Parent.ClassBuilder.Category = StructCategory.ApiCallbacks Then
                 Return Parent.ClassName & RemoteCallClassName & "BrowserProcessCall"
@@ -559,15 +559,21 @@ Public Class CefCallbackType
         End Get
     End Property
 
-    Public ReadOnly Property PublicClassName As String Implements ISignatureParent.PublicClassName
+    Public ReadOnly Property PublicClassName As String Implements ISignatureOwner.PublicClassName
         Get
             Return Parent.ClassName
         End Get
     End Property
 
-    Public ReadOnly Property Comments1 As CommentData Implements ISignatureParent.Comments
+    Public ReadOnly Property Comments1 As CommentData Implements ISignatureOwner.Comments
         Get
             Return Comments
+        End Get
+    End Property
+
+    Public ReadOnly Property CefConfig1 As CefConfigData Implements ISignatureOwner.CefConfig
+        Get
+            Return cefConfig
         End Get
     End Property
 End Class

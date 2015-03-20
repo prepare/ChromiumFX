@@ -38,8 +38,8 @@ Public Class SignatureWithStructPtrArray
 
     Private m_publicArguments As Argument()
 
-    Public Sub New(parent As ISignatureParent, sd As Parser.SignatureData, api As ApiTypeBuilder, arrayIndex As Integer, countIndex As Integer)
-        MyBase.New(parent, sd, api)
+    Public Sub New(owner As ISignatureOwner, sd As Parser.SignatureData, api As ApiTypeBuilder, arrayIndex As Integer, countIndex As Integer)
+        MyBase.New(owner, sd, api)
         Me.arrayIndex = arrayIndex
         Me.countIndex = countIndex
 
