@@ -40,7 +40,8 @@ Namespace Parser
         Private api As New CefApiData
         Private booleanRetvals As New HashSet(Of String)
         Private booleanParameters As New HashSet(Of String)
-        Private cppApiNames As New Dictionary(Of String, String)
+
+        Private cefConfigs As New Dictionary(Of String, CefConfigData)
 
         Private codeFiles As New Dictionary(Of String, String)
 
@@ -127,9 +128,11 @@ Namespace Parser
                     If sm.CallbackSignature IsNot Nothing Then
                         Dim token = ReduceToken(struct.Name.Substring(0, struct.Name.Length - 2) & sm.Name)
 
-                        If cppApiNames.ContainsKey(token) Then
-                            sm.cppApiName = cppApiNames(token)
-                            token = ReduceToken(struct.Name.Substring(0, struct.Name.Length - 2) & sm.cppApiName)
+                        If cefConfigs.ContainsKey(token) Then
+                            sm.CefConfig = cefConfigs(token)
+                            If sm.CefConfig.CppApiName IsNot Nothing Then
+                                token = ReduceToken(struct.Name.Substring(0, struct.Name.Length - 2) & sm.CefConfig.CppApiName)
+                            End If
                         End If
 
                         If booleanRetvals.Contains(token) Then
@@ -470,8 +473,6 @@ Namespace Parser
             Dim funcEx = New Regex("(\w+)\s*\((.*?)\)", RegexOptions.Singleline)
             Dim boolParamEx = New Regex("\bbool\b(?:\s*[&*])?\s*\b(\w+)\b")
 
-            Dim cppNamesEx = New Regex("--cef\([^)]*\bcapi_name=(\w+)[^)]*\)--[^(]*\b(\w+)\s*\(")
-
             Dim files = Directory.GetFiles("cef\include")
             For Each f In files
                 Dim code = File.ReadAllText(f)
@@ -481,10 +482,7 @@ Namespace Parser
                     Dim className = m.Groups(1).Value
                     Dim body = m.Groups(2).Value
 
-                    Dim mmAlt = cppNamesEx.Matches(body)
-                    For Each m1 As Match In mmAlt
-                        cppApiNames.Add(ReduceToken(className & m1.Groups(1).Value), m1.Groups(2).Value)
-                    Next
+                    ParseCefConfig(className, body)
 
                     Dim mmRetvals = boolRetvalEx.Matches(body)
                     For Each m1 As Match In mmRetvals
@@ -501,8 +499,6 @@ Namespace Parser
                 Next
 
                 code = classEx.Replace(code, "")
-
-                If f.EndsWith("cef_app.h") Then Stop
 
                 Dim mmRetvalsGlob = boolRetvalEx.Matches(code)
                 For Each m As Match In mmRetvalsGlob
@@ -527,6 +523,50 @@ Namespace Parser
             Return token.Replace("_", "").ToLowerInvariant()
         End Function
 
+        Private Sub ParseCefConfig(className As String, code As String)
+
+            Dim cefConfigTagEx = New Regex("/\*--cef\(([^)]*)\)--\*/[^(]*\b(\w+)\s*\(")
+
+            Dim mm = cefConfigTagEx.Matches(code)
+            For Each m As Match In mm
+                Dim config = m.Groups(1).Value
+                If config.Length > 0 Then
+                    Dim funcName = m.Groups(2).Value
+                    Dim token = ReduceToken(className & funcName)
+                    Dim items = config.Split(","c)
+                    Dim data = New CefConfigData
+                    Dim optParams = New List(Of String)
+                    For Each item In items
+                        Dim pair = item.Split("="c)
+                        Dim value As String = Nothing
+                        If pair.Length = 2 Then
+                            value = pair(1).Trim()
+                        End If
+
+                        Select Case pair(0).Trim()
+                            Case "capi_name"
+                                data.CppApiName = funcName
+                                token = ReduceToken(className & value)
+                            Case "index_param"
+                                data.IndexParameter = value
+                            Case "optional_param"
+                                optParams.Add(value)
+                            Case "count_func"
+                                data.CountFunction = value
+                            Case "default_retval"
+                                data.DefaultRetval = value
+                            Case "api_hash_check"
+                                data.ApiHashCheck = True
+                            Case Else
+                                Stop
+                        End Select
+                    Next
+                    data.OptionalParameters = optParams.ToArray()
+                    cefConfigs.Add(token, data)
+                End If
+            Next
+
+        End Sub
 
     End Class
 End Namespace
