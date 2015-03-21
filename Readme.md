@@ -4,26 +4,26 @@
 ----------
 
 ## Home ##
-[https://bitbucket.org/wborgsm/chromiumfx]()
+[https://bitbucket.org/chromiumfx/chromiumfx]()
 
 ## Overview ##
 
 ### ChromiumFX.dll ###
 
-* **[Managed wrapper](https://bitbucket.org/wborgsm/chromiumfx/wiki/Project) for the complete CEF API**
-* **[Remote wrapper](https://bitbucket.org/wborgsm/chromiumfx/wiki/Walkthrough_02) for full access to DOM and V8 from within the browser process**
+* **[Managed wrapper](https://bitbucket.org/chromiumfx/chromiumfx/wiki/Project) for the complete CEF API**
+* **[Remote wrapper](https://bitbucket.org/chromiumfx/chromiumfx/wiki/Walkthrough_02) for full access to DOM and V8 from within the browser process**
 
 ### ChromiumWebBrowser.dll ###
 
-* **[Windows Forms control](https://bitbucket.org/wborgsm/chromiumfx/wiki/Walkthrough_01) based on ChromiumFX**
+* **[Windows Forms control](https://bitbucket.org/chromiumfx/chromiumfx/wiki/Walkthrough_01) based on ChromiumFX**
 
 ### See Also ###
 
-* [Project Setup and Description](https://bitbucket.org/wborgsm/chromiumfx/wiki/Project)
-* [Getting started with the Browser Control](https://bitbucket.org/wborgsm/chromiumfx/wiki/Walkthrough_01) 
-* [Getting started with the Remoting Framework](https://bitbucket.org/wborgsm/chromiumfx/wiki/Walkthrough_02)
+* [Project Setup and Description](https://bitbucket.org/chromiumfx/chromiumfx/wiki/Project)
+* [Getting started with the Browser Control](https://bitbucket.org/chromiumfx/chromiumfx/wiki/Walkthrough_01) 
+* [Getting started with the Remoting Framework](https://bitbucket.org/chromiumfx/chromiumfx/wiki/Walkthrough_02)
 * [API Reference](http://chromiumfx.bitbucket.org/api/)
-* [Binary releases](https://bitbucket.org/wborgsm/chromiumfx/downloads)
+* [Binary releases](https://bitbucket.org/chromiumfx/chromiumfx/downloads)
 
 ### Warning ###
 The API of this project is not frozen and is subject to change. The overall structure will be kept though.
