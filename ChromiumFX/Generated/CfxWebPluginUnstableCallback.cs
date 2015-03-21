@@ -42,7 +42,7 @@ namespace Chromium {
     /// </summary>
     /// <remarks>
     /// See also the original CEF documentation in
-    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
     /// </remarks>
     public class CfxWebPluginUnstableCallback : CfxBase {
 
@@ -88,7 +88,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
         public event CfxWebPluginUnstableCallbackIsUnstableEventHandler IsUnstable {
             add {
@@ -134,7 +134,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
         public delegate void CfxWebPluginUnstableCallbackIsUnstableEventHandler(object sender, CfxWebPluginUnstableCallbackIsUnstableEventArgs e);
 
@@ -145,7 +145,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
         public class CfxWebPluginUnstableCallbackIsUnstableEventArgs : CfxEventArgs {
 

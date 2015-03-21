@@ -40,7 +40,7 @@ namespace Chromium {
     /// </summary>
     /// <remarks>
     /// See also the original CEF documentation in
-    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_auth_callback_capi.h">cef/include/capi/cef_auth_callback_capi.h</see>.
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_auth_callback_capi.h">cef/include/capi/cef_auth_callback_capi.h</see>.
     /// </remarks>
     public class CfxAuthCallback : CfxBase {
 
@@ -73,7 +73,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_auth_callback_capi.h">cef/include/capi/cef_auth_callback_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_auth_callback_capi.h">cef/include/capi/cef_auth_callback_capi.h</see>.
         /// </remarks>
         public void Continue(string userName, string password) {
             var userName_pinned = new PinnedString(userName);
@@ -88,7 +88,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_auth_callback_capi.h">cef/include/capi/cef_auth_callback_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_auth_callback_capi.h">cef/include/capi/cef_auth_callback_capi.h</see>.
         /// </remarks>
         public void Cancel() {
             CfxApi.cfx_auth_callback_cancel(NativePtr);

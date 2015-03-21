@@ -253,7 +253,7 @@ Public Class CodeBuilder
             AppendSummary(summary, forRemote, forEvent)
             AppendLine("/// <remarks>")
             AppendLine("/// See also the original CEF documentation in")
-            AppendLine("/// <see href=""https://bitbucket.org/wborgsm/chromiumfx/src/tip/{0}"">{0}</see>.", summary.FileName.Replace("\", "/"))
+            AppendLine("/// <see href=""https://bitbucket.org/chromiumfx/chromiumfx/src/tip/{0}"">{0}</see>.", summary.FileName.Replace("\", "/"))
             AppendLine("/// </remarks>")
         End If
     End Sub

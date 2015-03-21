@@ -69,7 +69,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_origin_whitelist_capi.h">cef/include/capi/cef_origin_whitelist_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_origin_whitelist_capi.h">cef/include/capi/cef_origin_whitelist_capi.h</see>.
         /// </remarks>
         public static bool AddCrossOriginWhitelistEntry(string sourceOrigin, string targetProtocol, string targetDomain, bool allowTargetSubdomains) {
             var sourceOrigin_pinned = new PinnedString(sourceOrigin);
@@ -89,7 +89,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
         public static void AddWebPluginDirectory(string dir) {
             var dir_pinned = new PinnedString(dir);
@@ -104,7 +104,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
         public static void AddWebPluginPath(string path) {
             var path_pinned = new PinnedString(path);
@@ -121,7 +121,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/cef_version.h">cef/include/cef_version.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/cef_version.h">cef/include/cef_version.h</see>.
         /// </remarks>
         public static string ApiHash(int entry) {
             return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(CfxApi.cfx_api_hash(entry));
@@ -142,7 +142,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
         /// </remarks>
         public static bool BeginTracing(string categories, CfxCompletionCallback callback) {
             var categories_pinned = new PinnedString(categories);
@@ -156,7 +156,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/cef_version.h">cef/include/cef_version.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/cef_version.h">cef/include/cef_version.h</see>.
         /// </remarks>
         public static int BuildRevision() {
             return CfxApi.cfx_build_revision();
@@ -168,7 +168,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_origin_whitelist_capi.h">cef/include/capi/cef_origin_whitelist_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_origin_whitelist_capi.h">cef/include/capi/cef_origin_whitelist_capi.h</see>.
         /// </remarks>
         public static bool ClearCrossOriginWhitelist() {
             return 0 != CfxApi.cfx_clear_cross_origin_whitelist();
@@ -180,7 +180,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
         /// </remarks>
         public static bool ClearSchemeHandlerFactories() {
             return 0 != CfxApi.cfx_clear_scheme_handler_factories();
@@ -193,7 +193,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
         /// </remarks>
         public static bool CreateUrl(CfxUrlParts parts, ref string url) {
             var url_pinned = new PinnedString(url);
@@ -213,7 +213,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static bool CurrentlyOn(CfxThreadId threadId) {
             return 0 != CfxApi.cfx_currently_on(threadId);
@@ -229,7 +229,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
         public static void DoMessageLoopWork() {
             CfxApi.cfx_do_message_loop_work();
@@ -247,7 +247,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
         /// </remarks>
         public static bool EndTracing(string tracingFile, CfxEndTracingCallback callback) {
             var tracingFile_pinned = new PinnedString(tracingFile);
@@ -270,7 +270,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
         private static int ExecuteProcessPrivate(CfxApp application, IntPtr windowsSandboxInfo) {
             return CfxApi.cfx_execute_process(CfxApp.Unwrap(application), windowsSandboxInfo);
@@ -282,7 +282,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
         public static void ForceWebPluginShutdown(string path) {
             var path_pinned = new PinnedString(path);
@@ -298,7 +298,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
         /// </remarks>
         public static void GetExtensionsForMimeType(string mimeType, System.Collections.Generic.List<string> extensions) {
             var mimeType_pinned = new PinnedString(mimeType);
@@ -318,7 +318,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_geolocation_capi.h">cef/include/capi/cef_geolocation_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_geolocation_capi.h">cef/include/capi/cef_geolocation_capi.h</see>.
         /// </remarks>
         public static bool GetGeolocation(CfxGetGeolocationCallback callback) {
             return 0 != CfxApi.cfx_get_geolocation(CfxGetGeolocationCallback.Unwrap(callback));
@@ -330,7 +330,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
         /// </remarks>
         public static string GetMimeType(string extension) {
             var extension_pinned = new PinnedString(extension);
@@ -345,7 +345,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_path_util_capi.h">cef/include/capi/cef_path_util_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_path_util_capi.h">cef/include/capi/cef_path_util_capi.h</see>.
         /// </remarks>
         public static bool GetPath(CfxPathKey key, ref string path) {
             var path_pinned = new PinnedString(path);
@@ -368,7 +368,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
         private static bool InitializePrivate(CfxSettings settings, CfxApp application, IntPtr windowsSandboxInfo) {
             return 0 != CfxApi.cfx_initialize(CfxSettings.Unwrap(settings), CfxApp.Unwrap(application), windowsSandboxInfo);
@@ -380,7 +380,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
         public static void IsWebPluginUnstable(string path, CfxWebPluginUnstableCallback callback) {
             var path_pinned = new PinnedString(path);
@@ -399,7 +399,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_process_util_capi.h">cef/include/capi/cef_process_util_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_process_util_capi.h">cef/include/capi/cef_process_util_capi.h</see>.
         /// </remarks>
         public static bool LaunchProcess(CfxCommandLine commandLine) {
             return 0 != CfxApi.cfx_launch_process(CfxCommandLine.Unwrap(commandLine));
@@ -412,7 +412,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
         /// </remarks>
         public static long NowFromSystemTraceTime() {
             return CfxApi.cfx_now_from_system_trace_time();
@@ -424,7 +424,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
         /// </remarks>
         public static bool ParseUrl(string url, CfxUrlParts parts) {
             var url_pinned = new PinnedString(url);
@@ -440,7 +440,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static bool PostDelayedTask(CfxThreadId threadId, CfxTask task, long delayMs) {
             return 0 != CfxApi.cfx_post_delayed_task(threadId, CfxTask.Unwrap(task), delayMs);
@@ -452,7 +452,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static bool PostTask(CfxThreadId threadId, CfxTask task) {
             return 0 != CfxApi.cfx_post_task(threadId, CfxTask.Unwrap(task));
@@ -465,7 +465,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
         public static void QuitMessageLoop() {
             CfxApi.cfx_quit_message_loop();
@@ -478,7 +478,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
         public static void RefreshWebPlugins() {
             CfxApi.cfx_refresh_web_plugins();
@@ -540,7 +540,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public static bool RegisterExtension(string extensionName, string javascriptCode, CfxV8Handler handler) {
             var extensionName_pinned = new PinnedString(extensionName);
@@ -566,7 +566,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
         /// </remarks>
         public static bool RegisterSchemeHandlerFactory(string schemeName, string domainName, CfxSchemeHandlerFactory factory) {
             var schemeName_pinned = new PinnedString(schemeName);
@@ -583,7 +583,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
         public static void RegisterWebPluginCrash(string path) {
             var path_pinned = new PinnedString(path);
@@ -597,7 +597,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_origin_whitelist_capi.h">cef/include/capi/cef_origin_whitelist_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_origin_whitelist_capi.h">cef/include/capi/cef_origin_whitelist_capi.h</see>.
         /// </remarks>
         public static bool RemoveCrossOriginWhitelistEntry(string sourceOrigin, string targetProtocol, string targetDomain, bool allowTargetSubdomains) {
             var sourceOrigin_pinned = new PinnedString(sourceOrigin);
@@ -617,7 +617,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
         public static void RemoveWebPluginPath(string path) {
             var path_pinned = new PinnedString(path);
@@ -635,7 +635,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
         public static void RunMessageLoop() {
             CfxApi.cfx_run_message_loop();
@@ -647,7 +647,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
         public static void SetOsModalLoop(bool osModalLoop) {
             CfxApi.cfx_set_osmodal_loop(osModalLoop ? 1 : 0);
@@ -659,7 +659,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
         private static void ShutdownPrivate() {
             CfxApi.cfx_shutdown();
@@ -672,7 +672,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
         public static void UnregisterInternalWebPlugin(string path) {
             var path_pinned = new PinnedString(path);
@@ -692,7 +692,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/cef_version.h">cef/include/cef_version.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/cef_version.h">cef/include/cef_version.h</see>.
         /// </remarks>
         public static int VersionInfo(int entry) {
             return CfxApi.cfx_version_info(entry);
@@ -704,7 +704,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
         public static void VisitWebPluginInfo(CfxWebPluginInfoVisitor visitor) {
             CfxApi.cfx_visit_web_plugin_info(CfxWebPluginInfoVisitor.Unwrap(visitor));

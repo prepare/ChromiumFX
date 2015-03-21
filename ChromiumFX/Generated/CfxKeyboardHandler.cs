@@ -42,7 +42,7 @@ namespace Chromium {
     /// </summary>
     /// <remarks>
     /// See also the original CEF documentation in
-    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
     /// </remarks>
     public class CfxKeyboardHandler : CfxBase {
 
@@ -115,7 +115,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
         /// </remarks>
         public event CfxOnPreKeyEventEventHandler OnPreKeyEvent {
             add {
@@ -150,7 +150,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
         /// </remarks>
         public event CfxOnKeyEventEventHandler OnKeyEvent {
             add {
@@ -202,7 +202,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
         /// </remarks>
         public delegate void CfxOnPreKeyEventEventHandler(object sender, CfxOnPreKeyEventEventArgs e);
 
@@ -215,7 +215,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
         /// </remarks>
         public class CfxOnPreKeyEventEventArgs : CfxEventArgs {
 
@@ -299,7 +299,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
         /// </remarks>
         public delegate void CfxOnKeyEventEventHandler(object sender, CfxOnKeyEventEventArgs e);
 
@@ -311,7 +311,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_keyboard_handler_capi.h">cef/include/capi/cef_keyboard_handler_capi.h</see>.
         /// </remarks>
         public class CfxOnKeyEventEventArgs : CfxEventArgs {
 
