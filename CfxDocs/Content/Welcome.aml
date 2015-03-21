@@ -22,10 +22,10 @@
         <para>
           The contents of this reference documentation are covered by the source code licenses of the
           <externalLink><linkText>Chromium Embedded Framework</linkText><linkUri>https://bitbucket.org/chromiumembedded/cef/</linkUri></externalLink>
-          and <externalLink><linkText>ChromiumFX</linkText><linkUri>https://bitbucket.org/wborgsm/chromiumfx/</linkUri></externalLink>. See also the
-          <externalLink><linkText>CEF Readme File</linkText><linkUri>https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/README.txt</linkUri></externalLink>,
-          the <externalLink><linkText>CEF License</linkText><linkUri>https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/LICENSE.txt</linkUri></externalLink>
-          and the <externalLink><linkText>ChromiumFX License</linkText><linkUri>https://bitbucket.org/wborgsm/chromiumfx/src/tip/License.txt</linkUri></externalLink>.
+          and <externalLink><linkText>ChromiumFX</linkText><linkUri>https://bitbucket.org/chromiumfx/chromiumfx/</linkUri></externalLink>. See also the
+          <externalLink><linkText>CEF Readme File</linkText><linkUri>https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/README.txt</linkUri></externalLink>,
+          the <externalLink><linkText>CEF License</linkText><linkUri>https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/LICENSE.txt</linkUri></externalLink>
+          and the <externalLink><linkText>ChromiumFX License</linkText><linkUri>https://bitbucket.org/chromiumfx/chromiumfx/src/tip/License.txt</linkUri></externalLink>.
       </para>
       <para/><para/>
      </content>
@@ -36,17 +36,17 @@
         <list class="bullet">
           <listItem>
             <para>
-              <externalLink><linkText>ChromiumFX Home</linkText><linkUri>https://bitbucket.org/wborgsm/chromiumfx/</linkUri></externalLink>
+              <externalLink><linkText>ChromiumFX Home</linkText><linkUri>https://bitbucket.org/chromiumfx/chromiumfx/</linkUri></externalLink>
             </para>
           </listItem>
         <listItem>
           <para>
-            <externalLink><linkText>Wiki</linkText><linkUri>https://bitbucket.org/wborgsm/chromiumfx/wiki/</linkUri></externalLink>
+            <externalLink><linkText>Wiki</linkText><linkUri>https://bitbucket.org/chromiumfx/chromiumfx/wiki/</linkUri></externalLink>
           </para>
         </listItem>
           <listItem>
           <para>
-            <externalLink><linkText>Source Code</linkText><linkUri>https://bitbucket.org/wborgsm/chromiumfx/src/tip/</linkUri></externalLink>
+            <externalLink><linkText>Source Code</linkText><linkUri>https://bitbucket.org/chromiumfx/chromiumfx/src/tip/</linkUri></externalLink>
           </para>
         </listItem>
         <listItem>

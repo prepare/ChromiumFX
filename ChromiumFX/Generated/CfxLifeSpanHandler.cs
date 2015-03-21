@@ -43,7 +43,7 @@ namespace Chromium {
     /// </summary>
     /// <remarks>
     /// See also the original CEF documentation in
-    /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
     /// </remarks>
     public class CfxLifeSpanHandler : CfxBase {
 
@@ -181,7 +181,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
         /// </remarks>
         public event CfxOnBeforePopupEventHandler OnBeforePopup {
             add {
@@ -213,7 +213,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
         /// </remarks>
         public event CfxOnAfterCreatedEventHandler OnAfterCreated {
             add {
@@ -247,7 +247,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
         /// </remarks>
         public event CfxRunModalEventHandler RunModal {
             add {
@@ -328,7 +328,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
         /// </remarks>
         public event CfxDoCloseEventHandler DoClose {
             add {
@@ -365,7 +365,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
         /// </remarks>
         public event CfxOnBeforeCloseEventHandler OnBeforeClose {
             add {
@@ -435,7 +435,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
         /// </remarks>
         public delegate void CfxOnBeforePopupEventHandler(object sender, CfxOnBeforePopupEventArgs e);
 
@@ -454,7 +454,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
         /// </remarks>
         public class CfxOnBeforePopupEventArgs : CfxEventArgs {
 
@@ -603,7 +603,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
         /// </remarks>
         public delegate void CfxOnAfterCreatedEventHandler(object sender, CfxOnAfterCreatedEventArgs e);
 
@@ -612,7 +612,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
         /// </remarks>
         public class CfxOnAfterCreatedEventArgs : CfxEventArgs {
 
@@ -646,7 +646,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
         /// </remarks>
         public delegate void CfxRunModalEventHandler(object sender, CfxRunModalEventArgs e);
 
@@ -657,7 +657,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
         /// </remarks>
         public class CfxRunModalEventArgs : CfxEventArgs {
 
@@ -753,7 +753,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
         /// </remarks>
         public delegate void CfxDoCloseEventHandler(object sender, CfxDoCloseEventArgs e);
 
@@ -811,7 +811,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
         /// </remarks>
         public class CfxDoCloseEventArgs : CfxEventArgs {
 
@@ -863,7 +863,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
         /// </remarks>
         public delegate void CfxOnBeforeCloseEventHandler(object sender, CfxOnBeforeCloseEventArgs e);
 
@@ -877,7 +877,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/wborgsm/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
         /// </remarks>
         public class CfxOnBeforeCloseEventArgs : CfxEventArgs {
 
