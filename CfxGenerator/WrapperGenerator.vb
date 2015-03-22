@@ -149,7 +149,7 @@ Public Class WrapperGenerator
             b.AppendLine("#include ""{0}""", f)
         Next
         b.AppendLine()
-        fileManager.WriteFileIfContentChanged("cfx_headers.h", b.ToString())
+        fileManager.WriteFileIfContentChanged("cef_headers.h", b.ToString())
         b.Clear()
     End Sub
 

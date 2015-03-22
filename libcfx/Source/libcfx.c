@@ -35,7 +35,7 @@
 
 #define CFX_EXPORT __declspec(dllexport)
 
-#include "libcfx\Generated\cfx_headers.h"
+#include "libcfx\Generated\cef_headers.h"
 #include "cef\include\cef_version.h"
 
 typedef void* gc_handle_t;
@@ -48,6 +48,7 @@ static __inline void* cfx_copy_structure(void* source, size_t size) {
 	memcpy(target, source, size);
 	return target;
 }
+
 
 #include "libcfx\Generated\cfx_amalgamation.c"
 
