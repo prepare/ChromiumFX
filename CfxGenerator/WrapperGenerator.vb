@@ -394,23 +394,22 @@ Public Class WrapperGenerator
 
         b.Clear()
         b.BeginCfxNamespace(".Remote")
-        b.BeginClass("RemoteCallSwitch", "internal")
-        b.BeginBlock("internal static RemoteCall ForCallId(RemoteCallId id)")
-        b.BeginBlock("switch(id)")
+        b.BeginClass("RemoteCallConstructor", "internal")
+        b.AppendLine("private delegate RemoteCall RemoteCallCtor();")
+        b.BeginBlock("private static RemoteCallCtor[] callConstructors = ")
         For Each id In callIds
-            b.AppendLine("case RemoteCallId.{0}:", id)
-            b.IncreaseIndent()
-            b.AppendLine("return new {0}();", id)
-            b.DecreaseIndent()
+            b.AppendLine("() => {{ return new {0}(); }},", id)
         Next
-        b.AppendLine("default:")
-        b.AppendComment("unreached")
-        b.AppendLine("return null;")
+        b.EndBlock(";")
+        b.AppendLine()
+
+        b.BeginBlock("internal static RemoteCall ForCallId(RemoteCallId id)")
+        b.AppendLine("return callConstructors[(int)id]();")
         b.EndBlock()
         b.EndBlock()
         b.EndBlock()
-        b.EndBlock()
-        fileManager.WriteFileIfContentChanged("RemoteCallSwitch.cs", b.ToString())
+        fileManager.WriteFileIfContentChanged("RemoteCallConstructor.cs", b.ToString())
+
 
     End Sub
 
