@@ -57,7 +57,7 @@ int CEF_CALLBACK _cfx_urlrequest_client_release(struct _cef_base_t* base) {
     return count;
 }
 
-CFX_EXPORT cfx_urlrequest_client_t* cfx_urlrequest_client_ctor(gc_handle_t gc_handle) {
+static cfx_urlrequest_client_t* cfx_urlrequest_client_ctor(gc_handle_t gc_handle) {
     cfx_urlrequest_client_t* ptr = (cfx_urlrequest_client_t*)calloc(1, sizeof(cfx_urlrequest_client_t));
     if(!ptr) return 0;
     ptr->cef_urlrequest_client.base.size = sizeof(cef_urlrequest_client_t);
@@ -68,7 +68,7 @@ CFX_EXPORT cfx_urlrequest_client_t* cfx_urlrequest_client_ctor(gc_handle_t gc_ha
     return ptr;
 }
 
-CFX_EXPORT gc_handle_t cfx_urlrequest_client_get_gc_handle(cfx_urlrequest_client_t* self) {
+static gc_handle_t cfx_urlrequest_client_get_gc_handle(cfx_urlrequest_client_t* self) {
     return self->gc_handle;
 }
 
@@ -119,7 +119,7 @@ int CEF_CALLBACK cfx_urlrequest_client_get_auth_credentials(cef_urlrequest_clien
 }
 
 
-CFX_EXPORT void cfx_urlrequest_client_set_managed_callback(cef_urlrequest_client_t* self, int index, void* callback) {
+static void cfx_urlrequest_client_set_managed_callback(cef_urlrequest_client_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_urlrequest_client_on_request_complete_callback)

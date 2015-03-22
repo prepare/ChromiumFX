@@ -68,6 +68,7 @@ Public Class WrapperGenerator
         BuildLibCfx(fileManager)
         BuildAmalgamation(fileManager)
         BuildHeaders(fileManager)
+        BuildFunctionPointers(fileManager)
         fileManager.DeleteObsoleteFiles()
 
         ''first pass without building files
@@ -149,8 +150,53 @@ Public Class WrapperGenerator
             b.AppendLine("#include ""{0}""", f)
         Next
         b.AppendLine()
-        fileManager.WriteFileIfContentChanged("cfx_headers.h", b.ToString())
+        fileManager.WriteFileIfContentChanged("cef_headers.h", b.ToString())
         b.Clear()
+    End Sub
+
+    Private Sub BuildFunctionPointers(fileManager As GeneratedFileManager)
+        Dim b = New CodeBuilder
+        Dim ff = New List(Of CefExportFunction)(decls.AllExportFunctions())
+        For Each sc In decls.StringCollectionTypes
+            ff.AddRange(sc.ExportFunctions)
+        Next
+
+        For Each f In ff
+            Dim retSymbol = f.ReturnType.OriginalSymbol
+            If f.Signature.ReturnValueIsConst Then
+                retSymbol = "const " & retSymbol
+            End If
+            b.AppendLine("static {0} (*{1}_ptr)({2});", retSymbol, f.Name, f.Signature.OriginalSignature)
+        Next
+        b.AppendLine()
+
+        b.BeginBlock("static void cfx_load_cef_function_pointers(HMODULE libcef)")
+        For Each f In ff
+            If (f.Name <> "cef_api_hash") Then
+                b.AppendLine("{0}_ptr = ({1} (*)({2}))GetProcAddress(libcef, ""{0}"");", f.Name, f.ReturnType.OriginalSymbol, f.Signature.OriginalSignatureUnnamed)
+            End If
+        Next
+        b.EndBlock()
+        b.AppendLine()
+
+        For Each f In ff
+            b.AppendLine("#define {0} {0}_ptr", f.Name)
+        Next
+        b.AppendLine()
+
+        fileManager.WriteFileIfContentChanged("cef_function_pointers.c", b.ToString())
+        b.Clear()
+
+        Dim cfxfuncs = decls.GetCfxApiFunctionNames()
+
+        b.BeginBlock("static void* cfx_function_pointers[{0}] = ", cfxfuncs.Count)
+        For i = 0 To cfxfuncs.Length - 1
+            b.AppendLine("(void*){0},", cfxfuncs(i))
+        Next
+        b.EndBlock(";")
+
+        fileManager.WriteFileIfContentChanged("cfx_function_pointers.c", b.ToString())
+
     End Sub
 
     Private Sub BuildLibCfx(fileManager As GeneratedFileManager)
@@ -247,7 +293,7 @@ Public Class WrapperGenerator
 
         b.BeginFunction("void InstantiateRuntimeDelegates()", "private static")
         For Each f In decls.ExportFunctions
-            CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
+            CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName, f.ApiIndex)
         Next
         b.EndBlock()
         b.AppendLine()
@@ -255,7 +301,7 @@ Public Class WrapperGenerator
         b.BeginFunction("void InstantiateStringCollectionDelegates()", "internal static")
         For Each o In decls.StringCollectionTypes
             For Each f In o.ExportFunctions
-                CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
+                CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName, f.ApiIndex)
             Next
         Next
         b.EndBlock()

@@ -38,39 +38,39 @@ extern "C" {
 #endif
 
 // CEF_EXPORT cef_task_runner_t* cef_task_runner_get_for_current_thread();
-CFX_EXPORT cef_task_runner_t* cfx_task_runner_get_for_current_thread() {
+static cef_task_runner_t* cfx_task_runner_get_for_current_thread() {
     return cef_task_runner_get_for_current_thread();
 }
 // CEF_EXPORT cef_task_runner_t* cef_task_runner_get_for_thread(cef_thread_id_t threadId);
-CFX_EXPORT cef_task_runner_t* cfx_task_runner_get_for_thread(cef_thread_id_t threadId) {
+static cef_task_runner_t* cfx_task_runner_get_for_thread(cef_thread_id_t threadId) {
     return cef_task_runner_get_for_thread(threadId);
 }
 // cef_base_t base
 
 // is_same
-CFX_EXPORT int cfx_task_runner_is_same(cef_task_runner_t* self, cef_task_runner_t* that) {
+static int cfx_task_runner_is_same(cef_task_runner_t* self, cef_task_runner_t* that) {
     if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
     return self->is_same(self, that);
 }
 
 // belongs_to_current_thread
-CFX_EXPORT int cfx_task_runner_belongs_to_current_thread(cef_task_runner_t* self) {
+static int cfx_task_runner_belongs_to_current_thread(cef_task_runner_t* self) {
     return self->belongs_to_current_thread(self);
 }
 
 // belongs_to_thread
-CFX_EXPORT int cfx_task_runner_belongs_to_thread(cef_task_runner_t* self, cef_thread_id_t threadId) {
+static int cfx_task_runner_belongs_to_thread(cef_task_runner_t* self, cef_thread_id_t threadId) {
     return self->belongs_to_thread(self, threadId);
 }
 
 // post_task
-CFX_EXPORT int cfx_task_runner_post_task(cef_task_runner_t* self, cef_task_t* task) {
+static int cfx_task_runner_post_task(cef_task_runner_t* self, cef_task_t* task) {
     if(task) ((cef_base_t*)task)->add_ref((cef_base_t*)task);
     return self->post_task(self, task);
 }
 
 // post_delayed_task
-CFX_EXPORT int cfx_task_runner_post_delayed_task(cef_task_runner_t* self, cef_task_t* task, int64 delay_ms) {
+static int cfx_task_runner_post_delayed_task(cef_task_runner_t* self, cef_task_t* task, int64 delay_ms) {
     if(task) ((cef_base_t*)task)->add_ref((cef_base_t*)task);
     return self->post_delayed_task(self, task, delay_ms);
 }

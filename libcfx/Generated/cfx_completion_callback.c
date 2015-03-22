@@ -57,7 +57,7 @@ int CEF_CALLBACK _cfx_completion_callback_release(struct _cef_base_t* base) {
     return count;
 }
 
-CFX_EXPORT cfx_completion_callback_t* cfx_completion_callback_ctor(gc_handle_t gc_handle) {
+static cfx_completion_callback_t* cfx_completion_callback_ctor(gc_handle_t gc_handle) {
     cfx_completion_callback_t* ptr = (cfx_completion_callback_t*)calloc(1, sizeof(cfx_completion_callback_t));
     if(!ptr) return 0;
     ptr->cef_completion_callback.base.size = sizeof(cef_completion_callback_t);
@@ -68,7 +68,7 @@ CFX_EXPORT cfx_completion_callback_t* cfx_completion_callback_ctor(gc_handle_t g
     return ptr;
 }
 
-CFX_EXPORT gc_handle_t cfx_completion_callback_get_gc_handle(cfx_completion_callback_t* self) {
+static gc_handle_t cfx_completion_callback_get_gc_handle(cfx_completion_callback_t* self) {
     return self->gc_handle;
 }
 
@@ -81,7 +81,7 @@ void CEF_CALLBACK cfx_completion_callback_on_complete(cef_completion_callback_t*
 }
 
 
-CFX_EXPORT void cfx_completion_callback_set_managed_callback(cef_completion_callback_t* self, int index, void* callback) {
+static void cfx_completion_callback_set_managed_callback(cef_completion_callback_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_completion_callback_on_complete_callback)

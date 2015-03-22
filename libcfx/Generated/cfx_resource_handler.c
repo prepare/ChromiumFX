@@ -57,7 +57,7 @@ int CEF_CALLBACK _cfx_resource_handler_release(struct _cef_base_t* base) {
     return count;
 }
 
-CFX_EXPORT cfx_resource_handler_t* cfx_resource_handler_ctor(gc_handle_t gc_handle) {
+static cfx_resource_handler_t* cfx_resource_handler_ctor(gc_handle_t gc_handle) {
     cfx_resource_handler_t* ptr = (cfx_resource_handler_t*)calloc(1, sizeof(cfx_resource_handler_t));
     if(!ptr) return 0;
     ptr->cef_resource_handler.base.size = sizeof(cef_resource_handler_t);
@@ -68,7 +68,7 @@ CFX_EXPORT cfx_resource_handler_t* cfx_resource_handler_ctor(gc_handle_t gc_hand
     return ptr;
 }
 
-CFX_EXPORT gc_handle_t cfx_resource_handler_get_gc_handle(cfx_resource_handler_t* self) {
+static gc_handle_t cfx_resource_handler_get_gc_handle(cfx_resource_handler_t* self) {
     return self->gc_handle;
 }
 
@@ -140,7 +140,7 @@ void CEF_CALLBACK cfx_resource_handler_cancel(cef_resource_handler_t* self) {
 }
 
 
-CFX_EXPORT void cfx_resource_handler_set_managed_callback(cef_resource_handler_t* self, int index, void* callback) {
+static void cfx_resource_handler_set_managed_callback(cef_resource_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_resource_handler_process_request_callback)

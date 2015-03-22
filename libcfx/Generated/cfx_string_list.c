@@ -36,17 +36,17 @@ extern "C" {
 #endif
 
 // CEF_EXPORT cef_string_list_t cef_string_list_alloc();
-CFX_EXPORT cef_string_list_t cfx_string_list_alloc() {
+static cef_string_list_t cfx_string_list_alloc() {
     return cef_string_list_alloc();
 }
 
 // CEF_EXPORT int cef_string_list_size(cef_string_list_t list);
-CFX_EXPORT int cfx_string_list_size(cef_string_list_t list) {
+static int cfx_string_list_size(cef_string_list_t list) {
     return cef_string_list_size(list);
 }
 
 // CEF_EXPORT int cef_string_list_value(cef_string_list_t list, int index, cef_string_t* value);
-CFX_EXPORT int cfx_string_list_value(cef_string_list_t list, int index, char16 **value_str, int *value_length) {
+static int cfx_string_list_value(cef_string_list_t list, int index, char16 **value_str, int *value_length) {
     cef_string_t value = { *value_str, *value_length, 0 };
     int __ret_val_ = cef_string_list_value(list, index, &value);
     *value_str = value.str; *value_length = (int)value.length;
@@ -54,23 +54,23 @@ CFX_EXPORT int cfx_string_list_value(cef_string_list_t list, int index, char16 *
 }
 
 // CEF_EXPORT void cef_string_list_append(cef_string_list_t list, const cef_string_t* value);
-CFX_EXPORT void cfx_string_list_append(cef_string_list_t list, char16 *value_str, int value_length) {
+static void cfx_string_list_append(cef_string_list_t list, char16 *value_str, int value_length) {
     cef_string_t value = { value_str, value_length, 0 };
     cef_string_list_append(list, &value);
 }
 
 // CEF_EXPORT void cef_string_list_clear(cef_string_list_t list);
-CFX_EXPORT void cfx_string_list_clear(cef_string_list_t list) {
+static void cfx_string_list_clear(cef_string_list_t list) {
     cef_string_list_clear(list);
 }
 
 // CEF_EXPORT void cef_string_list_free(cef_string_list_t list);
-CFX_EXPORT void cfx_string_list_free(cef_string_list_t list) {
+static void cfx_string_list_free(cef_string_list_t list) {
     cef_string_list_free(list);
 }
 
 // CEF_EXPORT cef_string_list_t cef_string_list_copy(cef_string_list_t list);
-CFX_EXPORT cef_string_list_t cfx_string_list_copy(cef_string_list_t list) {
+static cef_string_list_t cfx_string_list_copy(cef_string_list_t list) {
     return cef_string_list_copy(list);
 }
 

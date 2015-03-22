@@ -33,6 +33,8 @@
 Public Class CefStructType
     Inherits CefType
 
+    Public ApiIndex As Integer
+
     Private m_classBuilder As CfxClassBuilder
 
     Public Sub New(name As String, comments As CommentData)

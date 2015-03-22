@@ -45,32 +45,32 @@ namespace Chromium {
     public class CfxDictionaryValue : CfxBase {
 
         static CfxDictionaryValue () {
-            CfxApi.cfx_dictionary_value_create = (CfxApi.cfx_dictionary_value_create_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_create", typeof(CfxApi.cfx_dictionary_value_create_delegate));
-            CfxApi.cfx_dictionary_value_is_valid = (CfxApi.cfx_dictionary_value_is_valid_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_is_valid", typeof(CfxApi.cfx_dictionary_value_is_valid_delegate));
-            CfxApi.cfx_dictionary_value_is_owned = (CfxApi.cfx_dictionary_value_is_owned_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_is_owned", typeof(CfxApi.cfx_dictionary_value_is_owned_delegate));
-            CfxApi.cfx_dictionary_value_is_read_only = (CfxApi.cfx_dictionary_value_is_read_only_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_is_read_only", typeof(CfxApi.cfx_dictionary_value_is_read_only_delegate));
-            CfxApi.cfx_dictionary_value_copy = (CfxApi.cfx_dictionary_value_copy_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_copy", typeof(CfxApi.cfx_dictionary_value_copy_delegate));
-            CfxApi.cfx_dictionary_value_get_size = (CfxApi.cfx_dictionary_value_get_size_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_get_size", typeof(CfxApi.cfx_dictionary_value_get_size_delegate));
-            CfxApi.cfx_dictionary_value_clear = (CfxApi.cfx_dictionary_value_clear_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_clear", typeof(CfxApi.cfx_dictionary_value_clear_delegate));
-            CfxApi.cfx_dictionary_value_has_key = (CfxApi.cfx_dictionary_value_has_key_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_has_key", typeof(CfxApi.cfx_dictionary_value_has_key_delegate));
-            CfxApi.cfx_dictionary_value_get_keys = (CfxApi.cfx_dictionary_value_get_keys_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_get_keys", typeof(CfxApi.cfx_dictionary_value_get_keys_delegate));
-            CfxApi.cfx_dictionary_value_remove = (CfxApi.cfx_dictionary_value_remove_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_remove", typeof(CfxApi.cfx_dictionary_value_remove_delegate));
-            CfxApi.cfx_dictionary_value_get_type = (CfxApi.cfx_dictionary_value_get_type_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_get_type", typeof(CfxApi.cfx_dictionary_value_get_type_delegate));
-            CfxApi.cfx_dictionary_value_get_bool = (CfxApi.cfx_dictionary_value_get_bool_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_get_bool", typeof(CfxApi.cfx_dictionary_value_get_bool_delegate));
-            CfxApi.cfx_dictionary_value_get_int = (CfxApi.cfx_dictionary_value_get_int_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_get_int", typeof(CfxApi.cfx_dictionary_value_get_int_delegate));
-            CfxApi.cfx_dictionary_value_get_double = (CfxApi.cfx_dictionary_value_get_double_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_get_double", typeof(CfxApi.cfx_dictionary_value_get_double_delegate));
-            CfxApi.cfx_dictionary_value_get_string = (CfxApi.cfx_dictionary_value_get_string_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_get_string", typeof(CfxApi.cfx_dictionary_value_get_string_delegate));
-            CfxApi.cfx_dictionary_value_get_binary = (CfxApi.cfx_dictionary_value_get_binary_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_get_binary", typeof(CfxApi.cfx_dictionary_value_get_binary_delegate));
-            CfxApi.cfx_dictionary_value_get_dictionary = (CfxApi.cfx_dictionary_value_get_dictionary_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_get_dictionary", typeof(CfxApi.cfx_dictionary_value_get_dictionary_delegate));
-            CfxApi.cfx_dictionary_value_get_list = (CfxApi.cfx_dictionary_value_get_list_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_get_list", typeof(CfxApi.cfx_dictionary_value_get_list_delegate));
-            CfxApi.cfx_dictionary_value_set_null = (CfxApi.cfx_dictionary_value_set_null_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_set_null", typeof(CfxApi.cfx_dictionary_value_set_null_delegate));
-            CfxApi.cfx_dictionary_value_set_bool = (CfxApi.cfx_dictionary_value_set_bool_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_set_bool", typeof(CfxApi.cfx_dictionary_value_set_bool_delegate));
-            CfxApi.cfx_dictionary_value_set_int = (CfxApi.cfx_dictionary_value_set_int_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_set_int", typeof(CfxApi.cfx_dictionary_value_set_int_delegate));
-            CfxApi.cfx_dictionary_value_set_double = (CfxApi.cfx_dictionary_value_set_double_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_set_double", typeof(CfxApi.cfx_dictionary_value_set_double_delegate));
-            CfxApi.cfx_dictionary_value_set_string = (CfxApi.cfx_dictionary_value_set_string_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_set_string", typeof(CfxApi.cfx_dictionary_value_set_string_delegate));
-            CfxApi.cfx_dictionary_value_set_binary = (CfxApi.cfx_dictionary_value_set_binary_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_set_binary", typeof(CfxApi.cfx_dictionary_value_set_binary_delegate));
-            CfxApi.cfx_dictionary_value_set_dictionary = (CfxApi.cfx_dictionary_value_set_dictionary_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_set_dictionary", typeof(CfxApi.cfx_dictionary_value_set_dictionary_delegate));
-            CfxApi.cfx_dictionary_value_set_list = (CfxApi.cfx_dictionary_value_set_list_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_dictionary_value_set_list", typeof(CfxApi.cfx_dictionary_value_set_list_delegate));
+            CfxApi.cfx_dictionary_value_create = (CfxApi.cfx_dictionary_value_create_delegate)CfxApi.GetDelegate(285, typeof(CfxApi.cfx_dictionary_value_create_delegate));
+            CfxApi.cfx_dictionary_value_is_valid = (CfxApi.cfx_dictionary_value_is_valid_delegate)CfxApi.GetDelegate(286, typeof(CfxApi.cfx_dictionary_value_is_valid_delegate));
+            CfxApi.cfx_dictionary_value_is_owned = (CfxApi.cfx_dictionary_value_is_owned_delegate)CfxApi.GetDelegate(287, typeof(CfxApi.cfx_dictionary_value_is_owned_delegate));
+            CfxApi.cfx_dictionary_value_is_read_only = (CfxApi.cfx_dictionary_value_is_read_only_delegate)CfxApi.GetDelegate(288, typeof(CfxApi.cfx_dictionary_value_is_read_only_delegate));
+            CfxApi.cfx_dictionary_value_copy = (CfxApi.cfx_dictionary_value_copy_delegate)CfxApi.GetDelegate(289, typeof(CfxApi.cfx_dictionary_value_copy_delegate));
+            CfxApi.cfx_dictionary_value_get_size = (CfxApi.cfx_dictionary_value_get_size_delegate)CfxApi.GetDelegate(290, typeof(CfxApi.cfx_dictionary_value_get_size_delegate));
+            CfxApi.cfx_dictionary_value_clear = (CfxApi.cfx_dictionary_value_clear_delegate)CfxApi.GetDelegate(291, typeof(CfxApi.cfx_dictionary_value_clear_delegate));
+            CfxApi.cfx_dictionary_value_has_key = (CfxApi.cfx_dictionary_value_has_key_delegate)CfxApi.GetDelegate(292, typeof(CfxApi.cfx_dictionary_value_has_key_delegate));
+            CfxApi.cfx_dictionary_value_get_keys = (CfxApi.cfx_dictionary_value_get_keys_delegate)CfxApi.GetDelegate(293, typeof(CfxApi.cfx_dictionary_value_get_keys_delegate));
+            CfxApi.cfx_dictionary_value_remove = (CfxApi.cfx_dictionary_value_remove_delegate)CfxApi.GetDelegate(294, typeof(CfxApi.cfx_dictionary_value_remove_delegate));
+            CfxApi.cfx_dictionary_value_get_type = (CfxApi.cfx_dictionary_value_get_type_delegate)CfxApi.GetDelegate(295, typeof(CfxApi.cfx_dictionary_value_get_type_delegate));
+            CfxApi.cfx_dictionary_value_get_bool = (CfxApi.cfx_dictionary_value_get_bool_delegate)CfxApi.GetDelegate(296, typeof(CfxApi.cfx_dictionary_value_get_bool_delegate));
+            CfxApi.cfx_dictionary_value_get_int = (CfxApi.cfx_dictionary_value_get_int_delegate)CfxApi.GetDelegate(297, typeof(CfxApi.cfx_dictionary_value_get_int_delegate));
+            CfxApi.cfx_dictionary_value_get_double = (CfxApi.cfx_dictionary_value_get_double_delegate)CfxApi.GetDelegate(298, typeof(CfxApi.cfx_dictionary_value_get_double_delegate));
+            CfxApi.cfx_dictionary_value_get_string = (CfxApi.cfx_dictionary_value_get_string_delegate)CfxApi.GetDelegate(299, typeof(CfxApi.cfx_dictionary_value_get_string_delegate));
+            CfxApi.cfx_dictionary_value_get_binary = (CfxApi.cfx_dictionary_value_get_binary_delegate)CfxApi.GetDelegate(300, typeof(CfxApi.cfx_dictionary_value_get_binary_delegate));
+            CfxApi.cfx_dictionary_value_get_dictionary = (CfxApi.cfx_dictionary_value_get_dictionary_delegate)CfxApi.GetDelegate(301, typeof(CfxApi.cfx_dictionary_value_get_dictionary_delegate));
+            CfxApi.cfx_dictionary_value_get_list = (CfxApi.cfx_dictionary_value_get_list_delegate)CfxApi.GetDelegate(302, typeof(CfxApi.cfx_dictionary_value_get_list_delegate));
+            CfxApi.cfx_dictionary_value_set_null = (CfxApi.cfx_dictionary_value_set_null_delegate)CfxApi.GetDelegate(303, typeof(CfxApi.cfx_dictionary_value_set_null_delegate));
+            CfxApi.cfx_dictionary_value_set_bool = (CfxApi.cfx_dictionary_value_set_bool_delegate)CfxApi.GetDelegate(304, typeof(CfxApi.cfx_dictionary_value_set_bool_delegate));
+            CfxApi.cfx_dictionary_value_set_int = (CfxApi.cfx_dictionary_value_set_int_delegate)CfxApi.GetDelegate(305, typeof(CfxApi.cfx_dictionary_value_set_int_delegate));
+            CfxApi.cfx_dictionary_value_set_double = (CfxApi.cfx_dictionary_value_set_double_delegate)CfxApi.GetDelegate(306, typeof(CfxApi.cfx_dictionary_value_set_double_delegate));
+            CfxApi.cfx_dictionary_value_set_string = (CfxApi.cfx_dictionary_value_set_string_delegate)CfxApi.GetDelegate(307, typeof(CfxApi.cfx_dictionary_value_set_string_delegate));
+            CfxApi.cfx_dictionary_value_set_binary = (CfxApi.cfx_dictionary_value_set_binary_delegate)CfxApi.GetDelegate(308, typeof(CfxApi.cfx_dictionary_value_set_binary_delegate));
+            CfxApi.cfx_dictionary_value_set_dictionary = (CfxApi.cfx_dictionary_value_set_dictionary_delegate)CfxApi.GetDelegate(309, typeof(CfxApi.cfx_dictionary_value_set_dictionary_delegate));
+            CfxApi.cfx_dictionary_value_set_list = (CfxApi.cfx_dictionary_value_set_list_delegate)CfxApi.GetDelegate(310, typeof(CfxApi.cfx_dictionary_value_set_list_delegate));
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

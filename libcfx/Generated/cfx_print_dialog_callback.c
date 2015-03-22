@@ -40,13 +40,13 @@ extern "C" {
 // cef_base_t base
 
 // cont
-CFX_EXPORT void cfx_print_dialog_callback_cont(cef_print_dialog_callback_t* self, cef_print_settings_t* settings) {
+static void cfx_print_dialog_callback_cont(cef_print_dialog_callback_t* self, cef_print_settings_t* settings) {
     if(settings) ((cef_base_t*)settings)->add_ref((cef_base_t*)settings);
     self->cont(self, settings);
 }
 
 // cancel
-CFX_EXPORT void cfx_print_dialog_callback_cancel(cef_print_dialog_callback_t* self) {
+static void cfx_print_dialog_callback_cancel(cef_print_dialog_callback_t* self) {
     self->cancel(self);
 }
 

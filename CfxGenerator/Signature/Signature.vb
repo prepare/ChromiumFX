@@ -161,10 +161,23 @@ Public Class Signature
         End Get
     End Property
 
-    Public ReadOnly Property OriginalCallbackSignature As String
+    Public ReadOnly Property OriginalSignature As String
         Get
             For Each arg In Arguments
-                args.Add(arg.OriginalCallbackSignature)
+                args.Add(arg.OriginalSignature)
+            Next
+            Return args.Join()
+        End Get
+    End Property
+
+    Public ReadOnly Property OriginalSignatureUnnamed As String
+        Get
+            For Each arg In Arguments
+                If arg.IsConst Then
+                    args.Add("const " & arg.ArgumentType.OriginalSymbol)
+                Else
+                    args.Add(arg.ArgumentType.OriginalSymbol)
+                End If
             Next
             Return args.Join()
         End Get
@@ -195,7 +208,7 @@ Public Class Signature
                 retType = "const " & retType
             End If
 
-            Return String.Format("CFX_EXPORT {0} {1}({2})", retType, functionName, args.Join())
+            Return String.Format("static {0} {1}({2})", retType, functionName, args.Join())
         End Get
     End Property
 

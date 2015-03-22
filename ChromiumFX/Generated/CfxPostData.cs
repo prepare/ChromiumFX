@@ -45,13 +45,13 @@ namespace Chromium {
     public class CfxPostData : CfxBase {
 
         static CfxPostData () {
-            CfxApi.cfx_post_data_create = (CfxApi.cfx_post_data_create_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_post_data_create", typeof(CfxApi.cfx_post_data_create_delegate));
-            CfxApi.cfx_post_data_is_read_only = (CfxApi.cfx_post_data_is_read_only_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_post_data_is_read_only", typeof(CfxApi.cfx_post_data_is_read_only_delegate));
-            CfxApi.cfx_post_data_get_element_count = (CfxApi.cfx_post_data_get_element_count_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_post_data_get_element_count", typeof(CfxApi.cfx_post_data_get_element_count_delegate));
-            CfxApi.cfx_post_data_get_elements = (CfxApi.cfx_post_data_get_elements_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_post_data_get_elements", typeof(CfxApi.cfx_post_data_get_elements_delegate));
-            CfxApi.cfx_post_data_remove_element = (CfxApi.cfx_post_data_remove_element_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_post_data_remove_element", typeof(CfxApi.cfx_post_data_remove_element_delegate));
-            CfxApi.cfx_post_data_add_element = (CfxApi.cfx_post_data_add_element_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_post_data_add_element", typeof(CfxApi.cfx_post_data_add_element_delegate));
-            CfxApi.cfx_post_data_remove_elements = (CfxApi.cfx_post_data_remove_elements_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_post_data_remove_elements", typeof(CfxApi.cfx_post_data_remove_elements_delegate));
+            CfxApi.cfx_post_data_create = (CfxApi.cfx_post_data_create_delegate)CfxApi.GetDelegate(639, typeof(CfxApi.cfx_post_data_create_delegate));
+            CfxApi.cfx_post_data_is_read_only = (CfxApi.cfx_post_data_is_read_only_delegate)CfxApi.GetDelegate(640, typeof(CfxApi.cfx_post_data_is_read_only_delegate));
+            CfxApi.cfx_post_data_get_element_count = (CfxApi.cfx_post_data_get_element_count_delegate)CfxApi.GetDelegate(641, typeof(CfxApi.cfx_post_data_get_element_count_delegate));
+            CfxApi.cfx_post_data_get_elements = (CfxApi.cfx_post_data_get_elements_delegate)CfxApi.GetDelegate(642, typeof(CfxApi.cfx_post_data_get_elements_delegate));
+            CfxApi.cfx_post_data_remove_element = (CfxApi.cfx_post_data_remove_element_delegate)CfxApi.GetDelegate(643, typeof(CfxApi.cfx_post_data_remove_element_delegate));
+            CfxApi.cfx_post_data_add_element = (CfxApi.cfx_post_data_add_element_delegate)CfxApi.GetDelegate(644, typeof(CfxApi.cfx_post_data_add_element_delegate));
+            CfxApi.cfx_post_data_remove_elements = (CfxApi.cfx_post_data_remove_elements_delegate)CfxApi.GetDelegate(645, typeof(CfxApi.cfx_post_data_remove_elements_delegate));
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

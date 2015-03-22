@@ -48,14 +48,14 @@ namespace Chromium {
     public class CfxV8StackFrame : CfxBase {
 
         static CfxV8StackFrame () {
-            CfxApi.cfx_v8stack_frame_is_valid = (CfxApi.cfx_v8stack_frame_is_valid_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8stack_frame_is_valid", typeof(CfxApi.cfx_v8stack_frame_is_valid_delegate));
-            CfxApi.cfx_v8stack_frame_get_script_name = (CfxApi.cfx_v8stack_frame_get_script_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8stack_frame_get_script_name", typeof(CfxApi.cfx_v8stack_frame_get_script_name_delegate));
-            CfxApi.cfx_v8stack_frame_get_script_name_or_source_url = (CfxApi.cfx_v8stack_frame_get_script_name_or_source_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8stack_frame_get_script_name_or_source_url", typeof(CfxApi.cfx_v8stack_frame_get_script_name_or_source_url_delegate));
-            CfxApi.cfx_v8stack_frame_get_function_name = (CfxApi.cfx_v8stack_frame_get_function_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8stack_frame_get_function_name", typeof(CfxApi.cfx_v8stack_frame_get_function_name_delegate));
-            CfxApi.cfx_v8stack_frame_get_line_number = (CfxApi.cfx_v8stack_frame_get_line_number_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8stack_frame_get_line_number", typeof(CfxApi.cfx_v8stack_frame_get_line_number_delegate));
-            CfxApi.cfx_v8stack_frame_get_column = (CfxApi.cfx_v8stack_frame_get_column_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8stack_frame_get_column", typeof(CfxApi.cfx_v8stack_frame_get_column_delegate));
-            CfxApi.cfx_v8stack_frame_is_eval = (CfxApi.cfx_v8stack_frame_is_eval_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8stack_frame_is_eval", typeof(CfxApi.cfx_v8stack_frame_is_eval_delegate));
-            CfxApi.cfx_v8stack_frame_is_constructor = (CfxApi.cfx_v8stack_frame_is_constructor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8stack_frame_is_constructor", typeof(CfxApi.cfx_v8stack_frame_is_constructor_delegate));
+            CfxApi.cfx_v8stack_frame_is_valid = (CfxApi.cfx_v8stack_frame_is_valid_delegate)CfxApi.GetDelegate(932, typeof(CfxApi.cfx_v8stack_frame_is_valid_delegate));
+            CfxApi.cfx_v8stack_frame_get_script_name = (CfxApi.cfx_v8stack_frame_get_script_name_delegate)CfxApi.GetDelegate(933, typeof(CfxApi.cfx_v8stack_frame_get_script_name_delegate));
+            CfxApi.cfx_v8stack_frame_get_script_name_or_source_url = (CfxApi.cfx_v8stack_frame_get_script_name_or_source_url_delegate)CfxApi.GetDelegate(934, typeof(CfxApi.cfx_v8stack_frame_get_script_name_or_source_url_delegate));
+            CfxApi.cfx_v8stack_frame_get_function_name = (CfxApi.cfx_v8stack_frame_get_function_name_delegate)CfxApi.GetDelegate(935, typeof(CfxApi.cfx_v8stack_frame_get_function_name_delegate));
+            CfxApi.cfx_v8stack_frame_get_line_number = (CfxApi.cfx_v8stack_frame_get_line_number_delegate)CfxApi.GetDelegate(936, typeof(CfxApi.cfx_v8stack_frame_get_line_number_delegate));
+            CfxApi.cfx_v8stack_frame_get_column = (CfxApi.cfx_v8stack_frame_get_column_delegate)CfxApi.GetDelegate(937, typeof(CfxApi.cfx_v8stack_frame_get_column_delegate));
+            CfxApi.cfx_v8stack_frame_is_eval = (CfxApi.cfx_v8stack_frame_is_eval_delegate)CfxApi.GetDelegate(938, typeof(CfxApi.cfx_v8stack_frame_is_eval_delegate));
+            CfxApi.cfx_v8stack_frame_is_constructor = (CfxApi.cfx_v8stack_frame_is_constructor_delegate)CfxApi.GetDelegate(939, typeof(CfxApi.cfx_v8stack_frame_is_constructor_delegate));
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

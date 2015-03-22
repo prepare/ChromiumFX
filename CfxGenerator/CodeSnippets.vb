@@ -67,6 +67,10 @@ Public Class CodeSnippets
         EmitPInvokeDelegateInitialization(b, functionName, functionName & "_delegate")
     End Sub
 
+    Shared Sub EmitPInvokeDelegateInitialization(b As CodeBuilder, functionName As String, apiIndex As Integer)
+        b.AppendLine("CfxApi.{0} = (CfxApi.{0}_delegate)CfxApi.GetDelegate({1}, typeof(CfxApi.{0}_delegate));", functionName, apiIndex)
+    End Sub
+
     Shared Sub EmitPInvokeDelegateInitialization(b As CodeBuilder, functionName As String, delegateName As String)
         Dim hmodule As String
         If functionName.StartsWith("cef_") Then

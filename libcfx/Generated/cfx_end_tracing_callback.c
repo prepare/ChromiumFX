@@ -57,7 +57,7 @@ int CEF_CALLBACK _cfx_end_tracing_callback_release(struct _cef_base_t* base) {
     return count;
 }
 
-CFX_EXPORT cfx_end_tracing_callback_t* cfx_end_tracing_callback_ctor(gc_handle_t gc_handle) {
+static cfx_end_tracing_callback_t* cfx_end_tracing_callback_ctor(gc_handle_t gc_handle) {
     cfx_end_tracing_callback_t* ptr = (cfx_end_tracing_callback_t*)calloc(1, sizeof(cfx_end_tracing_callback_t));
     if(!ptr) return 0;
     ptr->cef_end_tracing_callback.base.size = sizeof(cef_end_tracing_callback_t);
@@ -68,7 +68,7 @@ CFX_EXPORT cfx_end_tracing_callback_t* cfx_end_tracing_callback_ctor(gc_handle_t
     return ptr;
 }
 
-CFX_EXPORT gc_handle_t cfx_end_tracing_callback_get_gc_handle(cfx_end_tracing_callback_t* self) {
+static gc_handle_t cfx_end_tracing_callback_get_gc_handle(cfx_end_tracing_callback_t* self) {
     return self->gc_handle;
 }
 
@@ -81,7 +81,7 @@ void CEF_CALLBACK cfx_end_tracing_callback_on_end_tracing_complete(cef_end_traci
 }
 
 
-CFX_EXPORT void cfx_end_tracing_callback_set_managed_callback(cef_end_tracing_callback_t* self, int index, void* callback) {
+static void cfx_end_tracing_callback_set_managed_callback(cef_end_tracing_callback_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_end_tracing_callback_on_end_tracing_complete_callback)

@@ -40,42 +40,42 @@ extern "C" {
 // cef_base_t base
 
 // is_valid
-CFX_EXPORT int cfx_v8stack_frame_is_valid(cef_v8stack_frame_t* self) {
+static int cfx_v8stack_frame_is_valid(cef_v8stack_frame_t* self) {
     return self->is_valid(self);
 }
 
 // get_script_name
-CFX_EXPORT cef_string_userfree_t cfx_v8stack_frame_get_script_name(cef_v8stack_frame_t* self) {
+static cef_string_userfree_t cfx_v8stack_frame_get_script_name(cef_v8stack_frame_t* self) {
     return self->get_script_name(self);
 }
 
 // get_script_name_or_source_url
-CFX_EXPORT cef_string_userfree_t cfx_v8stack_frame_get_script_name_or_source_url(cef_v8stack_frame_t* self) {
+static cef_string_userfree_t cfx_v8stack_frame_get_script_name_or_source_url(cef_v8stack_frame_t* self) {
     return self->get_script_name_or_source_url(self);
 }
 
 // get_function_name
-CFX_EXPORT cef_string_userfree_t cfx_v8stack_frame_get_function_name(cef_v8stack_frame_t* self) {
+static cef_string_userfree_t cfx_v8stack_frame_get_function_name(cef_v8stack_frame_t* self) {
     return self->get_function_name(self);
 }
 
 // get_line_number
-CFX_EXPORT int cfx_v8stack_frame_get_line_number(cef_v8stack_frame_t* self) {
+static int cfx_v8stack_frame_get_line_number(cef_v8stack_frame_t* self) {
     return self->get_line_number(self);
 }
 
 // get_column
-CFX_EXPORT int cfx_v8stack_frame_get_column(cef_v8stack_frame_t* self) {
+static int cfx_v8stack_frame_get_column(cef_v8stack_frame_t* self) {
     return self->get_column(self);
 }
 
 // is_eval
-CFX_EXPORT int cfx_v8stack_frame_is_eval(cef_v8stack_frame_t* self) {
+static int cfx_v8stack_frame_is_eval(cef_v8stack_frame_t* self) {
     return self->is_eval(self);
 }
 
 // is_constructor
-CFX_EXPORT int cfx_v8stack_frame_is_constructor(cef_v8stack_frame_t* self) {
+static int cfx_v8stack_frame_is_constructor(cef_v8stack_frame_t* self) {
     return self->is_constructor(self);
 }
 

@@ -36,17 +36,17 @@ extern "C" {
 #endif
 
 // CEF_EXPORT cef_string_map_t cef_string_map_alloc();
-CFX_EXPORT cef_string_map_t cfx_string_map_alloc() {
+static cef_string_map_t cfx_string_map_alloc() {
     return cef_string_map_alloc();
 }
 
 // CEF_EXPORT int cef_string_map_size(cef_string_map_t map);
-CFX_EXPORT int cfx_string_map_size(cef_string_map_t map) {
+static int cfx_string_map_size(cef_string_map_t map) {
     return cef_string_map_size(map);
 }
 
 // CEF_EXPORT int cef_string_map_find(cef_string_map_t map, const cef_string_t* key, cef_string_t* value);
-CFX_EXPORT int cfx_string_map_find(cef_string_map_t map, char16 *key_str, int key_length, char16 **value_str, int *value_length) {
+static int cfx_string_map_find(cef_string_map_t map, char16 *key_str, int key_length, char16 **value_str, int *value_length) {
     cef_string_t key = { key_str, key_length, 0 };
     cef_string_t value = { *value_str, *value_length, 0 };
     int __ret_val_ = cef_string_map_find(map, &key, &value);
@@ -55,7 +55,7 @@ CFX_EXPORT int cfx_string_map_find(cef_string_map_t map, char16 *key_str, int ke
 }
 
 // CEF_EXPORT int cef_string_map_key(cef_string_map_t map, int index, cef_string_t* key);
-CFX_EXPORT int cfx_string_map_key(cef_string_map_t map, int index, char16 **key_str, int *key_length) {
+static int cfx_string_map_key(cef_string_map_t map, int index, char16 **key_str, int *key_length) {
     cef_string_t key = { *key_str, *key_length, 0 };
     int __ret_val_ = cef_string_map_key(map, index, &key);
     *key_str = key.str; *key_length = (int)key.length;
@@ -63,7 +63,7 @@ CFX_EXPORT int cfx_string_map_key(cef_string_map_t map, int index, char16 **key_
 }
 
 // CEF_EXPORT int cef_string_map_value(cef_string_map_t map, int index, cef_string_t* value);
-CFX_EXPORT int cfx_string_map_value(cef_string_map_t map, int index, char16 **value_str, int *value_length) {
+static int cfx_string_map_value(cef_string_map_t map, int index, char16 **value_str, int *value_length) {
     cef_string_t value = { *value_str, *value_length, 0 };
     int __ret_val_ = cef_string_map_value(map, index, &value);
     *value_str = value.str; *value_length = (int)value.length;
@@ -71,19 +71,19 @@ CFX_EXPORT int cfx_string_map_value(cef_string_map_t map, int index, char16 **va
 }
 
 // CEF_EXPORT int cef_string_map_append(cef_string_map_t map, const cef_string_t* key, const cef_string_t* value);
-CFX_EXPORT int cfx_string_map_append(cef_string_map_t map, char16 *key_str, int key_length, char16 *value_str, int value_length) {
+static int cfx_string_map_append(cef_string_map_t map, char16 *key_str, int key_length, char16 *value_str, int value_length) {
     cef_string_t key = { key_str, key_length, 0 };
     cef_string_t value = { value_str, value_length, 0 };
     return cef_string_map_append(map, &key, &value);
 }
 
 // CEF_EXPORT void cef_string_map_clear(cef_string_map_t map);
-CFX_EXPORT void cfx_string_map_clear(cef_string_map_t map) {
+static void cfx_string_map_clear(cef_string_map_t map) {
     cef_string_map_clear(map);
 }
 
 // CEF_EXPORT void cef_string_map_free(cef_string_map_t map);
-CFX_EXPORT void cfx_string_map_free(cef_string_map_t map) {
+static void cfx_string_map_free(cef_string_map_t map) {
     cef_string_map_free(map);
 }
 
