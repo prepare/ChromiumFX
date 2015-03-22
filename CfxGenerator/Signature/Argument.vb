@@ -136,7 +136,7 @@ Public Class Argument
         End Get
     End Property
 
-    Public ReadOnly Property OriginalCallbackSignature As String
+    Public ReadOnly Property OriginalSignature As String
         Get
             If IsConst Then
                 Return String.Concat("const ", ArgumentType.OriginalSymbol, " ", VarName)
