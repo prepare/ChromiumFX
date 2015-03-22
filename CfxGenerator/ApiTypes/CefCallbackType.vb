@@ -484,7 +484,7 @@ Public Class CefCallbackType
     End Sub
 
     Public Sub EmitRemoteRaiseEventFunction(b As CodeBuilder, comments As CommentData)
-        'b.AppendLine("internal {0} m_{1};", ProxyEventHandlerName, PublicName)
+
         b.BeginBlock("internal void raise_{0}(object sender, {1} e)", PublicName, RemoteEventArgsClassName)
         b.AppendLine("var handler = m_{0};", PublicName)
         b.AppendLine("if(handler == null) return;")

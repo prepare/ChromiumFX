@@ -35,8 +35,6 @@ Public Class StringCollectionType
 
     Public ExportFunctions As CefExportFunction()
 
-    'TODO: user created string lists and maps don't copy appended strings so the normal scheme won't work
-
     Sub New(name As String)
         MyBase.New(name)
     End Sub
