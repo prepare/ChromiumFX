@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -207,8 +207,8 @@
     <Compile Include="Generated\Remote\CfxV8StackFrameRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8StackTraceRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8ValueRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\RemoteCallConstructor.cs" />
     <Compile Include="Generated\Remote\RemoteCallId.cs" />
-    <Compile Include="Generated\Remote\RemoteCallSwitch.cs" />
     <Compile Include="Source\CfxApi.cs" />
     <Compile Include="Source\CfxArray.cs" />
     <Compile Include="Source\CfxBase.cs" />
