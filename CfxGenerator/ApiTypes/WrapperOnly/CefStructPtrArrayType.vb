@@ -166,19 +166,6 @@ Public Class CefStructPtrArrayType
         b.AppendLine("CfxApi.cfx_release(e.m_{0}[i]);", var)
         b.EndBlock()
         b.EndBlock()
-
-
-        'b.BeginIf("e.m_{0}_managed != null", var)
-        'b.BeginBlock("for(int i = 0; i < {1}; ++i)", var, CountArg.VarName)
-        'b.AppendLine("e.m_{0}[i] = {1}.Unwrap(e.m_{0}_managed[i]);", var, Struct.ClassName)
-        'b.EndBlock()
-        'b.AppendLine("System.Runtime.InteropServices.Marshal.Copy(e.m_{0}, 0, {0}, {1});", var, CountArg.VarName)
-        'b.BeginElse()
-        'b.BeginBlock("for(int i = 0; i < {1}; ++i)", var, CountArg.VarName)
-        'b.AppendLine("CfxApi.cfx_release(e.m_{0}[i]);", var)
-        'b.EndBlock()
-        'b.EndBlock()
-
     End Sub
 
 
