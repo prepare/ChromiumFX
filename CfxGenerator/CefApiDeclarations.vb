@@ -48,6 +48,30 @@ Public Class CefApiDeclarations
     Private remoteFuncs As SortedDictionary(Of String, CefExportFunction)
     Private remoteStructs As SortedDictionary(Of String, CefStructType)
 
+    Public Function GetCfxApiFunctionNames() As String()
+        Static retval As String()
+        If retval Is Nothing Then
+            Dim list = New List(Of String)
+            For Each f In ExportFunctions
+                list.Add(f.CfxName)
+            Next
+            For Each st In CefStructTypes
+                For Each f In st.ClassBuilder.ExportFunctions
+                    list.Add(f.CfxName)
+                Next
+                If st.ClassBuilder.Category = StructCategory.ApiCalls Then
+                    For Each sm In st.ClassBuilder.StructMembers
+                        If sm.MemberType.IsCefCallbackType Then
+                            list.Add(sm.Callback.CfxApiFunctionName)
+                        End If
+                    Next
+                End If
+            Next
+            retval = list.ToArray()
+        End If
+        Return retval
+    End Function
+
     Public Function GetRemoteDeclarations() As CefApiDeclarations
 
         remoteFuncs = New SortedDictionary(Of String, CefExportFunction)

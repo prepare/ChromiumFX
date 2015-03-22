@@ -156,15 +156,21 @@ Public Class WrapperGenerator
 
     Private Sub BuildFunctionPointers(fileManager As GeneratedFileManager)
         Dim b = New CodeBuilder
-        Dim ff = decls.AllExportFunctions()
+        Dim ff = New List(Of CefExportFunction)(decls.AllExportFunctions())
+        For Each sc In decls.StringCollectionTypes
+            ff.AddRange(sc.ExportFunctions)
+        Next
+
         For Each f In ff
             b.AppendLine("static {0} (*{1}_ptr)({2});", f.ReturnType.OriginalSymbol, f.Name, f.Signature.OriginalSignature)
         Next
         b.AppendLine()
 
-        b.BeginBlock("void cfx_load_cef_function_pointers(HMODULE m)")
+        b.BeginBlock("static void cfx_load_cef_function_pointers(HMODULE libcef)")
         For Each f In ff
-            b.AppendLine("{0}_ptr = ({1} (*)({2}))GetProcAddress(m, ""{0}"");", f.Name, f.ReturnType.OriginalSymbol, f.Signature.OriginalSignatureUnnamed)
+            If (f.Name <> "cef_api_hash") Then
+                b.AppendLine("{0}_ptr = ({1} (*)({2}))GetProcAddress(libcef, ""{0}"");", f.Name, f.ReturnType.OriginalSymbol, f.Signature.OriginalSignatureUnnamed)
+            End If
         Next
         b.EndBlock()
         b.AppendLine()
@@ -176,6 +182,19 @@ Public Class WrapperGenerator
 
         fileManager.WriteFileIfContentChanged("cef_function_pointers.c", b.ToString())
         b.Clear()
+
+        Dim cfxfuncs = decls.GetCfxApiFunctionNames()
+
+        b.BeginBlock("static void* cfx_get_function_pointer(int index)")
+        b.BeginBlock("switch(index)")
+        For i = 0 To cfxfuncs.Length - 1
+            b.AppendLine("case {0}: return {1};", i, cfxfuncs(i))
+        Next
+        b.EndBlock()
+        b.EndBlock()
+        b.AppendLine()
+
+        fileManager.WriteFileIfContentChanged("cfx_get_function_pointer.c", b.ToString())
 
     End Sub
 
