@@ -84,6 +84,13 @@ namespace CfxTestApplication {
 
             WebBrowser.LifeSpanHandler.OnBeforePopup += LifeSpanHandler_OnBeforePopup;
 
+            WebBrowser.OnLoadingStateChange += WebBrowser_OnLoadingStateChange;
+
+        }
+
+        void WebBrowser_OnLoadingStateChange(object sender, CfxOnLoadingStateChangeEventArgs e) {
+            if(!e.IsLoading)
+                UrlTextBox.Text = WebBrowser.Url.ToString();
         }
 
         void DisplayHandler_OnStatusMessage(object sender, CfxOnStatusMessageEventArgs e) {
@@ -251,6 +258,14 @@ namespace CfxTestApplication {
 
         private void FwdButton_Click(object sender, EventArgs e) {
             WebBrowser.GoForward();
+        }
+
+        private void UrlTextBox_Click(object sender, EventArgs e) {
+
+        }
+
+        private void LoadGoogleButton_Click(object sender, EventArgs e) {
+            WebBrowser.LoadUrl("google.com");
         }
     }
 }

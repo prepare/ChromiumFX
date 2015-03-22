@@ -67,11 +67,12 @@ namespace CfxTestApplication {
             this.VisitDomButton = new System.Windows.Forms.ToolStripButton();
             this.CountFramesButton = new System.Windows.Forms.ToolStripButton();
             this.ShowDevToolsButton = new System.Windows.Forms.ToolStripButton();
+            this.CreditsButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.WebBrowser = new Chromium.WebBrowser.ChromiumWebBrowser();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.LogTextBox = new System.Windows.Forms.TextBox();
-            this.CreditsButton = new System.Windows.Forms.ToolStripButton();
+            this.LoadGoogleButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -91,6 +92,7 @@ namespace CfxTestApplication {
             this.UrlTextBox,
             this.LoadUrlButton,
             this.toolStripSeparator1,
+            this.LoadGoogleButton,
             this.JSHelloWorldButton,
             this.ResourcesTestButton,
             this.VisitDomButton,
@@ -127,7 +129,7 @@ namespace CfxTestApplication {
             // 
             this.UrlTextBox.Name = "UrlTextBox";
             this.UrlTextBox.Size = new System.Drawing.Size(400, 25);
-            this.UrlTextBox.Text = "www.google.pt";
+            this.UrlTextBox.Click += new System.EventHandler(this.UrlTextBox_Click);
             // 
             // LoadUrlButton
             // 
@@ -190,6 +192,17 @@ namespace CfxTestApplication {
             this.ShowDevToolsButton.Text = "ShowDevTools";
             this.ShowDevToolsButton.Click += new System.EventHandler(this.ShowDevToolsButton_Click);
             // 
+            // CreditsButton
+            // 
+            this.CreditsButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.CreditsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.CreditsButton.Image = ((System.Drawing.Image)(resources.GetObject("CreditsButton.Image")));
+            this.CreditsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CreditsButton.Name = "CreditsButton";
+            this.CreditsButton.Size = new System.Drawing.Size(80, 22);
+            this.CreditsButton.Text = "about:credits";
+            this.CreditsButton.Click += new System.EventHandler(this.CreditsButton_Click);
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -242,16 +255,15 @@ namespace CfxTestApplication {
             this.LogTextBox.Size = new System.Drawing.Size(1261, 121);
             this.LogTextBox.TabIndex = 0;
             // 
-            // CreditsButton
+            // LoadGoogleButton
             // 
-            this.CreditsButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.CreditsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.CreditsButton.Image = ((System.Drawing.Image)(resources.GetObject("CreditsButton.Image")));
-            this.CreditsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.CreditsButton.Name = "CreditsButton";
-            this.CreditsButton.Size = new System.Drawing.Size(80, 22);
-            this.CreditsButton.Text = "about:credits";
-            this.CreditsButton.Click += new System.EventHandler(this.CreditsButton_Click);
+            this.LoadGoogleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.LoadGoogleButton.Image = ((System.Drawing.Image)(resources.GetObject("LoadGoogleButton.Image")));
+            this.LoadGoogleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.LoadGoogleButton.Name = "LoadGoogleButton";
+            this.LoadGoogleButton.Size = new System.Drawing.Size(104, 22);
+            this.LoadGoogleButton.Text = "Load google.com";
+            this.LoadGoogleButton.Click += new System.EventHandler(this.LoadGoogleButton_Click);
             // 
             // BrowserForm
             // 
@@ -295,5 +307,6 @@ namespace CfxTestApplication {
         private System.Windows.Forms.ToolStripButton CountFramesButton;
         private System.Windows.Forms.ToolStripButton ShowDevToolsButton;
         private System.Windows.Forms.ToolStripButton CreditsButton;
+        private System.Windows.Forms.ToolStripButton LoadGoogleButton;
     }
 }
