@@ -38,29 +38,29 @@ extern "C" {
 #endif
 
 // CEF_EXPORT cef_request_context_t* cef_request_context_get_global_context();
-CFX_EXPORT cef_request_context_t* cfx_request_context_get_global_context() {
+static cef_request_context_t* cfx_request_context_get_global_context() {
     return cef_request_context_get_global_context();
 }
 // CEF_EXPORT cef_request_context_t* cef_request_context_create_context(cef_request_context_handler_t* handler);
-CFX_EXPORT cef_request_context_t* cfx_request_context_create_context(cef_request_context_handler_t* handler) {
+static cef_request_context_t* cfx_request_context_create_context(cef_request_context_handler_t* handler) {
     if(handler) ((cef_base_t*)handler)->add_ref((cef_base_t*)handler);
     return cef_request_context_create_context(handler);
 }
 // cef_base_t base
 
 // is_same
-CFX_EXPORT int cfx_request_context_is_same(cef_request_context_t* self, cef_request_context_t* other) {
+static int cfx_request_context_is_same(cef_request_context_t* self, cef_request_context_t* other) {
     if(other) ((cef_base_t*)other)->add_ref((cef_base_t*)other);
     return self->is_same(self, other);
 }
 
 // is_global
-CFX_EXPORT int cfx_request_context_is_global(cef_request_context_t* self) {
+static int cfx_request_context_is_global(cef_request_context_t* self) {
     return self->is_global(self);
 }
 
 // get_handler
-CFX_EXPORT cef_request_context_handler_t* cfx_request_context_get_handler(cef_request_context_t* self) {
+static cef_request_context_handler_t* cfx_request_context_get_handler(cef_request_context_t* self) {
     return self->get_handler(self);
 }
 

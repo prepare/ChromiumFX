@@ -38,61 +38,61 @@ extern "C" {
 #endif
 
 // CEF_EXPORT cef_request_t* cef_request_create();
-CFX_EXPORT cef_request_t* cfx_request_create() {
+static cef_request_t* cfx_request_create() {
     return cef_request_create();
 }
 // cef_base_t base
 
 // is_read_only
-CFX_EXPORT int cfx_request_is_read_only(cef_request_t* self) {
+static int cfx_request_is_read_only(cef_request_t* self) {
     return self->is_read_only(self);
 }
 
 // get_url
-CFX_EXPORT cef_string_userfree_t cfx_request_get_url(cef_request_t* self) {
+static cef_string_userfree_t cfx_request_get_url(cef_request_t* self) {
     return self->get_url(self);
 }
 
 // set_url
-CFX_EXPORT void cfx_request_set_url(cef_request_t* self, char16 *url_str, int url_length) {
+static void cfx_request_set_url(cef_request_t* self, char16 *url_str, int url_length) {
     cef_string_t url = { url_str, url_length, 0 };
     self->set_url(self, &url);
 }
 
 // get_method
-CFX_EXPORT cef_string_userfree_t cfx_request_get_method(cef_request_t* self) {
+static cef_string_userfree_t cfx_request_get_method(cef_request_t* self) {
     return self->get_method(self);
 }
 
 // set_method
-CFX_EXPORT void cfx_request_set_method(cef_request_t* self, char16 *method_str, int method_length) {
+static void cfx_request_set_method(cef_request_t* self, char16 *method_str, int method_length) {
     cef_string_t method = { method_str, method_length, 0 };
     self->set_method(self, &method);
 }
 
 // get_post_data
-CFX_EXPORT cef_post_data_t* cfx_request_get_post_data(cef_request_t* self) {
+static cef_post_data_t* cfx_request_get_post_data(cef_request_t* self) {
     return self->get_post_data(self);
 }
 
 // set_post_data
-CFX_EXPORT void cfx_request_set_post_data(cef_request_t* self, cef_post_data_t* postData) {
+static void cfx_request_set_post_data(cef_request_t* self, cef_post_data_t* postData) {
     if(postData) ((cef_base_t*)postData)->add_ref((cef_base_t*)postData);
     self->set_post_data(self, postData);
 }
 
 // get_header_map
-CFX_EXPORT void cfx_request_get_header_map(cef_request_t* self, cef_string_multimap_t headerMap) {
+static void cfx_request_get_header_map(cef_request_t* self, cef_string_multimap_t headerMap) {
     self->get_header_map(self, headerMap);
 }
 
 // set_header_map
-CFX_EXPORT void cfx_request_set_header_map(cef_request_t* self, cef_string_multimap_t headerMap) {
+static void cfx_request_set_header_map(cef_request_t* self, cef_string_multimap_t headerMap) {
     self->set_header_map(self, headerMap);
 }
 
 // set
-CFX_EXPORT void cfx_request_set(cef_request_t* self, char16 *url_str, int url_length, char16 *method_str, int method_length, cef_post_data_t* postData, cef_string_multimap_t headerMap) {
+static void cfx_request_set(cef_request_t* self, char16 *url_str, int url_length, char16 *method_str, int method_length, cef_post_data_t* postData, cef_string_multimap_t headerMap) {
     cef_string_t url = { url_str, url_length, 0 };
     cef_string_t method = { method_str, method_length, 0 };
     if(postData) ((cef_base_t*)postData)->add_ref((cef_base_t*)postData);
@@ -100,33 +100,33 @@ CFX_EXPORT void cfx_request_set(cef_request_t* self, char16 *url_str, int url_le
 }
 
 // get_flags
-CFX_EXPORT int cfx_request_get_flags(cef_request_t* self) {
+static int cfx_request_get_flags(cef_request_t* self) {
     return self->get_flags(self);
 }
 
 // set_flags
-CFX_EXPORT void cfx_request_set_flags(cef_request_t* self, int flags) {
+static void cfx_request_set_flags(cef_request_t* self, int flags) {
     self->set_flags(self, flags);
 }
 
 // get_first_party_for_cookies
-CFX_EXPORT cef_string_userfree_t cfx_request_get_first_party_for_cookies(cef_request_t* self) {
+static cef_string_userfree_t cfx_request_get_first_party_for_cookies(cef_request_t* self) {
     return self->get_first_party_for_cookies(self);
 }
 
 // set_first_party_for_cookies
-CFX_EXPORT void cfx_request_set_first_party_for_cookies(cef_request_t* self, char16 *url_str, int url_length) {
+static void cfx_request_set_first_party_for_cookies(cef_request_t* self, char16 *url_str, int url_length) {
     cef_string_t url = { url_str, url_length, 0 };
     self->set_first_party_for_cookies(self, &url);
 }
 
 // get_resource_type
-CFX_EXPORT cef_resource_type_t cfx_request_get_resource_type(cef_request_t* self) {
+static cef_resource_type_t cfx_request_get_resource_type(cef_request_t* self) {
     return self->get_resource_type(self);
 }
 
 // get_transition_type
-CFX_EXPORT cef_transition_type_t cfx_request_get_transition_type(cef_request_t* self) {
+static cef_transition_type_t cfx_request_get_transition_type(cef_request_t* self) {
     return self->get_transition_type(self);
 }
 

@@ -162,7 +162,11 @@ Public Class WrapperGenerator
         Next
 
         For Each f In ff
-            b.AppendLine("static {0} (*{1}_ptr)({2});", f.ReturnType.OriginalSymbol, f.Name, f.Signature.OriginalSignature)
+            Dim retSymbol = f.ReturnType.OriginalSymbol
+            If f.Signature.ReturnValueIsConst Then
+                retSymbol = "const " & retSymbol
+            End If
+            b.AppendLine("static {0} (*{1}_ptr)({2});", retSymbol, f.Name, f.Signature.OriginalSignature)
         Next
         b.AppendLine()
 
@@ -185,16 +189,13 @@ Public Class WrapperGenerator
 
         Dim cfxfuncs = decls.GetCfxApiFunctionNames()
 
-        b.BeginBlock("static void* cfx_get_function_pointer(int index)")
-        b.BeginBlock("switch(index)")
+        b.BeginBlock("static void* cfx_function_pointers[{0}] = ", cfxfuncs.Count)
         For i = 0 To cfxfuncs.Length - 1
-            b.AppendLine("case {0}: return {1};", i, cfxfuncs(i))
+            b.AppendLine("(void*){0},", cfxfuncs(i))
         Next
-        b.EndBlock()
-        b.EndBlock()
-        b.AppendLine()
+        b.EndBlock(";")
 
-        fileManager.WriteFileIfContentChanged("cfx_get_function_pointer.c", b.ToString())
+        fileManager.WriteFileIfContentChanged("cfx_function_pointers.c", b.ToString())
 
     End Sub
 
@@ -292,7 +293,7 @@ Public Class WrapperGenerator
 
         b.BeginFunction("void InstantiateRuntimeDelegates()", "private static")
         For Each f In decls.ExportFunctions
-            CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
+            CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName, f.ApiIndex)
         Next
         b.EndBlock()
         b.AppendLine()
@@ -300,7 +301,7 @@ Public Class WrapperGenerator
         b.BeginFunction("void InstantiateStringCollectionDelegates()", "internal static")
         For Each o In decls.StringCollectionTypes
             For Each f In o.ExportFunctions
-                CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
+                CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName, f.ApiIndex)
             Next
         Next
         b.EndBlock()

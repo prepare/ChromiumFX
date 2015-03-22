@@ -208,7 +208,7 @@ Public Class Signature
                 retType = "const " & retType
             End If
 
-            Return String.Format("CFX_EXPORT {0} {1}({2})", retType, functionName, args.Join())
+            Return String.Format("static {0} {1}({2})", retType, functionName, args.Join())
         End Get
     End Property
 

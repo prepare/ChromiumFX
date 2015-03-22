@@ -38,23 +38,23 @@ extern "C" {
 #endif
 
 // CEF_EXPORT cef_v8stack_trace_t* cef_v8stack_trace_get_current(int frame_limit);
-CFX_EXPORT cef_v8stack_trace_t* cfx_v8stack_trace_get_current(int frame_limit) {
+static cef_v8stack_trace_t* cfx_v8stack_trace_get_current(int frame_limit) {
     return cef_v8stack_trace_get_current(frame_limit);
 }
 // cef_base_t base
 
 // is_valid
-CFX_EXPORT int cfx_v8stack_trace_is_valid(cef_v8stack_trace_t* self) {
+static int cfx_v8stack_trace_is_valid(cef_v8stack_trace_t* self) {
     return self->is_valid(self);
 }
 
 // get_frame_count
-CFX_EXPORT int cfx_v8stack_trace_get_frame_count(cef_v8stack_trace_t* self) {
+static int cfx_v8stack_trace_get_frame_count(cef_v8stack_trace_t* self) {
     return self->get_frame_count(self);
 }
 
 // get_frame
-CFX_EXPORT cef_v8stack_frame_t* cfx_v8stack_trace_get_frame(cef_v8stack_trace_t* self, int index) {
+static cef_v8stack_frame_t* cfx_v8stack_trace_get_frame(cef_v8stack_trace_t* self, int index) {
     return self->get_frame(self, index);
 }
 

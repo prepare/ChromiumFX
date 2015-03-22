@@ -53,19 +53,45 @@ Public Class CefApiDeclarations
         If retval Is Nothing Then
             Dim list = New List(Of String)
             For Each f In ExportFunctions
+                f.ApiIndex = list.Count
                 list.Add(f.CfxName)
             Next
             For Each st In CefStructTypes
                 For Each f In st.ClassBuilder.ExportFunctions
+                    f.ApiIndex = list.Count
                     list.Add(f.CfxName)
                 Next
-                If st.ClassBuilder.Category = StructCategory.ApiCalls Then
-                    For Each sm In st.ClassBuilder.StructMembers
-                        If sm.MemberType.IsCefCallbackType Then
-                            list.Add(sm.Callback.CfxApiFunctionName)
-                        End If
-                    Next
-                End If
+                Select Case st.ClassBuilder.Category
+                    Case StructCategory.ApiCalls
+                        For Each sm In st.ClassBuilder.StructMembers
+                            If sm.MemberType.IsCefCallbackType Then
+                                sm.ApiIndex = list.Count
+                                list.Add(sm.Callback.CfxApiFunctionName)
+                            End If
+                        Next
+                    Case StructCategory.ApiCallbacks
+                        st.ApiIndex = list.Count
+                        list.Add(st.CfxName & "_ctor")
+                        list.Add(st.CfxName & "_get_gc_handle")
+                        list.Add(st.CfxName & "_set_managed_callback")
+                    Case StructCategory.Values
+                        st.ApiIndex = list.Count
+                        list.Add(st.CfxName & "_ctor")
+                        list.Add(st.CfxName & "_dtor")
+                        For Each sm In st.ClassBuilder.StructMembers
+                            If sm.Name <> "size" Then
+                                sm.ApiIndex = list.Count
+                                list.Add(st.CfxName & "_set_" & sm.Name)
+                                list.Add(st.CfxName & "_get_" & sm.Name)
+                            End If
+                        Next
+                End Select
+            Next
+            For Each sc In StringCollectionTypes
+                For Each f In sc.ExportFunctions
+                    f.ApiIndex = list.Count
+                    list.Add(f.CfxName)
+                Next
             Next
             retval = list.ToArray()
         End If

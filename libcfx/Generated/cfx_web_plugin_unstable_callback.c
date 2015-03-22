@@ -57,7 +57,7 @@ int CEF_CALLBACK _cfx_web_plugin_unstable_callback_release(struct _cef_base_t* b
     return count;
 }
 
-CFX_EXPORT cfx_web_plugin_unstable_callback_t* cfx_web_plugin_unstable_callback_ctor(gc_handle_t gc_handle) {
+static cfx_web_plugin_unstable_callback_t* cfx_web_plugin_unstable_callback_ctor(gc_handle_t gc_handle) {
     cfx_web_plugin_unstable_callback_t* ptr = (cfx_web_plugin_unstable_callback_t*)calloc(1, sizeof(cfx_web_plugin_unstable_callback_t));
     if(!ptr) return 0;
     ptr->cef_web_plugin_unstable_callback.base.size = sizeof(cef_web_plugin_unstable_callback_t);
@@ -68,7 +68,7 @@ CFX_EXPORT cfx_web_plugin_unstable_callback_t* cfx_web_plugin_unstable_callback_
     return ptr;
 }
 
-CFX_EXPORT gc_handle_t cfx_web_plugin_unstable_callback_get_gc_handle(cfx_web_plugin_unstable_callback_t* self) {
+static gc_handle_t cfx_web_plugin_unstable_callback_get_gc_handle(cfx_web_plugin_unstable_callback_t* self) {
     return self->gc_handle;
 }
 
@@ -81,7 +81,7 @@ void CEF_CALLBACK cfx_web_plugin_unstable_callback_is_unstable(cef_web_plugin_un
 }
 
 
-CFX_EXPORT void cfx_web_plugin_unstable_callback_set_managed_callback(cef_web_plugin_unstable_callback_t* self, int index, void* callback) {
+static void cfx_web_plugin_unstable_callback_set_managed_callback(cef_web_plugin_unstable_callback_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_web_plugin_unstable_callback_is_unstable_callback)

@@ -57,7 +57,7 @@ int CEF_CALLBACK _cfx_get_geolocation_callback_release(struct _cef_base_t* base)
     return count;
 }
 
-CFX_EXPORT cfx_get_geolocation_callback_t* cfx_get_geolocation_callback_ctor(gc_handle_t gc_handle) {
+static cfx_get_geolocation_callback_t* cfx_get_geolocation_callback_ctor(gc_handle_t gc_handle) {
     cfx_get_geolocation_callback_t* ptr = (cfx_get_geolocation_callback_t*)calloc(1, sizeof(cfx_get_geolocation_callback_t));
     if(!ptr) return 0;
     ptr->cef_get_geolocation_callback.base.size = sizeof(cef_get_geolocation_callback_t);
@@ -68,7 +68,7 @@ CFX_EXPORT cfx_get_geolocation_callback_t* cfx_get_geolocation_callback_ctor(gc_
     return ptr;
 }
 
-CFX_EXPORT gc_handle_t cfx_get_geolocation_callback_get_gc_handle(cfx_get_geolocation_callback_t* self) {
+static gc_handle_t cfx_get_geolocation_callback_get_gc_handle(cfx_get_geolocation_callback_t* self) {
     return self->gc_handle;
 }
 
@@ -81,7 +81,7 @@ void CEF_CALLBACK cfx_get_geolocation_callback_on_location_update(cef_get_geoloc
 }
 
 
-CFX_EXPORT void cfx_get_geolocation_callback_set_managed_callback(cef_get_geolocation_callback_t* self, int index, void* callback) {
+static void cfx_get_geolocation_callback_set_managed_callback(cef_get_geolocation_callback_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_get_geolocation_callback_on_location_update_callback)

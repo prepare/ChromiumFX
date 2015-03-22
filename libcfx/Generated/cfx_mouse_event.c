@@ -37,35 +37,35 @@
 extern "C" {
 #endif
 
-CFX_EXPORT cef_mouse_event_t* cfx_mouse_event_ctor() {
+static cef_mouse_event_t* cfx_mouse_event_ctor() {
     return (cef_mouse_event_t*)calloc(1, sizeof(cef_mouse_event_t));
 }
 
-CFX_EXPORT void cfx_mouse_event_dtor(cef_mouse_event_t* self) {
+static void cfx_mouse_event_dtor(cef_mouse_event_t* self) {
     free(self);
 }
 
 // cef_mouse_event_t->x
-CFX_EXPORT void cfx_mouse_event_set_x(cef_mouse_event_t *self, int x) {
+static void cfx_mouse_event_set_x(cef_mouse_event_t *self, int x) {
     self->x = x;
 }
-CFX_EXPORT void cfx_mouse_event_get_x(cef_mouse_event_t *self, int* x) {
+static void cfx_mouse_event_get_x(cef_mouse_event_t *self, int* x) {
     *x = self->x;
 }
 
 // cef_mouse_event_t->y
-CFX_EXPORT void cfx_mouse_event_set_y(cef_mouse_event_t *self, int y) {
+static void cfx_mouse_event_set_y(cef_mouse_event_t *self, int y) {
     self->y = y;
 }
-CFX_EXPORT void cfx_mouse_event_get_y(cef_mouse_event_t *self, int* y) {
+static void cfx_mouse_event_get_y(cef_mouse_event_t *self, int* y) {
     *y = self->y;
 }
 
 // cef_mouse_event_t->modifiers
-CFX_EXPORT void cfx_mouse_event_set_modifiers(cef_mouse_event_t *self, uint32 modifiers) {
+static void cfx_mouse_event_set_modifiers(cef_mouse_event_t *self, uint32 modifiers) {
     self->modifiers = modifiers;
 }
-CFX_EXPORT void cfx_mouse_event_get_modifiers(cef_mouse_event_t *self, uint32* modifiers) {
+static void cfx_mouse_event_get_modifiers(cef_mouse_event_t *self, uint32* modifiers) {
     *modifiers = self->modifiers;
 }
 

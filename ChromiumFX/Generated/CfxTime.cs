@@ -44,24 +44,24 @@ namespace Chromium {
     public sealed partial class CfxTime : CfxStructure {
 
         static CfxTime () {
-            CfxApi.cfx_time_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_time_ctor", typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_time_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_time_dtor", typeof(CfxApi.cfx_dtor_delegate));
-            CfxApi.cfx_time_set_year = (CfxApi.cfx_time_set_year_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_time_set_year", typeof(CfxApi.cfx_time_set_year_delegate));
-            CfxApi.cfx_time_get_year = (CfxApi.cfx_time_get_year_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_time_get_year", typeof(CfxApi.cfx_time_get_year_delegate));
-            CfxApi.cfx_time_set_month = (CfxApi.cfx_time_set_month_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_time_set_month", typeof(CfxApi.cfx_time_set_month_delegate));
-            CfxApi.cfx_time_get_month = (CfxApi.cfx_time_get_month_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_time_get_month", typeof(CfxApi.cfx_time_get_month_delegate));
-            CfxApi.cfx_time_set_day_of_week = (CfxApi.cfx_time_set_day_of_week_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_time_set_day_of_week", typeof(CfxApi.cfx_time_set_day_of_week_delegate));
-            CfxApi.cfx_time_get_day_of_week = (CfxApi.cfx_time_get_day_of_week_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_time_get_day_of_week", typeof(CfxApi.cfx_time_get_day_of_week_delegate));
-            CfxApi.cfx_time_set_day_of_month = (CfxApi.cfx_time_set_day_of_month_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_time_set_day_of_month", typeof(CfxApi.cfx_time_set_day_of_month_delegate));
-            CfxApi.cfx_time_get_day_of_month = (CfxApi.cfx_time_get_day_of_month_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_time_get_day_of_month", typeof(CfxApi.cfx_time_get_day_of_month_delegate));
-            CfxApi.cfx_time_set_hour = (CfxApi.cfx_time_set_hour_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_time_set_hour", typeof(CfxApi.cfx_time_set_hour_delegate));
-            CfxApi.cfx_time_get_hour = (CfxApi.cfx_time_get_hour_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_time_get_hour", typeof(CfxApi.cfx_time_get_hour_delegate));
-            CfxApi.cfx_time_set_minute = (CfxApi.cfx_time_set_minute_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_time_set_minute", typeof(CfxApi.cfx_time_set_minute_delegate));
-            CfxApi.cfx_time_get_minute = (CfxApi.cfx_time_get_minute_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_time_get_minute", typeof(CfxApi.cfx_time_get_minute_delegate));
-            CfxApi.cfx_time_set_second = (CfxApi.cfx_time_set_second_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_time_set_second", typeof(CfxApi.cfx_time_set_second_delegate));
-            CfxApi.cfx_time_get_second = (CfxApi.cfx_time_get_second_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_time_get_second", typeof(CfxApi.cfx_time_get_second_delegate));
-            CfxApi.cfx_time_set_millisecond = (CfxApi.cfx_time_set_millisecond_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_time_set_millisecond", typeof(CfxApi.cfx_time_set_millisecond_delegate));
-            CfxApi.cfx_time_get_millisecond = (CfxApi.cfx_time_get_millisecond_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_time_get_millisecond", typeof(CfxApi.cfx_time_get_millisecond_delegate));
+            CfxApi.cfx_time_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(858, typeof(CfxApi.cfx_ctor_delegate));
+            CfxApi.cfx_time_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(858, typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_time_set_year = (CfxApi.cfx_time_set_year_delegate)CfxApi.GetDelegate(860, typeof(CfxApi.cfx_time_set_year_delegate));
+            CfxApi.cfx_time_get_year = (CfxApi.cfx_time_get_year_delegate)CfxApi.GetDelegate(861, typeof(CfxApi.cfx_time_get_year_delegate));
+            CfxApi.cfx_time_set_month = (CfxApi.cfx_time_set_month_delegate)CfxApi.GetDelegate(862, typeof(CfxApi.cfx_time_set_month_delegate));
+            CfxApi.cfx_time_get_month = (CfxApi.cfx_time_get_month_delegate)CfxApi.GetDelegate(863, typeof(CfxApi.cfx_time_get_month_delegate));
+            CfxApi.cfx_time_set_day_of_week = (CfxApi.cfx_time_set_day_of_week_delegate)CfxApi.GetDelegate(864, typeof(CfxApi.cfx_time_set_day_of_week_delegate));
+            CfxApi.cfx_time_get_day_of_week = (CfxApi.cfx_time_get_day_of_week_delegate)CfxApi.GetDelegate(865, typeof(CfxApi.cfx_time_get_day_of_week_delegate));
+            CfxApi.cfx_time_set_day_of_month = (CfxApi.cfx_time_set_day_of_month_delegate)CfxApi.GetDelegate(866, typeof(CfxApi.cfx_time_set_day_of_month_delegate));
+            CfxApi.cfx_time_get_day_of_month = (CfxApi.cfx_time_get_day_of_month_delegate)CfxApi.GetDelegate(867, typeof(CfxApi.cfx_time_get_day_of_month_delegate));
+            CfxApi.cfx_time_set_hour = (CfxApi.cfx_time_set_hour_delegate)CfxApi.GetDelegate(868, typeof(CfxApi.cfx_time_set_hour_delegate));
+            CfxApi.cfx_time_get_hour = (CfxApi.cfx_time_get_hour_delegate)CfxApi.GetDelegate(869, typeof(CfxApi.cfx_time_get_hour_delegate));
+            CfxApi.cfx_time_set_minute = (CfxApi.cfx_time_set_minute_delegate)CfxApi.GetDelegate(870, typeof(CfxApi.cfx_time_set_minute_delegate));
+            CfxApi.cfx_time_get_minute = (CfxApi.cfx_time_get_minute_delegate)CfxApi.GetDelegate(871, typeof(CfxApi.cfx_time_get_minute_delegate));
+            CfxApi.cfx_time_set_second = (CfxApi.cfx_time_set_second_delegate)CfxApi.GetDelegate(872, typeof(CfxApi.cfx_time_set_second_delegate));
+            CfxApi.cfx_time_get_second = (CfxApi.cfx_time_get_second_delegate)CfxApi.GetDelegate(873, typeof(CfxApi.cfx_time_get_second_delegate));
+            CfxApi.cfx_time_set_millisecond = (CfxApi.cfx_time_set_millisecond_delegate)CfxApi.GetDelegate(874, typeof(CfxApi.cfx_time_set_millisecond_delegate));
+            CfxApi.cfx_time_get_millisecond = (CfxApi.cfx_time_get_millisecond_delegate)CfxApi.GetDelegate(875, typeof(CfxApi.cfx_time_get_millisecond_delegate));
         }
 
         internal static CfxTime Wrap(IntPtr nativePtr) {

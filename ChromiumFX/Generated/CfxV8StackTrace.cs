@@ -48,10 +48,10 @@ namespace Chromium {
     public class CfxV8StackTrace : CfxBase {
 
         static CfxV8StackTrace () {
-            CfxApi.cfx_v8stack_trace_get_current = (CfxApi.cfx_v8stack_trace_get_current_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8stack_trace_get_current", typeof(CfxApi.cfx_v8stack_trace_get_current_delegate));
-            CfxApi.cfx_v8stack_trace_is_valid = (CfxApi.cfx_v8stack_trace_is_valid_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8stack_trace_is_valid", typeof(CfxApi.cfx_v8stack_trace_is_valid_delegate));
-            CfxApi.cfx_v8stack_trace_get_frame_count = (CfxApi.cfx_v8stack_trace_get_frame_count_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8stack_trace_get_frame_count", typeof(CfxApi.cfx_v8stack_trace_get_frame_count_delegate));
-            CfxApi.cfx_v8stack_trace_get_frame = (CfxApi.cfx_v8stack_trace_get_frame_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_v8stack_trace_get_frame", typeof(CfxApi.cfx_v8stack_trace_get_frame_delegate));
+            CfxApi.cfx_v8stack_trace_get_current = (CfxApi.cfx_v8stack_trace_get_current_delegate)CfxApi.GetDelegate(940, typeof(CfxApi.cfx_v8stack_trace_get_current_delegate));
+            CfxApi.cfx_v8stack_trace_is_valid = (CfxApi.cfx_v8stack_trace_is_valid_delegate)CfxApi.GetDelegate(941, typeof(CfxApi.cfx_v8stack_trace_is_valid_delegate));
+            CfxApi.cfx_v8stack_trace_get_frame_count = (CfxApi.cfx_v8stack_trace_get_frame_count_delegate)CfxApi.GetDelegate(942, typeof(CfxApi.cfx_v8stack_trace_get_frame_count_delegate));
+            CfxApi.cfx_v8stack_trace_get_frame = (CfxApi.cfx_v8stack_trace_get_frame_delegate)CfxApi.GetDelegate(943, typeof(CfxApi.cfx_v8stack_trace_get_frame_delegate));
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

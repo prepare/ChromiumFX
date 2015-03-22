@@ -37,35 +37,35 @@
 extern "C" {
 #endif
 
-CFX_EXPORT cef_cursor_info_t* cfx_cursor_info_ctor() {
+static cef_cursor_info_t* cfx_cursor_info_ctor() {
     return (cef_cursor_info_t*)calloc(1, sizeof(cef_cursor_info_t));
 }
 
-CFX_EXPORT void cfx_cursor_info_dtor(cef_cursor_info_t* self) {
+static void cfx_cursor_info_dtor(cef_cursor_info_t* self) {
     free(self);
 }
 
 // cef_cursor_info_t->hotspot
-CFX_EXPORT void cfx_cursor_info_set_hotspot(cef_cursor_info_t *self, cef_point_t* hotspot) {
+static void cfx_cursor_info_set_hotspot(cef_cursor_info_t *self, cef_point_t* hotspot) {
     self->hotspot = *(hotspot);
 }
-CFX_EXPORT void cfx_cursor_info_get_hotspot(cef_cursor_info_t *self, cef_point_t** hotspot) {
+static void cfx_cursor_info_get_hotspot(cef_cursor_info_t *self, cef_point_t** hotspot) {
     *hotspot = &(self->hotspot);
 }
 
 // cef_cursor_info_t->image_scale_factor
-CFX_EXPORT void cfx_cursor_info_set_image_scale_factor(cef_cursor_info_t *self, float image_scale_factor) {
+static void cfx_cursor_info_set_image_scale_factor(cef_cursor_info_t *self, float image_scale_factor) {
     self->image_scale_factor = image_scale_factor;
 }
-CFX_EXPORT void cfx_cursor_info_get_image_scale_factor(cef_cursor_info_t *self, float* image_scale_factor) {
+static void cfx_cursor_info_get_image_scale_factor(cef_cursor_info_t *self, float* image_scale_factor) {
     *image_scale_factor = self->image_scale_factor;
 }
 
 // cef_cursor_info_t->buffer
-CFX_EXPORT void cfx_cursor_info_set_buffer(cef_cursor_info_t *self, void* buffer) {
+static void cfx_cursor_info_set_buffer(cef_cursor_info_t *self, void* buffer) {
     self->buffer = buffer;
 }
-CFX_EXPORT void cfx_cursor_info_get_buffer(cef_cursor_info_t *self, void** buffer) {
+static void cfx_cursor_info_get_buffer(cef_cursor_info_t *self, void** buffer) {
     *buffer = self->buffer;
 }
 

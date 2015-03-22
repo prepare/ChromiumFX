@@ -57,7 +57,7 @@ int CEF_CALLBACK _cfx_navigation_entry_visitor_release(struct _cef_base_t* base)
     return count;
 }
 
-CFX_EXPORT cfx_navigation_entry_visitor_t* cfx_navigation_entry_visitor_ctor(gc_handle_t gc_handle) {
+static cfx_navigation_entry_visitor_t* cfx_navigation_entry_visitor_ctor(gc_handle_t gc_handle) {
     cfx_navigation_entry_visitor_t* ptr = (cfx_navigation_entry_visitor_t*)calloc(1, sizeof(cfx_navigation_entry_visitor_t));
     if(!ptr) return 0;
     ptr->cef_navigation_entry_visitor.base.size = sizeof(cef_navigation_entry_visitor_t);
@@ -68,7 +68,7 @@ CFX_EXPORT cfx_navigation_entry_visitor_t* cfx_navigation_entry_visitor_ctor(gc_
     return ptr;
 }
 
-CFX_EXPORT gc_handle_t cfx_navigation_entry_visitor_get_gc_handle(cfx_navigation_entry_visitor_t* self) {
+static gc_handle_t cfx_navigation_entry_visitor_get_gc_handle(cfx_navigation_entry_visitor_t* self) {
     return self->gc_handle;
 }
 
@@ -83,7 +83,7 @@ int CEF_CALLBACK cfx_navigation_entry_visitor_visit(cef_navigation_entry_visitor
 }
 
 
-CFX_EXPORT void cfx_navigation_entry_visitor_set_managed_callback(cef_navigation_entry_visitor_t* self, int index, void* callback) {
+static void cfx_navigation_entry_visitor_set_managed_callback(cef_navigation_entry_visitor_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_navigation_entry_visitor_visit_callback)

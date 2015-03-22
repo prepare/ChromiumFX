@@ -45,15 +45,15 @@ namespace Chromium {
     public class CfxPostDataElement : CfxBase {
 
         static CfxPostDataElement () {
-            CfxApi.cfx_post_data_element_create = (CfxApi.cfx_post_data_element_create_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_post_data_element_create", typeof(CfxApi.cfx_post_data_element_create_delegate));
-            CfxApi.cfx_post_data_element_is_read_only = (CfxApi.cfx_post_data_element_is_read_only_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_post_data_element_is_read_only", typeof(CfxApi.cfx_post_data_element_is_read_only_delegate));
-            CfxApi.cfx_post_data_element_set_to_empty = (CfxApi.cfx_post_data_element_set_to_empty_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_post_data_element_set_to_empty", typeof(CfxApi.cfx_post_data_element_set_to_empty_delegate));
-            CfxApi.cfx_post_data_element_set_to_file = (CfxApi.cfx_post_data_element_set_to_file_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_post_data_element_set_to_file", typeof(CfxApi.cfx_post_data_element_set_to_file_delegate));
-            CfxApi.cfx_post_data_element_set_to_bytes = (CfxApi.cfx_post_data_element_set_to_bytes_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_post_data_element_set_to_bytes", typeof(CfxApi.cfx_post_data_element_set_to_bytes_delegate));
-            CfxApi.cfx_post_data_element_get_type = (CfxApi.cfx_post_data_element_get_type_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_post_data_element_get_type", typeof(CfxApi.cfx_post_data_element_get_type_delegate));
-            CfxApi.cfx_post_data_element_get_file = (CfxApi.cfx_post_data_element_get_file_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_post_data_element_get_file", typeof(CfxApi.cfx_post_data_element_get_file_delegate));
-            CfxApi.cfx_post_data_element_get_bytes_count = (CfxApi.cfx_post_data_element_get_bytes_count_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_post_data_element_get_bytes_count", typeof(CfxApi.cfx_post_data_element_get_bytes_count_delegate));
-            CfxApi.cfx_post_data_element_get_bytes = (CfxApi.cfx_post_data_element_get_bytes_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_post_data_element_get_bytes", typeof(CfxApi.cfx_post_data_element_get_bytes_delegate));
+            CfxApi.cfx_post_data_element_create = (CfxApi.cfx_post_data_element_create_delegate)CfxApi.GetDelegate(646, typeof(CfxApi.cfx_post_data_element_create_delegate));
+            CfxApi.cfx_post_data_element_is_read_only = (CfxApi.cfx_post_data_element_is_read_only_delegate)CfxApi.GetDelegate(647, typeof(CfxApi.cfx_post_data_element_is_read_only_delegate));
+            CfxApi.cfx_post_data_element_set_to_empty = (CfxApi.cfx_post_data_element_set_to_empty_delegate)CfxApi.GetDelegate(648, typeof(CfxApi.cfx_post_data_element_set_to_empty_delegate));
+            CfxApi.cfx_post_data_element_set_to_file = (CfxApi.cfx_post_data_element_set_to_file_delegate)CfxApi.GetDelegate(649, typeof(CfxApi.cfx_post_data_element_set_to_file_delegate));
+            CfxApi.cfx_post_data_element_set_to_bytes = (CfxApi.cfx_post_data_element_set_to_bytes_delegate)CfxApi.GetDelegate(650, typeof(CfxApi.cfx_post_data_element_set_to_bytes_delegate));
+            CfxApi.cfx_post_data_element_get_type = (CfxApi.cfx_post_data_element_get_type_delegate)CfxApi.GetDelegate(651, typeof(CfxApi.cfx_post_data_element_get_type_delegate));
+            CfxApi.cfx_post_data_element_get_file = (CfxApi.cfx_post_data_element_get_file_delegate)CfxApi.GetDelegate(652, typeof(CfxApi.cfx_post_data_element_get_file_delegate));
+            CfxApi.cfx_post_data_element_get_bytes_count = (CfxApi.cfx_post_data_element_get_bytes_count_delegate)CfxApi.GetDelegate(653, typeof(CfxApi.cfx_post_data_element_get_bytes_count_delegate));
+            CfxApi.cfx_post_data_element_get_bytes = (CfxApi.cfx_post_data_element_get_bytes_delegate)CfxApi.GetDelegate(654, typeof(CfxApi.cfx_post_data_element_get_bytes_delegate));
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

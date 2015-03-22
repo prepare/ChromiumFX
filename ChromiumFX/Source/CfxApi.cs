@@ -62,9 +62,9 @@ namespace Chromium
         public delegate IntPtr cfx_get_gc_handle_delegate(IntPtr nativePtr);
 
 
-        //CFX_EXPORT int cfx_api_initialize(HMODULE libcef, void *gc_handle_free, void **release, void **string_get_ptr, void **string_destroy)
+        //CFX_EXPORT int cfx_api_initialize(HMODULE libcef, void *gc_handle_free, void **release, void **string_get_ptr, void **string_destroy, , void **get_function_pointer)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate int cfx_api_initialize_delegate(IntPtr libcef, IntPtr gc_handle_free, out IntPtr release, out IntPtr string_get_ptr, out IntPtr string_destroy);
+        public delegate int cfx_api_initialize_delegate(IntPtr libcef, IntPtr gc_handle_free, out IntPtr release, out IntPtr string_get_ptr, out IntPtr string_destroy, out IntPtr get_function_pointer);
 
         //static int cfx_release(cef_base_t* base)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -80,6 +80,11 @@ namespace Chromium
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_string_destroy_delegate(IntPtr str);
         public static cfx_string_destroy_delegate cfx_string_destroy;
+
+        //static void* cfx_get_function_pointer(int index)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate IntPtr cfx_get_function_pointer_delegate(int index);
+        public static cfx_get_function_pointer_delegate cfx_get_function_pointer;
 
 
         //CEF_EXPORT void cef_string_userfree_utf16_free(cef_string_userfree_utf16_t str);
@@ -167,9 +172,10 @@ namespace Chromium
             IntPtr release;
             IntPtr string_get_pointer;
             IntPtr string_destroy;
+            IntPtr get_function_pointer;
 
-            cfx_api_initialize_delegate api_initialize = (cfx_api_initialize_delegate)GetDelegate(libcfxPtr, "cfx_api_initialize", typeof(cfx_api_initialize_delegate));
-            int retval = api_initialize(libcefPtr, Marshal.GetFunctionPointerForDelegate(cfx_free_gc_handle), out release, out string_get_pointer, out string_destroy);
+            cfx_api_initialize_delegate api_initialize = (cfx_api_initialize_delegate)LoadDelegate(libcfxPtr, "cfx_api_initialize", typeof(cfx_api_initialize_delegate));
+            int retval = api_initialize(libcefPtr, Marshal.GetFunctionPointerForDelegate(cfx_free_gc_handle), out release, out string_get_pointer, out string_destroy, out get_function_pointer);
 
             if(retval != 0) {
                 switch(retval) {
@@ -183,15 +189,21 @@ namespace Chromium
             cfx_release = (cfx_release_delegate)Marshal.GetDelegateForFunctionPointer(release, typeof(cfx_release_delegate));
             cfx_string_get_ptr = (cfx_string_get_ptr_delegate)Marshal.GetDelegateForFunctionPointer(string_get_pointer, typeof(cfx_string_get_ptr_delegate));
             cfx_string_destroy = (cfx_string_destroy_delegate)Marshal.GetDelegateForFunctionPointer(string_destroy, typeof(cfx_string_destroy_delegate));
+            cfx_get_function_pointer = (cfx_get_function_pointer_delegate)Marshal.GetDelegateForFunctionPointer(get_function_pointer, typeof(cfx_get_function_pointer_delegate));
 
-            cef_string_userfree_utf16_free = (cef_string_userfree_utf16_free_delegate)GetDelegate(libcefPtr, "cef_string_userfree_utf16_free", typeof(cef_string_userfree_utf16_free_delegate));
+            cef_string_userfree_utf16_free = (cef_string_userfree_utf16_free_delegate)LoadDelegate(libcefPtr, "cef_string_userfree_utf16_free", typeof(cef_string_userfree_utf16_free_delegate));
 
             InstantiateRuntimeDelegates();
             librariesLoaded = true;
 
         }
 
-        internal static Delegate GetDelegate(IntPtr hModule, string procName, Type delegateType) {
+        internal static Delegate GetDelegate(int apiIndex, Type delegateType) {
+            IntPtr functionPtr = cfx_get_function_pointer(apiIndex);
+            return Marshal.GetDelegateForFunctionPointer(functionPtr, delegateType);
+        }
+        
+        private static Delegate LoadDelegate(IntPtr hModule, string procName, Type delegateType) {
             IntPtr procAdress = WinAPI.GetProcAddress(hModule, procName);
             if (procAdress == IntPtr.Zero) {
                 throw new CfxException("Unable to load native function " + procName + ". Check libcef.dll and libcfx.dll compatibility.");

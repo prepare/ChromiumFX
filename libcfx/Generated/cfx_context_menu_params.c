@@ -40,97 +40,97 @@ extern "C" {
 // cef_base_t base
 
 // get_xcoord
-CFX_EXPORT int cfx_context_menu_params_get_xcoord(cef_context_menu_params_t* self) {
+static int cfx_context_menu_params_get_xcoord(cef_context_menu_params_t* self) {
     return self->get_xcoord(self);
 }
 
 // get_ycoord
-CFX_EXPORT int cfx_context_menu_params_get_ycoord(cef_context_menu_params_t* self) {
+static int cfx_context_menu_params_get_ycoord(cef_context_menu_params_t* self) {
     return self->get_ycoord(self);
 }
 
 // get_type_flags
-CFX_EXPORT cef_context_menu_type_flags_t cfx_context_menu_params_get_type_flags(cef_context_menu_params_t* self) {
+static cef_context_menu_type_flags_t cfx_context_menu_params_get_type_flags(cef_context_menu_params_t* self) {
     return self->get_type_flags(self);
 }
 
 // get_link_url
-CFX_EXPORT cef_string_userfree_t cfx_context_menu_params_get_link_url(cef_context_menu_params_t* self) {
+static cef_string_userfree_t cfx_context_menu_params_get_link_url(cef_context_menu_params_t* self) {
     return self->get_link_url(self);
 }
 
 // get_unfiltered_link_url
-CFX_EXPORT cef_string_userfree_t cfx_context_menu_params_get_unfiltered_link_url(cef_context_menu_params_t* self) {
+static cef_string_userfree_t cfx_context_menu_params_get_unfiltered_link_url(cef_context_menu_params_t* self) {
     return self->get_unfiltered_link_url(self);
 }
 
 // get_source_url
-CFX_EXPORT cef_string_userfree_t cfx_context_menu_params_get_source_url(cef_context_menu_params_t* self) {
+static cef_string_userfree_t cfx_context_menu_params_get_source_url(cef_context_menu_params_t* self) {
     return self->get_source_url(self);
 }
 
 // has_image_contents
-CFX_EXPORT int cfx_context_menu_params_has_image_contents(cef_context_menu_params_t* self) {
+static int cfx_context_menu_params_has_image_contents(cef_context_menu_params_t* self) {
     return self->has_image_contents(self);
 }
 
 // get_page_url
-CFX_EXPORT cef_string_userfree_t cfx_context_menu_params_get_page_url(cef_context_menu_params_t* self) {
+static cef_string_userfree_t cfx_context_menu_params_get_page_url(cef_context_menu_params_t* self) {
     return self->get_page_url(self);
 }
 
 // get_frame_url
-CFX_EXPORT cef_string_userfree_t cfx_context_menu_params_get_frame_url(cef_context_menu_params_t* self) {
+static cef_string_userfree_t cfx_context_menu_params_get_frame_url(cef_context_menu_params_t* self) {
     return self->get_frame_url(self);
 }
 
 // get_frame_charset
-CFX_EXPORT cef_string_userfree_t cfx_context_menu_params_get_frame_charset(cef_context_menu_params_t* self) {
+static cef_string_userfree_t cfx_context_menu_params_get_frame_charset(cef_context_menu_params_t* self) {
     return self->get_frame_charset(self);
 }
 
 // get_media_type
-CFX_EXPORT cef_context_menu_media_type_t cfx_context_menu_params_get_media_type(cef_context_menu_params_t* self) {
+static cef_context_menu_media_type_t cfx_context_menu_params_get_media_type(cef_context_menu_params_t* self) {
     return self->get_media_type(self);
 }
 
 // get_media_state_flags
-CFX_EXPORT cef_context_menu_media_state_flags_t cfx_context_menu_params_get_media_state_flags(cef_context_menu_params_t* self) {
+static cef_context_menu_media_state_flags_t cfx_context_menu_params_get_media_state_flags(cef_context_menu_params_t* self) {
     return self->get_media_state_flags(self);
 }
 
 // get_selection_text
-CFX_EXPORT cef_string_userfree_t cfx_context_menu_params_get_selection_text(cef_context_menu_params_t* self) {
+static cef_string_userfree_t cfx_context_menu_params_get_selection_text(cef_context_menu_params_t* self) {
     return self->get_selection_text(self);
 }
 
 // get_misspelled_word
-CFX_EXPORT cef_string_userfree_t cfx_context_menu_params_get_misspelled_word(cef_context_menu_params_t* self) {
+static cef_string_userfree_t cfx_context_menu_params_get_misspelled_word(cef_context_menu_params_t* self) {
     return self->get_misspelled_word(self);
 }
 
 // get_misspelling_hash
-CFX_EXPORT int cfx_context_menu_params_get_misspelling_hash(cef_context_menu_params_t* self) {
+static int cfx_context_menu_params_get_misspelling_hash(cef_context_menu_params_t* self) {
     return self->get_misspelling_hash(self);
 }
 
 // get_dictionary_suggestions
-CFX_EXPORT int cfx_context_menu_params_get_dictionary_suggestions(cef_context_menu_params_t* self, cef_string_list_t suggestions) {
+static int cfx_context_menu_params_get_dictionary_suggestions(cef_context_menu_params_t* self, cef_string_list_t suggestions) {
     return self->get_dictionary_suggestions(self, suggestions);
 }
 
 // is_editable
-CFX_EXPORT int cfx_context_menu_params_is_editable(cef_context_menu_params_t* self) {
+static int cfx_context_menu_params_is_editable(cef_context_menu_params_t* self) {
     return self->is_editable(self);
 }
 
 // is_spell_check_enabled
-CFX_EXPORT int cfx_context_menu_params_is_spell_check_enabled(cef_context_menu_params_t* self) {
+static int cfx_context_menu_params_is_spell_check_enabled(cef_context_menu_params_t* self) {
     return self->is_spell_check_enabled(self);
 }
 
 // get_edit_state_flags
-CFX_EXPORT cef_context_menu_edit_state_flags_t cfx_context_menu_params_get_edit_state_flags(cef_context_menu_params_t* self) {
+static cef_context_menu_edit_state_flags_t cfx_context_menu_params_get_edit_state_flags(cef_context_menu_params_t* self) {
     return self->get_edit_state_flags(self);
 }
 

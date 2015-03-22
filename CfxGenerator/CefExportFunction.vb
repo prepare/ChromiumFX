@@ -47,6 +47,8 @@ Public Class CefExportFunction
 
     Public ReadOnly Parent As CefType
 
+    Public ApiIndex As Integer
+
     Public Sub New(parent As CefType, fd As Parser.FunctionData, api As ApiTypeBuilder)
         Me.Name = fd.Name
         Me.Comments = fd.Comments

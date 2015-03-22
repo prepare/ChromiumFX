@@ -57,7 +57,7 @@ int CEF_CALLBACK _cfx_keyboard_handler_release(struct _cef_base_t* base) {
     return count;
 }
 
-CFX_EXPORT cfx_keyboard_handler_t* cfx_keyboard_handler_ctor(gc_handle_t gc_handle) {
+static cfx_keyboard_handler_t* cfx_keyboard_handler_ctor(gc_handle_t gc_handle) {
     cfx_keyboard_handler_t* ptr = (cfx_keyboard_handler_t*)calloc(1, sizeof(cfx_keyboard_handler_t));
     if(!ptr) return 0;
     ptr->cef_keyboard_handler.base.size = sizeof(cef_keyboard_handler_t);
@@ -68,7 +68,7 @@ CFX_EXPORT cfx_keyboard_handler_t* cfx_keyboard_handler_ctor(gc_handle_t gc_hand
     return ptr;
 }
 
-CFX_EXPORT gc_handle_t cfx_keyboard_handler_get_gc_handle(cfx_keyboard_handler_t* self) {
+static gc_handle_t cfx_keyboard_handler_get_gc_handle(cfx_keyboard_handler_t* self) {
     return self->gc_handle;
 }
 
@@ -94,7 +94,7 @@ int CEF_CALLBACK cfx_keyboard_handler_on_key_event(cef_keyboard_handler_t* self,
 }
 
 
-CFX_EXPORT void cfx_keyboard_handler_set_managed_callback(cef_keyboard_handler_t* self, int index, void* callback) {
+static void cfx_keyboard_handler_set_managed_callback(cef_keyboard_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_keyboard_handler_on_pre_key_event_callback)

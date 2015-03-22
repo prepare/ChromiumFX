@@ -46,36 +46,36 @@ namespace Chromium {
     public class CfxXmlReader : CfxBase {
 
         static CfxXmlReader () {
-            CfxApi.cfx_xml_reader_create = (CfxApi.cfx_xml_reader_create_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_create", typeof(CfxApi.cfx_xml_reader_create_delegate));
-            CfxApi.cfx_xml_reader_move_to_next_node = (CfxApi.cfx_xml_reader_move_to_next_node_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_move_to_next_node", typeof(CfxApi.cfx_xml_reader_move_to_next_node_delegate));
-            CfxApi.cfx_xml_reader_close = (CfxApi.cfx_xml_reader_close_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_close", typeof(CfxApi.cfx_xml_reader_close_delegate));
-            CfxApi.cfx_xml_reader_has_error = (CfxApi.cfx_xml_reader_has_error_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_has_error", typeof(CfxApi.cfx_xml_reader_has_error_delegate));
-            CfxApi.cfx_xml_reader_get_error = (CfxApi.cfx_xml_reader_get_error_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_get_error", typeof(CfxApi.cfx_xml_reader_get_error_delegate));
-            CfxApi.cfx_xml_reader_get_type = (CfxApi.cfx_xml_reader_get_type_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_get_type", typeof(CfxApi.cfx_xml_reader_get_type_delegate));
-            CfxApi.cfx_xml_reader_get_depth = (CfxApi.cfx_xml_reader_get_depth_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_get_depth", typeof(CfxApi.cfx_xml_reader_get_depth_delegate));
-            CfxApi.cfx_xml_reader_get_local_name = (CfxApi.cfx_xml_reader_get_local_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_get_local_name", typeof(CfxApi.cfx_xml_reader_get_local_name_delegate));
-            CfxApi.cfx_xml_reader_get_prefix = (CfxApi.cfx_xml_reader_get_prefix_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_get_prefix", typeof(CfxApi.cfx_xml_reader_get_prefix_delegate));
-            CfxApi.cfx_xml_reader_get_qualified_name = (CfxApi.cfx_xml_reader_get_qualified_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_get_qualified_name", typeof(CfxApi.cfx_xml_reader_get_qualified_name_delegate));
-            CfxApi.cfx_xml_reader_get_namespace_uri = (CfxApi.cfx_xml_reader_get_namespace_uri_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_get_namespace_uri", typeof(CfxApi.cfx_xml_reader_get_namespace_uri_delegate));
-            CfxApi.cfx_xml_reader_get_base_uri = (CfxApi.cfx_xml_reader_get_base_uri_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_get_base_uri", typeof(CfxApi.cfx_xml_reader_get_base_uri_delegate));
-            CfxApi.cfx_xml_reader_get_xml_lang = (CfxApi.cfx_xml_reader_get_xml_lang_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_get_xml_lang", typeof(CfxApi.cfx_xml_reader_get_xml_lang_delegate));
-            CfxApi.cfx_xml_reader_is_empty_element = (CfxApi.cfx_xml_reader_is_empty_element_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_is_empty_element", typeof(CfxApi.cfx_xml_reader_is_empty_element_delegate));
-            CfxApi.cfx_xml_reader_has_value = (CfxApi.cfx_xml_reader_has_value_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_has_value", typeof(CfxApi.cfx_xml_reader_has_value_delegate));
-            CfxApi.cfx_xml_reader_get_value = (CfxApi.cfx_xml_reader_get_value_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_get_value", typeof(CfxApi.cfx_xml_reader_get_value_delegate));
-            CfxApi.cfx_xml_reader_has_attributes = (CfxApi.cfx_xml_reader_has_attributes_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_has_attributes", typeof(CfxApi.cfx_xml_reader_has_attributes_delegate));
-            CfxApi.cfx_xml_reader_get_attribute_count = (CfxApi.cfx_xml_reader_get_attribute_count_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_get_attribute_count", typeof(CfxApi.cfx_xml_reader_get_attribute_count_delegate));
-            CfxApi.cfx_xml_reader_get_attribute_byindex = (CfxApi.cfx_xml_reader_get_attribute_byindex_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_get_attribute_byindex", typeof(CfxApi.cfx_xml_reader_get_attribute_byindex_delegate));
-            CfxApi.cfx_xml_reader_get_attribute_byqname = (CfxApi.cfx_xml_reader_get_attribute_byqname_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_get_attribute_byqname", typeof(CfxApi.cfx_xml_reader_get_attribute_byqname_delegate));
-            CfxApi.cfx_xml_reader_get_attribute_bylname = (CfxApi.cfx_xml_reader_get_attribute_bylname_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_get_attribute_bylname", typeof(CfxApi.cfx_xml_reader_get_attribute_bylname_delegate));
-            CfxApi.cfx_xml_reader_get_inner_xml = (CfxApi.cfx_xml_reader_get_inner_xml_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_get_inner_xml", typeof(CfxApi.cfx_xml_reader_get_inner_xml_delegate));
-            CfxApi.cfx_xml_reader_get_outer_xml = (CfxApi.cfx_xml_reader_get_outer_xml_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_get_outer_xml", typeof(CfxApi.cfx_xml_reader_get_outer_xml_delegate));
-            CfxApi.cfx_xml_reader_get_line_number = (CfxApi.cfx_xml_reader_get_line_number_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_get_line_number", typeof(CfxApi.cfx_xml_reader_get_line_number_delegate));
-            CfxApi.cfx_xml_reader_move_to_attribute_byindex = (CfxApi.cfx_xml_reader_move_to_attribute_byindex_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_move_to_attribute_byindex", typeof(CfxApi.cfx_xml_reader_move_to_attribute_byindex_delegate));
-            CfxApi.cfx_xml_reader_move_to_attribute_byqname = (CfxApi.cfx_xml_reader_move_to_attribute_byqname_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_move_to_attribute_byqname", typeof(CfxApi.cfx_xml_reader_move_to_attribute_byqname_delegate));
-            CfxApi.cfx_xml_reader_move_to_attribute_bylname = (CfxApi.cfx_xml_reader_move_to_attribute_bylname_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_move_to_attribute_bylname", typeof(CfxApi.cfx_xml_reader_move_to_attribute_bylname_delegate));
-            CfxApi.cfx_xml_reader_move_to_first_attribute = (CfxApi.cfx_xml_reader_move_to_first_attribute_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_move_to_first_attribute", typeof(CfxApi.cfx_xml_reader_move_to_first_attribute_delegate));
-            CfxApi.cfx_xml_reader_move_to_next_attribute = (CfxApi.cfx_xml_reader_move_to_next_attribute_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_move_to_next_attribute", typeof(CfxApi.cfx_xml_reader_move_to_next_attribute_delegate));
-            CfxApi.cfx_xml_reader_move_to_carrying_element = (CfxApi.cfx_xml_reader_move_to_carrying_element_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_xml_reader_move_to_carrying_element", typeof(CfxApi.cfx_xml_reader_move_to_carrying_element_delegate));
+            CfxApi.cfx_xml_reader_create = (CfxApi.cfx_xml_reader_create_delegate)CfxApi.GetDelegate(1038, typeof(CfxApi.cfx_xml_reader_create_delegate));
+            CfxApi.cfx_xml_reader_move_to_next_node = (CfxApi.cfx_xml_reader_move_to_next_node_delegate)CfxApi.GetDelegate(1039, typeof(CfxApi.cfx_xml_reader_move_to_next_node_delegate));
+            CfxApi.cfx_xml_reader_close = (CfxApi.cfx_xml_reader_close_delegate)CfxApi.GetDelegate(1040, typeof(CfxApi.cfx_xml_reader_close_delegate));
+            CfxApi.cfx_xml_reader_has_error = (CfxApi.cfx_xml_reader_has_error_delegate)CfxApi.GetDelegate(1041, typeof(CfxApi.cfx_xml_reader_has_error_delegate));
+            CfxApi.cfx_xml_reader_get_error = (CfxApi.cfx_xml_reader_get_error_delegate)CfxApi.GetDelegate(1042, typeof(CfxApi.cfx_xml_reader_get_error_delegate));
+            CfxApi.cfx_xml_reader_get_type = (CfxApi.cfx_xml_reader_get_type_delegate)CfxApi.GetDelegate(1043, typeof(CfxApi.cfx_xml_reader_get_type_delegate));
+            CfxApi.cfx_xml_reader_get_depth = (CfxApi.cfx_xml_reader_get_depth_delegate)CfxApi.GetDelegate(1044, typeof(CfxApi.cfx_xml_reader_get_depth_delegate));
+            CfxApi.cfx_xml_reader_get_local_name = (CfxApi.cfx_xml_reader_get_local_name_delegate)CfxApi.GetDelegate(1045, typeof(CfxApi.cfx_xml_reader_get_local_name_delegate));
+            CfxApi.cfx_xml_reader_get_prefix = (CfxApi.cfx_xml_reader_get_prefix_delegate)CfxApi.GetDelegate(1046, typeof(CfxApi.cfx_xml_reader_get_prefix_delegate));
+            CfxApi.cfx_xml_reader_get_qualified_name = (CfxApi.cfx_xml_reader_get_qualified_name_delegate)CfxApi.GetDelegate(1047, typeof(CfxApi.cfx_xml_reader_get_qualified_name_delegate));
+            CfxApi.cfx_xml_reader_get_namespace_uri = (CfxApi.cfx_xml_reader_get_namespace_uri_delegate)CfxApi.GetDelegate(1048, typeof(CfxApi.cfx_xml_reader_get_namespace_uri_delegate));
+            CfxApi.cfx_xml_reader_get_base_uri = (CfxApi.cfx_xml_reader_get_base_uri_delegate)CfxApi.GetDelegate(1049, typeof(CfxApi.cfx_xml_reader_get_base_uri_delegate));
+            CfxApi.cfx_xml_reader_get_xml_lang = (CfxApi.cfx_xml_reader_get_xml_lang_delegate)CfxApi.GetDelegate(1050, typeof(CfxApi.cfx_xml_reader_get_xml_lang_delegate));
+            CfxApi.cfx_xml_reader_is_empty_element = (CfxApi.cfx_xml_reader_is_empty_element_delegate)CfxApi.GetDelegate(1051, typeof(CfxApi.cfx_xml_reader_is_empty_element_delegate));
+            CfxApi.cfx_xml_reader_has_value = (CfxApi.cfx_xml_reader_has_value_delegate)CfxApi.GetDelegate(1052, typeof(CfxApi.cfx_xml_reader_has_value_delegate));
+            CfxApi.cfx_xml_reader_get_value = (CfxApi.cfx_xml_reader_get_value_delegate)CfxApi.GetDelegate(1053, typeof(CfxApi.cfx_xml_reader_get_value_delegate));
+            CfxApi.cfx_xml_reader_has_attributes = (CfxApi.cfx_xml_reader_has_attributes_delegate)CfxApi.GetDelegate(1054, typeof(CfxApi.cfx_xml_reader_has_attributes_delegate));
+            CfxApi.cfx_xml_reader_get_attribute_count = (CfxApi.cfx_xml_reader_get_attribute_count_delegate)CfxApi.GetDelegate(1055, typeof(CfxApi.cfx_xml_reader_get_attribute_count_delegate));
+            CfxApi.cfx_xml_reader_get_attribute_byindex = (CfxApi.cfx_xml_reader_get_attribute_byindex_delegate)CfxApi.GetDelegate(1056, typeof(CfxApi.cfx_xml_reader_get_attribute_byindex_delegate));
+            CfxApi.cfx_xml_reader_get_attribute_byqname = (CfxApi.cfx_xml_reader_get_attribute_byqname_delegate)CfxApi.GetDelegate(1057, typeof(CfxApi.cfx_xml_reader_get_attribute_byqname_delegate));
+            CfxApi.cfx_xml_reader_get_attribute_bylname = (CfxApi.cfx_xml_reader_get_attribute_bylname_delegate)CfxApi.GetDelegate(1058, typeof(CfxApi.cfx_xml_reader_get_attribute_bylname_delegate));
+            CfxApi.cfx_xml_reader_get_inner_xml = (CfxApi.cfx_xml_reader_get_inner_xml_delegate)CfxApi.GetDelegate(1059, typeof(CfxApi.cfx_xml_reader_get_inner_xml_delegate));
+            CfxApi.cfx_xml_reader_get_outer_xml = (CfxApi.cfx_xml_reader_get_outer_xml_delegate)CfxApi.GetDelegate(1060, typeof(CfxApi.cfx_xml_reader_get_outer_xml_delegate));
+            CfxApi.cfx_xml_reader_get_line_number = (CfxApi.cfx_xml_reader_get_line_number_delegate)CfxApi.GetDelegate(1061, typeof(CfxApi.cfx_xml_reader_get_line_number_delegate));
+            CfxApi.cfx_xml_reader_move_to_attribute_byindex = (CfxApi.cfx_xml_reader_move_to_attribute_byindex_delegate)CfxApi.GetDelegate(1062, typeof(CfxApi.cfx_xml_reader_move_to_attribute_byindex_delegate));
+            CfxApi.cfx_xml_reader_move_to_attribute_byqname = (CfxApi.cfx_xml_reader_move_to_attribute_byqname_delegate)CfxApi.GetDelegate(1063, typeof(CfxApi.cfx_xml_reader_move_to_attribute_byqname_delegate));
+            CfxApi.cfx_xml_reader_move_to_attribute_bylname = (CfxApi.cfx_xml_reader_move_to_attribute_bylname_delegate)CfxApi.GetDelegate(1064, typeof(CfxApi.cfx_xml_reader_move_to_attribute_bylname_delegate));
+            CfxApi.cfx_xml_reader_move_to_first_attribute = (CfxApi.cfx_xml_reader_move_to_first_attribute_delegate)CfxApi.GetDelegate(1065, typeof(CfxApi.cfx_xml_reader_move_to_first_attribute_delegate));
+            CfxApi.cfx_xml_reader_move_to_next_attribute = (CfxApi.cfx_xml_reader_move_to_next_attribute_delegate)CfxApi.GetDelegate(1066, typeof(CfxApi.cfx_xml_reader_move_to_next_attribute_delegate));
+            CfxApi.cfx_xml_reader_move_to_carrying_element = (CfxApi.cfx_xml_reader_move_to_carrying_element_delegate)CfxApi.GetDelegate(1067, typeof(CfxApi.cfx_xml_reader_move_to_carrying_element_delegate));
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

@@ -44,12 +44,12 @@ namespace Chromium {
     public sealed class CfxSize : CfxStructure {
 
         static CfxSize () {
-            CfxApi.cfx_size_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_size_ctor", typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_size_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_size_dtor", typeof(CfxApi.cfx_dtor_delegate));
-            CfxApi.cfx_size_set_width = (CfxApi.cfx_size_set_width_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_size_set_width", typeof(CfxApi.cfx_size_set_width_delegate));
-            CfxApi.cfx_size_get_width = (CfxApi.cfx_size_get_width_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_size_get_width", typeof(CfxApi.cfx_size_get_width_delegate));
-            CfxApi.cfx_size_set_height = (CfxApi.cfx_size_set_height_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_size_set_height", typeof(CfxApi.cfx_size_set_height_delegate));
-            CfxApi.cfx_size_get_height = (CfxApi.cfx_size_get_height_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_size_get_height", typeof(CfxApi.cfx_size_get_height_delegate));
+            CfxApi.cfx_size_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(824, typeof(CfxApi.cfx_ctor_delegate));
+            CfxApi.cfx_size_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(824, typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_size_set_width = (CfxApi.cfx_size_set_width_delegate)CfxApi.GetDelegate(826, typeof(CfxApi.cfx_size_set_width_delegate));
+            CfxApi.cfx_size_get_width = (CfxApi.cfx_size_get_width_delegate)CfxApi.GetDelegate(827, typeof(CfxApi.cfx_size_get_width_delegate));
+            CfxApi.cfx_size_set_height = (CfxApi.cfx_size_set_height_delegate)CfxApi.GetDelegate(828, typeof(CfxApi.cfx_size_set_height_delegate));
+            CfxApi.cfx_size_get_height = (CfxApi.cfx_size_get_height_delegate)CfxApi.GetDelegate(829, typeof(CfxApi.cfx_size_get_height_delegate));
         }
 
         public CfxSize() : base(CfxApi.cfx_size_ctor, CfxApi.cfx_size_dtor) {}

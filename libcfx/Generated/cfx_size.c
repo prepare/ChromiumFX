@@ -37,27 +37,27 @@
 extern "C" {
 #endif
 
-CFX_EXPORT cef_size_t* cfx_size_ctor() {
+static cef_size_t* cfx_size_ctor() {
     return (cef_size_t*)calloc(1, sizeof(cef_size_t));
 }
 
-CFX_EXPORT void cfx_size_dtor(cef_size_t* self) {
+static void cfx_size_dtor(cef_size_t* self) {
     free(self);
 }
 
 // cef_size_t->width
-CFX_EXPORT void cfx_size_set_width(cef_size_t *self, int width) {
+static void cfx_size_set_width(cef_size_t *self, int width) {
     self->width = width;
 }
-CFX_EXPORT void cfx_size_get_width(cef_size_t *self, int* width) {
+static void cfx_size_get_width(cef_size_t *self, int* width) {
     *width = self->width;
 }
 
 // cef_size_t->height
-CFX_EXPORT void cfx_size_set_height(cef_size_t *self, int height) {
+static void cfx_size_set_height(cef_size_t *self, int height) {
     self->height = height;
 }
-CFX_EXPORT void cfx_size_get_height(cef_size_t *self, int* height) {
+static void cfx_size_get_height(cef_size_t *self, int* height) {
     *height = self->height;
 }
 
