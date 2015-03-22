@@ -40,22 +40,22 @@ extern "C" {
 // cef_base_t base
 
 // get_name
-CFX_EXPORT cef_string_userfree_t cfx_web_plugin_info_get_name(cef_web_plugin_info_t* self) {
+static cef_string_userfree_t cfx_web_plugin_info_get_name(cef_web_plugin_info_t* self) {
     return self->get_name(self);
 }
 
 // get_path
-CFX_EXPORT cef_string_userfree_t cfx_web_plugin_info_get_path(cef_web_plugin_info_t* self) {
+static cef_string_userfree_t cfx_web_plugin_info_get_path(cef_web_plugin_info_t* self) {
     return self->get_path(self);
 }
 
 // get_version
-CFX_EXPORT cef_string_userfree_t cfx_web_plugin_info_get_version(cef_web_plugin_info_t* self) {
+static cef_string_userfree_t cfx_web_plugin_info_get_version(cef_web_plugin_info_t* self) {
     return self->get_version(self);
 }
 
 // get_description
-CFX_EXPORT cef_string_userfree_t cfx_web_plugin_info_get_description(cef_web_plugin_info_t* self) {
+static cef_string_userfree_t cfx_web_plugin_info_get_description(cef_web_plugin_info_t* self) {
     return self->get_description(self);
 }
 

@@ -40,7 +40,7 @@ extern "C" {
 // cef_base_t base
 
 // cancel
-CFX_EXPORT void cfx_download_item_callback_cancel(cef_download_item_callback_t* self) {
+static void cfx_download_item_callback_cancel(cef_download_item_callback_t* self) {
     self->cancel(self);
 }
 

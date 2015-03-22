@@ -40,7 +40,7 @@ extern "C" {
 // cef_base_t base
 
 // cont
-CFX_EXPORT void cfx_print_job_callback_cont(cef_print_job_callback_t* self) {
+static void cfx_print_job_callback_cont(cef_print_job_callback_t* self) {
     self->cont(self);
 }
 

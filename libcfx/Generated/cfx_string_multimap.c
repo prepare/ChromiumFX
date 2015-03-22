@@ -36,23 +36,23 @@ extern "C" {
 #endif
 
 // CEF_EXPORT cef_string_multimap_t cef_string_multimap_alloc();
-CFX_EXPORT cef_string_multimap_t cfx_string_multimap_alloc() {
+static cef_string_multimap_t cfx_string_multimap_alloc() {
     return cef_string_multimap_alloc();
 }
 
 // CEF_EXPORT int cef_string_multimap_size(cef_string_multimap_t map);
-CFX_EXPORT int cfx_string_multimap_size(cef_string_multimap_t map) {
+static int cfx_string_multimap_size(cef_string_multimap_t map) {
     return cef_string_multimap_size(map);
 }
 
 // CEF_EXPORT int cef_string_multimap_find_count(cef_string_multimap_t map, const cef_string_t* key);
-CFX_EXPORT int cfx_string_multimap_find_count(cef_string_multimap_t map, char16 *key_str, int key_length) {
+static int cfx_string_multimap_find_count(cef_string_multimap_t map, char16 *key_str, int key_length) {
     cef_string_t key = { key_str, key_length, 0 };
     return cef_string_multimap_find_count(map, &key);
 }
 
 // CEF_EXPORT int cef_string_multimap_enumerate(cef_string_multimap_t map, const cef_string_t* key, int value_index, cef_string_t* value);
-CFX_EXPORT int cfx_string_multimap_enumerate(cef_string_multimap_t map, char16 *key_str, int key_length, int value_index, char16 **value_str, int *value_length) {
+static int cfx_string_multimap_enumerate(cef_string_multimap_t map, char16 *key_str, int key_length, int value_index, char16 **value_str, int *value_length) {
     cef_string_t key = { key_str, key_length, 0 };
     cef_string_t value = { *value_str, *value_length, 0 };
     int __ret_val_ = cef_string_multimap_enumerate(map, &key, value_index, &value);
@@ -61,7 +61,7 @@ CFX_EXPORT int cfx_string_multimap_enumerate(cef_string_multimap_t map, char16 *
 }
 
 // CEF_EXPORT int cef_string_multimap_key(cef_string_multimap_t map, int index, cef_string_t* key);
-CFX_EXPORT int cfx_string_multimap_key(cef_string_multimap_t map, int index, char16 **key_str, int *key_length) {
+static int cfx_string_multimap_key(cef_string_multimap_t map, int index, char16 **key_str, int *key_length) {
     cef_string_t key = { *key_str, *key_length, 0 };
     int __ret_val_ = cef_string_multimap_key(map, index, &key);
     *key_str = key.str; *key_length = (int)key.length;
@@ -69,7 +69,7 @@ CFX_EXPORT int cfx_string_multimap_key(cef_string_multimap_t map, int index, cha
 }
 
 // CEF_EXPORT int cef_string_multimap_value(cef_string_multimap_t map, int index, cef_string_t* value);
-CFX_EXPORT int cfx_string_multimap_value(cef_string_multimap_t map, int index, char16 **value_str, int *value_length) {
+static int cfx_string_multimap_value(cef_string_multimap_t map, int index, char16 **value_str, int *value_length) {
     cef_string_t value = { *value_str, *value_length, 0 };
     int __ret_val_ = cef_string_multimap_value(map, index, &value);
     *value_str = value.str; *value_length = (int)value.length;
@@ -77,19 +77,19 @@ CFX_EXPORT int cfx_string_multimap_value(cef_string_multimap_t map, int index, c
 }
 
 // CEF_EXPORT int cef_string_multimap_append(cef_string_multimap_t map, const cef_string_t* key, const cef_string_t* value);
-CFX_EXPORT int cfx_string_multimap_append(cef_string_multimap_t map, char16 *key_str, int key_length, char16 *value_str, int value_length) {
+static int cfx_string_multimap_append(cef_string_multimap_t map, char16 *key_str, int key_length, char16 *value_str, int value_length) {
     cef_string_t key = { key_str, key_length, 0 };
     cef_string_t value = { value_str, value_length, 0 };
     return cef_string_multimap_append(map, &key, &value);
 }
 
 // CEF_EXPORT void cef_string_multimap_clear(cef_string_multimap_t map);
-CFX_EXPORT void cfx_string_multimap_clear(cef_string_multimap_t map) {
+static void cfx_string_multimap_clear(cef_string_multimap_t map) {
     cef_string_multimap_clear(map);
 }
 
 // CEF_EXPORT void cef_string_multimap_free(cef_string_multimap_t map);
-CFX_EXPORT void cfx_string_multimap_free(cef_string_multimap_t map) {
+static void cfx_string_multimap_free(cef_string_multimap_t map) {
     cef_string_multimap_free(map);
 }
 

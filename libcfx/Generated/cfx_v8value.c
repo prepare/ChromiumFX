@@ -38,49 +38,49 @@ extern "C" {
 #endif
 
 // CEF_EXPORT cef_v8value_t* cef_v8value_create_undefined();
-CFX_EXPORT cef_v8value_t* cfx_v8value_create_undefined() {
+static cef_v8value_t* cfx_v8value_create_undefined() {
     return cef_v8value_create_undefined();
 }
 // CEF_EXPORT cef_v8value_t* cef_v8value_create_null();
-CFX_EXPORT cef_v8value_t* cfx_v8value_create_null() {
+static cef_v8value_t* cfx_v8value_create_null() {
     return cef_v8value_create_null();
 }
 // CEF_EXPORT cef_v8value_t* cef_v8value_create_bool(int value);
-CFX_EXPORT cef_v8value_t* cfx_v8value_create_bool(int value) {
+static cef_v8value_t* cfx_v8value_create_bool(int value) {
     return cef_v8value_create_bool(value);
 }
 // CEF_EXPORT cef_v8value_t* cef_v8value_create_int(int32 value);
-CFX_EXPORT cef_v8value_t* cfx_v8value_create_int(int32 value) {
+static cef_v8value_t* cfx_v8value_create_int(int32 value) {
     return cef_v8value_create_int(value);
 }
 // CEF_EXPORT cef_v8value_t* cef_v8value_create_uint(uint32 value);
-CFX_EXPORT cef_v8value_t* cfx_v8value_create_uint(uint32 value) {
+static cef_v8value_t* cfx_v8value_create_uint(uint32 value) {
     return cef_v8value_create_uint(value);
 }
 // CEF_EXPORT cef_v8value_t* cef_v8value_create_double(double value);
-CFX_EXPORT cef_v8value_t* cfx_v8value_create_double(double value) {
+static cef_v8value_t* cfx_v8value_create_double(double value) {
     return cef_v8value_create_double(value);
 }
 // CEF_EXPORT cef_v8value_t* cef_v8value_create_date(const cef_time_t* date);
-CFX_EXPORT cef_v8value_t* cfx_v8value_create_date(const cef_time_t* date) {
+static cef_v8value_t* cfx_v8value_create_date(const cef_time_t* date) {
     return cef_v8value_create_date(date);
 }
 // CEF_EXPORT cef_v8value_t* cef_v8value_create_string(const cef_string_t* value);
-CFX_EXPORT cef_v8value_t* cfx_v8value_create_string(char16 *value_str, int value_length) {
+static cef_v8value_t* cfx_v8value_create_string(char16 *value_str, int value_length) {
     cef_string_t value = { value_str, value_length, 0 };
     return cef_v8value_create_string(&value);
 }
 // CEF_EXPORT cef_v8value_t* cef_v8value_create_object(cef_v8accessor_t* accessor);
-CFX_EXPORT cef_v8value_t* cfx_v8value_create_object(cef_v8accessor_t* accessor) {
+static cef_v8value_t* cfx_v8value_create_object(cef_v8accessor_t* accessor) {
     if(accessor) ((cef_base_t*)accessor)->add_ref((cef_base_t*)accessor);
     return cef_v8value_create_object(accessor);
 }
 // CEF_EXPORT cef_v8value_t* cef_v8value_create_array(int length);
-CFX_EXPORT cef_v8value_t* cfx_v8value_create_array(int length) {
+static cef_v8value_t* cfx_v8value_create_array(int length) {
     return cef_v8value_create_array(length);
 }
 // CEF_EXPORT cef_v8value_t* cef_v8value_create_function(const cef_string_t* name, cef_v8handler_t* handler);
-CFX_EXPORT cef_v8value_t* cfx_v8value_create_function(char16 *name_str, int name_length, cef_v8handler_t* handler) {
+static cef_v8value_t* cfx_v8value_create_function(char16 *name_str, int name_length, cef_v8handler_t* handler) {
     cef_string_t name = { name_str, name_length, 0 };
     if(handler) ((cef_base_t*)handler)->add_ref((cef_base_t*)handler);
     return cef_v8value_create_function(&name, handler);
@@ -88,232 +88,232 @@ CFX_EXPORT cef_v8value_t* cfx_v8value_create_function(char16 *name_str, int name
 // cef_base_t base
 
 // is_valid
-CFX_EXPORT int cfx_v8value_is_valid(cef_v8value_t* self) {
+static int cfx_v8value_is_valid(cef_v8value_t* self) {
     return self->is_valid(self);
 }
 
 // is_undefined
-CFX_EXPORT int cfx_v8value_is_undefined(cef_v8value_t* self) {
+static int cfx_v8value_is_undefined(cef_v8value_t* self) {
     return self->is_undefined(self);
 }
 
 // is_null
-CFX_EXPORT int cfx_v8value_is_null(cef_v8value_t* self) {
+static int cfx_v8value_is_null(cef_v8value_t* self) {
     return self->is_null(self);
 }
 
 // is_bool
-CFX_EXPORT int cfx_v8value_is_bool(cef_v8value_t* self) {
+static int cfx_v8value_is_bool(cef_v8value_t* self) {
     return self->is_bool(self);
 }
 
 // is_int
-CFX_EXPORT int cfx_v8value_is_int(cef_v8value_t* self) {
+static int cfx_v8value_is_int(cef_v8value_t* self) {
     return self->is_int(self);
 }
 
 // is_uint
-CFX_EXPORT int cfx_v8value_is_uint(cef_v8value_t* self) {
+static int cfx_v8value_is_uint(cef_v8value_t* self) {
     return self->is_uint(self);
 }
 
 // is_double
-CFX_EXPORT int cfx_v8value_is_double(cef_v8value_t* self) {
+static int cfx_v8value_is_double(cef_v8value_t* self) {
     return self->is_double(self);
 }
 
 // is_date
-CFX_EXPORT int cfx_v8value_is_date(cef_v8value_t* self) {
+static int cfx_v8value_is_date(cef_v8value_t* self) {
     return self->is_date(self);
 }
 
 // is_string
-CFX_EXPORT int cfx_v8value_is_string(cef_v8value_t* self) {
+static int cfx_v8value_is_string(cef_v8value_t* self) {
     return self->is_string(self);
 }
 
 // is_object
-CFX_EXPORT int cfx_v8value_is_object(cef_v8value_t* self) {
+static int cfx_v8value_is_object(cef_v8value_t* self) {
     return self->is_object(self);
 }
 
 // is_array
-CFX_EXPORT int cfx_v8value_is_array(cef_v8value_t* self) {
+static int cfx_v8value_is_array(cef_v8value_t* self) {
     return self->is_array(self);
 }
 
 // is_function
-CFX_EXPORT int cfx_v8value_is_function(cef_v8value_t* self) {
+static int cfx_v8value_is_function(cef_v8value_t* self) {
     return self->is_function(self);
 }
 
 // is_same
-CFX_EXPORT int cfx_v8value_is_same(cef_v8value_t* self, cef_v8value_t* that) {
+static int cfx_v8value_is_same(cef_v8value_t* self, cef_v8value_t* that) {
     if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
     return self->is_same(self, that);
 }
 
 // get_bool_value
-CFX_EXPORT int cfx_v8value_get_bool_value(cef_v8value_t* self) {
+static int cfx_v8value_get_bool_value(cef_v8value_t* self) {
     return self->get_bool_value(self);
 }
 
 // get_int_value
-CFX_EXPORT int32 cfx_v8value_get_int_value(cef_v8value_t* self) {
+static int32 cfx_v8value_get_int_value(cef_v8value_t* self) {
     return self->get_int_value(self);
 }
 
 // get_uint_value
-CFX_EXPORT uint32 cfx_v8value_get_uint_value(cef_v8value_t* self) {
+static uint32 cfx_v8value_get_uint_value(cef_v8value_t* self) {
     return self->get_uint_value(self);
 }
 
 // get_double_value
-CFX_EXPORT double cfx_v8value_get_double_value(cef_v8value_t* self) {
+static double cfx_v8value_get_double_value(cef_v8value_t* self) {
     return self->get_double_value(self);
 }
 
 // get_date_value
-CFX_EXPORT cef_time_t* cfx_v8value_get_date_value(cef_v8value_t* self) {
+static cef_time_t* cfx_v8value_get_date_value(cef_v8value_t* self) {
     cef_time_t __retval_tmp = self->get_date_value(self);
     return (cef_time_t*)cfx_copy_structure(&__retval_tmp, sizeof(cef_time_t));
 }
 
 // get_string_value
-CFX_EXPORT cef_string_userfree_t cfx_v8value_get_string_value(cef_v8value_t* self) {
+static cef_string_userfree_t cfx_v8value_get_string_value(cef_v8value_t* self) {
     return self->get_string_value(self);
 }
 
 // is_user_created
-CFX_EXPORT int cfx_v8value_is_user_created(cef_v8value_t* self) {
+static int cfx_v8value_is_user_created(cef_v8value_t* self) {
     return self->is_user_created(self);
 }
 
 // has_exception
-CFX_EXPORT int cfx_v8value_has_exception(cef_v8value_t* self) {
+static int cfx_v8value_has_exception(cef_v8value_t* self) {
     return self->has_exception(self);
 }
 
 // get_exception
-CFX_EXPORT cef_v8exception_t* cfx_v8value_get_exception(cef_v8value_t* self) {
+static cef_v8exception_t* cfx_v8value_get_exception(cef_v8value_t* self) {
     return self->get_exception(self);
 }
 
 // clear_exception
-CFX_EXPORT int cfx_v8value_clear_exception(cef_v8value_t* self) {
+static int cfx_v8value_clear_exception(cef_v8value_t* self) {
     return self->clear_exception(self);
 }
 
 // will_rethrow_exceptions
-CFX_EXPORT int cfx_v8value_will_rethrow_exceptions(cef_v8value_t* self) {
+static int cfx_v8value_will_rethrow_exceptions(cef_v8value_t* self) {
     return self->will_rethrow_exceptions(self);
 }
 
 // set_rethrow_exceptions
-CFX_EXPORT int cfx_v8value_set_rethrow_exceptions(cef_v8value_t* self, int rethrow) {
+static int cfx_v8value_set_rethrow_exceptions(cef_v8value_t* self, int rethrow) {
     return self->set_rethrow_exceptions(self, rethrow);
 }
 
 // has_value_bykey
-CFX_EXPORT int cfx_v8value_has_value_bykey(cef_v8value_t* self, char16 *key_str, int key_length) {
+static int cfx_v8value_has_value_bykey(cef_v8value_t* self, char16 *key_str, int key_length) {
     cef_string_t key = { key_str, key_length, 0 };
     return self->has_value_bykey(self, &key);
 }
 
 // has_value_byindex
-CFX_EXPORT int cfx_v8value_has_value_byindex(cef_v8value_t* self, int index) {
+static int cfx_v8value_has_value_byindex(cef_v8value_t* self, int index) {
     return self->has_value_byindex(self, index);
 }
 
 // delete_value_bykey
-CFX_EXPORT int cfx_v8value_delete_value_bykey(cef_v8value_t* self, char16 *key_str, int key_length) {
+static int cfx_v8value_delete_value_bykey(cef_v8value_t* self, char16 *key_str, int key_length) {
     cef_string_t key = { key_str, key_length, 0 };
     return self->delete_value_bykey(self, &key);
 }
 
 // delete_value_byindex
-CFX_EXPORT int cfx_v8value_delete_value_byindex(cef_v8value_t* self, int index) {
+static int cfx_v8value_delete_value_byindex(cef_v8value_t* self, int index) {
     return self->delete_value_byindex(self, index);
 }
 
 // get_value_bykey
-CFX_EXPORT cef_v8value_t* cfx_v8value_get_value_bykey(cef_v8value_t* self, char16 *key_str, int key_length) {
+static cef_v8value_t* cfx_v8value_get_value_bykey(cef_v8value_t* self, char16 *key_str, int key_length) {
     cef_string_t key = { key_str, key_length, 0 };
     return self->get_value_bykey(self, &key);
 }
 
 // get_value_byindex
-CFX_EXPORT cef_v8value_t* cfx_v8value_get_value_byindex(cef_v8value_t* self, int index) {
+static cef_v8value_t* cfx_v8value_get_value_byindex(cef_v8value_t* self, int index) {
     return self->get_value_byindex(self, index);
 }
 
 // set_value_bykey
-CFX_EXPORT int cfx_v8value_set_value_bykey(cef_v8value_t* self, char16 *key_str, int key_length, cef_v8value_t* value, cef_v8_propertyattribute_t attribute) {
+static int cfx_v8value_set_value_bykey(cef_v8value_t* self, char16 *key_str, int key_length, cef_v8value_t* value, cef_v8_propertyattribute_t attribute) {
     cef_string_t key = { key_str, key_length, 0 };
     if(value) ((cef_base_t*)value)->add_ref((cef_base_t*)value);
     return self->set_value_bykey(self, &key, value, attribute);
 }
 
 // set_value_byindex
-CFX_EXPORT int cfx_v8value_set_value_byindex(cef_v8value_t* self, int index, cef_v8value_t* value) {
+static int cfx_v8value_set_value_byindex(cef_v8value_t* self, int index, cef_v8value_t* value) {
     if(value) ((cef_base_t*)value)->add_ref((cef_base_t*)value);
     return self->set_value_byindex(self, index, value);
 }
 
 // set_value_byaccessor
-CFX_EXPORT int cfx_v8value_set_value_byaccessor(cef_v8value_t* self, char16 *key_str, int key_length, cef_v8_accesscontrol_t settings, cef_v8_propertyattribute_t attribute) {
+static int cfx_v8value_set_value_byaccessor(cef_v8value_t* self, char16 *key_str, int key_length, cef_v8_accesscontrol_t settings, cef_v8_propertyattribute_t attribute) {
     cef_string_t key = { key_str, key_length, 0 };
     return self->set_value_byaccessor(self, &key, settings, attribute);
 }
 
 // get_keys
-CFX_EXPORT int cfx_v8value_get_keys(cef_v8value_t* self, cef_string_list_t keys) {
+static int cfx_v8value_get_keys(cef_v8value_t* self, cef_string_list_t keys) {
     return self->get_keys(self, keys);
 }
 
 // set_user_data
-CFX_EXPORT int cfx_v8value_set_user_data(cef_v8value_t* self, struct _cef_base_t* user_data) {
+static int cfx_v8value_set_user_data(cef_v8value_t* self, struct _cef_base_t* user_data) {
     return self->set_user_data(self, user_data);
 }
 
 // get_user_data
-CFX_EXPORT struct _cef_base_t* cfx_v8value_get_user_data(cef_v8value_t* self) {
+static struct _cef_base_t* cfx_v8value_get_user_data(cef_v8value_t* self) {
     return self->get_user_data(self);
 }
 
 // get_externally_allocated_memory
-CFX_EXPORT int cfx_v8value_get_externally_allocated_memory(cef_v8value_t* self) {
+static int cfx_v8value_get_externally_allocated_memory(cef_v8value_t* self) {
     return self->get_externally_allocated_memory(self);
 }
 
 // adjust_externally_allocated_memory
-CFX_EXPORT int cfx_v8value_adjust_externally_allocated_memory(cef_v8value_t* self, int change_in_bytes) {
+static int cfx_v8value_adjust_externally_allocated_memory(cef_v8value_t* self, int change_in_bytes) {
     return self->adjust_externally_allocated_memory(self, change_in_bytes);
 }
 
 // get_array_length
-CFX_EXPORT int cfx_v8value_get_array_length(cef_v8value_t* self) {
+static int cfx_v8value_get_array_length(cef_v8value_t* self) {
     return self->get_array_length(self);
 }
 
 // get_function_name
-CFX_EXPORT cef_string_userfree_t cfx_v8value_get_function_name(cef_v8value_t* self) {
+static cef_string_userfree_t cfx_v8value_get_function_name(cef_v8value_t* self) {
     return self->get_function_name(self);
 }
 
 // get_function_handler
-CFX_EXPORT cef_v8handler_t* cfx_v8value_get_function_handler(cef_v8value_t* self) {
+static cef_v8handler_t* cfx_v8value_get_function_handler(cef_v8value_t* self) {
     return self->get_function_handler(self);
 }
 
 // execute_function
-CFX_EXPORT cef_v8value_t* cfx_v8value_execute_function(cef_v8value_t* self, cef_v8value_t* object, int argumentsCount, cef_v8value_t* const* arguments) {
+static cef_v8value_t* cfx_v8value_execute_function(cef_v8value_t* self, cef_v8value_t* object, int argumentsCount, cef_v8value_t* const* arguments) {
     if(object) ((cef_base_t*)object)->add_ref((cef_base_t*)object);
     return self->execute_function(self, object, (size_t)(argumentsCount), arguments);
 }
 
 // execute_function_with_context
-CFX_EXPORT cef_v8value_t* cfx_v8value_execute_function_with_context(cef_v8value_t* self, cef_v8context_t* context, cef_v8value_t* object, int argumentsCount, cef_v8value_t* const* arguments) {
+static cef_v8value_t* cfx_v8value_execute_function_with_context(cef_v8value_t* self, cef_v8context_t* context, cef_v8value_t* object, int argumentsCount, cef_v8value_t* const* arguments) {
     if(context) ((cef_base_t*)context)->add_ref((cef_base_t*)context);
     if(object) ((cef_base_t*)object)->add_ref((cef_base_t*)object);
     return self->execute_function_with_context(self, context, object, (size_t)(argumentsCount), arguments);

@@ -44,7 +44,7 @@ namespace Chromium {
     public class CfxSchemeRegistrar : CfxBase {
 
         static CfxSchemeRegistrar () {
-            CfxApi.cfx_scheme_registrar_add_custom_scheme = (CfxApi.cfx_scheme_registrar_add_custom_scheme_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_scheme_registrar_add_custom_scheme", typeof(CfxApi.cfx_scheme_registrar_add_custom_scheme_delegate));
+            CfxApi.cfx_scheme_registrar_add_custom_scheme = (CfxApi.cfx_scheme_registrar_add_custom_scheme_delegate)CfxApi.GetDelegate(763, typeof(CfxApi.cfx_scheme_registrar_add_custom_scheme_delegate));
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

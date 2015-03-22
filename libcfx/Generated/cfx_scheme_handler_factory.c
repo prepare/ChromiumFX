@@ -57,7 +57,7 @@ int CEF_CALLBACK _cfx_scheme_handler_factory_release(struct _cef_base_t* base) {
     return count;
 }
 
-CFX_EXPORT cfx_scheme_handler_factory_t* cfx_scheme_handler_factory_ctor(gc_handle_t gc_handle) {
+static cfx_scheme_handler_factory_t* cfx_scheme_handler_factory_ctor(gc_handle_t gc_handle) {
     cfx_scheme_handler_factory_t* ptr = (cfx_scheme_handler_factory_t*)calloc(1, sizeof(cfx_scheme_handler_factory_t));
     if(!ptr) return 0;
     ptr->cef_scheme_handler_factory.base.size = sizeof(cef_scheme_handler_factory_t);
@@ -68,7 +68,7 @@ CFX_EXPORT cfx_scheme_handler_factory_t* cfx_scheme_handler_factory_ctor(gc_hand
     return ptr;
 }
 
-CFX_EXPORT gc_handle_t cfx_scheme_handler_factory_get_gc_handle(cfx_scheme_handler_factory_t* self) {
+static gc_handle_t cfx_scheme_handler_factory_get_gc_handle(cfx_scheme_handler_factory_t* self) {
     return self->gc_handle;
 }
 
@@ -86,7 +86,7 @@ cef_resource_handler_t* CEF_CALLBACK cfx_scheme_handler_factory_create(cef_schem
 }
 
 
-CFX_EXPORT void cfx_scheme_handler_factory_set_managed_callback(cef_scheme_handler_factory_t* self, int index, void* callback) {
+static void cfx_scheme_handler_factory_set_managed_callback(cef_scheme_handler_factory_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_scheme_handler_factory_create_callback)

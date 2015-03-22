@@ -38,120 +38,120 @@ extern "C" {
 #endif
 
 // CEF_EXPORT cef_command_line_t* cef_command_line_create();
-CFX_EXPORT cef_command_line_t* cfx_command_line_create() {
+static cef_command_line_t* cfx_command_line_create() {
     return cef_command_line_create();
 }
 // CEF_EXPORT cef_command_line_t* cef_command_line_get_global();
-CFX_EXPORT cef_command_line_t* cfx_command_line_get_global() {
+static cef_command_line_t* cfx_command_line_get_global() {
     return cef_command_line_get_global();
 }
 // cef_base_t base
 
 // is_valid
-CFX_EXPORT int cfx_command_line_is_valid(cef_command_line_t* self) {
+static int cfx_command_line_is_valid(cef_command_line_t* self) {
     return self->is_valid(self);
 }
 
 // is_read_only
-CFX_EXPORT int cfx_command_line_is_read_only(cef_command_line_t* self) {
+static int cfx_command_line_is_read_only(cef_command_line_t* self) {
     return self->is_read_only(self);
 }
 
 // copy
-CFX_EXPORT cef_command_line_t* cfx_command_line_copy(cef_command_line_t* self) {
+static cef_command_line_t* cfx_command_line_copy(cef_command_line_t* self) {
     return self->copy(self);
 }
 
 // init_from_argv
-CFX_EXPORT void cfx_command_line_init_from_argv(cef_command_line_t* self, int argc, const char* const* argv) {
+static void cfx_command_line_init_from_argv(cef_command_line_t* self, int argc, const char* const* argv) {
     self->init_from_argv(self, argc, argv);
 }
 
 // init_from_string
-CFX_EXPORT void cfx_command_line_init_from_string(cef_command_line_t* self, char16 *command_line_str, int command_line_length) {
+static void cfx_command_line_init_from_string(cef_command_line_t* self, char16 *command_line_str, int command_line_length) {
     cef_string_t command_line = { command_line_str, command_line_length, 0 };
     self->init_from_string(self, &command_line);
 }
 
 // reset
-CFX_EXPORT void cfx_command_line_reset(cef_command_line_t* self) {
+static void cfx_command_line_reset(cef_command_line_t* self) {
     self->reset(self);
 }
 
 // get_argv
-CFX_EXPORT void cfx_command_line_get_argv(cef_command_line_t* self, cef_string_list_t argv) {
+static void cfx_command_line_get_argv(cef_command_line_t* self, cef_string_list_t argv) {
     self->get_argv(self, argv);
 }
 
 // get_command_line_string
-CFX_EXPORT cef_string_userfree_t cfx_command_line_get_command_line_string(cef_command_line_t* self) {
+static cef_string_userfree_t cfx_command_line_get_command_line_string(cef_command_line_t* self) {
     return self->get_command_line_string(self);
 }
 
 // get_program
-CFX_EXPORT cef_string_userfree_t cfx_command_line_get_program(cef_command_line_t* self) {
+static cef_string_userfree_t cfx_command_line_get_program(cef_command_line_t* self) {
     return self->get_program(self);
 }
 
 // set_program
-CFX_EXPORT void cfx_command_line_set_program(cef_command_line_t* self, char16 *program_str, int program_length) {
+static void cfx_command_line_set_program(cef_command_line_t* self, char16 *program_str, int program_length) {
     cef_string_t program = { program_str, program_length, 0 };
     self->set_program(self, &program);
 }
 
 // has_switches
-CFX_EXPORT int cfx_command_line_has_switches(cef_command_line_t* self) {
+static int cfx_command_line_has_switches(cef_command_line_t* self) {
     return self->has_switches(self);
 }
 
 // has_switch
-CFX_EXPORT int cfx_command_line_has_switch(cef_command_line_t* self, char16 *name_str, int name_length) {
+static int cfx_command_line_has_switch(cef_command_line_t* self, char16 *name_str, int name_length) {
     cef_string_t name = { name_str, name_length, 0 };
     return self->has_switch(self, &name);
 }
 
 // get_switch_value
-CFX_EXPORT cef_string_userfree_t cfx_command_line_get_switch_value(cef_command_line_t* self, char16 *name_str, int name_length) {
+static cef_string_userfree_t cfx_command_line_get_switch_value(cef_command_line_t* self, char16 *name_str, int name_length) {
     cef_string_t name = { name_str, name_length, 0 };
     return self->get_switch_value(self, &name);
 }
 
 // get_switches
-CFX_EXPORT void cfx_command_line_get_switches(cef_command_line_t* self, cef_string_map_t switches) {
+static void cfx_command_line_get_switches(cef_command_line_t* self, cef_string_map_t switches) {
     self->get_switches(self, switches);
 }
 
 // append_switch
-CFX_EXPORT void cfx_command_line_append_switch(cef_command_line_t* self, char16 *name_str, int name_length) {
+static void cfx_command_line_append_switch(cef_command_line_t* self, char16 *name_str, int name_length) {
     cef_string_t name = { name_str, name_length, 0 };
     self->append_switch(self, &name);
 }
 
 // append_switch_with_value
-CFX_EXPORT void cfx_command_line_append_switch_with_value(cef_command_line_t* self, char16 *name_str, int name_length, char16 *value_str, int value_length) {
+static void cfx_command_line_append_switch_with_value(cef_command_line_t* self, char16 *name_str, int name_length, char16 *value_str, int value_length) {
     cef_string_t name = { name_str, name_length, 0 };
     cef_string_t value = { value_str, value_length, 0 };
     self->append_switch_with_value(self, &name, &value);
 }
 
 // has_arguments
-CFX_EXPORT int cfx_command_line_has_arguments(cef_command_line_t* self) {
+static int cfx_command_line_has_arguments(cef_command_line_t* self) {
     return self->has_arguments(self);
 }
 
 // get_arguments
-CFX_EXPORT void cfx_command_line_get_arguments(cef_command_line_t* self, cef_string_list_t arguments) {
+static void cfx_command_line_get_arguments(cef_command_line_t* self, cef_string_list_t arguments) {
     self->get_arguments(self, arguments);
 }
 
 // append_argument
-CFX_EXPORT void cfx_command_line_append_argument(cef_command_line_t* self, char16 *argument_str, int argument_length) {
+static void cfx_command_line_append_argument(cef_command_line_t* self, char16 *argument_str, int argument_length) {
     cef_string_t argument = { argument_str, argument_length, 0 };
     self->append_argument(self, &argument);
 }
 
 // prepend_wrapper
-CFX_EXPORT void cfx_command_line_prepend_wrapper(cef_command_line_t* self, char16 *wrapper_str, int wrapper_length) {
+static void cfx_command_line_prepend_wrapper(cef_command_line_t* self, char16 *wrapper_str, int wrapper_length) {
     cef_string_t wrapper = { wrapper_str, wrapper_length, 0 };
     self->prepend_wrapper(self, &wrapper);
 }

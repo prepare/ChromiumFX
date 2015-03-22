@@ -38,34 +38,34 @@ extern "C" {
 #endif
 
 // CEF_EXPORT cef_process_message_t* cef_process_message_create(const cef_string_t* name);
-CFX_EXPORT cef_process_message_t* cfx_process_message_create(char16 *name_str, int name_length) {
+static cef_process_message_t* cfx_process_message_create(char16 *name_str, int name_length) {
     cef_string_t name = { name_str, name_length, 0 };
     return cef_process_message_create(&name);
 }
 // cef_base_t base
 
 // is_valid
-CFX_EXPORT int cfx_process_message_is_valid(cef_process_message_t* self) {
+static int cfx_process_message_is_valid(cef_process_message_t* self) {
     return self->is_valid(self);
 }
 
 // is_read_only
-CFX_EXPORT int cfx_process_message_is_read_only(cef_process_message_t* self) {
+static int cfx_process_message_is_read_only(cef_process_message_t* self) {
     return self->is_read_only(self);
 }
 
 // copy
-CFX_EXPORT cef_process_message_t* cfx_process_message_copy(cef_process_message_t* self) {
+static cef_process_message_t* cfx_process_message_copy(cef_process_message_t* self) {
     return self->copy(self);
 }
 
 // get_name
-CFX_EXPORT cef_string_userfree_t cfx_process_message_get_name(cef_process_message_t* self) {
+static cef_string_userfree_t cfx_process_message_get_name(cef_process_message_t* self) {
     return self->get_name(self);
 }
 
 // get_argument_list
-CFX_EXPORT cef_list_value_t* cfx_process_message_get_argument_list(cef_process_message_t* self) {
+static cef_list_value_t* cfx_process_message_get_argument_list(cef_process_message_t* self) {
     return self->get_argument_list(self);
 }
 

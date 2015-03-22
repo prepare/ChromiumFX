@@ -40,7 +40,7 @@ extern "C" {
 // cef_base_t base
 
 // cont
-CFX_EXPORT void cfx_allow_certificate_error_callback_cont(cef_allow_certificate_error_callback_t* self, int allow) {
+static void cfx_allow_certificate_error_callback_cont(cef_allow_certificate_error_callback_t* self, int allow) {
     self->cont(self, allow);
 }
 

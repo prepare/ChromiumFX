@@ -47,9 +47,9 @@ namespace Chromium {
     public class CfxPrintHandler : CfxBase {
 
         static CfxPrintHandler () {
-            CfxApi.cfx_print_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_handler_ctor", typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
-            CfxApi.cfx_print_handler_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_handler_get_gc_handle", typeof(CfxApi.cfx_get_gc_handle_delegate));
-            CfxApi.cfx_print_handler_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_print_handler_set_managed_callback", typeof(CfxApi.cfx_set_callback_delegate));
+            CfxApi.cfx_print_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(657, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
+            CfxApi.cfx_print_handler_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(658, typeof(CfxApi.cfx_get_gc_handle_delegate));
+            CfxApi.cfx_print_handler_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(659, typeof(CfxApi.cfx_set_callback_delegate));
         }
 
         internal static CfxPrintHandler Wrap(IntPtr nativePtr) {

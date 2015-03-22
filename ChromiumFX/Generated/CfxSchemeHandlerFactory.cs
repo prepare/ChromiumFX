@@ -48,9 +48,9 @@ namespace Chromium {
     public class CfxSchemeHandlerFactory : CfxBase {
 
         static CfxSchemeHandlerFactory () {
-            CfxApi.cfx_scheme_handler_factory_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_scheme_handler_factory_ctor", typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
-            CfxApi.cfx_scheme_handler_factory_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_scheme_handler_factory_get_gc_handle", typeof(CfxApi.cfx_get_gc_handle_delegate));
-            CfxApi.cfx_scheme_handler_factory_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_scheme_handler_factory_set_managed_callback", typeof(CfxApi.cfx_set_callback_delegate));
+            CfxApi.cfx_scheme_handler_factory_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(760, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
+            CfxApi.cfx_scheme_handler_factory_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(761, typeof(CfxApi.cfx_get_gc_handle_delegate));
+            CfxApi.cfx_scheme_handler_factory_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(762, typeof(CfxApi.cfx_set_callback_delegate));
         }
 
         internal static CfxSchemeHandlerFactory Wrap(IntPtr nativePtr) {

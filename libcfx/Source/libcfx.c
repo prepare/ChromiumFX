@@ -56,7 +56,7 @@ static __inline void* cfx_copy_structure(void* source, size_t size) {
 
 
 #include "libcfx\Generated\cfx_amalgamation.c"
-#include "libcfx\Generated\cfx_get_function_pointer.c"
+#include "libcfx\Generated\cfx_function_pointers.c"
 
 
 static int cfx_release(cef_base_t* base) {
@@ -72,8 +72,11 @@ static void cfx_string_destroy(cef_string_t* cefstr) {
 	cefstr->dtor(cefstr->str);
 }
 
+static void* cfx_get_function_pointer(int index) {
+	return cfx_function_pointers[index];
+}
 
-CFX_EXPORT int cfx_api_initialize(HMODULE libcef, void *gc_handle_free, void **release, void **string_get_ptr, void **string_destroy) {
+CFX_EXPORT int cfx_api_initialize(HMODULE libcef, void *gc_handle_free, void **release, void **string_get_ptr, void **string_destroy, void **get_function_pointer) {
 
 	cef_api_hash_ptr = (char* (*)(int))GetProcAddress(libcef, "cef_api_hash");
 	if(!cef_api_hash_ptr)
@@ -84,10 +87,13 @@ CFX_EXPORT int cfx_api_initialize(HMODULE libcef, void *gc_handle_free, void **r
 	}
 
 	cfx_gc_handle_free = (void(CEF_CALLBACK *)(gc_handle_t gc_handle))gc_handle_free;
-	*release = cfx_release;
-	*string_get_ptr = cfx_string_get_ptr;
-	*string_destroy = cfx_string_destroy;
+	*release = (void*)cfx_release;
+	*string_get_ptr = (void*)cfx_string_get_ptr;
+	*string_destroy = (void*)cfx_string_destroy;
+	*get_function_pointer = (void*)cfx_get_function_pointer;
+
 	cfx_load_cef_function_pointers(libcef);
 	cef_string_utf16_set_ptr = (int (*)(const char16*, size_t, cef_string_utf16_t*, int))GetProcAddress(libcef, "cef_string_utf16_set");
+
 	return 0;
 }

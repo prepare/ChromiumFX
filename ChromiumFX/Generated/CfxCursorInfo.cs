@@ -46,14 +46,14 @@ namespace Chromium {
     public sealed class CfxCursorInfo : CfxStructure {
 
         static CfxCursorInfo () {
-            CfxApi.cfx_cursor_info_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cursor_info_ctor", typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_cursor_info_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cursor_info_dtor", typeof(CfxApi.cfx_dtor_delegate));
-            CfxApi.cfx_cursor_info_set_hotspot = (CfxApi.cfx_cursor_info_set_hotspot_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cursor_info_set_hotspot", typeof(CfxApi.cfx_cursor_info_set_hotspot_delegate));
-            CfxApi.cfx_cursor_info_get_hotspot = (CfxApi.cfx_cursor_info_get_hotspot_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cursor_info_get_hotspot", typeof(CfxApi.cfx_cursor_info_get_hotspot_delegate));
-            CfxApi.cfx_cursor_info_set_image_scale_factor = (CfxApi.cfx_cursor_info_set_image_scale_factor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cursor_info_set_image_scale_factor", typeof(CfxApi.cfx_cursor_info_set_image_scale_factor_delegate));
-            CfxApi.cfx_cursor_info_get_image_scale_factor = (CfxApi.cfx_cursor_info_get_image_scale_factor_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cursor_info_get_image_scale_factor", typeof(CfxApi.cfx_cursor_info_get_image_scale_factor_delegate));
-            CfxApi.cfx_cursor_info_set_buffer = (CfxApi.cfx_cursor_info_set_buffer_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cursor_info_set_buffer", typeof(CfxApi.cfx_cursor_info_set_buffer_delegate));
-            CfxApi.cfx_cursor_info_get_buffer = (CfxApi.cfx_cursor_info_get_buffer_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_cursor_info_get_buffer", typeof(CfxApi.cfx_cursor_info_get_buffer_delegate));
+            CfxApi.cfx_cursor_info_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(274, typeof(CfxApi.cfx_ctor_delegate));
+            CfxApi.cfx_cursor_info_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(274, typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_cursor_info_set_hotspot = (CfxApi.cfx_cursor_info_set_hotspot_delegate)CfxApi.GetDelegate(276, typeof(CfxApi.cfx_cursor_info_set_hotspot_delegate));
+            CfxApi.cfx_cursor_info_get_hotspot = (CfxApi.cfx_cursor_info_get_hotspot_delegate)CfxApi.GetDelegate(277, typeof(CfxApi.cfx_cursor_info_get_hotspot_delegate));
+            CfxApi.cfx_cursor_info_set_image_scale_factor = (CfxApi.cfx_cursor_info_set_image_scale_factor_delegate)CfxApi.GetDelegate(278, typeof(CfxApi.cfx_cursor_info_set_image_scale_factor_delegate));
+            CfxApi.cfx_cursor_info_get_image_scale_factor = (CfxApi.cfx_cursor_info_get_image_scale_factor_delegate)CfxApi.GetDelegate(279, typeof(CfxApi.cfx_cursor_info_get_image_scale_factor_delegate));
+            CfxApi.cfx_cursor_info_set_buffer = (CfxApi.cfx_cursor_info_set_buffer_delegate)CfxApi.GetDelegate(280, typeof(CfxApi.cfx_cursor_info_set_buffer_delegate));
+            CfxApi.cfx_cursor_info_get_buffer = (CfxApi.cfx_cursor_info_get_buffer_delegate)CfxApi.GetDelegate(281, typeof(CfxApi.cfx_cursor_info_get_buffer_delegate));
         }
 
         internal static CfxCursorInfo Wrap(IntPtr nativePtr) {

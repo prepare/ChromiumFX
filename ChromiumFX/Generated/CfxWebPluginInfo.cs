@@ -44,10 +44,10 @@ namespace Chromium {
     public class CfxWebPluginInfo : CfxBase {
 
         static CfxWebPluginInfo () {
-            CfxApi.cfx_web_plugin_info_get_name = (CfxApi.cfx_web_plugin_info_get_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_web_plugin_info_get_name", typeof(CfxApi.cfx_web_plugin_info_get_name_delegate));
-            CfxApi.cfx_web_plugin_info_get_path = (CfxApi.cfx_web_plugin_info_get_path_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_web_plugin_info_get_path", typeof(CfxApi.cfx_web_plugin_info_get_path_delegate));
-            CfxApi.cfx_web_plugin_info_get_version = (CfxApi.cfx_web_plugin_info_get_version_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_web_plugin_info_get_version", typeof(CfxApi.cfx_web_plugin_info_get_version_delegate));
-            CfxApi.cfx_web_plugin_info_get_description = (CfxApi.cfx_web_plugin_info_get_description_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_web_plugin_info_get_description", typeof(CfxApi.cfx_web_plugin_info_get_description_delegate));
+            CfxApi.cfx_web_plugin_info_get_name = (CfxApi.cfx_web_plugin_info_get_name_delegate)CfxApi.GetDelegate(999, typeof(CfxApi.cfx_web_plugin_info_get_name_delegate));
+            CfxApi.cfx_web_plugin_info_get_path = (CfxApi.cfx_web_plugin_info_get_path_delegate)CfxApi.GetDelegate(1000, typeof(CfxApi.cfx_web_plugin_info_get_path_delegate));
+            CfxApi.cfx_web_plugin_info_get_version = (CfxApi.cfx_web_plugin_info_get_version_delegate)CfxApi.GetDelegate(1001, typeof(CfxApi.cfx_web_plugin_info_get_version_delegate));
+            CfxApi.cfx_web_plugin_info_get_description = (CfxApi.cfx_web_plugin_info_get_description_delegate)CfxApi.GetDelegate(1002, typeof(CfxApi.cfx_web_plugin_info_get_description_delegate));
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

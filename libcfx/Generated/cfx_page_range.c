@@ -37,27 +37,27 @@
 extern "C" {
 #endif
 
-CFX_EXPORT cef_page_range_t* cfx_page_range_ctor() {
+static cef_page_range_t* cfx_page_range_ctor() {
     return (cef_page_range_t*)calloc(1, sizeof(cef_page_range_t));
 }
 
-CFX_EXPORT void cfx_page_range_dtor(cef_page_range_t* self) {
+static void cfx_page_range_dtor(cef_page_range_t* self) {
     free(self);
 }
 
 // cef_page_range_t->from
-CFX_EXPORT void cfx_page_range_set_from(cef_page_range_t *self, int from) {
+static void cfx_page_range_set_from(cef_page_range_t *self, int from) {
     self->from = from;
 }
-CFX_EXPORT void cfx_page_range_get_from(cef_page_range_t *self, int* from) {
+static void cfx_page_range_get_from(cef_page_range_t *self, int* from) {
     *from = self->from;
 }
 
 // cef_page_range_t->to
-CFX_EXPORT void cfx_page_range_set_to(cef_page_range_t *self, int to) {
+static void cfx_page_range_set_to(cef_page_range_t *self, int to) {
     self->to = to;
 }
-CFX_EXPORT void cfx_page_range_get_to(cef_page_range_t *self, int* to) {
+static void cfx_page_range_get_to(cef_page_range_t *self, int* to) {
     *to = self->to;
 }
 

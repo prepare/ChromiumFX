@@ -47,9 +47,9 @@ namespace Chromium {
     public class CfxContextMenuHandler : CfxBase {
 
         static CfxContextMenuHandler () {
-            CfxApi.cfx_context_menu_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_handler_ctor", typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
-            CfxApi.cfx_context_menu_handler_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_handler_get_gc_handle", typeof(CfxApi.cfx_get_gc_handle_delegate));
-            CfxApi.cfx_context_menu_handler_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_context_menu_handler_set_managed_callback", typeof(CfxApi.cfx_set_callback_delegate));
+            CfxApi.cfx_context_menu_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(218, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
+            CfxApi.cfx_context_menu_handler_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(219, typeof(CfxApi.cfx_get_gc_handle_delegate));
+            CfxApi.cfx_context_menu_handler_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(220, typeof(CfxApi.cfx_set_callback_delegate));
         }
 
         internal static CfxContextMenuHandler Wrap(IntPtr nativePtr) {

@@ -37,27 +37,27 @@
 extern "C" {
 #endif
 
-CFX_EXPORT cef_point_t* cfx_point_ctor() {
+static cef_point_t* cfx_point_ctor() {
     return (cef_point_t*)calloc(1, sizeof(cef_point_t));
 }
 
-CFX_EXPORT void cfx_point_dtor(cef_point_t* self) {
+static void cfx_point_dtor(cef_point_t* self) {
     free(self);
 }
 
 // cef_point_t->x
-CFX_EXPORT void cfx_point_set_x(cef_point_t *self, int x) {
+static void cfx_point_set_x(cef_point_t *self, int x) {
     self->x = x;
 }
-CFX_EXPORT void cfx_point_get_x(cef_point_t *self, int* x) {
+static void cfx_point_get_x(cef_point_t *self, int* x) {
     *x = self->x;
 }
 
 // cef_point_t->y
-CFX_EXPORT void cfx_point_set_y(cef_point_t *self, int y) {
+static void cfx_point_set_y(cef_point_t *self, int y) {
     self->y = y;
 }
-CFX_EXPORT void cfx_point_get_y(cef_point_t *self, int* y) {
+static void cfx_point_get_y(cef_point_t *self, int* y) {
     *y = self->y;
 }
 

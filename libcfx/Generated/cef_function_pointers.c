@@ -34,7 +34,7 @@
 static int (*cef_add_cross_origin_whitelist_entry_ptr)(const cef_string_t* source_origin, const cef_string_t* target_protocol, const cef_string_t* target_domain, int allow_target_subdomains);
 static void (*cef_add_web_plugin_directory_ptr)(const cef_string_t* dir);
 static void (*cef_add_web_plugin_path_ptr)(const cef_string_t* path);
-static char* (*cef_api_hash_ptr)(int entry);
+static const char* (*cef_api_hash_ptr)(int entry);
 static int (*cef_begin_tracing_ptr)(const cef_string_t* categories, cef_completion_callback_t* callback);
 static int (*cef_build_revision_ptr)();
 static int (*cef_clear_cross_origin_whitelist_ptr)();

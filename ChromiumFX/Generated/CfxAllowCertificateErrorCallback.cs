@@ -45,7 +45,7 @@ namespace Chromium {
     public class CfxAllowCertificateErrorCallback : CfxBase {
 
         static CfxAllowCertificateErrorCallback () {
-            CfxApi.cfx_allow_certificate_error_callback_cont = (CfxApi.cfx_allow_certificate_error_callback_cont_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_allow_certificate_error_callback_cont", typeof(CfxApi.cfx_allow_certificate_error_callback_cont_delegate));
+            CfxApi.cfx_allow_certificate_error_callback_cont = (CfxApi.cfx_allow_certificate_error_callback_cont_delegate)CfxApi.GetDelegate(38, typeof(CfxApi.cfx_allow_certificate_error_callback_cont_delegate));
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

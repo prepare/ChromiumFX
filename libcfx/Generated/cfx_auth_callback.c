@@ -40,14 +40,14 @@ extern "C" {
 // cef_base_t base
 
 // cont
-CFX_EXPORT void cfx_auth_callback_cont(cef_auth_callback_t* self, char16 *username_str, int username_length, char16 *password_str, int password_length) {
+static void cfx_auth_callback_cont(cef_auth_callback_t* self, char16 *username_str, int username_length, char16 *password_str, int password_length) {
     cef_string_t username = { username_str, username_length, 0 };
     cef_string_t password = { password_str, password_length, 0 };
     self->cont(self, &username, &password);
 }
 
 // cancel
-CFX_EXPORT void cfx_auth_callback_cancel(cef_auth_callback_t* self) {
+static void cfx_auth_callback_cancel(cef_auth_callback_t* self) {
     self->cancel(self);
 }
 

@@ -57,7 +57,7 @@ int CEF_CALLBACK _cfx_load_handler_release(struct _cef_base_t* base) {
     return count;
 }
 
-CFX_EXPORT cfx_load_handler_t* cfx_load_handler_ctor(gc_handle_t gc_handle) {
+static cfx_load_handler_t* cfx_load_handler_ctor(gc_handle_t gc_handle) {
     cfx_load_handler_t* ptr = (cfx_load_handler_t*)calloc(1, sizeof(cfx_load_handler_t));
     if(!ptr) return 0;
     ptr->cef_load_handler.base.size = sizeof(cef_load_handler_t);
@@ -68,7 +68,7 @@ CFX_EXPORT cfx_load_handler_t* cfx_load_handler_ctor(gc_handle_t gc_handle) {
     return ptr;
 }
 
-CFX_EXPORT gc_handle_t cfx_load_handler_get_gc_handle(cfx_load_handler_t* self) {
+static gc_handle_t cfx_load_handler_get_gc_handle(cfx_load_handler_t* self) {
     return self->gc_handle;
 }
 
@@ -108,7 +108,7 @@ void CEF_CALLBACK cfx_load_handler_on_load_error(cef_load_handler_t* self, cef_b
 }
 
 
-CFX_EXPORT void cfx_load_handler_set_managed_callback(cef_load_handler_t* self, int index, void* callback) {
+static void cfx_load_handler_set_managed_callback(cef_load_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_load_handler_on_loading_state_change_callback)

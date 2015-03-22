@@ -36,6 +36,8 @@ Public Class StructMember
     Public ReadOnly MemberType As ApiType
     Public ReadOnly Name As String
 
+    Public ApiIndex As Integer
+
     Public ReadOnly Comments As CommentData
 
     Private ReadOnly cefConfig As CefConfigData
@@ -307,7 +309,7 @@ Public Class CfxClassBuilder
         b.EndBlock()
         b.AppendLine()
 
-        b.BeginBlock("CFX_EXPORT {0}* {1}_ctor(gc_handle_t gc_handle)", CfxNativeSymbol, CfxName)
+        b.BeginBlock("static {0}* {1}_ctor(gc_handle_t gc_handle)", CfxNativeSymbol, CfxName)
         b.AppendLine("{0}* ptr = ({0}*)calloc(1, sizeof({0}));", CfxNativeSymbol)
         b.AppendLine("if(!ptr) return 0;")
         b.AppendLine("ptr->{0}.base.size = sizeof({1});", struct.Name, OriginalSymbol)
@@ -318,7 +320,7 @@ Public Class CfxClassBuilder
         b.AppendLine("return ptr;")
         b.EndBlock()
         b.AppendLine()
-        b.BeginBlock("CFX_EXPORT gc_handle_t {0}_get_gc_handle({1}* self)", CfxName, CfxNativeSymbol)
+        b.BeginBlock("static gc_handle_t {0}_get_gc_handle({1}* self)", CfxName, CfxNativeSymbol)
         b.AppendLine("return self->gc_handle;")
         b.EndBlock()
         b.AppendLine()
@@ -362,7 +364,7 @@ Public Class CfxClassBuilder
             End If
         Next
 
-        b.BeginBlock("CFX_EXPORT void {0}_set_managed_callback({1}* self, int index, void* callback)", CfxName, OriginalSymbol)
+        b.BeginBlock("static void {0}_set_managed_callback({1}* self, int index, void* callback)", CfxName, OriginalSymbol)
         b.BeginBlock("switch(index)")
         Dim index = 0
         For Each sm In StructMembers
@@ -389,7 +391,7 @@ Public Class CfxClassBuilder
 
         If ExportFunctions.Count > 0 Then Stop
 
-        b.BeginBlock("CFX_EXPORT {0}* {1}_ctor()", OriginalSymbol, CfxName)
+        b.BeginBlock("static {0}* {1}_ctor()", OriginalSymbol, CfxName)
         If StructMembers.Length > 0 AndAlso StructMembers(0).Name = "size" Then
             b.AppendLine("{0}* self = ({0}*)calloc(1, sizeof({0}));", OriginalSymbol)
             b.AppendLine("if(!self) return 0;")
@@ -401,7 +403,7 @@ Public Class CfxClassBuilder
         b.EndBlock()
         b.AppendLine()
 
-        b.BeginBlock("CFX_EXPORT void {1}_dtor({0}* self)", OriginalSymbol, CfxName)
+        b.BeginBlock("static void {1}_dtor({0}* self)", OriginalSymbol, CfxName)
         For Each sm In StructMembers
             sm.MemberType.EmitNativeValueStructDtorStatements(b, sm.Name)
         Next
@@ -412,10 +414,10 @@ Public Class CfxClassBuilder
         For Each sm In StructMembers
             If sm.Name <> "size" Then
                 b.AppendComment("{0}->{1}", struct.OriginalSymbol, sm.Name)
-                b.BeginBlock("CFX_EXPORT void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeCallSignature(sm.Name, False))
+                b.BeginBlock("static void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeCallSignature(sm.Name, False))
                 sm.MemberType.EmitAssignToNativeStructMember(b, sm.Name)
                 b.EndBlock()
-                b.BeginBlock("CFX_EXPORT void {0}_get_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name))
+                b.BeginBlock("static void {0}_get_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name))
                 sm.MemberType.EmitAssignFromNativeStructMember(b, sm.Name)
                 b.EndBlock()
                 b.AppendLine()
@@ -441,19 +443,19 @@ Public Class CfxClassBuilder
 
             Case StructCategory.Values
 
-                b.AppendComment("CFX_EXPORT {0}* {1}_ctor()", OriginalSymbol, CfxName)
+                b.AppendComment("static {0}* {1}_ctor()", OriginalSymbol, CfxName)
                 b.AppendLine("public static cfx_ctor_delegate {0}_ctor;", CfxName)
-                b.AppendComment("CFX_EXPORT void {1}_dtor({0}* ptr)", OriginalSymbol, CfxName)
+                b.AppendComment("static void {1}_dtor({0}* ptr)", OriginalSymbol, CfxName)
                 b.AppendLine("public static cfx_dtor_delegate {0}_dtor;", CfxName)
                 b.AppendLine()
 
                 For Each sm In StructMembers
                     If sm.Name <> "size" Then
-                        b.AppendComment("CFX_EXPORT void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeCallSignature(sm.Name, False))
+                        b.AppendComment("static void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeCallSignature(sm.Name, False))
                         b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]")
                         b.AppendLine("public delegate void {0}_set_{1}_delegate(IntPtr self, {2});", CfxName, sm.Name, sm.MemberType.PInvokeCallSignature(sm.Name))
                         b.AppendLine("public static {0}_set_{1}_delegate {0}_set_{1};", CfxName, sm.Name)
-                        b.AppendComment("CFX_EXPORT void {0}_get_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name))
+                        b.AppendComment("static void {0}_get_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name))
                         b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]")
                         b.AppendLine("public delegate void {0}_get_{1}_delegate(IntPtr self, {2});", CfxName, sm.Name, sm.MemberType.PInvokeOutSignature(sm.Name))
                         b.AppendLine("public static {0}_get_{1}_delegate {0}_get_{1};", CfxName, sm.Name)
@@ -475,7 +477,6 @@ Public Class CfxClassBuilder
             Case StructCategory.ApiCallbacks
 
                 If Category = StructCategory.ApiCallbacks Then
-                    b.AppendComment("CFX_EXPORT {0}* {1}_ctor();", CfxNativeSymbol, CfxName)
                     b.AppendLine("public static cfx_ctor_with_gc_handle_delegate {0}_ctor;", CfxName)
                     b.AppendLine("public static cfx_get_gc_handle_delegate {0}_get_gc_handle;", CfxName)
                     b.AppendLine("public static cfx_set_callback_delegate {0}_set_managed_callback;", CfxName)
@@ -510,12 +511,12 @@ Public Class CfxClassBuilder
         b.BeginBlock("static {0} ()", ClassName)
         If ExportFunctions.Count > 0 Then
             For Each f In Me.ExportFunctions
-                CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
+                CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName, f.ApiIndex)
             Next
         End If
         For Each sm In StructMembers
             If sm.MemberType.IsCefCallbackType Then
-                CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_" & sm.Name)
+                CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_" & sm.Name, sm.ApiIndex)
             End If
         Next
         b.EndBlock()
@@ -605,9 +606,9 @@ Public Class CfxClassBuilder
         b.AppendLine()
 
         b.BeginBlock("static {0} ()", ClassName)
-        b.AppendLine("CfxApi.{0}_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, ""{0}_ctor"", typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));", CfxName)
-        b.AppendLine("CfxApi.{0}_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, ""{0}_get_gc_handle"", typeof(CfxApi.cfx_get_gc_handle_delegate));", CfxName)
-        b.AppendLine("CfxApi.{0}_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, ""{0}_set_managed_callback"", typeof(CfxApi.cfx_set_callback_delegate));", CfxName)
+        b.AppendLine("CfxApi.{0}_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate({1}, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));", CfxName, struct.ApiIndex)
+        b.AppendLine("CfxApi.{0}_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate({1}, typeof(CfxApi.cfx_get_gc_handle_delegate));", CfxName, struct.ApiIndex + 1)
+        b.AppendLine("CfxApi.{0}_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate({1}, typeof(CfxApi.cfx_set_callback_delegate));", CfxName, struct.ApiIndex + 2)
         If ExportFunctions.Count > 0 Then
             Stop
         End If
@@ -713,13 +714,13 @@ Public Class CfxClassBuilder
         b.AppendLine()
 
         b.BeginBlock("static {0} ()", ClassName)
-        CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_ctor", "cfx_ctor_delegate")
-        CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_dtor", "cfx_dtor_delegate")
+        b.AppendLine("CfxApi.{0}_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate({1}, typeof(CfxApi.cfx_ctor_delegate));", CfxName, struct.ApiIndex)
+        b.AppendLine("CfxApi.{0}_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate({1}, typeof(CfxApi.cfx_dtor_delegate));", CfxName, struct.ApiIndex)
 
         For Each sm In StructMembers
             If sm.Name <> "size" Then
-                CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_set_" & sm.Name)
-                CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_get_" & sm.Name)
+                CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_set_" & sm.Name, sm.ApiIndex)
+                CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_get_" & sm.Name, sm.ApiIndex + 1)
             End If
         Next
         If ExportFunctions.Count > 0 Then

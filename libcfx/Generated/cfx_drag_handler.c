@@ -57,7 +57,7 @@ int CEF_CALLBACK _cfx_drag_handler_release(struct _cef_base_t* base) {
     return count;
 }
 
-CFX_EXPORT cfx_drag_handler_t* cfx_drag_handler_ctor(gc_handle_t gc_handle) {
+static cfx_drag_handler_t* cfx_drag_handler_ctor(gc_handle_t gc_handle) {
     cfx_drag_handler_t* ptr = (cfx_drag_handler_t*)calloc(1, sizeof(cfx_drag_handler_t));
     if(!ptr) return 0;
     ptr->cef_drag_handler.base.size = sizeof(cef_drag_handler_t);
@@ -68,7 +68,7 @@ CFX_EXPORT cfx_drag_handler_t* cfx_drag_handler_ctor(gc_handle_t gc_handle) {
     return ptr;
 }
 
-CFX_EXPORT gc_handle_t cfx_drag_handler_get_gc_handle(cfx_drag_handler_t* self) {
+static gc_handle_t cfx_drag_handler_get_gc_handle(cfx_drag_handler_t* self) {
     return self->gc_handle;
 }
 
@@ -83,7 +83,7 @@ int CEF_CALLBACK cfx_drag_handler_on_drag_enter(cef_drag_handler_t* self, cef_br
 }
 
 
-CFX_EXPORT void cfx_drag_handler_set_managed_callback(cef_drag_handler_t* self, int index, void* callback) {
+static void cfx_drag_handler_set_managed_callback(cef_drag_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_drag_handler_on_drag_enter_callback)

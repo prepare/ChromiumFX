@@ -46,9 +46,9 @@ namespace Chromium {
     public class CfxCompletionCallback : CfxBase {
 
         static CfxCompletionCallback () {
-            CfxApi.cfx_completion_callback_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_completion_callback_ctor", typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
-            CfxApi.cfx_completion_callback_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_completion_callback_get_gc_handle", typeof(CfxApi.cfx_get_gc_handle_delegate));
-            CfxApi.cfx_completion_callback_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_completion_callback_set_managed_callback", typeof(CfxApi.cfx_set_callback_delegate));
+            CfxApi.cfx_completion_callback_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(215, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
+            CfxApi.cfx_completion_callback_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(216, typeof(CfxApi.cfx_get_gc_handle_delegate));
+            CfxApi.cfx_completion_callback_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(217, typeof(CfxApi.cfx_set_callback_delegate));
         }
 
         internal static CfxCompletionCallback Wrap(IntPtr nativePtr) {

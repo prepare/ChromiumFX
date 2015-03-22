@@ -51,7 +51,7 @@ Public Class GetFrameIdentifiersSignature
 
     Public Overrides ReadOnly Property NativeSignature(functionName As String) As String
         Get
-            Return "CFX_EXPORT void cfx_browser_get_frame_identifiers(cef_browser_t* self, int identifiersCount, int64* identifiers)"
+            Return "static void cfx_browser_get_frame_identifiers(cef_browser_t* self, int identifiersCount, int64* identifiers)"
         End Get
     End Property
 
