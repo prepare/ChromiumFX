@@ -40,133 +40,133 @@ extern "C" {
 // cef_base_t base
 
 // get_type
-CFX_EXPORT cef_dom_node_type_t cfx_domnode_get_type(cef_domnode_t* self) {
+static cef_dom_node_type_t cfx_domnode_get_type(cef_domnode_t* self) {
     return self->get_type(self);
 }
 
 // is_text
-CFX_EXPORT int cfx_domnode_is_text(cef_domnode_t* self) {
+static int cfx_domnode_is_text(cef_domnode_t* self) {
     return self->is_text(self);
 }
 
 // is_element
-CFX_EXPORT int cfx_domnode_is_element(cef_domnode_t* self) {
+static int cfx_domnode_is_element(cef_domnode_t* self) {
     return self->is_element(self);
 }
 
 // is_editable
-CFX_EXPORT int cfx_domnode_is_editable(cef_domnode_t* self) {
+static int cfx_domnode_is_editable(cef_domnode_t* self) {
     return self->is_editable(self);
 }
 
 // is_form_control_element
-CFX_EXPORT int cfx_domnode_is_form_control_element(cef_domnode_t* self) {
+static int cfx_domnode_is_form_control_element(cef_domnode_t* self) {
     return self->is_form_control_element(self);
 }
 
 // get_form_control_element_type
-CFX_EXPORT cef_string_userfree_t cfx_domnode_get_form_control_element_type(cef_domnode_t* self) {
+static cef_string_userfree_t cfx_domnode_get_form_control_element_type(cef_domnode_t* self) {
     return self->get_form_control_element_type(self);
 }
 
 // is_same
-CFX_EXPORT int cfx_domnode_is_same(cef_domnode_t* self, cef_domnode_t* that) {
+static int cfx_domnode_is_same(cef_domnode_t* self, cef_domnode_t* that) {
     if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
     return self->is_same(self, that);
 }
 
 // get_name
-CFX_EXPORT cef_string_userfree_t cfx_domnode_get_name(cef_domnode_t* self) {
+static cef_string_userfree_t cfx_domnode_get_name(cef_domnode_t* self) {
     return self->get_name(self);
 }
 
 // get_value
-CFX_EXPORT cef_string_userfree_t cfx_domnode_get_value(cef_domnode_t* self) {
+static cef_string_userfree_t cfx_domnode_get_value(cef_domnode_t* self) {
     return self->get_value(self);
 }
 
 // set_value
-CFX_EXPORT int cfx_domnode_set_value(cef_domnode_t* self, char16 *value_str, int value_length) {
+static int cfx_domnode_set_value(cef_domnode_t* self, char16 *value_str, int value_length) {
     cef_string_t value = { value_str, value_length, 0 };
     return self->set_value(self, &value);
 }
 
 // get_as_markup
-CFX_EXPORT cef_string_userfree_t cfx_domnode_get_as_markup(cef_domnode_t* self) {
+static cef_string_userfree_t cfx_domnode_get_as_markup(cef_domnode_t* self) {
     return self->get_as_markup(self);
 }
 
 // get_document
-CFX_EXPORT cef_domdocument_t* cfx_domnode_get_document(cef_domnode_t* self) {
+static cef_domdocument_t* cfx_domnode_get_document(cef_domnode_t* self) {
     return self->get_document(self);
 }
 
 // get_parent
-CFX_EXPORT cef_domnode_t* cfx_domnode_get_parent(cef_domnode_t* self) {
+static cef_domnode_t* cfx_domnode_get_parent(cef_domnode_t* self) {
     return self->get_parent(self);
 }
 
 // get_previous_sibling
-CFX_EXPORT cef_domnode_t* cfx_domnode_get_previous_sibling(cef_domnode_t* self) {
+static cef_domnode_t* cfx_domnode_get_previous_sibling(cef_domnode_t* self) {
     return self->get_previous_sibling(self);
 }
 
 // get_next_sibling
-CFX_EXPORT cef_domnode_t* cfx_domnode_get_next_sibling(cef_domnode_t* self) {
+static cef_domnode_t* cfx_domnode_get_next_sibling(cef_domnode_t* self) {
     return self->get_next_sibling(self);
 }
 
 // has_children
-CFX_EXPORT int cfx_domnode_has_children(cef_domnode_t* self) {
+static int cfx_domnode_has_children(cef_domnode_t* self) {
     return self->has_children(self);
 }
 
 // get_first_child
-CFX_EXPORT cef_domnode_t* cfx_domnode_get_first_child(cef_domnode_t* self) {
+static cef_domnode_t* cfx_domnode_get_first_child(cef_domnode_t* self) {
     return self->get_first_child(self);
 }
 
 // get_last_child
-CFX_EXPORT cef_domnode_t* cfx_domnode_get_last_child(cef_domnode_t* self) {
+static cef_domnode_t* cfx_domnode_get_last_child(cef_domnode_t* self) {
     return self->get_last_child(self);
 }
 
 // get_element_tag_name
-CFX_EXPORT cef_string_userfree_t cfx_domnode_get_element_tag_name(cef_domnode_t* self) {
+static cef_string_userfree_t cfx_domnode_get_element_tag_name(cef_domnode_t* self) {
     return self->get_element_tag_name(self);
 }
 
 // has_element_attributes
-CFX_EXPORT int cfx_domnode_has_element_attributes(cef_domnode_t* self) {
+static int cfx_domnode_has_element_attributes(cef_domnode_t* self) {
     return self->has_element_attributes(self);
 }
 
 // has_element_attribute
-CFX_EXPORT int cfx_domnode_has_element_attribute(cef_domnode_t* self, char16 *attrName_str, int attrName_length) {
+static int cfx_domnode_has_element_attribute(cef_domnode_t* self, char16 *attrName_str, int attrName_length) {
     cef_string_t attrName = { attrName_str, attrName_length, 0 };
     return self->has_element_attribute(self, &attrName);
 }
 
 // get_element_attribute
-CFX_EXPORT cef_string_userfree_t cfx_domnode_get_element_attribute(cef_domnode_t* self, char16 *attrName_str, int attrName_length) {
+static cef_string_userfree_t cfx_domnode_get_element_attribute(cef_domnode_t* self, char16 *attrName_str, int attrName_length) {
     cef_string_t attrName = { attrName_str, attrName_length, 0 };
     return self->get_element_attribute(self, &attrName);
 }
 
 // get_element_attributes
-CFX_EXPORT void cfx_domnode_get_element_attributes(cef_domnode_t* self, cef_string_map_t attrMap) {
+static void cfx_domnode_get_element_attributes(cef_domnode_t* self, cef_string_map_t attrMap) {
     self->get_element_attributes(self, attrMap);
 }
 
 // set_element_attribute
-CFX_EXPORT int cfx_domnode_set_element_attribute(cef_domnode_t* self, char16 *attrName_str, int attrName_length, char16 *value_str, int value_length) {
+static int cfx_domnode_set_element_attribute(cef_domnode_t* self, char16 *attrName_str, int attrName_length, char16 *value_str, int value_length) {
     cef_string_t attrName = { attrName_str, attrName_length, 0 };
     cef_string_t value = { value_str, value_length, 0 };
     return self->set_element_attribute(self, &attrName, &value);
 }
 
 // get_element_inner_text
-CFX_EXPORT cef_string_userfree_t cfx_domnode_get_element_inner_text(cef_domnode_t* self) {
+static cef_string_userfree_t cfx_domnode_get_element_inner_text(cef_domnode_t* self) {
     return self->get_element_inner_text(self);
 }
 

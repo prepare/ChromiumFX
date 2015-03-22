@@ -35,11 +35,16 @@
 
 #define CFX_EXPORT __declspec(dllexport)
 
-#include "libcfx\Generated\cfx_headers.h"
 #include "cef\include\cef_version.h"
 
+#include "libcfx\Generated\cef_headers.h"
+#include "libcfx\Generated\cef_function_pointers.c"
+
+static int (*cef_string_utf16_set_ptr)(const char16* src, size_t src_len,	cef_string_utf16_t* output, int copy);
+#define cef_string_utf16_set cef_string_utf16_set_ptr
+
 typedef void* gc_handle_t;
-static void(CEF_CALLBACK *cfx_gc_handle_free)(gc_handle_t gc_handle);
+static void (CEF_CALLBACK *cfx_gc_handle_free)(gc_handle_t gc_handle);
 
 
 static __inline void* cfx_copy_structure(void* source, size_t size) {
@@ -49,30 +54,46 @@ static __inline void* cfx_copy_structure(void* source, size_t size) {
 	return target;
 }
 
+
 #include "libcfx\Generated\cfx_amalgamation.c"
+#include "libcfx\Generated\cfx_function_pointers.c"
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-CFX_EXPORT void cfx_gc_handle_free_set_callback(void* callback) {
-	cfx_gc_handle_free = (void(CEF_CALLBACK *)(gc_handle_t gc_handle))callback;
-}
-
-CFX_EXPORT int cfx_release(cef_base_t* base) {
+static int cfx_release(cef_base_t* base) {
 	return base->release(base);
 }
 
-CFX_EXPORT char16* cfx_string_get_ptr(cef_string_t* cefstr,  int *length) {
+static char16* cfx_string_get_ptr(cef_string_t* cefstr, int *length) {
 	*length = cefstr->length;
 	return cefstr->str;
 }
 
-CFX_EXPORT void cfx_string_destroy(cef_string_t* cefstr) {
+static void cfx_string_destroy(cef_string_t* cefstr) {
 	cefstr->dtor(cefstr->str);
 }
 
-#ifdef __cplusplus
-} // extern "C"
-#endif
+static void* cfx_get_function_pointer(int index) {
+	return cfx_function_pointers[index];
+}
+
+CFX_EXPORT int cfx_api_initialize(HMODULE libcef, void *gc_handle_free, void **release, void **string_get_ptr, void **string_destroy, void **get_function_pointer) {
+
+	cef_api_hash_ptr = (char* (*)(int))GetProcAddress(libcef, "cef_api_hash");
+	if(!cef_api_hash_ptr)
+		return 1;
+
+	if(strcmp(cef_api_hash(0), CEF_API_HASH_PLATFORM)) {
+		return 2;
+	}
+
+	cfx_gc_handle_free = (void(CEF_CALLBACK *)(gc_handle_t gc_handle))gc_handle_free;
+	*release = (void*)cfx_release;
+	*string_get_ptr = (void*)cfx_string_get_ptr;
+	*string_destroy = (void*)cfx_string_destroy;
+	*get_function_pointer = (void*)cfx_get_function_pointer;
+
+	cfx_load_cef_function_pointers(libcef);
+	cef_string_utf16_set_ptr = (int (*)(const char16*, size_t, cef_string_utf16_t*, int))GetProcAddress(libcef, "cef_string_utf16_set");
+
+	return 0;
+}

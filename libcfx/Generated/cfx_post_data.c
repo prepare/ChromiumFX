@@ -38,41 +38,41 @@ extern "C" {
 #endif
 
 // CEF_EXPORT cef_post_data_t* cef_post_data_create();
-CFX_EXPORT cef_post_data_t* cfx_post_data_create() {
+static cef_post_data_t* cfx_post_data_create() {
     return cef_post_data_create();
 }
 // cef_base_t base
 
 // is_read_only
-CFX_EXPORT int cfx_post_data_is_read_only(cef_post_data_t* self) {
+static int cfx_post_data_is_read_only(cef_post_data_t* self) {
     return self->is_read_only(self);
 }
 
 // get_element_count
-CFX_EXPORT int cfx_post_data_get_element_count(cef_post_data_t* self) {
+static int cfx_post_data_get_element_count(cef_post_data_t* self) {
     return (int)(self->get_element_count(self));
 }
 
 // get_elements
-CFX_EXPORT void cfx_post_data_get_elements(cef_post_data_t* self, int elementsCount, cef_post_data_element_t** elements) {
+static void cfx_post_data_get_elements(cef_post_data_t* self, int elementsCount, cef_post_data_element_t** elements) {
     size_t tmp_elementsCount = (size_t)elementsCount;
     self->get_elements(self, &tmp_elementsCount, elements);
 }
 
 // remove_element
-CFX_EXPORT int cfx_post_data_remove_element(cef_post_data_t* self, cef_post_data_element_t* element) {
+static int cfx_post_data_remove_element(cef_post_data_t* self, cef_post_data_element_t* element) {
     if(element) ((cef_base_t*)element)->add_ref((cef_base_t*)element);
     return self->remove_element(self, element);
 }
 
 // add_element
-CFX_EXPORT int cfx_post_data_add_element(cef_post_data_t* self, cef_post_data_element_t* element) {
+static int cfx_post_data_add_element(cef_post_data_t* self, cef_post_data_element_t* element) {
     if(element) ((cef_base_t*)element)->add_ref((cef_base_t*)element);
     return self->add_element(self, element);
 }
 
 // remove_elements
-CFX_EXPORT void cfx_post_data_remove_elements(cef_post_data_t* self) {
+static void cfx_post_data_remove_elements(cef_post_data_t* self) {
     self->remove_elements(self);
 }
 

@@ -40,12 +40,12 @@ extern "C" {
 // cef_base_t base
 
 // cont
-CFX_EXPORT void cfx_file_dialog_callback_cont(cef_file_dialog_callback_t* self, cef_string_list_t file_paths) {
+static void cfx_file_dialog_callback_cont(cef_file_dialog_callback_t* self, cef_string_list_t file_paths) {
     self->cont(self, file_paths);
 }
 
 // cancel
-CFX_EXPORT void cfx_file_dialog_callback_cancel(cef_file_dialog_callback_t* self) {
+static void cfx_file_dialog_callback_cancel(cef_file_dialog_callback_t* self) {
     self->cancel(self);
 }
 

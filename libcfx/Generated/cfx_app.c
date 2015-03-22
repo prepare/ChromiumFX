@@ -57,7 +57,7 @@ int CEF_CALLBACK _cfx_app_release(struct _cef_base_t* base) {
     return count;
 }
 
-CFX_EXPORT cfx_app_t* cfx_app_ctor(gc_handle_t gc_handle) {
+static cfx_app_t* cfx_app_ctor(gc_handle_t gc_handle) {
     cfx_app_t* ptr = (cfx_app_t*)calloc(1, sizeof(cfx_app_t));
     if(!ptr) return 0;
     ptr->cef_app.base.size = sizeof(cef_app_t);
@@ -68,7 +68,7 @@ CFX_EXPORT cfx_app_t* cfx_app_ctor(gc_handle_t gc_handle) {
     return ptr;
 }
 
-CFX_EXPORT gc_handle_t cfx_app_get_gc_handle(cfx_app_t* self) {
+static gc_handle_t cfx_app_get_gc_handle(cfx_app_t* self) {
     return self->gc_handle;
 }
 
@@ -132,7 +132,7 @@ cef_render_process_handler_t* CEF_CALLBACK cfx_app_get_render_process_handler(ce
 }
 
 
-CFX_EXPORT void cfx_app_set_managed_callback(cef_app_t* self, int index, void* callback) {
+static void cfx_app_set_managed_callback(cef_app_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_app_on_before_command_line_processing_callback)

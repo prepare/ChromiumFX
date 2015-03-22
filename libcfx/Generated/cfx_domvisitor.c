@@ -57,7 +57,7 @@ int CEF_CALLBACK _cfx_domvisitor_release(struct _cef_base_t* base) {
     return count;
 }
 
-CFX_EXPORT cfx_domvisitor_t* cfx_domvisitor_ctor(gc_handle_t gc_handle) {
+static cfx_domvisitor_t* cfx_domvisitor_ctor(gc_handle_t gc_handle) {
     cfx_domvisitor_t* ptr = (cfx_domvisitor_t*)calloc(1, sizeof(cfx_domvisitor_t));
     if(!ptr) return 0;
     ptr->cef_domvisitor.base.size = sizeof(cef_domvisitor_t);
@@ -68,7 +68,7 @@ CFX_EXPORT cfx_domvisitor_t* cfx_domvisitor_ctor(gc_handle_t gc_handle) {
     return ptr;
 }
 
-CFX_EXPORT gc_handle_t cfx_domvisitor_get_gc_handle(cfx_domvisitor_t* self) {
+static gc_handle_t cfx_domvisitor_get_gc_handle(cfx_domvisitor_t* self) {
     return self->gc_handle;
 }
 
@@ -81,7 +81,7 @@ void CEF_CALLBACK cfx_domvisitor_visit(cef_domvisitor_t* self, cef_domdocument_t
 }
 
 
-CFX_EXPORT void cfx_domvisitor_set_managed_callback(cef_domvisitor_t* self, int index, void* callback) {
+static void cfx_domvisitor_set_managed_callback(cef_domvisitor_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_domvisitor_visit_callback)

@@ -44,8 +44,8 @@ namespace Chromium {
     public class CfxFileDialogCallback : CfxBase {
 
         static CfxFileDialogCallback () {
-            CfxApi.cfx_file_dialog_callback_cont = (CfxApi.cfx_file_dialog_callback_cont_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_file_dialog_callback_cont", typeof(CfxApi.cfx_file_dialog_callback_cont_delegate));
-            CfxApi.cfx_file_dialog_callback_cancel = (CfxApi.cfx_file_dialog_callback_cancel_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_file_dialog_callback_cancel", typeof(CfxApi.cfx_file_dialog_callback_cancel_delegate));
+            CfxApi.cfx_file_dialog_callback_cont = (CfxApi.cfx_file_dialog_callback_cont_delegate)CfxApi.GetDelegate(407, typeof(CfxApi.cfx_file_dialog_callback_cont_delegate));
+            CfxApi.cfx_file_dialog_callback_cancel = (CfxApi.cfx_file_dialog_callback_cancel_delegate)CfxApi.GetDelegate(408, typeof(CfxApi.cfx_file_dialog_callback_cancel_delegate));
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

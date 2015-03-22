@@ -38,33 +38,33 @@ extern "C" {
 #endif
 
 // CEF_EXPORT cef_binary_value_t* cef_binary_value_create(const void* data, size_t data_size);
-CFX_EXPORT cef_binary_value_t* cfx_binary_value_create(const void* data, int data_size) {
+static cef_binary_value_t* cfx_binary_value_create(const void* data, int data_size) {
     return cef_binary_value_create(data, (size_t)(data_size));
 }
 // cef_base_t base
 
 // is_valid
-CFX_EXPORT int cfx_binary_value_is_valid(cef_binary_value_t* self) {
+static int cfx_binary_value_is_valid(cef_binary_value_t* self) {
     return self->is_valid(self);
 }
 
 // is_owned
-CFX_EXPORT int cfx_binary_value_is_owned(cef_binary_value_t* self) {
+static int cfx_binary_value_is_owned(cef_binary_value_t* self) {
     return self->is_owned(self);
 }
 
 // copy
-CFX_EXPORT cef_binary_value_t* cfx_binary_value_copy(cef_binary_value_t* self) {
+static cef_binary_value_t* cfx_binary_value_copy(cef_binary_value_t* self) {
     return self->copy(self);
 }
 
 // get_size
-CFX_EXPORT int cfx_binary_value_get_size(cef_binary_value_t* self) {
+static int cfx_binary_value_get_size(cef_binary_value_t* self) {
     return (int)(self->get_size(self));
 }
 
 // get_data
-CFX_EXPORT int cfx_binary_value_get_data(cef_binary_value_t* self, void* buffer, int buffer_size, int data_offset) {
+static int cfx_binary_value_get_data(cef_binary_value_t* self, void* buffer, int buffer_size, int data_offset) {
     return (int)(self->get_data(self, buffer, (size_t)(buffer_size), (size_t)(data_offset)));
 }
 

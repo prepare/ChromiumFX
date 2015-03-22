@@ -40,7 +40,7 @@ extern "C" {
 // cef_base_t base
 
 // cont
-CFX_EXPORT void cfx_geolocation_callback_cont(cef_geolocation_callback_t* self, int allow) {
+static void cfx_geolocation_callback_cont(cef_geolocation_callback_t* self, int allow) {
     self->cont(self, allow);
 }
 

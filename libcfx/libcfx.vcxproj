@@ -62,7 +62,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
-      <AdditionalDependencies>..\cef\Debug\libcef.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
       <OutputFile>$(OutDir)libcfx.dll</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -85,7 +86,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
-      <AdditionalDependencies>..\cef\Release\libcef.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
       <OutputFile>$(OutDir)libcfx.dll</OutputFile>
     </Link>
   </ItemDefinitionGroup>

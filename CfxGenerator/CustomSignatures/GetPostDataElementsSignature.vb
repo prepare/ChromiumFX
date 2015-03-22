@@ -52,7 +52,7 @@ Public Class GetPostDataElementsSignature
 
     Public Overrides ReadOnly Property NativeSignature(functionName As String) As String
         Get
-            Return "CFX_EXPORT void cfx_post_data_get_elements(cef_post_data_t* self, int elementsCount, cef_post_data_element_t** elements)"
+            Return "static void cfx_post_data_get_elements(cef_post_data_t* self, int elementsCount, cef_post_data_element_t** elements)"
         End Get
     End Property
 

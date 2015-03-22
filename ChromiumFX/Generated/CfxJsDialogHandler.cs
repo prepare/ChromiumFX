@@ -47,9 +47,9 @@ namespace Chromium {
     public class CfxJsDialogHandler : CfxBase {
 
         static CfxJsDialogHandler () {
-            CfxApi.cfx_jsdialog_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_jsdialog_handler_ctor", typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
-            CfxApi.cfx_jsdialog_handler_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_jsdialog_handler_get_gc_handle", typeof(CfxApi.cfx_get_gc_handle_delegate));
-            CfxApi.cfx_jsdialog_handler_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_jsdialog_handler_set_managed_callback", typeof(CfxApi.cfx_set_callback_delegate));
+            CfxApi.cfx_jsdialog_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(466, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
+            CfxApi.cfx_jsdialog_handler_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(467, typeof(CfxApi.cfx_get_gc_handle_delegate));
+            CfxApi.cfx_jsdialog_handler_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(468, typeof(CfxApi.cfx_set_callback_delegate));
         }
 
         internal static CfxJsDialogHandler Wrap(IntPtr nativePtr) {

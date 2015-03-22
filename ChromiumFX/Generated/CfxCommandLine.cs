@@ -51,28 +51,28 @@ namespace Chromium {
     public class CfxCommandLine : CfxBase {
 
         static CfxCommandLine () {
-            CfxApi.cfx_command_line_create = (CfxApi.cfx_command_line_create_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_create", typeof(CfxApi.cfx_command_line_create_delegate));
-            CfxApi.cfx_command_line_get_global = (CfxApi.cfx_command_line_get_global_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_get_global", typeof(CfxApi.cfx_command_line_get_global_delegate));
-            CfxApi.cfx_command_line_is_valid = (CfxApi.cfx_command_line_is_valid_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_is_valid", typeof(CfxApi.cfx_command_line_is_valid_delegate));
-            CfxApi.cfx_command_line_is_read_only = (CfxApi.cfx_command_line_is_read_only_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_is_read_only", typeof(CfxApi.cfx_command_line_is_read_only_delegate));
-            CfxApi.cfx_command_line_copy = (CfxApi.cfx_command_line_copy_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_copy", typeof(CfxApi.cfx_command_line_copy_delegate));
-            CfxApi.cfx_command_line_init_from_argv = (CfxApi.cfx_command_line_init_from_argv_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_init_from_argv", typeof(CfxApi.cfx_command_line_init_from_argv_delegate));
-            CfxApi.cfx_command_line_init_from_string = (CfxApi.cfx_command_line_init_from_string_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_init_from_string", typeof(CfxApi.cfx_command_line_init_from_string_delegate));
-            CfxApi.cfx_command_line_reset = (CfxApi.cfx_command_line_reset_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_reset", typeof(CfxApi.cfx_command_line_reset_delegate));
-            CfxApi.cfx_command_line_get_argv = (CfxApi.cfx_command_line_get_argv_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_get_argv", typeof(CfxApi.cfx_command_line_get_argv_delegate));
-            CfxApi.cfx_command_line_get_command_line_string = (CfxApi.cfx_command_line_get_command_line_string_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_get_command_line_string", typeof(CfxApi.cfx_command_line_get_command_line_string_delegate));
-            CfxApi.cfx_command_line_get_program = (CfxApi.cfx_command_line_get_program_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_get_program", typeof(CfxApi.cfx_command_line_get_program_delegate));
-            CfxApi.cfx_command_line_set_program = (CfxApi.cfx_command_line_set_program_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_set_program", typeof(CfxApi.cfx_command_line_set_program_delegate));
-            CfxApi.cfx_command_line_has_switches = (CfxApi.cfx_command_line_has_switches_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_has_switches", typeof(CfxApi.cfx_command_line_has_switches_delegate));
-            CfxApi.cfx_command_line_has_switch = (CfxApi.cfx_command_line_has_switch_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_has_switch", typeof(CfxApi.cfx_command_line_has_switch_delegate));
-            CfxApi.cfx_command_line_get_switch_value = (CfxApi.cfx_command_line_get_switch_value_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_get_switch_value", typeof(CfxApi.cfx_command_line_get_switch_value_delegate));
-            CfxApi.cfx_command_line_get_switches = (CfxApi.cfx_command_line_get_switches_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_get_switches", typeof(CfxApi.cfx_command_line_get_switches_delegate));
-            CfxApi.cfx_command_line_append_switch = (CfxApi.cfx_command_line_append_switch_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_append_switch", typeof(CfxApi.cfx_command_line_append_switch_delegate));
-            CfxApi.cfx_command_line_append_switch_with_value = (CfxApi.cfx_command_line_append_switch_with_value_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_append_switch_with_value", typeof(CfxApi.cfx_command_line_append_switch_with_value_delegate));
-            CfxApi.cfx_command_line_has_arguments = (CfxApi.cfx_command_line_has_arguments_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_has_arguments", typeof(CfxApi.cfx_command_line_has_arguments_delegate));
-            CfxApi.cfx_command_line_get_arguments = (CfxApi.cfx_command_line_get_arguments_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_get_arguments", typeof(CfxApi.cfx_command_line_get_arguments_delegate));
-            CfxApi.cfx_command_line_append_argument = (CfxApi.cfx_command_line_append_argument_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_append_argument", typeof(CfxApi.cfx_command_line_append_argument_delegate));
-            CfxApi.cfx_command_line_prepend_wrapper = (CfxApi.cfx_command_line_prepend_wrapper_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_command_line_prepend_wrapper", typeof(CfxApi.cfx_command_line_prepend_wrapper_delegate));
+            CfxApi.cfx_command_line_create = (CfxApi.cfx_command_line_create_delegate)CfxApi.GetDelegate(193, typeof(CfxApi.cfx_command_line_create_delegate));
+            CfxApi.cfx_command_line_get_global = (CfxApi.cfx_command_line_get_global_delegate)CfxApi.GetDelegate(194, typeof(CfxApi.cfx_command_line_get_global_delegate));
+            CfxApi.cfx_command_line_is_valid = (CfxApi.cfx_command_line_is_valid_delegate)CfxApi.GetDelegate(195, typeof(CfxApi.cfx_command_line_is_valid_delegate));
+            CfxApi.cfx_command_line_is_read_only = (CfxApi.cfx_command_line_is_read_only_delegate)CfxApi.GetDelegate(196, typeof(CfxApi.cfx_command_line_is_read_only_delegate));
+            CfxApi.cfx_command_line_copy = (CfxApi.cfx_command_line_copy_delegate)CfxApi.GetDelegate(197, typeof(CfxApi.cfx_command_line_copy_delegate));
+            CfxApi.cfx_command_line_init_from_argv = (CfxApi.cfx_command_line_init_from_argv_delegate)CfxApi.GetDelegate(198, typeof(CfxApi.cfx_command_line_init_from_argv_delegate));
+            CfxApi.cfx_command_line_init_from_string = (CfxApi.cfx_command_line_init_from_string_delegate)CfxApi.GetDelegate(199, typeof(CfxApi.cfx_command_line_init_from_string_delegate));
+            CfxApi.cfx_command_line_reset = (CfxApi.cfx_command_line_reset_delegate)CfxApi.GetDelegate(200, typeof(CfxApi.cfx_command_line_reset_delegate));
+            CfxApi.cfx_command_line_get_argv = (CfxApi.cfx_command_line_get_argv_delegate)CfxApi.GetDelegate(201, typeof(CfxApi.cfx_command_line_get_argv_delegate));
+            CfxApi.cfx_command_line_get_command_line_string = (CfxApi.cfx_command_line_get_command_line_string_delegate)CfxApi.GetDelegate(202, typeof(CfxApi.cfx_command_line_get_command_line_string_delegate));
+            CfxApi.cfx_command_line_get_program = (CfxApi.cfx_command_line_get_program_delegate)CfxApi.GetDelegate(203, typeof(CfxApi.cfx_command_line_get_program_delegate));
+            CfxApi.cfx_command_line_set_program = (CfxApi.cfx_command_line_set_program_delegate)CfxApi.GetDelegate(204, typeof(CfxApi.cfx_command_line_set_program_delegate));
+            CfxApi.cfx_command_line_has_switches = (CfxApi.cfx_command_line_has_switches_delegate)CfxApi.GetDelegate(205, typeof(CfxApi.cfx_command_line_has_switches_delegate));
+            CfxApi.cfx_command_line_has_switch = (CfxApi.cfx_command_line_has_switch_delegate)CfxApi.GetDelegate(206, typeof(CfxApi.cfx_command_line_has_switch_delegate));
+            CfxApi.cfx_command_line_get_switch_value = (CfxApi.cfx_command_line_get_switch_value_delegate)CfxApi.GetDelegate(207, typeof(CfxApi.cfx_command_line_get_switch_value_delegate));
+            CfxApi.cfx_command_line_get_switches = (CfxApi.cfx_command_line_get_switches_delegate)CfxApi.GetDelegate(208, typeof(CfxApi.cfx_command_line_get_switches_delegate));
+            CfxApi.cfx_command_line_append_switch = (CfxApi.cfx_command_line_append_switch_delegate)CfxApi.GetDelegate(209, typeof(CfxApi.cfx_command_line_append_switch_delegate));
+            CfxApi.cfx_command_line_append_switch_with_value = (CfxApi.cfx_command_line_append_switch_with_value_delegate)CfxApi.GetDelegate(210, typeof(CfxApi.cfx_command_line_append_switch_with_value_delegate));
+            CfxApi.cfx_command_line_has_arguments = (CfxApi.cfx_command_line_has_arguments_delegate)CfxApi.GetDelegate(211, typeof(CfxApi.cfx_command_line_has_arguments_delegate));
+            CfxApi.cfx_command_line_get_arguments = (CfxApi.cfx_command_line_get_arguments_delegate)CfxApi.GetDelegate(212, typeof(CfxApi.cfx_command_line_get_arguments_delegate));
+            CfxApi.cfx_command_line_append_argument = (CfxApi.cfx_command_line_append_argument_delegate)CfxApi.GetDelegate(213, typeof(CfxApi.cfx_command_line_append_argument_delegate));
+            CfxApi.cfx_command_line_prepend_wrapper = (CfxApi.cfx_command_line_prepend_wrapper_delegate)CfxApi.GetDelegate(214, typeof(CfxApi.cfx_command_line_prepend_wrapper_delegate));
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

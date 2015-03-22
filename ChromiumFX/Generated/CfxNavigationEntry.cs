@@ -44,16 +44,16 @@ namespace Chromium {
     public class CfxNavigationEntry : CfxBase {
 
         static CfxNavigationEntry () {
-            CfxApi.cfx_navigation_entry_is_valid = (CfxApi.cfx_navigation_entry_is_valid_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_navigation_entry_is_valid", typeof(CfxApi.cfx_navigation_entry_is_valid_delegate));
-            CfxApi.cfx_navigation_entry_get_url = (CfxApi.cfx_navigation_entry_get_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_navigation_entry_get_url", typeof(CfxApi.cfx_navigation_entry_get_url_delegate));
-            CfxApi.cfx_navigation_entry_get_display_url = (CfxApi.cfx_navigation_entry_get_display_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_navigation_entry_get_display_url", typeof(CfxApi.cfx_navigation_entry_get_display_url_delegate));
-            CfxApi.cfx_navigation_entry_get_original_url = (CfxApi.cfx_navigation_entry_get_original_url_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_navigation_entry_get_original_url", typeof(CfxApi.cfx_navigation_entry_get_original_url_delegate));
-            CfxApi.cfx_navigation_entry_get_title = (CfxApi.cfx_navigation_entry_get_title_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_navigation_entry_get_title", typeof(CfxApi.cfx_navigation_entry_get_title_delegate));
-            CfxApi.cfx_navigation_entry_get_transition_type = (CfxApi.cfx_navigation_entry_get_transition_type_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_navigation_entry_get_transition_type", typeof(CfxApi.cfx_navigation_entry_get_transition_type_delegate));
-            CfxApi.cfx_navigation_entry_has_post_data = (CfxApi.cfx_navigation_entry_has_post_data_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_navigation_entry_has_post_data", typeof(CfxApi.cfx_navigation_entry_has_post_data_delegate));
-            CfxApi.cfx_navigation_entry_get_frame_name = (CfxApi.cfx_navigation_entry_get_frame_name_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_navigation_entry_get_frame_name", typeof(CfxApi.cfx_navigation_entry_get_frame_name_delegate));
-            CfxApi.cfx_navigation_entry_get_completion_time = (CfxApi.cfx_navigation_entry_get_completion_time_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_navigation_entry_get_completion_time", typeof(CfxApi.cfx_navigation_entry_get_completion_time_delegate));
-            CfxApi.cfx_navigation_entry_get_http_status_code = (CfxApi.cfx_navigation_entry_get_http_status_code_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_navigation_entry_get_http_status_code", typeof(CfxApi.cfx_navigation_entry_get_http_status_code_delegate));
+            CfxApi.cfx_navigation_entry_is_valid = (CfxApi.cfx_navigation_entry_is_valid_delegate)CfxApi.GetDelegate(578, typeof(CfxApi.cfx_navigation_entry_is_valid_delegate));
+            CfxApi.cfx_navigation_entry_get_url = (CfxApi.cfx_navigation_entry_get_url_delegate)CfxApi.GetDelegate(579, typeof(CfxApi.cfx_navigation_entry_get_url_delegate));
+            CfxApi.cfx_navigation_entry_get_display_url = (CfxApi.cfx_navigation_entry_get_display_url_delegate)CfxApi.GetDelegate(580, typeof(CfxApi.cfx_navigation_entry_get_display_url_delegate));
+            CfxApi.cfx_navigation_entry_get_original_url = (CfxApi.cfx_navigation_entry_get_original_url_delegate)CfxApi.GetDelegate(581, typeof(CfxApi.cfx_navigation_entry_get_original_url_delegate));
+            CfxApi.cfx_navigation_entry_get_title = (CfxApi.cfx_navigation_entry_get_title_delegate)CfxApi.GetDelegate(582, typeof(CfxApi.cfx_navigation_entry_get_title_delegate));
+            CfxApi.cfx_navigation_entry_get_transition_type = (CfxApi.cfx_navigation_entry_get_transition_type_delegate)CfxApi.GetDelegate(583, typeof(CfxApi.cfx_navigation_entry_get_transition_type_delegate));
+            CfxApi.cfx_navigation_entry_has_post_data = (CfxApi.cfx_navigation_entry_has_post_data_delegate)CfxApi.GetDelegate(584, typeof(CfxApi.cfx_navigation_entry_has_post_data_delegate));
+            CfxApi.cfx_navigation_entry_get_frame_name = (CfxApi.cfx_navigation_entry_get_frame_name_delegate)CfxApi.GetDelegate(585, typeof(CfxApi.cfx_navigation_entry_get_frame_name_delegate));
+            CfxApi.cfx_navigation_entry_get_completion_time = (CfxApi.cfx_navigation_entry_get_completion_time_delegate)CfxApi.GetDelegate(586, typeof(CfxApi.cfx_navigation_entry_get_completion_time_delegate));
+            CfxApi.cfx_navigation_entry_get_http_status_code = (CfxApi.cfx_navigation_entry_get_http_status_code_delegate)CfxApi.GetDelegate(587, typeof(CfxApi.cfx_navigation_entry_get_http_status_code_delegate));
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

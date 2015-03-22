@@ -57,7 +57,7 @@ int CEF_CALLBACK _cfx_run_file_dialog_callback_release(struct _cef_base_t* base)
     return count;
 }
 
-CFX_EXPORT cfx_run_file_dialog_callback_t* cfx_run_file_dialog_callback_ctor(gc_handle_t gc_handle) {
+static cfx_run_file_dialog_callback_t* cfx_run_file_dialog_callback_ctor(gc_handle_t gc_handle) {
     cfx_run_file_dialog_callback_t* ptr = (cfx_run_file_dialog_callback_t*)calloc(1, sizeof(cfx_run_file_dialog_callback_t));
     if(!ptr) return 0;
     ptr->cef_run_file_dialog_callback.base.size = sizeof(cef_run_file_dialog_callback_t);
@@ -68,7 +68,7 @@ CFX_EXPORT cfx_run_file_dialog_callback_t* cfx_run_file_dialog_callback_ctor(gc_
     return ptr;
 }
 
-CFX_EXPORT gc_handle_t cfx_run_file_dialog_callback_get_gc_handle(cfx_run_file_dialog_callback_t* self) {
+static gc_handle_t cfx_run_file_dialog_callback_get_gc_handle(cfx_run_file_dialog_callback_t* self) {
     return self->gc_handle;
 }
 
@@ -81,7 +81,7 @@ void CEF_CALLBACK cfx_run_file_dialog_callback_cont(cef_run_file_dialog_callback
 }
 
 
-CFX_EXPORT void cfx_run_file_dialog_callback_set_managed_callback(cef_run_file_dialog_callback_t* self, int index, void* callback) {
+static void cfx_run_file_dialog_callback_set_managed_callback(cef_run_file_dialog_callback_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_run_file_dialog_callback_cont_callback)

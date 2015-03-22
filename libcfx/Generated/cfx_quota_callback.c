@@ -40,12 +40,12 @@ extern "C" {
 // cef_base_t base
 
 // cont
-CFX_EXPORT void cfx_quota_callback_cont(cef_quota_callback_t* self, int allow) {
+static void cfx_quota_callback_cont(cef_quota_callback_t* self, int allow) {
     self->cont(self, allow);
 }
 
 // cancel
-CFX_EXPORT void cfx_quota_callback_cancel(cef_quota_callback_t* self) {
+static void cfx_quota_callback_cancel(cef_quota_callback_t* self) {
     self->cancel(self);
 }
 

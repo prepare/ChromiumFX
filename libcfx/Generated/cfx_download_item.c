@@ -40,84 +40,84 @@ extern "C" {
 // cef_base_t base
 
 // is_valid
-CFX_EXPORT int cfx_download_item_is_valid(cef_download_item_t* self) {
+static int cfx_download_item_is_valid(cef_download_item_t* self) {
     return self->is_valid(self);
 }
 
 // is_in_progress
-CFX_EXPORT int cfx_download_item_is_in_progress(cef_download_item_t* self) {
+static int cfx_download_item_is_in_progress(cef_download_item_t* self) {
     return self->is_in_progress(self);
 }
 
 // is_complete
-CFX_EXPORT int cfx_download_item_is_complete(cef_download_item_t* self) {
+static int cfx_download_item_is_complete(cef_download_item_t* self) {
     return self->is_complete(self);
 }
 
 // is_canceled
-CFX_EXPORT int cfx_download_item_is_canceled(cef_download_item_t* self) {
+static int cfx_download_item_is_canceled(cef_download_item_t* self) {
     return self->is_canceled(self);
 }
 
 // get_current_speed
-CFX_EXPORT int64 cfx_download_item_get_current_speed(cef_download_item_t* self) {
+static int64 cfx_download_item_get_current_speed(cef_download_item_t* self) {
     return self->get_current_speed(self);
 }
 
 // get_percent_complete
-CFX_EXPORT int cfx_download_item_get_percent_complete(cef_download_item_t* self) {
+static int cfx_download_item_get_percent_complete(cef_download_item_t* self) {
     return self->get_percent_complete(self);
 }
 
 // get_total_bytes
-CFX_EXPORT int64 cfx_download_item_get_total_bytes(cef_download_item_t* self) {
+static int64 cfx_download_item_get_total_bytes(cef_download_item_t* self) {
     return self->get_total_bytes(self);
 }
 
 // get_received_bytes
-CFX_EXPORT int64 cfx_download_item_get_received_bytes(cef_download_item_t* self) {
+static int64 cfx_download_item_get_received_bytes(cef_download_item_t* self) {
     return self->get_received_bytes(self);
 }
 
 // get_start_time
-CFX_EXPORT cef_time_t* cfx_download_item_get_start_time(cef_download_item_t* self) {
+static cef_time_t* cfx_download_item_get_start_time(cef_download_item_t* self) {
     cef_time_t __retval_tmp = self->get_start_time(self);
     return (cef_time_t*)cfx_copy_structure(&__retval_tmp, sizeof(cef_time_t));
 }
 
 // get_end_time
-CFX_EXPORT cef_time_t* cfx_download_item_get_end_time(cef_download_item_t* self) {
+static cef_time_t* cfx_download_item_get_end_time(cef_download_item_t* self) {
     cef_time_t __retval_tmp = self->get_end_time(self);
     return (cef_time_t*)cfx_copy_structure(&__retval_tmp, sizeof(cef_time_t));
 }
 
 // get_full_path
-CFX_EXPORT cef_string_userfree_t cfx_download_item_get_full_path(cef_download_item_t* self) {
+static cef_string_userfree_t cfx_download_item_get_full_path(cef_download_item_t* self) {
     return self->get_full_path(self);
 }
 
 // get_id
-CFX_EXPORT uint32 cfx_download_item_get_id(cef_download_item_t* self) {
+static uint32 cfx_download_item_get_id(cef_download_item_t* self) {
     return self->get_id(self);
 }
 
 // get_url
-CFX_EXPORT cef_string_userfree_t cfx_download_item_get_url(cef_download_item_t* self) {
+static cef_string_userfree_t cfx_download_item_get_url(cef_download_item_t* self) {
     return self->get_url(self);
 }
 
 // get_suggested_file_name
-CFX_EXPORT cef_string_userfree_t cfx_download_item_get_suggested_file_name(cef_download_item_t* self) {
+static cef_string_userfree_t cfx_download_item_get_suggested_file_name(cef_download_item_t* self) {
     return self->get_suggested_file_name(self);
 }
 
 // get_content_disposition
-CFX_EXPORT cef_string_userfree_t cfx_download_item_get_content_disposition(cef_download_item_t* self) {
+static cef_string_userfree_t cfx_download_item_get_content_disposition(cef_download_item_t* self) {
     return self->get_content_disposition(self);
 }
 
 // get_mime_type
-CFX_EXPORT cef_string_userfree_t cfx_download_item_get_mime_type(cef_download_item_t* self) {
+static cef_string_userfree_t cfx_download_item_get_mime_type(cef_download_item_t* self) {
     return self->get_mime_type(self);
 }
 

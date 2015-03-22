@@ -57,7 +57,7 @@ int CEF_CALLBACK _cfx_cookie_visitor_release(struct _cef_base_t* base) {
     return count;
 }
 
-CFX_EXPORT cfx_cookie_visitor_t* cfx_cookie_visitor_ctor(gc_handle_t gc_handle) {
+static cfx_cookie_visitor_t* cfx_cookie_visitor_ctor(gc_handle_t gc_handle) {
     cfx_cookie_visitor_t* ptr = (cfx_cookie_visitor_t*)calloc(1, sizeof(cfx_cookie_visitor_t));
     if(!ptr) return 0;
     ptr->cef_cookie_visitor.base.size = sizeof(cef_cookie_visitor_t);
@@ -68,7 +68,7 @@ CFX_EXPORT cfx_cookie_visitor_t* cfx_cookie_visitor_ctor(gc_handle_t gc_handle) 
     return ptr;
 }
 
-CFX_EXPORT gc_handle_t cfx_cookie_visitor_get_gc_handle(cfx_cookie_visitor_t* self) {
+static gc_handle_t cfx_cookie_visitor_get_gc_handle(cfx_cookie_visitor_t* self) {
     return self->gc_handle;
 }
 
@@ -83,7 +83,7 @@ int CEF_CALLBACK cfx_cookie_visitor_visit(cef_cookie_visitor_t* self, const cef_
 }
 
 
-CFX_EXPORT void cfx_cookie_visitor_set_managed_callback(cef_cookie_visitor_t* self, int index, void* callback) {
+static void cfx_cookie_visitor_set_managed_callback(cef_cookie_visitor_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_cookie_visitor_visit_callback)

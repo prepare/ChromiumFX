@@ -38,7 +38,7 @@ extern "C" {
 #endif
 
 // CEF_EXPORT cef_urlrequest_t* cef_urlrequest_create(cef_request_t* request, cef_urlrequest_client_t* client);
-CFX_EXPORT cef_urlrequest_t* cfx_urlrequest_create(cef_request_t* request, cef_urlrequest_client_t* client) {
+static cef_urlrequest_t* cfx_urlrequest_create(cef_request_t* request, cef_urlrequest_client_t* client) {
     if(request) ((cef_base_t*)request)->add_ref((cef_base_t*)request);
     if(client) ((cef_base_t*)client)->add_ref((cef_base_t*)client);
     return cef_urlrequest_create(request, client);
@@ -46,32 +46,32 @@ CFX_EXPORT cef_urlrequest_t* cfx_urlrequest_create(cef_request_t* request, cef_u
 // cef_base_t base
 
 // get_request
-CFX_EXPORT cef_request_t* cfx_urlrequest_get_request(cef_urlrequest_t* self) {
+static cef_request_t* cfx_urlrequest_get_request(cef_urlrequest_t* self) {
     return self->get_request(self);
 }
 
 // get_client
-CFX_EXPORT cef_urlrequest_client_t* cfx_urlrequest_get_client(cef_urlrequest_t* self) {
+static cef_urlrequest_client_t* cfx_urlrequest_get_client(cef_urlrequest_t* self) {
     return self->get_client(self);
 }
 
 // get_request_status
-CFX_EXPORT cef_urlrequest_status_t cfx_urlrequest_get_request_status(cef_urlrequest_t* self) {
+static cef_urlrequest_status_t cfx_urlrequest_get_request_status(cef_urlrequest_t* self) {
     return self->get_request_status(self);
 }
 
 // get_request_error
-CFX_EXPORT cef_errorcode_t cfx_urlrequest_get_request_error(cef_urlrequest_t* self) {
+static cef_errorcode_t cfx_urlrequest_get_request_error(cef_urlrequest_t* self) {
     return self->get_request_error(self);
 }
 
 // get_response
-CFX_EXPORT cef_response_t* cfx_urlrequest_get_response(cef_urlrequest_t* self) {
+static cef_response_t* cfx_urlrequest_get_response(cef_urlrequest_t* self) {
     return self->get_response(self);
 }
 
 // cancel
-CFX_EXPORT void cfx_urlrequest_cancel(cef_urlrequest_t* self) {
+static void cfx_urlrequest_cancel(cef_urlrequest_t* self) {
     self->cancel(self);
 }
 

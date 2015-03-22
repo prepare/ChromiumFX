@@ -57,7 +57,7 @@ int CEF_CALLBACK _cfx_browser_process_handler_release(struct _cef_base_t* base) 
     return count;
 }
 
-CFX_EXPORT cfx_browser_process_handler_t* cfx_browser_process_handler_ctor(gc_handle_t gc_handle) {
+static cfx_browser_process_handler_t* cfx_browser_process_handler_ctor(gc_handle_t gc_handle) {
     cfx_browser_process_handler_t* ptr = (cfx_browser_process_handler_t*)calloc(1, sizeof(cfx_browser_process_handler_t));
     if(!ptr) return 0;
     ptr->cef_browser_process_handler.base.size = sizeof(cef_browser_process_handler_t);
@@ -68,7 +68,7 @@ CFX_EXPORT cfx_browser_process_handler_t* cfx_browser_process_handler_ctor(gc_ha
     return ptr;
 }
 
-CFX_EXPORT gc_handle_t cfx_browser_process_handler_get_gc_handle(cfx_browser_process_handler_t* self) {
+static gc_handle_t cfx_browser_process_handler_get_gc_handle(cfx_browser_process_handler_t* self) {
     return self->gc_handle;
 }
 
@@ -113,7 +113,7 @@ cef_print_handler_t* CEF_CALLBACK cfx_browser_process_handler_get_print_handler(
 }
 
 
-CFX_EXPORT void cfx_browser_process_handler_set_managed_callback(cef_browser_process_handler_t* self, int index, void* callback) {
+static void cfx_browser_process_handler_set_managed_callback(cef_browser_process_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_browser_process_handler_on_context_initialized_callback)

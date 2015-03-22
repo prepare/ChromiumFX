@@ -40,53 +40,53 @@ extern "C" {
 // cef_base_t base
 
 // is_valid
-CFX_EXPORT int cfx_navigation_entry_is_valid(cef_navigation_entry_t* self) {
+static int cfx_navigation_entry_is_valid(cef_navigation_entry_t* self) {
     return self->is_valid(self);
 }
 
 // get_url
-CFX_EXPORT cef_string_userfree_t cfx_navigation_entry_get_url(cef_navigation_entry_t* self) {
+static cef_string_userfree_t cfx_navigation_entry_get_url(cef_navigation_entry_t* self) {
     return self->get_url(self);
 }
 
 // get_display_url
-CFX_EXPORT cef_string_userfree_t cfx_navigation_entry_get_display_url(cef_navigation_entry_t* self) {
+static cef_string_userfree_t cfx_navigation_entry_get_display_url(cef_navigation_entry_t* self) {
     return self->get_display_url(self);
 }
 
 // get_original_url
-CFX_EXPORT cef_string_userfree_t cfx_navigation_entry_get_original_url(cef_navigation_entry_t* self) {
+static cef_string_userfree_t cfx_navigation_entry_get_original_url(cef_navigation_entry_t* self) {
     return self->get_original_url(self);
 }
 
 // get_title
-CFX_EXPORT cef_string_userfree_t cfx_navigation_entry_get_title(cef_navigation_entry_t* self) {
+static cef_string_userfree_t cfx_navigation_entry_get_title(cef_navigation_entry_t* self) {
     return self->get_title(self);
 }
 
 // get_transition_type
-CFX_EXPORT cef_transition_type_t cfx_navigation_entry_get_transition_type(cef_navigation_entry_t* self) {
+static cef_transition_type_t cfx_navigation_entry_get_transition_type(cef_navigation_entry_t* self) {
     return self->get_transition_type(self);
 }
 
 // has_post_data
-CFX_EXPORT int cfx_navigation_entry_has_post_data(cef_navigation_entry_t* self) {
+static int cfx_navigation_entry_has_post_data(cef_navigation_entry_t* self) {
     return self->has_post_data(self);
 }
 
 // get_frame_name
-CFX_EXPORT cef_string_userfree_t cfx_navigation_entry_get_frame_name(cef_navigation_entry_t* self) {
+static cef_string_userfree_t cfx_navigation_entry_get_frame_name(cef_navigation_entry_t* self) {
     return self->get_frame_name(self);
 }
 
 // get_completion_time
-CFX_EXPORT cef_time_t* cfx_navigation_entry_get_completion_time(cef_navigation_entry_t* self) {
+static cef_time_t* cfx_navigation_entry_get_completion_time(cef_navigation_entry_t* self) {
     cef_time_t __retval_tmp = self->get_completion_time(self);
     return (cef_time_t*)cfx_copy_structure(&__retval_tmp, sizeof(cef_time_t));
 }
 
 // get_http_status_code
-CFX_EXPORT int cfx_navigation_entry_get_http_status_code(cef_navigation_entry_t* self) {
+static int cfx_navigation_entry_get_http_status_code(cef_navigation_entry_t* self) {
     return self->get_http_status_code(self);
 }
 

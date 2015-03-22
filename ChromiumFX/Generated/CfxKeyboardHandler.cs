@@ -47,9 +47,9 @@ namespace Chromium {
     public class CfxKeyboardHandler : CfxBase {
 
         static CfxKeyboardHandler () {
-            CfxApi.cfx_keyboard_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_keyboard_handler_ctor", typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
-            CfxApi.cfx_keyboard_handler_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_keyboard_handler_get_gc_handle", typeof(CfxApi.cfx_get_gc_handle_delegate));
-            CfxApi.cfx_keyboard_handler_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_keyboard_handler_set_managed_callback", typeof(CfxApi.cfx_set_callback_delegate));
+            CfxApi.cfx_keyboard_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(487, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
+            CfxApi.cfx_keyboard_handler_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(488, typeof(CfxApi.cfx_get_gc_handle_delegate));
+            CfxApi.cfx_keyboard_handler_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(489, typeof(CfxApi.cfx_set_callback_delegate));
         }
 
         internal static CfxKeyboardHandler Wrap(IntPtr nativePtr) {

@@ -57,7 +57,7 @@ int CEF_CALLBACK _cfx_v8handler_release(struct _cef_base_t* base) {
     return count;
 }
 
-CFX_EXPORT cfx_v8handler_t* cfx_v8handler_ctor(gc_handle_t gc_handle) {
+static cfx_v8handler_t* cfx_v8handler_ctor(gc_handle_t gc_handle) {
     cfx_v8handler_t* ptr = (cfx_v8handler_t*)calloc(1, sizeof(cfx_v8handler_t));
     if(!ptr) return 0;
     ptr->cef_v8handler.base.size = sizeof(cef_v8handler_t);
@@ -68,7 +68,7 @@ CFX_EXPORT cfx_v8handler_t* cfx_v8handler_ctor(gc_handle_t gc_handle) {
     return ptr;
 }
 
-CFX_EXPORT gc_handle_t cfx_v8handler_get_gc_handle(cfx_v8handler_t* self) {
+static gc_handle_t cfx_v8handler_get_gc_handle(cfx_v8handler_t* self) {
     return self->gc_handle;
 }
 
@@ -90,7 +90,7 @@ int CEF_CALLBACK cfx_v8handler_execute(cef_v8handler_t* self, const cef_string_t
 }
 
 
-CFX_EXPORT void cfx_v8handler_set_managed_callback(cef_v8handler_t* self, int index, void* callback) {
+static void cfx_v8handler_set_managed_callback(cef_v8handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_v8handler_execute_callback)

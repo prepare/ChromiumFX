@@ -49,13 +49,13 @@ namespace Chromium {
     public class CfxTaskRunner : CfxBase {
 
         static CfxTaskRunner () {
-            CfxApi.cfx_task_runner_get_for_current_thread = (CfxApi.cfx_task_runner_get_for_current_thread_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_task_runner_get_for_current_thread", typeof(CfxApi.cfx_task_runner_get_for_current_thread_delegate));
-            CfxApi.cfx_task_runner_get_for_thread = (CfxApi.cfx_task_runner_get_for_thread_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_task_runner_get_for_thread", typeof(CfxApi.cfx_task_runner_get_for_thread_delegate));
-            CfxApi.cfx_task_runner_is_same = (CfxApi.cfx_task_runner_is_same_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_task_runner_is_same", typeof(CfxApi.cfx_task_runner_is_same_delegate));
-            CfxApi.cfx_task_runner_belongs_to_current_thread = (CfxApi.cfx_task_runner_belongs_to_current_thread_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_task_runner_belongs_to_current_thread", typeof(CfxApi.cfx_task_runner_belongs_to_current_thread_delegate));
-            CfxApi.cfx_task_runner_belongs_to_thread = (CfxApi.cfx_task_runner_belongs_to_thread_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_task_runner_belongs_to_thread", typeof(CfxApi.cfx_task_runner_belongs_to_thread_delegate));
-            CfxApi.cfx_task_runner_post_task = (CfxApi.cfx_task_runner_post_task_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_task_runner_post_task", typeof(CfxApi.cfx_task_runner_post_task_delegate));
-            CfxApi.cfx_task_runner_post_delayed_task = (CfxApi.cfx_task_runner_post_delayed_task_delegate)CfxApi.GetDelegate(CfxApi.libcfxPtr, "cfx_task_runner_post_delayed_task", typeof(CfxApi.cfx_task_runner_post_delayed_task_delegate));
+            CfxApi.cfx_task_runner_get_for_current_thread = (CfxApi.cfx_task_runner_get_for_current_thread_delegate)CfxApi.GetDelegate(851, typeof(CfxApi.cfx_task_runner_get_for_current_thread_delegate));
+            CfxApi.cfx_task_runner_get_for_thread = (CfxApi.cfx_task_runner_get_for_thread_delegate)CfxApi.GetDelegate(852, typeof(CfxApi.cfx_task_runner_get_for_thread_delegate));
+            CfxApi.cfx_task_runner_is_same = (CfxApi.cfx_task_runner_is_same_delegate)CfxApi.GetDelegate(853, typeof(CfxApi.cfx_task_runner_is_same_delegate));
+            CfxApi.cfx_task_runner_belongs_to_current_thread = (CfxApi.cfx_task_runner_belongs_to_current_thread_delegate)CfxApi.GetDelegate(854, typeof(CfxApi.cfx_task_runner_belongs_to_current_thread_delegate));
+            CfxApi.cfx_task_runner_belongs_to_thread = (CfxApi.cfx_task_runner_belongs_to_thread_delegate)CfxApi.GetDelegate(855, typeof(CfxApi.cfx_task_runner_belongs_to_thread_delegate));
+            CfxApi.cfx_task_runner_post_task = (CfxApi.cfx_task_runner_post_task_delegate)CfxApi.GetDelegate(856, typeof(CfxApi.cfx_task_runner_post_task_delegate));
+            CfxApi.cfx_task_runner_post_delayed_task = (CfxApi.cfx_task_runner_post_delayed_task_delegate)CfxApi.GetDelegate(857, typeof(CfxApi.cfx_task_runner_post_delayed_task_delegate));
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

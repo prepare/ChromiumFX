@@ -57,7 +57,7 @@ int CEF_CALLBACK _cfx_jsdialog_handler_release(struct _cef_base_t* base) {
     return count;
 }
 
-CFX_EXPORT cfx_jsdialog_handler_t* cfx_jsdialog_handler_ctor(gc_handle_t gc_handle) {
+static cfx_jsdialog_handler_t* cfx_jsdialog_handler_ctor(gc_handle_t gc_handle) {
     cfx_jsdialog_handler_t* ptr = (cfx_jsdialog_handler_t*)calloc(1, sizeof(cfx_jsdialog_handler_t));
     if(!ptr) return 0;
     ptr->cef_jsdialog_handler.base.size = sizeof(cef_jsdialog_handler_t);
@@ -68,7 +68,7 @@ CFX_EXPORT cfx_jsdialog_handler_t* cfx_jsdialog_handler_ctor(gc_handle_t gc_hand
     return ptr;
 }
 
-CFX_EXPORT gc_handle_t cfx_jsdialog_handler_get_gc_handle(cfx_jsdialog_handler_t* self) {
+static gc_handle_t cfx_jsdialog_handler_get_gc_handle(cfx_jsdialog_handler_t* self) {
     return self->gc_handle;
 }
 
@@ -112,7 +112,7 @@ void CEF_CALLBACK cfx_jsdialog_handler_on_dialog_closed(cef_jsdialog_handler_t* 
 }
 
 
-CFX_EXPORT void cfx_jsdialog_handler_set_managed_callback(cef_jsdialog_handler_t* self, int index, void* callback) {
+static void cfx_jsdialog_handler_set_managed_callback(cef_jsdialog_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_jsdialog_handler_on_jsdialog_callback)
