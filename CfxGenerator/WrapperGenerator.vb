@@ -68,6 +68,7 @@ Public Class WrapperGenerator
         BuildLibCfx(fileManager)
         BuildAmalgamation(fileManager)
         BuildHeaders(fileManager)
+        BuildFunctionPointers(fileManager)
         fileManager.DeleteObsoleteFiles()
 
         ''first pass without building files
@@ -151,6 +152,31 @@ Public Class WrapperGenerator
         b.AppendLine()
         fileManager.WriteFileIfContentChanged("cef_headers.h", b.ToString())
         b.Clear()
+    End Sub
+
+    Private Sub BuildFunctionPointers(fileManager As GeneratedFileManager)
+        Dim b = New CodeBuilder
+        Dim ff = decls.AllExportFunctions()
+        For Each f In ff
+            b.AppendLine("static {0} (*{1}_ptr)({2});", f.ReturnType.OriginalSymbol, f.Name, f.Signature.OriginalSignature)
+        Next
+        b.AppendLine()
+
+        b.BeginBlock("void cfx_load_cef_function_pointers(HMODULE m)")
+        For Each f In ff
+            b.AppendLine("{0}_ptr = ({1} (*)({2}))GetProcAddress(m, ""{0}"");", f.Name, f.ReturnType.OriginalSymbol, f.Signature.OriginalSignatureUnnamed)
+        Next
+        b.EndBlock()
+        b.AppendLine()
+
+        For Each f In ff
+            b.AppendLine("#define {0} {0}_ptr", f.Name)
+        Next
+        b.AppendLine()
+
+        fileManager.WriteFileIfContentChanged("cef_function_pointers.c", b.ToString())
+        b.Clear()
+
     End Sub
 
     Private Sub BuildLibCfx(fileManager As GeneratedFileManager)

@@ -332,7 +332,7 @@ Public Class CfxClassBuilder
 
                 b.AppendLine("void (CEF_CALLBACK *{0}_callback)({1});", cb.NativeCallbackName, cb.Signature.NativeCallbackPtrSignature)
                 b.AppendLine()
-                b.BeginBlock("{0} CEF_CALLBACK {1}({2})", cb.NativeReturnType.OriginalSymbol, cb.NativeCallbackName, cb.Signature.OriginalCallbackSignature)
+                b.BeginBlock("{0} CEF_CALLBACK {1}({2})", cb.NativeReturnType.OriginalSymbol, cb.NativeCallbackName, cb.Signature.OriginalSignature)
                 If Not cb.NativeReturnType.IsVoid Then
                     b.AppendLine("{0} __retval;", cb.NativeReturnType.NativeSymbol)
                 End If

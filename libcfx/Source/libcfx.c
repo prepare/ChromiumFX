@@ -35,8 +35,11 @@
 
 #define CFX_EXPORT __declspec(dllexport)
 
-#include "libcfx\Generated\cef_headers.h"
 #include "cef\include\cef_version.h"
+
+#include "libcfx\Generated\cef_headers.h"
+#include "libcfx\Generated\cef_function_pointers.c"
+
 
 typedef void* gc_handle_t;
 static void(CEF_CALLBACK *cfx_gc_handle_free)(gc_handle_t gc_handle);
