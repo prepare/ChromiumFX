@@ -45,7 +45,7 @@ namespace Chromium {
 
         static CfxMouseEvent () {
             CfxApi.cfx_mouse_event_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(570, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_mouse_event_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(570, typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_mouse_event_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(571, typeof(CfxApi.cfx_dtor_delegate));
             CfxApi.cfx_mouse_event_set_x = (CfxApi.cfx_mouse_event_set_x_delegate)CfxApi.GetDelegate(572, typeof(CfxApi.cfx_mouse_event_set_x_delegate));
             CfxApi.cfx_mouse_event_get_x = (CfxApi.cfx_mouse_event_get_x_delegate)CfxApi.GetDelegate(573, typeof(CfxApi.cfx_mouse_event_get_x_delegate));
             CfxApi.cfx_mouse_event_set_y = (CfxApi.cfx_mouse_event_set_y_delegate)CfxApi.GetDelegate(574, typeof(CfxApi.cfx_mouse_event_set_y_delegate));

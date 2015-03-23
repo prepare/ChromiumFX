@@ -718,7 +718,7 @@ Public Class CfxClassBuilder
 
         b.BeginBlock("static {0} ()", ClassName)
         b.AppendLine("CfxApi.{0}_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate({1}, typeof(CfxApi.cfx_ctor_delegate));", CfxName, struct.ApiIndex)
-        b.AppendLine("CfxApi.{0}_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate({1}, typeof(CfxApi.cfx_dtor_delegate));", CfxName, struct.ApiIndex)
+        b.AppendLine("CfxApi.{0}_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate({1}, typeof(CfxApi.cfx_dtor_delegate));", CfxName, struct.ApiIndex + 1)
 
         For Each sm In StructMembers
             If sm.Name <> "size" Then

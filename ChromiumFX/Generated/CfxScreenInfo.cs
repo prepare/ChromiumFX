@@ -47,7 +47,7 @@ namespace Chromium {
 
         static CfxScreenInfo () {
             CfxApi.cfx_screen_info_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(764, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_screen_info_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(764, typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_screen_info_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(765, typeof(CfxApi.cfx_dtor_delegate));
             CfxApi.cfx_screen_info_set_device_scale_factor = (CfxApi.cfx_screen_info_set_device_scale_factor_delegate)CfxApi.GetDelegate(766, typeof(CfxApi.cfx_screen_info_set_device_scale_factor_delegate));
             CfxApi.cfx_screen_info_get_device_scale_factor = (CfxApi.cfx_screen_info_get_device_scale_factor_delegate)CfxApi.GetDelegate(767, typeof(CfxApi.cfx_screen_info_get_device_scale_factor_delegate));
             CfxApi.cfx_screen_info_set_depth = (CfxApi.cfx_screen_info_set_depth_delegate)CfxApi.GetDelegate(768, typeof(CfxApi.cfx_screen_info_set_depth_delegate));

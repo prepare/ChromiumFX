@@ -45,7 +45,7 @@ namespace Chromium {
 
         static CfxCookie () {
             CfxApi.cfx_cookie_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(240, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_cookie_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(240, typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_cookie_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(241, typeof(CfxApi.cfx_dtor_delegate));
             CfxApi.cfx_cookie_set_name = (CfxApi.cfx_cookie_set_name_delegate)CfxApi.GetDelegate(242, typeof(CfxApi.cfx_cookie_set_name_delegate));
             CfxApi.cfx_cookie_get_name = (CfxApi.cfx_cookie_get_name_delegate)CfxApi.GetDelegate(243, typeof(CfxApi.cfx_cookie_get_name_delegate));
             CfxApi.cfx_cookie_set_value = (CfxApi.cfx_cookie_set_value_delegate)CfxApi.GetDelegate(244, typeof(CfxApi.cfx_cookie_set_value_delegate));

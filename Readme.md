@@ -49,6 +49,10 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2171.11 ###
+
+Fixed a bug introduced in 3.2171.10: for not refcounted cef types, the pinvoke layer would use the wrong native function as a dtor function, causing memory leaks and possibly corruption. Sorry for that :)
+
 ### Version 3.2171.10 ###
 
 * libcfx.dll now loads libcef.dll function pointers explicitly instead of linking to libcef.lib, removing the link time dependency. This means that ChromiumFX is now compatible with any set of CEF binaries within the same branch.

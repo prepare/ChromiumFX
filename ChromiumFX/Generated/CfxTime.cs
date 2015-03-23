@@ -45,7 +45,7 @@ namespace Chromium {
 
         static CfxTime () {
             CfxApi.cfx_time_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(858, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_time_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(858, typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_time_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(859, typeof(CfxApi.cfx_dtor_delegate));
             CfxApi.cfx_time_set_year = (CfxApi.cfx_time_set_year_delegate)CfxApi.GetDelegate(860, typeof(CfxApi.cfx_time_set_year_delegate));
             CfxApi.cfx_time_get_year = (CfxApi.cfx_time_get_year_delegate)CfxApi.GetDelegate(861, typeof(CfxApi.cfx_time_get_year_delegate));
             CfxApi.cfx_time_set_month = (CfxApi.cfx_time_set_month_delegate)CfxApi.GetDelegate(862, typeof(CfxApi.cfx_time_set_month_delegate));

@@ -45,7 +45,7 @@ namespace Chromium {
 
         static CfxSize () {
             CfxApi.cfx_size_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(824, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_size_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(824, typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_size_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(825, typeof(CfxApi.cfx_dtor_delegate));
             CfxApi.cfx_size_set_width = (CfxApi.cfx_size_set_width_delegate)CfxApi.GetDelegate(826, typeof(CfxApi.cfx_size_set_width_delegate));
             CfxApi.cfx_size_get_width = (CfxApi.cfx_size_get_width_delegate)CfxApi.GetDelegate(827, typeof(CfxApi.cfx_size_get_width_delegate));
             CfxApi.cfx_size_set_height = (CfxApi.cfx_size_set_height_delegate)CfxApi.GetDelegate(828, typeof(CfxApi.cfx_size_set_height_delegate));

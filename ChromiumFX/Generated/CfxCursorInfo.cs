@@ -47,7 +47,7 @@ namespace Chromium {
 
         static CfxCursorInfo () {
             CfxApi.cfx_cursor_info_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(274, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_cursor_info_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(274, typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_cursor_info_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(275, typeof(CfxApi.cfx_dtor_delegate));
             CfxApi.cfx_cursor_info_set_hotspot = (CfxApi.cfx_cursor_info_set_hotspot_delegate)CfxApi.GetDelegate(276, typeof(CfxApi.cfx_cursor_info_set_hotspot_delegate));
             CfxApi.cfx_cursor_info_get_hotspot = (CfxApi.cfx_cursor_info_get_hotspot_delegate)CfxApi.GetDelegate(277, typeof(CfxApi.cfx_cursor_info_get_hotspot_delegate));
             CfxApi.cfx_cursor_info_set_image_scale_factor = (CfxApi.cfx_cursor_info_set_image_scale_factor_delegate)CfxApi.GetDelegate(278, typeof(CfxApi.cfx_cursor_info_set_image_scale_factor_delegate));

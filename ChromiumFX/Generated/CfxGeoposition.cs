@@ -47,7 +47,7 @@ namespace Chromium {
 
         static CfxGeoposition () {
             CfxApi.cfx_geoposition_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(440, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_geoposition_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(440, typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_geoposition_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(441, typeof(CfxApi.cfx_dtor_delegate));
             CfxApi.cfx_geoposition_set_latitude = (CfxApi.cfx_geoposition_set_latitude_delegate)CfxApi.GetDelegate(442, typeof(CfxApi.cfx_geoposition_set_latitude_delegate));
             CfxApi.cfx_geoposition_get_latitude = (CfxApi.cfx_geoposition_get_latitude_delegate)CfxApi.GetDelegate(443, typeof(CfxApi.cfx_geoposition_get_latitude_delegate));
             CfxApi.cfx_geoposition_set_longitude = (CfxApi.cfx_geoposition_set_longitude_delegate)CfxApi.GetDelegate(444, typeof(CfxApi.cfx_geoposition_set_longitude_delegate));

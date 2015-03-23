@@ -45,7 +45,7 @@ namespace Chromium {
 
         static CfxPoint () {
             CfxApi.cfx_point_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(597, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_point_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(597, typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_point_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(598, typeof(CfxApi.cfx_dtor_delegate));
             CfxApi.cfx_point_set_x = (CfxApi.cfx_point_set_x_delegate)CfxApi.GetDelegate(599, typeof(CfxApi.cfx_point_set_x_delegate));
             CfxApi.cfx_point_get_x = (CfxApi.cfx_point_get_x_delegate)CfxApi.GetDelegate(600, typeof(CfxApi.cfx_point_get_x_delegate));
             CfxApi.cfx_point_set_y = (CfxApi.cfx_point_set_y_delegate)CfxApi.GetDelegate(601, typeof(CfxApi.cfx_point_set_y_delegate));

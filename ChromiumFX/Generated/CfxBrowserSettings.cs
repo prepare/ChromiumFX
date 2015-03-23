@@ -48,7 +48,7 @@ namespace Chromium {
 
         static CfxBrowserSettings () {
             CfxApi.cfx_browser_settings_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(120, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_browser_settings_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(120, typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_browser_settings_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(121, typeof(CfxApi.cfx_dtor_delegate));
             CfxApi.cfx_browser_settings_set_windowless_frame_rate = (CfxApi.cfx_browser_settings_set_windowless_frame_rate_delegate)CfxApi.GetDelegate(122, typeof(CfxApi.cfx_browser_settings_set_windowless_frame_rate_delegate));
             CfxApi.cfx_browser_settings_get_windowless_frame_rate = (CfxApi.cfx_browser_settings_get_windowless_frame_rate_delegate)CfxApi.GetDelegate(123, typeof(CfxApi.cfx_browser_settings_get_windowless_frame_rate_delegate));
             CfxApi.cfx_browser_settings_set_standard_font_family = (CfxApi.cfx_browser_settings_set_standard_font_family_delegate)CfxApi.GetDelegate(124, typeof(CfxApi.cfx_browser_settings_set_standard_font_family_delegate));
