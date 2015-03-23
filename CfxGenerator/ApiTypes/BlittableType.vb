@@ -47,7 +47,7 @@ Public Class BlittableType
                 Case "bool", "BOOL"
                     Return "int"
                 Case "time_t"
-                    Return "int64"
+                    Return "uint64"
                 Case Else
                     Return MyBase.NativeSymbol
             End Select
@@ -69,6 +69,8 @@ Public Class BlittableType
                     Return String.Empty
                 Case "char*"
                     Return "string"
+                Case "time_t"
+                    Return "DateTime"
                 Case Else
                     Return MyBase.PublicSymbol
             End Select
@@ -81,7 +83,7 @@ Public Class BlittableType
                 Case "bool", "BOOL"
                     Return String.Format("({0}) ? 1 : 0", var)
                 Case "time_t"
-                    Return String.Format("(int64)({0})", var)
+                    Return String.Format("(uint64)({0})", var)
                 Case Else
                     Return var
             End Select
@@ -109,6 +111,8 @@ Public Class BlittableType
             Select Case Name
                 Case "bool", "BOOL"
                     Return String.Format("{0} ? 1 : 0", var)
+                Case "time_t"
+                    Return String.Format("TimeFunctions.ToTimeT({0})", var)
                 Case Else
                     Return MyBase.PublicUnwrapExpression(var)
             End Select
@@ -122,6 +126,8 @@ Public Class BlittableType
                     Return String.Format("0 != {0}", var)
                 Case "char*"
                     Return String.Format("System.Runtime.InteropServices.Marshal.PtrToStringAnsi({0})", var)
+                Case "time_t"
+                    Return String.Format("TimeFunctions.FromTimeT({0})", var)
                 Case Else
                     Return MyBase.PublicWrapExpression(var)
             End Select

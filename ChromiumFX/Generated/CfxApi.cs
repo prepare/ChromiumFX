@@ -5176,9 +5176,9 @@ namespace Chromium {
         public delegate long cfx_zip_reader_get_file_size_delegate(IntPtr self);
         public static cfx_zip_reader_get_file_size_delegate cfx_zip_reader_get_file_size;
 
-        // static int64 cfx_zip_reader_get_file_last_modified(cef_zip_reader_t* self)
+        // static uint64 cfx_zip_reader_get_file_last_modified(cef_zip_reader_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate long cfx_zip_reader_get_file_last_modified_delegate(IntPtr self);
+        public delegate ulong cfx_zip_reader_get_file_last_modified_delegate(IntPtr self);
         public static cfx_zip_reader_get_file_last_modified_delegate cfx_zip_reader_get_file_last_modified;
 
         // static int cfx_zip_reader_open_file(cef_zip_reader_t* self, char16 *password_str, int password_length)
