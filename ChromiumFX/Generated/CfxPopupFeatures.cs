@@ -45,7 +45,7 @@ namespace Chromium {
 
         static CfxPopupFeatures () {
             CfxApi.cfx_popup_features_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(603, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_popup_features_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(603, typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_popup_features_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(604, typeof(CfxApi.cfx_dtor_delegate));
             CfxApi.cfx_popup_features_set_x = (CfxApi.cfx_popup_features_set_x_delegate)CfxApi.GetDelegate(605, typeof(CfxApi.cfx_popup_features_set_x_delegate));
             CfxApi.cfx_popup_features_get_x = (CfxApi.cfx_popup_features_get_x_delegate)CfxApi.GetDelegate(606, typeof(CfxApi.cfx_popup_features_get_x_delegate));
             CfxApi.cfx_popup_features_set_xSet = (CfxApi.cfx_popup_features_set_xSet_delegate)CfxApi.GetDelegate(607, typeof(CfxApi.cfx_popup_features_set_xSet_delegate));

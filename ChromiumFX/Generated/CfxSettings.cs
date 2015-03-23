@@ -47,7 +47,7 @@ namespace Chromium {
 
         static CfxSettings () {
             CfxApi.cfx_settings_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(778, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_settings_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(778, typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_settings_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(779, typeof(CfxApi.cfx_dtor_delegate));
             CfxApi.cfx_settings_set_single_process = (CfxApi.cfx_settings_set_single_process_delegate)CfxApi.GetDelegate(780, typeof(CfxApi.cfx_settings_set_single_process_delegate));
             CfxApi.cfx_settings_get_single_process = (CfxApi.cfx_settings_get_single_process_delegate)CfxApi.GetDelegate(781, typeof(CfxApi.cfx_settings_get_single_process_delegate));
             CfxApi.cfx_settings_set_no_sandbox = (CfxApi.cfx_settings_set_no_sandbox_delegate)CfxApi.GetDelegate(782, typeof(CfxApi.cfx_settings_set_no_sandbox_delegate));

@@ -45,7 +45,7 @@ namespace Chromium {
 
         static CfxWindowInfo () {
             CfxApi.cfx_window_info_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(1009, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_window_info_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(1009, typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_window_info_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(1010, typeof(CfxApi.cfx_dtor_delegate));
             CfxApi.cfx_window_info_set_ex_style = (CfxApi.cfx_window_info_set_ex_style_delegate)CfxApi.GetDelegate(1011, typeof(CfxApi.cfx_window_info_set_ex_style_delegate));
             CfxApi.cfx_window_info_get_ex_style = (CfxApi.cfx_window_info_get_ex_style_delegate)CfxApi.GetDelegate(1012, typeof(CfxApi.cfx_window_info_get_ex_style_delegate));
             CfxApi.cfx_window_info_set_window_name = (CfxApi.cfx_window_info_set_window_name_delegate)CfxApi.GetDelegate(1013, typeof(CfxApi.cfx_window_info_set_window_name_delegate));

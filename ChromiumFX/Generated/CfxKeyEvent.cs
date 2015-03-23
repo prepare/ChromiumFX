@@ -45,7 +45,7 @@ namespace Chromium {
 
         static CfxKeyEvent () {
             CfxApi.cfx_key_event_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(469, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_key_event_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(469, typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_key_event_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(470, typeof(CfxApi.cfx_dtor_delegate));
             CfxApi.cfx_key_event_set_type = (CfxApi.cfx_key_event_set_type_delegate)CfxApi.GetDelegate(471, typeof(CfxApi.cfx_key_event_set_type_delegate));
             CfxApi.cfx_key_event_get_type = (CfxApi.cfx_key_event_get_type_delegate)CfxApi.GetDelegate(472, typeof(CfxApi.cfx_key_event_get_type_delegate));
             CfxApi.cfx_key_event_set_modifiers = (CfxApi.cfx_key_event_set_modifiers_delegate)CfxApi.GetDelegate(473, typeof(CfxApi.cfx_key_event_set_modifiers_delegate));

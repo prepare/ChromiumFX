@@ -45,7 +45,7 @@ namespace Chromium {
 
         static CfxUrlParts () {
             CfxApi.cfx_urlparts_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(876, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_urlparts_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(876, typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_urlparts_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(877, typeof(CfxApi.cfx_dtor_delegate));
             CfxApi.cfx_urlparts_set_spec = (CfxApi.cfx_urlparts_set_spec_delegate)CfxApi.GetDelegate(878, typeof(CfxApi.cfx_urlparts_set_spec_delegate));
             CfxApi.cfx_urlparts_get_spec = (CfxApi.cfx_urlparts_get_spec_delegate)CfxApi.GetDelegate(879, typeof(CfxApi.cfx_urlparts_get_spec_delegate));
             CfxApi.cfx_urlparts_set_scheme = (CfxApi.cfx_urlparts_set_scheme_delegate)CfxApi.GetDelegate(880, typeof(CfxApi.cfx_urlparts_set_scheme_delegate));
