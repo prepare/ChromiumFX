@@ -44,17 +44,19 @@ typedef struct _cfx_app_t {
 } cfx_app_t;
 
 void CEF_CALLBACK _cfx_app_add_ref(struct _cef_base_t* base) {
-    cfx_app_t* ptr = (cfx_app_t*)base;
-    InterlockedIncrement(&ptr->ref_count);
+    InterlockedIncrement(&((cfx_app_t*)base)->ref_count);
 }
 int CEF_CALLBACK _cfx_app_release(struct _cef_base_t* base) {
-    cfx_app_t* ptr = (cfx_app_t*)base;
-    int count = InterlockedDecrement(&((cfx_app_t*)ptr)->ref_count);
+    int count = InterlockedDecrement(&((cfx_app_t*)base)->ref_count);
     if(!count) {
-        cfx_gc_handle_free(((cfx_app_t*)ptr)->gc_handle);
-        free(ptr);
+        cfx_gc_handle_free(((cfx_app_t*)base)->gc_handle);
+        free(base);
+        return 1;
     }
-    return count;
+    return 0;
+}
+int CEF_CALLBACK _cfx_app_has_one_ref(struct _cef_base_t* base) {
+    return ((cfx_app_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
 static cfx_app_t* cfx_app_ctor(gc_handle_t gc_handle) {
@@ -63,6 +65,7 @@ static cfx_app_t* cfx_app_ctor(gc_handle_t gc_handle) {
     ptr->cef_app.base.size = sizeof(cef_app_t);
     ptr->cef_app.base.add_ref = _cfx_app_add_ref;
     ptr->cef_app.base.release = _cfx_app_release;
+    ptr->cef_app.base.has_one_ref = _cfx_app_has_one_ref;
     ptr->ref_count = 1;
     ptr->gc_handle = gc_handle;
     return ptr;

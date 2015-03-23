@@ -44,17 +44,19 @@ typedef struct _cfx_scheme_handler_factory_t {
 } cfx_scheme_handler_factory_t;
 
 void CEF_CALLBACK _cfx_scheme_handler_factory_add_ref(struct _cef_base_t* base) {
-    cfx_scheme_handler_factory_t* ptr = (cfx_scheme_handler_factory_t*)base;
-    InterlockedIncrement(&ptr->ref_count);
+    InterlockedIncrement(&((cfx_scheme_handler_factory_t*)base)->ref_count);
 }
 int CEF_CALLBACK _cfx_scheme_handler_factory_release(struct _cef_base_t* base) {
-    cfx_scheme_handler_factory_t* ptr = (cfx_scheme_handler_factory_t*)base;
-    int count = InterlockedDecrement(&((cfx_scheme_handler_factory_t*)ptr)->ref_count);
+    int count = InterlockedDecrement(&((cfx_scheme_handler_factory_t*)base)->ref_count);
     if(!count) {
-        cfx_gc_handle_free(((cfx_scheme_handler_factory_t*)ptr)->gc_handle);
-        free(ptr);
+        cfx_gc_handle_free(((cfx_scheme_handler_factory_t*)base)->gc_handle);
+        free(base);
+        return 1;
     }
-    return count;
+    return 0;
+}
+int CEF_CALLBACK _cfx_scheme_handler_factory_has_one_ref(struct _cef_base_t* base) {
+    return ((cfx_scheme_handler_factory_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
 static cfx_scheme_handler_factory_t* cfx_scheme_handler_factory_ctor(gc_handle_t gc_handle) {
@@ -63,6 +65,7 @@ static cfx_scheme_handler_factory_t* cfx_scheme_handler_factory_ctor(gc_handle_t
     ptr->cef_scheme_handler_factory.base.size = sizeof(cef_scheme_handler_factory_t);
     ptr->cef_scheme_handler_factory.base.add_ref = _cfx_scheme_handler_factory_add_ref;
     ptr->cef_scheme_handler_factory.base.release = _cfx_scheme_handler_factory_release;
+    ptr->cef_scheme_handler_factory.base.has_one_ref = _cfx_scheme_handler_factory_has_one_ref;
     ptr->ref_count = 1;
     ptr->gc_handle = gc_handle;
     return ptr;
