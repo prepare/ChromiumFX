@@ -10,4 +10,4 @@ BOOL|int
 cef_text_input_context_t|IntPtr
 cef_event_handle_t|IntPtr
 cef_cursor_handle_t|IntPtr
-time_t|long
+time_t|ulong

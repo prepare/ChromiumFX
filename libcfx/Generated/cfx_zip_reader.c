@@ -76,8 +76,8 @@ static int64 cfx_zip_reader_get_file_size(cef_zip_reader_t* self) {
 }
 
 // get_file_last_modified
-static int64 cfx_zip_reader_get_file_last_modified(cef_zip_reader_t* self) {
-    return (int64)(self->get_file_last_modified(self));
+static uint64 cfx_zip_reader_get_file_last_modified(cef_zip_reader_t* self) {
+    return (uint64)(self->get_file_last_modified(self));
 }
 
 // open_file
