@@ -44,17 +44,19 @@ typedef struct _cfx_urlrequest_client_t {
 } cfx_urlrequest_client_t;
 
 void CEF_CALLBACK _cfx_urlrequest_client_add_ref(struct _cef_base_t* base) {
-    cfx_urlrequest_client_t* ptr = (cfx_urlrequest_client_t*)base;
-    InterlockedIncrement(&ptr->ref_count);
+    InterlockedIncrement(&((cfx_urlrequest_client_t*)base)->ref_count);
 }
 int CEF_CALLBACK _cfx_urlrequest_client_release(struct _cef_base_t* base) {
-    cfx_urlrequest_client_t* ptr = (cfx_urlrequest_client_t*)base;
-    int count = InterlockedDecrement(&((cfx_urlrequest_client_t*)ptr)->ref_count);
+    int count = InterlockedDecrement(&((cfx_urlrequest_client_t*)base)->ref_count);
     if(!count) {
-        cfx_gc_handle_free(((cfx_urlrequest_client_t*)ptr)->gc_handle);
-        free(ptr);
+        cfx_gc_handle_free(((cfx_urlrequest_client_t*)base)->gc_handle);
+        free(base);
+        return 1;
     }
-    return count;
+    return 0;
+}
+int CEF_CALLBACK _cfx_urlrequest_client_has_one_ref(struct _cef_base_t* base) {
+    return ((cfx_urlrequest_client_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
 static cfx_urlrequest_client_t* cfx_urlrequest_client_ctor(gc_handle_t gc_handle) {
@@ -63,6 +65,7 @@ static cfx_urlrequest_client_t* cfx_urlrequest_client_ctor(gc_handle_t gc_handle
     ptr->cef_urlrequest_client.base.size = sizeof(cef_urlrequest_client_t);
     ptr->cef_urlrequest_client.base.add_ref = _cfx_urlrequest_client_add_ref;
     ptr->cef_urlrequest_client.base.release = _cfx_urlrequest_client_release;
+    ptr->cef_urlrequest_client.base.has_one_ref = _cfx_urlrequest_client_has_one_ref;
     ptr->ref_count = 1;
     ptr->gc_handle = gc_handle;
     return ptr;

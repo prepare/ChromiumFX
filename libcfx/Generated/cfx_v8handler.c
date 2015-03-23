@@ -44,17 +44,19 @@ typedef struct _cfx_v8handler_t {
 } cfx_v8handler_t;
 
 void CEF_CALLBACK _cfx_v8handler_add_ref(struct _cef_base_t* base) {
-    cfx_v8handler_t* ptr = (cfx_v8handler_t*)base;
-    InterlockedIncrement(&ptr->ref_count);
+    InterlockedIncrement(&((cfx_v8handler_t*)base)->ref_count);
 }
 int CEF_CALLBACK _cfx_v8handler_release(struct _cef_base_t* base) {
-    cfx_v8handler_t* ptr = (cfx_v8handler_t*)base;
-    int count = InterlockedDecrement(&((cfx_v8handler_t*)ptr)->ref_count);
+    int count = InterlockedDecrement(&((cfx_v8handler_t*)base)->ref_count);
     if(!count) {
-        cfx_gc_handle_free(((cfx_v8handler_t*)ptr)->gc_handle);
-        free(ptr);
+        cfx_gc_handle_free(((cfx_v8handler_t*)base)->gc_handle);
+        free(base);
+        return 1;
     }
-    return count;
+    return 0;
+}
+int CEF_CALLBACK _cfx_v8handler_has_one_ref(struct _cef_base_t* base) {
+    return ((cfx_v8handler_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
 static cfx_v8handler_t* cfx_v8handler_ctor(gc_handle_t gc_handle) {
@@ -63,6 +65,7 @@ static cfx_v8handler_t* cfx_v8handler_ctor(gc_handle_t gc_handle) {
     ptr->cef_v8handler.base.size = sizeof(cef_v8handler_t);
     ptr->cef_v8handler.base.add_ref = _cfx_v8handler_add_ref;
     ptr->cef_v8handler.base.release = _cfx_v8handler_release;
+    ptr->cef_v8handler.base.has_one_ref = _cfx_v8handler_has_one_ref;
     ptr->ref_count = 1;
     ptr->gc_handle = gc_handle;
     return ptr;

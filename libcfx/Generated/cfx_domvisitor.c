@@ -44,17 +44,19 @@ typedef struct _cfx_domvisitor_t {
 } cfx_domvisitor_t;
 
 void CEF_CALLBACK _cfx_domvisitor_add_ref(struct _cef_base_t* base) {
-    cfx_domvisitor_t* ptr = (cfx_domvisitor_t*)base;
-    InterlockedIncrement(&ptr->ref_count);
+    InterlockedIncrement(&((cfx_domvisitor_t*)base)->ref_count);
 }
 int CEF_CALLBACK _cfx_domvisitor_release(struct _cef_base_t* base) {
-    cfx_domvisitor_t* ptr = (cfx_domvisitor_t*)base;
-    int count = InterlockedDecrement(&((cfx_domvisitor_t*)ptr)->ref_count);
+    int count = InterlockedDecrement(&((cfx_domvisitor_t*)base)->ref_count);
     if(!count) {
-        cfx_gc_handle_free(((cfx_domvisitor_t*)ptr)->gc_handle);
-        free(ptr);
+        cfx_gc_handle_free(((cfx_domvisitor_t*)base)->gc_handle);
+        free(base);
+        return 1;
     }
-    return count;
+    return 0;
+}
+int CEF_CALLBACK _cfx_domvisitor_has_one_ref(struct _cef_base_t* base) {
+    return ((cfx_domvisitor_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
 static cfx_domvisitor_t* cfx_domvisitor_ctor(gc_handle_t gc_handle) {
@@ -63,6 +65,7 @@ static cfx_domvisitor_t* cfx_domvisitor_ctor(gc_handle_t gc_handle) {
     ptr->cef_domvisitor.base.size = sizeof(cef_domvisitor_t);
     ptr->cef_domvisitor.base.add_ref = _cfx_domvisitor_add_ref;
     ptr->cef_domvisitor.base.release = _cfx_domvisitor_release;
+    ptr->cef_domvisitor.base.has_one_ref = _cfx_domvisitor_has_one_ref;
     ptr->ref_count = 1;
     ptr->gc_handle = gc_handle;
     return ptr;
