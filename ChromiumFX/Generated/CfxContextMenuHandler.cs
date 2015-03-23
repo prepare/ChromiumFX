@@ -83,7 +83,11 @@ namespace Chromium {
             } else {
                 e.m_params_wrapped.Dispose();
             }
-            if(e.m_model_wrapped == null) CfxApi.cfx_release(e.m_model);
+            if(e.m_model_wrapped == null) {
+                CfxApi.cfx_release(e.m_model);
+            } else {
+                e.m_model_wrapped.Dispose();
+            }
         }
 
         // on_context_menu_command

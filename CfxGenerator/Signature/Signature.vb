@@ -339,10 +339,13 @@ Public Class Signature
     End Sub
 
     Public Sub EmitPostPublicEventHandlerCallStatements(b As CodeBuilder)
+
+        GeneratorConfig.FindDoNotKeepParameters(DirectCast(Owner, CefCallbackType))
+
         For i = 1 To ManagedArguments.Count - 1
             ManagedArguments(i).EmitPostPublicRaiseEventStatements(b)
             If ManagedArguments(i).TypeIsRefCounted Then
-                If GeneratorConfig.IsVolatileEventArg(DirectCast(Owner, CefCallbackType), ManagedArguments(i)) Then
+                If ManagedArguments(i).DoNotKeep Then
                     b.BeginIf("e.m_{0}_wrapped == null", ManagedArguments(i).VarName)
                     b.AppendLine("CfxApi.cfx_release(e.m_{0});", ManagedArguments(i).VarName)
                     b.BeginElse()

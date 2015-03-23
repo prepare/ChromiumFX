@@ -76,7 +76,11 @@ namespace Chromium {
             var eventHandler = self.m_OnPrintSettings;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
-            if(e.m_settings_wrapped == null) CfxApi.cfx_release(e.m_settings);
+            if(e.m_settings_wrapped == null) {
+                CfxApi.cfx_release(e.m_settings);
+            } else {
+                e.m_settings_wrapped.Dispose();
+            }
         }
 
         // on_print_dialog
