@@ -28,7 +28,7 @@
 '' TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE 
 '' USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
+Imports System.Text.RegularExpressions
 
 Public Class GeneratorConfig
 
@@ -58,12 +58,29 @@ Public Class GeneratorConfig
         End Get
     End Property
 
-    Public Shared ReadOnly Property IsVolatileEventArg(cb As CefCallbackType, arg As Argument) As Boolean
-        Get
-            Static volatileEventArgs As String() = AssemblyResources.GetLines("VolatileEventArgs.txt")
-            Return volatileEventArgs.Contains(cb.Parent.Name & "::" & cb.Name & "::" & arg.VarName)
-        End Get
-    End Property
+    Public Shared Sub FindDoNotKeepParameters(cb As CefCallbackType)
+
+        Dim cc = String.Join(" ", cb.Comments.Lines)
+
+        Dim phrase = Regex.Match(cc, "\bnot\s+keep\b[^.]+\.").Value
+        If phrase.Length = 0 Then Return
+
+        For Each arg In cb.Signature.ManagedArguments
+            If arg.ArgumentType.IsCefStructPtrType AndAlso arg.VarName <> "self" Then
+                If arg.ArgumentType.OriginalSymbol.StartsWith("cef_dom") Then
+                    arg.DoNotKeep = True
+                    'Debug.Print("{0}::{1}({2} {3})", cb.Parent.OriginalSymbol, cb.OriginalSymbol, arg.ArgumentType.OriginalSymbol, arg.VarName)
+                ElseIf Regex.Match(phrase, "\b" & arg.VarName & "\b").Success Then
+                    arg.DoNotKeep = True
+                    'Debug.Print("{0}::{1}({2} {3})", cb.Parent.OriginalSymbol, cb.OriginalSymbol, arg.ArgumentType.OriginalSymbol, arg.VarName)
+                ElseIf Regex.Match(phrase, "\b" & arg.ArgumentType.OriginalSymbol & "\b").Success Then
+                    arg.DoNotKeep = True
+                    'Debug.Print("{0}::{1}({2} {3})", cb.Parent.OriginalSymbol, cb.OriginalSymbol, arg.ArgumentType.OriginalSymbol, arg.VarName)
+                End If
+            End If
+        Next
+
+    End Sub
 
 
     Public Shared ReadOnly Property HasPrivateWrapper(item As String) As Boolean

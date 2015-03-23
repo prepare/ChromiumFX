@@ -110,8 +110,6 @@
     <Compile Include="Parser\CefConfigData.vb" />
     <Compile Include="Parser\CommentData.vb" />
     <Compile Include="Signature\Argument.vb" />
-    <EmbeddedResource Include="Config\VolatileEventArgs.txt" />
-    <EmbeddedResource Include="Config\RenderProcessThreadAffinity.txt" />
     <Compile Include="ApiTypes\CefStringMultimapType.vb" />
     <Compile Include="CfxCallMode.vb" />
     <Compile Include="CustomSignatures\CefV8HandlerExecuteSignature.vb" />

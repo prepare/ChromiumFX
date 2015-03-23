@@ -40,6 +40,7 @@ Public Class Argument
     Public IsThisArgument As Boolean
 
     Public IsPropertySetterArgument As Boolean
+    Public DoNotKeep As Boolean
 
     Public Sub New(ad As Parser.ArgumentData, api As ApiTypeBuilder, index As Integer)
         Me.ArgumentType = api.GetApiType(ad.ArgumentType, ad.IsConst)
