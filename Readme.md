@@ -32,7 +32,7 @@ The API of this project is not frozen and is subject to change. The overall stru
 
 ChromiumFX version numbers have the format X.Y.Z where X is the CEF version (currently 3), Y is the CEF branch and Z is the ChromiumFX release number for a specific CEF version and branch. 
 
-*"Within a release branch the CEF API is 'frozen' and generally only security/bug fixes are applied"*[[1](https://bitbucket.org/chromiumembedded/cef/wiki/BranchesAndBuilding#markdown-header-release-branches)]. So ChromiumFX binaries should work with any set of CEF binaries from the same branch. For example, ChromiumFX 3.2171.* works with CEF 3.2171.1979 from the [CEF download page](http://www.magpcss.net/cef_downloads/), CEF 3.2171.2039 from [cefbuilds.com](https://cefbuilds.com/) or any other CEF 3.2171.* build. 
+*"Within a release branch the CEF API is 'frozen' and generally only security/bug fixes are applied"*[[1](https://bitbucket.org/chromiumembedded/cef/wiki/BranchesAndBuilding#markdown-header-release-branches)]. So ChromiumFX binaries should work with any set of CEF binaries from the same branch. For example, ChromiumFX 3.2171.\* works with CEF 3.2171.1979 from the [CEF download page](http://www.magpcss.net/cef_downloads/), CEF 3.2171.2039 from [cefbuilds.com](https://cefbuilds.com/) or any other CEF 3.2171.\* build. 
 
 At startup, API compatibility is verified by checking the API hash of the loaded libcef.dll, making sure ChromiumFX fails early when loading incompatible CEF binaries.
 
