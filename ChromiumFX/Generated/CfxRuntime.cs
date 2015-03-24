@@ -209,7 +209,7 @@ namespace Chromium {
 
         /// <summary>
         /// Returns true (1) if called on the specified thread. Equivalent to using
-        /// cef_task_tRunner::GetForThread(threadId)->belongs_to_current_thread().
+        /// CfxTaskRunner.GetForThread(threadId).BelongsToCurrentThread().
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -435,7 +435,7 @@ namespace Chromium {
 
         /// <summary>
         /// Post a task for delayed execution on the specified thread. Equivalent to
-        /// using cef_task_tRunner::GetForThread(threadId)->PostDelayedTask(task,
+        /// using CfxTaskRunner.GetForThread(threadId).PostDelayedTask(task,
         /// delay_ms).
         /// </summary>
         /// <remarks>
@@ -448,7 +448,7 @@ namespace Chromium {
 
         /// <summary>
         /// Post a task for execution on the specified thread. Equivalent to using
-        /// cef_task_tRunner::GetForThread(threadId)->PostTask(task).
+        /// CfxTaskRunner.GetForThread(threadId).PostTask(task).
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
