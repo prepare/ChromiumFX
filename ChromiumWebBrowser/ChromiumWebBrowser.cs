@@ -264,7 +264,8 @@ namespace Chromium.WebBrowser {
 
         
         /// <summary>
-        /// Returns the context menu handler for this browser.
+        /// Returns the context menu handler for this browser. If this is never accessed the default
+        /// implementation will be used.
         /// </summary>
         public CfxContextMenuHandler ContextMenuHandler { get { return client.ContextMenuHandler; } }
 
@@ -289,6 +290,46 @@ namespace Chromium.WebBrowser {
         /// Returns the display handler for this browser.
         /// </summary>
         public CfxDisplayHandler DisplayHandler { get { return client.DisplayHandler; } }
+
+        /// <summary>
+        /// Returns the download handler for this browser. If this is never accessed
+        /// downloads will not be allowed.
+        /// </summary>
+        public CfxDownloadHandler DownloadHandler { get { return client.DownloadHandler; } }
+
+        /// <summary>
+        /// Returns the drag handler for this browser.
+        /// </summary>
+        public CfxDragHandler DragHandler { get { return client.DragHandler; } }
+
+        /// <summary>
+        /// Returns the dialog handler for this browser. If this is never accessed the default
+        /// implementation will be used.
+        /// </summary>
+        public CfxDialogHandler DialogHandler { get { return client.DialogHandler; } }
+
+        /// <summary>
+        /// Returns the focus handler for this browser.
+        /// </summary>
+        public CfxFocusHandler FocusHandler { get { return client.FocusHandler; } }
+
+        /// <summary>
+        /// Returns the geolocation handler for this browser. If this is never accessed
+        /// geolocation access will be denied by default.
+        /// </summary>
+        public CfxGeolocationHandler GeolocationHandler { get { return client.GeolocationHandler; } }
+
+        /// <summary>
+        /// Returns the js dialog handler for this browser. If this is never accessed the default
+        /// implementation will be used.
+        /// </summary>
+        public CfxJsDialogHandler JsDialogHandler { get { return client.JsDialogHandler; } }
+
+        /// <summary>
+        /// Returns the keyboard handler for this browser.
+        /// </summary>
+        public CfxKeyboardHandler KeyboardHandler { get { return client.KeyboardHandler; } }
+
 
 
         /// <summary>

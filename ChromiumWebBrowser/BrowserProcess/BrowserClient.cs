@@ -41,24 +41,31 @@ namespace Chromium.WebBrowser {
 
         internal LifeSpanHandler lifeSpanHandler;
         internal RequestHandler requestHandler;
-
+        
         private CfxContextMenuHandler contextMenuHandler;
         private CfxLoadHandler loadHandler;
         private CfxDisplayHandler displayHandler;
+        private CfxDownloadHandler downloadHandler;
+        private CfxDragHandler dragHandler;
+        private CfxDialogHandler dialogHandler;
+        private CfxFocusHandler focusHandler;
+        private CfxGeolocationHandler geolocationHandler;
+        private CfxJsDialogHandler jsDialogHandler;
+        private CfxKeyboardHandler keyboardHandler;
 
         internal BrowserClient(ChromiumWebBrowser browser) {
             this.browser = browser;
             this.lifeSpanHandler = new LifeSpanHandler(this);
             this.requestHandler = new RequestHandler(this);
-            this.GetLifeSpanHandler += new CfxGetLifeSpanHandlerEventHandler(BrowserClient_GetLifeSpanHandler);
-            this.GetRequestHandler += new CfxGetRequestHandlerEventHandler(BrowserClient_GetRequestHandler);
+            this.GetLifeSpanHandler += BrowserClient_GetLifeSpanHandler;
+            this.GetRequestHandler += BrowserClient_GetRequestHandler;
         }
 
         internal CfxContextMenuHandler ContextMenuHandler {
             get {
                 if(contextMenuHandler == null) {
                     contextMenuHandler = new CfxContextMenuHandler();
-                    this.GetContextMenuHandler += new CfxGetContextMenuHandlerEventHandler(BrowserClient_GetContextMenuHandler);
+                    this.GetContextMenuHandler += BrowserClient_GetContextMenuHandler;
                 }
                 return contextMenuHandler;
             }
@@ -68,7 +75,7 @@ namespace Chromium.WebBrowser {
             get {
                 if(loadHandler == null) {
                     loadHandler = new CfxLoadHandler();
-                    this.GetLoadHandler += new CfxGetLoadHandlerEventHandler(BrowserClient_GetLoadHandler);
+                    this.GetLoadHandler += BrowserClient_GetLoadHandler;
                 }
                 return loadHandler;
             }
@@ -78,10 +85,108 @@ namespace Chromium.WebBrowser {
             get {
                 if(displayHandler == null) {
                     displayHandler = new CfxDisplayHandler();
-                    this.GetDisplayHandler += new CfxGetDisplayHandlerEventHandler(BrowserClient_GetDisplayHandler);
+                    this.GetDisplayHandler += BrowserClient_GetDisplayHandler;
                 }
                 return displayHandler;
             }
+        }
+
+        internal CfxDownloadHandler DownloadHandler {
+            get {
+                if(downloadHandler == null) {
+                    downloadHandler = new CfxDownloadHandler();
+                    this.GetDownloadHandler += BrowserClient_GetDownloadHandler;
+                }
+                return downloadHandler;
+            }
+        }
+
+        internal CfxDragHandler DragHandler {
+            get {
+                if(dragHandler == null) {
+                    dragHandler = new CfxDragHandler();
+                    this.GetDragHandler += BrowserClient_GetDragHandler;
+                }
+                return dragHandler;
+            }
+        }
+
+        internal CfxDialogHandler DialogHandler {
+            get {
+                if(dialogHandler == null) {
+                    dialogHandler = new CfxDialogHandler();
+                    this.GetDialogHandler += BrowserClient_GetDialogHandler;
+                }
+                return dialogHandler;
+            }
+        }
+
+        internal CfxFocusHandler FocusHandler {
+            get {
+                if(focusHandler == null) {
+                    focusHandler = new CfxFocusHandler();
+                    this.GetFocusHandler += BrowserClient_GetFocusHandler;
+                }
+                return focusHandler;
+            }
+        }
+
+        internal CfxGeolocationHandler GeolocationHandler {
+            get {
+                if(geolocationHandler == null) {
+                    geolocationHandler = new CfxGeolocationHandler();
+                    this.GetGeolocationHandler += BrowserClient_GetGeolocationHandler;
+                }
+                return geolocationHandler;
+            }
+        }
+
+        internal CfxJsDialogHandler JsDialogHandler {
+            get {
+                if(jsDialogHandler == null) {
+                    jsDialogHandler = new CfxJsDialogHandler();
+                    this.GetJsDialogHandler += BrowserClient_GetjsDialogHandler;
+                }
+                return jsDialogHandler;
+            }
+        }
+
+        internal CfxKeyboardHandler KeyboardHandler {
+            get {
+                if(keyboardHandler == null) {
+                    keyboardHandler = new CfxKeyboardHandler();
+                    this.GetKeyboardHandler += BrowserClient_GetKeyboardHandler;
+                }
+                return keyboardHandler;
+            }
+        }
+
+        private void BrowserClient_GetKeyboardHandler(object sender, CfxGetKeyboardHandlerEventArgs e) {
+            e.SetReturnValue(keyboardHandler);
+        }
+
+        private void BrowserClient_GetjsDialogHandler(object sender, CfxGetJsDialogHandlerEventArgs e) {
+            e.SetReturnValue(jsDialogHandler);
+        }
+
+        private void BrowserClient_GetGeolocationHandler(object sender, CfxGetGeolocationHandlerEventArgs e) {
+            e.SetReturnValue(geolocationHandler);
+        }
+
+        void BrowserClient_GetFocusHandler(object sender, CfxGetFocusHandlerEventArgs e) {
+            e.SetReturnValue(focusHandler);
+        }
+
+        private void BrowserClient_GetDialogHandler(object sender, CfxGetDialogHandlerEventArgs e) {
+            e.SetReturnValue(dialogHandler);
+        }
+
+        void BrowserClient_GetDragHandler(object sender, CfxGetDragHandlerEventArgs e) {
+            e.SetReturnValue(dragHandler);
+        }
+
+        void BrowserClient_GetDownloadHandler(object sender, CfxGetDownloadHandlerEventArgs e) {
+            e.SetReturnValue(downloadHandler);
         }
 
         void BrowserClient_GetDisplayHandler(object sender, CfxGetDisplayHandlerEventArgs e) {
