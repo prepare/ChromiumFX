@@ -62,6 +62,7 @@ namespace CfxTestApplication {
             this.UrlTextBox = new System.Windows.Forms.ToolStripTextBox();
             this.LoadUrlButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.LoadGoogleButton = new System.Windows.Forms.ToolStripButton();
             this.JSHelloWorldButton = new System.Windows.Forms.ToolStripButton();
             this.ResourcesTestButton = new System.Windows.Forms.ToolStripButton();
             this.VisitDomButton = new System.Windows.Forms.ToolStripButton();
@@ -72,7 +73,8 @@ namespace CfxTestApplication {
             this.WebBrowser = new Chromium.WebBrowser.ChromiumWebBrowser();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.LogTextBox = new System.Windows.Forms.TextBox();
-            this.LoadGoogleButton = new System.Windows.Forms.ToolStripButton();
+            this.miscDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.systemNetCompatibilityTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -98,7 +100,8 @@ namespace CfxTestApplication {
             this.VisitDomButton,
             this.CountFramesButton,
             this.ShowDevToolsButton,
-            this.CreditsButton});
+            this.CreditsButton,
+            this.miscDropDownButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1261, 25);
@@ -144,6 +147,16 @@ namespace CfxTestApplication {
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // LoadGoogleButton
+            // 
+            this.LoadGoogleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.LoadGoogleButton.Image = ((System.Drawing.Image)(resources.GetObject("LoadGoogleButton.Image")));
+            this.LoadGoogleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.LoadGoogleButton.Name = "LoadGoogleButton";
+            this.LoadGoogleButton.Size = new System.Drawing.Size(104, 22);
+            this.LoadGoogleButton.Text = "Load google.com";
+            this.LoadGoogleButton.Click += new System.EventHandler(this.LoadGoogleButton_Click);
             // 
             // JSHelloWorldButton
             // 
@@ -255,15 +268,23 @@ namespace CfxTestApplication {
             this.LogTextBox.Size = new System.Drawing.Size(1261, 121);
             this.LogTextBox.TabIndex = 0;
             // 
-            // LoadGoogleButton
+            // miscDropDownButton
             // 
-            this.LoadGoogleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.LoadGoogleButton.Image = ((System.Drawing.Image)(resources.GetObject("LoadGoogleButton.Image")));
-            this.LoadGoogleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.LoadGoogleButton.Name = "LoadGoogleButton";
-            this.LoadGoogleButton.Size = new System.Drawing.Size(104, 22);
-            this.LoadGoogleButton.Text = "Load google.com";
-            this.LoadGoogleButton.Click += new System.EventHandler(this.LoadGoogleButton_Click);
+            this.miscDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.miscDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.systemNetCompatibilityTestToolStripMenuItem});
+            this.miscDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("miscDropDownButton.Image")));
+            this.miscDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.miscDropDownButton.Name = "miscDropDownButton";
+            this.miscDropDownButton.Size = new System.Drawing.Size(45, 22);
+            this.miscDropDownButton.Text = "Misc";
+            // 
+            // systemNetCompatibilityTestToolStripMenuItem
+            // 
+            this.systemNetCompatibilityTestToolStripMenuItem.Name = "systemNetCompatibilityTestToolStripMenuItem";
+            this.systemNetCompatibilityTestToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.systemNetCompatibilityTestToolStripMenuItem.Text = "System.Net compatibility test";
+            this.systemNetCompatibilityTestToolStripMenuItem.Click += new System.EventHandler(this.systemNetCompatibilityTestToolStripMenuItem_Click);
             // 
             // BrowserForm
             // 
@@ -308,5 +329,7 @@ namespace CfxTestApplication {
         private System.Windows.Forms.ToolStripButton ShowDevToolsButton;
         private System.Windows.Forms.ToolStripButton CreditsButton;
         private System.Windows.Forms.ToolStripButton LoadGoogleButton;
+        private System.Windows.Forms.ToolStripDropDownButton miscDropDownButton;
+        private System.Windows.Forms.ToolStripMenuItem systemNetCompatibilityTestToolStripMenuItem;
     }
 }
