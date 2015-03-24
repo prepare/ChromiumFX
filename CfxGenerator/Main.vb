@@ -36,6 +36,8 @@ Module Main
 
     Public EmitDebugInfo As Integer = 0
 
+    Public DocumentationFormatBugStillExists As Boolean
+
     Sub Main()
 
         ''GeneratedFileManager.PatchFilesLicense(CfxPath)
@@ -47,6 +49,11 @@ Module Main
 
         Dim gen = New WrapperGenerator(decls)
         gen.Run()
+
+        If Not DocumentationFormatBugStillExists Then
+            'remove workaroung for this bug in CSharp.PrepareSummaryLine
+            Stop
+        End If
 
     End Sub
 

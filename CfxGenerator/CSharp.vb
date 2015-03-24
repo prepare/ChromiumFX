@@ -47,8 +47,9 @@ Public Class CSharp
 
         line = Regex.Replace(line, "&(?!\w+;)", "&amp;")
 
-        line = Regex.Replace(line, "\b(cef_\w+)_t\b", AddressOf PrepareSummaryLine_TypeMatch)
-        line = Regex.Replace(line, "\b(Cef\w+)(?:\.|::)(\w+)\b", AddressOf PrepareSummaryLine_MemberMatch)
+        line = Regex.Replace(line, "\b(cef_\w+)_t(\w+)?\b", AddressOf PrepareSummaryLine_TypeMatch)
+        line = Regex.Replace(line, "\b(Cef\w+)(?:\.|::|->)(\w+)\b", AddressOf PrepareSummaryLine_MemberMatch)
+        line = Regex.Replace(line, "->([\w_]+)\(", AddressOf PrepareSummaryLine_FunctionMatch)
 
         PrepareSummaryLine_ArgumentMatch_ForEvent = forEvent
         line = Regex.Replace(line, "\|(\w+)\|", AddressOf PrepareSummaryLine_ArgumentMatch)
@@ -59,11 +60,20 @@ Public Class CSharp
     End Function
 
     Private Shared Function PrepareSummaryLine_TypeMatch(m As Match) As String
-        Return ApplyStyle(m.Groups(1).Value, False)
+        If m.Groups(2).Success Then
+            Main.DocumentationFormatBugStillExists = True
+            Return ApplyStyle(m.Groups(1).Value, False) & m.Groups(2).Value
+        Else
+            Return ApplyStyle(m.Groups(1).Value, False)
+        End If
     End Function
 
     Private Shared Function PrepareSummaryLine_MemberMatch(m As Match) As String
         Return String.Format("{0}.{1}", m.Groups(1).Value, ApplyStyle(m.Groups(2).Value, False))
+    End Function
+
+    Private Shared Function PrepareSummaryLine_FunctionMatch(m As Match) As String
+        Return String.Format(".{0}(", ApplyStyle(m.Groups(1).Value, False))
     End Function
 
     Private Shared PrepareSummaryLine_ArgumentMatch_ForEvent As Boolean

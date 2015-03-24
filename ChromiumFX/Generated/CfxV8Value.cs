@@ -192,7 +192,7 @@ namespace Chromium {
 
         /// <summary>
         /// Create a new CfxV8Value object of type Date. This function should only be
-        /// called from within the scope of a cef_v8context_tHandler, CfxV8Handler or
+        /// called from within the scope of a CfxV8ContextHandler, CfxV8Handler or
         /// CfxV8Accessor callback, or in combination with calling enter() and exit()
         /// on a stored CfxV8Context reference.
         /// </summary>
@@ -221,7 +221,7 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxV8Value object of type object with optional accessor. This
         /// function should only be called from within the scope of a
-        /// cef_v8context_tHandler, CfxV8Handler or CfxV8Accessor callback, or in
+        /// CfxV8ContextHandler, CfxV8Handler or CfxV8Accessor callback, or in
         /// combination with calling enter() and exit() on a stored CfxV8Context
         /// reference.
         /// </summary>
@@ -236,7 +236,7 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxV8Value object of type array with the specified |length|.
         /// If |length| is negative the returned array will have length 0. This function
-        /// should only be called from within the scope of a cef_v8context_tHandler,
+        /// should only be called from within the scope of a CfxV8ContextHandler,
         /// CfxV8Handler or CfxV8Accessor callback, or in combination with calling
         /// enter() and exit() on a stored CfxV8Context reference.
         /// </summary>
@@ -250,7 +250,7 @@ namespace Chromium {
 
         /// <summary>
         /// Create a new CfxV8Value object of type function. This function should only
-        /// be called from within the scope of a cef_v8context_tHandler, CfxV8Handler
+        /// be called from within the scope of a CfxV8ContextHandler, CfxV8Handler
         /// or CfxV8Accessor callback, or in combination with calling enter() and
         /// exit() on a stored CfxV8Context reference.
         /// </summary>

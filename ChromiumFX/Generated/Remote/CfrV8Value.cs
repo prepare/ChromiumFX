@@ -147,7 +147,7 @@ namespace Chromium.Remote {
 
         /// <summary>
         /// Create a new CfrV8Value object of type Date. This function should only be
-        /// called from within the scope of a cef_v8context_tHandler, CfrV8Handler or
+        /// called from within the scope of a CfrV8ContextHandler, CfrV8Handler or
         /// CfrV8Accessor callback, or in combination with calling enter() and exit()
         /// on a stored CfrV8Context reference.
         /// </summary>
@@ -179,7 +179,7 @@ namespace Chromium.Remote {
         /// <summary>
         /// Create a new CfrV8Value object of type object with optional accessor. This
         /// function should only be called from within the scope of a
-        /// cef_v8context_tHandler, CfrV8Handler or CfrV8Accessor callback, or in
+        /// CfrV8ContextHandler, CfrV8Handler or CfrV8Accessor callback, or in
         /// combination with calling enter() and exit() on a stored CfrV8Context
         /// reference.
         /// </summary>
@@ -197,7 +197,7 @@ namespace Chromium.Remote {
         /// <summary>
         /// Create a new CfrV8Value object of type array with the specified |length|.
         /// If |length| is negative the returned array will have length 0. This function
-        /// should only be called from within the scope of a cef_v8context_tHandler,
+        /// should only be called from within the scope of a CfrV8ContextHandler,
         /// CfrV8Handler or CfrV8Accessor callback, or in combination with calling
         /// enter() and exit() on a stored CfrV8Context reference.
         /// </summary>
@@ -214,7 +214,7 @@ namespace Chromium.Remote {
 
         /// <summary>
         /// Create a new CfrV8Value object of type function. This function should only
-        /// be called from within the scope of a cef_v8context_tHandler, CfrV8Handler
+        /// be called from within the scope of a CfrV8ContextHandler, CfrV8Handler
         /// or CfrV8Accessor callback, or in combination with calling enter() and
         /// exit() on a stored CfrV8Context reference.
         /// </summary>
