@@ -271,5 +271,9 @@ namespace CfxTestApplication {
         private void systemNetCompatibilityTestToolStripMenuItem_Click(object sender, EventArgs e) {
             HttpWebResponseCompatTest.Test();
         }
+
+        private void printButton_Click(object sender, EventArgs e) {
+            WebBrowser.BrowserHost.Print();
+        }
     }
 }

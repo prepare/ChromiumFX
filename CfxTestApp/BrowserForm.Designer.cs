@@ -69,12 +69,13 @@ namespace CfxTestApplication {
             this.CountFramesButton = new System.Windows.Forms.ToolStripButton();
             this.ShowDevToolsButton = new System.Windows.Forms.ToolStripButton();
             this.CreditsButton = new System.Windows.Forms.ToolStripButton();
+            this.miscDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.systemNetCompatibilityTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.WebBrowser = new Chromium.WebBrowser.ChromiumWebBrowser();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.LogTextBox = new System.Windows.Forms.TextBox();
-            this.miscDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
-            this.systemNetCompatibilityTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -101,10 +102,11 @@ namespace CfxTestApplication {
             this.CountFramesButton,
             this.ShowDevToolsButton,
             this.CreditsButton,
-            this.miscDropDownButton});
+            this.miscDropDownButton,
+            this.printButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1261, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1316, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -216,58 +218,6 @@ namespace CfxTestApplication {
             this.CreditsButton.Text = "about:credits";
             this.CreditsButton.Click += new System.EventHandler(this.CreditsButton_Click);
             // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.WebBrowser);
-            this.splitContainer1.Panel2Collapsed = true;
-            this.splitContainer1.Size = new System.Drawing.Size(1261, 448);
-            this.splitContainer1.SplitterDistance = 873;
-            this.splitContainer1.TabIndex = 3;
-            // 
-            // WebBrowser
-            // 
-            this.WebBrowser.BackColor = System.Drawing.Color.White;
-            this.WebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.WebBrowser.Location = new System.Drawing.Point(0, 0);
-            this.WebBrowser.Name = "WebBrowser";
-            this.WebBrowser.Size = new System.Drawing.Size(1261, 448);
-            this.WebBrowser.TabIndex = 2;
-            this.WebBrowser.Text = "cfxWebBrowser2";
-            // 
-            // splitContainer2
-            // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 25);
-            this.splitContainer2.Name = "splitContainer2";
-            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this.splitContainer1);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.LogTextBox);
-            this.splitContainer2.Size = new System.Drawing.Size(1261, 573);
-            this.splitContainer2.SplitterDistance = 448;
-            this.splitContainer2.TabIndex = 4;
-            // 
-            // LogTextBox
-            // 
-            this.LogTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LogTextBox.Location = new System.Drawing.Point(0, 0);
-            this.LogTextBox.Multiline = true;
-            this.LogTextBox.Name = "LogTextBox";
-            this.LogTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.LogTextBox.Size = new System.Drawing.Size(1261, 121);
-            this.LogTextBox.TabIndex = 0;
-            // 
             // miscDropDownButton
             // 
             this.miscDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -286,11 +236,74 @@ namespace CfxTestApplication {
             this.systemNetCompatibilityTestToolStripMenuItem.Text = "System.Net compatibility test";
             this.systemNetCompatibilityTestToolStripMenuItem.Click += new System.EventHandler(this.systemNetCompatibilityTestToolStripMenuItem_Click);
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.WebBrowser);
+            this.splitContainer1.Panel2Collapsed = true;
+            this.splitContainer1.Size = new System.Drawing.Size(1316, 448);
+            this.splitContainer1.SplitterDistance = 873;
+            this.splitContainer1.TabIndex = 3;
+            // 
+            // WebBrowser
+            // 
+            this.WebBrowser.BackColor = System.Drawing.Color.White;
+            this.WebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.WebBrowser.Location = new System.Drawing.Point(0, 0);
+            this.WebBrowser.Name = "WebBrowser";
+            this.WebBrowser.Size = new System.Drawing.Size(1316, 448);
+            this.WebBrowser.TabIndex = 2;
+            this.WebBrowser.Text = "cfxWebBrowser2";
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 25);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.splitContainer1);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.LogTextBox);
+            this.splitContainer2.Size = new System.Drawing.Size(1316, 573);
+            this.splitContainer2.SplitterDistance = 448;
+            this.splitContainer2.TabIndex = 4;
+            // 
+            // LogTextBox
+            // 
+            this.LogTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LogTextBox.Location = new System.Drawing.Point(0, 0);
+            this.LogTextBox.Multiline = true;
+            this.LogTextBox.Name = "LogTextBox";
+            this.LogTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.LogTextBox.Size = new System.Drawing.Size(1316, 121);
+            this.LogTextBox.TabIndex = 0;
+            // 
+            // printButton
+            // 
+            this.printButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.printButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.printButton.Image = ((System.Drawing.Image)(resources.GetObject("printButton.Image")));
+            this.printButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.printButton.Name = "printButton";
+            this.printButton.Size = new System.Drawing.Size(36, 22);
+            this.printButton.Text = "Print";
+            this.printButton.Click += new System.EventHandler(this.printButton_Click);
+            // 
             // BrowserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1261, 598);
+            this.ClientSize = new System.Drawing.Size(1316, 598);
             this.Controls.Add(this.splitContainer2);
             this.Controls.Add(this.toolStrip1);
             this.Name = "BrowserForm";
@@ -331,5 +344,6 @@ namespace CfxTestApplication {
         private System.Windows.Forms.ToolStripButton LoadGoogleButton;
         private System.Windows.Forms.ToolStripDropDownButton miscDropDownButton;
         private System.Windows.Forms.ToolStripMenuItem systemNetCompatibilityTestToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton printButton;
     }
 }
