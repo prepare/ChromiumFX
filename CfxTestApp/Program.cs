@@ -101,7 +101,6 @@ namespace CfxTestApplication {
             //Walkthrough01.Main();
             //return;
 
-           
             Application.EnableVisualStyles();
             var f = new BrowserForm();
             f.Show();

@@ -267,5 +267,9 @@ namespace CfxTestApplication {
         private void LoadGoogleButton_Click(object sender, EventArgs e) {
             WebBrowser.LoadUrl("google.com");
         }
+
+        private void systemNetCompatibilityTestToolStripMenuItem_Click(object sender, EventArgs e) {
+            HttpWebResponseCompatTest.Test();
+        }
     }
 }
