@@ -47,9 +47,7 @@ namespace Chromium {
     public class CfxWriteHandler : CfxBase {
 
         static CfxWriteHandler () {
-            CfxApi.cfx_write_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(1035, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
-            CfxApi.cfx_write_handler_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(1036, typeof(CfxApi.cfx_get_gc_handle_delegate));
-            CfxApi.cfx_write_handler_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(1037, typeof(CfxApi.cfx_set_callback_delegate));
+            CfxApiLoader.LoadCfxWriteHandlerApi();
         }
 
         internal static CfxWriteHandler Wrap(IntPtr nativePtr) {

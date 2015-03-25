@@ -47,55 +47,7 @@ namespace Chromium {
     public class CfxMenuModel : CfxBase {
 
         static CfxMenuModel () {
-            CfxApi.cfx_menu_model_clear = (CfxApi.cfx_menu_model_clear_delegate)CfxApi.GetDelegate(521, typeof(CfxApi.cfx_menu_model_clear_delegate));
-            CfxApi.cfx_menu_model_get_count = (CfxApi.cfx_menu_model_get_count_delegate)CfxApi.GetDelegate(522, typeof(CfxApi.cfx_menu_model_get_count_delegate));
-            CfxApi.cfx_menu_model_add_separator = (CfxApi.cfx_menu_model_add_separator_delegate)CfxApi.GetDelegate(523, typeof(CfxApi.cfx_menu_model_add_separator_delegate));
-            CfxApi.cfx_menu_model_add_item = (CfxApi.cfx_menu_model_add_item_delegate)CfxApi.GetDelegate(524, typeof(CfxApi.cfx_menu_model_add_item_delegate));
-            CfxApi.cfx_menu_model_add_check_item = (CfxApi.cfx_menu_model_add_check_item_delegate)CfxApi.GetDelegate(525, typeof(CfxApi.cfx_menu_model_add_check_item_delegate));
-            CfxApi.cfx_menu_model_add_radio_item = (CfxApi.cfx_menu_model_add_radio_item_delegate)CfxApi.GetDelegate(526, typeof(CfxApi.cfx_menu_model_add_radio_item_delegate));
-            CfxApi.cfx_menu_model_add_sub_menu = (CfxApi.cfx_menu_model_add_sub_menu_delegate)CfxApi.GetDelegate(527, typeof(CfxApi.cfx_menu_model_add_sub_menu_delegate));
-            CfxApi.cfx_menu_model_insert_separator_at = (CfxApi.cfx_menu_model_insert_separator_at_delegate)CfxApi.GetDelegate(528, typeof(CfxApi.cfx_menu_model_insert_separator_at_delegate));
-            CfxApi.cfx_menu_model_insert_item_at = (CfxApi.cfx_menu_model_insert_item_at_delegate)CfxApi.GetDelegate(529, typeof(CfxApi.cfx_menu_model_insert_item_at_delegate));
-            CfxApi.cfx_menu_model_insert_check_item_at = (CfxApi.cfx_menu_model_insert_check_item_at_delegate)CfxApi.GetDelegate(530, typeof(CfxApi.cfx_menu_model_insert_check_item_at_delegate));
-            CfxApi.cfx_menu_model_insert_radio_item_at = (CfxApi.cfx_menu_model_insert_radio_item_at_delegate)CfxApi.GetDelegate(531, typeof(CfxApi.cfx_menu_model_insert_radio_item_at_delegate));
-            CfxApi.cfx_menu_model_insert_sub_menu_at = (CfxApi.cfx_menu_model_insert_sub_menu_at_delegate)CfxApi.GetDelegate(532, typeof(CfxApi.cfx_menu_model_insert_sub_menu_at_delegate));
-            CfxApi.cfx_menu_model_remove = (CfxApi.cfx_menu_model_remove_delegate)CfxApi.GetDelegate(533, typeof(CfxApi.cfx_menu_model_remove_delegate));
-            CfxApi.cfx_menu_model_remove_at = (CfxApi.cfx_menu_model_remove_at_delegate)CfxApi.GetDelegate(534, typeof(CfxApi.cfx_menu_model_remove_at_delegate));
-            CfxApi.cfx_menu_model_get_index_of = (CfxApi.cfx_menu_model_get_index_of_delegate)CfxApi.GetDelegate(535, typeof(CfxApi.cfx_menu_model_get_index_of_delegate));
-            CfxApi.cfx_menu_model_get_command_id_at = (CfxApi.cfx_menu_model_get_command_id_at_delegate)CfxApi.GetDelegate(536, typeof(CfxApi.cfx_menu_model_get_command_id_at_delegate));
-            CfxApi.cfx_menu_model_set_command_id_at = (CfxApi.cfx_menu_model_set_command_id_at_delegate)CfxApi.GetDelegate(537, typeof(CfxApi.cfx_menu_model_set_command_id_at_delegate));
-            CfxApi.cfx_menu_model_get_label = (CfxApi.cfx_menu_model_get_label_delegate)CfxApi.GetDelegate(538, typeof(CfxApi.cfx_menu_model_get_label_delegate));
-            CfxApi.cfx_menu_model_get_label_at = (CfxApi.cfx_menu_model_get_label_at_delegate)CfxApi.GetDelegate(539, typeof(CfxApi.cfx_menu_model_get_label_at_delegate));
-            CfxApi.cfx_menu_model_set_label = (CfxApi.cfx_menu_model_set_label_delegate)CfxApi.GetDelegate(540, typeof(CfxApi.cfx_menu_model_set_label_delegate));
-            CfxApi.cfx_menu_model_set_label_at = (CfxApi.cfx_menu_model_set_label_at_delegate)CfxApi.GetDelegate(541, typeof(CfxApi.cfx_menu_model_set_label_at_delegate));
-            CfxApi.cfx_menu_model_get_type = (CfxApi.cfx_menu_model_get_type_delegate)CfxApi.GetDelegate(542, typeof(CfxApi.cfx_menu_model_get_type_delegate));
-            CfxApi.cfx_menu_model_get_type_at = (CfxApi.cfx_menu_model_get_type_at_delegate)CfxApi.GetDelegate(543, typeof(CfxApi.cfx_menu_model_get_type_at_delegate));
-            CfxApi.cfx_menu_model_get_group_id = (CfxApi.cfx_menu_model_get_group_id_delegate)CfxApi.GetDelegate(544, typeof(CfxApi.cfx_menu_model_get_group_id_delegate));
-            CfxApi.cfx_menu_model_get_group_id_at = (CfxApi.cfx_menu_model_get_group_id_at_delegate)CfxApi.GetDelegate(545, typeof(CfxApi.cfx_menu_model_get_group_id_at_delegate));
-            CfxApi.cfx_menu_model_set_group_id = (CfxApi.cfx_menu_model_set_group_id_delegate)CfxApi.GetDelegate(546, typeof(CfxApi.cfx_menu_model_set_group_id_delegate));
-            CfxApi.cfx_menu_model_set_group_id_at = (CfxApi.cfx_menu_model_set_group_id_at_delegate)CfxApi.GetDelegate(547, typeof(CfxApi.cfx_menu_model_set_group_id_at_delegate));
-            CfxApi.cfx_menu_model_get_sub_menu = (CfxApi.cfx_menu_model_get_sub_menu_delegate)CfxApi.GetDelegate(548, typeof(CfxApi.cfx_menu_model_get_sub_menu_delegate));
-            CfxApi.cfx_menu_model_get_sub_menu_at = (CfxApi.cfx_menu_model_get_sub_menu_at_delegate)CfxApi.GetDelegate(549, typeof(CfxApi.cfx_menu_model_get_sub_menu_at_delegate));
-            CfxApi.cfx_menu_model_is_visible = (CfxApi.cfx_menu_model_is_visible_delegate)CfxApi.GetDelegate(550, typeof(CfxApi.cfx_menu_model_is_visible_delegate));
-            CfxApi.cfx_menu_model_is_visible_at = (CfxApi.cfx_menu_model_is_visible_at_delegate)CfxApi.GetDelegate(551, typeof(CfxApi.cfx_menu_model_is_visible_at_delegate));
-            CfxApi.cfx_menu_model_set_visible = (CfxApi.cfx_menu_model_set_visible_delegate)CfxApi.GetDelegate(552, typeof(CfxApi.cfx_menu_model_set_visible_delegate));
-            CfxApi.cfx_menu_model_set_visible_at = (CfxApi.cfx_menu_model_set_visible_at_delegate)CfxApi.GetDelegate(553, typeof(CfxApi.cfx_menu_model_set_visible_at_delegate));
-            CfxApi.cfx_menu_model_is_enabled = (CfxApi.cfx_menu_model_is_enabled_delegate)CfxApi.GetDelegate(554, typeof(CfxApi.cfx_menu_model_is_enabled_delegate));
-            CfxApi.cfx_menu_model_is_enabled_at = (CfxApi.cfx_menu_model_is_enabled_at_delegate)CfxApi.GetDelegate(555, typeof(CfxApi.cfx_menu_model_is_enabled_at_delegate));
-            CfxApi.cfx_menu_model_set_enabled = (CfxApi.cfx_menu_model_set_enabled_delegate)CfxApi.GetDelegate(556, typeof(CfxApi.cfx_menu_model_set_enabled_delegate));
-            CfxApi.cfx_menu_model_set_enabled_at = (CfxApi.cfx_menu_model_set_enabled_at_delegate)CfxApi.GetDelegate(557, typeof(CfxApi.cfx_menu_model_set_enabled_at_delegate));
-            CfxApi.cfx_menu_model_is_checked = (CfxApi.cfx_menu_model_is_checked_delegate)CfxApi.GetDelegate(558, typeof(CfxApi.cfx_menu_model_is_checked_delegate));
-            CfxApi.cfx_menu_model_is_checked_at = (CfxApi.cfx_menu_model_is_checked_at_delegate)CfxApi.GetDelegate(559, typeof(CfxApi.cfx_menu_model_is_checked_at_delegate));
-            CfxApi.cfx_menu_model_set_checked = (CfxApi.cfx_menu_model_set_checked_delegate)CfxApi.GetDelegate(560, typeof(CfxApi.cfx_menu_model_set_checked_delegate));
-            CfxApi.cfx_menu_model_set_checked_at = (CfxApi.cfx_menu_model_set_checked_at_delegate)CfxApi.GetDelegate(561, typeof(CfxApi.cfx_menu_model_set_checked_at_delegate));
-            CfxApi.cfx_menu_model_has_accelerator = (CfxApi.cfx_menu_model_has_accelerator_delegate)CfxApi.GetDelegate(562, typeof(CfxApi.cfx_menu_model_has_accelerator_delegate));
-            CfxApi.cfx_menu_model_has_accelerator_at = (CfxApi.cfx_menu_model_has_accelerator_at_delegate)CfxApi.GetDelegate(563, typeof(CfxApi.cfx_menu_model_has_accelerator_at_delegate));
-            CfxApi.cfx_menu_model_set_accelerator = (CfxApi.cfx_menu_model_set_accelerator_delegate)CfxApi.GetDelegate(564, typeof(CfxApi.cfx_menu_model_set_accelerator_delegate));
-            CfxApi.cfx_menu_model_set_accelerator_at = (CfxApi.cfx_menu_model_set_accelerator_at_delegate)CfxApi.GetDelegate(565, typeof(CfxApi.cfx_menu_model_set_accelerator_at_delegate));
-            CfxApi.cfx_menu_model_remove_accelerator = (CfxApi.cfx_menu_model_remove_accelerator_delegate)CfxApi.GetDelegate(566, typeof(CfxApi.cfx_menu_model_remove_accelerator_delegate));
-            CfxApi.cfx_menu_model_remove_accelerator_at = (CfxApi.cfx_menu_model_remove_accelerator_at_delegate)CfxApi.GetDelegate(567, typeof(CfxApi.cfx_menu_model_remove_accelerator_at_delegate));
-            CfxApi.cfx_menu_model_get_accelerator = (CfxApi.cfx_menu_model_get_accelerator_delegate)CfxApi.GetDelegate(568, typeof(CfxApi.cfx_menu_model_get_accelerator_delegate));
-            CfxApi.cfx_menu_model_get_accelerator_at = (CfxApi.cfx_menu_model_get_accelerator_at_delegate)CfxApi.GetDelegate(569, typeof(CfxApi.cfx_menu_model_get_accelerator_at_delegate));
+            CfxApiLoader.LoadCfxMenuModelApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

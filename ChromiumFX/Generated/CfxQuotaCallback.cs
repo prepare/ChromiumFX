@@ -44,8 +44,7 @@ namespace Chromium {
     public class CfxQuotaCallback : CfxBase {
 
         static CfxQuotaCallback () {
-            CfxApi.cfx_quota_callback_cont = (CfxApi.cfx_quota_callback_cont_delegate)CfxApi.GetDelegate(691, typeof(CfxApi.cfx_quota_callback_cont_delegate));
-            CfxApi.cfx_quota_callback_cancel = (CfxApi.cfx_quota_callback_cancel_delegate)CfxApi.GetDelegate(692, typeof(CfxApi.cfx_quota_callback_cancel_delegate));
+            CfxApiLoader.LoadCfxQuotaCallbackApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

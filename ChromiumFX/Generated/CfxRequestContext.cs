@@ -56,11 +56,7 @@ namespace Chromium {
     public class CfxRequestContext : CfxBase {
 
         static CfxRequestContext () {
-            CfxApi.cfx_request_context_get_global_context = (CfxApi.cfx_request_context_get_global_context_delegate)CfxApi.GetDelegate(729, typeof(CfxApi.cfx_request_context_get_global_context_delegate));
-            CfxApi.cfx_request_context_create_context = (CfxApi.cfx_request_context_create_context_delegate)CfxApi.GetDelegate(730, typeof(CfxApi.cfx_request_context_create_context_delegate));
-            CfxApi.cfx_request_context_is_same = (CfxApi.cfx_request_context_is_same_delegate)CfxApi.GetDelegate(731, typeof(CfxApi.cfx_request_context_is_same_delegate));
-            CfxApi.cfx_request_context_is_global = (CfxApi.cfx_request_context_is_global_delegate)CfxApi.GetDelegate(732, typeof(CfxApi.cfx_request_context_is_global_delegate));
-            CfxApi.cfx_request_context_get_handler = (CfxApi.cfx_request_context_get_handler_delegate)CfxApi.GetDelegate(733, typeof(CfxApi.cfx_request_context_get_handler_delegate));
+            CfxApiLoader.LoadCfxRequestContextApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

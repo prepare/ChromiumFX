@@ -44,7 +44,7 @@ namespace Chromium {
     public class CfxBeforeDownloadCallback : CfxBase {
 
         static CfxBeforeDownloadCallback () {
-            CfxApi.cfx_before_download_callback_cont = (CfxApi.cfx_before_download_callback_cont_delegate)CfxApi.GetDelegate(44, typeof(CfxApi.cfx_before_download_callback_cont_delegate));
+            CfxApiLoader.LoadCfxBeforeDownloadCallbackApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

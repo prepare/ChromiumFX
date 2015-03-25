@@ -44,30 +44,7 @@ namespace Chromium {
     public class CfxPrintSettings : CfxBase {
 
         static CfxPrintSettings () {
-            CfxApi.cfx_print_settings_create = (CfxApi.cfx_print_settings_create_delegate)CfxApi.GetDelegate(661, typeof(CfxApi.cfx_print_settings_create_delegate));
-            CfxApi.cfx_print_settings_is_valid = (CfxApi.cfx_print_settings_is_valid_delegate)CfxApi.GetDelegate(662, typeof(CfxApi.cfx_print_settings_is_valid_delegate));
-            CfxApi.cfx_print_settings_is_read_only = (CfxApi.cfx_print_settings_is_read_only_delegate)CfxApi.GetDelegate(663, typeof(CfxApi.cfx_print_settings_is_read_only_delegate));
-            CfxApi.cfx_print_settings_copy = (CfxApi.cfx_print_settings_copy_delegate)CfxApi.GetDelegate(664, typeof(CfxApi.cfx_print_settings_copy_delegate));
-            CfxApi.cfx_print_settings_set_orientation = (CfxApi.cfx_print_settings_set_orientation_delegate)CfxApi.GetDelegate(665, typeof(CfxApi.cfx_print_settings_set_orientation_delegate));
-            CfxApi.cfx_print_settings_is_landscape = (CfxApi.cfx_print_settings_is_landscape_delegate)CfxApi.GetDelegate(666, typeof(CfxApi.cfx_print_settings_is_landscape_delegate));
-            CfxApi.cfx_print_settings_set_printer_printable_area = (CfxApi.cfx_print_settings_set_printer_printable_area_delegate)CfxApi.GetDelegate(667, typeof(CfxApi.cfx_print_settings_set_printer_printable_area_delegate));
-            CfxApi.cfx_print_settings_set_device_name = (CfxApi.cfx_print_settings_set_device_name_delegate)CfxApi.GetDelegate(668, typeof(CfxApi.cfx_print_settings_set_device_name_delegate));
-            CfxApi.cfx_print_settings_get_device_name = (CfxApi.cfx_print_settings_get_device_name_delegate)CfxApi.GetDelegate(669, typeof(CfxApi.cfx_print_settings_get_device_name_delegate));
-            CfxApi.cfx_print_settings_set_dpi = (CfxApi.cfx_print_settings_set_dpi_delegate)CfxApi.GetDelegate(670, typeof(CfxApi.cfx_print_settings_set_dpi_delegate));
-            CfxApi.cfx_print_settings_get_dpi = (CfxApi.cfx_print_settings_get_dpi_delegate)CfxApi.GetDelegate(671, typeof(CfxApi.cfx_print_settings_get_dpi_delegate));
-            CfxApi.cfx_print_settings_set_page_ranges = (CfxApi.cfx_print_settings_set_page_ranges_delegate)CfxApi.GetDelegate(672, typeof(CfxApi.cfx_print_settings_set_page_ranges_delegate));
-            CfxApi.cfx_print_settings_get_page_ranges_count = (CfxApi.cfx_print_settings_get_page_ranges_count_delegate)CfxApi.GetDelegate(673, typeof(CfxApi.cfx_print_settings_get_page_ranges_count_delegate));
-            CfxApi.cfx_print_settings_get_page_ranges = (CfxApi.cfx_print_settings_get_page_ranges_delegate)CfxApi.GetDelegate(674, typeof(CfxApi.cfx_print_settings_get_page_ranges_delegate));
-            CfxApi.cfx_print_settings_set_selection_only = (CfxApi.cfx_print_settings_set_selection_only_delegate)CfxApi.GetDelegate(675, typeof(CfxApi.cfx_print_settings_set_selection_only_delegate));
-            CfxApi.cfx_print_settings_is_selection_only = (CfxApi.cfx_print_settings_is_selection_only_delegate)CfxApi.GetDelegate(676, typeof(CfxApi.cfx_print_settings_is_selection_only_delegate));
-            CfxApi.cfx_print_settings_set_collate = (CfxApi.cfx_print_settings_set_collate_delegate)CfxApi.GetDelegate(677, typeof(CfxApi.cfx_print_settings_set_collate_delegate));
-            CfxApi.cfx_print_settings_will_collate = (CfxApi.cfx_print_settings_will_collate_delegate)CfxApi.GetDelegate(678, typeof(CfxApi.cfx_print_settings_will_collate_delegate));
-            CfxApi.cfx_print_settings_set_color_model = (CfxApi.cfx_print_settings_set_color_model_delegate)CfxApi.GetDelegate(679, typeof(CfxApi.cfx_print_settings_set_color_model_delegate));
-            CfxApi.cfx_print_settings_get_color_model = (CfxApi.cfx_print_settings_get_color_model_delegate)CfxApi.GetDelegate(680, typeof(CfxApi.cfx_print_settings_get_color_model_delegate));
-            CfxApi.cfx_print_settings_set_copies = (CfxApi.cfx_print_settings_set_copies_delegate)CfxApi.GetDelegate(681, typeof(CfxApi.cfx_print_settings_set_copies_delegate));
-            CfxApi.cfx_print_settings_get_copies = (CfxApi.cfx_print_settings_get_copies_delegate)CfxApi.GetDelegate(682, typeof(CfxApi.cfx_print_settings_get_copies_delegate));
-            CfxApi.cfx_print_settings_set_duplex_mode = (CfxApi.cfx_print_settings_set_duplex_mode_delegate)CfxApi.GetDelegate(683, typeof(CfxApi.cfx_print_settings_set_duplex_mode_delegate));
-            CfxApi.cfx_print_settings_get_duplex_mode = (CfxApi.cfx_print_settings_get_duplex_mode_delegate)CfxApi.GetDelegate(684, typeof(CfxApi.cfx_print_settings_get_duplex_mode_delegate));
+            CfxApiLoader.LoadCfxPrintSettingsApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

@@ -47,9 +47,7 @@ namespace Chromium {
     public class CfxResourceBundleHandler : CfxBase {
 
         static CfxResourceBundleHandler () {
-            CfxApi.cfx_resource_bundle_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(740, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
-            CfxApi.cfx_resource_bundle_handler_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(741, typeof(CfxApi.cfx_get_gc_handle_delegate));
-            CfxApi.cfx_resource_bundle_handler_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(742, typeof(CfxApi.cfx_set_callback_delegate));
+            CfxApiLoader.LoadCfxResourceBundleHandlerApi();
         }
 
         internal static CfxResourceBundleHandler Wrap(IntPtr nativePtr) {

@@ -47,9 +47,7 @@ namespace Chromium {
     public class CfxDialogHandler : CfxBase {
 
         static CfxDialogHandler () {
-            CfxApi.cfx_dialog_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(282, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
-            CfxApi.cfx_dialog_handler_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(283, typeof(CfxApi.cfx_get_gc_handle_delegate));
-            CfxApi.cfx_dialog_handler_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(284, typeof(CfxApi.cfx_set_callback_delegate));
+            CfxApiLoader.LoadCfxDialogHandlerApi();
         }
 
         internal static CfxDialogHandler Wrap(IntPtr nativePtr) {

@@ -46,20 +46,7 @@ namespace Chromium {
     public sealed class CfxScreenInfo : CfxStructure {
 
         static CfxScreenInfo () {
-            CfxApi.cfx_screen_info_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(764, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_screen_info_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(765, typeof(CfxApi.cfx_dtor_delegate));
-            CfxApi.cfx_screen_info_set_device_scale_factor = (CfxApi.cfx_screen_info_set_device_scale_factor_delegate)CfxApi.GetDelegate(766, typeof(CfxApi.cfx_screen_info_set_device_scale_factor_delegate));
-            CfxApi.cfx_screen_info_get_device_scale_factor = (CfxApi.cfx_screen_info_get_device_scale_factor_delegate)CfxApi.GetDelegate(767, typeof(CfxApi.cfx_screen_info_get_device_scale_factor_delegate));
-            CfxApi.cfx_screen_info_set_depth = (CfxApi.cfx_screen_info_set_depth_delegate)CfxApi.GetDelegate(768, typeof(CfxApi.cfx_screen_info_set_depth_delegate));
-            CfxApi.cfx_screen_info_get_depth = (CfxApi.cfx_screen_info_get_depth_delegate)CfxApi.GetDelegate(769, typeof(CfxApi.cfx_screen_info_get_depth_delegate));
-            CfxApi.cfx_screen_info_set_depth_per_component = (CfxApi.cfx_screen_info_set_depth_per_component_delegate)CfxApi.GetDelegate(770, typeof(CfxApi.cfx_screen_info_set_depth_per_component_delegate));
-            CfxApi.cfx_screen_info_get_depth_per_component = (CfxApi.cfx_screen_info_get_depth_per_component_delegate)CfxApi.GetDelegate(771, typeof(CfxApi.cfx_screen_info_get_depth_per_component_delegate));
-            CfxApi.cfx_screen_info_set_is_monochrome = (CfxApi.cfx_screen_info_set_is_monochrome_delegate)CfxApi.GetDelegate(772, typeof(CfxApi.cfx_screen_info_set_is_monochrome_delegate));
-            CfxApi.cfx_screen_info_get_is_monochrome = (CfxApi.cfx_screen_info_get_is_monochrome_delegate)CfxApi.GetDelegate(773, typeof(CfxApi.cfx_screen_info_get_is_monochrome_delegate));
-            CfxApi.cfx_screen_info_set_rect = (CfxApi.cfx_screen_info_set_rect_delegate)CfxApi.GetDelegate(774, typeof(CfxApi.cfx_screen_info_set_rect_delegate));
-            CfxApi.cfx_screen_info_get_rect = (CfxApi.cfx_screen_info_get_rect_delegate)CfxApi.GetDelegate(775, typeof(CfxApi.cfx_screen_info_get_rect_delegate));
-            CfxApi.cfx_screen_info_set_available_rect = (CfxApi.cfx_screen_info_set_available_rect_delegate)CfxApi.GetDelegate(776, typeof(CfxApi.cfx_screen_info_set_available_rect_delegate));
-            CfxApi.cfx_screen_info_get_available_rect = (CfxApi.cfx_screen_info_get_available_rect_delegate)CfxApi.GetDelegate(777, typeof(CfxApi.cfx_screen_info_get_available_rect_delegate));
+            CfxApiLoader.LoadCfxScreenInfoApi();
         }
 
         internal static CfxScreenInfo Wrap(IntPtr nativePtr) {

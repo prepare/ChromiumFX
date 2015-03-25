@@ -46,9 +46,7 @@ namespace Chromium {
     public class CfxClient : CfxBase {
 
         static CfxClient () {
-            CfxApi.cfx_client_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(190, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
-            CfxApi.cfx_client_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(191, typeof(CfxApi.cfx_get_gc_handle_delegate));
-            CfxApi.cfx_client_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(192, typeof(CfxApi.cfx_set_callback_delegate));
+            CfxApiLoader.LoadCfxClientApi();
         }
 
         internal static CfxClient Wrap(IntPtr nativePtr) {

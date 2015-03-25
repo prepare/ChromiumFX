@@ -45,23 +45,7 @@ namespace Chromium {
     public class CfxRequest : CfxBase {
 
         static CfxRequest () {
-            CfxApi.cfx_request_create = (CfxApi.cfx_request_create_delegate)CfxApi.GetDelegate(712, typeof(CfxApi.cfx_request_create_delegate));
-            CfxApi.cfx_request_is_read_only = (CfxApi.cfx_request_is_read_only_delegate)CfxApi.GetDelegate(713, typeof(CfxApi.cfx_request_is_read_only_delegate));
-            CfxApi.cfx_request_get_url = (CfxApi.cfx_request_get_url_delegate)CfxApi.GetDelegate(714, typeof(CfxApi.cfx_request_get_url_delegate));
-            CfxApi.cfx_request_set_url = (CfxApi.cfx_request_set_url_delegate)CfxApi.GetDelegate(715, typeof(CfxApi.cfx_request_set_url_delegate));
-            CfxApi.cfx_request_get_method = (CfxApi.cfx_request_get_method_delegate)CfxApi.GetDelegate(716, typeof(CfxApi.cfx_request_get_method_delegate));
-            CfxApi.cfx_request_set_method = (CfxApi.cfx_request_set_method_delegate)CfxApi.GetDelegate(717, typeof(CfxApi.cfx_request_set_method_delegate));
-            CfxApi.cfx_request_get_post_data = (CfxApi.cfx_request_get_post_data_delegate)CfxApi.GetDelegate(718, typeof(CfxApi.cfx_request_get_post_data_delegate));
-            CfxApi.cfx_request_set_post_data = (CfxApi.cfx_request_set_post_data_delegate)CfxApi.GetDelegate(719, typeof(CfxApi.cfx_request_set_post_data_delegate));
-            CfxApi.cfx_request_get_header_map = (CfxApi.cfx_request_get_header_map_delegate)CfxApi.GetDelegate(720, typeof(CfxApi.cfx_request_get_header_map_delegate));
-            CfxApi.cfx_request_set_header_map = (CfxApi.cfx_request_set_header_map_delegate)CfxApi.GetDelegate(721, typeof(CfxApi.cfx_request_set_header_map_delegate));
-            CfxApi.cfx_request_set = (CfxApi.cfx_request_set_delegate)CfxApi.GetDelegate(722, typeof(CfxApi.cfx_request_set_delegate));
-            CfxApi.cfx_request_get_flags = (CfxApi.cfx_request_get_flags_delegate)CfxApi.GetDelegate(723, typeof(CfxApi.cfx_request_get_flags_delegate));
-            CfxApi.cfx_request_set_flags = (CfxApi.cfx_request_set_flags_delegate)CfxApi.GetDelegate(724, typeof(CfxApi.cfx_request_set_flags_delegate));
-            CfxApi.cfx_request_get_first_party_for_cookies = (CfxApi.cfx_request_get_first_party_for_cookies_delegate)CfxApi.GetDelegate(725, typeof(CfxApi.cfx_request_get_first_party_for_cookies_delegate));
-            CfxApi.cfx_request_set_first_party_for_cookies = (CfxApi.cfx_request_set_first_party_for_cookies_delegate)CfxApi.GetDelegate(726, typeof(CfxApi.cfx_request_set_first_party_for_cookies_delegate));
-            CfxApi.cfx_request_get_resource_type = (CfxApi.cfx_request_get_resource_type_delegate)CfxApi.GetDelegate(727, typeof(CfxApi.cfx_request_get_resource_type_delegate));
-            CfxApi.cfx_request_get_transition_type = (CfxApi.cfx_request_get_transition_type_delegate)CfxApi.GetDelegate(728, typeof(CfxApi.cfx_request_get_transition_type_delegate));
+            CfxApiLoader.LoadCfxRequestApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

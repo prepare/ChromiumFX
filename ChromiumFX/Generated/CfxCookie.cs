@@ -44,28 +44,7 @@ namespace Chromium {
     public sealed class CfxCookie : CfxStructure {
 
         static CfxCookie () {
-            CfxApi.cfx_cookie_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(240, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_cookie_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(241, typeof(CfxApi.cfx_dtor_delegate));
-            CfxApi.cfx_cookie_set_name = (CfxApi.cfx_cookie_set_name_delegate)CfxApi.GetDelegate(242, typeof(CfxApi.cfx_cookie_set_name_delegate));
-            CfxApi.cfx_cookie_get_name = (CfxApi.cfx_cookie_get_name_delegate)CfxApi.GetDelegate(243, typeof(CfxApi.cfx_cookie_get_name_delegate));
-            CfxApi.cfx_cookie_set_value = (CfxApi.cfx_cookie_set_value_delegate)CfxApi.GetDelegate(244, typeof(CfxApi.cfx_cookie_set_value_delegate));
-            CfxApi.cfx_cookie_get_value = (CfxApi.cfx_cookie_get_value_delegate)CfxApi.GetDelegate(245, typeof(CfxApi.cfx_cookie_get_value_delegate));
-            CfxApi.cfx_cookie_set_domain = (CfxApi.cfx_cookie_set_domain_delegate)CfxApi.GetDelegate(246, typeof(CfxApi.cfx_cookie_set_domain_delegate));
-            CfxApi.cfx_cookie_get_domain = (CfxApi.cfx_cookie_get_domain_delegate)CfxApi.GetDelegate(247, typeof(CfxApi.cfx_cookie_get_domain_delegate));
-            CfxApi.cfx_cookie_set_path = (CfxApi.cfx_cookie_set_path_delegate)CfxApi.GetDelegate(248, typeof(CfxApi.cfx_cookie_set_path_delegate));
-            CfxApi.cfx_cookie_get_path = (CfxApi.cfx_cookie_get_path_delegate)CfxApi.GetDelegate(249, typeof(CfxApi.cfx_cookie_get_path_delegate));
-            CfxApi.cfx_cookie_set_secure = (CfxApi.cfx_cookie_set_secure_delegate)CfxApi.GetDelegate(250, typeof(CfxApi.cfx_cookie_set_secure_delegate));
-            CfxApi.cfx_cookie_get_secure = (CfxApi.cfx_cookie_get_secure_delegate)CfxApi.GetDelegate(251, typeof(CfxApi.cfx_cookie_get_secure_delegate));
-            CfxApi.cfx_cookie_set_httponly = (CfxApi.cfx_cookie_set_httponly_delegate)CfxApi.GetDelegate(252, typeof(CfxApi.cfx_cookie_set_httponly_delegate));
-            CfxApi.cfx_cookie_get_httponly = (CfxApi.cfx_cookie_get_httponly_delegate)CfxApi.GetDelegate(253, typeof(CfxApi.cfx_cookie_get_httponly_delegate));
-            CfxApi.cfx_cookie_set_creation = (CfxApi.cfx_cookie_set_creation_delegate)CfxApi.GetDelegate(254, typeof(CfxApi.cfx_cookie_set_creation_delegate));
-            CfxApi.cfx_cookie_get_creation = (CfxApi.cfx_cookie_get_creation_delegate)CfxApi.GetDelegate(255, typeof(CfxApi.cfx_cookie_get_creation_delegate));
-            CfxApi.cfx_cookie_set_last_access = (CfxApi.cfx_cookie_set_last_access_delegate)CfxApi.GetDelegate(256, typeof(CfxApi.cfx_cookie_set_last_access_delegate));
-            CfxApi.cfx_cookie_get_last_access = (CfxApi.cfx_cookie_get_last_access_delegate)CfxApi.GetDelegate(257, typeof(CfxApi.cfx_cookie_get_last_access_delegate));
-            CfxApi.cfx_cookie_set_has_expires = (CfxApi.cfx_cookie_set_has_expires_delegate)CfxApi.GetDelegate(258, typeof(CfxApi.cfx_cookie_set_has_expires_delegate));
-            CfxApi.cfx_cookie_get_has_expires = (CfxApi.cfx_cookie_get_has_expires_delegate)CfxApi.GetDelegate(259, typeof(CfxApi.cfx_cookie_get_has_expires_delegate));
-            CfxApi.cfx_cookie_set_expires = (CfxApi.cfx_cookie_set_expires_delegate)CfxApi.GetDelegate(260, typeof(CfxApi.cfx_cookie_set_expires_delegate));
-            CfxApi.cfx_cookie_get_expires = (CfxApi.cfx_cookie_get_expires_delegate)CfxApi.GetDelegate(261, typeof(CfxApi.cfx_cookie_get_expires_delegate));
+            CfxApiLoader.LoadCfxCookieApi();
         }
 
         internal static CfxCookie Wrap(IntPtr nativePtr) {

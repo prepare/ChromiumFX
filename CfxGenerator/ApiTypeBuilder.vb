@@ -95,6 +95,8 @@ Public Class ApiTypeBuilder
         AddType(New BooleanInteger)
         AddType(New BooleanIntegerOutType)
 
+        AddType(New OpaquePtrType("XDisplay"))
+
         Dim tStr As ApiType = New CefStringType
         AddType(tStr)
         AddType(New CefStringPtrType(tStr.AsCefStringType))

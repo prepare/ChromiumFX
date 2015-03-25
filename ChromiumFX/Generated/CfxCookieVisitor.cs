@@ -47,9 +47,7 @@ namespace Chromium {
     public class CfxCookieVisitor : CfxBase {
 
         static CfxCookieVisitor () {
-            CfxApi.cfx_cookie_visitor_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(271, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
-            CfxApi.cfx_cookie_visitor_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(272, typeof(CfxApi.cfx_get_gc_handle_delegate));
-            CfxApi.cfx_cookie_visitor_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(273, typeof(CfxApi.cfx_set_callback_delegate));
+            CfxApiLoader.LoadCfxCookieVisitorApi();
         }
 
         internal static CfxCookieVisitor Wrap(IntPtr nativePtr) {

@@ -48,18 +48,7 @@ namespace Chromium {
     public class CfxV8Context : CfxBase {
 
         static CfxV8Context () {
-            CfxApi.cfx_v8context_get_current_context = (CfxApi.cfx_v8context_get_current_context_delegate)CfxApi.GetDelegate(909, typeof(CfxApi.cfx_v8context_get_current_context_delegate));
-            CfxApi.cfx_v8context_get_entered_context = (CfxApi.cfx_v8context_get_entered_context_delegate)CfxApi.GetDelegate(910, typeof(CfxApi.cfx_v8context_get_entered_context_delegate));
-            CfxApi.cfx_v8context_in_context = (CfxApi.cfx_v8context_in_context_delegate)CfxApi.GetDelegate(911, typeof(CfxApi.cfx_v8context_in_context_delegate));
-            CfxApi.cfx_v8context_get_task_runner = (CfxApi.cfx_v8context_get_task_runner_delegate)CfxApi.GetDelegate(912, typeof(CfxApi.cfx_v8context_get_task_runner_delegate));
-            CfxApi.cfx_v8context_is_valid = (CfxApi.cfx_v8context_is_valid_delegate)CfxApi.GetDelegate(913, typeof(CfxApi.cfx_v8context_is_valid_delegate));
-            CfxApi.cfx_v8context_get_browser = (CfxApi.cfx_v8context_get_browser_delegate)CfxApi.GetDelegate(914, typeof(CfxApi.cfx_v8context_get_browser_delegate));
-            CfxApi.cfx_v8context_get_frame = (CfxApi.cfx_v8context_get_frame_delegate)CfxApi.GetDelegate(915, typeof(CfxApi.cfx_v8context_get_frame_delegate));
-            CfxApi.cfx_v8context_get_global = (CfxApi.cfx_v8context_get_global_delegate)CfxApi.GetDelegate(916, typeof(CfxApi.cfx_v8context_get_global_delegate));
-            CfxApi.cfx_v8context_enter = (CfxApi.cfx_v8context_enter_delegate)CfxApi.GetDelegate(917, typeof(CfxApi.cfx_v8context_enter_delegate));
-            CfxApi.cfx_v8context_exit = (CfxApi.cfx_v8context_exit_delegate)CfxApi.GetDelegate(918, typeof(CfxApi.cfx_v8context_exit_delegate));
-            CfxApi.cfx_v8context_is_same = (CfxApi.cfx_v8context_is_same_delegate)CfxApi.GetDelegate(919, typeof(CfxApi.cfx_v8context_is_same_delegate));
-            CfxApi.cfx_v8context_eval = (CfxApi.cfx_v8context_eval_delegate)CfxApi.GetDelegate(920, typeof(CfxApi.cfx_v8context_eval_delegate));
+            CfxApiLoader.LoadCfxV8ContextApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

@@ -45,17 +45,7 @@ namespace Chromium {
     public class CfxResponse : CfxBase {
 
         static CfxResponse () {
-            CfxApi.cfx_response_create = (CfxApi.cfx_response_create_delegate)CfxApi.GetDelegate(746, typeof(CfxApi.cfx_response_create_delegate));
-            CfxApi.cfx_response_is_read_only = (CfxApi.cfx_response_is_read_only_delegate)CfxApi.GetDelegate(747, typeof(CfxApi.cfx_response_is_read_only_delegate));
-            CfxApi.cfx_response_get_status = (CfxApi.cfx_response_get_status_delegate)CfxApi.GetDelegate(748, typeof(CfxApi.cfx_response_get_status_delegate));
-            CfxApi.cfx_response_set_status = (CfxApi.cfx_response_set_status_delegate)CfxApi.GetDelegate(749, typeof(CfxApi.cfx_response_set_status_delegate));
-            CfxApi.cfx_response_get_status_text = (CfxApi.cfx_response_get_status_text_delegate)CfxApi.GetDelegate(750, typeof(CfxApi.cfx_response_get_status_text_delegate));
-            CfxApi.cfx_response_set_status_text = (CfxApi.cfx_response_set_status_text_delegate)CfxApi.GetDelegate(751, typeof(CfxApi.cfx_response_set_status_text_delegate));
-            CfxApi.cfx_response_get_mime_type = (CfxApi.cfx_response_get_mime_type_delegate)CfxApi.GetDelegate(752, typeof(CfxApi.cfx_response_get_mime_type_delegate));
-            CfxApi.cfx_response_set_mime_type = (CfxApi.cfx_response_set_mime_type_delegate)CfxApi.GetDelegate(753, typeof(CfxApi.cfx_response_set_mime_type_delegate));
-            CfxApi.cfx_response_get_header = (CfxApi.cfx_response_get_header_delegate)CfxApi.GetDelegate(754, typeof(CfxApi.cfx_response_get_header_delegate));
-            CfxApi.cfx_response_get_header_map = (CfxApi.cfx_response_get_header_map_delegate)CfxApi.GetDelegate(755, typeof(CfxApi.cfx_response_get_header_map_delegate));
-            CfxApi.cfx_response_set_header_map = (CfxApi.cfx_response_set_header_map_delegate)CfxApi.GetDelegate(756, typeof(CfxApi.cfx_response_set_header_map_delegate));
+            CfxApiLoader.LoadCfxResponseApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

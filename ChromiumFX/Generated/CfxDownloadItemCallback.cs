@@ -44,7 +44,7 @@ namespace Chromium {
     public class CfxDownloadItemCallback : CfxBase {
 
         static CfxDownloadItemCallback () {
-            CfxApi.cfx_download_item_callback_cancel = (CfxApi.cfx_download_item_callback_cancel_delegate)CfxApi.GetDelegate(377, typeof(CfxApi.cfx_download_item_callback_cancel_delegate));
+            CfxApiLoader.LoadCfxDownloadItemCallbackApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

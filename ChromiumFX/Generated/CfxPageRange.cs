@@ -44,12 +44,7 @@ namespace Chromium {
     public sealed class CfxPageRange : CfxStructure {
 
         static CfxPageRange () {
-            CfxApi.cfx_page_range_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(591, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_page_range_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(592, typeof(CfxApi.cfx_dtor_delegate));
-            CfxApi.cfx_page_range_set_from = (CfxApi.cfx_page_range_set_from_delegate)CfxApi.GetDelegate(593, typeof(CfxApi.cfx_page_range_set_from_delegate));
-            CfxApi.cfx_page_range_get_from = (CfxApi.cfx_page_range_get_from_delegate)CfxApi.GetDelegate(594, typeof(CfxApi.cfx_page_range_get_from_delegate));
-            CfxApi.cfx_page_range_set_to = (CfxApi.cfx_page_range_set_to_delegate)CfxApi.GetDelegate(595, typeof(CfxApi.cfx_page_range_set_to_delegate));
-            CfxApi.cfx_page_range_get_to = (CfxApi.cfx_page_range_get_to_delegate)CfxApi.GetDelegate(596, typeof(CfxApi.cfx_page_range_get_to_delegate));
+            CfxApiLoader.LoadCfxPageRangeApi();
         }
 
         internal static CfxPageRange Wrap(IntPtr nativePtr) {

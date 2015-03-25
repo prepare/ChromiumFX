@@ -46,19 +46,7 @@ namespace Chromium {
     public partial class CfxZipReader : CfxBase {
 
         static CfxZipReader () {
-            CfxApi.cfx_zip_reader_create = (CfxApi.cfx_zip_reader_create_delegate)CfxApi.GetDelegate(1068, typeof(CfxApi.cfx_zip_reader_create_delegate));
-            CfxApi.cfx_zip_reader_move_to_first_file = (CfxApi.cfx_zip_reader_move_to_first_file_delegate)CfxApi.GetDelegate(1069, typeof(CfxApi.cfx_zip_reader_move_to_first_file_delegate));
-            CfxApi.cfx_zip_reader_move_to_next_file = (CfxApi.cfx_zip_reader_move_to_next_file_delegate)CfxApi.GetDelegate(1070, typeof(CfxApi.cfx_zip_reader_move_to_next_file_delegate));
-            CfxApi.cfx_zip_reader_move_to_file = (CfxApi.cfx_zip_reader_move_to_file_delegate)CfxApi.GetDelegate(1071, typeof(CfxApi.cfx_zip_reader_move_to_file_delegate));
-            CfxApi.cfx_zip_reader_close = (CfxApi.cfx_zip_reader_close_delegate)CfxApi.GetDelegate(1072, typeof(CfxApi.cfx_zip_reader_close_delegate));
-            CfxApi.cfx_zip_reader_get_file_name = (CfxApi.cfx_zip_reader_get_file_name_delegate)CfxApi.GetDelegate(1073, typeof(CfxApi.cfx_zip_reader_get_file_name_delegate));
-            CfxApi.cfx_zip_reader_get_file_size = (CfxApi.cfx_zip_reader_get_file_size_delegate)CfxApi.GetDelegate(1074, typeof(CfxApi.cfx_zip_reader_get_file_size_delegate));
-            CfxApi.cfx_zip_reader_get_file_last_modified = (CfxApi.cfx_zip_reader_get_file_last_modified_delegate)CfxApi.GetDelegate(1075, typeof(CfxApi.cfx_zip_reader_get_file_last_modified_delegate));
-            CfxApi.cfx_zip_reader_open_file = (CfxApi.cfx_zip_reader_open_file_delegate)CfxApi.GetDelegate(1076, typeof(CfxApi.cfx_zip_reader_open_file_delegate));
-            CfxApi.cfx_zip_reader_close_file = (CfxApi.cfx_zip_reader_close_file_delegate)CfxApi.GetDelegate(1077, typeof(CfxApi.cfx_zip_reader_close_file_delegate));
-            CfxApi.cfx_zip_reader_read_file = (CfxApi.cfx_zip_reader_read_file_delegate)CfxApi.GetDelegate(1078, typeof(CfxApi.cfx_zip_reader_read_file_delegate));
-            CfxApi.cfx_zip_reader_tell = (CfxApi.cfx_zip_reader_tell_delegate)CfxApi.GetDelegate(1079, typeof(CfxApi.cfx_zip_reader_tell_delegate));
-            CfxApi.cfx_zip_reader_eof = (CfxApi.cfx_zip_reader_eof_delegate)CfxApi.GetDelegate(1080, typeof(CfxApi.cfx_zip_reader_eof_delegate));
+            CfxApiLoader.LoadCfxZipReaderApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

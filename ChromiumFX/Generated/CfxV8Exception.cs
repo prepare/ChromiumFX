@@ -45,14 +45,7 @@ namespace Chromium {
     public class CfxV8Exception : CfxBase {
 
         static CfxV8Exception () {
-            CfxApi.cfx_v8exception_get_message = (CfxApi.cfx_v8exception_get_message_delegate)CfxApi.GetDelegate(921, typeof(CfxApi.cfx_v8exception_get_message_delegate));
-            CfxApi.cfx_v8exception_get_source_line = (CfxApi.cfx_v8exception_get_source_line_delegate)CfxApi.GetDelegate(922, typeof(CfxApi.cfx_v8exception_get_source_line_delegate));
-            CfxApi.cfx_v8exception_get_script_resource_name = (CfxApi.cfx_v8exception_get_script_resource_name_delegate)CfxApi.GetDelegate(923, typeof(CfxApi.cfx_v8exception_get_script_resource_name_delegate));
-            CfxApi.cfx_v8exception_get_line_number = (CfxApi.cfx_v8exception_get_line_number_delegate)CfxApi.GetDelegate(924, typeof(CfxApi.cfx_v8exception_get_line_number_delegate));
-            CfxApi.cfx_v8exception_get_start_position = (CfxApi.cfx_v8exception_get_start_position_delegate)CfxApi.GetDelegate(925, typeof(CfxApi.cfx_v8exception_get_start_position_delegate));
-            CfxApi.cfx_v8exception_get_end_position = (CfxApi.cfx_v8exception_get_end_position_delegate)CfxApi.GetDelegate(926, typeof(CfxApi.cfx_v8exception_get_end_position_delegate));
-            CfxApi.cfx_v8exception_get_start_column = (CfxApi.cfx_v8exception_get_start_column_delegate)CfxApi.GetDelegate(927, typeof(CfxApi.cfx_v8exception_get_start_column_delegate));
-            CfxApi.cfx_v8exception_get_end_column = (CfxApi.cfx_v8exception_get_end_column_delegate)CfxApi.GetDelegate(928, typeof(CfxApi.cfx_v8exception_get_end_column_delegate));
+            CfxApiLoader.LoadCfxV8ExceptionApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

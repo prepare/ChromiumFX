@@ -44,26 +44,7 @@ namespace Chromium {
     public sealed class CfxUrlParts : CfxStructure {
 
         static CfxUrlParts () {
-            CfxApi.cfx_urlparts_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(876, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_urlparts_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(877, typeof(CfxApi.cfx_dtor_delegate));
-            CfxApi.cfx_urlparts_set_spec = (CfxApi.cfx_urlparts_set_spec_delegate)CfxApi.GetDelegate(878, typeof(CfxApi.cfx_urlparts_set_spec_delegate));
-            CfxApi.cfx_urlparts_get_spec = (CfxApi.cfx_urlparts_get_spec_delegate)CfxApi.GetDelegate(879, typeof(CfxApi.cfx_urlparts_get_spec_delegate));
-            CfxApi.cfx_urlparts_set_scheme = (CfxApi.cfx_urlparts_set_scheme_delegate)CfxApi.GetDelegate(880, typeof(CfxApi.cfx_urlparts_set_scheme_delegate));
-            CfxApi.cfx_urlparts_get_scheme = (CfxApi.cfx_urlparts_get_scheme_delegate)CfxApi.GetDelegate(881, typeof(CfxApi.cfx_urlparts_get_scheme_delegate));
-            CfxApi.cfx_urlparts_set_username = (CfxApi.cfx_urlparts_set_username_delegate)CfxApi.GetDelegate(882, typeof(CfxApi.cfx_urlparts_set_username_delegate));
-            CfxApi.cfx_urlparts_get_username = (CfxApi.cfx_urlparts_get_username_delegate)CfxApi.GetDelegate(883, typeof(CfxApi.cfx_urlparts_get_username_delegate));
-            CfxApi.cfx_urlparts_set_password = (CfxApi.cfx_urlparts_set_password_delegate)CfxApi.GetDelegate(884, typeof(CfxApi.cfx_urlparts_set_password_delegate));
-            CfxApi.cfx_urlparts_get_password = (CfxApi.cfx_urlparts_get_password_delegate)CfxApi.GetDelegate(885, typeof(CfxApi.cfx_urlparts_get_password_delegate));
-            CfxApi.cfx_urlparts_set_host = (CfxApi.cfx_urlparts_set_host_delegate)CfxApi.GetDelegate(886, typeof(CfxApi.cfx_urlparts_set_host_delegate));
-            CfxApi.cfx_urlparts_get_host = (CfxApi.cfx_urlparts_get_host_delegate)CfxApi.GetDelegate(887, typeof(CfxApi.cfx_urlparts_get_host_delegate));
-            CfxApi.cfx_urlparts_set_port = (CfxApi.cfx_urlparts_set_port_delegate)CfxApi.GetDelegate(888, typeof(CfxApi.cfx_urlparts_set_port_delegate));
-            CfxApi.cfx_urlparts_get_port = (CfxApi.cfx_urlparts_get_port_delegate)CfxApi.GetDelegate(889, typeof(CfxApi.cfx_urlparts_get_port_delegate));
-            CfxApi.cfx_urlparts_set_origin = (CfxApi.cfx_urlparts_set_origin_delegate)CfxApi.GetDelegate(890, typeof(CfxApi.cfx_urlparts_set_origin_delegate));
-            CfxApi.cfx_urlparts_get_origin = (CfxApi.cfx_urlparts_get_origin_delegate)CfxApi.GetDelegate(891, typeof(CfxApi.cfx_urlparts_get_origin_delegate));
-            CfxApi.cfx_urlparts_set_path = (CfxApi.cfx_urlparts_set_path_delegate)CfxApi.GetDelegate(892, typeof(CfxApi.cfx_urlparts_set_path_delegate));
-            CfxApi.cfx_urlparts_get_path = (CfxApi.cfx_urlparts_get_path_delegate)CfxApi.GetDelegate(893, typeof(CfxApi.cfx_urlparts_get_path_delegate));
-            CfxApi.cfx_urlparts_set_query = (CfxApi.cfx_urlparts_set_query_delegate)CfxApi.GetDelegate(894, typeof(CfxApi.cfx_urlparts_set_query_delegate));
-            CfxApi.cfx_urlparts_get_query = (CfxApi.cfx_urlparts_get_query_delegate)CfxApi.GetDelegate(895, typeof(CfxApi.cfx_urlparts_get_query_delegate));
+            CfxApiLoader.LoadCfxUrlPartsApi();
         }
 
         public CfxUrlParts() : base(CfxApi.cfx_urlparts_ctor, CfxApi.cfx_urlparts_dtor) {}

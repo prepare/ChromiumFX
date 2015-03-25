@@ -64,23 +64,8 @@ Public Class CodeSnippets
     End Sub
 
     Shared Sub EmitPInvokeDelegateInitialization(b As CodeBuilder, functionName As String)
-        EmitPInvokeDelegateInitialization(b, functionName, functionName & "_delegate")
+        b.AppendLine("CfxApi.{0} = (CfxApi.{0}_delegate)CfxApi.GetDelegate(FunctionIndex.{0}, typeof(CfxApi.{0}_delegate));", functionName)
     End Sub
-
-    Shared Sub EmitPInvokeDelegateInitialization(b As CodeBuilder, functionName As String, apiIndex As Integer)
-        b.AppendLine("CfxApi.{0} = (CfxApi.{0}_delegate)CfxApi.GetDelegate({1}, typeof(CfxApi.{0}_delegate));", functionName, apiIndex)
-    End Sub
-
-    Shared Sub EmitPInvokeDelegateInitialization(b As CodeBuilder, functionName As String, delegateName As String)
-        Dim hmodule As String
-        If functionName.StartsWith("cef_") Then
-            hmodule = "libcefPtr"
-        Else
-            hmodule = "libcfxPtr"
-        End If
-        b.AppendLine("CfxApi.{1} = (CfxApi.{2})CfxApi.GetDelegate(CfxApi.{0}, ""{1}"", typeof(CfxApi.{2}));", hmodule, functionName, delegateName)
-    End Sub
-
 
     Shared Sub BeginExternC(b As CodeBuilder)
         b.AppendLine("#ifdef __cplusplus")
