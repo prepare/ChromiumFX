@@ -48,13 +48,7 @@ namespace Chromium {
     public class CfxUrlRequest : CfxBase {
 
         static CfxUrlRequest () {
-            CfxApi.cfx_urlrequest_create = (CfxApi.cfx_urlrequest_create_delegate)CfxApi.GetDelegate(896, typeof(CfxApi.cfx_urlrequest_create_delegate));
-            CfxApi.cfx_urlrequest_get_request = (CfxApi.cfx_urlrequest_get_request_delegate)CfxApi.GetDelegate(897, typeof(CfxApi.cfx_urlrequest_get_request_delegate));
-            CfxApi.cfx_urlrequest_get_client = (CfxApi.cfx_urlrequest_get_client_delegate)CfxApi.GetDelegate(898, typeof(CfxApi.cfx_urlrequest_get_client_delegate));
-            CfxApi.cfx_urlrequest_get_request_status = (CfxApi.cfx_urlrequest_get_request_status_delegate)CfxApi.GetDelegate(899, typeof(CfxApi.cfx_urlrequest_get_request_status_delegate));
-            CfxApi.cfx_urlrequest_get_request_error = (CfxApi.cfx_urlrequest_get_request_error_delegate)CfxApi.GetDelegate(900, typeof(CfxApi.cfx_urlrequest_get_request_error_delegate));
-            CfxApi.cfx_urlrequest_get_response = (CfxApi.cfx_urlrequest_get_response_delegate)CfxApi.GetDelegate(901, typeof(CfxApi.cfx_urlrequest_get_response_delegate));
-            CfxApi.cfx_urlrequest_cancel = (CfxApi.cfx_urlrequest_cancel_delegate)CfxApi.GetDelegate(902, typeof(CfxApi.cfx_urlrequest_cancel_delegate));
+            CfxApiLoader.LoadCfxUrlRequestApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

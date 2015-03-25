@@ -45,14 +45,7 @@ namespace Chromium {
     public class CfxStreamReader : CfxBase {
 
         static CfxStreamReader () {
-            CfxApi.cfx_stream_reader_create_for_file = (CfxApi.cfx_stream_reader_create_for_file_delegate)CfxApi.GetDelegate(830, typeof(CfxApi.cfx_stream_reader_create_for_file_delegate));
-            CfxApi.cfx_stream_reader_create_for_data = (CfxApi.cfx_stream_reader_create_for_data_delegate)CfxApi.GetDelegate(831, typeof(CfxApi.cfx_stream_reader_create_for_data_delegate));
-            CfxApi.cfx_stream_reader_create_for_handler = (CfxApi.cfx_stream_reader_create_for_handler_delegate)CfxApi.GetDelegate(832, typeof(CfxApi.cfx_stream_reader_create_for_handler_delegate));
-            CfxApi.cfx_stream_reader_read = (CfxApi.cfx_stream_reader_read_delegate)CfxApi.GetDelegate(833, typeof(CfxApi.cfx_stream_reader_read_delegate));
-            CfxApi.cfx_stream_reader_seek = (CfxApi.cfx_stream_reader_seek_delegate)CfxApi.GetDelegate(834, typeof(CfxApi.cfx_stream_reader_seek_delegate));
-            CfxApi.cfx_stream_reader_tell = (CfxApi.cfx_stream_reader_tell_delegate)CfxApi.GetDelegate(835, typeof(CfxApi.cfx_stream_reader_tell_delegate));
-            CfxApi.cfx_stream_reader_eof = (CfxApi.cfx_stream_reader_eof_delegate)CfxApi.GetDelegate(836, typeof(CfxApi.cfx_stream_reader_eof_delegate));
-            CfxApi.cfx_stream_reader_may_block = (CfxApi.cfx_stream_reader_may_block_delegate)CfxApi.GetDelegate(837, typeof(CfxApi.cfx_stream_reader_may_block_delegate));
+            CfxApiLoader.LoadCfxStreamReaderApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

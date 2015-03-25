@@ -38,7 +38,7 @@ namespace Chromium {
     internal class StringFunctions {
 
         static StringFunctions() {
-            CfxApi.InstantiateStringCollectionDelegates();
+            CfxApiLoader.LoadStringCollectionApi();
         }
 
 

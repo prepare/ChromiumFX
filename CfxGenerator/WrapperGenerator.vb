@@ -137,7 +137,7 @@ Public Class WrapperGenerator
         Dim b = New CodeBuilder
         Dim files = fileManager.GetNewFiles()
         For Each f In files
-            b.AppendLine("#include ""{0}""", f)
+            b.AppendLine("#include ""{0}""", System.IO.Path.GetFileName(f))
         Next
         b.AppendLine()
         fileManager.WriteFileIfContentChanged("cfx_amalgamation.c", b.ToString())
@@ -147,7 +147,8 @@ Public Class WrapperGenerator
         Dim b = New CodeBuilder
         Dim files = Directory.GetFiles("cef\include\capi")
         For Each f In files
-            b.AppendLine("#include ""{0}""", f)
+            f = f.Replace("\", "/")
+            b.AppendLine("#include ""{0}""", f.Substring(4))
         Next
         b.AppendLine()
         fileManager.WriteFileIfContentChanged("cef_headers.h", b.ToString())
@@ -291,22 +292,6 @@ Public Class WrapperGenerator
 
         b.AppendLine()
 
-        b.BeginFunction("void InstantiateRuntimeDelegates()", "private static")
-        For Each f In decls.ExportFunctions
-            CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName, f.ApiIndex)
-        Next
-        b.EndBlock()
-        b.AppendLine()
-
-        b.BeginFunction("void InstantiateStringCollectionDelegates()", "internal static")
-        For Each o In decls.StringCollectionTypes
-            For Each f In o.ExportFunctions
-                CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName, f.ApiIndex)
-            Next
-        Next
-        b.EndBlock()
-        b.AppendLine()
-
         b.AppendComment("global cef export functions")
         b.AppendLine()
 
@@ -334,6 +319,81 @@ Public Class WrapperGenerator
         b.EndBlock()
 
         fileManager.WriteFileIfContentChanged("CfxApi.cs", b.ToString())
+        b.Clear()
+
+        Dim cfxfuncs = decls.GetCfxApiFunctionNames()
+        b.BeginCfxNamespace()
+        b.BeginClass("CfxApiLoader", "internal partial")
+        b.BeginBlock("internal enum FunctionIndex")
+        For Each f In cfxfuncs
+            b.AppendLine(f & ",")
+        Next
+
+        b.EndBlock()
+        b.AppendLine()
+
+        b.BeginFunction("void LoadCfxRuntimeApi()", "internal static")
+        For Each f In decls.ExportFunctions
+            CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
+        Next
+        b.EndBlock()
+        b.AppendLine()
+
+        b.BeginFunction("void LoadStringCollectionApi()", "internal static")
+        For Each o In decls.StringCollectionTypes
+            For Each f In o.ExportFunctions
+                CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
+            Next
+        Next
+        b.EndBlock()
+        b.AppendLine()
+
+
+        For Each struct In decls.CefStructTypes
+            b.BeginBlock("internal static void Load{0}Api()", struct.ClassName)
+            Select Case struct.ClassBuilder.Category
+                Case StructCategory.ApiCalls
+                    If struct.ClassBuilder.ExportFunctions.Count > 0 Then
+                        For Each f In struct.ClassBuilder.ExportFunctions
+                            CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
+                        Next
+                    End If
+                    For Each sm In struct.ClassBuilder.StructMembers
+                        If sm.MemberType.IsCefCallbackType Then
+                            CodeSnippets.EmitPInvokeDelegateInitialization(b, struct.CfxName & "_" & sm.Name)
+                        End If
+                    Next
+                Case StructCategory.ApiCallbacks
+                    b.AppendLine("CfxApi.{0}_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.{0}_ctor, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));", struct.CfxName)
+                    b.AppendLine("CfxApi.{0}_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.{0}_get_gc_handle, typeof(CfxApi.cfx_get_gc_handle_delegate));", struct.CfxName)
+                    b.AppendLine("CfxApi.{0}_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(FunctionIndex.{0}_set_managed_callback, typeof(CfxApi.cfx_set_callback_delegate));", struct.CfxName)
+                    If struct.ClassBuilder.ExportFunctions.Count > 0 Then
+                        Stop
+                    End If
+                Case StructCategory.Values
+                    b.AppendLine("CfxApi.{0}_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(FunctionIndex.{0}_ctor, typeof(CfxApi.cfx_ctor_delegate));", struct.CfxName)
+                    b.AppendLine("CfxApi.{0}_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(FunctionIndex.{0}_dtor, typeof(CfxApi.cfx_dtor_delegate));", struct.CfxName)
+
+                    For Each sm In struct.ClassBuilder.StructMembers
+                        If sm.Name <> "size" Then
+                            CodeSnippets.EmitPInvokeDelegateInitialization(b, struct.CfxName & "_set_" & sm.Name)
+                            CodeSnippets.EmitPInvokeDelegateInitialization(b, struct.CfxName & "_get_" & sm.Name)
+                        End If
+                    Next
+                    If struct.ClassBuilder.ExportFunctions.Count > 0 Then
+                        Stop
+                    End If
+
+            End Select
+            b.EndBlock()
+            b.AppendLine()
+
+        Next
+
+        b.EndBlock()
+        b.EndBlock()
+
+        fileManager.WriteFileIfContentChanged("CfxApiLoader.cs", b.ToString())
 
     End Sub
 

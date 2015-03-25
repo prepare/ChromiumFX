@@ -57,7 +57,9 @@ Namespace Parser
 
 
             AddFile("cef\include\internal\cef_types.h", sb)
+
             AddFile("cef\include\internal\cef_types_win.h", sb)
+            'AddFile("linux\cef\include\internal\cef_types_linux.h", sb)
 
             AddFile("cef\include\cef_version.h", sb)
 

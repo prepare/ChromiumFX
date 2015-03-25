@@ -48,9 +48,7 @@ namespace Chromium {
     public class CfxRenderProcessHandler : CfxBase {
 
         static CfxRenderProcessHandler () {
-            CfxApi.cfx_render_process_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(709, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
-            CfxApi.cfx_render_process_handler_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(710, typeof(CfxApi.cfx_get_gc_handle_delegate));
-            CfxApi.cfx_render_process_handler_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(711, typeof(CfxApi.cfx_set_callback_delegate));
+            CfxApiLoader.LoadCfxRenderProcessHandlerApi();
         }
 
         internal static CfxRenderProcessHandler Wrap(IntPtr nativePtr) {

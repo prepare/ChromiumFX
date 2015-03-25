@@ -48,9 +48,7 @@ namespace Chromium {
     public class CfxV8Handler : CfxBase {
 
         static CfxV8Handler () {
-            CfxApi.cfx_v8handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(929, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
-            CfxApi.cfx_v8handler_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(930, typeof(CfxApi.cfx_get_gc_handle_delegate));
-            CfxApi.cfx_v8handler_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(931, typeof(CfxApi.cfx_set_callback_delegate));
+            CfxApiLoader.LoadCfxV8HandlerApi();
         }
 
         internal static CfxV8Handler Wrap(IntPtr nativePtr) {

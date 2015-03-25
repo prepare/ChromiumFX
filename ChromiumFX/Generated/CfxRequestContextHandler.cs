@@ -46,9 +46,7 @@ namespace Chromium {
     public class CfxRequestContextHandler : CfxBase {
 
         static CfxRequestContextHandler () {
-            CfxApi.cfx_request_context_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(734, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
-            CfxApi.cfx_request_context_handler_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(735, typeof(CfxApi.cfx_get_gc_handle_delegate));
-            CfxApi.cfx_request_context_handler_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(736, typeof(CfxApi.cfx_set_callback_delegate));
+            CfxApiLoader.LoadCfxRequestContextHandlerApi();
         }
 
         internal static CfxRequestContextHandler Wrap(IntPtr nativePtr) {

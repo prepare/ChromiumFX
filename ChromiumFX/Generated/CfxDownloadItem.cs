@@ -44,22 +44,7 @@ namespace Chromium {
     public class CfxDownloadItem : CfxBase {
 
         static CfxDownloadItem () {
-            CfxApi.cfx_download_item_is_valid = (CfxApi.cfx_download_item_is_valid_delegate)CfxApi.GetDelegate(361, typeof(CfxApi.cfx_download_item_is_valid_delegate));
-            CfxApi.cfx_download_item_is_in_progress = (CfxApi.cfx_download_item_is_in_progress_delegate)CfxApi.GetDelegate(362, typeof(CfxApi.cfx_download_item_is_in_progress_delegate));
-            CfxApi.cfx_download_item_is_complete = (CfxApi.cfx_download_item_is_complete_delegate)CfxApi.GetDelegate(363, typeof(CfxApi.cfx_download_item_is_complete_delegate));
-            CfxApi.cfx_download_item_is_canceled = (CfxApi.cfx_download_item_is_canceled_delegate)CfxApi.GetDelegate(364, typeof(CfxApi.cfx_download_item_is_canceled_delegate));
-            CfxApi.cfx_download_item_get_current_speed = (CfxApi.cfx_download_item_get_current_speed_delegate)CfxApi.GetDelegate(365, typeof(CfxApi.cfx_download_item_get_current_speed_delegate));
-            CfxApi.cfx_download_item_get_percent_complete = (CfxApi.cfx_download_item_get_percent_complete_delegate)CfxApi.GetDelegate(366, typeof(CfxApi.cfx_download_item_get_percent_complete_delegate));
-            CfxApi.cfx_download_item_get_total_bytes = (CfxApi.cfx_download_item_get_total_bytes_delegate)CfxApi.GetDelegate(367, typeof(CfxApi.cfx_download_item_get_total_bytes_delegate));
-            CfxApi.cfx_download_item_get_received_bytes = (CfxApi.cfx_download_item_get_received_bytes_delegate)CfxApi.GetDelegate(368, typeof(CfxApi.cfx_download_item_get_received_bytes_delegate));
-            CfxApi.cfx_download_item_get_start_time = (CfxApi.cfx_download_item_get_start_time_delegate)CfxApi.GetDelegate(369, typeof(CfxApi.cfx_download_item_get_start_time_delegate));
-            CfxApi.cfx_download_item_get_end_time = (CfxApi.cfx_download_item_get_end_time_delegate)CfxApi.GetDelegate(370, typeof(CfxApi.cfx_download_item_get_end_time_delegate));
-            CfxApi.cfx_download_item_get_full_path = (CfxApi.cfx_download_item_get_full_path_delegate)CfxApi.GetDelegate(371, typeof(CfxApi.cfx_download_item_get_full_path_delegate));
-            CfxApi.cfx_download_item_get_id = (CfxApi.cfx_download_item_get_id_delegate)CfxApi.GetDelegate(372, typeof(CfxApi.cfx_download_item_get_id_delegate));
-            CfxApi.cfx_download_item_get_url = (CfxApi.cfx_download_item_get_url_delegate)CfxApi.GetDelegate(373, typeof(CfxApi.cfx_download_item_get_url_delegate));
-            CfxApi.cfx_download_item_get_suggested_file_name = (CfxApi.cfx_download_item_get_suggested_file_name_delegate)CfxApi.GetDelegate(374, typeof(CfxApi.cfx_download_item_get_suggested_file_name_delegate));
-            CfxApi.cfx_download_item_get_content_disposition = (CfxApi.cfx_download_item_get_content_disposition_delegate)CfxApi.GetDelegate(375, typeof(CfxApi.cfx_download_item_get_content_disposition_delegate));
-            CfxApi.cfx_download_item_get_mime_type = (CfxApi.cfx_download_item_get_mime_type_delegate)CfxApi.GetDelegate(376, typeof(CfxApi.cfx_download_item_get_mime_type_delegate));
+            CfxApiLoader.LoadCfxDownloadItemApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

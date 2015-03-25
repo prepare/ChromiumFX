@@ -45,7 +45,7 @@ namespace Chromium {
     public class CfxGeolocationCallback : CfxBase {
 
         static CfxGeolocationCallback () {
-            CfxApi.cfx_geolocation_callback_cont = (CfxApi.cfx_geolocation_callback_cont_delegate)CfxApi.GetDelegate(436, typeof(CfxApi.cfx_geolocation_callback_cont_delegate));
+            CfxApiLoader.LoadCfxGeolocationCallbackApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

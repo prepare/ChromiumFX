@@ -1,4 +1,4 @@
-'' Copyright (c) 2014-2015 Wolfgang Borgsmüller
+﻿'' Copyright (c) 2014-2015 Wolfgang Borgsmüller
 '' All rights reserved.
 '' 
 '' Redistribution and use in source and binary forms, with or without 
@@ -29,54 +29,17 @@
 '' USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-
-Public Class NumericType
+Public Class OpaquePtrType
     Inherits ApiType
 
-    Private Shared typeSpecs As String() = {
-        "int|int",
-        "int32|int",
-        "int64|long",
-        "uint32|uint",
-        "uint64|ulong",
-        "unsigned short|ushort",
-        "long|int",
-        "unsigned long|uint",
-        "long long|long",
-        "unsigned long long|ulong",
-        "unsigned int|uint",
-        "unsigned|uint",
-        "float|float",
-        "double|double",
-        "DWORD|int"
-    }
-
-    Public Shared Sub CreateAll(b As ApiTypeBuilder)
-        Dim t As NumericType = New SizeType
-        b.AddType(t)
-        b.AddType(New NumericOutType(t))
-        For Each spec In typeSpecs
-            Dim names = spec.Split("|"c)
-            t = New NumericType(names(0), names(1))
-            b.AddType(t)
-            b.AddType(New NumericOutType(t))
-        Next
+    Sub New(name As String)
+        MyBase.New(name & "*")
     End Sub
-
-
-    Public ReadOnly PInvokeType As String
-
-    Sub New(name As String, pInvokeType As String)
-        MyBase.New(name)
-        Me.PInvokeType = pInvokeType
-    End Sub
-
 
     Public Overrides ReadOnly Property PInvokeSymbol As String
         Get
-            Return PInvokeType
+            Return "IntPtr"
         End Get
     End Property
-
 
 End Class

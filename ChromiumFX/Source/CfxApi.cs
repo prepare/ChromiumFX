@@ -205,13 +205,13 @@ namespace Chromium
 
             cef_string_userfree_utf16_free = (cef_string_userfree_utf16_free_delegate)LoadDelegate(libcefPtr, "cef_string_userfree_utf16_free", typeof(cef_string_userfree_utf16_free_delegate));
 
-            InstantiateRuntimeDelegates();
+            CfxApiLoader.LoadCfxRuntimeApi();
             librariesLoaded = true;
 
         }
 
-        internal static Delegate GetDelegate(int apiIndex, Type delegateType) {
-            IntPtr functionPtr = cfx_get_function_pointer(apiIndex);
+        internal static Delegate GetDelegate(CfxApiLoader.FunctionIndex apiIndex, Type delegateType) {
+            IntPtr functionPtr = cfx_get_function_pointer((int)apiIndex);
             return Marshal.GetDelegateForFunctionPointer(functionPtr, delegateType);
         }
         

@@ -46,52 +46,7 @@ namespace Chromium {
     public sealed class CfxSettings : CfxStructure {
 
         static CfxSettings () {
-            CfxApi.cfx_settings_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(778, typeof(CfxApi.cfx_ctor_delegate));
-            CfxApi.cfx_settings_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(779, typeof(CfxApi.cfx_dtor_delegate));
-            CfxApi.cfx_settings_set_single_process = (CfxApi.cfx_settings_set_single_process_delegate)CfxApi.GetDelegate(780, typeof(CfxApi.cfx_settings_set_single_process_delegate));
-            CfxApi.cfx_settings_get_single_process = (CfxApi.cfx_settings_get_single_process_delegate)CfxApi.GetDelegate(781, typeof(CfxApi.cfx_settings_get_single_process_delegate));
-            CfxApi.cfx_settings_set_no_sandbox = (CfxApi.cfx_settings_set_no_sandbox_delegate)CfxApi.GetDelegate(782, typeof(CfxApi.cfx_settings_set_no_sandbox_delegate));
-            CfxApi.cfx_settings_get_no_sandbox = (CfxApi.cfx_settings_get_no_sandbox_delegate)CfxApi.GetDelegate(783, typeof(CfxApi.cfx_settings_get_no_sandbox_delegate));
-            CfxApi.cfx_settings_set_browser_subprocess_path = (CfxApi.cfx_settings_set_browser_subprocess_path_delegate)CfxApi.GetDelegate(784, typeof(CfxApi.cfx_settings_set_browser_subprocess_path_delegate));
-            CfxApi.cfx_settings_get_browser_subprocess_path = (CfxApi.cfx_settings_get_browser_subprocess_path_delegate)CfxApi.GetDelegate(785, typeof(CfxApi.cfx_settings_get_browser_subprocess_path_delegate));
-            CfxApi.cfx_settings_set_multi_threaded_message_loop = (CfxApi.cfx_settings_set_multi_threaded_message_loop_delegate)CfxApi.GetDelegate(786, typeof(CfxApi.cfx_settings_set_multi_threaded_message_loop_delegate));
-            CfxApi.cfx_settings_get_multi_threaded_message_loop = (CfxApi.cfx_settings_get_multi_threaded_message_loop_delegate)CfxApi.GetDelegate(787, typeof(CfxApi.cfx_settings_get_multi_threaded_message_loop_delegate));
-            CfxApi.cfx_settings_set_windowless_rendering_enabled = (CfxApi.cfx_settings_set_windowless_rendering_enabled_delegate)CfxApi.GetDelegate(788, typeof(CfxApi.cfx_settings_set_windowless_rendering_enabled_delegate));
-            CfxApi.cfx_settings_get_windowless_rendering_enabled = (CfxApi.cfx_settings_get_windowless_rendering_enabled_delegate)CfxApi.GetDelegate(789, typeof(CfxApi.cfx_settings_get_windowless_rendering_enabled_delegate));
-            CfxApi.cfx_settings_set_command_line_args_disabled = (CfxApi.cfx_settings_set_command_line_args_disabled_delegate)CfxApi.GetDelegate(790, typeof(CfxApi.cfx_settings_set_command_line_args_disabled_delegate));
-            CfxApi.cfx_settings_get_command_line_args_disabled = (CfxApi.cfx_settings_get_command_line_args_disabled_delegate)CfxApi.GetDelegate(791, typeof(CfxApi.cfx_settings_get_command_line_args_disabled_delegate));
-            CfxApi.cfx_settings_set_cache_path = (CfxApi.cfx_settings_set_cache_path_delegate)CfxApi.GetDelegate(792, typeof(CfxApi.cfx_settings_set_cache_path_delegate));
-            CfxApi.cfx_settings_get_cache_path = (CfxApi.cfx_settings_get_cache_path_delegate)CfxApi.GetDelegate(793, typeof(CfxApi.cfx_settings_get_cache_path_delegate));
-            CfxApi.cfx_settings_set_persist_session_cookies = (CfxApi.cfx_settings_set_persist_session_cookies_delegate)CfxApi.GetDelegate(794, typeof(CfxApi.cfx_settings_set_persist_session_cookies_delegate));
-            CfxApi.cfx_settings_get_persist_session_cookies = (CfxApi.cfx_settings_get_persist_session_cookies_delegate)CfxApi.GetDelegate(795, typeof(CfxApi.cfx_settings_get_persist_session_cookies_delegate));
-            CfxApi.cfx_settings_set_user_agent = (CfxApi.cfx_settings_set_user_agent_delegate)CfxApi.GetDelegate(796, typeof(CfxApi.cfx_settings_set_user_agent_delegate));
-            CfxApi.cfx_settings_get_user_agent = (CfxApi.cfx_settings_get_user_agent_delegate)CfxApi.GetDelegate(797, typeof(CfxApi.cfx_settings_get_user_agent_delegate));
-            CfxApi.cfx_settings_set_product_version = (CfxApi.cfx_settings_set_product_version_delegate)CfxApi.GetDelegate(798, typeof(CfxApi.cfx_settings_set_product_version_delegate));
-            CfxApi.cfx_settings_get_product_version = (CfxApi.cfx_settings_get_product_version_delegate)CfxApi.GetDelegate(799, typeof(CfxApi.cfx_settings_get_product_version_delegate));
-            CfxApi.cfx_settings_set_locale = (CfxApi.cfx_settings_set_locale_delegate)CfxApi.GetDelegate(800, typeof(CfxApi.cfx_settings_set_locale_delegate));
-            CfxApi.cfx_settings_get_locale = (CfxApi.cfx_settings_get_locale_delegate)CfxApi.GetDelegate(801, typeof(CfxApi.cfx_settings_get_locale_delegate));
-            CfxApi.cfx_settings_set_log_file = (CfxApi.cfx_settings_set_log_file_delegate)CfxApi.GetDelegate(802, typeof(CfxApi.cfx_settings_set_log_file_delegate));
-            CfxApi.cfx_settings_get_log_file = (CfxApi.cfx_settings_get_log_file_delegate)CfxApi.GetDelegate(803, typeof(CfxApi.cfx_settings_get_log_file_delegate));
-            CfxApi.cfx_settings_set_log_severity = (CfxApi.cfx_settings_set_log_severity_delegate)CfxApi.GetDelegate(804, typeof(CfxApi.cfx_settings_set_log_severity_delegate));
-            CfxApi.cfx_settings_get_log_severity = (CfxApi.cfx_settings_get_log_severity_delegate)CfxApi.GetDelegate(805, typeof(CfxApi.cfx_settings_get_log_severity_delegate));
-            CfxApi.cfx_settings_set_javascript_flags = (CfxApi.cfx_settings_set_javascript_flags_delegate)CfxApi.GetDelegate(806, typeof(CfxApi.cfx_settings_set_javascript_flags_delegate));
-            CfxApi.cfx_settings_get_javascript_flags = (CfxApi.cfx_settings_get_javascript_flags_delegate)CfxApi.GetDelegate(807, typeof(CfxApi.cfx_settings_get_javascript_flags_delegate));
-            CfxApi.cfx_settings_set_resources_dir_path = (CfxApi.cfx_settings_set_resources_dir_path_delegate)CfxApi.GetDelegate(808, typeof(CfxApi.cfx_settings_set_resources_dir_path_delegate));
-            CfxApi.cfx_settings_get_resources_dir_path = (CfxApi.cfx_settings_get_resources_dir_path_delegate)CfxApi.GetDelegate(809, typeof(CfxApi.cfx_settings_get_resources_dir_path_delegate));
-            CfxApi.cfx_settings_set_locales_dir_path = (CfxApi.cfx_settings_set_locales_dir_path_delegate)CfxApi.GetDelegate(810, typeof(CfxApi.cfx_settings_set_locales_dir_path_delegate));
-            CfxApi.cfx_settings_get_locales_dir_path = (CfxApi.cfx_settings_get_locales_dir_path_delegate)CfxApi.GetDelegate(811, typeof(CfxApi.cfx_settings_get_locales_dir_path_delegate));
-            CfxApi.cfx_settings_set_pack_loading_disabled = (CfxApi.cfx_settings_set_pack_loading_disabled_delegate)CfxApi.GetDelegate(812, typeof(CfxApi.cfx_settings_set_pack_loading_disabled_delegate));
-            CfxApi.cfx_settings_get_pack_loading_disabled = (CfxApi.cfx_settings_get_pack_loading_disabled_delegate)CfxApi.GetDelegate(813, typeof(CfxApi.cfx_settings_get_pack_loading_disabled_delegate));
-            CfxApi.cfx_settings_set_remote_debugging_port = (CfxApi.cfx_settings_set_remote_debugging_port_delegate)CfxApi.GetDelegate(814, typeof(CfxApi.cfx_settings_set_remote_debugging_port_delegate));
-            CfxApi.cfx_settings_get_remote_debugging_port = (CfxApi.cfx_settings_get_remote_debugging_port_delegate)CfxApi.GetDelegate(815, typeof(CfxApi.cfx_settings_get_remote_debugging_port_delegate));
-            CfxApi.cfx_settings_set_uncaught_exception_stack_size = (CfxApi.cfx_settings_set_uncaught_exception_stack_size_delegate)CfxApi.GetDelegate(816, typeof(CfxApi.cfx_settings_set_uncaught_exception_stack_size_delegate));
-            CfxApi.cfx_settings_get_uncaught_exception_stack_size = (CfxApi.cfx_settings_get_uncaught_exception_stack_size_delegate)CfxApi.GetDelegate(817, typeof(CfxApi.cfx_settings_get_uncaught_exception_stack_size_delegate));
-            CfxApi.cfx_settings_set_context_safety_implementation = (CfxApi.cfx_settings_set_context_safety_implementation_delegate)CfxApi.GetDelegate(818, typeof(CfxApi.cfx_settings_set_context_safety_implementation_delegate));
-            CfxApi.cfx_settings_get_context_safety_implementation = (CfxApi.cfx_settings_get_context_safety_implementation_delegate)CfxApi.GetDelegate(819, typeof(CfxApi.cfx_settings_get_context_safety_implementation_delegate));
-            CfxApi.cfx_settings_set_ignore_certificate_errors = (CfxApi.cfx_settings_set_ignore_certificate_errors_delegate)CfxApi.GetDelegate(820, typeof(CfxApi.cfx_settings_set_ignore_certificate_errors_delegate));
-            CfxApi.cfx_settings_get_ignore_certificate_errors = (CfxApi.cfx_settings_get_ignore_certificate_errors_delegate)CfxApi.GetDelegate(821, typeof(CfxApi.cfx_settings_get_ignore_certificate_errors_delegate));
-            CfxApi.cfx_settings_set_background_color = (CfxApi.cfx_settings_set_background_color_delegate)CfxApi.GetDelegate(822, typeof(CfxApi.cfx_settings_set_background_color_delegate));
-            CfxApi.cfx_settings_get_background_color = (CfxApi.cfx_settings_get_background_color_delegate)CfxApi.GetDelegate(823, typeof(CfxApi.cfx_settings_get_background_color_delegate));
+            CfxApiLoader.LoadCfxSettingsApi();
         }
 
         public CfxSettings() : base(CfxApi.cfx_settings_ctor, CfxApi.cfx_settings_dtor) {}

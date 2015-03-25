@@ -95,6 +95,7 @@
     <Compile Include="ApiTypes\BlittablePtrType.vb" />
     <Compile Include="ApiTypes\NumericOutType.vb" />
     <Compile Include="ApiTypes\NumericType.vb" />
+    <Compile Include="ApiTypes\OpaquePtrType.vb" />
     <Compile Include="ApiTypes\SizeType.vb" />
     <Compile Include="ApiTypes\SpecialType.vb" />
     <Compile Include="ApiTypes\StringCollectionType.vb" />

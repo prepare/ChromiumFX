@@ -45,31 +45,7 @@ namespace Chromium {
     public class CfxDomNode : CfxBase {
 
         static CfxDomNode () {
-            CfxApi.cfx_domnode_get_type = (CfxApi.cfx_domnode_get_type_delegate)CfxApi.GetDelegate(330, typeof(CfxApi.cfx_domnode_get_type_delegate));
-            CfxApi.cfx_domnode_is_text = (CfxApi.cfx_domnode_is_text_delegate)CfxApi.GetDelegate(331, typeof(CfxApi.cfx_domnode_is_text_delegate));
-            CfxApi.cfx_domnode_is_element = (CfxApi.cfx_domnode_is_element_delegate)CfxApi.GetDelegate(332, typeof(CfxApi.cfx_domnode_is_element_delegate));
-            CfxApi.cfx_domnode_is_editable = (CfxApi.cfx_domnode_is_editable_delegate)CfxApi.GetDelegate(333, typeof(CfxApi.cfx_domnode_is_editable_delegate));
-            CfxApi.cfx_domnode_is_form_control_element = (CfxApi.cfx_domnode_is_form_control_element_delegate)CfxApi.GetDelegate(334, typeof(CfxApi.cfx_domnode_is_form_control_element_delegate));
-            CfxApi.cfx_domnode_get_form_control_element_type = (CfxApi.cfx_domnode_get_form_control_element_type_delegate)CfxApi.GetDelegate(335, typeof(CfxApi.cfx_domnode_get_form_control_element_type_delegate));
-            CfxApi.cfx_domnode_is_same = (CfxApi.cfx_domnode_is_same_delegate)CfxApi.GetDelegate(336, typeof(CfxApi.cfx_domnode_is_same_delegate));
-            CfxApi.cfx_domnode_get_name = (CfxApi.cfx_domnode_get_name_delegate)CfxApi.GetDelegate(337, typeof(CfxApi.cfx_domnode_get_name_delegate));
-            CfxApi.cfx_domnode_get_value = (CfxApi.cfx_domnode_get_value_delegate)CfxApi.GetDelegate(338, typeof(CfxApi.cfx_domnode_get_value_delegate));
-            CfxApi.cfx_domnode_set_value = (CfxApi.cfx_domnode_set_value_delegate)CfxApi.GetDelegate(339, typeof(CfxApi.cfx_domnode_set_value_delegate));
-            CfxApi.cfx_domnode_get_as_markup = (CfxApi.cfx_domnode_get_as_markup_delegate)CfxApi.GetDelegate(340, typeof(CfxApi.cfx_domnode_get_as_markup_delegate));
-            CfxApi.cfx_domnode_get_document = (CfxApi.cfx_domnode_get_document_delegate)CfxApi.GetDelegate(341, typeof(CfxApi.cfx_domnode_get_document_delegate));
-            CfxApi.cfx_domnode_get_parent = (CfxApi.cfx_domnode_get_parent_delegate)CfxApi.GetDelegate(342, typeof(CfxApi.cfx_domnode_get_parent_delegate));
-            CfxApi.cfx_domnode_get_previous_sibling = (CfxApi.cfx_domnode_get_previous_sibling_delegate)CfxApi.GetDelegate(343, typeof(CfxApi.cfx_domnode_get_previous_sibling_delegate));
-            CfxApi.cfx_domnode_get_next_sibling = (CfxApi.cfx_domnode_get_next_sibling_delegate)CfxApi.GetDelegate(344, typeof(CfxApi.cfx_domnode_get_next_sibling_delegate));
-            CfxApi.cfx_domnode_has_children = (CfxApi.cfx_domnode_has_children_delegate)CfxApi.GetDelegate(345, typeof(CfxApi.cfx_domnode_has_children_delegate));
-            CfxApi.cfx_domnode_get_first_child = (CfxApi.cfx_domnode_get_first_child_delegate)CfxApi.GetDelegate(346, typeof(CfxApi.cfx_domnode_get_first_child_delegate));
-            CfxApi.cfx_domnode_get_last_child = (CfxApi.cfx_domnode_get_last_child_delegate)CfxApi.GetDelegate(347, typeof(CfxApi.cfx_domnode_get_last_child_delegate));
-            CfxApi.cfx_domnode_get_element_tag_name = (CfxApi.cfx_domnode_get_element_tag_name_delegate)CfxApi.GetDelegate(348, typeof(CfxApi.cfx_domnode_get_element_tag_name_delegate));
-            CfxApi.cfx_domnode_has_element_attributes = (CfxApi.cfx_domnode_has_element_attributes_delegate)CfxApi.GetDelegate(349, typeof(CfxApi.cfx_domnode_has_element_attributes_delegate));
-            CfxApi.cfx_domnode_has_element_attribute = (CfxApi.cfx_domnode_has_element_attribute_delegate)CfxApi.GetDelegate(350, typeof(CfxApi.cfx_domnode_has_element_attribute_delegate));
-            CfxApi.cfx_domnode_get_element_attribute = (CfxApi.cfx_domnode_get_element_attribute_delegate)CfxApi.GetDelegate(351, typeof(CfxApi.cfx_domnode_get_element_attribute_delegate));
-            CfxApi.cfx_domnode_get_element_attributes = (CfxApi.cfx_domnode_get_element_attributes_delegate)CfxApi.GetDelegate(352, typeof(CfxApi.cfx_domnode_get_element_attributes_delegate));
-            CfxApi.cfx_domnode_set_element_attribute = (CfxApi.cfx_domnode_set_element_attribute_delegate)CfxApi.GetDelegate(353, typeof(CfxApi.cfx_domnode_set_element_attribute_delegate));
-            CfxApi.cfx_domnode_get_element_inner_text = (CfxApi.cfx_domnode_get_element_inner_text_delegate)CfxApi.GetDelegate(354, typeof(CfxApi.cfx_domnode_get_element_inner_text_delegate));
+            CfxApiLoader.LoadCfxDomNodeApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

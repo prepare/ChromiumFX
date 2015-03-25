@@ -48,9 +48,7 @@ namespace Chromium {
     public class CfxGeolocationHandler : CfxBase {
 
         static CfxGeolocationHandler () {
-            CfxApi.cfx_geolocation_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(437, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
-            CfxApi.cfx_geolocation_handler_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(438, typeof(CfxApi.cfx_get_gc_handle_delegate));
-            CfxApi.cfx_geolocation_handler_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(439, typeof(CfxApi.cfx_set_callback_delegate));
+            CfxApiLoader.LoadCfxGeolocationHandlerApi();
         }
 
         internal static CfxGeolocationHandler Wrap(IntPtr nativePtr) {

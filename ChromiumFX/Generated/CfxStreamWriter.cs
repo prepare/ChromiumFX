@@ -45,13 +45,7 @@ namespace Chromium {
     public class CfxStreamWriter : CfxBase {
 
         static CfxStreamWriter () {
-            CfxApi.cfx_stream_writer_create_for_file = (CfxApi.cfx_stream_writer_create_for_file_delegate)CfxApi.GetDelegate(838, typeof(CfxApi.cfx_stream_writer_create_for_file_delegate));
-            CfxApi.cfx_stream_writer_create_for_handler = (CfxApi.cfx_stream_writer_create_for_handler_delegate)CfxApi.GetDelegate(839, typeof(CfxApi.cfx_stream_writer_create_for_handler_delegate));
-            CfxApi.cfx_stream_writer_write = (CfxApi.cfx_stream_writer_write_delegate)CfxApi.GetDelegate(840, typeof(CfxApi.cfx_stream_writer_write_delegate));
-            CfxApi.cfx_stream_writer_seek = (CfxApi.cfx_stream_writer_seek_delegate)CfxApi.GetDelegate(841, typeof(CfxApi.cfx_stream_writer_seek_delegate));
-            CfxApi.cfx_stream_writer_tell = (CfxApi.cfx_stream_writer_tell_delegate)CfxApi.GetDelegate(842, typeof(CfxApi.cfx_stream_writer_tell_delegate));
-            CfxApi.cfx_stream_writer_flush = (CfxApi.cfx_stream_writer_flush_delegate)CfxApi.GetDelegate(843, typeof(CfxApi.cfx_stream_writer_flush_delegate));
-            CfxApi.cfx_stream_writer_may_block = (CfxApi.cfx_stream_writer_may_block_delegate)CfxApi.GetDelegate(844, typeof(CfxApi.cfx_stream_writer_may_block_delegate));
+            CfxApiLoader.LoadCfxStreamWriterApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

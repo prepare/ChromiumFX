@@ -47,9 +47,7 @@ namespace Chromium {
     public class CfxFocusHandler : CfxBase {
 
         static CfxFocusHandler () {
-            CfxApi.cfx_focus_handler_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(409, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
-            CfxApi.cfx_focus_handler_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(410, typeof(CfxApi.cfx_get_gc_handle_delegate));
-            CfxApi.cfx_focus_handler_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(411, typeof(CfxApi.cfx_set_callback_delegate));
+            CfxApiLoader.LoadCfxFocusHandlerApi();
         }
 
         internal static CfxFocusHandler Wrap(IntPtr nativePtr) {

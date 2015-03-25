@@ -44,31 +44,7 @@ namespace Chromium {
     public class CfxListValue : CfxBase {
 
         static CfxListValue () {
-            CfxApi.cfx_list_value_create = (CfxApi.cfx_list_value_create_delegate)CfxApi.GetDelegate(493, typeof(CfxApi.cfx_list_value_create_delegate));
-            CfxApi.cfx_list_value_is_valid = (CfxApi.cfx_list_value_is_valid_delegate)CfxApi.GetDelegate(494, typeof(CfxApi.cfx_list_value_is_valid_delegate));
-            CfxApi.cfx_list_value_is_owned = (CfxApi.cfx_list_value_is_owned_delegate)CfxApi.GetDelegate(495, typeof(CfxApi.cfx_list_value_is_owned_delegate));
-            CfxApi.cfx_list_value_is_read_only = (CfxApi.cfx_list_value_is_read_only_delegate)CfxApi.GetDelegate(496, typeof(CfxApi.cfx_list_value_is_read_only_delegate));
-            CfxApi.cfx_list_value_copy = (CfxApi.cfx_list_value_copy_delegate)CfxApi.GetDelegate(497, typeof(CfxApi.cfx_list_value_copy_delegate));
-            CfxApi.cfx_list_value_set_size = (CfxApi.cfx_list_value_set_size_delegate)CfxApi.GetDelegate(498, typeof(CfxApi.cfx_list_value_set_size_delegate));
-            CfxApi.cfx_list_value_get_size = (CfxApi.cfx_list_value_get_size_delegate)CfxApi.GetDelegate(499, typeof(CfxApi.cfx_list_value_get_size_delegate));
-            CfxApi.cfx_list_value_clear = (CfxApi.cfx_list_value_clear_delegate)CfxApi.GetDelegate(500, typeof(CfxApi.cfx_list_value_clear_delegate));
-            CfxApi.cfx_list_value_remove = (CfxApi.cfx_list_value_remove_delegate)CfxApi.GetDelegate(501, typeof(CfxApi.cfx_list_value_remove_delegate));
-            CfxApi.cfx_list_value_get_type = (CfxApi.cfx_list_value_get_type_delegate)CfxApi.GetDelegate(502, typeof(CfxApi.cfx_list_value_get_type_delegate));
-            CfxApi.cfx_list_value_get_bool = (CfxApi.cfx_list_value_get_bool_delegate)CfxApi.GetDelegate(503, typeof(CfxApi.cfx_list_value_get_bool_delegate));
-            CfxApi.cfx_list_value_get_int = (CfxApi.cfx_list_value_get_int_delegate)CfxApi.GetDelegate(504, typeof(CfxApi.cfx_list_value_get_int_delegate));
-            CfxApi.cfx_list_value_get_double = (CfxApi.cfx_list_value_get_double_delegate)CfxApi.GetDelegate(505, typeof(CfxApi.cfx_list_value_get_double_delegate));
-            CfxApi.cfx_list_value_get_string = (CfxApi.cfx_list_value_get_string_delegate)CfxApi.GetDelegate(506, typeof(CfxApi.cfx_list_value_get_string_delegate));
-            CfxApi.cfx_list_value_get_binary = (CfxApi.cfx_list_value_get_binary_delegate)CfxApi.GetDelegate(507, typeof(CfxApi.cfx_list_value_get_binary_delegate));
-            CfxApi.cfx_list_value_get_dictionary = (CfxApi.cfx_list_value_get_dictionary_delegate)CfxApi.GetDelegate(508, typeof(CfxApi.cfx_list_value_get_dictionary_delegate));
-            CfxApi.cfx_list_value_get_list = (CfxApi.cfx_list_value_get_list_delegate)CfxApi.GetDelegate(509, typeof(CfxApi.cfx_list_value_get_list_delegate));
-            CfxApi.cfx_list_value_set_null = (CfxApi.cfx_list_value_set_null_delegate)CfxApi.GetDelegate(510, typeof(CfxApi.cfx_list_value_set_null_delegate));
-            CfxApi.cfx_list_value_set_bool = (CfxApi.cfx_list_value_set_bool_delegate)CfxApi.GetDelegate(511, typeof(CfxApi.cfx_list_value_set_bool_delegate));
-            CfxApi.cfx_list_value_set_int = (CfxApi.cfx_list_value_set_int_delegate)CfxApi.GetDelegate(512, typeof(CfxApi.cfx_list_value_set_int_delegate));
-            CfxApi.cfx_list_value_set_double = (CfxApi.cfx_list_value_set_double_delegate)CfxApi.GetDelegate(513, typeof(CfxApi.cfx_list_value_set_double_delegate));
-            CfxApi.cfx_list_value_set_string = (CfxApi.cfx_list_value_set_string_delegate)CfxApi.GetDelegate(514, typeof(CfxApi.cfx_list_value_set_string_delegate));
-            CfxApi.cfx_list_value_set_binary = (CfxApi.cfx_list_value_set_binary_delegate)CfxApi.GetDelegate(515, typeof(CfxApi.cfx_list_value_set_binary_delegate));
-            CfxApi.cfx_list_value_set_dictionary = (CfxApi.cfx_list_value_set_dictionary_delegate)CfxApi.GetDelegate(516, typeof(CfxApi.cfx_list_value_set_dictionary_delegate));
-            CfxApi.cfx_list_value_set_list = (CfxApi.cfx_list_value_set_list_delegate)CfxApi.GetDelegate(517, typeof(CfxApi.cfx_list_value_set_list_delegate));
+            CfxApiLoader.LoadCfxListValueApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();

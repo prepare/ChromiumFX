@@ -512,16 +512,7 @@ Public Class CfxClassBuilder
         b.AppendLine()
 
         b.BeginBlock("static {0} ()", ClassName)
-        If ExportFunctions.Count > 0 Then
-            For Each f In Me.ExportFunctions
-                CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName, f.ApiIndex)
-            Next
-        End If
-        For Each sm In StructMembers
-            If sm.MemberType.IsCefCallbackType Then
-                CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_" & sm.Name, sm.ApiIndex)
-            End If
-        Next
+        b.AppendLine("CfxApiLoader.Load{0}Api();", ClassName)
         b.EndBlock()
         b.AppendLine()
 
@@ -609,12 +600,7 @@ Public Class CfxClassBuilder
         b.AppendLine()
 
         b.BeginBlock("static {0} ()", ClassName)
-        b.AppendLine("CfxApi.{0}_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate({1}, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));", CfxName, struct.ApiIndex)
-        b.AppendLine("CfxApi.{0}_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate({1}, typeof(CfxApi.cfx_get_gc_handle_delegate));", CfxName, struct.ApiIndex + 1)
-        b.AppendLine("CfxApi.{0}_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate({1}, typeof(CfxApi.cfx_set_callback_delegate));", CfxName, struct.ApiIndex + 2)
-        If ExportFunctions.Count > 0 Then
-            Stop
-        End If
+        b.AppendLine("CfxApiLoader.Load{0}Api();", ClassName)
         b.EndBlock()
         b.AppendLine()
 
@@ -717,18 +703,7 @@ Public Class CfxClassBuilder
         b.AppendLine()
 
         b.BeginBlock("static {0} ()", ClassName)
-        b.AppendLine("CfxApi.{0}_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate({1}, typeof(CfxApi.cfx_ctor_delegate));", CfxName, struct.ApiIndex)
-        b.AppendLine("CfxApi.{0}_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate({1}, typeof(CfxApi.cfx_dtor_delegate));", CfxName, struct.ApiIndex + 1)
-
-        For Each sm In StructMembers
-            If sm.Name <> "size" Then
-                CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_set_" & sm.Name, sm.ApiIndex)
-                CodeSnippets.EmitPInvokeDelegateInitialization(b, CfxName & "_get_" & sm.Name, sm.ApiIndex + 1)
-            End If
-        Next
-        If ExportFunctions.Count > 0 Then
-            Stop
-        End If
+        b.AppendLine("CfxApiLoader.Load{0}Api();", ClassName)
         b.EndBlock()
         b.AppendLine()
 

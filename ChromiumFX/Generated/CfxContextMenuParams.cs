@@ -45,25 +45,7 @@ namespace Chromium {
     public class CfxContextMenuParams : CfxBase {
 
         static CfxContextMenuParams () {
-            CfxApi.cfx_context_menu_params_get_xcoord = (CfxApi.cfx_context_menu_params_get_xcoord_delegate)CfxApi.GetDelegate(221, typeof(CfxApi.cfx_context_menu_params_get_xcoord_delegate));
-            CfxApi.cfx_context_menu_params_get_ycoord = (CfxApi.cfx_context_menu_params_get_ycoord_delegate)CfxApi.GetDelegate(222, typeof(CfxApi.cfx_context_menu_params_get_ycoord_delegate));
-            CfxApi.cfx_context_menu_params_get_type_flags = (CfxApi.cfx_context_menu_params_get_type_flags_delegate)CfxApi.GetDelegate(223, typeof(CfxApi.cfx_context_menu_params_get_type_flags_delegate));
-            CfxApi.cfx_context_menu_params_get_link_url = (CfxApi.cfx_context_menu_params_get_link_url_delegate)CfxApi.GetDelegate(224, typeof(CfxApi.cfx_context_menu_params_get_link_url_delegate));
-            CfxApi.cfx_context_menu_params_get_unfiltered_link_url = (CfxApi.cfx_context_menu_params_get_unfiltered_link_url_delegate)CfxApi.GetDelegate(225, typeof(CfxApi.cfx_context_menu_params_get_unfiltered_link_url_delegate));
-            CfxApi.cfx_context_menu_params_get_source_url = (CfxApi.cfx_context_menu_params_get_source_url_delegate)CfxApi.GetDelegate(226, typeof(CfxApi.cfx_context_menu_params_get_source_url_delegate));
-            CfxApi.cfx_context_menu_params_has_image_contents = (CfxApi.cfx_context_menu_params_has_image_contents_delegate)CfxApi.GetDelegate(227, typeof(CfxApi.cfx_context_menu_params_has_image_contents_delegate));
-            CfxApi.cfx_context_menu_params_get_page_url = (CfxApi.cfx_context_menu_params_get_page_url_delegate)CfxApi.GetDelegate(228, typeof(CfxApi.cfx_context_menu_params_get_page_url_delegate));
-            CfxApi.cfx_context_menu_params_get_frame_url = (CfxApi.cfx_context_menu_params_get_frame_url_delegate)CfxApi.GetDelegate(229, typeof(CfxApi.cfx_context_menu_params_get_frame_url_delegate));
-            CfxApi.cfx_context_menu_params_get_frame_charset = (CfxApi.cfx_context_menu_params_get_frame_charset_delegate)CfxApi.GetDelegate(230, typeof(CfxApi.cfx_context_menu_params_get_frame_charset_delegate));
-            CfxApi.cfx_context_menu_params_get_media_type = (CfxApi.cfx_context_menu_params_get_media_type_delegate)CfxApi.GetDelegate(231, typeof(CfxApi.cfx_context_menu_params_get_media_type_delegate));
-            CfxApi.cfx_context_menu_params_get_media_state_flags = (CfxApi.cfx_context_menu_params_get_media_state_flags_delegate)CfxApi.GetDelegate(232, typeof(CfxApi.cfx_context_menu_params_get_media_state_flags_delegate));
-            CfxApi.cfx_context_menu_params_get_selection_text = (CfxApi.cfx_context_menu_params_get_selection_text_delegate)CfxApi.GetDelegate(233, typeof(CfxApi.cfx_context_menu_params_get_selection_text_delegate));
-            CfxApi.cfx_context_menu_params_get_misspelled_word = (CfxApi.cfx_context_menu_params_get_misspelled_word_delegate)CfxApi.GetDelegate(234, typeof(CfxApi.cfx_context_menu_params_get_misspelled_word_delegate));
-            CfxApi.cfx_context_menu_params_get_misspelling_hash = (CfxApi.cfx_context_menu_params_get_misspelling_hash_delegate)CfxApi.GetDelegate(235, typeof(CfxApi.cfx_context_menu_params_get_misspelling_hash_delegate));
-            CfxApi.cfx_context_menu_params_get_dictionary_suggestions = (CfxApi.cfx_context_menu_params_get_dictionary_suggestions_delegate)CfxApi.GetDelegate(236, typeof(CfxApi.cfx_context_menu_params_get_dictionary_suggestions_delegate));
-            CfxApi.cfx_context_menu_params_is_editable = (CfxApi.cfx_context_menu_params_is_editable_delegate)CfxApi.GetDelegate(237, typeof(CfxApi.cfx_context_menu_params_is_editable_delegate));
-            CfxApi.cfx_context_menu_params_is_spell_check_enabled = (CfxApi.cfx_context_menu_params_is_spell_check_enabled_delegate)CfxApi.GetDelegate(238, typeof(CfxApi.cfx_context_menu_params_is_spell_check_enabled_delegate));
-            CfxApi.cfx_context_menu_params_get_edit_state_flags = (CfxApi.cfx_context_menu_params_get_edit_state_flags_delegate)CfxApi.GetDelegate(239, typeof(CfxApi.cfx_context_menu_params_get_edit_state_flags_delegate));
+            CfxApiLoader.LoadCfxContextMenuParamsApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();
