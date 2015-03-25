@@ -44,7 +44,9 @@ namespace Chromium
         private static string cefDir;
         private static string cfxDir;
         internal static bool librariesLoaded;
-        
+
+        private static PlatformApi platformApi;
+
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate IntPtr cfx_ctor_delegate();
 
@@ -151,18 +153,28 @@ namespace Chromium
                 return;
             }
 
+            
+            switch(Environment.OSVersion.Platform) {
+                case PlatformID.Win32NT:
+                    platformApi = new WindowsApi();
+                    break;
+                default:
+                    throw new CfxException("Unsupported platform: " + Environment.OSVersion.VersionString);
+            }
+
+
             CfxApi.cefDir = cefDir;
             CfxApi.cfxDir = cfxDir;
             
             var libcfx = System.IO.Path.Combine(cfxDir, "libcfx.dll");
             var libcef = System.IO.Path.Combine(cefDir, "libcef.dll");
 
-            libcefPtr = WinAPI.LoadLibrary(libcef);
+            libcefPtr = platformApi.LoadNativeLibrary(libcef);
             if(libcefPtr == IntPtr.Zero) {
                 throw new DllNotFoundException("Unable to load libcef.dll from directory " + cefDir + ".");
             }
 
-            libcfxPtr = WinAPI.LoadLibrary(libcfx);
+            libcfxPtr = platformApi.LoadNativeLibrary(libcfx);
             if (libcfxPtr == IntPtr.Zero) {
                 throw new DllNotFoundException("Unable to load libcfx.dll from directory " + cefDir + ".");
             }
@@ -204,7 +216,7 @@ namespace Chromium
         }
         
         private static Delegate LoadDelegate(IntPtr hModule, string procName, Type delegateType) {
-            IntPtr procAdress = WinAPI.GetProcAddress(hModule, procName);
+            IntPtr procAdress = platformApi.GetFunctionPointer(hModule, procName);
             if (procAdress == IntPtr.Zero) {
                 throw new CfxException("Unable to load native function " + procName + ". Check libcef.dll and libcfx.dll compatibility.");
             }
