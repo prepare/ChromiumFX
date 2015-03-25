@@ -33,7 +33,13 @@
 // which includes all the other c files
 
 
+#if CFX_PLATFORM == WIN32
+// void* cfx_platform_get_fptr(void *library, const char* function_name);
+#define cfx_platform_get_fptr(X, Y) GetProcAddress((HMODULE)X, Y)
 #define CFX_EXPORT __declspec(dllexport)
+#else
+#error unsupported platform
+#endif
 
 #include "cef\include\cef_version.h"
 
@@ -76,9 +82,9 @@ static void* cfx_get_function_pointer(int index) {
 	return cfx_function_pointers[index];
 }
 
-CFX_EXPORT int cfx_api_initialize(HMODULE libcef, void *gc_handle_free, void **release, void **string_get_ptr, void **string_destroy, void **get_function_pointer) {
+CFX_EXPORT int cfx_api_initialize(void *libcef, void *gc_handle_free, void **release, void **string_get_ptr, void **string_destroy, void **get_function_pointer) {
 
-	cef_api_hash_ptr = (char* (*)(int))GetProcAddress(libcef, "cef_api_hash");
+	cef_api_hash_ptr = (char* (*)(int))cfx_platform_get_fptr(libcef, "cef_api_hash");
 	if(!cef_api_hash_ptr)
 		return 1;
 
@@ -86,14 +92,14 @@ CFX_EXPORT int cfx_api_initialize(HMODULE libcef, void *gc_handle_free, void **r
 		return 2;
 	}
 
-	cfx_gc_handle_free = (void(CEF_CALLBACK *)(gc_handle_t gc_handle))gc_handle_free;
+	cfx_gc_handle_free = (void(CEF_CALLBACK *)(gc_handle_t))gc_handle_free;
 	*release = (void*)cfx_release;
 	*string_get_ptr = (void*)cfx_string_get_ptr;
 	*string_destroy = (void*)cfx_string_destroy;
 	*get_function_pointer = (void*)cfx_get_function_pointer;
 
 	cfx_load_cef_function_pointers(libcef);
-	cef_string_utf16_set_ptr = (int (*)(const char16*, size_t, cef_string_utf16_t*, int))GetProcAddress(libcef, "cef_string_utf16_set");
+	cef_string_utf16_set_ptr = (int(*)(const char16*, size_t, cef_string_utf16_t*, int))cfx_platform_get_fptr(libcef, "cef_string_utf16_set");
 
 	return 0;
 }

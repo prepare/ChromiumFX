@@ -170,10 +170,10 @@ Public Class WrapperGenerator
         Next
         b.AppendLine()
 
-        b.BeginBlock("static void cfx_load_cef_function_pointers(HMODULE libcef)")
+        b.BeginBlock("static void cfx_load_cef_function_pointers(void *libcef)")
         For Each f In ff
             If (f.Name <> "cef_api_hash") Then
-                b.AppendLine("{0}_ptr = ({1} (*)({2}))GetProcAddress(libcef, ""{0}"");", f.Name, f.ReturnType.OriginalSymbol, f.Signature.OriginalSignatureUnnamed)
+                b.AppendLine("{0}_ptr = ({1} (*)({2}))cfx_platform_get_fptr(libcef, ""{0}"");", f.Name, f.ReturnType.OriginalSymbol, f.Signature.OriginalSignatureUnnamed)
             End If
         Next
         b.EndBlock()
