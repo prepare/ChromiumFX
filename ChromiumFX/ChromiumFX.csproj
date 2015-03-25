@@ -216,6 +216,7 @@
     <Compile Include="Source\CfxColor.cs" />
     <Compile Include="Source\CfxDebug.cs" />
     <Compile Include="Source\CfxTime.cs" />
+    <Compile Include="Source\PlatformApi.cs" />
     <Compile Include="Source\StringFunctions.cs" />
     <Compile Include="Source\CfxZipReader.cs" />
     <Compile Include="Source\Remote\CfrTime.cs" />
@@ -249,7 +250,7 @@
     <Compile Include="Source\CfxStructure.cs" />
     <Compile Include="Source\TimeFunctions.cs" />
     <Compile Include="Source\WeakCache.cs" />
-    <Compile Include="Source\WinAPI.cs" />
+    <Compile Include="Source\WindowsApi.cs" />
     <Compile Include="Source\WindowStyles.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
