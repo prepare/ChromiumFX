@@ -137,6 +137,7 @@ Public Class WrapperGenerator
         Dim b = New CodeBuilder
         Dim files = fileManager.GetNewFiles()
         For Each f In files
+            f = f.Replace("\", "/")
             b.AppendLine("#include ""{0}""", f)
         Next
         b.AppendLine()
@@ -147,6 +148,7 @@ Public Class WrapperGenerator
         Dim b = New CodeBuilder
         Dim files = Directory.GetFiles("cef\include\capi")
         For Each f In files
+            f = f.Replace("\", "/")
             b.AppendLine("#include ""{0}""", f)
         Next
         b.AppendLine()
