@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Wolfgang Borgsmüller
+﻿// Copyright (c) 2014-2015 Wolfgang Borgsmüller
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without 
@@ -29,33 +29,38 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-
 using System;
-using System.Collections.Generic;
+using System.IO;
 
 namespace Chromium.Remote {
 
-    internal class RemoteService {
+    internal abstract class PipeFactory {
 
+        private static PipeFactory singleton;
 
-        internal static CfxRenderProcessStartupDelegate renderProcessStartupCallback;
-        internal static readonly List<RemoteConnection> connections = new List<RemoteConnection>();
-
-        public static void Initialize(CfxRenderProcessStartupDelegate renderProcessStartupCallback, CfxBrowserProcessHandler browserProcessHandler) {
-            RemoteService.renderProcessStartupCallback = renderProcessStartupCallback;
-            browserProcessHandler.OnBeforeChildProcessLaunch += OnBeforeChildProcessLaunch;
-        }
-
-        private static void OnBeforeChildProcessLaunch(object sender, Chromium.Event.CfxOnBeforeChildProcessLaunchEventArgs e) {
-
-            if(e.CommandLine.HasSwitch("type") && e.CommandLine.GetSwitchValue("type") == "renderer") {
-                var pipeName = "cfx" + Guid.NewGuid().ToString().Replace("-", string.Empty);
-                var pipeIn = PipeFactory.Instance.CreateServerPipeInputStream(pipeName + "si");
-                var pipeOut = PipeFactory.Instance.CreateServerPipeOutputStream(pipeName + "so");
-                var connection = new RemoteConnection(pipeIn, pipeOut, false);
-                connections.Add(connection);
-                e.CommandLine.AppendSwitchWithValue("cfxremote", pipeName);
+        internal static PipeFactory Instance {
+            get {
+                if(singleton == null) {
+                    switch(Environment.OSVersion.Platform) {
+                        case PlatformID.Win32NT:
+                            singleton = new WindowsPipeFactory();
+                            break;
+                        default:
+                            throw new CfxException("Unsupported platform: " + Environment.OSVersion.VersionString);
+                    }
+                }
+                return singleton;
             }
         }
+
+
+        internal abstract Stream CreateServerPipeInputStream(string name);
+        internal abstract Stream CreateServerPipeOutputStream(string name);
+        internal abstract Stream CreateClientPipeInputStream(string name);
+        internal abstract Stream CreateClientPipeOutputStream(string name);
+
+        internal abstract void WaitForConnection(Stream serverStream);
+        internal abstract void Connect(Stream clientStream);
+
     }
 }
