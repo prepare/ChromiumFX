@@ -137,8 +137,7 @@ Public Class WrapperGenerator
         Dim b = New CodeBuilder
         Dim files = fileManager.GetNewFiles()
         For Each f In files
-            f = f.Replace("\", "/")
-            b.AppendLine("#include ""{0}""", f)
+            b.AppendLine("#include ""{0}""", System.IO.Path.GetFileName(f))
         Next
         b.AppendLine()
         fileManager.WriteFileIfContentChanged("cfx_amalgamation.c", b.ToString())
@@ -149,7 +148,7 @@ Public Class WrapperGenerator
         Dim files = Directory.GetFiles("cef\include\capi")
         For Each f In files
             f = f.Replace("\", "/")
-            b.AppendLine("#include ""{0}""", f)
+            b.AppendLine("#include ""{0}""", f.Substring(4))
         Next
         b.AppendLine()
         fileManager.WriteFileIfContentChanged("cef_headers.h", b.ToString())

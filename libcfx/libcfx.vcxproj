@@ -11,7 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\libcfx.c" />
+    <ClCompile Include="Source\libcfx.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../libcfx/Generated;../cef</AdditionalIncludeDirectories>
+    </ClCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{64ED684B-187D-4D21-903C-DA5067F8F066}</ProjectGuid>
@@ -55,7 +57,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>CFX_PLATFORM=WIN32;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..;..\cef</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../libcfx/Generated;../cef</AdditionalIncludeDirectories>
       <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
     <Link>
@@ -77,7 +79,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..;..\cef</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../libcfx/Generated;../cef</AdditionalIncludeDirectories>
       <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
     <Link>
