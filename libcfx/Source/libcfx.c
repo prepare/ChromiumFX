@@ -41,10 +41,10 @@
 #error unsupported platform
 #endif
 
-#include "cef/include/cef_version.h"
+#include "include/cef_version.h"
 
-#include "libcfx/Generated/cef_headers.h"
-#include "libcfx/Generated/cef_function_pointers.c"
+#include "cef_headers.h"
+#include "cef_function_pointers.c"
 
 static int (*cef_string_utf16_set_ptr)(const char16* src, size_t src_len,	cef_string_utf16_t* output, int copy);
 #define cef_string_utf16_set cef_string_utf16_set_ptr
@@ -61,8 +61,8 @@ static __inline void* cfx_copy_structure(void* source, size_t size) {
 }
 
 
-#include "libcfx/Generated/cfx_amalgamation.c"
-#include "libcfx/Generated/cfx_function_pointers.c"
+#include "cfx_amalgamation.c"
+#include "cfx_function_pointers.c"
 
 
 static int cfx_release(cef_base_t* base) {
