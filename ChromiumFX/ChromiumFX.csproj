@@ -217,6 +217,8 @@
     <Compile Include="Source\CfxDebug.cs" />
     <Compile Include="Source\CfxTime.cs" />
     <Compile Include="Source\PlatformApi.cs" />
+    <Compile Include="Source\Remote\PipeFactory.cs" />
+    <Compile Include="Source\Remote\WindowsPipeFactory.cs" />
     <Compile Include="Source\StringFunctions.cs" />
     <Compile Include="Source\CfxZipReader.cs" />
     <Compile Include="Source\Remote\CfrTime.cs" />

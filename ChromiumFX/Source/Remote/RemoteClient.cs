@@ -31,7 +31,6 @@
 
 
 using System;
-using System.IO.Pipes;
 
 namespace Chromium.Remote {
 
@@ -53,8 +52,8 @@ namespace Chromium.Remote {
 
             //System.Diagnostics.Debugger.Break();
 
-            var pipeIn = new NamedPipeClientStream(".", pipeName + "so", PipeDirection.In);
-            var pipeOut = new NamedPipeClientStream(".", pipeName + "si", PipeDirection.Out);
+            var pipeIn = PipeFactory.Instance.CreateClientPipeInputStream(pipeName + "so");
+            var pipeOut = PipeFactory.Instance.CreateClientPipeOutputStream(pipeName + "si");
 
             connection = new RemoteConnection(pipeIn, pipeOut, true);
 

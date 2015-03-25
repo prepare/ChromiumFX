@@ -32,7 +32,6 @@
 
 using System;
 using System.IO;
-using System.IO.Pipes;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -40,8 +39,8 @@ namespace Chromium.Remote {
     internal class RemoteConnection {
 
 
-        private readonly PipeStream pipeIn;
-        private readonly PipeStream pipeOut;
+        private readonly Stream pipeIn;
+        private readonly Stream pipeOut;
         internal readonly StreamHandler streamHandler;
 
         private readonly bool isClient;
@@ -62,7 +61,7 @@ namespace Chromium.Remote {
         internal readonly RemoteCallStack callStack;
         
 
-        internal RemoteConnection(PipeStream pipeIn, PipeStream pipeOut, bool isClient) {
+        internal RemoteConnection(Stream pipeIn, Stream pipeOut, bool isClient) {
             
             this.pipeIn = pipeIn;
             this.pipeOut = pipeOut;
@@ -132,11 +131,11 @@ namespace Chromium.Remote {
             }
         }
 
-        private void Connect(PipeStream stream) {
+        private void Connect(Stream stream) {
             if(isClient) {
-                ((NamedPipeClientStream)stream).Connect();
+                PipeFactory.Instance.Connect(stream);
             } else {
-                ((NamedPipeServerStream)stream).WaitForConnection();
+                PipeFactory.Instance.WaitForConnection(stream);
             }
         }
 

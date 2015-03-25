@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Wolfgang Borgsmüller
+﻿// Copyright (c) 2014-2015 Wolfgang Borgsmüller
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without 
@@ -29,33 +29,34 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-
 using System;
-using System.Collections.Generic;
+using System.IO.Pipes;
 
 namespace Chromium.Remote {
+    class WindowsPipeFactory : PipeFactory {
 
-    internal class RemoteService {
-
-
-        internal static CfxRenderProcessStartupDelegate renderProcessStartupCallback;
-        internal static readonly List<RemoteConnection> connections = new List<RemoteConnection>();
-
-        public static void Initialize(CfxRenderProcessStartupDelegate renderProcessStartupCallback, CfxBrowserProcessHandler browserProcessHandler) {
-            RemoteService.renderProcessStartupCallback = renderProcessStartupCallback;
-            browserProcessHandler.OnBeforeChildProcessLaunch += OnBeforeChildProcessLaunch;
+        internal override System.IO.Stream CreateServerPipeInputStream(string name) {
+            return new NamedPipeServerStream(name, PipeDirection.In, 1);
         }
 
-        private static void OnBeforeChildProcessLaunch(object sender, Chromium.Event.CfxOnBeforeChildProcessLaunchEventArgs e) {
+        internal override System.IO.Stream CreateServerPipeOutputStream(string name) {
+            return new NamedPipeServerStream(name, PipeDirection.Out, 1);
+        }
 
-            if(e.CommandLine.HasSwitch("type") && e.CommandLine.GetSwitchValue("type") == "renderer") {
-                var pipeName = "cfx" + Guid.NewGuid().ToString().Replace("-", string.Empty);
-                var pipeIn = PipeFactory.Instance.CreateServerPipeInputStream(pipeName + "si");
-                var pipeOut = PipeFactory.Instance.CreateServerPipeOutputStream(pipeName + "so");
-                var connection = new RemoteConnection(pipeIn, pipeOut, false);
-                connections.Add(connection);
-                e.CommandLine.AppendSwitchWithValue("cfxremote", pipeName);
-            }
+        internal override System.IO.Stream CreateClientPipeInputStream(string name) {
+            return new NamedPipeClientStream(".", name, PipeDirection.In);
+        }
+
+        internal override System.IO.Stream CreateClientPipeOutputStream(string name) {
+            return new NamedPipeClientStream(".", name, PipeDirection.Out);
+        }
+
+        internal override void WaitForConnection(System.IO.Stream serverStream) {
+            ((NamedPipeServerStream)serverStream).WaitForConnection();
+        }
+
+        internal override void Connect(System.IO.Stream clientStream) {
+            ((NamedPipeClientStream)clientStream).Connect();
         }
     }
 }
