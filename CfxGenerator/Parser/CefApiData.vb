@@ -36,8 +36,6 @@ Namespace Parser
         Public CefStructs As List(Of StructData)
         Public CefFunctions As List(Of FunctionData)
         Public CefEnums As List(Of EnumData)
-        Public CefStringListFunctions As FunctionData()
-        Public CefStringMapFunctions As FunctionData()
-        Public CefStringMultimapFunctions As FunctionData()
+        Public CefStringCollectionFunctions As FunctionData()
     End Class
 End Namespace

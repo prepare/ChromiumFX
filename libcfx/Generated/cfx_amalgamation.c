@@ -132,7 +132,5 @@
 #include "cfx_write_handler.c"
 #include "cfx_xml_reader.c"
 #include "cfx_zip_reader.c"
-#include "cfx_string_list.c"
-#include "cfx_string_map.c"
-#include "cfx_string_multimap.c"
+#include "cfx_string_collections.c"
 
