@@ -37,7 +37,6 @@ Imports System.Runtime.Serialization.Formatters.Binary
 Namespace Parser
     Public Class ApiParser
 
-        Private api As New CefApiData
         Private booleanRetvals As New HashSet(Of String)
         Private booleanParameters As New HashSet(Of String)
 
@@ -49,40 +48,41 @@ Namespace Parser
 
             ParseCppHeaders()
 
-            Dim sb As New Text.StringBuilder
+            AddFile("cef\include\cef_version.h")
 
-            AddFile("cef\include\internal\cef_types.h", sb)
+            AddFile("cef\include\internal\cef_types.h")
+            AddFile("cef\include\internal\cef_time.h")
 
-            AddFile("cef\include\internal\cef_types_win.h", sb)
+            AddFile("cef\include\internal\cef_types_win.h")
             'AddFile("linux\cef\include\internal\cef_types_linux.h", sb)
-
-            AddFile("cef\include\cef_version.h", sb)
 
             Dim files = Directory.GetFiles("cef\include\capi")
             For Each f In files
-                AddFile(f, sb)
+                AddFile(f)
             Next
 
-            Dim code = sb.ToString()
+            Dim enums = New List(Of EnumData)
+            Dim structs = New List(Of StructData)
+            Dim funcs = New List(Of FunctionData)
 
-            sb.Clear()
-            AddFile("cef\include\internal\cef_time.h", sb)
-            Dim structOnlyCode = sb.ToString()
+            ParseEnums(StripComments(codeFiles("cef\include\internal\cef_types.h")), enums)
 
-            code = StripComments(code)
-            structOnlyCode = StripComments(structOnlyCode)
+            For Each cf In codeFiles
+                Dim code = StripComments(cf.Value)
+                ParseStructs(code, structs)
+                If cf.Key <> "cef\include\internal\cef_time.h" Then
+                    ParseFunctions(code, funcs)
+                End If
+            Next
 
+            Dim api = New CefApiData
+            api.CefEnums = enums
+            api.CefStructs = structs
+            api.CefFunctions = New List(Of FunctionData)
 
-            ParseEnums(StripComments(codeFiles("cef\include\internal\cef_types.h")))
+            For Each f In funcs
 
-
-            ParseStructs(code)
-            ParseStructs(structOnlyCode)
-
-            Dim ff = ParseFunctions(code)
-            For Each f In ff
-
-                Dim struct = MatchCefStructPrefix(f.Name)
+                Dim struct = MatchCefStructPrefix(f.Name, structs)
                 If struct Is Nothing Then
                     api.CefFunctions.Add(f)
                 Else
@@ -143,16 +143,23 @@ Namespace Parser
             Dim stringMapCode = File.ReadAllText("cef\include\internal\cef_string_map.h")
             Dim stringMultiMapCode = File.ReadAllText("cef\include\internal\cef_string_multimap.h")
 
-            api.CefStringListFunctions = ParseFunctions(stringListCode)
-            api.CefStringMapFunctions = ParseFunctions(stringMapCode)
-            api.CefStringMultimapFunctions = ParseFunctions(stringMultiMapCode)
+            funcs.Clear()
+            ParseFunctions(stringListCode, funcs)
+            api.CefStringListFunctions = funcs.ToArray()
+            funcs.Clear()
+            ParseFunctions(stringMapCode, funcs)
+            api.CefStringMapFunctions = funcs.ToArray()
+            funcs.Clear()
+            ParseFunctions(stringMultiMapCode, funcs)
+            api.CefStringMultimapFunctions = funcs.ToArray()
+            funcs.Clear()
 
             'Dim comments = ParseFunctionComments(stringListCode & stringMapCode & stringMultiMapCode)
             'AssignFunctionComments(comments, api.CefStringListFunctions)
             'AssignFunctionComments(comments, api.CefStringMapFunctions)
             'AssignFunctionComments(comments, api.CefStringMultimapFunctions)
 
-            ParseComments()
+            ParseComments(api)
 
             Return api
 
@@ -168,13 +175,12 @@ Namespace Parser
             Return stripCommentsRegex.Replace(code, "$1")
         End Function
 
-        Sub AddFile(filename As String, sb As Text.StringBuilder)
+        Private Sub AddFile(filename As String)
             Dim fcode = File.ReadAllText(filename)
-            sb.AppendLine(fcode)
             codeFiles.Add(filename, fcode)
         End Sub
 
-        Sub ParseEnums(code As String)
+        Private Sub ParseEnums(code As String, enums As List(Of EnumData))
             Static enumRegex As New Regex("typedef\s+enum\s*{(.*?)}\s*(\w+?)_t\s*;", RegexOptions.Singleline)
             Static memberEx As New Regex("\b(\w+)\s*(?:=\s*((?:[0-9xA-Fa-f<+-]|\s)+))?")
 
@@ -192,33 +198,31 @@ Namespace Parser
                     em.Value = mm1(i).Groups(2).Value.Trim()
                     e.Members.Add(em)
                 Next
-                api.CefEnums.Add(e)
+                enums.Add(e)
             Next
         End Sub
 
-        Private Function ParseFunctions(code As String) As FunctionData()
+        Private Sub ParseFunctions(code As String, funcs As List(Of FunctionData))
             Static exportFunctionRegex As New Regex("CEF_EXPORT\s+([^(]+?)\s+(cef_.+?)\((.*?)\);", RegexOptions.Singleline)
             Dim mm = exportFunctionRegex.Matches(code)
-            Dim list = New List(Of FunctionData)
             For Each m As Match In mm
                 Dim f = New FunctionData
                 f.Name = m.Groups(2).Value
                 f.Signature = New SignatureData
                 f.Signature.ReturnType = ParseTypeDecl(m.Groups(1).Value, f.Signature.ReturnValueIsConst)
                 ParseArgumentList(f.Signature, m.Groups(3).Value)
-                list.Add(f)
+                funcs.Add(f)
             Next
-            Return list.ToArray()
-        End Function
+        End Sub
 
-        Private Sub ParseStructs(code As String)
+        Private Sub ParseStructs(code As String, structs As List(Of StructData))
             Static structRegex As New Regex("typedef\s+struct\s+_(\w+?_t)\s*{(.*?)}\s*\1;", RegexOptions.Singleline)
             Dim mm = structRegex.Matches(code)
             For Each m As Match In mm
                 Dim struct = New StructData
                 struct.Name = m.Groups(1).Value
                 ParseBody(struct, m.Groups(2).Value)
-                api.CefStructs.Add(struct)
+                structs.Add(struct)
             Next
         End Sub
 
@@ -317,9 +321,9 @@ Namespace Parser
         End Function
 
 
-        Private Function MatchCefStructPrefix(name As String) As StructData
+        Private Function MatchCefStructPrefix(name As String, structs As List(Of StructData)) As StructData
             Dim result As StructData = Nothing
-            For Each struct In api.CefStructs
+            For Each struct In structs
                 If name.StartsWith(struct.Name.Substring(0, struct.Name.Length - 2)) Then
                     If result Is Nothing OrElse result.Name.Length < struct.Name.Length Then
                         result = struct
@@ -329,27 +333,21 @@ Namespace Parser
             Return result
         End Function
 
-        Private Function GetStruct(name As String) As StructData
-            For Each struct In api.CefStructs
-                If name.Equals(struct.Name) Then
-                    Return struct
-                End If
-            Next
-            Return Nothing
-        End Function
-
-        Private Function GetEnum(name As String) As EnumData
-            For Each e In api.CefEnums
-                If name.Equals(e.Name) Then
-                    Return e
-                End If
-            Next
-            Return Nothing
-        End Function
 
         Private commentPattern As String = "((?:\s*^\s*//+.*?$)+)"
 
-        Private Sub ParseComments()
+        Private Sub ParseComments(api As CefApiData)
+
+            Dim enums = New Dictionary(Of String, EnumData)
+            Dim structs = New Dictionary(Of String, StructData)
+
+            For Each e In api.CefEnums
+                enums.Add(e.Name, e)
+            Next
+
+            For Each s In api.CefStructs
+                structs.Add(s.Name, s)
+            Next
 
             Dim comments = New Dictionary(Of String, CommentData)
 
@@ -394,7 +392,7 @@ Namespace Parser
                 Dim body = m.Groups(1).Value
                 Dim name = m.Groups(2).Value
                 ParseComments(enumFile, body, enumFieldCommentEx, comments)
-                Dim e = GetEnum(name)
+                Dim e = enums(name)
                 For Each member In e.Members
                     comments.TryGetValue(member.Name, member.Comments)
                 Next
@@ -428,7 +426,7 @@ Namespace Parser
                 For Each m As Match In mm
                     Dim name = m.Groups(1).Value
                     Dim body = m.Groups(2).Value
-                    Dim t = GetStruct(name)
+                    Dim t = structs(name)
 
                     ParseComments(file, body, callbackCommentsEx, comments)
                     For Each sm In t.StructMembers

@@ -33,9 +33,9 @@
 Namespace Parser
     <Serializable()>
     Public Class CefApiData
-        Public ReadOnly CefStructs As New List(Of StructData)
-        Public ReadOnly CefFunctions As New List(Of FunctionData)
-        Public ReadOnly CefEnums As New List(Of EnumData)
+        Public CefStructs As List(Of StructData)
+        Public CefFunctions As List(Of FunctionData)
+        Public CefEnums As List(Of EnumData)
         Public CefStringListFunctions As FunctionData()
         Public CefStringMapFunctions As FunctionData()
         Public CefStringMultimapFunctions As FunctionData()
