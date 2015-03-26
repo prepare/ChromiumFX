@@ -145,19 +145,9 @@ Namespace Parser
 
             funcs.Clear()
             ParseFunctions(stringListCode, funcs)
-            api.CefStringListFunctions = funcs.ToArray()
-            funcs.Clear()
             ParseFunctions(stringMapCode, funcs)
-            api.CefStringMapFunctions = funcs.ToArray()
-            funcs.Clear()
             ParseFunctions(stringMultiMapCode, funcs)
-            api.CefStringMultimapFunctions = funcs.ToArray()
-            funcs.Clear()
-
-            'Dim comments = ParseFunctionComments(stringListCode & stringMapCode & stringMultiMapCode)
-            'AssignFunctionComments(comments, api.CefStringListFunctions)
-            'AssignFunctionComments(comments, api.CefStringMapFunctions)
-            'AssignFunctionComments(comments, api.CefStringMultimapFunctions)
+            api.CefStringCollectionFunctions = funcs.ToArray()
 
             ParseComments(api)
 

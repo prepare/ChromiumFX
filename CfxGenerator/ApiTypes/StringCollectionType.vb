@@ -33,27 +33,8 @@
 Public Class StringCollectionType
     Inherits CefType
 
-    Public ExportFunctions As CefExportFunction()
-
     Sub New(name As String)
         MyBase.New(name)
-    End Sub
-
-    Public Sub SetFunctions(funcs As Parser.FunctionData(), api As ApiTypeBuilder)
-        Dim list = New List(Of CefExportFunction)
-        For Each fd In funcs
-            list.Add(New CefExportFunction(Me, fd, api))
-        Next
-        ExportFunctions = list.ToArray()
-
-        For Each f In ExportFunctions
-            If f.Signature.ManagedArguments.Length > 0 Then
-                If f.Signature.ManagedArguments(0).ArgumentType.Equals(Me) Then
-                    f.Signature.ManagedArguments(0).IsThisArgument = True
-                End If
-            End If
-        Next
-
     End Sub
 
     Public Overrides ReadOnly Property PInvokeSymbol As String

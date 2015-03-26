@@ -77,6 +77,7 @@ Public Class ApiTypeBuilder
         Dim structs = New List(Of CefStructType)
         Dim enums = New List(Of CefEnumType)
         Dim stringCollectionTypes = New List(Of StringCollectionType)
+        Dim stringCollectionFunctions As New List(Of CefExportFunction)
         Dim functions As New List(Of CefExportFunction)
 
 
@@ -147,9 +148,9 @@ Public Class ApiTypeBuilder
             End If
         Next
 
-        stringCollectionTypes(0).SetFunctions(apiData.CefStringListFunctions, Me)
-        stringCollectionTypes(1).SetFunctions(apiData.CefStringMapFunctions, Me)
-        stringCollectionTypes(2).SetFunctions(apiData.CefStringMultimapFunctions, Me)
+        For Each fd In apiData.CefStringCollectionFunctions
+            stringCollectionFunctions.Add(New CefExportFunction(Nothing, fd, Me))
+        Next
 
         For Each fd In apiData.CefFunctions
             Dim f = New CefExportFunction(Nothing, fd, Me)
@@ -160,7 +161,7 @@ Public Class ApiTypeBuilder
         structs.Sort(New ApiType.Comparer)
         enums.Sort(New ApiType.Comparer)
 
-        Dim decl = New CefApiDeclarations(functions.ToArray(), structs.ToArray(), enums.ToArray(), stringCollectionTypes.ToArray())
+        Dim decl = New CefApiDeclarations(functions.ToArray(), structs.ToArray(), enums.ToArray(), stringCollectionTypes.ToArray(), stringCollectionFunctions.ToArray())
         Return decl
 
     End Function

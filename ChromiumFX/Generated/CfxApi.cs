@@ -221,7 +221,6 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate IntPtr cfx_string_list_copy_delegate(IntPtr list);
         public static cfx_string_list_copy_delegate cfx_string_list_copy;
-
         // CEF_EXPORT cef_string_map_t cef_string_map_alloc();
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate IntPtr cfx_string_map_alloc_delegate();
@@ -254,7 +253,6 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_string_map_free_delegate(IntPtr map);
         public static cfx_string_map_free_delegate cfx_string_map_free;
-
         // CEF_EXPORT cef_string_multimap_t cef_string_multimap_alloc();
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate IntPtr cfx_string_multimap_alloc_delegate();

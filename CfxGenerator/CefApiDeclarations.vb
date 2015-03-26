@@ -36,13 +36,15 @@ Public Class CefApiDeclarations
     Public ReadOnly CefStructTypes As CefStructType()
     Public ReadOnly CefEnumTypes As CefEnumType()
     Public ReadOnly StringCollectionTypes As StringCollectionType()
+    Public ReadOnly StringCollectionFunctions As CefExportFunction()
 
 
-    Public Sub New(exportFunctions As CefExportFunction(), cefStructTypes As CefStructType(), cefEnumTypes As CefEnumType(), stringCollectionTypes As StringCollectionType())
+    Public Sub New(exportFunctions As CefExportFunction(), cefStructTypes As CefStructType(), cefEnumTypes As CefEnumType(), stringCollectionTypes As StringCollectionType(), stringCollectionFunctions As CefExportFunction())
         Me.ExportFunctions = exportFunctions
         Me.CefStructTypes = cefStructTypes
         Me.CefEnumTypes = cefEnumTypes
         Me.StringCollectionTypes = stringCollectionTypes
+        Me.StringCollectionFunctions = stringCollectionFunctions
     End Sub
 
     Private remoteFuncs As SortedDictionary(Of String, CefExportFunction)
@@ -87,12 +89,12 @@ Public Class CefApiDeclarations
                         Next
                 End Select
             Next
-            For Each sc In StringCollectionTypes
-                For Each f In sc.ExportFunctions
-                    f.ApiIndex = list.Count
-                    list.Add(f.CfxName)
-                Next
+
+            For Each f In StringCollectionFunctions
+                f.ApiIndex = list.Count
+                list.Add(f.CfxName)
             Next
+
             retval = list.ToArray()
         End If
         Return retval
@@ -109,7 +111,7 @@ Public Class CefApiDeclarations
             End If
         Next
 
-        Return New CefApiDeclarations(remoteFuncs.Values.ToArray(), remoteStructs.Values.ToArray(), CefEnumTypes, StringCollectionTypes)
+        Return New CefApiDeclarations(remoteFuncs.Values.ToArray(), remoteStructs.Values.ToArray(), CefEnumTypes, Nothing, Nothing)
 
     End Function
 

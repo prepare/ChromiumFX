@@ -158,9 +158,7 @@ Public Class WrapperGenerator
     Private Sub BuildFunctionPointers(fileManager As GeneratedFileManager)
         Dim b = New CodeBuilder
         Dim ff = New List(Of CefExportFunction)(decls.AllExportFunctions())
-        For Each sc In decls.StringCollectionTypes
-            ff.AddRange(sc.ExportFunctions)
-        Next
+        ff.AddRange(decls.StringCollectionFunctions)
 
         For Each f In ff
             Dim retSymbol = f.ReturnType.OriginalSymbol
@@ -225,17 +223,15 @@ Public Class WrapperGenerator
             b.Clear()
         Next
 
-        For Each t In decls.StringCollectionTypes
-            CodeSnippets.BeginExternC(b)
+        CodeSnippets.BeginExternC(b)
+        b.AppendLine()
+        For Each f In decls.StringCollectionFunctions
+            f.EmitNativeFunction(b)
             b.AppendLine()
-            For Each f In t.ExportFunctions
-                f.EmitNativeFunction(b)
-                b.AppendLine()
-            Next
-            CodeSnippets.EndExternC(b)
-            fileManager.WriteFileIfContentChanged(t.CfxName & ".c", b.ToString())
-            b.Clear()
         Next
+        CodeSnippets.EndExternC(b)
+        fileManager.WriteFileIfContentChanged("cfx_string_collections.c", b.ToString())
+        b.Clear()
 
     End Sub
 
@@ -300,12 +296,11 @@ Public Class WrapperGenerator
         Next
         b.AppendLine()
 
-        For Each o In decls.StringCollectionTypes
-            For Each f In o.ExportFunctions
-                f.EmitPInvokeDeclaration(b)
-            Next
-            b.AppendLine()
+
+        For Each f In decls.StringCollectionFunctions
+            f.EmitPInvokeDeclaration(b)
         Next
+        b.AppendLine()
 
         b.AppendLine()
 
@@ -340,10 +335,8 @@ Public Class WrapperGenerator
         b.AppendLine()
 
         b.BeginFunction("void LoadStringCollectionApi()", "internal static")
-        For Each o In decls.StringCollectionTypes
-            For Each f In o.ExportFunctions
-                CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
-            Next
+        For Each f In decls.StringCollectionFunctions
+            CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
         Next
         b.EndBlock()
         b.AppendLine()
