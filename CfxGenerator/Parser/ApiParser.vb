@@ -49,12 +49,7 @@ Namespace Parser
 
             ParseCppHeaders()
 
-            Dim c1 = "/\*.*?\*/([\r\n]+)?"
-            Dim c2 = "//.*?([\r\n]+)"
-            Dim commentRegex = New Regex("(?:" & c1 & "|" & c2 & ")", RegexOptions.Singleline)
-
             Dim sb As New Text.StringBuilder
-
 
             AddFile("cef\include\internal\cef_types.h", sb)
 
@@ -74,28 +69,12 @@ Namespace Parser
             AddFile("cef\include\internal\cef_time.h", sb)
             Dim structOnlyCode = sb.ToString()
 
-            code = commentRegex.Replace(code, "$1")
-            structOnlyCode = commentRegex.Replace(structOnlyCode, "$1")
+            code = StripComments(code)
+            structOnlyCode = StripComments(structOnlyCode)
 
 
-            Dim enumRegex = New Regex("typedef\s+enum\s*{(.*?)}\s*(\w+?)_t\s*;", RegexOptions.Singleline)
-            Dim memberEx = New Regex("\b(\w+)\s*(?:=\s*((?:[0-9xA-Fa-f<+-]|\s)+))?")
-            Dim mm = enumRegex.Matches(code)
-            For Each m As Match In mm
+            ParseEnums(StripComments(codeFiles("cef\include\internal\cef_types.h")))
 
-                Dim e = New EnumData
-                e.Name = m.Groups(2).Value
-
-                Dim mm1 = memberEx.Matches(m.Groups(1).Value)
-                Dim members As New List(Of CefEnumType.EnumMember)
-                For i = 0 To mm1.Count - 1
-                    Dim em = New EnumMemberData
-                    em.Name = mm1(i).Groups(1).Value
-                    em.Value = mm1(i).Groups(2).Value.Trim()
-                    e.Members.Add(em)
-                Next
-                api.CefEnums.Add(e)
-            Next
 
             ParseStructs(code)
             ParseStructs(structOnlyCode)
@@ -179,10 +158,42 @@ Namespace Parser
 
         End Function
 
+        Private Function StripComments(code As String) As String
+            Static stripCommentsRegex As Regex
+            If stripCommentsRegex Is Nothing Then
+                Dim c1 = "/\*.*?\*/([\r\n]+)?"
+                Dim c2 = "//.*?([\r\n]+)"
+                stripCommentsRegex = New Regex("(?:" & c1 & "|" & c2 & ")", RegexOptions.Singleline)
+            End If
+            Return stripCommentsRegex.Replace(code, "$1")
+        End Function
+
         Sub AddFile(filename As String, sb As Text.StringBuilder)
             Dim fcode = File.ReadAllText(filename)
             sb.AppendLine(fcode)
             codeFiles.Add(filename, fcode)
+        End Sub
+
+        Sub ParseEnums(code As String)
+            Static enumRegex As New Regex("typedef\s+enum\s*{(.*?)}\s*(\w+?)_t\s*;", RegexOptions.Singleline)
+            Static memberEx As New Regex("\b(\w+)\s*(?:=\s*((?:[0-9xA-Fa-f<+-]|\s)+))?")
+
+            Dim mm = enumRegex.Matches(code)
+            For Each m As Match In mm
+
+                Dim e = New EnumData
+                e.Name = m.Groups(2).Value
+
+                Dim mm1 = memberEx.Matches(m.Groups(1).Value)
+                Dim members As New List(Of CefEnumType.EnumMember)
+                For i = 0 To mm1.Count - 1
+                    Dim em = New EnumMemberData
+                    em.Name = mm1(i).Groups(1).Value
+                    em.Value = mm1(i).Groups(2).Value.Trim()
+                    e.Members.Add(em)
+                Next
+                api.CefEnums.Add(e)
+            Next
         End Sub
 
         Private Function ParseFunctions(code As String) As FunctionData()
