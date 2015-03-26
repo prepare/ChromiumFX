@@ -33,18 +33,26 @@
 // which includes all the other c files
 
 
-#if CFX_PLATFORM == WIN32
-// void* cfx_platform_get_fptr(void *library, const char* function_name);
+
+#if defined CFX_WIN32
 #define cfx_platform_get_fptr(X, Y) GetProcAddress((HMODULE)X, Y)
 #define CFX_EXPORT __declspec(dllexport)
+#elif defined CFX_UNIX32
+#include <stdlib.h>
+#include <string.h>
+#include <dlfcn.h>
+#define cfx_platform_get_fptr dlsym
+#define CFX_EXPORT
+#define InterlockedIncrement(X) __sync_fetch_and_add(X, 1)
+#define InterlockedDecrement(X) __sync_fetch_and_sub(X, 1)
 #else
 #error unsupported platform
 #endif
 
-#include "cef\include\cef_version.h"
+#include "include/cef_version.h"
 
-#include "libcfx\Generated\cef_headers.h"
-#include "libcfx\Generated\cef_function_pointers.c"
+#include "cef_headers.h"
+#include "cef_function_pointers.c"
 
 static int (*cef_string_utf16_set_ptr)(const char16* src, size_t src_len,	cef_string_utf16_t* output, int copy);
 #define cef_string_utf16_set cef_string_utf16_set_ptr
@@ -61,8 +69,8 @@ static __inline void* cfx_copy_structure(void* source, size_t size) {
 }
 
 
-#include "libcfx\Generated\cfx_amalgamation.c"
-#include "libcfx\Generated\cfx_function_pointers.c"
+#include "cfx_amalgamation.c"
+#include "cfx_function_pointers.c"
 
 
 static int cfx_release(cef_base_t* base) {
@@ -84,7 +92,7 @@ static void* cfx_get_function_pointer(int index) {
 
 CFX_EXPORT int cfx_api_initialize(void *libcef, void *gc_handle_free, void **release, void **string_get_ptr, void **string_destroy, void **get_function_pointer) {
 
-	cef_api_hash_ptr = (char* (*)(int))cfx_platform_get_fptr(libcef, "cef_api_hash");
+	cef_api_hash_ptr = (const char* (*)(int))cfx_platform_get_fptr(libcef, "cef_api_hash");
 	if(!cef_api_hash_ptr)
 		return 1;
 
