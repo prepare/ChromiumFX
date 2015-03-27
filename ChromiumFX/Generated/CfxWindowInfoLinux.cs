@@ -57,7 +57,7 @@ namespace Chromium {
             return new CfxWindowInfoLinux(nativePtr, CfxApi.cfx_window_info_linux_dtor);
         }
 
-        public CfxWindowInfoLinux() : base(CfxApi.cfx_window_info_linux_ctor, CfxApi.cfx_window_info_linux_dtor) {}
+        public CfxWindowInfoLinux() : base(CfxApi.cfx_window_info_linux_ctor, CfxApi.cfx_window_info_linux_dtor) { CfxApi.PlatformCheck(CfxPlatform.Linux); }
         internal CfxWindowInfoLinux(IntPtr nativePtr) : base(nativePtr) {}
         internal CfxWindowInfoLinux(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 

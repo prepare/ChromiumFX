@@ -156,6 +156,10 @@ Namespace Parser
             api.CefFunctionsLinux = pa.CefFunctions
             api.CefStructsLinux = pa.CefStructs
 
+            pa = ParsePlatformApi("macos\cef\include\internal\cef_types_linux.h")
+            api.CefFunctionsLinux = pa.CefFunctions
+            api.CefStructsLinux = pa.CefStructs
+
             Return api
 
         End Function
