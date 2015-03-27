@@ -739,7 +739,13 @@ Public Class CfxClassBuilder
         b.AppendLine()
 
         b.BeginBlock("static {0} ()", ClassName)
+        If struct.IsCefPlatformStructType Then
+            b.BeginIf("CfxApi.ApiPlatform == CfxPlatform.{0}", struct.AsCefPlatformStructType.Platform.ToString())
+        End If
         b.AppendLine("CfxApiLoader.Load{0}Api();", ClassName)
+        If struct.IsCefPlatformStructType Then
+            b.EndBlock()
+        End If
         b.EndBlock()
         b.AppendLine()
 

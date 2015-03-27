@@ -1,4 +1,5 @@
 ﻿Public Enum CefPlatform
+    Independent
     Windows
     Linux
     MacOS

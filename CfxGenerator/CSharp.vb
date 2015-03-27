@@ -186,7 +186,7 @@ skip_to_lower:
         name = name.Replace("astwest", "astWest")
         name = name.Replace("oomout", "oomOut")
         name = name.Replace("oomin", "oomIn")
-
+        name = name.Replace("Xdisplay", "XDisplay")
         name = name.Replace("ConText", "Context")
         name = name.Replace("DisAllowed", "Disallowed")
         name = name.Replace("ubMenu", "ubmenu")

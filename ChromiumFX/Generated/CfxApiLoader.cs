@@ -54,6 +54,7 @@ namespace Chromium {
             cfx_get_geolocation,
             cfx_get_mime_type,
             cfx_get_path,
+            cfx_get_xdisplay,
             cfx_initialize,
             cfx_is_web_plugin_unstable,
             cfx_launch_process,
@@ -1190,6 +1191,9 @@ namespace Chromium {
             CfxApi.cfx_get_geolocation = (CfxApi.cfx_get_geolocation_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_get_geolocation, typeof(CfxApi.cfx_get_geolocation_delegate));
             CfxApi.cfx_get_mime_type = (CfxApi.cfx_get_mime_type_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_get_mime_type, typeof(CfxApi.cfx_get_mime_type_delegate));
             CfxApi.cfx_get_path = (CfxApi.cfx_get_path_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_get_path, typeof(CfxApi.cfx_get_path_delegate));
+            if(CfxApi.ApiPlatform == CfxPlatform.Linux) {
+                CfxApi.cfx_get_xdisplay = (CfxApi.cfx_get_xdisplay_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_get_xdisplay, typeof(CfxApi.cfx_get_xdisplay_delegate));
+            }
             CfxApi.cfx_initialize = (CfxApi.cfx_initialize_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_initialize, typeof(CfxApi.cfx_initialize_delegate));
             CfxApi.cfx_is_web_plugin_unstable = (CfxApi.cfx_is_web_plugin_unstable_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_is_web_plugin_unstable, typeof(CfxApi.cfx_is_web_plugin_unstable_delegate));
             CfxApi.cfx_launch_process = (CfxApi.cfx_launch_process_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_launch_process, typeof(CfxApi.cfx_launch_process_delegate));

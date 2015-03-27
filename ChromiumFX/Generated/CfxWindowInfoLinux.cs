@@ -44,7 +44,9 @@ namespace Chromium {
     public sealed class CfxWindowInfoLinux : CfxWindowInfoBase {
 
         static CfxWindowInfoLinux () {
-            CfxApiLoader.LoadCfxWindowInfoLinuxApi();
+            if(CfxApi.ApiPlatform == CfxPlatform.Linux) {
+                CfxApiLoader.LoadCfxWindowInfoLinuxApi();
+            }
         }
 
         internal static CfxWindowInfoLinux Wrap(IntPtr nativePtr) {

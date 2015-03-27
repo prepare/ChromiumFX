@@ -31,7 +31,7 @@
 // Generated file. Do not edit.
 
 
-static void* cfx_function_pointers[1133] =  {
+static void* cfx_function_pointers[1134] =  {
     (void*)cfx_add_cross_origin_whitelist_entry,
     (void*)cfx_add_web_plugin_directory,
     (void*)cfx_add_web_plugin_path,
@@ -50,6 +50,7 @@ static void* cfx_function_pointers[1133] =  {
     (void*)cfx_get_geolocation,
     (void*)cfx_get_mime_type,
     (void*)cfx_get_path,
+    (void*)cfx_get_xdisplay,
     (void*)cfx_initialize,
     (void*)cfx_is_web_plugin_unstable,
     (void*)cfx_launch_process,

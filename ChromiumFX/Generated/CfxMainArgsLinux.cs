@@ -44,7 +44,9 @@ namespace Chromium {
     internal sealed partial class CfxMainArgsLinux : CfxMainArgsBase {
 
         static CfxMainArgsLinux () {
-            CfxApiLoader.LoadCfxMainArgsLinuxApi();
+            if(CfxApi.ApiPlatform == CfxPlatform.Linux) {
+                CfxApiLoader.LoadCfxMainArgsLinuxApi();
+            }
         }
 
         public CfxMainArgsLinux() : base(CfxApi.cfx_main_args_linux_ctor, CfxApi.cfx_main_args_linux_dtor) { CfxApi.PlatformCheck(CfxPlatform.Linux); }

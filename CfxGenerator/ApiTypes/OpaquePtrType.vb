@@ -36,6 +36,12 @@ Public Class OpaquePtrType
         MyBase.New(name & "*")
     End Sub
 
+    Public Overrides ReadOnly Property NativeSymbol As String
+        Get
+            Return "void*"
+        End Get
+    End Property
+
     Public Overrides ReadOnly Property PInvokeSymbol As String
         Get
             Return "IntPtr"
