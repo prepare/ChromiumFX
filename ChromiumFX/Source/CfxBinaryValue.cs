@@ -66,7 +66,6 @@ namespace Chromium {
                 throw new ArgumentException("bufferOffset >= buffer.Length.", "bufferOffset");
 
             var po = new PinnedObject(buffer);
-            var ptr = po.PinnedPtr + bufferOffset;
 
             var retval = CfxApi.cfx_binary_value_get_data(NativePtr, po.PinnedPtr + bufferOffset, maxBytes, dataOffset);
             po.Free();
