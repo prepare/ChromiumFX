@@ -37,5 +37,12 @@ Namespace Parser
         Public CefFunctions As List(Of FunctionData)
         Public CefEnums As List(Of EnumData)
         Public CefStringCollectionFunctions As FunctionData()
+
+        Public CefStructsWindows As List(Of StructData)
+        Public CefFunctionsWindows As List(Of FunctionData)
+
+        Public CefStructsLinux As List(Of StructData)
+        Public CefFunctionsLinux As List(Of FunctionData)
+
     End Class
 End Namespace

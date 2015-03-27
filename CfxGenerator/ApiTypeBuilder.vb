@@ -85,9 +85,6 @@ Public Class ApiTypeBuilder
 
         AddType(New ApiType("void"))
 
-        AddType(New CefMainArgsType)
-        AddType(New CefMainArgsPtrType)
-
         AddType(New CefBaseType)
         AddType(New CefBasePtrType)
 
@@ -97,6 +94,8 @@ Public Class ApiTypeBuilder
         AddType(New BooleanIntegerOutType)
 
         AddType(New OpaquePtrType("XDisplay"))
+        AddType(New CefPlatformBasePtrType("cef_window_info_t*"))
+        AddType(New CefPlatformBasePtrType("cef_main_args_t*"))
 
         Dim tStr As ApiType = New CefStringType
         AddType(tStr)
@@ -132,6 +131,20 @@ Public Class ApiTypeBuilder
             End If
         Next
 
+        For Each sd In apiData.CefStructsWindows
+            Dim structName = sd.Name.Substring(0, sd.Name.Length - 2)
+            Dim t = New CefPlatformStructType(structName, sd.Comments, CefPlatform.Windows)
+            AddType(t)
+            structs.Add(t)
+        Next
+
+        For Each sd In apiData.CefStructsLinux
+            Dim structName = sd.Name.Substring(0, sd.Name.Length - 2)
+            Dim t = New CefPlatformStructType(structName, sd.Comments, CefPlatform.Linux)
+            AddType(t)
+            structs.Add(t)
+        Next
+
         stringCollectionTypes.Add(New CefStringListType)
         stringCollectionTypes.Add(New CefStringMapType)
         stringCollectionTypes.Add(New CefStringMultimapType)
@@ -140,12 +153,22 @@ Public Class ApiTypeBuilder
             AddType(t)
         Next
 
-
+        
         For Each sd In apiData.CefStructs
             Dim t = apiTypes(sd.Name)
             If t.IsCefStructType Then
-                apiTypes(sd.Name).AsCefStructType.SetMembers(sd, Me)
+                t.AsCefStructType.SetMembers(sd, Me)
             End If
+        Next
+
+        For Each sd In apiData.CefStructsWindows
+            Dim t = apiTypes(sd.Name.Substring(0, sd.Name.Length - 2) & "_windows")
+            t.AsCefStructType.SetMembers(sd, Me)
+        Next
+
+        For Each sd In apiData.CefStructsLinux
+            Dim t = apiTypes(sd.Name.Substring(0, sd.Name.Length - 2) & "_linux")
+            t.AsCefStructType.SetMembers(sd, Me)
         Next
 
         For Each fd In apiData.CefStringCollectionFunctions

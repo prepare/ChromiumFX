@@ -34,10 +34,10 @@
 
 
 
-#if defined CFX_WIN32
+#if defined CFX_WINDOWS
 #define cfx_platform_get_fptr(X, Y) GetProcAddress((HMODULE)X, Y)
 #define CFX_EXPORT __declspec(dllexport)
-#elif defined CFX_UNIX32
+#elif defined CFX_LINUX
 #include <stdlib.h>
 #include <string.h>
 #include <dlfcn.h>
@@ -90,7 +90,7 @@ static void* cfx_get_function_pointer(int index) {
 	return cfx_function_pointers[index];
 }
 
-CFX_EXPORT int cfx_api_initialize(void *libcef, void *gc_handle_free, void **release, void **string_get_ptr, void **string_destroy, void **get_function_pointer) {
+CFX_EXPORT int cfx_api_initialize(void *libcef, void *gc_handle_free, int *platform, void **release, void **string_get_ptr, void **string_destroy, void **get_function_pointer) {
 
 	cef_api_hash_ptr = (const char* (*)(int))cfx_platform_get_fptr(libcef, "cef_api_hash");
 	if(!cef_api_hash_ptr)
@@ -99,6 +99,14 @@ CFX_EXPORT int cfx_api_initialize(void *libcef, void *gc_handle_free, void **rel
 	if(strcmp(cef_api_hash(0), CEF_API_HASH_PLATFORM)) {
 		return 2;
 	}
+
+#if defined CFX_WINDOWS
+	*platform = 0;
+#elif defined CFX_LINUX
+	*platform = 1;
+#elif defined CFX_MACOS
+	*platform = 2;
+#endif
 
 	cfx_gc_handle_free = (void(CEF_CALLBACK *)(gc_handle_t))gc_handle_free;
 	*release = (void*)cfx_release;

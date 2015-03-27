@@ -30,9 +30,19 @@
 
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace Chromium {
     internal abstract class PlatformApi {
+
+        internal static PlatformApi Create() {
+            // use path separator character instead of Environment.OSVersion.Platform
+            // for platform detection
+            if(System.IO.Path.DirectorySeparatorChar.Equals('\\'))
+                return new WindowsApi();
+            else
+                return new UnixApi();
+        }
 
         /// <summary>
         /// Dynamically loads a native library.
@@ -50,4 +60,43 @@ namespace Chromium {
         internal abstract IntPtr GetFunctionPointer(IntPtr libraryHandle, string name);
 
     }
+
+    // for windows
+    internal class WindowsApi : PlatformApi {
+
+        [DllImport("kernel32.dll", SetLastError = false)]
+        private static extern IntPtr LoadLibrary(string filename);
+
+        [DllImport("kernel32.dll", SetLastError = false)]
+        private static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+
+        internal override IntPtr LoadNativeLibrary(string name) {
+            return LoadLibrary(name);
+        }
+
+        internal override IntPtr GetFunctionPointer(IntPtr libraryHandle, string name) {
+            return GetProcAddress(libraryHandle, name);
+        }
+    }
+
+    // for linux and mac os
+    internal class UnixApi : PlatformApi {
+
+        [DllImport("dl")]
+        static extern IntPtr dlopen([MarshalAs(UnmanagedType.LPTStr)] string filename, int flags);
+
+        [DllImport("dl")]
+        static extern IntPtr dlsym(IntPtr handle, [MarshalAs(UnmanagedType.LPTStr)] string symbol);
+
+        const int RTLD_NOW = 2;
+
+        internal override IntPtr LoadNativeLibrary(string name) {
+            return dlopen(name, RTLD_NOW);
+        }
+
+        internal override IntPtr GetFunctionPointer(IntPtr libraryHandle, string name) {
+            return dlsym(libraryHandle, name);
+        }
+    }
+
 }

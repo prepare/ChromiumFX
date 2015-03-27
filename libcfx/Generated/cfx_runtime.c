@@ -107,11 +107,14 @@ static int cfx_end_tracing(char16 *tracing_file_str, int tracing_file_length, ce
     return cef_end_tracing(&tracing_file, callback);
 }
 
-// CEF_EXPORT int cef_execute_process(cef_app_t* application, void* windows_sandbox_info);
-static int cfx_execute_process(cef_app_t* application, void* windows_sandbox_info) {
-    cef_main_args_t args = { GetModuleHandle(0) };
+// CEF_EXPORT int cef_execute_process(const cef_main_args_t* args, cef_app_t* application, void* windows_sandbox_info);
+static int cfx_execute_process(const cef_main_args_t* args, cef_app_t* application, void* windows_sandbox_info) {
+    #if defined CFX_WINDOWS
+    cef_main_args_t args_tmp = { GetModuleHandle(0) };
+    args = &args_tmp;
+    #endif
     if(application) ((cef_base_t*)application)->add_ref((cef_base_t*)application);
-    return cef_execute_process(&args, application, windows_sandbox_info);
+    return cef_execute_process(args, application, windows_sandbox_info);
 }
 
 // CEF_EXPORT void cef_force_web_plugin_shutdown(const cef_string_t* path);
@@ -146,11 +149,14 @@ static int cfx_get_path(cef_path_key_t key, char16 **path_str, int *path_length)
     return __ret_val_;
 }
 
-// CEF_EXPORT int cef_initialize(const cef_settings_t* settings, cef_app_t* application, void* windows_sandbox_info);
-static int cfx_initialize(const cef_settings_t* settings, cef_app_t* application, void* windows_sandbox_info) {
-    cef_main_args_t args = { GetModuleHandle(0) };
+// CEF_EXPORT int cef_initialize(const cef_main_args_t* args, const cef_settings_t* settings, cef_app_t* application, void* windows_sandbox_info);
+static int cfx_initialize(const cef_main_args_t* args, const cef_settings_t* settings, cef_app_t* application, void* windows_sandbox_info) {
+    #if defined CFX_WINDOWS
+    cef_main_args_t args_tmp = { GetModuleHandle(0) };
+    args = &args_tmp;
+    #endif
     if(application) ((cef_base_t*)application)->add_ref((cef_base_t*)application);
-    return cef_initialize(&args, settings, application, windows_sandbox_info);
+    return cef_initialize(args, settings, application, windows_sandbox_info);
 }
 
 // CEF_EXPORT void cef_is_web_plugin_unstable(const cef_string_t* path, cef_web_plugin_unstable_callback_t* callback);

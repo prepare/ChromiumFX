@@ -81,7 +81,7 @@
     <Compile Include="ApiTypes\CefCallbackType.vb" />
     <Compile Include="ApiTypes\CefColorType.vb" />
     <Compile Include="ApiTypes\CefEnumType.vb" />
-    <Compile Include="ApiTypes\CefMainArgsPtrType.vb" />
+    <Compile Include="ApiTypes\CefPlatformBasePtrType.vb" />
     <Compile Include="ApiTypes\CefRectArrayType.vb" />
     <Compile Include="ApiTypes\CefStringListType.vb" />
     <Compile Include="ApiTypes\CefStringMapType.vb" />
@@ -90,12 +90,12 @@
     <Compile Include="ApiTypes\CefStructOutType.vb" />
     <Compile Include="ApiTypes\CefStructPtrPtrType.vb" />
     <Compile Include="ApiTypes\CefStructPtrType.vb" />
-    <Compile Include="ApiTypes\CefMainArgsType.vb" />
     <Compile Include="ApiTypes\CefStringPtrType.vb" />
     <Compile Include="ApiTypes\BlittablePtrType.vb" />
     <Compile Include="ApiTypes\NumericOutType.vb" />
     <Compile Include="ApiTypes\NumericType.vb" />
     <Compile Include="ApiTypes\OpaquePtrType.vb" />
+    <Compile Include="ApiTypes\CefPlatformStructType.vb" />
     <Compile Include="ApiTypes\SizeType.vb" />
     <Compile Include="ApiTypes\SpecialType.vb" />
     <Compile Include="ApiTypes\StringCollectionType.vb" />
@@ -104,6 +104,7 @@
     <Compile Include="ApiTypes\WrapperOnly\CefStructPtrArrayType.vb" />
     <Compile Include="ApiTypes\WrapperOnly\WrapperArrayType.vb" />
     <Compile Include="AssemblyResources.vb" />
+    <Compile Include="CefPlatform.vb" />
     <Compile Include="CfxClassBuilder.vb" />
     <Compile Include="CustomSignatures\GetPageRangesSignature.vb" />
     <Compile Include="CustomSignatures\SignatureWithStructArray.vb" />

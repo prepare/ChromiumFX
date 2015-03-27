@@ -29,24 +29,10 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-using System;
-using System.Runtime.InteropServices;
-
 namespace Chromium {
-    internal class WindowsApi : PlatformApi {
-
-        [DllImport("kernel32.dll", SetLastError = false)]
-        private static extern IntPtr LoadLibrary(string filename);
-
-        [DllImport("kernel32.dll", SetLastError = false)]
-        private static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
-
-        internal override IntPtr LoadNativeLibrary(string name) {
-            return LoadLibrary(name);
-        }
-
-        internal override IntPtr GetFunctionPointer(IntPtr libraryHandle, string name) {
-            return GetProcAddress(libraryHandle, name);
-        }
+    public enum CfxPlatform {
+        Windows = 0,
+        Linux,
+        MacOS
     }
 }

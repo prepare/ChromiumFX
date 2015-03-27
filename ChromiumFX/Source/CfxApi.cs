@@ -41,6 +41,8 @@ namespace Chromium
         internal static IntPtr libcfxPtr;
         internal static IntPtr libcefPtr;
 
+        internal static CfxPlatform ApiPlatform { get; private set; }
+
         private static string cefDir;
         private static string cfxDir;
         internal static bool librariesLoaded;
@@ -66,7 +68,7 @@ namespace Chromium
 
         //CFX_EXPORT int cfx_api_initialize(HMODULE libcef, void *gc_handle_free, void **release, void **string_get_ptr, void **string_destroy, , void **get_function_pointer)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate int cfx_api_initialize_delegate(IntPtr libcef, IntPtr gc_handle_free, out IntPtr release, out IntPtr string_get_ptr, out IntPtr string_destroy, out IntPtr get_function_pointer);
+        public delegate int cfx_api_initialize_delegate(IntPtr libcef, IntPtr gc_handle_free, out int platform, out IntPtr release, out IntPtr string_get_ptr, out IntPtr string_destroy, out IntPtr get_function_pointer);
 
         //static int cfx_release(cef_base_t* base)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -153,16 +155,8 @@ namespace Chromium
                 return;
             }
 
+            platformApi = PlatformApi.Create();
             
-            switch(Environment.OSVersion.Platform) {
-                case PlatformID.Win32NT:
-                    platformApi = new WindowsApi();
-                    break;
-                default:
-                    throw new CfxException("Unsupported platform: " + Environment.OSVersion.VersionString);
-            }
-
-
             CfxApi.cefDir = cefDir;
             CfxApi.cfxDir = cfxDir;
             
@@ -181,13 +175,14 @@ namespace Chromium
 
             cfx_free_gc_handle = FreeGcHandle;
 
+            int platform;
             IntPtr release;
             IntPtr string_get_pointer;
             IntPtr string_destroy;
             IntPtr get_function_pointer;
 
             cfx_api_initialize_delegate api_initialize = (cfx_api_initialize_delegate)LoadDelegate(libcfxPtr, "cfx_api_initialize", typeof(cfx_api_initialize_delegate));
-            int retval = api_initialize(libcefPtr, Marshal.GetFunctionPointerForDelegate(cfx_free_gc_handle), out release, out string_get_pointer, out string_destroy, out get_function_pointer);
+            int retval = api_initialize(libcefPtr, Marshal.GetFunctionPointerForDelegate(cfx_free_gc_handle), out platform, out release, out string_get_pointer, out string_destroy, out get_function_pointer);
 
             if(retval != 0) {
                 switch(retval) {
@@ -197,6 +192,8 @@ namespace Chromium
                         throw new CfxException("API hash mismatch: incompatible libcef.dll");
                 }
             }
+
+            ApiPlatform = (CfxPlatform)platform;
 
             cfx_release = (cfx_release_delegate)Marshal.GetDelegateForFunctionPointer(release, typeof(cfx_release_delegate));
             cfx_string_get_ptr = (cfx_string_get_ptr_delegate)Marshal.GetDelegateForFunctionPointer(string_get_pointer, typeof(cfx_string_get_ptr_delegate));
