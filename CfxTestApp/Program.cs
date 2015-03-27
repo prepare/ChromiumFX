@@ -67,32 +67,6 @@ namespace CfxTestApplication {
             CfxRuntime.LoadLibraries(@"cef\Release");
 //#endif
 
-            //for(int i = 0; i < 1000000; i++) {
-
-            //    var ps = CfxPrintSettings.Create();
-            //    var pr = new CfxPageRange[] { new CfxPageRange(), new CfxPageRange(), new CfxPageRange() };
-
-            //    pr[0].To = 3;
-            //    pr[1].From = 10;
-            //    pr[1].To = 11;
-            //    pr[2].From = 60;
-            //    pr[2].To = 65;
-
-            //    ps.SetPageRanges(pr);
-
-            //    pr[0].Dispose();
-            //    pr[1].Dispose();
-            //    pr[2].Dispose();
-
-            //    var x = ps.PageRangesCount;
-
-            //    var y = ps.GetPageRanges();
-
-            //    //ps.Dispose();
-            //    //GC.Collect();
-            //}
-
-
             Chromium.WebBrowser.ChromiumWebBrowser.OnBeforeCfxInitialize += ChromiumWebBrowser_OnBeforeCfxInitialize;
             ChromiumWebBrowser.OnBeforeCommandLineProcessing += ChromiumWebBrowser_OnBeforeCommandLineProcessing;
             Chromium.WebBrowser.ChromiumWebBrowser.Initialize();
@@ -112,11 +86,6 @@ namespace CfxTestApplication {
         static void ChromiumWebBrowser_OnBeforeCommandLineProcessing(CfxOnBeforeCommandLineProcessingEventArgs e) {
             Console.WriteLine("ChromiumWebBrowser_OnBeforeCommandLineProcessing");
             Console.WriteLine(e.CommandLine.CommandLineString);
-            var switches = e.CommandLine.GetSwitches();
-            e.CommandLine.AppendArgument("arg001");
-            e.CommandLine.AppendArgument("arg002");
-            var args = e.CommandLine.GetArguments();
-
         }
 
         static void ChromiumWebBrowser_OnBeforeCfxInitialize(OnBeforeCfxInitializeEventArgs e) {
