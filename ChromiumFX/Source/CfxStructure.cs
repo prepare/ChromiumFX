@@ -49,6 +49,10 @@ namespace Chromium {
         // allocate native on creation, free native on dispose.
         internal CfxStructure(CfxApi.cfx_ctor_delegate cfx_ctor, CfxApi.cfx_dtor_delegate cfx_dtor) {
             this.m_cfx_dtor = cfx_dtor;
+            //this might happen if the application tries to instanciate a platform specific struct
+            //on the wrong platform.
+            if(cfx_ctor == null)
+                return;
             CreateNative(cfx_ctor);
         }
 

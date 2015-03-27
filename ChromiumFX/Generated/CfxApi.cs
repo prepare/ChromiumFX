@@ -112,6 +112,10 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate int cfx_get_path_delegate(CfxPathKey key, ref IntPtr path_str, ref int path_length);
         public static cfx_get_path_delegate cfx_get_path;
+        // CEF_EXPORT XDisplay* cef_get_xdisplay();
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate IntPtr cfx_get_xdisplay_delegate();
+        public static cfx_get_xdisplay_delegate cfx_get_xdisplay;
         // CEF_EXPORT int cef_initialize(const cef_main_args_t* args, const cef_settings_t* settings, cef_app_t* application, void* windows_sandbox_info);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate int cfx_initialize_delegate(IntPtr args, IntPtr settings, IntPtr application, IntPtr windows_sandbox_info);

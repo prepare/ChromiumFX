@@ -149,6 +149,15 @@ static int cfx_get_path(cef_path_key_t key, char16 **path_str, int *path_length)
     return __ret_val_;
 }
 
+// CEF_EXPORT XDisplay* cef_get_xdisplay();
+#ifdef CFX_LINUX
+static void* cfx_get_xdisplay() {
+    return cef_get_xdisplay();
+}
+#else
+#define cfx_get_xdisplay 0
+#endif
+
 // CEF_EXPORT int cef_initialize(const cef_main_args_t* args, const cef_settings_t* settings, cef_app_t* application, void* windows_sandbox_info);
 static int cfx_initialize(const cef_main_args_t* args, const cef_settings_t* settings, cef_app_t* application, void* windows_sandbox_info) {
     #if defined CFX_WINDOWS

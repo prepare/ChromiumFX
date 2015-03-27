@@ -49,6 +49,9 @@ static void (*cef_get_extensions_for_mime_type_ptr)(const cef_string_t* mime_typ
 static int (*cef_get_geolocation_ptr)(cef_get_geolocation_callback_t* callback);
 static cef_string_userfree_t (*cef_get_mime_type_ptr)(const cef_string_t* extension);
 static int (*cef_get_path_ptr)(cef_path_key_t key, cef_string_t* path);
+#ifdef CFX_LINUX
+static XDisplay* (*cef_get_xdisplay_ptr)();
+#endif
 static int (*cef_initialize_ptr)(const cef_main_args_t* args, const cef_settings_t* settings, cef_app_t* application, void* windows_sandbox_info);
 static void (*cef_is_web_plugin_unstable_ptr)(const cef_string_t* path, cef_web_plugin_unstable_callback_t* callback);
 static int (*cef_launch_process_ptr)(cef_command_line_t* command_line);
@@ -155,6 +158,9 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_get_geolocation_ptr = (int (*)(cef_get_geolocation_callback_t*))cfx_platform_get_fptr(libcef, "cef_get_geolocation");
     cef_get_mime_type_ptr = (cef_string_userfree_t (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_get_mime_type");
     cef_get_path_ptr = (int (*)(cef_path_key_t, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_get_path");
+    #ifdef CFX_LINUX
+    cef_get_xdisplay_ptr = (XDisplay* (*)())cfx_platform_get_fptr(libcef, "cef_get_xdisplay");
+    #endif
     cef_initialize_ptr = (int (*)(const cef_main_args_t*, const cef_settings_t*, cef_app_t*, void*))cfx_platform_get_fptr(libcef, "cef_initialize");
     cef_is_web_plugin_unstable_ptr = (void (*)(const cef_string_t*, cef_web_plugin_unstable_callback_t*))cfx_platform_get_fptr(libcef, "cef_is_web_plugin_unstable");
     cef_launch_process_ptr = (int (*)(cef_command_line_t*))cfx_platform_get_fptr(libcef, "cef_launch_process");
@@ -262,6 +268,9 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_get_geolocation cef_get_geolocation_ptr
 #define cef_get_mime_type cef_get_mime_type_ptr
 #define cef_get_path cef_get_path_ptr
+#ifdef CFX_LINUX
+#define cef_get_xdisplay cef_get_xdisplay_ptr
+#endif
 #define cef_initialize cef_initialize_ptr
 #define cef_is_web_plugin_unstable cef_is_web_plugin_unstable_ptr
 #define cef_launch_process cef_launch_process_ptr

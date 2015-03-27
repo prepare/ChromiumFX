@@ -49,12 +49,19 @@ Public Class CefExportFunction
 
     Public ApiIndex As Integer
 
-    Public Sub New(parent As CefType, fd As Parser.FunctionData, api As ApiTypeBuilder)
+    Public ReadOnly Platform As CefPlatform
+
+    Public Sub New(parent As CefType, fd As Parser.FunctionData, api As ApiTypeBuilder, platform As CefPlatform)
         Me.Name = fd.Name
         Me.Comments = fd.Comments
         Me.Signature = Signature.Create(Me, fd.Signature, api)
         Me.PrivateWrapper = GeneratorConfig.HasPrivateWrapper(Me.Name)
         Me.Parent = parent
+        Me.Platform = platform
+    End Sub
+
+    Public Sub New(parent As CefType, fd As Parser.FunctionData, api As ApiTypeBuilder)
+        Me.New(parent, fd, api, CefPlatform.Independent)
     End Sub
 
     Public ReadOnly Property CfxName As String
@@ -90,10 +97,19 @@ Public Class CefExportFunction
     End Sub
 
     Public Sub EmitNativeFunction(b As CodeBuilder)
+
         b.AppendComment(Me.ToString())
+        If Platform <> CefPlatform.Independent Then
+            b.AppendLine("#ifdef CFX_" & Platform.ToString().ToUpperInvariant())
+        End If
         b.BeginBlock(Signature.NativeSignature(CfxName))
         Signature.EmitNativeCall(b, Name)
         b.EndBlock()
+        If Platform <> CefPlatform.Independent Then
+            b.AppendLine("#else")
+            b.AppendLine("#define {0} 0", CfxName)
+            b.AppendLine("#endif")
+        End If
     End Sub
 
     Public Sub EmitPublicFunction(b As CodeBuilder)
@@ -107,6 +123,10 @@ Public Class CefExportFunction
         End If
 
         b.BeginFunction(Signature.PublicSignature(PublicName), modifiers)
+        If Platform <> CefPlatform.Independent Then
+            b.AppendLine("CfxApi.PlatformCheck(CfxPlatform.{0});", Platform.ToString())
+        End If
+
         Signature.EmitPublicCall(b)
         b.EndBlock()
 

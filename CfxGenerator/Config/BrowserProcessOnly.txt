@@ -28,3 +28,4 @@ cef_api_hash
 cef_app::get_browser_process_handler
 cef_browser::get_host
 cef_frame::view_source
+cef_get_xdisplay

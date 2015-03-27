@@ -180,6 +180,13 @@ Public Class ApiTypeBuilder
             functions.Add(f)
         Next
 
+        If apiData.CefFunctionsWindows.Count > 0 Then Stop
+
+        For Each fd In apiData.CefFunctionsLinux
+            Dim f = New CefExportFunction(Nothing, fd, Me, CefPlatform.Linux)
+            functions.Add(f)
+        Next
+
         functions.Sort(New CefExportFunction.Comparer)
         structs.Sort(New ApiType.Comparer)
         enums.Sort(New ApiType.Comparer)

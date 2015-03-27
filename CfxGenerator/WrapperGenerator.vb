@@ -165,21 +165,39 @@ Public Class WrapperGenerator
             If f.Signature.ReturnValueIsConst Then
                 retSymbol = "const " & retSymbol
             End If
+            If f.Platform <> CefPlatform.Independent Then
+                b.AppendLine("#ifdef CFX_" & f.Platform.ToString().ToUpperInvariant())
+            End If
             b.AppendLine("static {0} (*{1}_ptr)({2});", retSymbol, f.Name, f.Signature.OriginalSignature)
+            If f.Platform <> CefPlatform.Independent Then
+                b.AppendLine("#endif")
+            End If
         Next
         b.AppendLine()
 
         b.BeginBlock("static void cfx_load_cef_function_pointers(void *libcef)")
         For Each f In ff
             If (f.Name <> "cef_api_hash") Then
+                If f.Platform <> CefPlatform.Independent Then
+                    b.AppendLine("#ifdef CFX_" & f.Platform.ToString().ToUpperInvariant())
+                End If
                 b.AppendLine("{0}_ptr = ({1} (*)({2}))cfx_platform_get_fptr(libcef, ""{0}"");", f.Name, f.ReturnType.OriginalSymbol, f.Signature.OriginalSignatureUnnamed)
+                If f.Platform <> CefPlatform.Independent Then
+                    b.AppendLine("#endif")
+                End If
             End If
         Next
         b.EndBlock()
         b.AppendLine()
 
         For Each f In ff
+            If f.Platform <> CefPlatform.Independent Then
+                b.AppendLine("#ifdef CFX_" & f.Platform.ToString().ToUpperInvariant())
+            End If
             b.AppendLine("#define {0} {0}_ptr", f.Name)
+            If f.Platform <> CefPlatform.Independent Then
+                b.AppendLine("#endif")
+            End If
         Next
         b.AppendLine()
 
@@ -203,7 +221,6 @@ Public Class WrapperGenerator
         Dim b = New CodeBuilder
         CodeSnippets.BeginExternC(b)
         b.AppendLine()
-
         For Each f In decls.ExportFunctions
             f.EmitNativeFunction(b)
             b.AppendLine()
@@ -250,10 +267,23 @@ Public Class WrapperGenerator
         b.BeginCfxNamespace()
         b.BeginClass("CfxRuntime", "public partial")
         b.AppendLine()
+
+        Dim lxFuncs = New List(Of CefExportFunction)
         For Each f In decls.ExportFunctions
+            If f.Platform = CefPlatform.Independent Then
+                f.EmitPublicFunction(b)
+                b.AppendLine()
+            Else
+                lxFuncs.Add(f)
+            End If
+        Next
+        b.BeginClass("Linux", "public")
+        b.AppendLine()
+        For Each f In lxFuncs
             f.EmitPublicFunction(b)
             b.AppendLine()
         Next
+        b.EndBlock()
         b.EndBlock()
         b.EndBlock()
         fileManager.WriteFileIfContentChanged("CfxRuntime.cs", b.ToString())
@@ -329,7 +359,13 @@ Public Class WrapperGenerator
 
         b.BeginFunction("void LoadCfxRuntimeApi()", "internal static")
         For Each f In decls.ExportFunctions
+            If f.Platform <> CefPlatform.Independent Then
+                b.BeginIf("CfxApi.ApiPlatform == CfxPlatform.{0}", f.Platform.ToString())
+            End If
             CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
+            If f.Platform <> CefPlatform.Independent Then
+                b.EndBlock()
+            End If
         Next
         b.EndBlock()
         b.AppendLine()
