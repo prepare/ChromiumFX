@@ -756,7 +756,12 @@ Public Class CfxClassBuilder
             b.AppendLine()
         End If
 
-        b.AppendLine("public {0}() : base(CfxApi.{1}_ctor, CfxApi.{1}_dtor) {{}}", ClassName, CfxName)
+        If struct.IsCefPlatformStructType Then
+            b.AppendLine("public {0}() : base(CfxApi.{1}_ctor, CfxApi.{1}_dtor) {{ CfxApi.PlatformCheck(CfxPlatform.{2}); }}", ClassName, CfxName, struct.AsCefPlatformStructType.Platform.ToString())
+        Else
+            b.AppendLine("public {0}() : base(CfxApi.{1}_ctor, CfxApi.{1}_dtor) {{}}", ClassName, CfxName)
+        End If
+
         If NeedsWrapping Then
             b.AppendLine("internal {0}(IntPtr nativePtr) : base(nativePtr) {{}}", ClassName, CfxName)
             b.AppendLine("internal {0}(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {{}}", ClassName, CfxName)

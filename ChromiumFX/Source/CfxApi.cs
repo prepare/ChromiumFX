@@ -207,6 +207,12 @@ namespace Chromium
 
         }
 
+        internal static void PlatformCheck(CfxPlatform p) {
+            if(p != ApiPlatform) {
+                throw new CfxException("Platform check failed - platform specific type or function doesn't match current platform.");
+            }
+        }
+
         internal static Delegate GetDelegate(CfxApiLoader.FunctionIndex apiIndex, Type delegateType) {
             IntPtr functionPtr = cfx_get_function_pointer((int)apiIndex);
             return Marshal.GetDelegateForFunctionPointer(functionPtr, delegateType);

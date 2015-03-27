@@ -36,7 +36,7 @@ namespace Chromium {
     public abstract class CfxWindowInfoBase : CfxStructure {
 
         internal static CfxWindowInfoBase Cast(IntPtr nativePtr) {
-            switch(CfxRuntime.Platform) {
+            switch(CfxApi.ApiPlatform) {
                 case CfxPlatform.Windows:
                     return CfxWindowInfo.Wrap(nativePtr);
                 case CfxPlatform.Linux:
