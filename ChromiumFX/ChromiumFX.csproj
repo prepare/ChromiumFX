@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -91,6 +91,8 @@
     <Compile Include="Generated\CfxLifeSpanHandler.cs" />
     <Compile Include="Generated\CfxListValue.cs" />
     <Compile Include="Generated\CfxLoadHandler.cs" />
+    <Compile Include="Generated\CfxMainArgs.cs" />
+    <Compile Include="Generated\CfxMainArgsLinux.cs" />
     <Compile Include="Generated\CfxMenuModel.cs" />
     <Compile Include="Generated\CfxMouseEvent.cs" />
     <Compile Include="Generated\CfxNavigationEntry.cs" />
@@ -144,6 +146,7 @@
     <Compile Include="Generated\CfxWebPluginInfoVisitor.cs" />
     <Compile Include="Generated\CfxWebPluginUnstableCallback.cs" />
     <Compile Include="Generated\CfxWindowInfo.cs" />
+    <Compile Include="Generated\CfxWindowInfoLinux.cs" />
     <Compile Include="Generated\CfxWriteHandler.cs" />
     <Compile Include="Generated\CfxXmlReader.cs" />
     <Compile Include="Generated\CfxZipReader.cs" />
@@ -217,8 +220,11 @@
     <Compile Include="Source\CfxBinaryValue.cs" />
     <Compile Include="Source\CfxColor.cs" />
     <Compile Include="Source\CfxDebug.cs" />
+    <Compile Include="Source\CfxMainArgsLinux.cs" />
+    <Compile Include="Source\CfxPlatform.cs" />
     <Compile Include="Source\CfxTime.cs" />
     <Compile Include="Source\PlatformApi.cs" />
+    <Compile Include="Source\PlatformBaseTypes.cs" />
     <Compile Include="Source\Remote\PipeFactory.cs" />
     <Compile Include="Source\Remote\WindowsPipeFactory.cs" />
     <Compile Include="Source\StringFunctions.cs" />
@@ -254,7 +260,6 @@
     <Compile Include="Source\CfxStructure.cs" />
     <Compile Include="Source\TimeFunctions.cs" />
     <Compile Include="Source\WeakCache.cs" />
-    <Compile Include="Source\WindowsApi.cs" />
     <Compile Include="Source\WindowStyles.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

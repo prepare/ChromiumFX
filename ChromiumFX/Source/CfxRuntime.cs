@@ -39,7 +39,6 @@ namespace Chromium {
 
         internal static event Action OnCfxShutdown;
 
-
         /// <summary>
         /// Loads the native libraries libcef.dll and libcfx.dll from default locations.
         /// Tries to find the cef binaries in the executing assembly's directory
@@ -75,6 +74,15 @@ namespace Chromium {
         public static bool LibrariesLoaded { get { return CfxApi.librariesLoaded; } }
 
         /// <summary>
+        /// The platform ChromiumFX is currently running on.
+        /// </summary>
+        public static CfxPlatform Platform {
+            get {
+                return CfxApi.ApiPlatform;
+            }
+        }
+
+        /// <summary>
         /// This function should be called from the application entry point function to
         /// execute a secondary process. It can be used to run secondary processes from
         /// the browser client executable (default behavior) or from a separate
@@ -86,7 +94,18 @@ namespace Chromium {
         /// No sandbox info is provided.
         /// </summary>
         public static int ExecuteProcess(CfxApp application) {
-            return ExecuteProcessPrivate(application, IntPtr.Zero);
+            switch(CfxApi.ApiPlatform) {
+                case CfxPlatform.Windows:
+                    return ExecuteProcessPrivate(null, application, IntPtr.Zero);
+                case CfxPlatform.Linux:
+                    using(var mainArgs = CfxMainArgsLinux.Create()) {
+                        var retval = ExecuteProcessPrivate(mainArgs, application, IntPtr.Zero);
+                        mainArgs.Free();
+                        return retval;
+                    }
+                default:
+                    throw new CfxException();
+            }
         }
 
         /// <summary>
@@ -97,7 +116,18 @@ namespace Chromium {
         /// No sandbox info is provided.
         /// </summary>
         public static bool Initialize(CfxSettings settings, CfxApp application) {
-            return InitializePrivate(settings, application, IntPtr.Zero);
+            switch(CfxApi.ApiPlatform) {
+                case CfxPlatform.Windows:
+                    return InitializePrivate(null, settings, application, IntPtr.Zero);
+                case CfxPlatform.Linux:
+                    using(var mainArgs = CfxMainArgsLinux.Create()) {
+                        var retval = InitializePrivate(mainArgs, settings, application, IntPtr.Zero);
+                        mainArgs.Free();
+                        return retval;
+                    }
+                default:
+                    throw new CfxException();
+            }
         }
 
         public static string GetCefVersion() {

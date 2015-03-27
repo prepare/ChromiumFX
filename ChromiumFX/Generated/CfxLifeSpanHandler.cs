@@ -469,7 +469,6 @@ namespace Chromium {
             internal IntPtr m_popupFeatures;
             internal CfxPopupFeatures m_popupFeatures_wrapped;
             internal IntPtr m_windowInfo;
-            internal CfxWindowInfo m_windowInfo_wrapped;
             internal CfxClient m_client_wrapped;
             internal IntPtr m_settings;
             internal CfxBrowserSettings m_settings_wrapped;
@@ -543,11 +542,10 @@ namespace Chromium {
             /// <summary>
             /// Get the WindowInfo parameter for the <see cref="CfxLifeSpanHandler.OnBeforePopup"/> callback.
             /// </summary>
-            public CfxWindowInfo WindowInfo {
+            public CfxWindowInfoBase WindowInfo {
                 get {
                     CheckAccess();
-                    if(m_windowInfo_wrapped == null) m_windowInfo_wrapped = CfxWindowInfo.Wrap(m_windowInfo);
-                    return m_windowInfo_wrapped;
+                    return CfxWindowInfoBase.Cast(m_windowInfo);
                 }
             }
             /// <summary>

@@ -382,6 +382,17 @@ Public Class ApiType
         End Get
     End Property
 
+    Public Overridable ReadOnly Property IsCefPlatformStructType As Boolean
+        Get
+            Return False
+        End Get
+    End Property
+    Public Overridable ReadOnly Property AsCefPlatformStructType As CefPlatformStructType
+        Get
+            Throw New Exception
+        End Get
+    End Property
+
     Public Overridable ReadOnly Property IsCefStringType As Boolean
         Get
             Return False

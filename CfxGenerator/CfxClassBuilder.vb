@@ -150,6 +150,16 @@ Public Class CfxClassBuilder
         Me.ClassName = struct.ClassName
         Me.RemoteClassName = struct.RemoteClassName
 
+        'If sd Is Nothing Then
+        '    If Not TypeOf struct Is CefPlatformBasePtrType Then
+        '        Stop
+        '    End If
+        '    ExportFunctions = {}
+        '    StructMembers = {}
+        '    Category = StructCategory.Values
+        '    Return
+        'End If
+
         Me.comments = sd.Comments
         If struct.Name.Equals("cef_app") OrElse
                 struct.Name.Equals("cef_get_geolocation_callback") OrElse
@@ -257,7 +267,6 @@ Public Class CfxClassBuilder
             Case StructCategory.Values
                 EmitNativeValueStruct(b)
         End Select
-
         b.AppendLine()
         CodeSnippets.EndExternC(b)
         b.AppendLine()
@@ -394,6 +403,11 @@ Public Class CfxClassBuilder
 
         If ExportFunctions.Count > 0 Then Stop
 
+        If struct.IsCefPlatformStructType Then
+            b.AppendLine("#ifdef CFX_" & struct.AsCefPlatformStructType.Platform.ToString().ToUpper())
+            b.AppendLine()
+        End If
+
         b.BeginBlock("static {0}* {1}_ctor()", OriginalSymbol, CfxName)
         If StructMembers.Length > 0 AndAlso StructMembers(0).Name = "size" Then
             b.AppendLine("{0}* self = ({0}*)calloc(1, sizeof({0}));", OriginalSymbol)
@@ -426,6 +440,20 @@ Public Class CfxClassBuilder
                 b.AppendLine()
             End If
         Next
+
+        If struct.IsCefPlatformStructType Then
+            b.AppendLine("#else //ifdef CFX_" & struct.AsCefPlatformStructType.Platform.ToString().ToUpper())
+            b.AppendLine("#define {0}_ctor 0", CfxName)
+            b.AppendLine("#define {0}_dtor 0", CfxName)
+            For Each sm In StructMembers
+                If sm.Name <> "size" Then
+                    b.AppendLine("#define {0}_set_{1} 0", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeCallSignature(sm.Name, False))
+                    b.AppendLine("#define {0}_get_{1} 0", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name))
+                End If
+            Next
+            b.AppendLine("#endif //ifdef CFX_" & struct.AsCefPlatformStructType.Platform.ToString().ToUpper())
+            b.AppendLine()
+        End If
 
     End Sub
 
@@ -699,7 +727,15 @@ Public Class CfxClassBuilder
 
         b.AppendSummaryAndRemarks(comments)
 
-        b.BeginClass(ClassName & " : CfxStructure", GeneratorConfig.ClassModifiers(ClassName, "public sealed"))
+        If struct.IsCefPlatformStructType Then
+            If struct.AsCefPlatformStructType.BaseClassName = "CfxMainArgsBase" Then
+                b.BeginClass(ClassName & " : " & struct.AsCefPlatformStructType.BaseClassName, GeneratorConfig.ClassModifiers(ClassName, "internal sealed"))
+            Else
+                b.BeginClass(ClassName & " : " & struct.AsCefPlatformStructType.BaseClassName, GeneratorConfig.ClassModifiers(ClassName, "public sealed"))
+            End If
+        Else
+            b.BeginClass(ClassName & " : CfxStructure", GeneratorConfig.ClassModifiers(ClassName, "public sealed"))
+        End If
         b.AppendLine()
 
         b.BeginBlock("static {0} ()", ClassName)

@@ -1,4 +1,4 @@
-'' Copyright (c) 2014-2015 Wolfgang Borgsmüller
+﻿'' Copyright (c) 2014-2015 Wolfgang Borgsmüller
 '' All rights reserved.
 '' 
 '' Redistribution and use in source and binary forms, with or without 
@@ -30,10 +30,54 @@
 
 
 
-Public Class CefMainArgsType
-    Inherits SpecialType
-    Sub New()
-        MyBase.New("cef_main_args_t")
+Public Class CefPlatformStructType
+    Inherits CefStructType
+
+    Public ReadOnly Platform As CefPlatform
+    Private ReadOnly baseTypeName As String
+
+    Sub New(name As String, comments As CommentData, platform As CefPlatform)
+        MyBase.New(name & "_" & platform.ToString().ToLowerInvariant(), comments)
+        Me.Platform = platform
+        baseTypeName = name
     End Sub
 
+    Public ReadOnly Property BaseClassName As String
+        Get
+            Return "Cfx" & CSharp.ApplyStyle(baseTypeName.Substring(4)) & "Base"
+        End Get
+    End Property
+
+
+    Public Overrides ReadOnly Property OriginalSymbol As String
+        Get
+            Return baseTypeName & "_t"
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property ClassName As String
+        Get
+            If Platform = CefPlatform.Windows Then
+                Return "Cfx" & CSharp.ApplyStyle(baseTypeName.Substring(4))
+            End If
+            Return MyBase.ClassName
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property ParserMatches As String()
+        Get
+            Return {Name}
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property IsCefPlatformStructType As Boolean
+        Get
+            Return True
+        End Get
+    End Property
+    Public Overrides ReadOnly Property AsCefPlatformStructType As CefPlatformStructType
+        Get
+            Return Me
+        End Get
+    End Property
 End Class

@@ -1,4 +1,4 @@
-'' Copyright (c) 2014-2015 Wolfgang Borgsmüller
+﻿'' Copyright (c) 2014-2015 Wolfgang Borgsmüller
 '' All rights reserved.
 '' 
 '' Redistribution and use in source and binary forms, with or without 
@@ -29,27 +29,38 @@
 '' USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+Public Class CefPlatformBasePtrType
+    Inherits SpecialType
 
-Public Class CefMainArgsPtrType
-    Inherits ApiType
-    Sub New()
-        MyBase.New("struct _cef_main_args_t*")
+    Sub New(name As String)
+        MyBase.New(name)
     End Sub
 
-    Public Overrides ReadOnly Property NativeSymbol As String
+    Public Overrides ReadOnly Property PublicSymbol As String
         Get
-            Return Nothing
+            Return "Cfx" & CSharp.ApplyStyle(Name.Substring(4, Name.Length - 7)) & "Base"
         End Get
     End Property
 
-    Public Overrides ReadOnly Property NativeUnwrapExpression(var As String) As String
+    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
         Get
-            Return "&" & var
+            Return String.Format("{0}.Unwrap({1})", PublicSymbol, var)
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property PublicWrapExpression(var As String) As String
+        Get
+            Return String.Format("{0}.Cast({1})", PublicSymbol, var)
         End Get
     End Property
 
     Public Overrides Sub EmitPreNativeCallStatements(b As CodeBuilder, var As String)
-        b.AppendLine("cef_main_args_t {0} = {{ GetModuleHandle(0) }};", var)
+        If Name = "cef_main_args_t*" Then
+            b.AppendLine("#if defined CFX_WINDOWS")
+            b.AppendLine("cef_main_args_t args_tmp = { GetModuleHandle(0) };")
+            b.AppendLine("args = &args_tmp;")
+            b.AppendLine("#endif")
+        End If
     End Sub
 
 End Class

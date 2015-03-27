@@ -2,7 +2,9 @@
 cef_time
 cef_key_event
 cef_popup_features
-cef_window_info
+cef_window_info_windows
+cef_window_info_linux
+cef_window_info_macos
 cef_rect
 cef_geoposition
 cef_browser_settings
