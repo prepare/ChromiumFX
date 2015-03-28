@@ -360,7 +360,7 @@ Public Class WrapperGenerator
         b.BeginFunction("void LoadCfxRuntimeApi()", "internal static")
         For Each f In decls.ExportFunctions
             If f.Platform <> CefPlatform.Independent Then
-                b.BeginIf("CfxApi.ApiPlatform == CfxPlatform.{0}", f.Platform.ToString())
+                b.BeginIf("CfxApi.PlatformOS == CfxPlatformOS.{0}", f.Platform.ToString())
             End If
             CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
             If f.Platform <> CefPlatform.Independent Then

@@ -30,9 +30,14 @@
 
 
 namespace Chromium {
-    public enum CfxPlatform {
+    public enum CfxPlatformOS {
         Windows = 0,
         Linux,
-        MacOS
+        MacOSX
+    }
+
+    public enum CfxPlatformArch {
+        x86,
+        x64
     }
 }

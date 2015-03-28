@@ -41,13 +41,11 @@ namespace Chromium
         internal static IntPtr libcfxPtr;
         internal static IntPtr libcefPtr;
 
-        internal static CfxPlatform ApiPlatform { get; private set; }
+        internal static CfxPlatformOS PlatformOS { get; private set; }
 
         private static string cefDir;
         private static string cfxDir;
         internal static bool librariesLoaded;
-
-        private static PlatformApi platformApi;
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate IntPtr cfx_ctor_delegate();
@@ -120,57 +118,39 @@ namespace Chromium
 
             CfxDebug.Announce();
 
-            if (cfxDir == null)
-                cfxDir = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
-           
-            if(cefDir == null) {
-                cefDir = cfxDir;
-                if(!System.IO.File.Exists(System.IO.Path.Combine(cefDir, "libcef.dll")))
-                    cefDir = System.IO.Path.Combine(cefDir, "cef");
-                if(!System.IO.File.Exists(System.IO.Path.Combine(cefDir, "libcef.dll")))
-                    throw new DllNotFoundException("Unable to find libcef.dll in default locations.");
-            } else {
-                if(!System.IO.File.Exists(System.IO.Path.Combine(cefDir, "libcef.dll")))
-                    throw new DllNotFoundException("Unable to find libcef.dll in the provided location.");
-            }
+            string libCfx, libCef;
+
+            FindLibraries(ref cefDir, ref cfxDir, out libCef, out libCfx);
             
-            if(!System.IO.File.Exists(System.IO.Path.Combine(cfxDir, "libcfx.dll")))
-                cfxDir = cefDir;
-            if(!System.IO.File.Exists(System.IO.Path.Combine(cfxDir, "libcfx.dll")))
-                throw new DllNotFoundException("Unable to find libcfx.dll.");
-
-            cefDir = System.IO.Path.GetFullPath(cefDir);
-            cfxDir = System.IO.Path.GetFullPath(cfxDir);
-
             if (libcfxPtr != IntPtr.Zero || libcefPtr != IntPtr.Zero) {
 
                 if(CfxApi.cefDir != cefDir) {
-                    throw new InvalidOperationException("CEF API libraries already loaded from a different directory: " + CfxApi.cefDir);
+                    throw new InvalidOperationException("libcef library already loaded from a different location: " + CfxApi.cefDir);
                 }
 
                 if (CfxApi.cfxDir != cfxDir) {
-                    throw new InvalidOperationException("libcfx.dll already loaded from a different directory: " + CfxApi.cfxDir);
+                    throw new InvalidOperationException("libcfx library already loaded from a different location: " + CfxApi.cfxDir);
                 }
                 
                 return;
             }
 
-            platformApi = PlatformApi.Create();
+            var loader = NativeFunctionLoader.Create();
             
             CfxApi.cefDir = cefDir;
             CfxApi.cfxDir = cfxDir;
             
-            var libcfx = System.IO.Path.Combine(cfxDir, "libcfx.dll");
-            var libcef = System.IO.Path.Combine(cefDir, "libcef.dll");
+            var libcfxPath = System.IO.Path.Combine(cfxDir, libCfx);
+            var libcefPath = System.IO.Path.Combine(cefDir, libCef);
 
-            libcefPtr = platformApi.LoadNativeLibrary(libcef);
+            libcefPtr = loader.LoadNativeLibrary(libcefPath);
             if(libcefPtr == IntPtr.Zero) {
-                throw new DllNotFoundException("Unable to load libcef.dll from directory " + cefDir + ".");
+                throw new CfxException("Unable to load libcef library " + libcefPath);
             }
 
-            libcfxPtr = platformApi.LoadNativeLibrary(libcfx);
+            libcfxPtr = loader.LoadNativeLibrary(libcfxPath);
             if (libcfxPtr == IntPtr.Zero) {
-                throw new DllNotFoundException("Unable to load libcfx.dll from directory " + cefDir + ".");
+                throw new CfxException("Unable to load libcfx library " + libcfxPath);
             }
 
             cfx_free_gc_handle = FreeGcHandle;
@@ -181,49 +161,126 @@ namespace Chromium
             IntPtr string_destroy;
             IntPtr get_function_pointer;
 
-            cfx_api_initialize_delegate api_initialize = (cfx_api_initialize_delegate)LoadDelegate(libcfxPtr, "cfx_api_initialize", typeof(cfx_api_initialize_delegate));
+            cfx_api_initialize_delegate api_initialize = (cfx_api_initialize_delegate)LoadDelegate(loader, libcfxPtr, "cfx_api_initialize", typeof(cfx_api_initialize_delegate));
             int retval = api_initialize(libcefPtr, Marshal.GetFunctionPointerForDelegate(cfx_free_gc_handle), out platform, out release, out string_get_pointer, out string_destroy, out get_function_pointer);
 
             if(retval != 0) {
                 switch(retval) {
                     case 1:
-                        throw new CfxException("Unable to load native function cef_api_hash from libcef.dll");
+                        throw new CfxException("Unable to get native function cef_api_hash from libcef library");
                     case 2:
                         throw new CfxException("API hash mismatch: incompatible libcef.dll");
                 }
             }
 
-            ApiPlatform = (CfxPlatform)platform;
+            PlatformOS = (CfxPlatformOS)platform;
 
             cfx_release = (cfx_release_delegate)Marshal.GetDelegateForFunctionPointer(release, typeof(cfx_release_delegate));
             cfx_string_get_ptr = (cfx_string_get_ptr_delegate)Marshal.GetDelegateForFunctionPointer(string_get_pointer, typeof(cfx_string_get_ptr_delegate));
             cfx_string_destroy = (cfx_string_destroy_delegate)Marshal.GetDelegateForFunctionPointer(string_destroy, typeof(cfx_string_destroy_delegate));
             cfx_get_function_pointer = (cfx_get_function_pointer_delegate)Marshal.GetDelegateForFunctionPointer(get_function_pointer, typeof(cfx_get_function_pointer_delegate));
 
-            cef_string_userfree_utf16_free = (cef_string_userfree_utf16_free_delegate)LoadDelegate(libcefPtr, "cef_string_userfree_utf16_free", typeof(cef_string_userfree_utf16_free_delegate));
+            cef_string_userfree_utf16_free = (cef_string_userfree_utf16_free_delegate)LoadDelegate(loader, libcefPtr, "cef_string_userfree_utf16_free", typeof(cef_string_userfree_utf16_free_delegate));
 
             CfxApiLoader.LoadCfxRuntimeApi();
             librariesLoaded = true;
 
         }
 
-        internal static void PlatformCheck(CfxPlatform p) {
-            if(p != ApiPlatform) {
+
+        private static void FindLibraries(ref string cefDir, ref string cfxDir, out string libCef, out string libCfx) {
+            
+            if(cfxDir == null)
+                cfxDir = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
+
+            libCfx = GetLibCfxName(cfxDir);
+
+            if(libCfx == null) {
+                if(cefDir != null) {
+                    cfxDir = cefDir;
+                    libCfx = GetLibCfxName(cfxDir);
+                }
+                if(libCfx == null) {
+                    if(CfxRuntime.PlatformArch == CfxPlatformArch.x64) {
+                        cfxDir = System.IO.Path.Combine(cfxDir, "cef64");
+                        libCfx = GetLibCfxName(cfxDir);
+                        if(libCfx == null) {
+                            cfxDir = cfxDir.Substring(cfxDir.Length - 2);
+                            libCfx = GetLibCfxName(cfxDir);
+                        }
+                    } else {
+                        cfxDir = System.IO.Path.Combine(cfxDir, "cef");
+                        libCfx = GetLibCfxName(cfxDir);
+                    }
+                }
+            }
+
+            if(libCfx == null) {
+                throw new CfxException("libcfx library not found.");
+            }
+
+            libCef = "libcef" + libCfx.Substring(libCfx.LastIndexOf('.'));
+
+            if(cefDir == null)
+                cefDir = cfxDir;
+
+            if(!System.IO.File.Exists(System.IO.Path.Combine(cefDir, libCef))) {
+                if(CfxRuntime.PlatformArch == CfxPlatformArch.x64) {
+                    cefDir = System.IO.Path.Combine(cefDir, "cef64");
+                    if(!System.IO.File.Exists(System.IO.Path.Combine(cefDir, libCef))) {
+                        cefDir = cefDir.Substring(cefDir.Length - 2);
+                    }
+                } else {
+                    cefDir = System.IO.Path.Combine(cefDir, "cef");
+                }
+            }
+            
+            if(!System.IO.File.Exists(System.IO.Path.Combine(cefDir, libCef))) {
+                throw new CfxException("libcef library not found.");
+            }
+
+            cefDir = System.IO.Path.GetFullPath(cefDir);
+            cfxDir = System.IO.Path.GetFullPath(cfxDir);
+
+        }
+
+        private static string GetLibCfxName(string directory) {
+            string name;
+            if(CfxRuntime.PlatformArch== CfxPlatformArch.x86)
+                name = "libcfx";
+            else
+                name = "libcfx64";
+
+            if(System.IO.File.Exists(System.IO.Path.Combine(directory, name + ".dll")))
+                return name + ".dll";
+
+            if(System.IO.File.Exists(System.IO.Path.Combine(directory, name + ".so")))
+                return name + ".so";
+
+            return null;
+        }
+
+
+        internal static void CheckPlatformOS(CfxPlatformOS p) {
+            if(p != PlatformOS) {
                 throw new CfxException("Platform check failed - platform specific type or function doesn't match current platform.");
             }
         }
 
         internal static Delegate GetDelegate(CfxApiLoader.FunctionIndex apiIndex, Type delegateType) {
             IntPtr functionPtr = cfx_get_function_pointer((int)apiIndex);
+            if(functionPtr == IntPtr.Zero) {
+                throw new CfxException("Unable to load native function " + apiIndex.ToString() + ".");
+            }
             return Marshal.GetDelegateForFunctionPointer(functionPtr, delegateType);
         }
-        
-        private static Delegate LoadDelegate(IntPtr hModule, string procName, Type delegateType) {
-            IntPtr procAdress = platformApi.GetFunctionPointer(hModule, procName);
-            if (procAdress == IntPtr.Zero) {
-                throw new CfxException("Unable to load native function " + procName + ". Check libcef.dll and libcfx.dll compatibility.");
+
+        private static Delegate LoadDelegate(NativeFunctionLoader loader, IntPtr hModule, string procName, Type delegateType) {
+            IntPtr functionPtr = loader.GetFunctionPointer(hModule, procName);
+            if(functionPtr == IntPtr.Zero) {
+                throw new CfxException("Unable to load native function " + procName + ".");
             }
-            return Marshal.GetDelegateForFunctionPointer(procAdress, delegateType);
+            return Marshal.GetDelegateForFunctionPointer(functionPtr, delegateType);
         }
     }
 

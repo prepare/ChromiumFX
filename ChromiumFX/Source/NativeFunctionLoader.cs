@@ -33,15 +33,15 @@ using System;
 using System.Runtime.InteropServices;
 
 namespace Chromium {
-    internal abstract class PlatformApi {
+    internal abstract class NativeFunctionLoader {
 
-        internal static PlatformApi Create() {
+        internal static NativeFunctionLoader Create() {
             // use path separator character instead of Environment.OSVersion.Platform
             // for platform detection
             if(System.IO.Path.DirectorySeparatorChar.Equals('\\'))
-                return new WindowsApi();
+                return new WindowsFunctionLoader();
             else
-                return new UnixApi();
+                return new UnixFunctionLoader();
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Chromium {
     }
 
     // for windows
-    internal class WindowsApi : PlatformApi {
+    internal class WindowsFunctionLoader : NativeFunctionLoader {
 
         [DllImport("kernel32.dll", SetLastError = false)]
         private static extern IntPtr LoadLibrary(string filename);
@@ -79,8 +79,8 @@ namespace Chromium {
         }
     }
 
-    // for linux and mac os
-    internal class UnixApi : PlatformApi {
+    // for linux and mac osx
+    internal class UnixFunctionLoader : NativeFunctionLoader {
 
         [DllImport("dl")]
         static extern IntPtr dlopen([MarshalAs(UnmanagedType.LPTStr)] string filename, int flags);

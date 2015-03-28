@@ -44,7 +44,7 @@ namespace Chromium {
     public sealed class CfxWindowInfoLinux : CfxWindowInfoBase {
 
         static CfxWindowInfoLinux () {
-            if(CfxApi.ApiPlatform == CfxPlatform.Linux) {
+            if(CfxApi.PlatformOS == CfxPlatformOS.Linux) {
                 CfxApiLoader.LoadCfxWindowInfoLinuxApi();
             }
         }
@@ -59,7 +59,7 @@ namespace Chromium {
             return new CfxWindowInfoLinux(nativePtr, CfxApi.cfx_window_info_linux_dtor);
         }
 
-        public CfxWindowInfoLinux() : base(CfxApi.cfx_window_info_linux_ctor, CfxApi.cfx_window_info_linux_dtor) { CfxApi.PlatformCheck(CfxPlatform.Linux); }
+        public CfxWindowInfoLinux() : base(CfxApi.cfx_window_info_linux_ctor, CfxApi.cfx_window_info_linux_dtor) { CfxApi.CheckPlatformOS(CfxPlatformOS.Linux); }
         internal CfxWindowInfoLinux(IntPtr nativePtr) : base(nativePtr) {}
         internal CfxWindowInfoLinux(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
