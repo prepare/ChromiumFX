@@ -101,7 +101,7 @@ void (CEF_CALLBACK *cfx_print_handler_on_print_job_callback)(gc_handle_t self, i
 
 int CEF_CALLBACK cfx_print_handler_on_print_job(cef_print_handler_t* self, const cef_string_t* document_name, const cef_string_t* pdf_file_path, cef_print_job_callback_t* callback) {
     int __retval;
-    cfx_print_handler_on_print_job_callback(((cfx_print_handler_t*)self)->gc_handle, &__retval, document_name ? document_name->str : 0, document_name ? document_name->length : 0, pdf_file_path ? pdf_file_path->str : 0, pdf_file_path ? pdf_file_path->length : 0, callback);
+    cfx_print_handler_on_print_job_callback(((cfx_print_handler_t*)self)->gc_handle, &__retval, document_name ? document_name->str : 0, document_name ? (int)document_name->length : 0, pdf_file_path ? pdf_file_path->str : 0, pdf_file_path ? (int)pdf_file_path->length : 0, callback);
     return __retval;
 }
 

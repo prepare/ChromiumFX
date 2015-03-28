@@ -81,7 +81,7 @@ void (CEF_CALLBACK *cfx_resource_bundle_handler_get_localized_string_callback)(g
 
 int CEF_CALLBACK cfx_resource_bundle_handler_get_localized_string(cef_resource_bundle_handler_t* self, int message_id, cef_string_t* string) {
     int __retval;
-    char16* string_tmp_str = string->str; int string_tmp_length = string->length;
+    char16* string_tmp_str = string->str; int string_tmp_length = (int)string->length;
     cfx_resource_bundle_handler_get_localized_string_callback(((cfx_resource_bundle_handler_t*)self)->gc_handle, &__retval, message_id, &(string_tmp_str), &(string_tmp_length));
     if(string_tmp_str != string->str) {
         if(string->dtor) string->dtor(string->str);

@@ -91,7 +91,7 @@ int CEF_CALLBACK cfx_resource_handler_process_request(cef_resource_handler_t* se
 void (CEF_CALLBACK *cfx_resource_handler_get_response_headers_callback)(gc_handle_t self, cef_response_t* response, int64* response_length, char16 **redirectUrl_str, int *redirectUrl_length);
 
 void CEF_CALLBACK cfx_resource_handler_get_response_headers(cef_resource_handler_t* self, cef_response_t* response, int64* response_length, cef_string_t* redirectUrl) {
-    char16* redirectUrl_tmp_str = redirectUrl->str; int redirectUrl_tmp_length = redirectUrl->length;
+    char16* redirectUrl_tmp_str = redirectUrl->str; int redirectUrl_tmp_length = (int)redirectUrl->length;
     cfx_resource_handler_get_response_headers_callback(((cfx_resource_handler_t*)self)->gc_handle, response, response_length, &(redirectUrl_tmp_str), &(redirectUrl_tmp_length));
     if(redirectUrl_tmp_str != redirectUrl->str) {
         if(redirectUrl->dtor) redirectUrl->dtor(redirectUrl->str);

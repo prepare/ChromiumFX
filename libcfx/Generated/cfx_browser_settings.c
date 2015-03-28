@@ -69,7 +69,7 @@ static void cfx_browser_settings_set_standard_font_family(cef_browser_settings_t
 }
 static void cfx_browser_settings_get_standard_font_family(cef_browser_settings_t *self, char16 **standard_font_family_str, int *standard_font_family_length) {
     *standard_font_family_str = self->standard_font_family.str;
-    *standard_font_family_length = self->standard_font_family.length;
+    *standard_font_family_length = (int)self->standard_font_family.length;
 }
 
 // cef_browser_settings_t->fixed_font_family
@@ -78,7 +78,7 @@ static void cfx_browser_settings_set_fixed_font_family(cef_browser_settings_t *s
 }
 static void cfx_browser_settings_get_fixed_font_family(cef_browser_settings_t *self, char16 **fixed_font_family_str, int *fixed_font_family_length) {
     *fixed_font_family_str = self->fixed_font_family.str;
-    *fixed_font_family_length = self->fixed_font_family.length;
+    *fixed_font_family_length = (int)self->fixed_font_family.length;
 }
 
 // cef_browser_settings_t->serif_font_family
@@ -87,7 +87,7 @@ static void cfx_browser_settings_set_serif_font_family(cef_browser_settings_t *s
 }
 static void cfx_browser_settings_get_serif_font_family(cef_browser_settings_t *self, char16 **serif_font_family_str, int *serif_font_family_length) {
     *serif_font_family_str = self->serif_font_family.str;
-    *serif_font_family_length = self->serif_font_family.length;
+    *serif_font_family_length = (int)self->serif_font_family.length;
 }
 
 // cef_browser_settings_t->sans_serif_font_family
@@ -96,7 +96,7 @@ static void cfx_browser_settings_set_sans_serif_font_family(cef_browser_settings
 }
 static void cfx_browser_settings_get_sans_serif_font_family(cef_browser_settings_t *self, char16 **sans_serif_font_family_str, int *sans_serif_font_family_length) {
     *sans_serif_font_family_str = self->sans_serif_font_family.str;
-    *sans_serif_font_family_length = self->sans_serif_font_family.length;
+    *sans_serif_font_family_length = (int)self->sans_serif_font_family.length;
 }
 
 // cef_browser_settings_t->cursive_font_family
@@ -105,7 +105,7 @@ static void cfx_browser_settings_set_cursive_font_family(cef_browser_settings_t 
 }
 static void cfx_browser_settings_get_cursive_font_family(cef_browser_settings_t *self, char16 **cursive_font_family_str, int *cursive_font_family_length) {
     *cursive_font_family_str = self->cursive_font_family.str;
-    *cursive_font_family_length = self->cursive_font_family.length;
+    *cursive_font_family_length = (int)self->cursive_font_family.length;
 }
 
 // cef_browser_settings_t->fantasy_font_family
@@ -114,7 +114,7 @@ static void cfx_browser_settings_set_fantasy_font_family(cef_browser_settings_t 
 }
 static void cfx_browser_settings_get_fantasy_font_family(cef_browser_settings_t *self, char16 **fantasy_font_family_str, int *fantasy_font_family_length) {
     *fantasy_font_family_str = self->fantasy_font_family.str;
-    *fantasy_font_family_length = self->fantasy_font_family.length;
+    *fantasy_font_family_length = (int)self->fantasy_font_family.length;
 }
 
 // cef_browser_settings_t->default_font_size
@@ -155,7 +155,7 @@ static void cfx_browser_settings_set_default_encoding(cef_browser_settings_t *se
 }
 static void cfx_browser_settings_get_default_encoding(cef_browser_settings_t *self, char16 **default_encoding_str, int *default_encoding_length) {
     *default_encoding_str = self->default_encoding.str;
-    *default_encoding_length = self->default_encoding.length;
+    *default_encoding_length = (int)self->default_encoding.length;
 }
 
 // cef_browser_settings_t->remote_fonts

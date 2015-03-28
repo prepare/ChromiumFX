@@ -80,7 +80,7 @@ static gc_handle_t cfx_web_plugin_unstable_callback_get_gc_handle(cfx_web_plugin
 void (CEF_CALLBACK *cfx_web_plugin_unstable_callback_is_unstable_callback)(gc_handle_t self, char16 *path_str, int path_length, int unstable);
 
 void CEF_CALLBACK cfx_web_plugin_unstable_callback_is_unstable(cef_web_plugin_unstable_callback_t* self, const cef_string_t* path, int unstable) {
-    cfx_web_plugin_unstable_callback_is_unstable_callback(((cfx_web_plugin_unstable_callback_t*)self)->gc_handle, path ? path->str : 0, path ? path->length : 0, unstable);
+    cfx_web_plugin_unstable_callback_is_unstable_callback(((cfx_web_plugin_unstable_callback_t*)self)->gc_handle, path ? path->str : 0, path ? (int)path->length : 0, unstable);
 }
 
 

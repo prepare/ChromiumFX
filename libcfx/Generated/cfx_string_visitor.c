@@ -80,7 +80,7 @@ static gc_handle_t cfx_string_visitor_get_gc_handle(cfx_string_visitor_t* self) 
 void (CEF_CALLBACK *cfx_string_visitor_visit_callback)(gc_handle_t self, char16 *string_str, int string_length);
 
 void CEF_CALLBACK cfx_string_visitor_visit(cef_string_visitor_t* self, const cef_string_t* string) {
-    cfx_string_visitor_visit_callback(((cfx_string_visitor_t*)self)->gc_handle, string ? string->str : 0, string ? string->length : 0);
+    cfx_string_visitor_visit_callback(((cfx_string_visitor_t*)self)->gc_handle, string ? string->str : 0, string ? (int)string->length : 0);
 }
 
 

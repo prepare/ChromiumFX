@@ -124,7 +124,7 @@ Public Class CefStringPtrType
     End Sub
 
     Public Overrides Sub EmitPreNativeCallbackStatements(b As CodeBuilder, var As String)
-        b.AppendLine("char16* {0}_tmp_str = {0}->str; int {0}_tmp_length = {0}->length;", var)
+        b.AppendLine("char16* {0}_tmp_str = {0}->str; int {0}_tmp_length = (int){0}->length;", var)
     End Sub
 
     Public Overrides Sub EmitPostNativeCallbackStatements(b As CodeBuilder, var As String)

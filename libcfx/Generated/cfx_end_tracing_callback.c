@@ -80,7 +80,7 @@ static gc_handle_t cfx_end_tracing_callback_get_gc_handle(cfx_end_tracing_callba
 void (CEF_CALLBACK *cfx_end_tracing_callback_on_end_tracing_complete_callback)(gc_handle_t self, char16 *tracing_file_str, int tracing_file_length);
 
 void CEF_CALLBACK cfx_end_tracing_callback_on_end_tracing_complete(cef_end_tracing_callback_t* self, const cef_string_t* tracing_file) {
-    cfx_end_tracing_callback_on_end_tracing_complete_callback(((cfx_end_tracing_callback_t*)self)->gc_handle, tracing_file ? tracing_file->str : 0, tracing_file ? tracing_file->length : 0);
+    cfx_end_tracing_callback_on_end_tracing_complete_callback(((cfx_end_tracing_callback_t*)self)->gc_handle, tracing_file ? tracing_file->str : 0, tracing_file ? (int)tracing_file->length : 0);
 }
 
 

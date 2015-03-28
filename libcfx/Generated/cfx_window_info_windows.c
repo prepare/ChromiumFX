@@ -62,7 +62,7 @@ static void cfx_window_info_windows_set_window_name(cef_window_info_t *self, cha
 }
 static void cfx_window_info_windows_get_window_name(cef_window_info_t *self, char16 **window_name_str, int *window_name_length) {
     *window_name_str = self->window_name.str;
-    *window_name_length = self->window_name.length;
+    *window_name_length = (int)self->window_name.length;
 }
 
 // cef_window_info_t->style

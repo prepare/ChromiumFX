@@ -116,8 +116,8 @@ cef_resource_handler_t* CEF_CALLBACK cfx_request_handler_get_resource_handler(ce
 void (CEF_CALLBACK *cfx_request_handler_on_resource_redirect_callback)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, char16 *old_url_str, int old_url_length, char16 **new_url_str, int *new_url_length);
 
 void CEF_CALLBACK cfx_request_handler_on_resource_redirect(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, const cef_string_t* old_url, cef_string_t* new_url) {
-    char16* new_url_tmp_str = new_url->str; int new_url_tmp_length = new_url->length;
-    cfx_request_handler_on_resource_redirect_callback(((cfx_request_handler_t*)self)->gc_handle, browser, frame, old_url ? old_url->str : 0, old_url ? old_url->length : 0, &(new_url_tmp_str), &(new_url_tmp_length));
+    char16* new_url_tmp_str = new_url->str; int new_url_tmp_length = (int)new_url->length;
+    cfx_request_handler_on_resource_redirect_callback(((cfx_request_handler_t*)self)->gc_handle, browser, frame, old_url ? old_url->str : 0, old_url ? (int)old_url->length : 0, &(new_url_tmp_str), &(new_url_tmp_length));
     if(new_url_tmp_str != new_url->str) {
         if(new_url->dtor) new_url->dtor(new_url->str);
         cef_string_set(new_url_tmp_str, new_url_tmp_length, new_url, 1);
@@ -132,7 +132,7 @@ void (CEF_CALLBACK *cfx_request_handler_get_auth_credentials_callback)(gc_handle
 
 int CEF_CALLBACK cfx_request_handler_get_auth_credentials(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, int isProxy, const cef_string_t* host, int port, const cef_string_t* realm, const cef_string_t* scheme, cef_auth_callback_t* callback) {
     int __retval;
-    cfx_request_handler_get_auth_credentials_callback(((cfx_request_handler_t*)self)->gc_handle, &__retval, browser, frame, isProxy, host ? host->str : 0, host ? host->length : 0, port, realm ? realm->str : 0, realm ? realm->length : 0, scheme ? scheme->str : 0, scheme ? scheme->length : 0, callback);
+    cfx_request_handler_get_auth_credentials_callback(((cfx_request_handler_t*)self)->gc_handle, &__retval, browser, frame, isProxy, host ? host->str : 0, host ? (int)host->length : 0, port, realm ? realm->str : 0, realm ? (int)realm->length : 0, scheme ? scheme->str : 0, scheme ? (int)scheme->length : 0, callback);
     return __retval;
 }
 
@@ -143,7 +143,7 @@ void (CEF_CALLBACK *cfx_request_handler_on_quota_request_callback)(gc_handle_t s
 
 int CEF_CALLBACK cfx_request_handler_on_quota_request(cef_request_handler_t* self, cef_browser_t* browser, const cef_string_t* origin_url, int64 new_size, cef_quota_callback_t* callback) {
     int __retval;
-    cfx_request_handler_on_quota_request_callback(((cfx_request_handler_t*)self)->gc_handle, &__retval, browser, origin_url ? origin_url->str : 0, origin_url ? origin_url->length : 0, new_size, callback);
+    cfx_request_handler_on_quota_request_callback(((cfx_request_handler_t*)self)->gc_handle, &__retval, browser, origin_url ? origin_url->str : 0, origin_url ? (int)origin_url->length : 0, new_size, callback);
     return __retval;
 }
 
@@ -153,7 +153,7 @@ int CEF_CALLBACK cfx_request_handler_on_quota_request(cef_request_handler_t* sel
 void (CEF_CALLBACK *cfx_request_handler_on_protocol_execution_callback)(gc_handle_t self, cef_browser_t* browser, char16 *url_str, int url_length, int* allow_os_execution);
 
 void CEF_CALLBACK cfx_request_handler_on_protocol_execution(cef_request_handler_t* self, cef_browser_t* browser, const cef_string_t* url, int* allow_os_execution) {
-    cfx_request_handler_on_protocol_execution_callback(((cfx_request_handler_t*)self)->gc_handle, browser, url ? url->str : 0, url ? url->length : 0, allow_os_execution);
+    cfx_request_handler_on_protocol_execution_callback(((cfx_request_handler_t*)self)->gc_handle, browser, url ? url->str : 0, url ? (int)url->length : 0, allow_os_execution);
 }
 
 
@@ -163,7 +163,7 @@ void (CEF_CALLBACK *cfx_request_handler_on_certificate_error_callback)(gc_handle
 
 int CEF_CALLBACK cfx_request_handler_on_certificate_error(cef_request_handler_t* self, cef_errorcode_t cert_error, const cef_string_t* request_url, cef_allow_certificate_error_callback_t* callback) {
     int __retval;
-    cfx_request_handler_on_certificate_error_callback(((cfx_request_handler_t*)self)->gc_handle, &__retval, cert_error, request_url ? request_url->str : 0, request_url ? request_url->length : 0, callback);
+    cfx_request_handler_on_certificate_error_callback(((cfx_request_handler_t*)self)->gc_handle, &__retval, cert_error, request_url ? request_url->str : 0, request_url ? (int)request_url->length : 0, callback);
     return __retval;
 }
 
@@ -174,7 +174,7 @@ void (CEF_CALLBACK *cfx_request_handler_on_before_plugin_load_callback)(gc_handl
 
 int CEF_CALLBACK cfx_request_handler_on_before_plugin_load(cef_request_handler_t* self, cef_browser_t* browser, const cef_string_t* url, const cef_string_t* policy_url, cef_web_plugin_info_t* info) {
     int __retval;
-    cfx_request_handler_on_before_plugin_load_callback(((cfx_request_handler_t*)self)->gc_handle, &__retval, browser, url ? url->str : 0, url ? url->length : 0, policy_url ? policy_url->str : 0, policy_url ? policy_url->length : 0, info);
+    cfx_request_handler_on_before_plugin_load_callback(((cfx_request_handler_t*)self)->gc_handle, &__retval, browser, url ? url->str : 0, url ? (int)url->length : 0, policy_url ? policy_url->str : 0, policy_url ? (int)policy_url->length : 0, info);
     return __retval;
 }
 
@@ -184,7 +184,7 @@ int CEF_CALLBACK cfx_request_handler_on_before_plugin_load(cef_request_handler_t
 void (CEF_CALLBACK *cfx_request_handler_on_plugin_crashed_callback)(gc_handle_t self, cef_browser_t* browser, char16 *plugin_path_str, int plugin_path_length);
 
 void CEF_CALLBACK cfx_request_handler_on_plugin_crashed(cef_request_handler_t* self, cef_browser_t* browser, const cef_string_t* plugin_path) {
-    cfx_request_handler_on_plugin_crashed_callback(((cfx_request_handler_t*)self)->gc_handle, browser, plugin_path ? plugin_path->str : 0, plugin_path ? plugin_path->length : 0);
+    cfx_request_handler_on_plugin_crashed_callback(((cfx_request_handler_t*)self)->gc_handle, browser, plugin_path ? plugin_path->str : 0, plugin_path ? (int)plugin_path->length : 0);
 }
 
 

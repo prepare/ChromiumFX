@@ -79,7 +79,7 @@ static void cfx_settings_set_browser_subprocess_path(cef_settings_t *self, char1
 }
 static void cfx_settings_get_browser_subprocess_path(cef_settings_t *self, char16 **browser_subprocess_path_str, int *browser_subprocess_path_length) {
     *browser_subprocess_path_str = self->browser_subprocess_path.str;
-    *browser_subprocess_path_length = self->browser_subprocess_path.length;
+    *browser_subprocess_path_length = (int)self->browser_subprocess_path.length;
 }
 
 // cef_settings_t->multi_threaded_message_loop
@@ -112,7 +112,7 @@ static void cfx_settings_set_cache_path(cef_settings_t *self, char16 *cache_path
 }
 static void cfx_settings_get_cache_path(cef_settings_t *self, char16 **cache_path_str, int *cache_path_length) {
     *cache_path_str = self->cache_path.str;
-    *cache_path_length = self->cache_path.length;
+    *cache_path_length = (int)self->cache_path.length;
 }
 
 // cef_settings_t->persist_session_cookies
@@ -129,7 +129,7 @@ static void cfx_settings_set_user_agent(cef_settings_t *self, char16 *user_agent
 }
 static void cfx_settings_get_user_agent(cef_settings_t *self, char16 **user_agent_str, int *user_agent_length) {
     *user_agent_str = self->user_agent.str;
-    *user_agent_length = self->user_agent.length;
+    *user_agent_length = (int)self->user_agent.length;
 }
 
 // cef_settings_t->product_version
@@ -138,7 +138,7 @@ static void cfx_settings_set_product_version(cef_settings_t *self, char16 *produ
 }
 static void cfx_settings_get_product_version(cef_settings_t *self, char16 **product_version_str, int *product_version_length) {
     *product_version_str = self->product_version.str;
-    *product_version_length = self->product_version.length;
+    *product_version_length = (int)self->product_version.length;
 }
 
 // cef_settings_t->locale
@@ -147,7 +147,7 @@ static void cfx_settings_set_locale(cef_settings_t *self, char16 *locale_str, in
 }
 static void cfx_settings_get_locale(cef_settings_t *self, char16 **locale_str, int *locale_length) {
     *locale_str = self->locale.str;
-    *locale_length = self->locale.length;
+    *locale_length = (int)self->locale.length;
 }
 
 // cef_settings_t->log_file
@@ -156,7 +156,7 @@ static void cfx_settings_set_log_file(cef_settings_t *self, char16 *log_file_str
 }
 static void cfx_settings_get_log_file(cef_settings_t *self, char16 **log_file_str, int *log_file_length) {
     *log_file_str = self->log_file.str;
-    *log_file_length = self->log_file.length;
+    *log_file_length = (int)self->log_file.length;
 }
 
 // cef_settings_t->log_severity
@@ -173,7 +173,7 @@ static void cfx_settings_set_javascript_flags(cef_settings_t *self, char16 *java
 }
 static void cfx_settings_get_javascript_flags(cef_settings_t *self, char16 **javascript_flags_str, int *javascript_flags_length) {
     *javascript_flags_str = self->javascript_flags.str;
-    *javascript_flags_length = self->javascript_flags.length;
+    *javascript_flags_length = (int)self->javascript_flags.length;
 }
 
 // cef_settings_t->resources_dir_path
@@ -182,7 +182,7 @@ static void cfx_settings_set_resources_dir_path(cef_settings_t *self, char16 *re
 }
 static void cfx_settings_get_resources_dir_path(cef_settings_t *self, char16 **resources_dir_path_str, int *resources_dir_path_length) {
     *resources_dir_path_str = self->resources_dir_path.str;
-    *resources_dir_path_length = self->resources_dir_path.length;
+    *resources_dir_path_length = (int)self->resources_dir_path.length;
 }
 
 // cef_settings_t->locales_dir_path
@@ -191,7 +191,7 @@ static void cfx_settings_set_locales_dir_path(cef_settings_t *self, char16 *loca
 }
 static void cfx_settings_get_locales_dir_path(cef_settings_t *self, char16 **locales_dir_path_str, int *locales_dir_path_length) {
     *locales_dir_path_str = self->locales_dir_path.str;
-    *locales_dir_path_length = self->locales_dir_path.length;
+    *locales_dir_path_length = (int)self->locales_dir_path.length;
 }
 
 // cef_settings_t->pack_loading_disabled

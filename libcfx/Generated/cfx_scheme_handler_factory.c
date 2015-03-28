@@ -81,7 +81,7 @@ void (CEF_CALLBACK *cfx_scheme_handler_factory_create_callback)(gc_handle_t self
 
 cef_resource_handler_t* CEF_CALLBACK cfx_scheme_handler_factory_create(cef_scheme_handler_factory_t* self, cef_browser_t* browser, cef_frame_t* frame, const cef_string_t* scheme_name, cef_request_t* request) {
     cef_resource_handler_t* __retval;
-    cfx_scheme_handler_factory_create_callback(((cfx_scheme_handler_factory_t*)self)->gc_handle, &__retval, browser, frame, scheme_name ? scheme_name->str : 0, scheme_name ? scheme_name->length : 0, request);
+    cfx_scheme_handler_factory_create_callback(((cfx_scheme_handler_factory_t*)self)->gc_handle, &__retval, browser, frame, scheme_name ? scheme_name->str : 0, scheme_name ? (int)scheme_name->length : 0, request);
     if(__retval) {
         ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
     }

@@ -80,7 +80,7 @@ static gc_handle_t cfx_display_handler_get_gc_handle(cfx_display_handler_t* self
 void (CEF_CALLBACK *cfx_display_handler_on_address_change_callback)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, char16 *url_str, int url_length);
 
 void CEF_CALLBACK cfx_display_handler_on_address_change(cef_display_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, const cef_string_t* url) {
-    cfx_display_handler_on_address_change_callback(((cfx_display_handler_t*)self)->gc_handle, browser, frame, url ? url->str : 0, url ? url->length : 0);
+    cfx_display_handler_on_address_change_callback(((cfx_display_handler_t*)self)->gc_handle, browser, frame, url ? url->str : 0, url ? (int)url->length : 0);
 }
 
 
@@ -89,7 +89,7 @@ void CEF_CALLBACK cfx_display_handler_on_address_change(cef_display_handler_t* s
 void (CEF_CALLBACK *cfx_display_handler_on_title_change_callback)(gc_handle_t self, cef_browser_t* browser, char16 *title_str, int title_length);
 
 void CEF_CALLBACK cfx_display_handler_on_title_change(cef_display_handler_t* self, cef_browser_t* browser, const cef_string_t* title) {
-    cfx_display_handler_on_title_change_callback(((cfx_display_handler_t*)self)->gc_handle, browser, title ? title->str : 0, title ? title->length : 0);
+    cfx_display_handler_on_title_change_callback(((cfx_display_handler_t*)self)->gc_handle, browser, title ? title->str : 0, title ? (int)title->length : 0);
 }
 
 
@@ -99,7 +99,7 @@ void (CEF_CALLBACK *cfx_display_handler_on_tooltip_callback)(gc_handle_t self, i
 
 int CEF_CALLBACK cfx_display_handler_on_tooltip(cef_display_handler_t* self, cef_browser_t* browser, cef_string_t* text) {
     int __retval;
-    char16* text_tmp_str = text->str; int text_tmp_length = text->length;
+    char16* text_tmp_str = text->str; int text_tmp_length = (int)text->length;
     cfx_display_handler_on_tooltip_callback(((cfx_display_handler_t*)self)->gc_handle, &__retval, browser, &(text_tmp_str), &(text_tmp_length));
     if(text_tmp_str != text->str) {
         if(text->dtor) text->dtor(text->str);
@@ -115,7 +115,7 @@ int CEF_CALLBACK cfx_display_handler_on_tooltip(cef_display_handler_t* self, cef
 void (CEF_CALLBACK *cfx_display_handler_on_status_message_callback)(gc_handle_t self, cef_browser_t* browser, char16 *value_str, int value_length);
 
 void CEF_CALLBACK cfx_display_handler_on_status_message(cef_display_handler_t* self, cef_browser_t* browser, const cef_string_t* value) {
-    cfx_display_handler_on_status_message_callback(((cfx_display_handler_t*)self)->gc_handle, browser, value ? value->str : 0, value ? value->length : 0);
+    cfx_display_handler_on_status_message_callback(((cfx_display_handler_t*)self)->gc_handle, browser, value ? value->str : 0, value ? (int)value->length : 0);
 }
 
 
@@ -125,7 +125,7 @@ void (CEF_CALLBACK *cfx_display_handler_on_console_message_callback)(gc_handle_t
 
 int CEF_CALLBACK cfx_display_handler_on_console_message(cef_display_handler_t* self, cef_browser_t* browser, const cef_string_t* message, const cef_string_t* source, int line) {
     int __retval;
-    cfx_display_handler_on_console_message_callback(((cfx_display_handler_t*)self)->gc_handle, &__retval, browser, message ? message->str : 0, message ? message->length : 0, source ? source->str : 0, source ? source->length : 0, line);
+    cfx_display_handler_on_console_message_callback(((cfx_display_handler_t*)self)->gc_handle, &__retval, browser, message ? message->str : 0, message ? (int)message->length : 0, source ? source->str : 0, source ? (int)source->length : 0, line);
     return __retval;
 }
 

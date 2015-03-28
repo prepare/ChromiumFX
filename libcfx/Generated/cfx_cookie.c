@@ -55,7 +55,7 @@ static void cfx_cookie_set_name(cef_cookie_t *self, char16 *name_str, int name_l
 }
 static void cfx_cookie_get_name(cef_cookie_t *self, char16 **name_str, int *name_length) {
     *name_str = self->name.str;
-    *name_length = self->name.length;
+    *name_length = (int)self->name.length;
 }
 
 // cef_cookie_t->value
@@ -64,7 +64,7 @@ static void cfx_cookie_set_value(cef_cookie_t *self, char16 *value_str, int valu
 }
 static void cfx_cookie_get_value(cef_cookie_t *self, char16 **value_str, int *value_length) {
     *value_str = self->value.str;
-    *value_length = self->value.length;
+    *value_length = (int)self->value.length;
 }
 
 // cef_cookie_t->domain
@@ -73,7 +73,7 @@ static void cfx_cookie_set_domain(cef_cookie_t *self, char16 *domain_str, int do
 }
 static void cfx_cookie_get_domain(cef_cookie_t *self, char16 **domain_str, int *domain_length) {
     *domain_str = self->domain.str;
-    *domain_length = self->domain.length;
+    *domain_length = (int)self->domain.length;
 }
 
 // cef_cookie_t->path
@@ -82,7 +82,7 @@ static void cfx_cookie_set_path(cef_cookie_t *self, char16 *path_str, int path_l
 }
 static void cfx_cookie_get_path(cef_cookie_t *self, char16 **path_str, int *path_length) {
     *path_str = self->path.str;
-    *path_length = self->path.length;
+    *path_length = (int)self->path.length;
 }
 
 // cef_cookie_t->secure

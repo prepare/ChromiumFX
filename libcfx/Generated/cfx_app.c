@@ -80,7 +80,7 @@ static gc_handle_t cfx_app_get_gc_handle(cfx_app_t* self) {
 void (CEF_CALLBACK *cfx_app_on_before_command_line_processing_callback)(gc_handle_t self, char16 *process_type_str, int process_type_length, cef_command_line_t* command_line);
 
 void CEF_CALLBACK cfx_app_on_before_command_line_processing(cef_app_t* self, const cef_string_t* process_type, cef_command_line_t* command_line) {
-    cfx_app_on_before_command_line_processing_callback(((cfx_app_t*)self)->gc_handle, process_type ? process_type->str : 0, process_type ? process_type->length : 0, command_line);
+    cfx_app_on_before_command_line_processing_callback(((cfx_app_t*)self)->gc_handle, process_type ? process_type->str : 0, process_type ? (int)process_type->length : 0, command_line);
 }
 
 
