@@ -50,6 +50,7 @@ namespace CfxTestApplication {
             LogWriteLine("CfxRuntime.ApiHash(1): " + CfxRuntime.ApiHash(1));
             LogWriteLine("CfxRuntime.GetCefVersion(): " + CfxRuntime.GetCefVersion());
             LogWriteLine("CfxRuntime.GetChromeVersion(): " + CfxRuntime.GetChromeVersion());
+            LogWriteLine("Platform OS: {0}; Arch: {1}", CfxRuntime.PlatformOS, CfxRuntime.PlatformArch);
             LogWriteLine();
 
             LoadUrlButton.Click += new EventHandler(LoadUrlButton_Click);

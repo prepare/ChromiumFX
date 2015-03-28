@@ -721,7 +721,7 @@ namespace Chromium {
             /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/linux/cef/include/internal/cef_types_linux.h">linux/cef/include/internal/cef_types_linux.h</see>.
             /// </remarks>
             public static IntPtr GetXDisplay() {
-                CfxApi.PlatformCheck(CfxPlatform.Linux);
+                CfxApi.CheckPlatformOS(CfxPlatformOS.Linux);
                 return CfxApi.cfx_get_xdisplay();
             }
 

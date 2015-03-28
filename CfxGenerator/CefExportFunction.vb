@@ -124,7 +124,7 @@ Public Class CefExportFunction
 
         b.BeginFunction(Signature.PublicSignature(PublicName), modifiers)
         If Platform <> CefPlatform.Independent Then
-            b.AppendLine("CfxApi.PlatformCheck(CfxPlatform.{0});", Platform.ToString())
+            b.AppendLine("CfxApi.CheckPlatformOS(CfxPlatformOS.{0});", Platform.ToString())
         End If
 
         Signature.EmitPublicCall(b)

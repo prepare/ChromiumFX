@@ -740,7 +740,7 @@ Public Class CfxClassBuilder
 
         b.BeginBlock("static {0} ()", ClassName)
         If struct.IsCefPlatformStructType Then
-            b.BeginIf("CfxApi.ApiPlatform == CfxPlatform.{0}", struct.AsCefPlatformStructType.Platform.ToString())
+            b.BeginIf("CfxApi.PlatformOS == CfxPlatformOS.{0}", struct.AsCefPlatformStructType.Platform.ToString())
         End If
         b.AppendLine("CfxApiLoader.Load{0}Api();", ClassName)
         If struct.IsCefPlatformStructType Then
@@ -763,7 +763,7 @@ Public Class CfxClassBuilder
         End If
 
         If struct.IsCefPlatformStructType Then
-            b.AppendLine("public {0}() : base(CfxApi.{1}_ctor, CfxApi.{1}_dtor) {{ CfxApi.PlatformCheck(CfxPlatform.{2}); }}", ClassName, CfxName, struct.AsCefPlatformStructType.Platform.ToString())
+            b.AppendLine("public {0}() : base(CfxApi.{1}_ctor, CfxApi.{1}_dtor) {{ CfxApi.CheckPlatformOS(CfxPlatformOS.{2}); }}", ClassName, CfxName, struct.AsCefPlatformStructType.Platform.ToString())
         Else
             b.AppendLine("public {0}() : base(CfxApi.{1}_ctor, CfxApi.{1}_dtor) {{}}", ClassName, CfxName)
         End If

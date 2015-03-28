@@ -1191,7 +1191,7 @@ namespace Chromium {
             CfxApi.cfx_get_geolocation = (CfxApi.cfx_get_geolocation_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_get_geolocation, typeof(CfxApi.cfx_get_geolocation_delegate));
             CfxApi.cfx_get_mime_type = (CfxApi.cfx_get_mime_type_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_get_mime_type, typeof(CfxApi.cfx_get_mime_type_delegate));
             CfxApi.cfx_get_path = (CfxApi.cfx_get_path_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_get_path, typeof(CfxApi.cfx_get_path_delegate));
-            if(CfxApi.ApiPlatform == CfxPlatform.Linux) {
+            if(CfxApi.PlatformOS == CfxPlatformOS.Linux) {
                 CfxApi.cfx_get_xdisplay = (CfxApi.cfx_get_xdisplay_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_get_xdisplay, typeof(CfxApi.cfx_get_xdisplay_delegate));
             }
             CfxApi.cfx_initialize = (CfxApi.cfx_initialize_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_initialize, typeof(CfxApi.cfx_initialize_delegate));

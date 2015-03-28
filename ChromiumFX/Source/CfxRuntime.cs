@@ -74,11 +74,27 @@ namespace Chromium {
         public static bool LibrariesLoaded { get { return CfxApi.librariesLoaded; } }
 
         /// <summary>
-        /// The platform ChromiumFX is currently running on.
+        /// The operating system ChromiumFX is currently running on.
         /// </summary>
-        public static CfxPlatform Platform {
+        public static CfxPlatformOS PlatformOS {
             get {
-                return CfxApi.ApiPlatform;
+                return CfxApi.PlatformOS;
+            }
+        }
+
+        /// <summary>
+        /// The system architecture ChromiumFX is currently running on.
+        /// </summary>
+        public static CfxPlatformArch PlatformArch {
+            get {
+                switch(IntPtr.Size) {
+                    case 4:
+                        return CfxPlatformArch.x86;
+                    case 8:
+                        return CfxPlatformArch.x64;
+                    default:
+                        throw new CfxException("Unknown platform architecture.");
+                }
             }
         }
 
@@ -94,10 +110,10 @@ namespace Chromium {
         /// No sandbox info is provided.
         /// </summary>
         public static int ExecuteProcess(CfxApp application) {
-            switch(CfxApi.ApiPlatform) {
-                case CfxPlatform.Windows:
+            switch(CfxApi.PlatformOS) {
+                case CfxPlatformOS.Windows:
                     return ExecuteProcessPrivate(null, application, IntPtr.Zero);
-                case CfxPlatform.Linux:
+                case CfxPlatformOS.Linux:
                     using(var mainArgs = CfxMainArgsLinux.Create()) {
                         var retval = ExecuteProcessPrivate(mainArgs, application, IntPtr.Zero);
                         mainArgs.Free();
@@ -116,10 +132,10 @@ namespace Chromium {
         /// No sandbox info is provided.
         /// </summary>
         public static bool Initialize(CfxSettings settings, CfxApp application) {
-            switch(CfxApi.ApiPlatform) {
-                case CfxPlatform.Windows:
+            switch(CfxApi.PlatformOS) {
+                case CfxPlatformOS.Windows:
                     return InitializePrivate(null, settings, application, IntPtr.Zero);
-                case CfxPlatform.Linux:
+                case CfxPlatformOS.Linux:
                     using(var mainArgs = CfxMainArgsLinux.Create()) {
                         var retval = InitializePrivate(mainArgs, settings, application, IntPtr.Zero);
                         mainArgs.Free();

@@ -223,7 +223,7 @@
     <Compile Include="Source\CfxMainArgsLinux.cs" />
     <Compile Include="Source\CfxPlatform.cs" />
     <Compile Include="Source\CfxTime.cs" />
-    <Compile Include="Source\PlatformApi.cs" />
+    <Compile Include="Source\NativeFunctionLoader.cs" />
     <Compile Include="Source\PlatformBaseTypes.cs" />
     <Compile Include="Source\Remote\PipeFactory.cs" />
     <Compile Include="Source\Remote\WindowsPipeFactory.cs" />
