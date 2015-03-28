@@ -57,7 +57,7 @@ Public Class CefStringPtrTypeConst
 
     Public Overrides ReadOnly Property NativeWrapExpression(var As String) As String
         Get
-            Return String.Format("{0} ? {0}->str : 0, {0} ? {0}->length : 0", var)
+            Return String.Format("{0} ? {0}->str : 0, {0} ? (int){0}->length : 0", var)
         End Get
     End Property
 

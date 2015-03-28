@@ -117,7 +117,7 @@ void (CEF_CALLBACK *cfx_urlrequest_client_get_auth_credentials_callback)(gc_hand
 
 int CEF_CALLBACK cfx_urlrequest_client_get_auth_credentials(cef_urlrequest_client_t* self, int isProxy, const cef_string_t* host, int port, const cef_string_t* realm, const cef_string_t* scheme, cef_auth_callback_t* callback) {
     int __retval;
-    cfx_urlrequest_client_get_auth_credentials_callback(((cfx_urlrequest_client_t*)self)->gc_handle, &__retval, isProxy, host ? host->str : 0, host ? host->length : 0, port, realm ? realm->str : 0, realm ? realm->length : 0, scheme ? scheme->str : 0, scheme ? scheme->length : 0, callback);
+    cfx_urlrequest_client_get_auth_credentials_callback(((cfx_urlrequest_client_t*)self)->gc_handle, &__retval, isProxy, host ? host->str : 0, host ? (int)host->length : 0, port, realm ? realm->str : 0, realm ? (int)realm->length : 0, scheme ? scheme->str : 0, scheme ? (int)scheme->length : 0, callback);
     return __retval;
 }
 

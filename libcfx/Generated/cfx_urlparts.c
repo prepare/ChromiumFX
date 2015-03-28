@@ -60,7 +60,7 @@ static void cfx_urlparts_set_spec(cef_urlparts_t *self, char16 *spec_str, int sp
 }
 static void cfx_urlparts_get_spec(cef_urlparts_t *self, char16 **spec_str, int *spec_length) {
     *spec_str = self->spec.str;
-    *spec_length = self->spec.length;
+    *spec_length = (int)self->spec.length;
 }
 
 // cef_urlparts_t->scheme
@@ -69,7 +69,7 @@ static void cfx_urlparts_set_scheme(cef_urlparts_t *self, char16 *scheme_str, in
 }
 static void cfx_urlparts_get_scheme(cef_urlparts_t *self, char16 **scheme_str, int *scheme_length) {
     *scheme_str = self->scheme.str;
-    *scheme_length = self->scheme.length;
+    *scheme_length = (int)self->scheme.length;
 }
 
 // cef_urlparts_t->username
@@ -78,7 +78,7 @@ static void cfx_urlparts_set_username(cef_urlparts_t *self, char16 *username_str
 }
 static void cfx_urlparts_get_username(cef_urlparts_t *self, char16 **username_str, int *username_length) {
     *username_str = self->username.str;
-    *username_length = self->username.length;
+    *username_length = (int)self->username.length;
 }
 
 // cef_urlparts_t->password
@@ -87,7 +87,7 @@ static void cfx_urlparts_set_password(cef_urlparts_t *self, char16 *password_str
 }
 static void cfx_urlparts_get_password(cef_urlparts_t *self, char16 **password_str, int *password_length) {
     *password_str = self->password.str;
-    *password_length = self->password.length;
+    *password_length = (int)self->password.length;
 }
 
 // cef_urlparts_t->host
@@ -96,7 +96,7 @@ static void cfx_urlparts_set_host(cef_urlparts_t *self, char16 *host_str, int ho
 }
 static void cfx_urlparts_get_host(cef_urlparts_t *self, char16 **host_str, int *host_length) {
     *host_str = self->host.str;
-    *host_length = self->host.length;
+    *host_length = (int)self->host.length;
 }
 
 // cef_urlparts_t->port
@@ -105,7 +105,7 @@ static void cfx_urlparts_set_port(cef_urlparts_t *self, char16 *port_str, int po
 }
 static void cfx_urlparts_get_port(cef_urlparts_t *self, char16 **port_str, int *port_length) {
     *port_str = self->port.str;
-    *port_length = self->port.length;
+    *port_length = (int)self->port.length;
 }
 
 // cef_urlparts_t->origin
@@ -114,7 +114,7 @@ static void cfx_urlparts_set_origin(cef_urlparts_t *self, char16 *origin_str, in
 }
 static void cfx_urlparts_get_origin(cef_urlparts_t *self, char16 **origin_str, int *origin_length) {
     *origin_str = self->origin.str;
-    *origin_length = self->origin.length;
+    *origin_length = (int)self->origin.length;
 }
 
 // cef_urlparts_t->path
@@ -123,7 +123,7 @@ static void cfx_urlparts_set_path(cef_urlparts_t *self, char16 *path_str, int pa
 }
 static void cfx_urlparts_get_path(cef_urlparts_t *self, char16 **path_str, int *path_length) {
     *path_str = self->path.str;
-    *path_length = self->path.length;
+    *path_length = (int)self->path.length;
 }
 
 // cef_urlparts_t->query
@@ -132,7 +132,7 @@ static void cfx_urlparts_set_query(cef_urlparts_t *self, char16 *query_str, int 
 }
 static void cfx_urlparts_get_query(cef_urlparts_t *self, char16 **query_str, int *query_length) {
     *query_str = self->query.str;
-    *query_length = self->query.length;
+    *query_length = (int)self->query.length;
 }
 
 

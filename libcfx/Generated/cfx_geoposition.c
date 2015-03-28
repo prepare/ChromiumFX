@@ -124,7 +124,7 @@ static void cfx_geoposition_set_error_message(cef_geoposition_t *self, char16 *e
 }
 static void cfx_geoposition_get_error_message(cef_geoposition_t *self, char16 **error_message_str, int *error_message_length) {
     *error_message_str = self->error_message.str;
-    *error_message_length = self->error_message.length;
+    *error_message_length = (int)self->error_message.length;
 }
 
 

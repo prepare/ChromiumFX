@@ -103,7 +103,7 @@ Public Class CefStringType
 
     Public Overrides Sub EmitAssignFromNativeStructMember(b As CodeBuilder, var As String, Optional struct As String = "self")
         b.AppendLine("*{0}_str = {1}->{0}.str;", var, struct)
-        b.AppendLine("*{0}_length = {1}->{0}.length;", var, struct)
+        b.AppendLine("*{0}_length = (int){1}->{0}.length;", var, struct)
     End Sub
 
     Public Overrides Sub EmitNativeValueStructDtorStatements(b As CodeBuilder, var As String)

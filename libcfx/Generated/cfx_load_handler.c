@@ -107,7 +107,7 @@ void CEF_CALLBACK cfx_load_handler_on_load_end(cef_load_handler_t* self, cef_bro
 void (CEF_CALLBACK *cfx_load_handler_on_load_error_callback)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_errorcode_t errorCode, char16 *errorText_str, int errorText_length, char16 *failedUrl_str, int failedUrl_length);
 
 void CEF_CALLBACK cfx_load_handler_on_load_error(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_errorcode_t errorCode, const cef_string_t* errorText, const cef_string_t* failedUrl) {
-    cfx_load_handler_on_load_error_callback(((cfx_load_handler_t*)self)->gc_handle, browser, frame, errorCode, errorText ? errorText->str : 0, errorText ? errorText->length : 0, failedUrl ? failedUrl->str : 0, failedUrl ? failedUrl->length : 0);
+    cfx_load_handler_on_load_error_callback(((cfx_load_handler_t*)self)->gc_handle, browser, frame, errorCode, errorText ? errorText->str : 0, errorText ? (int)errorText->length : 0, failedUrl ? failedUrl->str : 0, failedUrl ? (int)failedUrl->length : 0);
 }
 
 

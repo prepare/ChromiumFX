@@ -81,7 +81,7 @@ void (CEF_CALLBACK *cfx_dialog_handler_on_file_dialog_callback)(gc_handle_t self
 
 int CEF_CALLBACK cfx_dialog_handler_on_file_dialog(cef_dialog_handler_t* self, cef_browser_t* browser, cef_file_dialog_mode_t mode, const cef_string_t* title, const cef_string_t* default_file_name, cef_string_list_t accept_types, cef_file_dialog_callback_t* callback) {
     int __retval;
-    cfx_dialog_handler_on_file_dialog_callback(((cfx_dialog_handler_t*)self)->gc_handle, &__retval, browser, mode, title ? title->str : 0, title ? title->length : 0, default_file_name ? default_file_name->str : 0, default_file_name ? default_file_name->length : 0, accept_types, callback);
+    cfx_dialog_handler_on_file_dialog_callback(((cfx_dialog_handler_t*)self)->gc_handle, &__retval, browser, mode, title ? title->str : 0, title ? (int)title->length : 0, default_file_name ? default_file_name->str : 0, default_file_name ? (int)default_file_name->length : 0, accept_types, callback);
     return __retval;
 }
 

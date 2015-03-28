@@ -81,7 +81,7 @@ void (CEF_CALLBACK *cfx_jsdialog_handler_on_jsdialog_callback)(gc_handle_t self,
 
 int CEF_CALLBACK cfx_jsdialog_handler_on_jsdialog(cef_jsdialog_handler_t* self, cef_browser_t* browser, const cef_string_t* origin_url, const cef_string_t* accept_lang, cef_jsdialog_type_t dialog_type, const cef_string_t* message_text, const cef_string_t* default_prompt_text, cef_jsdialog_callback_t* callback, int* suppress_message) {
     int __retval;
-    cfx_jsdialog_handler_on_jsdialog_callback(((cfx_jsdialog_handler_t*)self)->gc_handle, &__retval, browser, origin_url ? origin_url->str : 0, origin_url ? origin_url->length : 0, accept_lang ? accept_lang->str : 0, accept_lang ? accept_lang->length : 0, dialog_type, message_text ? message_text->str : 0, message_text ? message_text->length : 0, default_prompt_text ? default_prompt_text->str : 0, default_prompt_text ? default_prompt_text->length : 0, callback, suppress_message);
+    cfx_jsdialog_handler_on_jsdialog_callback(((cfx_jsdialog_handler_t*)self)->gc_handle, &__retval, browser, origin_url ? origin_url->str : 0, origin_url ? (int)origin_url->length : 0, accept_lang ? accept_lang->str : 0, accept_lang ? (int)accept_lang->length : 0, dialog_type, message_text ? message_text->str : 0, message_text ? (int)message_text->length : 0, default_prompt_text ? default_prompt_text->str : 0, default_prompt_text ? (int)default_prompt_text->length : 0, callback, suppress_message);
     return __retval;
 }
 
@@ -92,7 +92,7 @@ void (CEF_CALLBACK *cfx_jsdialog_handler_on_before_unload_dialog_callback)(gc_ha
 
 int CEF_CALLBACK cfx_jsdialog_handler_on_before_unload_dialog(cef_jsdialog_handler_t* self, cef_browser_t* browser, const cef_string_t* message_text, int is_reload, cef_jsdialog_callback_t* callback) {
     int __retval;
-    cfx_jsdialog_handler_on_before_unload_dialog_callback(((cfx_jsdialog_handler_t*)self)->gc_handle, &__retval, browser, message_text ? message_text->str : 0, message_text ? message_text->length : 0, is_reload, callback);
+    cfx_jsdialog_handler_on_before_unload_dialog_callback(((cfx_jsdialog_handler_t*)self)->gc_handle, &__retval, browser, message_text ? message_text->str : 0, message_text ? (int)message_text->length : 0, is_reload, callback);
     return __retval;
 }
 

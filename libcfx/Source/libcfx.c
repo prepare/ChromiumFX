@@ -78,7 +78,7 @@ static int cfx_release(cef_base_t* base) {
 }
 
 static char16* cfx_string_get_ptr(cef_string_t* cefstr, int *length) {
-	*length = cefstr->length;
+	*length = (int)cefstr->length;
 	return cefstr->str;
 }
 

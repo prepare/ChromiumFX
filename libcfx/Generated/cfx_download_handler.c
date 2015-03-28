@@ -80,7 +80,7 @@ static gc_handle_t cfx_download_handler_get_gc_handle(cfx_download_handler_t* se
 void (CEF_CALLBACK *cfx_download_handler_on_before_download_callback)(gc_handle_t self, cef_browser_t* browser, cef_download_item_t* download_item, char16 *suggested_name_str, int suggested_name_length, cef_before_download_callback_t* callback);
 
 void CEF_CALLBACK cfx_download_handler_on_before_download(cef_download_handler_t* self, cef_browser_t* browser, cef_download_item_t* download_item, const cef_string_t* suggested_name, cef_before_download_callback_t* callback) {
-    cfx_download_handler_on_before_download_callback(((cfx_download_handler_t*)self)->gc_handle, browser, download_item, suggested_name ? suggested_name->str : 0, suggested_name ? suggested_name->length : 0, callback);
+    cfx_download_handler_on_before_download_callback(((cfx_download_handler_t*)self)->gc_handle, browser, download_item, suggested_name ? suggested_name->str : 0, suggested_name ? (int)suggested_name->length : 0, callback);
 }
 
 

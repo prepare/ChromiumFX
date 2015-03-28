@@ -81,7 +81,7 @@ void (CEF_CALLBACK *cfx_life_span_handler_on_before_popup_callback)(gc_handle_t 
 
 int CEF_CALLBACK cfx_life_span_handler_on_before_popup(cef_life_span_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, const cef_string_t* target_url, const cef_string_t* target_frame_name, const cef_popup_features_t* popupFeatures, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, int* no_javascript_access) {
     int __retval;
-    cfx_life_span_handler_on_before_popup_callback(((cfx_life_span_handler_t*)self)->gc_handle, &__retval, browser, frame, target_url ? target_url->str : 0, target_url ? target_url->length : 0, target_frame_name ? target_frame_name->str : 0, target_frame_name ? target_frame_name->length : 0, popupFeatures, windowInfo, client, settings, no_javascript_access);
+    cfx_life_span_handler_on_before_popup_callback(((cfx_life_span_handler_t*)self)->gc_handle, &__retval, browser, frame, target_url ? target_url->str : 0, target_url ? (int)target_url->length : 0, target_frame_name ? target_frame_name->str : 0, target_frame_name ? (int)target_frame_name->length : 0, popupFeatures, windowInfo, client, settings, no_javascript_access);
     if(*client)((cef_base_t*)*client)->add_ref((cef_base_t*)*client);
     return __retval;
 }
