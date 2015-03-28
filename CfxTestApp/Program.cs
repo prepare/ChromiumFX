@@ -59,13 +59,11 @@ namespace CfxTestApplication {
             var assemblyDir = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
 
             Environment.CurrentDirectory = System.IO.Path.Combine(assemblyDir, @"..\..\");
-            
-//#if DEBUG
-//            //CfxRuntime.LoadLibraries(@"cef\Debug");
-//            CfxRuntime.LoadLibraries();
-//#else
-            CfxRuntime.LoadLibraries(@"cef\Release");
-//#endif
+
+            if(CfxRuntime.PlatformArch== CfxPlatformArch.x64)
+                CfxRuntime.LoadLibraries(@"cef\Release64");
+            else
+                CfxRuntime.LoadLibraries(@"cef\Release");
 
             Chromium.WebBrowser.ChromiumWebBrowser.OnBeforeCfxInitialize += ChromiumWebBrowser_OnBeforeCfxInitialize;
             ChromiumWebBrowser.OnBeforeCommandLineProcessing += ChromiumWebBrowser_OnBeforeCommandLineProcessing;
