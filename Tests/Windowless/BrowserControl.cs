@@ -83,10 +83,19 @@ namespace Windowless {
 
             var settings = new CfxBrowserSettings();
 
-            var windowInfo = new CfxWindowInfo();
-            windowInfo.WindowlessRenderingEnabled = true;
-            windowInfo.Width = 800;
-            windowInfo.Height = 600;
+            CfxWindowInfoBase windowInfo;
+            if(CfxRuntime.PlatformOS == CfxPlatformOS.Linux) {
+                windowInfo = new CfxWindowInfoLinux();
+                ((CfxWindowInfoLinux)windowInfo).WindowlessRenderingEnabled = true;
+                ((CfxWindowInfoLinux)windowInfo).Width = 800;
+                ((CfxWindowInfoLinux)windowInfo).Height = 600;
+            } else {
+                windowInfo = new CfxWindowInfo();
+                ((CfxWindowInfo)windowInfo).WindowlessRenderingEnabled = true;
+                ((CfxWindowInfo)windowInfo).Width = 800;
+                ((CfxWindowInfo)windowInfo).Height = 600;
+            }
+            
             
             // Create handle now for InvokeRequired to work properly 
             CreateHandle();
