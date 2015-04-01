@@ -334,7 +334,9 @@ Public Class Signature
 
     Public Sub EmitPublicEventCtorStatements(b As CodeBuilder)
         For i = 1 To ManagedArguments.Count - 1
-            ManagedArguments(i).EmitPublicEventCtorStatements(b)
+            If ManagedArguments(i).ArgumentType.IsIn Then
+                ManagedArguments(i).EmitPublicEventCtorStatements(b)
+            End If
         Next
     End Sub
 

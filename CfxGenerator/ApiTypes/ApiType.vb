@@ -309,16 +309,25 @@ Public Class ApiType
         b.AppendLine("{0} = {1};", var, RemoteWrapExpression("call." & If(var = "this", "self", CSharp.Escape(var))))
     End Sub
 
+    ''' <summary>
+    ''' Called if IsIn is true.
+    ''' </summary>
     Public Overridable Sub EmitPublicEventCtorStatements(b As CodeBuilder, var As String)
         If IsIn Then
             b.AppendLine("m_{0} = {1};", var, CSharp.Escape(var))
         End If
     End Sub
 
+    ''' <summary>
+    ''' Called if IsIn is true.
+    ''' </summary>
     Public Overridable Sub EmitPublicEventArgGetterStatements(b As CodeBuilder, var As String)
         b.AppendLine("return {0};", PublicWrapExpression("m_" & var))
     End Sub
 
+    ''' <summary>
+    ''' Called if IsOut is true.
+    ''' </summary>
     Public Overridable Sub EmitPublicEventArgSetterStatements(b As CodeBuilder, var As String)
         b.AppendLine("m_{0} = {1};", var, PublicUnwrapExpression("value"))
     End Sub
