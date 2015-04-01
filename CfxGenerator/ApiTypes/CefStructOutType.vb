@@ -144,21 +144,13 @@ Public Class CefStructOutType
         b.AppendLine("internal {0} m_{1}_wrapped;", PublicSymbol, var)
     End Sub
 
-    Public Overrides Sub EmitPublicEventCtorStatements(b As CodeBuilder, var As String)
-    End Sub
-
     Public Overrides Sub EmitPostPublicRaiseEventStatements(b As CodeBuilder, var As String)
         b.AppendLine("{0} = {1};", var, StructPtr.PublicUnwrapExpression(String.Concat("e.m_", var, "_wrapped")))
-    End Sub
-
-    Public Overrides Sub EmitPublicEventArgGetterStatements(b As CodeBuilder, var As String)
-        b.AppendLine("return m_{0}_wrapped;", var)
     End Sub
 
     Public Overrides Sub EmitPublicEventArgSetterStatements(b As CodeBuilder, var As String)
         b.AppendLine("m_{0}_wrapped = value;", var)
     End Sub
-
 
     Public Overrides Sub EmitProxyEventArgSetter(b As CodeBuilder, var As String)
         b.AppendLine("e.{0} = {1};", var, StructPtr.ProxyUnwrapExpression("value"))
