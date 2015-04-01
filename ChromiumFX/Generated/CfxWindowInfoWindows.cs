@@ -41,27 +41,27 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types_win.h">cef/include/internal/cef_types_win.h</see>.
     /// </remarks>
-    public sealed class CfxWindowInfo : CfxWindowInfoBase {
+    internal sealed class CfxWindowInfoWindows : CfxStructure {
 
-        static CfxWindowInfo () {
+        static CfxWindowInfoWindows () {
             if(CfxApi.PlatformOS == CfxPlatformOS.Windows) {
-                CfxApiLoader.LoadCfxWindowInfoApi();
+                CfxApiLoader.LoadCfxWindowInfoWindowsApi();
             }
         }
 
-        internal static CfxWindowInfo Wrap(IntPtr nativePtr) {
+        internal static CfxWindowInfoWindows Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxWindowInfo(nativePtr);
+            return new CfxWindowInfoWindows(nativePtr);
         }
 
-        internal static CfxWindowInfo WrapOwned(IntPtr nativePtr) {
+        internal static CfxWindowInfoWindows WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxWindowInfo(nativePtr, CfxApi.cfx_window_info_windows_dtor);
+            return new CfxWindowInfoWindows(nativePtr, CfxApi.cfx_window_info_windows_dtor);
         }
 
-        public CfxWindowInfo() : base(CfxApi.cfx_window_info_windows_ctor, CfxApi.cfx_window_info_windows_dtor) { CfxApi.CheckPlatformOS(CfxPlatformOS.Windows); }
-        internal CfxWindowInfo(IntPtr nativePtr) : base(nativePtr) {}
-        internal CfxWindowInfo(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
+        public CfxWindowInfoWindows() : base(CfxApi.cfx_window_info_windows_ctor, CfxApi.cfx_window_info_windows_dtor) { CfxApi.CheckPlatformOS(CfxPlatformOS.Windows); }
+        internal CfxWindowInfoWindows(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxWindowInfoWindows(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         /// <summary>
         /// Standard parameters required by CreateWindowEx()

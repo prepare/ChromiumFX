@@ -2570,7 +2570,7 @@ namespace Chromium {
         public static cfx_main_args_linux_get_argv_delegate cfx_main_args_linux_get_argv;
 
 
-        // CfxMainArgs
+        // CfxMainArgsWindows
 
         // static cef_main_args_t* cfx_main_args_windows_ctor()
         public static cfx_ctor_delegate cfx_main_args_windows_ctor;
@@ -4920,7 +4920,7 @@ namespace Chromium {
         public static cfx_window_info_linux_get_window_delegate cfx_window_info_linux_get_window;
 
 
-        // CfxWindowInfo
+        // CfxWindowInfoWindows
 
         // static cef_window_info_t* cfx_window_info_windows_ctor()
         public static cfx_ctor_delegate cfx_window_info_windows_ctor;

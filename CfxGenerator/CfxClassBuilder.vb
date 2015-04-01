@@ -728,11 +728,7 @@ Public Class CfxClassBuilder
         b.AppendSummaryAndRemarks(comments)
 
         If struct.IsCefPlatformStructType Then
-            If struct.AsCefPlatformStructType.BaseClassName = "CfxMainArgsBase" Then
-                b.BeginClass(ClassName & " : " & struct.AsCefPlatformStructType.BaseClassName, GeneratorConfig.ClassModifiers(ClassName, "internal sealed"))
-            Else
-                b.BeginClass(ClassName & " : " & struct.AsCefPlatformStructType.BaseClassName, GeneratorConfig.ClassModifiers(ClassName, "public sealed"))
-            End If
+            b.BeginClass(ClassName & " : CfxStructure", GeneratorConfig.ClassModifiers(ClassName, "internal sealed"))
         Else
             b.BeginClass(ClassName & " : CfxStructure", GeneratorConfig.ClassModifiers(ClassName, "public sealed"))
         End If

@@ -80,9 +80,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public static bool CreateBrowser(CfxWindowInfoBase windowInfo, CfxClient client, string url, CfxBrowserSettings settings, CfxRequestContext requestContext) {
+        public static bool CreateBrowser(CfxWindowInfo windowInfo, CfxClient client, string url, CfxBrowserSettings settings, CfxRequestContext requestContext) {
             var url_pinned = new PinnedString(url);
-            var __retval = CfxApi.cfx_browser_host_create_browser(CfxWindowInfoBase.Unwrap(windowInfo), CfxClient.Unwrap(client), url_pinned.Obj.PinnedPtr, url_pinned.Length, CfxBrowserSettings.Unwrap(settings), CfxRequestContext.Unwrap(requestContext));
+            var __retval = CfxApi.cfx_browser_host_create_browser(CfxWindowInfo.Unwrap(windowInfo), CfxClient.Unwrap(client), url_pinned.Obj.PinnedPtr, url_pinned.Length, CfxBrowserSettings.Unwrap(settings), CfxRequestContext.Unwrap(requestContext));
             url_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -96,9 +96,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public static CfxBrowser CreateBrowserSync(CfxWindowInfoBase windowInfo, CfxClient client, string url, CfxBrowserSettings settings, CfxRequestContext requestContext) {
+        public static CfxBrowser CreateBrowserSync(CfxWindowInfo windowInfo, CfxClient client, string url, CfxBrowserSettings settings, CfxRequestContext requestContext) {
             var url_pinned = new PinnedString(url);
-            var __retval = CfxApi.cfx_browser_host_create_browser_sync(CfxWindowInfoBase.Unwrap(windowInfo), CfxClient.Unwrap(client), url_pinned.Obj.PinnedPtr, url_pinned.Length, CfxBrowserSettings.Unwrap(settings), CfxRequestContext.Unwrap(requestContext));
+            var __retval = CfxApi.cfx_browser_host_create_browser_sync(CfxWindowInfo.Unwrap(windowInfo), CfxClient.Unwrap(client), url_pinned.Obj.PinnedPtr, url_pinned.Length, CfxBrowserSettings.Unwrap(settings), CfxRequestContext.Unwrap(requestContext));
             url_pinned.Obj.Free();
             return CfxBrowser.Wrap(__retval);
         }
@@ -361,8 +361,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public void ShowDevTools(CfxWindowInfoBase windowInfo, CfxClient client, CfxBrowserSettings settings, CfxPoint inspectElementAt) {
-            CfxApi.cfx_browser_host_show_dev_tools(NativePtr, CfxWindowInfoBase.Unwrap(windowInfo), CfxClient.Unwrap(client), CfxBrowserSettings.Unwrap(settings), CfxPoint.Unwrap(inspectElementAt));
+        public void ShowDevTools(CfxWindowInfo windowInfo, CfxClient client, CfxBrowserSettings settings, CfxPoint inspectElementAt) {
+            CfxApi.cfx_browser_host_show_dev_tools(NativePtr, CfxWindowInfo.Unwrap(windowInfo), CfxClient.Unwrap(client), CfxBrowserSettings.Unwrap(settings), CfxPoint.Unwrap(inspectElementAt));
         }
 
         /// <summary>

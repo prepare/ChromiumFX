@@ -114,9 +114,9 @@ namespace Chromium {
                 case CfxPlatformOS.Windows:
                     return ExecuteProcessPrivate(null, application, IntPtr.Zero);
                 case CfxPlatformOS.Linux:
-                    using(var mainArgs = CfxMainArgsLinux.Create()) {
+                    using(var mainArgs = CfxMainArgs.ForLinux()) {
                         var retval = ExecuteProcessPrivate(mainArgs, application, IntPtr.Zero);
-                        mainArgs.Free();
+                        mainArgs.mainArgsLinux.Free();
                         return retval;
                     }
                 default:
@@ -136,9 +136,9 @@ namespace Chromium {
                 case CfxPlatformOS.Windows:
                     return InitializePrivate(null, settings, application, IntPtr.Zero);
                 case CfxPlatformOS.Linux:
-                    using(var mainArgs = CfxMainArgsLinux.Create()) {
+                    using(var mainArgs = CfxMainArgs.ForLinux()) {
                         var retval = InitializePrivate(mainArgs, settings, application, IntPtr.Zero);
-                        mainArgs.Free();
+                        mainArgs.mainArgsLinux.Free();
                         return retval;
                     }
                 default:

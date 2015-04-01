@@ -379,7 +379,10 @@ Public Class WrapperGenerator
 
 
         For Each struct In decls.CefStructTypes
+            b.AppendLine("private static bool {0}ApiLoaded;", struct.ClassName)
             b.BeginBlock("internal static void Load{0}Api()", struct.ClassName)
+            b.AppendLine("if({0}ApiLoaded) return;", struct.ClassName)
+            b.AppendLine("{0}ApiLoaded = true;", struct.ClassName)
             Select Case struct.ClassBuilder.Category
                 Case StructCategory.ApiCalls
                     If struct.ClassBuilder.ExportFunctions.Count > 0 Then

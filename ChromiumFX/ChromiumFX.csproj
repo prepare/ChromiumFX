@@ -90,8 +90,8 @@
     <Compile Include="Generated\CfxLifeSpanHandler.cs" />
     <Compile Include="Generated\CfxListValue.cs" />
     <Compile Include="Generated\CfxLoadHandler.cs" />
-    <Compile Include="Generated\CfxMainArgs.cs" />
     <Compile Include="Generated\CfxMainArgsLinux.cs" />
+    <Compile Include="Generated\CfxMainArgsWindows.cs" />
     <Compile Include="Generated\CfxMenuModel.cs" />
     <Compile Include="Generated\CfxMouseEvent.cs" />
     <Compile Include="Generated\CfxNavigationEntry.cs" />
@@ -144,8 +144,8 @@
     <Compile Include="Generated\CfxWebPluginInfo.cs" />
     <Compile Include="Generated\CfxWebPluginInfoVisitor.cs" />
     <Compile Include="Generated\CfxWebPluginUnstableCallback.cs" />
-    <Compile Include="Generated\CfxWindowInfo.cs" />
     <Compile Include="Generated\CfxWindowInfoLinux.cs" />
+    <Compile Include="Generated\CfxWindowInfoWindows.cs" />
     <Compile Include="Generated\CfxWriteHandler.cs" />
     <Compile Include="Generated\CfxXmlReader.cs" />
     <Compile Include="Generated\CfxZipReader.cs" />
@@ -222,8 +222,9 @@
     <Compile Include="Source\CfxMainArgsLinux.cs" />
     <Compile Include="Source\CfxPlatform.cs" />
     <Compile Include="Source\CfxTime.cs" />
+    <Compile Include="Source\CfxWindowInfo.cs" />
     <Compile Include="Source\NativeFunctionLoader.cs" />
-    <Compile Include="Source\PlatformBaseTypes.cs" />
+    <Compile Include="Source\CfxMainArgs.cs" />
     <Compile Include="Source\Remote\PipeFactory.cs" />
     <Compile Include="Source\Remote\WindowsPipeFactory.cs" />
     <Compile Include="Source\StringFunctions.cs" />
