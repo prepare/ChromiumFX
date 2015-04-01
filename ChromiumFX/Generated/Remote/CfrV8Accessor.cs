@@ -192,7 +192,6 @@ namespace Chromium.Remote {
             string m_Name;
             bool ObjectFetched;
             CfrV8Value m_Object;
-            CfrV8Value m_Retval;
             bool ExceptionFetched;
             string m_Exception;
 
@@ -238,7 +237,6 @@ namespace Chromium.Remote {
             public CfrV8Value Retval {
                 set {
                     CheckAccess();
-                    m_Retval = value;
                     var call = new CfxV8AccessorGetSetRetvalRenderProcessCall();
                     call.eventArgsId = eventArgsId;
                     call.value = CfrV8Value.Unwrap(value);

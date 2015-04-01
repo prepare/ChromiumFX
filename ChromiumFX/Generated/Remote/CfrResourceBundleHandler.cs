@@ -284,8 +284,6 @@ namespace Chromium.Remote {
 
             bool ResourceIdFetched;
             int m_ResourceId;
-            RemotePtr m_Data;
-            int m_DataSize;
 
             private bool returnValueSet;
 
@@ -313,7 +311,6 @@ namespace Chromium.Remote {
             public RemotePtr Data {
                 set {
                     CheckAccess();
-                    m_Data = value;
                     var call = new CfxGetDataResourceSetDataRenderProcessCall();
                     call.eventArgsId = eventArgsId;
                     call.value = value.ptr;
@@ -326,7 +323,6 @@ namespace Chromium.Remote {
             public int DataSize {
                 set {
                     CheckAccess();
-                    m_DataSize = value;
                     var call = new CfxGetDataResourceSetDataSizeRenderProcessCall();
                     call.eventArgsId = eventArgsId;
                     call.value = value;

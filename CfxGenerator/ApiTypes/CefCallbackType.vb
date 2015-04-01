@@ -348,8 +348,10 @@ Public Class CefCallbackType
         b.AppendLine()
 
         For i = 1 To Signature.ManagedArguments.Count - 1
-            If Signature.ManagedArguments(i).ArgumentType.IsIn Then b.AppendLine("bool {0}Fetched;", Signature.ManagedArguments(i).PublicPropertyName)
-            b.AppendLine("{0} m_{1};", Signature.ManagedArguments(i).ArgumentType.RemoteSymbol, Signature.ManagedArguments(i).PublicPropertyName)
+            If Signature.ManagedArguments(i).ArgumentType.IsIn Then
+                b.AppendLine("bool {0}Fetched;", Signature.ManagedArguments(i).PublicPropertyName)
+                b.AppendLine("{0} m_{1};", Signature.ManagedArguments(i).ArgumentType.RemoteSymbol, Signature.ManagedArguments(i).PublicPropertyName)
+            End If
         Next
         b.AppendLine()
 
@@ -389,8 +391,10 @@ Public Class CefCallbackType
             If arg.ArgumentType.IsOut Then
                 b.BeginBlock("set")
                 b.AppendLine("CheckAccess();")
-                b.AppendLine("m_{0} = value;", arg.PublicPropertyName)
-                If arg.ArgumentType.IsIn Then b.AppendLine("{0}Fetched = true;", arg.PublicPropertyName)
+                If arg.ArgumentType.IsIn Then
+                    b.AppendLine("m_{0} = value;", arg.PublicPropertyName)
+                    b.AppendLine("{0}Fetched = true;", arg.PublicPropertyName)
+                End If
                 b.AppendLine("var call = new {0}Set{1}RenderProcessCall();", EventName, arg.PublicPropertyName)
                 b.AppendLine("call.eventArgsId = eventArgsId;")
                 b.AppendLine("call.value = {0};", arg.ArgumentType.RemoteUnwrapExpression("value"))
