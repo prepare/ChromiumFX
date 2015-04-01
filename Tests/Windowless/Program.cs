@@ -54,7 +54,11 @@ namespace Windowless {
             settings.NoSandbox = true;
             settings.SingleProcess = true;
             settings.LogSeverity = CfxLogSeverity.Disable;
-
+   
+            var assemblyDir = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
+            settings.ResourcesDirPath = assemblyDir;
+            settings.LocalesDirPath = System.IO.Path.Combine(assemblyDir, "locales");
+            
             if(!CfxRuntime.Initialize(settings, null))
                 Environment.Exit(-1);
 
