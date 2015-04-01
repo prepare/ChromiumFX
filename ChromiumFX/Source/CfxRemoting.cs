@@ -45,21 +45,11 @@ namespace Chromium {
         /// <summary>
         /// Call this function instead of CfxRuntime.ExecuteProcess if the application
         /// wants to use the remoting framework.
+        /// See also CfxRuntime.Initialize(CfxSettings, CfxApp, CfxRenderProcessStartupDelegate);
         /// </summary>
         /// <returns></returns>
         public static int ExecuteProcess() {
             return RemoteClient.ExecuteProcess();
-        }
-
-        /// <summary>
-        /// Initialize the remoting service to accept connections from render processes.
-        /// You have to make sure the submitted browserProcessHandler is the one that will be
-        /// returned to CEF by the application's CfxApp handler.
-        /// </summary>
-        /// <param name="renderProcessStartupCallback">Entry point for the remote process.</param>
-        /// <param name="browserProcessHandler"></param>
-        public static void Initialize(CfxRenderProcessStartupDelegate renderProcessStartupCallback, CfxBrowserProcessHandler browserProcessHandler) {
-            RemoteService.Initialize(renderProcessStartupCallback, browserProcessHandler);
         }
 
         /// <summary>

@@ -107,7 +107,8 @@ namespace Chromium {
         /// it will return immediately with a value of -1. If called for a recognized
         /// secondary process it will block until the process should exit and then return
         /// the process exit code. The |application| parameter may be NULL.
-        /// No sandbox info is provided.
+        /// 
+        /// The chromium sandbox is currently not supported within ChromiumFX.
         /// </summary>
         public static int ExecuteProcess(CfxApp application) {
             switch(CfxApi.PlatformOS) {
@@ -126,10 +127,30 @@ namespace Chromium {
 
         /// <summary>
         /// This function should be called on the main application thread to initialize
+        /// the CEF browser process with support for the remote interface to the render
+        /// process. The |application| parameter may be NULL. A return
+        /// value of true (1) indicates that it succeeded and false (0) indicates that it
+        /// failed.
+        /// 
+        /// If |renderProcessStartupCallback| is provided and the secondary process is
+        /// executed by a call to CfxRemoting.ExecuteProcess() instead of CfxRuntime.ExecuteProcess(),
+        /// then every newly created render process main thread will be redirected through
+        /// |renderProcessStartupCallback|.
+        /// 
+        /// The chromium sandbox is currently not supported within ChromiumFX.
+        /// </summary>
+        public static bool Initialize(CfxSettings settings, CfxApp application, CfxRenderProcessStartupDelegate renderProcessStartupCallback) {
+            Chromium.Remote.RemoteService.Initialize(renderProcessStartupCallback, ref application);
+            return Initialize(settings, application);
+        }
+
+        /// <summary>
+        /// This function should be called on the main application thread to initialize
         /// the CEF browser process. The |application| parameter may be NULL. A return
         /// value of true (1) indicates that it succeeded and false (0) indicates that it
         /// failed.
-        /// No sandbox info is provided.
+        /// 
+        /// The chromium sandbox is currently not supported within ChromiumFX.
         /// </summary>
         public static bool Initialize(CfxSettings settings, CfxApp application) {
             switch(CfxApi.PlatformOS) {

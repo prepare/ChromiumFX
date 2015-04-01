@@ -79,7 +79,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var remoteRuntime = new CfrRuntime(connection);
-            __retval = RemoteService.renderProcessStartupCallback(remoteRuntime);
+            __retval = RemoteService.RenderProcessStartupCallback(remoteRuntime);
         }
     }
 }
