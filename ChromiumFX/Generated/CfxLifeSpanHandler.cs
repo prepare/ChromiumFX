@@ -542,10 +542,10 @@ namespace Chromium {
             /// <summary>
             /// Get the WindowInfo parameter for the <see cref="CfxLifeSpanHandler.OnBeforePopup"/> callback.
             /// </summary>
-            public CfxWindowInfoBase WindowInfo {
+            public CfxWindowInfo WindowInfo {
                 get {
                     CheckAccess();
-                    return CfxWindowInfoBase.Cast(m_windowInfo);
+                    return CfxWindowInfo.Wrap(m_windowInfo);
                 }
             }
             /// <summary>

@@ -41,15 +41,15 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types_win.h">cef/include/internal/cef_types_win.h</see>.
     /// </remarks>
-    internal sealed class CfxMainArgs : CfxMainArgsBase {
+    internal sealed class CfxMainArgsWindows : CfxStructure {
 
-        static CfxMainArgs () {
+        static CfxMainArgsWindows () {
             if(CfxApi.PlatformOS == CfxPlatformOS.Windows) {
-                CfxApiLoader.LoadCfxMainArgsApi();
+                CfxApiLoader.LoadCfxMainArgsWindowsApi();
             }
         }
 
-        public CfxMainArgs() : base(CfxApi.cfx_main_args_windows_ctor, CfxApi.cfx_main_args_windows_dtor) { CfxApi.CheckPlatformOS(CfxPlatformOS.Windows); }
+        public CfxMainArgsWindows() : base(CfxApi.cfx_main_args_windows_ctor, CfxApi.cfx_main_args_windows_dtor) { CfxApi.CheckPlatformOS(CfxPlatformOS.Windows); }
 
         public IntPtr Instance {
             get {

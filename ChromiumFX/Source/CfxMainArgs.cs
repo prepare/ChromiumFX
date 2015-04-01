@@ -32,28 +32,16 @@
 using System;
 
 namespace Chromium {
-    
-    public abstract class CfxWindowInfoBase : CfxStructure {
+    internal class CfxMainArgs : CfxStructure {
 
-        internal static CfxWindowInfoBase Cast(IntPtr nativePtr) {
-            switch(CfxApi.PlatformOS) {
-                case CfxPlatformOS.Windows:
-                    return CfxWindowInfo.Wrap(nativePtr);
-                case CfxPlatformOS.Linux:
-                    return CfxWindowInfoLinux.Wrap(nativePtr);
-                default:
-                    throw new NotImplementedException();
-            }
+        internal static CfxMainArgs ForLinux() {
+            CfxMainArgsLinux mainArgsLinux = CfxMainArgsLinux.Create();
+            return new CfxMainArgs(mainArgsLinux);
         }
 
-        internal CfxWindowInfoBase(CfxApi.cfx_ctor_delegate cfx_ctor, CfxApi.cfx_dtor_delegate cfx_dtor) : base(cfx_ctor, cfx_dtor) {}
-        internal CfxWindowInfoBase(IntPtr nativePtr) : base(nativePtr) {}
-        internal CfxWindowInfoBase(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) { }
+        internal CfxMainArgsLinux mainArgsLinux;
+        private CfxMainArgs(CfxMainArgsLinux mainArgsLinux) : base(mainArgsLinux.nativePtrUnchecked) {
+            this.mainArgsLinux = mainArgsLinux;
+        }
     }
-
-
-    public abstract class CfxMainArgsBase : CfxStructure {
-        internal CfxMainArgsBase(CfxApi.cfx_ctor_delegate cfx_ctor, CfxApi.cfx_dtor_delegate cfx_dtor) : base(cfx_ctor, cfx_dtor) {}
-    }
-
 }

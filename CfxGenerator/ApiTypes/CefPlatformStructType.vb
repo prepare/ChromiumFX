@@ -42,25 +42,9 @@ Public Class CefPlatformStructType
         baseTypeName = name
     End Sub
 
-    Public ReadOnly Property BaseClassName As String
-        Get
-            Return "Cfx" & CSharp.ApplyStyle(baseTypeName.Substring(4)) & "Base"
-        End Get
-    End Property
-
-
     Public Overrides ReadOnly Property OriginalSymbol As String
         Get
             Return baseTypeName & "_t"
-        End Get
-    End Property
-
-    Public Overrides ReadOnly Property ClassName As String
-        Get
-            If Platform = CefPlatform.Windows Then
-                Return "Cfx" & CSharp.ApplyStyle(baseTypeName.Substring(4))
-            End If
-            Return MyBase.ClassName
         End Get
     End Property
 

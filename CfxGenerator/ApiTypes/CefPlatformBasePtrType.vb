@@ -38,7 +38,7 @@ Public Class CefPlatformBasePtrType
 
     Public Overrides ReadOnly Property PublicSymbol As String
         Get
-            Return "Cfx" & CSharp.ApplyStyle(Name.Substring(4, Name.Length - 7)) & "Base"
+            Return "Cfx" & CSharp.ApplyStyle(Name.Substring(4, Name.Length - 7))
         End Get
     End Property
 
@@ -50,7 +50,7 @@ Public Class CefPlatformBasePtrType
 
     Public Overrides ReadOnly Property PublicWrapExpression(var As String) As String
         Get
-            Return String.Format("{0}.Cast({1})", PublicSymbol, var)
+            Return String.Format("{0}.Wrap({1})", PublicSymbol, var)
         End Get
     End Property
 

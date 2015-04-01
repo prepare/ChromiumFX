@@ -41,7 +41,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/linux/cef/include/internal/cef_types_linux.h">linux/cef/include/internal/cef_types_linux.h</see>.
     /// </remarks>
-    internal sealed partial class CfxMainArgsLinux : CfxMainArgsBase {
+    internal sealed partial class CfxMainArgsLinux : CfxStructure {
 
         static CfxMainArgsLinux () {
             if(CfxApi.PlatformOS == CfxPlatformOS.Linux) {
