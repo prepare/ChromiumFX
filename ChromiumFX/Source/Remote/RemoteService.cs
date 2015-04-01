@@ -48,6 +48,7 @@ namespace Chromium.Remote {
 
             if(app == null) {
                 m_app = new CfxApp();
+                app = m_app;
             } else {
                 m_app = app;
                 m_browserProcessHandler = m_app.RetrieveCfxBrowserProcessHandler();
