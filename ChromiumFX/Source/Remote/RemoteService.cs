@@ -38,12 +38,28 @@ namespace Chromium.Remote {
     internal class RemoteService {
 
 
-        internal static CfxRenderProcessStartupDelegate renderProcessStartupCallback;
+        internal static CfxRenderProcessStartupDelegate RenderProcessStartupCallback;
         internal static readonly List<RemoteConnection> connections = new List<RemoteConnection>();
 
-        public static void Initialize(CfxRenderProcessStartupDelegate renderProcessStartupCallback, CfxBrowserProcessHandler browserProcessHandler) {
-            RemoteService.renderProcessStartupCallback = renderProcessStartupCallback;
-            browserProcessHandler.OnBeforeChildProcessLaunch += OnBeforeChildProcessLaunch;
+        private static CfxApp m_app;
+        private static CfxBrowserProcessHandler m_browserProcessHandler;
+
+        internal static void Initialize(CfxRenderProcessStartupDelegate renderProcessStartupCallback, ref CfxApp app) {
+
+            if(app == null) {
+                m_app = new CfxApp();
+            } else {
+                m_app = app;
+                m_browserProcessHandler = m_app.RetrieveCfxBrowserProcessHandler();
+            }
+
+            if(m_browserProcessHandler == null) {
+                m_browserProcessHandler = new CfxBrowserProcessHandler();
+                m_app.GetBrowserProcessHandler += (sender, e) => e.SetReturnValue(m_browserProcessHandler);
+            } 
+            
+            RenderProcessStartupCallback = renderProcessStartupCallback;
+            m_browserProcessHandler.OnBeforeChildProcessLaunch += OnBeforeChildProcessLaunch;
         }
 
         private static void OnBeforeChildProcessLaunch(object sender, Chromium.Event.CfxOnBeforeChildProcessLaunchEventArgs e) {
