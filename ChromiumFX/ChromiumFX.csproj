@@ -261,7 +261,7 @@
     <Compile Include="Source\CfxStructure.cs" />
     <Compile Include="Source\TimeFunctions.cs" />
     <Compile Include="Source\WeakCache.cs" />
-    <Compile Include="Source\WindowStyles.cs" />
+    <Compile Include="Source\WindowStyle.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

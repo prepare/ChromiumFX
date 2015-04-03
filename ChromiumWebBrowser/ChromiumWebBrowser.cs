@@ -58,8 +58,6 @@ namespace Chromium.WebBrowser {
         public static CfxBrowserSettings DefaultBrowserSettings {
             get {
                 if(defaultBrowserSettings == null) {
-                    if(!CfxRuntime.LibrariesLoaded)
-                        CfxRuntime.LoadLibraries();
                     defaultBrowserSettings = new CfxBrowserSettings();
                 }
                 return defaultBrowserSettings;

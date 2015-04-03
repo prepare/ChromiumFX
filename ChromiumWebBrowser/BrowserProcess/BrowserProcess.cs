@@ -47,8 +47,6 @@ namespace Chromium.WebBrowser {
             if(initialized)
                 throw new CfxException("ChromiumWebBrowser library already initialized.");
 
-            if(!CfxRuntime.LibrariesLoaded)
-                CfxRuntime.LoadLibraries();
 
             int retval = CfxRemoting.ExecuteProcess();
             if(retval >= 0)

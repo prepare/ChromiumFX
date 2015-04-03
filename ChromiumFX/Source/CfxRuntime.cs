@@ -40,32 +40,33 @@ namespace Chromium {
         internal static event Action OnCfxShutdown;
 
         /// <summary>
-        /// Loads the native libraries libcef.dll and libcfx.dll from default locations.
-        /// Tries to find the cef binaries in the executing assembly's directory
-        /// or in subdirectory called cef.
+        /// Set the path to the directory containing the libcef library.
+        /// If left blank the default locations are searched.
         /// </summary>
-        public static void LoadLibraries() {
-            CfxApi.LoadLibraries();
+        public static string LibCefDirPath {
+            get {
+                return CfxApi.libCefDirPath;
+            }
+            set {
+                if(CfxApi.librariesLoaded)
+                    throw new CfxException("Unable to change libcfx directory path: library already loaded.");
+                CfxApi.libCefDirPath = value;
+            }
         }
 
         /// <summary>
-        /// Loads the native library libcef.dll from the given location.
-        /// Tries to find libcfx.dll in the executing assembly's directory
-        /// or in the given cef directory.
+        /// Set the path to the directory containing the libcfx library.
+        /// If left blank the default locations are searched.
         /// </summary>
-        /// <param name="cefDir"></param>
-        public static void LoadLibraries(string cefDir) {
-            CfxApi.LoadLibraries(cefDir);
-        }
-
-        /// <summary>
-        /// Loads the native libraries libcef.dll and libcfx.dll
-        /// from the given locations.
-        /// </summary>
-        /// <param name="cefDir"></param>
-        /// <param name="cfxDir"></param>
-        public static void LoadLibraries(string cefDir, string cfxDir) {
-            CfxApi.LoadLibraries(cefDir, cfxDir);
+        public static string LibCfxDirPath {
+            get {
+                return CfxApi.libCfxDirPath;
+            }
+            set {
+                if(CfxApi.librariesLoaded)
+                    throw new CfxException("Unable to change libcef directory path: library already loaded.");
+                CfxApi.libCfxDirPath = value;
+            }
         }
 
         /// <summary>
@@ -78,6 +79,7 @@ namespace Chromium {
         /// </summary>
         public static CfxPlatformOS PlatformOS {
             get {
+                CfxApi.Probe();
                 return CfxApi.PlatformOS;
             }
         }
@@ -111,6 +113,7 @@ namespace Chromium {
         /// The chromium sandbox is currently not supported within ChromiumFX.
         /// </summary>
         public static int ExecuteProcess(CfxApp application) {
+            CfxApi.Probe();
             switch(CfxApi.PlatformOS) {
                 case CfxPlatformOS.Windows:
                     return ExecuteProcessPrivate(null, application, IntPtr.Zero);
@@ -140,6 +143,7 @@ namespace Chromium {
         /// The chromium sandbox is currently not supported within ChromiumFX.
         /// </summary>
         public static bool Initialize(CfxSettings settings, CfxApp application, CfxRenderProcessStartupDelegate renderProcessStartupCallback) {
+            CfxApi.Probe();
             Chromium.Remote.RemoteService.Initialize(renderProcessStartupCallback, ref application);
             return Initialize(settings, application);
         }
@@ -153,6 +157,7 @@ namespace Chromium {
         /// The chromium sandbox is currently not supported within ChromiumFX.
         /// </summary>
         public static bool Initialize(CfxSettings settings, CfxApp application) {
+            CfxApi.Probe();
             switch(CfxApi.PlatformOS) {
                 case CfxPlatformOS.Windows:
                     return InitializePrivate(null, settings, application, IntPtr.Zero);
@@ -168,10 +173,12 @@ namespace Chromium {
         }
 
         public static string GetCefVersion() {
+            CfxApi.Probe();
                 return String.Format("{0}.{1}.{2}", VersionInfo(0), VersionInfo(4), BuildRevision());
         }
 
         public static string GetChromeVersion() {
+            CfxApi.Probe();
             return String.Format("{0}.{1}.{2}.{3}", VersionInfo(2), VersionInfo(3), VersionInfo(4), VersionInfo(5));
         }
 
