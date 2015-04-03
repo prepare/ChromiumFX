@@ -214,7 +214,7 @@ namespace Chromium
                 if(CfxRuntime.PlatformArch == CfxPlatformArch.x64) {
                     libCefDirPath = System.IO.Path.Combine(libCefDirPath, "cef64");
                     if(!System.IO.File.Exists(System.IO.Path.Combine(libCefDirPath, libCef))) {
-                        libCefDirPath = libCefDirPath.Substring(libCefDirPath.Length - 2);
+                        libCefDirPath = libCefDirPath.Substring(0, libCefDirPath.Length - 2);
                     }
                 } else {
                     libCefDirPath = System.IO.Path.Combine(libCefDirPath, "cef");
