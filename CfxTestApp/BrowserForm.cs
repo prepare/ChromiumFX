@@ -237,7 +237,7 @@ namespace CfxTestApplication {
 
             CfxWindowInfo windowInfo = new CfxWindowInfo();
 
-            windowInfo.Style = (int)(WindowStyles.WS_OVERLAPPEDWINDOW | WindowStyles.WS_CLIPCHILDREN | WindowStyles.WS_CLIPSIBLINGS | WindowStyles.WS_VISIBLE);
+            windowInfo.Style = WindowStyle.WS_OVERLAPPEDWINDOW | WindowStyle.WS_CLIPCHILDREN | WindowStyle.WS_CLIPSIBLINGS | WindowStyle.WS_VISIBLE;
             windowInfo.ParentWindow = IntPtr.Zero;
             windowInfo.WindowName = "Dev Tools";
             windowInfo.X = 200;

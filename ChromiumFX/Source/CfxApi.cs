@@ -64,9 +64,9 @@ namespace Chromium
         public delegate IntPtr cfx_get_gc_handle_delegate(IntPtr nativePtr);
 
 
-        //CFX_EXPORT int cfx_api_initialize(HMODULE libcef, void *gc_handle_free, void **release, void **string_get_ptr, void **string_destroy, , void **get_function_pointer)
+        //CFX_EXPORT int cfx_api_initialize(void *libcef, void *gc_handle_free, int *platform, int *cw_usedefault, void **release, void **string_get_ptr, void **string_destroy, void **get_function_pointer)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate int cfx_api_initialize_delegate(IntPtr libcef, IntPtr gc_handle_free, out int platform, out IntPtr release, out IntPtr string_get_ptr, out IntPtr string_destroy, out IntPtr get_function_pointer);
+        public delegate int cfx_api_initialize_delegate(IntPtr libcef, IntPtr gc_handle_free, out int platform, out int cw_usedefault, out IntPtr release, out IntPtr string_get_ptr, out IntPtr string_destroy, out IntPtr get_function_pointer);
 
         //static int cfx_release(cef_base_t* base)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -162,7 +162,7 @@ namespace Chromium
             IntPtr get_function_pointer;
 
             cfx_api_initialize_delegate api_initialize = (cfx_api_initialize_delegate)LoadDelegate(loader, libcfxPtr, "cfx_api_initialize", typeof(cfx_api_initialize_delegate));
-            int retval = api_initialize(libcefPtr, Marshal.GetFunctionPointerForDelegate(cfx_free_gc_handle), out platform, out release, out string_get_pointer, out string_destroy, out get_function_pointer);
+            int retval = api_initialize(libcefPtr, Marshal.GetFunctionPointerForDelegate(cfx_free_gc_handle), out platform, out CfxWindowInfo.CW_USEDEFAULT, out release, out string_get_pointer, out string_destroy, out get_function_pointer);
 
             if(retval != 0) {
                 switch(retval) {

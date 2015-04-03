@@ -59,6 +59,8 @@ namespace Chromium {
         private CfxWindowInfoWindows windows;
         private CfxWindowInfoLinux linux;
 
+        internal static int CW_USEDEFAULT;
+
         private CfxWindowInfo(IntPtr nativePtr) : base(nativePtr) {
             switch(CfxApi.PlatformOS) {
                 case CfxPlatformOS.Windows:
@@ -91,7 +93,69 @@ namespace Chromium {
         }
 
 
-                /// <summary>
+        /// <summary>
+        /// Create the browser as a child window.
+        /// </summary>
+        public void SetAsChild(IntPtr parentWindow, int left, int top, int width, int height) {
+            if(CfxApi.PlatformOS == CfxPlatformOS.Windows)
+                Style = WindowStyle.WS_CHILD | WindowStyle.WS_CLIPCHILDREN | WindowStyle.WS_CLIPSIBLINGS | WindowStyle.WS_TABSTOP | WindowStyle.WS_VISIBLE;
+            ParentWindow = parentWindow;
+            X = left;
+            Y = top;
+            Width = width;
+            Height = height;
+        }
+
+        /// <summary>
+        /// Create the browser as a popup window.
+        /// </summary>
+        void SetAsPopup(IntPtr parentWindow, string windowName) {
+            if(CfxApi.PlatformOS != CfxPlatformOS.Windows)
+                throw new CfxException("Unsupported platform.");
+
+            Style = WindowStyle.WS_OVERLAPPEDWINDOW | WindowStyle.WS_CLIPCHILDREN | WindowStyle.WS_CLIPSIBLINGS | WindowStyle.WS_VISIBLE;
+            ParentWindow = parentWindow;
+            X = CW_USEDEFAULT;
+            Y = CW_USEDEFAULT;
+            Width = CW_USEDEFAULT;
+            Height = CW_USEDEFAULT;
+            WindowName = windowName;
+        }
+
+        /// <summary>
+        /// Create the browser using windowless (off-screen) rendering. No window
+        /// will be created for the browser and all rendering will occur via the
+        /// CefRenderHandler interface. The |parent| value will be used to identify
+        /// monitor info and to act as the parent window for dialogs, context menus,
+        /// etc. If |parent| is not provided then the main screen monitor will be used
+        /// and some functionality that requires a parent window may not function
+        /// correctly. If |transparent| is true a transparent background color will be
+        /// used (RGBA=0x00000000). If |transparent| is false the background will be
+        /// white and opaque. In order to create windowless browsers the
+        /// CefSettings.windowless_rendering_enabled value must be set to true.
+        /// </summary>
+        void SetAsWindowless(IntPtr parentWindow, bool transparent) {
+            ParentWindow = parentWindow;
+            WindowlessRenderingEnabled = true;
+            TransparentPaintingEnabled = transparent;
+        }
+
+        /// <summary>
+        /// Create the browser using windowless (off-screen) rendering. No window
+        /// will be created for the browser and all rendering will occur via the
+        /// CefRenderHandler interface. The main screen monitor will be used as parent
+        /// and some functionality that requires a parent window may not function
+        /// correctly. If |transparent| is true a transparent background color will be
+        /// used (RGBA=0x00000000). If |transparent| is false the background will be
+        /// white and opaque. In order to create windowless browsers the
+        /// CefSettings.windowless_rendering_enabled value must be set to true.
+        /// </summary>
+        void SetAsWindowless(bool transparent) {
+            WindowlessRenderingEnabled = true;
+            TransparentPaintingEnabled = transparent;
+        }
+
+        /// <summary>
         /// Standard parameters required by CreateWindowEx()
         /// </summary>
         /// <remarks>
@@ -138,11 +202,11 @@ namespace Chromium {
             }
         }
 
-        public int Style {
+        public WindowStyle Style {
             get {
                 switch(CfxApi.PlatformOS) {
                     case CfxPlatformOS.Windows:
-                        return windows.Style;
+                        return (WindowStyle)windows.Style;
                     default:
                         throw new CfxException("Windows platform only.");
                 }
@@ -150,7 +214,7 @@ namespace Chromium {
             set {
                 switch(CfxApi.PlatformOS) {
                     case CfxPlatformOS.Windows:
-                        windows.Style = value;
+                        windows.Style = (int)value;
                         break;
                     default:
                         throw new CfxException("Windows platform only.");

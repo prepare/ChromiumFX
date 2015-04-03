@@ -90,7 +90,7 @@ static void* cfx_get_function_pointer(int index) {
 	return cfx_function_pointers[index];
 }
 
-CFX_EXPORT int cfx_api_initialize(void *libcef, void *gc_handle_free, int *platform, void **release, void **string_get_ptr, void **string_destroy, void **get_function_pointer) {
+CFX_EXPORT int cfx_api_initialize(void *libcef, void *gc_handle_free, int *platform, int *cw_usedefault, void **release, void **string_get_ptr, void **string_destroy, void **get_function_pointer) {
 
 	cef_api_hash_ptr = (const char* (*)(int))cfx_platform_get_fptr(libcef, "cef_api_hash");
 	if(!cef_api_hash_ptr)
@@ -102,10 +102,13 @@ CFX_EXPORT int cfx_api_initialize(void *libcef, void *gc_handle_free, int *platf
 
 #if defined CFX_WINDOWS
 	*platform = 0;
+	*cw_usedefault = CW_USEDEFAULT;
 #elif defined CFX_LINUX
 	*platform = 1;
+	*cw_usedefault = 0;
 #elif defined CFX_MACOS
 	*platform = 2;
+	*cw_usedefault = 0;
 #endif
 
 	cfx_gc_handle_free = (void(CEF_CALLBACK *)(gc_handle_t))gc_handle_free;
