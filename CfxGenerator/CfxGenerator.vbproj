@@ -143,7 +143,6 @@
     <Compile Include="CodeSnippets.vb" />
     <Compile Include="GeneratedFileManager.vb" />
     <Compile Include="GeneratorConfig.vb" />
-    <Compile Include="Log.vb" />
     <Compile Include="Main.vb" />
     <Compile Include="AssemblyInfo.vb" />
     <Compile Include="CSharp.vb" />
@@ -155,7 +154,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Config\LicenseStub.txt" />
     <EmbeddedResource Include="Config\AdditionalCallIds.txt" />
-    <Content Include="Config\AdditionalFunctions.txt" />
     <EmbeddedResource Include="Config\StructsNeedWrapping.txt" />
     <EmbeddedResource Include="Config\PrivateWrapper.txt" />
     <EmbeddedResource Include="Config\BrowserProcessOnly.txt" />
