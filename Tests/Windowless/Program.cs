@@ -39,8 +39,6 @@ namespace Windowless {
         [STAThread]
         static void Main() {
 
-            CfxRuntime.LoadLibraries();
-
             var exitCode = CfxRuntime.ExecuteProcess(null);
             if(exitCode >= 0) {
                 Environment.Exit(exitCode);
