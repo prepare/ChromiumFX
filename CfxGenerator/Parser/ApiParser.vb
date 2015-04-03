@@ -102,9 +102,15 @@ Namespace Parser
             Next
 
             For Each struct In api.CefStructs
+
+                Dim structToken = ReduceToken(struct.Name.Substring(0, struct.Name.Length - 2))
+                If cefConfigs.ContainsKey(structToken) Then
+                    struct.CefConfig = cefConfigs(structToken)
+                End If
+
                 For Each sm In struct.StructMembers
                     If sm.CallbackSignature IsNot Nothing Then
-                        Dim token = ReduceToken(struct.Name.Substring(0, struct.Name.Length - 2) & sm.Name)
+                        Dim token = structToken & ReduceToken(sm.Name)
 
                         If cefConfigs.ContainsKey(token) Then
                             sm.CefConfig = cefConfigs(token)
@@ -153,10 +159,6 @@ Namespace Parser
             api.CefStructsWindows = pa.CefStructs
 
             pa = ParsePlatformApi("linux\cef\include\internal\cef_types_linux.h")
-            api.CefFunctionsLinux = pa.CefFunctions
-            api.CefStructsLinux = pa.CefStructs
-
-            pa = ParsePlatformApi("macos\cef\include\internal\cef_types_linux.h")
             api.CefFunctionsLinux = pa.CefFunctions
             api.CefStructsLinux = pa.CefStructs
 
@@ -494,7 +496,7 @@ Namespace Parser
 
         Private Sub ParseCppHeaders()
 
-            Dim classEx = New Regex("class\s+(\w+)\s*(?::\s*public\s+virtual\s+CefBase\s*)?{(.+?)};", RegexOptions.Singleline)
+            Dim classEx = New Regex("(?:/\*--cef\(([^)]*)\)--\*/\s*)?class\s+(\w+)\s*(?::\s*public\s+virtual\s+CefBase\s*)?{(.+?)};", RegexOptions.Singleline)
             Dim boolRetvalEx = New Regex("\bbool\b\s+(\w+)\s*\(")
             Dim funcEx = New Regex("(\w+)\s*\((.*?)\)", RegexOptions.Singleline)
             Dim boolParamEx = New Regex("\bbool\b(?:\s*[&*])?\s*\b(\w+)\b")
@@ -505,8 +507,11 @@ Namespace Parser
 
                 Dim mmClasses = classEx.Matches(code)
                 For Each m As Match In mmClasses
-                    Dim className = m.Groups(1).Value
-                    Dim body = m.Groups(2).Value
+                    Dim cefConfig = m.Groups(1).Value
+                    Dim className = m.Groups(2).Value
+                    Dim body = m.Groups(3).Value
+
+                    AddCefConfig(ReduceToken(className), cefConfig, Nothing, Nothing)
 
                     ParseCefConfig(className, body)
 
@@ -559,39 +564,50 @@ Namespace Parser
                 If config.Length > 0 Then
                     Dim funcName = m.Groups(2).Value
                     Dim token = ReduceToken(className & funcName)
-                    Dim items = config.Split(","c)
-                    Dim data = New CefConfigData
-                    Dim optParams = New List(Of String)
-                    For Each item In items
-                        Dim pair = item.Split("="c)
-                        Dim value As String = Nothing
-                        If pair.Length = 2 Then
-                            value = pair(1).Trim()
-                        End If
-
-                        Select Case pair(0).Trim()
-                            Case "capi_name"
-                                data.CppApiName = funcName
-                                token = ReduceToken(className & value)
-                            Case "index_param"
-                                data.IndexParameter = value
-                            Case "optional_param"
-                                optParams.Add(value)
-                            Case "count_func"
-                                data.CountFunction = value
-                            Case "default_retval"
-                                data.DefaultRetval = value
-                            Case "api_hash_check"
-                                data.ApiHashCheck = True
-                            Case Else
-                                Stop
-                        End Select
-                    Next
-                    data.OptionalParameters = optParams.ToArray()
-                    cefConfigs.Add(token, data)
+                    AddCefConfig(token, config, className, funcName)
                 End If
             Next
 
+        End Sub
+
+        Private Sub AddCefConfig(token As String, config As String, className As String, funcName As String)
+            If config.Length > 0 Then
+
+                Dim items = config.Split(","c)
+                Dim data = New CefConfigData
+                Dim optParams = New List(Of String)
+                For Each item In items
+                    Dim pair = item.Split("="c)
+                    Dim value As String = Nothing
+                    If pair.Length = 2 Then
+                        value = pair(1).Trim()
+                    End If
+
+                    Select Case pair(0).Trim()
+                        Case "capi_name"
+                            data.CppApiName = funcName
+                            token = ReduceToken(className & value)
+                        Case "index_param"
+                            data.IndexParameter = value
+                        Case "optional_param"
+                            optParams.Add(value)
+                        Case "count_func"
+                            data.CountFunction = value
+                        Case "default_retval"
+                            data.DefaultRetval = value
+                        Case "api_hash_check"
+                            data.ApiHashCheck = True
+                        Case "source"
+                            data.Source = value
+                        Case "no_debugct_check"
+                            data.NoDebugctCheck = True
+                        Case Else
+                            Stop
+                    End Select
+                Next
+                data.OptionalParameters = optParams.ToArray()
+                cefConfigs.Add(token, data)
+            End If
         End Sub
 
     End Class

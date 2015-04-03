@@ -37,6 +37,7 @@ Namespace Parser
         Public ReadOnly CefFunctions As New List(Of FunctionData)
         Public ReadOnly StructMembers As New List(Of StructMemberData)
         Public Comments As CommentData
+        Public CefConfig As CefConfigData
         Public Overrides Function ToString() As String
             Return Name
         End Function
