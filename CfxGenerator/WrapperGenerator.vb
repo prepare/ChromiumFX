@@ -371,6 +371,7 @@ Public Class WrapperGenerator
         b.AppendLine()
 
         b.BeginFunction("void LoadStringCollectionApi()", "internal static")
+        b.AppendLine("CfxApi.Probe();")
         For Each f In decls.StringCollectionFunctions
             CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName)
         Next
@@ -383,6 +384,7 @@ Public Class WrapperGenerator
             b.BeginBlock("internal static void Load{0}Api()", struct.ClassName)
             b.AppendLine("if({0}ApiLoaded) return;", struct.ClassName)
             b.AppendLine("{0}ApiLoaded = true;", struct.ClassName)
+            b.AppendLine("CfxApi.Probe();")
             Select Case struct.ClassBuilder.Category
                 Case StructCategory.ApiCalls
                     If struct.ClassBuilder.ExportFunctions.Count > 0 Then

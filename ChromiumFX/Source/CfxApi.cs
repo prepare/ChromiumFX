@@ -43,9 +43,11 @@ namespace Chromium
 
         internal static CfxPlatformOS PlatformOS { get; private set; }
 
-        private static string cefDir;
-        private static string cfxDir;
+        internal static string libCefDirPath;
+        internal static string libCfxDirPath;
         internal static bool librariesLoaded;
+
+        internal static int CW_USEDEFAULT;
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate IntPtr cfx_ctor_delegate();
@@ -104,44 +106,28 @@ namespace Chromium
             GCHandle.FromIntPtr(gc_handle).Free();
         }
 
-
-        public static void LoadLibraries() {
-            LoadLibraries(null, null);
+        private static object loadLock = new object();
+        internal static void Probe() {
+            if(!librariesLoaded) {
+                lock(loadLock) {
+                    if(!librariesLoaded) Load();
+                }
+            }
         }
 
-        public static void LoadLibraries(string cefDir) {
-            LoadLibraries(cefDir, null);
-        }
-
-        public static void LoadLibraries(string cefDir, string cfxDir)
+        private static void Load()
         {
 
             CfxDebug.Announce();
 
             string libCfx, libCef;
 
-            FindLibraries(ref cefDir, ref cfxDir, out libCef, out libCfx);
-            
-            if (libcfxPtr != IntPtr.Zero || libcefPtr != IntPtr.Zero) {
-
-                if(CfxApi.cefDir != cefDir) {
-                    throw new InvalidOperationException("libcef library already loaded from a different location: " + CfxApi.cefDir);
-                }
-
-                if (CfxApi.cfxDir != cfxDir) {
-                    throw new InvalidOperationException("libcfx library already loaded from a different location: " + CfxApi.cfxDir);
-                }
-                
-                return;
-            }
+            FindLibraries(out libCef, out libCfx);
 
             var loader = NativeFunctionLoader.Create();
             
-            CfxApi.cefDir = cefDir;
-            CfxApi.cfxDir = cfxDir;
-            
-            var libcfxPath = System.IO.Path.Combine(cfxDir, libCfx);
-            var libcefPath = System.IO.Path.Combine(cefDir, libCef);
+            var libcfxPath = System.IO.Path.Combine(libCfxDirPath, libCfx);
+            var libcefPath = System.IO.Path.Combine(libCefDirPath, libCef);
 
             libcefPtr = loader.LoadNativeLibrary(libcefPath);
             if(libcefPtr == IntPtr.Zero) {
@@ -162,7 +148,7 @@ namespace Chromium
             IntPtr get_function_pointer;
 
             cfx_api_initialize_delegate api_initialize = (cfx_api_initialize_delegate)LoadDelegate(loader, libcfxPtr, "cfx_api_initialize", typeof(cfx_api_initialize_delegate));
-            int retval = api_initialize(libcefPtr, Marshal.GetFunctionPointerForDelegate(cfx_free_gc_handle), out platform, out CfxWindowInfo.CW_USEDEFAULT, out release, out string_get_pointer, out string_destroy, out get_function_pointer);
+            int retval = api_initialize(libcefPtr, Marshal.GetFunctionPointerForDelegate(cfx_free_gc_handle), out platform, out CW_USEDEFAULT, out release, out string_get_pointer, out string_destroy, out get_function_pointer);
 
             if(retval != 0) {
                 switch(retval) {
@@ -188,29 +174,29 @@ namespace Chromium
         }
 
 
-        private static void FindLibraries(ref string cefDir, ref string cfxDir, out string libCef, out string libCfx) {
+        private static void FindLibraries(out string libCef, out string libCfx) {
             
-            if(cfxDir == null)
-                cfxDir = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
+            if(libCfxDirPath == null)
+                libCfxDirPath = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
 
-            libCfx = GetLibCfxName(cfxDir);
+            libCfx = GetLibCfxName(libCfxDirPath);
 
             if(libCfx == null) {
-                if(cefDir != null) {
-                    cfxDir = cefDir;
-                    libCfx = GetLibCfxName(cfxDir);
+                if(libCefDirPath != null) {
+                    libCfxDirPath = libCefDirPath;
+                    libCfx = GetLibCfxName(libCfxDirPath);
                 }
                 if(libCfx == null) {
                     if(CfxRuntime.PlatformArch == CfxPlatformArch.x64) {
-                        cfxDir = System.IO.Path.Combine(cfxDir, "cef64");
-                        libCfx = GetLibCfxName(cfxDir);
+                        libCfxDirPath = System.IO.Path.Combine(libCfxDirPath, "cef64");
+                        libCfx = GetLibCfxName(libCfxDirPath);
                         if(libCfx == null) {
-                            cfxDir = cfxDir.Substring(cfxDir.Length - 2);
-                            libCfx = GetLibCfxName(cfxDir);
+                            libCfxDirPath = libCfxDirPath.Substring(libCfxDirPath.Length - 2);
+                            libCfx = GetLibCfxName(libCfxDirPath);
                         }
                     } else {
-                        cfxDir = System.IO.Path.Combine(cfxDir, "cef");
-                        libCfx = GetLibCfxName(cfxDir);
+                        libCfxDirPath = System.IO.Path.Combine(libCfxDirPath, "cef");
+                        libCfx = GetLibCfxName(libCfxDirPath);
                     }
                 }
             }
@@ -221,26 +207,26 @@ namespace Chromium
 
             libCef = "libcef" + libCfx.Substring(libCfx.LastIndexOf('.'));
 
-            if(cefDir == null)
-                cefDir = cfxDir;
+            if(libCefDirPath == null)
+                libCefDirPath = libCfxDirPath;
 
-            if(!System.IO.File.Exists(System.IO.Path.Combine(cefDir, libCef))) {
+            if(!System.IO.File.Exists(System.IO.Path.Combine(libCefDirPath, libCef))) {
                 if(CfxRuntime.PlatformArch == CfxPlatformArch.x64) {
-                    cefDir = System.IO.Path.Combine(cefDir, "cef64");
-                    if(!System.IO.File.Exists(System.IO.Path.Combine(cefDir, libCef))) {
-                        cefDir = cefDir.Substring(cefDir.Length - 2);
+                    libCefDirPath = System.IO.Path.Combine(libCefDirPath, "cef64");
+                    if(!System.IO.File.Exists(System.IO.Path.Combine(libCefDirPath, libCef))) {
+                        libCefDirPath = libCefDirPath.Substring(libCefDirPath.Length - 2);
                     }
                 } else {
-                    cefDir = System.IO.Path.Combine(cefDir, "cef");
+                    libCefDirPath = System.IO.Path.Combine(libCefDirPath, "cef");
                 }
             }
             
-            if(!System.IO.File.Exists(System.IO.Path.Combine(cefDir, libCef))) {
+            if(!System.IO.File.Exists(System.IO.Path.Combine(libCefDirPath, libCef))) {
                 throw new CfxException("libcef library not found.");
             }
 
-            cefDir = System.IO.Path.GetFullPath(cefDir);
-            cfxDir = System.IO.Path.GetFullPath(cfxDir);
+            libCefDirPath = System.IO.Path.GetFullPath(libCefDirPath);
+            libCfxDirPath = System.IO.Path.GetFullPath(libCfxDirPath);
 
         }
 

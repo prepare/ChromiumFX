@@ -59,8 +59,6 @@ namespace Chromium {
         private CfxWindowInfoWindows windows;
         private CfxWindowInfoLinux linux;
 
-        internal static int CW_USEDEFAULT;
-
         private CfxWindowInfo(IntPtr nativePtr) : base(nativePtr) {
             switch(CfxApi.PlatformOS) {
                 case CfxPlatformOS.Windows:
@@ -115,10 +113,10 @@ namespace Chromium {
 
             Style = WindowStyle.WS_OVERLAPPEDWINDOW | WindowStyle.WS_CLIPCHILDREN | WindowStyle.WS_CLIPSIBLINGS | WindowStyle.WS_VISIBLE;
             ParentWindow = parentWindow;
-            X = CW_USEDEFAULT;
-            Y = CW_USEDEFAULT;
-            Width = CW_USEDEFAULT;
-            Height = CW_USEDEFAULT;
+            X = CfxApi.CW_USEDEFAULT;
+            Y = CfxApi.CW_USEDEFAULT;
+            Width = CfxApi.CW_USEDEFAULT;
+            Height = CfxApi.CW_USEDEFAULT;
             WindowName = windowName;
         }
 
