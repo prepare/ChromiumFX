@@ -161,26 +161,20 @@ Public Class CfxClassBuilder
         'End If
 
         Me.comments = sd.Comments
-        If struct.Name.Equals("cef_app") OrElse
-                struct.Name.Equals("cef_get_geolocation_callback") OrElse
-                struct.Name.Equals("cef_end_tracing_callback") OrElse
-                struct.Name.Equals("cef_completion_callback") OrElse
-                struct.Name.Equals("cef_run_file_dialog_callback") OrElse
-                struct.Name.Equals("cef_web_plugin_unstable_callback") OrElse
-                struct.Name.Equals("cef_scheme_handler_factory") OrElse
-                struct.Name.EndsWith("handler") OrElse
-                struct.Name.EndsWith("_client") OrElse
-                struct.Name.EndsWith("visitor") OrElse
-                struct.Name.EndsWith("_listener") OrElse
-                struct.Name.EndsWith("accessor") OrElse
-                struct.Name.EndsWith("_task") Then
-            Category = StructCategory.ApiCallbacks
-        ElseIf sd.StructMembers.Count > 1 AndAlso sd.StructMembers(1).CallbackSignature IsNot Nothing Then
-            Category = StructCategory.ApiCalls
+
+        If sd.CefConfig IsNot Nothing Then
+            Select Case sd.CefConfig.Source
+                Case "client"
+                    Category = StructCategory.ApiCallbacks
+                Case "library"
+                    Category = StructCategory.ApiCalls
+                Case Else
+                    Stop
+            End Select
         Else
             Category = StructCategory.Values
+            If sd.StructMembers.Count > 1 AndAlso sd.StructMembers(1).CallbackSignature IsNot Nothing Then Stop
         End If
-
 
         Dim smlist = New List(Of StructMember)
         For Each smd In sd.StructMembers

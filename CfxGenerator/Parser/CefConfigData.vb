@@ -37,4 +37,6 @@ Public Class CefConfigData
     Public CountFunction As String
     Public DefaultRetval As String
     Public ApiHashCheck As Boolean
+    Public Source As String
+    Public NoDebugctCheck As Boolean
 End Class
