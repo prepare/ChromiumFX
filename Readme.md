@@ -49,6 +49,14 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2171.12 ###
+
+* The ChromiumWebBrowser control now exposes all client handlers as properties.
+* ChromiumFX and ChromiumWebBrowser now support 64-bit CEF binaries. As a consequence, both assemblies are now compiled for platform AnyCPU. See [wiki](https://bitbucket.org/chromiumfx/chromiumfx/wiki/Project#markdown-header-application-layout) for details about application layouts.
+* A small test application for windowless browsing was added [here](https://bitbucket.org/chromiumfx/chromiumfx/src/tip/Tests/Windowless/).
+* `CfxRemoting.Initialize` was removed, applications now pass their render process startup callback directly through `CfxRuntime.Initialize(CfxSettings, CfxApp, CfxRenderProcessStartupDelegate)`.
+* Some work has been done for linux support, but it's still broken. [Issue 9](https://bitbucket.org/chromiumfx/chromiumfx/issue/9/mono-support) is tracking this.
+
 ### Version 3.2171.11 ###
 
 Fixed a bug introduced in 3.2171.10: for not refcounted cef types, the pinvoke layer would use the wrong native function as a dtor function, causing memory leaks and possibly corruption. Sorry for that :)
