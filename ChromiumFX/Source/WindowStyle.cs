@@ -38,7 +38,7 @@ namespace Chromium
     /// The following styles can be specified wherever a window style is required. After the control has been created, these styles cannot be modified, except as noted.
     /// </summary>
     [Flags()]
-    public enum WindowStyles
+    public enum WindowStyle
     {
         /// <summary>The window has a thin-line border.</summary>
         WS_BORDER = 0x800000,
