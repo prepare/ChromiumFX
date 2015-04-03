@@ -107,7 +107,7 @@ namespace Chromium {
         /// <summary>
         /// Create the browser as a popup window.
         /// </summary>
-        void SetAsPopup(IntPtr parentWindow, string windowName) {
+        public void SetAsPopup(IntPtr parentWindow, string windowName) {
             if(CfxApi.PlatformOS != CfxPlatformOS.Windows)
                 throw new CfxException("Unsupported platform.");
 
@@ -132,7 +132,7 @@ namespace Chromium {
         /// white and opaque. In order to create windowless browsers the
         /// CefSettings.windowless_rendering_enabled value must be set to true.
         /// </summary>
-        void SetAsWindowless(IntPtr parentWindow, bool transparent) {
+        public void SetAsWindowless(IntPtr parentWindow, bool transparent) {
             ParentWindow = parentWindow;
             WindowlessRenderingEnabled = true;
             TransparentPaintingEnabled = transparent;
@@ -148,7 +148,7 @@ namespace Chromium {
         /// white and opaque. In order to create windowless browsers the
         /// CefSettings.windowless_rendering_enabled value must be set to true.
         /// </summary>
-        void SetAsWindowless(bool transparent) {
+        public void SetAsWindowless(bool transparent) {
             WindowlessRenderingEnabled = true;
             TransparentPaintingEnabled = transparent;
         }
