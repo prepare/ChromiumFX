@@ -38,17 +38,7 @@ namespace Chromium.Remote {
 
         internal static RemoteConnection connection;
 
-        internal static int ExecuteProcess() {
-
-            var cmd = Environment.CommandLine;
-            var ex = new System.Text.RegularExpressions.Regex(@"cfxremote=(\w+)");
-            var m = ex.Match(cmd);
-            
-            if(!m.Success) {
-                return CfxRuntime.ExecuteProcess(null);
-            }
-
-            var pipeName = m.Groups[1].Value;
+        internal static int ExecuteProcess(string pipeName) {
 
             //System.Diagnostics.Debugger.Break();
 
