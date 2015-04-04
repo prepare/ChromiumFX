@@ -38,18 +38,17 @@ namespace Chromium {
     public delegate int CfxRenderProcessStartupDelegate(CfrRuntime remoteRumtime);
 
     /// <summary>
-    /// Provides methods to setup the remoting interface for the render processes.
+    /// Properties and methods for the remoting interface.
     /// </summary>
     public class CfxRemoting {
 
         /// <summary>
-        /// Call this function instead of CfxRuntime.ExecuteProcess if the application
-        /// wants to use the remoting framework.
-        /// See also CfxRuntime.Initialize(CfxSettings, CfxApp, CfxRenderProcessStartupDelegate);
+        /// Indicates if the remoting framework is active. The remoting framework is
+        /// active if CfxRuntime.Initialize has been called with a valid
+        /// render process startup callback. 
         /// </summary>
-        /// <returns></returns>
-        public static int ExecuteProcess() {
-            return RemoteClient.ExecuteProcess();
+        public static bool IsActive {
+            get { return RemoteService.RenderProcessStartupCallback != null; }
         }
 
         /// <summary>

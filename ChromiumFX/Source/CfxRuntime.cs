@@ -108,12 +108,53 @@ namespace Chromium {
         /// called for the browser process (identified by no "type" command-line value)
         /// it will return immediately with a value of -1. If called for a recognized
         /// secondary process it will block until the process should exit and then return
+        /// the process exit code.
+        /// 
+        /// If the browser process was initialized with a valid render process startup callback,
+        /// the render main thread will be redirected through the remoting interface into the
+        /// browser process. The browser process' render process startup callback routine
+        /// is then responsible for calling CfrRuntime.ExecuteProcess().
+        /// 
+        /// The chromium sandbox is currently not supported within ChromiumFX.
+        /// </summary>
+        public static int ExecuteProcess() {
+            return ExecuteProcess(null);
+        }
+
+        /// <summary>
+        /// This function should be called from the application entry point function to
+        /// execute a secondary process. It can be used to run secondary processes from
+        /// the browser client executable (default behavior) or from a separate
+        /// executable specified by the CefSettings.browser_subprocess_path value. If
+        /// called for the browser process (identified by no "type" command-line value)
+        /// it will return immediately with a value of -1. If called for a recognized
+        /// secondary process it will block until the process should exit and then return
         /// the process exit code. The |application| parameter may be NULL.
+        /// 
+        /// If the browser process was initialized with a valid render process startup callback,
+        /// the render main thread will be redirected through the remoting interface into the
+        /// browser process. The browser process' render process startup callback routine
+        /// is then responsible for calling CfrRuntime.ExecuteProcess() and the |application|
+        /// parameter will be ignored.
         /// 
         /// The chromium sandbox is currently not supported within ChromiumFX.
         /// </summary>
         public static int ExecuteProcess(CfxApp application) {
+            
             CfxApi.Probe();
+
+            var cmd = Environment.CommandLine;
+            var ex = new System.Text.RegularExpressions.Regex(@"cfxremote=(\w+)");
+            var m = ex.Match(cmd);
+
+            if(m.Success) {
+                return Chromium.Remote.RemoteClient.ExecuteProcess(m.Groups[1].Value);
+            } else {
+                return ExecuteProcessInternal(application);
+            }
+        }
+
+        internal static int ExecuteProcessInternal(CfxApp application) {
             switch(CfxApi.PlatformOS) {
                 case CfxPlatformOS.Windows:
                     return ExecuteProcessPrivate(null, application, IntPtr.Zero);
@@ -124,7 +165,7 @@ namespace Chromium {
                         return retval;
                     }
                 default:
-                    throw new CfxException();
+                    throw new CfxException("Unsupported platform.");
             }
         }
 
