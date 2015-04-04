@@ -37,7 +37,7 @@ using Chromium.Event;
 
 namespace Chromium {
     partial class CfxApp {
-        internal CfxBrowserProcessHandler RetrieveCfxBrowserProcessHandler() {
+        internal CfxBrowserProcessHandler RetrieveBrowserProcessHandler() {
             var h = m_GetBrowserProcessHandler;
             if(h != null) {
                 var e = new CfxGetBrowserProcessHandlerEventArgs();
