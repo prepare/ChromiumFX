@@ -50,21 +50,28 @@ namespace Chromium.Remote {
 
 
         /// <summary>
-        /// This function should be called from the application entry point function to
-        /// execute a secondary process. It can be used to run secondary processes from
-        /// the browser client executable (default behavior) or from a separate
-        /// executable specified by the CefSettings.browser_subprocess_path value. If
-        /// called for the browser process (identified by no "type" command-line value)
-        /// it will return immediately with a value of -1. If called for a recognized
-        /// secondary process it will block until the process should exit and then return
-        /// the process exit code. The |application| parameter may be NULL.
-        /// No sandbox info is provided.
+        /// This function should be called from the render process startup callback
+        /// provided to CfxRuntime.Initialize() in the browser process. It will
+        /// call into the render process passing in the provided |application| 
+        /// object and block until the render process exits. 
+        /// The |application| object will receive CEF framework callbacks 
+        /// from within the render process.
         /// </summary>
         public int ExecuteProcess(CfrApp application) {
             var call = new CfxRuntimeExecuteProcessRenderProcessCall();
             call.application = CfrObject.Unwrap(application);
-            call.Execute(connection);
-            return call.__retval;
+            // Looks like this almost never returns with a value
+            // from the call into the render process. Probably the
+            // IPC connection doesn't get a chance to send over the
+            // return value from CfxRuntime.ExecuteProcess() when the
+            // render process exits. So we don't throw an exception but
+            // use a return value of -2 to indicate connection lost.
+            try {
+                call.Execute(connection);
+                return call.__retval;
+            } catch(CfxException) {
+                return -2;
+            }
         }
 
 
