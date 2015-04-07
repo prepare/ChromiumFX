@@ -34,7 +34,7 @@
 using System;
 
 namespace Chromium.Remote {
-    internal class RemoteCallConstructor {
+    internal class RemoteCallFactory {
         private delegate RemoteCall RemoteCallCtor();
         private static RemoteCallCtor[] callConstructors =  {
             () => { return new CfxRuntimeAddCrossOriginWhitelistEntryRenderProcessCall(); },

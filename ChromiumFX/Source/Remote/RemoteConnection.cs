@@ -169,7 +169,7 @@ namespace Chromium.Remote {
                     var call = callStack.Pop(threadId);
                     call.ReadResponse(streamHandler);
                 } else {
-                    var call = RemoteCallConstructor.ForCallId((RemoteCallId)callId);
+                    var call = RemoteCallFactory.ForCallId((RemoteCallId)callId);
                     call.ReadRequest(this);
                 }
             }
