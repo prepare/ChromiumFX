@@ -1,15 +1,13 @@
 Chromium Embedded Framework (CEF) Standard Binary Distribution for Linux
 -------------------------------------------------------------------------------
 
-Date:             March 10, 2015
+Date:             June 11, 2014
 
-CEF Version:      3.2171.2069
-CEF URL:          https://chromiumembedded@bitbucket.org/chromiumembedded/branches-2171-cef3.git
-                  @2069
+CEF Version:      3.1750.1738
+CEF URL:          http://chromiumembedded.googlecode.com/svn/branches/1750/cef3@1738
 
-Chromium Verison: 39.0.2171.95
-Chromium URL:     https://chromium.googlesource.com/chromium/src.git
-                  @07d25682862707e7524037c8b93ef93f361835f1
+Chromium Verison: 33.0.1750.170
+Chromium URL:     http://chromiumembedded.googlecode.com/svn/branches/1750/cef3@1738
 
 This distribution contains all components necessary to build and distribute an
 application using CEF on the Linux platform. Please see the LICENSING
@@ -50,12 +48,7 @@ Resources   Contains resources required by libcef.so. By default these files
 USAGE
 -----
 
-Building using CMake:
-  CMake can be used to generate project files in many different formats. See
-  usage instructions at the top of the CMakeLists.txt file.
-
-Building using the pre-existing make solution (DEPRECATED):
-  Run 'build.sh Debug' to build the cefclient target in Debug mode.
+Run 'build.sh Debug' to build the cefclient target in Debug mode.
 
 Please visit the CEF Website for additional usage information.
 
@@ -75,9 +68,6 @@ Required components:
 * CEF core library
     libcef.so
 
-* Unicode support
-    icudtl.dat
-
 Optional components:
 
 * Localized resources
@@ -92,8 +82,6 @@ Optional components:
 
 * Other resources
     cef.pak
-    cef_100_percent.pak
-    cef_200_percent.pak
     devtools_resources.pak
   Note: Contains WebKit image and inspector resources. Pack file loading can be
   disabled completely using CefSettings.pack_loading_disabled. The resources
@@ -102,9 +90,6 @@ Optional components:
 * FFmpeg audio and video support
     libffmpegsumo.so
   Note: Without this component HTML5 audio and video will not function.
-
-* PDF support
-    libpdf.so
 
 
 LICENSING
