@@ -108,10 +108,6 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate int cfx_get_path_delegate(CfxPathKey key, ref IntPtr path_str, ref int path_length);
         public static cfx_get_path_delegate cfx_get_path;
-        // CEF_EXPORT XDisplay* cef_get_xdisplay();
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate IntPtr cfx_get_xdisplay_delegate();
-        public static cfx_get_xdisplay_delegate cfx_get_xdisplay;
         // CEF_EXPORT int cef_initialize(const cef_main_args_t* args, const cef_settings_t* settings, cef_app_t* application, void* windows_sandbox_info);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate int cfx_initialize_delegate(IntPtr args, IntPtr settings, IntPtr application, IntPtr windows_sandbox_info);
@@ -4454,77 +4450,41 @@ namespace Chromium {
         // static void cfx_window_info_linux_dtor(cef_window_info_t* ptr)
         public static cfx_dtor_delegate cfx_window_info_linux_dtor;
 
-        // static void cfx_window_info_linux_set_x(cef_window_info_t *self, unsigned int x)
+        // static void cfx_window_info_linux_set_parent_widget(cef_window_info_t *self, cef_window_handle_t parent_widget)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_window_info_linux_set_x_delegate(IntPtr self, uint x);
-        public static cfx_window_info_linux_set_x_delegate cfx_window_info_linux_set_x;
-        // static void cfx_window_info_linux_get_x(cef_window_info_t *self, unsigned int* x)
+        public delegate void cfx_window_info_linux_set_parent_widget_delegate(IntPtr self, IntPtr parent_widget);
+        public static cfx_window_info_linux_set_parent_widget_delegate cfx_window_info_linux_set_parent_widget;
+        // static void cfx_window_info_linux_get_parent_widget(cef_window_info_t *self, cef_window_handle_t* parent_widget)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_window_info_linux_get_x_delegate(IntPtr self, out uint x);
-        public static cfx_window_info_linux_get_x_delegate cfx_window_info_linux_get_x;
+        public delegate void cfx_window_info_linux_get_parent_widget_delegate(IntPtr self, out IntPtr parent_widget);
+        public static cfx_window_info_linux_get_parent_widget_delegate cfx_window_info_linux_get_parent_widget;
 
-        // static void cfx_window_info_linux_set_y(cef_window_info_t *self, unsigned int y)
+        // static void cfx_window_info_linux_set_window_rendering_disabled(cef_window_info_t *self, int window_rendering_disabled)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_window_info_linux_set_y_delegate(IntPtr self, uint y);
-        public static cfx_window_info_linux_set_y_delegate cfx_window_info_linux_set_y;
-        // static void cfx_window_info_linux_get_y(cef_window_info_t *self, unsigned int* y)
+        public delegate void cfx_window_info_linux_set_window_rendering_disabled_delegate(IntPtr self, int window_rendering_disabled);
+        public static cfx_window_info_linux_set_window_rendering_disabled_delegate cfx_window_info_linux_set_window_rendering_disabled;
+        // static void cfx_window_info_linux_get_window_rendering_disabled(cef_window_info_t *self, int* window_rendering_disabled)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_window_info_linux_get_y_delegate(IntPtr self, out uint y);
-        public static cfx_window_info_linux_get_y_delegate cfx_window_info_linux_get_y;
+        public delegate void cfx_window_info_linux_get_window_rendering_disabled_delegate(IntPtr self, out int window_rendering_disabled);
+        public static cfx_window_info_linux_get_window_rendering_disabled_delegate cfx_window_info_linux_get_window_rendering_disabled;
 
-        // static void cfx_window_info_linux_set_width(cef_window_info_t *self, unsigned int width)
+        // static void cfx_window_info_linux_set_transparent_painting(cef_window_info_t *self, int transparent_painting)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_window_info_linux_set_width_delegate(IntPtr self, uint width);
-        public static cfx_window_info_linux_set_width_delegate cfx_window_info_linux_set_width;
-        // static void cfx_window_info_linux_get_width(cef_window_info_t *self, unsigned int* width)
+        public delegate void cfx_window_info_linux_set_transparent_painting_delegate(IntPtr self, int transparent_painting);
+        public static cfx_window_info_linux_set_transparent_painting_delegate cfx_window_info_linux_set_transparent_painting;
+        // static void cfx_window_info_linux_get_transparent_painting(cef_window_info_t *self, int* transparent_painting)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_window_info_linux_get_width_delegate(IntPtr self, out uint width);
-        public static cfx_window_info_linux_get_width_delegate cfx_window_info_linux_get_width;
+        public delegate void cfx_window_info_linux_get_transparent_painting_delegate(IntPtr self, out int transparent_painting);
+        public static cfx_window_info_linux_get_transparent_painting_delegate cfx_window_info_linux_get_transparent_painting;
 
-        // static void cfx_window_info_linux_set_height(cef_window_info_t *self, unsigned int height)
+        // static void cfx_window_info_linux_set_widget(cef_window_info_t *self, cef_window_handle_t widget)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_window_info_linux_set_height_delegate(IntPtr self, uint height);
-        public static cfx_window_info_linux_set_height_delegate cfx_window_info_linux_set_height;
-        // static void cfx_window_info_linux_get_height(cef_window_info_t *self, unsigned int* height)
+        public delegate void cfx_window_info_linux_set_widget_delegate(IntPtr self, IntPtr widget);
+        public static cfx_window_info_linux_set_widget_delegate cfx_window_info_linux_set_widget;
+        // static void cfx_window_info_linux_get_widget(cef_window_info_t *self, cef_window_handle_t* widget)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_window_info_linux_get_height_delegate(IntPtr self, out uint height);
-        public static cfx_window_info_linux_get_height_delegate cfx_window_info_linux_get_height;
-
-        // static void cfx_window_info_linux_set_parent_window(cef_window_info_t *self, cef_window_handle_t parent_window)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_window_info_linux_set_parent_window_delegate(IntPtr self, IntPtr parent_window);
-        public static cfx_window_info_linux_set_parent_window_delegate cfx_window_info_linux_set_parent_window;
-        // static void cfx_window_info_linux_get_parent_window(cef_window_info_t *self, cef_window_handle_t* parent_window)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_window_info_linux_get_parent_window_delegate(IntPtr self, out IntPtr parent_window);
-        public static cfx_window_info_linux_get_parent_window_delegate cfx_window_info_linux_get_parent_window;
-
-        // static void cfx_window_info_linux_set_windowless_rendering_enabled(cef_window_info_t *self, int windowless_rendering_enabled)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_window_info_linux_set_windowless_rendering_enabled_delegate(IntPtr self, int windowless_rendering_enabled);
-        public static cfx_window_info_linux_set_windowless_rendering_enabled_delegate cfx_window_info_linux_set_windowless_rendering_enabled;
-        // static void cfx_window_info_linux_get_windowless_rendering_enabled(cef_window_info_t *self, int* windowless_rendering_enabled)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_window_info_linux_get_windowless_rendering_enabled_delegate(IntPtr self, out int windowless_rendering_enabled);
-        public static cfx_window_info_linux_get_windowless_rendering_enabled_delegate cfx_window_info_linux_get_windowless_rendering_enabled;
-
-        // static void cfx_window_info_linux_set_transparent_painting_enabled(cef_window_info_t *self, int transparent_painting_enabled)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_window_info_linux_set_transparent_painting_enabled_delegate(IntPtr self, int transparent_painting_enabled);
-        public static cfx_window_info_linux_set_transparent_painting_enabled_delegate cfx_window_info_linux_set_transparent_painting_enabled;
-        // static void cfx_window_info_linux_get_transparent_painting_enabled(cef_window_info_t *self, int* transparent_painting_enabled)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_window_info_linux_get_transparent_painting_enabled_delegate(IntPtr self, out int transparent_painting_enabled);
-        public static cfx_window_info_linux_get_transparent_painting_enabled_delegate cfx_window_info_linux_get_transparent_painting_enabled;
-
-        // static void cfx_window_info_linux_set_window(cef_window_info_t *self, cef_window_handle_t window)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_window_info_linux_set_window_delegate(IntPtr self, IntPtr window);
-        public static cfx_window_info_linux_set_window_delegate cfx_window_info_linux_set_window;
-        // static void cfx_window_info_linux_get_window(cef_window_info_t *self, cef_window_handle_t* window)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_window_info_linux_get_window_delegate(IntPtr self, out IntPtr window);
-        public static cfx_window_info_linux_get_window_delegate cfx_window_info_linux_get_window;
+        public delegate void cfx_window_info_linux_get_widget_delegate(IntPtr self, out IntPtr widget);
+        public static cfx_window_info_linux_get_widget_delegate cfx_window_info_linux_get_widget;
 
 
         // CfxWindowInfoWindows

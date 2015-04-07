@@ -47,89 +47,49 @@ static void cfx_window_info_linux_dtor(cef_window_info_t* self) {
     free(self);
 }
 
-// cef_window_info_t->x
-static void cfx_window_info_linux_set_x(cef_window_info_t *self, unsigned int x) {
-    self->x = x;
+// cef_window_info_t->parent_widget
+static void cfx_window_info_linux_set_parent_widget(cef_window_info_t *self, cef_window_handle_t parent_widget) {
+    self->parent_widget = parent_widget;
 }
-static void cfx_window_info_linux_get_x(cef_window_info_t *self, unsigned int* x) {
-    *x = self->x;
-}
-
-// cef_window_info_t->y
-static void cfx_window_info_linux_set_y(cef_window_info_t *self, unsigned int y) {
-    self->y = y;
-}
-static void cfx_window_info_linux_get_y(cef_window_info_t *self, unsigned int* y) {
-    *y = self->y;
+static void cfx_window_info_linux_get_parent_widget(cef_window_info_t *self, cef_window_handle_t* parent_widget) {
+    *parent_widget = self->parent_widget;
 }
 
-// cef_window_info_t->width
-static void cfx_window_info_linux_set_width(cef_window_info_t *self, unsigned int width) {
-    self->width = width;
+// cef_window_info_t->window_rendering_disabled
+static void cfx_window_info_linux_set_window_rendering_disabled(cef_window_info_t *self, int window_rendering_disabled) {
+    self->window_rendering_disabled = window_rendering_disabled;
 }
-static void cfx_window_info_linux_get_width(cef_window_info_t *self, unsigned int* width) {
-    *width = self->width;
-}
-
-// cef_window_info_t->height
-static void cfx_window_info_linux_set_height(cef_window_info_t *self, unsigned int height) {
-    self->height = height;
-}
-static void cfx_window_info_linux_get_height(cef_window_info_t *self, unsigned int* height) {
-    *height = self->height;
+static void cfx_window_info_linux_get_window_rendering_disabled(cef_window_info_t *self, int* window_rendering_disabled) {
+    *window_rendering_disabled = self->window_rendering_disabled;
 }
 
-// cef_window_info_t->parent_window
-static void cfx_window_info_linux_set_parent_window(cef_window_info_t *self, cef_window_handle_t parent_window) {
-    self->parent_window = parent_window;
+// cef_window_info_t->transparent_painting
+static void cfx_window_info_linux_set_transparent_painting(cef_window_info_t *self, int transparent_painting) {
+    self->transparent_painting = transparent_painting;
 }
-static void cfx_window_info_linux_get_parent_window(cef_window_info_t *self, cef_window_handle_t* parent_window) {
-    *parent_window = self->parent_window;
-}
-
-// cef_window_info_t->windowless_rendering_enabled
-static void cfx_window_info_linux_set_windowless_rendering_enabled(cef_window_info_t *self, int windowless_rendering_enabled) {
-    self->windowless_rendering_enabled = windowless_rendering_enabled;
-}
-static void cfx_window_info_linux_get_windowless_rendering_enabled(cef_window_info_t *self, int* windowless_rendering_enabled) {
-    *windowless_rendering_enabled = self->windowless_rendering_enabled;
+static void cfx_window_info_linux_get_transparent_painting(cef_window_info_t *self, int* transparent_painting) {
+    *transparent_painting = self->transparent_painting;
 }
 
-// cef_window_info_t->transparent_painting_enabled
-static void cfx_window_info_linux_set_transparent_painting_enabled(cef_window_info_t *self, int transparent_painting_enabled) {
-    self->transparent_painting_enabled = transparent_painting_enabled;
+// cef_window_info_t->widget
+static void cfx_window_info_linux_set_widget(cef_window_info_t *self, cef_window_handle_t widget) {
+    self->widget = widget;
 }
-static void cfx_window_info_linux_get_transparent_painting_enabled(cef_window_info_t *self, int* transparent_painting_enabled) {
-    *transparent_painting_enabled = self->transparent_painting_enabled;
-}
-
-// cef_window_info_t->window
-static void cfx_window_info_linux_set_window(cef_window_info_t *self, cef_window_handle_t window) {
-    self->window = window;
-}
-static void cfx_window_info_linux_get_window(cef_window_info_t *self, cef_window_handle_t* window) {
-    *window = self->window;
+static void cfx_window_info_linux_get_widget(cef_window_info_t *self, cef_window_handle_t* widget) {
+    *widget = self->widget;
 }
 
 #else //ifdef CFX_LINUX
 #define cfx_window_info_linux_ctor 0
 #define cfx_window_info_linux_dtor 0
-#define cfx_window_info_linux_set_x 0
-#define cfx_window_info_linux_get_x 0
-#define cfx_window_info_linux_set_y 0
-#define cfx_window_info_linux_get_y 0
-#define cfx_window_info_linux_set_width 0
-#define cfx_window_info_linux_get_width 0
-#define cfx_window_info_linux_set_height 0
-#define cfx_window_info_linux_get_height 0
-#define cfx_window_info_linux_set_parent_window 0
-#define cfx_window_info_linux_get_parent_window 0
-#define cfx_window_info_linux_set_windowless_rendering_enabled 0
-#define cfx_window_info_linux_get_windowless_rendering_enabled 0
-#define cfx_window_info_linux_set_transparent_painting_enabled 0
-#define cfx_window_info_linux_get_transparent_painting_enabled 0
-#define cfx_window_info_linux_set_window 0
-#define cfx_window_info_linux_get_window 0
+#define cfx_window_info_linux_set_parent_widget 0
+#define cfx_window_info_linux_get_parent_widget 0
+#define cfx_window_info_linux_set_window_rendering_disabled 0
+#define cfx_window_info_linux_get_window_rendering_disabled 0
+#define cfx_window_info_linux_set_transparent_painting 0
+#define cfx_window_info_linux_get_transparent_painting 0
+#define cfx_window_info_linux_set_widget 0
+#define cfx_window_info_linux_get_widget 0
 #endif //ifdef CFX_LINUX
 
 

@@ -63,129 +63,77 @@ namespace Chromium {
         internal CfxWindowInfoLinux(IntPtr nativePtr) : base(nativePtr) {}
         internal CfxWindowInfoLinux(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
-        public uint X {
-            get {
-                uint value;
-                CfxApi.cfx_window_info_linux_get_x(nativePtrUnchecked, out value);
-                return value;
-            }
-            set {
-                CfxApi.cfx_window_info_linux_set_x(nativePtrUnchecked, value);
-            }
-        }
-
-        public uint Y {
-            get {
-                uint value;
-                CfxApi.cfx_window_info_linux_get_y(nativePtrUnchecked, out value);
-                return value;
-            }
-            set {
-                CfxApi.cfx_window_info_linux_set_y(nativePtrUnchecked, value);
-            }
-        }
-
-        public uint Width {
-            get {
-                uint value;
-                CfxApi.cfx_window_info_linux_get_width(nativePtrUnchecked, out value);
-                return value;
-            }
-            set {
-                CfxApi.cfx_window_info_linux_set_width(nativePtrUnchecked, value);
-            }
-        }
-
-        public uint Height {
-            get {
-                uint value;
-                CfxApi.cfx_window_info_linux_get_height(nativePtrUnchecked, out value);
-                return value;
-            }
-            set {
-                CfxApi.cfx_window_info_linux_set_height(nativePtrUnchecked, value);
-            }
-        }
-
         /// <summary>
-        /// Pointer for the parent window.
+        /// Pointer for the parent GtkBox widget.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/linux/cef/include/internal/cef_types_linux.h">linux/cef/include/internal/cef_types_linux.h</see>.
         /// </remarks>
-        public IntPtr ParentWindow {
+        public IntPtr ParentWidget {
             get {
                 IntPtr value;
-                CfxApi.cfx_window_info_linux_get_parent_window(nativePtrUnchecked, out value);
+                CfxApi.cfx_window_info_linux_get_parent_widget(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_window_info_linux_set_parent_window(nativePtrUnchecked, value);
+                CfxApi.cfx_window_info_linux_set_parent_widget(nativePtrUnchecked, value);
             }
         }
 
         /// <summary>
-        /// Set to true (1) to create the browser using windowless (off-screen)
-        /// rendering. No window will be created for the browser and all rendering will
-        /// occur via the CfxRenderHandler interface. The |parentWindow| value will be
-        /// used to identify monitor info and to act as the parent window for dialogs,
-        /// context menus, etc. If |parentWindow| is not provided then the main screen
-        /// monitor will be used and some functionality that requires a parent window
-        /// may not function correctly. In order to create windowless browsers the
-        /// CfxSettings.WindowlessRenderingEnabled value must be set to true.
+        /// If window rendering is disabled no browser window will be created. Set
+        /// |parentWidget| to the window that will act as the parent for popup menus,
+        /// dialog boxes, etc.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/linux/cef/include/internal/cef_types_linux.h">linux/cef/include/internal/cef_types_linux.h</see>.
         /// </remarks>
-        public bool WindowlessRenderingEnabled {
+        public int WindowRenderingDisabled {
             get {
                 int value;
-                CfxApi.cfx_window_info_linux_get_windowless_rendering_enabled(nativePtrUnchecked, out value);
+                CfxApi.cfx_window_info_linux_get_window_rendering_disabled(nativePtrUnchecked, out value);
+                return value;
+            }
+            set {
+                CfxApi.cfx_window_info_linux_set_window_rendering_disabled(nativePtrUnchecked, value);
+            }
+        }
+
+        /// <summary>
+        /// Set to true to enable transparent painting.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/linux/cef/include/internal/cef_types_linux.h">linux/cef/include/internal/cef_types_linux.h</see>.
+        /// </remarks>
+        public bool TransparentPainting {
+            get {
+                int value;
+                CfxApi.cfx_window_info_linux_get_transparent_painting(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_window_info_linux_set_windowless_rendering_enabled(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.cfx_window_info_linux_set_transparent_painting(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
         /// <summary>
-        /// Set to true (1) to enable transparent painting in combination with
-        /// windowless rendering. When this value is true a transparent background
-        /// color will be used (RGBA=0x00000000). When this value is false the
-        /// background will be white and opaque.
+        /// Pointer for the new browser widget.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/linux/cef/include/internal/cef_types_linux.h">linux/cef/include/internal/cef_types_linux.h</see>.
         /// </remarks>
-        public bool TransparentPaintingEnabled {
-            get {
-                int value;
-                CfxApi.cfx_window_info_linux_get_transparent_painting_enabled(nativePtrUnchecked, out value);
-                return 0 != value;
-            }
-            set {
-                CfxApi.cfx_window_info_linux_set_transparent_painting_enabled(nativePtrUnchecked, value ? 1 : 0);
-            }
-        }
-
-        /// <summary>
-        /// Pointer for the new browser window. Only used with windowed rendering.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/linux/cef/include/internal/cef_types_linux.h">linux/cef/include/internal/cef_types_linux.h</see>.
-        /// </remarks>
-        public IntPtr Window {
+        public IntPtr Widget {
             get {
                 IntPtr value;
-                CfxApi.cfx_window_info_linux_get_window(nativePtrUnchecked, out value);
+                CfxApi.cfx_window_info_linux_get_widget(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_window_info_linux_set_window(nativePtrUnchecked, value);
+                CfxApi.cfx_window_info_linux_set_widget(nativePtrUnchecked, value);
             }
         }
 
