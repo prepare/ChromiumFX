@@ -68,30 +68,6 @@ namespace Chromium {
         internal CfxDragData(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Create a new CfxDragData object.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_drag_data_capi.h">cef/include/capi/cef_drag_data_capi.h</see>.
-        /// </remarks>
-        public static CfxDragData Create() {
-            return CfxDragData.Wrap(CfxApi.cfx_drag_data_create());
-        }
-
-        /// <summary>
-        /// Returns true (1) if this object is read-only.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_drag_data_capi.h">cef/include/capi/cef_drag_data_capi.h</see>.
-        /// </remarks>
-        public bool IsReadOnly {
-            get {
-                return 0 != CfxApi.cfx_drag_data_is_read_only(NativePtr);
-            }
-        }
-
-        /// <summary>
         /// Returns true (1) if the drag data is a link.
         /// </summary>
         /// <remarks>
@@ -132,8 +108,6 @@ namespace Chromium {
 
         /// <summary>
         /// Return the link URL that is being dragged.
-        /// 
-        /// Set the link URL that is being dragged.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -143,17 +117,10 @@ namespace Chromium {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_link_url(NativePtr));
             }
-            set {
-                var value_pinned = new PinnedString(value);
-                CfxApi.cfx_drag_data_set_link_url(NativePtr, value_pinned.Obj.PinnedPtr, value_pinned.Length);
-                value_pinned.Obj.Free();
-            }
         }
 
         /// <summary>
         /// Return the title associated with the link being dragged.
-        /// 
-        /// Set the title associated with the link being dragged.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -163,17 +130,10 @@ namespace Chromium {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_link_title(NativePtr));
             }
-            set {
-                var value_pinned = new PinnedString(value);
-                CfxApi.cfx_drag_data_set_link_title(NativePtr, value_pinned.Obj.PinnedPtr, value_pinned.Length);
-                value_pinned.Obj.Free();
-            }
         }
 
         /// <summary>
         /// Return the metadata, if any, associated with the link being dragged.
-        /// 
-        /// Set the metadata associated with the link being dragged.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -183,17 +143,10 @@ namespace Chromium {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_link_metadata(NativePtr));
             }
-            set {
-                var value_pinned = new PinnedString(value);
-                CfxApi.cfx_drag_data_set_link_metadata(NativePtr, value_pinned.Obj.PinnedPtr, value_pinned.Length);
-                value_pinned.Obj.Free();
-            }
         }
 
         /// <summary>
         /// Return the plain text fragment that is being dragged.
-        /// 
-        /// Set the plain text fragment that is being dragged.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -203,17 +156,10 @@ namespace Chromium {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_fragment_text(NativePtr));
             }
-            set {
-                var value_pinned = new PinnedString(value);
-                CfxApi.cfx_drag_data_set_fragment_text(NativePtr, value_pinned.Obj.PinnedPtr, value_pinned.Length);
-                value_pinned.Obj.Free();
-            }
         }
 
         /// <summary>
         /// Return the text/html fragment that is being dragged.
-        /// 
-        /// Set the text/html fragment that is being dragged.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -223,18 +169,11 @@ namespace Chromium {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_fragment_html(NativePtr));
             }
-            set {
-                var value_pinned = new PinnedString(value);
-                CfxApi.cfx_drag_data_set_fragment_html(NativePtr, value_pinned.Obj.PinnedPtr, value_pinned.Length);
-                value_pinned.Obj.Free();
-            }
         }
 
         /// <summary>
         /// Return the base URL that the fragment came from. This value is used for
         /// resolving relative URLs and may be NULL.
-        /// 
-        /// Set the base URL that the fragment came from.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -243,11 +182,6 @@ namespace Chromium {
         public string FragmentBaseUrl {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_fragment_base_url(NativePtr));
-            }
-            set {
-                var value_pinned = new PinnedString(value);
-                CfxApi.cfx_drag_data_set_fragment_base_url(NativePtr, value_pinned.Obj.PinnedPtr, value_pinned.Length);
-                value_pinned.Obj.Free();
             }
         }
 
@@ -262,31 +196,6 @@ namespace Chromium {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.cfx_drag_data_get_file_name(NativePtr));
             }
-        }
-
-        /// <summary>
-        /// Returns a copy of the current object.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_drag_data_capi.h">cef/include/capi/cef_drag_data_capi.h</see>.
-        /// </remarks>
-        public CfxDragData Clone() {
-            return CfxDragData.Wrap(CfxApi.cfx_drag_data_clone(NativePtr));
-        }
-
-        /// <summary>
-        /// Write the contents of the file being dragged out of the web view into
-        /// |writer|. Returns the number of bytes sent to |writer|. If |writer| is NULL
-        /// this function will return the size of the file contents in bytes. Call
-        /// get_file_name() to get a suggested name for the file.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_drag_data_capi.h">cef/include/capi/cef_drag_data_capi.h</see>.
-        /// </remarks>
-        public int GetFileContents(CfxStreamWriter writer) {
-            return CfxApi.cfx_drag_data_get_file_contents(NativePtr, CfxStreamWriter.Unwrap(writer));
         }
 
         /// <summary>
@@ -305,34 +214,6 @@ namespace Chromium {
             StringFunctions.CfxStringListCopyToManaged(names_unwrapped, names);
             CfxApi.cfx_string_list_free(names_unwrapped);
             return 0 != __retval;
-        }
-
-        /// <summary>
-        /// Reset the file contents. You should do this before calling
-        /// CfxBrowserHost.DragTargetDragEnter as the web view does not allow us
-        /// to drag in this kind of data.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_drag_data_capi.h">cef/include/capi/cef_drag_data_capi.h</see>.
-        /// </remarks>
-        public void ResetFileContents() {
-            CfxApi.cfx_drag_data_reset_file_contents(NativePtr);
-        }
-
-        /// <summary>
-        /// Add a file that is being dragged into the webview.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_drag_data_capi.h">cef/include/capi/cef_drag_data_capi.h</see>.
-        /// </remarks>
-        public void AddFile(string path, string displayName) {
-            var path_pinned = new PinnedString(path);
-            var displayName_pinned = new PinnedString(displayName);
-            CfxApi.cfx_drag_data_add_file(NativePtr, path_pinned.Obj.PinnedPtr, path_pinned.Length, displayName_pinned.Obj.PinnedPtr, displayName_pinned.Length);
-            path_pinned.Obj.Free();
-            displayName_pinned.Obj.Free();
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

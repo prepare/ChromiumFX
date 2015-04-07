@@ -581,6 +581,42 @@ namespace Chromium.Remote {
         }
     }
 
+    internal class CfxDomNodeAddEventListenerRenderProcessCall : RenderProcessCall {
+
+        internal CfxDomNodeAddEventListenerRenderProcessCall()
+            : base(RemoteCallId.CfxDomNodeAddEventListenerRenderProcessCall) {}
+
+        internal ulong self;
+        internal string eventType;
+        internal ulong listener;
+        internal bool useCapture;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(self);
+            h.Write(eventType);
+            h.Write(listener);
+            h.Write(useCapture);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out self);
+            h.Read(out eventType);
+            h.Read(out listener);
+            h.Read(out useCapture);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var self_local = (CfxDomNode)RemoteProxy.Unwrap(self);
+            self_local.AddEventListener(eventType, (CfxDomEventListener)RemoteProxy.Unwrap(listener), useCapture);
+        }
+    }
+
     internal class CfxDomNodeGetElementTagNameRenderProcessCall : RenderProcessCall {
 
         internal CfxDomNodeGetElementTagNameRenderProcessCall()

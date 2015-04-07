@@ -342,6 +342,26 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Add an event listener to this node for the specified event type. If
+        /// |useCapture| is true (1) then this listener will be considered a capturing
+        /// listener. Capturing listeners will recieve all events of the specified type
+        /// before the events are dispatched to any other event targets beneath the
+        /// current node in the tree. Events which are bubbling upwards through the
+        /// tree will not trigger a capturing listener. Separate calls to this function
+        /// can be used to register the same listener with and without capture. See
+        /// WebCore/dom/EventNames.h for the list of supported event types.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
+        public void AddEventListener(string eventType, CfxDomEventListener listener, bool useCapture) {
+            var eventType_pinned = new PinnedString(eventType);
+            CfxApi.cfx_domnode_add_event_listener(NativePtr, eventType_pinned.Obj.PinnedPtr, eventType_pinned.Length, CfxDomEventListener.Unwrap(listener), useCapture ? 1 : 0);
+            eventType_pinned.Obj.Free();
+        }
+
+        /// <summary>
         /// Returns true (1) if this element has an attribute named |attrName|.
         /// </summary>
         /// <remarks>

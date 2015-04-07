@@ -39,7 +39,7 @@ namespace Chromium {
     /// <summary>
     /// Implement this structure to handle events related to geolocation permission
     /// requests. The functions of this structure will be called on the browser
-    /// process UI thread.
+    /// process IO thread.
     /// </summary>
     /// <remarks>
     /// See also the original CEF documentation in
@@ -62,14 +62,13 @@ namespace Chromium {
 
         // on_request_geolocation_permission
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_geolocation_handler_on_request_geolocation_permission_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id, IntPtr callback);
+        private delegate void cfx_geolocation_handler_on_request_geolocation_permission_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id, IntPtr callback);
         private static cfx_geolocation_handler_on_request_geolocation_permission_delegate cfx_geolocation_handler_on_request_geolocation_permission;
         private static IntPtr cfx_geolocation_handler_on_request_geolocation_permission_ptr;
 
-        internal static void on_request_geolocation_permission(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id, IntPtr callback) {
+        internal static void on_request_geolocation_permission(IntPtr gcHandlePtr, IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id, IntPtr callback) {
             var self = (CfxGeolocationHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
-                __retval = default(int);
                 return;
             }
             var e = new CfxOnRequestGeolocationPermissionEventArgs(browser, requesting_url_str, requesting_url_length, request_id, callback);
@@ -78,7 +77,6 @@ namespace Chromium {
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
-            __retval = e.m_returnValue ? 1 : 0;
         }
 
         // on_cancel_geolocation_permission
@@ -105,10 +103,9 @@ namespace Chromium {
         /// <summary>
         /// Called when a page requests permission to access geolocation information.
         /// |RequestingUrl| is the URL requesting permission and |RequestId| is the
-        /// unique ID for the permission request. Return true (1) and call
-        /// CfxGeolocationCallback.Continue() either in this function or at a later
-        /// time to continue or cancel the request. Return false (0) to cancel the
-        /// request immediately.
+        /// unique ID for the permission request. Call
+        /// CfxGeolocationCallback.Continue to allow or deny the permission
+        /// request.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -192,10 +189,9 @@ namespace Chromium {
         /// <summary>
         /// Called when a page requests permission to access geolocation information.
         /// |RequestingUrl| is the URL requesting permission and |RequestId| is the
-        /// unique ID for the permission request. Return true (1) and call
-        /// CfxGeolocationCallback.Continue() either in this function or at a later
-        /// time to continue or cancel the request. Return false (0) to cancel the
-        /// request immediately.
+        /// unique ID for the permission request. Call
+        /// CfxGeolocationCallback.Continue to allow or deny the permission
+        /// request.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -206,10 +202,9 @@ namespace Chromium {
         /// <summary>
         /// Called when a page requests permission to access geolocation information.
         /// |RequestingUrl| is the URL requesting permission and |RequestId| is the
-        /// unique ID for the permission request. Return true (1) and call
-        /// CfxGeolocationCallback.Continue() either in this function or at a later
-        /// time to continue or cancel the request. Return false (0) to cancel the
-        /// request immediately.
+        /// unique ID for the permission request. Call
+        /// CfxGeolocationCallback.Continue to allow or deny the permission
+        /// request.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -225,9 +220,6 @@ namespace Chromium {
             internal int m_request_id;
             internal IntPtr m_callback;
             internal CfxGeolocationCallback m_callback_wrapped;
-
-            internal bool m_returnValue;
-            private bool returnValueSet;
 
             internal CfxOnRequestGeolocationPermissionEventArgs(IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id, IntPtr callback) {
                 m_browser = browser;
@@ -275,18 +267,6 @@ namespace Chromium {
                     if(m_callback_wrapped == null) m_callback_wrapped = CfxGeolocationCallback.Wrap(m_callback);
                     return m_callback_wrapped;
                 }
-            }
-            /// <summary>
-            /// Set the return value for the <see cref="CfxGeolocationHandler.OnRequestGeolocationPermission"/> callback.
-            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
-            /// </summary>
-            public void SetReturnValue(bool returnValue) {
-                CheckAccess();
-                if(returnValueSet) {
-                    throw new CfxException("The return value has already been set");
-                }
-                returnValueSet = true;
-                this.m_returnValue = returnValue;
             }
 
             public override string ToString() {

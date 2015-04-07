@@ -292,10 +292,9 @@ namespace Chromium {
         /// instead of immediately closing (see the example below). This gives CEF an
         /// opportunity to process the 'onbeforeunload' event and optionally cancel the
         /// close before do_close() is called.
-        /// The CfxLifeSpanHandler.OnBeforeClose() function will be called
+        /// The CfxLifeSpanHandler.OnBeforeclose() function will be called
         /// immediately before the browser object is destroyed. The application should
-        /// only exit after on_before_close() has been called for all existing
-        /// browsers.
+        /// only exit after OnBeforeclose() has been called for all existing browsers.
         /// If the browser represents a modal window and a custom modal loop
         /// implementation was provided in CfxLifeSpanHandler.RunModal() this
         /// callback should be used to restore the opener window to a usable state.
@@ -312,13 +311,15 @@ namespace Chromium {
         /// CfxJSDialogHandler.OnBeforeUnloadDialog()).
         /// 4.  User approves the close. 5.  JavaScript 'onunload' handler executes. 6.
         /// Application's do_close() handler is called. Application will:
-        /// A. Set a flag to indicate that the next close attempt will be allowed.
-        /// B. Return false.
+        /// A. Call CfxBrowserHost.ParentWindowWillClose() to notify CEF that the
+        /// parent window will be closing.
+        /// B. Set a flag to indicate that the next close attempt will be allowed.
+        /// C. Return false.
         /// 7.  CEF sends an OS close notification. 8.  Application's top-level window
         /// receives the OS close notification and
         /// allows the window to close based on the flag from #6B.
         /// 9.  Browser OS window is destroyed. 10. Application's
-        /// CfxLifeSpanHandler.OnBeforeClose() handler is called and
+        /// CfxLifeSpanHandler.OnBeforeclose() handler is called and
         /// the browser object is destroyed.
         /// 11. Application exits by calling cef_quit_message_loop() if no other
         /// browsers
@@ -715,10 +716,9 @@ namespace Chromium {
         /// instead of immediately closing (see the example below). This gives CEF an
         /// opportunity to process the 'onbeforeunload' event and optionally cancel the
         /// close before do_close() is called.
-        /// The CfxLifeSpanHandler.OnBeforeClose() function will be called
+        /// The CfxLifeSpanHandler.OnBeforeclose() function will be called
         /// immediately before the browser object is destroyed. The application should
-        /// only exit after on_before_close() has been called for all existing
-        /// browsers.
+        /// only exit after OnBeforeclose() has been called for all existing browsers.
         /// If the browser represents a modal window and a custom modal loop
         /// implementation was provided in CfxLifeSpanHandler.RunModal() this
         /// callback should be used to restore the opener window to a usable state.
@@ -735,13 +735,15 @@ namespace Chromium {
         /// CfxJSDialogHandler.OnBeforeUnloadDialog()).
         /// 4.  User approves the close. 5.  JavaScript 'onunload' handler executes. 6.
         /// Application's do_close() handler is called. Application will:
-        /// A. Set a flag to indicate that the next close attempt will be allowed.
-        /// B. Return false.
+        /// A. Call CfxBrowserHost.ParentWindowWillClose() to notify CEF that the
+        /// parent window will be closing.
+        /// B. Set a flag to indicate that the next close attempt will be allowed.
+        /// C. Return false.
         /// 7.  CEF sends an OS close notification. 8.  Application's top-level window
         /// receives the OS close notification and
         /// allows the window to close based on the flag from #6B.
         /// 9.  Browser OS window is destroyed. 10. Application's
-        /// CfxLifeSpanHandler.OnBeforeClose() handler is called and
+        /// CfxLifeSpanHandler.OnBeforeclose() handler is called and
         /// the browser object is destroyed.
         /// 11. Application exits by calling cef_quit_message_loop() if no other
         /// browsers
@@ -773,10 +775,9 @@ namespace Chromium {
         /// instead of immediately closing (see the example below). This gives CEF an
         /// opportunity to process the 'onbeforeunload' event and optionally cancel the
         /// close before do_close() is called.
-        /// The CfxLifeSpanHandler.OnBeforeClose() function will be called
+        /// The CfxLifeSpanHandler.OnBeforeclose() function will be called
         /// immediately before the browser object is destroyed. The application should
-        /// only exit after on_before_close() has been called for all existing
-        /// browsers.
+        /// only exit after OnBeforeclose() has been called for all existing browsers.
         /// If the browser represents a modal window and a custom modal loop
         /// implementation was provided in CfxLifeSpanHandler.RunModal() this
         /// callback should be used to restore the opener window to a usable state.
@@ -793,13 +794,15 @@ namespace Chromium {
         /// CfxJSDialogHandler.OnBeforeUnloadDialog()).
         /// 4.  User approves the close. 5.  JavaScript 'onunload' handler executes. 6.
         /// Application's do_close() handler is called. Application will:
-        /// A. Set a flag to indicate that the next close attempt will be allowed.
-        /// B. Return false.
+        /// A. Call CfxBrowserHost.ParentWindowWillClose() to notify CEF that the
+        /// parent window will be closing.
+        /// B. Set a flag to indicate that the next close attempt will be allowed.
+        /// C. Return false.
         /// 7.  CEF sends an OS close notification. 8.  Application's top-level window
         /// receives the OS close notification and
         /// allows the window to close based on the flag from #6B.
         /// 9.  Browser OS window is destroyed. 10. Application's
-        /// CfxLifeSpanHandler.OnBeforeClose() handler is called and
+        /// CfxLifeSpanHandler.OnBeforeclose() handler is called and
         /// the browser object is destroyed.
         /// 11. Application exits by calling cef_quit_message_loop() if no other
         /// browsers

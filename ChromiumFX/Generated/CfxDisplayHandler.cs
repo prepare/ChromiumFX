@@ -264,8 +264,9 @@ namespace Chromium {
         private CfxOnTooltipEventHandler m_OnTooltip;
 
         /// <summary>
-        /// Called when the browser receives a status message. |Value| contains the
-        /// text that will be displayed in the status message.
+        /// Called when the browser receives a status message. |Text| contains the text
+        /// that will be displayed in the status message and |Type| indicates the
+        /// status message type.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -572,8 +573,9 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Called when the browser receives a status message. |Value| contains the
-        /// text that will be displayed in the status message.
+        /// Called when the browser receives a status message. |Text| contains the text
+        /// that will be displayed in the status message and |Type| indicates the
+        /// status message type.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -582,8 +584,9 @@ namespace Chromium {
         public delegate void CfxOnStatusMessageEventHandler(object sender, CfxOnStatusMessageEventArgs e);
 
         /// <summary>
-        /// Called when the browser receives a status message. |Value| contains the
-        /// text that will be displayed in the status message.
+        /// Called when the browser receives a status message. |Text| contains the text
+        /// that will be displayed in the status message and |Type| indicates the
+        /// status message type.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

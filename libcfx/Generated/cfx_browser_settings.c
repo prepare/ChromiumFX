@@ -55,14 +55,6 @@ static void cfx_browser_settings_dtor(cef_browser_settings_t* self) {
     free(self);
 }
 
-// cef_browser_settings_t->windowless_frame_rate
-static void cfx_browser_settings_set_windowless_frame_rate(cef_browser_settings_t *self, int windowless_frame_rate) {
-    self->windowless_frame_rate = windowless_frame_rate;
-}
-static void cfx_browser_settings_get_windowless_frame_rate(cef_browser_settings_t *self, int* windowless_frame_rate) {
-    *windowless_frame_rate = self->windowless_frame_rate;
-}
-
 // cef_browser_settings_t->standard_font_family
 static void cfx_browser_settings_set_standard_font_family(cef_browser_settings_t *self, char16 *standard_font_family_str, int standard_font_family_length) {
     cef_string_utf16_set(standard_font_family_str, standard_font_family_length, &(self->standard_font_family), 1);
@@ -316,6 +308,14 @@ static void cfx_browser_settings_set_webgl(cef_browser_settings_t *self, cef_sta
 }
 static void cfx_browser_settings_get_webgl(cef_browser_settings_t *self, cef_state_t* webgl) {
     *webgl = self->webgl;
+}
+
+// cef_browser_settings_t->accelerated_compositing
+static void cfx_browser_settings_set_accelerated_compositing(cef_browser_settings_t *self, cef_state_t accelerated_compositing) {
+    self->accelerated_compositing = accelerated_compositing;
+}
+static void cfx_browser_settings_get_accelerated_compositing(cef_browser_settings_t *self, cef_state_t* accelerated_compositing) {
+    *accelerated_compositing = self->accelerated_compositing;
 }
 
 // cef_browser_settings_t->background_color
