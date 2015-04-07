@@ -55,7 +55,7 @@ namespace Windowless {
             var assemblyDir = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
             settings.ResourcesDirPath = System.IO.Path.Combine(assemblyDir, "cef");
             settings.LocalesDirPath = System.IO.Path.Combine(assemblyDir, "cef", "locales");
-            settings.BrowserSubprocessPath = System.IO.Path.Combine(assemblyDir, "LinuxTestApp.exe");
+            settings.BrowserSubprocessPath = System.IO.Path.Combine(assemblyDir, "Windowless.exe");
             if(!CfxRuntime.Initialize(settings, null))
                 Environment.Exit(-1);
 
