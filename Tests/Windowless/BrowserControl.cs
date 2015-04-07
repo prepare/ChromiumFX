@@ -63,7 +63,13 @@ namespace Windowless {
             renderHandler.GetRootScreenRect += renderHandler_GetRootScreenRect;
             renderHandler.GetScreenInfo += renderHandler_GetScreenInfo;
             renderHandler.GetScreenPoint += renderHandler_GetScreenPoint;
-            renderHandler.GetViewRect += renderHandler_GetViewRect;
+            
+            // Breaks when attaching to renderHandler.GetViewRect.
+            // Uncommenting this line allows CEF to start rendering.
+            // *** glibc detected *** /usr/bin/mono: free(): invalid pointer: 0x00003b5554b1b000 ***
+            //renderHandler.GetViewRect += renderHandler_GetViewRect;
+            MessageBox.Show("Rendering is broken. See comments in BrowserControl constructor.");
+            
             renderHandler.OnCursorChange += renderHandler_OnCursorChange;
             renderHandler.OnPaint += renderHandler_OnPaint;
             //renderHandler.OnPopupShow += renderHandler_OnPopupShow;
@@ -97,10 +103,10 @@ namespace Windowless {
                 // this seems to happen when calling LoadUrl and the browser is not yet ready
                 var url = e.FailedUrl;
                 var frame = e.Frame;
-                System.Threading.ThreadPool.QueueUserWorkItem((state) => {
-                    System.Threading.Thread.Sleep(200);
-                    frame.LoadUrl(url);
-                });
+//                System.Threading.ThreadPool.QueueUserWorkItem((state) => {
+//                    System.Threading.Thread.Sleep(200);
+//                    frame.LoadUrl(url);
+//                });
             }
         }
 
