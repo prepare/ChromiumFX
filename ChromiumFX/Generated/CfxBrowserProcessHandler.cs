@@ -121,25 +121,6 @@ namespace Chromium {
             }
         }
 
-        // get_print_handler
-        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_browser_process_handler_get_print_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        private static cfx_browser_process_handler_get_print_handler_delegate cfx_browser_process_handler_get_print_handler;
-        private static IntPtr cfx_browser_process_handler_get_print_handler_ptr;
-
-        internal static void get_print_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
-            var self = (CfxBrowserProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
-                __retval = default(IntPtr);
-                return;
-            }
-            var e = new CfxGetPrintHandlerEventArgs();
-            var eventHandler = self.m_GetPrintHandler;
-            if(eventHandler != null) eventHandler(self, e);
-            e.m_isInvalid = true;
-            __retval = CfxPrintHandler.Unwrap(e.m_returnValue);
-        }
-
         internal CfxBrowserProcessHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxBrowserProcessHandler() : base(CfxApi.cfx_browser_process_handler_ctor) {}
 
@@ -248,39 +229,6 @@ namespace Chromium {
 
         private CfxOnRenderProcessThreadCreatedEventHandler m_OnRenderProcessThreadCreated;
 
-        /// <summary>
-        /// Return the handler for printing on Linux. If a print handler is not
-        /// provided then printing will not be supported on the Linux platform.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_process_handler_capi.h">cef/include/capi/cef_browser_process_handler_capi.h</see>.
-        /// </remarks>
-        public event CfxGetPrintHandlerEventHandler GetPrintHandler {
-            add {
-                lock(eventLock) {
-                    if(m_GetPrintHandler == null) {
-                        if(cfx_browser_process_handler_get_print_handler == null) {
-                            cfx_browser_process_handler_get_print_handler = get_print_handler;
-                            cfx_browser_process_handler_get_print_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_browser_process_handler_get_print_handler);
-                        }
-                        CfxApi.cfx_browser_process_handler_set_managed_callback(NativePtr, 3, cfx_browser_process_handler_get_print_handler_ptr);
-                    }
-                    m_GetPrintHandler += value;
-                }
-            }
-            remove {
-                lock(eventLock) {
-                    m_GetPrintHandler -= value;
-                    if(m_GetPrintHandler == null) {
-                        CfxApi.cfx_browser_process_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
-                    }
-                }
-            }
-        }
-
-        private CfxGetPrintHandlerEventHandler m_GetPrintHandler;
-
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnContextInitialized != null) {
                 m_OnContextInitialized = null;
@@ -293,10 +241,6 @@ namespace Chromium {
             if(m_OnRenderProcessThreadCreated != null) {
                 m_OnRenderProcessThreadCreated = null;
                 CfxApi.cfx_browser_process_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
-            }
-            if(m_GetPrintHandler != null) {
-                m_GetPrintHandler = null;
-                CfxApi.cfx_browser_process_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -401,47 +345,6 @@ namespace Chromium {
 
             public override string ToString() {
                 return String.Format("ExtraInfo={{{0}}}", ExtraInfo);
-            }
-        }
-
-        /// <summary>
-        /// Return the handler for printing on Linux. If a print handler is not
-        /// provided then printing will not be supported on the Linux platform.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_process_handler_capi.h">cef/include/capi/cef_browser_process_handler_capi.h</see>.
-        /// </remarks>
-        public delegate void CfxGetPrintHandlerEventHandler(object sender, CfxGetPrintHandlerEventArgs e);
-
-        /// <summary>
-        /// Return the handler for printing on Linux. If a print handler is not
-        /// provided then printing will not be supported on the Linux platform.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_process_handler_capi.h">cef/include/capi/cef_browser_process_handler_capi.h</see>.
-        /// </remarks>
-        public class CfxGetPrintHandlerEventArgs : CfxEventArgs {
-
-
-            internal CfxPrintHandler m_returnValue;
-            private bool returnValueSet;
-
-            internal CfxGetPrintHandlerEventArgs() {
-            }
-
-            /// <summary>
-            /// Set the return value for the <see cref="CfxBrowserProcessHandler.GetPrintHandler"/> callback.
-            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
-            /// </summary>
-            public void SetReturnValue(CfxPrintHandler returnValue) {
-                CheckAccess();
-                if(returnValueSet) {
-                    throw new CfxException("The return value has already been set");
-                }
-                returnValueSet = true;
-                this.m_returnValue = returnValue;
             }
         }
 

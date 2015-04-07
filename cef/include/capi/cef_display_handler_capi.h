@@ -82,8 +82,9 @@ typedef struct _cef_display_handler_t {
       struct _cef_browser_t* browser, cef_string_t* text);
 
   ///
-  // Called when the browser receives a status message. |value| contains the
-  // text that will be displayed in the status message.
+  // Called when the browser receives a status message. |text| contains the text
+  // that will be displayed in the status message and |type| indicates the
+  // status message type.
   ///
   void (CEF_CALLBACK *on_status_message)(struct _cef_display_handler_t* self,
       struct _cef_browser_t* browser, const cef_string_t* value);

@@ -86,9 +86,9 @@ static int cfx_cookie_manager_set_storage_path(cef_cookie_manager_t* self, char1
 }
 
 // flush_store
-static int cfx_cookie_manager_flush_store(cef_cookie_manager_t* self, cef_completion_callback_t* callback) {
-    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
-    return self->flush_store(self, callback);
+static int cfx_cookie_manager_flush_store(cef_cookie_manager_t* self, cef_completion_handler_t* handler) {
+    if(handler) ((cef_base_t*)handler)->add_ref((cef_base_t*)handler);
+    return self->flush_store(self, handler);
 }
 
 

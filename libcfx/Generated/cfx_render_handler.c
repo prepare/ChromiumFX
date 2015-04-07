@@ -43,20 +43,20 @@ typedef struct _cfx_render_handler_t {
     gc_handle_t gc_handle;
 } cfx_render_handler_t;
 
-void CEF_CALLBACK _cfx_render_handler_add_ref(struct _cef_base_t* base) {
-    InterlockedIncrement(&((cfx_render_handler_t*)base)->ref_count);
+int CEF_CALLBACK _cfx_render_handler_add_ref(struct _cef_base_t* base) {
+    return InterlockedIncrement(&((cfx_render_handler_t*)base)->ref_count);
 }
 int CEF_CALLBACK _cfx_render_handler_release(struct _cef_base_t* base) {
     int count = InterlockedDecrement(&((cfx_render_handler_t*)base)->ref_count);
     if(!count) {
         cfx_gc_handle_free(((cfx_render_handler_t*)base)->gc_handle);
         free(base);
-        return 1;
+        return 0;
     }
-    return 0;
+    return count;
 }
-int CEF_CALLBACK _cfx_render_handler_has_one_ref(struct _cef_base_t* base) {
-    return ((cfx_render_handler_t*)base)->ref_count == 1 ? 1 : 0;
+int CEF_CALLBACK _cfx_render_handler_get_refct(struct _cef_base_t* base) {
+    return ((cfx_render_handler_t*)base)->ref_count;
 }
 
 static cfx_render_handler_t* cfx_render_handler_ctor(gc_handle_t gc_handle) {
@@ -65,7 +65,7 @@ static cfx_render_handler_t* cfx_render_handler_ctor(gc_handle_t gc_handle) {
     ptr->cef_render_handler.base.size = sizeof(cef_render_handler_t);
     ptr->cef_render_handler.base.add_ref = _cfx_render_handler_add_ref;
     ptr->cef_render_handler.base.release = _cfx_render_handler_release;
-    ptr->cef_render_handler.base.has_one_ref = _cfx_render_handler_has_one_ref;
+    ptr->cef_render_handler.base.get_refct = _cfx_render_handler_get_refct;
     ptr->ref_count = 1;
     ptr->gc_handle = gc_handle;
     return ptr;
@@ -148,30 +148,10 @@ void CEF_CALLBACK cfx_render_handler_on_paint(cef_render_handler_t* self, cef_br
 
 // on_cursor_change
 
-void (CEF_CALLBACK *cfx_render_handler_on_cursor_change_callback)(gc_handle_t self, cef_browser_t* browser, cef_cursor_handle_t cursor, cef_cursor_type_t type, const cef_cursor_info_t* custom_cursor_info);
+void (CEF_CALLBACK *cfx_render_handler_on_cursor_change_callback)(gc_handle_t self, cef_browser_t* browser, cef_cursor_handle_t cursor);
 
-void CEF_CALLBACK cfx_render_handler_on_cursor_change(cef_render_handler_t* self, cef_browser_t* browser, cef_cursor_handle_t cursor, cef_cursor_type_t type, const cef_cursor_info_t* custom_cursor_info) {
-    cfx_render_handler_on_cursor_change_callback(((cfx_render_handler_t*)self)->gc_handle, browser, cursor, type, custom_cursor_info);
-}
-
-
-// start_dragging
-
-void (CEF_CALLBACK *cfx_render_handler_start_dragging_callback)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_drag_data_t* drag_data, cef_drag_operations_mask_t allowed_ops, int x, int y);
-
-int CEF_CALLBACK cfx_render_handler_start_dragging(cef_render_handler_t* self, cef_browser_t* browser, cef_drag_data_t* drag_data, cef_drag_operations_mask_t allowed_ops, int x, int y) {
-    int __retval;
-    cfx_render_handler_start_dragging_callback(((cfx_render_handler_t*)self)->gc_handle, &__retval, browser, drag_data, allowed_ops, x, y);
-    return __retval;
-}
-
-
-// update_drag_cursor
-
-void (CEF_CALLBACK *cfx_render_handler_update_drag_cursor_callback)(gc_handle_t self, cef_browser_t* browser, cef_drag_operations_mask_t operation);
-
-void CEF_CALLBACK cfx_render_handler_update_drag_cursor(cef_render_handler_t* self, cef_browser_t* browser, cef_drag_operations_mask_t operation) {
-    cfx_render_handler_update_drag_cursor_callback(((cfx_render_handler_t*)self)->gc_handle, browser, operation);
+void CEF_CALLBACK cfx_render_handler_on_cursor_change(cef_render_handler_t* self, cef_browser_t* browser, cef_cursor_handle_t cursor) {
+    cfx_render_handler_on_cursor_change_callback(((cfx_render_handler_t*)self)->gc_handle, browser, cursor);
 }
 
 
@@ -223,20 +203,10 @@ static void cfx_render_handler_set_managed_callback(cef_render_handler_t* self, 
         break;
     case 7:
         if(callback && !cfx_render_handler_on_cursor_change_callback)
-            cfx_render_handler_on_cursor_change_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_cursor_handle_t cursor, cef_cursor_type_t type, const cef_cursor_info_t* custom_cursor_info)) callback;
+            cfx_render_handler_on_cursor_change_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_cursor_handle_t cursor)) callback;
         self->on_cursor_change = callback ? cfx_render_handler_on_cursor_change : 0;
         break;
     case 8:
-        if(callback && !cfx_render_handler_start_dragging_callback)
-            cfx_render_handler_start_dragging_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_drag_data_t* drag_data, cef_drag_operations_mask_t allowed_ops, int x, int y)) callback;
-        self->start_dragging = callback ? cfx_render_handler_start_dragging : 0;
-        break;
-    case 9:
-        if(callback && !cfx_render_handler_update_drag_cursor_callback)
-            cfx_render_handler_update_drag_cursor_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_drag_operations_mask_t operation)) callback;
-        self->update_drag_cursor = callback ? cfx_render_handler_update_drag_cursor : 0;
-        break;
-    case 10:
         if(callback && !cfx_render_handler_on_scroll_offset_changed_callback)
             cfx_render_handler_on_scroll_offset_changed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) callback;
         self->on_scroll_offset_changed = callback ? cfx_render_handler_on_scroll_offset_changed : 0;

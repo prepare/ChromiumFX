@@ -161,35 +161,6 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall : RenderProcessCall {
-
-        internal CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall()
-            : base(RemoteCallId.CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall) {}
-
-        internal string mimeType;
-        internal System.Collections.Generic.List<string> extensions;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(mimeType);
-            h.Write(extensions);
-        }
-
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out mimeType);
-            h.Read(out extensions);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            CfxRuntime.GetExtensionsForMimeType(mimeType, extensions);
-        }
-    }
-
     internal class CfxRuntimeGetMimeTypeRenderProcessCall : RenderProcessCall {
 
         internal CfxRuntimeGetMimeTypeRenderProcessCall()

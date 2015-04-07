@@ -39,9 +39,7 @@
 #pragma once
 
 #include "include/cef_base.h"
-#include "include/cef_drag_data.h"
 #include "include/cef_frame.h"
-#include "include/cef_navigation_entry.h"
 #include "include/cef_process_message.h"
 #include "include/cef_request_context.h"
 #include <vector>
@@ -160,7 +158,7 @@ class CefBrowser : public virtual CefBase {
   ///
   // Returns the frame with the specified name, or NULL if not found.
   ///
-  /*--cef(optional_param=name)--*/
+  /*--cef()--*/
   virtual CefRefPtr<CefFrame> GetFrame(const CefString& name) =0;
 
   ///
@@ -212,28 +210,6 @@ class CefRunFileDialogCallback : public virtual CefBase {
 
 
 ///
-// Callback interface for CefBrowserHost::GetNavigationEntries. The methods of
-// this class will be called on the browser process UI thread.
-///
-/*--cef(source=client)--*/
-class CefNavigationEntryVisitor : public virtual CefBase {
- public:
-  ///
-  // Method that will be executed. Do not keep a reference to |entry| outside of
-  // this callback. Return true to continue visiting entries or false to stop.
-  // |current| is true if this entry is the currently loaded navigation entry.
-  // |index| is the 0-based index of this entry and |total| is the total number
-  // of entries.
-  ///
-  /*--cef()--*/
-  virtual bool Visit(CefRefPtr<CefNavigationEntry> entry,
-                     bool current,
-                     int index,
-                     int total) =0;
-};
-
-
-///
 // Class used to represent the browser process aspects of a browser window. The
 // methods of this class can only be called in the browser process. They may be
 // called on any thread in that process unless otherwise indicated in the
@@ -242,7 +218,6 @@ class CefNavigationEntryVisitor : public virtual CefBase {
 /*--cef(source=library)--*/
 class CefBrowserHost : public virtual CefBase {
  public:
-  typedef cef_drag_operations_mask_t DragOperationsMask;
   typedef cef_file_dialog_mode_t FileDialogMode;
   typedef cef_mouse_button_type_t MouseButtonType;
   typedef cef_paint_element_type_t PaintElementType;
@@ -282,6 +257,15 @@ class CefBrowserHost : public virtual CefBase {
   ///
   /*--cef()--*/
   virtual CefRefPtr<CefBrowser> GetBrowser() =0;
+
+  ///
+  // Call this method before destroying a contained browser window. This method
+  // performs any internal cleanup that may be needed before the browser window
+  // is destroyed. See CefLifeSpanHandler::DoClose() documentation for
+  // additional usage information.
+  ///
+  /*--cef()--*/
+  virtual void ParentWindowWillClose() =0;
 
   ///
   // Request that the browser close. The JavaScript 'onbeforeunload' event will
@@ -401,14 +385,12 @@ class CefBrowserHost : public virtual CefBase {
   virtual void StopFinding(bool clearSelection) =0;
 
   ///
-  // Open developer tools in its own window. If |inspect_element_at| is non-
-  // empty the element at the specified (x,y) location will be inspected.
+  // Open developer tools in its own window.
   ///
-  /*--cef(optional_param=inspect_element_at)--*/
+  /*--cef()--*/
   virtual void ShowDevTools(const CefWindowInfo& windowInfo,
                             CefRefPtr<CefClient> client,
-                            const CefBrowserSettings& settings,
-                            const CefPoint& inspect_element_at) =0;
+                            const CefBrowserSettings& settings) =0;
 
   ///
   // Explicitly close the developer tools window if one exists for this browser
@@ -416,17 +398,6 @@ class CefBrowserHost : public virtual CefBase {
   ///
   /*--cef()--*/
   virtual void CloseDevTools() =0;
-
-  ///
-  // Retrieve a snapshot of current navigation entries as values sent to the
-  // specified visitor. If |current_only| is true only the current navigation
-  // entry will be sent, otherwise all navigation entries will be sent.
-  ///
-  ///
-  /*--cef()--*/
-  virtual void GetNavigationEntries(
-      CefRefPtr<CefNavigationEntryVisitor> visitor,
-      bool current_only) =0;
 
   ///
   // Set whether mouse cursor change is disabled.
@@ -439,19 +410,6 @@ class CefBrowserHost : public virtual CefBase {
   ///
   /*--cef()--*/
   virtual bool IsMouseCursorChangeDisabled() =0;
-
-  ///
-  // If a misspelled word is currently selected in an editable node calling
-  // this method will replace it with the specified |word|.
-  ///
-  /*--cef()--*/
-  virtual void ReplaceMisspelling(const CefString& word) =0;
-
-  ///
-  // Add the specified |word| to the spelling dictionary.
-  ///
-  /*--cef()--*/
-  virtual void AddWordToDictionary(const CefString& word) =0;
 
   ///
   // Returns true if window rendering is disabled.
@@ -488,12 +446,12 @@ class CefBrowserHost : public virtual CefBase {
   virtual void NotifyScreenInfoChanged() =0;
 
   ///
-  // Invalidate the view. The browser will call CefRenderHandler::OnPaint
-  // asynchronously. This method is only used when window rendering is
-  // disabled.
+  // Invalidate the |dirtyRect| region of the view. The browser will call
+  // CefRenderHandler::OnPaint asynchronously with the updated regions. This
+  // method is only used when window rendering is disabled.
   ///
   /*--cef()--*/
-  virtual void Invalidate(PaintElementType type) =0;
+  virtual void Invalidate(const CefRect& dirtyRect, PaintElementType type) =0;
 
   ///
   // Send a key event to the browser.
@@ -542,13 +500,6 @@ class CefBrowserHost : public virtual CefBase {
   virtual void SendCaptureLostEvent() =0;
 
   ///
-  // Notify the browser that the window hosting it is about to be moved or
-  // resized. This method is only used on Windows and Linux.
-  ///
-  /*--cef()--*/
-  virtual void NotifyMoveOrResizeStarted() =0;
-
-  ///
   // Get the NSTextInputContext implementation for enabling IME on Mac when
   // window rendering is disabled.
   ///
@@ -567,72 +518,6 @@ class CefBrowserHost : public virtual CefBase {
   ///
   /*--cef()--*/
   virtual void HandleKeyEventAfterTextInputClient(CefEventHandle keyEvent) =0;
-
-  ///
-  // Call this method when the user drags the mouse into the web view (before
-  // calling DragTargetDragOver/DragTargetLeave/DragTargetDrop).
-  // |drag_data| should not contain file contents as this type of data is not
-  // allowed to be dragged into the web view. File contents can be removed using
-  // CefDragData::ResetFileContents (for example, if |drag_data| comes from
-  // CefRenderHandler::StartDragging).
-  // This method is only used when window rendering is disabled.
-  ///
-  /*--cef()--*/
-  virtual void DragTargetDragEnter(CefRefPtr<CefDragData> drag_data,
-                                  const CefMouseEvent& event,
-                                  DragOperationsMask allowed_ops) =0;
-
-  ///
-  // Call this method each time the mouse is moved across the web view during
-  // a drag operation (after calling DragTargetDragEnter and before calling
-  // DragTargetDragLeave/DragTargetDrop).
-  // This method is only used when window rendering is disabled.
-  ///
-  /*--cef()--*/
-  virtual void DragTargetDragOver(const CefMouseEvent& event,
-                                  DragOperationsMask allowed_ops) =0;
-
-  ///
-  // Call this method when the user drags the mouse out of the web view (after
-  // calling DragTargetDragEnter).
-  // This method is only used when window rendering is disabled.
-  ///
-  /*--cef()--*/
-  virtual void DragTargetDragLeave() =0;
-
-  ///
-  // Call this method when the user completes the drag operation by dropping
-  // the object onto the web view (after calling DragTargetDragEnter).
-  // The object being dropped is |drag_data|, given as an argument to
-  // the previous DragTargetDragEnter call.
-  // This method is only used when window rendering is disabled.
-  ///
-  /*--cef()--*/
-  virtual void DragTargetDrop(const CefMouseEvent& event) =0;
-
-  ///
-  // Call this method when the drag operation started by a
-  // CefRenderHandler::StartDragging call has ended either in a drop or
-  // by being cancelled. |x| and |y| are mouse coordinates relative to the
-  // upper-left corner of the view. If the web view is both the drag source
-  // and the drag target then all DragTarget* methods should be called before
-  // DragSource* mthods.
-  // This method is only used when window rendering is disabled.
-  ///
-  /*--cef()--*/
-  virtual void DragSourceEndedAt(int x, int y, DragOperationsMask op) =0;
-
-  ///
-  // Call this method when the drag operation started by a
-  // CefRenderHandler::StartDragging call has completed. This method may be
-  // called immediately without first calling DragSourceEndedAt to cancel a
-  // drag operation. If the web view is both the drag source and the drag
-  // target then all DragTarget* methods should be called before DragSource*
-  // mthods.
-  // This method is only used when window rendering is disabled.
-  ///
-  /*--cef()--*/
-  virtual void DragSourceSystemDragEnded() =0;
 };
 
 #endif  // CEF_INCLUDE_CEF_BROWSER_H_

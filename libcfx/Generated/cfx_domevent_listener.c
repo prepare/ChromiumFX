@@ -31,65 +31,65 @@
 // Generated file. Do not edit.
 
 
-// cef_domvisitor
+// cef_domevent_listener
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct _cfx_domvisitor_t {
-    cef_domvisitor_t cef_domvisitor;
+typedef struct _cfx_domevent_listener_t {
+    cef_domevent_listener_t cef_domevent_listener;
     unsigned int ref_count;
     gc_handle_t gc_handle;
-} cfx_domvisitor_t;
+} cfx_domevent_listener_t;
 
-int CEF_CALLBACK _cfx_domvisitor_add_ref(struct _cef_base_t* base) {
-    return InterlockedIncrement(&((cfx_domvisitor_t*)base)->ref_count);
+int CEF_CALLBACK _cfx_domevent_listener_add_ref(struct _cef_base_t* base) {
+    return InterlockedIncrement(&((cfx_domevent_listener_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_domvisitor_release(struct _cef_base_t* base) {
-    int count = InterlockedDecrement(&((cfx_domvisitor_t*)base)->ref_count);
+int CEF_CALLBACK _cfx_domevent_listener_release(struct _cef_base_t* base) {
+    int count = InterlockedDecrement(&((cfx_domevent_listener_t*)base)->ref_count);
     if(!count) {
-        cfx_gc_handle_free(((cfx_domvisitor_t*)base)->gc_handle);
+        cfx_gc_handle_free(((cfx_domevent_listener_t*)base)->gc_handle);
         free(base);
         return 0;
     }
     return count;
 }
-int CEF_CALLBACK _cfx_domvisitor_get_refct(struct _cef_base_t* base) {
-    return ((cfx_domvisitor_t*)base)->ref_count;
+int CEF_CALLBACK _cfx_domevent_listener_get_refct(struct _cef_base_t* base) {
+    return ((cfx_domevent_listener_t*)base)->ref_count;
 }
 
-static cfx_domvisitor_t* cfx_domvisitor_ctor(gc_handle_t gc_handle) {
-    cfx_domvisitor_t* ptr = (cfx_domvisitor_t*)calloc(1, sizeof(cfx_domvisitor_t));
+static cfx_domevent_listener_t* cfx_domevent_listener_ctor(gc_handle_t gc_handle) {
+    cfx_domevent_listener_t* ptr = (cfx_domevent_listener_t*)calloc(1, sizeof(cfx_domevent_listener_t));
     if(!ptr) return 0;
-    ptr->cef_domvisitor.base.size = sizeof(cef_domvisitor_t);
-    ptr->cef_domvisitor.base.add_ref = _cfx_domvisitor_add_ref;
-    ptr->cef_domvisitor.base.release = _cfx_domvisitor_release;
-    ptr->cef_domvisitor.base.get_refct = _cfx_domvisitor_get_refct;
+    ptr->cef_domevent_listener.base.size = sizeof(cef_domevent_listener_t);
+    ptr->cef_domevent_listener.base.add_ref = _cfx_domevent_listener_add_ref;
+    ptr->cef_domevent_listener.base.release = _cfx_domevent_listener_release;
+    ptr->cef_domevent_listener.base.get_refct = _cfx_domevent_listener_get_refct;
     ptr->ref_count = 1;
     ptr->gc_handle = gc_handle;
     return ptr;
 }
 
-static gc_handle_t cfx_domvisitor_get_gc_handle(cfx_domvisitor_t* self) {
+static gc_handle_t cfx_domevent_listener_get_gc_handle(cfx_domevent_listener_t* self) {
     return self->gc_handle;
 }
 
-// visit
+// handle_event
 
-void (CEF_CALLBACK *cfx_domvisitor_visit_callback)(gc_handle_t self, cef_domdocument_t* document);
+void (CEF_CALLBACK *cfx_domevent_listener_handle_event_callback)(gc_handle_t self, cef_domevent_t* event);
 
-void CEF_CALLBACK cfx_domvisitor_visit(cef_domvisitor_t* self, cef_domdocument_t* document) {
-    cfx_domvisitor_visit_callback(((cfx_domvisitor_t*)self)->gc_handle, document);
+void CEF_CALLBACK cfx_domevent_listener_handle_event(cef_domevent_listener_t* self, cef_domevent_t* event) {
+    cfx_domevent_listener_handle_event_callback(((cfx_domevent_listener_t*)self)->gc_handle, event);
 }
 
 
-static void cfx_domvisitor_set_managed_callback(cef_domvisitor_t* self, int index, void* callback) {
+static void cfx_domevent_listener_set_managed_callback(cef_domevent_listener_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        if(callback && !cfx_domvisitor_visit_callback)
-            cfx_domvisitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_domdocument_t* document)) callback;
-        self->visit = callback ? cfx_domvisitor_visit : 0;
+        if(callback && !cfx_domevent_listener_handle_event_callback)
+            cfx_domevent_listener_handle_event_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_domevent_t* event)) callback;
+        self->handle_event = callback ? cfx_domevent_listener_handle_event : 0;
         break;
     }
 }

@@ -129,23 +129,6 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Get the extensions associated with the given mime type. This should be passed
-        /// in lower case. There could be multiple extensions for a given mime type, like
-        /// "html,htm" for "text/html", or "txt,text,html,..." for "text/*". Any existing
-        /// elements in the provided vector will not be erased.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
-        /// </remarks>
-        public void GetExtensionsForMimeType(string mimeType, System.Collections.Generic.List<string> extensions) {
-            var call = new CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall();
-            call.mimeType = mimeType;
-            call.extensions = extensions;
-            call.Execute(connection);
-        }
-
-        /// <summary>
         /// Returns the mime type for the specified file extension or an NULL string if
         /// unknown.
         /// </summary>

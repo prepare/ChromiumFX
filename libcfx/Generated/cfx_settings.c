@@ -90,14 +90,6 @@ static void cfx_settings_get_multi_threaded_message_loop(cef_settings_t *self, i
     *multi_threaded_message_loop = self->multi_threaded_message_loop;
 }
 
-// cef_settings_t->windowless_rendering_enabled
-static void cfx_settings_set_windowless_rendering_enabled(cef_settings_t *self, int windowless_rendering_enabled) {
-    self->windowless_rendering_enabled = windowless_rendering_enabled;
-}
-static void cfx_settings_get_windowless_rendering_enabled(cef_settings_t *self, int* windowless_rendering_enabled) {
-    *windowless_rendering_enabled = self->windowless_rendering_enabled;
-}
-
 // cef_settings_t->command_line_args_disabled
 static void cfx_settings_set_command_line_args_disabled(cef_settings_t *self, int command_line_args_disabled) {
     self->command_line_args_disabled = command_line_args_disabled;
@@ -165,6 +157,14 @@ static void cfx_settings_set_log_severity(cef_settings_t *self, cef_log_severity
 }
 static void cfx_settings_get_log_severity(cef_settings_t *self, cef_log_severity_t* log_severity) {
     *log_severity = self->log_severity;
+}
+
+// cef_settings_t->release_dcheck_enabled
+static void cfx_settings_set_release_dcheck_enabled(cef_settings_t *self, int release_dcheck_enabled) {
+    self->release_dcheck_enabled = release_dcheck_enabled;
+}
+static void cfx_settings_get_release_dcheck_enabled(cef_settings_t *self, int* release_dcheck_enabled) {
+    *release_dcheck_enabled = self->release_dcheck_enabled;
 }
 
 // cef_settings_t->javascript_flags
