@@ -691,19 +691,6 @@ namespace Chromium {
 
         public class Linux {
 
-            /// <summary>
-            /// Return the singleton X11 display shared with Chromium. The display is not
-            /// thread-safe and must only be accessed on the browser process UI thread.
-            /// </summary>
-            /// <remarks>
-            /// See also the original CEF documentation in
-            /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/linux/cef/include/internal/cef_types_linux.h">linux/cef/include/internal/cef_types_linux.h</see>.
-            /// </remarks>
-            public static IntPtr GetXDisplay() {
-                CfxApi.CheckPlatformOS(CfxPlatformOS.Linux);
-                return CfxApi.cfx_get_xdisplay();
-            }
-
         }
     }
 }
