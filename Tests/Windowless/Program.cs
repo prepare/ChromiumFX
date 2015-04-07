@@ -49,13 +49,13 @@ namespace Windowless {
 
             var settings = new CfxSettings();
             settings.NoSandbox = true;
-            settings.SingleProcess = true;
+            //settings.SingleProcess = true;
             settings.LogSeverity = CfxLogSeverity.Disable;
    
             var assemblyDir = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
-            settings.ResourcesDirPath = assemblyDir;
-            settings.LocalesDirPath = System.IO.Path.Combine(assemblyDir, "locales");
-            
+            settings.ResourcesDirPath = System.IO.Path.Combine(assemblyDir, "cef");
+            settings.LocalesDirPath = System.IO.Path.Combine(assemblyDir, "cef", "locales");
+            settings.BrowserSubprocessPath = System.IO.Path.Combine(assemblyDir, "LinuxTestApp.exe");
             if(!CfxRuntime.Initialize(settings, null))
                 Environment.Exit(-1);
 
