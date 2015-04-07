@@ -488,7 +488,7 @@ Public Class WrapperGenerator
 
         b.Clear()
         b.BeginCfxNamespace(".Remote")
-        b.BeginClass("RemoteCallConstructor", "internal")
+        b.BeginClass("RemoteCallFactory", "internal")
         b.AppendLine("private delegate RemoteCall RemoteCallCtor();")
         b.BeginBlock("private static RemoteCallCtor[] callConstructors = ")
         For Each id In callIds
@@ -502,7 +502,7 @@ Public Class WrapperGenerator
         b.EndBlock()
         b.EndBlock()
         b.EndBlock()
-        fileManager.WriteFileIfContentChanged("RemoteCallConstructor.cs", b.ToString())
+        fileManager.WriteFileIfContentChanged("RemoteCallFactory.cs", b.ToString())
 
 
     End Sub
