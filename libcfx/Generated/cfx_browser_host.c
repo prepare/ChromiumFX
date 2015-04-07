@@ -58,6 +58,11 @@ static cef_browser_t* cfx_browser_host_get_browser(cef_browser_host_t* self) {
     return self->get_browser(self);
 }
 
+// parent_window_will_close
+static void cfx_browser_host_parent_window_will_close(cef_browser_host_t* self) {
+    self->parent_window_will_close(self);
+}
+
 // close_browser
 static void cfx_browser_host_close_browser(cef_browser_host_t* self, int force_close) {
     self->close_browser(self, force_close);
@@ -134,20 +139,14 @@ static void cfx_browser_host_stop_finding(cef_browser_host_t* self, int clearSel
 }
 
 // show_dev_tools
-static void cfx_browser_host_show_dev_tools(cef_browser_host_t* self, const cef_window_info_t* windowInfo, cef_client_t* client, const cef_browser_settings_t* settings, const cef_point_t* inspect_element_at) {
+static void cfx_browser_host_show_dev_tools(cef_browser_host_t* self, const cef_window_info_t* windowInfo, cef_client_t* client, const cef_browser_settings_t* settings) {
     if(client) ((cef_base_t*)client)->add_ref((cef_base_t*)client);
-    self->show_dev_tools(self, windowInfo, client, settings, inspect_element_at);
+    self->show_dev_tools(self, windowInfo, client, settings);
 }
 
 // close_dev_tools
 static void cfx_browser_host_close_dev_tools(cef_browser_host_t* self) {
     self->close_dev_tools(self);
-}
-
-// get_navigation_entries
-static void cfx_browser_host_get_navigation_entries(cef_browser_host_t* self, cef_navigation_entry_visitor_t* visitor, int current_only) {
-    if(visitor) ((cef_base_t*)visitor)->add_ref((cef_base_t*)visitor);
-    self->get_navigation_entries(self, visitor, current_only);
 }
 
 // set_mouse_cursor_change_disabled
@@ -158,18 +157,6 @@ static void cfx_browser_host_set_mouse_cursor_change_disabled(cef_browser_host_t
 // is_mouse_cursor_change_disabled
 static int cfx_browser_host_is_mouse_cursor_change_disabled(cef_browser_host_t* self) {
     return self->is_mouse_cursor_change_disabled(self);
-}
-
-// replace_misspelling
-static void cfx_browser_host_replace_misspelling(cef_browser_host_t* self, char16 *word_str, int word_length) {
-    cef_string_t word = { word_str, word_length, 0 };
-    self->replace_misspelling(self, &word);
-}
-
-// add_word_to_dictionary
-static void cfx_browser_host_add_word_to_dictionary(cef_browser_host_t* self, char16 *word_str, int word_length) {
-    cef_string_t word = { word_str, word_length, 0 };
-    self->add_word_to_dictionary(self, &word);
 }
 
 // is_window_rendering_disabled
@@ -193,8 +180,8 @@ static void cfx_browser_host_notify_screen_info_changed(cef_browser_host_t* self
 }
 
 // invalidate
-static void cfx_browser_host_invalidate(cef_browser_host_t* self, cef_paint_element_type_t type) {
-    self->invalidate(self, type);
+static void cfx_browser_host_invalidate(cef_browser_host_t* self, const cef_rect_t* dirtyRect, cef_paint_element_type_t type) {
+    self->invalidate(self, dirtyRect, type);
 }
 
 // send_key_event
@@ -227,11 +214,6 @@ static void cfx_browser_host_send_capture_lost_event(cef_browser_host_t* self) {
     self->send_capture_lost_event(self);
 }
 
-// notify_move_or_resize_started
-static void cfx_browser_host_notify_move_or_resize_started(cef_browser_host_t* self) {
-    self->notify_move_or_resize_started(self);
-}
-
 // get_nstext_input_context
 static cef_text_input_context_t cfx_browser_host_get_nstext_input_context(cef_browser_host_t* self) {
     return self->get_nstext_input_context(self);
@@ -245,37 +227,6 @@ static void cfx_browser_host_handle_key_event_before_text_input_client(cef_brows
 // handle_key_event_after_text_input_client
 static void cfx_browser_host_handle_key_event_after_text_input_client(cef_browser_host_t* self, cef_event_handle_t keyEvent) {
     self->handle_key_event_after_text_input_client(self, keyEvent);
-}
-
-// drag_target_drag_enter
-static void cfx_browser_host_drag_target_drag_enter(cef_browser_host_t* self, cef_drag_data_t* drag_data, const cef_mouse_event_t* event, cef_drag_operations_mask_t allowed_ops) {
-    if(drag_data) ((cef_base_t*)drag_data)->add_ref((cef_base_t*)drag_data);
-    self->drag_target_drag_enter(self, drag_data, event, allowed_ops);
-}
-
-// drag_target_drag_over
-static void cfx_browser_host_drag_target_drag_over(cef_browser_host_t* self, const cef_mouse_event_t* event, cef_drag_operations_mask_t allowed_ops) {
-    self->drag_target_drag_over(self, event, allowed_ops);
-}
-
-// drag_target_drag_leave
-static void cfx_browser_host_drag_target_drag_leave(cef_browser_host_t* self) {
-    self->drag_target_drag_leave(self);
-}
-
-// drag_target_drop
-static void cfx_browser_host_drag_target_drop(cef_browser_host_t* self, const cef_mouse_event_t* event) {
-    self->drag_target_drop(self, event);
-}
-
-// drag_source_ended_at
-static void cfx_browser_host_drag_source_ended_at(cef_browser_host_t* self, int x, int y, cef_drag_operations_mask_t op) {
-    self->drag_source_ended_at(self, x, y, op);
-}
-
-// drag_source_system_drag_ended
-static void cfx_browser_host_drag_source_system_drag_ended(cef_browser_host_t* self) {
-    self->drag_source_system_drag_ended(self);
 }
 
 

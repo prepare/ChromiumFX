@@ -102,20 +102,6 @@ void CEF_CALLBACK cfx_browser_process_handler_on_render_process_thread_created(c
 }
 
 
-// get_print_handler
-
-void (CEF_CALLBACK *cfx_browser_process_handler_get_print_handler_callback)(gc_handle_t self, cef_print_handler_t** __retval);
-
-cef_print_handler_t* CEF_CALLBACK cfx_browser_process_handler_get_print_handler(cef_browser_process_handler_t* self) {
-    cef_print_handler_t* __retval;
-    cfx_browser_process_handler_get_print_handler_callback(((cfx_browser_process_handler_t*)self)->gc_handle, &__retval);
-    if(__retval) {
-        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
-    }
-    return __retval;
-}
-
-
 static void cfx_browser_process_handler_set_managed_callback(cef_browser_process_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
@@ -132,11 +118,6 @@ static void cfx_browser_process_handler_set_managed_callback(cef_browser_process
         if(callback && !cfx_browser_process_handler_on_render_process_thread_created_callback)
             cfx_browser_process_handler_on_render_process_thread_created_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_list_value_t* extra_info)) callback;
         self->on_render_process_thread_created = callback ? cfx_browser_process_handler_on_render_process_thread_created : 0;
-        break;
-    case 3:
-        if(callback && !cfx_browser_process_handler_get_print_handler_callback)
-            cfx_browser_process_handler_get_print_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_print_handler_t** __retval)) callback;
-        self->get_print_handler = callback ? cfx_browser_process_handler_get_print_handler : 0;
         break;
     }
 }

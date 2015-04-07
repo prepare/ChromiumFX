@@ -173,53 +173,49 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Set to true (1) to create the browser using windowless (off-screen)
-        /// rendering. No window will be created for the browser and all rendering will
-        /// occur via the CfxRenderHandler interface. The |parentWindow| value will be
-        /// used to identify monitor info and to act as the parent window for dialogs,
-        /// context menus, etc. If |parentWindow| is not provided then the main screen
-        /// monitor will be used and some functionality that requires a parent window
-        /// may not function correctly. In order to create windowless browsers the
-        /// CfxSettings.WindowlessRenderingEnabled value must be set to true.
+        /// If window rendering is disabled no browser window will be created. Set
+        /// |parentWindow| to be used for identifying monitor info
+        /// (MonitorFromWindow). If |parentWindow| is not provided the main screen
+        /// monitor will be used.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types_win.h">cef/include/internal/cef_types_win.h</see>.
         /// </remarks>
-        public bool WindowlessRenderingEnabled {
+        public bool WindowRenderingDisabled {
             get {
                 int value;
-                CfxApi.cfx_window_info_windows_get_windowless_rendering_enabled(nativePtrUnchecked, out value);
+                CfxApi.cfx_window_info_windows_get_window_rendering_disabled(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_window_info_windows_set_windowless_rendering_enabled(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.cfx_window_info_windows_set_window_rendering_disabled(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
         /// <summary>
-        /// Set to true (1) to enable transparent painting in combination with
-        /// windowless rendering. When this value is true a transparent background
-        /// color will be used (RGBA=0x00000000). When this value is false the
-        /// background will be white and opaque.
+        /// Set to true to enable transparent painting.
+        /// If window rendering is disabled and |transparentPainting| is set to true
+        /// WebKit rendering will draw on a transparent background (RGBA=0x00000000).
+        /// When this value is false the background will be white and opaque.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types_win.h">cef/include/internal/cef_types_win.h</see>.
         /// </remarks>
-        public bool TransparentPaintingEnabled {
+        public bool TransparentPainting {
             get {
                 int value;
-                CfxApi.cfx_window_info_windows_get_transparent_painting_enabled(nativePtrUnchecked, out value);
+                CfxApi.cfx_window_info_windows_get_transparent_painting(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_window_info_windows_set_transparent_painting_enabled(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.cfx_window_info_windows_set_transparent_painting(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
         /// <summary>
-        /// Handle for the new browser window. Only used with windowed rendering.
+        /// Handle for the new browser window.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

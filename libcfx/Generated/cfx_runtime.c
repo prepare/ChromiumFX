@@ -60,11 +60,10 @@ static const char* cfx_api_hash(int entry) {
     return cef_api_hash(entry);
 }
 
-// CEF_EXPORT int cef_begin_tracing(const cef_string_t* categories, cef_completion_callback_t* callback);
-static int cfx_begin_tracing(char16 *categories_str, int categories_length, cef_completion_callback_t* callback) {
+// CEF_EXPORT int cef_begin_tracing(const cef_string_t* categories);
+static int cfx_begin_tracing(char16 *categories_str, int categories_length) {
     cef_string_t categories = { categories_str, categories_length, 0 };
-    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
-    return cef_begin_tracing(&categories, callback);
+    return cef_begin_tracing(&categories);
 }
 
 // CEF_EXPORT int cef_build_revision();
@@ -100,11 +99,11 @@ static void cfx_do_message_loop_work() {
     cef_do_message_loop_work();
 }
 
-// CEF_EXPORT int cef_end_tracing(const cef_string_t* tracing_file, cef_end_tracing_callback_t* callback);
-static int cfx_end_tracing(char16 *tracing_file_str, int tracing_file_length, cef_end_tracing_callback_t* callback) {
+// CEF_EXPORT int cef_end_tracing_async(const cef_string_t* tracing_file, cef_end_tracing_callback_t* callback);
+static int cfx_end_tracing_async(char16 *tracing_file_str, int tracing_file_length, cef_end_tracing_callback_t* callback) {
     cef_string_t tracing_file = { tracing_file_str, tracing_file_length, 0 };
     if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
-    return cef_end_tracing(&tracing_file, callback);
+    return cef_end_tracing_async(&tracing_file, callback);
 }
 
 // CEF_EXPORT int cef_execute_process(const cef_main_args_t* args, cef_app_t* application, void* windows_sandbox_info);
@@ -121,12 +120,6 @@ static int cfx_execute_process(const cef_main_args_t* args, cef_app_t* applicati
 static void cfx_force_web_plugin_shutdown(char16 *path_str, int path_length) {
     cef_string_t path = { path_str, path_length, 0 };
     cef_force_web_plugin_shutdown(&path);
-}
-
-// CEF_EXPORT void cef_get_extensions_for_mime_type(const cef_string_t* mime_type, cef_string_list_t extensions);
-static void cfx_get_extensions_for_mime_type(char16 *mime_type_str, int mime_type_length, cef_string_list_t extensions) {
-    cef_string_t mime_type = { mime_type_str, mime_type_length, 0 };
-    cef_get_extensions_for_mime_type(&mime_type, extensions);
 }
 
 // CEF_EXPORT int cef_get_geolocation(cef_get_geolocation_callback_t* callback);

@@ -65,27 +65,6 @@ namespace Chromium {
         internal CfxBrowserSettings(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         /// <summary>
-        /// The maximum rate in frames per second (fps) that CfxRenderHandler.OnPaint
-        /// will be called for a windowless browser. The actual fps may be lower if
-        /// the browser cannot generate frames at the requested rate. The minimum
-        /// value is 1 and the maximum value is 60 (default 30).
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
-        /// </remarks>
-        public int WindowlessFrameRate {
-            get {
-                int value;
-                CfxApi.cfx_browser_settings_get_windowless_frame_rate(nativePtrUnchecked, out value);
-                return value;
-            }
-            set {
-                CfxApi.cfx_browser_settings_set_windowless_frame_rate(nativePtrUnchecked, value);
-            }
-        }
-
-        /// <summary>
         /// The below values map to WebPreferences settings.
         /// Font settings.
         /// </summary>
@@ -630,6 +609,27 @@ namespace Chromium {
             }
             set {
                 CfxApi.cfx_browser_settings_set_webgl(nativePtrUnchecked, value);
+            }
+        }
+
+        /// <summary>
+        /// Controls whether content that depends on accelerated compositing can be
+        /// used. Note that accelerated compositing requires hardware support and may
+        /// not work on all systems even when enabled. Also configurable using the
+        /// "disable-accelerated-compositing" command-line switch.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
+        public CfxState AcceleratedCompositing {
+            get {
+                CfxState value;
+                CfxApi.cfx_browser_settings_get_accelerated_compositing(nativePtrUnchecked, out value);
+                return value;
+            }
+            set {
+                CfxApi.cfx_browser_settings_set_accelerated_compositing(nativePtrUnchecked, value);
             }
         }
 

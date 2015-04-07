@@ -121,20 +121,20 @@ static void cfx_window_info_windows_get_menu(cef_window_info_t *self, HMENU* men
     *menu = self->menu;
 }
 
-// cef_window_info_t->windowless_rendering_enabled
-static void cfx_window_info_windows_set_windowless_rendering_enabled(cef_window_info_t *self, int windowless_rendering_enabled) {
-    self->windowless_rendering_enabled = windowless_rendering_enabled;
+// cef_window_info_t->window_rendering_disabled
+static void cfx_window_info_windows_set_window_rendering_disabled(cef_window_info_t *self, int window_rendering_disabled) {
+    self->window_rendering_disabled = (BOOL)(window_rendering_disabled);
 }
-static void cfx_window_info_windows_get_windowless_rendering_enabled(cef_window_info_t *self, int* windowless_rendering_enabled) {
-    *windowless_rendering_enabled = self->windowless_rendering_enabled;
+static void cfx_window_info_windows_get_window_rendering_disabled(cef_window_info_t *self, int* window_rendering_disabled) {
+    *window_rendering_disabled = (self->window_rendering_disabled) ? 1 : 0;
 }
 
-// cef_window_info_t->transparent_painting_enabled
-static void cfx_window_info_windows_set_transparent_painting_enabled(cef_window_info_t *self, int transparent_painting_enabled) {
-    self->transparent_painting_enabled = transparent_painting_enabled;
+// cef_window_info_t->transparent_painting
+static void cfx_window_info_windows_set_transparent_painting(cef_window_info_t *self, int transparent_painting) {
+    self->transparent_painting = (BOOL)(transparent_painting);
 }
-static void cfx_window_info_windows_get_transparent_painting_enabled(cef_window_info_t *self, int* transparent_painting_enabled) {
-    *transparent_painting_enabled = self->transparent_painting_enabled;
+static void cfx_window_info_windows_get_transparent_painting(cef_window_info_t *self, int* transparent_painting) {
+    *transparent_painting = (self->transparent_painting) ? 1 : 0;
 }
 
 // cef_window_info_t->window
@@ -166,10 +166,10 @@ static void cfx_window_info_windows_get_window(cef_window_info_t *self, cef_wind
 #define cfx_window_info_windows_get_parent_window 0
 #define cfx_window_info_windows_set_menu 0
 #define cfx_window_info_windows_get_menu 0
-#define cfx_window_info_windows_set_windowless_rendering_enabled 0
-#define cfx_window_info_windows_get_windowless_rendering_enabled 0
-#define cfx_window_info_windows_set_transparent_painting_enabled 0
-#define cfx_window_info_windows_get_transparent_painting_enabled 0
+#define cfx_window_info_windows_set_window_rendering_disabled 0
+#define cfx_window_info_windows_get_window_rendering_disabled 0
+#define cfx_window_info_windows_set_transparent_painting 0
+#define cfx_window_info_windows_get_transparent_painting 0
 #define cfx_window_info_windows_set_window 0
 #define cfx_window_info_windows_get_window 0
 #endif //ifdef CFX_WINDOWS

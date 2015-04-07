@@ -34,14 +34,13 @@
 using System;
 
 namespace Chromium.Remote {
-    internal class RemoteCallFactory {
+    internal class RemoteCallConstructor {
         private delegate RemoteCall RemoteCallCtor();
         private static RemoteCallCtor[] callConstructors =  {
             () => { return new CfxRuntimeAddCrossOriginWhitelistEntryRenderProcessCall(); },
             () => { return new CfxRuntimeClearCrossOriginWhitelistRenderProcessCall(); },
             () => { return new CfxRuntimeCreateUrlRenderProcessCall(); },
             () => { return new CfxRuntimeCurrentlyOnRenderProcessCall(); },
-            () => { return new CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall(); },
             () => { return new CfxRuntimeGetMimeTypeRenderProcessCall(); },
             () => { return new CfxRuntimeNowFromSystemTraceTimeRenderProcessCall(); },
             () => { return new CfxRuntimeParseUrlRenderProcessCall(); },
@@ -157,6 +156,19 @@ namespace Chromium.Remote {
             () => { return new CfxDomDocumentGetSelectionAsTextRenderProcessCall(); },
             () => { return new CfxDomDocumentGetBaseUrlRenderProcessCall(); },
             () => { return new CfxDomDocumentGetCompleteUrlRenderProcessCall(); },
+            () => { return new CfxDomEventGetTypeRenderProcessCall(); },
+            () => { return new CfxDomEventGetCategoryRenderProcessCall(); },
+            () => { return new CfxDomEventGetPhaseRenderProcessCall(); },
+            () => { return new CfxDomEventCanBubbleRenderProcessCall(); },
+            () => { return new CfxDomEventCanCancelRenderProcessCall(); },
+            () => { return new CfxDomEventGetDocumentRenderProcessCall(); },
+            () => { return new CfxDomEventGetTargetRenderProcessCall(); },
+            () => { return new CfxDomEventGetCurrentTargetRenderProcessCall(); },
+            () => { return new CfxDomEventListenerCtorRenderProcessCall(); },
+            () => { return new CfxDomEventListenerHandleEventBrowserProcessCall(); },
+            () => { return new CfxDomEventListenerHandleEventActivateRenderProcessCall(); },
+            () => { return new CfxDomEventListenerHandleEventDeactivateRenderProcessCall(); },
+            () => { return new CfxDomEventListenerHandleEventGetEventRenderProcessCall(); },
             () => { return new CfxDomNodeGetTypeRenderProcessCall(); },
             () => { return new CfxDomNodeIsTextRenderProcessCall(); },
             () => { return new CfxDomNodeIsElementRenderProcessCall(); },
@@ -175,6 +187,7 @@ namespace Chromium.Remote {
             () => { return new CfxDomNodeHasChildrenRenderProcessCall(); },
             () => { return new CfxDomNodeGetFirstChildRenderProcessCall(); },
             () => { return new CfxDomNodeGetLastChildRenderProcessCall(); },
+            () => { return new CfxDomNodeAddEventListenerRenderProcessCall(); },
             () => { return new CfxDomNodeGetElementTagNameRenderProcessCall(); },
             () => { return new CfxDomNodeHasElementAttributesRenderProcessCall(); },
             () => { return new CfxDomNodeHasElementAttributeRenderProcessCall(); },

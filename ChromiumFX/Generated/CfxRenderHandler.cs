@@ -199,56 +199,17 @@ namespace Chromium {
 
         // on_cursor_change
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_render_handler_on_cursor_change_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr cursor, CfxCursorType type, IntPtr custom_cursor_info);
+        private delegate void cfx_render_handler_on_cursor_change_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr cursor);
         private static cfx_render_handler_on_cursor_change_delegate cfx_render_handler_on_cursor_change;
         private static IntPtr cfx_render_handler_on_cursor_change_ptr;
 
-        internal static void on_cursor_change(IntPtr gcHandlePtr, IntPtr browser, IntPtr cursor, CfxCursorType type, IntPtr custom_cursor_info) {
+        internal static void on_cursor_change(IntPtr gcHandlePtr, IntPtr browser, IntPtr cursor) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 return;
             }
-            var e = new CfxOnCursorChangeEventArgs(browser, cursor, type, custom_cursor_info);
+            var e = new CfxOnCursorChangeEventArgs(browser, cursor);
             var eventHandler = self.m_OnCursorChange;
-            if(eventHandler != null) eventHandler(self, e);
-            e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-        }
-
-        // start_dragging
-        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_render_handler_start_dragging_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr drag_data, CfxDragOperationsMask allowed_ops, int x, int y);
-        private static cfx_render_handler_start_dragging_delegate cfx_render_handler_start_dragging;
-        private static IntPtr cfx_render_handler_start_dragging_ptr;
-
-        internal static void start_dragging(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr drag_data, CfxDragOperationsMask allowed_ops, int x, int y) {
-            var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
-                __retval = default(int);
-                return;
-            }
-            var e = new CfxStartDraggingEventArgs(browser, drag_data, allowed_ops, x, y);
-            var eventHandler = self.m_StartDragging;
-            if(eventHandler != null) eventHandler(self, e);
-            e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            if(e.m_drag_data_wrapped == null) CfxApi.cfx_release(e.m_drag_data);
-            __retval = e.m_returnValue ? 1 : 0;
-        }
-
-        // update_drag_cursor
-        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_render_handler_update_drag_cursor_delegate(IntPtr gcHandlePtr, IntPtr browser, CfxDragOperationsMask operation);
-        private static cfx_render_handler_update_drag_cursor_delegate cfx_render_handler_update_drag_cursor;
-        private static IntPtr cfx_render_handler_update_drag_cursor_ptr;
-
-        internal static void update_drag_cursor(IntPtr gcHandlePtr, IntPtr browser, CfxDragOperationsMask operation) {
-            var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
-                return;
-            }
-            var e = new CfxUpdateDragCursorEventArgs(browser, operation);
-            var eventHandler = self.m_UpdateDragCursor;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
@@ -481,8 +442,8 @@ namespace Chromium {
         /// Called when an element should be painted. |Type| indicates whether the
         /// element is the view or the popup widget. |Buffer| contains the pixel data
         /// for the whole image. |DirtyRects| contains the set of rectangles that need
-        /// to be repainted. |Buffer| will be |Width|*|Height|*4 bytes in size and
-        /// represents a BGRA image with an upper-left origin.
+        /// to be repainted. On Windows |Buffer| will be |Width|*|Height|*4 bytes in
+        /// size and represents a BGRA image with an upper-left origin.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -514,8 +475,7 @@ namespace Chromium {
         private CfxOnPaintEventHandler m_OnPaint;
 
         /// <summary>
-        /// Called when the browser's cursor has changed. If |Type| is CT_CUSTOM then
-        /// |CustomCursorInfo| will be populated with the custom cursor information.
+        /// Called when the browser window's cursor has changed.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -547,80 +507,6 @@ namespace Chromium {
         private CfxOnCursorChangeEventHandler m_OnCursorChange;
 
         /// <summary>
-        /// Called when the user starts dragging content in the web view. Contextual
-        /// information about the dragged content is supplied by |DragData|. OS APIs
-        /// that run a system message loop may be used within the StartDragging call.
-        /// Return false (0) to abort the drag operation. Don't call any of
-        /// CfxBrowserHost.DragSource*Ended* functions after returning false (0).
-        /// Return true (1) to handle the drag operation. Call
-        /// CfxBrowserHost.DragSourceEndedAt and DragSourceSystemDragEnded either
-        /// synchronously or asynchronously to inform the web view that the drag
-        /// operation has ended.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
-        /// </remarks>
-        public event CfxStartDraggingEventHandler StartDragging {
-            add {
-                lock(eventLock) {
-                    if(m_StartDragging == null) {
-                        if(cfx_render_handler_start_dragging == null) {
-                            cfx_render_handler_start_dragging = start_dragging;
-                            cfx_render_handler_start_dragging_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_render_handler_start_dragging);
-                        }
-                        CfxApi.cfx_render_handler_set_managed_callback(NativePtr, 8, cfx_render_handler_start_dragging_ptr);
-                    }
-                    m_StartDragging += value;
-                }
-            }
-            remove {
-                lock(eventLock) {
-                    m_StartDragging -= value;
-                    if(m_StartDragging == null) {
-                        CfxApi.cfx_render_handler_set_managed_callback(NativePtr, 8, IntPtr.Zero);
-                    }
-                }
-            }
-        }
-
-        private CfxStartDraggingEventHandler m_StartDragging;
-
-        /// <summary>
-        /// Called when the web view wants to update the mouse cursor during a drag &amp;
-        /// drop operation. |Operation| describes the allowed operation (none, move,
-        /// copy, link).
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
-        /// </remarks>
-        public event CfxUpdateDragCursorEventHandler UpdateDragCursor {
-            add {
-                lock(eventLock) {
-                    if(m_UpdateDragCursor == null) {
-                        if(cfx_render_handler_update_drag_cursor == null) {
-                            cfx_render_handler_update_drag_cursor = update_drag_cursor;
-                            cfx_render_handler_update_drag_cursor_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_render_handler_update_drag_cursor);
-                        }
-                        CfxApi.cfx_render_handler_set_managed_callback(NativePtr, 9, cfx_render_handler_update_drag_cursor_ptr);
-                    }
-                    m_UpdateDragCursor += value;
-                }
-            }
-            remove {
-                lock(eventLock) {
-                    m_UpdateDragCursor -= value;
-                    if(m_UpdateDragCursor == null) {
-                        CfxApi.cfx_render_handler_set_managed_callback(NativePtr, 9, IntPtr.Zero);
-                    }
-                }
-            }
-        }
-
-        private CfxUpdateDragCursorEventHandler m_UpdateDragCursor;
-
-        /// <summary>
         /// Called when the scroll offset has changed.
         /// </summary>
         /// <remarks>
@@ -635,7 +521,7 @@ namespace Chromium {
                             cfx_render_handler_on_scroll_offset_changed = on_scroll_offset_changed;
                             cfx_render_handler_on_scroll_offset_changed_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_render_handler_on_scroll_offset_changed);
                         }
-                        CfxApi.cfx_render_handler_set_managed_callback(NativePtr, 10, cfx_render_handler_on_scroll_offset_changed_ptr);
+                        CfxApi.cfx_render_handler_set_managed_callback(NativePtr, 8, cfx_render_handler_on_scroll_offset_changed_ptr);
                     }
                     m_OnScrollOffsetChanged += value;
                 }
@@ -644,7 +530,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnScrollOffsetChanged -= value;
                     if(m_OnScrollOffsetChanged == null) {
-                        CfxApi.cfx_render_handler_set_managed_callback(NativePtr, 10, IntPtr.Zero);
+                        CfxApi.cfx_render_handler_set_managed_callback(NativePtr, 8, IntPtr.Zero);
                     }
                 }
             }
@@ -685,17 +571,9 @@ namespace Chromium {
                 m_OnCursorChange = null;
                 CfxApi.cfx_render_handler_set_managed_callback(NativePtr, 7, IntPtr.Zero);
             }
-            if(m_StartDragging != null) {
-                m_StartDragging = null;
-                CfxApi.cfx_render_handler_set_managed_callback(NativePtr, 8, IntPtr.Zero);
-            }
-            if(m_UpdateDragCursor != null) {
-                m_UpdateDragCursor = null;
-                CfxApi.cfx_render_handler_set_managed_callback(NativePtr, 9, IntPtr.Zero);
-            }
             if(m_OnScrollOffsetChanged != null) {
                 m_OnScrollOffsetChanged = null;
-                CfxApi.cfx_render_handler_set_managed_callback(NativePtr, 10, IntPtr.Zero);
+                CfxApi.cfx_render_handler_set_managed_callback(NativePtr, 8, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -1139,8 +1017,8 @@ namespace Chromium {
         /// Called when an element should be painted. |Type| indicates whether the
         /// element is the view or the popup widget. |Buffer| contains the pixel data
         /// for the whole image. |DirtyRects| contains the set of rectangles that need
-        /// to be repainted. |Buffer| will be |Width|*|Height|*4 bytes in size and
-        /// represents a BGRA image with an upper-left origin.
+        /// to be repainted. On Windows |Buffer| will be |Width|*|Height|*4 bytes in
+        /// size and represents a BGRA image with an upper-left origin.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -1152,8 +1030,8 @@ namespace Chromium {
         /// Called when an element should be painted. |Type| indicates whether the
         /// element is the view or the popup widget. |Buffer| contains the pixel data
         /// for the whole image. |DirtyRects| contains the set of rectangles that need
-        /// to be repainted. |Buffer| will be |Width|*|Height|*4 bytes in size and
-        /// represents a BGRA image with an upper-left origin.
+        /// to be repainted. On Windows |Buffer| will be |Width|*|Height|*4 bytes in
+        /// size and represents a BGRA image with an upper-left origin.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -1257,8 +1135,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Called when the browser's cursor has changed. If |Type| is CT_CUSTOM then
-        /// |CustomCursorInfo| will be populated with the custom cursor information.
+        /// Called when the browser window's cursor has changed.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -1267,8 +1144,7 @@ namespace Chromium {
         public delegate void CfxOnCursorChangeEventHandler(object sender, CfxOnCursorChangeEventArgs e);
 
         /// <summary>
-        /// Called when the browser's cursor has changed. If |Type| is CT_CUSTOM then
-        /// |CustomCursorInfo| will be populated with the custom cursor information.
+        /// Called when the browser window's cursor has changed.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -1279,15 +1155,10 @@ namespace Chromium {
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
             internal IntPtr m_cursor;
-            internal CfxCursorType m_type;
-            internal IntPtr m_custom_cursor_info;
-            internal CfxCursorInfo m_custom_cursor_info_wrapped;
 
-            internal CfxOnCursorChangeEventArgs(IntPtr browser, IntPtr cursor, CfxCursorType type, IntPtr custom_cursor_info) {
+            internal CfxOnCursorChangeEventArgs(IntPtr browser, IntPtr cursor) {
                 m_browser = browser;
                 m_cursor = cursor;
-                m_type = type;
-                m_custom_cursor_info = custom_cursor_info;
             }
 
             /// <summary>
@@ -1309,202 +1180,9 @@ namespace Chromium {
                     return m_cursor;
                 }
             }
-            /// <summary>
-            /// Get the Type parameter for the <see cref="CfxRenderHandler.OnCursorChange"/> callback.
-            /// </summary>
-            public CfxCursorType Type {
-                get {
-                    CheckAccess();
-                    return m_type;
-                }
-            }
-            /// <summary>
-            /// Get the CustomCursorInfo parameter for the <see cref="CfxRenderHandler.OnCursorChange"/> callback.
-            /// </summary>
-            public CfxCursorInfo CustomCursorInfo {
-                get {
-                    CheckAccess();
-                    if(m_custom_cursor_info_wrapped == null) m_custom_cursor_info_wrapped = CfxCursorInfo.Wrap(m_custom_cursor_info);
-                    return m_custom_cursor_info_wrapped;
-                }
-            }
 
             public override string ToString() {
-                return String.Format("Browser={{{0}}}, Cursor={{{1}}}, Type={{{2}}}, CustomCursorInfo={{{3}}}", Browser, Cursor, Type, CustomCursorInfo);
-            }
-        }
-
-        /// <summary>
-        /// Called when the user starts dragging content in the web view. Contextual
-        /// information about the dragged content is supplied by |DragData|. OS APIs
-        /// that run a system message loop may be used within the StartDragging call.
-        /// Return false (0) to abort the drag operation. Don't call any of
-        /// CfxBrowserHost.DragSource*Ended* functions after returning false (0).
-        /// Return true (1) to handle the drag operation. Call
-        /// CfxBrowserHost.DragSourceEndedAt and DragSourceSystemDragEnded either
-        /// synchronously or asynchronously to inform the web view that the drag
-        /// operation has ended.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
-        /// </remarks>
-        public delegate void CfxStartDraggingEventHandler(object sender, CfxStartDraggingEventArgs e);
-
-        /// <summary>
-        /// Called when the user starts dragging content in the web view. Contextual
-        /// information about the dragged content is supplied by |DragData|. OS APIs
-        /// that run a system message loop may be used within the StartDragging call.
-        /// Return false (0) to abort the drag operation. Don't call any of
-        /// CfxBrowserHost.DragSource*Ended* functions after returning false (0).
-        /// Return true (1) to handle the drag operation. Call
-        /// CfxBrowserHost.DragSourceEndedAt and DragSourceSystemDragEnded either
-        /// synchronously or asynchronously to inform the web view that the drag
-        /// operation has ended.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
-        /// </remarks>
-        public class CfxStartDraggingEventArgs : CfxEventArgs {
-
-            internal IntPtr m_browser;
-            internal CfxBrowser m_browser_wrapped;
-            internal IntPtr m_drag_data;
-            internal CfxDragData m_drag_data_wrapped;
-            internal CfxDragOperationsMask m_allowed_ops;
-            internal int m_x;
-            internal int m_y;
-
-            internal bool m_returnValue;
-            private bool returnValueSet;
-
-            internal CfxStartDraggingEventArgs(IntPtr browser, IntPtr drag_data, CfxDragOperationsMask allowed_ops, int x, int y) {
-                m_browser = browser;
-                m_drag_data = drag_data;
-                m_allowed_ops = allowed_ops;
-                m_x = x;
-                m_y = y;
-            }
-
-            /// <summary>
-            /// Get the Browser parameter for the <see cref="CfxRenderHandler.StartDragging"/> callback.
-            /// </summary>
-            public CfxBrowser Browser {
-                get {
-                    CheckAccess();
-                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                    return m_browser_wrapped;
-                }
-            }
-            /// <summary>
-            /// Get the DragData parameter for the <see cref="CfxRenderHandler.StartDragging"/> callback.
-            /// </summary>
-            public CfxDragData DragData {
-                get {
-                    CheckAccess();
-                    if(m_drag_data_wrapped == null) m_drag_data_wrapped = CfxDragData.Wrap(m_drag_data);
-                    return m_drag_data_wrapped;
-                }
-            }
-            /// <summary>
-            /// Get the AllowedOps parameter for the <see cref="CfxRenderHandler.StartDragging"/> callback.
-            /// </summary>
-            public CfxDragOperationsMask AllowedOps {
-                get {
-                    CheckAccess();
-                    return m_allowed_ops;
-                }
-            }
-            /// <summary>
-            /// Get the X parameter for the <see cref="CfxRenderHandler.StartDragging"/> callback.
-            /// </summary>
-            public int X {
-                get {
-                    CheckAccess();
-                    return m_x;
-                }
-            }
-            /// <summary>
-            /// Get the Y parameter for the <see cref="CfxRenderHandler.StartDragging"/> callback.
-            /// </summary>
-            public int Y {
-                get {
-                    CheckAccess();
-                    return m_y;
-                }
-            }
-            /// <summary>
-            /// Set the return value for the <see cref="CfxRenderHandler.StartDragging"/> callback.
-            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
-            /// </summary>
-            public void SetReturnValue(bool returnValue) {
-                CheckAccess();
-                if(returnValueSet) {
-                    throw new CfxException("The return value has already been set");
-                }
-                returnValueSet = true;
-                this.m_returnValue = returnValue;
-            }
-
-            public override string ToString() {
-                return String.Format("Browser={{{0}}}, DragData={{{1}}}, AllowedOps={{{2}}}, X={{{3}}}, Y={{{4}}}", Browser, DragData, AllowedOps, X, Y);
-            }
-        }
-
-        /// <summary>
-        /// Called when the web view wants to update the mouse cursor during a drag &amp;
-        /// drop operation. |Operation| describes the allowed operation (none, move,
-        /// copy, link).
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
-        /// </remarks>
-        public delegate void CfxUpdateDragCursorEventHandler(object sender, CfxUpdateDragCursorEventArgs e);
-
-        /// <summary>
-        /// Called when the web view wants to update the mouse cursor during a drag &amp;
-        /// drop operation. |Operation| describes the allowed operation (none, move,
-        /// copy, link).
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
-        /// </remarks>
-        public class CfxUpdateDragCursorEventArgs : CfxEventArgs {
-
-            internal IntPtr m_browser;
-            internal CfxBrowser m_browser_wrapped;
-            internal CfxDragOperationsMask m_operation;
-
-            internal CfxUpdateDragCursorEventArgs(IntPtr browser, CfxDragOperationsMask operation) {
-                m_browser = browser;
-                m_operation = operation;
-            }
-
-            /// <summary>
-            /// Get the Browser parameter for the <see cref="CfxRenderHandler.UpdateDragCursor"/> callback.
-            /// </summary>
-            public CfxBrowser Browser {
-                get {
-                    CheckAccess();
-                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                    return m_browser_wrapped;
-                }
-            }
-            /// <summary>
-            /// Get the Operation parameter for the <see cref="CfxRenderHandler.UpdateDragCursor"/> callback.
-            /// </summary>
-            public CfxDragOperationsMask Operation {
-                get {
-                    CheckAccess();
-                    return m_operation;
-                }
-            }
-
-            public override string ToString() {
-                return String.Format("Browser={{{0}}}, Operation={{{1}}}", Browser, Operation);
+                return String.Format("Browser={{{0}}}, Cursor={{{1}}}", Browser, Cursor);
             }
         }
 

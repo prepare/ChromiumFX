@@ -137,26 +137,6 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Set to true (1) to enable windowless (off-screen) rendering support. Do not
-        /// enable this value if the application does not use windowless rendering as
-        /// it may reduce rendering performance on some systems.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
-        /// </remarks>
-        public bool WindowlessRenderingEnabled {
-            get {
-                int value;
-                CfxApi.cfx_settings_get_windowless_rendering_enabled(nativePtrUnchecked, out value);
-                return 0 != value;
-            }
-            set {
-                CfxApi.cfx_settings_set_windowless_rendering_enabled(nativePtrUnchecked, value ? 1 : 0);
-            }
-        }
-
-        /// <summary>
         /// Set to true (1) to disable configuration of browser process features using
         /// standard CEF and Chromium command-line arguments. Configuration can still
         /// be specified using CEF data structures or via the
@@ -338,6 +318,25 @@ namespace Chromium {
             }
             set {
                 CfxApi.cfx_settings_set_log_severity(nativePtrUnchecked, value);
+            }
+        }
+
+        /// <summary>
+        /// Enable DCHECK in release mode to ease debugging. Also configurable using the
+        /// "enable-release-dcheck" command-line switch.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
+        public int ReleaseDcheckEnabled {
+            get {
+                int value;
+                CfxApi.cfx_settings_get_release_dcheck_enabled(nativePtrUnchecked, out value);
+                return value;
+            }
+            set {
+                CfxApi.cfx_settings_set_release_dcheck_enabled(nativePtrUnchecked, value);
             }
         }
 

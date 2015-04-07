@@ -35,17 +35,16 @@ static int (*cef_add_cross_origin_whitelist_entry_ptr)(const cef_string_t* sourc
 static void (*cef_add_web_plugin_directory_ptr)(const cef_string_t* dir);
 static void (*cef_add_web_plugin_path_ptr)(const cef_string_t* path);
 static const char* (*cef_api_hash_ptr)(int entry);
-static int (*cef_begin_tracing_ptr)(const cef_string_t* categories, cef_completion_callback_t* callback);
+static int (*cef_begin_tracing_ptr)(const cef_string_t* categories);
 static int (*cef_build_revision_ptr)();
 static int (*cef_clear_cross_origin_whitelist_ptr)();
 static int (*cef_clear_scheme_handler_factories_ptr)();
 static int (*cef_create_url_ptr)(const cef_urlparts_t* parts, cef_string_t* url);
 static int (*cef_currently_on_ptr)(cef_thread_id_t threadId);
 static void (*cef_do_message_loop_work_ptr)();
-static int (*cef_end_tracing_ptr)(const cef_string_t* tracing_file, cef_end_tracing_callback_t* callback);
+static int (*cef_end_tracing_async_ptr)(const cef_string_t* tracing_file, cef_end_tracing_callback_t* callback);
 static int (*cef_execute_process_ptr)(const cef_main_args_t* args, cef_app_t* application, void* windows_sandbox_info);
 static void (*cef_force_web_plugin_shutdown_ptr)(const cef_string_t* path);
-static void (*cef_get_extensions_for_mime_type_ptr)(const cef_string_t* mime_type, cef_string_list_t extensions);
 static int (*cef_get_geolocation_ptr)(cef_get_geolocation_callback_t* callback);
 static cef_string_userfree_t (*cef_get_mime_type_ptr)(const cef_string_t* extension);
 static int (*cef_get_path_ptr)(cef_path_key_t key, cef_string_t* path);
@@ -80,11 +79,9 @@ static cef_command_line_t* (*cef_command_line_get_global_ptr)();
 static cef_cookie_manager_t* (*cef_cookie_manager_get_global_manager_ptr)();
 static cef_cookie_manager_t* (*cef_cookie_manager_create_manager_ptr)(const cef_string_t* path, int persist_session_cookies);
 static cef_dictionary_value_t* (*cef_dictionary_value_create_ptr)();
-static cef_drag_data_t* (*cef_drag_data_create_ptr)();
 static cef_list_value_t* (*cef_list_value_create_ptr)();
 static cef_post_data_t* (*cef_post_data_create_ptr)();
 static cef_post_data_element_t* (*cef_post_data_element_create_ptr)();
-static cef_print_settings_t* (*cef_print_settings_create_ptr)();
 static cef_process_message_t* (*cef_process_message_create_ptr)(const cef_string_t* name);
 static cef_request_t* (*cef_request_create_ptr)();
 static cef_request_context_t* (*cef_request_context_get_global_context_ptr)();
@@ -144,17 +141,16 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_add_cross_origin_whitelist_entry_ptr = (int (*)(const cef_string_t*, const cef_string_t*, const cef_string_t*, int))cfx_platform_get_fptr(libcef, "cef_add_cross_origin_whitelist_entry");
     cef_add_web_plugin_directory_ptr = (void (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_add_web_plugin_directory");
     cef_add_web_plugin_path_ptr = (void (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_add_web_plugin_path");
-    cef_begin_tracing_ptr = (int (*)(const cef_string_t*, cef_completion_callback_t*))cfx_platform_get_fptr(libcef, "cef_begin_tracing");
+    cef_begin_tracing_ptr = (int (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_begin_tracing");
     cef_build_revision_ptr = (int (*)())cfx_platform_get_fptr(libcef, "cef_build_revision");
     cef_clear_cross_origin_whitelist_ptr = (int (*)())cfx_platform_get_fptr(libcef, "cef_clear_cross_origin_whitelist");
     cef_clear_scheme_handler_factories_ptr = (int (*)())cfx_platform_get_fptr(libcef, "cef_clear_scheme_handler_factories");
     cef_create_url_ptr = (int (*)(const cef_urlparts_t*, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_create_url");
     cef_currently_on_ptr = (int (*)(cef_thread_id_t))cfx_platform_get_fptr(libcef, "cef_currently_on");
     cef_do_message_loop_work_ptr = (void (*)())cfx_platform_get_fptr(libcef, "cef_do_message_loop_work");
-    cef_end_tracing_ptr = (int (*)(const cef_string_t*, cef_end_tracing_callback_t*))cfx_platform_get_fptr(libcef, "cef_end_tracing");
+    cef_end_tracing_async_ptr = (int (*)(const cef_string_t*, cef_end_tracing_callback_t*))cfx_platform_get_fptr(libcef, "cef_end_tracing_async");
     cef_execute_process_ptr = (int (*)(const cef_main_args_t*, cef_app_t*, void*))cfx_platform_get_fptr(libcef, "cef_execute_process");
     cef_force_web_plugin_shutdown_ptr = (void (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_force_web_plugin_shutdown");
-    cef_get_extensions_for_mime_type_ptr = (void (*)(const cef_string_t*, cef_string_list_t))cfx_platform_get_fptr(libcef, "cef_get_extensions_for_mime_type");
     cef_get_geolocation_ptr = (int (*)(cef_get_geolocation_callback_t*))cfx_platform_get_fptr(libcef, "cef_get_geolocation");
     cef_get_mime_type_ptr = (cef_string_userfree_t (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_get_mime_type");
     cef_get_path_ptr = (int (*)(cef_path_key_t, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_get_path");
@@ -189,11 +185,9 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_cookie_manager_get_global_manager_ptr = (cef_cookie_manager_t* (*)())cfx_platform_get_fptr(libcef, "cef_cookie_manager_get_global_manager");
     cef_cookie_manager_create_manager_ptr = (cef_cookie_manager_t* (*)(const cef_string_t*, int))cfx_platform_get_fptr(libcef, "cef_cookie_manager_create_manager");
     cef_dictionary_value_create_ptr = (cef_dictionary_value_t* (*)())cfx_platform_get_fptr(libcef, "cef_dictionary_value_create");
-    cef_drag_data_create_ptr = (cef_drag_data_t* (*)())cfx_platform_get_fptr(libcef, "cef_drag_data_create");
     cef_list_value_create_ptr = (cef_list_value_t* (*)())cfx_platform_get_fptr(libcef, "cef_list_value_create");
     cef_post_data_create_ptr = (cef_post_data_t* (*)())cfx_platform_get_fptr(libcef, "cef_post_data_create");
     cef_post_data_element_create_ptr = (cef_post_data_element_t* (*)())cfx_platform_get_fptr(libcef, "cef_post_data_element_create");
-    cef_print_settings_create_ptr = (cef_print_settings_t* (*)())cfx_platform_get_fptr(libcef, "cef_print_settings_create");
     cef_process_message_create_ptr = (cef_process_message_t* (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_process_message_create");
     cef_request_create_ptr = (cef_request_t* (*)())cfx_platform_get_fptr(libcef, "cef_request_create");
     cef_request_context_get_global_context_ptr = (cef_request_context_t* (*)())cfx_platform_get_fptr(libcef, "cef_request_context_get_global_context");
@@ -261,10 +255,9 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_create_url cef_create_url_ptr
 #define cef_currently_on cef_currently_on_ptr
 #define cef_do_message_loop_work cef_do_message_loop_work_ptr
-#define cef_end_tracing cef_end_tracing_ptr
+#define cef_end_tracing_async cef_end_tracing_async_ptr
 #define cef_execute_process cef_execute_process_ptr
 #define cef_force_web_plugin_shutdown cef_force_web_plugin_shutdown_ptr
-#define cef_get_extensions_for_mime_type cef_get_extensions_for_mime_type_ptr
 #define cef_get_geolocation cef_get_geolocation_ptr
 #define cef_get_mime_type cef_get_mime_type_ptr
 #define cef_get_path cef_get_path_ptr
@@ -299,11 +292,9 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_cookie_manager_get_global_manager cef_cookie_manager_get_global_manager_ptr
 #define cef_cookie_manager_create_manager cef_cookie_manager_create_manager_ptr
 #define cef_dictionary_value_create cef_dictionary_value_create_ptr
-#define cef_drag_data_create cef_drag_data_create_ptr
 #define cef_list_value_create cef_list_value_create_ptr
 #define cef_post_data_create cef_post_data_create_ptr
 #define cef_post_data_element_create cef_post_data_element_create_ptr
-#define cef_print_settings_create cef_print_settings_create_ptr
 #define cef_process_message_create cef_process_message_create_ptr
 #define cef_request_create cef_request_create_ptr
 #define cef_request_context_get_global_context cef_request_context_get_global_context_ptr
