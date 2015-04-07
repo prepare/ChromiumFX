@@ -48,7 +48,6 @@ namespace Windowless {
             Application.SetCompatibleTextRenderingDefault(false);
 
             var settings = new CfxSettings();
-            settings.WindowlessRenderingEnabled = true;
             settings.NoSandbox = true;
             settings.SingleProcess = true;
             settings.LogSeverity = CfxLogSeverity.Disable;

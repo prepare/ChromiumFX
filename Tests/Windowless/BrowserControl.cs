@@ -64,14 +64,12 @@ namespace Windowless {
             renderHandler.GetScreenInfo += renderHandler_GetScreenInfo;
             renderHandler.GetScreenPoint += renderHandler_GetScreenPoint;
             renderHandler.GetViewRect += renderHandler_GetViewRect;
-            renderHandler.OnCursorChange += renderHandler_OnCursorChange;
+            //renderHandler.OnCursorChange += renderHandler_OnCursorChange;
             renderHandler.OnPaint += renderHandler_OnPaint;
             //renderHandler.OnPopupShow += renderHandler_OnPopupShow;
             //renderHandler.OnPopupSize += renderHandler_OnPopupSize;
             //renderHandler.OnScrollOffsetChanged += renderHandler_OnScrollOffsetChanged;
-            //renderHandler.StartDragging += renderHandler_StartDragging;
-            //renderHandler.UpdateDragCursor += renderHandler_UpdateDragCursor;
-
+            
             loadHandler = new CfxLoadHandler();
 
             loadHandler.OnLoadError += loadHandler_OnLoadError;
@@ -104,14 +102,7 @@ namespace Windowless {
             }
         }
 
-        void renderHandler_UpdateDragCursor(object sender, Chromium.Event.CfxUpdateDragCursorEventArgs e) {
-            throw new NotImplementedException();
-        }
-
-        void renderHandler_StartDragging(object sender, Chromium.Event.CfxStartDraggingEventArgs e) {
-            throw new NotImplementedException();
-        }
-
+        
         void renderHandler_OnScrollOffsetChanged(object sender, Chromium.Event.CfxOnScrollOffsetChangedEventArgs e) {
             throw new NotImplementedException();
         }
@@ -142,14 +133,7 @@ namespace Windowless {
         }
 
         void renderHandler_OnCursorChange(object sender, Chromium.Event.CfxOnCursorChangeEventArgs e) {
-            switch(e.Type) {
-                case CfxCursorType.Hand:
-                    Cursor = Cursors.Hand;
-                    break;
-                default:
-                    Cursor = Cursors.Default;
-                    break;
-            }
+            throw new NotImplementedException();
         }
 
         void renderHandler_GetViewRect(object sender, Chromium.Event.CfxGetViewRectEventArgs e) {
