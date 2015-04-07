@@ -29,33 +29,14 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-
 using System;
 using System.Diagnostics;
 
 namespace Chromium {
-
     internal class CfxDebug {
-
-        private static readonly object syncRoot = new object();
-
         [Conditional("DEBUG")]
         internal static void Announce() {
             Debug.Print("Running ChromiumFX debug library.");
-        }
-
-        [Conditional("DEBUG")]
-        internal static void HandleCalloutException(Exception ex) {
-            System.Threading.ThreadPool.QueueUserWorkItem(HandleCalloutExceptionAsync, ex);
-        }
-
-        private static void HandleCalloutExceptionAsync(object state) {
-            lock (syncRoot) {
-                var ex = (Exception)state;
-                var dir = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
-                var file = System.IO.Path.Combine(dir, "CalloutException.log");
-                System.IO.File.AppendAllText(file, Environment.NewLine + DateTime.Now.ToString() + Environment.NewLine + ex.ToString());
-            }
         }
     }
 }
