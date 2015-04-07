@@ -134,8 +134,8 @@ namespace Chromium {
         /// </summary>
         public void SetAsWindowless(IntPtr parentWindow, bool transparent) {
             ParentWindow = parentWindow;
-            WindowlessRenderingEnabled = true;
-            TransparentPaintingEnabled = transparent;
+            WindowRenderingDisabled = true;
+            TransparentPainting = transparent;
         }
 
         /// <summary>
@@ -149,8 +149,8 @@ namespace Chromium {
         /// CefSettings.windowless_rendering_enabled value must be set to true.
         /// </summary>
         public void SetAsWindowless(bool transparent) {
-            WindowlessRenderingEnabled = true;
-            TransparentPaintingEnabled = transparent;
+            WindowRenderingDisabled = true;
+            TransparentPainting = transparent;
         }
 
         /// <summary>
@@ -225,8 +225,6 @@ namespace Chromium {
                 switch(CfxApi.PlatformOS) {
                     case CfxPlatformOS.Windows:
                         return windows.X;
-                    case CfxPlatformOS.Linux:
-                        return unchecked((int)linux.X);
                     default:
                         throw new CfxException("Unsupported platform.");
                 }
@@ -235,9 +233,6 @@ namespace Chromium {
                 switch(CfxApi.PlatformOS) {
                     case CfxPlatformOS.Windows:
                         windows.X = value;
-                        break;
-                    case CfxPlatformOS.Linux:
-                        linux.X = unchecked((uint)value);
                         break;
                     default:
                         throw new CfxException("Unsupported platform.");
@@ -250,8 +245,6 @@ namespace Chromium {
                 switch(CfxApi.PlatformOS) {
                     case CfxPlatformOS.Windows:
                         return windows.Y;
-                    case CfxPlatformOS.Linux:
-                        return unchecked((int)linux.Y);
                     default:
                         throw new CfxException("Unsupported platform.");
                 }
@@ -260,9 +253,6 @@ namespace Chromium {
                 switch(CfxApi.PlatformOS) {
                     case CfxPlatformOS.Windows:
                         windows.Y = value;
-                        break;
-                    case CfxPlatformOS.Linux:
-                        linux.Y = unchecked((uint)value);
                         break;
                     default:
                         throw new CfxException("Unsupported platform.");
@@ -275,8 +265,6 @@ namespace Chromium {
                 switch(CfxApi.PlatformOS) {
                     case CfxPlatformOS.Windows:
                         return windows.Width;
-                    case CfxPlatformOS.Linux:
-                        return unchecked((int)linux.Width);
                     default:
                         throw new CfxException("Unsupported platform.");
                 }
@@ -285,9 +273,6 @@ namespace Chromium {
                 switch(CfxApi.PlatformOS) {
                     case CfxPlatformOS.Windows:
                         windows.Width = value;
-                        break;
-                    case CfxPlatformOS.Linux:
-                        linux.Width = unchecked((uint)value);
                         break;
                     default:
                         throw new CfxException("Unsupported platform.");
@@ -300,8 +285,6 @@ namespace Chromium {
                 switch(CfxApi.PlatformOS) {
                     case CfxPlatformOS.Windows:
                         return windows.Height;
-                    case CfxPlatformOS.Linux:
-                        return unchecked((int)linux.Height);
                     default:
                         throw new CfxException("Unsupported platform.");
                 }
@@ -310,9 +293,6 @@ namespace Chromium {
                 switch(CfxApi.PlatformOS) {
                     case CfxPlatformOS.Windows:
                         windows.Height = value;
-                        break;
-                    case CfxPlatformOS.Linux:
-                        linux.Height = unchecked((uint)value);
                         break;
                     default:
                         throw new CfxException("Unsupported platform.");
@@ -326,7 +306,7 @@ namespace Chromium {
                     case CfxPlatformOS.Windows:
                         return windows.ParentWindow;
                     case CfxPlatformOS.Linux:
-                        return linux.ParentWindow;
+                        return linux.ParentWidget;
                     default:
                         throw new CfxException("Unsupported platform.");
                 }
@@ -337,7 +317,7 @@ namespace Chromium {
                         windows.ParentWindow = value;
                         break;
                     case CfxPlatformOS.Linux:
-                        linux.ParentWindow = value;
+                        linux.ParentWidget = value;
                         break;
                     default:
                         throw new CfxException("Unsupported platform.");
@@ -366,27 +346,22 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Set to true (1) to create the browser using windowless (off-screen)
-        /// rendering. No window will be created for the browser and all rendering will
-        /// occur via the CfxRenderHandler interface. The |parentWindow| value will be
-        /// used to identify monitor info and to act as the parent window for dialogs,
-        /// context menus, etc. If |parentWindow| is not provided then the main screen
-        /// monitor will be used and some functionality that requires a parent window
-        /// may not function correctly. In order to create windowless browsers the
-        /// CfxSettings.WindowlessRenderingEnabled value must be set to true.
+        /// If window rendering is disabled no browser window will be created. Set
+        /// |parentWindow| to be used for identifying monitor info
+        /// (MonitorFromWindow). If |parentWindow| is not provided the main screen
+        /// monitor will be used.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types_win.h">cef/include/internal/cef_types_win.h</see>
-        /// and <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/linux/cef/include/internal/cef_types_linux.h">linux/cef/include/internal/cef_types_linux.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types_win.h">cef/include/internal/cef_types_win.h</see>.
         /// </remarks>
-        public bool WindowlessRenderingEnabled {
+        public bool WindowRenderingDisabled {
             get {
                 switch(CfxApi.PlatformOS) {
                     case CfxPlatformOS.Windows:
-                        return windows.WindowlessRenderingEnabled;
+                        return windows.WindowRenderingDisabled;
                     case CfxPlatformOS.Linux:
-                        return linux.WindowlessRenderingEnabled;
+                        return linux.WindowRenderingDisabled != 0 ? true : false;
                     default:
                         throw new CfxException("Unsupported platform.");
                 }
@@ -394,10 +369,10 @@ namespace Chromium {
             set {
                 switch(CfxApi.PlatformOS) {
                     case CfxPlatformOS.Windows:
-                        windows.WindowlessRenderingEnabled = value;
+                        windows.WindowRenderingDisabled = value;
                         break;
                     case CfxPlatformOS.Linux:
-                        linux.WindowlessRenderingEnabled = value;
+                        linux.WindowRenderingDisabled = value ? 1 : 0;
                         break;
                     default:
                         throw new CfxException("Unsupported platform.");
@@ -416,13 +391,13 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types_win.h">cef/include/internal/cef_types_win.h</see>
         /// and <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/linux/cef/include/internal/cef_types_linux.h">linux/cef/include/internal/cef_types_linux.h</see>.
         /// </remarks>
-        public bool TransparentPaintingEnabled {
+        public bool TransparentPainting {
             get {
                 switch(CfxApi.PlatformOS) {
                     case CfxPlatformOS.Windows:
-                        return windows.TransparentPaintingEnabled;
+                        return windows.TransparentPainting;
                     case CfxPlatformOS.Linux:
-                        return linux.TransparentPaintingEnabled;
+                        return linux.TransparentPainting;
                     default:
                         throw new CfxException("Unsupported platform.");
                 }
@@ -430,10 +405,10 @@ namespace Chromium {
             set {
                 switch(CfxApi.PlatformOS) {
                     case CfxPlatformOS.Windows:
-                        windows.TransparentPaintingEnabled = value;
+                        windows.TransparentPainting = value;
                         break;
                     case CfxPlatformOS.Linux:
-                        linux.TransparentPaintingEnabled = value;
+                        linux.TransparentPainting = value;
                         break;
                     default:
                         throw new CfxException("Unsupported platform.");
@@ -455,7 +430,7 @@ namespace Chromium {
                     case CfxPlatformOS.Windows:
                         return windows.Window;
                     case CfxPlatformOS.Linux:
-                        return linux.Window;
+                        return linux.Widget;
                     default:
                         throw new CfxException("Unsupported platform.");
                 }
@@ -466,7 +441,7 @@ namespace Chromium {
                         windows.Window = value;
                         break;
                     case CfxPlatformOS.Linux:
-                        linux.Window = value;
+                        linux.Widget = value;
                         break;
                     default:
                         throw new CfxException("Unsupported platform.");
