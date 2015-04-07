@@ -35,7 +35,10 @@
 #include "include/internal/cef_build.h"
 
 #if defined(OS_LINUX)
-#include <gtk/gtk.h>
+//#include <gtk/gtk.h>
+typedef struct GdkCursor GdkCursor;
+typedef struct GdkEvent GdkEvent;
+typedef struct GtkWidget GtkWidget;
 #include "include/internal/cef_string.h"
 
 #ifdef __cplusplus
