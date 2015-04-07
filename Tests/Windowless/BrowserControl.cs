@@ -63,20 +63,12 @@ namespace Windowless {
             renderHandler.GetRootScreenRect += renderHandler_GetRootScreenRect;
             renderHandler.GetScreenInfo += renderHandler_GetScreenInfo;
             renderHandler.GetScreenPoint += renderHandler_GetScreenPoint;
-            
-            // Breaks when attaching to renderHandler.GetViewRect.
-            // Uncommenting this line allows CEF to start rendering.
-            // *** glibc detected *** /usr/bin/mono: free(): invalid pointer: 0x00003b5554b1b000 ***
-            //renderHandler.GetViewRect += renderHandler_GetViewRect;
-            MessageBox.Show("Rendering is broken. See comments in BrowserControl constructor.");
-            
-            renderHandler.OnCursorChange += renderHandler_OnCursorChange;
+            renderHandler.GetViewRect += renderHandler_GetViewRect;
+            //renderHandler.OnCursorChange += renderHandler_OnCursorChange;
             renderHandler.OnPaint += renderHandler_OnPaint;
             //renderHandler.OnPopupShow += renderHandler_OnPopupShow;
             //renderHandler.OnPopupSize += renderHandler_OnPopupSize;
             //renderHandler.OnScrollOffsetChanged += renderHandler_OnScrollOffsetChanged;
-            //renderHandler.StartDragging += renderHandler_StartDragging;
-            //renderHandler.UpdateDragCursor += renderHandler_UpdateDragCursor;
 
             loadHandler = new CfxLoadHandler();
 
@@ -103,19 +95,11 @@ namespace Windowless {
                 // this seems to happen when calling LoadUrl and the browser is not yet ready
                 var url = e.FailedUrl;
                 var frame = e.Frame;
-//                System.Threading.ThreadPool.QueueUserWorkItem((state) => {
-//                    System.Threading.Thread.Sleep(200);
-//                    frame.LoadUrl(url);
-//                });
+                System.Threading.ThreadPool.QueueUserWorkItem((state) => {
+                    System.Threading.Thread.Sleep(200);
+                    frame.LoadUrl(url);
+                });
             }
-        }
-
-        void renderHandler_UpdateDragCursor(object sender, Chromium.Event.CfxUpdateDragCursorEventArgs e) {
-            throw new NotImplementedException();
-        }
-
-        void renderHandler_StartDragging(object sender, Chromium.Event.CfxStartDraggingEventArgs e) {
-            throw new NotImplementedException();
         }
 
         void renderHandler_OnScrollOffsetChanged(object sender, Chromium.Event.CfxOnScrollOffsetChangedEventArgs e) {
@@ -148,14 +132,7 @@ namespace Windowless {
         }
 
         void renderHandler_OnCursorChange(object sender, Chromium.Event.CfxOnCursorChangeEventArgs e) {
-            switch(e.Type) {
-                case CfxCursorType.Hand:
-                    Cursor = Cursors.Hand;
-                    break;
-                default:
-                    Cursor = Cursors.Default;
-                    break;
-            }
+            throw new NotImplementedException();
         }
 
         void renderHandler_GetViewRect(object sender, Chromium.Event.CfxGetViewRectEventArgs e) {
