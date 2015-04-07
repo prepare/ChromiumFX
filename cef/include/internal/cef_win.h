@@ -32,8 +32,38 @@
 #define CEF_INCLUDE_INTERNAL_CEF_WIN_H_
 #pragma once
 
+#if defined(OS_WIN)
+#include <windows.h>
 #include "include/internal/cef_types_win.h"
 #include "include/internal/cef_types_wrappers.h"
+
+///
+// Atomic increment and decrement.
+///
+#define CefAtomicIncrement(p) InterlockedIncrement(p)
+#define CefAtomicDecrement(p) InterlockedDecrement(p)
+
+///
+// Critical section wrapper.
+///
+class CefCriticalSection {
+ public:
+  CefCriticalSection() {
+    memset(&m_sec, 0, sizeof(CRITICAL_SECTION));
+    InitializeCriticalSection(&m_sec);
+  }
+  virtual ~CefCriticalSection() {
+    DeleteCriticalSection(&m_sec);
+  }
+  void Lock() {
+    EnterCriticalSection(&m_sec);
+  }
+  void Unlock() {
+    LeaveCriticalSection(&m_sec);
+  }
+
+  CRITICAL_SECTION m_sec;
+};
 
 ///
 // Handle types.
@@ -89,9 +119,9 @@ struct CefWindowInfoTraits {
     target->height = src->height;
     target->parent_window = src->parent_window;
     target->menu = src->menu;
-    target->transparent_painting_enabled = src->transparent_painting_enabled;
-    target->windowless_rendering_enabled = src->windowless_rendering_enabled;
     target->window = src->window;
+    target->transparent_painting = src->transparent_painting;
+    target->window_rendering_disabled = src->window_rendering_disabled;
   }
 };
 
@@ -106,26 +136,20 @@ class CefWindowInfo : public CefStructBase<CefWindowInfoTraits> {
   explicit CefWindowInfo(const cef_window_info_t& r) : parent(r) {}
   explicit CefWindowInfo(const CefWindowInfo& r) : parent(r) {}
 
-  ///
-  // Create the browser as a child window.
-  ///
-  void SetAsChild(CefWindowHandle parent, RECT windowRect) {
+  void SetAsChild(HWND hWndParent, RECT windowRect) {
     style = WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_TABSTOP |
             WS_VISIBLE;
-    parent_window = parent;
+    parent_window = hWndParent;
     x = windowRect.left;
     y = windowRect.top;
     width = windowRect.right - windowRect.left;
     height = windowRect.bottom - windowRect.top;
   }
 
-  ///
-  // Create the browser as a popup window.
-  ///
-  void SetAsPopup(CefWindowHandle parent, const CefString& windowName) {
+  void SetAsPopup(HWND hWndParent, const CefString& windowName) {
     style = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS |
             WS_VISIBLE;
-    parent_window = parent;
+    parent_window = hWndParent;
     x = CW_USEDEFAULT;
     y = CW_USEDEFAULT;
     width = CW_USEDEFAULT;
@@ -134,23 +158,16 @@ class CefWindowInfo : public CefStructBase<CefWindowInfoTraits> {
     cef_string_copy(windowName.c_str(), windowName.length(), &window_name);
   }
 
-  ///
-  // Create the browser using windowless (off-screen) rendering. No window
-  // will be created for the browser and all rendering will occur via the
-  // CefRenderHandler interface. The |parent| value will be used to identify
-  // monitor info and to act as the parent window for dialogs, context menus,
-  // etc. If |parent| is not provided then the main screen monitor will be used
-  // and some functionality that requires a parent window may not function
-  // correctly. If |transparent| is true a transparent background color will be
-  // used (RGBA=0x00000000). If |transparent| is false the background will be
-  // white and opaque. In order to create windowless browsers the
-  // CefSettings.windowless_rendering_enabled value must be set to true.
-  ///
-  void SetAsWindowless(CefWindowHandle parent, bool transparent) {
-    windowless_rendering_enabled = TRUE;
-    parent_window = parent;
-    transparent_painting_enabled = transparent;
+  void SetTransparentPainting(BOOL transparentPainting) {
+    transparent_painting = transparentPainting;
+  }
+
+  void SetAsOffScreen(HWND hWndParent) {
+    window_rendering_disabled = TRUE;
+    parent_window = hWndParent;
   }
 };
+
+#endif  // OS_WIN
 
 #endif  // CEF_INCLUDE_INTERNAL_CEF_WIN_H_
