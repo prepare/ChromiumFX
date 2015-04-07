@@ -43,20 +43,20 @@ typedef struct _cfx_run_file_dialog_callback_t {
     gc_handle_t gc_handle;
 } cfx_run_file_dialog_callback_t;
 
-void CEF_CALLBACK _cfx_run_file_dialog_callback_add_ref(struct _cef_base_t* base) {
-    InterlockedIncrement(&((cfx_run_file_dialog_callback_t*)base)->ref_count);
+int CEF_CALLBACK _cfx_run_file_dialog_callback_add_ref(struct _cef_base_t* base) {
+    return InterlockedIncrement(&((cfx_run_file_dialog_callback_t*)base)->ref_count);
 }
 int CEF_CALLBACK _cfx_run_file_dialog_callback_release(struct _cef_base_t* base) {
     int count = InterlockedDecrement(&((cfx_run_file_dialog_callback_t*)base)->ref_count);
     if(!count) {
         cfx_gc_handle_free(((cfx_run_file_dialog_callback_t*)base)->gc_handle);
         free(base);
-        return 1;
+        return 0;
     }
-    return 0;
+    return count;
 }
-int CEF_CALLBACK _cfx_run_file_dialog_callback_has_one_ref(struct _cef_base_t* base) {
-    return ((cfx_run_file_dialog_callback_t*)base)->ref_count == 1 ? 1 : 0;
+int CEF_CALLBACK _cfx_run_file_dialog_callback_get_refct(struct _cef_base_t* base) {
+    return ((cfx_run_file_dialog_callback_t*)base)->ref_count;
 }
 
 static cfx_run_file_dialog_callback_t* cfx_run_file_dialog_callback_ctor(gc_handle_t gc_handle) {
@@ -65,7 +65,7 @@ static cfx_run_file_dialog_callback_t* cfx_run_file_dialog_callback_ctor(gc_hand
     ptr->cef_run_file_dialog_callback.base.size = sizeof(cef_run_file_dialog_callback_t);
     ptr->cef_run_file_dialog_callback.base.add_ref = _cfx_run_file_dialog_callback_add_ref;
     ptr->cef_run_file_dialog_callback.base.release = _cfx_run_file_dialog_callback_release;
-    ptr->cef_run_file_dialog_callback.base.has_one_ref = _cfx_run_file_dialog_callback_has_one_ref;
+    ptr->cef_run_file_dialog_callback.base.get_refct = _cfx_run_file_dialog_callback_get_refct;
     ptr->ref_count = 1;
     ptr->gc_handle = gc_handle;
     return ptr;

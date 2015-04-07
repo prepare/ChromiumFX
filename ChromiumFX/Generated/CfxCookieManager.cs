@@ -209,15 +209,15 @@ namespace Chromium {
 
         /// <summary>
         /// Flush the backing store (if any) to disk and execute the specified
-        /// |callback| on the IO thread when done. Returns false (0) if cookies cannot
+        /// |handler| on the IO thread when done. Returns false (0) if cookies cannot
         /// be accessed.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
         /// </remarks>
-        public bool FlushStore(CfxCompletionCallback callback) {
-            return 0 != CfxApi.cfx_cookie_manager_flush_store(NativePtr, CfxCompletionCallback.Unwrap(callback));
+        public bool FlushStore(CfxCompletionHandler handler) {
+            return 0 != CfxApi.cfx_cookie_manager_flush_store(NativePtr, CfxCompletionHandler.Unwrap(handler));
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

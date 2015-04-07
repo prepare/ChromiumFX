@@ -31,45 +31,56 @@
 // Generated file. Do not edit.
 
 
-using System;
+// cef_domevent
 
-namespace Chromium {
-    /// <summary>
-    /// Structure representing a size.
-    /// </summary>
-    /// <remarks>
-    /// See also the original CEF documentation in
-    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
-    /// </remarks>
-    public sealed class CfxSize : CfxStructure {
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-        static CfxSize () {
-            CfxApiLoader.LoadCfxSizeApi();
-        }
+// cef_base_t base
 
-        public CfxSize() : base(CfxApi.cfx_size_ctor, CfxApi.cfx_size_dtor) {}
-
-        public int Width {
-            get {
-                int value;
-                CfxApi.cfx_size_get_width(nativePtrUnchecked, out value);
-                return value;
-            }
-            set {
-                CfxApi.cfx_size_set_width(nativePtrUnchecked, value);
-            }
-        }
-
-        public int Height {
-            get {
-                int value;
-                CfxApi.cfx_size_get_height(nativePtrUnchecked, out value);
-                return value;
-            }
-            set {
-                CfxApi.cfx_size_set_height(nativePtrUnchecked, value);
-            }
-        }
-
-    }
+// get_type
+static cef_string_userfree_t cfx_domevent_get_type(cef_domevent_t* self) {
+    return self->get_type(self);
 }
+
+// get_category
+static cef_dom_event_category_t cfx_domevent_get_category(cef_domevent_t* self) {
+    return self->get_category(self);
+}
+
+// get_phase
+static cef_dom_event_phase_t cfx_domevent_get_phase(cef_domevent_t* self) {
+    return self->get_phase(self);
+}
+
+// can_bubble
+static int cfx_domevent_can_bubble(cef_domevent_t* self) {
+    return self->can_bubble(self);
+}
+
+// can_cancel
+static int cfx_domevent_can_cancel(cef_domevent_t* self) {
+    return self->can_cancel(self);
+}
+
+// get_document
+static cef_domdocument_t* cfx_domevent_get_document(cef_domevent_t* self) {
+    return self->get_document(self);
+}
+
+// get_target
+static cef_domnode_t* cfx_domevent_get_target(cef_domevent_t* self) {
+    return self->get_target(self);
+}
+
+// get_current_target
+static cef_domnode_t* cfx_domevent_get_current_target(cef_domevent_t* self) {
+    return self->get_current_target(self);
+}
+
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
+

@@ -189,8 +189,8 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Get the resource type for this request. Only available in the browser
-        /// process.
+        /// Get the resource type for this request. Accurate resource type information
+        /// may only be available in the browser process.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

@@ -128,9 +128,9 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Start tracing events on all processes. Tracing is initialized asynchronously
-        /// and |callback| will be executed on the UI thread after initialization is
-        /// complete.
+        /// Start tracing events on all processes. Tracing begins immediately locally,
+        /// and asynchronously on child processes as soon as they receive the
+        /// BeginTracing request.
         /// If CfxBeginTracing was called previously, or if a CfxEndTracingAsync call is
         /// pending, CfxBeginTracing will fail and return false (0).
         /// |categories| is a comma-delimited list of category wildcards. A category can
@@ -144,9 +144,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
         /// </remarks>
-        public static bool BeginTracing(string categories, CfxCompletionCallback callback) {
+        public static bool BeginTracing(string categories) {
             var categories_pinned = new PinnedString(categories);
-            var __retval = CfxApi.cfx_begin_tracing(categories_pinned.Obj.PinnedPtr, categories_pinned.Length, CfxCompletionCallback.Unwrap(callback));
+            var __retval = CfxApi.cfx_begin_tracing(categories_pinned.Obj.PinnedPtr, categories_pinned.Length);
             categories_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -249,9 +249,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
         /// </remarks>
-        public static bool EndTracing(string tracingFile, CfxEndTracingCallback callback) {
+        public static bool EndTracingAsync(string tracingFile, CfxEndTracingCallback callback) {
             var tracingFile_pinned = new PinnedString(tracingFile);
-            var __retval = CfxApi.cfx_end_tracing(tracingFile_pinned.Obj.PinnedPtr, tracingFile_pinned.Length, CfxEndTracingCallback.Unwrap(callback));
+            var __retval = CfxApi.cfx_end_tracing_async(tracingFile_pinned.Obj.PinnedPtr, tracingFile_pinned.Length, CfxEndTracingCallback.Unwrap(callback));
             tracingFile_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -288,27 +288,6 @@ namespace Chromium {
             var path_pinned = new PinnedString(path);
             CfxApi.cfx_force_web_plugin_shutdown(path_pinned.Obj.PinnedPtr, path_pinned.Length);
             path_pinned.Obj.Free();
-        }
-
-        /// <summary>
-        /// Get the extensions associated with the given mime type. This should be passed
-        /// in lower case. There could be multiple extensions for a given mime type, like
-        /// "html,htm" for "text/html", or "txt,text,html,..." for "text/*". Any existing
-        /// elements in the provided vector will not be erased.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
-        /// </remarks>
-        public static void GetExtensionsForMimeType(string mimeType, System.Collections.Generic.List<string> extensions) {
-            var mimeType_pinned = new PinnedString(mimeType);
-            PinnedString[] extensions_handles;
-            var extensions_unwrapped = StringFunctions.UnwrapCfxStringList(extensions, out extensions_handles);
-            CfxApi.cfx_get_extensions_for_mime_type(mimeType_pinned.Obj.PinnedPtr, mimeType_pinned.Length, extensions_unwrapped);
-            mimeType_pinned.Obj.Free();
-            StringFunctions.FreePinnedStrings(extensions_handles);
-            StringFunctions.CfxStringListCopyToManaged(extensions_unwrapped, extensions);
-            CfxApi.cfx_string_list_free(extensions_unwrapped);
         }
 
         /// <summary>

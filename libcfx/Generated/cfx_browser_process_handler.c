@@ -43,20 +43,20 @@ typedef struct _cfx_browser_process_handler_t {
     gc_handle_t gc_handle;
 } cfx_browser_process_handler_t;
 
-void CEF_CALLBACK _cfx_browser_process_handler_add_ref(struct _cef_base_t* base) {
-    InterlockedIncrement(&((cfx_browser_process_handler_t*)base)->ref_count);
+int CEF_CALLBACK _cfx_browser_process_handler_add_ref(struct _cef_base_t* base) {
+    return InterlockedIncrement(&((cfx_browser_process_handler_t*)base)->ref_count);
 }
 int CEF_CALLBACK _cfx_browser_process_handler_release(struct _cef_base_t* base) {
     int count = InterlockedDecrement(&((cfx_browser_process_handler_t*)base)->ref_count);
     if(!count) {
         cfx_gc_handle_free(((cfx_browser_process_handler_t*)base)->gc_handle);
         free(base);
-        return 1;
+        return 0;
     }
-    return 0;
+    return count;
 }
-int CEF_CALLBACK _cfx_browser_process_handler_has_one_ref(struct _cef_base_t* base) {
-    return ((cfx_browser_process_handler_t*)base)->ref_count == 1 ? 1 : 0;
+int CEF_CALLBACK _cfx_browser_process_handler_get_refct(struct _cef_base_t* base) {
+    return ((cfx_browser_process_handler_t*)base)->ref_count;
 }
 
 static cfx_browser_process_handler_t* cfx_browser_process_handler_ctor(gc_handle_t gc_handle) {
@@ -65,7 +65,7 @@ static cfx_browser_process_handler_t* cfx_browser_process_handler_ctor(gc_handle
     ptr->cef_browser_process_handler.base.size = sizeof(cef_browser_process_handler_t);
     ptr->cef_browser_process_handler.base.add_ref = _cfx_browser_process_handler_add_ref;
     ptr->cef_browser_process_handler.base.release = _cfx_browser_process_handler_release;
-    ptr->cef_browser_process_handler.base.has_one_ref = _cfx_browser_process_handler_has_one_ref;
+    ptr->cef_browser_process_handler.base.get_refct = _cfx_browser_process_handler_get_refct;
     ptr->ref_count = 1;
     ptr->gc_handle = gc_handle;
     return ptr;
@@ -102,20 +102,6 @@ void CEF_CALLBACK cfx_browser_process_handler_on_render_process_thread_created(c
 }
 
 
-// get_print_handler
-
-void (CEF_CALLBACK *cfx_browser_process_handler_get_print_handler_callback)(gc_handle_t self, cef_print_handler_t** __retval);
-
-cef_print_handler_t* CEF_CALLBACK cfx_browser_process_handler_get_print_handler(cef_browser_process_handler_t* self) {
-    cef_print_handler_t* __retval;
-    cfx_browser_process_handler_get_print_handler_callback(((cfx_browser_process_handler_t*)self)->gc_handle, &__retval);
-    if(__retval) {
-        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
-    }
-    return __retval;
-}
-
-
 static void cfx_browser_process_handler_set_managed_callback(cef_browser_process_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
@@ -132,11 +118,6 @@ static void cfx_browser_process_handler_set_managed_callback(cef_browser_process
         if(callback && !cfx_browser_process_handler_on_render_process_thread_created_callback)
             cfx_browser_process_handler_on_render_process_thread_created_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_list_value_t* extra_info)) callback;
         self->on_render_process_thread_created = callback ? cfx_browser_process_handler_on_render_process_thread_created : 0;
-        break;
-    case 3:
-        if(callback && !cfx_browser_process_handler_get_print_handler_callback)
-            cfx_browser_process_handler_get_print_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_print_handler_t** __retval)) callback;
-        self->get_print_handler = callback ? cfx_browser_process_handler_get_print_handler : 0;
         break;
     }
 }

@@ -131,6 +131,13 @@ static cef_domnode_t* cfx_domnode_get_last_child(cef_domnode_t* self) {
     return self->get_last_child(self);
 }
 
+// add_event_listener
+static void cfx_domnode_add_event_listener(cef_domnode_t* self, char16 *eventType_str, int eventType_length, cef_domevent_listener_t* listener, int useCapture) {
+    cef_string_t eventType = { eventType_str, eventType_length, 0 };
+    if(listener) ((cef_base_t*)listener)->add_ref((cef_base_t*)listener);
+    self->add_event_listener(self, &eventType, listener, useCapture);
+}
+
 // get_element_tag_name
 static cef_string_userfree_t cfx_domnode_get_element_tag_name(cef_domnode_t* self) {
     return self->get_element_tag_name(self);

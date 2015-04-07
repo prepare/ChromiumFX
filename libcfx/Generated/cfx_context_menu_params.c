@@ -104,29 +104,14 @@ static cef_string_userfree_t cfx_context_menu_params_get_selection_text(cef_cont
     return self->get_selection_text(self);
 }
 
-// get_misspelled_word
-static cef_string_userfree_t cfx_context_menu_params_get_misspelled_word(cef_context_menu_params_t* self) {
-    return self->get_misspelled_word(self);
-}
-
-// get_misspelling_hash
-static int cfx_context_menu_params_get_misspelling_hash(cef_context_menu_params_t* self) {
-    return self->get_misspelling_hash(self);
-}
-
-// get_dictionary_suggestions
-static int cfx_context_menu_params_get_dictionary_suggestions(cef_context_menu_params_t* self, cef_string_list_t suggestions) {
-    return self->get_dictionary_suggestions(self, suggestions);
-}
-
 // is_editable
 static int cfx_context_menu_params_is_editable(cef_context_menu_params_t* self) {
     return self->is_editable(self);
 }
 
-// is_spell_check_enabled
-static int cfx_context_menu_params_is_spell_check_enabled(cef_context_menu_params_t* self) {
-    return self->is_spell_check_enabled(self);
+// is_speech_input_enabled
+static int cfx_context_menu_params_is_speech_input_enabled(cef_context_menu_params_t* self) {
+    return self->is_speech_input_enabled(self);
 }
 
 // get_edit_state_flags

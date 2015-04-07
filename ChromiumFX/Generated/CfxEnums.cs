@@ -35,36 +35,6 @@ using System;
 
 namespace Chromium {
     /// <summary>
-    /// Print job color mode values.
-    /// </summary>
-    /// <remarks>
-    /// See also the original CEF documentation in
-    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
-    /// </remarks>
-    public enum CfxColorModel {
-        Unknown,
-        Gray,
-        Color,
-        Cmyk,
-        Cmy,
-        Kcmy,
-        CmyK,
-        Black,
-        Grayscale,
-        Rgb,
-        Rgb16,
-        Rgba,
-        ColorModeColor,
-        ColorModeMonochrome,
-        HpColorColor,
-        HpColorBlack,
-        PrintoutModeNormal,
-        PrintoutModeNormalGray,
-        ProcessColorModelCmyk,
-        ProcessColorModelGreyscale,
-        ProcessColorModelRgb
-    }
-    /// <summary>
     /// Supported context menu edit state bit flags.
     /// </summary>
     /// <remarks>
@@ -158,59 +128,6 @@ namespace Chromium {
         Editable = unchecked((int)1 << 5)
     }
     /// <summary>
-    /// Cursor type values.
-    /// </summary>
-    /// <remarks>
-    /// See also the original CEF documentation in
-    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
-    /// </remarks>
-    public enum CfxCursorType {
-        Pointer = unchecked((int)0),
-        Cross,
-        Hand,
-        Ibeam,
-        Wait,
-        Help,
-        EastResize,
-        NorthResize,
-        NortheastResize,
-        NorthwestResize,
-        SouthResize,
-        SoutheastResize,
-        SouthwestResize,
-        WestResize,
-        NorthSouthResize,
-        EastWestResize,
-        NortheastSouthwestResize,
-        NorthwestSoutheastResize,
-        ColumnResize,
-        RowResize,
-        MiddlePanning,
-        EastPanning,
-        NorthPanning,
-        NortheastPanning,
-        NorthwestPanning,
-        SouthPanning,
-        SoutheastPanning,
-        SouthwestPanning,
-        WestPanning,
-        Move,
-        VerticalText,
-        Cell,
-        ContextMenu,
-        Alias,
-        Progress,
-        NoDrop,
-        Copy,
-        None,
-        NotAllowed,
-        ZoomIn,
-        ZoomOut,
-        Grab,
-        Grabbing,
-        Custom
-    }
-    /// <summary>
     /// DOM document types.
     /// </summary>
     /// <remarks>
@@ -247,7 +164,8 @@ namespace Chromium {
         PageTransition = unchecked((int)0x1000),
         Popstate = unchecked((int)0x2000),
         Progress = unchecked((int)0x4000),
-        XmlhttpRequestProgress = unchecked((int)0x8000)
+        XmlhttpRequestProgress = unchecked((int)0x8000),
+        BeforeLoad = unchecked((int)0x10000)
     }
     /// <summary>
     /// DOM event processing phases.
@@ -275,11 +193,14 @@ namespace Chromium {
         Attribute,
         Text,
         CdataSection,
+        Entity,
         ProcessingInstructions,
         Comment,
         Document,
         DocumentType,
-        DocumentFragment
+        DocumentFragment,
+        Notation,
+        XpathNamespace
     }
     /// <summary>
     /// "Verb" of a drag-and-drop operation as negotiated between the source and
@@ -300,19 +221,6 @@ namespace Chromium {
         DragOperationDelete = unchecked((int)32),
         DragOperationEvery,
         UintMax
-    }
-    /// <summary>
-    /// Print job duplex mode values.
-    /// </summary>
-    /// <remarks>
-    /// See also the original CEF documentation in
-    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
-    /// </remarks>
-    public enum CfxDuplexMode {
-        Unknown = unchecked((int)-1),
-        Simplex,
-        LongEdge,
-        ShortEdge
     }
     /// <summary>
     /// Supported error code values. See net\base\net_error_list.h for complete
@@ -468,25 +376,9 @@ namespace Chromium {
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
     /// </remarks>
     public enum CfxKeyEventType {
-        /// <summary>
-        /// Notification that a key transitioned from "up" to "down".
-        /// </summary>
         RawKeydown = unchecked((int)0),
-        /// <summary>
-        /// Notification that a key was pressed. This does not necessarily correspond
-        /// to a character depending on the key and language. Use KEYEVENT_CHAR for
-        /// character input.
-        /// </summary>
         Keydown,
-        /// <summary>
-        /// Notification that a key was released.
-        /// </summary>
         Keyup,
-        /// <summary>
-        /// Notification that a character was typed. Use this for text input. Key
-        /// down events may generate 0, 1, or more than one character event depending
-        /// on the key, locale, and operating system.
-        /// </summary>
         Char
     }
     /// <summary>
@@ -517,6 +409,10 @@ namespace Chromium {
         /// ERROR logging.
         /// </summary>
         Error,
+        /// <summary>
+        /// ERROR_REPORT logging.
+        /// </summary>
+        ErrorReport,
         /// <summary>
         /// Completely disable logging.
         /// </summary>
@@ -555,17 +451,6 @@ namespace Chromium {
         Find = unchecked((int)130),
         Print = unchecked((int)131),
         ViewSource = unchecked((int)132),
-        /// <summary>
-        /// Spell checking word correction suggestions.
-        /// </summary>
-        SpellcheckSuggestion0 = unchecked((int)200),
-        SpellcheckSuggestion1 = unchecked((int)201),
-        SpellcheckSuggestion2 = unchecked((int)202),
-        SpellcheckSuggestion3 = unchecked((int)203),
-        SpellcheckSuggestion4 = unchecked((int)204),
-        SpellcheckSuggestionLast = unchecked((int)204),
-        NoSpellingSuggestions = unchecked((int)205),
-        AddToDictionary = unchecked((int)206),
         /// <summary>
         /// All user-defined menu IDs should come between MENU_ID_USER_FIRST and
         /// MENU_ID_USER_LAST to avoid overlapping the Chromium and CEF ID ranges
@@ -754,15 +639,7 @@ namespace Chromium {
         /// <summary>
         /// XMLHttpRequest.
         /// </summary>
-        Xhr,
-        /// <summary>
-        /// A request for a &lt;ping>
-        /// </summary>
-        Ping,
-        /// <summary>
-        /// Main resource of a service worker.
-        /// </summary>
-        ServiceWorker
+        Xhr
     }
     /// <summary>
     /// Represents the state of a setting.
@@ -967,7 +844,9 @@ namespace Chromium {
         None = unchecked((int)0),
         SkipCache = unchecked((int)1 << 0),
         AllowCachedCredentials = unchecked((int)1 << 1),
+        AllowCookies = unchecked((int)1 << 2),
         ReportUploadProgress = unchecked((int)1 << 3),
+        ReportLoadTiming = unchecked((int)1 << 4),
         ReportRawHeaders = unchecked((int)1 << 5),
         NoDownloadData = unchecked((int)1 << 6),
         NoRetryOn5xx = unchecked((int)1 << 7)
