@@ -49,6 +49,12 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2171.13 ###
+
+* The `WindowStyles` enum was renamed to `WindowStyle`. The `CfxWindowInfo.Style` property type was changed to `WindowStyle`. Methods `CfxWindowInfo.SetAsChild()`, `CfxWindowInfo.SetAsPopup()` and `CfxWindowInfo.SetAsWindowless()` were added.
+* Method `CfxRuntime.LoadLibraries()` was removed, the native libraries are now loaded transparently. To change locations for native libraries, use the `CfxRuntime.LibCefDirPath` and/or `CfxRuntime.LibCfxDirPath` properties before calling anything else in the Chromium namespaces.
+* Method `CfxRemoting.ExecuteProcess()` was removed. `CfxRuntime.ExecuteProcess()` now checks transparently if a remote connection is required in the render process.
+
 ### Version 3.2171.12 ###
 
 * The ChromiumWebBrowser control now exposes all client handlers as properties.
