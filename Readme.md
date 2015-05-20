@@ -49,6 +49,10 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2171.14 ###
+
+* Enhanced javascript intgration: Additionally to the existing JSFunction, it is now possible to add javascript objects to the WebBrowser control and define functions and properties for those javascript objects, including other javascript objects and dynamic properties the application can handle at runtime. For a working example, see the test application (JsTestObject.cs).
+
 ### Version 3.2171.13 ###
 
 * The `WindowStyles` enum was renamed to `WindowStyle`. The `CfxWindowInfo.Style` property type was changed to `WindowStyle`. Methods `CfxWindowInfo.SetAsChild()`, `CfxWindowInfo.SetAsPopup()` and `CfxWindowInfo.SetAsWindowless()` were added.
