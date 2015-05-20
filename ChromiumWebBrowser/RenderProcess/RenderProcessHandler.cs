@@ -75,7 +75,7 @@ namespace Chromium.WebBrowser {
                 if(e.Frame.IsMain) {
                     SetProperties(e.Context, wb.mainFrameJSProperties);
                 } else if(wb.frameJSProperties.Count > 0) {
-                    List<JSProperty> list;
+                    Dictionary<string, JSProperty> list;
                     if(wb.frameJSProperties.TryGetValue(e.Frame.Name, out list)) {
                         SetProperties(e.Context, list);
                     }
@@ -83,10 +83,10 @@ namespace Chromium.WebBrowser {
             }
         }
 
-        private void SetProperties(CfrV8Context context, List<JSProperty> list) {
+        private void SetProperties(CfrV8Context context, Dictionary<string, JSProperty> list) {
             foreach(var p in list) {
-                var v8Value = p.GetV8Value(context.RemoteRuntime);
-                context.Global.SetValue(p.Name, v8Value, CfxV8PropertyAttribute.DontDelete | CfxV8PropertyAttribute.ReadOnly);
+                var v8Value = p.Value.GetV8Value(context.RemoteRuntime);
+                context.Global.SetValue(p.Key, v8Value, CfxV8PropertyAttribute.DontDelete | CfxV8PropertyAttribute.ReadOnly);
             }
         }
     }
