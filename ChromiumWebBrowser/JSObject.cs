@@ -38,10 +38,6 @@ using Chromium.Remote.Event;
 
 namespace Chromium.WebBrowser {
 
-    public class JSPropertySetEventArgs : EventArgs {
-
-    }
-
     /// <summary>
     /// Represents a javascript object in the render process to be added as 
     /// a property to a browser frame's global object or to another JSObject.
