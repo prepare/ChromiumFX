@@ -64,7 +64,14 @@ namespace CfxTestApplication {
             WebBrowser.AddGlobalJSProperty("TestObject", new JsTestObject(this));
 
             var html = @"
-                <html><body>
+
+                <html>
+                <head><script>
+                    function testlog(text) {
+                        document.getElementById('testfunc_result').innerHTML += '<br>' + text;
+                    }
+                </script>
+                <body>
                     Local resource test page.<br><br>
                     Local resource image:<br>
                     <img src='http://localresource/image'><br><br>
@@ -72,16 +79,22 @@ namespace CfxTestApplication {
                     <br><br>
                     <button onclick=""document.getElementById('testfunc_result').innerHTML += '<br>' + CfxHelloWorld('this is the hello world function');"">Execute CfxHelloWorld()</button>
                     <button onclick=""
-                        document.getElementById('testfunc_result').innerHTML += '<br>TestObject = ' + TestObject;
-                        document.getElementById('testfunc_result').innerHTML += '<br>TestObject.testFunction = ' + TestObject.testFunction;
+                        testlog('TestObject = ' + TestObject);
+                        testlog('TestObject.testFunction = ' + TestObject.testFunction);
                         TestObject.testFunction('this is the test function');
                     "">Execute TestObject.testFunction()</button>
                     <button onclick=""
-                        document.getElementById('testfunc_result').innerHTML += '<br>TestObject = ' + TestObject;
-                        document.getElementById('testfunc_result').innerHTML += '<br>TestObject.anotherObject = ' + TestObject.anotherObject;
-                        document.getElementById('testfunc_result').innerHTML += '<br>TestObject.anotherObject.anotherTestFunction = ' + TestObject.anotherObject.anotherTestFunction;
-                        document.getElementById('testfunc_result').innerHTML += '<br>' + TestObject.anotherObject.anotherTestFunction('this is the other test function');
+                        testlog('TestObject = ' + TestObject);
+                        testlog('TestObject.anotherObject = ' + TestObject.anotherObject);
+                        testlog('TestObject.anotherObject.anotherTestFunction = ' + TestObject.anotherObject.anotherTestFunction);
+                        testlog(TestObject.anotherObject.anotherTestFunction('this is the other test function'));
                     "">Execute TestObject.anotherObject.anotherTestFunction()</button>
+                    <button onclick=""
+                        testlog('TestObject.foo = ' + TestObject.foo);
+                        testlog('(define TestObject.foo = 100)');
+                        TestObject.foo = 100;
+                        testlog('TestObject.foo = ' + TestObject.foo);
+                    "">Undefined TestObject properties</button>
                     <br><br><div id='testfunc_result'></div>
             ";
             
