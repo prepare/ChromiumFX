@@ -53,27 +53,7 @@ namespace Chromium.WebBrowser {
         private CfrV8Accessor v8Accessor;
 
         /// <summary>
-        /// Called if a script attempts to get a property value on this object
-        /// which has not been defined through AddJSProperty. It's up to the
-        /// application to decide how to handle the request. See also
-        /// description of CfrV8AccessorGetEventArgs.
-        /// If the application does not subscribe to this event, the 
-        /// default action will be to return «undefined».
-        /// </summary>
-        public event CfrV8AccessorGetEventHandler PropertyGet;
-
-        /// <summary>
-        /// Called if a script attempts to set a property value on this object.
-        /// It's up to the application to decide how to handle the request. See also
-        /// description of CfrV8AccessorSetEventArgs.
-        /// If the application does not subscribe to this event, the 
-        /// default action will be to return an exception with
-        /// the message "Object is readonly" to the script.
-        /// </summary>
-        public event CfrV8AccessorSetEventHandler PropertySet;
-
-        /// <summary>
-        /// If true, then the PropertyGet and PropertySet events 
+        /// If true, dynamic properties and functions in this object 
         /// are executed on the thread that owns the browser's 
         /// underlying window handle. Preserves affinity to the render thread.
         /// </summary>
@@ -135,6 +115,20 @@ namespace Chromium.WebBrowser {
             return o;
         }
 
+        /// <summary>
+        /// Add a dynamic javascript property to this object.
+        /// If InvokeOnBrowser is true, the property's 
+        /// setter and getter events are executed 
+        /// on the thread that owns the browser's 
+        /// underlying window handle. Preserves affinity to 
+        /// the original thread.
+        /// </summary>
+        public JSDynamicProperty AddJSDynamicProperty(string propertyName) {
+            var p = new JSDynamicProperty(InvokeOnBrowser);
+            AddJSProperty(propertyName, p);
+            return p;
+        }
+
 
         internal override CfrV8Value CreateV8Value() {
             v8Accessor = new CfrV8Accessor(v8Context.RemoteRuntime);
@@ -142,42 +136,30 @@ namespace Chromium.WebBrowser {
             v8Accessor.Set += v8Accessor_Set;
             var o = CfrV8Value.CreateObject(v8Context.RemoteRuntime, v8Accessor);
             foreach(var p in jsProperties) {
-                o.SetValue(p.Key, p.Value.GetV8Value(v8Context), CfxV8PropertyAttribute.DontDelete | CfxV8PropertyAttribute.ReadOnly);
+                var v = p.Value.GetV8Value(v8Context);
+                if(p.Value is JSDynamicProperty)
+                    o.SetValue(p.Key, CfxV8AccessControl.Default, CfxV8PropertyAttribute.None);
+                else
+                    o.SetValue(p.Key, p.Value.GetV8Value(v8Context), CfxV8PropertyAttribute.DontDelete | CfxV8PropertyAttribute.ReadOnly);
             }
             return o;
         }
 
         void v8Accessor_Set(object sender, CfrV8AccessorSetEventArgs e) {
-            var h = PropertySet;
-            if(h == null) {
-                e.Exception = "Object is readonly.";
-                e.SetReturnValue(true);
+            JSProperty property;
+            if(jsProperties.TryGetValue(e.Name, out property)) {
+                ((JSDynamicProperty)property).RaisePropertySet(e);
             } else {
-                if(InvokeOnBrowser) {
-                    Browser.RenderThreadInvoke((MethodInvoker)(() => h.Invoke(this, e)));
-                } else {
-                    h.Invoke(this, e);
-                }
+                e.Exception = "Internal error.";
             }
         }
 
         void v8Accessor_Get(object sender, CfrV8AccessorGetEventArgs e) {
             JSProperty property;
             if(jsProperties.TryGetValue(e.Name, out property)) {
-                e.Retval = property.GetV8Value(v8Context);
-                e.SetReturnValue(true);
+                ((JSDynamicProperty)property).RaisePropertyGet(e);
             } else {
-                var h = PropertyGet;
-                if(h == null) {
-                    e.Retval = CfrV8Value.CreateUndefined(e.RemoteRuntime);
-                    e.SetReturnValue(true);
-                } else {
-                    if(InvokeOnBrowser) {
-                        Browser.RenderThreadInvoke((MethodInvoker)(() => h.Invoke(this, e)));
-                    } else {
-                        h.Invoke(this, e);
-                    }
-                }
+                e.Exception = "Internal error.";
             }
         }
     }
