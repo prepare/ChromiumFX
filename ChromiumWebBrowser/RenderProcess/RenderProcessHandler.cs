@@ -73,22 +73,20 @@ namespace Chromium.WebBrowser {
             var wb = ChromiumWebBrowser.GetBrowser(e.Browser.Identifier);
             if(wb != null) {
                 if(e.Frame.IsMain) {
-                    SetFunctions(e.Context, wb.mainFrameJSFunctions);
-                } else if(wb.frameJSFunctions.Count > 0) {
-                    List<JSFunction> list;
-                    if(wb.frameJSFunctions.TryGetValue(e.Frame.Name, out list)) {
-                        SetFunctions(e.Context, list);
+                    SetProperties(e.Context, wb.mainFrameJSProperties);
+                } else if(wb.frameJSProperties.Count > 0) {
+                    List<JSProperty> list;
+                    if(wb.frameJSProperties.TryGetValue(e.Frame.Name, out list)) {
+                        SetProperties(e.Context, list);
                     }
                 }
             }
         }
 
-        private void SetFunctions(CfrV8Context context, List<JSFunction> list) {
-            foreach(var f in list) {
-                f.v8Handler = new CfrV8Handler(context.RemoteRuntime);
-                f.v8Function = CfrV8Value.CreateFunction(context.RemoteRuntime, f.Name, f.v8Handler);
-                f.SetV8Handler(f.v8Handler);
-                context.Global.SetValue(f.Name, f.v8Function, CfxV8PropertyAttribute.DontDelete | CfxV8PropertyAttribute.ReadOnly);
+        private void SetProperties(CfrV8Context context, List<JSProperty> list) {
+            foreach(var p in list) {
+                var v8Value = p.GetV8Value(context.RemoteRuntime);
+                context.Global.SetValue(p.Name, v8Value, CfxV8PropertyAttribute.DontDelete | CfxV8PropertyAttribute.ReadOnly);
             }
         }
     }

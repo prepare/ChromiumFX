@@ -32,6 +32,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Chromium.Remote;
 
 namespace Chromium.WebBrowser {
 
@@ -87,6 +88,8 @@ namespace Chromium.WebBrowser {
                 return m_parent;
             }
         }
+
+        internal abstract CfrV8Value GetV8Value(CfrRuntime remoteRuntime);
 
         private ChromiumWebBrowser GetBrowserFromParent(JSProperty requestor) {
 

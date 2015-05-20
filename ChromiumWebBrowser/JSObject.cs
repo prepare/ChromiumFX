@@ -32,6 +32,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Chromium.Remote;
 
 namespace Chromium.WebBrowser {
 
@@ -46,5 +47,9 @@ namespace Chromium.WebBrowser {
             : base(JSPropertyType.Object) {
         }
 
+
+        internal override CfrV8Value GetV8Value(Remote.CfrRuntime remoteRuntime) {
+            throw new NotImplementedException();
+        }
     }
 }
