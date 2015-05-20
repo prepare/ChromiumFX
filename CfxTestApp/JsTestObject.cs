@@ -12,10 +12,10 @@ namespace CfxTestApplication {
 
         internal JsTestObject(BrowserForm form) {
             this.form = form;
-            AddJSFunction("testFunction").Execute += TestFunction_Execute;
-            AddJSObject("anotherObject").AddJSFunction("anotherTestFunction").Execute += AnotherTestFunction_Execute;
+            AddFunction("testFunction").Execute += TestFunction_Execute;
+            AddObject("anotherObject").AddFunction("anotherTestFunction").Execute += AnotherTestFunction_Execute;
 
-            AddJSDynamicProperty("dynamicProperty").PropertyGet += JsTestObject_PropertyGet;
+            AddDynamicProperty("dynamicProperty").PropertyGet += JsTestObject_PropertyGet;
 
         }
 

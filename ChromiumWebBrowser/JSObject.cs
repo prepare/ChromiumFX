@@ -82,7 +82,7 @@ namespace Chromium.WebBrowser {
         /// <summary>
         /// Add a javascript property to this object.
         /// </summary>
-        public void AddJSProperty(string propertyName, JSProperty property) {
+        public void AddProperty(string propertyName, JSProperty property) {
             property.SetParent(propertyName, this);
             if(jsProperties.ContainsKey(propertyName))
                 throw new CfxException("Property already exists.");
@@ -96,9 +96,9 @@ namespace Chromium.WebBrowser {
         /// underlying window handle. Preserves affinity to 
         /// the original thread.
         /// </summary>
-        public JSFunction AddJSFunction(string functionName) {
+        public JSFunction AddFunction(string functionName) {
             var f = new JSFunction(InvokeOnBrowser);
-            AddJSProperty(functionName, f);
+            AddProperty(functionName, f);
             return f;
         }
 
@@ -109,9 +109,9 @@ namespace Chromium.WebBrowser {
         /// underlying window handle. Preserves affinity to 
         /// the original thread.
         /// </summary>
-        public JSObject AddJSObject(string objectName) {
+        public JSObject AddObject(string objectName) {
             var o = new JSObject(InvokeOnBrowser);
-            AddJSProperty(objectName, o);
+            AddProperty(objectName, o);
             return o;
         }
 
@@ -123,9 +123,9 @@ namespace Chromium.WebBrowser {
         /// underlying window handle. Preserves affinity to 
         /// the original thread.
         /// </summary>
-        public JSDynamicProperty AddJSDynamicProperty(string propertyName) {
+        public JSDynamicProperty AddDynamicProperty(string propertyName) {
             var p = new JSDynamicProperty(InvokeOnBrowser);
-            AddJSProperty(propertyName, p);
+            AddProperty(propertyName, p);
             return p;
         }
 
