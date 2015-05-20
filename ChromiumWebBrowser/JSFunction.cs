@@ -43,8 +43,8 @@ namespace Chromium.WebBrowser {
     /// </summary>
     public class JSFunction : JSProperty {
 
-        internal CfrV8Handler v8Handler;
-        internal CfrV8Value v8Function;
+        private CfrV8Handler v8Handler;
+        private CfrV8Value v8Function;
 
         /// <summary>
         /// Javascript callback event for this function.
