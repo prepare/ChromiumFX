@@ -50,10 +50,7 @@ namespace Chromium.WebBrowser {
 
 
         private readonly Dictionary<string, JSProperty> jsProperties = new Dictionary<string, JSProperty>();
-
         private CfrV8Accessor v8Accessor;
-        private CfrV8Value v8Object;
-
 
         /// <summary>
         /// Called if a script attempts to get a property value on this object
@@ -139,12 +136,11 @@ namespace Chromium.WebBrowser {
         }
 
 
-        internal override CfrV8Value GetV8Value(Remote.CfrRuntime remoteRuntime) {
-            v8Accessor = new CfrV8Accessor(remoteRuntime);
-            v8Accessor.Get += v8Accessor_Get;
-            v8Accessor.Set += v8Accessor_Set;
-            v8Object = CfrV8Value.CreateObject(remoteRuntime, v8Accessor);
-            return v8Object;
+        internal override CfrV8Value CreateV8Value(CfrRuntime remoteRuntime) {
+                v8Accessor = new CfrV8Accessor(remoteRuntime);
+                v8Accessor.Get += v8Accessor_Get;
+                v8Accessor.Set += v8Accessor_Set;
+                return CfrV8Value.CreateObject(remoteRuntime, v8Accessor);
         }
 
         void v8Accessor_Set(object sender, CfrV8AccessorSetEventArgs e) {
@@ -164,7 +160,7 @@ namespace Chromium.WebBrowser {
         void v8Accessor_Get(object sender, CfrV8AccessorGetEventArgs e) {
             JSProperty property;
             if(jsProperties.TryGetValue(e.Name, out property)) {
-                e.Retval = property.GetV8Value(e.RemoteRuntime);
+                e.Retval = property.GetV8Value(v8Context);
                 e.SetReturnValue(true);
             } else {
                 var h = PropertyGet;

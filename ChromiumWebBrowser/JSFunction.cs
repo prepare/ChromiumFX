@@ -44,8 +44,7 @@ namespace Chromium.WebBrowser {
     public class JSFunction : JSProperty {
 
         private CfrV8Handler v8Handler;
-        private CfrV8Value v8Function;
-
+        
         /// <summary>
         /// Javascript callback event for this function.
         /// </summary>
@@ -91,11 +90,10 @@ namespace Chromium.WebBrowser {
             }
         }
 
-        internal override CfrV8Value GetV8Value(CfrRuntime remoteRuntime) {
+        internal override CfrV8Value CreateV8Value(CfrRuntime remoteRuntime) {
             v8Handler = new CfrV8Handler(remoteRuntime);
-            v8Function = CfrV8Value.CreateFunction(remoteRuntime, Name, v8Handler);
             v8Handler.Execute += new CfrV8HandlerExecuteEventHandler(handler_Execute);
-            return v8Function;
+            return CfrV8Value.CreateFunction(remoteRuntime, Name, v8Handler);
         }
     }
 }

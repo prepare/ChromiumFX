@@ -64,6 +64,9 @@ namespace Chromium.WebBrowser {
         private ChromiumWebBrowser m_browser;
         private JSObject m_parent;
 
+        internal CfrV8Context v8Context {get; private set; }
+        private CfrV8Value v8Value;
+
         internal JSProperty(JSPropertyType type) {
             PropertyType = type;
         }
@@ -89,7 +92,17 @@ namespace Chromium.WebBrowser {
             }
         }
 
-        internal abstract CfrV8Value GetV8Value(CfrRuntime remoteRuntime);
+
+        /* protected AND internal */
+        internal abstract CfrV8Value CreateV8Value(CfrRuntime remoteRuntime);
+        
+        internal CfrV8Value GetV8Value(CfrV8Context context) {
+            if(v8Value == null || !Object.ReferenceEquals(v8Context, context)) {
+                v8Context = context;
+                v8Value = CreateV8Value(context.RemoteRuntime);
+            }
+            return v8Value;
+        }
 
         private ChromiumWebBrowser GetBrowserFromParent(JSProperty requestor) {
 
