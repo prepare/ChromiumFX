@@ -539,11 +539,8 @@ namespace Chromium.WebBrowser {
         /// The function will be available after the next time a
         /// V8 context is created in the render process.
         /// </summary>
-        public void AddGlobalJSFunction(JSFunction globalFunction) {
-            if(globalFunction.Browser != null) {
-                throw new CfxException("This JSFunction object already belongs to a browser.");
-            }
-            globalFunction.Browser = this;
+        public void AddGlobalJSFunction(string functionName, JSFunction globalFunction) {
+            globalFunction.SetBrowser(functionName, this);
             mainFrameJSFunctions.Add(globalFunction);
         }
 
@@ -552,34 +549,31 @@ namespace Chromium.WebBrowser {
         /// The function will be available after the next time a
         /// V8 context is created for a frame with this name in the render process.
         /// </summary>
-        public void AddGlobalJSFunction(string frameName, JSFunction globalFunction) {
-            if(globalFunction.Browser != null) {
-                throw new CfxException("This JSFunction object already belongs to a browser.");
-            }
+        public void AddGlobalJSFunction(string frameName, string functionName, JSFunction globalFunction) {
+            globalFunction.SetBrowser(functionName, this);
             List<JSFunction> list;
             if(!frameJSFunctions.TryGetValue(frameName, out list)) {
                 list = new List<JSFunction>();
                 frameJSFunctions.Add(frameName, list);
             }
-            globalFunction.Browser = this;
             list.Add(globalFunction);
         }
 
         /// <summary>
-        /// Add a JS Function to the main frame's global object.
+        /// Add and return a JS Function to the main frame's global object.
         /// The function will be available after the next time a
         /// V8 context is created in the render process.
         /// The function is executed on the thread that owns this browser control's 
         /// underlying window handle. Preserves affinity to the original thread.
         /// </summary>
         public JSFunction AddGlobalJSFunction(string functionName) {
-            var f = new JSFunction(functionName, true);
-            AddGlobalJSFunction(f);
+            var f = new JSFunction(true);
+            AddGlobalJSFunction(functionName, f);
             return f;
         }
 
         /// <summary>
-        /// Add a JS Function to the main frame's global object.
+        /// Add and return a JS Function to the main frame's global object.
         /// The function will be available after the next time a
         /// V8 context is created in the render process.
         /// If invokeOnBrowser is true, then the function is 
@@ -587,21 +581,21 @@ namespace Chromium.WebBrowser {
         /// underlying window handle. Preserves affinity to the render thread.
         /// </summary>
         public JSFunction AddGlobalJSFunction(string functionName, bool invokeOnBrowser) {
-            var f = new JSFunction(functionName, invokeOnBrowser);
-            AddGlobalJSFunction(f);
+            var f = new JSFunction(invokeOnBrowser);
+            AddGlobalJSFunction(functionName, f);
             return f;
         }
 
         /// <summary>
-        /// Add a JS Function to the named frame's global object.
+        /// Add and return a JS Function to the named frame's global object.
         /// The function will be available after the next time a
         /// V8 context is created in the render process.
         /// The function is executed on the thread that owns this browser control's 
         /// underlying window handle. Preserves affinity to the original thread.
         /// </summary>
         public JSFunction AddGlobalJSFunction(string frameName, string functionName) {
-            var f = new JSFunction(functionName, true);
-            AddGlobalJSFunction(frameName, f);
+            var f = new JSFunction(true);
+            AddGlobalJSFunction(frameName, functionName, f);
             return f;
         }
 

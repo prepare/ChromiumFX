@@ -53,6 +53,8 @@
     <Compile Include="ChromiumWebBrowser.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="JSObject.cs" />
+    <Compile Include="JSProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenderProcess\RenderProcess.cs" />
     <Compile Include="RenderProcess\RenderProcessHandler.cs" />
