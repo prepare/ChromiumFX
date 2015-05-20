@@ -72,7 +72,7 @@
       <DependentUpon>BrowserForm.cs</DependentUpon>
     </Compile>
     <Compile Include="HttpWebResponseCompatTest.cs" />
-    <Compile Include="JsObjectTest.cs" />
+    <Compile Include="JsTestObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Walkthrough01.cs" />
