@@ -78,7 +78,7 @@ namespace Chromium.WebBrowser {
         /// to a browser frame's global object or to another JSObject.
         /// </summary>
         public JSDynamicProperty()
-            : base(JSPropertyType.Object) {
+            : base(JSPropertyType.Dynamic) {
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Chromium.WebBrowser {
         /// underlying window handle. Preserves affinity to the render thread.
         /// </summary>
         public JSDynamicProperty(bool invokeOnBrowser)
-            : base(JSPropertyType.Function) {
+            : base(JSPropertyType.Dynamic) {
             this.InvokeOnBrowser = invokeOnBrowser;
         }
 
