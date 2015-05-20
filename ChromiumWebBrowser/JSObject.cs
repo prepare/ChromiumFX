@@ -95,7 +95,7 @@ namespace Chromium.WebBrowser {
         /// underlying window handle. Preserves affinity to the render thread.
         /// </summary>
         public JSObject(bool invokeOnBrowser)
-            : base(JSPropertyType.Function) {
+            : base(JSPropertyType.Object) {
             this.InvokeOnBrowser = invokeOnBrowser;
         }
 
