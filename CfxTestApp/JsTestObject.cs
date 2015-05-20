@@ -15,18 +15,16 @@ namespace CfxTestApplication {
             AddJSFunction("testFunction").Execute += TestFunction_Execute;
             AddJSObject("anotherObject").AddJSFunction("anotherTestFunction").Execute += AnotherTestFunction_Execute;
 
-            PropertyGet += JsTestObject_PropertyGet;
-            PropertySet += JsTestObject_PropertySet;
+            AddJSDynamicProperty("dynamicProperty").PropertyGet += JsTestObject_PropertyGet;
+
         }
 
-        void JsTestObject_PropertySet(object sender, Chromium.Remote.Event.CfrV8AccessorSetEventArgs e) {
-            form.LogWriteLine("PropertySet({0}, {1})", sender, e);
-            e.SetReturnValue(true);
-        }
+        int dynaCallCounter;
 
         void JsTestObject_PropertyGet(object sender, Chromium.Remote.Event.CfrV8AccessorGetEventArgs e) {
+            ++dynaCallCounter;
             form.LogWriteLine("PropertyGet({0}, {1})", sender, e);
-            e.Retval = CfrV8Value.CreateString(e.RemoteRuntime, "Some property");
+            e.Retval = CfrV8Value.CreateString(e.RemoteRuntime, "This is the value of dynamicProperty: " + dynaCallCounter);
             e.SetReturnValue(true);
         }
 
