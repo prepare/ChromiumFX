@@ -58,7 +58,7 @@ namespace Chromium.WebBrowser {
         public bool InvokeOnBrowser { get; set; }
 
         /// <summary>
-        /// Creates a JS Function to be added as a property 
+        /// Creates a new javascript function to be added as a property 
         /// to a browser frame's global object or to a JSObject.
         /// </summary>
         public JSFunction()
