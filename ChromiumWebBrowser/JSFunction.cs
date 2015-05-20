@@ -55,7 +55,7 @@ namespace Chromium.WebBrowser {
         /// If true, then the function is executed on the thread that owns the browser's 
         /// underlying window handle. Preserves affinity to the render thread.
         /// </summary>
-        public bool InvokeOnBrowser { get; set; }
+        public bool InvokeOnBrowser { get; private set; }
 
         /// <summary>
         /// Creates a new javascript function to be added as a property 
@@ -66,7 +66,7 @@ namespace Chromium.WebBrowser {
         }
 
         /// <summary>
-        /// Creates a JS Function to be added as a property 
+        /// Creates a new javascript function to be added as a property 
         /// to a browser frame's global object or to a JSObject.
         /// If invokeOnBrowser is true, then the function is executed on the thread that 
         /// owns the browser's underlying window handle. Preserves affinity to the render thread.

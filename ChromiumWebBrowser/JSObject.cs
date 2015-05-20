@@ -32,9 +32,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using Chromium.Remote;
+using Chromium.Remote.Event;
 
 namespace Chromium.WebBrowser {
+
+    public class JSPropertySetEventArgs : EventArgs {
+
+    }
 
     /// <summary>
     /// Represents a javascript object in the render process to be added as 
@@ -43,13 +49,136 @@ namespace Chromium.WebBrowser {
     public class JSObject : JSProperty {
 
 
+        private readonly Dictionary<string, JSProperty> jsProperties = new Dictionary<string, JSProperty>();
+
+        private CfrV8Accessor v8Accessor;
+        private CfrV8Value v8Object;
+
+
+        /// <summary>
+        /// Called if a script attempts to get a property value on this object
+        /// which has not been defined through AddJSProperty. It's up to the
+        /// application to decide how to handle the request. See also
+        /// description of CfrV8AccessorGetEventArgs.
+        /// If the application does not subscribe to this event, the 
+        /// default action will be to return «undefined».
+        /// </summary>
+        public event CfrV8AccessorGetEventHandler PropertyGet;
+
+        /// <summary>
+        /// Called if a script attempts to set a property value on this object.
+        /// It's up to the application to decide how to handle the request. See also
+        /// description of CfrV8AccessorSetEventArgs.
+        /// If the application does not subscribe to this event, the 
+        /// default action will be to return an exception with
+        /// the message "Object is readonly" to the script.
+        /// </summary>
+        public event CfrV8AccessorSetEventHandler PropertySet;
+
+        /// <summary>
+        /// If true, then the PropertyGet and PropertySet events 
+        /// are executed on the thread that owns the browser's 
+        /// underlying window handle. Preserves affinity to the render thread.
+        /// </summary>
+        public bool InvokeOnBrowser { get; private set; }
+
+        /// <summary>
+        /// Creates a new javascript object to be added as a property 
+        /// to a browser frame's global object or to another JSObject.
+        /// </summary>
         public JSObject()
             : base(JSPropertyType.Object) {
         }
 
+        /// <summary>
+        /// Creates a new javascript object to be added as a property 
+        /// to a browser frame's global object or to another JSObject.
+        /// If invokeOnBrowser is true, then the PropertyGet and PropertySet 
+        /// events are executed on the thread that owns the browser's 
+        /// underlying window handle. Preserves affinity to the render thread.
+        /// </summary>
+        public JSObject(bool invokeOnBrowser)
+            : base(JSPropertyType.Function) {
+            this.InvokeOnBrowser = invokeOnBrowser;
+        }
+
+        /// <summary>
+        /// Add a javascript property to this object.
+        /// </summary>
+        public void AddJSProperty(string propertyName, JSProperty property) {
+            property.SetParent(propertyName, this);
+            if(jsProperties.ContainsKey(propertyName))
+                throw new CfxException("Property already exists.");
+            jsProperties.Add(propertyName, property);
+        }
+
+        /// <summary>
+        /// Add a javascript function as a property to this object.
+        /// If InvokeOnBrowser is true, the function is executed 
+        /// on the thread that owns the browser's 
+        /// underlying window handle. Preserves affinity to 
+        /// the original thread.
+        /// </summary>
+        public JSFunction AddJSFunction(string functionName) {
+            var f = new JSFunction(InvokeOnBrowser);
+            AddJSProperty(functionName, f);
+            return f;
+        }
+
+        /// <summary>
+        /// Add another javascript object as a property to this object.
+        /// If InvokeOnBrowser is true, any functions of the other object
+        /// are executed on the thread that owns the browser's 
+        /// underlying window handle. Preserves affinity to 
+        /// the original thread.
+        /// </summary>
+        public JSObject AddJSObject(string objectName) {
+            var o = new JSObject(InvokeOnBrowser);
+            AddJSProperty(objectName, o);
+            return o;
+        }
+
 
         internal override CfrV8Value GetV8Value(Remote.CfrRuntime remoteRuntime) {
-            throw new NotImplementedException();
+            v8Accessor = new CfrV8Accessor(remoteRuntime);
+            v8Accessor.Get += v8Accessor_Get;
+            v8Accessor.Set += v8Accessor_Set;
+            v8Object = CfrV8Value.CreateObject(remoteRuntime, v8Accessor);
+            return v8Object;
+        }
+
+        void v8Accessor_Set(object sender, CfrV8AccessorSetEventArgs e) {
+            var h = PropertySet;
+            if(h == null) {
+                e.Exception = "Object is readonly.";
+                e.SetReturnValue(true);
+            } else {
+                if(InvokeOnBrowser) {
+                    Browser.RenderThreadInvoke((MethodInvoker)(() => h.Invoke(this, e)));
+                } else {
+                    h.Invoke(this, e);
+                }
+            }
+        }
+
+        void v8Accessor_Get(object sender, CfrV8AccessorGetEventArgs e) {
+            JSProperty property;
+            if(jsProperties.TryGetValue(e.Name, out property)) {
+                e.Retval = property.GetV8Value(e.RemoteRuntime);
+                e.SetReturnValue(true);
+            } else {
+                var h = PropertyGet;
+                if(h == null) {
+                    e.Retval = CfrV8Value.CreateUndefined(e.RemoteRuntime);
+                    e.SetReturnValue(true);
+                } else {
+                    if(InvokeOnBrowser) {
+                        Browser.RenderThreadInvoke((MethodInvoker)(() => h.Invoke(this, e)));
+                    } else {
+                        h.Invoke(this, e);
+                    }
+                }
+            }
         }
     }
 }
