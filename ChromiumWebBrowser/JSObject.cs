@@ -136,11 +136,11 @@ namespace Chromium.WebBrowser {
             v8Accessor.Set += v8Accessor_Set;
             var o = CfrV8Value.CreateObject(v8Context.RemoteRuntime, v8Accessor);
             foreach(var p in jsProperties) {
-                var v = p.Value.GetV8Value(v8Context);
-                if(p.Value is JSDynamicProperty)
-                    o.SetValue(p.Key, CfxV8AccessControl.Default, CfxV8PropertyAttribute.None);
-                else
+                if(p.Value.PropertyType == JSPropertyType.Dynamic) {
+                    o.SetValue(p.Key, CfxV8AccessControl.Default, CfxV8PropertyAttribute.DontDelete);
+                } else {
                     o.SetValue(p.Key, p.Value.GetV8Value(v8Context), CfxV8PropertyAttribute.DontDelete | CfxV8PropertyAttribute.ReadOnly);
+                }
             }
             return o;
         }
@@ -150,7 +150,8 @@ namespace Chromium.WebBrowser {
             if(jsProperties.TryGetValue(e.Name, out property)) {
                 ((JSDynamicProperty)property).RaisePropertySet(e);
             } else {
-                e.Exception = "Internal error.";
+                //this should never be reached
+                e.SetReturnValue(false);
             }
         }
 
@@ -159,7 +160,8 @@ namespace Chromium.WebBrowser {
             if(jsProperties.TryGetValue(e.Name, out property)) {
                 ((JSDynamicProperty)property).RaisePropertyGet(e);
             } else {
-                e.Exception = "Internal error.";
+                //this should never be reached
+                e.SetReturnValue(false);
             }
         }
     }
