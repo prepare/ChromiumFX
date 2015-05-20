@@ -40,7 +40,7 @@ namespace Chromium.Remote {
 
         internal static int ExecuteProcess(string pipeName) {
 
-            //System.Diagnostics.Debugger.Break();
+            //System.Diagnostics.Debugger.Launch();
 
             var pipeIn = PipeFactory.Instance.CreateClientPipeInputStream(pipeName + "so");
             var pipeOut = PipeFactory.Instance.CreateClientPipeOutputStream(pipeName + "si");
