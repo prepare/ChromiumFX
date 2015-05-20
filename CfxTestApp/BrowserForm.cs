@@ -61,8 +61,7 @@ namespace CfxTestApplication {
             VisitDomButton.Click += new EventHandler(VisitDomButton_Click);
 
             WebBrowser.AddGlobalJSFunction("CfxHelloWorld").Execute += CfxHelloWorld_Execute;
-            var o = new JsTestObject(this);
-            WebBrowser.AddGlobalJSProperty("TestObject", o);
+            WebBrowser.AddGlobalJSProperty("TestObject", new JsTestObject(this));
 
             var html = @"
                 <html><body>
@@ -72,10 +71,17 @@ namespace CfxTestApplication {
                     <a href='http://www.google.com/' onclick=""window.open('http://www.google.com/', 'Popup test', 'width=800,height=600,scrollbars=yes'); return false;"">open popup</a>
                     <br><br>
                     <button onclick=""document.getElementById('testfunc_result').innerHTML += '<br>' + CfxHelloWorld('this is the hello world function');"">Execute CfxHelloWorld()</button>
-                    <br><br>
-                    <button onclick=""TestObject.testFunction('this is the test function');"">Execute TestObject.testFunction()</button>
-                    <br><br>
-                    <button onclick=""document.getElementById('testfunc_result').innerHTML += '<br>' + TestObject.anotherObject.anotherTestFunction('this is the other test function');"">Execute TestObject.anotherObject.anotherTestFunction()</button>
+                    <button onclick=""
+                        document.getElementById('testfunc_result').innerHTML += '<br>TestObject = ' + TestObject;
+                        document.getElementById('testfunc_result').innerHTML += '<br>TestObject.testFunction = ' + TestObject.testFunction;
+                        TestObject.testFunction('this is the test function');
+                    "">Execute TestObject.testFunction()</button>
+                    <button onclick=""
+                        document.getElementById('testfunc_result').innerHTML += '<br>TestObject = ' + TestObject;
+                        document.getElementById('testfunc_result').innerHTML += '<br>TestObject.anotherObject = ' + TestObject.anotherObject;
+                        document.getElementById('testfunc_result').innerHTML += '<br>TestObject.anotherObject.anotherTestFunction = ' + TestObject.anotherObject.anotherTestFunction;
+                        document.getElementById('testfunc_result').innerHTML += '<br>' + TestObject.anotherObject.anotherTestFunction('this is the other test function');
+                    "">Execute TestObject.anotherObject.anotherTestFunction()</button>
                     <br><br><div id='testfunc_result'></div>
             ";
             

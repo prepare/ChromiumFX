@@ -63,6 +63,7 @@ namespace CfxTestApplication {
             this.LoadUrlButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.LoadGoogleButton = new System.Windows.Forms.ToolStripButton();
+            this.JSHelloWorldButton = new System.Windows.Forms.ToolStripButton();
             this.JSTestPageButton = new System.Windows.Forms.ToolStripButton();
             this.VisitDomButton = new System.Windows.Forms.ToolStripButton();
             this.CountFramesButton = new System.Windows.Forms.ToolStripButton();
@@ -75,7 +76,6 @@ namespace CfxTestApplication {
             this.WebBrowser = new Chromium.WebBrowser.ChromiumWebBrowser();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.LogTextBox = new System.Windows.Forms.TextBox();
-            this.JSHelloWorldButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -159,6 +159,15 @@ namespace CfxTestApplication {
             this.LoadGoogleButton.Size = new System.Drawing.Size(104, 22);
             this.LoadGoogleButton.Text = "Load google.com";
             this.LoadGoogleButton.Click += new System.EventHandler(this.LoadGoogleButton_Click);
+            // 
+            // JSHelloWorldButton
+            // 
+            this.JSHelloWorldButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.JSHelloWorldButton.Image = ((System.Drawing.Image)(resources.GetObject("JSHelloWorldButton.Image")));
+            this.JSHelloWorldButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.JSHelloWorldButton.Name = "JSHelloWorldButton";
+            this.JSHelloWorldButton.Size = new System.Drawing.Size(81, 22);
+            this.JSHelloWorldButton.Text = "JSHelloWorld";
             // 
             // JSTestPageButton
             // 
@@ -248,7 +257,7 @@ namespace CfxTestApplication {
             // 
             this.splitContainer1.Panel1.Controls.Add(this.WebBrowser);
             this.splitContainer1.Panel2Collapsed = true;
-            this.splitContainer1.Size = new System.Drawing.Size(1316, 448);
+            this.splitContainer1.Size = new System.Drawing.Size(1316, 605);
             this.splitContainer1.SplitterDistance = 873;
             this.splitContainer1.TabIndex = 3;
             // 
@@ -258,7 +267,7 @@ namespace CfxTestApplication {
             this.WebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.WebBrowser.Location = new System.Drawing.Point(0, 0);
             this.WebBrowser.Name = "WebBrowser";
-            this.WebBrowser.Size = new System.Drawing.Size(1316, 448);
+            this.WebBrowser.Size = new System.Drawing.Size(1316, 605);
             this.WebBrowser.TabIndex = 2;
             this.WebBrowser.Text = "cfxWebBrowser2";
             // 
@@ -276,8 +285,8 @@ namespace CfxTestApplication {
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.LogTextBox);
-            this.splitContainer2.Size = new System.Drawing.Size(1316, 573);
-            this.splitContainer2.SplitterDistance = 448;
+            this.splitContainer2.Size = new System.Drawing.Size(1316, 775);
+            this.splitContainer2.SplitterDistance = 605;
             this.splitContainer2.TabIndex = 4;
             // 
             // LogTextBox
@@ -287,23 +296,14 @@ namespace CfxTestApplication {
             this.LogTextBox.Multiline = true;
             this.LogTextBox.Name = "LogTextBox";
             this.LogTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.LogTextBox.Size = new System.Drawing.Size(1316, 121);
+            this.LogTextBox.Size = new System.Drawing.Size(1316, 166);
             this.LogTextBox.TabIndex = 0;
-            // 
-            // JSHelloWorldButton
-            // 
-            this.JSHelloWorldButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.JSHelloWorldButton.Image = ((System.Drawing.Image)(resources.GetObject("JSHelloWorldButton.Image")));
-            this.JSHelloWorldButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.JSHelloWorldButton.Name = "JSHelloWorldButton";
-            this.JSHelloWorldButton.Size = new System.Drawing.Size(81, 22);
-            this.JSHelloWorldButton.Text = "JSHelloWorld";
             // 
             // BrowserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1316, 598);
+            this.ClientSize = new System.Drawing.Size(1316, 800);
             this.Controls.Add(this.splitContainer2);
             this.Controls.Add(this.toolStrip1);
             this.Name = "BrowserForm";
