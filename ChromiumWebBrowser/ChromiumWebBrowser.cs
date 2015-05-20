@@ -539,8 +539,8 @@ namespace Chromium.WebBrowser {
         /// The property will be available after the next time a
         /// V8 context is created in the render process.
         /// </summary>
-        public void AddGlobalJSProperty(string functionName, JSProperty globalProperty) {
-            globalProperty.SetBrowser(functionName, this);
+        public void AddGlobalJSProperty(string propertyName, JSProperty globalProperty) {
+            globalProperty.SetBrowser(propertyName, this);
             mainFrameJSProperties.Add(globalProperty);
         }
 
@@ -549,8 +549,8 @@ namespace Chromium.WebBrowser {
         /// The property will be available after the next time a
         /// V8 context is created for a frame with this name in the render process.
         /// </summary>
-        public void AddGlobalJSProperty(string frameName, string functionName, JSProperty globalProperty) {
-            globalProperty.SetBrowser(functionName, this);
+        public void AddGlobalJSProperty(string frameName, string propertyName, JSProperty globalProperty) {
+            globalProperty.SetBrowser(propertyName, this);
             List<JSProperty> list;
             if(!frameJSProperties.TryGetValue(frameName, out list)) {
                 list = new List<JSProperty>();
