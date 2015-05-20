@@ -86,9 +86,9 @@ namespace Chromium.WebBrowser {
         private void SetFunctions(CfrV8Context context, List<JSFunction> list) {
             foreach(var f in list) {
                 f.v8Handler = new CfrV8Handler(context.RemoteRuntime);
-                f.v8Function = CfrV8Value.CreateFunction(context.RemoteRuntime, f.FunctionName, f.v8Handler);
+                f.v8Function = CfrV8Value.CreateFunction(context.RemoteRuntime, f.Name, f.v8Handler);
                 f.SetV8Handler(f.v8Handler);
-                context.Global.SetValue(f.FunctionName, f.v8Function, CfxV8PropertyAttribute.DontDelete | CfxV8PropertyAttribute.ReadOnly);
+                context.Global.SetValue(f.Name, f.v8Function, CfxV8PropertyAttribute.DontDelete | CfxV8PropertyAttribute.ReadOnly);
             }
         }
     }

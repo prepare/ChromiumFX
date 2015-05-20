@@ -38,9 +38,10 @@ using Chromium.Remote.Event;
 namespace Chromium.WebBrowser {
 
     /// <summary>
-    /// Represents a javascript function in the render process.
+    /// Represents a javascript function in the render process to be added as 
+    /// a property to a browser frame's global object or to a JSObject.
     /// </summary>
-    public class JSFunction {
+    public class JSFunction : JSProperty {
 
         internal CfrV8Handler v8Handler;
         internal CfrV8Value v8Function;
@@ -51,37 +52,27 @@ namespace Chromium.WebBrowser {
         public event CfrV8HandlerExecuteEventHandler Execute;
 
         /// <summary>
-        /// Name for this function in the frame's global object.
-        /// </summary>
-        public string FunctionName { get; private set; }
-
-        /// <summary>
-        /// The browser this function belongs to. 
-        /// </summary>
-        public ChromiumWebBrowser Browser { get; internal set; }
-        
-        /// <summary>
         /// If true, then the function is executed on the thread that owns the browser's 
         /// underlying window handle. Preserves affinity to the render thread.
         /// </summary>
         public bool InvokeOnBrowser { get; set; }
-        
+
         /// <summary>
-        /// Creates a JS Function for registration with a
-        /// ChromiumWebBrowser control.
+        /// Creates a JS Function to be added as a property 
+        /// to a browser frame's global object or to a JSObject.
         /// </summary>
-        public JSFunction(string functionName) {
-            this.FunctionName = functionName;
+        public JSFunction()
+            : base(JSPropertyType.Function) {
         }
 
         /// <summary>
-        /// Creates a JS Function for registration with a
-        /// ChromiumWebBrowser control.
+        /// Creates a JS Function to be added as a property 
+        /// to a browser frame's global object or to a JSObject.
         /// If invokeOnBrowser is true, then the function is executed on the thread that 
         /// owns the browser's underlying window handle. Preserves affinity to the render thread.
         /// </summary>
-        public JSFunction(string functionName, bool invokeOnBrowser) {
-            this.FunctionName = functionName;
+        public JSFunction(bool invokeOnBrowser)
+            : base(JSPropertyType.Function) {
             this.InvokeOnBrowser = invokeOnBrowser;
         }
 
