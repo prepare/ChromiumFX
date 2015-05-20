@@ -66,8 +66,8 @@ namespace Chromium.WebBrowser {
         /// <summary>
         /// Creates a new javascript object to be added as a property 
         /// to a browser frame's global object or to another JSObject.
-        /// If invokeOnBrowser is true, then the PropertyGet and PropertySet 
-        /// events are executed on the thread that owns the browser's 
+        /// If invokeOnBrowser is true, dynamic properties and functions 
+        /// in this object are executed on the thread that owns the browser's 
         /// underlying window handle. Preserves affinity to the render thread.
         /// </summary>
         public JSObject(bool invokeOnBrowser)
