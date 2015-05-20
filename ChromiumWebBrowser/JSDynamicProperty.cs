@@ -39,8 +39,8 @@ using Chromium.Remote.Event;
 namespace Chromium.WebBrowser {
 
     /// <summary>
-    /// Represents a dynamic javascript property in the render process to be added to
-    /// a browser frame's global object or to a JSObject.
+    /// Represents a dynamic javascript property in the render process 
+    /// to be added to a JSObject.
     /// </summary>
     public class JSDynamicProperty : JSProperty {
 
@@ -61,8 +61,7 @@ namespace Chromium.WebBrowser {
         /// application to decide how to handle the request. See also
         /// description of CfrV8AccessorSetEventArgs.
         /// If the application does not subscribe to this event, the 
-        /// default action will be to return an exception with
-        /// the message "Property is readonly" to the script.
+        /// default action will be to silently ignore the request.
         /// </summary>
         public event CfrV8AccessorSetEventHandler PropertySet;
 
@@ -74,16 +73,14 @@ namespace Chromium.WebBrowser {
         public bool InvokeOnBrowser { get; private set; }
 
         /// <summary>
-        /// Creates a new dynamic javascript property to be added 
-        /// to a browser frame's global object or to another JSObject.
+        /// Creates a new dynamic javascript property to be added to a JSObject.
         /// </summary>
         public JSDynamicProperty()
             : base(JSPropertyType.Dynamic) {
         }
 
         /// <summary>
-        /// Creates a new dynamic javascript property to be added
-        /// to a browser frame's global object or to another JSObject.
+        /// Creates a new dynamic javascript property to be added to a JSObject.
         /// If invokeOnBrowser is true, then the PropertyGet and PropertySet 
         /// events are executed on the thread that owns the browser's 
         /// underlying window handle. Preserves affinity to the render thread.
@@ -96,7 +93,11 @@ namespace Chromium.WebBrowser {
         internal void RaisePropertySet(CfrV8AccessorSetEventArgs e) {
             var h = PropertySet;
             if(h == null) {
-                e.Exception = "Property is readonly.";
+                //TODO: this causes the browser to crash.
+                //so for the time being, we silently ignore
+                //set requests when there is no application 
+                //defined set event.
+                //e.Exception = "Property is readonly.";
                 e.SetReturnValue(true);
             } else {
                 if(InvokeOnBrowser) {
