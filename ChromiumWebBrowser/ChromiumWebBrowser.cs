@@ -564,7 +564,7 @@ namespace Chromium.WebBrowser {
         }
 
         /// <summary>
-        /// Add and return a JS Function to the main frame's global object.
+        /// Add a javascript function as a property to the main frame's global object.
         /// The function will be available after the next time a
         /// V8 context is created in the render process.
         /// The function is executed on the thread that owns this browser control's 
@@ -577,7 +577,7 @@ namespace Chromium.WebBrowser {
         }
 
         /// <summary>
-        /// Add and return a JS Function to the main frame's global object.
+        /// Add a javascript function as a property to the main frame's global object.
         /// The function will be available after the next time a
         /// V8 context is created in the render process.
         /// If invokeOnBrowser is true, then the function is 
@@ -591,7 +591,7 @@ namespace Chromium.WebBrowser {
         }
 
         /// <summary>
-        /// Add and return a JS Function to the named frame's global object.
+        /// Add a javascript function as a property to the named frame's global object.
         /// The function will be available after the next time a
         /// V8 context is created for a frame with this name in the render process.
         /// The function is executed on the thread that owns this browser control's 
@@ -601,6 +601,76 @@ namespace Chromium.WebBrowser {
             var f = new JSFunction(true);
             AddGlobalJSProperty(frameName, functionName, f);
             return f;
+        }
+
+        /// <summary>
+        /// Add a javascript function as a property to the named frame's global object.
+        /// The function will be available after the next time a
+        /// V8 context is created for a frame with this name in the render process.
+        /// If invokeOnBrowser is true, then the function is executed 
+        /// on the thread that owns this browser control's 
+        /// underlying window handle. Preserves affinity to the original thread.
+        /// </summary>
+        public JSFunction AddGlobalJSFunction(string frameName, string functionName, bool invokeOnBrowser) {
+            var f = new JSFunction(invokeOnBrowser);
+            AddGlobalJSProperty(frameName, functionName, f);
+            return f;
+        }
+
+
+        /// <summary>
+        /// Add a javascript object as a property to the main frame's global object.
+        /// The object will be available after the next time a
+        /// V8 context is created in the render process.
+        /// Any functions and events of the object are executed on the thread that owns this browser control's 
+        /// underlying window handle. Preserves affinity to the render thread.
+        /// </summary>
+        public JSObject AddGlobalJSObject(string objectName) {
+            var o = new JSObject(true);
+            AddGlobalJSProperty(objectName, o);
+            return o;
+        }
+
+        /// <summary>
+        /// Add a javascript object as a property to the main frame's global object.
+        /// The object will be available after the next time a
+        /// V8 context is created in the render process.
+        /// If invokeOnBrowser is true, then any functions and events of the object 
+        /// are executed on the thread that owns this browser control's 
+        /// underlying window handle. Preserves affinity to the render thread.
+        /// </summary>
+        public JSObject AddGlobalJSObject(string objectName, bool invokeOnBrowser) {
+            var o = new JSObject(invokeOnBrowser);
+            AddGlobalJSProperty(objectName, o);
+            return o;
+        }
+
+        /// <summary>
+        /// Add a javascript object as a property to the named frame's global object.
+        /// The object will be available after the next time a
+        /// V8 context is created for a frame with this name in the render process.
+        /// Any functions and events of the object are 
+        /// executed on the thread that owns this browser control's 
+        /// underlying window handle. Preserves affinity to the render thread.
+        /// </summary>
+        public JSObject AddGlobalJSObject(string frameName, string objectName) {
+            var o = new JSObject(true);
+            AddGlobalJSProperty(frameName, objectName, o);
+            return o;
+        }
+
+        /// <summary>
+        /// Add a javascript object as a property to the named frame's global object.
+        /// The object will be available after the next time a
+        /// V8 context is created for a frame with this name in the render process.
+        /// If invokeOnBrowser is true, then any functions and events of the object are 
+        /// executed on the thread that owns this browser control's 
+        /// underlying window handle. Preserves affinity to the render thread.
+        /// </summary>
+        public JSObject AddGlobalJSObject(string frameName, string objectName, bool invokeOnBrowser) {
+            var o = new JSObject(invokeOnBrowser);
+            AddGlobalJSProperty(frameName, objectName, o);
+            return o;
         }
 
         /// <summary>
