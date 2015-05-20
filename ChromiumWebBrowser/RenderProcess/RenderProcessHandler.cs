@@ -85,7 +85,7 @@ namespace Chromium.WebBrowser {
 
         private void SetProperties(CfrV8Context context, Dictionary<string, JSProperty> list) {
             foreach(var p in list) {
-                var v8Value = p.Value.GetV8Value(context.RemoteRuntime);
+                var v8Value = p.Value.GetV8Value(context);
                 context.Global.SetValue(p.Key, v8Value, CfxV8PropertyAttribute.DontDelete | CfxV8PropertyAttribute.ReadOnly);
             }
         }
