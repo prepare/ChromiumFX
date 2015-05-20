@@ -57,17 +57,27 @@ namespace CfxTestApplication {
             UrlTextBox.KeyDown += new KeyEventHandler(UrlTextBox_KeyDown);
 
             JSHelloWorldButton.Click += new EventHandler(JSHelloWorldButton_Click);
-            ResourcesTestButton.Click += new EventHandler(TestButton_Click);
+            JSTestPageButton.Click += new EventHandler(TestButton_Click);
             VisitDomButton.Click += new EventHandler(VisitDomButton_Click);
 
             WebBrowser.AddGlobalJSFunction("CfxHelloWorld").Execute += CfxHelloWorld_Execute;
+            var o = new JsTestObject(this);
+            WebBrowser.AddGlobalJSProperty("TestObject", o);
 
             var html = @"
                 <html><body>
                     Local resource test page.<br><br>
                     Local resource image:<br>
                     <img src='http://localresource/image'><br><br>
-                    <a href='http://www.google.com/' onclick=""window.open('http://www.google.com/', 'Popup test', 'width=800,height=600,scrollbars=yes'); return false;"">open popup</a>";
+                    <a href='http://www.google.com/' onclick=""window.open('http://www.google.com/', 'Popup test', 'width=800,height=600,scrollbars=yes'); return false;"">open popup</a>
+                    <br><br>
+                    <button onclick=""document.getElementById('testfunc_result').innerHTML += '<br>' + CfxHelloWorld('this is the hello world function');"">Execute CfxHelloWorld()</button>
+                    <br><br>
+                    <button onclick=""TestObject.testFunction('this is the test function');"">Execute TestObject.testFunction()</button>
+                    <br><br>
+                    <button onclick=""document.getElementById('testfunc_result').innerHTML += '<br>' + TestObject.anotherObject.anotherTestFunction('this is the other test function');"">Execute TestObject.anotherObject.anotherTestFunction()</button>
+                    <br><br><div id='testfunc_result'></div>
+            ";
             
             WebBrowser.SetWebResource("http://localresource/text.html", new Chromium.WebBrowser.WebResource(html));
 
@@ -132,7 +142,6 @@ namespace CfxTestApplication {
 
         void JSHelloWorldButton_Click(object sender, EventArgs e) {
             WebBrowser.EvaluateJavascript("var test = 10; var result = CfxHelloWorld(test, 'foo'); document.body.innerHTML = result;", HelloWorldResult);
-            //WebBrowser.ExecuteJavascript("var test = 10; var result = CfxHelloWorld(test, 'foo'); document.body.innerHTML = result;");
         }
 
         void HelloWorldResult(CfrV8Value retval, CfrV8Exception ex) {
@@ -140,15 +149,15 @@ namespace CfxTestApplication {
         }
 
         void CfxHelloWorld_Execute(object sender, CfrV8HandlerExecuteEventArgs e) {
-            
-            var r1 = e.Arguments[0].IntValue;
-            var r2 = e.Arguments[1].StringValue;
 
-            LogWriteLine("CfxHelloWorld_Execute arguments: " + r1 + ", '" + r2 + "'");
-
+            if(e.Arguments.Length > 1) {
+                var r1 = e.Arguments[0].IntValue;
+                var r2 = e.Arguments[1].StringValue;
+                LogWriteLine("CfxHelloWorld_Execute arguments: " + r1 + ", '" + r2 + "'");
+            }
             LogCallback(sender, e);
-            var context = Chromium.Remote.CfrV8Context.GetEnteredContext(e.RemoteRuntime);
-            e.SetReturnValue(Chromium.Remote.CfrV8Value.CreateString(e.RemoteRuntime, "CfxHelloWorld_Execute"));
+            var context = CfrV8Context.GetEnteredContext(e.RemoteRuntime);
+            e.SetReturnValue(CfrV8Value.CreateString(e.RemoteRuntime, "CfxHelloWorld returns this text."));
             
         }
 

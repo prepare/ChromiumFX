@@ -63,19 +63,19 @@ namespace CfxTestApplication {
             this.LoadUrlButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.LoadGoogleButton = new System.Windows.Forms.ToolStripButton();
-            this.JSHelloWorldButton = new System.Windows.Forms.ToolStripButton();
-            this.ResourcesTestButton = new System.Windows.Forms.ToolStripButton();
+            this.JSTestPageButton = new System.Windows.Forms.ToolStripButton();
             this.VisitDomButton = new System.Windows.Forms.ToolStripButton();
             this.CountFramesButton = new System.Windows.Forms.ToolStripButton();
             this.ShowDevToolsButton = new System.Windows.Forms.ToolStripButton();
             this.CreditsButton = new System.Windows.Forms.ToolStripButton();
             this.miscDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.systemNetCompatibilityTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.WebBrowser = new Chromium.WebBrowser.ChromiumWebBrowser();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.LogTextBox = new System.Windows.Forms.TextBox();
-            this.printButton = new System.Windows.Forms.ToolStripButton();
+            this.JSHelloWorldButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -97,7 +97,7 @@ namespace CfxTestApplication {
             this.toolStripSeparator1,
             this.LoadGoogleButton,
             this.JSHelloWorldButton,
-            this.ResourcesTestButton,
+            this.JSTestPageButton,
             this.VisitDomButton,
             this.CountFramesButton,
             this.ShowDevToolsButton,
@@ -160,23 +160,14 @@ namespace CfxTestApplication {
             this.LoadGoogleButton.Text = "Load google.com";
             this.LoadGoogleButton.Click += new System.EventHandler(this.LoadGoogleButton_Click);
             // 
-            // JSHelloWorldButton
+            // JSTestPageButton
             // 
-            this.JSHelloWorldButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.JSHelloWorldButton.Image = ((System.Drawing.Image)(resources.GetObject("JSHelloWorldButton.Image")));
-            this.JSHelloWorldButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.JSHelloWorldButton.Name = "JSHelloWorldButton";
-            this.JSHelloWorldButton.Size = new System.Drawing.Size(87, 22);
-            this.JSHelloWorldButton.Text = "JS Hello World";
-            // 
-            // ResourcesTestButton
-            // 
-            this.ResourcesTestButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.ResourcesTestButton.Image = ((System.Drawing.Image)(resources.GetObject("ResourcesTestButton.Image")));
-            this.ResourcesTestButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ResourcesTestButton.Name = "ResourcesTestButton";
-            this.ResourcesTestButton.Size = new System.Drawing.Size(93, 22);
-            this.ResourcesTestButton.Text = "Load Resources";
+            this.JSTestPageButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.JSTestPageButton.Image = ((System.Drawing.Image)(resources.GetObject("JSTestPageButton.Image")));
+            this.JSTestPageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.JSTestPageButton.Name = "JSTestPageButton";
+            this.JSTestPageButton.Size = new System.Drawing.Size(104, 22);
+            this.JSTestPageButton.Text = "Load JS Test Page";
             // 
             // VisitDomButton
             // 
@@ -236,6 +227,17 @@ namespace CfxTestApplication {
             this.systemNetCompatibilityTestToolStripMenuItem.Text = "System.Net compatibility test";
             this.systemNetCompatibilityTestToolStripMenuItem.Click += new System.EventHandler(this.systemNetCompatibilityTestToolStripMenuItem_Click);
             // 
+            // printButton
+            // 
+            this.printButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.printButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.printButton.Image = ((System.Drawing.Image)(resources.GetObject("printButton.Image")));
+            this.printButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.printButton.Name = "printButton";
+            this.printButton.Size = new System.Drawing.Size(36, 22);
+            this.printButton.Text = "Print";
+            this.printButton.Click += new System.EventHandler(this.printButton_Click);
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -288,16 +290,14 @@ namespace CfxTestApplication {
             this.LogTextBox.Size = new System.Drawing.Size(1316, 121);
             this.LogTextBox.TabIndex = 0;
             // 
-            // printButton
+            // JSHelloWorldButton
             // 
-            this.printButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.printButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.printButton.Image = ((System.Drawing.Image)(resources.GetObject("printButton.Image")));
-            this.printButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.printButton.Name = "printButton";
-            this.printButton.Size = new System.Drawing.Size(36, 22);
-            this.printButton.Text = "Print";
-            this.printButton.Click += new System.EventHandler(this.printButton_Click);
+            this.JSHelloWorldButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.JSHelloWorldButton.Image = ((System.Drawing.Image)(resources.GetObject("JSHelloWorldButton.Image")));
+            this.JSHelloWorldButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.JSHelloWorldButton.Name = "JSHelloWorldButton";
+            this.JSHelloWorldButton.Size = new System.Drawing.Size(81, 22);
+            this.JSHelloWorldButton.Text = "JSHelloWorld";
             // 
             // BrowserForm
             // 
@@ -331,8 +331,7 @@ namespace CfxTestApplication {
         private System.Windows.Forms.ToolStripTextBox UrlTextBox;
         private System.Windows.Forms.ToolStripButton LoadUrlButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton JSHelloWorldButton;
-        private System.Windows.Forms.ToolStripButton ResourcesTestButton;
+        private System.Windows.Forms.ToolStripButton JSTestPageButton;
         private System.Windows.Forms.ToolStripButton VisitDomButton;
         public Chromium.WebBrowser.ChromiumWebBrowser WebBrowser;
         private System.Windows.Forms.SplitContainer splitContainer1;
@@ -345,5 +344,6 @@ namespace CfxTestApplication {
         private System.Windows.Forms.ToolStripDropDownButton miscDropDownButton;
         private System.Windows.Forms.ToolStripMenuItem systemNetCompatibilityTestToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton printButton;
+        private System.Windows.Forms.ToolStripButton JSHelloWorldButton;
     }
 }
