@@ -40,6 +40,7 @@ namespace Chromium.WebBrowser {
     /// The type of a javascript property.
     /// </summary>
     public enum JSPropertyType {
+        Dynamic,
         Function,
         Object
     }

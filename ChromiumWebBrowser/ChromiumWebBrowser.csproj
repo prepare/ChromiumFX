@@ -48,6 +48,7 @@
     <Compile Include="BrowserProcess\BrowserProcess.cs" />
     <Compile Include="BrowserProcess\Events.cs" />
     <Compile Include="BrowserProcess\RequestHandler.cs" />
+    <Compile Include="JSDynamicProperty.cs" />
     <Compile Include="JSFunction.cs" />
     <Compile Include="BrowserProcess\LifeSpanHandler.cs" />
     <Compile Include="ChromiumWebBrowser.cs">
