@@ -72,7 +72,8 @@ namespace CfxTestApplication {
                     }
                 </script>
                 <body>
-                    Local resource test page.<br><br>
+                    <br><br><b>Local resource/javascript integration test page.</b>
+                    <hr><br><br>
                     Local resource image:<br>
                     <img src='http://localresource/image'><br><br>
                     <a href='http://www.google.com/' onclick=""window.open('http://www.google.com/', 'Popup test', 'width=800,height=600,scrollbars=yes'); return false;"">open popup</a>
@@ -91,8 +92,8 @@ namespace CfxTestApplication {
                     "">Execute TestObject.anotherObject.anotherTestFunction()</button>
                     <button onclick=""
                         testlog('TestObject.dynamicProperty = ' + TestObject.dynamicProperty);
-                        testlog('(define TestObject.dynamicProperty = 100 - should throw exception)');
-                        TestObject.dynamicProperty = 100;
+                        testlog('(define TestObject.dynamicProperty += 100)');
+                        TestObject.dynamicProperty += 100;
                         testlog('TestObject.dynamicProperty = ' + TestObject.dynamicProperty);
                     "">Defined TestObject properties</button>
                     <button onclick=""
@@ -122,7 +123,10 @@ namespace CfxTestApplication {
 
             WebBrowser.OnLoadingStateChange += WebBrowser_OnLoadingStateChange;
 
+            WebBrowser.LoadUrl("http://localresource/text.html");
+
         }
+
 
         void WebBrowser_OnLoadingStateChange(object sender, CfxOnLoadingStateChangeEventArgs e) {
             if(!e.IsLoading)
