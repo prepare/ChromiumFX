@@ -90,6 +90,12 @@ namespace CfxTestApplication {
                         testlog(TestObject.anotherObject.anotherTestFunction('this is the other test function'));
                     "">Execute TestObject.anotherObject.anotherTestFunction()</button>
                     <button onclick=""
+                        testlog('TestObject.dynamicProperty = ' + TestObject.dynamicProperty);
+                        testlog('(define TestObject.dynamicProperty = 100 - should throw exception)');
+                        TestObject.dynamicProperty = 100;
+                        testlog('TestObject.dynamicProperty = ' + TestObject.dynamicProperty);
+                    "">Defined TestObject properties</button>
+                    <button onclick=""
                         testlog('TestObject.foo = ' + TestObject.foo);
                         testlog('(define TestObject.foo = 100)');
                         TestObject.foo = 100;
