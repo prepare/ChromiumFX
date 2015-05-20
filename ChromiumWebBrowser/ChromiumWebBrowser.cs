@@ -150,8 +150,8 @@ namespace Chromium.WebBrowser {
         private IntPtr browserWindowHandle;
         private int browserId;
 
-        internal readonly Dictionary<string, List<JSFunction>> frameJSFunctions = new Dictionary<string, List<JSFunction>>();
-        internal readonly List<JSFunction> mainFrameJSFunctions = new List<JSFunction>();
+        internal readonly Dictionary<string, List<JSProperty>> frameJSProperties = new Dictionary<string, List<JSProperty>>();
+        internal readonly List<JSProperty> mainFrameJSProperties = new List<JSProperty>();
         internal readonly Dictionary<string, WebResource> webResources = new Dictionary<string, WebResource>();
 
         internal RenderProcess remoteProcess;
@@ -535,28 +535,28 @@ namespace Chromium.WebBrowser {
 
         
         /// <summary>
-        /// Add a JS Function to the main frame's global object.
-        /// The function will be available after the next time a
+        /// Add a javascript property to the main frame's global object.
+        /// The property will be available after the next time a
         /// V8 context is created in the render process.
         /// </summary>
-        public void AddGlobalJSFunction(string functionName, JSFunction globalFunction) {
-            globalFunction.SetBrowser(functionName, this);
-            mainFrameJSFunctions.Add(globalFunction);
+        public void AddGlobalJSProperty(string functionName, JSProperty globalProperty) {
+            globalProperty.SetBrowser(functionName, this);
+            mainFrameJSProperties.Add(globalProperty);
         }
 
         /// <summary>
-        /// Add a JS Function to the named frame's global object.
-        /// The function will be available after the next time a
+        /// Add a javascript property to the named frame's global object.
+        /// The property will be available after the next time a
         /// V8 context is created for a frame with this name in the render process.
         /// </summary>
-        public void AddGlobalJSFunction(string frameName, string functionName, JSFunction globalFunction) {
-            globalFunction.SetBrowser(functionName, this);
-            List<JSFunction> list;
-            if(!frameJSFunctions.TryGetValue(frameName, out list)) {
-                list = new List<JSFunction>();
-                frameJSFunctions.Add(frameName, list);
+        public void AddGlobalJSProperty(string frameName, string functionName, JSProperty globalProperty) {
+            globalProperty.SetBrowser(functionName, this);
+            List<JSProperty> list;
+            if(!frameJSProperties.TryGetValue(frameName, out list)) {
+                list = new List<JSProperty>();
+                frameJSProperties.Add(frameName, list);
             }
-            list.Add(globalFunction);
+            list.Add(globalProperty);
         }
 
         /// <summary>
@@ -568,7 +568,7 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public JSFunction AddGlobalJSFunction(string functionName) {
             var f = new JSFunction(true);
-            AddGlobalJSFunction(functionName, f);
+            AddGlobalJSProperty(functionName, f);
             return f;
         }
 
@@ -582,20 +582,20 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public JSFunction AddGlobalJSFunction(string functionName, bool invokeOnBrowser) {
             var f = new JSFunction(invokeOnBrowser);
-            AddGlobalJSFunction(functionName, f);
+            AddGlobalJSProperty(functionName, f);
             return f;
         }
 
         /// <summary>
         /// Add and return a JS Function to the named frame's global object.
         /// The function will be available after the next time a
-        /// V8 context is created in the render process.
+        /// V8 context is created for a frame with this name in the render process.
         /// The function is executed on the thread that owns this browser control's 
         /// underlying window handle. Preserves affinity to the original thread.
         /// </summary>
         public JSFunction AddGlobalJSFunction(string frameName, string functionName) {
             var f = new JSFunction(true);
-            AddGlobalJSFunction(frameName, functionName, f);
+            AddGlobalJSProperty(frameName, functionName, f);
             return f;
         }
 
