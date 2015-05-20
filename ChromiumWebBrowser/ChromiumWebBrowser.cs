@@ -150,8 +150,8 @@ namespace Chromium.WebBrowser {
         private IntPtr browserWindowHandle;
         private int browserId;
 
-        internal readonly Dictionary<string, List<JSProperty>> frameJSProperties = new Dictionary<string, List<JSProperty>>();
-        internal readonly List<JSProperty> mainFrameJSProperties = new List<JSProperty>();
+        internal readonly Dictionary<string, Dictionary<string, JSProperty>> frameJSProperties = new Dictionary<string, Dictionary<string, JSProperty>>();
+        internal readonly Dictionary<string, JSProperty> mainFrameJSProperties = new Dictionary<string, JSProperty>();
         internal readonly Dictionary<string, WebResource> webResources = new Dictionary<string, WebResource>();
 
         internal RenderProcess remoteProcess;
@@ -541,7 +541,9 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public void AddGlobalJSProperty(string propertyName, JSProperty globalProperty) {
             globalProperty.SetBrowser(propertyName, this);
-            mainFrameJSProperties.Add(globalProperty);
+            if(mainFrameJSProperties.ContainsKey(propertyName))
+                throw new CfxException("Property already exists.");
+            mainFrameJSProperties.Add(propertyName, globalProperty);
         }
 
         /// <summary>
@@ -551,12 +553,14 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public void AddGlobalJSProperty(string frameName, string propertyName, JSProperty globalProperty) {
             globalProperty.SetBrowser(propertyName, this);
-            List<JSProperty> list;
+            Dictionary<string, JSProperty> list;
             if(!frameJSProperties.TryGetValue(frameName, out list)) {
-                list = new List<JSProperty>();
+                list = new Dictionary<string, JSProperty>();
                 frameJSProperties.Add(frameName, list);
             }
-            list.Add(globalProperty);
+            if(list.ContainsKey(propertyName))
+                throw new CfxException("Property already exists.");
+            list.Add(propertyName, globalProperty);
         }
 
         /// <summary>
