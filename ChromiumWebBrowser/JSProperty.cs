@@ -94,12 +94,12 @@ namespace Chromium.WebBrowser {
 
 
         /* protected AND internal */
-        internal abstract CfrV8Value CreateV8Value(CfrRuntime remoteRuntime);
+        internal abstract CfrV8Value CreateV8Value();
         
         internal CfrV8Value GetV8Value(CfrV8Context context) {
             if(v8Value == null || !Object.ReferenceEquals(v8Context, context)) {
                 v8Context = context;
-                v8Value = CreateV8Value(context.RemoteRuntime);
+                v8Value = CreateV8Value();
             }
             return v8Value;
         }

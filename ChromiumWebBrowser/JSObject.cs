@@ -136,11 +136,15 @@ namespace Chromium.WebBrowser {
         }
 
 
-        internal override CfrV8Value CreateV8Value(CfrRuntime remoteRuntime) {
-                v8Accessor = new CfrV8Accessor(remoteRuntime);
-                v8Accessor.Get += v8Accessor_Get;
-                v8Accessor.Set += v8Accessor_Set;
-                return CfrV8Value.CreateObject(remoteRuntime, v8Accessor);
+        internal override CfrV8Value CreateV8Value() {
+            v8Accessor = new CfrV8Accessor(v8Context.RemoteRuntime);
+            v8Accessor.Get += v8Accessor_Get;
+            v8Accessor.Set += v8Accessor_Set;
+            var o = CfrV8Value.CreateObject(v8Context.RemoteRuntime, v8Accessor);
+            foreach(var p in jsProperties) {
+                o.SetValue(p.Key, p.Value.GetV8Value(v8Context), CfxV8PropertyAttribute.DontDelete | CfxV8PropertyAttribute.ReadOnly);
+            }
+            return o;
         }
 
         void v8Accessor_Set(object sender, CfrV8AccessorSetEventArgs e) {
