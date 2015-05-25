@@ -38,5 +38,9 @@ namespace Chromium {
         internal static void Announce() {
             Debug.Print("Running ChromiumFX debug library.");
         }
+        [Conditional("DEBUG")]
+        internal static void Assert(bool condition) {
+            Debug.Assert(condition);
+        }
     }
 }
