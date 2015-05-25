@@ -49,6 +49,13 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2171.15 ###
+
+* Fixed a deadlock in the IPC code which caused the UI freeze after a renderer crash under some circumstances.
+* Fixed a null reference bug unwrapping arrays of cef structs.
+* Fixed a ref counting bug for arrays of cef structs.
+* Issue #16 resolved; added test code for the use case described in that issue. 
+
 ### Version 3.2171.14 ###
 
 * Enhanced javascript intgration: Additionally to the existing JSFunction, it is now possible to add javascript objects to the WebBrowser control and define functions and properties for those javascript objects, including other javascript objects and dynamic properties the application can handle at runtime. For a working example, see the test application (JsTestObject.cs).
