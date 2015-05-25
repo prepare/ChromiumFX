@@ -40,12 +40,12 @@ namespace Chromium.Remote {
         private readonly bool returnImmediately;
 
         internal readonly object waitLock = new object();
-        
+
         private RemoteCall reentryCall;
 
         internal int localThreadId;
         private int remoteThreadId;
-        
+
         internal RemoteCall(RemoteCallId callId) {
             this.callId = callId;
             this.returnImmediately = false;
@@ -67,17 +67,18 @@ namespace Chromium.Remote {
                 return;
             }
 
-            
-            lock(waitLock) {
 
-                localThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
-                connection.callStack.Push(this);
 
-                remoteThreadId = CfxRemoting.remoteThreadId;
 
-                connection.EnqueueRequest(this);
+            localThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+            connection.callStack.Push(this);
 
-                for(;;) {
+            remoteThreadId = CfxRemoting.remoteThreadId;
+
+            connection.EnqueueRequest(this);
+
+            for(; ; ) {
+                lock(waitLock) {
 
                     if(!connection.ShuttingDown && connection.connectionLostException == null)
                         System.Threading.Monitor.Wait(waitLock);
@@ -91,10 +92,9 @@ namespace Chromium.Remote {
                     if(reentryCall == null) {
                         return;
                     }
-                    
-                    reentryCall.ExecutionThreadEntry(connection);
-                    reentryCall = null;
                 }
+                reentryCall.ExecutionThreadEntry(connection);
+                reentryCall = null;
             }
         }
 
@@ -166,7 +166,7 @@ namespace Chromium.Remote {
             connection.EnqueueResponse(this);
         }
 
-        
+
 
         protected virtual void WriteArgs(StreamHandler h) { }
         protected virtual void ReadArgs(StreamHandler h) { }
@@ -175,6 +175,6 @@ namespace Chromium.Remote {
         protected virtual void ReadReturn(StreamHandler h) { }
 
         protected abstract void ExecuteInTargetProcess(RemoteConnection connection);
-        
+
     }
 }
