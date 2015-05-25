@@ -44,6 +44,10 @@ Public Class CefStructPtrPtrType
         Me.Indirection = Indirection
     End Sub
 
+    Protected Sub New(structPtrPtr As CefStructPtrPtrType)
+        Me.New(structPtrPtr.StructPtr, structPtrPtr.Indirection)
+    End Sub
+
     Public Overrides ReadOnly Property OriginalSymbol As String
         Get
             Return AddIndirection(Struct.OriginalSymbol, Indirection)
@@ -61,16 +65,6 @@ Public Class CefStructPtrPtrType
             Return {Struct.ParserMatches(0) & Indirection, Struct.ParserMatches(1) & Indirection}
         End Get
     End Property
-
-    Public Overrides Sub EmitPublicEventArgGetterStatements(b As CodeBuilder, var As String)
-        Stop 'unused
-        b.BeginIf("!m_{0}_changed", var)
-        b.AppendLine("m_{0}_wrapped = {1};", var, StructPtr.PublicWrapExpression("m_" & var))
-        b.AppendLine("m_{0}_changed = true;", var)
-        b.EndBlock()
-        b.AppendLine("return m_{0}_wrapped;", var)
-    End Sub
-
 
     Public Overrides ReadOnly Property IsCefStructPtrPtrType As Boolean
         Get

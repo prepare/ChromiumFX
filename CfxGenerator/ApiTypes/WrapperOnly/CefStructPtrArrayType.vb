@@ -35,20 +35,15 @@
 ''' </summary>
 ''' <remarks></remarks>
 Public Class CefStructPtrArrayType
-    Inherits ApiType
+    Inherits CefStructPtrPtrType
 
     Public ReadOnly StructArg As Argument
     Public ReadOnly CountArg As Argument
-    Public ReadOnly StructPtr As CefStructPtrType
-    Public ReadOnly Struct As CefStructType
 
     Sub New(structArg As Argument, countArg As Argument)
-        MyBase.New("__" & structArg.VarName & "[]")
+        MyBase.New(structArg.ArgumentType.AsCefStructPtrPtrType)
         Me.StructArg = structArg
         Me.CountArg = countArg
-        Me.StructPtr = DirectCast(structArg.ArgumentType, CefStructPtrPtrType).StructPtr
-        Me.Struct = StructPtr.Struct
-        
     End Sub
 
     Public Overrides ReadOnly Property PublicSymbol As String
