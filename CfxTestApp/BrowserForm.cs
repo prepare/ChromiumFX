@@ -61,6 +61,8 @@ namespace CfxTestApplication {
             VisitDomButton.Click += new EventHandler(VisitDomButton_Click);
 
             WebBrowser.AddGlobalJSFunction("CfxHelloWorld").Execute += CfxHelloWorld_Execute;
+            WebBrowser.AddGlobalJSFunction("testDoubleCallback").Execute += TestDoubleCallback_Execute;
+
             WebBrowser.AddGlobalJSProperty("TestObject", new JsTestObject(this));
 
             var html = @"
@@ -71,6 +73,15 @@ namespace CfxTestApplication {
                         document.getElementById('testfunc_result').innerHTML += '<br>' + text;
                     }
                 </script>
+                <script>
+                    function doubleCallback(arg1, arg2) {
+                        testlog('Function doubleCallback() called. Arguments:');
+                        testlog(arg1);
+                        testlog(arg2);
+                        return 'This text is returned from doubleCallback()';
+                    }
+                </script>
+                </head>
                 <body>
                     <br><br><b>Local resource/javascript integration test page.</b>
                     <hr><br><br>
@@ -102,11 +113,15 @@ namespace CfxTestApplication {
                         TestObject.foo = 100;
                         testlog('TestObject.foo = ' + TestObject.foo);
                     "">Undefined TestObject properties</button>
+                    <button onclick=""
+                        testlog('Call native function testDoubleCallback(doubleCallback). Return value:');
+                        testlog('Return value: ' + testDoubleCallback(doubleCallback));
+                    "">Double Callback</button>
                     <br><br><div id='testfunc_result'></div>
             ";
             
             WebBrowser.SetWebResource("http://localresource/text.html", new Chromium.WebBrowser.WebResource(html));
-
+            
             var bm = new System.Drawing.Bitmap(100, 100);
             using(var g = System.Drawing.Graphics.FromImage(bm)) {
                 g.FillRectangle(System.Drawing.Brushes.Yellow, 0, 0, 99, 99);
@@ -126,7 +141,6 @@ namespace CfxTestApplication {
             WebBrowser.LoadUrl("http://localresource/text.html");
 
         }
-
 
         void WebBrowser_OnLoadingStateChange(object sender, CfxOnLoadingStateChangeEventArgs e) {
             if(!e.IsLoading)
@@ -188,6 +202,16 @@ namespace CfxTestApplication {
             var context = CfrV8Context.GetEnteredContext(e.RemoteRuntime);
             e.SetReturnValue(CfrV8Value.CreateString(e.RemoteRuntime, "CfxHelloWorld returns this text."));
             
+        }
+
+        void TestDoubleCallback_Execute(object sender, CfrV8HandlerExecuteEventArgs e) {
+            var doubleCallback = e.Arguments[0];
+            var args = new CfrV8Value[] {
+                CfrV8Value.CreateString(e.RemoteRuntime, "This is the first argument"),
+                CfrV8Value.CreateDouble(e.RemoteRuntime, 123.4567)
+            };
+            var retval = doubleCallback.ExecuteFunction(null, args);
+            e.SetReturnValue(retval);
         }
 
         void UrlTextBox_KeyDown(object sender, KeyEventArgs e) {
