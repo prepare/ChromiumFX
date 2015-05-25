@@ -78,6 +78,7 @@ namespace Chromium.Remote {
             connection.EnqueueRequest(this);
 
             for(; ; ) {
+                RemoteCall reentryCall = null;
                 lock(waitLock) {
 
                     if(!connection.ShuttingDown && connection.connectionLostException == null)
@@ -89,12 +90,15 @@ namespace Chromium.Remote {
                         throw new CfxException("Remote connection lost.", connection.connectionLostException);
                     }
 
-                    if(reentryCall == null) {
+                    if(this.reentryCall == null) {
                         return;
                     }
+
+                    reentryCall = this.reentryCall;
+                    this.reentryCall = null;
+
                 }
                 reentryCall.ExecutionThreadEntry(connection);
-                reentryCall = null;
             }
         }
 
