@@ -111,6 +111,14 @@ Public Class CefStructPtrArrayType
         End Get
     End Property
 
+    Public Overrides Sub EmitPreNativeCallStatements(b As CodeBuilder, var As String)
+        b.BeginIf("{0}", CountArg.VarName)
+        b.BeginFor(CountArg.VarName)
+        b.AppendLine("if({0}[i]) ((cef_base_t*){0}[i])->add_ref((cef_base_t*){0}[i]);", StructArg.VarName)
+        b.EndBlock()
+        b.EndBlock()
+    End Sub
+
     Public Overrides Sub EmitPrePublicCallStatements(b As CodeBuilder, var As String)
 
         b.AppendLine("int {0}_length;", var)
