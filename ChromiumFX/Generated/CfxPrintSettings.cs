@@ -269,10 +269,17 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
         /// </remarks>
         public void SetPageRanges(CfxPageRange[] ranges) {
-            int ranges_length = ranges.Length;
-            IntPtr[] ranges_ptrs = new IntPtr[ranges_length];
-            for(int i = 0; i < ranges_length; ++i) {
-                ranges_ptrs[i] = CfxPageRange.Unwrap(ranges[i]);
+            int ranges_length;
+            IntPtr[] ranges_ptrs;
+            if(ranges != null) {
+                ranges_length = ranges.Length;
+                ranges_ptrs = new IntPtr[ranges_length];
+                for(int i = 0; i < ranges_length; ++i) {
+                    ranges_ptrs[i] = CfxPageRange.Unwrap(ranges[i]);
+                }
+            } else {
+                ranges_length = 0;
+                ranges_ptrs = null;
             }
             PinnedObject ranges_pinned = new PinnedObject(ranges_ptrs);
             int ranges_nomem;

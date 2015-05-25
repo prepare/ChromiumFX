@@ -1699,9 +1699,14 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var arguments_unwrapped = new CfxV8Value[arguments.Length];
-            for(int i = 0; i < arguments.Length; ++i) {
-                arguments_unwrapped[i] = (CfxV8Value)RemoteProxy.Unwrap(arguments[i]);
+            CfxV8Value[] arguments_unwrapped;
+            if(arguments != null) {
+                arguments_unwrapped = new CfxV8Value[arguments.Length];
+                for(int i = 0; i < arguments.Length; ++i) {
+                    arguments_unwrapped[i] = (CfxV8Value)RemoteProxy.Unwrap(arguments[i]);
+                }
+            } else {
+                arguments_unwrapped = null;
             }
             var self_local = (CfxV8Value)RemoteProxy.Unwrap(self);
             __retval = RemoteProxy.Wrap(self_local.ExecuteFunction((CfxV8Value)RemoteProxy.Unwrap(@object), arguments_unwrapped));
@@ -1742,9 +1747,14 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var arguments_unwrapped = new CfxV8Value[arguments.Length];
-            for(int i = 0; i < arguments.Length; ++i) {
-                arguments_unwrapped[i] = (CfxV8Value)RemoteProxy.Unwrap(arguments[i]);
+            CfxV8Value[] arguments_unwrapped;
+            if(arguments != null) {
+                arguments_unwrapped = new CfxV8Value[arguments.Length];
+                for(int i = 0; i < arguments.Length; ++i) {
+                    arguments_unwrapped[i] = (CfxV8Value)RemoteProxy.Unwrap(arguments[i]);
+                }
+            } else {
+                arguments_unwrapped = null;
             }
             var self_local = (CfxV8Value)RemoteProxy.Unwrap(self);
             __retval = RemoteProxy.Wrap(self_local.ExecuteFunctionWithContext((CfxV8Context)RemoteProxy.Unwrap(context), (CfxV8Value)RemoteProxy.Unwrap(@object), arguments_unwrapped));

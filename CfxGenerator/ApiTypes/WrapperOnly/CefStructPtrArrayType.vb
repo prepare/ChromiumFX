@@ -123,10 +123,18 @@ Public Class CefStructPtrArrayType
     End Property
 
     Public Overrides Sub EmitPrePublicCallStatements(b As CodeBuilder, var As String)
-        b.AppendLine("int {0}_length = {0}.Length;", var)
-        b.AppendLine("IntPtr[] {0}_ptrs = new IntPtr[{0}_length];", var)
+
+        b.AppendLine("int {0}_length;", var)
+        b.AppendLine("IntPtr[] {0}_ptrs;", var)
+        b.BeginIf("{0} != null", var)
+        b.AppendLine("{0}_length = {0}.Length;", var)
+        b.AppendLine("{0}_ptrs = new IntPtr[{0}_length];", var)
         b.BeginBlock("for(int i = 0; i < {0}_length; ++i)", var)
         b.AppendLine("{0}_ptrs[i] = {1}.Unwrap({0}[i]);", var, Struct.ClassName)
+        b.EndBlock()
+        b.BeginElse()
+        b.AppendLine("{0}_length = 0;", var)
+        b.AppendLine("{0}_ptrs = null;", var)
         b.EndBlock()
         b.AppendLine("PinnedObject {0}_pinned = new PinnedObject({0}_ptrs);", var)
     End Sub
@@ -170,9 +178,14 @@ Public Class CefStructPtrArrayType
 
 
     Public Overrides Sub EmitPreProxyCallStatements(b As CodeBuilder, var As String)
-        b.AppendLine("var {0}_unwrapped = new {1}[{0}.Length];", var, Struct.ClassName)
+        b.AppendLine("{0}[] {1}_unwrapped;", Struct.ClassName, var)
+        b.BeginIf("{0} != null", var)
+        b.AppendLine("{0}_unwrapped = new {1}[{0}.Length];", var, Struct.ClassName)
         b.BeginBlock("for(int i = 0; i < {0}.Length; ++i)", var)
         b.AppendLine("{0}_unwrapped[i] = {1};", var, StructPtr.ProxyUnwrapExpression(var & "[i]"))
+        b.EndBlock()
+        b.BeginElse()
+        b.AppendLine("{0}_unwrapped = null;", var)
         b.EndBlock()
     End Sub
 
