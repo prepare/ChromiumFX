@@ -71,4 +71,17 @@ Public Class CefStructPtrPtrType
         b.AppendLine("return m_{0}_wrapped;", var)
     End Sub
 
+
+    Public Overrides ReadOnly Property IsCefStructPtrPtrType As Boolean
+        Get
+            Return True
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property AsCefStructPtrPtrType As CefStructPtrPtrType
+        Get
+            Return Me
+        End Get
+    End Property
+
 End Class
