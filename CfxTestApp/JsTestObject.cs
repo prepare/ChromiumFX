@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Chromium.WebBrowser;
+﻿
 using Chromium.Remote;
+using Chromium.WebBrowser;
 
 namespace CfxTestApplication {
     class JsTestObject : JSObject {
