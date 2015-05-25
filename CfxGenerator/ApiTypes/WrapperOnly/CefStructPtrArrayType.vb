@@ -92,12 +92,6 @@ Public Class CefStructPtrArrayType
         End Get
     End Property
 
-    'Public Overrides ReadOnly Property RemoteWrapExpression(var As String) As String
-    '    Get
-    '        Return MyBase.RemoteWrapExpression(var) & ".GetRemote(remoteRuntime)"
-    '    End Get
-    'End Property
-
     Public Overrides ReadOnly Property RemoteUnwrapExpression(var As String) As String
         Get
             Return var & "_unwrapped"
@@ -136,9 +130,6 @@ Public Class CefStructPtrArrayType
 
     Public Overrides Sub EmitPostPublicCallStatements(b As CodeBuilder, var As String)
         b.AppendLine("{0}_pinned.Free();", var)
-        'b.BeginBlock("for(int i = 0; i < {0}_length; ++i)", var)
-        'b.AppendLine("{0}[i] = {1}.Wrap({0}_ptrs[i]);", var, Struct.ClassName)
-        'b.EndBlock()
     End Sub
 
     Public Overrides Sub EmitPublicEventArgFields(b As CodeBuilder, var As String)
@@ -171,7 +162,6 @@ Public Class CefStructPtrArrayType
         b.EndBlock()
     End Sub
 
-
     Public Overrides Sub EmitPreProxyCallStatements(b As CodeBuilder, var As String)
         b.AppendLine("{0}[] {1}_unwrapped;", Struct.ClassName, var)
         b.BeginIf("{0} != null", var)
@@ -184,12 +174,6 @@ Public Class CefStructPtrArrayType
         b.EndBlock()
     End Sub
 
-    Public Overrides Sub EmitPostProxyCallStatements(b As CodeBuilder, var As String)
-        'b.BeginBlock("for(int i = 0; i < {0}.Length; ++i)", var)
-        'b.AppendLine("{0}[i] = {1};", var, StructPtr.ProxyWrapExpression(var & "_unwrapped[i]"))
-        'b.EndBlock()
-    End Sub
-
     Public Overrides Sub EmitPreRemoteCallStatements(b As CodeBuilder, var As String)
         b.BeginIf("{0} != null", var)
         b.AppendLine("call.{0} = new ulong[{0}.Length];", var)
@@ -197,12 +181,6 @@ Public Class CefStructPtrArrayType
         b.AppendLine("call.{0}[i] = {1};", var, StructPtr.RemoteUnwrapExpression(var & "[i]"))
         b.EndBlock()
         b.EndBlock()
-    End Sub
-
-    Public Overrides Sub EmitPostRemoteCallStatements(b As CodeBuilder, var As String)
-        'b.BeginBlock("for(int i = 0; i < {0}.Length; ++i)", var)
-        'b.AppendLine("{0}[i] = {1};", var, StructPtr.RemoteWrapExpression(var & "_unwrapped[i]"))
-        'b.EndBlock()
     End Sub
 
 End Class
