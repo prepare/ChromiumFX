@@ -435,6 +435,17 @@ Public Class ApiType
         End Get
     End Property
 
+    Public Overridable ReadOnly Property IsCefStructPtrPtrType As Boolean
+        Get
+            Return False
+        End Get
+    End Property
+    Public Overridable ReadOnly Property AsCefStructPtrPtrType As CefStructPtrPtrType
+        Get
+            Throw New Exception
+        End Get
+    End Property
+
     Public Overridable ReadOnly Property IsCefStringPtrTypeConst As Boolean
         Get
             Return False
