@@ -50,6 +50,7 @@ Public Class SignatureWithStructPtrArray
             ElseIf i = arrayIndex Then
                 Dim a = New Argument(Arguments(arrayIndex), New CefStructPtrArrayType(Arguments(arrayIndex), Arguments(countIndex)))
                 list.Add(a)
+                Arguments(i) = a
             End If
         Next
         m_publicArguments = list.ToArray()
