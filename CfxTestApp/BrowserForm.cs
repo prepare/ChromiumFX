@@ -338,5 +338,22 @@ namespace CfxTestApplication {
         private void printButton_Click(object sender, EventArgs e) {
             WebBrowser.BrowserHost.Print();
         }
+
+        private void clearContextMenuModelToolStripMenuItem_Click(object sender, EventArgs e) {
+            if(clearContextMenuModelToolStripMenuItem.Checked) {
+                WebBrowser.ContextMenuHandler.OnBeforeContextMenu += ContextMenuHandler_OnBeforeContextMenu;
+            } else {
+                WebBrowser.ContextMenuHandler.OnBeforeContextMenu -= ContextMenuHandler_OnBeforeContextMenu;
+            }
+        }
+
+        void ContextMenuHandler_OnBeforeContextMenu(object sender, CfxOnBeforeContextMenuEventArgs e) {
+            if(e.Model.Clear()) {
+                LogWriteLine("Context Menu cleared.");
+            } else {
+                LogWriteLine("Context Menu not cleared.");
+            }
+        }
+
     }
 }

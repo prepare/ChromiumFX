@@ -76,6 +76,7 @@ namespace CfxTestApplication {
             this.WebBrowser = new Chromium.WebBrowser.ChromiumWebBrowser();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.LogTextBox = new System.Windows.Forms.TextBox();
+            this.clearContextMenuModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -106,7 +107,7 @@ namespace CfxTestApplication {
             this.printButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1316, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1441, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -222,7 +223,8 @@ namespace CfxTestApplication {
             // 
             this.miscDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.miscDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.systemNetCompatibilityTestToolStripMenuItem});
+            this.systemNetCompatibilityTestToolStripMenuItem,
+            this.clearContextMenuModelToolStripMenuItem});
             this.miscDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("miscDropDownButton.Image")));
             this.miscDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.miscDropDownButton.Name = "miscDropDownButton";
@@ -257,7 +259,7 @@ namespace CfxTestApplication {
             // 
             this.splitContainer1.Panel1.Controls.Add(this.WebBrowser);
             this.splitContainer1.Panel2Collapsed = true;
-            this.splitContainer1.Size = new System.Drawing.Size(1316, 605);
+            this.splitContainer1.Size = new System.Drawing.Size(1441, 605);
             this.splitContainer1.SplitterDistance = 873;
             this.splitContainer1.TabIndex = 3;
             // 
@@ -267,7 +269,7 @@ namespace CfxTestApplication {
             this.WebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.WebBrowser.Location = new System.Drawing.Point(0, 0);
             this.WebBrowser.Name = "WebBrowser";
-            this.WebBrowser.Size = new System.Drawing.Size(1316, 605);
+            this.WebBrowser.Size = new System.Drawing.Size(1441, 605);
             this.WebBrowser.TabIndex = 2;
             this.WebBrowser.Text = "cfxWebBrowser2";
             // 
@@ -285,7 +287,7 @@ namespace CfxTestApplication {
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.LogTextBox);
-            this.splitContainer2.Size = new System.Drawing.Size(1316, 775);
+            this.splitContainer2.Size = new System.Drawing.Size(1441, 775);
             this.splitContainer2.SplitterDistance = 605;
             this.splitContainer2.TabIndex = 4;
             // 
@@ -296,14 +298,22 @@ namespace CfxTestApplication {
             this.LogTextBox.Multiline = true;
             this.LogTextBox.Name = "LogTextBox";
             this.LogTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.LogTextBox.Size = new System.Drawing.Size(1316, 166);
+            this.LogTextBox.Size = new System.Drawing.Size(1441, 166);
             this.LogTextBox.TabIndex = 0;
+            // 
+            // clearContextMenuModelToolStripMenuItem
+            // 
+            this.clearContextMenuModelToolStripMenuItem.CheckOnClick = true;
+            this.clearContextMenuModelToolStripMenuItem.Name = "clearContextMenuModelToolStripMenuItem";
+            this.clearContextMenuModelToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.clearContextMenuModelToolStripMenuItem.Text = "Clear context menu model";
+            this.clearContextMenuModelToolStripMenuItem.Click += new System.EventHandler(this.clearContextMenuModelToolStripMenuItem_Click);
             // 
             // BrowserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1316, 800);
+            this.ClientSize = new System.Drawing.Size(1441, 800);
             this.Controls.Add(this.splitContainer2);
             this.Controls.Add(this.toolStrip1);
             this.Name = "BrowserForm";
@@ -345,5 +355,6 @@ namespace CfxTestApplication {
         private System.Windows.Forms.ToolStripMenuItem systemNetCompatibilityTestToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton printButton;
         private System.Windows.Forms.ToolStripButton JSHelloWorldButton;
+        private System.Windows.Forms.ToolStripMenuItem clearContextMenuModelToolStripMenuItem;
     }
 }
