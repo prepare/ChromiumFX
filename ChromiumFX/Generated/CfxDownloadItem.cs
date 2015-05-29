@@ -238,6 +238,19 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Returns the original URL before any redirections.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_download_item_capi.h">cef/include/capi/cef_download_item_capi.h</see>.
+        /// </remarks>
+        public string OriginalUrl {
+            get {
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_download_item_get_original_url(NativePtr));
+            }
+        }
+
+        /// <summary>
         /// Returns the suggested file name.
         /// </summary>
         /// <remarks>

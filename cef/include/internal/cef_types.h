@@ -234,20 +234,34 @@ typedef struct _cef_settings_t {
   int command_line_args_disabled;
 
   ///
-  // The location where cache data will be stored on disk. If empty an in-memory
-  // cache will be used for some features and a temporary disk cache for others.
-  // HTML5 databases such as localStorage will only persist across sessions if a
-  // cache path is specified.
+  // The location where cache data will be stored on disk. If empty then
+  // browsers will be created in "incognito mode" where in-memory caches are
+  // used for storage and no data is persisted to disk. HTML5 databases such as
+  // localStorage will only persist across sessions if a cache path is
+  // specified. Can be overridden for individual CefRequestContext instances via
+  // the CefRequestContextSettings.cache_path value.
   ///
   cef_string_t cache_path;
+
+  ///
+  // The location where user data such as spell checking dictionary files will
+  // be stored on disk. If empty then the default platform-specific user data
+  // directory will be used ("~/.cef_user_data" directory on Linux,
+  // "~/Library/Application Support/CEF/User Data" directory on Mac OS X,
+  // "Local Settings\Application Data\CEF\User Data" directory under the user
+  // profile directory on Windows).
+  ///
+  cef_string_t user_data_path;
 
   ///
   // To persist session cookies (cookies without an expiry date or validity
   // interval) by default when using the global cookie manager set this value to
   // true. Session cookies are generally intended to be transient and most Web
-  // browsers do not persist them. A |cache_path| value must also be specified to
-  // enable this feature. Also configurable using the "persist-session-cookies"
-  // command-line switch.
+  // browsers do not persist them. A |cache_path| value must also be specified
+  // to enable this feature. Also configurable using the
+  // "persist-session-cookies" command-line switch. Can be overridden for
+  // individual CefRequestContext instances via the
+  // CefRequestContextSettings.persist_session_cookies value.
   ///
   int persist_session_cookies;
 
@@ -336,7 +350,7 @@ typedef struct _cef_settings_t {
 
   ///
   // The number of stack trace frames to capture for uncaught exceptions.
-  // Specify a positive value to enable the CefV8ContextHandler::
+  // Specify a positive value to enable the CefRenderProcessHandler::
   // OnUncaughtException() callback. Specify 0 (default value) and
   // OnUncaughtException() will not be called. Also configurable using the
   // "uncaught-exception-stack-size" command-line switch.
@@ -370,7 +384,9 @@ typedef struct _cef_settings_t {
   // Enabling this setting can lead to potential security vulnerabilities like
   // "man in the middle" attacks. Applications that load content from the
   // internet should not enable this setting. Also configurable using the
-  // "ignore-certificate-errors" command-line switch.
+  // "ignore-certificate-errors" command-line switch. Can be overridden for
+  // individual CefRequestContext instances via the
+  // CefRequestContextSettings.ignore_certificate_errors value.
   ///
   int ignore_certificate_errors;
 
@@ -381,7 +397,68 @@ typedef struct _cef_settings_t {
   // of the background color but will be otherwise ignored.
   ///
   cef_color_t background_color;
+
+  ///
+  // Comma delimited ordered list of language codes without any whitespace that
+  // will be used in the "Accept-Language" HTTP header. May be overridden on a
+  // per-browser basis using the CefBrowserSettings.accept_language_list value.
+  // If both values are empty then "en-US,en" will be used. Can be overridden
+  // for individual CefRequestContext instances via the
+  // CefRequestContextSettings.accept_language_list value.
+  ///
+  cef_string_t accept_language_list;
 } cef_settings_t;
+
+///
+// Request context initialization settings. Specify NULL or 0 to get the
+// recommended default values.
+///
+typedef struct _cef_request_context_settings_t {
+  ///
+  // Size of this structure.
+  ///
+  size_t size;
+
+  ///
+  // The location where cache data will be stored on disk. If empty then
+  // browsers will be created in "incognito mode" where in-memory caches are
+  // used for storage and no data is persisted to disk. HTML5 databases such as
+  // localStorage will only persist across sessions if a cache path is
+  // specified. To share the global browser cache and related configuration set
+  // this value to match the CefSettings.cache_path value.
+  ///
+  cef_string_t cache_path;
+
+  ///
+  // To persist session cookies (cookies without an expiry date or validity
+  // interval) by default when using the global cookie manager set this value to
+  // true. Session cookies are generally intended to be transient and most Web
+  // browsers do not persist them. Can be set globally using the
+  // CefSettings.persist_session_cookies value. This value will be ignored if
+  // |cache_path| is empty or if it matches the CefSettings.cache_path value.
+  ///
+  int persist_session_cookies;
+
+  ///
+  // Set to true (1) to ignore errors related to invalid SSL certificates.
+  // Enabling this setting can lead to potential security vulnerabilities like
+  // "man in the middle" attacks. Applications that load content from the
+  // internet should not enable this setting. Can be set globally using the
+  // CefSettings.ignore_certificate_errors value. This value will be ignored if
+  // |cache_path| matches the CefSettings.cache_path value.
+  ///
+  int ignore_certificate_errors;
+
+  ///
+  // Comma delimited ordered list of language codes without any whitespace that
+  // will be used in the "Accept-Language" HTTP header. Can be set globally
+  // using the CefSettings.accept_language_list value or overridden on a per-
+  // browser basis using the CefBrowserSettings.accept_language_list value. If
+  // all values are empty then "en-US,en" will be used. This value will be
+  // ignored if |cache_path| matches the CefSettings.cache_path value.
+  ///
+  cef_string_t accept_language_list;
+} cef_request_context_settings_t;
 
 ///
 // Browser initialization settings. Specify NULL or 0 to get the recommended
@@ -447,8 +524,9 @@ typedef struct _cef_browser_settings_t {
   ///
   // Controls whether JavaScript can be used to close windows that were not
   // opened via JavaScript. JavaScript can still be used to close windows that
-  // were opened via JavaScript. Also configurable using the
-  // "disable-javascript-close-windows" command-line switch.
+  // were opened via JavaScript or that have no back/forward history. Also
+  // configurable using the "disable-javascript-close-windows" command-line
+  // switch.
   ///
   cef_state_t javascript_close_windows;
 
@@ -563,7 +641,35 @@ typedef struct _cef_browser_settings_t {
   // 0 to enable use of the background color but will be otherwise ignored.
   ///
   cef_color_t background_color;
+
+  ///
+  // Comma delimited ordered list of language codes without any whitespace that
+  // will be used in the "Accept-Language" HTTP header. May be set globally
+  // using the CefBrowserSettings.accept_language_list value. If both values are
+  // empty then "en-US,en" will be used.
+  ///
+  cef_string_t accept_language_list;
 } cef_browser_settings_t;
+
+///
+// Return value types.
+///
+typedef enum {
+  ///
+  // Cancel immediately.
+  ///
+  RV_CANCEL = 0,
+
+  ///
+  // Continue immediately.
+  ///
+  RV_CONTINUE,
+
+  ///
+  // Continue asynchronously (usually via a callback).
+  ///
+  RV_CONTINUE_ASYNC,
+} cef_return_value_t;
 
 ///
 // URL component parts.
@@ -729,6 +835,18 @@ typedef enum {
   // module).
   ///
   PK_FILE_MODULE,
+
+  ///
+  // "Local Settings\Application Data" directory under the user profile
+  // directory on Windows.
+  ///
+  PK_LOCAL_APP_DATA,
+
+  ///
+  // "Application Data" directory under the user profile directory on Windows
+  // and "~/Library/Application Support" directory on Mac OS X.
+  ///
+  PK_USER_DATA,
 } cef_path_key_t;
 
 ///
@@ -794,6 +912,23 @@ typedef enum {
   ERR_CACHE_MISS = -400,
   ERR_INSECURE_RESPONSE = -501,
 } cef_errorcode_t;
+
+///
+// The manner in which a link click should be opened.
+///
+typedef enum {
+  WOD_UNKNOWN,
+  WOD_SUPPRESS_OPEN,
+  WOD_CURRENT_TAB,
+  WOD_SINGLETON_TAB,
+  WOD_NEW_FOREGROUND_TAB,
+  WOD_NEW_BACKGROUND_TAB,
+  WOD_NEW_POPUP,
+  WOD_NEW_WINDOW,
+  WOD_SAVE_TO_DISK,
+  WOD_OFF_THE_RECORD,
+  WOD_IGNORE_ACTION
+} cef_window_open_disposition_t;
 
 ///
 // "Verb" of a drag-and-drop operation as negotiated between the source and
@@ -1721,10 +1856,35 @@ typedef enum {
   FILE_DIALOG_OPEN_MULTIPLE,
 
   ///
+  // Like Open, but selects a folder to open.
+  ///
+  FILE_DIALOG_OPEN_FOLDER,
+
+  ///
   // Allows picking a nonexistent file, and prompts to overwrite if the file
   // already exists.
   ///
   FILE_DIALOG_SAVE,
+
+  ///
+  // General mask defining the bits used for the type values.
+  ///
+  FILE_DIALOG_TYPE_MASK = 0xFF,
+
+  // Qualifiers.
+  // Any of the type values above can be augmented by one or more qualifiers.
+  // These qualifiers further define the dialog behavior.
+
+  ///
+  // Prompt to overwrite if the user selects an existing file with the Save
+  // dialog.
+  ///
+  FILE_DIALOG_OVERWRITEPROMPT_FLAG = 0x01000000,
+
+  ///
+  // Do not display read-only files.
+  ///
+  FILE_DIALOG_HIDEREADONLY_FLAG = 0x02000000,
 } cef_file_dialog_mode_t;
 
 ///
@@ -1779,7 +1939,7 @@ typedef struct _cef_geoposition_t {
   double speed;
 
   ///
-  // Time of position measurement in miliseconds since Epoch in UTC time. This
+  // Time of position measurement in milliseconds since Epoch in UTC time. This
   // is taken from the host computer's system clock.
   ///
   cef_time_t timestamp;
@@ -1901,6 +2061,57 @@ typedef struct _cef_cursor_info_t {
   void* buffer;
   cef_size_t size;
 } cef_cursor_info_t;
+
+///
+// URI unescape rules passed to CefURIDecode().
+///
+typedef enum {
+  ///
+  // Don't unescape anything at all.
+  ///
+  UU_NONE = 0,
+
+  ///
+  // Don't unescape anything special, but all normal unescaping will happen.
+  // This is a placeholder and can't be combined with other flags (since it's
+  // just the absence of them). All other unescape rules imply "normal" in
+  // addition to their special meaning. Things like escaped letters, digits,
+  // and most symbols will get unescaped with this mode.
+  ///
+  UU_NORMAL = 1,
+
+  ///
+  // Convert %20 to spaces. In some places where we're showing URLs, we may
+  // want this. In places where the URL may be copied and pasted out, then
+  // you wouldn't want this since it might not be interpreted in one piece
+  // by other applications.
+  ///
+  UU_SPACES = 2,
+
+  ///
+  // Unescapes various characters that will change the meaning of URLs,
+  // including '%', '+', '&', '/', '#'. If we unescaped these characters, the
+  // resulting URL won't be the same as the source one. This flag is used when
+  // generating final output like filenames for URLs where we won't be
+  // interpreting as a URL and want to do as much unescaping as possible.
+  ///
+  UU_URL_SPECIAL_CHARS = 4,
+
+  ///
+  // Unescapes control characters such as %01. This INCLUDES NULLs. This is
+  // used for rare cases such as data: URL decoding where the result is binary
+  // data. This flag also unescapes BiDi control characters.
+  //
+  // DO NOT use CONTROL_CHARS if the URL is going to be displayed in the UI
+  // for security reasons.
+  ///
+  UU_CONTROL_CHARS = 8,
+
+  ///
+  // URL queries use "+" for space. This flag controls that replacement.
+  ///
+  UU_REPLACE_PLUS_WITH_SPACE = 16,
+} cef_uri_unescape_rule_t;
 
 #ifdef __cplusplus
 }

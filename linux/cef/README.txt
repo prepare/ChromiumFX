@@ -1,15 +1,15 @@
 Chromium Embedded Framework (CEF) Standard Binary Distribution for Linux
 -------------------------------------------------------------------------------
 
-Date:             March 10, 2015
+Date:             May 28, 2015
 
-CEF Version:      3.2171.2069
-CEF URL:          https://chromiumembedded@bitbucket.org/chromiumembedded/branches-2171-cef3.git
-                  @2069
+CEF Version:      3.2357.1274.g7b49af6
+CEF URL:          https://bitbucket.org/chromiumembedded/cef.git
+                  @7b49af61829a550d14a7582584a0844bc4237a4b
 
-Chromium Verison: 39.0.2171.95
+Chromium Verison: 43.0.2357.45
 Chromium URL:     https://chromium.googlesource.com/chromium/src.git
-                  @07d25682862707e7524037c8b93ef93f361835f1
+                  @213dcd807b7cb9c23978c299d6ba12cd05c899d9
 
 This distribution contains all components necessary to build and distribute an
 application using CEF on the Linux platform. Please see the LICENSING
@@ -54,12 +54,9 @@ Building using CMake:
   CMake can be used to generate project files in many different formats. See
   usage instructions at the top of the CMakeLists.txt file.
 
-Building using the pre-existing make solution (DEPRECATED):
-  Run 'build.sh Debug' to build the cefclient target in Debug mode.
-
 Please visit the CEF Website for additional usage information.
 
-http://code.google.com/p/chromiumembedded
+https://bitbucket.org/chromiumembedded/cef/
 
 
 REDISTRIBUTION
@@ -77,6 +74,10 @@ Required components:
 
 * Unicode support
     icudtl.dat
+
+* V8 initial snapshot
+    natives_blob.bin
+    snapshot_blob.bin
 
 Optional components:
 
@@ -102,9 +103,6 @@ Optional components:
 * FFmpeg audio and video support
     libffmpegsumo.so
   Note: Without this component HTML5 audio and video will not function.
-
-* PDF support
-    libpdf.so
 
 
 LICENSING

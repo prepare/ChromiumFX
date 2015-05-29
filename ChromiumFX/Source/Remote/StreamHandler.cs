@@ -434,7 +434,13 @@ internal class StreamHandler {
         value = DateTime.FromBinary(reader.ReadInt64());
     }
 
-    
+    public void Write(Chromium.CfxColor c) {
+        Write(c.color);
+    }
+
+    public void Read(out Chromium.CfxColor c) {
+        Read(out c.color);
+    }
 
     public void Flush() {
         writer.Flush();

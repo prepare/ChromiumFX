@@ -37,20 +37,23 @@
 extern "C" {
 #endif
 
-// CEF_EXPORT cef_cookie_manager_t* cef_cookie_manager_get_global_manager();
-static cef_cookie_manager_t* cfx_cookie_manager_get_global_manager() {
-    return cef_cookie_manager_get_global_manager();
+// CEF_EXPORT cef_cookie_manager_t* cef_cookie_manager_get_global_manager(cef_completion_callback_t* callback);
+static cef_cookie_manager_t* cfx_cookie_manager_get_global_manager(cef_completion_callback_t* callback) {
+    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    return cef_cookie_manager_get_global_manager(callback);
 }
-// CEF_EXPORT cef_cookie_manager_t* cef_cookie_manager_create_manager(const cef_string_t* path, int persist_session_cookies);
-static cef_cookie_manager_t* cfx_cookie_manager_create_manager(char16 *path_str, int path_length, int persist_session_cookies) {
+// CEF_EXPORT cef_cookie_manager_t* cef_cookie_manager_create_manager(const cef_string_t* path, int persist_session_cookies, cef_completion_callback_t* callback);
+static cef_cookie_manager_t* cfx_cookie_manager_create_manager(char16 *path_str, int path_length, int persist_session_cookies, cef_completion_callback_t* callback) {
     cef_string_t path = { path_str, path_length, 0 };
-    return cef_cookie_manager_create_manager(&path, persist_session_cookies);
+    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    return cef_cookie_manager_create_manager(&path, persist_session_cookies, callback);
 }
 // cef_base_t base
 
 // set_supported_schemes
-static void cfx_cookie_manager_set_supported_schemes(cef_cookie_manager_t* self, cef_string_list_t schemes) {
-    self->set_supported_schemes(self, schemes);
+static void cfx_cookie_manager_set_supported_schemes(cef_cookie_manager_t* self, cef_string_list_t schemes, cef_completion_callback_t* callback) {
+    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    self->set_supported_schemes(self, schemes, callback);
 }
 
 // visit_all_cookies
@@ -67,22 +70,25 @@ static int cfx_cookie_manager_visit_url_cookies(cef_cookie_manager_t* self, char
 }
 
 // set_cookie
-static int cfx_cookie_manager_set_cookie(cef_cookie_manager_t* self, char16 *url_str, int url_length, const cef_cookie_t* cookie) {
+static int cfx_cookie_manager_set_cookie(cef_cookie_manager_t* self, char16 *url_str, int url_length, const cef_cookie_t* cookie, cef_set_cookie_callback_t* callback) {
     cef_string_t url = { url_str, url_length, 0 };
-    return self->set_cookie(self, &url, cookie);
+    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    return self->set_cookie(self, &url, cookie, callback);
 }
 
 // delete_cookies
-static int cfx_cookie_manager_delete_cookies(cef_cookie_manager_t* self, char16 *url_str, int url_length, char16 *cookie_name_str, int cookie_name_length) {
+static int cfx_cookie_manager_delete_cookies(cef_cookie_manager_t* self, char16 *url_str, int url_length, char16 *cookie_name_str, int cookie_name_length, cef_delete_cookies_callback_t* callback) {
     cef_string_t url = { url_str, url_length, 0 };
     cef_string_t cookie_name = { cookie_name_str, cookie_name_length, 0 };
-    return self->delete_cookies(self, &url, &cookie_name);
+    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    return self->delete_cookies(self, &url, &cookie_name, callback);
 }
 
 // set_storage_path
-static int cfx_cookie_manager_set_storage_path(cef_cookie_manager_t* self, char16 *path_str, int path_length, int persist_session_cookies) {
+static int cfx_cookie_manager_set_storage_path(cef_cookie_manager_t* self, char16 *path_str, int path_length, int persist_session_cookies, cef_completion_callback_t* callback) {
     cef_string_t path = { path_str, path_length, 0 };
-    return self->set_storage_path(self, &path, persist_session_cookies);
+    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    return self->set_storage_path(self, &path, persist_session_cookies, callback);
 }
 
 // flush_store

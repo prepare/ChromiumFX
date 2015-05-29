@@ -278,36 +278,6 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDomDocumentGetSelectionStartNodeRenderProcessCall : RenderProcessCall {
-
-        internal CfxDomDocumentGetSelectionStartNodeRenderProcessCall()
-            : base(RemoteCallId.CfxDomDocumentGetSelectionStartNodeRenderProcessCall) {}
-
-        internal ulong self;
-        internal ulong __retval;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
-        }
-
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-            h.Write(__retval);
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
-            h.Read(out __retval);
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxDomDocument)RemoteProxy.Unwrap(self);
-            __retval = RemoteProxy.Wrap(self_local.SelectionStartNode);
-        }
-    }
-
     internal class CfxDomDocumentGetSelectionStartOffsetRenderProcessCall : RenderProcessCall {
 
         internal CfxDomDocumentGetSelectionStartOffsetRenderProcessCall()
@@ -335,36 +305,6 @@ namespace Chromium.Remote {
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxDomDocument)RemoteProxy.Unwrap(self);
             __retval = self_local.SelectionStartOffset;
-        }
-    }
-
-    internal class CfxDomDocumentGetSelectionEndNodeRenderProcessCall : RenderProcessCall {
-
-        internal CfxDomDocumentGetSelectionEndNodeRenderProcessCall()
-            : base(RemoteCallId.CfxDomDocumentGetSelectionEndNodeRenderProcessCall) {}
-
-        internal ulong self;
-        internal ulong __retval;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
-        }
-
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-            h.Write(__retval);
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
-            h.Read(out __retval);
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxDomDocument)RemoteProxy.Unwrap(self);
-            __retval = RemoteProxy.Wrap(self_local.SelectionEndNode);
         }
     }
 

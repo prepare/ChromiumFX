@@ -245,6 +245,41 @@ namespace Chromium.Remote {
         }
     }
 
+    internal class CfxRuntimeParseCssColorRenderProcessCall : RenderProcessCall {
+
+        internal CfxRuntimeParseCssColorRenderProcessCall()
+            : base(RemoteCallId.CfxRuntimeParseCssColorRenderProcessCall) {}
+
+        internal string @string;
+        internal bool strict;
+        internal CfxColor color;
+        internal bool __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(@string);
+            h.Write(strict);
+            h.Write(color);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out @string);
+            h.Read(out strict);
+            h.Read(out color);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            __retval = CfxRuntime.ParseCssColor(@string, strict, ref color);
+        }
+    }
+
     internal class CfxRuntimeParseUrlRenderProcessCall : RenderProcessCall {
 
         internal CfxRuntimeParseUrlRenderProcessCall()
@@ -414,6 +449,73 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             __retval = CfxRuntime.RemoveCrossOriginWhitelistEntry(sourceOrigin, targetProtocol, targetDomain, allowTargetSubdomains);
+        }
+    }
+
+    internal class CfxRuntimeUridecodeRenderProcessCall : RenderProcessCall {
+
+        internal CfxRuntimeUridecodeRenderProcessCall()
+            : base(RemoteCallId.CfxRuntimeUridecodeRenderProcessCall) {}
+
+        internal string text;
+        internal bool convertToUtf8;
+        internal int unescapeRule;
+        internal string __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(text);
+            h.Write(convertToUtf8);
+            h.Write(unescapeRule);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out text);
+            h.Read(out convertToUtf8);
+            h.Read(out unescapeRule);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            __retval = CfxRuntime.Uridecode(text, convertToUtf8, (CfxUriUnescapeRule)unescapeRule);
+        }
+    }
+
+    internal class CfxRuntimeUriencodeRenderProcessCall : RenderProcessCall {
+
+        internal CfxRuntimeUriencodeRenderProcessCall()
+            : base(RemoteCallId.CfxRuntimeUriencodeRenderProcessCall) {}
+
+        internal string text;
+        internal bool usePlus;
+        internal string __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(text);
+            h.Write(usePlus);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out text);
+            h.Read(out usePlus);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            __retval = CfxRuntime.Uriencode(text, usePlus);
         }
     }
 

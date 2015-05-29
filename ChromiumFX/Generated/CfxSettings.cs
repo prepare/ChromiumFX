@@ -178,10 +178,12 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// The location where cache data will be stored on disk. If empty an in-memory
-        /// cache will be used for some features and a temporary disk cache for others.
-        /// HTML5 databases such as localStorage will only persist across sessions if a
-        /// cache path is specified.
+        /// The location where cache data will be stored on disk. If empty then
+        /// browsers will be created in "incognito mode" where in-memory caches are
+        /// used for storage and no data is persisted to disk. HTML5 databases such as
+        /// localStorage will only persist across sessions if a cache path is
+        /// specified. Can be overridden for individual CfxRequestContext instances via
+        /// the CfxRequestContextSettings.CachePath value.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -202,12 +204,40 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// The location where user data such as spell checking dictionary files will
+        /// be stored on disk. If empty then the default platform-specific user data
+        /// directory will be used ("~/.cef_user_data" directory on Linux,
+        /// "~/Library/Application Support/CEF/User Data" directory on Mac OS X,
+        /// "Local Settings\Application Data\CEF\User Data" directory under the user
+        /// profile directory on Windows).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
+        public string UserDataPath {
+            get {
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_settings_get_user_data_path(nativePtrUnchecked, out value_str, out value_length);
+                return StringFunctions.PtrToStringUni(value_str, value_length);
+            }
+            set {
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_settings_set_user_data_path(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
+            }
+        }
+
+        /// <summary>
         /// To persist session cookies (cookies without an expiry date or validity
         /// interval) by default when using the global cookie manager set this value to
         /// true. Session cookies are generally intended to be transient and most Web
-        /// browsers do not persist them. A |cachePath| value must also be specified to
-        /// enable this feature. Also configurable using the "persist-session-cookies"
-        /// command-line switch.
+        /// browsers do not persist them. A |cachePath| value must also be specified
+        /// to enable this feature. Also configurable using the
+        /// "persist-session-cookies" command-line switch. Can be overridden for
+        /// individual CfxRequestContext instances via the
+        /// CfxRequestContextSettings.PersistSessionCookies value.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -460,7 +490,7 @@ namespace Chromium {
 
         /// <summary>
         /// The number of stack trace frames to capture for uncaught exceptions.
-        /// Specify a positive value to enable the CfxV8ContextHandler::
+        /// Specify a positive value to enable the CfxRenderProcessHandler::
         /// OnUncaughtException() callback. Specify 0 (default value) and
         /// OnUncaughtException() will not be called. Also configurable using the
         /// "uncaught-exception-stack-size" command-line switch.
@@ -517,7 +547,9 @@ namespace Chromium {
         /// Enabling this setting can lead to potential security vulnerabilities like
         /// "man in the middle" attacks. Applications that load content from the
         /// internet should not enable this setting. Also configurable using the
-        /// "ignore-certificate-errors" command-line switch.
+        /// "ignore-certificate-errors" command-line switch. Can be overridden for
+        /// individual CfxRequestContext instances via the
+        /// CfxRequestContextSettings.IgnoreCertificateErrors value.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -552,6 +584,32 @@ namespace Chromium {
             }
             set {
                 CfxApi.cfx_settings_set_background_color(nativePtrUnchecked, CfxColor.Unwrap(value));
+            }
+        }
+
+        /// <summary>
+        /// Comma delimited ordered list of language codes without any whitespace that
+        /// will be used in the "Accept-Language" HTTP header. May be overridden on a
+        /// per-browser basis using the CfxBrowserSettings.AcceptLanguageList value.
+        /// If both values are empty then "en-US,en" will be used. Can be overridden
+        /// for individual CfxRequestContext instances via the
+        /// CfxRequestContextSettings.AcceptLanguageList value.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
+        public string AcceptLanguageList {
+            get {
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_settings_get_accept_language_list(nativePtrUnchecked, out value_str, out value_length);
+                return StringFunctions.PtrToStringUni(value_str, value_length);
+            }
+            set {
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_settings_set_accept_language_list(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 

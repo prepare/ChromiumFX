@@ -190,7 +190,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Time of position measurement in miliseconds since Epoch in UTC time. This
+        /// Time of position measurement in milliseconds since Epoch in UTC time. This
         /// is taken from the host computer's system clock.
         /// </summary>
         /// <remarks>

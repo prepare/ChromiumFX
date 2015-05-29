@@ -109,11 +109,6 @@ static cef_string_userfree_t cfx_context_menu_params_get_misspelled_word(cef_con
     return self->get_misspelled_word(self);
 }
 
-// get_misspelling_hash
-static int cfx_context_menu_params_get_misspelling_hash(cef_context_menu_params_t* self) {
-    return self->get_misspelling_hash(self);
-}
-
 // get_dictionary_suggestions
 static int cfx_context_menu_params_get_dictionary_suggestions(cef_context_menu_params_t* self, cef_string_list_t suggestions) {
     return self->get_dictionary_suggestions(self, suggestions);

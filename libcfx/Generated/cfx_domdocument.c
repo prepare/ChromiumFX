@@ -80,19 +80,9 @@ static int cfx_domdocument_has_selection(cef_domdocument_t* self) {
     return self->has_selection(self);
 }
 
-// get_selection_start_node
-static cef_domnode_t* cfx_domdocument_get_selection_start_node(cef_domdocument_t* self) {
-    return self->get_selection_start_node(self);
-}
-
 // get_selection_start_offset
 static int cfx_domdocument_get_selection_start_offset(cef_domdocument_t* self) {
     return self->get_selection_start_offset(self);
-}
-
-// get_selection_end_node
-static cef_domnode_t* cfx_domdocument_get_selection_end_node(cef_domdocument_t* self) {
-    return self->get_selection_end_node(self);
 }
 
 // get_selection_end_offset

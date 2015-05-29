@@ -145,6 +145,20 @@ cef_drag_handler_t* CEF_CALLBACK cfx_client_get_drag_handler(cef_client_t* self)
 }
 
 
+// get_find_handler
+
+void (CEF_CALLBACK *cfx_client_get_find_handler_callback)(gc_handle_t self, cef_find_handler_t** __retval);
+
+cef_find_handler_t* CEF_CALLBACK cfx_client_get_find_handler(cef_client_t* self) {
+    cef_find_handler_t* __retval;
+    cfx_client_get_find_handler_callback(((cfx_client_t*)self)->gc_handle, &__retval);
+    if(__retval) {
+        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
+    }
+    return __retval;
+}
+
+
 // get_focus_handler
 
 void (CEF_CALLBACK *cfx_client_get_focus_handler_callback)(gc_handle_t self, cef_focus_handler_t** __retval);
@@ -296,46 +310,51 @@ static void cfx_client_set_managed_callback(cef_client_t* self, int index, void*
         self->get_drag_handler = callback ? cfx_client_get_drag_handler : 0;
         break;
     case 5:
+        if(callback && !cfx_client_get_find_handler_callback)
+            cfx_client_get_find_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_find_handler_t** __retval)) callback;
+        self->get_find_handler = callback ? cfx_client_get_find_handler : 0;
+        break;
+    case 6:
         if(callback && !cfx_client_get_focus_handler_callback)
             cfx_client_get_focus_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_focus_handler_t** __retval)) callback;
         self->get_focus_handler = callback ? cfx_client_get_focus_handler : 0;
         break;
-    case 6:
+    case 7:
         if(callback && !cfx_client_get_geolocation_handler_callback)
             cfx_client_get_geolocation_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_geolocation_handler_t** __retval)) callback;
         self->get_geolocation_handler = callback ? cfx_client_get_geolocation_handler : 0;
         break;
-    case 7:
+    case 8:
         if(callback && !cfx_client_get_jsdialog_handler_callback)
             cfx_client_get_jsdialog_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_jsdialog_handler_t** __retval)) callback;
         self->get_jsdialog_handler = callback ? cfx_client_get_jsdialog_handler : 0;
         break;
-    case 8:
+    case 9:
         if(callback && !cfx_client_get_keyboard_handler_callback)
             cfx_client_get_keyboard_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_keyboard_handler_t** __retval)) callback;
         self->get_keyboard_handler = callback ? cfx_client_get_keyboard_handler : 0;
         break;
-    case 9:
+    case 10:
         if(callback && !cfx_client_get_life_span_handler_callback)
             cfx_client_get_life_span_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_life_span_handler_t** __retval)) callback;
         self->get_life_span_handler = callback ? cfx_client_get_life_span_handler : 0;
         break;
-    case 10:
+    case 11:
         if(callback && !cfx_client_get_load_handler_callback)
             cfx_client_get_load_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_load_handler_t** __retval)) callback;
         self->get_load_handler = callback ? cfx_client_get_load_handler : 0;
         break;
-    case 11:
+    case 12:
         if(callback && !cfx_client_get_render_handler_callback)
             cfx_client_get_render_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_render_handler_t** __retval)) callback;
         self->get_render_handler = callback ? cfx_client_get_render_handler : 0;
         break;
-    case 12:
+    case 13:
         if(callback && !cfx_client_get_request_handler_callback)
             cfx_client_get_request_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_request_handler_t** __retval)) callback;
         self->get_request_handler = callback ? cfx_client_get_request_handler : 0;
         break;
-    case 13:
+    case 14:
         if(callback && !cfx_client_on_process_message_received_callback)
             cfx_client_on_process_message_received_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_process_id_t source_process, cef_process_message_t* message)) callback;
         self->on_process_message_received = callback ? cfx_client_on_process_message_received : 0;

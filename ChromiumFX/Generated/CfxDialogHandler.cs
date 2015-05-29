@@ -61,17 +61,17 @@ namespace Chromium {
 
         // on_file_dialog
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_dialog_handler_on_file_dialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxFileDialogMode mode, IntPtr title_str, int title_length, IntPtr default_file_name_str, int default_file_name_length, IntPtr accept_types, IntPtr callback);
+        private delegate void cfx_dialog_handler_on_file_dialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxFileDialogMode mode, IntPtr title_str, int title_length, IntPtr default_file_path_str, int default_file_path_length, IntPtr accept_filters, int selected_accept_filter, IntPtr callback);
         private static cfx_dialog_handler_on_file_dialog_delegate cfx_dialog_handler_on_file_dialog;
         private static IntPtr cfx_dialog_handler_on_file_dialog_ptr;
 
-        internal static void on_file_dialog(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxFileDialogMode mode, IntPtr title_str, int title_length, IntPtr default_file_name_str, int default_file_name_length, IntPtr accept_types, IntPtr callback) {
+        internal static void on_file_dialog(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxFileDialogMode mode, IntPtr title_str, int title_length, IntPtr default_file_path_str, int default_file_path_length, IntPtr accept_filters, int selected_accept_filter, IntPtr callback) {
             var self = (CfxDialogHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
                 return;
             }
-            var e = new CfxDialogHandlerOnFileDialogEventArgs(browser, mode, title_str, title_length, default_file_name_str, default_file_name_length, accept_types, callback);
+            var e = new CfxDialogHandlerOnFileDialogEventArgs(browser, mode, title_str, title_length, default_file_path_str, default_file_path_length, accept_filters, selected_accept_filter, callback);
             var eventHandler = self.m_OnFileDialog;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
@@ -87,12 +87,16 @@ namespace Chromium {
         /// Called to run a file chooser dialog. |Mode| represents the type of dialog
         /// to display. |Title| to the title to be used for the dialog and may be NULL
         /// to show the default title ("Open" or "Save" depending on the mode).
-        /// |DefaultFileName| is the default file name to select in the dialog.
-        /// |AcceptTypes| is a list of valid lower-cased MIME types or file extensions
-        /// specified in an input element and is used to restrict selectable files to
-        /// such types. To display a custom dialog return true (1) and execute
-        /// |Callback| either inline or at a later time. To display the default dialog
-        /// return false (0).
+        /// |DefaultFilePath| is the path with optional directory and/or file name
+        /// component that should be initially selected in the dialog. |AcceptFilters|
+        /// are used to restrict the selectable file types and may any combination of
+        /// (a) valid lower-cased MIME types (e.g. "text/*" or "image/*"), (b)
+        /// individual file extensions (e.g. ".txt" or ".png"), or (c) combined
+        /// description and file extension delimited using "|" and ";" (e.g. "Image
+        /// Types|.png;.gif;.jpg"). |SelectedAcceptFilter| is the 0-based index of
+        /// the filter that should be selected by default. To display a custom dialog
+        /// return true (1) and execute |Callback| either inline or at a later time. To
+        /// display the default dialog return false (0).
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -139,12 +143,16 @@ namespace Chromium {
         /// Called to run a file chooser dialog. |Mode| represents the type of dialog
         /// to display. |Title| to the title to be used for the dialog and may be NULL
         /// to show the default title ("Open" or "Save" depending on the mode).
-        /// |DefaultFileName| is the default file name to select in the dialog.
-        /// |AcceptTypes| is a list of valid lower-cased MIME types or file extensions
-        /// specified in an input element and is used to restrict selectable files to
-        /// such types. To display a custom dialog return true (1) and execute
-        /// |Callback| either inline or at a later time. To display the default dialog
-        /// return false (0).
+        /// |DefaultFilePath| is the path with optional directory and/or file name
+        /// component that should be initially selected in the dialog. |AcceptFilters|
+        /// are used to restrict the selectable file types and may any combination of
+        /// (a) valid lower-cased MIME types (e.g. "text/*" or "image/*"), (b)
+        /// individual file extensions (e.g. ".txt" or ".png"), or (c) combined
+        /// description and file extension delimited using "|" and ";" (e.g. "Image
+        /// Types|.png;.gif;.jpg"). |SelectedAcceptFilter| is the 0-based index of
+        /// the filter that should be selected by default. To display a custom dialog
+        /// return true (1) and execute |Callback| either inline or at a later time. To
+        /// display the default dialog return false (0).
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -156,12 +164,16 @@ namespace Chromium {
         /// Called to run a file chooser dialog. |Mode| represents the type of dialog
         /// to display. |Title| to the title to be used for the dialog and may be NULL
         /// to show the default title ("Open" or "Save" depending on the mode).
-        /// |DefaultFileName| is the default file name to select in the dialog.
-        /// |AcceptTypes| is a list of valid lower-cased MIME types or file extensions
-        /// specified in an input element and is used to restrict selectable files to
-        /// such types. To display a custom dialog return true (1) and execute
-        /// |Callback| either inline or at a later time. To display the default dialog
-        /// return false (0).
+        /// |DefaultFilePath| is the path with optional directory and/or file name
+        /// component that should be initially selected in the dialog. |AcceptFilters|
+        /// are used to restrict the selectable file types and may any combination of
+        /// (a) valid lower-cased MIME types (e.g. "text/*" or "image/*"), (b)
+        /// individual file extensions (e.g. ".txt" or ".png"), or (c) combined
+        /// description and file extension delimited using "|" and ";" (e.g. "Image
+        /// Types|.png;.gif;.jpg"). |SelectedAcceptFilter| is the 0-based index of
+        /// the filter that should be selected by default. To display a custom dialog
+        /// return true (1) and execute |Callback| either inline or at a later time. To
+        /// display the default dialog return false (0).
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -175,24 +187,26 @@ namespace Chromium {
             internal IntPtr m_title_str;
             internal int m_title_length;
             internal string m_title;
-            internal IntPtr m_default_file_name_str;
-            internal int m_default_file_name_length;
-            internal string m_default_file_name;
-            internal IntPtr m_accept_types;
+            internal IntPtr m_default_file_path_str;
+            internal int m_default_file_path_length;
+            internal string m_default_file_path;
+            internal IntPtr m_accept_filters;
+            internal int m_selected_accept_filter;
             internal IntPtr m_callback;
             internal CfxFileDialogCallback m_callback_wrapped;
 
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxDialogHandlerOnFileDialogEventArgs(IntPtr browser, CfxFileDialogMode mode, IntPtr title_str, int title_length, IntPtr default_file_name_str, int default_file_name_length, IntPtr accept_types, IntPtr callback) {
+            internal CfxDialogHandlerOnFileDialogEventArgs(IntPtr browser, CfxFileDialogMode mode, IntPtr title_str, int title_length, IntPtr default_file_path_str, int default_file_path_length, IntPtr accept_filters, int selected_accept_filter, IntPtr callback) {
                 m_browser = browser;
                 m_mode = mode;
                 m_title_str = title_str;
                 m_title_length = title_length;
-                m_default_file_name_str = default_file_name_str;
-                m_default_file_name_length = default_file_name_length;
-                m_accept_types = accept_types;
+                m_default_file_path_str = default_file_path_str;
+                m_default_file_path_length = default_file_path_length;
+                m_accept_filters = accept_filters;
+                m_selected_accept_filter = selected_accept_filter;
                 m_callback = callback;
             }
 
@@ -226,22 +240,31 @@ namespace Chromium {
                 }
             }
             /// <summary>
-            /// Get the DefaultFileName parameter for the <see cref="CfxDialogHandler.OnFileDialog"/> callback.
+            /// Get the DefaultFilePath parameter for the <see cref="CfxDialogHandler.OnFileDialog"/> callback.
             /// </summary>
-            public string DefaultFileName {
+            public string DefaultFilePath {
                 get {
                     CheckAccess();
-                    m_default_file_name = StringFunctions.PtrToStringUni(m_default_file_name_str, m_default_file_name_length);
-                    return m_default_file_name;
+                    m_default_file_path = StringFunctions.PtrToStringUni(m_default_file_path_str, m_default_file_path_length);
+                    return m_default_file_path;
                 }
             }
             /// <summary>
-            /// Get the AcceptTypes parameter for the <see cref="CfxDialogHandler.OnFileDialog"/> callback.
+            /// Get the AcceptFilters parameter for the <see cref="CfxDialogHandler.OnFileDialog"/> callback.
             /// </summary>
-            public System.Collections.Generic.List<string> AcceptTypes {
+            public System.Collections.Generic.List<string> AcceptFilters {
                 get {
                     CheckAccess();
-                    return StringFunctions.WrapCfxStringList(m_accept_types);
+                    return StringFunctions.WrapCfxStringList(m_accept_filters);
+                }
+            }
+            /// <summary>
+            /// Get the SelectedAcceptFilter parameter for the <see cref="CfxDialogHandler.OnFileDialog"/> callback.
+            /// </summary>
+            public int SelectedAcceptFilter {
+                get {
+                    CheckAccess();
+                    return m_selected_accept_filter;
                 }
             }
             /// <summary>
@@ -268,7 +291,7 @@ namespace Chromium {
             }
 
             public override string ToString() {
-                return String.Format("Browser={{{0}}}, Mode={{{1}}}, Title={{{2}}}, DefaultFileName={{{3}}}, AcceptTypes={{{4}}}, Callback={{{5}}}", Browser, Mode, Title, DefaultFileName, AcceptTypes, Callback);
+                return String.Format("Browser={{{0}}}, Mode={{{1}}}, Title={{{2}}}, DefaultFilePath={{{3}}}, AcceptFilters={{{4}}}, SelectedAcceptFilter={{{5}}}, Callback={{{6}}}", Browser, Mode, Title, DefaultFilePath, AcceptFilters, SelectedAcceptFilter, Callback);
             }
         }
 

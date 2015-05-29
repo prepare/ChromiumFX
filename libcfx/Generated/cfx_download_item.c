@@ -106,6 +106,11 @@ static cef_string_userfree_t cfx_download_item_get_url(cef_download_item_t* self
     return self->get_url(self);
 }
 
+// get_original_url
+static cef_string_userfree_t cfx_download_item_get_original_url(cef_download_item_t* self) {
+    return self->get_original_url(self);
+}
+
 // get_suggested_file_name
 static cef_string_userfree_t cfx_download_item_get_suggested_file_name(cef_download_item_t* self) {
     return self->get_suggested_file_name(self);

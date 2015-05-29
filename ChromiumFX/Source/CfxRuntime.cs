@@ -215,7 +215,7 @@ namespace Chromium {
 
         public static string GetCefVersion() {
             CfxApi.Probe();
-                return String.Format("{0}.{1}.{2}", VersionInfo(0), VersionInfo(4), BuildRevision());
+            return String.Format("{0}.{1}.{2}", VersionInfo(0), VersionInfo(4), VersionInfo(1));
         }
 
         public static string GetChromeVersion() {

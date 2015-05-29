@@ -47,6 +47,7 @@ static cef_settings_t* cfx_settings_ctor() {
 static void cfx_settings_dtor(cef_settings_t* self) {
     if(self->browser_subprocess_path.dtor) self->browser_subprocess_path.dtor(self->browser_subprocess_path.str);
     if(self->cache_path.dtor) self->cache_path.dtor(self->cache_path.str);
+    if(self->user_data_path.dtor) self->user_data_path.dtor(self->user_data_path.str);
     if(self->user_agent.dtor) self->user_agent.dtor(self->user_agent.str);
     if(self->product_version.dtor) self->product_version.dtor(self->product_version.str);
     if(self->locale.dtor) self->locale.dtor(self->locale.str);
@@ -54,6 +55,7 @@ static void cfx_settings_dtor(cef_settings_t* self) {
     if(self->javascript_flags.dtor) self->javascript_flags.dtor(self->javascript_flags.str);
     if(self->resources_dir_path.dtor) self->resources_dir_path.dtor(self->resources_dir_path.str);
     if(self->locales_dir_path.dtor) self->locales_dir_path.dtor(self->locales_dir_path.str);
+    if(self->accept_language_list.dtor) self->accept_language_list.dtor(self->accept_language_list.str);
     free(self);
 }
 
@@ -113,6 +115,15 @@ static void cfx_settings_set_cache_path(cef_settings_t *self, char16 *cache_path
 static void cfx_settings_get_cache_path(cef_settings_t *self, char16 **cache_path_str, int *cache_path_length) {
     *cache_path_str = self->cache_path.str;
     *cache_path_length = (int)self->cache_path.length;
+}
+
+// cef_settings_t->user_data_path
+static void cfx_settings_set_user_data_path(cef_settings_t *self, char16 *user_data_path_str, int user_data_path_length) {
+    cef_string_utf16_set(user_data_path_str, user_data_path_length, &(self->user_data_path), 1);
+}
+static void cfx_settings_get_user_data_path(cef_settings_t *self, char16 **user_data_path_str, int *user_data_path_length) {
+    *user_data_path_str = self->user_data_path.str;
+    *user_data_path_length = (int)self->user_data_path.length;
 }
 
 // cef_settings_t->persist_session_cookies
@@ -240,6 +251,15 @@ static void cfx_settings_set_background_color(cef_settings_t *self, uint32 backg
 }
 static void cfx_settings_get_background_color(cef_settings_t *self, uint32* background_color) {
     *background_color = self->background_color;
+}
+
+// cef_settings_t->accept_language_list
+static void cfx_settings_set_accept_language_list(cef_settings_t *self, char16 *accept_language_list_str, int accept_language_list_length) {
+    cef_string_utf16_set(accept_language_list_str, accept_language_list_length, &(self->accept_language_list), 1);
+}
+static void cfx_settings_get_accept_language_list(cef_settings_t *self, char16 **accept_language_list_str, int *accept_language_list_length) {
+    *accept_language_list_str = self->accept_language_list.str;
+    *accept_language_list_length = (int)self->accept_language_list.length;
 }
 
 

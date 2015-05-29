@@ -176,22 +176,6 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Returns the selection start node.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
-        /// </remarks>
-        public CfrDomNode SelectionStartNode {
-            get {
-                var call = new CfxDomDocumentGetSelectionStartNodeRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
-                return CfrDomNode.Wrap(call.__retval, remoteRuntime);
-            }
-        }
-
-        /// <summary>
         /// Returns the selection offset within the start node.
         /// </summary>
         /// <remarks>
@@ -204,22 +188,6 @@ namespace Chromium.Remote {
                 call.self = CfrObject.Unwrap(this);
                 call.Execute(remoteRuntime.connection);
                 return call.__retval;
-            }
-        }
-
-        /// <summary>
-        /// Returns the selection end node.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
-        /// </remarks>
-        public CfrDomNode SelectionEndNode {
-            get {
-                var call = new CfxDomDocumentGetSelectionEndNodeRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
-                return CfrDomNode.Wrap(call.__retval, remoteRuntime);
             }
         }
 
