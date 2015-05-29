@@ -1,15 +1,15 @@
 Chromium Embedded Framework (CEF) Standard Binary Distribution for Windows
 -------------------------------------------------------------------------------
 
-Date:             March 03, 2015
+Date:             May 29, 2015
 
-CEF Version:      3.2171.2039
-CEF URL:          https://chromiumembedded@bitbucket.org/chromiumembedded/branches-2171-cef3.git
-                  @2039
+CEF Version:      3.2357.1274.g7b49af6
+CEF URL:          https://bitbucket.org/chromiumembedded/cef.git
+                  @7b49af61829a550d14a7582584a0844bc4237a4b
 
-Chromium Verison: 39.0.2171.95
+Chromium Verison: 43.0.2357.45
 Chromium URL:     https://chromium.googlesource.com/chromium/src.git
-                  @07d25682862707e7524037c8b93ef93f361835f1
+                  @213dcd807b7cb9c23978c299d6ba12cd05c899d9
 
 This distribution contains all components necessary to build and distribute an
 application using CEF on the Windows platform. Please see the LICENSING
@@ -55,23 +55,9 @@ Building using CMake:
   CMake can be used to generate project files in many different formats. See
   usage instructions at the top of the CMakeLists.txt file.
 
-Building using the pre-existing Visual Studio solution (DEPRECATED):
-  Visual Studio 2013 and newer:
-    Open the cefclient2010.sln solution in Visual Studio and build.
-
-  Visual Studio 2008:
-    Open the cefclient2008.sln solution in Visual Studio and build.
-
-  Visual Studio 2005:
-    1. Open the cefclient.vcproj and libcef_dll_wrapper.vcproj files in a text
-       editor. Change Version="9.00" to Version="8.00".
-    2. Open the cefclient2005.sln file in a text editor. Change "Version 9.00"
-       to "Version 8.00".
-    3. Open the cefclient2005.sln solution in Visual Studio and build.
-
 Please visit the CEF Website for additional usage information.
 
-http://code.google.com/p/chromiumembedded
+https://bitbucket.org/chromiumembedded/cef/
 
 
 REDISTRIBUTION
@@ -113,10 +99,6 @@ Optional components:
 * FFmpeg audio and video support
     ffmpegsumo.dll
   Note: Without this component HTML5 audio and video will not function.
-
-* PDF support
-    pdf.dll
-  Note: Without this component printing will not function.
 
 * Angle and Direct3D support
     d3dcompiler_43.dll (required for Windows XP)
