@@ -252,7 +252,7 @@ namespace Chromium.Remote {
 
         internal string @string;
         internal bool strict;
-        internal ref CfxColor color;
+        internal CfxColor color;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -276,7 +276,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxRuntime.ParseCssColor(@string, strict, color);
+            __retval = CfxRuntime.ParseCssColor(@string, strict, ref color);
         }
     }
 

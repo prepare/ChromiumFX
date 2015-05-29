@@ -185,7 +185,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
         /// </remarks>
-        public bool ParseCssColor(string @string, bool strict, ref CfxColor color) {
+        public bool ParseCssColor(string @string, bool strict, CfxColor color) {
             var call = new CfxRuntimeParseCssColorRenderProcessCall();
             call.@string = @string;
             call.strict = strict;
