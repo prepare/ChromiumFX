@@ -75,21 +75,21 @@ static gc_handle_t cfx_run_file_dialog_callback_get_gc_handle(cfx_run_file_dialo
     return self->gc_handle;
 }
 
-// cont
+// on_file_dialog_dismissed
 
-void (CEF_CALLBACK *cfx_run_file_dialog_callback_cont_callback)(gc_handle_t self, cef_browser_host_t* browser_host, cef_string_list_t file_paths);
+void (CEF_CALLBACK *cfx_run_file_dialog_callback_on_file_dialog_dismissed_callback)(gc_handle_t self, int selected_accept_filter, cef_string_list_t file_paths);
 
-void CEF_CALLBACK cfx_run_file_dialog_callback_cont(cef_run_file_dialog_callback_t* self, cef_browser_host_t* browser_host, cef_string_list_t file_paths) {
-    cfx_run_file_dialog_callback_cont_callback(((cfx_run_file_dialog_callback_t*)self)->gc_handle, browser_host, file_paths);
+void CEF_CALLBACK cfx_run_file_dialog_callback_on_file_dialog_dismissed(cef_run_file_dialog_callback_t* self, int selected_accept_filter, cef_string_list_t file_paths) {
+    cfx_run_file_dialog_callback_on_file_dialog_dismissed_callback(((cfx_run_file_dialog_callback_t*)self)->gc_handle, selected_accept_filter, file_paths);
 }
 
 
 static void cfx_run_file_dialog_callback_set_managed_callback(cef_run_file_dialog_callback_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        if(callback && !cfx_run_file_dialog_callback_cont_callback)
-            cfx_run_file_dialog_callback_cont_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_host_t* browser_host, cef_string_list_t file_paths)) callback;
-        self->cont = callback ? cfx_run_file_dialog_callback_cont : 0;
+        if(callback && !cfx_run_file_dialog_callback_on_file_dialog_dismissed_callback)
+            cfx_run_file_dialog_callback_on_file_dialog_dismissed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int selected_accept_filter, cef_string_list_t file_paths)) callback;
+        self->on_file_dialog_dismissed = callback ? cfx_run_file_dialog_callback_on_file_dialog_dismissed : 0;
         break;
     }
 }

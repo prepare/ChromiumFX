@@ -130,6 +130,11 @@ static cef_transition_type_t cfx_request_get_transition_type(cef_request_t* self
     return self->get_transition_type(self);
 }
 
+// get_identifier
+static uint64 cfx_request_get_identifier(cef_request_t* self) {
+    return self->get_identifier(self);
+}
+
 
 #ifdef __cplusplus
 } // extern "C"

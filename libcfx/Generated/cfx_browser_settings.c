@@ -52,6 +52,7 @@ static void cfx_browser_settings_dtor(cef_browser_settings_t* self) {
     if(self->cursive_font_family.dtor) self->cursive_font_family.dtor(self->cursive_font_family.str);
     if(self->fantasy_font_family.dtor) self->fantasy_font_family.dtor(self->fantasy_font_family.str);
     if(self->default_encoding.dtor) self->default_encoding.dtor(self->default_encoding.str);
+    if(self->accept_language_list.dtor) self->accept_language_list.dtor(self->accept_language_list.str);
     free(self);
 }
 
@@ -324,6 +325,15 @@ static void cfx_browser_settings_set_background_color(cef_browser_settings_t *se
 }
 static void cfx_browser_settings_get_background_color(cef_browser_settings_t *self, uint32* background_color) {
     *background_color = self->background_color;
+}
+
+// cef_browser_settings_t->accept_language_list
+static void cfx_browser_settings_set_accept_language_list(cef_browser_settings_t *self, char16 *accept_language_list_str, int accept_language_list_length) {
+    cef_string_utf16_set(accept_language_list_str, accept_language_list_length, &(self->accept_language_list), 1);
+}
+static void cfx_browser_settings_get_accept_language_list(cef_browser_settings_t *self, char16 **accept_language_list_str, int *accept_language_list_length) {
+    *accept_language_list_str = self->accept_language_list.str;
+    *accept_language_list_length = (int)self->accept_language_list.length;
 }
 
 

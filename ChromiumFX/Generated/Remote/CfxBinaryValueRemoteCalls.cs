@@ -127,6 +127,72 @@ namespace Chromium.Remote {
         }
     }
 
+    internal class CfxBinaryValueIsSameRenderProcessCall : RenderProcessCall {
+
+        internal CfxBinaryValueIsSameRenderProcessCall()
+            : base(RemoteCallId.CfxBinaryValueIsSameRenderProcessCall) {}
+
+        internal ulong self;
+        internal ulong that;
+        internal bool __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(self);
+            h.Write(that);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out self);
+            h.Read(out that);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var self_local = (CfxBinaryValue)RemoteProxy.Unwrap(self);
+            __retval = self_local.IsSame((CfxBinaryValue)RemoteProxy.Unwrap(that));
+        }
+    }
+
+    internal class CfxBinaryValueIsEqualRenderProcessCall : RenderProcessCall {
+
+        internal CfxBinaryValueIsEqualRenderProcessCall()
+            : base(RemoteCallId.CfxBinaryValueIsEqualRenderProcessCall) {}
+
+        internal ulong self;
+        internal ulong that;
+        internal bool __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(self);
+            h.Write(that);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out self);
+            h.Read(out that);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var self_local = (CfxBinaryValue)RemoteProxy.Unwrap(self);
+            __retval = self_local.IsEqual((CfxBinaryValue)RemoteProxy.Unwrap(that));
+        }
+    }
+
     internal class CfxBinaryValueCopyRenderProcessCall : RenderProcessCall {
 
         internal CfxBinaryValueCopyRenderProcessCall()

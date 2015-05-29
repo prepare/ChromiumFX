@@ -96,6 +96,24 @@ namespace Chromium {
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
 
+        // on_favicon_urlchange
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_display_handler_on_favicon_urlchange_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr icon_urls);
+        private static cfx_display_handler_on_favicon_urlchange_delegate cfx_display_handler_on_favicon_urlchange;
+        private static IntPtr cfx_display_handler_on_favicon_urlchange_ptr;
+
+        internal static void on_favicon_urlchange(IntPtr gcHandlePtr, IntPtr browser, IntPtr icon_urls) {
+            var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null) {
+                return;
+            }
+            var e = new CfxOnFaviconUrlchangeEventArgs(browser, icon_urls);
+            var eventHandler = self.m_OnFaviconUrlchange;
+            if(eventHandler != null) eventHandler(self, e);
+            e.m_isInvalid = true;
+            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
+        }
+
         // on_tooltip
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void cfx_display_handler_on_tooltip_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, ref IntPtr text_str, ref int text_length);
@@ -227,6 +245,38 @@ namespace Chromium {
         private CfxOnTitleChangeEventHandler m_OnTitleChange;
 
         /// <summary>
+        /// Called when the page icon changes.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
+        public event CfxOnFaviconUrlchangeEventHandler OnFaviconUrlchange {
+            add {
+                lock(eventLock) {
+                    if(m_OnFaviconUrlchange == null) {
+                        if(cfx_display_handler_on_favicon_urlchange == null) {
+                            cfx_display_handler_on_favicon_urlchange = on_favicon_urlchange;
+                            cfx_display_handler_on_favicon_urlchange_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_display_handler_on_favicon_urlchange);
+                        }
+                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 2, cfx_display_handler_on_favicon_urlchange_ptr);
+                    }
+                    m_OnFaviconUrlchange += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_OnFaviconUrlchange -= value;
+                    if(m_OnFaviconUrlchange == null) {
+                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                    }
+                }
+            }
+        }
+
+        private CfxOnFaviconUrlchangeEventHandler m_OnFaviconUrlchange;
+
+        /// <summary>
         /// Called when the browser is about to display a tooltip. |Text| contains the
         /// text that will be displayed in the tooltip. To handle the display of the
         /// tooltip yourself return true (1). Otherwise, you can optionally modify
@@ -246,7 +296,7 @@ namespace Chromium {
                             cfx_display_handler_on_tooltip = on_tooltip;
                             cfx_display_handler_on_tooltip_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_display_handler_on_tooltip);
                         }
-                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 2, cfx_display_handler_on_tooltip_ptr);
+                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 3, cfx_display_handler_on_tooltip_ptr);
                     }
                     m_OnTooltip += value;
                 }
@@ -255,7 +305,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnTooltip -= value;
                     if(m_OnTooltip == null) {
-                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
                     }
                 }
             }
@@ -279,7 +329,7 @@ namespace Chromium {
                             cfx_display_handler_on_status_message = on_status_message;
                             cfx_display_handler_on_status_message_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_display_handler_on_status_message);
                         }
-                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 3, cfx_display_handler_on_status_message_ptr);
+                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 4, cfx_display_handler_on_status_message_ptr);
                     }
                     m_OnStatusMessage += value;
                 }
@@ -288,7 +338,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnStatusMessage -= value;
                     if(m_OnStatusMessage == null) {
-                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
                     }
                 }
             }
@@ -312,7 +362,7 @@ namespace Chromium {
                             cfx_display_handler_on_console_message = on_console_message;
                             cfx_display_handler_on_console_message_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_display_handler_on_console_message);
                         }
-                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 4, cfx_display_handler_on_console_message_ptr);
+                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 5, cfx_display_handler_on_console_message_ptr);
                     }
                     m_OnConsoleMessage += value;
                 }
@@ -321,7 +371,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnConsoleMessage -= value;
                     if(m_OnConsoleMessage == null) {
-                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
+                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 5, IntPtr.Zero);
                     }
                 }
             }
@@ -338,17 +388,21 @@ namespace Chromium {
                 m_OnTitleChange = null;
                 CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
+            if(m_OnFaviconUrlchange != null) {
+                m_OnFaviconUrlchange = null;
+                CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+            }
             if(m_OnTooltip != null) {
                 m_OnTooltip = null;
-                CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
             }
             if(m_OnStatusMessage != null) {
                 m_OnStatusMessage = null;
-                CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
             }
             if(m_OnConsoleMessage != null) {
                 m_OnConsoleMessage = null;
-                CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
+                CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 5, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -479,6 +533,58 @@ namespace Chromium {
 
             public override string ToString() {
                 return String.Format("Browser={{{0}}}, Title={{{1}}}", Browser, Title);
+            }
+        }
+
+        /// <summary>
+        /// Called when the page icon changes.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxOnFaviconUrlchangeEventHandler(object sender, CfxOnFaviconUrlchangeEventArgs e);
+
+        /// <summary>
+        /// Called when the page icon changes.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxOnFaviconUrlchangeEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_icon_urls;
+
+            internal CfxOnFaviconUrlchangeEventArgs(IntPtr browser, IntPtr icon_urls) {
+                m_browser = browser;
+                m_icon_urls = icon_urls;
+            }
+
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxDisplayHandler.OnFaviconUrlchange"/> callback.
+            /// </summary>
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the IconUrls parameter for the <see cref="CfxDisplayHandler.OnFaviconUrlchange"/> callback.
+            /// </summary>
+            public System.Collections.Generic.List<string> IconUrls {
+                get {
+                    CheckAccess();
+                    return StringFunctions.WrapCfxStringList(m_icon_urls);
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, IconUrls={{{1}}}", Browser, IconUrls);
             }
         }
 

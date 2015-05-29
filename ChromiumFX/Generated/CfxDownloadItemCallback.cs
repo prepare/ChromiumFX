@@ -77,6 +77,28 @@ namespace Chromium {
             CfxApi.cfx_download_item_callback_cancel(NativePtr);
         }
 
+        /// <summary>
+        /// Call to pause the download.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_download_handler_capi.h">cef/include/capi/cef_download_handler_capi.h</see>.
+        /// </remarks>
+        public void Pause() {
+            CfxApi.cfx_download_item_callback_pause(NativePtr);
+        }
+
+        /// <summary>
+        /// Call to resume the download.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_download_handler_capi.h">cef/include/capi/cef_download_handler_capi.h</see>.
+        /// </remarks>
+        public void Resume() {
+            CfxApi.cfx_download_item_callback_resume(NativePtr);
+        }
+
         internal override void OnDispose(IntPtr nativePtr) {
             weakCache.Remove(nativePtr);
             base.OnDispose(nativePtr);

@@ -62,11 +62,11 @@ namespace Chromium {
 
         // on_before_popup
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_life_span_handler_on_before_popup_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access);
+        private delegate void cfx_life_span_handler_on_before_popup_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, CfxWindowOpenDisposition target_disposition, int user_gesture, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access);
         private static cfx_life_span_handler_on_before_popup_delegate cfx_life_span_handler_on_before_popup;
         private static IntPtr cfx_life_span_handler_on_before_popup_ptr;
 
-        internal static void on_before_popup(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access) {
+        internal static void on_before_popup(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, CfxWindowOpenDisposition target_disposition, int user_gesture, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
@@ -74,7 +74,7 @@ namespace Chromium {
                 no_javascript_access = default(int);
                 return;
             }
-            var e = new CfxOnBeforePopupEventArgs(browser, frame, target_url_str, target_url_length, target_frame_name_str, target_frame_name_length, popupFeatures, windowInfo, settings);
+            var e = new CfxOnBeforePopupEventArgs(browser, frame, target_url_str, target_url_length, target_frame_name_str, target_frame_name_length, target_disposition, user_gesture, popupFeatures, windowInfo, settings);
             var eventHandler = self.m_OnBeforePopup;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
@@ -165,17 +165,22 @@ namespace Chromium {
         public CfxLifeSpanHandler() : base(CfxApi.cfx_life_span_handler_ctor) {}
 
         /// <summary>
-        /// Called on the IO thread before a new popup window is created. The |Browser|
-        /// and |Frame| parameters represent the source of the popup request. The
-        /// |TargetUrl| and |TargetFrameName| values may be NULL if none were
-        /// specified with the request. The |PopupFeatures| structure contains
-        /// information about the requested popup window. To allow creation of the
-        /// popup window optionally modify |WindowInfo|, |Client|, |Settings| and
-        /// |NoJavascriptAccess| and return false (0). To cancel creation of the
-        /// popup window return true (1). The |Client| and |Settings| values will
-        /// default to the source browser's values. The |NoJavascriptAccess| value
-        /// indicates whether the new browser window should be scriptable and in the
-        /// same process as the source browser.
+        /// Called on the IO thread before a new popup browser is created. The
+        /// |Browser| and |Frame| values represent the source of the popup request. The
+        /// |TargetUrl| and |TargetFrameName| values indicate where the popup
+        /// browser should navigate and may be NULL if not specified with the request.
+        /// The |TargetDisposition| value indicates where the user intended to open
+        /// the popup (e.g. current tab, new tab, etc). The |UserGesture| value will
+        /// be true (1) if the popup was opened via explicit user gesture (e.g.
+        /// clicking a link) or false (0) if the popup opened automatically (e.g. via
+        /// the DomContentLoaded event). The |PopupFeatures| structure contains
+        /// additional information about the requested popup window. To allow creation
+        /// of the popup browser optionally modify |WindowInfo|, |Client|, |Settings|
+        /// and |NoJavascriptAccess| and return false (0). To cancel creation of the
+        /// popup browser return true (1). The |Client| and |Settings| values will
+        /// default to the source browser's values. If the |NoJavascriptAccess| value
+        /// is set to false (0) the new browser will not be scriptable and may not be
+        /// hosted in the same renderer process as the source browser.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -419,17 +424,22 @@ namespace Chromium {
     namespace Event {
 
         /// <summary>
-        /// Called on the IO thread before a new popup window is created. The |Browser|
-        /// and |Frame| parameters represent the source of the popup request. The
-        /// |TargetUrl| and |TargetFrameName| values may be NULL if none were
-        /// specified with the request. The |PopupFeatures| structure contains
-        /// information about the requested popup window. To allow creation of the
-        /// popup window optionally modify |WindowInfo|, |Client|, |Settings| and
-        /// |NoJavascriptAccess| and return false (0). To cancel creation of the
-        /// popup window return true (1). The |Client| and |Settings| values will
-        /// default to the source browser's values. The |NoJavascriptAccess| value
-        /// indicates whether the new browser window should be scriptable and in the
-        /// same process as the source browser.
+        /// Called on the IO thread before a new popup browser is created. The
+        /// |Browser| and |Frame| values represent the source of the popup request. The
+        /// |TargetUrl| and |TargetFrameName| values indicate where the popup
+        /// browser should navigate and may be NULL if not specified with the request.
+        /// The |TargetDisposition| value indicates where the user intended to open
+        /// the popup (e.g. current tab, new tab, etc). The |UserGesture| value will
+        /// be true (1) if the popup was opened via explicit user gesture (e.g.
+        /// clicking a link) or false (0) if the popup opened automatically (e.g. via
+        /// the DomContentLoaded event). The |PopupFeatures| structure contains
+        /// additional information about the requested popup window. To allow creation
+        /// of the popup browser optionally modify |WindowInfo|, |Client|, |Settings|
+        /// and |NoJavascriptAccess| and return false (0). To cancel creation of the
+        /// popup browser return true (1). The |Client| and |Settings| values will
+        /// default to the source browser's values. If the |NoJavascriptAccess| value
+        /// is set to false (0) the new browser will not be scriptable and may not be
+        /// hosted in the same renderer process as the source browser.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -438,17 +448,22 @@ namespace Chromium {
         public delegate void CfxOnBeforePopupEventHandler(object sender, CfxOnBeforePopupEventArgs e);
 
         /// <summary>
-        /// Called on the IO thread before a new popup window is created. The |Browser|
-        /// and |Frame| parameters represent the source of the popup request. The
-        /// |TargetUrl| and |TargetFrameName| values may be NULL if none were
-        /// specified with the request. The |PopupFeatures| structure contains
-        /// information about the requested popup window. To allow creation of the
-        /// popup window optionally modify |WindowInfo|, |Client|, |Settings| and
-        /// |NoJavascriptAccess| and return false (0). To cancel creation of the
-        /// popup window return true (1). The |Client| and |Settings| values will
-        /// default to the source browser's values. The |NoJavascriptAccess| value
-        /// indicates whether the new browser window should be scriptable and in the
-        /// same process as the source browser.
+        /// Called on the IO thread before a new popup browser is created. The
+        /// |Browser| and |Frame| values represent the source of the popup request. The
+        /// |TargetUrl| and |TargetFrameName| values indicate where the popup
+        /// browser should navigate and may be NULL if not specified with the request.
+        /// The |TargetDisposition| value indicates where the user intended to open
+        /// the popup (e.g. current tab, new tab, etc). The |UserGesture| value will
+        /// be true (1) if the popup was opened via explicit user gesture (e.g.
+        /// clicking a link) or false (0) if the popup opened automatically (e.g. via
+        /// the DomContentLoaded event). The |PopupFeatures| structure contains
+        /// additional information about the requested popup window. To allow creation
+        /// of the popup browser optionally modify |WindowInfo|, |Client|, |Settings|
+        /// and |NoJavascriptAccess| and return false (0). To cancel creation of the
+        /// popup browser return true (1). The |Client| and |Settings| values will
+        /// default to the source browser's values. If the |NoJavascriptAccess| value
+        /// is set to false (0) the new browser will not be scriptable and may not be
+        /// hosted in the same renderer process as the source browser.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -466,6 +481,8 @@ namespace Chromium {
             internal IntPtr m_target_frame_name_str;
             internal int m_target_frame_name_length;
             internal string m_target_frame_name;
+            internal CfxWindowOpenDisposition m_target_disposition;
+            internal int m_user_gesture;
             internal IntPtr m_popupFeatures;
             internal CfxPopupFeatures m_popupFeatures_wrapped;
             internal IntPtr m_windowInfo;
@@ -477,13 +494,15 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnBeforePopupEventArgs(IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, IntPtr popupFeatures, IntPtr windowInfo, IntPtr settings) {
+            internal CfxOnBeforePopupEventArgs(IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, CfxWindowOpenDisposition target_disposition, int user_gesture, IntPtr popupFeatures, IntPtr windowInfo, IntPtr settings) {
                 m_browser = browser;
                 m_frame = frame;
                 m_target_url_str = target_url_str;
                 m_target_url_length = target_url_length;
                 m_target_frame_name_str = target_frame_name_str;
                 m_target_frame_name_length = target_frame_name_length;
+                m_target_disposition = target_disposition;
+                m_user_gesture = user_gesture;
                 m_popupFeatures = popupFeatures;
                 m_windowInfo = windowInfo;
                 m_settings = settings;
@@ -527,6 +546,24 @@ namespace Chromium {
                     CheckAccess();
                     m_target_frame_name = StringFunctions.PtrToStringUni(m_target_frame_name_str, m_target_frame_name_length);
                     return m_target_frame_name;
+                }
+            }
+            /// <summary>
+            /// Get the TargetDisposition parameter for the <see cref="CfxLifeSpanHandler.OnBeforePopup"/> callback.
+            /// </summary>
+            public CfxWindowOpenDisposition TargetDisposition {
+                get {
+                    CheckAccess();
+                    return m_target_disposition;
+                }
+            }
+            /// <summary>
+            /// Get the UserGesture parameter for the <see cref="CfxLifeSpanHandler.OnBeforePopup"/> callback.
+            /// </summary>
+            public bool UserGesture {
+                get {
+                    CheckAccess();
+                    return 0 != m_user_gesture;
                 }
             }
             /// <summary>
@@ -590,7 +627,7 @@ namespace Chromium {
             }
 
             public override string ToString() {
-                return String.Format("Browser={{{0}}}, Frame={{{1}}}, TargetUrl={{{2}}}, TargetFrameName={{{3}}}, PopupFeatures={{{4}}}, WindowInfo={{{5}}}, Settings={{{6}}}", Browser, Frame, TargetUrl, TargetFrameName, PopupFeatures, WindowInfo, Settings);
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, TargetUrl={{{2}}}, TargetFrameName={{{3}}}, TargetDisposition={{{4}}}, UserGesture={{{5}}}, PopupFeatures={{{6}}}, WindowInfo={{{7}}}, Settings={{{8}}}", Browser, Frame, TargetUrl, TargetFrameName, TargetDisposition, UserGesture, PopupFeatures, WindowInfo, Settings);
             }
         }
 

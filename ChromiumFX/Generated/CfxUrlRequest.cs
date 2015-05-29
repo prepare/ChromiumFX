@@ -80,14 +80,17 @@ namespace Chromium {
         /// not normally be rendered then the response may receive special handling
         /// inside the browser (for example, via the file download code path instead of
         /// the URL request code path). The |request| object will be marked as read-only
-        /// after calling this function.
+        /// after calling this function. In the browser process if |requestContext| is
+        /// NULL the global request context will be used. In the render process
+        /// |requestContext| must be NULL and the context associated with the current
+        /// renderer process' browser will be used.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
         /// </remarks>
-        public static CfxUrlRequest Create(CfxRequest request, CfxUrlRequestClient client) {
-            return CfxUrlRequest.Wrap(CfxApi.cfx_urlrequest_create(CfxRequest.Unwrap(request), CfxUrlRequestClient.Unwrap(client)));
+        public static CfxUrlRequest Create(CfxRequest request, CfxUrlRequestClient client, CfxRequestContext requestContext) {
+            return CfxUrlRequest.Wrap(CfxApi.cfx_urlrequest_create(CfxRequest.Unwrap(request), CfxUrlRequestClient.Unwrap(client), CfxRequestContext.Unwrap(requestContext)));
         }
 
         /// <summary>
