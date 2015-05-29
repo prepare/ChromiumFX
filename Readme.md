@@ -49,6 +49,12 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2357.0 ###
+
+* Updated to CEF release branch 2357, the newest release branch considered production ready. If you update to this revision, you have to replace all CEF binary and resource files to the latest binary package found at [https://cefbuilds.com](). And you should test it with your use case to verify that there are no issues.
+* As usual, the new release branch brings in a few API changes, see commit  393ad75 for an overview.
+* The [API reference](http://chromiumfx.bitbucket.org/api/html/welcome.htm) has been updated to branch 2357 as well.
+
 ### Version 3.2171.15 ###
 
 * Fixed a deadlock in the IPC code which caused the UI freeze after a renderer crash under some circumstances.
