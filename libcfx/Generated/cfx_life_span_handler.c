@@ -77,11 +77,11 @@ static gc_handle_t cfx_life_span_handler_get_gc_handle(cfx_life_span_handler_t* 
 
 // on_before_popup
 
-void (CEF_CALLBACK *cfx_life_span_handler_on_before_popup_callback)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, char16 *target_url_str, int target_url_length, char16 *target_frame_name_str, int target_frame_name_length, const cef_popup_features_t* popupFeatures, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, int* no_javascript_access);
+void (CEF_CALLBACK *cfx_life_span_handler_on_before_popup_callback)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, char16 *target_url_str, int target_url_length, char16 *target_frame_name_str, int target_frame_name_length, cef_window_open_disposition_t target_disposition, int user_gesture, const cef_popup_features_t* popupFeatures, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, int* no_javascript_access);
 
-int CEF_CALLBACK cfx_life_span_handler_on_before_popup(cef_life_span_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, const cef_string_t* target_url, const cef_string_t* target_frame_name, const cef_popup_features_t* popupFeatures, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, int* no_javascript_access) {
+int CEF_CALLBACK cfx_life_span_handler_on_before_popup(cef_life_span_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, const cef_string_t* target_url, const cef_string_t* target_frame_name, cef_window_open_disposition_t target_disposition, int user_gesture, const cef_popup_features_t* popupFeatures, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, int* no_javascript_access) {
     int __retval;
-    cfx_life_span_handler_on_before_popup_callback(((cfx_life_span_handler_t*)self)->gc_handle, &__retval, browser, frame, target_url ? target_url->str : 0, target_url ? (int)target_url->length : 0, target_frame_name ? target_frame_name->str : 0, target_frame_name ? (int)target_frame_name->length : 0, popupFeatures, windowInfo, client, settings, no_javascript_access);
+    cfx_life_span_handler_on_before_popup_callback(((cfx_life_span_handler_t*)self)->gc_handle, &__retval, browser, frame, target_url ? target_url->str : 0, target_url ? (int)target_url->length : 0, target_frame_name ? target_frame_name->str : 0, target_frame_name ? (int)target_frame_name->length : 0, target_disposition, user_gesture, popupFeatures, windowInfo, client, settings, no_javascript_access);
     if(*client)((cef_base_t*)*client)->add_ref((cef_base_t*)*client);
     return __retval;
 }
@@ -131,7 +131,7 @@ static void cfx_life_span_handler_set_managed_callback(cef_life_span_handler_t* 
     switch(index) {
     case 0:
         if(callback && !cfx_life_span_handler_on_before_popup_callback)
-            cfx_life_span_handler_on_before_popup_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, char16 *target_url_str, int target_url_length, char16 *target_frame_name_str, int target_frame_name_length, const cef_popup_features_t* popupFeatures, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, int* no_javascript_access)) callback;
+            cfx_life_span_handler_on_before_popup_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, char16 *target_url_str, int target_url_length, char16 *target_frame_name_str, int target_frame_name_length, cef_window_open_disposition_t target_disposition, int user_gesture, const cef_popup_features_t* popupFeatures, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, int* no_javascript_access)) callback;
         self->on_before_popup = callback ? cfx_life_span_handler_on_before_popup : 0;
         break;
     case 1:

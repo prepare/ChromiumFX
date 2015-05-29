@@ -80,11 +80,11 @@ namespace Chromium {
 
         // on_upload_progress
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_urlrequest_client_on_upload_progress_delegate(IntPtr gcHandlePtr, IntPtr request, ulong current, ulong total);
+        private delegate void cfx_urlrequest_client_on_upload_progress_delegate(IntPtr gcHandlePtr, IntPtr request, long current, long total);
         private static cfx_urlrequest_client_on_upload_progress_delegate cfx_urlrequest_client_on_upload_progress;
         private static IntPtr cfx_urlrequest_client_on_upload_progress_ptr;
 
-        internal static void on_upload_progress(IntPtr gcHandlePtr, IntPtr request, ulong current, ulong total) {
+        internal static void on_upload_progress(IntPtr gcHandlePtr, IntPtr request, long current, long total) {
             var self = (CfxUrlRequestClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 return;
@@ -98,11 +98,11 @@ namespace Chromium {
 
         // on_download_progress
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_urlrequest_client_on_download_progress_delegate(IntPtr gcHandlePtr, IntPtr request, ulong current, ulong total);
+        private delegate void cfx_urlrequest_client_on_download_progress_delegate(IntPtr gcHandlePtr, IntPtr request, long current, long total);
         private static cfx_urlrequest_client_on_download_progress_delegate cfx_urlrequest_client_on_download_progress;
         private static IntPtr cfx_urlrequest_client_on_download_progress_ptr;
 
-        internal static void on_download_progress(IntPtr gcHandlePtr, IntPtr request, ulong current, ulong total) {
+        internal static void on_download_progress(IntPtr gcHandlePtr, IntPtr request, long current, long total) {
             var self = (CfxUrlRequestClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 return;
@@ -429,10 +429,10 @@ namespace Chromium {
 
             internal IntPtr m_request;
             internal CfxUrlRequest m_request_wrapped;
-            internal ulong m_current;
-            internal ulong m_total;
+            internal long m_current;
+            internal long m_total;
 
-            internal CfxOnUploadProgressEventArgs(IntPtr request, ulong current, ulong total) {
+            internal CfxOnUploadProgressEventArgs(IntPtr request, long current, long total) {
                 m_request = request;
                 m_current = current;
                 m_total = total;
@@ -451,7 +451,7 @@ namespace Chromium {
             /// <summary>
             /// Get the Current parameter for the <see cref="CfxUrlRequestClient.OnUploadProgress"/> callback.
             /// </summary>
-            public ulong Current {
+            public long Current {
                 get {
                     CheckAccess();
                     return m_current;
@@ -460,7 +460,7 @@ namespace Chromium {
             /// <summary>
             /// Get the Total parameter for the <see cref="CfxUrlRequestClient.OnUploadProgress"/> callback.
             /// </summary>
-            public ulong Total {
+            public long Total {
                 get {
                     CheckAccess();
                     return m_total;
@@ -496,10 +496,10 @@ namespace Chromium {
 
             internal IntPtr m_request;
             internal CfxUrlRequest m_request_wrapped;
-            internal ulong m_current;
-            internal ulong m_total;
+            internal long m_current;
+            internal long m_total;
 
-            internal CfxOnDownloadProgressEventArgs(IntPtr request, ulong current, ulong total) {
+            internal CfxOnDownloadProgressEventArgs(IntPtr request, long current, long total) {
                 m_request = request;
                 m_current = current;
                 m_total = total;
@@ -518,7 +518,7 @@ namespace Chromium {
             /// <summary>
             /// Get the Current parameter for the <see cref="CfxUrlRequestClient.OnDownloadProgress"/> callback.
             /// </summary>
-            public ulong Current {
+            public long Current {
                 get {
                     CheckAccess();
                     return m_current;
@@ -527,7 +527,7 @@ namespace Chromium {
             /// <summary>
             /// Get the Total parameter for the <see cref="CfxUrlRequestClient.OnDownloadProgress"/> callback.
             /// </summary>
-            public ulong Total {
+            public long Total {
                 get {
                     CheckAccess();
                     return m_total;

@@ -79,8 +79,10 @@ namespace Chromium.Remote {
         private CfrBinaryValue(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) {}
 
         /// <summary>
-        /// Returns true (1) if this object is valid. Do not call any other functions
-        /// if this function returns false (0).
+        /// Returns true (1) if this object is valid. This object may become invalid if
+        /// the underlying data is owned by another object (e.g. list or dictionary)
+        /// and that other object is then modified or destroyed. Do not call any other
+        /// functions if this function returns false (0).
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -125,6 +127,38 @@ namespace Chromium.Remote {
                 call.Execute(remoteRuntime.connection);
                 return call.__retval;
             }
+        }
+
+        /// <summary>
+        /// Returns true (1) if this object and |that| object have the same underlying
+        /// data.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
+        public bool IsSame(CfrBinaryValue that) {
+            var call = new CfxBinaryValueIsSameRenderProcessCall();
+            call.self = CfrObject.Unwrap(this);
+            call.that = CfrObject.Unwrap(that);
+            call.Execute(remoteRuntime.connection);
+            return call.__retval;
+        }
+
+        /// <summary>
+        /// Returns true (1) if this object and |that| object have an equivalent
+        /// underlying value but are not necessarily the same object.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
+        public bool IsEqual(CfrBinaryValue that) {
+            var call = new CfxBinaryValueIsEqualRenderProcessCall();
+            call.self = CfrObject.Unwrap(this);
+            call.that = CfrObject.Unwrap(that);
+            call.Execute(remoteRuntime.connection);
+            return call.__retval;
         }
 
         /// <summary>

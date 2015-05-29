@@ -276,29 +276,33 @@ namespace Chromium {
         /// Call to run a file chooser dialog. Only a single file chooser dialog may be
         /// pending at any given time. |mode| represents the type of dialog to display.
         /// |title| to the title to be used for the dialog and may be NULL to show the
-        /// default title ("Open" or "Save" depending on the mode). |defaultFileName|
-        /// is the default file name to select in the dialog. |acceptTypes| is a list
-        /// of valid lower-cased MIME types or file extensions specified in an input
-        /// element and is used to restrict selectable files to such types. |callback|
-        /// will be executed after the dialog is dismissed or immediately if another
-        /// dialog is already pending. The dialog will be initiated asynchronously on
-        /// the UI thread.
+        /// default title ("Open" or "Save" depending on the mode). |defaultFilePath|
+        /// is the path with optional directory and/or file name component that will be
+        /// initially selected in the dialog. |acceptFilters| are used to restrict the
+        /// selectable file types and may any combination of (a) valid lower-cased MIME
+        /// types (e.g. "text/*" or "image/*"), (b) individual file extensions (e.g.
+        /// ".txt" or ".png"), or (c) combined description and file extension delimited
+        /// using "|" and ";" (e.g. "Image Types|.png;.gif;.jpg").
+        /// |selectedAcceptFilter| is the 0-based index of the filter that will be
+        /// selected by default. |callback| will be executed after the dialog is
+        /// dismissed or immediately if another dialog is already pending. The dialog
+        /// will be initiated asynchronously on the UI thread.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public void RunFileDialog(CfxFileDialogMode mode, string title, string defaultFileName, System.Collections.Generic.List<string> acceptTypes, CfxRunFileDialogCallback callback) {
+        public void RunFileDialog(CfxFileDialogMode mode, string title, string defaultFilePath, System.Collections.Generic.List<string> acceptFilters, int selectedAcceptFilter, CfxRunFileDialogCallback callback) {
             var title_pinned = new PinnedString(title);
-            var defaultFileName_pinned = new PinnedString(defaultFileName);
-            PinnedString[] acceptTypes_handles;
-            var acceptTypes_unwrapped = StringFunctions.UnwrapCfxStringList(acceptTypes, out acceptTypes_handles);
-            CfxApi.cfx_browser_host_run_file_dialog(NativePtr, mode, title_pinned.Obj.PinnedPtr, title_pinned.Length, defaultFileName_pinned.Obj.PinnedPtr, defaultFileName_pinned.Length, acceptTypes_unwrapped, CfxRunFileDialogCallback.Unwrap(callback));
+            var defaultFilePath_pinned = new PinnedString(defaultFilePath);
+            PinnedString[] acceptFilters_handles;
+            var acceptFilters_unwrapped = StringFunctions.UnwrapCfxStringList(acceptFilters, out acceptFilters_handles);
+            CfxApi.cfx_browser_host_run_file_dialog(NativePtr, mode, title_pinned.Obj.PinnedPtr, title_pinned.Length, defaultFilePath_pinned.Obj.PinnedPtr, defaultFilePath_pinned.Length, acceptFilters_unwrapped, selectedAcceptFilter, CfxRunFileDialogCallback.Unwrap(callback));
             title_pinned.Obj.Free();
-            defaultFileName_pinned.Obj.Free();
-            StringFunctions.FreePinnedStrings(acceptTypes_handles);
-            StringFunctions.CfxStringListCopyToManaged(acceptTypes_unwrapped, acceptTypes);
-            CfxApi.cfx_string_list_free(acceptTypes_unwrapped);
+            defaultFilePath_pinned.Obj.Free();
+            StringFunctions.FreePinnedStrings(acceptFilters_handles);
+            StringFunctions.CfxStringListCopyToManaged(acceptFilters_unwrapped, acceptFilters);
+            CfxApi.cfx_string_list_free(acceptFilters_unwrapped);
         }
 
         /// <summary>
@@ -330,7 +334,8 @@ namespace Chromium {
         /// running simultaniously. |forward| indicates whether to search forward or
         /// backward within the page. |matchCase| indicates whether the search should
         /// be case-sensitive. |findNext| indicates whether this is the first request
-        /// or a follow-up.
+        /// or a follow-up. The CfxFindHandler instance, if any, returned via
+        /// CfxClient.GetFindHandler will be called to report find results.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

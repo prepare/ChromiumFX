@@ -37,7 +37,9 @@ namespace Chromium {
     using Event;
 
     /// <summary>
-    /// Implement this structure to provide handler implementations.
+    /// Implement this structure to provide handler implementations. The handler
+    /// instance will not be released until all objects related to the context have
+    /// been destroyed.
     /// </summary>
     /// <remarks>
     /// See also the original CEF documentation in
@@ -81,8 +83,9 @@ namespace Chromium {
         public CfxRequestContextHandler() : base(CfxApi.cfx_request_context_handler_ctor) {}
 
         /// <summary>
-        /// Called on the IO thread to retrieve the cookie manager. The global cookie
-        /// manager will be used if this function returns NULL.
+        /// Called on the IO thread to retrieve the cookie manager. If this function
+        /// returns NULL the default cookie manager retrievable via
+        /// CfxRequestContext.GetDefaultCookieManager() will be used.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -126,8 +129,9 @@ namespace Chromium {
     namespace Event {
 
         /// <summary>
-        /// Called on the IO thread to retrieve the cookie manager. The global cookie
-        /// manager will be used if this function returns NULL.
+        /// Called on the IO thread to retrieve the cookie manager. If this function
+        /// returns NULL the default cookie manager retrievable via
+        /// CfxRequestContext.GetDefaultCookieManager() will be used.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -136,8 +140,9 @@ namespace Chromium {
         public delegate void CfxRequestContextHandlerGetCookieManagerEventHandler(object sender, CfxRequestContextHandlerGetCookieManagerEventArgs e);
 
         /// <summary>
-        /// Called on the IO thread to retrieve the cookie manager. The global cookie
-        /// manager will be used if this function returns NULL.
+        /// Called on the IO thread to retrieve the cookie manager. If this function
+        /// returns NULL the default cookie manager retrievable via
+        /// CfxRequestContext.GetDefaultCookieManager() will be used.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

@@ -256,16 +256,16 @@ namespace Chromium {
 
         // on_scroll_offset_changed
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_render_handler_on_scroll_offset_changed_delegate(IntPtr gcHandlePtr, IntPtr browser);
+        private delegate void cfx_render_handler_on_scroll_offset_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, double x, double y);
         private static cfx_render_handler_on_scroll_offset_changed_delegate cfx_render_handler_on_scroll_offset_changed;
         private static IntPtr cfx_render_handler_on_scroll_offset_changed_ptr;
 
-        internal static void on_scroll_offset_changed(IntPtr gcHandlePtr, IntPtr browser) {
+        internal static void on_scroll_offset_changed(IntPtr gcHandlePtr, IntPtr browser, double x, double y) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 return;
             }
-            var e = new CfxOnScrollOffsetChangedEventArgs(browser);
+            var e = new CfxOnScrollOffsetChangedEventArgs(browser, x, y);
             var eventHandler = self.m_OnScrollOffsetChanged;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
@@ -446,7 +446,7 @@ namespace Chromium {
 
         /// <summary>
         /// Called when the browser wants to move or resize the popup widget. |Rect|
-        /// contains the new location and size.
+        /// contains the new location and size in view coordinates.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -478,11 +478,14 @@ namespace Chromium {
         private CfxOnPopupSizeEventHandler m_OnPopupSize;
 
         /// <summary>
-        /// Called when an element should be painted. |Type| indicates whether the
-        /// element is the view or the popup widget. |Buffer| contains the pixel data
-        /// for the whole image. |DirtyRects| contains the set of rectangles that need
-        /// to be repainted. |Buffer| will be |Width|*|Height|*4 bytes in size and
-        /// represents a BGRA image with an upper-left origin.
+        /// Called when an element should be painted. Pixel values passed to this
+        /// function are scaled relative to view coordinates based on the value of
+        /// CfxScreenInfo.DeviceScaleFactor returned from GetScreenInfo. |Type|
+        /// indicates whether the element is the view or the popup widget. |Buffer|
+        /// contains the pixel data for the whole image. |DirtyRects| contains the set
+        /// of rectangles in pixel coordinates that need to be repainted. |Buffer| will
+        /// be |Width|*|Height|*4 bytes in size and represents a BGRA image with an
+        /// upper-left origin.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -548,8 +551,9 @@ namespace Chromium {
 
         /// <summary>
         /// Called when the user starts dragging content in the web view. Contextual
-        /// information about the dragged content is supplied by |DragData|. OS APIs
-        /// that run a system message loop may be used within the StartDragging call.
+        /// information about the dragged content is supplied by |DragData|. (|X|,
+        /// |Y|) is the drag start location in screen coordinates. OS APIs that run a
+        /// system message loop may be used within the StartDragging call.
         /// Return false (0) to abort the drag operation. Don't call any of
         /// CfxBrowserHost.DragSource*Ended* functions after returning false (0).
         /// Return true (1) to handle the drag operation. Call
@@ -1081,7 +1085,7 @@ namespace Chromium {
 
         /// <summary>
         /// Called when the browser wants to move or resize the popup widget. |Rect|
-        /// contains the new location and size.
+        /// contains the new location and size in view coordinates.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -1091,7 +1095,7 @@ namespace Chromium {
 
         /// <summary>
         /// Called when the browser wants to move or resize the popup widget. |Rect|
-        /// contains the new location and size.
+        /// contains the new location and size in view coordinates.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -1136,11 +1140,14 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Called when an element should be painted. |Type| indicates whether the
-        /// element is the view or the popup widget. |Buffer| contains the pixel data
-        /// for the whole image. |DirtyRects| contains the set of rectangles that need
-        /// to be repainted. |Buffer| will be |Width|*|Height|*4 bytes in size and
-        /// represents a BGRA image with an upper-left origin.
+        /// Called when an element should be painted. Pixel values passed to this
+        /// function are scaled relative to view coordinates based on the value of
+        /// CfxScreenInfo.DeviceScaleFactor returned from GetScreenInfo. |Type|
+        /// indicates whether the element is the view or the popup widget. |Buffer|
+        /// contains the pixel data for the whole image. |DirtyRects| contains the set
+        /// of rectangles in pixel coordinates that need to be repainted. |Buffer| will
+        /// be |Width|*|Height|*4 bytes in size and represents a BGRA image with an
+        /// upper-left origin.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -1149,11 +1156,14 @@ namespace Chromium {
         public delegate void CfxOnPaintEventHandler(object sender, CfxOnPaintEventArgs e);
 
         /// <summary>
-        /// Called when an element should be painted. |Type| indicates whether the
-        /// element is the view or the popup widget. |Buffer| contains the pixel data
-        /// for the whole image. |DirtyRects| contains the set of rectangles that need
-        /// to be repainted. |Buffer| will be |Width|*|Height|*4 bytes in size and
-        /// represents a BGRA image with an upper-left origin.
+        /// Called when an element should be painted. Pixel values passed to this
+        /// function are scaled relative to view coordinates based on the value of
+        /// CfxScreenInfo.DeviceScaleFactor returned from GetScreenInfo. |Type|
+        /// indicates whether the element is the view or the popup widget. |Buffer|
+        /// contains the pixel data for the whole image. |DirtyRects| contains the set
+        /// of rectangles in pixel coordinates that need to be repainted. |Buffer| will
+        /// be |Width|*|Height|*4 bytes in size and represents a BGRA image with an
+        /// upper-left origin.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -1336,8 +1346,9 @@ namespace Chromium {
 
         /// <summary>
         /// Called when the user starts dragging content in the web view. Contextual
-        /// information about the dragged content is supplied by |DragData|. OS APIs
-        /// that run a system message loop may be used within the StartDragging call.
+        /// information about the dragged content is supplied by |DragData|. (|X|,
+        /// |Y|) is the drag start location in screen coordinates. OS APIs that run a
+        /// system message loop may be used within the StartDragging call.
         /// Return false (0) to abort the drag operation. Don't call any of
         /// CfxBrowserHost.DragSource*Ended* functions after returning false (0).
         /// Return true (1) to handle the drag operation. Call
@@ -1353,8 +1364,9 @@ namespace Chromium {
 
         /// <summary>
         /// Called when the user starts dragging content in the web view. Contextual
-        /// information about the dragged content is supplied by |DragData|. OS APIs
-        /// that run a system message loop may be used within the StartDragging call.
+        /// information about the dragged content is supplied by |DragData|. (|X|,
+        /// |Y|) is the drag start location in screen coordinates. OS APIs that run a
+        /// system message loop may be used within the StartDragging call.
         /// Return false (0) to abort the drag operation. Don't call any of
         /// CfxBrowserHost.DragSource*Ended* functions after returning false (0).
         /// Return true (1) to handle the drag operation. Call
@@ -1528,9 +1540,13 @@ namespace Chromium {
 
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
+            internal double m_x;
+            internal double m_y;
 
-            internal CfxOnScrollOffsetChangedEventArgs(IntPtr browser) {
+            internal CfxOnScrollOffsetChangedEventArgs(IntPtr browser, double x, double y) {
                 m_browser = browser;
+                m_x = x;
+                m_y = y;
             }
 
             /// <summary>
@@ -1543,9 +1559,27 @@ namespace Chromium {
                     return m_browser_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the X parameter for the <see cref="CfxRenderHandler.OnScrollOffsetChanged"/> callback.
+            /// </summary>
+            public double X {
+                get {
+                    CheckAccess();
+                    return m_x;
+                }
+            }
+            /// <summary>
+            /// Get the Y parameter for the <see cref="CfxRenderHandler.OnScrollOffsetChanged"/> callback.
+            /// </summary>
+            public double Y {
+                get {
+                    CheckAccess();
+                    return m_y;
+                }
+            }
 
             public override string ToString() {
-                return String.Format("Browser={{{0}}}", Browser);
+                return String.Format("Browser={{{0}}}, X={{{1}}}, Y={{{2}}}", Browser, X, Y);
             }
         }
 

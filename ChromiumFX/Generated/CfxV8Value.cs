@@ -138,9 +138,9 @@ namespace Chromium {
 
         /// <summary>
         /// Create a new CfxV8Value object of type Date. This function should only be
-        /// called from within the scope of a CfxV8ContextHandler, CfxV8Handler or
-        /// CfxV8Accessor callback, or in combination with calling enter() and exit()
-        /// on a stored CfxV8Context reference.
+        /// called from within the scope of a CfxRenderProcessHandler,
+        /// CfxV8Handler or CfxV8Accessor callback, or in combination with calling
+        /// enter() and exit() on a stored CfxV8Context reference.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -167,8 +167,8 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxV8Value object of type object with optional accessor. This
         /// function should only be called from within the scope of a
-        /// CfxV8ContextHandler, CfxV8Handler or CfxV8Accessor callback, or in
-        /// combination with calling enter() and exit() on a stored CfxV8Context
+        /// CfxRenderProcessHandler, CfxV8Handler or CfxV8Accessor callback,
+        /// or in combination with calling enter() and exit() on a stored CfxV8Context
         /// reference.
         /// </summary>
         /// <remarks>
@@ -182,9 +182,10 @@ namespace Chromium {
         /// <summary>
         /// Create a new CfxV8Value object of type array with the specified |length|.
         /// If |length| is negative the returned array will have length 0. This function
-        /// should only be called from within the scope of a CfxV8ContextHandler,
-        /// CfxV8Handler or CfxV8Accessor callback, or in combination with calling
-        /// enter() and exit() on a stored CfxV8Context reference.
+        /// should only be called from within the scope of a
+        /// CfxRenderProcessHandler, CfxV8Handler or CfxV8Accessor callback,
+        /// or in combination with calling enter() and exit() on a stored CfxV8Context
+        /// reference.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -196,9 +197,9 @@ namespace Chromium {
 
         /// <summary>
         /// Create a new CfxV8Value object of type function. This function should only
-        /// be called from within the scope of a CfxV8ContextHandler, CfxV8Handler
-        /// or CfxV8Accessor callback, or in combination with calling enter() and
-        /// exit() on a stored CfxV8Context reference.
+        /// be called from within the scope of a CfxRenderProcessHandler,
+        /// CfxV8Handler or CfxV8Accessor callback, or in combination with calling
+        /// enter() and exit() on a stored CfxV8Context reference.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

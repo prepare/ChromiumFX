@@ -253,6 +253,24 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
+        /// Returns the globally unique identifier for this request or 0 if not
+        /// specified. Can be used by CfrRequestHandler implementations in the
+        /// browser process to track a single request across multiple callbacks.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
+        public ulong Identifier {
+            get {
+                var call = new CfxRequestGetIdentifierRenderProcessCall();
+                call.self = CfrObject.Unwrap(this);
+                call.Execute(remoteRuntime.connection);
+                return call.__retval;
+            }
+        }
+
+        /// <summary>
         /// Get the header values.
         /// </summary>
         /// <remarks>

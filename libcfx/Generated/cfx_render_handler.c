@@ -177,10 +177,10 @@ void CEF_CALLBACK cfx_render_handler_update_drag_cursor(cef_render_handler_t* se
 
 // on_scroll_offset_changed
 
-void (CEF_CALLBACK *cfx_render_handler_on_scroll_offset_changed_callback)(gc_handle_t self, cef_browser_t* browser);
+void (CEF_CALLBACK *cfx_render_handler_on_scroll_offset_changed_callback)(gc_handle_t self, cef_browser_t* browser, double x, double y);
 
-void CEF_CALLBACK cfx_render_handler_on_scroll_offset_changed(cef_render_handler_t* self, cef_browser_t* browser) {
-    cfx_render_handler_on_scroll_offset_changed_callback(((cfx_render_handler_t*)self)->gc_handle, browser);
+void CEF_CALLBACK cfx_render_handler_on_scroll_offset_changed(cef_render_handler_t* self, cef_browser_t* browser, double x, double y) {
+    cfx_render_handler_on_scroll_offset_changed_callback(((cfx_render_handler_t*)self)->gc_handle, browser, x, y);
 }
 
 
@@ -238,7 +238,7 @@ static void cfx_render_handler_set_managed_callback(cef_render_handler_t* self, 
         break;
     case 10:
         if(callback && !cfx_render_handler_on_scroll_offset_changed_callback)
-            cfx_render_handler_on_scroll_offset_changed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) callback;
+            cfx_render_handler_on_scroll_offset_changed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, double x, double y)) callback;
         self->on_scroll_offset_changed = callback ? cfx_render_handler_on_scroll_offset_changed : 0;
         break;
     }

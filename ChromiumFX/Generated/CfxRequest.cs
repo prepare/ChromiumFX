@@ -218,6 +218,21 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Returns the globally unique identifier for this request or 0 if not
+        /// specified. Can be used by CfxRequestHandler implementations in the
+        /// browser process to track a single request across multiple callbacks.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
+        public ulong Identifier {
+            get {
+                return CfxApi.cfx_request_get_identifier(NativePtr);
+            }
+        }
+
+        /// <summary>
         /// Get the header values.
         /// </summary>
         /// <remarks>

@@ -44,6 +44,16 @@ static void cfx_download_item_callback_cancel(cef_download_item_callback_t* self
     self->cancel(self);
 }
 
+// pause
+static void cfx_download_item_callback_pause(cef_download_item_callback_t* self) {
+    self->pause(self);
+}
+
+// resume
+static void cfx_download_item_callback_resume(cef_download_item_callback_t* self) {
+    self->resume(self);
+}
+
 
 #ifdef __cplusplus
 } // extern "C"

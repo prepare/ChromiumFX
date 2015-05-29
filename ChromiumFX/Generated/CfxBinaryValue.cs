@@ -79,8 +79,10 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Returns true (1) if this object is valid. Do not call any other functions
-        /// if this function returns false (0).
+        /// Returns true (1) if this object is valid. This object may become invalid if
+        /// the underlying data is owned by another object (e.g. list or dictionary)
+        /// and that other object is then modified or destroyed. Do not call any other
+        /// functions if this function returns false (0).
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -116,6 +118,30 @@ namespace Chromium {
             get {
                 return CfxApi.cfx_binary_value_get_size(NativePtr);
             }
+        }
+
+        /// <summary>
+        /// Returns true (1) if this object and |that| object have the same underlying
+        /// data.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
+        public bool IsSame(CfxBinaryValue that) {
+            return 0 != CfxApi.cfx_binary_value_is_same(NativePtr, CfxBinaryValue.Unwrap(that));
+        }
+
+        /// <summary>
+        /// Returns true (1) if this object and |that| object have an equivalent
+        /// underlying value but are not necessarily the same object.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
+        public bool IsEqual(CfxBinaryValue that) {
+            return 0 != CfxApi.cfx_binary_value_is_equal(NativePtr, CfxBinaryValue.Unwrap(that));
         }
 
         /// <summary>

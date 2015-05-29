@@ -49,7 +49,7 @@ namespace Chromium {
         }
 
 
-        private uint color;
+        internal uint color;
 
         /// <summary>
         /// Return an CfxColor with the specified value.

@@ -31,7 +31,7 @@
 // Generated file. Do not edit.
 
 
-// cef_quota_callback
+// cef_sslinfo
 
 #ifdef __cplusplus
 extern "C" {
@@ -39,14 +39,41 @@ extern "C" {
 
 // cef_base_t base
 
-// cont
-static void cfx_quota_callback_cont(cef_quota_callback_t* self, int allow) {
-    self->cont(self, allow);
+// get_subject
+static cef_sslcert_principal_t* cfx_sslinfo_get_subject(cef_sslinfo_t* self) {
+    return self->get_subject(self);
 }
 
-// cancel
-static void cfx_quota_callback_cancel(cef_quota_callback_t* self) {
-    self->cancel(self);
+// get_issuer
+static cef_sslcert_principal_t* cfx_sslinfo_get_issuer(cef_sslinfo_t* self) {
+    return self->get_issuer(self);
+}
+
+// get_serial_number
+static cef_binary_value_t* cfx_sslinfo_get_serial_number(cef_sslinfo_t* self) {
+    return self->get_serial_number(self);
+}
+
+// get_valid_start
+static cef_time_t* cfx_sslinfo_get_valid_start(cef_sslinfo_t* self) {
+    cef_time_t __retval_tmp = self->get_valid_start(self);
+    return (cef_time_t*)cfx_copy_structure(&__retval_tmp, sizeof(cef_time_t));
+}
+
+// get_valid_expiry
+static cef_time_t* cfx_sslinfo_get_valid_expiry(cef_sslinfo_t* self) {
+    cef_time_t __retval_tmp = self->get_valid_expiry(self);
+    return (cef_time_t*)cfx_copy_structure(&__retval_tmp, sizeof(cef_time_t));
+}
+
+// get_derencoded
+static cef_binary_value_t* cfx_sslinfo_get_derencoded(cef_sslinfo_t* self) {
+    return self->get_derencoded(self);
+}
+
+// get_pemencoded
+static cef_binary_value_t* cfx_sslinfo_get_pemencoded(cef_sslinfo_t* self) {
+    return self->get_pemencoded(self);
 }
 
 

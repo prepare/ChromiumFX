@@ -104,11 +104,11 @@ static void cfx_browser_host_set_zoom_level(cef_browser_host_t* self, double zoo
 }
 
 // run_file_dialog
-static void cfx_browser_host_run_file_dialog(cef_browser_host_t* self, cef_file_dialog_mode_t mode, char16 *title_str, int title_length, char16 *default_file_name_str, int default_file_name_length, cef_string_list_t accept_types, cef_run_file_dialog_callback_t* callback) {
+static void cfx_browser_host_run_file_dialog(cef_browser_host_t* self, cef_file_dialog_mode_t mode, char16 *title_str, int title_length, char16 *default_file_path_str, int default_file_path_length, cef_string_list_t accept_filters, int selected_accept_filter, cef_run_file_dialog_callback_t* callback) {
     cef_string_t title = { title_str, title_length, 0 };
-    cef_string_t default_file_name = { default_file_name_str, default_file_name_length, 0 };
+    cef_string_t default_file_path = { default_file_path_str, default_file_path_length, 0 };
     if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
-    self->run_file_dialog(self, mode, &title, &default_file_name, accept_types, callback);
+    self->run_file_dialog(self, mode, &title, &default_file_path, accept_filters, selected_accept_filter, callback);
 }
 
 // start_download
