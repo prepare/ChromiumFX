@@ -59,32 +59,32 @@ namespace Chromium {
 
         private static object eventLock = new object();
 
-        // cont
+        // on_file_dialog_dismissed
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_run_file_dialog_callback_cont_delegate(IntPtr gcHandlePtr, IntPtr browser_host, IntPtr file_paths);
-        private static cfx_run_file_dialog_callback_cont_delegate cfx_run_file_dialog_callback_cont;
-        private static IntPtr cfx_run_file_dialog_callback_cont_ptr;
+        private delegate void cfx_run_file_dialog_callback_on_file_dialog_dismissed_delegate(IntPtr gcHandlePtr, int selected_accept_filter, IntPtr file_paths);
+        private static cfx_run_file_dialog_callback_on_file_dialog_dismissed_delegate cfx_run_file_dialog_callback_on_file_dialog_dismissed;
+        private static IntPtr cfx_run_file_dialog_callback_on_file_dialog_dismissed_ptr;
 
-        internal static void cont(IntPtr gcHandlePtr, IntPtr browser_host, IntPtr file_paths) {
+        internal static void on_file_dialog_dismissed(IntPtr gcHandlePtr, int selected_accept_filter, IntPtr file_paths) {
             var self = (CfxRunFileDialogCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 return;
             }
-            var e = new CfxRunFileDialogCallbackOnFileDialogDismissedEventArgs(browser_host, file_paths);
+            var e = new CfxRunFileDialogCallbackOnFileDialogDismissedEventArgs(selected_accept_filter, file_paths);
             var eventHandler = self.m_OnFileDialogDismissed;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_host_wrapped == null) CfxApi.cfx_release(e.m_browser_host);
         }
 
         internal CfxRunFileDialogCallback(IntPtr nativePtr) : base(nativePtr) {}
         public CfxRunFileDialogCallback() : base(CfxApi.cfx_run_file_dialog_callback_ctor) {}
 
         /// <summary>
-        /// Called asynchronously after the file dialog is dismissed. If the selection
-        /// was successful |FilePaths| will be a single value or a list of values
-        /// depending on the dialog mode. If the selection was cancelled |FilePaths|
-        /// will be NULL.
+        /// Called asynchronously after the file dialog is dismissed.
+        /// |SelectedAcceptFilter| is the 0-based index of the value selected from
+        /// the accept filters array passed to CfxBrowserHost.RunFileDialog.
+        /// |FilePaths| will be a single value or a list of values depending on the
+        /// dialog mode. If the selection was cancelled |FilePaths| will be NULL.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -94,11 +94,11 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnFileDialogDismissed == null) {
-                        if(cfx_run_file_dialog_callback_cont == null) {
-                            cfx_run_file_dialog_callback_cont = cont;
-                            cfx_run_file_dialog_callback_cont_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_run_file_dialog_callback_cont);
+                        if(cfx_run_file_dialog_callback_on_file_dialog_dismissed == null) {
+                            cfx_run_file_dialog_callback_on_file_dialog_dismissed = on_file_dialog_dismissed;
+                            cfx_run_file_dialog_callback_on_file_dialog_dismissed_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_run_file_dialog_callback_on_file_dialog_dismissed);
                         }
-                        CfxApi.cfx_run_file_dialog_callback_set_managed_callback(NativePtr, 0, cfx_run_file_dialog_callback_cont_ptr);
+                        CfxApi.cfx_run_file_dialog_callback_set_managed_callback(NativePtr, 0, cfx_run_file_dialog_callback_on_file_dialog_dismissed_ptr);
                     }
                     m_OnFileDialogDismissed += value;
                 }
@@ -128,10 +128,11 @@ namespace Chromium {
     namespace Event {
 
         /// <summary>
-        /// Called asynchronously after the file dialog is dismissed. If the selection
-        /// was successful |FilePaths| will be a single value or a list of values
-        /// depending on the dialog mode. If the selection was cancelled |FilePaths|
-        /// will be NULL.
+        /// Called asynchronously after the file dialog is dismissed.
+        /// |SelectedAcceptFilter| is the 0-based index of the value selected from
+        /// the accept filters array passed to CfxBrowserHost.RunFileDialog.
+        /// |FilePaths| will be a single value or a list of values depending on the
+        /// dialog mode. If the selection was cancelled |FilePaths| will be NULL.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -140,10 +141,11 @@ namespace Chromium {
         public delegate void CfxRunFileDialogCallbackOnFileDialogDismissedEventHandler(object sender, CfxRunFileDialogCallbackOnFileDialogDismissedEventArgs e);
 
         /// <summary>
-        /// Called asynchronously after the file dialog is dismissed. If the selection
-        /// was successful |FilePaths| will be a single value or a list of values
-        /// depending on the dialog mode. If the selection was cancelled |FilePaths|
-        /// will be NULL.
+        /// Called asynchronously after the file dialog is dismissed.
+        /// |SelectedAcceptFilter| is the 0-based index of the value selected from
+        /// the accept filters array passed to CfxBrowserHost.RunFileDialog.
+        /// |FilePaths| will be a single value or a list of values depending on the
+        /// dialog mode. If the selection was cancelled |FilePaths| will be NULL.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -151,23 +153,21 @@ namespace Chromium {
         /// </remarks>
         public class CfxRunFileDialogCallbackOnFileDialogDismissedEventArgs : CfxEventArgs {
 
-            internal IntPtr m_browser_host;
-            internal CfxBrowserHost m_browser_host_wrapped;
+            internal int m_selected_accept_filter;
             internal IntPtr m_file_paths;
 
-            internal CfxRunFileDialogCallbackOnFileDialogDismissedEventArgs(IntPtr browser_host, IntPtr file_paths) {
-                m_browser_host = browser_host;
+            internal CfxRunFileDialogCallbackOnFileDialogDismissedEventArgs(int selected_accept_filter, IntPtr file_paths) {
+                m_selected_accept_filter = selected_accept_filter;
                 m_file_paths = file_paths;
             }
 
             /// <summary>
-            /// Get the BrowserHost parameter for the <see cref="CfxRunFileDialogCallback.OnFileDialogDismissed"/> callback.
+            /// Get the SelectedAcceptFilter parameter for the <see cref="CfxRunFileDialogCallback.OnFileDialogDismissed"/> callback.
             /// </summary>
-            public CfxBrowserHost BrowserHost {
+            public int SelectedAcceptFilter {
                 get {
                     CheckAccess();
-                    if(m_browser_host_wrapped == null) m_browser_host_wrapped = CfxBrowserHost.Wrap(m_browser_host);
-                    return m_browser_host_wrapped;
+                    return m_selected_accept_filter;
                 }
             }
             /// <summary>
@@ -181,7 +181,7 @@ namespace Chromium {
             }
 
             public override string ToString() {
-                return String.Format("BrowserHost={{{0}}}, FilePaths={{{1}}}", BrowserHost, FilePaths);
+                return String.Format("SelectedAcceptFilter={{{0}}}, FilePaths={{{1}}}", SelectedAcceptFilter, FilePaths);
             }
         }
 

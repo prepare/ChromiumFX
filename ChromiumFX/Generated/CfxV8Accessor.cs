@@ -38,9 +38,9 @@ namespace Chromium {
 
     /// <summary>
     /// Structure that should be implemented to handle V8 accessor calls. Accessor
-    /// identifiers are registered by calling CfxV8Value.SetValueByAccessor().
-    /// The functions of this structure will be called on the thread associated with
-    /// the V8 accessor.
+    /// identifiers are registered by calling CfxV8Value.SetValue(). The
+    /// functions of this structure will be called on the thread associated with the
+    /// V8 accessor.
     /// </summary>
     /// <remarks>
     /// See also the original CEF documentation in

@@ -89,6 +89,7 @@ Public Class ApiTypeBuilder
         AddType(New CefBasePtrType)
 
         AddType(New CefColorType)
+        AddType(New CefColorRefType)
 
         AddType(New BooleanInteger)
         AddType(New BooleanIntegerOutType)

@@ -67,11 +67,6 @@ static int cfx_begin_tracing(char16 *categories_str, int categories_length, cef_
     return cef_begin_tracing(&categories, callback);
 }
 
-// CEF_EXPORT int cef_build_revision();
-static int cfx_build_revision() {
-    return cef_build_revision();
-}
-
 // CEF_EXPORT int cef_clear_cross_origin_whitelist();
 static int cfx_clear_cross_origin_whitelist() {
     return cef_clear_cross_origin_whitelist();
@@ -186,6 +181,12 @@ static int64 cfx_now_from_system_trace_time() {
     return cef_now_from_system_trace_time();
 }
 
+// CEF_EXPORT int cef_parse_csscolor(const cef_string_t* string, int strict, cef_color_t* color);
+static int cfx_parse_csscolor(char16 *string_str, int string_length, int strict, uint32* color) {
+    cef_string_t string = { string_str, string_length, 0 };
+    return cef_parse_csscolor(&string, strict, color);
+}
+
 // CEF_EXPORT int cef_parse_url(const cef_string_t* url, cef_urlparts_t* parts);
 static int cfx_parse_url(char16 *url_str, int url_length, cef_urlparts_t* parts) {
     cef_string_t url = { url_str, url_length, 0 };
@@ -269,6 +270,18 @@ static void cfx_shutdown() {
 static void cfx_unregister_internal_web_plugin(char16 *path_str, int path_length) {
     cef_string_t path = { path_str, path_length, 0 };
     cef_unregister_internal_web_plugin(&path);
+}
+
+// CEF_EXPORT cef_string_userfree_t cef_uridecode(const cef_string_t* text, int convert_to_utf8, cef_uri_unescape_rule_t unescape_rule);
+static cef_string_userfree_t cfx_uridecode(char16 *text_str, int text_length, int convert_to_utf8, cef_uri_unescape_rule_t unescape_rule) {
+    cef_string_t text = { text_str, text_length, 0 };
+    return cef_uridecode(&text, convert_to_utf8, unescape_rule);
+}
+
+// CEF_EXPORT cef_string_userfree_t cef_uriencode(const cef_string_t* text, int use_plus);
+static cef_string_userfree_t cfx_uriencode(char16 *text_str, int text_length, int use_plus) {
+    cef_string_t text = { text_str, text_length, 0 };
+    return cef_uriencode(&text, use_plus);
 }
 
 // CEF_EXPORT int cef_version_info(int entry);

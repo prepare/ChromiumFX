@@ -35,19 +35,20 @@ using System;
 
 namespace Chromium {
     /// <summary>
-    /// A request context provides request handling for a set of related browser
-    /// objects. A request context is specified when creating a new browser object
-    /// via the CfxBrowserHost static factory functions. Browser objects with
-    /// different request contexts will never be hosted in the same render process.
-    /// Browser objects with the same request context may or may not be hosted in the
-    /// same render process depending on the process model. Browser objects created
-    /// indirectly via the JavaScript window.open function or targeted links will
-    /// share the same render process and the same request context as the source
-    /// browser. When running in single-process mode there is only a single render
-    /// process (the main process) and so all browsers created in single-process mode
-    /// will share the same request context. This will be the first request context
-    /// passed into a CfxBrowserHost static factory function and all other
-    /// request context objects will be ignored.
+    /// A request context provides request handling for a set of related browser or
+    /// URL request objects. A request context can be specified when creating a new
+    /// browser via the CfxBrowserHost static factory functions or when creating
+    /// a new URL request via the CfxUrlRequest static factory functions. Browser
+    /// objects with different request contexts will never be hosted in the same
+    /// render process. Browser objects with the same request context may or may not
+    /// be hosted in the same render process depending on the process model. Browser
+    /// objects created indirectly via the JavaScript window.open function or
+    /// targeted links will share the same render process and the same request
+    /// context as the source browser. When running in single-process mode there is
+    /// only a single render process (the main process) and so all browsers created
+    /// in single-process mode will share the same request context. This will be the
+    /// first request context passed into a CfxBrowserHost static factory
+    /// function and all other request context objects will be ignored.
     /// </summary>
     /// <remarks>
     /// See also the original CEF documentation in
@@ -90,18 +91,21 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Creates a new context object with the specified handler.
+        /// Creates a new context object with the specified |settings| and optional
+        /// |handler|.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
         /// </remarks>
-        public static CfxRequestContext CreateContext(CfxRequestContextHandler handler) {
-            return CfxRequestContext.Wrap(CfxApi.cfx_request_context_create_context(CfxRequestContextHandler.Unwrap(handler)));
+        public static CfxRequestContext CreateContext(CfxRequestContextSettings settings, CfxRequestContextHandler handler) {
+            return CfxRequestContext.Wrap(CfxApi.cfx_request_context_create_context(CfxRequestContextSettings.Unwrap(settings), CfxRequestContextHandler.Unwrap(handler)));
         }
 
         /// <summary>
-        /// Returns true (1) if this object is the global context.
+        /// Returns true (1) if this object is the global context. The global context
+        /// is used by default when creating a browser or URL request with a NULL
+        /// context argument.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -127,6 +131,20 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Returns the cache path for this object. If NULL an "incognito mode" in-
+        /// memory cache is being used.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
+        public string CachePath {
+            get {
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_request_context_get_cache_path(NativePtr));
+            }
+        }
+
+        /// <summary>
         /// Returns true (1) if this object is pointing to the same context as |that|
         /// object.
         /// </summary>
@@ -136,6 +154,72 @@ namespace Chromium {
         /// </remarks>
         public bool IsSame(CfxRequestContext other) {
             return 0 != CfxApi.cfx_request_context_is_same(NativePtr, CfxRequestContext.Unwrap(other));
+        }
+
+        /// <summary>
+        /// Returns true (1) if this object is sharing the same storage as |that|
+        /// object.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
+        public bool IsSharingWith(CfxRequestContext other) {
+            return 0 != CfxApi.cfx_request_context_is_sharing_with(NativePtr, CfxRequestContext.Unwrap(other));
+        }
+
+        /// <summary>
+        /// Returns the default cookie manager for this object. This will be the global
+        /// cookie manager if this object is the global request context. Otherwise,
+        /// this will be the default cookie manager used when this request context does
+        /// not receive a value via CfxRequestContextHandler.GetCookieManager().
+        /// If |callback| is non-NULL it will be executed asnychronously on the IO
+        /// thread after the manager's storage has been initialized.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
+        public CfxCookieManager GetDefaultCookieManager(CfxCompletionCallback callback) {
+            return CfxCookieManager.Wrap(CfxApi.cfx_request_context_get_default_cookie_manager(NativePtr, CfxCompletionCallback.Unwrap(callback)));
+        }
+
+        /// <summary>
+        /// Register a scheme handler factory for the specified |schemeName| and
+        /// optional |domainName|. An NULL |domainName| value for a standard scheme
+        /// will cause the factory to match all domain names. The |domainName| value
+        /// will be ignored for non-standard schemes. If |schemeName| is a built-in
+        /// scheme and no handler is returned by |factory| then the built-in scheme
+        /// handler factory will be called. If |schemeName| is a custom scheme then
+        /// you must also implement the CfxApp.OnRegisterCustomSchemes()
+        /// function in all processes. This function may be called multiple times to
+        /// change or remove the factory that matches the specified |schemeName| and
+        /// optional |domainName|. Returns false (0) if an error occurs. This function
+        /// may be called on any thread in the browser process.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
+        public bool RegisterSchemeHandlerFactory(string schemeName, string domainName, CfxSchemeHandlerFactory factory) {
+            var schemeName_pinned = new PinnedString(schemeName);
+            var domainName_pinned = new PinnedString(domainName);
+            var __retval = CfxApi.cfx_request_context_register_scheme_handler_factory(NativePtr, schemeName_pinned.Obj.PinnedPtr, schemeName_pinned.Length, domainName_pinned.Obj.PinnedPtr, domainName_pinned.Length, CfxSchemeHandlerFactory.Unwrap(factory));
+            schemeName_pinned.Obj.Free();
+            domainName_pinned.Obj.Free();
+            return 0 != __retval;
+        }
+
+        /// <summary>
+        /// Clear all registered scheme handler factories. Returns false (0) on error.
+        /// This function may be called on any thread in the browser process.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
+        public bool ClearSchemeHandlerFactories() {
+            return 0 != CfxApi.cfx_request_context_clear_scheme_handler_factories(NativePtr);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

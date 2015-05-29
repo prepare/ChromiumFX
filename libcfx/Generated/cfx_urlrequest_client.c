@@ -86,18 +86,18 @@ void CEF_CALLBACK cfx_urlrequest_client_on_request_complete(cef_urlrequest_clien
 
 // on_upload_progress
 
-void (CEF_CALLBACK *cfx_urlrequest_client_on_upload_progress_callback)(gc_handle_t self, cef_urlrequest_t* request, uint64 current, uint64 total);
+void (CEF_CALLBACK *cfx_urlrequest_client_on_upload_progress_callback)(gc_handle_t self, cef_urlrequest_t* request, int64 current, int64 total);
 
-void CEF_CALLBACK cfx_urlrequest_client_on_upload_progress(cef_urlrequest_client_t* self, cef_urlrequest_t* request, uint64 current, uint64 total) {
+void CEF_CALLBACK cfx_urlrequest_client_on_upload_progress(cef_urlrequest_client_t* self, cef_urlrequest_t* request, int64 current, int64 total) {
     cfx_urlrequest_client_on_upload_progress_callback(((cfx_urlrequest_client_t*)self)->gc_handle, request, current, total);
 }
 
 
 // on_download_progress
 
-void (CEF_CALLBACK *cfx_urlrequest_client_on_download_progress_callback)(gc_handle_t self, cef_urlrequest_t* request, uint64 current, uint64 total);
+void (CEF_CALLBACK *cfx_urlrequest_client_on_download_progress_callback)(gc_handle_t self, cef_urlrequest_t* request, int64 current, int64 total);
 
-void CEF_CALLBACK cfx_urlrequest_client_on_download_progress(cef_urlrequest_client_t* self, cef_urlrequest_t* request, uint64 current, uint64 total) {
+void CEF_CALLBACK cfx_urlrequest_client_on_download_progress(cef_urlrequest_client_t* self, cef_urlrequest_t* request, int64 current, int64 total) {
     cfx_urlrequest_client_on_download_progress_callback(((cfx_urlrequest_client_t*)self)->gc_handle, request, current, total);
 }
 
@@ -131,12 +131,12 @@ static void cfx_urlrequest_client_set_managed_callback(cef_urlrequest_client_t* 
         break;
     case 1:
         if(callback && !cfx_urlrequest_client_on_upload_progress_callback)
-            cfx_urlrequest_client_on_upload_progress_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_urlrequest_t* request, uint64 current, uint64 total)) callback;
+            cfx_urlrequest_client_on_upload_progress_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_urlrequest_t* request, int64 current, int64 total)) callback;
         self->on_upload_progress = callback ? cfx_urlrequest_client_on_upload_progress : 0;
         break;
     case 2:
         if(callback && !cfx_urlrequest_client_on_download_progress_callback)
-            cfx_urlrequest_client_on_download_progress_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_urlrequest_t* request, uint64 current, uint64 total)) callback;
+            cfx_urlrequest_client_on_download_progress_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_urlrequest_t* request, int64 current, int64 total)) callback;
         self->on_download_progress = callback ? cfx_urlrequest_client_on_download_progress : 0;
         break;
     case 3:

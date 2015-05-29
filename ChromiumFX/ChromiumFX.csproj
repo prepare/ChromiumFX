@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Generated\CfxAllowCertificateErrorCallback.cs" />
     <Compile Include="Generated\CfxApi.cs" />
     <Compile Include="Generated\CfxApiLoader.cs" />
     <Compile Include="Generated\CfxApp.cs" />
@@ -63,6 +62,7 @@
     <Compile Include="Generated\CfxCookieManager.cs" />
     <Compile Include="Generated\CfxCookieVisitor.cs" />
     <Compile Include="Generated\CfxCursorInfo.cs" />
+    <Compile Include="Generated\CfxDeleteCookiesCallback.cs" />
     <Compile Include="Generated\CfxDialogHandler.cs" />
     <Compile Include="Generated\CfxDictionaryValue.cs" />
     <Compile Include="Generated\CfxDisplayHandler.cs" />
@@ -77,6 +77,7 @@
     <Compile Include="Generated\CfxEndTracingCallback.cs" />
     <Compile Include="Generated\CfxEnums.cs" />
     <Compile Include="Generated\CfxFileDialogCallback.cs" />
+    <Compile Include="Generated\CfxFindHandler.cs" />
     <Compile Include="Generated\CfxFocusHandler.cs" />
     <Compile Include="Generated\CfxFrame.cs" />
     <Compile Include="Generated\CfxGeolocationCallback.cs" />
@@ -106,14 +107,15 @@
     <Compile Include="Generated\CfxPrintJobCallback.cs" />
     <Compile Include="Generated\CfxPrintSettings.cs" />
     <Compile Include="Generated\CfxProcessMessage.cs" />
-    <Compile Include="Generated\CfxQuotaCallback.cs" />
     <Compile Include="Generated\CfxReadHandler.cs" />
     <Compile Include="Generated\CfxRect.cs" />
     <Compile Include="Generated\CfxRenderHandler.cs" />
     <Compile Include="Generated\CfxRenderProcessHandler.cs" />
     <Compile Include="Generated\CfxRequest.cs" />
+    <Compile Include="Generated\CfxRequestCallback.cs" />
     <Compile Include="Generated\CfxRequestContext.cs" />
     <Compile Include="Generated\CfxRequestContextHandler.cs" />
+    <Compile Include="Generated\CfxRequestContextSettings.cs" />
     <Compile Include="Generated\CfxRequestHandler.cs" />
     <Compile Include="Generated\CfxResourceBundleHandler.cs" />
     <Compile Include="Generated\CfxResourceHandler.cs" />
@@ -123,8 +125,11 @@
     <Compile Include="Generated\CfxSchemeHandlerFactory.cs" />
     <Compile Include="Generated\CfxSchemeRegistrar.cs" />
     <Compile Include="Generated\CfxScreenInfo.cs" />
+    <Compile Include="Generated\CfxSetCookieCallback.cs" />
     <Compile Include="Generated\CfxSettings.cs" />
     <Compile Include="Generated\CfxSize.cs" />
+    <Compile Include="Generated\CfxSslcertPrincipal.cs" />
+    <Compile Include="Generated\CfxSslinfo.cs" />
     <Compile Include="Generated\CfxStreamReader.cs" />
     <Compile Include="Generated\CfxStreamWriter.cs" />
     <Compile Include="Generated\CfxStringVisitor.cs" />
@@ -141,6 +146,7 @@
     <Compile Include="Generated\CfxV8StackFrame.cs" />
     <Compile Include="Generated\CfxV8StackTrace.cs" />
     <Compile Include="Generated\CfxV8Value.cs" />
+    <Compile Include="Generated\CfxValue.cs" />
     <Compile Include="Generated\CfxWebPluginInfo.cs" />
     <Compile Include="Generated\CfxWebPluginInfoVisitor.cs" />
     <Compile Include="Generated\CfxWebPluginUnstableCallback.cs" />
@@ -180,6 +186,7 @@
     <Compile Include="Generated\Remote\CfrV8StackFrame.cs" />
     <Compile Include="Generated\Remote\CfrV8StackTrace.cs" />
     <Compile Include="Generated\Remote\CfrV8Value.cs" />
+    <Compile Include="Generated\Remote\CfrValue.cs" />
     <Compile Include="Generated\Remote\CfxAppRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxBinaryValueRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxBrowserRemoteCalls.cs" />
@@ -211,6 +218,7 @@
     <Compile Include="Generated\Remote\CfxV8StackFrameRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8StackTraceRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8ValueRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxValueRemoteCalls.cs" />
     <Compile Include="Generated\Remote\RemoteCallFactory.cs" />
     <Compile Include="Generated\Remote\RemoteCallId.cs" />
     <Compile Include="Source\CfxApi.cs" />

@@ -40,8 +40,8 @@ extern "C" {
 // cef_base_t base
 
 // cont
-static void cfx_file_dialog_callback_cont(cef_file_dialog_callback_t* self, cef_string_list_t file_paths) {
-    self->cont(self, file_paths);
+static void cfx_file_dialog_callback_cont(cef_file_dialog_callback_t* self, int selected_accept_filter, cef_string_list_t file_paths) {
+    self->cont(self, selected_accept_filter, file_paths);
 }
 
 // cancel

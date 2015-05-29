@@ -304,8 +304,9 @@ namespace Chromium {
         /// <summary>
         /// Controls whether JavaScript can be used to close windows that were not
         /// opened via JavaScript. JavaScript can still be used to close windows that
-        /// were opened via JavaScript. Also configurable using the
-        /// "disable-javascript-close-windows" command-line switch.
+        /// were opened via JavaScript or that have no back/forward history. Also
+        /// configurable using the "disable-javascript-close-windows" command-line
+        /// switch.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -652,6 +653,30 @@ namespace Chromium {
             }
             set {
                 CfxApi.cfx_browser_settings_set_background_color(nativePtrUnchecked, CfxColor.Unwrap(value));
+            }
+        }
+
+        /// <summary>
+        /// Comma delimited ordered list of language codes without any whitespace that
+        /// will be used in the "Accept-Language" HTTP header. May be set globally
+        /// using the CfxBrowserSettings.AcceptLanguageList value. If both values are
+        /// empty then "en-US,en" will be used.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
+        public string AcceptLanguageList {
+            get {
+                IntPtr value_str;
+                int value_length;
+                CfxApi.cfx_browser_settings_get_accept_language_list(nativePtrUnchecked, out value_str, out value_length);
+                return StringFunctions.PtrToStringUni(value_str, value_length);
+            }
+            set {
+                var value_pinned = new PinnedString(value);
+                CfxApi.cfx_browser_settings_set_accept_language_list(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
             }
         }
 

@@ -413,10 +413,30 @@ namespace Chromium {
         /// </summary>
         OpenMultiple,
         /// <summary>
+        /// Like Open, but selects a folder to open.
+        /// </summary>
+        OpenFolder,
+        /// <summary>
         /// Allows picking a nonexistent file, and prompts to overwrite if the file
         /// already exists.
         /// </summary>
-        Save
+        Save,
+        /// <summary>
+        /// General mask defining the bits used for the type values.
+        /// </summary>
+        TypeMask = unchecked((int)0xFF),
+        /// <summary>
+        /// Qualifiers.
+        /// Any of the type values above can be augmented by one or more qualifiers.
+        /// These qualifiers further define the dialog behavior.
+        /// Prompt to overwrite if the user selects an existing file with the Save
+        /// dialog.
+        /// </summary>
+        OverwritepromptFlag = unchecked((int)0x01000000),
+        /// <summary>
+        /// Do not display read-only files.
+        /// </summary>
+        HidereadOnlyFlag = unchecked((int)0x02000000)
     }
     /// <summary>
     /// Focus sources.
@@ -659,7 +679,17 @@ namespace Chromium {
         /// Path and filename of the module containing the CEF code (usually the libcef
         /// module).
         /// </summary>
-        FileModule
+        FileModule,
+        /// <summary>
+        /// "Local Settings\Application Data" directory under the user profile
+        /// directory on Windows.
+        /// </summary>
+        LocalAppData,
+        /// <summary>
+        /// "Application Data" directory under the user profile directory on Windows
+        /// and "~/Library/Application Support" directory on Mac OS X.
+        /// </summary>
+        UserData
     }
     /// <summary>
     /// Post data elements may represent either bytes or files.
@@ -763,6 +793,27 @@ namespace Chromium {
         /// Main resource of a service worker.
         /// </summary>
         ServiceWorker
+    }
+    /// <summary>
+    /// Return value types.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxReturnValue {
+        /// <summary>
+        /// Cancel immediately.
+        /// </summary>
+        Ancel = unchecked((int)0),
+        /// <summary>
+        /// Continue immediately.
+        /// </summary>
+        Ontinue,
+        /// <summary>
+        /// Continue asynchronously (usually via a callback).
+        /// </summary>
+        OntinueAsync
     }
     /// <summary>
     /// Represents the state of a setting.
@@ -953,6 +1004,54 @@ namespace Chromium {
         QualifierMask = unchecked((int)0xFFFFFF00)
     }
     /// <summary>
+    /// URI unescape rules passed to CfxURIDecode().
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxUriUnescapeRule {
+        /// <summary>
+        /// Don't unescape anything at all.
+        /// </summary>
+        None = unchecked((int)0),
+        /// <summary>
+        /// Don't unescape anything special, but all normal unescaping will happen.
+        /// This is a placeholder and can't be combined with other flags (since it's
+        /// just the absence of them). All other unescape rules imply "normal" in
+        /// addition to their special meaning. Things like escaped letters, digits,
+        /// and most symbols will get unescaped with this mode.
+        /// </summary>
+        Normal = unchecked((int)1),
+        /// <summary>
+        /// Convert %20 to spaces. In some places where we're showing URLs, we may
+        /// want this. In places where the URL may be copied and pasted out, then
+        /// you wouldn't want this since it might not be interpreted in one piece
+        /// by other applications.
+        /// </summary>
+        Spaces = unchecked((int)2),
+        /// <summary>
+        /// Unescapes various characters that will change the meaning of URLs,
+        /// including '%', '+', '&amp;', '/', '#'. If we unescaped these characters, the
+        /// resulting URL won't be the same as the source one. This flag is used when
+        /// generating final output like filenames for URLs where we won't be
+        /// interpreting as a URL and want to do as much unescaping as possible.
+        /// </summary>
+        UrlSpecialChars = unchecked((int)4),
+        /// <summary>
+        /// Unescapes control characters such as %01. This INCLUDES NULLs. This is
+        /// used for rare cases such as data: URL decoding where the result is binary
+        /// data. This flag also unescapes BiDi control characters.
+        /// DO NOT use CONTROL_CHARS if the URL is going to be displayed in the UI
+        /// for security reasons.
+        /// </summary>
+        ControlChars = unchecked((int)8),
+        /// <summary>
+        /// URL queries use "+" for space. This flag controls that replacement.
+        /// </summary>
+        ReplacePlusWithSpace = unchecked((int)16)
+    }
+    /// <summary>
     /// Flags used to customize the behavior of CfxURLRequest.
     /// </summary>
     /// <remarks>
@@ -1046,6 +1145,26 @@ namespace Chromium {
         Binary,
         Dictionary,
         List
+    }
+    /// <summary>
+    /// The manner in which a link click should be opened.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxWindowOpenDisposition {
+        Unknown,
+        SuppressOpen,
+        CurrentTab,
+        SingletonTab,
+        NewForegroundTab,
+        NewBackgroundTab,
+        NewPopup,
+        NewWindow,
+        SaveToDisk,
+        OffTheRecord,
+        IgnoreAction
     }
     /// <summary>
     /// Supported XML encoding types. The parser supports ASCII, ISO-8859-1, and

@@ -58,6 +58,18 @@ static int cfx_list_value_is_read_only(cef_list_value_t* self) {
     return self->is_read_only(self);
 }
 
+// is_same
+static int cfx_list_value_is_same(cef_list_value_t* self, cef_list_value_t* that) {
+    if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
+    return self->is_same(self, that);
+}
+
+// is_equal
+static int cfx_list_value_is_equal(cef_list_value_t* self, cef_list_value_t* that) {
+    if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
+    return self->is_equal(self, that);
+}
+
 // copy
 static cef_list_value_t* cfx_list_value_copy(cef_list_value_t* self) {
     return self->copy(self);
@@ -86,6 +98,11 @@ static int cfx_list_value_remove(cef_list_value_t* self, int index) {
 // get_type
 static cef_value_type_t cfx_list_value_get_type(cef_list_value_t* self, int index) {
     return self->get_type(self, index);
+}
+
+// get_value
+static cef_value_t* cfx_list_value_get_value(cef_list_value_t* self, int index) {
+    return self->get_value(self, index);
 }
 
 // get_bool
@@ -121,6 +138,12 @@ static cef_dictionary_value_t* cfx_list_value_get_dictionary(cef_list_value_t* s
 // get_list
 static cef_list_value_t* cfx_list_value_get_list(cef_list_value_t* self, int index) {
     return self->get_list(self, index);
+}
+
+// set_value
+static int cfx_list_value_set_value(cef_list_value_t* self, int index, cef_value_t* value) {
+    if(value) ((cef_base_t*)value)->add_ref((cef_base_t*)value);
+    return self->set_value(self, index, value);
 }
 
 // set_null

@@ -31,7 +31,7 @@
 // Generated file. Do not edit.
 
 
-// cef_allow_certificate_error_callback
+// cef_sslcert_principal
 
 #ifdef __cplusplus
 extern "C" {
@@ -39,9 +39,49 @@ extern "C" {
 
 // cef_base_t base
 
-// cont
-static void cfx_allow_certificate_error_callback_cont(cef_allow_certificate_error_callback_t* self, int allow) {
-    self->cont(self, allow);
+// get_display_name
+static cef_string_userfree_t cfx_sslcert_principal_get_display_name(cef_sslcert_principal_t* self) {
+    return self->get_display_name(self);
+}
+
+// get_common_name
+static cef_string_userfree_t cfx_sslcert_principal_get_common_name(cef_sslcert_principal_t* self) {
+    return self->get_common_name(self);
+}
+
+// get_locality_name
+static cef_string_userfree_t cfx_sslcert_principal_get_locality_name(cef_sslcert_principal_t* self) {
+    return self->get_locality_name(self);
+}
+
+// get_state_or_province_name
+static cef_string_userfree_t cfx_sslcert_principal_get_state_or_province_name(cef_sslcert_principal_t* self) {
+    return self->get_state_or_province_name(self);
+}
+
+// get_country_name
+static cef_string_userfree_t cfx_sslcert_principal_get_country_name(cef_sslcert_principal_t* self) {
+    return self->get_country_name(self);
+}
+
+// get_street_addresses
+static void cfx_sslcert_principal_get_street_addresses(cef_sslcert_principal_t* self, cef_string_list_t addresses) {
+    self->get_street_addresses(self, addresses);
+}
+
+// get_organization_names
+static void cfx_sslcert_principal_get_organization_names(cef_sslcert_principal_t* self, cef_string_list_t names) {
+    self->get_organization_names(self, names);
+}
+
+// get_organization_unit_names
+static void cfx_sslcert_principal_get_organization_unit_names(cef_sslcert_principal_t* self, cef_string_list_t names) {
+    self->get_organization_unit_names(self, names);
+}
+
+// get_domain_components
+static void cfx_sslcert_principal_get_domain_components(cef_sslcert_principal_t* self, cef_string_list_t components) {
+    self->get_domain_components(self, components);
 }
 
 

@@ -151,6 +151,72 @@ namespace Chromium.Remote {
         }
     }
 
+    internal class CfxListValueIsSameRenderProcessCall : RenderProcessCall {
+
+        internal CfxListValueIsSameRenderProcessCall()
+            : base(RemoteCallId.CfxListValueIsSameRenderProcessCall) {}
+
+        internal ulong self;
+        internal ulong that;
+        internal bool __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(self);
+            h.Write(that);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out self);
+            h.Read(out that);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var self_local = (CfxListValue)RemoteProxy.Unwrap(self);
+            __retval = self_local.IsSame((CfxListValue)RemoteProxy.Unwrap(that));
+        }
+    }
+
+    internal class CfxListValueIsEqualRenderProcessCall : RenderProcessCall {
+
+        internal CfxListValueIsEqualRenderProcessCall()
+            : base(RemoteCallId.CfxListValueIsEqualRenderProcessCall) {}
+
+        internal ulong self;
+        internal ulong that;
+        internal bool __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(self);
+            h.Write(that);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out self);
+            h.Read(out that);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var self_local = (CfxListValue)RemoteProxy.Unwrap(self);
+            __retval = self_local.IsEqual((CfxListValue)RemoteProxy.Unwrap(that));
+        }
+    }
+
     internal class CfxListValueCopyRenderProcessCall : RenderProcessCall {
 
         internal CfxListValueCopyRenderProcessCall()
@@ -337,6 +403,39 @@ namespace Chromium.Remote {
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxListValue)RemoteProxy.Unwrap(self);
             __retval = (int)self_local.GetType(index);
+        }
+    }
+
+    internal class CfxListValueGetValueRenderProcessCall : RenderProcessCall {
+
+        internal CfxListValueGetValueRenderProcessCall()
+            : base(RemoteCallId.CfxListValueGetValueRenderProcessCall) {}
+
+        internal ulong self;
+        internal int index;
+        internal ulong __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(self);
+            h.Write(index);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out self);
+            h.Read(out index);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var self_local = (CfxListValue)RemoteProxy.Unwrap(self);
+            __retval = RemoteProxy.Wrap(self_local.GetValue(index));
         }
     }
 
@@ -568,6 +667,42 @@ namespace Chromium.Remote {
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxListValue)RemoteProxy.Unwrap(self);
             __retval = RemoteProxy.Wrap(self_local.GetList(index));
+        }
+    }
+
+    internal class CfxListValueSetValueRenderProcessCall : RenderProcessCall {
+
+        internal CfxListValueSetValueRenderProcessCall()
+            : base(RemoteCallId.CfxListValueSetValueRenderProcessCall) {}
+
+        internal ulong self;
+        internal int index;
+        internal ulong value;
+        internal bool __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(self);
+            h.Write(index);
+            h.Write(value);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out self);
+            h.Read(out index);
+            h.Read(out value);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var self_local = (CfxListValue)RemoteProxy.Unwrap(self);
+            __retval = self_local.SetValue(index, (CfxValue)RemoteProxy.Unwrap(value));
         }
     }
 

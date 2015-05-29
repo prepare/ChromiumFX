@@ -159,19 +159,6 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Returns the selection start node.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
-        /// </remarks>
-        public CfxDomNode SelectionStartNode {
-            get {
-                return CfxDomNode.Wrap(CfxApi.cfx_domdocument_get_selection_start_node(NativePtr));
-            }
-        }
-
-        /// <summary>
         /// Returns the selection offset within the start node.
         /// </summary>
         /// <remarks>
@@ -181,19 +168,6 @@ namespace Chromium {
         public int SelectionStartOffset {
             get {
                 return CfxApi.cfx_domdocument_get_selection_start_offset(NativePtr);
-            }
-        }
-
-        /// <summary>
-        /// Returns the selection end node.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
-        /// </remarks>
-        public CfxDomNode SelectionEndNode {
-            get {
-                return CfxDomNode.Wrap(CfxApi.cfx_domdocument_get_selection_end_node(NativePtr));
             }
         }
 

@@ -261,20 +261,6 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Returns the hash of the misspelled word, if any, that the context menu was
-        /// invoked on.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
-        /// </remarks>
-        public int MisspellingHash {
-            get {
-                return CfxApi.cfx_context_menu_params_get_misspelling_hash(NativePtr);
-            }
-        }
-
-        /// <summary>
         /// Returns true (1) if the context menu was invoked on an editable node.
         /// </summary>
         /// <remarks>

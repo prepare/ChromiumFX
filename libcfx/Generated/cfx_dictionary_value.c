@@ -58,6 +58,18 @@ static int cfx_dictionary_value_is_read_only(cef_dictionary_value_t* self) {
     return self->is_read_only(self);
 }
 
+// is_same
+static int cfx_dictionary_value_is_same(cef_dictionary_value_t* self, cef_dictionary_value_t* that) {
+    if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
+    return self->is_same(self, that);
+}
+
+// is_equal
+static int cfx_dictionary_value_is_equal(cef_dictionary_value_t* self, cef_dictionary_value_t* that) {
+    if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
+    return self->is_equal(self, that);
+}
+
 // copy
 static cef_dictionary_value_t* cfx_dictionary_value_copy(cef_dictionary_value_t* self, int exclude_empty_children) {
     return self->copy(self, exclude_empty_children);
@@ -94,6 +106,12 @@ static int cfx_dictionary_value_remove(cef_dictionary_value_t* self, char16 *key
 static cef_value_type_t cfx_dictionary_value_get_type(cef_dictionary_value_t* self, char16 *key_str, int key_length) {
     cef_string_t key = { key_str, key_length, 0 };
     return self->get_type(self, &key);
+}
+
+// get_value
+static cef_value_t* cfx_dictionary_value_get_value(cef_dictionary_value_t* self, char16 *key_str, int key_length) {
+    cef_string_t key = { key_str, key_length, 0 };
+    return self->get_value(self, &key);
 }
 
 // get_bool
@@ -136,6 +154,13 @@ static cef_dictionary_value_t* cfx_dictionary_value_get_dictionary(cef_dictionar
 static cef_list_value_t* cfx_dictionary_value_get_list(cef_dictionary_value_t* self, char16 *key_str, int key_length) {
     cef_string_t key = { key_str, key_length, 0 };
     return self->get_list(self, &key);
+}
+
+// set_value
+static int cfx_dictionary_value_set_value(cef_dictionary_value_t* self, char16 *key_str, int key_length, cef_value_t* value) {
+    cef_string_t key = { key_str, key_length, 0 };
+    if(value) ((cef_base_t*)value)->add_ref((cef_base_t*)value);
+    return self->set_value(self, &key, value);
 }
 
 // set_null
