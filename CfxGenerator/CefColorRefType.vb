@@ -50,13 +50,25 @@ Public Class CefColorRefType
 
     Public Overrides ReadOnly Property PublicSymbol As String
         Get
-            Return "ref CfxColor"
+            Return "CfxColor"
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property PublicCallSignature(var As String) As String
+        Get
+            Return String.Concat("ref ", PublicSymbol, " ", var)
         End Get
     End Property
 
     Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
         Get
-            Return String.Format("{0}.color", var)
+            Return String.Format("ref {0}.color", var)
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property ProxyUnwrapExpression(var As String) As String
+        Get
+            Return String.Concat("ref ", var)
         End Get
     End Property
 

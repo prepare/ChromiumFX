@@ -423,7 +423,7 @@ namespace Chromium {
         /// </remarks>
         public static bool ParseCssColor(string @string, bool strict, ref CfxColor color) {
             var string_pinned = new PinnedString(@string);
-            var __retval = CfxApi.cfx_parse_csscolor(string_pinned.Obj.PinnedPtr, string_pinned.Length, strict ? 1 : 0, color.color);
+            var __retval = CfxApi.cfx_parse_csscolor(string_pinned.Obj.PinnedPtr, string_pinned.Length, strict ? 1 : 0, ref color.color);
             string_pinned.Obj.Free();
             return 0 != __retval;
         }
