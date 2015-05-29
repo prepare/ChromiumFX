@@ -1,4 +1,4 @@
-// Copyright (c) 2014 Marshall A. Greenblatt. All rights reserved.
+// Copyright (c) 2015 Marshall A. Greenblatt. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -204,13 +204,6 @@ typedef struct _cef_context_menu_params_t {
   ///
   // The resulting string must be freed by calling cef_string_userfree_free().
   cef_string_userfree_t (CEF_CALLBACK *get_misspelled_word)(
-      struct _cef_context_menu_params_t* self);
-
-  ///
-  // Returns the hash of the misspelled word, if any, that the context menu was
-  // invoked on.
-  ///
-  int (CEF_CALLBACK *get_misspelling_hash)(
       struct _cef_context_menu_params_t* self);
 
   ///
