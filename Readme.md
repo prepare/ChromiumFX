@@ -49,6 +49,11 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2357.1 ###
+
+* Fixed a race in the ipc layer introduced in 3.2171.15. Just as many concurrency bugs, this one becomes more visible under heavy usage. So basically 3.2171.15 and 
+3.2357.0 are broken, with a bug causing the render process to freeze under some circumstances.
+
 ### Version 3.2357.0 ###
 
 * Updated to CEF release branch 2357, the newest release branch considered production ready. If you update to this revision, you have to replace all CEF binary and resource files to the latest binary package found at [https://cefbuilds.com](). And you should test it with your use case to verify that there are no issues.
