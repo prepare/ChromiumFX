@@ -68,18 +68,21 @@ namespace Chromium.Remote {
             }
 
 
+            lock(waitLock) {
 
+                // The lock must begin here. Otherwise,
+                // there is a race between Wait and PulseAll
+                // causing this thread to wait forever
+                // under some circumstances.
 
-            localThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
-            connection.callStack.Push(this);
+                localThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+                connection.callStack.Push(this);
 
-            remoteThreadId = CfxRemoting.remoteThreadId;
+                remoteThreadId = CfxRemoting.remoteThreadId;
 
-            connection.EnqueueRequest(this);
+                connection.EnqueueRequest(this);
 
-            for(; ; ) {
-                RemoteCall reentryCall = null;
-                lock(waitLock) {
+                for(; ; ) {
 
                     if(!connection.ShuttingDown && connection.connectionLostException == null)
                         System.Threading.Monitor.Wait(waitLock);
@@ -94,11 +97,9 @@ namespace Chromium.Remote {
                         return;
                     }
 
-                    reentryCall = this.reentryCall;
-                    this.reentryCall = null;
-
+                    reentryCall.ExecutionThreadEntry(connection);
+                    reentryCall = null;
                 }
-                reentryCall.ExecutionThreadEntry(connection);
             }
         }
 
