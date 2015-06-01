@@ -67,8 +67,17 @@ namespace Chromium.Remote {
                 foreach(var stack in stacks.Values) {
                     if(stack.Count > 0) {
                         var call = stack.Peek();
-                        lock(call.waitLock) {
-                            System.Threading.Monitor.PulseAll(call.waitLock);
+                        // Lock with timeout: attempting a simple lock
+                        // could hang forever in the browser process
+                        // if the render process crashes or hangs.
+                        bool lockTaken = false;
+                        System.Threading.Monitor.TryEnter(call.waitLock, 100, ref lockTaken);
+                        if(lockTaken) {
+                            try {
+                                System.Threading.Monitor.PulseAll(call.waitLock);
+                            } finally {
+                                System.Threading.Monitor.Exit(call.waitLock);
+                            }
                         }
                     }
                 }
