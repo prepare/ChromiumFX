@@ -75,9 +75,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
         /// </remarks>
-        public CfxSslcertPrincipal Subject {
+        public CfxSslCertPrincipal Subject {
             get {
-                return CfxSslcertPrincipal.Wrap(CfxApi.cfx_sslinfo_get_subject(NativePtr));
+                return CfxSslCertPrincipal.Wrap(CfxApi.cfx_sslinfo_get_subject(NativePtr));
             }
         }
 
@@ -88,9 +88,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
         /// </remarks>
-        public CfxSslcertPrincipal Issuer {
+        public CfxSslCertPrincipal Issuer {
             get {
-                return CfxSslcertPrincipal.Wrap(CfxApi.cfx_sslinfo_get_issuer(NativePtr));
+                return CfxSslCertPrincipal.Wrap(CfxApi.cfx_sslinfo_get_issuer(NativePtr));
             }
         }
 
@@ -143,7 +143,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
         /// </remarks>
-        public CfxBinaryValue Derencoded {
+        public CfxBinaryValue DerEncoded {
             get {
                 return CfxBinaryValue.Wrap(CfxApi.cfx_sslinfo_get_derencoded(NativePtr));
             }
@@ -156,7 +156,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
         /// </remarks>
-        public CfxBinaryValue Pemencoded {
+        public CfxBinaryValue PemEncoded {
             get {
                 return CfxBinaryValue.Wrap(CfxApi.cfx_sslinfo_get_pemencoded(NativePtr));
             }

@@ -41,20 +41,20 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
     /// </remarks>
-    public class CfxSslcertPrincipal : CfxBase {
+    public class CfxSslCertPrincipal : CfxBase {
 
-        static CfxSslcertPrincipal () {
-            CfxApiLoader.LoadCfxSslcertPrincipalApi();
+        static CfxSslCertPrincipal () {
+            CfxApiLoader.LoadCfxSslCertPrincipalApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();
 
-        internal static CfxSslcertPrincipal Wrap(IntPtr nativePtr) {
+        internal static CfxSslCertPrincipal Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
-                var wrapper = (CfxSslcertPrincipal)weakCache.Get(nativePtr);
+                var wrapper = (CfxSslCertPrincipal)weakCache.Get(nativePtr);
                 if(wrapper == null) {
-                    wrapper = new CfxSslcertPrincipal(nativePtr);
+                    wrapper = new CfxSslCertPrincipal(nativePtr);
                     weakCache.Add(wrapper);
                 } else {
                     CfxApi.cfx_release(nativePtr);
@@ -64,7 +64,7 @@ namespace Chromium {
         }
 
 
-        internal CfxSslcertPrincipal(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxSslCertPrincipal(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
         /// Returns a name that can be used to represent the issuer.  It tries in this

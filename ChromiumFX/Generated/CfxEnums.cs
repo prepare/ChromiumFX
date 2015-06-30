@@ -481,6 +481,56 @@ namespace Chromium {
         Prompt
     }
     /// <summary>
+    /// Error codes that can be returned from CfxParseJSONAndReturnError.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxJsonParserError {
+        NoError = unchecked((int)0),
+        InvalidEscape,
+        SyntaxError,
+        UnexpectedToken,
+        TrailingComma,
+        TooMuchNesting,
+        UnexpectedDataAfterRoot,
+        UnsupportedEncoding,
+        UnquotedDictionaryKey,
+        ParseErrorCount
+    }
+    /// <summary>
+    /// Options that can be passed to CfxParseJSON.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxJsonParserOptions {
+        /// <summary>
+        /// Parses the input strictly according to RFC 4627. See comments in Chromium's
+        /// base/json/json_reader.h file for known limitations/deviations from the RFC.
+        /// </summary>
+        Rfc = unchecked((int)0),
+        AllowTrailingCommas = unchecked((int)1 << 0)
+    }
+    /// <summary>
+    /// Options that can be passed to CfxWriteJSON.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxJsonWriterOptions {
+        /// <summary>
+        /// Default behavior.
+        /// </summary>
+        Default = unchecked((int)0),
+        OmitBinaryValues = unchecked((int)1 << 0),
+        OmitDoubleTypePreservation = unchecked((int)1 << 1),
+        PrettyPrint = unchecked((int)1 << 2)
+    }
+    /// <summary>
     /// Key event types.
     /// </summary>
     /// <remarks>

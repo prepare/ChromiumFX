@@ -429,6 +429,45 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Parses the specified |jsonString| and returns a dictionary or list
+        /// representation. If JSON parsing fails this function returns NULL.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
+        /// </remarks>
+        public static CfxValue ParseJson(string jsonString, CfxJsonParserOptions options) {
+            var jsonString_pinned = new PinnedString(jsonString);
+            var __retval = CfxApi.cfx_parse_json(jsonString_pinned.Obj.PinnedPtr, jsonString_pinned.Length, options);
+            jsonString_pinned.Obj.Free();
+            return CfxValue.Wrap(__retval);
+        }
+
+        /// <summary>
+        /// Parses the specified |jsonString| and returns a dictionary or list
+        /// representation. If JSON parsing fails this function returns NULL and
+        /// populates |errorCodeOut| and |errorMsgOut| with an error code and a
+        /// formatted error message respectively.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
+        /// </remarks>
+        public static CfxValue ParseJsonAndReturnError(string jsonString, CfxJsonParserOptions options, out CfxJsonParserError errorCodeOut, ref string errorMsgOut) {
+            var jsonString_pinned = new PinnedString(jsonString);
+            var errorMsgOut_pinned = new PinnedString(errorMsgOut);
+            IntPtr errorMsgOut_str = errorMsgOut_pinned.Obj.PinnedPtr;
+            int errorMsgOut_length = errorMsgOut_pinned.Length;
+            var __retval = CfxApi.cfx_parse_jsonand_return_error(jsonString_pinned.Obj.PinnedPtr, jsonString_pinned.Length, options, out errorCodeOut, ref errorMsgOut_str, ref errorMsgOut_length);
+            jsonString_pinned.Obj.Free();
+            if(errorMsgOut_str != errorMsgOut_pinned.Obj.PinnedPtr) {
+                errorMsgOut = System.Runtime.InteropServices.Marshal.PtrToStringUni(errorMsgOut_str, errorMsgOut_length);
+            }
+            errorMsgOut_pinned.Obj.Free();
+            return CfxValue.Wrap(__retval);
+        }
+
+        /// <summary>
         /// Parse the specified |url| into its component parts. Returns false (0) if the
         /// URL is NULL or invalid.
         /// </summary>
@@ -706,7 +745,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
         /// </remarks>
-        public static string Uridecode(string text, bool convertToUtf8, CfxUriUnescapeRule unescapeRule) {
+        public static string UriDecode(string text, bool convertToUtf8, CfxUriUnescapeRule unescapeRule) {
             var text_pinned = new PinnedString(text);
             var __retval = CfxApi.cfx_uridecode(text_pinned.Obj.PinnedPtr, text_pinned.Length, convertToUtf8 ? 1 : 0, unescapeRule);
             text_pinned.Obj.Free();
@@ -723,7 +762,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
         /// </remarks>
-        public static string Uriencode(string text, bool usePlus) {
+        public static string UriEncode(string text, bool usePlus) {
             var text_pinned = new PinnedString(text);
             var __retval = CfxApi.cfx_uriencode(text_pinned.Obj.PinnedPtr, text_pinned.Length, usePlus ? 1 : 0);
             text_pinned.Obj.Free();
@@ -758,6 +797,19 @@ namespace Chromium {
         /// </remarks>
         public static void VisitWebPluginInfo(CfxWebPluginInfoVisitor visitor) {
             CfxApi.cfx_visit_web_plugin_info(CfxWebPluginInfoVisitor.Unwrap(visitor));
+        }
+
+        /// <summary>
+        /// Generates a JSON string from the specified root |node| which should be a
+        /// dictionary or list value. Returns an NULL string on failure. This function
+        /// requires exclusive access to |node| including any underlying data.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
+        /// </remarks>
+        public static string WriteJson(CfxValue node, CfxJsonWriterOptions options) {
+            return StringFunctions.ConvertStringUserfree(CfxApi.cfx_write_json(CfxValue.Unwrap(node), options));
         }
 
         public class Linux {

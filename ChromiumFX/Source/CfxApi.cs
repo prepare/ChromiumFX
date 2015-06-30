@@ -155,7 +155,9 @@ namespace Chromium
                     case 1:
                         throw new CfxException("Unable to get native function cef_api_hash from libcef library");
                     case 2:
-                        throw new CfxException("API hash mismatch: incompatible libcef.dll");
+                        cfx_api_hash_delegate api_hash = (cfx_api_hash_delegate)LoadDelegate(loader, libcefPtr, "cef_api_hash", typeof(cfx_api_hash_delegate));
+                        var apiHash = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(api_hash(0));
+                        throw new CfxException("API hash mismatch: incompatible libcef.dll (" + apiHash + ")");
                 }
             }
 
