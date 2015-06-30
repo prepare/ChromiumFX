@@ -233,7 +233,13 @@ Public Class ApiTypeBuilder
             Stop
         End If
 
-        If t.IsCefStructType Then
+        If t.IsCefEnumType Then
+            If td.Indirection = "*" Then
+                t = New CefEnumOutType(t.AsCefEnumType())
+            Else
+                Stop
+            End If
+        ElseIf t.IsCefStructType Then
             If td.Indirection.Count(Function(c As Char) c.Equals("*"c)) = 1 Then
                 t = New CefStructPtrType(t.AsCefStructType, td.Indirection)
             ElseIf td.Indirection = "**" Then

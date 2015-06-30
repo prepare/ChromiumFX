@@ -64,6 +64,10 @@ Public Class CefEnumType
         comments = data.Comments
     End Sub
 
+    Protected Sub New(name As String)
+        MyBase.New(name)
+    End Sub
+
     Public Overrides ReadOnly Property OriginalSymbol As String
         Get
             Return Name & "_t"
