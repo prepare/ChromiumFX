@@ -56,6 +56,8 @@ static void (*cef_is_web_plugin_unstable_ptr)(const cef_string_t* path, cef_web_
 static int (*cef_launch_process_ptr)(cef_command_line_t* command_line);
 static int64 (*cef_now_from_system_trace_time_ptr)();
 static int (*cef_parse_csscolor_ptr)(const cef_string_t* string, int strict, cef_color_t* color);
+static cef_value_t* (*cef_parse_json_ptr)(const cef_string_t* json_string, cef_json_parser_options_t options);
+static cef_value_t* (*cef_parse_jsonand_return_error_ptr)(const cef_string_t* json_string, cef_json_parser_options_t options, cef_json_parser_error_t* error_code_out, cef_string_t* error_msg_out);
 static int (*cef_parse_url_ptr)(const cef_string_t* url, cef_urlparts_t* parts);
 static int (*cef_post_delayed_task_ptr)(cef_thread_id_t threadId, cef_task_t* task, int64 delay_ms);
 static int (*cef_post_task_ptr)(cef_thread_id_t threadId, cef_task_t* task);
@@ -74,6 +76,7 @@ static cef_string_userfree_t (*cef_uridecode_ptr)(const cef_string_t* text, int 
 static cef_string_userfree_t (*cef_uriencode_ptr)(const cef_string_t* text, int use_plus);
 static int (*cef_version_info_ptr)(int entry);
 static void (*cef_visit_web_plugin_info_ptr)(cef_web_plugin_info_visitor_t* visitor);
+static cef_string_userfree_t (*cef_write_json_ptr)(cef_value_t* node, cef_json_writer_options_t options);
 static cef_binary_value_t* (*cef_binary_value_create_ptr)(const void* data, size_t data_size);
 static int (*cef_browser_host_create_browser_ptr)(const cef_window_info_t* windowInfo, cef_client_t* client, const cef_string_t* url, const cef_browser_settings_t* settings, cef_request_context_t* request_context);
 static cef_browser_t* (*cef_browser_host_create_browser_sync_ptr)(const cef_window_info_t* windowInfo, cef_client_t* client, const cef_string_t* url, const cef_browser_settings_t* settings, cef_request_context_t* request_context);
@@ -168,6 +171,8 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_launch_process_ptr = (int (*)(cef_command_line_t*))cfx_platform_get_fptr(libcef, "cef_launch_process");
     cef_now_from_system_trace_time_ptr = (int64 (*)())cfx_platform_get_fptr(libcef, "cef_now_from_system_trace_time");
     cef_parse_csscolor_ptr = (int (*)(const cef_string_t*, int, cef_color_t*))cfx_platform_get_fptr(libcef, "cef_parse_csscolor");
+    cef_parse_json_ptr = (cef_value_t* (*)(const cef_string_t*, cef_json_parser_options_t))cfx_platform_get_fptr(libcef, "cef_parse_json");
+    cef_parse_jsonand_return_error_ptr = (cef_value_t* (*)(const cef_string_t*, cef_json_parser_options_t, cef_json_parser_error_t*, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_parse_jsonand_return_error");
     cef_parse_url_ptr = (int (*)(const cef_string_t*, cef_urlparts_t*))cfx_platform_get_fptr(libcef, "cef_parse_url");
     cef_post_delayed_task_ptr = (int (*)(cef_thread_id_t, cef_task_t*, int64))cfx_platform_get_fptr(libcef, "cef_post_delayed_task");
     cef_post_task_ptr = (int (*)(cef_thread_id_t, cef_task_t*))cfx_platform_get_fptr(libcef, "cef_post_task");
@@ -186,6 +191,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_uriencode_ptr = (cef_string_userfree_t (*)(const cef_string_t*, int))cfx_platform_get_fptr(libcef, "cef_uriencode");
     cef_version_info_ptr = (int (*)(int))cfx_platform_get_fptr(libcef, "cef_version_info");
     cef_visit_web_plugin_info_ptr = (void (*)(cef_web_plugin_info_visitor_t*))cfx_platform_get_fptr(libcef, "cef_visit_web_plugin_info");
+    cef_write_json_ptr = (cef_string_userfree_t (*)(cef_value_t*, cef_json_writer_options_t))cfx_platform_get_fptr(libcef, "cef_write_json");
     cef_binary_value_create_ptr = (cef_binary_value_t* (*)(const void*, size_t))cfx_platform_get_fptr(libcef, "cef_binary_value_create");
     cef_browser_host_create_browser_ptr = (int (*)(const cef_window_info_t*, cef_client_t*, const cef_string_t*, const cef_browser_settings_t*, cef_request_context_t*))cfx_platform_get_fptr(libcef, "cef_browser_host_create_browser");
     cef_browser_host_create_browser_sync_ptr = (cef_browser_t* (*)(const cef_window_info_t*, cef_client_t*, const cef_string_t*, const cef_browser_settings_t*, cef_request_context_t*))cfx_platform_get_fptr(libcef, "cef_browser_host_create_browser_sync");
@@ -281,6 +287,8 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_launch_process cef_launch_process_ptr
 #define cef_now_from_system_trace_time cef_now_from_system_trace_time_ptr
 #define cef_parse_csscolor cef_parse_csscolor_ptr
+#define cef_parse_json cef_parse_json_ptr
+#define cef_parse_jsonand_return_error cef_parse_jsonand_return_error_ptr
 #define cef_parse_url cef_parse_url_ptr
 #define cef_post_delayed_task cef_post_delayed_task_ptr
 #define cef_post_task cef_post_task_ptr
@@ -299,6 +307,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_uriencode cef_uriencode_ptr
 #define cef_version_info cef_version_info_ptr
 #define cef_visit_web_plugin_info cef_visit_web_plugin_info_ptr
+#define cef_write_json cef_write_json_ptr
 #define cef_binary_value_create cef_binary_value_create_ptr
 #define cef_browser_host_create_browser cef_browser_host_create_browser_ptr
 #define cef_browser_host_create_browser_sync cef_browser_host_create_browser_sync_ptr

@@ -329,46 +329,5 @@ namespace Chromium.Remote {
             return call.__retval;
         }
 
-        /// <summary>
-        /// Unescapes |text| and returns the result. Unescaping consists of looking for
-        /// the exact pattern "%XX" where each X is a hex digit and converting to the
-        /// character with the numerical value of those digits (e.g. "i%20=%203%3b"
-        /// unescapes to "i = 3;"). If |convertToUtf8| is true (1) this function will
-        /// attempt to interpret the initial decoded result as UTF-8. If the result is
-        /// convertable into UTF-8 it will be returned as converted. Otherwise the
-        /// initial decoded result will be returned.  The |unescapeRule| parameter
-        /// supports further customization the decoding process.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
-        /// </remarks>
-        public string Uridecode(string text, bool convertToUtf8, CfxUriUnescapeRule unescapeRule) {
-            var call = new CfxRuntimeUridecodeRenderProcessCall();
-            call.text = text;
-            call.convertToUtf8 = convertToUtf8;
-            call.unescapeRule = (int)unescapeRule;
-            call.Execute(connection);
-            return call.__retval;
-        }
-
-        /// <summary>
-        /// Escapes characters in |text| which are unsuitable for use as a query
-        /// parameter value. Everything except alphanumerics and -_.!~*'() will be
-        /// converted to "%XX". If |usePlus| is true (1) spaces will change to "+". The
-        /// result is basically the same as encodeURIComponent in Javacript.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
-        /// </remarks>
-        public string Uriencode(string text, bool usePlus) {
-            var call = new CfxRuntimeUriencodeRenderProcessCall();
-            call.text = text;
-            call.usePlus = usePlus;
-            call.Execute(connection);
-            return call.__retval;
-        }
-
     }
 }

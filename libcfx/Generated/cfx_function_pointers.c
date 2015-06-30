@@ -31,7 +31,7 @@
 // Generated file. Do not edit.
 
 
-static void* cfx_function_pointers[1215] =  {
+static void* cfx_function_pointers[1224] =  {
     (void*)cfx_add_cross_origin_whitelist_entry,
     (void*)cfx_add_web_plugin_directory,
     (void*)cfx_add_web_plugin_path,
@@ -55,6 +55,8 @@ static void* cfx_function_pointers[1215] =  {
     (void*)cfx_launch_process,
     (void*)cfx_now_from_system_trace_time,
     (void*)cfx_parse_csscolor,
+    (void*)cfx_parse_json,
+    (void*)cfx_parse_jsonand_return_error,
     (void*)cfx_parse_url,
     (void*)cfx_post_delayed_task,
     (void*)cfx_post_task,
@@ -73,6 +75,7 @@ static void* cfx_function_pointers[1215] =  {
     (void*)cfx_uriencode,
     (void*)cfx_version_info,
     (void*)cfx_visit_web_plugin_info,
+    (void*)cfx_write_json,
     (void*)cfx_app_ctor,
     (void*)cfx_app_get_gc_handle,
     (void*)cfx_app_set_managed_callback,
@@ -449,6 +452,12 @@ static void* cfx_function_pointers[1215] =  {
     (void*)cfx_drag_handler_ctor,
     (void*)cfx_drag_handler_get_gc_handle,
     (void*)cfx_drag_handler_set_managed_callback,
+    (void*)cfx_draggable_region_ctor,
+    (void*)cfx_draggable_region_dtor,
+    (void*)cfx_draggable_region_set_bounds,
+    (void*)cfx_draggable_region_get_bounds,
+    (void*)cfx_draggable_region_set_draggable,
+    (void*)cfx_draggable_region_get_draggable,
     (void*)cfx_end_tracing_callback_ctor,
     (void*)cfx_end_tracing_callback_get_gc_handle,
     (void*)cfx_end_tracing_callback_set_managed_callback,
