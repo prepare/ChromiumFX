@@ -12,3 +12,4 @@ cef_screen_info
 cef_cursor_info
 cef_point
 cef_page_range
+cef_draggable_region
