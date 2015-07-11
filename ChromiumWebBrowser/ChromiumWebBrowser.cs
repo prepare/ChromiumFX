@@ -458,18 +458,16 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public Object RenderThreadInvoke(Delegate method, params Object[] args) {
             object retval = null;
-            int id = CfxRemoting.RemoteThreadId;
-            Invoke((MethodInvoker)(() => { retval = RenderThreadInvokeInternal(method, args, id); }));
+            int remoteThreadId = CfxRemoting.RemoteThreadId;
+            Invoke((MethodInvoker)(() => { 
+                CfxRemoting.SetThreadAffinity(remoteThreadId);
+                try {
+                    retval = method.DynamicInvoke(args);
+                } finally {
+                    CfxRemoting.SetThreadAffinity(0);
+                }
+            }));
             return retval;
-        }
-
-        private Object RenderThreadInvokeInternal(Delegate method, Object[] args, int remoteThreadId) {
-            CfxRemoting.SetThreadAffinity(remoteThreadId);
-            try {
-                return method.DynamicInvoke(args);
-            } finally {
-                CfxRemoting.SetThreadAffinity(0);
-            }
         }
 
         /// <summary>
