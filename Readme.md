@@ -49,6 +49,9 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2357.1 Win32 ###
+- This is an update based on CEF 3.2357.1280. There was an API change between the previous 3.2357.1 release (based on CEF 3.2357.1274) and this one, and there is no 64-bit build available at cefbuilds.com - 64-bit applications have to stick with the previous version.
+
 ### Version 3.2357.1 ###
 
 * Fixed a race in the ipc layer introduced in 3.2171.15. Just as many concurrency bugs, this one becomes more visible under heavy usage. So basically 3.2171.15 and 
