@@ -472,6 +472,26 @@ namespace Chromium.WebBrowser {
             }
         }
 
+        /// <summary>
+        /// Special Invoke for framework callbacks from the render process.
+        /// Maintains affinity with the render process thread.
+        /// Use this instead of invoke when the following conditions are meat:
+        /// 1) The current thread is executing in the scope of a framework
+        ///    callback event from the render process (ex. CfrTask.Execute).
+        /// 2) You need to Invoke on the webbrowser control and
+        /// 3) The invoked code needs to call into the render process.
+        /// </summary>
+        public void RenderThreadInvoke(MethodInvoker method) {
+            int remoteThreadId = CfxRemoting.RemoteThreadId;
+            Invoke((MethodInvoker)(() => {
+                CfxRemoting.SetThreadAffinity(remoteThreadId);
+                try {
+                    method.Invoke();
+                } finally {
+                    CfxRemoting.SetThreadAffinity(0);
+                }
+            }));
+        }
 
         /// <summary>
         /// Evaluate a string of javascript code in the browser's main frame.
