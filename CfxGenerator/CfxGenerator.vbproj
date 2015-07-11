@@ -105,6 +105,7 @@
     <Compile Include="ApiTypes\WrapperOnly\WrapperArrayType.vb" />
     <Compile Include="AssemblyResources.vb" />
     <Compile Include="CefColorRefType.vb" />
+    <Compile Include="ApiTypes\CefEnumOutType.vb" />
     <Compile Include="CefPlatform.vb" />
     <Compile Include="CfxClassBuilder.vb" />
     <Compile Include="CustomSignatures\GetPageRangesSignature.vb" />
