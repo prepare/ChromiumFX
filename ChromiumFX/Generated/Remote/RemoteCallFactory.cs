@@ -50,8 +50,6 @@ namespace Chromium.Remote {
             () => { return new CfxRuntimePostTaskRenderProcessCall(); },
             () => { return new CfxRuntimeRegisterExtensionRenderProcessCall(); },
             () => { return new CfxRuntimeRemoveCrossOriginWhitelistEntryRenderProcessCall(); },
-            () => { return new CfxRuntimeUridecodeRenderProcessCall(); },
-            () => { return new CfxRuntimeUriencodeRenderProcessCall(); },
             () => { return new CfxAppCtorRenderProcessCall(); },
             () => { return new CfxOnBeforeCommandLineProcessingBrowserProcessCall(); },
             () => { return new CfxOnBeforeCommandLineProcessingActivateRenderProcessCall(); },

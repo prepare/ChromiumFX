@@ -73,6 +73,7 @@
     <Compile Include="Generated\CfxDownloadItem.cs" />
     <Compile Include="Generated\CfxDownloadItemCallback.cs" />
     <Compile Include="Generated\CfxDragData.cs" />
+    <Compile Include="Generated\CfxDraggableRegion.cs" />
     <Compile Include="Generated\CfxDragHandler.cs" />
     <Compile Include="Generated\CfxEndTracingCallback.cs" />
     <Compile Include="Generated\CfxEnums.cs" />
@@ -128,7 +129,7 @@
     <Compile Include="Generated\CfxSetCookieCallback.cs" />
     <Compile Include="Generated\CfxSettings.cs" />
     <Compile Include="Generated\CfxSize.cs" />
-    <Compile Include="Generated\CfxSslcertPrincipal.cs" />
+    <Compile Include="Generated\CfxSslCertPrincipal.cs" />
     <Compile Include="Generated\CfxSslinfo.cs" />
     <Compile Include="Generated\CfxStreamReader.cs" />
     <Compile Include="Generated\CfxStreamWriter.cs" />

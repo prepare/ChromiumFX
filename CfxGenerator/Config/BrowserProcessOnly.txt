@@ -29,3 +29,8 @@ cef_app::get_browser_process_handler
 cef_browser::get_host
 cef_frame::view_source
 cef_get_xdisplay
+cef_parse_json
+cef_parse_jsonand_return_error
+cef_write_json
+cef_uridecode
+cef_uriencode

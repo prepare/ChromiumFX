@@ -187,6 +187,12 @@ skip_to_lower:
         name = name.Replace("oomout", "oomOut")
         name = name.Replace("oomin", "oomIn")
         name = name.Replace("Xdisplay", "XDisplay")
+        name = name.Replace("Sslcert", "SslCert")
+        name = name.Replace("Jsonand", "JsonAnd")
+        name = name.Replace("Jsonand", "JsonAnd")
+        name = name.Replace("decode", "Decode")
+        name = name.Replace("encode", "Encode")
+        
         name = name.Replace("ConText", "Context")
         name = name.Replace("DisAllowed", "Disallowed")
         name = name.Replace("ubMenu", "ubmenu")

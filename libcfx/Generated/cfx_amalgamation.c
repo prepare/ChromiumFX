@@ -62,6 +62,7 @@
 #include "cfx_download_item_callback.c"
 #include "cfx_drag_data.c"
 #include "cfx_drag_handler.c"
+#include "cfx_draggable_region.c"
 #include "cfx_end_tracing_callback.c"
 #include "cfx_file_dialog_callback.c"
 #include "cfx_find_handler.c"

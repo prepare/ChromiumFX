@@ -86,12 +86,26 @@ int CEF_CALLBACK cfx_drag_handler_on_drag_enter(cef_drag_handler_t* self, cef_br
 }
 
 
+// on_draggable_regions_changed
+
+void (CEF_CALLBACK *cfx_drag_handler_on_draggable_regions_changed_callback)(gc_handle_t self, cef_browser_t* browser, int regionsCount, cef_draggable_region_t const* regions);
+
+void CEF_CALLBACK cfx_drag_handler_on_draggable_regions_changed(cef_drag_handler_t* self, cef_browser_t* browser, size_t regionsCount, cef_draggable_region_t const* regions) {
+    cfx_drag_handler_on_draggable_regions_changed_callback(((cfx_drag_handler_t*)self)->gc_handle, browser, (int)(regionsCount), regions);
+}
+
+
 static void cfx_drag_handler_set_managed_callback(cef_drag_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_drag_handler_on_drag_enter_callback)
             cfx_drag_handler_on_drag_enter_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_drag_data_t* dragData, cef_drag_operations_mask_t mask)) callback;
         self->on_drag_enter = callback ? cfx_drag_handler_on_drag_enter : 0;
+        break;
+    case 1:
+        if(callback && !cfx_drag_handler_on_draggable_regions_changed_callback)
+            cfx_drag_handler_on_draggable_regions_changed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int regionsCount, cef_draggable_region_t const* regions)) callback;
+        self->on_draggable_regions_changed = callback ? cfx_drag_handler_on_draggable_regions_changed : 0;
         break;
     }
 }

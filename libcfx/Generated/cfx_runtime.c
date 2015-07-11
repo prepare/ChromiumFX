@@ -187,6 +187,21 @@ static int cfx_parse_csscolor(char16 *string_str, int string_length, int strict,
     return cef_parse_csscolor(&string, strict, color);
 }
 
+// CEF_EXPORT cef_value_t* cef_parse_json(const cef_string_t* json_string, cef_json_parser_options_t options);
+static cef_value_t* cfx_parse_json(char16 *json_string_str, int json_string_length, cef_json_parser_options_t options) {
+    cef_string_t json_string = { json_string_str, json_string_length, 0 };
+    return cef_parse_json(&json_string, options);
+}
+
+// CEF_EXPORT cef_value_t* cef_parse_jsonand_return_error(const cef_string_t* json_string, cef_json_parser_options_t options, cef_json_parser_error_t* error_code_out, cef_string_t* error_msg_out);
+static cef_value_t* cfx_parse_jsonand_return_error(char16 *json_string_str, int json_string_length, cef_json_parser_options_t options, cef_json_parser_error_t* error_code_out, char16 **error_msg_out_str, int *error_msg_out_length) {
+    cef_string_t json_string = { json_string_str, json_string_length, 0 };
+    cef_string_t error_msg_out = { *error_msg_out_str, *error_msg_out_length, 0 };
+    cef_value_t* __ret_val_ = cef_parse_jsonand_return_error(&json_string, options, error_code_out, &error_msg_out);
+    *error_msg_out_str = error_msg_out.str; *error_msg_out_length = (int)error_msg_out.length;
+    return __ret_val_;
+}
+
 // CEF_EXPORT int cef_parse_url(const cef_string_t* url, cef_urlparts_t* parts);
 static int cfx_parse_url(char16 *url_str, int url_length, cef_urlparts_t* parts) {
     cef_string_t url = { url_str, url_length, 0 };
@@ -293,6 +308,12 @@ static int cfx_version_info(int entry) {
 static void cfx_visit_web_plugin_info(cef_web_plugin_info_visitor_t* visitor) {
     if(visitor) ((cef_base_t*)visitor)->add_ref((cef_base_t*)visitor);
     cef_visit_web_plugin_info(visitor);
+}
+
+// CEF_EXPORT cef_string_userfree_t cef_write_json(cef_value_t* node, cef_json_writer_options_t options);
+static cef_string_userfree_t cfx_write_json(cef_value_t* node, cef_json_writer_options_t options) {
+    if(node) ((cef_base_t*)node)->add_ref((cef_base_t*)node);
+    return cef_write_json(node, options);
 }
 
 

@@ -132,6 +132,14 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate int cfx_parse_csscolor_delegate(IntPtr string_str, int string_length, int strict, ref uint color);
         public static cfx_parse_csscolor_delegate cfx_parse_csscolor;
+        // CEF_EXPORT cef_value_t* cef_parse_json(const cef_string_t* json_string, cef_json_parser_options_t options);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate IntPtr cfx_parse_json_delegate(IntPtr json_string_str, int json_string_length, CfxJsonParserOptions options);
+        public static cfx_parse_json_delegate cfx_parse_json;
+        // CEF_EXPORT cef_value_t* cef_parse_jsonand_return_error(const cef_string_t* json_string, cef_json_parser_options_t options, cef_json_parser_error_t* error_code_out, cef_string_t* error_msg_out);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate IntPtr cfx_parse_jsonand_return_error_delegate(IntPtr json_string_str, int json_string_length, CfxJsonParserOptions options, out CfxJsonParserError error_code_out, ref IntPtr error_msg_out_str, ref int error_msg_out_length);
+        public static cfx_parse_jsonand_return_error_delegate cfx_parse_jsonand_return_error;
         // CEF_EXPORT int cef_parse_url(const cef_string_t* url, cef_urlparts_t* parts);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate int cfx_parse_url_delegate(IntPtr url_str, int url_length, IntPtr parts);
@@ -204,6 +212,10 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_visit_web_plugin_info_delegate(IntPtr visitor);
         public static cfx_visit_web_plugin_info_delegate cfx_visit_web_plugin_info;
+        // CEF_EXPORT cef_string_userfree_t cef_write_json(cef_value_t* node, cef_json_writer_options_t options);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate IntPtr cfx_write_json_delegate(IntPtr node, CfxJsonWriterOptions options);
+        public static cfx_write_json_delegate cfx_write_json;
 
         // CEF_EXPORT cef_string_list_t cef_string_list_alloc();
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -2074,6 +2086,32 @@ namespace Chromium {
         public static cfx_ctor_with_gc_handle_delegate cfx_drag_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_drag_handler_get_gc_handle;
         public static cfx_set_callback_delegate cfx_drag_handler_set_managed_callback;
+
+
+        // CfxDraggableRegion
+
+        // static cef_draggable_region_t* cfx_draggable_region_ctor()
+        public static cfx_ctor_delegate cfx_draggable_region_ctor;
+        // static void cfx_draggable_region_dtor(cef_draggable_region_t* ptr)
+        public static cfx_dtor_delegate cfx_draggable_region_dtor;
+
+        // static void cfx_draggable_region_set_bounds(cef_draggable_region_t *self, cef_rect_t* bounds)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_draggable_region_set_bounds_delegate(IntPtr self, IntPtr bounds);
+        public static cfx_draggable_region_set_bounds_delegate cfx_draggable_region_set_bounds;
+        // static void cfx_draggable_region_get_bounds(cef_draggable_region_t *self, cef_rect_t** bounds)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_draggable_region_get_bounds_delegate(IntPtr self, out IntPtr bounds);
+        public static cfx_draggable_region_get_bounds_delegate cfx_draggable_region_get_bounds;
+
+        // static void cfx_draggable_region_set_draggable(cef_draggable_region_t *self, int draggable)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_draggable_region_set_draggable_delegate(IntPtr self, int draggable);
+        public static cfx_draggable_region_set_draggable_delegate cfx_draggable_region_set_draggable;
+        // static void cfx_draggable_region_get_draggable(cef_draggable_region_t *self, int* draggable)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_draggable_region_get_draggable_delegate(IntPtr self, out int draggable);
+        public static cfx_draggable_region_get_draggable_delegate cfx_draggable_region_get_draggable;
 
 
         // CfxEndTracingCallback
@@ -4180,7 +4218,7 @@ namespace Chromium {
         public static cfx_size_get_height_delegate cfx_size_get_height;
 
 
-        // CfxSslcertPrincipal
+        // CfxSslCertPrincipal
 
         // static cef_string_userfree_t cfx_sslcert_principal_get_display_name(cef_sslcert_principal_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
