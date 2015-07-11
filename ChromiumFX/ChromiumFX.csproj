@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{36972B7C-3A3A-465F-B064-51B525FD4C14}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Chromium</RootNamespace>
+    <AssemblyName>ChromiumFX</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\Build\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DocumentationFile>..\Build\Debug\ChromiumFX.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>..\Build\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>..\Build\Release\ChromiumFX.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>1591</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Generated\CfxApi.cs" />
+    <Compile Include="Generated\CfxApiLoader.cs" />
+    <Compile Include="Generated\CfxApp.cs" />
+    <Compile Include="Generated\CfxAuthCallback.cs" />
+    <Compile Include="Generated\CfxBeforeDownloadCallback.cs" />
+    <Compile Include="Generated\CfxBinaryValue.cs" />
+    <Compile Include="Generated\CfxBrowser.cs" />
+    <Compile Include="Generated\CfxBrowserHost.cs" />
+    <Compile Include="Generated\CfxBrowserProcessHandler.cs" />
+    <Compile Include="Generated\CfxBrowserSettings.cs" />
+    <Compile Include="Generated\CfxCallback.cs" />
+    <Compile Include="Generated\CfxClient.cs" />
+    <Compile Include="Generated\CfxCommandLine.cs" />
+    <Compile Include="Generated\CfxCompletionCallback.cs" />
+    <Compile Include="Generated\CfxContextMenuHandler.cs" />
+    <Compile Include="Generated\CfxContextMenuParams.cs" />
+    <Compile Include="Generated\CfxCookie.cs" />
+    <Compile Include="Generated\CfxCookieManager.cs" />
+    <Compile Include="Generated\CfxCookieVisitor.cs" />
+    <Compile Include="Generated\CfxCursorInfo.cs" />
+    <Compile Include="Generated\CfxDeleteCookiesCallback.cs" />
+    <Compile Include="Generated\CfxDialogHandler.cs" />
+    <Compile Include="Generated\CfxDictionaryValue.cs" />
+    <Compile Include="Generated\CfxDisplayHandler.cs" />
+    <Compile Include="Generated\CfxDomDocument.cs" />
+    <Compile Include="Generated\CfxDomNode.cs" />
+    <Compile Include="Generated\CfxDomVisitor.cs" />
+    <Compile Include="Generated\CfxDownloadHandler.cs" />
+    <Compile Include="Generated\CfxDownloadItem.cs" />
+    <Compile Include="Generated\CfxDownloadItemCallback.cs" />
+    <Compile Include="Generated\CfxDragData.cs" />
+    <Compile Include="Generated\CfxDragHandler.cs" />
+    <Compile Include="Generated\CfxEndTracingCallback.cs" />
+    <Compile Include="Generated\CfxEnums.cs" />
+    <Compile Include="Generated\CfxFileDialogCallback.cs" />
+    <Compile Include="Generated\CfxFindHandler.cs" />
+    <Compile Include="Generated\CfxFocusHandler.cs" />
+    <Compile Include="Generated\CfxFrame.cs" />
+    <Compile Include="Generated\CfxGeolocationCallback.cs" />
+    <Compile Include="Generated\CfxGeolocationHandler.cs" />
+    <Compile Include="Generated\CfxGeoposition.cs" />
+    <Compile Include="Generated\CfxGetGeolocationCallback.cs" />
+    <Compile Include="Generated\CfxJsDialogCallback.cs" />
+    <Compile Include="Generated\CfxJsDialogHandler.cs" />
+    <Compile Include="Generated\CfxKeyboardHandler.cs" />
+    <Compile Include="Generated\CfxKeyEvent.cs" />
+    <Compile Include="Generated\CfxLifeSpanHandler.cs" />
+    <Compile Include="Generated\CfxListValue.cs" />
+    <Compile Include="Generated\CfxLoadHandler.cs" />
+    <Compile Include="Generated\CfxMainArgsLinux.cs" />
+    <Compile Include="Generated\CfxMainArgsWindows.cs" />
+    <Compile Include="Generated\CfxMenuModel.cs" />
+    <Compile Include="Generated\CfxMouseEvent.cs" />
+    <Compile Include="Generated\CfxNavigationEntry.cs" />
+    <Compile Include="Generated\CfxNavigationEntryVisitor.cs" />
+    <Compile Include="Generated\CfxPageRange.cs" />
+    <Compile Include="Generated\CfxPoint.cs" />
+    <Compile Include="Generated\CfxPopupFeatures.cs" />
+    <Compile Include="Generated\CfxPostData.cs" />
+    <Compile Include="Generated\CfxPostDataElement.cs" />
+    <Compile Include="Generated\CfxPrintDialogCallback.cs" />
+    <Compile Include="Generated\CfxPrintHandler.cs" />
+    <Compile Include="Generated\CfxPrintJobCallback.cs" />
+    <Compile Include="Generated\CfxPrintSettings.cs" />
+    <Compile Include="Generated\CfxProcessMessage.cs" />
+    <Compile Include="Generated\CfxReadHandler.cs" />
+    <Compile Include="Generated\CfxRect.cs" />
+    <Compile Include="Generated\CfxRenderHandler.cs" />
+    <Compile Include="Generated\CfxRenderProcessHandler.cs" />
+    <Compile Include="Generated\CfxRequest.cs" />
+    <Compile Include="Generated\CfxRequestCallback.cs" />
+    <Compile Include="Generated\CfxRequestContext.cs" />
+    <Compile Include="Generated\CfxRequestContextHandler.cs" />
+    <Compile Include="Generated\CfxRequestContextSettings.cs" />
+    <Compile Include="Generated\CfxRequestHandler.cs" />
+    <Compile Include="Generated\CfxResourceBundleHandler.cs" />
+    <Compile Include="Generated\CfxResourceHandler.cs" />
+    <Compile Include="Generated\CfxResponse.cs" />
+    <Compile Include="Generated\CfxRunFileDialogCallback.cs" />
+    <Compile Include="Generated\CfxRuntime.cs" />
+    <Compile Include="Generated\CfxSchemeHandlerFactory.cs" />
+    <Compile Include="Generated\CfxSchemeRegistrar.cs" />
+    <Compile Include="Generated\CfxScreenInfo.cs" />
+    <Compile Include="Generated\CfxSetCookieCallback.cs" />
+    <Compile Include="Generated\CfxSettings.cs" />
+    <Compile Include="Generated\CfxSize.cs" />
+    <Compile Include="Generated\CfxSslcertPrincipal.cs" />
+    <Compile Include="Generated\CfxSslinfo.cs" />
+    <Compile Include="Generated\CfxStreamReader.cs" />
+    <Compile Include="Generated\CfxStreamWriter.cs" />
+    <Compile Include="Generated\CfxStringVisitor.cs" />
+    <Compile Include="Generated\CfxTask.cs" />
+    <Compile Include="Generated\CfxTaskRunner.cs" />
+    <Compile Include="Generated\CfxTime.cs" />
+    <Compile Include="Generated\CfxUrlParts.cs" />
+    <Compile Include="Generated\CfxUrlRequest.cs" />
+    <Compile Include="Generated\CfxUrlRequestClient.cs" />
+    <Compile Include="Generated\CfxV8Accessor.cs" />
+    <Compile Include="Generated\CfxV8Context.cs" />
+    <Compile Include="Generated\CfxV8Exception.cs" />
+    <Compile Include="Generated\CfxV8Handler.cs" />
+    <Compile Include="Generated\CfxV8StackFrame.cs" />
+    <Compile Include="Generated\CfxV8StackTrace.cs" />
+    <Compile Include="Generated\CfxV8Value.cs" />
+    <Compile Include="Generated\CfxValue.cs" />
+    <Compile Include="Generated\CfxWebPluginInfo.cs" />
+    <Compile Include="Generated\CfxWebPluginInfoVisitor.cs" />
+    <Compile Include="Generated\CfxWebPluginUnstableCallback.cs" />
+    <Compile Include="Generated\CfxWindowInfoLinux.cs" />
+    <Compile Include="Generated\CfxWindowInfoWindows.cs" />
+    <Compile Include="Generated\CfxWriteHandler.cs" />
+    <Compile Include="Generated\CfxXmlReader.cs" />
+    <Compile Include="Generated\CfxZipReader.cs" />
+    <Compile Include="Generated\Remote\CfrApp.cs" />
+    <Compile Include="Generated\Remote\CfrBinaryValue.cs" />
+    <Compile Include="Generated\Remote\CfrBrowser.cs" />
+    <Compile Include="Generated\Remote\CfrCommandLine.cs" />
+    <Compile Include="Generated\Remote\CfrDictionaryValue.cs" />
+    <Compile Include="Generated\Remote\CfrDomDocument.cs" />
+    <Compile Include="Generated\Remote\CfrDomNode.cs" />
+    <Compile Include="Generated\Remote\CfrDomVisitor.cs" />
+    <Compile Include="Generated\Remote\CfrFrame.cs" />
+    <Compile Include="Generated\Remote\CfrListValue.cs" />
+    <Compile Include="Generated\Remote\CfrLoadHandler.cs" />
+    <Compile Include="Generated\Remote\CfrPostData.cs" />
+    <Compile Include="Generated\Remote\CfrPostDataElement.cs" />
+    <Compile Include="Generated\Remote\CfrProcessMessage.cs" />
+    <Compile Include="Generated\Remote\CfrRenderProcessHandler.cs" />
+    <Compile Include="Generated\Remote\CfrRequest.cs" />
+    <Compile Include="Generated\Remote\CfrResourceBundleHandler.cs" />
+    <Compile Include="Generated\Remote\CfrRuntime.cs" />
+    <Compile Include="Generated\Remote\CfrSchemeRegistrar.cs" />
+    <Compile Include="Generated\Remote\CfrStringVisitor.cs" />
+    <Compile Include="Generated\Remote\CfrTask.cs" />
+    <Compile Include="Generated\Remote\CfrTaskRunner.cs" />
+    <Compile Include="Generated\Remote\CfrTime.cs" />
+    <Compile Include="Generated\Remote\CfrUrlParts.cs" />
+    <Compile Include="Generated\Remote\CfrV8Accessor.cs" />
+    <Compile Include="Generated\Remote\CfrV8Context.cs" />
+    <Compile Include="Generated\Remote\CfrV8Exception.cs" />
+    <Compile Include="Generated\Remote\CfrV8Handler.cs" />
+    <Compile Include="Generated\Remote\CfrV8StackFrame.cs" />
+    <Compile Include="Generated\Remote\CfrV8StackTrace.cs" />
+    <Compile Include="Generated\Remote\CfrV8Value.cs" />
+    <Compile Include="Generated\Remote\CfrValue.cs" />
+    <Compile Include="Generated\Remote\CfxAppRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxBinaryValueRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxBrowserRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxCommandLineRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxDictionaryValueRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxDomDocumentRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxDomNodeRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxDomVisitorRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxFrameRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxListValueRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxLoadHandlerRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxPostDataElementRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxPostDataRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxProcessMessageRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxRenderProcessHandlerRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxRequestRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxResourceBundleHandlerRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxRuntimeRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxSchemeRegistrarRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxStringVisitorRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxTaskRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxTaskRunnerRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxTimeRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxUrlPartsRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxV8AccessorRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxV8ContextRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxV8ExceptionRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxV8HandlerRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxV8StackFrameRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxV8StackTraceRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxV8ValueRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxValueRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\RemoteCallFactory.cs" />
+    <Compile Include="Generated\Remote\RemoteCallId.cs" />
+    <Compile Include="Source\CfxApi.cs" />
+    <Compile Include="Source\CfxApp.cs" />
+    <Compile Include="Source\CfxArray.cs" />
+    <Compile Include="Source\CfxBase.cs" />
+    <Compile Include="Source\CfxBinaryValue.cs" />
+    <Compile Include="Source\CfxColor.cs" />
+    <Compile Include="Source\CfxDebug.cs" />
+    <Compile Include="Source\CfxMainArgsLinux.cs" />
+    <Compile Include="Source\CfxPlatform.cs" />
+    <Compile Include="Source\CfxTime.cs" />
+    <Compile Include="Source\CfxWindowInfo.cs" />
+    <Compile Include="Source\NativeFunctionLoader.cs" />
+    <Compile Include="Source\CfxMainArgs.cs" />
+    <Compile Include="Source\Remote\PipeFactory.cs" />
+    <Compile Include="Source\Remote\WindowsPipeFactory.cs" />
+    <Compile Include="Source\StringFunctions.cs" />
+    <Compile Include="Source\CfxZipReader.cs" />
+    <Compile Include="Source\Remote\CfrTime.cs" />
+    <Compile Include="Source\Remote\CfrV8HandlerExecuteEventArgs.cs" />
+    <Compile Include="Source\Remote\CfrBinaryValue.cs" />
+    <Compile Include="Source\Remote\CfrEventArgs.cs" />
+    <Compile Include="Source\CfxException.cs" />
+    <Compile Include="Source\CfxObject.cs" />
+    <Compile Include="Source\PinnedObject.cs" />
+    <Compile Include="Source\PinnedString.cs" />
+    <Compile Include="Source\Remote\CfrBase.cs" />
+    <Compile Include="Source\CfxEventArgs.cs" />
+    <Compile Include="Source\Remote\CfrObject.cs" />
+    <Compile Include="Source\Remote\CfrRuntime.cs" />
+    <Compile Include="Source\Remote\CfrV8Value.cs" />
+    <Compile Include="Source\CfxRemoting.cs" />
+    <Compile Include="Source\Remote\CfrStructure.cs" />
+    <Compile Include="Source\Remote\CfrMarshal.cs" />
+    <Compile Include="Source\Remote\RemoteCall.cs" />
+    <Compile Include="Source\Remote\RemoteCallStack.cs" />
+    <Compile Include="Source\Remote\RemoteWeakCache.cs" />
+    <Compile Include="Source\Remote\RemoteConnection.cs" />
+    <Compile Include="Source\Remote\BrowserProcessCall.cs" />
+    <Compile Include="Source\Remote\RenderProcessCall.cs" />
+    <Compile Include="Source\Remote\RemoteProxy.cs" />
+    <Compile Include="Source\Remote\RemotePtr.cs" />
+    <Compile Include="Source\Remote\StreamHandler.cs" />
+    <Compile Include="Source\Remote\RemoteClient.cs" />
+    <Compile Include="Source\Remote\RemoteService.cs" />
+    <Compile Include="Source\CfxRuntime.cs" />
+    <Compile Include="Source\CfxStructure.cs" />
+    <Compile Include="Source\TimeFunctions.cs" />
+    <Compile Include="Source\WeakCache.cs" />
+    <Compile Include="Source\WindowStyle.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

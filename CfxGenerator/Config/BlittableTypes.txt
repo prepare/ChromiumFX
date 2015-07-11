@@ -1,0 +1,13 @@
+﻿void*|IntPtr
+char|byte
+char*|IntPtr
+char16*|IntPtr
+char16|short
+HINSTANCE|IntPtr
+cef_window_handle_t|IntPtr
+HMENU|IntPtr
+BOOL|int
+cef_text_input_context_t|IntPtr
+cef_event_handle_t|IntPtr
+cef_cursor_handle_t|IntPtr
+time_t|ulong

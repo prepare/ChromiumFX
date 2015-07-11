@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<topic id="welcome" revisionNumber="1">
+	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<introduction>
+			<para>This is the API reference documentation for ChromiumFX and ChromiumWebBrowser.</para>
+		</introduction>
+
+		<section>
+			<title>Acknowledgements</title>
+			<content>
+				<para>
+          CEF-related documentation extracted from the <legacyBold>CEF C API header files</legacyBold>
+          and adapted to ChromiumFX. All credits for the excellent documentation go to the author and maintainers of the 
+          <externalLink><linkText>Chromium Embedded Framework</linkText><linkUri>https://bitbucket.org/chromiumembedded/cef/</linkUri></externalLink>.
+      </para>
+      <para/><para/>
+       </content>
+		</section>
+    <section>
+      <title>Copyright</title>
+      <content>
+        <para>
+          The contents of this reference documentation are covered by the source code licenses of the
+          <externalLink><linkText>Chromium Embedded Framework</linkText><linkUri>https://bitbucket.org/chromiumembedded/cef/</linkUri></externalLink>
+          and <externalLink><linkText>ChromiumFX</linkText><linkUri>https://bitbucket.org/chromiumfx/chromiumfx/</linkUri></externalLink>. See also the
+          <externalLink><linkText>CEF Readme File</linkText><linkUri>https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/README.txt</linkUri></externalLink>,
+          the <externalLink><linkText>CEF License</linkText><linkUri>https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/LICENSE.txt</linkUri></externalLink>
+          and the <externalLink><linkText>ChromiumFX License</linkText><linkUri>https://bitbucket.org/chromiumfx/chromiumfx/src/tip/License.txt</linkUri></externalLink>.
+      </para>
+      <para/><para/>
+     </content>
+    </section>
+    <section>
+      <title>See also</title>
+      <content>
+        <list class="bullet">
+          <listItem>
+            <para>
+              <externalLink><linkText>ChromiumFX Home</linkText><linkUri>https://bitbucket.org/chromiumfx/chromiumfx/</linkUri></externalLink>
+            </para>
+          </listItem>
+        <listItem>
+          <para>
+            <externalLink><linkText>Wiki</linkText><linkUri>https://bitbucket.org/chromiumfx/chromiumfx/wiki/</linkUri></externalLink>
+          </para>
+        </listItem>
+          <listItem>
+          <para>
+            <externalLink><linkText>Source Code</linkText><linkUri>https://bitbucket.org/chromiumfx/chromiumfx/src/tip/</linkUri></externalLink>
+          </para>
+        </listItem>
+        <listItem>
+          <para>
+            <externalLink><linkText>The Chromium Embedded Framework</linkText><linkUri>https://bitbucket.org/chromiumembedded/cef/</linkUri></externalLink>
+          </para>
+        </listItem>
+        </list>
+      <para/><para/>
+     </content>
+    </section>
+		<relatedTopics>
+		</relatedTopics>
+	</developerConceptualDocument>
+</topic>
