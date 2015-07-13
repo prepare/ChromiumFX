@@ -44,7 +44,7 @@ namespace Chromium.WebBrowser {
 
     /// <summary>
     /// Represents a javascript property in the render process to be added to 
-    /// a browser frame's global object or to a JSObject.
+    /// a browser frame's global object or to a child object.
     /// </summary>
     public abstract class JSProperty {
 
@@ -70,7 +70,8 @@ namespace Chromium.WebBrowser {
         }
 
         /// <summary>
-        /// The browser this JSProperty or the parent JSObject belongs to.
+        /// The browser this javascript property or the parent javascript object belongs to.
+        /// May be null if this property or it's parent is still unbound.
         /// </summary>
         public ChromiumWebBrowser Browser {
             get {
@@ -81,8 +82,8 @@ namespace Chromium.WebBrowser {
         }
 
         /// <summary>
-        /// The parent JSObject of this property, or null if this property
-        /// was not added to a JSObject.
+        /// The parent javascript object of this property.
+        /// May be null if this property is still unbound.
         /// </summary>
         public JSObject Parent {
             get {
