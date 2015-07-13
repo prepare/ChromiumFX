@@ -60,10 +60,10 @@ namespace CfxTestApplication {
             JSTestPageButton.Click += new EventHandler(TestButton_Click);
             VisitDomButton.Click += new EventHandler(VisitDomButton_Click);
 
-            WebBrowser.AddGlobalJSFunction("CfxHelloWorld").Execute += CfxHelloWorld_Execute;
-            WebBrowser.AddGlobalJSFunction("testDoubleCallback").Execute += TestDoubleCallback_Execute;
+            WebBrowser.GlobalObject.AddFunction("CfxHelloWorld").Execute += CfxHelloWorld_Execute;
+            WebBrowser.GlobalObject.AddFunction("testDoubleCallback").Execute += TestDoubleCallback_Execute;
 
-            WebBrowser.AddGlobalJSProperty("TestObject", new JsTestObject(this));
+            WebBrowser.GlobalObject.Add("TestObject", new JsTestObject(this));
 
             var html = @"
 

@@ -150,8 +150,7 @@ namespace Chromium.WebBrowser {
         private IntPtr browserWindowHandle;
         private int browserId;
 
-        internal readonly Dictionary<string, Dictionary<string, JSProperty>> frameJSProperties = new Dictionary<string, Dictionary<string, JSProperty>>();
-        internal readonly Dictionary<string, JSProperty> mainFrameJSProperties = new Dictionary<string, JSProperty>();
+        internal readonly Dictionary<string, JSObject> frameGlobalObjects = new Dictionary<string, JSObject>();
         internal readonly Dictionary<string, WebResource> webResources = new Dictionary<string, WebResource>();
 
         internal RenderProcess remoteProcess;
@@ -217,6 +216,9 @@ namespace Chromium.WebBrowser {
                     this.initialUrl = initialUrl;
 
                 client = new BrowserClient(this);
+
+                GlobalObject = new JSObject();
+                GlobalObject.SetBrowser("window", this);
 
                 if(createImmediately)
                     CreateBrowser();
@@ -551,17 +553,48 @@ namespace Chromium.WebBrowser {
             }
         }
 
+        /// <summary>
+        /// Represents the main frame's global javascript object (window).
+        /// Any changes to the global object's properties will be available 
+        /// after the next time a V8 context is created in the render process
+        /// for the main frame of this browser.
+        /// Dynamic properties and functions in this object 
+        /// are executed on the thread that owns the browser's 
+        /// underlying window handle, unless otherwise specified 
+        /// in the function/dynamic property constructor. 
+        /// Preserves affinity to the render thread.
+        /// </summary>
+        public JSObject GlobalObject { get; private set; }
+
+        /// <summary>
+        /// Represents a named frame's global javascript object (window).
+        /// Any changes to the global object's properties will be available 
+        /// after the next time a V8 context is created in the render process
+        /// of this browser for a frame with this name.
+        /// Dynamic properties and functions in this object 
+        /// are executed on the thread that owns the browser's 
+        /// underlying window handle, unless otherwise specified 
+        /// in the function/dynamic property constructor. 
+        /// Preserves affinity to the render thread.
+        /// </summary>
+        public JSObject GlobalObjectForFrame(string frameName) {
+            JSObject obj;
+            if(!frameGlobalObjects.TryGetValue(frameName, out obj)) {
+                obj = new JSObject();
+                obj.SetBrowser("window", this);
+                frameGlobalObjects.Add(frameName, obj);
+            }
+            return obj;
+        }
         
         /// <summary>
         /// Add a javascript property to the main frame's global object.
         /// The property will be available after the next time a
         /// V8 context is created in the render process.
         /// </summary>
+        [Obsolete("AddGlobalJSProperty is deprecated, please use GlobalObject.Add instead.")]
         public void AddGlobalJSProperty(string propertyName, JSProperty globalProperty) {
-            globalProperty.SetBrowser(propertyName, this);
-            if(mainFrameJSProperties.ContainsKey(propertyName))
-                throw new CfxException("Property already exists.");
-            mainFrameJSProperties.Add(propertyName, globalProperty);
+            GlobalObject.Add(propertyName, globalProperty);
         }
 
         /// <summary>
@@ -569,16 +602,9 @@ namespace Chromium.WebBrowser {
         /// The property will be available after the next time a
         /// V8 context is created for a frame with this name in the render process.
         /// </summary>
+        [Obsolete("AddGlobalJSProperty is deprecated, please use GlobalObjectForFrame(frameName).Add instead.")]
         public void AddGlobalJSProperty(string frameName, string propertyName, JSProperty globalProperty) {
-            globalProperty.SetBrowser(propertyName, this);
-            Dictionary<string, JSProperty> list;
-            if(!frameJSProperties.TryGetValue(frameName, out list)) {
-                list = new Dictionary<string, JSProperty>();
-                frameJSProperties.Add(frameName, list);
-            }
-            if(list.ContainsKey(propertyName))
-                throw new CfxException("Property already exists.");
-            list.Add(propertyName, globalProperty);
+            GlobalObjectForFrame(frameName).Add(propertyName, globalProperty);
         }
 
         /// <summary>
@@ -588,10 +614,9 @@ namespace Chromium.WebBrowser {
         /// The function is executed on the thread that owns this browser control's 
         /// underlying window handle. Preserves affinity to the original thread.
         /// </summary>
+        [Obsolete("AddGlobalJSFunction is deprecated, please use GlobalObject.AddFunction instead.")]
         public JSFunction AddGlobalJSFunction(string functionName) {
-            var f = new JSFunction(true);
-            AddGlobalJSProperty(functionName, f);
-            return f;
+            return GlobalObject.AddFunction(functionName);
         }
 
         /// <summary>
@@ -602,10 +627,9 @@ namespace Chromium.WebBrowser {
         /// executed on the thread that owns this browser control's 
         /// underlying window handle. Preserves affinity to the render thread.
         /// </summary>
+        [Obsolete("AddGlobalJSFunction is deprecated, please use GlobalObject.AddFunction instead.")]
         public JSFunction AddGlobalJSFunction(string functionName, bool invokeOnBrowser) {
-            var f = new JSFunction(invokeOnBrowser);
-            AddGlobalJSProperty(functionName, f);
-            return f;
+            return GlobalObject.AddFunction(functionName, invokeOnBrowser);
         }
 
         /// <summary>
@@ -615,6 +639,7 @@ namespace Chromium.WebBrowser {
         /// The function is executed on the thread that owns this browser control's 
         /// underlying window handle. Preserves affinity to the original thread.
         /// </summary>
+        [Obsolete("AddGlobalJSFunction is deprecated, please use GlobalObjectForFrame(frameName).AddFunction instead.")]
         public JSFunction AddGlobalJSFunction(string frameName, string functionName) {
             var f = new JSFunction(true);
             AddGlobalJSProperty(frameName, functionName, f);
@@ -629,6 +654,7 @@ namespace Chromium.WebBrowser {
         /// on the thread that owns this browser control's 
         /// underlying window handle. Preserves affinity to the original thread.
         /// </summary>
+        [Obsolete("AddGlobalJSFunction is deprecated, please use GlobalObjectForFrame(frameName).AddFunction instead.")]
         public JSFunction AddGlobalJSFunction(string frameName, string functionName, bool invokeOnBrowser) {
             var f = new JSFunction(invokeOnBrowser);
             AddGlobalJSProperty(frameName, functionName, f);
@@ -643,10 +669,9 @@ namespace Chromium.WebBrowser {
         /// Any functions and events of the object are executed on the thread that owns this browser control's 
         /// underlying window handle. Preserves affinity to the render thread.
         /// </summary>
+        [Obsolete("AddGlobalJSObject is deprecated, please use GlobalObject.AddObject instead.")]
         public JSObject AddGlobalJSObject(string objectName) {
-            var o = new JSObject(true);
-            AddGlobalJSProperty(objectName, o);
-            return o;
+            return GlobalObject.AddObject(objectName);
         }
 
         /// <summary>
@@ -657,10 +682,9 @@ namespace Chromium.WebBrowser {
         /// are executed on the thread that owns this browser control's 
         /// underlying window handle. Preserves affinity to the render thread.
         /// </summary>
+        [Obsolete("AddGlobalJSObject is deprecated, please use GlobalObject.AddObject instead.")]
         public JSObject AddGlobalJSObject(string objectName, bool invokeOnBrowser) {
-            var o = new JSObject(invokeOnBrowser);
-            AddGlobalJSProperty(objectName, o);
-            return o;
+            return GlobalObject.AddObject(objectName, invokeOnBrowser);
         }
 
         /// <summary>
@@ -671,6 +695,7 @@ namespace Chromium.WebBrowser {
         /// executed on the thread that owns this browser control's 
         /// underlying window handle. Preserves affinity to the render thread.
         /// </summary>
+        [Obsolete("AddGlobalJSObject is deprecated, please use GlobalObjectForFrame(frameName).AddObject instead.")]
         public JSObject AddGlobalJSObject(string frameName, string objectName) {
             var o = new JSObject(true);
             AddGlobalJSProperty(frameName, objectName, o);
@@ -685,11 +710,14 @@ namespace Chromium.WebBrowser {
         /// executed on the thread that owns this browser control's 
         /// underlying window handle. Preserves affinity to the render thread.
         /// </summary>
+        [Obsolete("AddGlobalJSObject is deprecated, please use GlobalObjectForFrame(frameName).AddObject instead.")]
         public JSObject AddGlobalJSObject(string frameName, string objectName, bool invokeOnBrowser) {
             var o = new JSObject(invokeOnBrowser);
             AddGlobalJSProperty(frameName, objectName, o);
             return o;
         }
+
+
 
         /// <summary>
         /// Visit the DOM in the remote browser's main frame.

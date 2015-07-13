@@ -26,8 +26,8 @@ namespace CfxTestApplication {
 
             wb.Parent = f;
 
-            wb.AddGlobalJSFunction("HelloApp").Execute += HelloApp_Execute;
-            wb.AddGlobalJSFunction("DoSomething").Execute += DoSomething_Execute;
+            wb.GlobalObject.AddFunction("HelloApp").Execute += HelloApp_Execute;
+            wb.GlobalObject.AddFunction("DoSomething").Execute += DoSomething_Execute;
 
 
             //wb.ExecuteJavascript("var x = HelloApp();");
