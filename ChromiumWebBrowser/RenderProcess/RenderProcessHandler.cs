@@ -73,18 +73,18 @@ namespace Chromium.WebBrowser {
             var wb = ChromiumWebBrowser.GetBrowser(e.Browser.Identifier);
             if(wb != null) {
                 if(e.Frame.IsMain) {
-                    SetProperties(e.Context, wb.mainFrameJSProperties);
-                } else if(wb.frameJSProperties.Count > 0) {
-                    Dictionary<string, JSProperty> list;
-                    if(wb.frameJSProperties.TryGetValue(e.Frame.Name, out list)) {
-                        SetProperties(e.Context, list);
+                    SetProperties(e.Context, wb.GlobalObject);
+                } else {
+                    JSObject obj;
+                    if(wb.frameGlobalObjects.TryGetValue(e.Frame.Name, out obj)) {
+                        SetProperties(e.Context, obj);
                     }
                 }
             }
         }
 
-        private void SetProperties(CfrV8Context context, Dictionary<string, JSProperty> list) {
-            foreach(var p in list) {
+        private void SetProperties(CfrV8Context context, JSObject obj) {
+            foreach(var p in obj) {
                 var v8Value = p.Value.GetV8Value(context);
                 context.Global.SetValue(p.Key, v8Value, CfxV8PropertyAttribute.DontDelete | CfxV8PropertyAttribute.ReadOnly);
             }
