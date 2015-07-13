@@ -29,6 +29,7 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using System;
+using System.Diagnostics;
 using Chromium.Remote;
 
 namespace Chromium.WebBrowser {
@@ -75,9 +76,14 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public ChromiumWebBrowser Browser {
             get {
+                
+                if(m_browser != null)
+                    return m_browser;
+
                 if(m_parent != null)
-                    return m_parent.GetBrowserFromParent(this);
-                return m_browser;
+                    return m_parent.Browser;
+
+                return null;
             }
         }
 
@@ -103,21 +109,10 @@ namespace Chromium.WebBrowser {
             return v8Value;
         }
 
-        private ChromiumWebBrowser GetBrowserFromParent(JSProperty requestor) {
-
-            if(m_parent == null)
-                return null;
-
-            if(m_parent.m_browser != null)
-                return m_parent.m_browser;
-
-            if(Object.ReferenceEquals(m_parent, requestor))
-                return null;
-
-            return m_parent.GetBrowserFromParent(requestor);
-        }
-
         internal void SetParent(string propertyName, JSObject parent) {
+            if(Object.ReferenceEquals(parent, this)) {
+                throw new CfxException("Can't add a javascript object to itself.");
+            }
             CheckUnboundState();
             Name = propertyName;
             m_parent = parent;
