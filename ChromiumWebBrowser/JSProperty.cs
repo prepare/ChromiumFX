@@ -128,6 +128,12 @@ namespace Chromium.WebBrowser {
             m_browser = browser;
         }
 
+        internal void ClearParent() {
+            Name = null;
+            m_parent = null;
+            m_browser = null;
+        }
+
         private void CheckUnboundState() {
             if(m_parent != null) {
                 throw new CfxException("This property already belongs to an JSObject.");
