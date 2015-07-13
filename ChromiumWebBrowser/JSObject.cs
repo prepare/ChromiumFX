@@ -28,6 +28,7 @@
 // TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE 
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+using System;
 using System.Collections.Generic;
 using Chromium.Remote;
 using Chromium.Remote.Event;
@@ -38,7 +39,7 @@ namespace Chromium.WebBrowser {
     /// Represents a javascript object in the render process to be added as 
     /// a property to a browser frame's global object or to another JSObject.
     /// </summary>
-    public class JSObject : JSProperty {
+    public class JSObject : JSProperty, IDictionary<string, JSProperty> {
 
 
         private readonly Dictionary<string, JSProperty> jsProperties = new Dictionary<string, JSProperty>();
@@ -72,8 +73,136 @@ namespace Chromium.WebBrowser {
         }
 
         /// <summary>
+        /// Adds the specified javascript property to this object.
+        /// </summary>
+        public void Add(string name, JSProperty property) {
+            if(jsProperties.ContainsKey(name))
+                throw new CfxException("A property with this name already exists.");
+            property.SetParent(name, this);
+            jsProperties.Add(name, property);
+        }
+
+        /// <summary>
+        /// Determines whether this javascript object contains a property with the specified name.
+        /// </summary>
+        public bool ContainsKey(string name) {
+            return jsProperties.ContainsKey(name);
+        }
+
+        /// <summary>
+        /// Gets a collection containing the property names in this javascript object.
+        /// </summary>
+        public ICollection<string> Keys {
+            get { return jsProperties.Keys; }
+        }
+
+        /// <summary>
+        /// Removes the property with the specified name from this javascript object.
+        /// </summary>
+        public bool Remove(string name) {
+            if(jsProperties.ContainsKey(name)) {
+                jsProperties[name].ClearParent();
+            }
+            return jsProperties.Remove(name);
+        }
+
+        /// <summary>
+        /// Gets the property with the specified name.
+        /// </summary>
+        public bool TryGetValue(string name, out JSProperty property) {
+            return jsProperties.TryGetValue(name, out property);
+        }
+
+        /// <summary>
+        /// Gets a collection containing the properties in this javascript object.
+        /// </summary>
+        public ICollection<JSProperty> Values {
+            get { return jsProperties.Values; }
+        }
+
+        /// <summary>
+        /// Gets or sets the property with the specified name.
+        /// </summary>
+        public JSProperty this[string name] {
+            get {
+                return jsProperties[name];
+            }
+            set {
+                if(jsProperties.ContainsKey(name)) {
+                    jsProperties[name].ClearParent();
+                }
+                jsProperties[name] = value;
+            }
+        }
+
+        /// <summary>
+        /// Not supported.
+        /// </summary>
+        /// <param name="item"></param>
+        public void Add(KeyValuePair<string, JSProperty> item) {
+            throw new System.NotSupportedException();
+        }
+
+        /// <summary>
+        /// Removes all properties from this javascript object.
+        /// </summary>
+        public void Clear() {
+            jsProperties.Clear();
+        }
+
+        /// <summary>
+        /// Not supported.
+        /// </summary>
+        public bool Contains(KeyValuePair<string, JSProperty> item) {
+            throw new System.NotSupportedException();
+        }
+
+        /// <summary>
+        /// Not supported.
+        /// </summary>
+        public void CopyTo(KeyValuePair<string, JSProperty>[] array, int arrayIndex) {
+            throw new System.NotSupportedException();
+        }
+
+        /// <summary>
+        /// Gets the number of properties contained in this javascript object.
+        /// </summary>
+        public int Count {
+            get { return jsProperties.Count; }
+        }
+
+        /// <summary>
+        /// Always false.
+        /// </summary>
+        public bool IsReadOnly {
+            get { return false; }
+        }
+
+        /// <summary>
+        /// Not supported.
+        /// </summary>
+        public bool Remove(KeyValuePair<string, JSProperty> item) {
+            throw new System.NotSupportedException();
+        }
+
+        /// <summary>
+        /// Returns an enumerator that iterates through the properties in this javascript object.
+        /// </summary>
+        public IEnumerator<KeyValuePair<string, JSProperty>> GetEnumerator() {
+            return jsProperties.GetEnumerator();
+        }
+
+        /// <summary>
+        /// Returns an enumerator that iterates through the properties in this javascript object.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() {
+            return jsProperties.GetEnumerator();
+        }
+
+        /// <summary>
         /// Add a javascript property to this object.
         /// </summary>
+        [Obsolete("AddProperty is deprecated, please use Add instead.")]
         public void AddProperty(string propertyName, JSProperty property) {
             property.SetParent(propertyName, this);
             if(jsProperties.ContainsKey(propertyName))
@@ -90,7 +219,7 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public JSFunction AddFunction(string functionName) {
             var f = new JSFunction(InvokeOnBrowser);
-            AddProperty(functionName, f);
+            Add(functionName, f);
             return f;
         }
 
@@ -103,7 +232,7 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public JSObject AddObject(string objectName) {
             var o = new JSObject(InvokeOnBrowser);
-            AddProperty(objectName, o);
+            Add(objectName, o);
             return o;
         }
 
@@ -117,7 +246,7 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public JSDynamicProperty AddDynamicProperty(string propertyName) {
             var p = new JSDynamicProperty(InvokeOnBrowser);
-            AddProperty(propertyName, p);
+            Add(propertyName, p);
             return p;
         }
 
