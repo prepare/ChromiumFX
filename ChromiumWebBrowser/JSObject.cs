@@ -56,7 +56,7 @@ namespace Chromium.WebBrowser {
 
         /// <summary>
         /// Creates a new javascript object to be added as a property 
-        /// to a browser frame's global object or to another JSObject.
+        /// to a browser frame's global object or a child object.
         /// Dynamic properties and functions in this object are executed 
         /// on the thread that owns the browser's underlying window handle, 
         /// unless otherwise specified in the function/dynamic property constructor.
@@ -64,11 +64,12 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public JSObject()
             : base(JSPropertyType.Object) {
+                this.InvokeOnBrowser = true;
         }
 
         /// <summary>
         /// Creates a new javascript object to be added as a property 
-        /// to a browser frame's global object or to another JSObject.
+        /// to a browser frame's global object or a child object.
         /// If invokeOnBrowser is true, dynamic properties and functions 
         /// in this object are executed on the thread that owns the browser's 
         /// underlying window handle, unless otherwise specified in the 
