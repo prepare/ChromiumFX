@@ -130,7 +130,7 @@
     <Compile Include="Generated\CfxSettings.cs" />
     <Compile Include="Generated\CfxSize.cs" />
     <Compile Include="Generated\CfxSslCertPrincipal.cs" />
-    <Compile Include="Generated\CfxSslinfo.cs" />
+    <Compile Include="Generated\CfxSslInfo.cs" />
     <Compile Include="Generated\CfxStreamReader.cs" />
     <Compile Include="Generated\CfxStreamWriter.cs" />
     <Compile Include="Generated\CfxStringVisitor.cs" />
