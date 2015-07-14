@@ -2784,10 +2784,10 @@ namespace Chromium {
             CfxApi.cfx_sslcert_principal_get_domain_components = (CfxApi.cfx_sslcert_principal_get_domain_components_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslcert_principal_get_domain_components, typeof(CfxApi.cfx_sslcert_principal_get_domain_components_delegate));
         }
 
-        private static bool CfxSslinfoApiLoaded;
-        internal static void LoadCfxSslinfoApi() {
-            if(CfxSslinfoApiLoaded) return;
-            CfxSslinfoApiLoaded = true;
+        private static bool CfxSslInfoApiLoaded;
+        internal static void LoadCfxSslInfoApi() {
+            if(CfxSslInfoApiLoaded) return;
+            CfxSslInfoApiLoaded = true;
             CfxApi.Probe();
             CfxApi.cfx_sslinfo_get_subject = (CfxApi.cfx_sslinfo_get_subject_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslinfo_get_subject, typeof(CfxApi.cfx_sslinfo_get_subject_delegate));
             CfxApi.cfx_sslinfo_get_issuer = (CfxApi.cfx_sslinfo_get_issuer_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslinfo_get_issuer, typeof(CfxApi.cfx_sslinfo_get_issuer_delegate));

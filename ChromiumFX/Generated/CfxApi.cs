@@ -4266,7 +4266,7 @@ namespace Chromium {
         public static cfx_sslcert_principal_get_domain_components_delegate cfx_sslcert_principal_get_domain_components;
 
 
-        // CfxSslinfo
+        // CfxSslInfo
 
         // static cef_sslcert_principal_t* cfx_sslinfo_get_subject(cef_sslinfo_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]

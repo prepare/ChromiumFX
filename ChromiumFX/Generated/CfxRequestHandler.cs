@@ -1933,7 +1933,7 @@ namespace Chromium {
             internal int m_request_url_length;
             internal string m_request_url;
             internal IntPtr m_ssl_info;
-            internal CfxSslinfo m_ssl_info_wrapped;
+            internal CfxSslInfo m_ssl_info_wrapped;
             internal IntPtr m_callback;
             internal CfxRequestCallback m_callback_wrapped;
 
@@ -1981,10 +1981,10 @@ namespace Chromium {
             /// <summary>
             /// Get the SslInfo parameter for the <see cref="CfxRequestHandler.OnCertificateError"/> callback.
             /// </summary>
-            public CfxSslinfo SslInfo {
+            public CfxSslInfo SslInfo {
                 get {
                     CheckAccess();
-                    if(m_ssl_info_wrapped == null) m_ssl_info_wrapped = CfxSslinfo.Wrap(m_ssl_info);
+                    if(m_ssl_info_wrapped == null) m_ssl_info_wrapped = CfxSslInfo.Wrap(m_ssl_info);
                     return m_ssl_info_wrapped;
                 }
             }
