@@ -323,12 +323,12 @@ Public Class ApiType
         b.AppendLine("{0} {1};", PInvokeSymbol, CSharp.Escape(var))
     End Sub
 
-    Public Overridable Sub EmitAssignToNativeStructMember(b As CodeBuilder, var As String, Optional struct As String = "self")
-        b.AppendLine("{0}->{1} = {2};", struct, var, NativeUnwrapExpression(var))
+    Public Overridable Sub EmitAssignToNativeStructMember(b As CodeBuilder, var As String, Optional cefStruct As String = "self")
+        b.AppendLine("{0}->{1} = {2};", cefStruct, var, NativeUnwrapExpression(var))
     End Sub
 
-    Public Overridable Sub EmitAssignFromNativeStructMember(b As CodeBuilder, var As String, Optional struct As String = "self")
-        b.AppendLine("*{0} = {1};", var, NativeWrapExpression(String.Format("{0}->{1}", struct, var)))
+    Public Overridable Sub EmitAssignFromNativeStructMember(b As CodeBuilder, var As String, Optional cefStruct As String = "self")
+        b.AppendLine("*{0} = {1};", var, NativeWrapExpression(String.Format("{0}->{1}", cefStruct, var)))
     End Sub
 
     Public Overridable Sub EmitNativeValueStructDtorStatements(b As CodeBuilder, var As String)

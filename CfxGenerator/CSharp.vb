@@ -201,8 +201,8 @@ skip_to_lower:
         Return name
     End Function
 
-    Private Shared Function CapitalizeFirst(str As String) As String
-        Return Char.ToUpper(str(0)) & str.Substring(1)
+    Private Shared Function CapitalizeFirst(s As String) As String
+        Return Char.ToUpper(s(0)) & s.Substring(1)
     End Function
 
 End Class

@@ -83,13 +83,13 @@ Public Class CefStringType
         b.AppendLine("int {0}_length;", var)
     End Sub
 
-    Public Overrides Sub EmitAssignToNativeStructMember(b As CodeBuilder, var As String, Optional struct As String = "self")
-        b.AppendLine("cef_string_utf16_set({0}_str, {0}_length, &({1}->{0}), 1);", var, struct)
+    Public Overrides Sub EmitAssignToNativeStructMember(b As CodeBuilder, var As String, Optional cefStruct As String = "self")
+        b.AppendLine("cef_string_utf16_set({0}_str, {0}_length, &({1}->{0}), 1);", var, cefStruct)
     End Sub
 
-    Public Overrides Sub EmitAssignFromNativeStructMember(b As CodeBuilder, var As String, Optional struct As String = "self")
-        b.AppendLine("*{0}_str = {1}->{0}.str;", var, struct)
-        b.AppendLine("*{0}_length = (int){1}->{0}.length;", var, struct)
+    Public Overrides Sub EmitAssignFromNativeStructMember(b As CodeBuilder, var As String, Optional cefStruct As String = "self")
+        b.AppendLine("*{0}_str = {1}->{0}.str;", var, cefStruct)
+        b.AppendLine("*{0}_length = (int){1}->{0}.length;", var, cefStruct)
     End Sub
 
     Public Overrides Sub EmitNativeValueStructDtorStatements(b As CodeBuilder, var As String)

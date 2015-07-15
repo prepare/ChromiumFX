@@ -36,9 +36,9 @@ Public Class CefStructPtrType
     Public ReadOnly Struct As CefStructType
     Public ReadOnly Indirection As String
 
-    Public Sub New(struct As CefStructType, Indirection As String)
-        MyBase.New(AddIndirection(struct.Name, Indirection))
-        Me.Struct = struct
+    Public Sub New(cefStruct As CefStructType, Indirection As String)
+        MyBase.New(AddIndirection(cefStruct.Name, Indirection))
+        Me.Struct = cefStruct
         Me.Indirection = Indirection
     End Sub
 

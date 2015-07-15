@@ -78,7 +78,7 @@ Public Class CefExportFunction
 
     Public ReadOnly Property PublicName As String
         Get
-            Return CSharp.ApplyStyle(Name).Substring(If(Parent Is Nothing, 3, Parent.ClassName.Length)) & If(PrivateWrapper, "Private", "")
+            Return CSharp.ApplyStyle(Name).Substring(If(Parent Is Nothing, 3, Parent.ClassName.Length)) & (If(PrivateWrapper, "Private", ""))
         End Get
     End Property
 
