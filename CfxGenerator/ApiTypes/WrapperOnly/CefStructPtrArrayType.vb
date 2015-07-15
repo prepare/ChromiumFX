@@ -64,52 +64,38 @@ Public Class CefStructPtrArrayType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
-        Get
-            If StructArg.Index < CountArg.Index Then
-                Return String.Format("{0}_pinned.PinnedPtr, {0}_length", var)
-            Else
-                Return String.Format("{0}_length, {0}_pinned.PinnedPtr", var)
-            End If
-        End Get
-    End Property
+    Public Overrides Function PublicUnwrapExpression(var As String) As String
+        If StructArg.Index < CountArg.Index Then
+            Return String.Format("{0}_pinned.PinnedPtr, {0}_length", var)
+        Else
+            Return String.Format("{0}_length, {0}_pinned.PinnedPtr", var)
+        End If
+    End Function
 
-    Public Overrides ReadOnly Property ProxyWrapExpression(var As String) As String
-        Get
-            Return String.Format("CfxArray.GetProxyIds<{0}>({1})", Struct.ClassName, var)
-        End Get
-    End Property
+    Public Overrides Function ProxyWrapExpression(var As String) As String
+        Return String.Format("CfxArray.GetProxyIds<{0}>({1})", Struct.ClassName, var)
+    End Function
 
-    Public Overrides ReadOnly Property ProxyUnwrapExpression(var As String) As String
-        Get
-            Return var & "_unwrapped"
-        End Get
-    End Property
+    Public Overrides Function ProxyUnwrapExpression(var As String) As String
+        Return var & "_unwrapped"
+    End Function
 
-    Public Overrides ReadOnly Property RemoteWrapExpression(var As String) As String
-        Get
-            Return String.Format("CfxArray.GetCfrObjects<{0}>({1}, remoteRuntime, {0}.Wrap)", Struct.RemoteClassName, var)
-        End Get
-    End Property
+    Public Overrides Function RemoteWrapExpression(var As String) As String
+        Return String.Format("CfxArray.GetCfrObjects<{0}>({1}, remoteRuntime, {0}.Wrap)", Struct.RemoteClassName, var)
+    End Function
 
-    Public Overrides ReadOnly Property RemoteUnwrapExpression(var As String) As String
-        Get
-            Return var & "_unwrapped"
-        End Get
-    End Property
+    Public Overrides Function RemoteUnwrapExpression(var As String) As String
+        Return var & "_unwrapped"
+    End Function
 
 
-    Public Overrides ReadOnly Property PublicEventConstructorSignature(var As String) As String
-        Get
-            Return StructPtr.PublicEventConstructorSignature(var) & ", " & CountArg.PublicEventConstructorSignature
-        End Get
-    End Property
+    Public Overrides Function PublicEventConstructorSignature(var As String) As String
+        Return StructPtr.PublicEventConstructorSignature(var) & ", " & CountArg.PublicEventConstructorSignature
+    End Function
 
-    Public Overrides ReadOnly Property PublicEventConstructorCall(var As String) As String
-        Get
-            Return StructPtr.PublicEventConstructorCall(var) & ", " & CountArg.PublicEventConstructorCall
-        End Get
-    End Property
+    Public Overrides Function PublicEventConstructorCall(var As String) As String
+        Return StructPtr.PublicEventConstructorCall(var) & ", " & CountArg.PublicEventConstructorCall
+    End Function
 
     Public Overrides Sub EmitPreNativeCallStatements(b As CodeBuilder, var As String)
         b.BeginIf("{0}", CountArg.VarName)

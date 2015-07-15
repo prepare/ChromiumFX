@@ -1,4 +1,4 @@
-﻿Public Class VoidPtrPtrType
+Public Class VoidPtrPtrType
     Inherits ApiType
 
     Sub New()
@@ -23,11 +23,9 @@
         End Get
     End Property
 
-    Public Overrides ReadOnly Property PInvokeCallSignature(var As String) As String
-        Get
-            Return "out IntPtr " & CSharp.Escape(var)
-        End Get
-    End Property
+    Public Overrides Function PInvokeCallSignature(var As String) As String
+        Return "out IntPtr " & CSharp.Escape(var)
+    End Function
 
 
 End Class

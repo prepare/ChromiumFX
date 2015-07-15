@@ -50,17 +50,13 @@ Public Class GetPostDataElementsSignature
         End Get
     End Property
 
-    Public Overrides ReadOnly Property NativeSignature(functionName As String) As String
-        Get
-            Return "static void cfx_post_data_get_elements(cef_post_data_t* self, int elementsCount, cef_post_data_element_t** elements)"
-        End Get
-    End Property
+    Public Overrides Function NativeSignature(functionName As String) As String
+        Return "static void cfx_post_data_get_elements(cef_post_data_t* self, int elementsCount, cef_post_data_element_t** elements)"
+    End Function
 
-    Public Overrides ReadOnly Property PInvokeSignature(functionName As String) As String
-        Get
-            Return "void cfx_post_data_get_elements_delegate(IntPtr self, int elementsCount, IntPtr elements)"
-        End Get
-    End Property
+    Public Overrides Function PInvokeSignature(functionName As String) As String
+        Return "void cfx_post_data_get_elements_delegate(IntPtr self, int elementsCount, IntPtr elements)"
+    End Function
 
     Public Overrides Sub EmitNativeCall(b As CodeBuilder, functionName As String)
         b.AppendLine("size_t tmp_elementsCount = (size_t)elementsCount;")

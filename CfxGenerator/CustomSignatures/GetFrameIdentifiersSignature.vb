@@ -49,23 +49,17 @@ Public Class GetFrameIdentifiersSignature
         End Get
     End Property
 
-    Public Overrides ReadOnly Property NativeSignature(functionName As String) As String
-        Get
-            Return "static void cfx_browser_get_frame_identifiers(cef_browser_t* self, int identifiersCount, int64* identifiers)"
-        End Get
-    End Property
+    Public Overrides Function NativeSignature(functionName As String) As String
+        Return "static void cfx_browser_get_frame_identifiers(cef_browser_t* self, int identifiersCount, int64* identifiers)"
+    End Function
 
-    Public Overrides ReadOnly Property PInvokeSignature(functionName As String) As String
-        Get
-            Return "void cfx_browser_get_frame_identifiers_delegate(IntPtr self, int identifiersCount, IntPtr identifiers)"
-        End Get
-    End Property
+    Public Overrides Function PInvokeSignature(functionName As String) As String
+        Return "void cfx_browser_get_frame_identifiers_delegate(IntPtr self, int identifiersCount, IntPtr identifiers)"
+    End Function
 
-    Public Overrides ReadOnly Property PublicSignature(functionName As String) As String
-        Get
-            Return "long[] GetFrameIdentifiers()"
-        End Get
-    End Property
+    Public Overrides Function PublicSignature(functionName As String) As String
+        Return "long[] GetFrameIdentifiers()"
+    End Function
 
     Public Overrides Sub EmitNativeCall(b As CodeBuilder, functionName As String)
         b.AppendLine("size_t tmp_identifiersCount = (size_t)identifiersCount;")

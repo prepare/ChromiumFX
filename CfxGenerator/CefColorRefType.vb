@@ -1,4 +1,4 @@
-﻿'' Copyright (c) 2014-2015 Wolfgang Borgsmüller
+'' Copyright (c) 2014-2015 Wolfgang Borgsmüller
 '' All rights reserved.
 '' 
 '' Redistribution and use in source and binary forms, with or without 
@@ -54,22 +54,16 @@ Public Class CefColorRefType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property PublicCallSignature(var As String) As String
-        Get
-            Return String.Concat("ref ", PublicSymbol, " ", var)
-        End Get
-    End Property
+    Public Overrides Function PublicCallSignature(var As String) As String
+        Return String.Concat("ref ", PublicSymbol, " ", var)
+    End Function
 
-    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("ref {0}.color", var)
-        End Get
-    End Property
+    Public Overrides Function PublicUnwrapExpression(var As String) As String
+        Return String.Format("ref {0}.color", var)
+    End Function
 
-    Public Overrides ReadOnly Property ProxyUnwrapExpression(var As String) As String
-        Get
-            Return String.Concat("ref ", var)
-        End Get
-    End Property
+    Public Overrides Function ProxyUnwrapExpression(var As String) As String
+        Return String.Concat("ref ", var)
+    End Function
 
 End Class

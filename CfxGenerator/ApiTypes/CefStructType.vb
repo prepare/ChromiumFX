@@ -115,61 +115,43 @@ Public Class CefStructType
 
     End Sub
 
-    Public Overrides ReadOnly Property NativeWrapExpression(var As String) As String
-        Get
-            Return String.Format("&({0})", var)
-        End Get
-    End Property
+    Public Overrides Function NativeWrapExpression(var As String) As String
+        Return String.Format("&({0})", var)
+    End Function
 
-    Public Overrides ReadOnly Property NativeUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("*({0})", var)
-        End Get
-    End Property
+    Public Overrides Function NativeUnwrapExpression(var As String) As String
+        Return String.Format("*({0})", var)
+    End Function
 
-    Public Overrides ReadOnly Property PublicReturnExpression(var As String) As String
-        Get
-            Return String.Format("{0}.WrapOwned({1})", ClassName, var)
-            Return MyBase.PublicReturnExpression(var)
-        End Get
-    End Property
+    Public Overrides Function PublicReturnExpression(var As String) As String
+        Return String.Format("{0}.WrapOwned({1})", ClassName, var)
+        Return MyBase.PublicReturnExpression(var)
+    End Function
 
 
-    Public Overrides ReadOnly Property PublicWrapExpression(var As String) As String
-        Get
-            Return String.Format("{0}.Wrap({1})", ClassName, var)
-        End Get
-    End Property
+    Public Overrides Function PublicWrapExpression(var As String) As String
+        Return String.Format("{0}.Wrap({1})", ClassName, var)
+    End Function
 
-    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("{0}.Unwrap({1})", ClassName, var)
-        End Get
-    End Property
+    Public Overrides Function PublicUnwrapExpression(var As String) As String
+        Return String.Format("{0}.Unwrap({1})", ClassName, var)
+    End Function
 
-    Public Overrides ReadOnly Property ProxyWrapExpression(var As String) As String
-        Get
-            Return String.Format("RemoteProxy.Wrap({0})", var)
-        End Get
-    End Property
+    Public Overrides Function ProxyWrapExpression(var As String) As String
+        Return String.Format("RemoteProxy.Wrap({0})", var)
+    End Function
 
-    Public Overrides ReadOnly Property ProxyUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("({0})RemoteProxy.Unwrap({1})", ClassName, var)
-        End Get
-    End Property
+    Public Overrides Function ProxyUnwrapExpression(var As String) As String
+        Return String.Format("({0})RemoteProxy.Unwrap({1})", ClassName, var)
+    End Function
 
-    Public Overrides ReadOnly Property RemoteWrapExpression(var As String) As String
-        Get
-            Return String.Format("{0}.Wrap({1}, remoteRuntime)", RemoteClassName, var)
-        End Get
-    End Property
+    Public Overrides Function RemoteWrapExpression(var As String) As String
+        Return String.Format("{0}.Wrap({1}, remoteRuntime)", RemoteClassName, var)
+    End Function
 
-    Public Overrides ReadOnly Property RemoteUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("{0}.Unwrap({1})", RemoteClassName, var)
-        End Get
-    End Property
+    Public Overrides Function RemoteUnwrapExpression(var As String) As String
+        Return String.Format("{0}.Unwrap({1})", RemoteClassName, var)
+    End Function
 
     Public Overrides ReadOnly Property ParserMatches As String()
         Get

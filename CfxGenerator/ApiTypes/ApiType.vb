@@ -114,149 +114,109 @@ Public Class ApiType
         End Get
     End Property
 
-    Public Overridable ReadOnly Property NativeCallSignature(var As String, isConst As Boolean) As String
-        Get
-            If NativeSymbol Is Nothing Then
-                Return Nothing
-            End If
-            If isConst Then
-                Return String.Concat("const ", NativeSymbol, " ", var)
-            Else
-                Return String.Concat(NativeSymbol, " ", var)
-            End If
-        End Get
-    End Property
+    Public Overridable Function NativeCallSignature(var As String, isConst As Boolean) As String
+        If NativeSymbol Is Nothing Then
+            Return Nothing
+        End If
+        If isConst Then
+            Return String.Concat("const ", NativeSymbol, " ", var)
+        Else
+            Return String.Concat(NativeSymbol, " ", var)
+        End If
+    End Function
 
-    Public Overridable ReadOnly Property PInvokeCallSignature(var As String) As String
-        Get
-            If PInvokeSymbol Is Nothing Then Return Nothing
-            Return String.Format("{0} {1}", PInvokeSymbol, CSharp.Escape(var))
-        End Get
-    End Property
+    Public Overridable Function PInvokeCallSignature(var As String) As String
+        If PInvokeSymbol Is Nothing Then Return Nothing
+        Return String.Format("{0} {1}", PInvokeSymbol, CSharp.Escape(var))
+    End Function
 
-    Public Overridable ReadOnly Property NativeOutSignature(var As String) As String
-        Get
-            If NativeSymbol Is Nothing Then Return Nothing
-            Return String.Concat(NativeSymbol, "* ", var)
-        End Get
-    End Property
+    Public Overridable Function NativeOutSignature(var As String) As String
+        If NativeSymbol Is Nothing Then Return Nothing
+        Return String.Concat(NativeSymbol, "* ", var)
+    End Function
 
 
 
-    Public Overridable ReadOnly Property PInvokeCallbackSignature(var As String) As String
-        Get
-            Return PInvokeCallSignature(var)
-        End Get
-    End Property
+    Public Overridable Function PInvokeCallbackSignature(var As String) As String
+        Return PInvokeCallSignature(var)
+    End Function
 
-    Public Overridable ReadOnly Property PublicEventConstructorSignature(var As String) As String
-        Get
-            Return PInvokeCallbackSignature(var)
-        End Get
-    End Property
+    Public Overridable Function PublicEventConstructorSignature(var As String) As String
+        Return PInvokeCallbackSignature(var)
+    End Function
 
-    Public Overridable ReadOnly Property PInvokeOutSignature(var As String) As String
-        Get
-            If PInvokeSymbol Is Nothing Then Return Nothing
-            Return "out " & PInvokeCallSignature(var)
-        End Get
-    End Property
+    Public Overridable Function PInvokeOutSignature(var As String) As String
+        If PInvokeSymbol Is Nothing Then Return Nothing
+        Return "out " & PInvokeCallSignature(var)
+    End Function
 
-    Public Overridable ReadOnly Property PInvokeOutArgument(var As String) As String
-        Get
-            Return "out " & CSharp.Escape(var)
-        End Get
-    End Property
+    Public Overridable Function PInvokeOutArgument(var As String) As String
+        Return "out " & CSharp.Escape(var)
+    End Function
 
-    Public Overridable ReadOnly Property PublicCallSignature(var As String) As String
-        Get
-            If PublicSymbol Is Nothing Then Return Nothing
-            Return String.Format("{0} {1}", PublicSymbol, CSharp.Escape(var))
-        End Get
-    End Property
+    Public Overridable Function PublicCallSignature(var As String) As String
+        If PublicSymbol Is Nothing Then Return Nothing
+        Return String.Format("{0} {1}", PublicSymbol, CSharp.Escape(var))
+    End Function
 
-    Public Overridable ReadOnly Property ProxyCallSignature(var As String) As String
-        Get
-            If ProxySymbol Is Nothing Then Return Nothing
-            Return String.Format("{0} {1}", ProxySymbol, CSharp.Escape(var))
-        End Get
-    End Property
+    Public Overridable Function ProxyCallSignature(var As String) As String
+        If ProxySymbol Is Nothing Then Return Nothing
+        Return String.Format("{0} {1}", ProxySymbol, CSharp.Escape(var))
+    End Function
 
-    Public Overridable ReadOnly Property RemoteCallSignature(var As String) As String
-        Get
-            If RemoteSymbol Is Nothing Then Return Nothing
-            Return String.Format("{0} {1}", RemoteSymbol, CSharp.Escape(var))
-        End Get
-    End Property
+    Public Overridable Function RemoteCallSignature(var As String) As String
+        If RemoteSymbol Is Nothing Then Return Nothing
+        Return String.Format("{0} {1}", RemoteSymbol, CSharp.Escape(var))
+    End Function
 
-    Public Overridable ReadOnly Property NativeWrapExpression(var As String) As String
-        Get
-            Return var
-        End Get
-    End Property
+    Public Overridable Function NativeWrapExpression(var As String) As String
+        Return var
+    End Function
 
-    Public Overridable ReadOnly Property NativeUnwrapExpression(var As String) As String
-        Get
-            Return var
-        End Get
-    End Property
+    Public Overridable Function NativeUnwrapExpression(var As String) As String
+        Return var
+    End Function
 
-    Public Overridable ReadOnly Property PublicReturnExpression(var As String) As String
-        Get
-            Return PublicWrapExpression(var)
-        End Get
-    End Property
+    Public Overridable Function PublicReturnExpression(var As String) As String
+        Return PublicWrapExpression(var)
+    End Function
 
-    Public Overridable ReadOnly Property PublicWrapExpression(var As String) As String
-        Get
+    Public Overridable Function PublicWrapExpression(var As String) As String
+        Return CSharp.Escape(var)
+    End Function
+
+    Public Overridable Function PublicUnwrapExpression(var As String) As String
+        Return CSharp.Escape(var)
+    End Function
+
+    Public Overridable Function ProxyWrapExpression(var As String) As String
+        Return CSharp.Escape(var)
+    End Function
+
+    Public Overridable Function ProxyUnwrapExpression(var As String) As String
+        Return CSharp.Escape(var)
+    End Function
+
+    Public Overridable Function RemoteWrapExpression(var As String) As String
+        If RemoteSymbol = "RemotePtr" Then
+            Return String.Format("new RemotePtr({0})", CSharp.Escape(var))
+        Else
             Return CSharp.Escape(var)
-        End Get
-    End Property
+        End If
+    End Function
 
-    Public Overridable ReadOnly Property PublicUnwrapExpression(var As String) As String
-        Get
+    Public Overridable Function RemoteUnwrapExpression(var As String) As String
+        If ProxySymbol Is Nothing Then Return Nothing
+        If RemoteSymbol = "RemotePtr" Then
+            Return CSharp.Escape(var) & ".ptr"
+        Else
             Return CSharp.Escape(var)
-        End Get
-    End Property
+        End If
+    End Function
 
-    Public Overridable ReadOnly Property ProxyWrapExpression(var As String) As String
-        Get
-            Return CSharp.Escape(var)
-        End Get
-    End Property
-
-    Public Overridable ReadOnly Property ProxyUnwrapExpression(var As String) As String
-        Get
-            Return CSharp.Escape(var)
-        End Get
-    End Property
-
-    Public Overridable ReadOnly Property RemoteWrapExpression(var As String) As String
-        Get
-            If RemoteSymbol = "RemotePtr" Then
-                Return String.Format("new RemotePtr({0})", CSharp.Escape(var))
-            Else
-                Return CSharp.Escape(var)
-            End If
-        End Get
-    End Property
-
-    Public Overridable ReadOnly Property RemoteUnwrapExpression(var As String) As String
-        Get
-            If ProxySymbol Is Nothing Then Return Nothing
-            If RemoteSymbol = "RemotePtr" Then
-                Return CSharp.Escape(var) & ".ptr"
-            Else
-                Return CSharp.Escape(var)
-            End If
-        End Get
-    End Property
-
-    Public Overridable ReadOnly Property PublicEventConstructorCall(var As String) As String
-        Get
-            Return CSharp.Escape(var)
-        End Get
-    End Property
+    Public Overridable Function PublicEventConstructorCall(var As String) As String
+        Return CSharp.Escape(var)
+    End Function
 
 
     Public Overridable Sub EmitPreNativeCallbackStatements(b As CodeBuilder, var As String)

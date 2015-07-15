@@ -1,4 +1,4 @@
-﻿'' Copyright (c) 2014-2015 Wolfgang Borgsmüller
+'' Copyright (c) 2014-2015 Wolfgang Borgsmüller
 '' All rights reserved.
 '' 
 '' Redistribution and use in source and binary forms, with or without 
@@ -42,17 +42,13 @@ Public Class CefPlatformBasePtrType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("{0}.Unwrap({1})", PublicSymbol, var)
-        End Get
-    End Property
+    Public Overrides Function PublicUnwrapExpression(var As String) As String
+        Return String.Format("{0}.Unwrap({1})", PublicSymbol, var)
+    End Function
 
-    Public Overrides ReadOnly Property PublicWrapExpression(var As String) As String
-        Get
-            Return String.Format("{0}.Wrap({1})", PublicSymbol, var)
-        End Get
-    End Property
+    Public Overrides Function PublicWrapExpression(var As String) As String
+        Return String.Format("{0}.Wrap({1})", PublicSymbol, var)
+    End Function
 
     Public Overrides Sub EmitPreNativeCallStatements(b As CodeBuilder, var As String)
         If Name = "cef_main_args_t*" Then

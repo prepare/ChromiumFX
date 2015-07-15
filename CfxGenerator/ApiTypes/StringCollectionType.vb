@@ -43,17 +43,13 @@ Public Class StringCollectionType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("{0}_unwrapped", var)
-        End Get
-    End Property
+    Public Overrides Function PublicUnwrapExpression(var As String) As String
+        Return String.Format("{0}_unwrapped", var)
+    End Function
 
-    Public Overrides ReadOnly Property PublicWrapExpression(var As String) As String
-        Get
-            Return String.Format("StringFunctions.Wrap{0}({1})", ClassName, var)
-        End Get
-    End Property
+    Public Overrides Function PublicWrapExpression(var As String) As String
+        Return String.Format("StringFunctions.Wrap{0}({1})", ClassName, var)
+    End Function
 
     Public Overrides Sub EmitPrePublicCallStatements(b As CodeBuilder, var As String)
         b.AppendLine("PinnedString[] {0}_handles;", var)
