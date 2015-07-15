@@ -241,8 +241,8 @@ Public Class CodeBuilder
         If summary IsNot Nothing AndAlso Not summary.Lines.Length = 0 Then
             AppendLine("/// <summary>")
             For Each line In summary.Lines
-                line = CSharp.PrepareSummaryLine(line, forRemote, forEvent)
-                AppendLine("/// " & line)
+                Dim l1 = CSharp.PrepareSummaryLine(line, forRemote, forEvent)
+                AppendLine("/// " & l1)
             Next
             AppendLine("/// </summary>")
         End If

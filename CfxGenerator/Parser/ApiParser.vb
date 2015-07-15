@@ -79,11 +79,11 @@ Namespace Parser
 
             For Each f In funcs
 
-                Dim struct = MatchCefStructPrefix(f.Name, structs)
-                If struct Is Nothing Then
+                Dim cefStruct = MatchCefStructPrefix(f.Name, structs)
+                If cefStruct Is Nothing Then
                     api.CefFunctions.Add(f)
                 Else
-                    struct.CefFunctions.Add(f)
+                    cefStruct.CefFunctions.Add(f)
                 End If
 
                 Dim token = ReduceToken(f.Name)
@@ -101,21 +101,21 @@ Namespace Parser
 
             Next
 
-            For Each struct In api.CefStructs
+            For Each cefStruct In api.CefStructs
 
-                Dim structToken = ReduceToken(struct.Name.Substring(0, struct.Name.Length - 2))
+                Dim structToken = ReduceToken(cefStruct.Name.Substring(0, cefStruct.Name.Length - 2))
                 If cefConfigs.ContainsKey(structToken) Then
-                    struct.CefConfig = cefConfigs(structToken)
+                    cefStruct.CefConfig = cefConfigs(structToken)
                 End If
 
-                For Each sm In struct.StructMembers
+                For Each sm In cefStruct.StructMembers
                     If sm.CallbackSignature IsNot Nothing Then
                         Dim token = structToken & ReduceToken(sm.Name)
 
                         If cefConfigs.ContainsKey(token) Then
                             sm.CefConfig = cefConfigs(token)
                             If sm.CefConfig.CppApiName IsNot Nothing Then
-                                token = ReduceToken(struct.Name.Substring(0, struct.Name.Length - 2) & sm.CefConfig.CppApiName)
+                                token = ReduceToken(cefStruct.Name.Substring(0, cefStruct.Name.Length - 2) & sm.CefConfig.CppApiName)
                             End If
                         End If
 
@@ -235,10 +235,10 @@ Namespace Parser
         Private Sub ParseStructs(code As String, structs As List(Of StructData))
             Dim mm = structRegex.Matches(code)
             For Each m As Match In mm
-                Dim struct = New StructData
-                struct.Name = m.Groups(1).Value
-                ParseBody(struct, m.Groups(2).Value)
-                structs.Add(struct)
+                Dim cefStruct = New StructData
+                cefStruct.Name = m.Groups(1).Value
+                ParseBody(cefStruct, m.Groups(2).Value)
+                structs.Add(cefStruct)
             Next
         End Sub
 
@@ -261,7 +261,8 @@ Namespace Parser
                     Dim m = varEx.Match(memberDeclerations(i))
 
                     Dim sm = New StructMemberData
-                    sm.MemberType = ParseTypeDecl(m.Groups(1).Value.Trim(), False)
+                    Dim unused = False
+                    sm.MemberType = ParseTypeDecl(m.Groups(1).Value.Trim(), unused)
                     sm.Name = m.Groups(2).Value
                     parent.StructMembers.Add(sm)
                 End If
@@ -339,10 +340,10 @@ Namespace Parser
 
         Private Function MatchCefStructPrefix(name As String, structs As List(Of StructData)) As StructData
             Dim result As StructData = Nothing
-            For Each struct In structs
-                If name.StartsWith(struct.Name.Substring(0, struct.Name.Length - 2)) Then
-                    If result Is Nothing OrElse result.Name.Length < struct.Name.Length Then
-                        result = struct
+            For Each cefStruct In structs
+                If name.StartsWith(cefStruct.Name.Substring(0, cefStruct.Name.Length - 2)) Then
+                    If result Is Nothing OrElse result.Name.Length < cefStruct.Name.Length Then
+                        result = cefStruct
                     End If
                 End If
             Next

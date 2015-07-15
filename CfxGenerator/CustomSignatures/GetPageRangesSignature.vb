@@ -8,7 +8,7 @@ Public Class GetPageRangesSignature
 
     Public Overrides ReadOnly Property ManagedArguments As Argument()
         Get
-            Return New Argument() {}
+            Return New Argument(-1) {}
         End Get
     End Property
 

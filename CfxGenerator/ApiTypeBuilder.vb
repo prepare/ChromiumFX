@@ -235,7 +235,7 @@ Public Class ApiTypeBuilder
 
         If t.IsCefEnumType Then
             If td.Indirection = "*" Then
-                t = New CefEnumOutType(t.AsCefEnumType())
+                t = New CefEnumOutType(t.AsCefEnumType)
             Else
                 Stop
             End If

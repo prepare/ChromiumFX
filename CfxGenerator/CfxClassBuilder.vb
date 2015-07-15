@@ -120,7 +120,7 @@ End Enum
 
 Public Class CfxClassBuilder
 
-    Private ReadOnly struct As CefStructType
+    Private ReadOnly cefStruct As CefStructType
 
     Public ReadOnly ExportFunctions As CefExportFunction()
     Public ReadOnly StructMembers As StructMember()
@@ -141,24 +141,14 @@ Public Class CfxClassBuilder
 
     Private ReadOnly NeedsWrapping As Boolean
 
-    Public Sub New(struct As CefStructType, sd As Parser.StructData, api As ApiTypeBuilder)
+    Public Sub New(cefStruct As CefStructType, sd As Parser.StructData, api As ApiTypeBuilder)
 
-        Me.struct = struct
-        Me.OriginalSymbol = struct.OriginalSymbol
-        Me.CfxNativeSymbol = struct.CfxNativeSymbol
-        Me.CfxName = struct.CfxName
-        Me.ClassName = struct.ClassName
-        Me.RemoteClassName = struct.RemoteClassName
-
-        'If sd Is Nothing Then
-        '    If Not TypeOf struct Is CefPlatformBasePtrType Then
-        '        Stop
-        '    End If
-        '    ExportFunctions = {}
-        '    StructMembers = {}
-        '    Category = StructCategory.Values
-        '    Return
-        'End If
+        Me.cefStruct = cefStruct
+        Me.OriginalSymbol = cefStruct.OriginalSymbol
+        Me.CfxNativeSymbol = cefStruct.CfxNativeSymbol
+        Me.CfxName = cefStruct.CfxName
+        Me.ClassName = cefStruct.ClassName
+        Me.RemoteClassName = cefStruct.RemoteClassName
 
         Me.comments = sd.Comments
 
@@ -178,13 +168,13 @@ Public Class CfxClassBuilder
 
         Dim smlist = New List(Of StructMember)
         For Each smd In sd.StructMembers
-            smlist.Add(New StructMember(struct, Category, smd, api))
+            smlist.Add(New StructMember(cefStruct, Category, smd, api))
         Next
         StructMembers = smlist.ToArray()
 
         Dim flist = New List(Of CefExportFunction)
         For Each fd In sd.CefFunctions
-            flist.Add(New CefExportFunction(struct, fd, api))
+            flist.Add(New CefExportFunction(cefStruct, fd, api))
         Next
         ExportFunctions = flist.ToArray()
 
@@ -227,7 +217,7 @@ Public Class CfxClassBuilder
         End If
 
         If Category = StructCategory.Values Then
-            NeedsWrapping = GeneratorConfig.ValueStructNeedsWrapping(struct.Name)
+            NeedsWrapping = GeneratorConfig.ValueStructNeedsWrapping(cefStruct.Name)
         End If
 
     End Sub
@@ -248,7 +238,7 @@ Public Class CfxClassBuilder
 
     Public Sub EmitNativeWrapper(b As CodeBuilder)
 
-        b.AppendComment(struct.Name)
+        b.AppendComment(cefStruct.Name)
         b.AppendLine()
         CodeSnippets.BeginExternC(b)
         b.AppendLine()
@@ -291,7 +281,7 @@ Public Class CfxClassBuilder
         If ExportFunctions.Count > 0 Then Stop
 
         b.BeginBlock("typedef struct _{0}", CfxNativeSymbol)
-        b.AppendLine("{0} {1};", OriginalSymbol, struct.Name)
+        b.AppendLine("{0} {1};", OriginalSymbol, cefStruct.Name)
         b.AppendLine("unsigned int ref_count;")
         b.AppendLine("gc_handle_t gc_handle;")
         b.EndBlock("{0};", CfxNativeSymbol)
@@ -317,10 +307,10 @@ Public Class CfxClassBuilder
         b.BeginBlock("static {0}* {1}_ctor(gc_handle_t gc_handle)", CfxNativeSymbol, CfxName)
         b.AppendLine("{0}* ptr = ({0}*)calloc(1, sizeof({0}));", CfxNativeSymbol)
         b.AppendLine("if(!ptr) return 0;")
-        b.AppendLine("ptr->{0}.base.size = sizeof({1});", struct.Name, OriginalSymbol)
-        b.AppendLine("ptr->{0}.base.add_ref = _{1}_add_ref;", struct.Name, CfxName)
-        b.AppendLine("ptr->{0}.base.release = _{1}_release;", struct.Name, CfxName)
-        b.AppendLine("ptr->{0}.base.has_one_ref = _{1}_has_one_ref;", struct.Name, CfxName)
+        b.AppendLine("ptr->{0}.base.size = sizeof({1});", cefStruct.Name, OriginalSymbol)
+        b.AppendLine("ptr->{0}.base.add_ref = _{1}_add_ref;", cefStruct.Name, CfxName)
+        b.AppendLine("ptr->{0}.base.release = _{1}_release;", cefStruct.Name, CfxName)
+        b.AppendLine("ptr->{0}.base.has_one_ref = _{1}_has_one_ref;", cefStruct.Name, CfxName)
         b.AppendLine("ptr->ref_count = 1;")
         b.AppendLine("ptr->gc_handle = gc_handle;")
         b.AppendLine("return ptr;")
@@ -397,8 +387,8 @@ Public Class CfxClassBuilder
 
         If ExportFunctions.Count > 0 Then Stop
 
-        If struct.IsCefPlatformStructType Then
-            b.AppendLine("#ifdef CFX_" & struct.AsCefPlatformStructType.Platform.ToString().ToUpper())
+        If cefStruct.IsCefPlatformStructType Then
+            b.AppendLine("#ifdef CFX_" & cefStruct.AsCefPlatformStructType.Platform.ToString().ToUpper())
             b.AppendLine()
         End If
 
@@ -424,28 +414,28 @@ Public Class CfxClassBuilder
 
         For Each sm In StructMembers
             If sm.Name <> "size" Then
-                b.AppendComment("{0}->{1}", struct.OriginalSymbol, sm.Name)
-                b.BeginBlock("static void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeCallSignature(sm.Name, False))
+                b.AppendComment("{0}->{1}", cefStruct.OriginalSymbol, sm.Name)
+                b.BeginBlock("static void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, cefStruct.OriginalSymbol, sm.MemberType.NativeCallSignature(sm.Name, False))
                 sm.MemberType.EmitAssignToNativeStructMember(b, sm.Name)
                 b.EndBlock()
-                b.BeginBlock("static void {0}_get_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name))
+                b.BeginBlock("static void {0}_get_{1}({2} *self, {3})", CfxName, sm.Name, cefStruct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name))
                 sm.MemberType.EmitAssignFromNativeStructMember(b, sm.Name)
                 b.EndBlock()
                 b.AppendLine()
             End If
         Next
 
-        If struct.IsCefPlatformStructType Then
-            b.AppendLine("#else //ifdef CFX_" & struct.AsCefPlatformStructType.Platform.ToString().ToUpper())
+        If cefStruct.IsCefPlatformStructType Then
+            b.AppendLine("#else //ifdef CFX_" & cefStruct.AsCefPlatformStructType.Platform.ToString().ToUpper())
             b.AppendLine("#define {0}_ctor 0", CfxName)
             b.AppendLine("#define {0}_dtor 0", CfxName)
             For Each sm In StructMembers
                 If sm.Name <> "size" Then
-                    b.AppendLine("#define {0}_set_{1} 0", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeCallSignature(sm.Name, False))
-                    b.AppendLine("#define {0}_get_{1} 0", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name))
+                    b.AppendLine("#define {0}_set_{1} 0", CfxName, sm.Name, cefStruct.OriginalSymbol, sm.MemberType.NativeCallSignature(sm.Name, False))
+                    b.AppendLine("#define {0}_get_{1} 0", CfxName, sm.Name, cefStruct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name))
                 End If
             Next
-            b.AppendLine("#endif //ifdef CFX_" & struct.AsCefPlatformStructType.Platform.ToString().ToUpper())
+            b.AppendLine("#endif //ifdef CFX_" & cefStruct.AsCefPlatformStructType.Platform.ToString().ToUpper())
             b.AppendLine()
         End If
 
@@ -476,11 +466,11 @@ Public Class CfxClassBuilder
 
                 For Each sm In StructMembers
                     If sm.Name <> "size" Then
-                        b.AppendComment("static void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeCallSignature(sm.Name, False))
+                        b.AppendComment("static void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, cefStruct.OriginalSymbol, sm.MemberType.NativeCallSignature(sm.Name, False))
                         b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]")
                         b.AppendLine("public delegate void {0}_set_{1}_delegate(IntPtr self, {2});", CfxName, sm.Name, sm.MemberType.PInvokeCallSignature(sm.Name))
                         b.AppendLine("public static {0}_set_{1}_delegate {0}_set_{1};", CfxName, sm.Name)
-                        b.AppendComment("static void {0}_get_{1}({2} *self, {3})", CfxName, sm.Name, struct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name))
+                        b.AppendComment("static void {0}_get_{1}({2} *self, {3})", CfxName, sm.Name, cefStruct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name))
                         b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]")
                         b.AppendLine("public delegate void {0}_get_{1}_delegate(IntPtr self, {2});", CfxName, sm.Name, sm.MemberType.PInvokeOutSignature(sm.Name))
                         b.AppendLine("public static {0}_get_{1}_delegate {0}_get_{1};", CfxName, sm.Name)
@@ -721,7 +711,7 @@ Public Class CfxClassBuilder
 
         b.AppendSummaryAndRemarks(comments)
 
-        If struct.IsCefPlatformStructType Then
+        If cefStruct.IsCefPlatformStructType Then
             b.BeginClass(ClassName & " : CfxStructure", GeneratorConfig.ClassModifiers(ClassName, "internal sealed"))
         Else
             b.BeginClass(ClassName & " : CfxStructure", GeneratorConfig.ClassModifiers(ClassName, "public sealed"))
@@ -729,11 +719,11 @@ Public Class CfxClassBuilder
         b.AppendLine()
 
         b.BeginBlock("static {0} ()", ClassName)
-        If struct.IsCefPlatformStructType Then
-            b.BeginIf("CfxApi.PlatformOS == CfxPlatformOS.{0}", struct.AsCefPlatformStructType.Platform.ToString())
+        If cefStruct.IsCefPlatformStructType Then
+            b.BeginIf("CfxApi.PlatformOS == CfxPlatformOS.{0}", cefStruct.AsCefPlatformStructType.Platform.ToString())
         End If
         b.AppendLine("CfxApiLoader.Load{0}Api();", ClassName)
-        If struct.IsCefPlatformStructType Then
+        If cefStruct.IsCefPlatformStructType Then
             b.EndBlock()
         End If
         b.EndBlock()
@@ -752,8 +742,8 @@ Public Class CfxClassBuilder
             b.AppendLine()
         End If
 
-        If struct.IsCefPlatformStructType Then
-            b.AppendLine("public {0}() : base(CfxApi.{1}_ctor, CfxApi.{1}_dtor) {{ CfxApi.CheckPlatformOS(CfxPlatformOS.{2}); }}", ClassName, CfxName, struct.AsCefPlatformStructType.Platform.ToString())
+        If cefStruct.IsCefPlatformStructType Then
+            b.AppendLine("public {0}() : base(CfxApi.{1}_ctor, CfxApi.{1}_dtor) {{ CfxApi.CheckPlatformOS(CfxPlatformOS.{2}); }}", ClassName, CfxName, cefStruct.AsCefPlatformStructType.Platform.ToString())
         Else
             b.AppendLine("public {0}() : base(CfxApi.{1}_ctor, CfxApi.{1}_dtor) {{}}", ClassName, CfxName)
         End If
@@ -842,7 +832,7 @@ Public Class CfxClassBuilder
 
                 Dim sm = StructMembers(i)
 
-                If Not GeneratorConfig.IsBrowserProcessOnly(struct.Name & "::" & sm.Name) Then
+                If Not GeneratorConfig.IsBrowserProcessOnly(cefStruct.Name & "::" & sm.Name) Then
 
                     Dim cb = sm.Callback
                     Dim sig = cb.Signature
@@ -1001,7 +991,7 @@ Public Class CfxClassBuilder
             Next
 
             For i = 1 To StructMembers.Length - 1
-                If Not GeneratorConfig.IsBrowserProcessOnly(struct.Name & "::" & StructMembers(i).Name) Then
+                If Not GeneratorConfig.IsBrowserProcessOnly(cefStruct.Name & "::" & StructMembers(i).Name) Then
                     b.BeginRemoteCallClass(ClassName & StructMembers(i).RemoteCallClassName, False, callIds)
                     StructMembers(i).CallbackSignature.EmitRemoteCallClassBody(b)
                     b.EndBlock()
@@ -1069,7 +1059,7 @@ Public Class CfxClassBuilder
             b.AppendLine()
 
             For Each sm In StructMembers
-                If sm.MemberType.IsCefCallbackType AndAlso Not GeneratorConfig.IsBrowserProcessOnly(struct.Name & "::" & sm.Name) Then
+                If sm.MemberType.IsCefCallbackType AndAlso Not GeneratorConfig.IsBrowserProcessOnly(cefStruct.Name & "::" & sm.Name) Then
                     sm.MemberType.AsCefCallbackType.EmitRemoteRaiseEventFunction(b, sm.Comments)
                 End If
             Next
@@ -1094,7 +1084,7 @@ Public Class CfxClassBuilder
             Case StructCategory.ApiCallbacks
 
                 For Each sm In StructMembers
-                    If sm.MemberType.IsCefCallbackType AndAlso Not GeneratorConfig.IsBrowserProcessOnly(struct.Name & "::" & sm.Name) Then
+                    If sm.MemberType.IsCefCallbackType AndAlso Not GeneratorConfig.IsBrowserProcessOnly(cefStruct.Name & "::" & sm.Name) Then
                         sm.MemberType.AsCefCallbackType.EmitRemoteEvent(b, sm.Comments)
                         b.AppendLine()
                     End If
@@ -1103,7 +1093,7 @@ Public Class CfxClassBuilder
             Case StructCategory.ApiCalls
 
                 For Each p In m_structProperties
-                    If GeneratorConfig.CreateRemoteProxy(struct.Name & "::" & p.Getter.Name) Then
+                    If GeneratorConfig.CreateRemoteProxy(cefStruct.Name & "::" & p.Getter.Name) Then
 
                         Dim cb = p.Getter.MemberType.AsCefCallbackType
 
@@ -1137,7 +1127,7 @@ Public Class CfxClassBuilder
                 Next
 
                 For Each sm In m_structFunctions
-                    If GeneratorConfig.CreateRemoteProxy(struct.Name & "::" & sm.Name) Then
+                    If GeneratorConfig.CreateRemoteProxy(cefStruct.Name & "::" & sm.Name) Then
                         Dim cb = sm.MemberType.AsCefCallbackType
                         b.AppendSummaryAndRemarks(sm.Comments, True)
                         b.BeginFunction(sm.PublicName, cb.RemoteReturnType.RemoteSymbol, cb.Signature.RemoteSignature)
@@ -1222,7 +1212,7 @@ Public Class CfxClassBuilder
 
     Public Sub EmitRemoteEventArgs(b As CodeBuilder)
         For Each sm In StructMembers
-            If sm.MemberType.IsCefCallbackType AndAlso Not GeneratorConfig.IsBrowserProcessOnly(struct.Name & "::" & sm.Name) Then
+            If sm.MemberType.IsCefCallbackType AndAlso Not GeneratorConfig.IsBrowserProcessOnly(cefStruct.Name & "::" & sm.Name) Then
                 sm.MemberType.AsCefCallbackType.EmitRemoteEventArgsAndHandler(b, sm.Comments)
                 b.AppendLine()
             End If

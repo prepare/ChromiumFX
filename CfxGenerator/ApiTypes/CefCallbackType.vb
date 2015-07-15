@@ -53,13 +53,13 @@ Public Class CefCallbackType
         End Get
     End Property
 
-    Public Sub New(parent As CefStructType, structCategory As StructCategory, name As String, cefConfig As CefConfigData, sd As Parser.SignatureData, api As ApiTypeBuilder, comments As CommentData)
+    Public Sub New(parent As CefStructType, category As StructCategory, name As String, cefConfig As CefConfigData, sd As Parser.SignatureData, api As ApiTypeBuilder, comments As CommentData)
         MyBase.New(name)
         Me.Parent = parent
         Me.Comments = comments
         Me.cefConfig = cefConfig
 
-        If structCategory = structCategory.ApiCallbacks Then
+        If category = StructCategory.ApiCallbacks Then
             m_callMode = CfxCallMode.Callback
         Else
             m_callMode = CfxCallMode.FunctionCall
@@ -507,7 +507,7 @@ Public Class CefCallbackType
 
     Public Overrides ReadOnly Property ParserMatches As String()
         Get
-            Return New String() {}
+            Return New String(-1) {}
         End Get
     End Property
 
