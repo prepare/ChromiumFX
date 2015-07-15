@@ -181,8 +181,8 @@ Namespace Parser
             Return platformApi
         End Function
 
+        Private stripCommentsRegex As Regex
         Private Function StripComments(code As String) As String
-            Static stripCommentsRegex As Regex
             If stripCommentsRegex Is Nothing Then
                 Dim c1 = "/\*.*?\*/([\r\n]+)?"
                 Dim c2 = "//.*?([\r\n]+)"
@@ -196,9 +196,9 @@ Namespace Parser
             codeFiles.Add(filename, fcode)
         End Sub
 
+        Private memberEx As New Regex("\b(\w+)\s*(?:=\s*((?:[0-9xA-Fa-f<+-]|\s)+))?")
+        Private enumRegex As New Regex("typedef\s+enum\s*{(.*?)}\s*(\w+?)_t\s*;", RegexOptions.Singleline)
         Private Sub ParseEnums(code As String, enums As List(Of EnumData))
-            Static enumRegex As New Regex("typedef\s+enum\s*{(.*?)}\s*(\w+?)_t\s*;", RegexOptions.Singleline)
-            Static memberEx As New Regex("\b(\w+)\s*(?:=\s*((?:[0-9xA-Fa-f<+-]|\s)+))?")
 
             Dim mm = enumRegex.Matches(code)
             For Each m As Match In mm
@@ -218,8 +218,8 @@ Namespace Parser
             Next
         End Sub
 
+        Private exportFunctionRegex As New Regex("CEF_EXPORT\s+([^(]+?)\s+(cef_.+?)\((.*?)\);", RegexOptions.Singleline)
         Private Sub ParseFunctions(code As String, funcs As List(Of FunctionData))
-            Static exportFunctionRegex As New Regex("CEF_EXPORT\s+([^(]+?)\s+(cef_.+?)\((.*?)\);", RegexOptions.Singleline)
             Dim mm = exportFunctionRegex.Matches(code)
             For Each m As Match In mm
                 Dim f = New FunctionData
@@ -231,8 +231,8 @@ Namespace Parser
             Next
         End Sub
 
+        Private structRegex As New Regex("typedef\s+struct\s+_(\w+?_t)\s*{(.*?)}\s*\1;", RegexOptions.Singleline)
         Private Sub ParseStructs(code As String, structs As List(Of StructData))
-            Static structRegex As New Regex("typedef\s+struct\s+_(\w+?_t)\s*{(.*?)}\s*\1;", RegexOptions.Singleline)
             Dim mm = structRegex.Matches(code)
             For Each m As Match In mm
                 Dim struct = New StructData
@@ -242,9 +242,9 @@ Namespace Parser
             Next
         End Sub
 
+        Private varEx As New Regex("^\s*(.+?)\s+(\w+)\s*$")
         Private Sub ParseBody(parent As StructData, body As String)
 
-            Static varEx As New Regex("^\s*(.+?)\s+(\w+)\s*$")
 
             Dim memberDeclerations = body.Split(";"c)
 
@@ -269,9 +269,9 @@ Namespace Parser
 
         End Sub
 
+        Private argsEx As New Regex("([^,]+)")
         Private Sub ParseArgumentList(signature As SignatureData, argsString As String)
 
-            Static argsEx As New Regex("([^,]+)")
 
             Dim mm = argsEx.Matches(argsString)
             For Each m As Match In mm
@@ -280,9 +280,9 @@ Namespace Parser
 
         End Sub
 
+        Private parseArgumentRegex As New Regex("^\s*(.+)(\b\w+)\s*$")
         Private Function ParseArgument(argString As String) As ArgumentData
 
-            Static parseArgumentRegex As New Regex("^\s*(.+)(\b\w+)\s*$")
             Dim m = parseArgumentRegex.Match(argString)
 
             Dim arg = New ArgumentData
@@ -292,11 +292,12 @@ Namespace Parser
 
         End Function
 
+        Private typeDeclRegex As New Regex("^\s*(const)?((?:\s*\b\w+\b)+)\s*$")
+        Private indirEx As New Regex("(?:(?:\bconst\s*)?\*\s*)+$")
         Private Function ParseTypeDecl(typeDecl As String, ByRef isConst As Boolean) As TypeData
 
             Dim t = New TypeData
 
-            Static indirEx As New Regex("(?:(?:\bconst\s*)?\*\s*)+$")
             Dim m1 = indirEx.Match(typeDecl)
             Dim td2 = typeDecl
             If m1.Success Then
@@ -304,7 +305,6 @@ Namespace Parser
                 td2 = typeDecl.Substring(0, typeDecl.Length - m1.Value.Length)
             End If
 
-            Static typeDeclRegex As New Regex("^\s*(const)?((?:\s*\b\w+\b)+)\s*$")
             Dim m = typeDeclRegex.Match(td2)
             If Not m.Success Then
                 Stop
@@ -317,9 +317,9 @@ Namespace Parser
         End Function
 
 
+        Private callbackRegex As New Regex("\s*(.*?)\s*\(\s*CEF_CALLBACK\s*\*\s*(\w+)\s*\)\s*\((.*?)\)", RegexOptions.Singleline)
         Private Function ParseCallback(declaration As String) As StructMemberData
 
-            Static callbackRegex As New Regex("\s*(.*?)\s*\(\s*CEF_CALLBACK\s*\*\s*(\w+)\s*\)\s*\((.*?)\)", RegexOptions.Singleline)
 
             If Not callbackRegex.IsMatch(declaration) Then
                 Stop
@@ -474,9 +474,9 @@ Namespace Parser
             Next
         End Sub
 
+        Private l As New List(Of String)
+        Private commentArrayRegex As New Regex("^\s*//+(.*?)$", RegexOptions.Multiline)
         Private Function GetCommentArray(comments As String) As CommentData
-            Static commentArrayRegex As New Regex("^\s*//+(.*?)$", RegexOptions.Multiline)
-            Static l As New List(Of String)
             Dim mm = commentArrayRegex.Matches(comments)
             l.Clear()
             For i = 0 To mm.Count - 1

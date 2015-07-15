@@ -50,8 +50,8 @@ Public Class CefApiDeclarations
     Private remoteFuncs As SortedDictionary(Of String, CefExportFunction)
     Private remoteStructs As SortedDictionary(Of String, CefStructType)
 
+    Private retval As String()
     Public Function GetCfxApiFunctionNames() As String()
-        Static retval As String()
         If retval Is Nothing Then
             Dim list = New List(Of String)
             For Each f In ExportFunctions
@@ -164,8 +164,8 @@ Public Class CefApiDeclarations
     End Sub
 
 
+    Private funcs As CefExportFunction()
     Public Function AllExportFunctions() As CefExportFunction()
-        Static funcs As CefExportFunction()
         If funcs Is Nothing Then
             Dim ff = New List(Of CefExportFunction)(ExportFunctions)
             For Each t In CefStructTypes
