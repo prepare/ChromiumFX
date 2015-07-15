@@ -66,8 +66,7 @@ Public Class CefExportFunction
 
     Public ReadOnly Property CfxName As String
         Get
-            Static _name As String = "cfx_" & Name.Substring(4)
-            Return _name
+            Return "cfx_" & Name.Substring(4)
         End Get
     End Property
 
@@ -79,15 +78,13 @@ Public Class CefExportFunction
 
     Public ReadOnly Property PublicName As String
         Get
-            Static _name As String = CSharp.ApplyStyle(Name).Substring(If(Parent Is Nothing, 3, Parent.ClassName.Length)) & If(PrivateWrapper, "Private", "")
-            Return _name
+            Return CSharp.ApplyStyle(Name).Substring(If(Parent Is Nothing, 3, Parent.ClassName.Length)) & If(PrivateWrapper, "Private", "")
         End Get
     End Property
 
     Public ReadOnly Property ProxyFunctionName As String
         Get
-            Static _name As String = CSharp.ApplyStyle(CfxName).Substring(If(Parent Is Nothing, 3, 0))
-            Return _name
+            Return CSharp.ApplyStyle(CfxName).Substring(If(Parent Is Nothing, 3, 0))
         End Get
     End Property
 

@@ -51,8 +51,7 @@ Public MustInherit Class CefType
 
     Public Overridable ReadOnly Property ClassName As String
         Get
-            Static _name As String = CSharp.ApplyStyle(CfxName)
-            Return _name
+            Return CSharp.ApplyStyle(CfxName)
         End Get
     End Property
 
