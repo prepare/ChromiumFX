@@ -29,41 +29,36 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+public class BlittablePtrType : ApiType {
+    public readonly BlittableType BlittableType;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+    public readonly string Indirection;
 
-namespace Chromium {
-    partial class CfxMainArgsLinux {
+    public BlittablePtrType(BlittableType baseType, string indirection)
+        : base(AddIndirection(baseType.Name, indirection)) {
+        this.Indirection = indirection;
+        this.BlittableType = baseType;
+    }
 
-        internal static CfxMainArgsLinux Create() {
-            var args = Environment.GetCommandLineArgs();
-            var mainArgs = new CfxMainArgsLinux();
-            mainArgs.Argc = args.Length;
-            if(args.Length > 0) {
-                mainArgs.managedArgv = new IntPtr[args.Length];
-                for(int i = 0; i < args.Length; ++i) {
-                    mainArgs.managedArgv[i] = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(args[i]);
+    public override string OriginalSymbol {
+        get { return AddIndirection(BlittableType.OriginalSymbol, Indirection); }
+    }
+
+    public override string PInvokeSymbol {
+        get { return "IntPtr"; }
+    }
+
+    private string[] _matches;
+
+    public override string[] ParserMatches {
+        get {
+            if(_matches == null) {
+                _matches = new string[BlittableType.ParserMatches.Length];
+                for(var i = 0; i <= _matches.Length - 1; i++) {
+                    _matches[i] = BlittableType.ParserMatches[i] + Indirection;
                 }
-                mainArgs.argvPinned = new PinnedObject(mainArgs.managedArgv);
-                mainArgs.Argv = mainArgs.argvPinned.PinnedPtr;
-            } 
-            return mainArgs;
-        }
-
-        private IntPtr[] managedArgv;
-        private PinnedObject argvPinned;
-
-        // Must be called explicitly, otherwise leaks
-        internal void Free() {
-            if(managedArgv == null) return;
-            argvPinned.Free();
-            for(int i = 0; i < managedArgv.Length; ++i) {
-                System.Runtime.InteropServices.Marshal.FreeHGlobal(managedArgv[i]);
             }
-            managedArgv = null;
+            return _matches;
         }
     }
 }

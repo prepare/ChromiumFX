@@ -29,41 +29,37 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Chromium {
-    partial class CfxMainArgsLinux {
+public class SignatureWithStructPtrArray : Signature {
+    private int arrayIndex;
 
-        internal static CfxMainArgsLinux Create() {
-            var args = Environment.GetCommandLineArgs();
-            var mainArgs = new CfxMainArgsLinux();
-            mainArgs.Argc = args.Length;
-            if(args.Length > 0) {
-                mainArgs.managedArgv = new IntPtr[args.Length];
-                for(int i = 0; i < args.Length; ++i) {
-                    mainArgs.managedArgv[i] = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(args[i]);
-                }
-                mainArgs.argvPinned = new PinnedObject(mainArgs.managedArgv);
-                mainArgs.Argv = mainArgs.argvPinned.PinnedPtr;
-            } 
-            return mainArgs;
-        }
+    private int countIndex;
 
-        private IntPtr[] managedArgv;
-        private PinnedObject argvPinned;
+    private Argument[] m_publicArguments;
 
-        // Must be called explicitly, otherwise leaks
-        internal void Free() {
-            if(managedArgv == null) return;
-            argvPinned.Free();
-            for(int i = 0; i < managedArgv.Length; ++i) {
-                System.Runtime.InteropServices.Marshal.FreeHGlobal(managedArgv[i]);
+    public SignatureWithStructPtrArray(ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api, int arrayIndex, int countIndex)
+        : base(owner, sd, api) {
+        this.arrayIndex = arrayIndex;
+        this.countIndex = countIndex;
+
+        var list = new List<Argument>();
+        for(var i = 0; i <= Arguments.Length - 1; i++) {
+            if(i != arrayIndex && i != countIndex) {
+                list.Add(Arguments[i]);
+            } else if(i == arrayIndex) {
+                var a = new Argument(Arguments[arrayIndex], new CefStructPtrArrayType(Arguments[arrayIndex], Arguments[countIndex]));
+                list.Add(a);
+                Arguments[i] = a;
             }
-            managedArgv = null;
         }
+        m_publicArguments = list.ToArray();
+    }
+
+    public override Argument[] ManagedArguments {
+        get { return m_publicArguments; }
+    }
+
+    public override void DebugPrintUnhandledArrayArguments() {
     }
 }

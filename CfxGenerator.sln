@@ -3,18 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CfxGenerator", "CfxGenerator\CfxGenerator.vbproj", "{72D274FD-FAB4-4480-9514-C6725029916F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CfxGenerator", "CfxGenerator\CfxGenerator.csproj", "{BEC79EF6-997A-4F56-9CEF-F01AC28BDEF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x86 = Debug|x86
-		Release|x86 = Release|x86
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{72D274FD-FAB4-4480-9514-C6725029916F}.Debug|x86.ActiveCfg = Debug|x86
-		{72D274FD-FAB4-4480-9514-C6725029916F}.Debug|x86.Build.0 = Debug|x86
-		{72D274FD-FAB4-4480-9514-C6725029916F}.Release|x86.ActiveCfg = Release|x86
-		{72D274FD-FAB4-4480-9514-C6725029916F}.Release|x86.Build.0 = Release|x86
+		{BEC79EF6-997A-4F56-9CEF-F01AC28BDEF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEC79EF6-997A-4F56-9CEF-F01AC28BDEF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEC79EF6-997A-4F56-9CEF-F01AC28BDEF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEC79EF6-997A-4F56-9CEF-F01AC28BDEF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

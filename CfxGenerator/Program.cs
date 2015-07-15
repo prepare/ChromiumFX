@@ -29,41 +29,32 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Chromium {
-    partial class CfxMainArgsLinux {
+internal static class Program {
 
-        internal static CfxMainArgsLinux Create() {
-            var args = Environment.GetCommandLineArgs();
-            var mainArgs = new CfxMainArgsLinux();
-            mainArgs.Argc = args.Length;
-            if(args.Length > 0) {
-                mainArgs.managedArgv = new IntPtr[args.Length];
-                for(int i = 0; i < args.Length; ++i) {
-                    mainArgs.managedArgv[i] = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(args[i]);
-                }
-                mainArgs.argvPinned = new PinnedObject(mainArgs.managedArgv);
-                mainArgs.Argv = mainArgs.argvPinned.PinnedPtr;
-            } 
-            return mainArgs;
-        }
+    public const string CfxPath = "..\\..\\..\\..\\ChromiumFX";
 
-        private IntPtr[] managedArgv;
-        private PinnedObject argvPinned;
+    public static int EmitDebugInfo = 0;
 
-        // Must be called explicitly, otherwise leaks
-        internal void Free() {
-            if(managedArgv == null) return;
-            argvPinned.Free();
-            for(int i = 0; i < managedArgv.Length; ++i) {
-                System.Runtime.InteropServices.Marshal.FreeHGlobal(managedArgv[i]);
-            }
-            managedArgv = null;
+    public static bool DocumentationFormatBugStillExists;
+
+    public static void Main() {
+
+        //GeneratedFileManager.PatchFilesLicense(CfxPath);
+        //Environment.Exit(0);
+
+        Environment.CurrentDirectory = CfxPath;
+
+        var parser = new ApiTypeBuilder();
+        var decls = parser.GetDeclarations();
+
+        var gen = new WrapperGenerator(decls);
+        gen.Run();
+
+        if(!DocumentationFormatBugStillExists) {
+            //remove workaroung for this bug in CSharp.PrepareSummaryLine
+            System.Diagnostics.Debugger.Break();
         }
     }
 }

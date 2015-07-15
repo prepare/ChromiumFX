@@ -29,41 +29,40 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+public class CefStructPtrPtrType : ApiType {
+    public readonly CefStructPtrType StructPtr;
+    public readonly CefStructType Struct;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+    public readonly string Indirection;
 
-namespace Chromium {
-    partial class CfxMainArgsLinux {
+    public CefStructPtrPtrType(CefStructPtrType structPtr, string Indirection)
+        : base(AddIndirection(structPtr.Name, Indirection)) {
+        this.StructPtr = structPtr;
+        this.Struct = structPtr.Struct;
+        this.Indirection = Indirection;
+    }
 
-        internal static CfxMainArgsLinux Create() {
-            var args = Environment.GetCommandLineArgs();
-            var mainArgs = new CfxMainArgsLinux();
-            mainArgs.Argc = args.Length;
-            if(args.Length > 0) {
-                mainArgs.managedArgv = new IntPtr[args.Length];
-                for(int i = 0; i < args.Length; ++i) {
-                    mainArgs.managedArgv[i] = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(args[i]);
-                }
-                mainArgs.argvPinned = new PinnedObject(mainArgs.managedArgv);
-                mainArgs.Argv = mainArgs.argvPinned.PinnedPtr;
-            } 
-            return mainArgs;
-        }
+    protected CefStructPtrPtrType(CefStructPtrPtrType structPtrPtr)
+        : this(structPtrPtr.StructPtr, structPtrPtr.Indirection) {
+    }
 
-        private IntPtr[] managedArgv;
-        private PinnedObject argvPinned;
+    public override string OriginalSymbol {
+        get { return AddIndirection(Struct.OriginalSymbol, Indirection); }
+    }
 
-        // Must be called explicitly, otherwise leaks
-        internal void Free() {
-            if(managedArgv == null) return;
-            argvPinned.Free();
-            for(int i = 0; i < managedArgv.Length; ++i) {
-                System.Runtime.InteropServices.Marshal.FreeHGlobal(managedArgv[i]);
-            }
-            managedArgv = null;
-        }
+    public override string PInvokeSymbol {
+        get { return "IntPtr"; }
+    }
+
+    public override string[] ParserMatches {
+        get { return new string[] { Struct.ParserMatches[0] + Indirection, Struct.ParserMatches[1] + Indirection }; }
+    }
+
+    public override bool IsCefStructPtrPtrType {
+        get { return true; }
+    }
+
+    public override CefStructPtrPtrType AsCefStructPtrPtrType {
+        get { return this; }
     }
 }

@@ -29,41 +29,17 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+public class SpecialType : ApiType {
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+    public SpecialType(string name)
+        : base(name) {
+    }
 
-namespace Chromium {
-    partial class CfxMainArgsLinux {
+    public override string PInvokeSymbol {
+        get { return "IntPtr"; }
+    }
 
-        internal static CfxMainArgsLinux Create() {
-            var args = Environment.GetCommandLineArgs();
-            var mainArgs = new CfxMainArgsLinux();
-            mainArgs.Argc = args.Length;
-            if(args.Length > 0) {
-                mainArgs.managedArgv = new IntPtr[args.Length];
-                for(int i = 0; i < args.Length; ++i) {
-                    mainArgs.managedArgv[i] = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(args[i]);
-                }
-                mainArgs.argvPinned = new PinnedObject(mainArgs.managedArgv);
-                mainArgs.Argv = mainArgs.argvPinned.PinnedPtr;
-            } 
-            return mainArgs;
-        }
-
-        private IntPtr[] managedArgv;
-        private PinnedObject argvPinned;
-
-        // Must be called explicitly, otherwise leaks
-        internal void Free() {
-            if(managedArgv == null) return;
-            argvPinned.Free();
-            for(int i = 0; i < managedArgv.Length; ++i) {
-                System.Runtime.InteropServices.Marshal.FreeHGlobal(managedArgv[i]);
-            }
-            managedArgv = null;
-        }
+    public override string[] ParserMatches {
+        get { return new string[] { OriginalSymbol, "struct _" + OriginalSymbol }; }
     }
 }

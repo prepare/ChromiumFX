@@ -29,41 +29,44 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+public class CustomSignatures {
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Chromium {
-    partial class CfxMainArgsLinux {
-
-        internal static CfxMainArgsLinux Create() {
-            var args = Environment.GetCommandLineArgs();
-            var mainArgs = new CfxMainArgsLinux();
-            mainArgs.Argc = args.Length;
-            if(args.Length > 0) {
-                mainArgs.managedArgv = new IntPtr[args.Length];
-                for(int i = 0; i < args.Length; ++i) {
-                    mainArgs.managedArgv[i] = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(args[i]);
+    public static Signature ForFunction(ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api) {
+        if(owner.CefName.Contains("::get_") && sd.Arguments.Count == 2) {
+            if(sd.ReturnType.Name == "void" && string.IsNullOrEmpty(sd.ReturnType.Indirection)) {
+                if(sd.Arguments[1].ArgumentType.Name.StartsWith("cef_string_list") || sd.Arguments[1].ArgumentType.Name.StartsWith("cef_string_m")) {
+                    return new StringCollectionAsRetvalSignature(owner, sd, api);
                 }
-                mainArgs.argvPinned = new PinnedObject(mainArgs.managedArgv);
-                mainArgs.Argv = mainArgs.argvPinned.PinnedPtr;
-            } 
-            return mainArgs;
+            }
         }
 
-        private IntPtr[] managedArgv;
-        private PinnedObject argvPinned;
+        switch(owner.CefName) {
+            case "cef_browser::get_frame_identifiers":
+                return new GetFrameIdentifiersSignature(owner, sd, api);
 
-        // Must be called explicitly, otherwise leaks
-        internal void Free() {
-            if(managedArgv == null) return;
-            argvPinned.Free();
-            for(int i = 0; i < managedArgv.Length; ++i) {
-                System.Runtime.InteropServices.Marshal.FreeHGlobal(managedArgv[i]);
-            }
-            managedArgv = null;
+            case "cef_v8value::execute_function_with_context":
+                return new SignatureWithStructPtrArray(owner, sd, api, 4, 3);
+
+            case "cef_v8value::execute_function":
+                return new SignatureWithStructPtrArray(owner, sd, api, 3, 2);
+
+            case "cef_render_handler::on_paint":
+                return new OnPaintSignature(owner, sd, api);
+
+            case "cef_post_data::get_elements":
+                return new GetPostDataElementsSignature(owner, sd, api);
+
+            case "cef_v8handler::execute":
+                return new CefV8HandlerExecuteSignature(owner, sd, api);
+
+            case "cef_print_settings::set_page_ranges":
+                return new SignatureWithStructArray(owner, sd, api, 2, 1);
+
+            case "cef_print_settings::get_page_ranges":
+                return new GetPageRangesSignature(owner, sd, api, 2, 1);
+
+            default:
+                return null;
         }
     }
 }
