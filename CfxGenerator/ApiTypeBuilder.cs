@@ -31,11 +31,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 
 public class ApiTypeBuilder {
+
     private Parser.CefApiData apiData;
 
     private SortedDictionary<string, ApiType> apiTypes;
@@ -44,7 +46,8 @@ public class ApiTypeBuilder {
 
     public CefApiDeclarations GetDeclarations() {
         apiData = Deserialize();
-        if(apiData == null) {
+        string hash = Parser.ApiParser.ParseApiHash();
+        if(apiData == null || !hash.Equals(apiData.ApiHashUniversal)) {
             var parser = new Parser.ApiParser();
             apiData = parser.Parse();
             Serialize(apiData);
