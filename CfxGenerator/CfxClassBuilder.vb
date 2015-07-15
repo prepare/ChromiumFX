@@ -579,7 +579,7 @@ Public Class CfxClassBuilder
                         p.Setter.Comments.Lines(0).StartsWith("Set ") AndAlso
                         p.Getter.Comments.Lines(0).Substring(4).Equals(p.Setter.Comments.Lines(0).Substring(4)) Then
 
-                    summary.Lines = {"Get or set " & p.Getter.Comments.Lines(0).Substring(4)}
+                    summary.Lines = New String() {"Get or set " & p.Getter.Comments.Lines(0).Substring(4)}
                 Else
                     Dim summaryLines As New List(Of String)
                     summaryLines.AddRange(p.Getter.Comments.Lines)
