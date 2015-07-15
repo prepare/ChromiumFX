@@ -294,7 +294,7 @@ Public Class CefCallbackType
 
         If Not Signature.PublicReturnType.IsVoid Then
             Dim cd = New CommentData
-            cd.Lines = {String.Format("Set the return value for the <see cref=""{0}.{1}""/> callback.", Parent.ClassName, PublicFunctionName),
+            cd.Lines = New String() {String.Format("Set the return value for the <see cref=""{0}.{1}""/> callback.", Parent.ClassName, PublicFunctionName),
                         "Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown."}
             b.AppendSummary(cd)
             b.BeginBlock("public void SetReturnValue({0} returnValue)", Signature.PublicReturnType.PublicSymbol)
@@ -367,11 +367,11 @@ Public Class CefCallbackType
             Dim arg = Signature.ManagedArguments(i)
             Dim cd = New CommentData
             If arg.ArgumentType.IsIn AndAlso arg.ArgumentType.IsOut Then
-                cd.Lines = {String.Format("Get or set the {0} parameter for the <see cref=""{1}.{2}""/> render process callback.", arg.PublicPropertyName, Parent.RemoteSymbol, PublicFunctionName)}
+                cd.Lines = New String() {String.Format("Get or set the {0} parameter for the <see cref=""{1}.{2}""/> render process callback.", arg.PublicPropertyName, Parent.RemoteSymbol, PublicFunctionName)}
             ElseIf arg.ArgumentType.IsIn Then
-                cd.Lines = {String.Format("Get the {0} parameter for the <see cref=""{1}.{2}""/> render process callback.", arg.PublicPropertyName, Parent.RemoteSymbol, PublicFunctionName)}
+                cd.Lines = New String() {String.Format("Get the {0} parameter for the <see cref=""{1}.{2}""/> render process callback.", arg.PublicPropertyName, Parent.RemoteSymbol, PublicFunctionName)}
             Else
-                cd.Lines = {String.Format("Set the {0} out parameter for the <see cref=""{1}.{2}""/> render process callback.", arg.PublicPropertyName, Parent.RemoteSymbol, PublicFunctionName)}
+                cd.Lines = New String() {String.Format("Set the {0} out parameter for the <see cref=""{1}.{2}""/> render process callback.", arg.PublicPropertyName, Parent.RemoteSymbol, PublicFunctionName)}
             End If
             b.AppendSummary(cd)
             b.BeginBlock("public {0} {1}", arg.ArgumentType.RemoteSymbol, arg.PublicPropertyName)
@@ -405,7 +405,7 @@ Public Class CefCallbackType
         Next
         If Not Signature.PublicReturnType.IsVoid Then
             Dim cd = New CommentData
-            cd.Lines = {String.Format("Set the return value for the <see cref=""{0}.{1}""/> render process callback.", Parent.RemoteClassName, PublicFunctionName),
+            cd.Lines = New String() {String.Format("Set the return value for the <see cref=""{0}.{1}""/> render process callback.", Parent.RemoteClassName, PublicFunctionName),
                         "Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown."}
             b.AppendSummary(cd)
             b.BeginBlock("public void SetReturnValue({0} returnValue)", Signature.PublicReturnType.RemoteSymbol)

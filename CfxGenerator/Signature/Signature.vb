@@ -360,11 +360,11 @@ Public Class Signature
             Dim arg = ManagedArguments(i)
             Dim cd = New CommentData
             If arg.ArgumentType.IsIn AndAlso arg.ArgumentType.IsOut Then
-                cd.Lines = {String.Format("Get or set the {0} parameter for the <see cref=""{1}.{2}""/> callback.", arg.PublicPropertyName, Owner.PublicClassName, Owner.PublicFunctionName)}
+                cd.Lines = New String() {String.Format("Get or set the {0} parameter for the <see cref=""{1}.{2}""/> callback.", arg.PublicPropertyName, Owner.PublicClassName, Owner.PublicFunctionName)}
             ElseIf arg.ArgumentType.IsIn Then
-                cd.Lines = {String.Format("Get the {0} parameter for the <see cref=""{1}.{2}""/> callback.", arg.PublicPropertyName, Owner.PublicClassName, Owner.PublicFunctionName)}
+                cd.Lines = New String() {String.Format("Get the {0} parameter for the <see cref=""{1}.{2}""/> callback.", arg.PublicPropertyName, Owner.PublicClassName, Owner.PublicFunctionName)}
             Else
-                cd.Lines = {String.Format("Set the {0} out parameter for the <see cref=""{1}.{2}""/> callback.", arg.PublicPropertyName, Owner.PublicClassName, Owner.PublicFunctionName)}
+                cd.Lines = New String() {String.Format("Set the {0} out parameter for the <see cref=""{1}.{2}""/> callback.", arg.PublicPropertyName, Owner.PublicClassName, Owner.PublicFunctionName)}
             End If
             b.AppendSummary(cd)
             b.BeginBlock("public {0} {1}", arg.ArgumentType.PublicSymbol, arg.PublicPropertyName)
