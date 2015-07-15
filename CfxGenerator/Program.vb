@@ -30,7 +30,7 @@
 
 
 
-Module Main
+Module Program
 
     Public Const CfxPath As String = "..\..\..\..\ChromiumFX"
 
@@ -58,6 +58,6 @@ Module Main
     End Sub
 
 
-    
+
 
 End Module

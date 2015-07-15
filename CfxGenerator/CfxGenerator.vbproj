@@ -9,7 +9,7 @@
     </SchemaVersion>
     <ProjectGuid>{72D274FD-FAB4-4480-9514-C6725029916F}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Main</StartupObject>
+    <StartupObject>Program</StartupObject>
     <RootNamespace>
     </RootNamespace>
     <AssemblyName>CfxGenerator</AssemblyName>
@@ -145,7 +145,7 @@
     <Compile Include="CodeSnippets.vb" />
     <Compile Include="GeneratedFileManager.vb" />
     <Compile Include="GeneratorConfig.vb" />
-    <Compile Include="Main.vb" />
+    <Compile Include="Program.vb" />
     <Compile Include="AssemblyInfo.vb" />
     <Compile Include="CSharp.vb" />
     <Compile Include="WrapperGenerator.vb" />

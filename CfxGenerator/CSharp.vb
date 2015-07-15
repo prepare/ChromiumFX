@@ -61,7 +61,7 @@ Public Class CSharp
 
     Private Shared Function PrepareSummaryLine_TypeMatch(m As Match) As String
         If m.Groups(2).Success Then
-            Main.DocumentationFormatBugStillExists = True
+            Program.DocumentationFormatBugStillExists = True
             Return ApplyStyle(m.Groups(1).Value, False) & m.Groups(2).Value
         Else
             Return ApplyStyle(m.Groups(1).Value, False)

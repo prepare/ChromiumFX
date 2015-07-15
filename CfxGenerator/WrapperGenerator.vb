@@ -71,15 +71,6 @@ Public Class WrapperGenerator
         BuildFunctionPointers(fileManager)
         fileManager.DeleteObsoleteFiles()
 
-        ''first pass without building files
-        ''needed to set the WrapFunctionUsed and UnwrapFunctionUsed flags
-        'fileManager = New GeneratedFileManager()
-        'BuildCfxRuntime(fileManager)
-        'BuildApiClasses(fileManager, StructCategory.ApiCalls)
-        'BuildApiClasses(fileManager, StructCategory.ApiCallbacks)
-        'BuildApiClasses(fileManager, StructCategory.Values)
-
-
         generatedCSFiles = New List(Of String)
 
         fileManager = New GeneratedFileManager("ChromiumFX\Generated")
@@ -91,10 +82,6 @@ Public Class WrapperGenerator
         BuildApiClasses(fileManager, StructCategory.Values)
         fileManager.DeleteObsoleteFiles()
         generatedCSFiles.AddRange(fileManager.GetNewFiles())
-
-        For Each struct In decls.CefStructTypes
-            'Debug.Print("{0}: Wrap {1} Unwrap {2}", struct.ClassName, struct.ClassBuilder.WrapFunctionUsed, struct.ClassBuilder.UnwrapFunctionUsed)
-        Next
 
 
         fileManager = New GeneratedFileManager("ChromiumFX\Generated\Remote")
