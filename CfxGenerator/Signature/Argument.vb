@@ -72,23 +72,20 @@ Public Class Argument
             ElseIf IsThisArgument Then
                 Return "this"
             Else
-                Static _name As String = CSharp.ApplyStyle(VarName, True)
-                Return _name
+                Return CSharp.ApplyStyle(VarName, True)
             End If
         End Get
     End Property
 
     Public ReadOnly Property ProxyVarName As String
         Get
-            Static _name As String = If(IsThisArgument, "self", PublicVarName)
-            Return _name
+            Return If(IsThisArgument, "self", PublicVarName)
         End Get
     End Property
 
     Public ReadOnly Property PublicPropertyName As String
         Get
-            Static _name As String = CSharp.Escape(CSharp.ApplyStyle(VarName, False))
-            Return _name
+            Return CSharp.Escape(CSharp.ApplyStyle(VarName, False))
         End Get
     End Property
 

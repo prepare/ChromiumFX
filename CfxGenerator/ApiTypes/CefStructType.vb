@@ -60,8 +60,7 @@ Public Class CefStructType
 
     Public ReadOnly Property RemoteClassName As String
         Get
-            Static _name As String = "Cfr" & CSharp.ApplyStyle(Name.Substring(4))
-            Return _name
+            Return "Cfr" & CSharp.ApplyStyle(Name.Substring(4))
         End Get
     End Property
 
