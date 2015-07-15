@@ -112,7 +112,7 @@ Public Class GeneratedFileManager
         Dim files = Directory.GetFiles(dir)
         For Each f In files
             Dim ext = Path.GetExtension(f)
-            If {".cs", ".vb", ".c", ".cpp", ".h"}.Contains(ext.ToLowerInvariant()) Then
+            If New String() {".cs", ".vb", ".c", ".cpp", ".h"}.Contains(ext.ToLowerInvariant()) Then
                 Dim content = File.ReadAllText(f)
 
                 If Not content.StartsWith("'' Copyright") AndAlso Not content.StartsWith("// Copyright") Then
