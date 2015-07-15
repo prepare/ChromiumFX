@@ -29,41 +29,30 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+public class CefPlatformBasePtrType : SpecialType {
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+    public CefPlatformBasePtrType(string name)
+        : base(name) {
+    }
 
-namespace Chromium {
-    partial class CfxMainArgsLinux {
+    public override string PublicSymbol {
+        get { return "Cfx" + CSharp.ApplyStyle(Name.Substring(4, Name.Length - 7)); }
+    }
 
-        internal static CfxMainArgsLinux Create() {
-            var args = Environment.GetCommandLineArgs();
-            var mainArgs = new CfxMainArgsLinux();
-            mainArgs.Argc = args.Length;
-            if(args.Length > 0) {
-                mainArgs.managedArgv = new IntPtr[args.Length];
-                for(int i = 0; i < args.Length; ++i) {
-                    mainArgs.managedArgv[i] = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(args[i]);
-                }
-                mainArgs.argvPinned = new PinnedObject(mainArgs.managedArgv);
-                mainArgs.Argv = mainArgs.argvPinned.PinnedPtr;
-            } 
-            return mainArgs;
-        }
+    public override string PublicUnwrapExpression(string var) {
+        return string.Format("{0}.Unwrap({1})", PublicSymbol, var);
+    }
 
-        private IntPtr[] managedArgv;
-        private PinnedObject argvPinned;
+    public override string PublicWrapExpression(string var) {
+        return string.Format("{0}.Wrap({1})", PublicSymbol, var);
+    }
 
-        // Must be called explicitly, otherwise leaks
-        internal void Free() {
-            if(managedArgv == null) return;
-            argvPinned.Free();
-            for(int i = 0; i < managedArgv.Length; ++i) {
-                System.Runtime.InteropServices.Marshal.FreeHGlobal(managedArgv[i]);
-            }
-            managedArgv = null;
+    public override void EmitPreNativeCallStatements(CodeBuilder b, string var) {
+        if(Name == "cef_main_args_t*") {
+            b.AppendLine("#if defined CFX_WINDOWS");
+            b.AppendLine("cef_main_args_t args_tmp = { GetModuleHandle(0) };");
+            b.AppendLine("args = &args_tmp;");
+            b.AppendLine("#endif");
         }
     }
 }

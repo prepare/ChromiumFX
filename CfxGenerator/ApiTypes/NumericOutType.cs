@@ -29,41 +29,39 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+public class NumericOutType : ApiType {
+    public readonly NumericType BaseType;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+    public NumericOutType(NumericType baseType)
+        : base(AddIndirection(baseType.Name, "*")) {
+        this.BaseType = baseType;
+    }
 
-namespace Chromium {
-    partial class CfxMainArgsLinux {
+    public override string PInvokeSymbol {
+        get { return BaseType.PInvokeSymbol; }
+    }
 
-        internal static CfxMainArgsLinux Create() {
-            var args = Environment.GetCommandLineArgs();
-            var mainArgs = new CfxMainArgsLinux();
-            mainArgs.Argc = args.Length;
-            if(args.Length > 0) {
-                mainArgs.managedArgv = new IntPtr[args.Length];
-                for(int i = 0; i < args.Length; ++i) {
-                    mainArgs.managedArgv[i] = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(args[i]);
-                }
-                mainArgs.argvPinned = new PinnedObject(mainArgs.managedArgv);
-                mainArgs.Argv = mainArgs.argvPinned.PinnedPtr;
-            } 
-            return mainArgs;
-        }
+    public override string PInvokeCallSignature(string var) {
+        return "out " + BaseType.PInvokeCallSignature(var);
+    }
 
-        private IntPtr[] managedArgv;
-        private PinnedObject argvPinned;
+    public override string PublicCallSignature(string var) {
+        return "out " + BaseType.PublicCallSignature(var);
+    }
 
-        // Must be called explicitly, otherwise leaks
-        internal void Free() {
-            if(managedArgv == null) return;
-            argvPinned.Free();
-            for(int i = 0; i < managedArgv.Length; ++i) {
-                System.Runtime.InteropServices.Marshal.FreeHGlobal(managedArgv[i]);
-            }
-            managedArgv = null;
-        }
+    public override string PublicUnwrapExpression(string var) {
+        return "out " + var;
+    }
+
+    public override void EmitPublicEventArgSetterStatements(CodeBuilder b, string var) {
+        b.AppendLine("m_{0} = value;", var);
+    }
+
+    public override bool IsOut {
+        get { return true; }
+    }
+
+    public override bool IsIn {
+        get { return false; }
     }
 }

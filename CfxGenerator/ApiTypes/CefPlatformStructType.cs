@@ -29,41 +29,30 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+public class CefPlatformStructType : CefStructType {
+    public readonly CefPlatform Platform;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+    private readonly string baseTypeName;
 
-namespace Chromium {
-    partial class CfxMainArgsLinux {
+    public CefPlatformStructType(string name, CommentData comments, CefPlatform platform)
+        : base(name + "_" + platform.ToString().ToLowerInvariant(), comments) {
+        this.Platform = platform;
+        baseTypeName = name;
+    }
 
-        internal static CfxMainArgsLinux Create() {
-            var args = Environment.GetCommandLineArgs();
-            var mainArgs = new CfxMainArgsLinux();
-            mainArgs.Argc = args.Length;
-            if(args.Length > 0) {
-                mainArgs.managedArgv = new IntPtr[args.Length];
-                for(int i = 0; i < args.Length; ++i) {
-                    mainArgs.managedArgv[i] = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(args[i]);
-                }
-                mainArgs.argvPinned = new PinnedObject(mainArgs.managedArgv);
-                mainArgs.Argv = mainArgs.argvPinned.PinnedPtr;
-            } 
-            return mainArgs;
-        }
+    public override string OriginalSymbol {
+        get { return baseTypeName + "_t"; }
+    }
 
-        private IntPtr[] managedArgv;
-        private PinnedObject argvPinned;
+    public override string[] ParserMatches {
+        get { return new string[] { Name }; }
+    }
 
-        // Must be called explicitly, otherwise leaks
-        internal void Free() {
-            if(managedArgv == null) return;
-            argvPinned.Free();
-            for(int i = 0; i < managedArgv.Length; ++i) {
-                System.Runtime.InteropServices.Marshal.FreeHGlobal(managedArgv[i]);
-            }
-            managedArgv = null;
-        }
+    public override bool IsCefPlatformStructType {
+        get { return true; }
+    }
+
+    public override CefPlatformStructType AsCefPlatformStructType {
+        get { return this; }
     }
 }

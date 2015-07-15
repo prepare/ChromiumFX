@@ -29,41 +29,46 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+public class NumericType : ApiType {
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+    private static string[] typeSpecs = {
+		"int|int",
+		"int32|int",
+		"int64|long",
+		"uint32|uint",
+		"uint64|ulong",
+		"unsigned short|ushort",
+		"long|int",
+		"unsigned long|uint",
+		"long long|long",
+		"unsigned long long|ulong",
+		"unsigned int|uint",
+		"unsigned|uint",
+		"float|float",
+		"double|double",
+		"DWORD|int"
+	};
 
-namespace Chromium {
-    partial class CfxMainArgsLinux {
-
-        internal static CfxMainArgsLinux Create() {
-            var args = Environment.GetCommandLineArgs();
-            var mainArgs = new CfxMainArgsLinux();
-            mainArgs.Argc = args.Length;
-            if(args.Length > 0) {
-                mainArgs.managedArgv = new IntPtr[args.Length];
-                for(int i = 0; i < args.Length; ++i) {
-                    mainArgs.managedArgv[i] = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(args[i]);
-                }
-                mainArgs.argvPinned = new PinnedObject(mainArgs.managedArgv);
-                mainArgs.Argv = mainArgs.argvPinned.PinnedPtr;
-            } 
-            return mainArgs;
+    public static void CreateAll(ApiTypeBuilder b) {
+        NumericType t = new SizeType();
+        b.AddType(t);
+        b.AddType(new NumericOutType(t));
+        foreach(var spec in typeSpecs) {
+            var names = spec.Split('|');
+            t = new NumericType(names[0], names[1]);
+            b.AddType(t);
+            b.AddType(new NumericOutType(t));
         }
+    }
 
-        private IntPtr[] managedArgv;
-        private PinnedObject argvPinned;
+    public readonly string PInvokeType;
 
-        // Must be called explicitly, otherwise leaks
-        internal void Free() {
-            if(managedArgv == null) return;
-            argvPinned.Free();
-            for(int i = 0; i < managedArgv.Length; ++i) {
-                System.Runtime.InteropServices.Marshal.FreeHGlobal(managedArgv[i]);
-            }
-            managedArgv = null;
-        }
+    public NumericType(string name, string pInvokeType)
+        : base(name) {
+        this.PInvokeType = pInvokeType;
+    }
+
+    public override string PInvokeSymbol {
+        get { return PInvokeType; }
     }
 }

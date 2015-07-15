@@ -29,41 +29,33 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+public class CefColorRefType : ApiType {
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+    public CefColorRefType()
+        : base("cef_color_t*") {
+    }
 
-namespace Chromium {
-    partial class CfxMainArgsLinux {
+    public override string NativeSymbol {
+        get { return "uint32*"; }
+    }
 
-        internal static CfxMainArgsLinux Create() {
-            var args = Environment.GetCommandLineArgs();
-            var mainArgs = new CfxMainArgsLinux();
-            mainArgs.Argc = args.Length;
-            if(args.Length > 0) {
-                mainArgs.managedArgv = new IntPtr[args.Length];
-                for(int i = 0; i < args.Length; ++i) {
-                    mainArgs.managedArgv[i] = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(args[i]);
-                }
-                mainArgs.argvPinned = new PinnedObject(mainArgs.managedArgv);
-                mainArgs.Argv = mainArgs.argvPinned.PinnedPtr;
-            } 
-            return mainArgs;
-        }
+    public override string PInvokeSymbol {
+        get { return "ref uint"; }
+    }
 
-        private IntPtr[] managedArgv;
-        private PinnedObject argvPinned;
+    public override string PublicSymbol {
+        get { return "CfxColor"; }
+    }
 
-        // Must be called explicitly, otherwise leaks
-        internal void Free() {
-            if(managedArgv == null) return;
-            argvPinned.Free();
-            for(int i = 0; i < managedArgv.Length; ++i) {
-                System.Runtime.InteropServices.Marshal.FreeHGlobal(managedArgv[i]);
-            }
-            managedArgv = null;
-        }
+    public override string PublicCallSignature(string var) {
+        return string.Concat("ref ", PublicSymbol, " ", var);
+    }
+
+    public override string PublicUnwrapExpression(string var) {
+        return string.Format("ref {0}.color", var);
+    }
+
+    public override string ProxyUnwrapExpression(string var) {
+        return string.Concat("ref ", var);
     }
 }

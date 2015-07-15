@@ -29,41 +29,20 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Chromium {
-    partial class CfxMainArgsLinux {
+namespace Parser {
 
-        internal static CfxMainArgsLinux Create() {
-            var args = Environment.GetCommandLineArgs();
-            var mainArgs = new CfxMainArgsLinux();
-            mainArgs.Argc = args.Length;
-            if(args.Length > 0) {
-                mainArgs.managedArgv = new IntPtr[args.Length];
-                for(int i = 0; i < args.Length; ++i) {
-                    mainArgs.managedArgv[i] = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(args[i]);
-                }
-                mainArgs.argvPinned = new PinnedObject(mainArgs.managedArgv);
-                mainArgs.Argv = mainArgs.argvPinned.PinnedPtr;
-            } 
-            return mainArgs;
-        }
+    [Serializable()]
+    public class StructMemberData {
+        public string Name;
+        public CefConfigData CefConfig;
+        public TypeData MemberType;
+        public SignatureData CallbackSignature;
+        public CommentData Comments;
 
-        private IntPtr[] managedArgv;
-        private PinnedObject argvPinned;
-
-        // Must be called explicitly, otherwise leaks
-        internal void Free() {
-            if(managedArgv == null) return;
-            argvPinned.Free();
-            for(int i = 0; i < managedArgv.Length; ++i) {
-                System.Runtime.InteropServices.Marshal.FreeHGlobal(managedArgv[i]);
-            }
-            managedArgv = null;
+        public override string ToString() {
+            return Name;
         }
     }
 }

@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BEC79EF6-997A-4F56-9CEF-F01AC28BDEF1}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CfxGenerator</RootNamespace>
+    <AssemblyName>CfxGenerator</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiTypeBuilder.cs" />
+    <Compile Include="ApiTypes\ApiType.cs" />
+    <Compile Include="ApiTypes\BlittablePtrType.cs" />
+    <Compile Include="ApiTypes\BlittableType.cs" />
+    <Compile Include="ApiTypes\BooleanInteger.cs" />
+    <Compile Include="ApiTypes\CefBasePtrType.cs" />
+    <Compile Include="ApiTypes\CefBaseType.cs" />
+    <Compile Include="ApiTypes\CefCallbackType.cs" />
+    <Compile Include="ApiTypes\CefColorType.cs" />
+    <Compile Include="ApiTypes\CefEnumOutType.cs" />
+    <Compile Include="ApiTypes\CefEnumType.cs" />
+    <Compile Include="ApiTypes\CefPlatformBasePtrType.cs" />
+    <Compile Include="ApiTypes\CefPlatformStructType.cs" />
+    <Compile Include="ApiTypes\CefRectArrayType.cs" />
+    <Compile Include="ApiTypes\CefStringListType.cs" />
+    <Compile Include="ApiTypes\CefStringMapType.cs" />
+    <Compile Include="ApiTypes\CefStringMultimapType.cs" />
+    <Compile Include="ApiTypes\CefStringPtrType.cs" />
+    <Compile Include="ApiTypes\CefStringPtrTypeConst.cs" />
+    <Compile Include="ApiTypes\CefStringType.cs" />
+    <Compile Include="ApiTypes\CefStringUserfreeType.cs" />
+    <Compile Include="ApiTypes\CefStructOutType.cs" />
+    <Compile Include="ApiTypes\CefStructPtrPtrType.cs" />
+    <Compile Include="ApiTypes\CefStructPtrType.cs" />
+    <Compile Include="ApiTypes\CefStructType.cs" />
+    <Compile Include="ApiTypes\CefType.cs" />
+    <Compile Include="ApiTypes\NumericOutType.cs" />
+    <Compile Include="ApiTypes\NumericType.cs" />
+    <Compile Include="ApiTypes\OpaquePtrType.cs" />
+    <Compile Include="ApiTypes\SizeType.cs" />
+    <Compile Include="ApiTypes\SpecialType.cs" />
+    <Compile Include="ApiTypes\StringCollectionType.cs" />
+    <Compile Include="ApiTypes\VoidPtrPtrType.cs" />
+    <Compile Include="ApiTypes\WrapperOnly\CefStructArrayType.cs" />
+    <Compile Include="ApiTypes\WrapperOnly\CefStructPtrArrayType.cs" />
+    <Compile Include="ApiTypes\WrapperOnly\WrapperArrayType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AssemblyResources.cs" />
+    <Compile Include="CefApiDeclarations.cs" />
+    <Compile Include="CefColorRefType.cs" />
+    <Compile Include="CefExportFunction.cs" />
+    <Compile Include="CefPlatform.cs" />
+    <Compile Include="CfxCallMode.cs" />
+    <Compile Include="CfxClassBuilder.cs" />
+    <Compile Include="CodeBuilder.cs" />
+    <Compile Include="CodeSnippets.cs" />
+    <Compile Include="CSharp.cs" />
+    <Compile Include="CustomSignatures\CefV8HandlerExecuteSignature.cs" />
+    <Compile Include="CustomSignatures\CustomSignatures.cs" />
+    <Compile Include="CustomSignatures\GetFrameIdentifiersSignature.cs" />
+    <Compile Include="CustomSignatures\GetPageRangesSignature.cs" />
+    <Compile Include="CustomSignatures\GetPostDataElementsSignature.cs" />
+    <Compile Include="CustomSignatures\OnPaintSignature.cs" />
+    <Compile Include="CustomSignatures\OutStringToRetvalSignature.cs" />
+    <Compile Include="CustomSignatures\SignatureWithStructArray.cs" />
+    <Compile Include="CustomSignatures\SignatureWithStructPtrArray.cs" />
+    <Compile Include="CustomSignatures\StringCollectionAsRetvalSignature.cs" />
+    <Compile Include="GeneratedFileManager.cs" />
+    <Compile Include="GeneratorConfig.cs" />
+    <Compile Include="ISignatureOwner.cs" />
+    <Compile Include="Parser\ApiParser.cs" />
+    <Compile Include="Parser\ArgumentData.cs" />
+    <Compile Include="Parser\CefApiData.cs" />
+    <Compile Include="Parser\CefConfigData.cs" />
+    <Compile Include="Parser\CommentData.cs" />
+    <Compile Include="Parser\EnumData.cs" />
+    <Compile Include="Parser\EnumMemberData.cs" />
+    <Compile Include="Parser\FunctionData.cs" />
+    <Compile Include="Parser\SignatureData.cs" />
+    <Compile Include="Parser\StructData.cs" />
+    <Compile Include="Parser\StructMemberData.cs" />
+    <Compile Include="Parser\TypeData.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Signature\Argument.cs" />
+    <Compile Include="Signature\Signature.cs" />
+    <Compile Include="StructProperty.cs" />
+    <Compile Include="WrapperGenerator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\AdditionalCallIds.txt" />
+    <EmbeddedResource Include="Config\BlittableTypes.txt" />
+    <EmbeddedResource Include="Config\BrowserProcessOnly.txt" />
+    <EmbeddedResource Include="Config\LicenseStub.txt" />
+    <EmbeddedResource Include="Config\PrivateWrapper.txt" />
+    <EmbeddedResource Include="Config\StructsNeedWrapping.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

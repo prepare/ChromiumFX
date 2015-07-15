@@ -29,41 +29,37 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Chromium {
-    partial class CfxMainArgsLinux {
+public class CefV8HandlerExecuteSignature : SignatureWithStructPtrArray {
+    private Argument[] m_publicArguments;
 
-        internal static CfxMainArgsLinux Create() {
-            var args = Environment.GetCommandLineArgs();
-            var mainArgs = new CfxMainArgsLinux();
-            mainArgs.Argc = args.Length;
-            if(args.Length > 0) {
-                mainArgs.managedArgv = new IntPtr[args.Length];
-                for(int i = 0; i < args.Length; ++i) {
-                    mainArgs.managedArgv[i] = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(args[i]);
-                }
-                mainArgs.argvPinned = new PinnedObject(mainArgs.managedArgv);
-                mainArgs.Argv = mainArgs.argvPinned.PinnedPtr;
-            } 
-            return mainArgs;
-        }
-
-        private IntPtr[] managedArgv;
-        private PinnedObject argvPinned;
-
-        // Must be called explicitly, otherwise leaks
-        internal void Free() {
-            if(managedArgv == null) return;
-            argvPinned.Free();
-            for(int i = 0; i < managedArgv.Length; ++i) {
-                System.Runtime.InteropServices.Marshal.FreeHGlobal(managedArgv[i]);
+    public CefV8HandlerExecuteSignature(ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api)
+        : base(owner, sd, api, 4, 3) {
+        var list = new List<Argument>();
+        foreach(var arg in base.ManagedArguments) {
+            if(arg.VarName != "retval") {
+                list.Add(arg);
             }
-            managedArgv = null;
         }
+        m_publicArguments = list.ToArray();
+    }
+
+    public override ApiType PublicReturnType {
+        get { return new CefStructPtrType(new CefStructType("cef_v8value", null), "*"); }
+    }
+
+    public override Argument[] ManagedArguments {
+        get { return m_publicArguments; }
+    }
+
+    protected override void EmitPostPublicEventHandlerReturnValueStatements(CodeBuilder b) {
+        b.BeginIf("e.m_returnValue != null");
+        b.AppendLine("retval = CfxV8Value.Unwrap(e.m_returnValue);");
+        b.AppendLine("__retval = 1;");
+        b.BeginElse();
+        b.AppendLine("retval = IntPtr.Zero;");
+        b.AppendLine("__retval = 0;");
+        b.EndBlock();
     }
 }
