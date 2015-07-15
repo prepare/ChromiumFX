@@ -158,11 +158,11 @@ Public Class CodeBuilder
     End Sub
 
     Sub BeginCfxNamespace()
-        BeginCfxNamespace({"System"})
+        BeginCfxNamespace(New String() {"System"})
     End Sub
 
     Sub BeginCfxNamespace(subspace As String)
-        BeginCfxNamespace({"System"}, subspace)
+        BeginCfxNamespace(New String() {"System"}, subspace)
     End Sub
 
     Sub BeginCfxNamespace(usingStmts As String(), Optional subspace As String = "")
