@@ -38,9 +38,9 @@ Public Class GeneratorConfig
         End Get
     End Property
 
+    Private Shared browserProcessOnly As String() = AssemblyResources.GetLines("BrowserProcessOnly.txt")
     Public Shared ReadOnly Property IsBrowserProcessOnly(item As String) As Boolean
         Get
-            Static browserProcessOnly As String() = AssemblyResources.GetLines("BrowserProcessOnly.txt")
             Return browserProcessOnly.Contains(item)
         End Get
     End Property
@@ -83,17 +83,17 @@ Public Class GeneratorConfig
     End Sub
 
 
+    Private Shared privateWrapperFunctions As String() = AssemblyResources.GetLines("PrivateWrapper.txt")
     Public Shared ReadOnly Property HasPrivateWrapper(item As String) As Boolean
         Get
-            Static privateWrapperFunctions As String() = AssemblyResources.GetLines("PrivateWrapper.txt")
             Return privateWrapperFunctions.Contains(item)
         End Get
     End Property
 
 
+    Private Shared callbackValueStructs As String() = AssemblyResources.GetLines("StructsNeedWrapping.txt")
     Public Shared ReadOnly Property ValueStructNeedsWrapping(item As String) As Boolean
         Get
-            Static callbackValueStructs As String() = AssemblyResources.GetLines("StructsNeedWrapping.txt")
             Return callbackValueStructs.Contains(item)
         End Get
     End Property

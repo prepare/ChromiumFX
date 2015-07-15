@@ -55,9 +55,9 @@ Public Class BlittablePtrType
         End Get
     End Property
 
+    Private _matches As String()
     Public Overrides ReadOnly Property ParserMatches As String()
         Get
-            Static _matches As String()
             If _matches Is Nothing Then
                 _matches = New String(BlittableType.ParserMatches.Length - 1) {}
                 For i = 0 To _matches.Length - 1

@@ -95,9 +95,9 @@ Public Class Signature
         End Get
     End Property
 
+    Private _managedArgs As Argument()
     Public Overridable ReadOnly Property ManagedArguments As Argument()
         Get
-            Static _managedArgs As Argument()
             If _managedArgs Is Nothing Then
                 Dim list = New List(Of Argument)
                 For Each arg In Arguments
