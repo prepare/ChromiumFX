@@ -36,6 +36,9 @@ namespace Parser {
 
     [Serializable()]
     public class CefApiData {
+
+        public string ApiHashUniversal;
+
         public List<StructData> CefStructs;
         public List<FunctionData> CefFunctions;
         public List<EnumData> CefEnums;
