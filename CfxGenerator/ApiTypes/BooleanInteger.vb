@@ -67,7 +67,7 @@ Public Class BooleanInteger
 
     Public Overrides ReadOnly Property ParserMatches As String()
         Get
-            Return {"bool"}
+            Return new String() {"bool"}
         End Get
     End Property
 
@@ -109,7 +109,7 @@ Public Class BooleanIntegerOutType
 
     Public Overrides ReadOnly Property ParserMatches As String()
         Get
-            Return {"bool*"}
+            Return new String() {"bool*"}
         End Get
     End Property
 

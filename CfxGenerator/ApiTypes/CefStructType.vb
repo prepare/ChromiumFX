@@ -155,7 +155,7 @@ Public Class CefStructType
 
     Public Overrides ReadOnly Property ParserMatches As String()
         Get
-            Return {OriginalSymbol, "struct _" & OriginalSymbol}
+            Return New String() {OriginalSymbol, "struct _" & OriginalSymbol}
         End Get
     End Property
 

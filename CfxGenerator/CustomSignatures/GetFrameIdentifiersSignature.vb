@@ -39,7 +39,7 @@ Public Class GetFrameIdentifiersSignature
 
     Public Overrides ReadOnly Property ManagedArguments As Argument()
         Get
-            Return {Arguments(0)}
+            Return New Argument() {Arguments(0)}
         End Get
     End Property
 

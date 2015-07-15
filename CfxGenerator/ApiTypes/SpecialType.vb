@@ -44,7 +44,7 @@ Public Class SpecialType
 
     Public Overrides ReadOnly Property ParserMatches As String()
         Get
-            Return {OriginalSymbol, "struct _" & OriginalSymbol}
+            Return new String() {OriginalSymbol, "struct _" & OriginalSymbol}
         End Get
     End Property
 

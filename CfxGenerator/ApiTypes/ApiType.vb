@@ -68,7 +68,7 @@ Public Class ApiType
 
     Public Overridable ReadOnly Property ParserMatches As String()
         Get
-            Return {OriginalSymbol}
+            Return new String() {OriginalSymbol}
         End Get
     End Property
 

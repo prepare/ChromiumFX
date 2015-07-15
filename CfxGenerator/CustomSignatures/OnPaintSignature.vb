@@ -40,7 +40,7 @@ Public Class OnPaintSignature
 
     Public Overrides ReadOnly Property ManagedArguments As Argument()
         Get
-            Return {MyBase.Arguments(0), MyBase.Arguments(1), MyBase.Arguments(2), New Argument(MyBase.Arguments(4), New CefRectArrayType(MyBase.Arguments(3))), MyBase.Arguments(5), MyBase.Arguments(6), MyBase.Arguments(7)}
+            Return New Argument() {MyBase.Arguments(0), MyBase.Arguments(1), MyBase.Arguments(2), New Argument(MyBase.Arguments(4), New CefRectArrayType(MyBase.Arguments(3))), MyBase.Arguments(5), MyBase.Arguments(6), MyBase.Arguments(7)}
         End Get
     End Property
 
