@@ -1,4 +1,4 @@
-﻿'' Copyright (c) 2014-2015 Wolfgang Borgsmüller
+'' Copyright (c) 2014-2015 Wolfgang Borgsmüller
 '' All rights reserved.
 '' 
 '' Redistribution and use in source and binary forms, with or without 
@@ -50,7 +50,7 @@ Public Class CefPlatformStructType
 
     Public Overrides ReadOnly Property ParserMatches As String()
         Get
-            Return {Name}
+            Return new String() {Name}
         End Get
     End Property
 

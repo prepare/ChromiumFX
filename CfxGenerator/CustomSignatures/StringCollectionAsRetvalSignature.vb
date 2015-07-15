@@ -1,4 +1,4 @@
-﻿Public Class StringCollectionAsRetvalSignature
+Public Class StringCollectionAsRetvalSignature
     Inherits Signature
 
     Public Sub New(parent As ISignatureOwner, sd As Parser.SignatureData, api As ApiTypeBuilder)
@@ -8,7 +8,7 @@
 
     Public Overrides ReadOnly Property ManagedArguments As Argument()
         Get
-            Return {MyBase.ManagedArguments(0)}
+            Return New Argument() {MyBase.ManagedArguments(0)}
         End Get
     End Property
 

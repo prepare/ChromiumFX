@@ -126,7 +126,7 @@ Public Class CefStructPtrType
 
     Public Overrides ReadOnly Property ParserMatches As String()
         Get
-            Return {Struct.ParserMatches(0) & Indirection, Struct.ParserMatches(1) & Indirection}
+            Return new String() {Struct.ParserMatches(0) & Indirection, Struct.ParserMatches(1) & Indirection}
         End Get
     End Property
 
