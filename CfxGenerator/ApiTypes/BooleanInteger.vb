@@ -57,17 +57,13 @@ Public Class BooleanInteger
         End Get
     End Property
 
-    Public Overrides ReadOnly Property PublicWrapExpression(var As String) As String
-        Get
-            Return String.Format("0 != {0}", CSharp.Escape(var))
-        End Get
-    End Property
+    Public Overrides Function PublicWrapExpression(var As String) As String
+        Return String.Format("0 != {0}", CSharp.Escape(var))
+    End Function
 
-    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("{0} ? 1 : 0", CSharp.Escape(var))
-        End Get
-    End Property
+    Public Overrides Function PublicUnwrapExpression(var As String) As String
+        Return String.Format("{0} ? 1 : 0", CSharp.Escape(var))
+    End Function
 
     Public Overrides ReadOnly Property ParserMatches As String()
         Get
@@ -91,17 +87,13 @@ Public Class BooleanIntegerOutType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property PublicCallSignature(var As String) As String
-        Get
-            Return "out bool " & var
-        End Get
-    End Property
+    Public Overrides Function PublicCallSignature(var As String) As String
+        Return "out bool " & var
+    End Function
 
-    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("out {0}_unwrapped", var)
-        End Get
-    End Property
+    Public Overrides Function PublicUnwrapExpression(var As String) As String
+        Return String.Format("out {0}_unwrapped", var)
+    End Function
 
     Public Overrides Sub EmitPublicEventArgSetterStatements(b As CodeBuilder, var As String)
         b.AppendLine("m_{0} = value ? 1 : 0;", var)

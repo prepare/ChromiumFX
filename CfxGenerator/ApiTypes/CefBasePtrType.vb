@@ -54,28 +54,20 @@ Public Class CefBasePtrType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property PublicWrapExpression(var As String) As String
-        Get
-            Return String.Format("CfxBase.Cast({0})", var)
-        End Get
-    End Property
+    Public Overrides Function PublicWrapExpression(var As String) As String
+        Return String.Format("CfxBase.Cast({0})", var)
+    End Function
 
-    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("CfxBase.Unwrap({0})", var)
-        End Get
-    End Property
+    Public Overrides Function PublicUnwrapExpression(var As String) As String
+        Return String.Format("CfxBase.Unwrap({0})", var)
+    End Function
 
-    Public Overrides ReadOnly Property ProxyWrapExpression(var As String) As String
-        Get
-            Return String.Format("CfxBase.Unwrap({0})", var)
-        End Get
-    End Property
+    Public Overrides Function ProxyWrapExpression(var As String) As String
+        Return String.Format("CfxBase.Unwrap({0})", var)
+    End Function
 
-    Public Overrides ReadOnly Property ProxyUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("CfxBase.Cast({0})", var)
-        End Get
-    End Property
+    Public Overrides Function ProxyUnwrapExpression(var As String) As String
+        Return String.Format("CfxBase.Cast({0})", var)
+    End Function
 
 End Class

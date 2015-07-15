@@ -1,4 +1,4 @@
-﻿'' Copyright (c) 2014-2015 Wolfgang Borgsmüller
+'' Copyright (c) 2014-2015 Wolfgang Borgsmüller
 '' All rights reserved.
 '' 
 '' Redistribution and use in source and binary forms, with or without 
@@ -53,23 +53,17 @@ Public Class CefEnumOutType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property PInvokeCallSignature(var As String) As String
-        Get
-            Return "out " & cefEnum.PInvokeCallSignature(var)
-        End Get
-    End Property
+    Public Overrides Function PInvokeCallSignature(var As String) As String
+        Return "out " & cefEnum.PInvokeCallSignature(var)
+    End Function
 
-    Public Overrides ReadOnly Property PublicCallSignature(var As String) As String
-        Get
-            Return "out " & cefEnum.PublicCallSignature(var)
-        End Get
-    End Property
+    Public Overrides Function PublicCallSignature(var As String) As String
+        Return "out " & cefEnum.PublicCallSignature(var)
+    End Function
 
-    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
-        Get
-            Return "out " & var
-        End Get
-    End Property
+    Public Overrides Function PublicUnwrapExpression(var As String) As String
+        Return "out " & var
+    End Function
 
 
 

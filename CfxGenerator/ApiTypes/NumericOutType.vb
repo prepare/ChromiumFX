@@ -46,23 +46,17 @@ Public Class NumericOutType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property PInvokeCallSignature(var As String) As String
-        Get
-            Return "out " & BaseType.PInvokeCallSignature(var)
-        End Get
-    End Property
+    Public Overrides Function PInvokeCallSignature(var As String) As String
+        Return "out " & BaseType.PInvokeCallSignature(var)
+    End Function
 
-    Public Overrides ReadOnly Property PublicCallSignature(var As String) As String
-        Get
-            Return "out " & BaseType.PublicCallSignature(var)
-        End Get
-    End Property
+    Public Overrides Function PublicCallSignature(var As String) As String
+        Return "out " & BaseType.PublicCallSignature(var)
+    End Function
 
-    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
-        Get
-            Return "out " & var
-        End Get
-    End Property
+    Public Overrides Function PublicUnwrapExpression(var As String) As String
+        Return "out " & var
+    End Function
 
     Public Overrides Sub EmitPublicEventArgSetterStatements(b As CodeBuilder, var As String)
         b.AppendLine("m_{0} = value;", var)

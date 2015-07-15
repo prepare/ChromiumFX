@@ -67,66 +67,46 @@ Public Class CefStructOutType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property PInvokeCallSignature(var As String) As String
-        Get
-            Return "out IntPtr " & var
-        End Get
-    End Property
+    Public Overrides Function PInvokeCallSignature(var As String) As String
+        Return "out IntPtr " & var
+    End Function
 
-    Public Overrides ReadOnly Property PublicCallSignature(var As String) As String
-        Get
-            Return "out " & StructPtr.PublicCallSignature(var)
-        End Get
-    End Property
+    Public Overrides Function PublicCallSignature(var As String) As String
+        Return "out " & StructPtr.PublicCallSignature(var)
+    End Function
 
 
-    Public Overrides ReadOnly Property ProxyCallSignature(var As String) As String
-        Get
-            Return "out " & StructPtr.ProxyCallSignature(var)
-        End Get
-    End Property
+    Public Overrides Function ProxyCallSignature(var As String) As String
+        Return "out " & StructPtr.ProxyCallSignature(var)
+    End Function
 
-    Public Overrides ReadOnly Property RemoteCallSignature(var As String) As String
-        Get
-            Return "out " & StructPtr.RemoteCallSignature(var)
-        End Get
-    End Property
+    Public Overrides Function RemoteCallSignature(var As String) As String
+        Return "out " & StructPtr.RemoteCallSignature(var)
+    End Function
 
-    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("out {0}_ptr", var)
-        End Get
-    End Property
+    Public Overrides Function PublicUnwrapExpression(var As String) As String
+        Return String.Format("out {0}_ptr", var)
+    End Function
 
-    Public Overrides ReadOnly Property ProxyUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("out {0}_local", var)
-        End Get
-    End Property
+    Public Overrides Function ProxyUnwrapExpression(var As String) As String
+        Return String.Format("out {0}_local", var)
+    End Function
 
-    Public Overrides ReadOnly Property RemoteUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("{0}.Unwrap({1})", Struct.RemoteClassName, var)
-        End Get
-    End Property
+    Public Overrides Function RemoteUnwrapExpression(var As String) As String
+        Return String.Format("{0}.Unwrap({1})", Struct.RemoteClassName, var)
+    End Function
 
-    Public Overrides ReadOnly Property RemoteWrapExpression(var As String) As String
-        Get
-            Return String.Format("{0}.Wrap({1}, remoteRuntime)", Struct.RemoteClassName, var)
-        End Get
-    End Property
+    Public Overrides Function RemoteWrapExpression(var As String) As String
+        Return String.Format("{0}.Wrap({1}, remoteRuntime)", Struct.RemoteClassName, var)
+    End Function
 
-    Public Overrides ReadOnly Property PublicEventConstructorSignature(var As String) As String
-        Get
-            Return Nothing
-        End Get
-    End Property
+    Public Overrides Function PublicEventConstructorSignature(var As String) As String
+        Return Nothing
+    End Function
 
-    Public Overrides ReadOnly Property PublicEventConstructorCall(var As String) As String
-        Get
-            Return Nothing
-        End Get
-    End Property
+    Public Overrides Function PublicEventConstructorCall(var As String) As String
+        Return Nothing
+    End Function
 
     Public Overrides Sub EmitPostNativeCallbackStatements(b As CodeBuilder, var As String)
         b.AppendLine("if(*{0})((cef_base_t*)*{0})->add_ref((cef_base_t*)*{0});", var)

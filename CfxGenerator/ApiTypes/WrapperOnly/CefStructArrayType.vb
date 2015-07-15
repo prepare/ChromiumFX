@@ -1,4 +1,4 @@
-﻿'' Copyright (c) 2014-2015 Wolfgang Borgsmüller
+'' Copyright (c) 2014-2015 Wolfgang Borgsmüller
 '' All rights reserved.
 '' 
 '' Redistribution and use in source and binary forms, with or without 
@@ -58,29 +58,21 @@ Public Class CefStructArrayType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property PInvokeCallSignature(var As String) As String
-        Get
-            Return String.Format("{0}, out int {1}_nomem", MyBase.PInvokeCallSignature(var), var)
-        End Get
-    End Property
+    Public Overrides Function PInvokeCallSignature(var As String) As String
+        Return String.Format("{0}, out int {1}_nomem", MyBase.PInvokeCallSignature(var), var)
+    End Function
 
-    Public Overrides ReadOnly Property NativeCallSignature(var As String, isConst As Boolean) As String
-        Get
-            Return String.Format("{0}, int* {1}_nomem", MyBase.NativeCallSignature(var, isConst), var)
-        End Get
-    End Property
+    Public Overrides Function NativeCallSignature(var As String, isConst As Boolean) As String
+        Return String.Format("{0}, int* {1}_nomem", MyBase.NativeCallSignature(var, isConst), var)
+    End Function
 
-    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("{0}, out {1}_nomem", MyBase.PublicUnwrapExpression(var), var)
-        End Get
-    End Property
+    Public Overrides Function PublicUnwrapExpression(var As String) As String
+        Return String.Format("{0}, out {1}_nomem", MyBase.PublicUnwrapExpression(var), var)
+    End Function
 
-    Public Overrides ReadOnly Property NativeUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("{0}_tmp", var)
-        End Get
-    End Property
+    Public Overrides Function NativeUnwrapExpression(var As String) As String
+        Return String.Format("{0}_tmp", var)
+    End Function
 
     Public Overrides Sub EmitPrePublicCallStatements(b As CodeBuilder, var As String)
         MyBase.EmitPrePublicCallStatements(b, var)

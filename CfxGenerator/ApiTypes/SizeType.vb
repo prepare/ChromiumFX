@@ -43,16 +43,12 @@ Public Class SizeType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property NativeWrapExpression(var As String) As String
-        Get
-            Return String.Format("(int)({0})", var)
-        End Get
-    End Property
+    Public Overrides Function NativeWrapExpression(var As String) As String
+        Return String.Format("(int)({0})", var)
+    End Function
 
-    Public Overrides ReadOnly Property NativeUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("(size_t)({0})", var)
-        End Get
-    End Property
+    Public Overrides Function NativeUnwrapExpression(var As String) As String
+        Return String.Format("(size_t)({0})", var)
+    End Function
 
 End Class

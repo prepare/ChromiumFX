@@ -42,47 +42,33 @@ Public Class CefStringType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property NativeCallSignature(var As String, isConst As Boolean) As String
-        Get
-            Return String.Format("char16 *{0}_str, int {0}_length", var)
-        End Get
-    End Property
+    Public Overrides Function NativeCallSignature(var As String, isConst As Boolean) As String
+        Return String.Format("char16 *{0}_str, int {0}_length", var)
+    End Function
 
-    Public Overrides ReadOnly Property NativeOutSignature(var As String) As String
-        Get
-            Return String.Format("char16 **{0}_str, int *{0}_length", var)
-        End Get
-    End Property
+    Public Overrides Function NativeOutSignature(var As String) As String
+        Return String.Format("char16 **{0}_str, int *{0}_length", var)
+    End Function
 
-    Public Overrides ReadOnly Property PInvokeCallSignature(var As String) As String
-        Get
-            Return String.Format("IntPtr {0}_str, int {0}_length", var)
-        End Get
-    End Property
+    Public Overrides Function PInvokeCallSignature(var As String) As String
+        Return String.Format("IntPtr {0}_str, int {0}_length", var)
+    End Function
 
-    Public Overrides ReadOnly Property PInvokeOutSignature(var As String) As String
-        Get
-            Return String.Format("out IntPtr {0}_str, out int {0}_length", var)
-        End Get
-    End Property
+    Public Overrides Function PInvokeOutSignature(var As String) As String
+        Return String.Format("out IntPtr {0}_str, out int {0}_length", var)
+    End Function
 
-    Public Overrides ReadOnly Property PublicWrapExpression(var As String) As String
-        Get
-            Return String.Format("StringFunctions.PtrToStringUni({0}_str, {0}_length)", var)
-        End Get
-    End Property
+    Public Overrides Function PublicWrapExpression(var As String) As String
+        Return String.Format("StringFunctions.PtrToStringUni({0}_str, {0}_length)", var)
+    End Function
 
-    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("{0}_pinned.Obj.PinnedPtr, {0}_pinned.Length", var)
-        End Get
-    End Property
+    Public Overrides Function PublicUnwrapExpression(var As String) As String
+        Return String.Format("{0}_pinned.Obj.PinnedPtr, {0}_pinned.Length", var)
+    End Function
 
-    Public Overrides ReadOnly Property PInvokeOutArgument(var As String) As String
-        Get
-            Return String.Format("out {0}_str, out {0}_length", var)
-        End Get
-    End Property
+    Public Overrides Function PInvokeOutArgument(var As String) As String
+        Return String.Format("out {0}_str, out {0}_length", var)
+    End Function
 
     Public Overrides Sub EmitPrePublicCallStatements(b As CodeBuilder, var As String)
         b.AppendLine("var {0}_pinned = new PinnedString({1});", var, CSharp.Escape(var))

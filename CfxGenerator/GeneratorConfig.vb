@@ -32,18 +32,14 @@ Imports System.Text.RegularExpressions
 
 Public Class GeneratorConfig
 
-    Public Shared ReadOnly Property CreateRemoteProxy(item As String) As Boolean
-        Get
-            Return Not (IsBrowserProcessOnly(item) OrElse HasPrivateWrapper(item))
-        End Get
-    End Property
+    Public Shared Function CreateRemoteProxy(item As String) As Boolean
+        Return Not (IsBrowserProcessOnly(item) OrElse HasPrivateWrapper(item))
+    End Function
 
     Private Shared browserProcessOnly As String() = AssemblyResources.GetLines("BrowserProcessOnly.txt")
-    Public Shared ReadOnly Property IsBrowserProcessOnly(item As String) As Boolean
-        Get
-            Return browserProcessOnly.Contains(item)
-        End Get
-    End Property
+    Public Shared Function IsBrowserProcessOnly(item As String) As Boolean
+        Return browserProcessOnly.Contains(item)
+    End Function
 
     Public Shared ReadOnly Property AdditionalCallIds As String()
         Get
@@ -84,33 +80,27 @@ Public Class GeneratorConfig
 
 
     Private Shared privateWrapperFunctions As String() = AssemblyResources.GetLines("PrivateWrapper.txt")
-    Public Shared ReadOnly Property HasPrivateWrapper(item As String) As Boolean
-        Get
-            Return privateWrapperFunctions.Contains(item)
-        End Get
-    End Property
+    Public Shared Function HasPrivateWrapper(item As String) As Boolean
+        Return privateWrapperFunctions.Contains(item)
+    End Function
 
 
     Private Shared callbackValueStructs As String() = AssemblyResources.GetLines("StructsNeedWrapping.txt")
-    Public Shared ReadOnly Property ValueStructNeedsWrapping(item As String) As Boolean
-        Get
-            Return callbackValueStructs.Contains(item)
-        End Get
-    End Property
+    Public Shared Function ValueStructNeedsWrapping(item As String) As Boolean
+        Return callbackValueStructs.Contains(item)
+    End Function
 
 
     Private Shared partialClasses As HashSet(Of String)
 
 
-    Public Shared ReadOnly Property ClassModifiers(className As String, Optional baseModifiers As String = "public") As String
-        Get
-            If IsPartialClass(className) Then
-                Return baseModifiers & " partial"
-            Else
-                Return baseModifiers
-            End If
-        End Get
-    End Property
+    Public Shared Function ClassModifiers(className As String, Optional baseModifiers As String = "public") As String
+        If IsPartialClass(className) Then
+            Return baseModifiers & " partial"
+        Else
+            Return baseModifiers
+        End If
+    End Function
 
     Public Shared Function IsPartialClass(className As String) As Boolean
         If partialClasses Is Nothing Then

@@ -98,29 +98,21 @@ Public Class CefEnumType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property RemoteUnwrapExpression(var As String) As String
-        Get
-            Return "(int)" & var
-        End Get
-    End Property
+    Public Overrides Function RemoteUnwrapExpression(var As String) As String
+        Return "(int)" & var
+    End Function
 
-    Public Overrides ReadOnly Property RemoteWrapExpression(var As String) As String
-        Get
-            Return String.Format("({0}){1}", RemoteSymbol, var)
-        End Get
-    End Property
+    Public Overrides Function RemoteWrapExpression(var As String) As String
+        Return String.Format("({0}){1}", RemoteSymbol, var)
+    End Function
 
-    Public Overrides ReadOnly Property ProxyWrapExpression(var As String) As String
-        Get
-            Return "(int)" & var
-        End Get
-    End Property
+    Public Overrides Function ProxyWrapExpression(var As String) As String
+        Return "(int)" & var
+    End Function
 
-    Public Overrides ReadOnly Property ProxyUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("({0}){1}", PublicSymbol, var)
-        End Get
-    End Property
+    Public Overrides Function ProxyUnwrapExpression(var As String) As String
+        Return String.Format("({0}){1}", PublicSymbol, var)
+    End Function
 
 
     Private Shared additionalFlags As String() = {"CfxV8PropertyAttribute"}

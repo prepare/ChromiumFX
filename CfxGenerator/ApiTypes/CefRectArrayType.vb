@@ -47,17 +47,13 @@ Public Class CefRectArrayType
     End Property
 
 
-    Public Overrides ReadOnly Property PublicEventConstructorSignature(var As String) As String
-        Get
-            Return String.Format("IntPtr {0}, {1}", var, CountArg.PublicEventConstructorSignature)
-        End Get
-    End Property
+    Public Overrides Function PublicEventConstructorSignature(var As String) As String
+        Return String.Format("IntPtr {0}, {1}", var, CountArg.PublicEventConstructorSignature)
+    End Function
 
-    Public Overrides ReadOnly Property PublicEventConstructorCall(var As String) As String
-        Get
-            Return var & ", " & CountArg.PublicEventConstructorCall
-        End Get
-    End Property
+    Public Overrides Function PublicEventConstructorCall(var As String) As String
+        Return var & ", " & CountArg.PublicEventConstructorCall
+    End Function
 
     Public Overrides Sub EmitPublicEventArgFields(b As CodeBuilder, var As String)
         b.AppendLine("internal IntPtr m_{0};", var)

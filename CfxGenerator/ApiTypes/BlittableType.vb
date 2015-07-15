@@ -77,62 +77,54 @@ Public Class BlittableType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property NativeWrapExpression(var As String) As String
-        Get
-            Select Case Name
-                Case "bool", "BOOL"
-                    Return String.Format("({0}) ? 1 : 0", var)
-                Case "time_t"
-                    Return String.Format("(uint64)({0})", var)
-                Case Else
-                    Return var
-            End Select
-        End Get
-    End Property
+    Public Overrides Function NativeWrapExpression(var As String) As String
+        Select Case Name
+            Case "bool", "BOOL"
+                Return String.Format("({0}) ? 1 : 0", var)
+            Case "time_t"
+                Return String.Format("(uint64)({0})", var)
+            Case Else
+                Return var
+        End Select
+    End Function
 
-    Public Overrides ReadOnly Property NativeUnwrapExpression(var As String) As String
-        Get
-            Select Case Name
-                Case "bool"
-                    Return String.Format("({0}) ? true : false", var)
-                Case "BOOL"
-                    Return String.Format("(BOOL)({0})", var)
-                Case "time_t"
-                    Return String.Format("(time_t)({0})", var)
-                Case Else
-                    Return var
-            End Select
-        End Get
-    End Property
+    Public Overrides Function NativeUnwrapExpression(var As String) As String
+        Select Case Name
+            Case "bool"
+                Return String.Format("({0}) ? true : false", var)
+            Case "BOOL"
+                Return String.Format("(BOOL)({0})", var)
+            Case "time_t"
+                Return String.Format("(time_t)({0})", var)
+            Case Else
+                Return var
+        End Select
+    End Function
 
-    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
-        Get
-            If PInvokeSymbol Is Nothing Then Return Nothing
-            Select Case Name
-                Case "bool", "BOOL"
-                    Return String.Format("{0} ? 1 : 0", var)
-                Case "time_t"
-                    Return String.Format("TimeFunctions.ToTimeT({0})", var)
-                Case Else
-                    Return MyBase.PublicUnwrapExpression(var)
-            End Select
-        End Get
-    End Property
+    Public Overrides Function PublicUnwrapExpression(var As String) As String
+        If PInvokeSymbol Is Nothing Then Return Nothing
+        Select Case Name
+            Case "bool", "BOOL"
+                Return String.Format("{0} ? 1 : 0", var)
+            Case "time_t"
+                Return String.Format("TimeFunctions.ToTimeT({0})", var)
+            Case Else
+                Return MyBase.PublicUnwrapExpression(var)
+        End Select
+    End Function
 
-    Public Overrides ReadOnly Property PublicWrapExpression(var As String) As String
-        Get
-            Select Case Name
-                Case "bool", "BOOL"
-                    Return String.Format("0 != {0}", var)
-                Case "char*"
-                    Return String.Format("System.Runtime.InteropServices.Marshal.PtrToStringAnsi({0})", var)
-                Case "time_t"
-                    Return String.Format("TimeFunctions.FromTimeT({0})", var)
-                Case Else
-                    Return MyBase.PublicWrapExpression(var)
-            End Select
-        End Get
-    End Property
+    Public Overrides Function PublicWrapExpression(var As String) As String
+        Select Case Name
+            Case "bool", "BOOL"
+                Return String.Format("0 != {0}", var)
+            Case "char*"
+                Return String.Format("System.Runtime.InteropServices.Marshal.PtrToStringAnsi({0})", var)
+            Case "time_t"
+                Return String.Format("TimeFunctions.FromTimeT({0})", var)
+            Case Else
+                Return MyBase.PublicWrapExpression(var)
+        End Select
+    End Function
 
     Public Overrides ReadOnly Property IsBlittableType As Boolean
         Get

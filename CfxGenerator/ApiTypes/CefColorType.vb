@@ -54,16 +54,12 @@ Public Class CefColorType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("CfxColor.Unwrap({0})", var)
-        End Get
-    End Property
+    Public Overrides Function PublicUnwrapExpression(var As String) As String
+        Return String.Format("CfxColor.Unwrap({0})", var)
+    End Function
 
-    Public Overrides ReadOnly Property PublicWrapExpression(var As String) As String
-        Get
-            Return String.Format("CfxColor.Wrap({0})", var)
-        End Get
-    End Property
+    Public Overrides Function PublicWrapExpression(var As String) As String
+        Return String.Format("CfxColor.Wrap({0})", var)
+    End Function
 
 End Class

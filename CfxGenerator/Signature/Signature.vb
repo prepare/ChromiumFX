@@ -197,29 +197,25 @@ Public Class Signature
         End Get
     End Property
 
-    Public Overridable ReadOnly Property NativeSignature(functionName As String) As String
-        Get
-            For i = 0 To Arguments.Length - 1
-                args.Add(Arguments(i).NativeCallSignature)
-            Next
+    Public Overridable Function NativeSignature(functionName As String) As String
+        For i = 0 To Arguments.Length - 1
+            args.Add(Arguments(i).NativeCallSignature)
+        Next
 
-            Dim retType = ReturnType.NativeSymbol
-            If ReturnValueIsConst Then
-                retType = "const " & retType
-            End If
+        Dim retType = ReturnType.NativeSymbol
+        If ReturnValueIsConst Then
+            retType = "const " & retType
+        End If
 
-            Return String.Format("static {0} {1}({2})", retType, functionName, args.Join())
-        End Get
-    End Property
+        Return String.Format("static {0} {1}({2})", retType, functionName, args.Join())
+    End Function
 
-    Public Overridable ReadOnly Property PInvokeSignature(functionName As String) As String
-        Get
-            For i = 0 To Arguments.Length - 1
-                args.Add(Arguments(i).PInvokeCallSignature)
-            Next
-            Return String.Format("{0} {1}({2})", ReturnType.PInvokeSymbol, functionName, args.Join())
-        End Get
-    End Property
+    Public Overridable Function PInvokeSignature(functionName As String) As String
+        For i = 0 To Arguments.Length - 1
+            args.Add(Arguments(i).PInvokeCallSignature)
+        Next
+        Return String.Format("{0} {1}({2})", ReturnType.PInvokeSymbol, functionName, args.Join())
+    End Function
 
     Public ReadOnly Property PInvokeCallbackSignature As String
         Get
@@ -234,16 +230,14 @@ Public Class Signature
         End Get
     End Property
 
-    Public Overridable ReadOnly Property PublicSignature(functionName As String) As String
-        Get
-            For Each arg In ManagedArguments
-                If arg.PublicSignature IsNot Nothing Then
-                    args.Add(arg.PublicSignature)
-                End If
-            Next
-            Return String.Format("{0} {1}({2})", PublicReturnType.PublicSymbol, functionName, args.Join())
-        End Get
-    End Property
+    Public Overridable Function PublicSignature(functionName As String) As String
+        For Each arg In ManagedArguments
+            If arg.PublicSignature IsNot Nothing Then
+                args.Add(arg.PublicSignature)
+            End If
+        Next
+        Return String.Format("{0} {1}({2})", PublicReturnType.PublicSymbol, functionName, args.Join())
+    End Function
 
     Public ReadOnly Property RemoteSignature As String
         Get

@@ -1,4 +1,4 @@
-﻿Public Class GetPageRangesSignature
+Public Class GetPageRangesSignature
     Inherits SignatureWithStructArray
 
     Public Sub New(parent As ISignatureOwner, sd As Parser.SignatureData, api As ApiTypeBuilder, arrayIndex As Integer, countIndex As Integer)
@@ -18,11 +18,9 @@
         End Get
     End Property
 
-    Public Overrides ReadOnly Property PInvokeSignature(functionName As String) As String
-        Get
-            Return "void cfx_print_settings_get_page_ranges_delegate(IntPtr self, ref int rangesCount, IntPtr ranges, out int ranges_nomem)"
-        End Get
-    End Property
+    Public Overrides Function PInvokeSignature(functionName As String) As String
+        Return "void cfx_print_settings_get_page_ranges_delegate(IntPtr self, ref int rangesCount, IntPtr ranges, out int ranges_nomem)"
+    End Function
 
     Public Overrides Sub EmitPublicCall(b As CodeBuilder)
 

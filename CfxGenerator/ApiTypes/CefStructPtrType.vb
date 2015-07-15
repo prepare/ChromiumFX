@@ -66,41 +66,29 @@ Public Class CefStructPtrType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property PublicWrapExpression(var As String) As String
-        Get
-            Return String.Format("{0}.Wrap({1})", Struct.ClassName, var)
-        End Get
-    End Property
+    Public Overrides Function PublicWrapExpression(var As String) As String
+        Return String.Format("{0}.Wrap({1})", Struct.ClassName, var)
+    End Function
 
-    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("{0}.Unwrap({1})", Struct.ClassName, CSharp.Escape(var))
-        End Get
-    End Property
+    Public Overrides Function PublicUnwrapExpression(var As String) As String
+        Return String.Format("{0}.Unwrap({1})", Struct.ClassName, CSharp.Escape(var))
+    End Function
 
-    Public Overrides ReadOnly Property ProxyUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("({0})RemoteProxy.Unwrap({1})", Struct.ClassName, CSharp.Escape(var))
-        End Get
-    End Property
+    Public Overrides Function ProxyUnwrapExpression(var As String) As String
+        Return String.Format("({0})RemoteProxy.Unwrap({1})", Struct.ClassName, CSharp.Escape(var))
+    End Function
 
-    Public Overrides ReadOnly Property ProxyWrapExpression(var As String) As String
-        Get
-            Return String.Format("RemoteProxy.Wrap({0})", CSharp.Escape(var))
-        End Get
-    End Property
+    Public Overrides Function ProxyWrapExpression(var As String) As String
+        Return String.Format("RemoteProxy.Wrap({0})", CSharp.Escape(var))
+    End Function
 
-    Public Overrides ReadOnly Property RemoteUnwrapExpression(var As String) As String
-        Get
-            Return String.Format("CfrObject.Unwrap({0})", CSharp.Escape(var))
-        End Get
-    End Property
+    Public Overrides Function RemoteUnwrapExpression(var As String) As String
+        Return String.Format("CfrObject.Unwrap({0})", CSharp.Escape(var))
+    End Function
 
-    Public Overrides ReadOnly Property RemoteWrapExpression(var As String) As String
-        Get
-            Return String.Format("{0}.Wrap({1}, remoteRuntime)", RemoteSymbol, var)
-        End Get
-    End Property
+    Public Overrides Function RemoteWrapExpression(var As String) As String
+        Return String.Format("{0}.Wrap({1}, remoteRuntime)", RemoteSymbol, var)
+    End Function
 
     Public Overrides Sub EmitPreNativeCallStatements(b As CodeBuilder, var As String)
         If Struct.ClassBuilder.IsRefCounted AndAlso var <> "self" Then

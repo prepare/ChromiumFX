@@ -42,16 +42,12 @@ Public Class CefStringUserFreeType
         End Get
     End Property
 
-    Public Overrides ReadOnly Property PublicWrapExpression(var As String) As String
-        Get
-            Return String.Format("StringFunctions.ConvertStringUserfree({0})", var)
-        End Get
-    End Property
+    Public Overrides Function PublicWrapExpression(var As String) As String
+        Return String.Format("StringFunctions.ConvertStringUserfree({0})", var)
+    End Function
 
-    Public Overrides ReadOnly Property PublicUnwrapExpression(var As String) As String
-        Get
-            Throw New Exception
-        End Get
-    End Property
+    Public Overrides Function PublicUnwrapExpression(var As String) As String
+        Throw New Exception
+    End Function
 
 End Class
