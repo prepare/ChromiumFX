@@ -48,7 +48,7 @@ Public Class CodeBuilder
     End Sub
 
     Private Sub EmitDebugInfo()
-        If Main.EmitDebugInfo > 0 Then
+        If Program.EmitDebugInfo > 0 Then
             Dim i = 2
             Dim caller = New StackFrame(2, False)
             Dim method = caller.GetMethod()
