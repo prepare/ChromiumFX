@@ -30,12 +30,14 @@
 
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 
 namespace Parser {
 
     public class ApiParser {
+
         private HashSet<string> booleanRetvals = new HashSet<string>();
 
         private HashSet<string> booleanParameters = new HashSet<string>();
@@ -43,6 +45,13 @@ namespace Parser {
         private Dictionary<string, CefConfigData> cefConfigs = new Dictionary<string, CefConfigData>();
 
         private Dictionary<string, string> codeFiles = new Dictionary<string, string>();
+
+        public static string ParseApiHash() {
+            var code = File.ReadAllText("cef\\include\\cef_version.h");
+            var ex = new Regex(@"CEF_API_HASH_UNIVERSAL ""(\w+)""");
+            Debug.Assert(ex.IsMatch(code));
+            return ex.Match(code).Groups[1].Value;
+        }
 
         public CefApiData Parse() {
             ParseCppHeaders();
@@ -72,6 +81,7 @@ namespace Parser {
             }
 
             var api = new CefApiData();
+            api.ApiHashUniversal = ParseApiHash();
             api.CefEnums = enums;
             api.CefStructs = structs;
             api.CefFunctions = new List<FunctionData>();
