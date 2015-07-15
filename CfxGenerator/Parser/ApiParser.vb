@@ -282,8 +282,8 @@ Namespace Parser
 
         Private Function ParseArgument(argString As String) As ArgumentData
 
-            Static ex As New Regex("^\s*(.+)(\b\w+)\s*$")
-            Dim m = ex.Match(argString)
+            Static parseArgumentRegex As New Regex("^\s*(.+)(\b\w+)\s*$")
+            Dim m = parseArgumentRegex.Match(argString)
 
             Dim arg = New ArgumentData
             arg.Var = m.Groups(2).Value
@@ -304,8 +304,8 @@ Namespace Parser
                 td2 = typeDecl.Substring(0, typeDecl.Length - m1.Value.Length)
             End If
 
-            Static ex As New Regex("^\s*(const)?((?:\s*\b\w+\b)+)\s*$")
-            Dim m = ex.Match(td2)
+            Static typeDeclRegex As New Regex("^\s*(const)?((?:\s*\b\w+\b)+)\s*$")
+            Dim m = typeDeclRegex.Match(td2)
             If Not m.Success Then
                 Stop
             End If
@@ -475,9 +475,9 @@ Namespace Parser
         End Sub
 
         Private Function GetCommentArray(comments As String) As CommentData
-            Static ex As New Regex("^\s*//+(.*?)$", RegexOptions.Multiline)
+            Static commentArrayRegex As New Regex("^\s*//+(.*?)$", RegexOptions.Multiline)
             Static l As New List(Of String)
-            Dim mm = ex.Matches(comments)
+            Dim mm = commentArrayRegex.Matches(comments)
             l.Clear()
             For i = 0 To mm.Count - 1
                 Dim line = mm(i).Groups(1).Value.Trim()
