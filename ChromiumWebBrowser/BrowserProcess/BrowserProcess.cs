@@ -58,7 +58,8 @@ namespace Chromium.WebBrowser {
             
             app.GetBrowserProcessHandler += app_GetBrowserProcessHandler;
             app.OnBeforeCommandLineProcessing += app_OnBeforeCommandLineProcessing;
-            
+            app.OnRegisterCustomSchemes += app_OnRegisterCustomSchemes;
+
             var settings = new CfxSettings();
             settings.MultiThreadedMessageLoop = true;
             settings.NoSandbox = true;
@@ -69,6 +70,10 @@ namespace Chromium.WebBrowser {
                 throw new CfxException("Failed to initialize CEF library.");
 
             initialized = true;
+        }
+
+        static void app_OnRegisterCustomSchemes(object sender, CfxOnRegisterCustomSchemesEventArgs e) {
+            ChromiumWebBrowser.RaiseOnRegisterCustomSchemes(e);
         }
 
         static void app_OnBeforeCommandLineProcessing(object sender, CfxOnBeforeCommandLineProcessingEventArgs e) {

@@ -36,7 +36,7 @@ using Chromium.Remote;
 namespace Chromium.WebBrowser.Event {
 
     public delegate void OnBeforeCommandLineProcessingEventHandler(CfxOnBeforeCommandLineProcessingEventArgs e);
-    
+    public delegate void OnRegisterCustomSchemesEventHandler(CfxOnRegisterCustomSchemesEventArgs e);
     public delegate void OnBeforeCfxInitializeEventHandler(OnBeforeCfxInitializeEventArgs e);
 
     public class OnBeforeCfxInitializeEventArgs : EventArgs {
