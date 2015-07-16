@@ -97,6 +97,20 @@ namespace Chromium.WebBrowser {
         }
 
         /// <summary>
+        /// Provides an opportunity to register custom schemes. Do not keep a reference
+        /// to the |Registrar| object. This function is called on the main thread for
+        /// each process and the registered schemes should be the same across all
+        /// processes.
+        /// </summary>
+        public static event OnRegisterCustomSchemesEventHandler OnRegisterCustomSchemes;
+        internal static void RaiseOnRegisterCustomSchemes(CfxOnRegisterCustomSchemesEventArgs e) {
+            var handler = OnRegisterCustomSchemes;
+            if(handler != null) {
+                handler(e);
+            }
+        }
+
+        /// <summary>
         /// Initialize the ChromiumWebBrowser and ChromiumFX libraries.
         /// The application can change initialization settings by handling
         /// the OnBeforeCfxInitialize event.
