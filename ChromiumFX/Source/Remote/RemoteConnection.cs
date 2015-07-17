@@ -177,10 +177,18 @@ namespace Chromium.Remote {
 
 
         private void OnConnectionLost(Exception ex) {
-            connectionLostException = ex;
-            callStack.ReleaseAll();
-            if(!isClient)
-                RemoteService.connections.Remove(this);
+            // When a connection is lost, both the 
+            // reader and the writer thread can
+            // reach this code under some
+            // conditions.
+            lock(syncRoot) {
+                if(connectionLostException != null)
+                    return;
+                connectionLostException = ex;
+                callStack.ReleaseAll();
+                if(!isClient)
+                    RemoteService.connections.Remove(this);
+            }
         }
     }
 }
