@@ -118,7 +118,7 @@ template <class T> struct is_const<const T> : true_type {};
 template <class T> struct is_void : false_type {};
 template <> struct is_void<void> : true_type {};
 
-namespace cef_internal {
+namespace internal {
 
 // Types YesType and NoType are guaranteed such that sizeof(YesType) <
 // sizeof(NoType).
@@ -158,7 +158,7 @@ struct IsClassHelper {
   static NoType Test(...);
 };
 
-}  // namespace cef_internal
+}  // namespace internal
 
 // Inherits from true_type if From is convertible to To, false_type otherwise.
 //
@@ -167,16 +167,16 @@ struct IsClassHelper {
 template <typename From, typename To>
 struct is_convertible
     : integral_constant<bool,
-                        sizeof(cef_internal::ConvertHelper::Test<To>(
-                                   cef_internal::ConvertHelper::Create<From>())) ==
-                        sizeof(cef_internal::YesType)> {
+                        sizeof(internal::ConvertHelper::Test<To>(
+                                   internal::ConvertHelper::Create<From>())) ==
+                        sizeof(internal::YesType)> {
 };
 
 template <typename T>
 struct is_class
     : integral_constant<bool,
-                        sizeof(cef_internal::IsClassHelper::Test<T>(0)) ==
-                            sizeof(cef_internal::YesType)> {
+                        sizeof(internal::IsClassHelper::Test<T>(0)) ==
+                            sizeof(internal::YesType)> {
 };
 
 template<bool B, class T = void>
