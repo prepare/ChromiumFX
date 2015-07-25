@@ -343,7 +343,14 @@ namespace Chromium.WebBrowser {
         /// <summary>
         /// Returns the URL currently loaded in the main frame.
         /// </summary>
-        public System.Uri Url { get { return new System.Uri(Browser.MainFrame.Url); } }
+        public System.Uri Url {
+            get {
+                if(Browser == null) return null;
+                Uri retval;
+                Uri.TryCreate(Browser.MainFrame.Url, UriKind.RelativeOrAbsolute, out retval);
+                return retval;
+            }
+        }
 
         /// <summary>
         /// Returns true if the browser is currently loading.
