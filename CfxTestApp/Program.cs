@@ -40,15 +40,6 @@ using System.Diagnostics;
 
 using Chromium.WebBrowser.Event;
 
-namespace Chromium {
-    internal class SandboxStarter {
-        static int SandboxMain() {
-            CfxTestApplication.Program.Main();
-            return 0;
-        }
-    }
-}
-
 namespace CfxTestApplication {
 
     public class Program {
