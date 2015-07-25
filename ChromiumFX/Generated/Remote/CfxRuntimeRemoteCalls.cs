@@ -245,41 +245,6 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxRuntimeParseCssColorRenderProcessCall : RenderProcessCall {
-
-        internal CfxRuntimeParseCssColorRenderProcessCall()
-            : base(RemoteCallId.CfxRuntimeParseCssColorRenderProcessCall) {}
-
-        internal string @string;
-        internal bool strict;
-        internal CfxColor color;
-        internal bool __retval;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(@string);
-            h.Write(strict);
-            h.Write(color);
-        }
-
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out @string);
-            h.Read(out strict);
-            h.Read(out color);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-            h.Write(__retval);
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
-            h.Read(out __retval);
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxRuntime.ParseCssColor(@string, strict, ref color);
-        }
-    }
-
     internal class CfxRuntimeParseUrlRenderProcessCall : RenderProcessCall {
 
         internal CfxRuntimeParseUrlRenderProcessCall()
