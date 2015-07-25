@@ -3,6 +3,11 @@
   - CEF 3.2357.1281
   - CEF 3.2357.1280
 
+* CEF versions known to work with ChromiumFX 3.2171.16:
+  - CEF 3.2171.2069
+  - CEF 3.2171.2039
+  - CEF 3.2171.1979
+
 Download CEF binaries at:
 http://www.magpcss.net/cef_downloads/
 https://cefbuilds.com/

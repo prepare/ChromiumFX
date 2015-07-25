@@ -51,6 +51,9 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2171.16 ###
+- This is a back port of the current ChromiumFX version. It contains all ChromiumFX features from version 3.2357.2 but targets the CEF 3.2171 API. Besides new features, it contains a lot of important bug fixes so all users of the 3.2171 branch should upgrade.   
+
 ### Version 3.2357.2 ###
 - Windows 64-bit builds on cefbuilds.com are still hanging so if you want to use this version in 64-bit mode, you have to build your own CEF binaries.
 - JSObject now implements IDictionary.
