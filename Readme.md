@@ -51,6 +51,15 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2357.2 ###
+- Windows 64-bit builds on cefbuilds.com are still hanging so if you want to use this version in 64-bit mode, you have to build your own CEF binaries.
+- JSObject now implements IDictionary.
+- ChromiumWebBrowser: the global objects for the main frame and other named frames are now exposed through `public JSObject GlobalObject` and `public JSObject GlobalObjectForFrame(string frameName)`. The previous methods AddGlobalJSProperty, AddGlobalJSFunction and AddGlobalJSObject are deprecated.
+- Some camelCase fixes for C# symbols, namely CfxSslCertPrincipal and CfxSslInfo.
+- CfxGenerator was converted from VB to C# with some regular expressions, manual rewriting and the SharpDevelop 4.4 code converter.
+- Implemented callback event ChromiumWebBrowser.OnRegisterCustomSchemes.
+- Some bug fixes.
+
 ### Version 3.2357.1 Win32 ###
 - This is an update based on CEF 3.2357.1280. There was an API change between the previous 3.2357.1 release (based on CEF 3.2357.1274) and this one, and there is no 64-bit build available at cefbuilds.com - 64-bit applications have to stick with the previous version.
 
