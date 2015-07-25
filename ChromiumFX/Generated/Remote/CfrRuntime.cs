@@ -102,7 +102,7 @@ namespace Chromium.Remote {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
         /// </remarks>
         public bool CreateUrl(CfrUrlParts parts, string url) {
             var call = new CfxRuntimeCreateUrlRenderProcessCall();
@@ -136,7 +136,7 @@ namespace Chromium.Remote {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
         /// </remarks>
         public void GetExtensionsForMimeType(string mimeType, System.Collections.Generic.List<string> extensions) {
             var call = new CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall();
@@ -151,7 +151,7 @@ namespace Chromium.Remote {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
         /// </remarks>
         public string GetMimeType(string extension) {
             var call = new CfxRuntimeGetMimeTypeRenderProcessCall();
@@ -176,31 +176,12 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Parses |string| which represents a CSS color value. If |strict| is true (1)
-        /// strict parsing rules will be applied. Returns true (1) on success or false
-        /// (0) on error. If parsing succeeds |color| will be set to the color value
-        /// otherwise |color| will remain unchanged.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
-        /// </remarks>
-        public bool ParseCssColor(string @string, bool strict, CfxColor color) {
-            var call = new CfxRuntimeParseCssColorRenderProcessCall();
-            call.@string = @string;
-            call.strict = strict;
-            call.color = color;
-            call.Execute(connection);
-            return call.__retval;
-        }
-
-        /// <summary>
         /// Parse the specified |url| into its component parts. Returns false (0) if the
         /// URL is NULL or invalid.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
         /// </remarks>
         public bool ParseUrl(string url, CfrUrlParts parts) {
             var call = new CfxRuntimeParseUrlRenderProcessCall();
