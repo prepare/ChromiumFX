@@ -33,11 +33,10 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-
 [assembly: AssemblyTitle("ChromiumWebBrowser")]
-[assembly: AssemblyDescription("WebBrowser control using ChromiumFX.")]
+[assembly: AssemblyDescription("WebBrowser control based on ChromiumFX.")]
 [assembly: AssemblyCopyright("Copyright © 2014-2015 Wolfgang Borgsmüller")]
 
 [assembly: ComVisible(false)]
 
-[assembly: AssemblyVersion("3.2357.1")]
+[assembly: AssemblyVersion("3.2357.2")]
