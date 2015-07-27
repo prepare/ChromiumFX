@@ -37,83 +37,6 @@ namespace Chromium.Remote {
     public partial class CfrRuntime {
 
         /// <summary>
-        /// Add an entry to the cross-origin access whitelist.
-        /// The same-origin policy restricts how scripts hosted from different origins
-        /// (scheme + domain + port) can communicate. By default, scripts can only access
-        /// resources with the same origin. Scripts hosted on the HTTP and HTTPS schemes
-        /// (but no other schemes) can use the "Access-Control-Allow-Origin" header to
-        /// allow cross-origin requests. For example, https://source.example.com can make
-        /// XMLHttpRequest requests on http://target.example.com if the
-        /// http://target.example.com request returns an "Access-Control-Allow-Origin:
-        /// https://source.example.com" response header.
-        /// Scripts in separate frames or iframes and hosted from the same protocol and
-        /// domain suffix can execute cross-origin JavaScript if both pages set the
-        /// document.domain value to the same domain suffix. For example,
-        /// scheme://foo.example.com and scheme://bar.example.com can communicate using
-        /// JavaScript if both domains set document.domain="example.com".
-        /// This function is used to allow access to origins that would otherwise violate
-        /// the same-origin policy. Scripts hosted underneath the fully qualified
-        /// |sourceOrigin| URL (like http://www.example.com) will be allowed access to
-        /// all resources hosted on the specified |targetProtocol| and |targetDomain|.
-        /// If |targetDomain| is non-NULL and |allowTargetSubdomains| if false (0)
-        /// only exact domain matches will be allowed. If |targetDomain| contains a top-
-        /// level domain component (like "example.com") and |allowTargetSubdomains| is
-        /// true (1) sub-domain matches will be allowed. If |targetDomain| is NULL and
-        /// |allowTargetSubdomains| if true (1) all domains and IP addresses will be
-        /// allowed.
-        /// This function cannot be used to bypass the restrictions on local or display
-        /// isolated schemes. See the comments on CfrRegisterCustomScheme for more
-        /// information.
-        /// This function may be called on any thread. Returns false (0) if
-        /// |sourceOrigin| is invalid or the whitelist cannot be accessed.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_origin_whitelist_capi.h">cef/include/capi/cef_origin_whitelist_capi.h</see>.
-        /// </remarks>
-        public bool AddCrossOriginWhitelistEntry(string sourceOrigin, string targetProtocol, string targetDomain, bool allowTargetSubdomains) {
-            var call = new CfxRuntimeAddCrossOriginWhitelistEntryRenderProcessCall();
-            call.sourceOrigin = sourceOrigin;
-            call.targetProtocol = targetProtocol;
-            call.targetDomain = targetDomain;
-            call.allowTargetSubdomains = allowTargetSubdomains;
-            call.Execute();
-            return call.__retval;
-        }
-
-        /// <summary>
-        /// Remove all entries from the cross-origin access whitelist. Returns false (0)
-        /// if the whitelist cannot be accessed.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_origin_whitelist_capi.h">cef/include/capi/cef_origin_whitelist_capi.h</see>.
-        /// </remarks>
-        public bool ClearCrossOriginWhitelist() {
-            var call = new CfxRuntimeClearCrossOriginWhitelistRenderProcessCall();
-            call.Execute();
-            return call.__retval;
-        }
-
-        /// <summary>
-        /// Creates a URL from the specified |parts|, which must contain a non-NULL spec
-        /// or a non-NULL host and path (at a minimum), but not both. Returns false (0)
-        /// if |parts| isn't initialized as described.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
-        /// </remarks>
-        public bool CreateUrl(CfrUrlParts parts, string url) {
-            var call = new CfxRuntimeCreateUrlRenderProcessCall();
-            call.parts = CfrObject.Unwrap(parts);
-            call.url = url;
-            call.Execute();
-            url = call.url;
-            return call.__retval;
-        }
-
-        /// <summary>
         /// Returns true (1) if called on the specified thread. Equivalent to using
         /// CfrTaskRunner.GetForThread(threadId).BelongsToCurrentThread().
         /// </summary>
@@ -124,88 +47,6 @@ namespace Chromium.Remote {
         public bool CurrentlyOn(CfxThreadId threadId) {
             var call = new CfxRuntimeCurrentlyOnRenderProcessCall();
             call.threadId = (int)threadId;
-            call.Execute();
-            return call.__retval;
-        }
-
-        /// <summary>
-        /// Get the extensions associated with the given mime type. This should be passed
-        /// in lower case. There could be multiple extensions for a given mime type, like
-        /// "html,htm" for "text/html", or "txt,text,html,..." for "text/*". Any existing
-        /// elements in the provided vector will not be erased.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
-        /// </remarks>
-        public void GetExtensionsForMimeType(string mimeType, System.Collections.Generic.List<string> extensions) {
-            var call = new CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall();
-            call.mimeType = mimeType;
-            call.extensions = extensions;
-            call.Execute();
-        }
-
-        /// <summary>
-        /// Returns the mime type for the specified file extension or an NULL string if
-        /// unknown.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
-        /// </remarks>
-        public string GetMimeType(string extension) {
-            var call = new CfxRuntimeGetMimeTypeRenderProcessCall();
-            call.extension = extension;
-            call.Execute();
-            return call.__retval;
-        }
-
-        /// <summary>
-        /// Returns the current system trace time or, if none is defined, the current
-        /// high-res time. Can be used by clients to synchronize with the time
-        /// information in trace events.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
-        /// </remarks>
-        public long NowFromSystemTraceTime() {
-            var call = new CfxRuntimeNowFromSystemTraceTimeRenderProcessCall();
-            call.Execute();
-            return call.__retval;
-        }
-
-        /// <summary>
-        /// Parses |string| which represents a CSS color value. If |strict| is true (1)
-        /// strict parsing rules will be applied. Returns true (1) on success or false
-        /// (0) on error. If parsing succeeds |color| will be set to the color value
-        /// otherwise |color| will remain unchanged.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
-        /// </remarks>
-        public bool ParseCssColor(string @string, bool strict, CfxColor color) {
-            var call = new CfxRuntimeParseCssColorRenderProcessCall();
-            call.@string = @string;
-            call.strict = strict;
-            call.color = color;
-            call.Execute();
-            return call.__retval;
-        }
-
-        /// <summary>
-        /// Parse the specified |url| into its component parts. Returns false (0) if the
-        /// URL is NULL or invalid.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
-        /// </remarks>
-        public bool ParseUrl(string url, CfrUrlParts parts) {
-            var call = new CfxRuntimeParseUrlRenderProcessCall();
-            call.url = url;
-            call.parts = CfrObject.Unwrap(parts);
             call.Execute();
             return call.__retval;
         }
@@ -307,24 +148,6 @@ namespace Chromium.Remote {
             call.extensionName = extensionName;
             call.javascriptCode = javascriptCode;
             call.handler = CfrObject.Unwrap(handler);
-            call.Execute();
-            return call.__retval;
-        }
-
-        /// <summary>
-        /// Remove an entry from the cross-origin access whitelist. Returns false (0) if
-        /// |sourceOrigin| is invalid or the whitelist cannot be accessed.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_origin_whitelist_capi.h">cef/include/capi/cef_origin_whitelist_capi.h</see>.
-        /// </remarks>
-        public bool RemoveCrossOriginWhitelistEntry(string sourceOrigin, string targetProtocol, string targetDomain, bool allowTargetSubdomains) {
-            var call = new CfxRuntimeRemoveCrossOriginWhitelistEntryRenderProcessCall();
-            call.sourceOrigin = sourceOrigin;
-            call.targetProtocol = targetProtocol;
-            call.targetDomain = targetDomain;
-            call.allowTargetSubdomains = allowTargetSubdomains;
             call.Execute();
             return call.__retval;
         }
