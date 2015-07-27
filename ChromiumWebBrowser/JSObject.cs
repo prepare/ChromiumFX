@@ -86,7 +86,7 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public void Add(string name, JSProperty property) {
             if(jsProperties.ContainsKey(name))
-                throw new CfxException("A property with this name already exists.");
+                throw new ChromiumWebBrowserException("A property with this name already exists.");
             property.SetParent(name, this);
             jsProperties.Add(name, property);
         }
@@ -215,7 +215,7 @@ namespace Chromium.WebBrowser {
         public void AddProperty(string propertyName, JSProperty property) {
             property.SetParent(propertyName, this);
             if(jsProperties.ContainsKey(propertyName))
-                throw new CfxException("Property already exists.");
+                throw new ChromiumWebBrowserException("Property already exists.");
             jsProperties.Add(propertyName, property);
         }
 
