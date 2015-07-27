@@ -539,10 +539,15 @@ namespace Chromium.WebBrowser {
             var rb = remoteBrowser;
             if(rb == null) return false;
             try {
-                var taskRunner = CfrTaskRunner.GetForThread(rb.RemoteRuntime, CfxThreadId.Renderer);
-                var task = new EvaluateTask(this, code, callback);
-                taskRunner.PostTask(task);
-                return true;
+                rb.RemoteRuntime.EnterContext();
+                try {
+                    var taskRunner = CfrTaskRunner.GetForThread(rb.RemoteRuntime, CfxThreadId.Renderer);
+                    var task = new EvaluateTask(this, code, callback);
+                    taskRunner.PostTask(task);
+                    return true;
+                } finally {
+                    rb.RemoteRuntime.ExitContext();
+                }
             } catch(System.IO.IOException) {
                 return false;
             }
@@ -768,13 +773,18 @@ namespace Chromium.WebBrowser {
             var rb = remoteBrowser;
             if(rb == null) return false;
             try {
-                var taskRunner = CfrTaskRunner.GetForThread(rb.RemoteRuntime, CfxThreadId.Renderer);
-                var task = new VisitDomTask(this, callback);
-                taskRunner.PostTask(task);
-                return true;
+                rb.RemoteRuntime.EnterContext();
+                try {
+                    var taskRunner = CfrTaskRunner.GetForThread(rb.RemoteRuntime, CfxThreadId.Renderer);
+                    var task = new VisitDomTask(this, callback);
+                    taskRunner.PostTask(task);
+                    return true;
+                } finally {
+                    rb.RemoteRuntime.ExitContext();
+                }
             } catch(System.IO.IOException) {
                 return false;
-            }
+            } 
         }
 
         private class VisitDomTask : CfrTask {

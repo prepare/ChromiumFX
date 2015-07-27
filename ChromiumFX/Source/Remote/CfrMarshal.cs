@@ -53,7 +53,7 @@ namespace Chromium.Remote {
         public RemotePtr AllocHGlobal(int cb) {
             var call = new CfrMarshalAllocHGlobalRenderProcessCall();
             call.cb = cb;
-            call.Execute(connection);
+            call.Execute();
             return new RemotePtr(call.__retval);
         }
 
@@ -63,7 +63,7 @@ namespace Chromium.Remote {
         public void FreeHGlobal(RemotePtr hglobal) {
             var call = new CfrMarshalFreeHGlobalRenderProcessCall();
             call.hglobal = hglobal.ptr;
-            call.Execute(connection);
+            call.Execute();
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Chromium.Remote {
             call.startIndex = startIndex;
             call.destination = destination.ptr;
             call.length = length;
-            call.Execute(connection);
+            call.Execute();
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Chromium.Remote {
             call.destination = destination;
             call.startIndex = startIndex;
             call.length = length;
-            call.Execute(connection);
+            call.Execute();
 
         }
     }

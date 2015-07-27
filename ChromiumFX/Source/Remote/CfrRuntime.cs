@@ -72,7 +72,7 @@ namespace Chromium.Remote {
             // render process exits. So we don't throw an exception but
             // use a return value of -2 to indicate connection lost.
             try {
-                call.Execute(connection);
+                call.Execute();
                 return call.__retval;
             } catch(CfxException) {
                 return -2;
@@ -114,7 +114,7 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Returns the remote runtime context for the calling thread, or null if the
+        /// Returns the remote runtime context for the calling thread. Throws an exception if the 
         /// calling thread is not currently in the context of a remote runtime.
         /// </summary>
         public static CfrRuntime CurrentContext {
@@ -123,8 +123,17 @@ namespace Chromium.Remote {
                 if(s.Count > 0)
                     return s.Peek();
                 else
-                    return null;
-            } 
+                    throw new CfxException("The calling thread is not currently in the context of a remote runtime");
+            }
+        }
+
+        /// <summary>
+        /// True if the calling thread is currently in the context of a remote runtime, false otherwise.
+        /// </summary>
+        public static bool IsInContext {
+            get {
+                return contextStack.Count > 0;
+            }
         }
 
         internal static int ContextStackCount {
