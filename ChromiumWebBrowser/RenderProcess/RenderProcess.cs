@@ -66,7 +66,7 @@ namespace Chromium.WebBrowser {
 
         private int Startup() {
             try {
-                var retval = remoteRuntime.ExecuteProcess(app);
+                var retval = CfrRuntime.ExecuteProcess(app);
                 return retval;
             } catch(Exception) {
                 return 100;

@@ -42,16 +42,19 @@ namespace Chromium.Remote {
 
         internal readonly RemoteConnection connection;
 
+        static CfrRuntime() {
+            Marshal = new CfrMarshal();
+        }
+
         internal CfrRuntime(RemoteConnection connection) {
             this.connection = connection;
-            this.Marshal = new CfrMarshal(connection);
         }
 
 
         /// <summary>
         /// Provides access to the remote process unmanaged memory.
         /// </summary>
-        public CfrMarshal Marshal { get; private set; }
+        public static CfrMarshal Marshal { get; private set; }
 
 
         /// <summary>
@@ -62,7 +65,7 @@ namespace Chromium.Remote {
         /// The |application| object will receive CEF framework callbacks 
         /// from within the render process.
         /// </summary>
-        public int ExecuteProcess(CfrApp application) {
+        public static int ExecuteProcess(CfrApp application) {
             var call = new CfxRuntimeExecuteProcessRenderProcessCall();
             call.application = CfrObject.Unwrap(application);
             // Looks like this almost never returns with a value

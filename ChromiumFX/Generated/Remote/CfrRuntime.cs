@@ -44,7 +44,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
-        public bool CurrentlyOn(CfxThreadId threadId) {
+        public static bool CurrentlyOn(CfxThreadId threadId) {
             var call = new CfxRuntimeCurrentlyOnRenderProcessCall();
             call.threadId = (int)threadId;
             call.Execute();
@@ -60,7 +60,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
-        public bool PostDelayedTask(CfxThreadId threadId, CfrTask task, long delayMs) {
+        public static bool PostDelayedTask(CfxThreadId threadId, CfrTask task, long delayMs) {
             var call = new CfxRuntimePostDelayedTaskRenderProcessCall();
             call.threadId = (int)threadId;
             call.task = CfrObject.Unwrap(task);
@@ -77,7 +77,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
-        public bool PostTask(CfxThreadId threadId, CfrTask task) {
+        public static bool PostTask(CfxThreadId threadId, CfrTask task) {
             var call = new CfxRuntimePostTaskRenderProcessCall();
             call.threadId = (int)threadId;
             call.task = CfrObject.Unwrap(task);
@@ -143,7 +143,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool RegisterExtension(string extensionName, string javascriptCode, CfrV8Handler handler) {
+        public static bool RegisterExtension(string extensionName, string javascriptCode, CfrV8Handler handler) {
             var call = new CfxRuntimeRegisterExtensionRenderProcessCall();
             call.extensionName = extensionName;
             call.javascriptCode = javascriptCode;
