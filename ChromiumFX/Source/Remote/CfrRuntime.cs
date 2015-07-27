@@ -44,7 +44,6 @@ namespace Chromium.Remote {
 
         internal CfrRuntime(RemoteConnection connection) {
             this.connection = connection;
-            connection.remoteRuntime = this;
             this.Marshal = new CfrMarshal(connection);
         }
 
