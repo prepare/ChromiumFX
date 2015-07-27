@@ -108,7 +108,7 @@ namespace Chromium.WebBrowser {
         internal void RaisePropertyGet(CfrV8AccessorGetEventArgs e) {
             var h = PropertyGet;
             if(h == null) {
-                e.Retval = CfrV8Value.CreateUndefined(e.RemoteRuntime);
+                e.Retval = CfrV8Value.CreateUndefined();
                 e.SetReturnValue(true);
             } else {
                 if(InvokeOnBrowser) {

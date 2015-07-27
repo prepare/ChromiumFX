@@ -60,7 +60,7 @@ namespace CfxTestApplication {
 
         void dynamicProperty_PropertyGet(object sender, Chromium.Remote.Event.CfrV8AccessorGetEventArgs e) {
             form.LogWriteLine("PropertyGet({0}, {1})", sender, e);
-            e.Retval = CfrV8Value.CreateInt(e.RemoteRuntime, dynamicPropertyValue);
+            e.Retval = CfrV8Value.CreateInt(dynamicPropertyValue);
             e.SetReturnValue(true);
         }
 
