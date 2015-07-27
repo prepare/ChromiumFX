@@ -60,12 +60,12 @@ namespace Chromium.Remote {
             var call = new CfxGetLocalizedStringBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute(RemoteClient.connection);
+            call.Execute();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrResourceBundleHandler.Wrap(this.sender, connection.remoteRuntime);
-            var e = new CfrGetLocalizedStringEventArgs(eventArgsId, connection.remoteRuntime);
+            var sender = CfrResourceBundleHandler.Wrap(this.sender);
+            var e = new CfrGetLocalizedStringEventArgs(eventArgsId);
             sender.raise_GetLocalizedString(sender, e);
         }
     }
@@ -209,12 +209,12 @@ namespace Chromium.Remote {
             var call = new CfxGetDataResourceBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute(RemoteClient.connection);
+            call.Execute();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrResourceBundleHandler.Wrap(this.sender, connection.remoteRuntime);
-            var e = new CfrGetDataResourceEventArgs(eventArgsId, connection.remoteRuntime);
+            var sender = CfrResourceBundleHandler.Wrap(this.sender);
+            var e = new CfrGetDataResourceEventArgs(eventArgsId);
             sender.raise_GetDataResource(sender, e);
         }
     }

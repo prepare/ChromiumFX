@@ -46,13 +46,13 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrProcessMessage Wrap(ulong proxyId, CfrRuntime remoteRuntime) {
+        internal static CfrProcessMessage Wrap(ulong proxyId) {
             if(proxyId == 0) return null;
             lock(weakCache) {
-                var cfrObj = (CfrProcessMessage)weakCache.Get(remoteRuntime, proxyId);
+                var cfrObj = (CfrProcessMessage)weakCache.Get(proxyId);
                 if(cfrObj == null) {
-                    cfrObj = new CfrProcessMessage(proxyId, remoteRuntime);
-                    weakCache.Add(remoteRuntime, proxyId, cfrObj);
+                    cfrObj = new CfrProcessMessage(proxyId);
+                    weakCache.Add(proxyId, cfrObj);
                 }
                 return cfrObj;
             }
@@ -66,15 +66,36 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
         /// </remarks>
+        [Obsolete("Create(CfrRuntime, ...) is deprecated, please use Create(...) without CfrRuntime instead.")]
         public static CfrProcessMessage Create(CfrRuntime remoteRuntime, string name) {
+            remoteRuntime.EnterContext();
+            try {
+                var call = new CfxProcessMessageCreateRenderProcessCall();
+                call.name = name;
+                call.Execute();
+                return CfrProcessMessage.Wrap(call.__retval);
+            }
+            finally {
+                remoteRuntime.ExitContext();
+            }
+        }
+
+        /// <summary>
+        /// Create a new CfrProcessMessage object with the specified name.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
+        /// </remarks>
+        public static CfrProcessMessage Create(string name) {
             var call = new CfxProcessMessageCreateRenderProcessCall();
             call.name = name;
-            call.Execute(remoteRuntime.connection);
-            return CfrProcessMessage.Wrap(call.__retval, remoteRuntime);
+            call.Execute();
+            return CfrProcessMessage.Wrap(call.__retval);
         }
 
 
-        private CfrProcessMessage(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) {}
+        private CfrProcessMessage(ulong proxyId) : base(proxyId) {}
 
         /// <summary>
         /// Returns true (1) if this object is valid. Do not call any other functions
@@ -88,7 +109,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxProcessMessageIsValidRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -105,7 +126,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxProcessMessageIsReadOnlyRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -121,7 +142,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxProcessMessageGetNameRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -137,8 +158,8 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxProcessMessageGetArgumentListRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
-                return CfrListValue.Wrap(call.__retval, remoteRuntime);
+                call.Execute();
+                return CfrListValue.Wrap(call.__retval);
             }
         }
 
@@ -152,12 +173,12 @@ namespace Chromium.Remote {
         public CfrProcessMessage Copy() {
             var call = new CfxProcessMessageCopyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.Execute(remoteRuntime.connection);
-            return CfrProcessMessage.Wrap(call.__retval, remoteRuntime);
+            call.Execute();
+            return CfrProcessMessage.Wrap(call.__retval);
         }
 
         internal override void OnDispose(ulong proxyId) {
-            weakCache.Remove(remoteRuntime, proxyId);
+            weakCache.Remove(proxyId);
         }
     }
 }

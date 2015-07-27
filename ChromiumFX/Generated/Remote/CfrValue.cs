@@ -48,13 +48,13 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrValue Wrap(ulong proxyId, CfrRuntime remoteRuntime) {
+        internal static CfrValue Wrap(ulong proxyId) {
             if(proxyId == 0) return null;
             lock(weakCache) {
-                var cfrObj = (CfrValue)weakCache.Get(remoteRuntime, proxyId);
+                var cfrObj = (CfrValue)weakCache.Get(proxyId);
                 if(cfrObj == null) {
-                    cfrObj = new CfrValue(proxyId, remoteRuntime);
-                    weakCache.Add(remoteRuntime, proxyId, cfrObj);
+                    cfrObj = new CfrValue(proxyId);
+                    weakCache.Add(proxyId, cfrObj);
                 }
                 return cfrObj;
             }
@@ -68,14 +68,34 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
+        [Obsolete("Create(CfrRuntime, ...) is deprecated, please use Create(...) without CfrRuntime instead.")]
         public static CfrValue Create(CfrRuntime remoteRuntime) {
+            remoteRuntime.EnterContext();
+            try {
+                var call = new CfxValueCreateRenderProcessCall();
+                call.Execute();
+                return CfrValue.Wrap(call.__retval);
+            }
+            finally {
+                remoteRuntime.ExitContext();
+            }
+        }
+
+        /// <summary>
+        /// Creates a new object.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
+        public static CfrValue Create() {
             var call = new CfxValueCreateRenderProcessCall();
-            call.Execute(remoteRuntime.connection);
-            return CfrValue.Wrap(call.__retval, remoteRuntime);
+            call.Execute();
+            return CfrValue.Wrap(call.__retval);
         }
 
 
-        private CfrValue(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) {}
+        private CfrValue(ulong proxyId) : base(proxyId) {}
 
         /// <summary>
         /// Returns true (1) if the underlying data is valid. This will always be true
@@ -93,7 +113,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxValueIsValidRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -109,7 +129,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxValueIsOwnedRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -126,7 +146,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxValueIsReadOnlyRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -142,7 +162,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxValueGetTypeRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return (CfxValueType)call.__retval;
             }
         }
@@ -158,7 +178,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxValueGetBoolRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -174,7 +194,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxValueGetIntRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -190,7 +210,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxValueGetDoubleRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -206,7 +226,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxValueGetStringRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -227,8 +247,8 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxValueGetBinaryRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
-                return CfrBinaryValue.Wrap(call.__retval, remoteRuntime);
+                call.Execute();
+                return CfrBinaryValue.Wrap(call.__retval);
             }
         }
 
@@ -248,8 +268,8 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxValueGetDictionaryRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
-                return CfrDictionaryValue.Wrap(call.__retval, remoteRuntime);
+                call.Execute();
+                return CfrDictionaryValue.Wrap(call.__retval);
             }
         }
 
@@ -269,8 +289,8 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxValueGetListRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
-                return CfrListValue.Wrap(call.__retval, remoteRuntime);
+                call.Execute();
+                return CfrListValue.Wrap(call.__retval);
             }
         }
 
@@ -287,7 +307,7 @@ namespace Chromium.Remote {
             var call = new CfxValueIsSameRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.that = CfrObject.Unwrap(that);
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -303,7 +323,7 @@ namespace Chromium.Remote {
             var call = new CfxValueIsEqualRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.that = CfrObject.Unwrap(that);
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -317,8 +337,8 @@ namespace Chromium.Remote {
         public CfrValue Copy() {
             var call = new CfxValueCopyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.Execute(remoteRuntime.connection);
-            return CfrValue.Wrap(call.__retval, remoteRuntime);
+            call.Execute();
+            return CfrValue.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -332,7 +352,7 @@ namespace Chromium.Remote {
         public bool SetNull() {
             var call = new CfxValueSetNullRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -348,7 +368,7 @@ namespace Chromium.Remote {
             var call = new CfxValueSetBoolRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.value = value;
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -364,7 +384,7 @@ namespace Chromium.Remote {
             var call = new CfxValueSetIntRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.value = value;
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -380,7 +400,7 @@ namespace Chromium.Remote {
             var call = new CfxValueSetDoubleRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.value = value;
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -396,7 +416,7 @@ namespace Chromium.Remote {
             var call = new CfxValueSetStringRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.value = value;
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -413,7 +433,7 @@ namespace Chromium.Remote {
             var call = new CfxValueSetBinaryRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.value = CfrObject.Unwrap(value);
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -430,7 +450,7 @@ namespace Chromium.Remote {
             var call = new CfxValueSetDictionaryRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.value = CfrObject.Unwrap(value);
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -447,12 +467,12 @@ namespace Chromium.Remote {
             var call = new CfxValueSetListRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.value = CfrObject.Unwrap(value);
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
         internal override void OnDispose(ulong proxyId) {
-            weakCache.Remove(remoteRuntime, proxyId);
+            weakCache.Remove(proxyId);
         }
     }
 }

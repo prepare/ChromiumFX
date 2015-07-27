@@ -60,12 +60,12 @@ namespace Chromium.Remote {
             var call = new CfxOnBeforeCommandLineProcessingBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute(RemoteClient.connection);
+            call.Execute();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrApp.Wrap(this.sender, connection.remoteRuntime);
-            var e = new CfrOnBeforeCommandLineProcessingEventArgs(eventArgsId, connection.remoteRuntime);
+            var sender = CfrApp.Wrap(this.sender);
+            var e = new CfrOnBeforeCommandLineProcessingEventArgs(eventArgsId);
             sender.raise_OnBeforeCommandLineProcessing(sender, e);
         }
     }
@@ -163,12 +163,12 @@ namespace Chromium.Remote {
             var call = new CfxOnRegisterCustomSchemesBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute(RemoteClient.connection);
+            call.Execute();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrApp.Wrap(this.sender, connection.remoteRuntime);
-            var e = new CfrOnRegisterCustomSchemesEventArgs(eventArgsId, connection.remoteRuntime);
+            var sender = CfrApp.Wrap(this.sender);
+            var e = new CfrOnRegisterCustomSchemesEventArgs(eventArgsId);
             sender.raise_OnRegisterCustomSchemes(sender, e);
         }
     }
@@ -239,12 +239,12 @@ namespace Chromium.Remote {
             var call = new CfxGetResourceBundleHandlerBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute(RemoteClient.connection);
+            call.Execute();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrApp.Wrap(this.sender, connection.remoteRuntime);
-            var e = new CfrGetResourceBundleHandlerEventArgs(eventArgsId, connection.remoteRuntime);
+            var sender = CfrApp.Wrap(this.sender);
+            var e = new CfrGetResourceBundleHandlerEventArgs(eventArgsId);
             sender.raise_GetResourceBundleHandler(sender, e);
         }
     }
@@ -311,12 +311,12 @@ namespace Chromium.Remote {
             var call = new CfxGetRenderProcessHandlerBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute(RemoteClient.connection);
+            call.Execute();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrApp.Wrap(this.sender, connection.remoteRuntime);
-            var e = new CfrGetRenderProcessHandlerEventArgs(eventArgsId, connection.remoteRuntime);
+            var sender = CfrApp.Wrap(this.sender);
+            var e = new CfrGetRenderProcessHandlerEventArgs(eventArgsId);
             sender.raise_GetRenderProcessHandler(sender, e);
         }
     }

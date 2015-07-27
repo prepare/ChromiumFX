@@ -48,22 +48,34 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrDomVisitor Wrap(ulong proxyId, CfrRuntime remoteRuntime) {
+        internal static CfrDomVisitor Wrap(ulong proxyId) {
             if(proxyId == 0) return null;
             lock(weakCache) {
-                var cfrObj = (CfrDomVisitor)weakCache.Get(remoteRuntime, proxyId);
+                var cfrObj = (CfrDomVisitor)weakCache.Get(proxyId);
                 if(cfrObj == null) {
-                    cfrObj = new CfrDomVisitor(proxyId, remoteRuntime);
-                    weakCache.Add(remoteRuntime, proxyId, cfrObj);
+                    cfrObj = new CfrDomVisitor(proxyId);
+                    weakCache.Add(proxyId, cfrObj);
                 }
                 return cfrObj;
             }
         }
 
 
+        [Obsolete]
         internal static ulong CreateRemote(CfrRuntime remoteRuntime) {
             var call = new CfxDomVisitorCtorRenderProcessCall();
-            call.Execute(remoteRuntime.connection);
+            remoteRuntime.EnterContext();
+            try {
+                call.Execute();
+                return call.__retval;
+            }
+            finally {
+                remoteRuntime.ExitContext();
+            }
+        }
+        internal static ulong CreateRemote() {
+            var call = new CfxDomVisitorCtorRenderProcessCall();
+            call.Execute();
             return call.__retval;
         }
 
@@ -75,9 +87,15 @@ namespace Chromium.Remote {
         }
 
 
-        private CfrDomVisitor(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) {}
+        private CfrDomVisitor(ulong proxyId) : base(proxyId) {}
+        [Obsolete("new CfrDomVisitor(CfrRuntime) is deprecated, please use new CfrDomVisitor() without CfrRuntime instead.")]
         public CfrDomVisitor(CfrRuntime remoteRuntime) : base(CreateRemote(remoteRuntime), remoteRuntime) {
-            weakCache.Add(remoteRuntime, this.proxyId, this);
+            remoteRuntime.EnterContext();
+            weakCache.Add(this.proxyId, this);
+            remoteRuntime.ExitContext();
+        }
+        public CfrDomVisitor() : base(CreateRemote()) {
+            weakCache.Add(this.proxyId, this);
         }
 
         /// <summary>
@@ -96,7 +114,7 @@ namespace Chromium.Remote {
                 if(m_Visit == null) {
                     var call = new CfxDomVisitorVisitActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                 }
                 m_Visit += value;
             }
@@ -105,7 +123,7 @@ namespace Chromium.Remote {
                 if(m_Visit == null) {
                     var call = new CfxDomVisitorVisitDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                 }
             }
         }
@@ -114,7 +132,7 @@ namespace Chromium.Remote {
 
 
         internal override void OnDispose(ulong proxyId) {
-            weakCache.Remove(remoteRuntime, proxyId);
+            weakCache.Remove(proxyId);
         }
     }
 
@@ -149,7 +167,7 @@ namespace Chromium.Remote {
             bool DocumentFetched;
             CfrDomDocument m_Document;
 
-            internal CfrDomVisitorVisitEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+            internal CfrDomVisitorVisitEventArgs(ulong eventArgsId) : base(eventArgsId) {}
 
             /// <summary>
             /// Get the Document parameter for the <see cref="CfrDomVisitor.Visit"/> render process callback.
@@ -161,8 +179,8 @@ namespace Chromium.Remote {
                         DocumentFetched = true;
                         var call = new CfxDomVisitorVisitGetDocumentRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.Execute(remoteRuntime.connection);
-                        m_Document = CfrDomDocument.Wrap(call.value, remoteRuntime);
+                        call.Execute();
+                        m_Document = CfrDomDocument.Wrap(call.value);
                     }
                     return m_Document;
                 }

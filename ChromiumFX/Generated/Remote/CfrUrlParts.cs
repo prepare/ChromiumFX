@@ -46,28 +46,46 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrUrlParts Wrap(ulong proxyId, CfrRuntime remoteRuntime) {
+        internal static CfrUrlParts Wrap(ulong proxyId) {
             if(proxyId == 0) return null;
             lock(weakCache) {
-                var cfrObj = (CfrUrlParts)weakCache.Get(remoteRuntime, proxyId);
+                var cfrObj = (CfrUrlParts)weakCache.Get(proxyId);
                 if(cfrObj == null) {
-                    cfrObj = new CfrUrlParts(proxyId, remoteRuntime);
-                    weakCache.Add(remoteRuntime, proxyId, cfrObj);
+                    cfrObj = new CfrUrlParts(proxyId);
+                    weakCache.Add(proxyId, cfrObj);
                 }
                 return cfrObj;
             }
         }
 
 
+        [Obsolete]
         internal static ulong CreateRemote(CfrRuntime remoteRuntime) {
             var call = new CfxUrlPartsCtorRenderProcessCall();
-            call.Execute(remoteRuntime.connection);
+            remoteRuntime.EnterContext();
+            try {
+                call.Execute();
+                return call.__retval;
+            }
+            finally {
+                remoteRuntime.ExitContext();
+            }
+        }
+        internal static ulong CreateRemote() {
+            var call = new CfxUrlPartsCtorRenderProcessCall();
+            call.Execute();
             return call.__retval;
         }
 
-        private CfrUrlParts(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) {}
+        private CfrUrlParts(ulong proxyId) : base(proxyId) {}
+        [Obsolete("new CfrUrlParts(CfrRuntime) is deprecated, please use new CfrUrlParts() without CfrRuntime instead.")]
         public CfrUrlParts(CfrRuntime remoteRuntime) : base(CreateRemote(remoteRuntime), remoteRuntime) {
-            weakCache.Add(remoteRuntime, this.proxyId, this);
+            remoteRuntime.EnterContext();
+            weakCache.Add(this.proxyId, this);
+            remoteRuntime.ExitContext();
+        }
+        public CfrUrlParts() : base(CreateRemote()) {
+            weakCache.Add(this.proxyId, this);
         }
 
         string m_Spec;
@@ -85,7 +103,7 @@ namespace Chromium.Remote {
                 if(!m_Spec_fetched) {
                     var call = new CfxUrlPartsGetSpecRenderProcessCall();
                     call.sender = this.proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                     m_Spec = call.value;
                     m_Spec_fetched = true;
                 }
@@ -95,7 +113,7 @@ namespace Chromium.Remote {
                 var call = new CfxUrlPartsSetSpecRenderProcessCall();
                 call.sender = this.proxyId;
                 call.value = value;
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 m_Spec = value;
                 m_Spec_fetched = true;
             }
@@ -116,7 +134,7 @@ namespace Chromium.Remote {
                 if(!m_Scheme_fetched) {
                     var call = new CfxUrlPartsGetSchemeRenderProcessCall();
                     call.sender = this.proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                     m_Scheme = call.value;
                     m_Scheme_fetched = true;
                 }
@@ -126,7 +144,7 @@ namespace Chromium.Remote {
                 var call = new CfxUrlPartsSetSchemeRenderProcessCall();
                 call.sender = this.proxyId;
                 call.value = value;
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 m_Scheme = value;
                 m_Scheme_fetched = true;
             }
@@ -147,7 +165,7 @@ namespace Chromium.Remote {
                 if(!m_UserName_fetched) {
                     var call = new CfxUrlPartsGetUserNameRenderProcessCall();
                     call.sender = this.proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                     m_UserName = call.value;
                     m_UserName_fetched = true;
                 }
@@ -157,7 +175,7 @@ namespace Chromium.Remote {
                 var call = new CfxUrlPartsSetUserNameRenderProcessCall();
                 call.sender = this.proxyId;
                 call.value = value;
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 m_UserName = value;
                 m_UserName_fetched = true;
             }
@@ -178,7 +196,7 @@ namespace Chromium.Remote {
                 if(!m_Password_fetched) {
                     var call = new CfxUrlPartsGetPasswordRenderProcessCall();
                     call.sender = this.proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                     m_Password = call.value;
                     m_Password_fetched = true;
                 }
@@ -188,7 +206,7 @@ namespace Chromium.Remote {
                 var call = new CfxUrlPartsSetPasswordRenderProcessCall();
                 call.sender = this.proxyId;
                 call.value = value;
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 m_Password = value;
                 m_Password_fetched = true;
             }
@@ -210,7 +228,7 @@ namespace Chromium.Remote {
                 if(!m_Host_fetched) {
                     var call = new CfxUrlPartsGetHostRenderProcessCall();
                     call.sender = this.proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                     m_Host = call.value;
                     m_Host_fetched = true;
                 }
@@ -220,7 +238,7 @@ namespace Chromium.Remote {
                 var call = new CfxUrlPartsSetHostRenderProcessCall();
                 call.sender = this.proxyId;
                 call.value = value;
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 m_Host = value;
                 m_Host_fetched = true;
             }
@@ -241,7 +259,7 @@ namespace Chromium.Remote {
                 if(!m_Port_fetched) {
                     var call = new CfxUrlPartsGetPortRenderProcessCall();
                     call.sender = this.proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                     m_Port = call.value;
                     m_Port_fetched = true;
                 }
@@ -251,7 +269,7 @@ namespace Chromium.Remote {
                 var call = new CfxUrlPartsSetPortRenderProcessCall();
                 call.sender = this.proxyId;
                 call.value = value;
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 m_Port = value;
                 m_Port_fetched = true;
             }
@@ -275,7 +293,7 @@ namespace Chromium.Remote {
                 if(!m_Origin_fetched) {
                     var call = new CfxUrlPartsGetOriginRenderProcessCall();
                     call.sender = this.proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                     m_Origin = call.value;
                     m_Origin_fetched = true;
                 }
@@ -285,7 +303,7 @@ namespace Chromium.Remote {
                 var call = new CfxUrlPartsSetOriginRenderProcessCall();
                 call.sender = this.proxyId;
                 call.value = value;
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 m_Origin = value;
                 m_Origin_fetched = true;
             }
@@ -306,7 +324,7 @@ namespace Chromium.Remote {
                 if(!m_Path_fetched) {
                     var call = new CfxUrlPartsGetPathRenderProcessCall();
                     call.sender = this.proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                     m_Path = call.value;
                     m_Path_fetched = true;
                 }
@@ -316,7 +334,7 @@ namespace Chromium.Remote {
                 var call = new CfxUrlPartsSetPathRenderProcessCall();
                 call.sender = this.proxyId;
                 call.value = value;
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 m_Path = value;
                 m_Path_fetched = true;
             }
@@ -337,7 +355,7 @@ namespace Chromium.Remote {
                 if(!m_Query_fetched) {
                     var call = new CfxUrlPartsGetQueryRenderProcessCall();
                     call.sender = this.proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                     m_Query = call.value;
                     m_Query_fetched = true;
                 }
@@ -347,14 +365,14 @@ namespace Chromium.Remote {
                 var call = new CfxUrlPartsSetQueryRenderProcessCall();
                 call.sender = this.proxyId;
                 call.value = value;
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 m_Query = value;
                 m_Query_fetched = true;
             }
         }
 
         internal override void OnDispose(ulong proxyId) {
-            weakCache.Remove(remoteRuntime, proxyId);
+            weakCache.Remove(proxyId);
         }
     }
 }

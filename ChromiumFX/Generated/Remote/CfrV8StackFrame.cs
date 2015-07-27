@@ -50,13 +50,13 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrV8StackFrame Wrap(ulong proxyId, CfrRuntime remoteRuntime) {
+        internal static CfrV8StackFrame Wrap(ulong proxyId) {
             if(proxyId == 0) return null;
             lock(weakCache) {
-                var cfrObj = (CfrV8StackFrame)weakCache.Get(remoteRuntime, proxyId);
+                var cfrObj = (CfrV8StackFrame)weakCache.Get(proxyId);
                 if(cfrObj == null) {
-                    cfrObj = new CfrV8StackFrame(proxyId, remoteRuntime);
-                    weakCache.Add(remoteRuntime, proxyId, cfrObj);
+                    cfrObj = new CfrV8StackFrame(proxyId);
+                    weakCache.Add(proxyId, cfrObj);
                 }
                 return cfrObj;
             }
@@ -64,7 +64,7 @@ namespace Chromium.Remote {
 
 
 
-        private CfrV8StackFrame(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) {}
+        private CfrV8StackFrame(ulong proxyId) : base(proxyId) {}
 
         /// <summary>
         /// Returns true (1) if the underlying handle is valid and it can be accessed
@@ -79,7 +79,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8StackFrameIsValidRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -95,7 +95,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8StackFrameGetScriptNameRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -113,7 +113,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8StackFrameGetScriptNameOrSourceUrlRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -129,7 +129,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8StackFrameGetFunctionNameRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -145,7 +145,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8StackFrameGetLineNumberRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -162,7 +162,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8StackFrameGetColumnRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -178,7 +178,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8StackFrameIsEvalRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -194,13 +194,13 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8StackFrameIsConstructorRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
 
         internal override void OnDispose(ulong proxyId) {
-            weakCache.Remove(remoteRuntime, proxyId);
+            weakCache.Remove(proxyId);
         }
     }
 }

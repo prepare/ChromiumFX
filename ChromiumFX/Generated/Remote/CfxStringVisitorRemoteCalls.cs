@@ -60,12 +60,12 @@ namespace Chromium.Remote {
             var call = new CfxStringVisitorVisitBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute(RemoteClient.connection);
+            call.Execute();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrStringVisitor.Wrap(this.sender, connection.remoteRuntime);
-            var e = new CfrStringVisitorVisitEventArgs(eventArgsId, connection.remoteRuntime);
+            var sender = CfrStringVisitor.Wrap(this.sender);
+            var e = new CfrStringVisitorVisitEventArgs(eventArgsId);
             sender.raise_Visit(sender, e);
         }
     }

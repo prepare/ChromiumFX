@@ -48,22 +48,34 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrResourceBundleHandler Wrap(ulong proxyId, CfrRuntime remoteRuntime) {
+        internal static CfrResourceBundleHandler Wrap(ulong proxyId) {
             if(proxyId == 0) return null;
             lock(weakCache) {
-                var cfrObj = (CfrResourceBundleHandler)weakCache.Get(remoteRuntime, proxyId);
+                var cfrObj = (CfrResourceBundleHandler)weakCache.Get(proxyId);
                 if(cfrObj == null) {
-                    cfrObj = new CfrResourceBundleHandler(proxyId, remoteRuntime);
-                    weakCache.Add(remoteRuntime, proxyId, cfrObj);
+                    cfrObj = new CfrResourceBundleHandler(proxyId);
+                    weakCache.Add(proxyId, cfrObj);
                 }
                 return cfrObj;
             }
         }
 
 
+        [Obsolete]
         internal static ulong CreateRemote(CfrRuntime remoteRuntime) {
             var call = new CfxResourceBundleHandlerCtorRenderProcessCall();
-            call.Execute(remoteRuntime.connection);
+            remoteRuntime.EnterContext();
+            try {
+                call.Execute();
+                return call.__retval;
+            }
+            finally {
+                remoteRuntime.ExitContext();
+            }
+        }
+        internal static ulong CreateRemote() {
+            var call = new CfxResourceBundleHandlerCtorRenderProcessCall();
+            call.Execute();
             return call.__retval;
         }
 
@@ -82,9 +94,15 @@ namespace Chromium.Remote {
         }
 
 
-        private CfrResourceBundleHandler(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) {}
+        private CfrResourceBundleHandler(ulong proxyId) : base(proxyId) {}
+        [Obsolete("new CfrResourceBundleHandler(CfrRuntime) is deprecated, please use new CfrResourceBundleHandler() without CfrRuntime instead.")]
         public CfrResourceBundleHandler(CfrRuntime remoteRuntime) : base(CreateRemote(remoteRuntime), remoteRuntime) {
-            weakCache.Add(remoteRuntime, this.proxyId, this);
+            remoteRuntime.EnterContext();
+            weakCache.Add(this.proxyId, this);
+            remoteRuntime.ExitContext();
+        }
+        public CfrResourceBundleHandler() : base(CreateRemote()) {
+            weakCache.Add(this.proxyId, this);
         }
 
         /// <summary>
@@ -102,7 +120,7 @@ namespace Chromium.Remote {
                 if(m_GetLocalizedString == null) {
                     var call = new CfxGetLocalizedStringActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                 }
                 m_GetLocalizedString += value;
             }
@@ -111,7 +129,7 @@ namespace Chromium.Remote {
                 if(m_GetLocalizedString == null) {
                     var call = new CfxGetLocalizedStringDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                 }
             }
         }
@@ -136,7 +154,7 @@ namespace Chromium.Remote {
                 if(m_GetDataResource == null) {
                     var call = new CfxGetDataResourceActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                 }
                 m_GetDataResource += value;
             }
@@ -145,7 +163,7 @@ namespace Chromium.Remote {
                 if(m_GetDataResource == null) {
                     var call = new CfxGetDataResourceDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                 }
             }
         }
@@ -154,7 +172,7 @@ namespace Chromium.Remote {
 
 
         internal override void OnDispose(ulong proxyId) {
-            weakCache.Remove(remoteRuntime, proxyId);
+            weakCache.Remove(proxyId);
         }
     }
 
@@ -191,7 +209,7 @@ namespace Chromium.Remote {
 
             private bool returnValueSet;
 
-            internal CfrGetLocalizedStringEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+            internal CfrGetLocalizedStringEventArgs(ulong eventArgsId) : base(eventArgsId) {}
 
             /// <summary>
             /// Get the MessageId parameter for the <see cref="CfrResourceBundleHandler.GetLocalizedString"/> render process callback.
@@ -203,7 +221,7 @@ namespace Chromium.Remote {
                         MessageIdFetched = true;
                         var call = new CfxGetLocalizedStringGetMessageIdRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.Execute(remoteRuntime.connection);
+                        call.Execute();
                         m_MessageId = call.value;
                     }
                     return m_MessageId;
@@ -219,7 +237,7 @@ namespace Chromium.Remote {
                         StringFetched = true;
                         var call = new CfxGetLocalizedStringGetStringRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.Execute(remoteRuntime.connection);
+                        call.Execute();
                         m_String = call.value;
                     }
                     return m_String;
@@ -231,7 +249,7 @@ namespace Chromium.Remote {
                     var call = new CfxGetLocalizedStringSetStringRenderProcessCall();
                     call.eventArgsId = eventArgsId;
                     call.value = value;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                 }
             }
             /// <summary>
@@ -245,7 +263,7 @@ namespace Chromium.Remote {
                 var call = new CfxGetLocalizedStringSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
                 call.value = returnValue;
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 returnValueSet = true;
             }
 
@@ -287,7 +305,7 @@ namespace Chromium.Remote {
 
             private bool returnValueSet;
 
-            internal CfrGetDataResourceEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+            internal CfrGetDataResourceEventArgs(ulong eventArgsId) : base(eventArgsId) {}
 
             /// <summary>
             /// Get the ResourceId parameter for the <see cref="CfrResourceBundleHandler.GetDataResource"/> render process callback.
@@ -299,7 +317,7 @@ namespace Chromium.Remote {
                         ResourceIdFetched = true;
                         var call = new CfxGetDataResourceGetResourceIdRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.Execute(remoteRuntime.connection);
+                        call.Execute();
                         m_ResourceId = call.value;
                     }
                     return m_ResourceId;
@@ -314,7 +332,7 @@ namespace Chromium.Remote {
                     var call = new CfxGetDataResourceSetDataRenderProcessCall();
                     call.eventArgsId = eventArgsId;
                     call.value = value.ptr;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                 }
             }
             /// <summary>
@@ -326,7 +344,7 @@ namespace Chromium.Remote {
                     var call = new CfxGetDataResourceSetDataSizeRenderProcessCall();
                     call.eventArgsId = eventArgsId;
                     call.value = value;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                 }
             }
             /// <summary>
@@ -340,7 +358,7 @@ namespace Chromium.Remote {
                 var call = new CfxGetDataResourceSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
                 call.value = returnValue;
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 returnValueSet = true;
             }
 

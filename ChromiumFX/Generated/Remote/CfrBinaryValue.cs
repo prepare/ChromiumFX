@@ -46,13 +46,13 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrBinaryValue Wrap(ulong proxyId, CfrRuntime remoteRuntime) {
+        internal static CfrBinaryValue Wrap(ulong proxyId) {
             if(proxyId == 0) return null;
             lock(weakCache) {
-                var cfrObj = (CfrBinaryValue)weakCache.Get(remoteRuntime, proxyId);
+                var cfrObj = (CfrBinaryValue)weakCache.Get(proxyId);
                 if(cfrObj == null) {
-                    cfrObj = new CfrBinaryValue(proxyId, remoteRuntime);
-                    weakCache.Add(remoteRuntime, proxyId, cfrObj);
+                    cfrObj = new CfrBinaryValue(proxyId);
+                    weakCache.Add(proxyId, cfrObj);
                 }
                 return cfrObj;
             }
@@ -67,16 +67,39 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
+        [Obsolete("Create(CfrRuntime, ...) is deprecated, please use Create(...) without CfrRuntime instead.")]
         public static CfrBinaryValue Create(CfrRuntime remoteRuntime, RemotePtr data, int dataSize) {
+            remoteRuntime.EnterContext();
+            try {
+                var call = new CfxBinaryValueCreateRenderProcessCall();
+                call.data = data.ptr;
+                call.dataSize = dataSize;
+                call.Execute();
+                return CfrBinaryValue.Wrap(call.__retval);
+            }
+            finally {
+                remoteRuntime.ExitContext();
+            }
+        }
+
+        /// <summary>
+        /// Creates a new object that is not owned by any other object. The specified
+        /// |data| will be copied.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
+        /// </remarks>
+        public static CfrBinaryValue Create(RemotePtr data, int dataSize) {
             var call = new CfxBinaryValueCreateRenderProcessCall();
             call.data = data.ptr;
             call.dataSize = dataSize;
-            call.Execute(remoteRuntime.connection);
-            return CfrBinaryValue.Wrap(call.__retval, remoteRuntime);
+            call.Execute();
+            return CfrBinaryValue.Wrap(call.__retval);
         }
 
 
-        private CfrBinaryValue(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) {}
+        private CfrBinaryValue(ulong proxyId) : base(proxyId) {}
 
         /// <summary>
         /// Returns true (1) if this object is valid. This object may become invalid if
@@ -92,7 +115,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxBinaryValueIsValidRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -108,7 +131,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxBinaryValueIsOwnedRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -124,7 +147,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxBinaryValueGetSizeRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -141,7 +164,7 @@ namespace Chromium.Remote {
             var call = new CfxBinaryValueIsSameRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.that = CfrObject.Unwrap(that);
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -157,7 +180,7 @@ namespace Chromium.Remote {
             var call = new CfxBinaryValueIsEqualRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.that = CfrObject.Unwrap(that);
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -171,8 +194,8 @@ namespace Chromium.Remote {
         public CfrBinaryValue Copy() {
             var call = new CfxBinaryValueCopyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.Execute(remoteRuntime.connection);
-            return CfrBinaryValue.Wrap(call.__retval, remoteRuntime);
+            call.Execute();
+            return CfrBinaryValue.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -189,12 +212,12 @@ namespace Chromium.Remote {
             call.buffer = buffer.ptr;
             call.bufferSize = bufferSize;
             call.dataOffset = dataOffset;
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
         internal override void OnDispose(ulong proxyId) {
-            weakCache.Remove(remoteRuntime, proxyId);
+            weakCache.Remove(proxyId);
         }
     }
 }

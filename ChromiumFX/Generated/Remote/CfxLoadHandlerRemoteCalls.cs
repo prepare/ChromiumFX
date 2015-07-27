@@ -60,12 +60,12 @@ namespace Chromium.Remote {
             var call = new CfxOnLoadingStateChangeBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute(RemoteClient.connection);
+            call.Execute();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrLoadHandler.Wrap(this.sender, connection.remoteRuntime);
-            var e = new CfrOnLoadingStateChangeEventArgs(eventArgsId, connection.remoteRuntime);
+            var sender = CfrLoadHandler.Wrap(this.sender);
+            var e = new CfrOnLoadingStateChangeEventArgs(eventArgsId);
             sender.raise_OnLoadingStateChange(sender, e);
         }
     }
@@ -217,12 +217,12 @@ namespace Chromium.Remote {
             var call = new CfxOnLoadStartBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute(RemoteClient.connection);
+            call.Execute();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrLoadHandler.Wrap(this.sender, connection.remoteRuntime);
-            var e = new CfrOnLoadStartEventArgs(eventArgsId, connection.remoteRuntime);
+            var sender = CfrLoadHandler.Wrap(this.sender);
+            var e = new CfrOnLoadStartEventArgs(eventArgsId);
             sender.raise_OnLoadStart(sender, e);
         }
     }
@@ -320,12 +320,12 @@ namespace Chromium.Remote {
             var call = new CfxOnLoadEndBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute(RemoteClient.connection);
+            call.Execute();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrLoadHandler.Wrap(this.sender, connection.remoteRuntime);
-            var e = new CfrOnLoadEndEventArgs(eventArgsId, connection.remoteRuntime);
+            var sender = CfrLoadHandler.Wrap(this.sender);
+            var e = new CfrOnLoadEndEventArgs(eventArgsId);
             sender.raise_OnLoadEnd(sender, e);
         }
     }
@@ -450,12 +450,12 @@ namespace Chromium.Remote {
             var call = new CfxOnLoadErrorBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute(RemoteClient.connection);
+            call.Execute();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrLoadHandler.Wrap(this.sender, connection.remoteRuntime);
-            var e = new CfrOnLoadErrorEventArgs(eventArgsId, connection.remoteRuntime);
+            var sender = CfrLoadHandler.Wrap(this.sender);
+            var e = new CfrOnLoadErrorEventArgs(eventArgsId);
             sender.raise_OnLoadError(sender, e);
         }
     }

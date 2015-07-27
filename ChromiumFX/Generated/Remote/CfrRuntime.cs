@@ -77,7 +77,7 @@ namespace Chromium.Remote {
             call.targetProtocol = targetProtocol;
             call.targetDomain = targetDomain;
             call.allowTargetSubdomains = allowTargetSubdomains;
-            call.Execute(connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -91,7 +91,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool ClearCrossOriginWhitelist() {
             var call = new CfxRuntimeClearCrossOriginWhitelistRenderProcessCall();
-            call.Execute(connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -108,7 +108,7 @@ namespace Chromium.Remote {
             var call = new CfxRuntimeCreateUrlRenderProcessCall();
             call.parts = CfrObject.Unwrap(parts);
             call.url = url;
-            call.Execute(connection);
+            call.Execute();
             url = call.url;
             return call.__retval;
         }
@@ -124,7 +124,7 @@ namespace Chromium.Remote {
         public bool CurrentlyOn(CfxThreadId threadId) {
             var call = new CfxRuntimeCurrentlyOnRenderProcessCall();
             call.threadId = (int)threadId;
-            call.Execute(connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -142,7 +142,7 @@ namespace Chromium.Remote {
             var call = new CfxRuntimeGetExtensionsForMimeTypeRenderProcessCall();
             call.mimeType = mimeType;
             call.extensions = extensions;
-            call.Execute(connection);
+            call.Execute();
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Chromium.Remote {
         public string GetMimeType(string extension) {
             var call = new CfxRuntimeGetMimeTypeRenderProcessCall();
             call.extension = extension;
-            call.Execute(connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -171,7 +171,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public long NowFromSystemTraceTime() {
             var call = new CfxRuntimeNowFromSystemTraceTimeRenderProcessCall();
-            call.Execute(connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -190,7 +190,7 @@ namespace Chromium.Remote {
             call.@string = @string;
             call.strict = strict;
             call.color = color;
-            call.Execute(connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -206,7 +206,7 @@ namespace Chromium.Remote {
             var call = new CfxRuntimeParseUrlRenderProcessCall();
             call.url = url;
             call.parts = CfrObject.Unwrap(parts);
-            call.Execute(connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -224,7 +224,7 @@ namespace Chromium.Remote {
             call.threadId = (int)threadId;
             call.task = CfrObject.Unwrap(task);
             call.delayMs = delayMs;
-            call.Execute(connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -240,7 +240,7 @@ namespace Chromium.Remote {
             var call = new CfxRuntimePostTaskRenderProcessCall();
             call.threadId = (int)threadId;
             call.task = CfrObject.Unwrap(task);
-            call.Execute(connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -307,7 +307,7 @@ namespace Chromium.Remote {
             call.extensionName = extensionName;
             call.javascriptCode = javascriptCode;
             call.handler = CfrObject.Unwrap(handler);
-            call.Execute(connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -325,7 +325,7 @@ namespace Chromium.Remote {
             call.targetProtocol = targetProtocol;
             call.targetDomain = targetDomain;
             call.allowTargetSubdomains = allowTargetSubdomains;
-            call.Execute(connection);
+            call.Execute();
             return call.__retval;
         }
 

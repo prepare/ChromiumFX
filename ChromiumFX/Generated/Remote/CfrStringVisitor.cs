@@ -47,22 +47,34 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrStringVisitor Wrap(ulong proxyId, CfrRuntime remoteRuntime) {
+        internal static CfrStringVisitor Wrap(ulong proxyId) {
             if(proxyId == 0) return null;
             lock(weakCache) {
-                var cfrObj = (CfrStringVisitor)weakCache.Get(remoteRuntime, proxyId);
+                var cfrObj = (CfrStringVisitor)weakCache.Get(proxyId);
                 if(cfrObj == null) {
-                    cfrObj = new CfrStringVisitor(proxyId, remoteRuntime);
-                    weakCache.Add(remoteRuntime, proxyId, cfrObj);
+                    cfrObj = new CfrStringVisitor(proxyId);
+                    weakCache.Add(proxyId, cfrObj);
                 }
                 return cfrObj;
             }
         }
 
 
+        [Obsolete]
         internal static ulong CreateRemote(CfrRuntime remoteRuntime) {
             var call = new CfxStringVisitorCtorRenderProcessCall();
-            call.Execute(remoteRuntime.connection);
+            remoteRuntime.EnterContext();
+            try {
+                call.Execute();
+                return call.__retval;
+            }
+            finally {
+                remoteRuntime.ExitContext();
+            }
+        }
+        internal static ulong CreateRemote() {
+            var call = new CfxStringVisitorCtorRenderProcessCall();
+            call.Execute();
             return call.__retval;
         }
 
@@ -74,9 +86,15 @@ namespace Chromium.Remote {
         }
 
 
-        private CfrStringVisitor(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) {}
+        private CfrStringVisitor(ulong proxyId) : base(proxyId) {}
+        [Obsolete("new CfrStringVisitor(CfrRuntime) is deprecated, please use new CfrStringVisitor() without CfrRuntime instead.")]
         public CfrStringVisitor(CfrRuntime remoteRuntime) : base(CreateRemote(remoteRuntime), remoteRuntime) {
-            weakCache.Add(remoteRuntime, this.proxyId, this);
+            remoteRuntime.EnterContext();
+            weakCache.Add(this.proxyId, this);
+            remoteRuntime.ExitContext();
+        }
+        public CfrStringVisitor() : base(CreateRemote()) {
+            weakCache.Add(this.proxyId, this);
         }
 
         /// <summary>
@@ -91,7 +109,7 @@ namespace Chromium.Remote {
                 if(m_Visit == null) {
                     var call = new CfxStringVisitorVisitActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                 }
                 m_Visit += value;
             }
@@ -100,7 +118,7 @@ namespace Chromium.Remote {
                 if(m_Visit == null) {
                     var call = new CfxStringVisitorVisitDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                 }
             }
         }
@@ -109,7 +127,7 @@ namespace Chromium.Remote {
 
 
         internal override void OnDispose(ulong proxyId) {
-            weakCache.Remove(remoteRuntime, proxyId);
+            weakCache.Remove(proxyId);
         }
     }
 
@@ -136,7 +154,7 @@ namespace Chromium.Remote {
             bool StringFetched;
             string m_String;
 
-            internal CfrStringVisitorVisitEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+            internal CfrStringVisitorVisitEventArgs(ulong eventArgsId) : base(eventArgsId) {}
 
             /// <summary>
             /// Get the String parameter for the <see cref="CfrStringVisitor.Visit"/> render process callback.
@@ -148,7 +166,7 @@ namespace Chromium.Remote {
                         StringFetched = true;
                         var call = new CfxStringVisitorVisitGetStringRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.Execute(remoteRuntime.connection);
+                        call.Execute();
                         m_String = call.value;
                     }
                     return m_String;
