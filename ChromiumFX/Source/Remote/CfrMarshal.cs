@@ -41,16 +41,10 @@ namespace Chromium.Remote {
     /// </summary>
     public class CfrMarshal {
 
-        private readonly RemoteConnection connection;
-
-        internal CfrMarshal(RemoteConnection connection) {
-            this.connection = connection;
-        }
-
         /// <summary>
         /// Call Marshal.AllocHGlobal in the target process.
         /// </summary>
-        public RemotePtr AllocHGlobal(int cb) {
+        public static RemotePtr AllocHGlobal(int cb) {
             var call = new CfrMarshalAllocHGlobalRenderProcessCall();
             call.cb = cb;
             call.Execute();
@@ -60,7 +54,7 @@ namespace Chromium.Remote {
         /// <summary>
         /// Call Marshal.FreeHGlobal in the target process.
         /// </summary>
-        public void FreeHGlobal(RemotePtr hglobal) {
+        public static void FreeHGlobal(RemotePtr hglobal) {
             var call = new CfrMarshalFreeHGlobalRenderProcessCall();
             call.hglobal = hglobal.ptr;
             call.Execute();
@@ -69,7 +63,7 @@ namespace Chromium.Remote {
         /// <summary>
         /// Call Marshal.Copy in the target process.
         /// </summary>
-        public void Copy(byte[] source, int startIndex, RemotePtr destination, int length) {
+        public static void Copy(byte[] source, int startIndex, RemotePtr destination, int length) {
             var call = new CfrMarshalCopyToNativeRenderProcessCall();
             call.source = source;
             call.startIndex = startIndex;
@@ -81,7 +75,7 @@ namespace Chromium.Remote {
         /// <summary>
         /// Call Marshal.Copy in the target process.
         /// </summary>
-        public void Copy(RemotePtr source, byte[] destination, int startIndex, int length) {
+        public static void Copy(RemotePtr source, byte[] destination, int startIndex, int length) {
             var call = new CfrMarshalCopyToManagedRenderProcessCall();
             call.source = source.ptr;
             call.destination = destination;

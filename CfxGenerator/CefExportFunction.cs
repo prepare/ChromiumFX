@@ -123,7 +123,7 @@ public class CefExportFunction : ISignatureOwner {
         b.AppendSummaryAndRemarks(Comments, true);
 
         if(Parent == null) {
-            b.BeginFunction(PublicFunctionName, ReturnType.RemoteSymbol, Signature.RemoteSignature);
+            b.BeginFunction(PublicFunctionName, ReturnType.RemoteSymbol, Signature.RemoteSignature, "public static");
             Signature.EmitRemoteCall(b);
         } else {
             var sig = Signature.RemoteSignature;
