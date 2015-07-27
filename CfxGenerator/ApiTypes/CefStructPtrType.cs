@@ -77,7 +77,7 @@ public class CefStructPtrType : ApiType {
     }
 
     public override string RemoteWrapExpression(string var) {
-        return string.Format("{0}.Wrap({1}, remoteRuntime)", RemoteSymbol, var);
+        return string.Format("{0}.Wrap({1})", RemoteSymbol, var);
     }
 
     public override void EmitPreNativeCallStatements(CodeBuilder b, string var) {
