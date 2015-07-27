@@ -42,8 +42,8 @@ namespace Chromium.Remote
         internal readonly CfrRuntime remoteRuntime;
         internal bool m_isInvalid = false;
 
-        internal CfrEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) {
-            this.remoteRuntime = remoteRuntime;
+        internal CfrEventArgs(ulong eventArgsId) {
+            this.remoteRuntime = CfrRuntime.CurrentContext;
             this.eventArgsId = eventArgsId;
         }
 

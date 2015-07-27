@@ -47,11 +47,16 @@ namespace Chromium.Remote {
         internal ulong m_proxyId;
 
 
+        internal CfrObject(ulong proxyId) {
+            this.m_proxyId = proxyId;
+            this.remoteRuntime = CfrRuntime.CurrentContext;
+        }
+        [Obsolete]
         internal CfrObject(ulong proxyId, CfrRuntime remoteRuntime) {
             this.m_proxyId = proxyId;
             this.remoteRuntime = remoteRuntime;
         }
-
+        
         internal ulong proxyId {
             get {
                 if(m_proxyId == 0) {
@@ -76,7 +81,7 @@ namespace Chromium.Remote {
             get {
                 var call = new GetRemotePtrRemoteCall();
                 call.proxyId = proxyId;
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return new RemotePtr(call.retval);
             }
         }
@@ -91,7 +96,7 @@ namespace Chromium.Remote {
                     if(remoteRuntime.connection.connectionLostException == null) {
                         var call = new ReleaseProxyRemoteCall();
                         call.proxyId = m_proxyId;
-                        call.Execute(remoteRuntime.connection);
+                        call.Execute();
                     }
                 } catch {
                 } finally {
