@@ -179,7 +179,6 @@
     <Compile Include="Generated\Remote\CfrTask.cs" />
     <Compile Include="Generated\Remote\CfrTaskRunner.cs" />
     <Compile Include="Generated\Remote\CfrTime.cs" />
-    <Compile Include="Generated\Remote\CfrUrlParts.cs" />
     <Compile Include="Generated\Remote\CfrV8Accessor.cs" />
     <Compile Include="Generated\Remote\CfrV8Context.cs" />
     <Compile Include="Generated\Remote\CfrV8Exception.cs" />
@@ -211,7 +210,6 @@
     <Compile Include="Generated\Remote\CfxTaskRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxTaskRunnerRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxTimeRemoteCalls.cs" />
-    <Compile Include="Generated\Remote\CfxUrlPartsRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8AccessorRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8ContextRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8ExceptionRemoteCalls.cs" />
