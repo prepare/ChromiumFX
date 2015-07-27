@@ -51,13 +51,13 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrTaskRunner Wrap(ulong proxyId, CfrRuntime remoteRuntime) {
+        internal static CfrTaskRunner Wrap(ulong proxyId) {
             if(proxyId == 0) return null;
             lock(weakCache) {
-                var cfrObj = (CfrTaskRunner)weakCache.Get(remoteRuntime, proxyId);
+                var cfrObj = (CfrTaskRunner)weakCache.Get(proxyId);
                 if(cfrObj == null) {
-                    cfrObj = new CfrTaskRunner(proxyId, remoteRuntime);
-                    weakCache.Add(remoteRuntime, proxyId, cfrObj);
+                    cfrObj = new CfrTaskRunner(proxyId);
+                    weakCache.Add(proxyId, cfrObj);
                 }
                 return cfrObj;
             }
@@ -73,10 +73,32 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
+        [Obsolete("GetForCurrentThread(CfrRuntime, ...) is deprecated, please use GetForCurrentThread(...) without CfrRuntime instead.")]
         public static CfrTaskRunner GetForCurrentThread(CfrRuntime remoteRuntime) {
+            remoteRuntime.EnterContext();
+            try {
+                var call = new CfxTaskRunnerGetForCurrentThreadRenderProcessCall();
+                call.Execute();
+                return CfrTaskRunner.Wrap(call.__retval);
+            }
+            finally {
+                remoteRuntime.ExitContext();
+            }
+        }
+
+        /// <summary>
+        /// Returns the task runner for the current thread. Only CEF threads will have
+        /// task runners. An NULL reference will be returned if this function is called
+        /// on an invalid thread.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
+        public static CfrTaskRunner GetForCurrentThread() {
             var call = new CfxTaskRunnerGetForCurrentThreadRenderProcessCall();
-            call.Execute(remoteRuntime.connection);
-            return CfrTaskRunner.Wrap(call.__retval, remoteRuntime);
+            call.Execute();
+            return CfrTaskRunner.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -86,15 +108,36 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
+        [Obsolete("GetForThread(CfrRuntime, ...) is deprecated, please use GetForThread(...) without CfrRuntime instead.")]
         public static CfrTaskRunner GetForThread(CfrRuntime remoteRuntime, CfxThreadId threadId) {
+            remoteRuntime.EnterContext();
+            try {
+                var call = new CfxTaskRunnerGetForThreadRenderProcessCall();
+                call.threadId = (int)threadId;
+                call.Execute();
+                return CfrTaskRunner.Wrap(call.__retval);
+            }
+            finally {
+                remoteRuntime.ExitContext();
+            }
+        }
+
+        /// <summary>
+        /// Returns the task runner for the specified CEF thread.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
+        /// </remarks>
+        public static CfrTaskRunner GetForThread(CfxThreadId threadId) {
             var call = new CfxTaskRunnerGetForThreadRenderProcessCall();
             call.threadId = (int)threadId;
-            call.Execute(remoteRuntime.connection);
-            return CfrTaskRunner.Wrap(call.__retval, remoteRuntime);
+            call.Execute();
+            return CfrTaskRunner.Wrap(call.__retval);
         }
 
 
-        private CfrTaskRunner(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) {}
+        private CfrTaskRunner(ulong proxyId) : base(proxyId) {}
 
         /// <summary>
         /// Returns true (1) if this object is pointing to the same task runner as
@@ -108,7 +151,7 @@ namespace Chromium.Remote {
             var call = new CfxTaskRunnerIsSameRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.that = CfrObject.Unwrap(that);
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -122,7 +165,7 @@ namespace Chromium.Remote {
         public bool BelongsToCurrentThread() {
             var call = new CfxTaskRunnerBelongsToCurrentThreadRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -137,7 +180,7 @@ namespace Chromium.Remote {
             var call = new CfxTaskRunnerBelongsToThreadRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.threadId = (int)threadId;
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -153,7 +196,7 @@ namespace Chromium.Remote {
             var call = new CfxTaskRunnerPostTaskRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.task = CfrObject.Unwrap(task);
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -172,12 +215,12 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.task = CfrObject.Unwrap(task);
             call.delayMs = delayMs;
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
         internal override void OnDispose(ulong proxyId) {
-            weakCache.Remove(remoteRuntime, proxyId);
+            weakCache.Remove(proxyId);
         }
     }
 }

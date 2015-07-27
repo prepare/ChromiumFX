@@ -50,13 +50,13 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrV8StackTrace Wrap(ulong proxyId, CfrRuntime remoteRuntime) {
+        internal static CfrV8StackTrace Wrap(ulong proxyId) {
             if(proxyId == 0) return null;
             lock(weakCache) {
-                var cfrObj = (CfrV8StackTrace)weakCache.Get(remoteRuntime, proxyId);
+                var cfrObj = (CfrV8StackTrace)weakCache.Get(proxyId);
                 if(cfrObj == null) {
-                    cfrObj = new CfrV8StackTrace(proxyId, remoteRuntime);
-                    weakCache.Add(remoteRuntime, proxyId, cfrObj);
+                    cfrObj = new CfrV8StackTrace(proxyId);
+                    weakCache.Add(proxyId, cfrObj);
                 }
                 return cfrObj;
             }
@@ -71,15 +71,37 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
+        [Obsolete("GetCurrent(CfrRuntime, ...) is deprecated, please use GetCurrent(...) without CfrRuntime instead.")]
         public static CfrV8StackTrace GetCurrent(CfrRuntime remoteRuntime, int frameLimit) {
+            remoteRuntime.EnterContext();
+            try {
+                var call = new CfxV8StackTraceGetCurrentRenderProcessCall();
+                call.frameLimit = frameLimit;
+                call.Execute();
+                return CfrV8StackTrace.Wrap(call.__retval);
+            }
+            finally {
+                remoteRuntime.ExitContext();
+            }
+        }
+
+        /// <summary>
+        /// Returns the stack trace for the currently active context. |frameLimit| is
+        /// the maximum number of frames that will be captured.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
+        public static CfrV8StackTrace GetCurrent(int frameLimit) {
             var call = new CfxV8StackTraceGetCurrentRenderProcessCall();
             call.frameLimit = frameLimit;
-            call.Execute(remoteRuntime.connection);
-            return CfrV8StackTrace.Wrap(call.__retval, remoteRuntime);
+            call.Execute();
+            return CfrV8StackTrace.Wrap(call.__retval);
         }
 
 
-        private CfrV8StackTrace(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) {}
+        private CfrV8StackTrace(ulong proxyId) : base(proxyId) {}
 
         /// <summary>
         /// Returns true (1) if the underlying handle is valid and it can be accessed
@@ -94,7 +116,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8StackTraceIsValidRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -110,7 +132,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8StackTraceGetFrameCountRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -126,12 +148,12 @@ namespace Chromium.Remote {
             var call = new CfxV8StackTraceGetFrameRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.index = index;
-            call.Execute(remoteRuntime.connection);
-            return CfrV8StackFrame.Wrap(call.__retval, remoteRuntime);
+            call.Execute();
+            return CfrV8StackFrame.Wrap(call.__retval);
         }
 
         internal override void OnDispose(ulong proxyId) {
-            weakCache.Remove(remoteRuntime, proxyId);
+            weakCache.Remove(proxyId);
         }
     }
 }

@@ -47,13 +47,13 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrPostData Wrap(ulong proxyId, CfrRuntime remoteRuntime) {
+        internal static CfrPostData Wrap(ulong proxyId) {
             if(proxyId == 0) return null;
             lock(weakCache) {
-                var cfrObj = (CfrPostData)weakCache.Get(remoteRuntime, proxyId);
+                var cfrObj = (CfrPostData)weakCache.Get(proxyId);
                 if(cfrObj == null) {
-                    cfrObj = new CfrPostData(proxyId, remoteRuntime);
-                    weakCache.Add(remoteRuntime, proxyId, cfrObj);
+                    cfrObj = new CfrPostData(proxyId);
+                    weakCache.Add(proxyId, cfrObj);
                 }
                 return cfrObj;
             }
@@ -67,14 +67,34 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
+        [Obsolete("Create(CfrRuntime, ...) is deprecated, please use Create(...) without CfrRuntime instead.")]
         public static CfrPostData Create(CfrRuntime remoteRuntime) {
+            remoteRuntime.EnterContext();
+            try {
+                var call = new CfxPostDataCreateRenderProcessCall();
+                call.Execute();
+                return CfrPostData.Wrap(call.__retval);
+            }
+            finally {
+                remoteRuntime.ExitContext();
+            }
+        }
+
+        /// <summary>
+        /// Create a new CfrPostData object.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
+        public static CfrPostData Create() {
             var call = new CfxPostDataCreateRenderProcessCall();
-            call.Execute(remoteRuntime.connection);
-            return CfrPostData.Wrap(call.__retval, remoteRuntime);
+            call.Execute();
+            return CfrPostData.Wrap(call.__retval);
         }
 
 
-        private CfrPostData(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) {}
+        private CfrPostData(ulong proxyId) : base(proxyId) {}
 
         /// <summary>
         /// Returns true (1) if this object is read-only.
@@ -87,7 +107,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxPostDataIsReadOnlyRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -103,7 +123,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxPostDataGetElementCountRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -119,11 +139,11 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxPostDataGetElementsRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 if(call.__retval == null) return null;
                 var retval = new CfrPostDataElement[call.__retval.Length];
                 for(int i = 0; i < retval.Length; ++i) {
-                    retval[i] = CfrPostDataElement.Wrap(call.__retval[i], remoteRuntime);
+                    retval[i] = CfrPostDataElement.Wrap(call.__retval[i]);
                 }
                 return retval;
             }
@@ -141,7 +161,7 @@ namespace Chromium.Remote {
             var call = new CfxPostDataRemoveElementRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.element = CfrObject.Unwrap(element);
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -156,7 +176,7 @@ namespace Chromium.Remote {
             var call = new CfxPostDataAddElementRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.element = CfrObject.Unwrap(element);
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -170,11 +190,11 @@ namespace Chromium.Remote {
         public void RemoveElements() {
             var call = new CfxPostDataRemoveElementsRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
         }
 
         internal override void OnDispose(ulong proxyId) {
-            weakCache.Remove(remoteRuntime, proxyId);
+            weakCache.Remove(proxyId);
         }
     }
 }

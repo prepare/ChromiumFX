@@ -52,22 +52,34 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrTask Wrap(ulong proxyId, CfrRuntime remoteRuntime) {
+        internal static CfrTask Wrap(ulong proxyId) {
             if(proxyId == 0) return null;
             lock(weakCache) {
-                var cfrObj = (CfrTask)weakCache.Get(remoteRuntime, proxyId);
+                var cfrObj = (CfrTask)weakCache.Get(proxyId);
                 if(cfrObj == null) {
-                    cfrObj = new CfrTask(proxyId, remoteRuntime);
-                    weakCache.Add(remoteRuntime, proxyId, cfrObj);
+                    cfrObj = new CfrTask(proxyId);
+                    weakCache.Add(proxyId, cfrObj);
                 }
                 return cfrObj;
             }
         }
 
 
+        [Obsolete]
         internal static ulong CreateRemote(CfrRuntime remoteRuntime) {
             var call = new CfxTaskCtorRenderProcessCall();
-            call.Execute(remoteRuntime.connection);
+            remoteRuntime.EnterContext();
+            try {
+                call.Execute();
+                return call.__retval;
+            }
+            finally {
+                remoteRuntime.ExitContext();
+            }
+        }
+        internal static ulong CreateRemote() {
+            var call = new CfxTaskCtorRenderProcessCall();
+            call.Execute();
             return call.__retval;
         }
 
@@ -79,9 +91,15 @@ namespace Chromium.Remote {
         }
 
 
-        private CfrTask(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) {}
+        private CfrTask(ulong proxyId) : base(proxyId) {}
+        [Obsolete("new CfrTask(CfrRuntime) is deprecated, please use new CfrTask() without CfrRuntime instead.")]
         public CfrTask(CfrRuntime remoteRuntime) : base(CreateRemote(remoteRuntime), remoteRuntime) {
-            weakCache.Add(remoteRuntime, this.proxyId, this);
+            remoteRuntime.EnterContext();
+            weakCache.Add(this.proxyId, this);
+            remoteRuntime.ExitContext();
+        }
+        public CfrTask() : base(CreateRemote()) {
+            weakCache.Add(this.proxyId, this);
         }
 
         /// <summary>
@@ -96,7 +114,7 @@ namespace Chromium.Remote {
                 if(m_Execute == null) {
                     var call = new CfxTaskExecuteActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                 }
                 m_Execute += value;
             }
@@ -105,7 +123,7 @@ namespace Chromium.Remote {
                 if(m_Execute == null) {
                     var call = new CfxTaskExecuteDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                 }
             }
         }
@@ -114,7 +132,7 @@ namespace Chromium.Remote {
 
 
         internal override void OnDispose(ulong proxyId) {
-            weakCache.Remove(remoteRuntime, proxyId);
+            weakCache.Remove(proxyId);
         }
     }
 

@@ -46,13 +46,13 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrSchemeRegistrar Wrap(ulong proxyId, CfrRuntime remoteRuntime) {
+        internal static CfrSchemeRegistrar Wrap(ulong proxyId) {
             if(proxyId == 0) return null;
             lock(weakCache) {
-                var cfrObj = (CfrSchemeRegistrar)weakCache.Get(remoteRuntime, proxyId);
+                var cfrObj = (CfrSchemeRegistrar)weakCache.Get(proxyId);
                 if(cfrObj == null) {
-                    cfrObj = new CfrSchemeRegistrar(proxyId, remoteRuntime);
-                    weakCache.Add(remoteRuntime, proxyId, cfrObj);
+                    cfrObj = new CfrSchemeRegistrar(proxyId);
+                    weakCache.Add(proxyId, cfrObj);
                 }
                 return cfrObj;
             }
@@ -60,7 +60,7 @@ namespace Chromium.Remote {
 
 
 
-        private CfrSchemeRegistrar(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) {}
+        private CfrSchemeRegistrar(ulong proxyId) : base(proxyId) {}
 
         /// <summary>
         /// Register a custom scheme. This function should not be called for the built-
@@ -113,12 +113,12 @@ namespace Chromium.Remote {
             call.isStandard = isStandard;
             call.isLocal = isLocal;
             call.isDisplayIsolated = isDisplayIsolated;
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
         internal override void OnDispose(ulong proxyId) {
-            weakCache.Remove(remoteRuntime, proxyId);
+            weakCache.Remove(proxyId);
         }
     }
 }

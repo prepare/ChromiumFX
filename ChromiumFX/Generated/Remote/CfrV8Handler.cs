@@ -49,22 +49,34 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrV8Handler Wrap(ulong proxyId, CfrRuntime remoteRuntime) {
+        internal static CfrV8Handler Wrap(ulong proxyId) {
             if(proxyId == 0) return null;
             lock(weakCache) {
-                var cfrObj = (CfrV8Handler)weakCache.Get(remoteRuntime, proxyId);
+                var cfrObj = (CfrV8Handler)weakCache.Get(proxyId);
                 if(cfrObj == null) {
-                    cfrObj = new CfrV8Handler(proxyId, remoteRuntime);
-                    weakCache.Add(remoteRuntime, proxyId, cfrObj);
+                    cfrObj = new CfrV8Handler(proxyId);
+                    weakCache.Add(proxyId, cfrObj);
                 }
                 return cfrObj;
             }
         }
 
 
+        [Obsolete]
         internal static ulong CreateRemote(CfrRuntime remoteRuntime) {
             var call = new CfxV8HandlerCtorRenderProcessCall();
-            call.Execute(remoteRuntime.connection);
+            remoteRuntime.EnterContext();
+            try {
+                call.Execute();
+                return call.__retval;
+            }
+            finally {
+                remoteRuntime.ExitContext();
+            }
+        }
+        internal static ulong CreateRemote() {
+            var call = new CfxV8HandlerCtorRenderProcessCall();
+            call.Execute();
             return call.__retval;
         }
 
@@ -76,9 +88,15 @@ namespace Chromium.Remote {
         }
 
 
-        private CfrV8Handler(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) {}
+        private CfrV8Handler(ulong proxyId) : base(proxyId) {}
+        [Obsolete("new CfrV8Handler(CfrRuntime) is deprecated, please use new CfrV8Handler() without CfrRuntime instead.")]
         public CfrV8Handler(CfrRuntime remoteRuntime) : base(CreateRemote(remoteRuntime), remoteRuntime) {
-            weakCache.Add(remoteRuntime, this.proxyId, this);
+            remoteRuntime.EnterContext();
+            weakCache.Add(this.proxyId, this);
+            remoteRuntime.ExitContext();
+        }
+        public CfrV8Handler() : base(CreateRemote()) {
+            weakCache.Add(this.proxyId, this);
         }
 
         /// <summary>
@@ -97,7 +115,7 @@ namespace Chromium.Remote {
                 if(m_Execute == null) {
                     var call = new CfxV8HandlerExecuteActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                 }
                 m_Execute += value;
             }
@@ -106,7 +124,7 @@ namespace Chromium.Remote {
                 if(m_Execute == null) {
                     var call = new CfxV8HandlerExecuteDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                 }
             }
         }
@@ -115,7 +133,7 @@ namespace Chromium.Remote {
 
 
         internal override void OnDispose(ulong proxyId) {
-            weakCache.Remove(remoteRuntime, proxyId);
+            weakCache.Remove(proxyId);
         }
     }
 
@@ -158,7 +176,7 @@ namespace Chromium.Remote {
 
             private bool returnValueSet;
 
-            internal CfrV8HandlerExecuteEventArgs(ulong eventArgsId, CfrRuntime remoteRuntime) : base(eventArgsId, remoteRuntime) {}
+            internal CfrV8HandlerExecuteEventArgs(ulong eventArgsId) : base(eventArgsId) {}
 
             /// <summary>
             /// Get the Name parameter for the <see cref="CfrV8Handler.Execute"/> render process callback.
@@ -170,7 +188,7 @@ namespace Chromium.Remote {
                         NameFetched = true;
                         var call = new CfxV8HandlerExecuteGetNameRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.Execute(remoteRuntime.connection);
+                        call.Execute();
                         m_Name = call.value;
                     }
                     return m_Name;
@@ -186,8 +204,8 @@ namespace Chromium.Remote {
                         ObjectFetched = true;
                         var call = new CfxV8HandlerExecuteGetObjectRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.Execute(remoteRuntime.connection);
-                        m_Object = CfrV8Value.Wrap(call.value, remoteRuntime);
+                        call.Execute();
+                        m_Object = CfrV8Value.Wrap(call.value);
                     }
                     return m_Object;
                 }
@@ -202,8 +220,8 @@ namespace Chromium.Remote {
                         ArgumentsFetched = true;
                         var call = new CfxV8HandlerExecuteGetArgumentsRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.Execute(remoteRuntime.connection);
-                        m_Arguments = CfxArray.GetCfrObjects<CfrV8Value>(call.value, remoteRuntime, CfrV8Value.Wrap);
+                        call.Execute();
+                        m_Arguments = CfxArray.GetCfrObjects<CfrV8Value>(call.value, CfrV8Value.Wrap);
                     }
                     return m_Arguments;
                 }
@@ -218,7 +236,7 @@ namespace Chromium.Remote {
                         ExceptionFetched = true;
                         var call = new CfxV8HandlerExecuteGetExceptionRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.Execute(remoteRuntime.connection);
+                        call.Execute();
                         m_Exception = call.value;
                     }
                     return m_Exception;
@@ -230,7 +248,7 @@ namespace Chromium.Remote {
                     var call = new CfxV8HandlerExecuteSetExceptionRenderProcessCall();
                     call.eventArgsId = eventArgsId;
                     call.value = value;
-                    call.Execute(remoteRuntime.connection);
+                    call.Execute();
                 }
             }
             /// <summary>
@@ -244,7 +262,7 @@ namespace Chromium.Remote {
                 var call = new CfxV8HandlerExecuteSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
                 call.value = CfrObject.Unwrap(returnValue);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 returnValueSet = true;
             }
 

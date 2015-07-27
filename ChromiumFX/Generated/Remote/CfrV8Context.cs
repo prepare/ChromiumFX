@@ -50,13 +50,13 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrV8Context Wrap(ulong proxyId, CfrRuntime remoteRuntime) {
+        internal static CfrV8Context Wrap(ulong proxyId) {
             if(proxyId == 0) return null;
             lock(weakCache) {
-                var cfrObj = (CfrV8Context)weakCache.Get(remoteRuntime, proxyId);
+                var cfrObj = (CfrV8Context)weakCache.Get(proxyId);
                 if(cfrObj == null) {
-                    cfrObj = new CfrV8Context(proxyId, remoteRuntime);
-                    weakCache.Add(remoteRuntime, proxyId, cfrObj);
+                    cfrObj = new CfrV8Context(proxyId);
+                    weakCache.Add(proxyId, cfrObj);
                 }
                 return cfrObj;
             }
@@ -70,10 +70,30 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
+        [Obsolete("GetCurrentContext(CfrRuntime, ...) is deprecated, please use GetCurrentContext(...) without CfrRuntime instead.")]
         public static CfrV8Context GetCurrentContext(CfrRuntime remoteRuntime) {
+            remoteRuntime.EnterContext();
+            try {
+                var call = new CfxV8ContextGetCurrentContextRenderProcessCall();
+                call.Execute();
+                return CfrV8Context.Wrap(call.__retval);
+            }
+            finally {
+                remoteRuntime.ExitContext();
+            }
+        }
+
+        /// <summary>
+        /// Returns the current (top) context object in the V8 context stack.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
+        public static CfrV8Context GetCurrentContext() {
             var call = new CfxV8ContextGetCurrentContextRenderProcessCall();
-            call.Execute(remoteRuntime.connection);
-            return CfrV8Context.Wrap(call.__retval, remoteRuntime);
+            call.Execute();
+            return CfrV8Context.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -83,10 +103,30 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
+        [Obsolete("GetEnteredContext(CfrRuntime, ...) is deprecated, please use GetEnteredContext(...) without CfrRuntime instead.")]
         public static CfrV8Context GetEnteredContext(CfrRuntime remoteRuntime) {
+            remoteRuntime.EnterContext();
+            try {
+                var call = new CfxV8ContextGetEnteredContextRenderProcessCall();
+                call.Execute();
+                return CfrV8Context.Wrap(call.__retval);
+            }
+            finally {
+                remoteRuntime.ExitContext();
+            }
+        }
+
+        /// <summary>
+        /// Returns the entered (bottom) context object in the V8 context stack.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
+        public static CfrV8Context GetEnteredContext() {
             var call = new CfxV8ContextGetEnteredContextRenderProcessCall();
-            call.Execute(remoteRuntime.connection);
-            return CfrV8Context.Wrap(call.__retval, remoteRuntime);
+            call.Execute();
+            return CfrV8Context.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -96,14 +136,34 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
+        [Obsolete("InContext(CfrRuntime, ...) is deprecated, please use InContext(...) without CfrRuntime instead.")]
         public static bool InContext(CfrRuntime remoteRuntime) {
+            remoteRuntime.EnterContext();
+            try {
+                var call = new CfxV8ContextInContextRenderProcessCall();
+                call.Execute();
+                return call.__retval;
+            }
+            finally {
+                remoteRuntime.ExitContext();
+            }
+        }
+
+        /// <summary>
+        /// Returns true (1) if V8 is currently inside a context.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
+        /// </remarks>
+        public static bool InContext() {
             var call = new CfxV8ContextInContextRenderProcessCall();
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
 
-        private CfrV8Context(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) {}
+        private CfrV8Context(ulong proxyId) : base(proxyId) {}
 
         /// <summary>
         /// Returns the task runner associated with this context. V8 handles can only
@@ -118,8 +178,8 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8ContextGetTaskRunnerRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
-                return CfrTaskRunner.Wrap(call.__retval, remoteRuntime);
+                call.Execute();
+                return CfrTaskRunner.Wrap(call.__retval);
             }
         }
 
@@ -136,7 +196,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8ContextIsValidRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
+                call.Execute();
                 return call.__retval;
             }
         }
@@ -153,8 +213,8 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8ContextGetBrowserRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
-                return CfrBrowser.Wrap(call.__retval, remoteRuntime);
+                call.Execute();
+                return CfrBrowser.Wrap(call.__retval);
             }
         }
 
@@ -170,8 +230,8 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8ContextGetFrameRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
-                return CfrFrame.Wrap(call.__retval, remoteRuntime);
+                call.Execute();
+                return CfrFrame.Wrap(call.__retval);
             }
         }
 
@@ -187,8 +247,8 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8ContextGetGlobalRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute(remoteRuntime.connection);
-                return CfrV8Value.Wrap(call.__retval, remoteRuntime);
+                call.Execute();
+                return CfrV8Value.Wrap(call.__retval);
             }
         }
 
@@ -206,7 +266,7 @@ namespace Chromium.Remote {
         public bool Enter() {
             var call = new CfxV8ContextEnterRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -221,7 +281,7 @@ namespace Chromium.Remote {
         public bool Exit() {
             var call = new CfxV8ContextExitRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -237,7 +297,7 @@ namespace Chromium.Remote {
             var call = new CfxV8ContextIsSameRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.that = CfrObject.Unwrap(that);
-            call.Execute(remoteRuntime.connection);
+            call.Execute();
             return call.__retval;
         }
 
@@ -255,14 +315,14 @@ namespace Chromium.Remote {
             var call = new CfxV8ContextEvalRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.code = code;
-            call.Execute(remoteRuntime.connection);
-            retval = CfrV8Value.Wrap(call.retval, remoteRuntime);
-            exception = CfrV8Exception.Wrap(call.exception, remoteRuntime);
+            call.Execute();
+            retval = CfrV8Value.Wrap(call.retval);
+            exception = CfrV8Exception.Wrap(call.exception);
             return call.__retval;
         }
 
         internal override void OnDispose(ulong proxyId) {
-            weakCache.Remove(remoteRuntime, proxyId);
+            weakCache.Remove(proxyId);
         }
     }
 }
