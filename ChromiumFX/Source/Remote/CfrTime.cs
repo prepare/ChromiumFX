@@ -44,7 +44,7 @@ namespace Chromium.Remote {
             if (time.Kind != DateTimeKind.Utc)
                 throw new ArgumentException("time must be of kind DateTimeKind.Utc", "time");
 
-            var r = new CfrTime(remoteRuntime);
+            var r = new CfrTime();
             r.Year = time.Year;
             r.Month = time.Month;
             r.DayOfMonth = time.Day;
