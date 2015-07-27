@@ -156,7 +156,7 @@ namespace Chromium.Remote {
             var connection = (RemoteConnection)state;
 
             if(returnImmediately) {
-                ExecuteInTargetProcess(connection);
+                ExecuteRemoteProcedure(connection);
                 return;
             }
 
@@ -164,14 +164,32 @@ namespace Chromium.Remote {
             CfxRemoting.remoteThreadId = remoteThreadId;
 
             try {
-                ExecuteInTargetProcess(connection);
+                ExecuteRemoteProcedure(connection);
             } finally {
                 CfxRemoting.remoteThreadId = previousRemoteThreadId;
             }
             connection.EnqueueResponse(this);
         }
 
-
+        private void ExecuteRemoteProcedure(RemoteConnection connection) {
+            if(connection.remoteRuntime == null) {
+                // this is the render process
+                ExecuteInTargetProcess(connection);
+                return;
+            }
+            // this is the browser process
+            connection.remoteRuntime.EnterContext();
+            var contextStackCount = CfrRuntime.ContextStackCount;
+            try {
+                ExecuteInTargetProcess(connection);
+            } finally {
+                if(contextStackCount != CfrRuntime.ContextStackCount || CfrRuntime.CurrentContext != connection.remoteRuntime) {
+                    CfrRuntime.ResetContextStackTo(contextStackCount - 1);
+                    throw new CfxException("Unbalanced remote runtime context stack. Make sure to balance calls to CfrRuntime.EnterContext() and CfrRuntime.ExitContext() in all render process callback events.");
+                }
+                connection.remoteRuntime.ExitContext();
+            }
+        }
 
         protected virtual void WriteArgs(StreamHandler h) { }
         protected virtual void ReadArgs(StreamHandler h) { }
