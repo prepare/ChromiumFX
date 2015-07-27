@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -238,7 +238,6 @@
     <Compile Include="Source\StringFunctions.cs" />
     <Compile Include="Source\CfxZipReader.cs" />
     <Compile Include="Source\Remote\CfrTime.cs" />
-    <Compile Include="Source\Remote\CfrV8HandlerExecuteEventArgs.cs" />
     <Compile Include="Source\Remote\CfrBinaryValue.cs" />
     <Compile Include="Source\Remote\CfrEventArgs.cs" />
     <Compile Include="Source\CfxException.cs" />
