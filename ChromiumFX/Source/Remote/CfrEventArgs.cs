@@ -39,11 +39,9 @@ namespace Chromium.Remote
     public class CfrEventArgs : EventArgs {
         
         internal readonly ulong eventArgsId;
-        internal readonly CfrRuntime remoteRuntime;
         internal bool m_isInvalid = false;
 
         internal CfrEventArgs(ulong eventArgsId) {
-            this.remoteRuntime = CfrRuntime.CurrentContext;
             this.eventArgsId = eventArgsId;
         }
 
@@ -56,7 +54,8 @@ namespace Chromium.Remote
         /// The CfrRuntime for the render process that
         /// originated this remote callback event.
         /// </summary>
-        public CfrRuntime RemoteRuntime { get { return remoteRuntime; }}
+        [Obsolete("CfrEventArgs.RemoteRuntime is deprecated, please use CfrRuntime.CurrentContext instead.")]
+        public CfrRuntime RemoteRuntime { get { return CfrRuntime.CurrentContext; } }
 
     }
 
