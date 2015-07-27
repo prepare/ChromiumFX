@@ -45,7 +45,7 @@ namespace Chromium.WebBrowser {
         internal static void Initialize() {
 
             if(initialized)
-                throw new CfxException("ChromiumWebBrowser library already initialized.");
+                throw new ChromiumWebBrowserException("ChromiumWebBrowser library already initialized.");
 
 
             int retval = CfxRuntime.ExecuteProcess();
@@ -67,7 +67,7 @@ namespace Chromium.WebBrowser {
             ChromiumWebBrowser.RaiseOnBeforeCfxInitialize(settings, processHandler);
 
             if(!CfxRuntime.Initialize(settings, app, RenderProcess.Startup))
-                throw new CfxException("Failed to initialize CEF library.");
+                throw new ChromiumWebBrowserException("Failed to initialize CEF library.");
 
             initialized = true;
         }

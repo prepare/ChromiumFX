@@ -267,7 +267,7 @@ namespace Chromium.WebBrowser {
             var windowInfo = new CfxWindowInfo();
             windowInfo.SetAsChild(Handle, 0, 0, Height > 0 ? Height : 500, Width > 0 ? Width : 500);
             if(!CfxBrowserHost.CreateBrowser(windowInfo, client, initialUrl, DefaultBrowserSettings, requestContext))
-                throw new CfxException("Failed to create browser instance.");
+                throw new ChromiumWebBrowserException("Failed to create browser instance.");
         }
 
 

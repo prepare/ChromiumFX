@@ -31,16 +31,14 @@
 
 
 using System;
-namespace Chromium
-{
+namespace Chromium {
     /// <summary>
     /// Class for ChromiumFX related exceptions.
     /// </summary>
     public class CfxException : Exception {
-        public CfxException() : base() {}
-        public CfxException(string message) : base(message)    {}
-        public CfxException(string message, Exception inner) : base(message, inner) { }
+        internal CfxException() : base() { }
+        internal CfxException(string message) : base(message) { }
+        internal CfxException(string message, Exception inner) : base(message, inner) { }
     }
-
 }
 

@@ -111,7 +111,7 @@ namespace Chromium.WebBrowser {
 
         internal void SetParent(string propertyName, JSObject parent) {
             if(Object.ReferenceEquals(parent, this)) {
-                throw new CfxException("Can't add a javascript object to itself.");
+                throw new ChromiumWebBrowserException("Can't add a javascript object to itself.");
             }
             CheckUnboundState();
             Name = propertyName;
@@ -132,10 +132,10 @@ namespace Chromium.WebBrowser {
 
         private void CheckUnboundState() {
             if(m_parent != null) {
-                throw new CfxException("This property already belongs to an JSObject.");
+                throw new ChromiumWebBrowserException("This property already belongs to an JSObject.");
             }
             if(m_browser != null) {
-                throw new CfxException("This property already belongs to a browser frame's global object.");
+                throw new ChromiumWebBrowserException("This property already belongs to a browser frame's global object.");
             }
         }
     }
