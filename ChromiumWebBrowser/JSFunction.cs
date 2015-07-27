@@ -91,9 +91,9 @@ namespace Chromium.WebBrowser {
         }
 
         internal override CfrV8Value CreateV8Value() {
-            v8Handler = new CfrV8Handler(v8Context.RemoteRuntime);
+            v8Handler = new CfrV8Handler();
             v8Handler.Execute += new CfrV8HandlerExecuteEventHandler(handler_Execute);
-            return CfrV8Value.CreateFunction(v8Context.RemoteRuntime, Name, v8Handler);
+            return CfrV8Value.CreateFunction(Name, v8Handler);
         }
     }
 }

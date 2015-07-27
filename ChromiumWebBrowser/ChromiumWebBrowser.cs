@@ -541,7 +541,7 @@ namespace Chromium.WebBrowser {
             try {
                 rb.RemoteRuntime.EnterContext();
                 try {
-                    var taskRunner = CfrTaskRunner.GetForThread(rb.RemoteRuntime, CfxThreadId.Renderer);
+                    var taskRunner = CfrTaskRunner.GetForThread(CfxThreadId.Renderer);
                     var task = new EvaluateTask(this, code, callback);
                     taskRunner.PostTask(task);
                     return true;
@@ -559,8 +559,7 @@ namespace Chromium.WebBrowser {
             string code;
             Action<CfrV8Value, CfrV8Exception> callback;
 
-            internal EvaluateTask(ChromiumWebBrowser wb, string code, Action<CfrV8Value, CfrV8Exception> callback)
-                : base(wb.remoteProcess.remoteRuntime) {
+            internal EvaluateTask(ChromiumWebBrowser wb, string code, Action<CfrV8Value, CfrV8Exception> callback) {
                 this.wb = wb;
                 this.code = code;
                 this.callback = callback;
@@ -775,7 +774,7 @@ namespace Chromium.WebBrowser {
             try {
                 rb.RemoteRuntime.EnterContext();
                 try {
-                    var taskRunner = CfrTaskRunner.GetForThread(rb.RemoteRuntime, CfxThreadId.Renderer);
+                    var taskRunner = CfrTaskRunner.GetForThread(CfxThreadId.Renderer);
                     var task = new VisitDomTask(this, callback);
                     taskRunner.PostTask(task);
                     return true;
@@ -793,12 +792,11 @@ namespace Chromium.WebBrowser {
             Action<CfrDomDocument, CfrBrowser> callback;
             CfrDomVisitor visitor;
 
-            internal VisitDomTask(ChromiumWebBrowser wb, Action<CfrDomDocument, CfrBrowser> callback)
-                : base(wb.remoteProcess.remoteRuntime) {
+            internal VisitDomTask(ChromiumWebBrowser wb, Action<CfrDomDocument, CfrBrowser> callback) {
                 this.wb = wb;
                 this.callback = callback;
                 this.Execute += Task_Execute;
-                visitor = new CfrDomVisitor(wb.remoteBrowser.RemoteRuntime);
+                visitor = new CfrDomVisitor();
                 visitor.Visit += visitor_Visit;
             }
 

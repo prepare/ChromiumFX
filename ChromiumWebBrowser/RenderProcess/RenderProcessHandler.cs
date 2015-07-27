@@ -41,7 +41,7 @@ namespace Chromium.WebBrowser {
 
         private readonly RenderProcess remoteProcess;
 
-        internal RenderProcessHandler(RenderProcess remoteProcess) : base(remoteProcess.remoteRuntime) {
+        internal RenderProcessHandler(RenderProcess remoteProcess) {
             this.remoteProcess = remoteProcess;
 
             this.OnContextCreated += new CfrOnContextCreatedEventHandler(RenderProcessHandler_OnContextCreated);
