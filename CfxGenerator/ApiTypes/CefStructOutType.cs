@@ -84,7 +84,7 @@ public class CefStructOutType : CefStructPtrPtrType {
     }
 
     public override string RemoteWrapExpression(string var) {
-        return string.Format("{0}.Wrap({1}, remoteRuntime)", Struct.RemoteClassName, var);
+        return string.Format("{0}.Wrap({1})", Struct.RemoteClassName, var);
     }
 
     public override string PublicEventConstructorSignature(string var) {

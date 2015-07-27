@@ -809,13 +809,13 @@ public class CfxClassBuilder {
                     b.AppendLine("var call = new {0}BrowserProcessCall();", cb.EventName);
                     b.AppendLine("call.sender = RemoteProxy.Wrap((CfxBase)sender);");
                     b.AppendLine("call.eventArgsId = AddEventArgs(e);");
-                    b.AppendLine("call.Execute(RemoteClient.connection);");
+                    b.AppendLine("call.Execute();");
                     b.AppendLine("RemoveEventArgs(call.eventArgsId);");
                     b.EndBlock();
 
                     b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-                    b.AppendLine("var sender = {0}.Wrap(this.sender, connection.remoteRuntime);", RemoteClassName);
-                    b.AppendLine("var e = new {0}(eventArgsId, connection.remoteRuntime);", cb.RemoteEventArgsClassName);
+                    b.AppendLine("var sender = {0}.Wrap(this.sender);", RemoteClassName);
+                    b.AppendLine("var e = new {0}(eventArgsId);", cb.RemoteEventArgsClassName);
                     b.AppendLine("sender.raise_{0}(sender, e);", cb.PublicName);
                     b.EndBlock();
                     b.EndBlock();
@@ -979,13 +979,13 @@ public class CfxClassBuilder {
 
         b.AppendLine("private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();");
         b.AppendLine();
-        b.BeginFunction("Wrap", RemoteClassName, "ulong proxyId, CfrRuntime remoteRuntime", "internal static");
+        b.BeginFunction("Wrap", RemoteClassName, "ulong proxyId", "internal static");
         b.AppendLine("if(proxyId == 0) return null;");
         b.BeginBlock("lock(weakCache)");
-        b.AppendLine("var cfrObj = ({0})weakCache.Get(remoteRuntime, proxyId);", RemoteClassName);
+        b.AppendLine("var cfrObj = ({0})weakCache.Get(proxyId);", RemoteClassName);
         b.BeginBlock("if(cfrObj == null)");
-        b.AppendLine("cfrObj = new {0}(proxyId, remoteRuntime);", RemoteClassName);
-        b.AppendLine("weakCache.Add(remoteRuntime, proxyId, cfrObj);");
+        b.AppendLine("cfrObj = new {0}(proxyId);", RemoteClassName);
+        b.AppendLine("weakCache.Add(proxyId, cfrObj);");
         b.EndBlock();
         b.AppendLine("return cfrObj;");
         b.EndBlock();
@@ -994,9 +994,21 @@ public class CfxClassBuilder {
         b.AppendLine();
 
         if(NeedsConstructor) {
+            b.AppendLine("[Obsolete]");
             b.BeginFunction("CreateRemote", "ulong", "CfrRuntime remoteRuntime", "internal static");
             b.AppendLine("var call = new {0}CtorRenderProcessCall();", ClassName);
-            b.AppendLine("call.Execute(remoteRuntime.connection);");
+            b.AppendLine("remoteRuntime.EnterContext();");
+            b.BeginBlock("try");
+            b.AppendLine("call.Execute();");
+            b.AppendLine("return call.__retval;");
+            b.EndBlock();
+            b.BeginBlock("finally");
+            b.AppendLine("remoteRuntime.ExitContext();");
+            b.EndBlock();
+            b.EndBlock();
+            b.BeginFunction("CreateRemote", "ulong", "", "internal static");
+            b.AppendLine("var call = new {0}CtorRenderProcessCall();", ClassName);
+            b.AppendLine("call.Execute();");
             b.AppendLine("return call.__retval;");
             b.EndBlock();
         }
@@ -1020,11 +1032,17 @@ public class CfxClassBuilder {
 
         b.AppendLine();
 
-        b.AppendLine("private {0}(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) {{}}", RemoteClassName);
+        b.AppendLine("private {0}(ulong proxyId) : base(proxyId) {{}}", RemoteClassName);
 
         if(NeedsConstructor) {
+            b.AppendLine("[Obsolete(\"new {0}(CfrRuntime) is deprecated, please use new {0}() without CfrRuntime instead.\")]", RemoteClassName);
             b.BeginBlock("public {0}(CfrRuntime remoteRuntime) : base(CreateRemote(remoteRuntime), remoteRuntime)", RemoteClassName);
-            b.AppendLine("weakCache.Add(remoteRuntime, this.proxyId, this);");
+            b.AppendLine("remoteRuntime.EnterContext();");
+            b.AppendLine("weakCache.Add(this.proxyId, this);");
+            b.AppendLine("remoteRuntime.ExitContext();");
+            b.EndBlock();
+            b.BeginBlock("public {0}() : base(CreateRemote())", RemoteClassName);
+            b.AppendLine("weakCache.Add(this.proxyId, this);");
             b.EndBlock();
         }
 
@@ -1103,7 +1121,7 @@ public class CfxClassBuilder {
                         b.BeginIf("!m_{0}_fetched", sm.PublicName);
                         b.AppendLine("var call = new {0}Get{1}RenderProcessCall();", ClassName, sm.PublicName);
                         b.AppendLine("call.sender = this.proxyId;");
-                        b.AppendLine("call.Execute(remoteRuntime.connection);");
+                        b.AppendLine("call.Execute();");
                         b.AppendLine("m_{0} = {1};", sm.PublicName, sm.MemberType.RemoteWrapExpression("call.value"));
                         b.AppendLine("m_{0}_fetched = true;", sm.PublicName);
                         b.EndBlock();
@@ -1113,7 +1131,7 @@ public class CfxClassBuilder {
                         b.AppendLine("var call = new {0}Set{1}RenderProcessCall();", ClassName, sm.PublicName);
                         b.AppendLine("call.sender = this.proxyId;");
                         b.AppendLine("call.value = {0};", sm.MemberType.RemoteUnwrapExpression("value"));
-                        b.AppendLine("call.Execute(remoteRuntime.connection);");
+                        b.AppendLine("call.Execute();");
                         b.AppendLine("m_{0} = value;", sm.PublicName);
                         b.AppendLine("m_{0}_fetched = true;", sm.PublicName);
                         b.EndBlock();
@@ -1126,7 +1144,7 @@ public class CfxClassBuilder {
         }
 
         b.BeginFunction("OnDispose", "void", "ulong proxyId", "internal override");
-        b.AppendLine("weakCache.Remove(remoteRuntime, proxyId);");
+        b.AppendLine("weakCache.Remove(proxyId);");
         b.EndBlock();
 
         b.EndBlock();

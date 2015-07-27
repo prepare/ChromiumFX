@@ -398,11 +398,7 @@ public class Signature {
             }
         }
 
-        if(Owner.RemoteCallId.StartsWith("CfxRuntime")) {
-            b.AppendLine("call.Execute(connection);");
-        } else {
-            b.AppendLine("call.Execute(remoteRuntime.connection);");
-        }
+        b.AppendLine("call.Execute();");
 
         foreach(var arg in ManagedArguments) {
             if(arg.ArgumentType.IsOut) {

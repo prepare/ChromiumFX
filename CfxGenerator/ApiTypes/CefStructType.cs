@@ -118,7 +118,7 @@ public class CefStructType : CefType {
     }
 
     public override string RemoteWrapExpression(string var) {
-        return string.Format("{0}.Wrap({1}, remoteRuntime)", RemoteClassName, var);
+        return string.Format("{0}.Wrap({1})", RemoteClassName, var);
     }
 
     public override string RemoteUnwrapExpression(string var) {

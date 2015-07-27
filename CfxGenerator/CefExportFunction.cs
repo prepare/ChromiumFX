@@ -132,7 +132,19 @@ public class CefExportFunction : ISignatureOwner {
             } else {
                 sig = "CfrRuntime remoteRuntime, " + sig;
             }
+            b.AppendLine("[Obsolete(\"{0}(CfrRuntime, ...) is deprecated, please use {0}(...) without CfrRuntime instead.\")]", PublicFunctionName);
             b.BeginFunction(PublicFunctionName, ReturnType.RemoteSymbol, sig, "public static");
+            b.AppendLine("remoteRuntime.EnterContext();");
+            b.BeginBlock("try");
+            Signature.EmitRemoteCall(b);
+            b.EndBlock();
+            b.BeginBlock("finally");
+            b.AppendLine("remoteRuntime.ExitContext();");
+            b.EndBlock();
+            b.EndBlock();
+            b.AppendLine();
+            b.AppendSummaryAndRemarks(Comments, true);
+            b.BeginFunction(PublicFunctionName, ReturnType.RemoteSymbol, Signature.RemoteSignature, "public static");
             Signature.EmitRemoteCall(b);
         }
         b.EndBlock();

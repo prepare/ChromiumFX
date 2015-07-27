@@ -73,7 +73,7 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
     }
 
     public override string RemoteWrapExpression(string var) {
-        return string.Format("CfxArray.GetCfrObjects<{0}>({1}, remoteRuntime, {0}.Wrap)", Struct.RemoteClassName, var);
+        return string.Format("CfxArray.GetCfrObjects<{0}>({1}, {0}.Wrap)", Struct.RemoteClassName, var);
     }
 
     public override string RemoteUnwrapExpression(string var) {
