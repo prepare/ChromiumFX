@@ -34,6 +34,32 @@ using System;
 
 namespace Chromium.Remote {
     partial class CfrV8Value {
+
+        public static implicit operator CfrV8Value(bool value) {
+            return CfrV8Value.CreateBool(value);
+        }
+
+        public static implicit operator CfrV8Value(CfrTime value) {
+            return CfrV8Value.CreateDate(value);
+        }
+
+        public static implicit operator CfrV8Value(double value) {
+            return CfrV8Value.CreateDouble(value);
+        }
+
+        public static implicit operator CfrV8Value(int value) {
+            return CfrV8Value.CreateInt(value);
+        }
+
+        public static implicit operator CfrV8Value(string value) {
+            return CfrV8Value.CreateString(value);
+        }
+
+        public static implicit operator CfrV8Value(uint value) {
+            return CfrV8Value.CreateUint(value);
+        }
+
+
         public override string ToString() {
             return StringValue;
         }
