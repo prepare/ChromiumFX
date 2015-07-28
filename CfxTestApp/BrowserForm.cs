@@ -53,6 +53,9 @@ namespace CfxTestApplication {
             LogWriteLine("Platform OS: {0}; Arch: {1}", CfxRuntime.PlatformOS, CfxRuntime.PlatformArch);
             LogWriteLine();
 
+            ChromiumWebBrowser.OnRemoteContextCreated += (e) =>
+                LogWriteLine("Remote context created for render process id {0}", e.Context.ProcessId);
+
             LoadUrlButton.Click += new EventHandler(LoadUrlButton_Click);
             UrlTextBox.KeyDown += new KeyEventHandler(UrlTextBox_KeyDown);
 
@@ -119,9 +122,9 @@ namespace CfxTestApplication {
                     "">Double Callback</button>
                     <br><br><div id='testfunc_result'></div>
             ";
-            
+
             WebBrowser.SetWebResource("http://localresource/text.html", new Chromium.WebBrowser.WebResource(html));
-            
+
             var bm = new System.Drawing.Bitmap(100, 100);
             using(var g = System.Drawing.Graphics.FromImage(bm)) {
                 g.FillRectangle(System.Drawing.Brushes.Yellow, 0, 0, 99, 99);
@@ -164,8 +167,8 @@ namespace CfxTestApplication {
             LogCallback(sender, e);
             var ff = e.PopupFeatures.AdditionalFeatures;
             if(ff != null) foreach(var f in ff) {
-                LogWriteLine("Additional popup feature: {0}", f);
-            }
+                    LogWriteLine("Additional popup feature: {0}", f);
+                }
         }
 
         void VisitDomButton_Click(object sender, EventArgs e) {
@@ -201,7 +204,7 @@ namespace CfxTestApplication {
             LogCallback(sender, e);
             var context = CfrV8Context.GetEnteredContext();
             e.SetReturnValue("CfxHelloWorld returns this text.");
-            
+
         }
 
         void TestDoubleCallback_Execute(object sender, CfrV8HandlerExecuteEventArgs e) {
