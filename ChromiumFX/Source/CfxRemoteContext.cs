@@ -93,6 +93,12 @@ namespace Chromium {
             contextStack.Pop();
         }
 
+        public int ProcessId {
+            get {
+                return connection.remoteProcessId;
+            }
+        }
+
         /// <summary>
         /// Returns the current remote context for the calling thread. Throws an exception if the 
         /// calling thread is not currently in the context of a remote render process.
