@@ -37,31 +37,20 @@ using Chromium.Remote.Event;
 namespace Chromium.WebBrowser {
     internal class RenderProcess {
 
-        internal static int Startup(CfrRuntime remoteRuntime) {
-            var rp = new RenderProcess(remoteRuntime);
+        internal static int RenderProcessMain() {
+            var rp = new RenderProcess();
             return rp.Startup();
         }
-
-        internal readonly CfrRuntime remoteRuntime;
         
         private readonly CfrApp app;
         private readonly RenderProcessHandler processHandler;
 
         internal event Action<RenderProcess> OnExit;
 
-        private RenderProcess(CfrRuntime remoteRuntime) {
-
-            this.remoteRuntime = remoteRuntime;
-                        
+        private RenderProcess() {
             app = new CfrApp();
             processHandler = new RenderProcessHandler(this);
-
-            app.GetRenderProcessHandler += app_GetRenderProcessHandler;
-            
-        }
-
-        private void app_GetRenderProcessHandler(object sender, CfrGetRenderProcessHandlerEventArgs e) {
-            e.SetReturnValue(processHandler);
+            app.GetRenderProcessHandler += (s, e) => e.SetReturnValue(processHandler);
         }
 
         private int Startup() {

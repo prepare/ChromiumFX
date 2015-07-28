@@ -66,7 +66,7 @@ namespace Chromium.WebBrowser {
 
             ChromiumWebBrowser.RaiseOnBeforeCfxInitialize(settings, processHandler);
 
-            if(!CfxRuntime.Initialize(settings, app, RenderProcess.Startup))
+            if(!CfxRuntime.Initialize(settings, app, RenderProcess.RenderProcessMain))
                 throw new ChromiumWebBrowserException("Failed to initialize CEF library.");
 
             initialized = true;
