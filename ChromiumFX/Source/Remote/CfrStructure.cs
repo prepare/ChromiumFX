@@ -38,7 +38,5 @@ namespace Chromium.Remote {
     /// </summary>
     public abstract class CfrStructure : CfrObject {
         internal CfrStructure(ulong proxyId) : base(proxyId) { }
-        [Obsolete]
-        internal CfrStructure(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) { }
     }
 }

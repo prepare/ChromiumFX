@@ -37,14 +37,24 @@ namespace Chromium.Remote {
 
     internal class RemoteService {
 
-
+        [Obsolete]
         internal static CfxRenderProcessStartupDelegate RenderProcessStartupCallback;
+        internal static CfxRenderProcessMainDelegate renderProcessMainCallback;
         internal static readonly List<RemoteConnection> connections = new List<RemoteConnection>();
 
         private static CfxApp m_app;
         private static CfxBrowserProcessHandler m_browserProcessHandler;
 
+        [Obsolete]
         internal static void Initialize(CfxRenderProcessStartupDelegate renderProcessStartupCallback, ref CfxApp app) {
+            RemoteService.RenderProcessStartupCallback = renderProcessStartupCallback;
+            CfxRenderProcessMainDelegate cb = () => {
+                return RemoteService.RenderProcessStartupCallback.Invoke(new CfrRuntime());
+            };
+            Initialize(cb, ref app);
+        }
+
+        internal static void Initialize(CfxRenderProcessMainDelegate renderProcessMainCallback, ref CfxApp app) {
 
             if(app == null) {
                 m_app = new CfxApp();
@@ -57,9 +67,9 @@ namespace Chromium.Remote {
             if(m_browserProcessHandler == null) {
                 m_browserProcessHandler = new CfxBrowserProcessHandler();
                 m_app.GetBrowserProcessHandler += (sender, e) => e.SetReturnValue(m_browserProcessHandler);
-            } 
-            
-            RenderProcessStartupCallback = renderProcessStartupCallback;
+            }
+
+            RemoteService.renderProcessMainCallback = renderProcessMainCallback;
             m_browserProcessHandler.OnBeforeChildProcessLaunch += OnBeforeChildProcessLaunch;
         }
 

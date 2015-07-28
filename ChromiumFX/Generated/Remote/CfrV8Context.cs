@@ -72,15 +72,9 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("GetCurrentContext(CfrRuntime, ...) is deprecated, please use GetCurrentContext(...) without CfrRuntime instead.")]
         public static CfrV8Context GetCurrentContext(CfrRuntime remoteRuntime) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxV8ContextGetCurrentContextRenderProcessCall();
-                call.Execute();
-                return CfrV8Context.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxV8ContextGetCurrentContextRenderProcessCall();
+            call.Execute();
+            return CfrV8Context.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -105,15 +99,9 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("GetEnteredContext(CfrRuntime, ...) is deprecated, please use GetEnteredContext(...) without CfrRuntime instead.")]
         public static CfrV8Context GetEnteredContext(CfrRuntime remoteRuntime) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxV8ContextGetEnteredContextRenderProcessCall();
-                call.Execute();
-                return CfrV8Context.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxV8ContextGetEnteredContextRenderProcessCall();
+            call.Execute();
+            return CfrV8Context.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -138,15 +126,9 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("InContext(CfrRuntime, ...) is deprecated, please use InContext(...) without CfrRuntime instead.")]
         public static bool InContext(CfrRuntime remoteRuntime) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxV8ContextInContextRenderProcessCall();
-                call.Execute();
-                return call.__retval;
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxV8ContextInContextRenderProcessCall();
+            call.Execute();
+            return call.__retval;
         }
 
         /// <summary>

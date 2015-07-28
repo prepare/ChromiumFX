@@ -73,16 +73,10 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("GetCurrent(CfrRuntime, ...) is deprecated, please use GetCurrent(...) without CfrRuntime instead.")]
         public static CfrV8StackTrace GetCurrent(CfrRuntime remoteRuntime, int frameLimit) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxV8StackTraceGetCurrentRenderProcessCall();
-                call.frameLimit = frameLimit;
-                call.Execute();
-                return CfrV8StackTrace.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxV8StackTraceGetCurrentRenderProcessCall();
+            call.frameLimit = frameLimit;
+            call.Execute();
+            return CfrV8StackTrace.Wrap(call.__retval);
         }
 
         /// <summary>

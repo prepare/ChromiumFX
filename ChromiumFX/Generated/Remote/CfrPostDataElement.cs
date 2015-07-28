@@ -69,15 +69,9 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("Create(CfrRuntime, ...) is deprecated, please use Create(...) without CfrRuntime instead.")]
         public static CfrPostDataElement Create(CfrRuntime remoteRuntime) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxPostDataElementCreateRenderProcessCall();
-                call.Execute();
-                return CfrPostDataElement.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxPostDataElementCreateRenderProcessCall();
+            call.Execute();
+            return CfrPostDataElement.Wrap(call.__retval);
         }
 
         /// <summary>

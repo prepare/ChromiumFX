@@ -72,15 +72,9 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("CreateUndefined(CfrRuntime, ...) is deprecated, please use CreateUndefined(...) without CfrRuntime instead.")]
         public static CfrV8Value CreateUndefined(CfrRuntime remoteRuntime) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxV8ValueCreateUndefinedRenderProcessCall();
-                call.Execute();
-                return CfrV8Value.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxV8ValueCreateUndefinedRenderProcessCall();
+            call.Execute();
+            return CfrV8Value.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -105,15 +99,9 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("CreateNull(CfrRuntime, ...) is deprecated, please use CreateNull(...) without CfrRuntime instead.")]
         public static CfrV8Value CreateNull(CfrRuntime remoteRuntime) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxV8ValueCreateNullRenderProcessCall();
-                call.Execute();
-                return CfrV8Value.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxV8ValueCreateNullRenderProcessCall();
+            call.Execute();
+            return CfrV8Value.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -138,16 +126,10 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("CreateBool(CfrRuntime, ...) is deprecated, please use CreateBool(...) without CfrRuntime instead.")]
         public static CfrV8Value CreateBool(CfrRuntime remoteRuntime, bool value) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxV8ValueCreateBoolRenderProcessCall();
-                call.value = value;
-                call.Execute();
-                return CfrV8Value.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxV8ValueCreateBoolRenderProcessCall();
+            call.value = value;
+            call.Execute();
+            return CfrV8Value.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -173,16 +155,10 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("CreateInt(CfrRuntime, ...) is deprecated, please use CreateInt(...) without CfrRuntime instead.")]
         public static CfrV8Value CreateInt(CfrRuntime remoteRuntime, int value) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxV8ValueCreateIntRenderProcessCall();
-                call.value = value;
-                call.Execute();
-                return CfrV8Value.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxV8ValueCreateIntRenderProcessCall();
+            call.value = value;
+            call.Execute();
+            return CfrV8Value.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -208,16 +184,10 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("CreateUint(CfrRuntime, ...) is deprecated, please use CreateUint(...) without CfrRuntime instead.")]
         public static CfrV8Value CreateUint(CfrRuntime remoteRuntime, uint value) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxV8ValueCreateUintRenderProcessCall();
-                call.value = value;
-                call.Execute();
-                return CfrV8Value.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxV8ValueCreateUintRenderProcessCall();
+            call.value = value;
+            call.Execute();
+            return CfrV8Value.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -243,16 +213,10 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("CreateDouble(CfrRuntime, ...) is deprecated, please use CreateDouble(...) without CfrRuntime instead.")]
         public static CfrV8Value CreateDouble(CfrRuntime remoteRuntime, double value) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxV8ValueCreateDoubleRenderProcessCall();
-                call.value = value;
-                call.Execute();
-                return CfrV8Value.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxV8ValueCreateDoubleRenderProcessCall();
+            call.value = value;
+            call.Execute();
+            return CfrV8Value.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -281,16 +245,10 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("CreateDate(CfrRuntime, ...) is deprecated, please use CreateDate(...) without CfrRuntime instead.")]
         public static CfrV8Value CreateDate(CfrRuntime remoteRuntime, CfrTime date) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxV8ValueCreateDateRenderProcessCall();
-                call.date = CfrObject.Unwrap(date);
-                call.Execute();
-                return CfrV8Value.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxV8ValueCreateDateRenderProcessCall();
+            call.date = CfrObject.Unwrap(date);
+            call.Execute();
+            return CfrV8Value.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -319,16 +277,10 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("CreateString(CfrRuntime, ...) is deprecated, please use CreateString(...) without CfrRuntime instead.")]
         public static CfrV8Value CreateString(CfrRuntime remoteRuntime, string value) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxV8ValueCreateStringRenderProcessCall();
-                call.value = value;
-                call.Execute();
-                return CfrV8Value.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxV8ValueCreateStringRenderProcessCall();
+            call.value = value;
+            call.Execute();
+            return CfrV8Value.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -358,16 +310,10 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("CreateObject(CfrRuntime, ...) is deprecated, please use CreateObject(...) without CfrRuntime instead.")]
         public static CfrV8Value CreateObject(CfrRuntime remoteRuntime, CfrV8Accessor accessor) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxV8ValueCreateObjectRenderProcessCall();
-                call.accessor = CfrObject.Unwrap(accessor);
-                call.Execute();
-                return CfrV8Value.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxV8ValueCreateObjectRenderProcessCall();
+            call.accessor = CfrObject.Unwrap(accessor);
+            call.Execute();
+            return CfrV8Value.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -402,16 +348,10 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("CreateArray(CfrRuntime, ...) is deprecated, please use CreateArray(...) without CfrRuntime instead.")]
         public static CfrV8Value CreateArray(CfrRuntime remoteRuntime, int length) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxV8ValueCreateArrayRenderProcessCall();
-                call.length = length;
-                call.Execute();
-                return CfrV8Value.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxV8ValueCreateArrayRenderProcessCall();
+            call.length = length;
+            call.Execute();
+            return CfrV8Value.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -445,17 +385,11 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("CreateFunction(CfrRuntime, ...) is deprecated, please use CreateFunction(...) without CfrRuntime instead.")]
         public static CfrV8Value CreateFunction(CfrRuntime remoteRuntime, string name, CfrV8Handler handler) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxV8ValueCreateFunctionRenderProcessCall();
-                call.name = name;
-                call.handler = CfrObject.Unwrap(handler);
-                call.Execute();
-                return CfrV8Value.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxV8ValueCreateFunctionRenderProcessCall();
+            call.name = name;
+            call.handler = CfrObject.Unwrap(handler);
+            call.Execute();
+            return CfrV8Value.Wrap(call.__retval);
         }
 
         /// <summary>

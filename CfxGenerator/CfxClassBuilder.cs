@@ -994,18 +994,6 @@ public class CfxClassBuilder {
         b.AppendLine();
 
         if(NeedsConstructor) {
-            b.AppendLine("[Obsolete]");
-            b.BeginFunction("CreateRemote", "ulong", "CfrRuntime remoteRuntime", "internal static");
-            b.AppendLine("var call = new {0}CtorRenderProcessCall();", ClassName);
-            b.AppendLine("remoteRuntime.EnterContext();");
-            b.BeginBlock("try");
-            b.AppendLine("call.Execute();");
-            b.AppendLine("return call.__retval;");
-            b.EndBlock();
-            b.BeginBlock("finally");
-            b.AppendLine("remoteRuntime.ExitContext();");
-            b.EndBlock();
-            b.EndBlock();
             b.BeginFunction("CreateRemote", "ulong", "", "internal static");
             b.AppendLine("var call = new {0}CtorRenderProcessCall();", ClassName);
             b.AppendLine("call.Execute();");
@@ -1036,10 +1024,8 @@ public class CfxClassBuilder {
 
         if(NeedsConstructor) {
             b.AppendLine("[Obsolete(\"new {0}(CfrRuntime) is deprecated, please use new {0}() without CfrRuntime instead.\")]", RemoteClassName);
-            b.BeginBlock("public {0}(CfrRuntime remoteRuntime) : base(CreateRemote(remoteRuntime), remoteRuntime)", RemoteClassName);
-            b.AppendLine("remoteRuntime.EnterContext();");
+            b.BeginBlock("public {0}(CfrRuntime remoteRuntime) : base(CreateRemote())", RemoteClassName);
             b.AppendLine("weakCache.Add(this.proxyId, this);");
-            b.AppendLine("remoteRuntime.ExitContext();");
             b.EndBlock();
             b.BeginBlock("public {0}() : base(CreateRemote())", RemoteClassName);
             b.AppendLine("weakCache.Add(this.proxyId, this);");

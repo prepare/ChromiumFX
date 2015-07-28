@@ -68,7 +68,7 @@ namespace Chromium.Remote {
         protected override void ReadReturn(StreamHandler h) { h.Read(out __retval); }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = RemoteService.RenderProcessStartupCallback(connection.remoteRuntime);
+            __retval = RemoteService.renderProcessMainCallback();
         }
     }
 }

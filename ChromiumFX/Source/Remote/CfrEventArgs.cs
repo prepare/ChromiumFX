@@ -54,8 +54,8 @@ namespace Chromium.Remote
         /// The CfrRuntime for the render process that
         /// originated this remote callback event.
         /// </summary>
-        [Obsolete("CfrEventArgs.RemoteRuntime is deprecated, please use CfrRuntime.CurrentContext instead.")]
-        public CfrRuntime RemoteRuntime { get { return CfrRuntime.CurrentContext; } }
+        [Obsolete("CfrEventArgs.RemoteRuntime is deprecated.")]
+        public CfrRuntime RemoteRuntime { get { return new CfrRuntime(); } }
 
     }
 
