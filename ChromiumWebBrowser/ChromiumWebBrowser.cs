@@ -481,16 +481,16 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public Object RenderThreadInvoke(Delegate method, params Object[] args) {
             object retval = null;
-            int remoteThreadId = CfxRemoting.RemoteThreadId;
-            var remoteContext = CfrRuntime.CurrentContext;
+            int remoteThreadId = CfxRemoteContext.RemoteThreadId;
+            var remoteContext = CfxRemoteContext.CurrentContext;
             Invoke((MethodInvoker)(() => {
-                CfxRemoting.SetThreadAffinity(remoteThreadId);
-                if(remoteContext != null) remoteContext.EnterContext();
+                CfxRemoteContext.SetThreadAffinity(remoteThreadId);
+                if(remoteContext != null) remoteContext.Enter();
                 try {
                     retval = method.DynamicInvoke(args);
                 } finally {
-                    if(remoteContext != null) remoteContext.ExitContext();
-                    CfxRemoting.SetThreadAffinity(0);
+                    if(remoteContext != null) remoteContext.Exit();
+                    CfxRemoteContext.SetThreadAffinity(0);
                 }
             }));
             return retval;
@@ -506,16 +506,16 @@ namespace Chromium.WebBrowser {
         /// 3) The invoked code needs to call into the render process.
         /// </summary>
         public void RenderThreadInvoke(MethodInvoker method) {
-            int remoteThreadId = CfxRemoting.RemoteThreadId;
-            var remoteContext = CfrRuntime.CurrentContext;
+            int remoteThreadId = CfxRemoteContext.RemoteThreadId;
+            var remoteContext = CfxRemoteContext.CurrentContext;
             Invoke((MethodInvoker)(() => {
-                CfxRemoting.SetThreadAffinity(remoteThreadId);
-                if(remoteContext != null) remoteContext.EnterContext();
+                CfxRemoteContext.SetThreadAffinity(remoteThreadId);
+                if(remoteContext != null) remoteContext.Enter();
                 try {
                     method.Invoke();
                 } finally {
-                    if(remoteContext != null) remoteContext.ExitContext();
-                    CfxRemoting.SetThreadAffinity(0);
+                    if(remoteContext != null) remoteContext.Exit();
+                    CfxRemoteContext.SetThreadAffinity(0);
                 }
             }));
         }
@@ -539,14 +539,14 @@ namespace Chromium.WebBrowser {
             var rb = remoteBrowser;
             if(rb == null) return false;
             try {
-                rb.RemoteRuntime.EnterContext();
+                rb.RemoteContext.Enter();
                 try {
                     var taskRunner = CfrTaskRunner.GetForThread(CfxThreadId.Renderer);
                     var task = new EvaluateTask(this, code, callback);
                     taskRunner.PostTask(task);
                     return true;
                 } finally {
-                    rb.RemoteRuntime.ExitContext();
+                    rb.RemoteContext.Exit();
                 }
             } catch(System.IO.IOException) {
                 return false;
@@ -772,14 +772,14 @@ namespace Chromium.WebBrowser {
             var rb = remoteBrowser;
             if(rb == null) return false;
             try {
-                rb.RemoteRuntime.EnterContext();
+                rb.RemoteContext.Enter();
                 try {
                     var taskRunner = CfrTaskRunner.GetForThread(CfxThreadId.Renderer);
                     var task = new VisitDomTask(this, callback);
                     taskRunner.PostTask(task);
                     return true;
                 } finally {
-                    rb.RemoteRuntime.ExitContext();
+                    rb.RemoteContext.Exit();
                 }
             } catch(System.IO.IOException) {
                 return false;
