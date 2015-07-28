@@ -43,18 +43,13 @@ namespace Chromium.Remote {
             return remoteObject == null ? 0 : remoteObject.proxyId;
         }
 
-        internal readonly CfrRuntime remoteRuntime;
+        internal readonly CfxRemoteContext remoteContext;
         internal ulong m_proxyId;
 
 
         internal CfrObject(ulong proxyId) {
             this.m_proxyId = proxyId;
-            this.remoteRuntime = CfrRuntime.CurrentContext;
-        }
-        [Obsolete]
-        internal CfrObject(ulong proxyId, CfrRuntime remoteRuntime) {
-            this.m_proxyId = proxyId;
-            this.remoteRuntime = remoteRuntime;
+            this.remoteContext = CfxRemoteContext.CurrentContext;
         }
         
         internal ulong proxyId {
@@ -68,10 +63,10 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// The CfrRuntime for the render process 
+        /// The remote context of the render process 
         /// this object belongs to.
         /// </summary>
-        public CfrRuntime RemoteRuntime { get { return remoteRuntime; }}
+        public CfxRemoteContext RemoteContext { get { return remoteContext; } }
 
         /// <summary>
         /// Address of the underlying native CEF object
@@ -93,7 +88,7 @@ namespace Chromium.Remote {
             if(m_proxyId != 0) {
                 try {
                     OnDispose(m_proxyId);
-                    if(remoteRuntime.connection.connectionLostException == null) {
+                    if(remoteContext.connection.connectionLostException == null) {
                         var call = new ReleaseProxyRemoteCall();
                         call.proxyId = m_proxyId;
                         call.Execute();

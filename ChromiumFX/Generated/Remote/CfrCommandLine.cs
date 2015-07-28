@@ -75,15 +75,9 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("Create(CfrRuntime, ...) is deprecated, please use Create(...) without CfrRuntime instead.")]
         public static CfrCommandLine Create(CfrRuntime remoteRuntime) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxCommandLineCreateRenderProcessCall();
-                call.Execute();
-                return CfrCommandLine.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxCommandLineCreateRenderProcessCall();
+            call.Execute();
+            return CfrCommandLine.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -109,15 +103,9 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("GetGlobal(CfrRuntime, ...) is deprecated, please use GetGlobal(...) without CfrRuntime instead.")]
         public static CfrCommandLine GetGlobal(CfrRuntime remoteRuntime) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxCommandLineGetGlobalRenderProcessCall();
-                call.Execute();
-                return CfrCommandLine.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxCommandLineGetGlobalRenderProcessCall();
+            call.Execute();
+            return CfrCommandLine.Wrap(call.__retval);
         }
 
         /// <summary>

@@ -38,8 +38,6 @@ namespace Chromium.Remote {
     /// </summary>
     public abstract class CfrBase : CfrObject {
         internal CfrBase(ulong proxyId) : base(proxyId) { }
-        [Obsolete]
-        internal CfrBase(ulong proxyId, CfrRuntime remoteRuntime) : base(proxyId, remoteRuntime) { }
     }
 
 }

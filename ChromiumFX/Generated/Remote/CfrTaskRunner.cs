@@ -75,15 +75,9 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("GetForCurrentThread(CfrRuntime, ...) is deprecated, please use GetForCurrentThread(...) without CfrRuntime instead.")]
         public static CfrTaskRunner GetForCurrentThread(CfrRuntime remoteRuntime) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxTaskRunnerGetForCurrentThreadRenderProcessCall();
-                call.Execute();
-                return CfrTaskRunner.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxTaskRunnerGetForCurrentThreadRenderProcessCall();
+            call.Execute();
+            return CfrTaskRunner.Wrap(call.__retval);
         }
 
         /// <summary>
@@ -110,16 +104,10 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("GetForThread(CfrRuntime, ...) is deprecated, please use GetForThread(...) without CfrRuntime instead.")]
         public static CfrTaskRunner GetForThread(CfrRuntime remoteRuntime, CfxThreadId threadId) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxTaskRunnerGetForThreadRenderProcessCall();
-                call.threadId = (int)threadId;
-                call.Execute();
-                return CfrTaskRunner.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxTaskRunnerGetForThreadRenderProcessCall();
+            call.threadId = (int)threadId;
+            call.Execute();
+            return CfrTaskRunner.Wrap(call.__retval);
         }
 
         /// <summary>

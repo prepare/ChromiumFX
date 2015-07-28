@@ -183,9 +183,29 @@ namespace Chromium {
         /// 
         /// The chromium sandbox is currently not supported within ChromiumFX.
         /// </summary>
+        [Obsolete("Initialize(..., CfxRenderProcessStartupDelegate) is deprecated, please use Initialize(..., CfxRenderProcessMainDelegate) instead.")]
         public static bool Initialize(CfxSettings settings, CfxApp application, CfxRenderProcessStartupDelegate renderProcessStartupCallback) {
             CfxApi.Probe();
             Chromium.Remote.RemoteService.Initialize(renderProcessStartupCallback, ref application);
+            return Initialize(settings, application);
+        }
+
+        /// <summary>
+        /// This function should be called on the main application thread to initialize
+        /// the CEF browser process with support for the remote interface to the render
+        /// process. The |application| parameter may be NULL. A return value of true (1) 
+        /// indicates that it succeeded and false (0) indicates that it failed.
+        /// 
+        /// If |renderProcessMain| is provided, then every newly created render process 
+        /// main thread will be redirected through this callback and the callee is
+        /// responsible for calling CfrRuntime.ExecuteProcess() from within the 
+        /// scope of this callback.
+        /// 
+        /// The chromium sandbox is currently not supported within ChromiumFX.
+        /// </summary>
+        public static bool Initialize(CfxSettings settings, CfxApp application, CfxRenderProcessMainDelegate renderProcessMain) {
+            CfxApi.Probe();
+            Chromium.Remote.RemoteService.Initialize(renderProcessMain, ref application);
             return Initialize(settings, application);
         }
 

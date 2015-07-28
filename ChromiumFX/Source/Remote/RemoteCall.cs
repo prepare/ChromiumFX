@@ -62,7 +62,7 @@ namespace Chromium.Remote {
             if(RemoteClient.connection != null) {
                 connection = RemoteClient.connection;
             } else {
-                connection = CfrRuntime.CurrentContext.connection;
+                connection = CfxRemoteContext.CurrentContext.connection;
             }
 
             if(returnImmediately) {
@@ -85,7 +85,7 @@ namespace Chromium.Remote {
                 localThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
                 connection.callStack.Push(this);
 
-                remoteThreadId = CfxRemoting.remoteThreadId;
+                remoteThreadId = CfxRemoteContext.remoteThreadId;
 
                 connection.EnqueueRequest(this);
 
@@ -167,34 +167,34 @@ namespace Chromium.Remote {
                 return;
             }
 
-            var previousRemoteThreadId = CfxRemoting.remoteThreadId;
-            CfxRemoting.remoteThreadId = remoteThreadId;
+            var previousRemoteThreadId = CfxRemoteContext.remoteThreadId;
+            CfxRemoteContext.remoteThreadId = remoteThreadId;
 
             try {
                 ExecuteRemoteProcedure(connection);
             } finally {
-                CfxRemoting.remoteThreadId = previousRemoteThreadId;
+                CfxRemoteContext.remoteThreadId = previousRemoteThreadId;
             }
             connection.EnqueueResponse(this);
         }
 
         private void ExecuteRemoteProcedure(RemoteConnection connection) {
-            if(connection.remoteRuntime == null) {
+            if(connection.remoteContext == null) {
                 // this is the render process
                 ExecuteInTargetProcess(connection);
                 return;
             }
             // this is the browser process
-            connection.remoteRuntime.EnterContext();
-            var contextStackCount = CfrRuntime.ContextStackCount;
+            connection.remoteContext.Enter();
+            var contextStackCount = CfxRemoteContext.ContextStackCount;
             try {
                 ExecuteInTargetProcess(connection);
             } finally {
-                if(contextStackCount != CfrRuntime.ContextStackCount || CfrRuntime.CurrentContext != connection.remoteRuntime) {
-                    CfrRuntime.ResetContextStackTo(contextStackCount - 1);
-                    throw new CfxException("Unbalanced remote runtime context stack. Make sure to balance calls to CfrRuntime.EnterContext() and CfrRuntime.ExitContext() in all render process callback events.");
+                if(contextStackCount != CfxRemoteContext.ContextStackCount || CfxRemoteContext.CurrentContext != connection.remoteContext) {
+                    CfxRemoteContext.ResetContextStackTo(contextStackCount - 1);
+                    throw new CfxException("Unbalanced remote context stack. Make sure to balance calls to CfxRemoteContext.Enter() and CfxRemoteContext.Exit() in all render process callback events.");
                 }
-                connection.remoteRuntime.ExitContext();
+                connection.remoteContext.Exit();
             }
         }
 

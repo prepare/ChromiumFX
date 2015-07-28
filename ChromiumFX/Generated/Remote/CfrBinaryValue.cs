@@ -69,17 +69,11 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("Create(CfrRuntime, ...) is deprecated, please use Create(...) without CfrRuntime instead.")]
         public static CfrBinaryValue Create(CfrRuntime remoteRuntime, RemotePtr data, int dataSize) {
-            remoteRuntime.EnterContext();
-            try {
-                var call = new CfxBinaryValueCreateRenderProcessCall();
-                call.data = data.ptr;
-                call.dataSize = dataSize;
-                call.Execute();
-                return CfrBinaryValue.Wrap(call.__retval);
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
+            var call = new CfxBinaryValueCreateRenderProcessCall();
+            call.data = data.ptr;
+            call.dataSize = dataSize;
+            call.Execute();
+            return CfrBinaryValue.Wrap(call.__retval);
         }
 
         /// <summary>

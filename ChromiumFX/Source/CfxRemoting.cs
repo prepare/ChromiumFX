@@ -35,11 +35,13 @@ using Chromium.Remote;
 
 namespace Chromium {
 
+    [Obsolete("CfxRenderProcessStartupDelegate is deprecated, please use CfxRenderProcessMainDelegate instead.")]
     public delegate int CfxRenderProcessStartupDelegate(CfrRuntime remoteRumtime);
 
     /// <summary>
     /// Properties and methods for the remoting interface.
     /// </summary>
+    [Obsolete("CfxRemoting is deprecated, please use CfxRemoteContext instead.")]
     public class CfxRemoting {
 
         /// <summary>
@@ -47,16 +49,18 @@ namespace Chromium {
         /// active if CfxRuntime.Initialize has been called with a valid
         /// render process startup callback. 
         /// </summary>
+        [Obsolete("CfxRemoting.IsActive is deprecated, please use CfxRemoteContext.RemotingInitialized instead.")]
         public static bool IsActive {
-            get { return RemoteService.RenderProcessStartupCallback != null; }
+            get { return CfxRemoteContext.RemotingInitialized; }
         }
 
         /// <summary>
         /// Thread-relative static property indicating the thread id of an affine thread
         /// in the remote process. Zero if the calling thread has no affinity with a remote thread.
         /// </summary>
+        [Obsolete("CfxRemoting.RemoteThreadId is deprecated, please use CfxRemoteContext.RemoteThreadId instead.")]
         public static int RemoteThreadId {
-            get { return remoteThreadId; }
+            get { return CfxRemoteContext.RemoteThreadId; }
         }
 
         /// <summary>
@@ -68,21 +72,9 @@ namespace Chromium {
         /// Typical use case: marshal an Invoke call to the render thread.
         /// </summary>
         /// <param name="remoteThreadId"></param>
+        [Obsolete("CfxRemoting.SetThreadAffinity is deprecated, please use CfxRemoteContext.SetThreadAffinity instead.")]
         public static void SetThreadAffinity(int remoteThreadId) {
-            
-            if(CfxRemoting.remoteThreadId != 0 && !threadAffinityIsExternal)
-                throw new CfxException("Can's set thread affinity on a framework provided thread.");
-
-            threadAffinityIsExternal = true;
-            CfxRemoting.remoteThreadId = remoteThreadId;
-
+            CfxRemoteContext.SetThreadAffinity(remoteThreadId);
         }
-
-        [ThreadStatic]
-        internal static int remoteThreadId;
-
-        [ThreadStatic]
-        internal static bool threadAffinityIsExternal;
-
     }
 }

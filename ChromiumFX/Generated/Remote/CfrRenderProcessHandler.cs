@@ -62,18 +62,6 @@ namespace Chromium.Remote {
         }
 
 
-        [Obsolete]
-        internal static ulong CreateRemote(CfrRuntime remoteRuntime) {
-            var call = new CfxRenderProcessHandlerCtorRenderProcessCall();
-            remoteRuntime.EnterContext();
-            try {
-                call.Execute();
-                return call.__retval;
-            }
-            finally {
-                remoteRuntime.ExitContext();
-            }
-        }
         internal static ulong CreateRemote() {
             var call = new CfxRenderProcessHandlerCtorRenderProcessCall();
             call.Execute();
@@ -160,10 +148,8 @@ namespace Chromium.Remote {
 
         private CfrRenderProcessHandler(ulong proxyId) : base(proxyId) {}
         [Obsolete("new CfrRenderProcessHandler(CfrRuntime) is deprecated, please use new CfrRenderProcessHandler() without CfrRuntime instead.")]
-        public CfrRenderProcessHandler(CfrRuntime remoteRuntime) : base(CreateRemote(remoteRuntime), remoteRuntime) {
-            remoteRuntime.EnterContext();
+        public CfrRenderProcessHandler(CfrRuntime remoteRuntime) : base(CreateRemote()) {
             weakCache.Add(this.proxyId, this);
-            remoteRuntime.ExitContext();
         }
         public CfrRenderProcessHandler() : base(CreateRemote()) {
             weakCache.Add(this.proxyId, this);
