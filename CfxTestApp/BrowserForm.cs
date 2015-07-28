@@ -133,43 +133,28 @@ namespace CfxTestApplication {
             }
             WebBrowser.SetWebResource("http://localresource/image", new Chromium.WebBrowser.WebResource(bm));
 
-            WebBrowser.DisplayHandler.OnConsoleMessage += DisplayHandler_OnConsoleMessage;
-            WebBrowser.DisplayHandler.OnTitleChange += DisplayHandler_OnTitleChange;
-            WebBrowser.DisplayHandler.OnStatusMessage += DisplayHandler_OnStatusMessage;
+            WebBrowser.DisplayHandler.OnConsoleMessage += (s, e) => LogCallback(s, e);
+            WebBrowser.DisplayHandler.OnTitleChange += (s, e) => LogCallback(s, e);
+            WebBrowser.DisplayHandler.OnStatusMessage += (s, e) => LogCallback(s, e);
 
-            WebBrowser.LifeSpanHandler.OnBeforePopup += LifeSpanHandler_OnBeforePopup;
+            WebBrowser.LifeSpanHandler.OnBeforePopup += (s, e) => {
+                LogCallback(s, e);
+                var ff = e.PopupFeatures.AdditionalFeatures;
+                if(ff != null) 
+                    foreach(var f in ff) {
+                        LogWriteLine("Additional popup feature: {0}", f);
+                    }
+            };
 
-            WebBrowser.OnLoadingStateChange += WebBrowser_OnLoadingStateChange;
+            WebBrowser.OnLoadingStateChange += (s, e) => {
+                if(!e.IsLoading)
+                    UrlTextBox.Text = WebBrowser.Url.ToString();
+            };
 
             WebBrowser.LoadUrl("http://localresource/text.html");
 
         }
 
-        void WebBrowser_OnLoadingStateChange(object sender, CfxOnLoadingStateChangeEventArgs e) {
-            if(!e.IsLoading)
-                UrlTextBox.Text = WebBrowser.Url.ToString();
-        }
-
-        void DisplayHandler_OnStatusMessage(object sender, CfxOnStatusMessageEventArgs e) {
-            LogCallback(sender, e);
-        }
-
-
-        void DisplayHandler_OnTitleChange(object sender, CfxOnTitleChangeEventArgs e) {
-            LogCallback(sender, e);
-        }
-
-        void DisplayHandler_OnConsoleMessage(object sender, CfxOnConsoleMessageEventArgs e) {
-            LogCallback(sender, e);
-        }
-
-        void LifeSpanHandler_OnBeforePopup(object sender, CfxOnBeforePopupEventArgs e) {
-            LogCallback(sender, e);
-            var ff = e.PopupFeatures.AdditionalFeatures;
-            if(ff != null) foreach(var f in ff) {
-                    LogWriteLine("Additional popup feature: {0}", f);
-                }
-        }
 
         void VisitDomButton_Click(object sender, EventArgs e) {
             var retval = WebBrowser.VisitDom(VisitDOMCallback);
