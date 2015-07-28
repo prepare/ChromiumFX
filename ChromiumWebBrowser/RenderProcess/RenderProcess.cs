@@ -38,6 +38,7 @@ namespace Chromium.WebBrowser {
     internal class RenderProcess {
 
         internal static int RenderProcessMain() {
+            ChromiumWebBrowser.RaiseOnRemoteContextCreated();
             var rp = new RenderProcess();
             return rp.Startup();
         }

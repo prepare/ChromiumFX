@@ -110,6 +110,14 @@ namespace Chromium.WebBrowser {
             }
         }
 
+        public static event OnRemoteContextCreatedEventHandler OnRemoteContextCreated;
+        internal static void RaiseOnRemoteContextCreated() {
+            var handler = OnRemoteContextCreated;
+            if(handler != null) {
+                handler(new OnRemoteContextCreatedEventArgs());
+            }
+        }
+
         /// <summary>
         /// Initialize the ChromiumWebBrowser and ChromiumFX libraries.
         /// The application can change initialization settings by handling
