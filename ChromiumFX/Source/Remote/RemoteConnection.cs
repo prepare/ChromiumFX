@@ -34,6 +34,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Threading;
+using System.Diagnostics;
 
 namespace Chromium.Remote {
     internal class RemoteConnection {
@@ -42,6 +43,8 @@ namespace Chromium.Remote {
         private readonly Stream pipeIn;
         private readonly Stream pipeOut;
         internal readonly StreamHandler streamHandler;
+
+        internal int remoteProcessId { get; private set; }
 
         private readonly bool isClient;
 
@@ -114,6 +117,8 @@ namespace Chromium.Remote {
         internal void WriteLoopEntry() {
             try {
                 Connect(pipeOut);
+                streamHandler.Write(Process.GetCurrentProcess().Id);
+                streamHandler.Flush();
                 WriteLoop();
             } catch(EndOfStreamException ex) {
                 OnConnectionLost(ex);
@@ -125,6 +130,7 @@ namespace Chromium.Remote {
         internal void ReadLoopEntry() {
             try {
                 Connect(pipeIn);
+                remoteProcessId = streamHandler.ReadInt32();
                 ReadLoop();
             } catch(EndOfStreamException ex) {
                 OnConnectionLost(ex);
