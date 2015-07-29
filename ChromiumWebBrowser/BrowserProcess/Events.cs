@@ -38,16 +38,7 @@ namespace Chromium.WebBrowser.Event {
     public delegate void OnBeforeCommandLineProcessingEventHandler(CfxOnBeforeCommandLineProcessingEventArgs e);
     public delegate void OnRegisterCustomSchemesEventHandler(CfxOnRegisterCustomSchemesEventArgs e);
     public delegate void OnBeforeCfxInitializeEventHandler(OnBeforeCfxInitializeEventArgs e);
-    public delegate void OnRemoteContextCreatedEventHandler(OnRemoteContextCreatedEventArgs e);
-
-    public class OnRemoteContextCreatedEventArgs : EventArgs {
-        internal OnRemoteContextCreatedEventArgs() { }
-        public CfxRemoteProcessContext Context {
-            get {
-                return CfxRemoteProcessContext.CurrentContext;
-            }
-        }
-    }
+    public delegate void OnRemoteContextCreatedEventHandler(EventArgs e);
 
     public class OnBeforeCfxInitializeEventArgs : EventArgs {
         public CfxSettings Settings { get; private set; }
