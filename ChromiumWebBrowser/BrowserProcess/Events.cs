@@ -42,9 +42,9 @@ namespace Chromium.WebBrowser.Event {
 
     public class OnRemoteContextCreatedEventArgs : EventArgs {
         internal OnRemoteContextCreatedEventArgs() { }
-        public CfxRemoteContext Context {
+        public CfxRemoteProcessContext Context {
             get {
-                return CfxRemoteContext.CurrentContext;
+                return CfxRemoteProcessContext.CurrentContext;
             }
         }
     }

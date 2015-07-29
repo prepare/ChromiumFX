@@ -49,7 +49,7 @@ namespace Chromium {
     /// remote callback event, the executing thread is always in the context of the
     /// render process which originated the callback.
     /// </summary>
-    public class CfxRemoteContext {
+    public class CfxRemoteProcessContext {
 
         /// <summary>
         /// Indicates if the remoting framework is initialized. The remoting framework is
@@ -65,13 +65,13 @@ namespace Chromium {
 
         internal readonly RemoteConnection connection;
 
-        internal CfxRemoteContext(RemoteConnection connection) {
+        internal CfxRemoteProcessContext(RemoteConnection connection) {
             this.connection = connection;
         }
 
 
         [ThreadStatic]
-        private static Stack<CfxRemoteContext> contextStack;
+        private static Stack<CfxRemoteProcessContext> contextStack;
 
         /// <summary>
         /// Enter the context of a remote render process. Calls to Enter()/Exit() 
@@ -79,7 +79,7 @@ namespace Chromium {
         /// Exit() is called the same number of times as Enter().
         /// </summary>
         public void Enter() {
-            if(contextStack == null) contextStack = new Stack<CfxRemoteContext>();
+            if(contextStack == null) contextStack = new Stack<CfxRemoteProcessContext>();
             contextStack.Push(this);
         }
 
@@ -93,6 +93,9 @@ namespace Chromium {
             contextStack.Pop();
         }
 
+        /// <summary>
+        /// The process id of the remote process.
+        /// </summary>
         public int ProcessId {
             get {
                 return connection.remoteProcessId;
@@ -103,7 +106,7 @@ namespace Chromium {
         /// Returns the current remote context for the calling thread. Throws an exception if the 
         /// calling thread is not currently in the context of a remote render process.
         /// </summary>
-        public static CfxRemoteContext CurrentContext {
+        public static CfxRemoteProcessContext CurrentContext {
             get {
                 if(contextStack != null && contextStack.Count > 0)
                     return contextStack.Peek();
@@ -133,7 +136,6 @@ namespace Chromium {
                 contextStack.Pop();
         }
 
-
         /// <summary>
         /// Thread-relative static property indicating the thread id of an affine thread
         /// in the remote process. Zero if the calling thread has no affinity with a remote thread.
@@ -153,11 +155,11 @@ namespace Chromium {
         /// <param name="remoteThreadId"></param>
         public static void SetThreadAffinity(int remoteThreadId) {
 
-            if(CfxRemoteContext.remoteThreadId != 0 && !threadAffinityIsExternal)
+            if(CfxRemoteProcessContext.remoteThreadId != 0 && !threadAffinityIsExternal)
                 throw new CfxException("Can's set thread affinity on a framework provided thread.");
 
             threadAffinityIsExternal = true;
-            CfxRemoteContext.remoteThreadId = remoteThreadId;
+            CfxRemoteProcessContext.remoteThreadId = remoteThreadId;
 
         }
 

@@ -229,7 +229,8 @@
     <Compile Include="Source\CfxDebug.cs" />
     <Compile Include="Source\CfxMainArgsLinux.cs" />
     <Compile Include="Source\CfxPlatform.cs" />
-    <Compile Include="Source\CfxRemoteContext.cs" />
+    <Compile Include="Source\CfxRemoteProcessContext.cs" />
+    <Compile Include="Source\CfxRemoteThreadContext.cs" />
     <Compile Include="Source\CfxTime.cs" />
     <Compile Include="Source\CfxWindowInfo.cs" />
     <Compile Include="Source\NativeFunctionLoader.cs" />
