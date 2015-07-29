@@ -43,13 +43,13 @@ namespace Chromium.Remote {
             return remoteObject == null ? 0 : remoteObject.proxyId;
         }
 
-        internal readonly CfxRemoteContext remoteContext;
+        internal readonly CfxRemoteProcessContext remoteContext;
         internal ulong m_proxyId;
 
 
         internal CfrObject(ulong proxyId) {
             this.m_proxyId = proxyId;
-            this.remoteContext = CfxRemoteContext.CurrentContext;
+            this.remoteContext = CfxRemoteProcessContext.CurrentContext;
         }
         
         internal ulong proxyId {
@@ -66,7 +66,7 @@ namespace Chromium.Remote {
         /// The remote context of the render process 
         /// this object belongs to.
         /// </summary>
-        public CfxRemoteContext RemoteContext { get { return remoteContext; } }
+        public CfxRemoteProcessContext RemoteContext { get { return remoteContext; } }
 
         /// <summary>
         /// Address of the underlying native CEF object

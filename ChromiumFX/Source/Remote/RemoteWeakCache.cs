@@ -47,10 +47,10 @@ namespace Chromium.Remote {
                     }
                 }
             }
-            public readonly CfxRemoteContext remoteContext;
+            public readonly CfxRemoteProcessContext remoteContext;
             public readonly ulong proxyId;
             public CacheKey(ulong proxyId) {
-                this.remoteContext = CfxRemoteContext.CurrentContext;
+                this.remoteContext = CfxRemoteProcessContext.CurrentContext;
                 this.proxyId = proxyId;
             }
         }
