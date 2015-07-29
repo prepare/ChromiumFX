@@ -118,6 +118,7 @@ namespace Chromium.Remote {
                 h.Write(remoteThreadId);
             }
             WriteArgs(h);
+            h.Flush();
         }
 
         internal void ReadRequest(RemoteConnection connection) {
@@ -149,6 +150,7 @@ namespace Chromium.Remote {
             h.Write(ushort.MaxValue);
             h.Write(remoteThreadId);
             WriteReturn(h);
+            h.Flush();
         }
 
         internal void ReadResponse(StreamHandler h) {
