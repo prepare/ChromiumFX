@@ -113,7 +113,7 @@ class Lock {
 #endif  // NDEBUG
 
   // Platform specific underlying lock implementation.
-  cef_internal::LockImpl lock_;
+  internal::LockImpl lock_;
 
   DISALLOW_COPY_AND_ASSIGN(Lock);
 };
