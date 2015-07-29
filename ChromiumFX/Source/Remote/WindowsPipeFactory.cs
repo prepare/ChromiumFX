@@ -30,6 +30,7 @@
 
 
 using System;
+using System.IO;
 using System.IO.Pipes;
 
 namespace Chromium.Remote {
@@ -40,7 +41,8 @@ namespace Chromium.Remote {
         }
 
         internal override System.IO.Stream CreateServerPipeOutputStream(string name) {
-            return new NamedPipeServerStream(name, PipeDirection.Out, 1);
+            var s = new NamedPipeServerStream(name, PipeDirection.Out, 1);
+            return new PipeWriteBufferStream(s);
         }
 
         internal override System.IO.Stream CreateClientPipeInputStream(string name) {
@@ -48,15 +50,22 @@ namespace Chromium.Remote {
         }
 
         internal override System.IO.Stream CreateClientPipeOutputStream(string name) {
-            return new NamedPipeClientStream(".", name, PipeDirection.Out);
+            var s = new NamedPipeClientStream(".", name, PipeDirection.Out);
+            return new PipeWriteBufferStream(s);
         }
 
         internal override void WaitForConnection(System.IO.Stream serverStream) {
-            ((NamedPipeServerStream)serverStream).WaitForConnection();
+            if(serverStream is PipeWriteBufferStream)
+                ((NamedPipeServerStream)((PipeWriteBufferStream)serverStream).pipe).WaitForConnection();
+            else
+                ((NamedPipeServerStream)serverStream).WaitForConnection();
         }
 
         internal override void Connect(System.IO.Stream clientStream) {
-            ((NamedPipeClientStream)clientStream).Connect();
+            if(clientStream is PipeWriteBufferStream)
+                ((NamedPipeClientStream)((PipeWriteBufferStream)clientStream).pipe).Connect();
+            else
+                ((NamedPipeClientStream)clientStream).Connect();
         }
     }
 }
