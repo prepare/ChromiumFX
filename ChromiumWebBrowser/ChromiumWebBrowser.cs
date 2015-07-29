@@ -480,7 +480,7 @@ namespace Chromium.WebBrowser {
 
         /// <summary>
         /// Special Invoke for framework callbacks from the render process.
-        /// Maintains affinity with the render process thread.
+        /// Maintains the thread in the context of the calling remote thread.
         /// Use this instead of invoke when the following conditions are meat:
         /// 1) The current thread is executing in the scope of a framework
         ///    callback event from the render process (ex. CfrTask.Execute).
@@ -503,7 +503,7 @@ namespace Chromium.WebBrowser {
 
         /// <summary>
         /// Special Invoke for framework callbacks from the render process.
-        /// Maintains affinity with the render process thread.
+        /// Maintains the thread within the context of the calling remote thread.
         /// Use this instead of invoke when the following conditions are meat:
         /// 1) The current thread is executing in the scope of a framework
         ///    callback event from the render process (ex. CfrTask.Execute).
@@ -528,7 +528,7 @@ namespace Chromium.WebBrowser {
         /// Returns false if the remote browser is currently unavailable.
         /// If this function returns false, then |callback| will not be called. Otherwise,
         /// |callback| will be called on the thread that owns this browser control's 
-        /// underlying window handle, preserving affinity to the renderer thread.
+        /// underlying window handle within the context of the calling remote thread.
         /// Use with care:
         /// The callback may never be called if the render process gets killed prematurely.
         /// Otherwise, the returned CfrV8Value may be null if evaluation in the render process fails.
@@ -594,8 +594,8 @@ namespace Chromium.WebBrowser {
         /// Dynamic properties and functions in this object 
         /// are executed on the thread that owns the browser's 
         /// underlying window handle, unless otherwise specified 
-        /// in the function/dynamic property constructor. 
-        /// Preserves affinity to the render thread.
+        /// in the function/dynamic property constructor, and
+        /// within the context of the calling remote thread.
         /// </summary>
         public JSObject GlobalObject { get; private set; }
 
@@ -607,8 +607,8 @@ namespace Chromium.WebBrowser {
         /// Dynamic properties and functions in this object 
         /// are executed on the thread that owns the browser's 
         /// underlying window handle, unless otherwise specified 
-        /// in the function/dynamic property constructor. 
-        /// Preserves affinity to the render thread.
+        /// in the function/dynamic property constructor, and 
+        /// within the context of the calling remote thread.
         /// </summary>
         public JSObject GlobalObjectForFrame(string frameName) {
             JSObject obj;
@@ -620,58 +620,26 @@ namespace Chromium.WebBrowser {
             return obj;
         }
 
-        /// <summary>
-        /// Add a javascript property to the main frame's global object.
-        /// The property will be available after the next time a
-        /// V8 context is created in the render process.
-        /// </summary>
         [Obsolete("AddGlobalJSProperty is deprecated, please use GlobalObject.Add instead.")]
         public void AddGlobalJSProperty(string propertyName, JSProperty globalProperty) {
             GlobalObject.Add(propertyName, globalProperty);
         }
 
-        /// <summary>
-        /// Add a javascript property to the named frame's global object.
-        /// The property will be available after the next time a
-        /// V8 context is created for a frame with this name in the render process.
-        /// </summary>
         [Obsolete("AddGlobalJSProperty is deprecated, please use GlobalObjectForFrame(frameName).Add instead.")]
         public void AddGlobalJSProperty(string frameName, string propertyName, JSProperty globalProperty) {
             GlobalObjectForFrame(frameName).Add(propertyName, globalProperty);
         }
 
-        /// <summary>
-        /// Add a javascript function as a property to the main frame's global object.
-        /// The function will be available after the next time a
-        /// V8 context is created in the render process.
-        /// The function is executed on the thread that owns this browser control's 
-        /// underlying window handle. Preserves affinity to the original thread.
-        /// </summary>
         [Obsolete("AddGlobalJSFunction is deprecated, please use GlobalObject.AddFunction instead.")]
         public JSFunction AddGlobalJSFunction(string functionName) {
             return GlobalObject.AddFunction(functionName);
         }
 
-        /// <summary>
-        /// Add a javascript function as a property to the main frame's global object.
-        /// The function will be available after the next time a
-        /// V8 context is created in the render process.
-        /// If invokeOnBrowser is true, then the function is 
-        /// executed on the thread that owns this browser control's 
-        /// underlying window handle. Preserves affinity to the render thread.
-        /// </summary>
         [Obsolete("AddGlobalJSFunction is deprecated, please use GlobalObject.AddFunction instead.")]
         public JSFunction AddGlobalJSFunction(string functionName, bool invokeOnBrowser) {
             return GlobalObject.AddFunction(functionName, invokeOnBrowser);
         }
 
-        /// <summary>
-        /// Add a javascript function as a property to the named frame's global object.
-        /// The function will be available after the next time a
-        /// V8 context is created for a frame with this name in the render process.
-        /// The function is executed on the thread that owns this browser control's 
-        /// underlying window handle. Preserves affinity to the original thread.
-        /// </summary>
         [Obsolete("AddGlobalJSFunction is deprecated, please use GlobalObjectForFrame(frameName).AddFunction instead.")]
         public JSFunction AddGlobalJSFunction(string frameName, string functionName) {
             var f = new JSFunction(true);
@@ -679,14 +647,6 @@ namespace Chromium.WebBrowser {
             return f;
         }
 
-        /// <summary>
-        /// Add a javascript function as a property to the named frame's global object.
-        /// The function will be available after the next time a
-        /// V8 context is created for a frame with this name in the render process.
-        /// If invokeOnBrowser is true, then the function is executed 
-        /// on the thread that owns this browser control's 
-        /// underlying window handle. Preserves affinity to the original thread.
-        /// </summary>
         [Obsolete("AddGlobalJSFunction is deprecated, please use GlobalObjectForFrame(frameName).AddFunction instead.")]
         public JSFunction AddGlobalJSFunction(string frameName, string functionName, bool invokeOnBrowser) {
             var f = new JSFunction(invokeOnBrowser);
@@ -695,39 +655,16 @@ namespace Chromium.WebBrowser {
         }
 
 
-        /// <summary>
-        /// Add a javascript object as a property to the main frame's global object.
-        /// The object will be available after the next time a
-        /// V8 context is created in the render process.
-        /// Any functions and events of the object are executed on the thread that owns this browser control's 
-        /// underlying window handle. Preserves affinity to the render thread.
-        /// </summary>
         [Obsolete("AddGlobalJSObject is deprecated, please use GlobalObject.AddObject instead.")]
         public JSObject AddGlobalJSObject(string objectName) {
             return GlobalObject.AddObject(objectName);
         }
 
-        /// <summary>
-        /// Add a javascript object as a property to the main frame's global object.
-        /// The object will be available after the next time a
-        /// V8 context is created in the render process.
-        /// If invokeOnBrowser is true, then any functions and events of the object 
-        /// are executed on the thread that owns this browser control's 
-        /// underlying window handle. Preserves affinity to the render thread.
-        /// </summary>
         [Obsolete("AddGlobalJSObject is deprecated, please use GlobalObject.AddObject instead.")]
         public JSObject AddGlobalJSObject(string objectName, bool invokeOnBrowser) {
             return GlobalObject.AddObject(objectName, invokeOnBrowser);
         }
 
-        /// <summary>
-        /// Add a javascript object as a property to the named frame's global object.
-        /// The object will be available after the next time a
-        /// V8 context is created for a frame with this name in the render process.
-        /// Any functions and events of the object are 
-        /// executed on the thread that owns this browser control's 
-        /// underlying window handle. Preserves affinity to the render thread.
-        /// </summary>
         [Obsolete("AddGlobalJSObject is deprecated, please use GlobalObjectForFrame(frameName).AddObject instead.")]
         public JSObject AddGlobalJSObject(string frameName, string objectName) {
             var o = new JSObject(true);
@@ -735,14 +672,6 @@ namespace Chromium.WebBrowser {
             return o;
         }
 
-        /// <summary>
-        /// Add a javascript object as a property to the named frame's global object.
-        /// The object will be available after the next time a
-        /// V8 context is created for a frame with this name in the render process.
-        /// If invokeOnBrowser is true, then any functions and events of the object are 
-        /// executed on the thread that owns this browser control's 
-        /// underlying window handle. Preserves affinity to the render thread.
-        /// </summary>
         [Obsolete("AddGlobalJSObject is deprecated, please use GlobalObjectForFrame(frameName).AddObject instead.")]
         public JSObject AddGlobalJSObject(string frameName, string objectName, bool invokeOnBrowser) {
             var o = new JSObject(invokeOnBrowser);
@@ -757,7 +686,7 @@ namespace Chromium.WebBrowser {
         /// Returns false if the remote browser is currently unavailable.
         /// If this function returns false, then |callback| will not be called. Otherwise,
         /// |callback| will be called on the thread that owns this browser control's 
-        /// underlying window handle, preserving affinity to the renderer thread.
+        /// underlying window handle within the context of the calling remote thread.
         /// The document object passed to the callback represents a snapshot 
         /// of the DOM at the time the callback is executed.
         /// DOM objects are only valid for the scope of the callback. Do not
@@ -847,7 +776,7 @@ namespace Chromium.WebBrowser {
         /// Called after a remote browser has been created. When browsing cross-origin a new
         /// browser will be created before the old browser is destroyed.
         /// The event is executed on the thread that owns this browser control's 
-        /// underlying window handle, preserving affinity to the render thread.
+        /// underlying window handle within the context of the calling remote thread.
         /// 
         /// Applications may keep a reference to the CfrBrowser object outside the scope 
         /// of this event, but you have to be aware that those objects become invalid as soon

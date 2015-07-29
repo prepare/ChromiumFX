@@ -65,7 +65,7 @@ namespace Chromium.WebBrowser {
         /// <summary>
         /// If true, then the PropertyGet and PropertySet events 
         /// are executed on the thread that owns the browser's 
-        /// underlying window handle. Preserves affinity to the render thread.
+        /// underlying window handle within the context of the calling remote thread.
         /// </summary>
         public bool InvokeOnBrowser { get; private set; }
 
@@ -80,7 +80,7 @@ namespace Chromium.WebBrowser {
         /// Creates a new dynamic javascript property to be added to a JSObject.
         /// If invokeOnBrowser is true, then the PropertyGet and PropertySet 
         /// events are executed on the thread that owns the browser's 
-        /// underlying window handle. Preserves affinity to the render thread.
+        /// underlying window handle within the context of the calling remote thread.
         /// </summary>
         public JSDynamicProperty(bool invokeOnBrowser)
             : base(JSPropertyType.Dynamic) {
