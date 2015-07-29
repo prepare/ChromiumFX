@@ -51,6 +51,11 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2357.3 ###
+- A 64-bit build is now available at cefbuilds.com for CEF 3.2357.1283 and it's compatible with this version. CEF 3.2357.1281 32-bit is still compatible as well.
+- Instead of passing around a CfrRuntime object, the remote layer now uses remote process and thread contexts with thread-local and mostly transparent enter/exit semantics to keep track of remote callbacks. This implied a few changes in the public API of ChromiumFX and a lot of methods are deprecated now and will be deleted in a future release.
+- Thanks to the new remote process and thread contexts, Cfr* static methods and constructors now work without passing in a remote runtime object. This allows for some useful features, e.g. implicit conversion from int, double, string and other primitive types to CfrV8Value.
+
 ### Version 3.2171.16 ###
 - This is a back port of the current ChromiumFX version. It contains all ChromiumFX features from version 3.2357.2 but targets the CEF 3.2171 API. Besides new features, it contains a lot of important bug fixes so all users of the 3.2171 branch should upgrade.   
 
