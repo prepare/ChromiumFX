@@ -50,10 +50,6 @@ namespace Chromium.Remote
                 throw new CfxException("Do not keep/use a reference to callback event arguments outside the scope of the event handler.");
         }
 
-        /// <summary>
-        /// The CfrRuntime for the render process that
-        /// originated this remote callback event.
-        /// </summary>
         [Obsolete("CfrEventArgs.RemoteRuntime is deprecated.")]
         public CfrRuntime RemoteRuntime { get { return new CfrRuntime(); } }
 

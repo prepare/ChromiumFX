@@ -49,8 +49,8 @@ namespace Chromium.WebBrowser {
         /// If true, dynamic properties and functions in this object 
         /// are executed on the thread that owns the browser's 
         /// underlying window handle, unless otherwise specified 
-        /// in the function/dynamic property constructor. 
-        /// Preserves affinity to the render thread.
+        /// in the function/dynamic property constructor,  
+        /// within the context of the calling remote thread.
         /// </summary>
         public bool InvokeOnBrowser { get; private set; }
 
@@ -59,8 +59,8 @@ namespace Chromium.WebBrowser {
         /// to a browser frame's global object or a child object.
         /// Dynamic properties and functions in this object are executed 
         /// on the thread that owns the browser's underlying window handle, 
-        /// unless otherwise specified in the function/dynamic property constructor.
-        /// Preserves affinity to the render thread.
+        /// unless otherwise specified in the function/dynamic property constructor,
+        /// within the context of the calling remote thread.
         /// </summary>
         public JSObject()
             : base(JSPropertyType.Object) {
@@ -73,8 +73,8 @@ namespace Chromium.WebBrowser {
         /// If invokeOnBrowser is true, dynamic properties and functions 
         /// in this object are executed on the thread that owns the browser's 
         /// underlying window handle, unless otherwise specified in the 
-        /// function/dynamic property constructor.
-        /// Preserves affinity to the render thread.
+        /// function/dynamic property constructor,
+        /// within the context of the calling remote thread.
         /// </summary>
         public JSObject(bool invokeOnBrowser)
             : base(JSPropertyType.Object) {
@@ -208,9 +208,6 @@ namespace Chromium.WebBrowser {
             return jsProperties.GetEnumerator();
         }
 
-        /// <summary>
-        /// Add a javascript property to this object.
-        /// </summary>
         [Obsolete("AddProperty is deprecated, please use Add instead.")]
         public void AddProperty(string propertyName, JSProperty property) {
             property.SetParent(propertyName, this);
@@ -223,8 +220,7 @@ namespace Chromium.WebBrowser {
         /// Add a javascript function as a property to this object.
         /// If this object's InvokeOnBrowser property is true, the 
         /// function is executed on the thread that owns the browser's 
-        /// underlying window handle. Preserves affinity to 
-        /// the render thread.
+        /// underlying window handle, within the context of the calling remote thread.
         /// </summary>
         public JSFunction AddFunction(string functionName) {
             var f = new JSFunction(InvokeOnBrowser);
@@ -235,8 +231,8 @@ namespace Chromium.WebBrowser {
         /// <summary>
         /// Add a javascript function as a property to this object.
         /// If invokeOnBrowser is true, the function is executed on 
-        /// the thread that owns the browser's underlying window handle. 
-        /// Preserves affinity to the render thread.
+        /// the thread that owns the browser's underlying window handle,  
+        /// within the context of the calling remote thread
         /// </summary>
         public JSFunction AddFunction(string functionName, bool invokeOnBrowser) {
             var f = new JSFunction(invokeOnBrowser);
@@ -270,8 +266,7 @@ namespace Chromium.WebBrowser {
         /// If this object's InvokeOnBrowser property is true, 
         /// the property's setter and getter events are executed 
         /// on the thread that owns the browser's 
-        /// underlying window handle. Preserves affinity to 
-        /// the render thread.
+        /// underlying window handle, within the context of the calling remote thread.
         /// </summary>
         public JSDynamicProperty AddDynamicProperty(string propertyName) {
             var p = new JSDynamicProperty(InvokeOnBrowser);
@@ -283,8 +278,8 @@ namespace Chromium.WebBrowser {
         /// Add a dynamic javascript property to this object.
         /// If invokeOnBrowser is true, the property's setter 
         /// and getter events are executed on the thread that 
-        /// owns the browser's underlying window handle. 
-        /// Preserves affinity to the render thread.
+        /// owns the browser's underlying window handle,  
+        /// within the context of the calling remote thread.
         /// </summary>
         public JSDynamicProperty AddDynamicProperty(string propertyName, bool invokeOnBrowser) {
             var p = new JSDynamicProperty(invokeOnBrowser);
