@@ -37,20 +37,9 @@ using System.Threading;
 namespace Chromium.Remote {
     /// <summary>
     /// Collection of global static CEF functions acessible in the render process.
+    /// A thread must be in a remote context in order to access these function.
     /// </summary>
     public partial class CfrRuntime {
-
-        static CfrRuntime() {
-            Marshal = new CfrMarshal();
-        }
-
-        internal CfrRuntime() { }
-
-        /// <summary>
-        /// Provides access to the remote process unmanaged memory.
-        /// </summary>
-        public static CfrMarshal Marshal { get; private set; }
-
 
         /// <summary>
         /// This function should be called from the render process startup callback
