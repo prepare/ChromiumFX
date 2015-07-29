@@ -235,9 +235,9 @@ namespace Chromium.Remote {
 
         /// <summary>
         /// Create a new CfrV8Value object of type Date. This function should only be
-        /// called from within the scope of a CfrRenderProcessHandler,
-        /// CfrV8Handler or CfrV8Accessor callback, or in combination with calling
-        /// enter() and exit() on a stored CfrV8Context reference.
+        /// called from within the scope of a CfrV8ContextHandler, CfrV8Handler or
+        /// CfrV8Accessor callback, or in combination with calling enter() and exit()
+        /// on a stored CfrV8Context reference.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -253,9 +253,9 @@ namespace Chromium.Remote {
 
         /// <summary>
         /// Create a new CfrV8Value object of type Date. This function should only be
-        /// called from within the scope of a CfrRenderProcessHandler,
-        /// CfrV8Handler or CfrV8Accessor callback, or in combination with calling
-        /// enter() and exit() on a stored CfrV8Context reference.
+        /// called from within the scope of a CfrV8ContextHandler, CfrV8Handler or
+        /// CfrV8Accessor callback, or in combination with calling enter() and exit()
+        /// on a stored CfrV8Context reference.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -300,8 +300,8 @@ namespace Chromium.Remote {
         /// <summary>
         /// Create a new CfrV8Value object of type object with optional accessor. This
         /// function should only be called from within the scope of a
-        /// CfrRenderProcessHandler, CfrV8Handler or CfrV8Accessor callback,
-        /// or in combination with calling enter() and exit() on a stored CfrV8Context
+        /// CfrV8ContextHandler, CfrV8Handler or CfrV8Accessor callback, or in
+        /// combination with calling enter() and exit() on a stored CfrV8Context
         /// reference.
         /// </summary>
         /// <remarks>
@@ -319,8 +319,8 @@ namespace Chromium.Remote {
         /// <summary>
         /// Create a new CfrV8Value object of type object with optional accessor. This
         /// function should only be called from within the scope of a
-        /// CfrRenderProcessHandler, CfrV8Handler or CfrV8Accessor callback,
-        /// or in combination with calling enter() and exit() on a stored CfrV8Context
+        /// CfrV8ContextHandler, CfrV8Handler or CfrV8Accessor callback, or in
+        /// combination with calling enter() and exit() on a stored CfrV8Context
         /// reference.
         /// </summary>
         /// <remarks>
@@ -337,10 +337,9 @@ namespace Chromium.Remote {
         /// <summary>
         /// Create a new CfrV8Value object of type array with the specified |length|.
         /// If |length| is negative the returned array will have length 0. This function
-        /// should only be called from within the scope of a
-        /// CfrRenderProcessHandler, CfrV8Handler or CfrV8Accessor callback,
-        /// or in combination with calling enter() and exit() on a stored CfrV8Context
-        /// reference.
+        /// should only be called from within the scope of a CfrV8ContextHandler,
+        /// CfrV8Handler or CfrV8Accessor callback, or in combination with calling
+        /// enter() and exit() on a stored CfrV8Context reference.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -357,10 +356,9 @@ namespace Chromium.Remote {
         /// <summary>
         /// Create a new CfrV8Value object of type array with the specified |length|.
         /// If |length| is negative the returned array will have length 0. This function
-        /// should only be called from within the scope of a
-        /// CfrRenderProcessHandler, CfrV8Handler or CfrV8Accessor callback,
-        /// or in combination with calling enter() and exit() on a stored CfrV8Context
-        /// reference.
+        /// should only be called from within the scope of a CfrV8ContextHandler,
+        /// CfrV8Handler or CfrV8Accessor callback, or in combination with calling
+        /// enter() and exit() on a stored CfrV8Context reference.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -375,9 +373,9 @@ namespace Chromium.Remote {
 
         /// <summary>
         /// Create a new CfrV8Value object of type function. This function should only
-        /// be called from within the scope of a CfrRenderProcessHandler,
-        /// CfrV8Handler or CfrV8Accessor callback, or in combination with calling
-        /// enter() and exit() on a stored CfrV8Context reference.
+        /// be called from within the scope of a CfrV8ContextHandler, CfrV8Handler
+        /// or CfrV8Accessor callback, or in combination with calling enter() and
+        /// exit() on a stored CfrV8Context reference.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -394,9 +392,9 @@ namespace Chromium.Remote {
 
         /// <summary>
         /// Create a new CfrV8Value object of type function. This function should only
-        /// be called from within the scope of a CfrRenderProcessHandler,
-        /// CfrV8Handler or CfrV8Accessor callback, or in combination with calling
-        /// enter() and exit() on a stored CfrV8Context reference.
+        /// be called from within the scope of a CfrV8ContextHandler, CfrV8Handler
+        /// or CfrV8Accessor callback, or in combination with calling enter() and
+        /// exit() on a stored CfrV8Context reference.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
