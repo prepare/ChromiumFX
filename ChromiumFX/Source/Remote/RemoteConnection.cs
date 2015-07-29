@@ -76,11 +76,11 @@ namespace Chromium.Remote {
             responseQueue = new Queue<RemoteCall>();
             streamHandler = new StreamHandler(pipeIn, pipeOut);
 
+            remoteContext = new CfxRemoteProcessContext(this);
+
             if(!isClient) {
                 CfxRuntime.OnCfxShutdown += new Action(CfxRuntime_OnCfxShutdown);
-                remoteContext = new CfxRemoteProcessContext(this);
             }
-
 
             writer = new Thread(WriteLoopEntry);
             reader = new Thread(ReadLoopEntry);

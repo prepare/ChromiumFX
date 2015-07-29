@@ -58,9 +58,9 @@ namespace Chromium {
         /// Thread-relative static property indicating the thread id of an affine thread
         /// in the remote process. Zero if the calling thread has no affinity with a remote thread.
         /// </summary>
-        [Obsolete("CfxRemoting.RemoteThreadId is deprecated, please use CfxRemoteThreadContext.CurrentContext instead.")]
+        [Obsolete("CfxRemoting.RemoteThreadId is deprecated, please use CfxRemoteThreadContext.CurrentContext.ThreadId instead.")]
         public static int RemoteThreadId {
-            get { return CfxRemoteProcessContext.RemoteThreadId; }
+            get { return CfxRemoteThreadContext.CurrentContext.ThreadId; }
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Chromium {
         /// <param name="remoteThreadId"></param>
         [Obsolete("CfxRemoting.SetThreadAffinity is deprecated, please use CfxRemoteProcessContext.SetThreadAffinity instead.")]
         public static void SetThreadAffinity(int remoteThreadId) {
-            CfxRemoteProcessContext.SetThreadAffinity(remoteThreadId);
+            throw new NotImplementedException("SetThreadAffinity doesn't work any more, use CfxRemoteThreadContext.Enter/Exit");
         }
     }
 }
