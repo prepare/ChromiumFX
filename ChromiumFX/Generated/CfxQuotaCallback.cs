@@ -35,26 +35,26 @@ using System;
 
 namespace Chromium {
     /// <summary>
-    /// Callback structure used for asynchronous continuation of url requests.
+    /// Callback structure used for asynchronous continuation of quota requests.
     /// </summary>
     /// <remarks>
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
     /// </remarks>
-    public class CfxRequestCallback : CfxBase {
+    public class CfxQuotaCallback : CfxBase {
 
-        static CfxRequestCallback () {
-            CfxApiLoader.LoadCfxRequestCallbackApi();
+        static CfxQuotaCallback () {
+            CfxApiLoader.LoadCfxQuotaCallbackApi();
         }
 
         private static readonly WeakCache weakCache = new WeakCache();
 
-        internal static CfxRequestCallback Wrap(IntPtr nativePtr) {
+        internal static CfxQuotaCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
-                var wrapper = (CfxRequestCallback)weakCache.Get(nativePtr);
+                var wrapper = (CfxQuotaCallback)weakCache.Get(nativePtr);
                 if(wrapper == null) {
-                    wrapper = new CfxRequestCallback(nativePtr);
+                    wrapper = new CfxQuotaCallback(nativePtr);
                     weakCache.Add(wrapper);
                 } else {
                     CfxApi.cfx_release(nativePtr);
@@ -64,29 +64,29 @@ namespace Chromium {
         }
 
 
-        internal CfxRequestCallback(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxQuotaCallback(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Continue the url request. If |allow| is true (1) the request will be
-        /// continued. Otherwise, the request will be canceled.
+        /// Continue the quota request. If |allow| is true (1) the request will be
+        /// allowed. Otherwise, the request will be denied.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
         /// </remarks>
         public void Continue(bool allow) {
-            CfxApi.cfx_request_callback_cont(NativePtr, allow ? 1 : 0);
+            CfxApi.cfx_quota_callback_cont(NativePtr, allow ? 1 : 0);
         }
 
         /// <summary>
-        /// Cancel the url request.
+        /// Cancel the quota request.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
         /// </remarks>
         public void Cancel() {
-            CfxApi.cfx_request_callback_cancel(NativePtr);
+            CfxApi.cfx_quota_callback_cancel(NativePtr);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

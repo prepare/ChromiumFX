@@ -90,10 +90,8 @@ namespace Chromium.Remote {
         private CfrListValue(ulong proxyId) : base(proxyId) {}
 
         /// <summary>
-        /// Returns true (1) if this object is valid. This object may become invalid if
-        /// the underlying data is owned by another object (e.g. list or dictionary)
-        /// and that other object is then modified or destroyed. Do not call any other
-        /// functions if this function returns false (0).
+        /// Returns true (1) if this object is valid. Do not call any other functions
+        /// if this function returns false (0).
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -155,39 +153,6 @@ namespace Chromium.Remote {
                 call.Execute();
                 return call.__retval;
             }
-        }
-
-        /// <summary>
-        /// Returns true (1) if this object and |that| object have the same underlying
-        /// data. If true (1) modifications to this object will also affect |that|
-        /// object and vice-versa.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
-        /// </remarks>
-        public bool IsSame(CfrListValue that) {
-            var call = new CfxListValueIsSameRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
-            call.that = CfrObject.Unwrap(that);
-            call.Execute();
-            return call.__retval;
-        }
-
-        /// <summary>
-        /// Returns true (1) if this object and |that| object have an equivalent
-        /// underlying value but are not necessarily the same object.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
-        /// </remarks>
-        public bool IsEqual(CfrListValue that) {
-            var call = new CfxListValueIsEqualRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
-            call.that = CfrObject.Unwrap(that);
-            call.Execute();
-            return call.__retval;
         }
 
         /// <summary>
@@ -265,25 +230,6 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Returns the value at the specified index. For simple types the returned
-        /// value will copy existing data and modifications to the value will not
-        /// modify this object. For complex types (binary, dictionary and list) the
-        /// returned value will reference existing data and modifications to the value
-        /// will modify this object.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
-        /// </remarks>
-        public CfrValue GetValue(int index) {
-            var call = new CfxListValueGetValueRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
-            call.index = index;
-            call.Execute();
-            return CfrValue.Wrap(call.__retval);
-        }
-
-        /// <summary>
         /// Returns the value at the specified index as type bool.
         /// </summary>
         /// <remarks>
@@ -344,8 +290,7 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Returns the value at the specified index as type binary. The returned value
-        /// will reference existing data.
+        /// Returns the value at the specified index as type binary.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -360,9 +305,7 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Returns the value at the specified index as type dictionary. The returned
-        /// value will reference existing data and modifications to the value will
-        /// modify this object.
+        /// Returns the value at the specified index as type dictionary.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -377,9 +320,7 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Returns the value at the specified index as type list. The returned value
-        /// will reference existing data and modifications to the value will modify
-        /// this object.
+        /// Returns the value at the specified index as type list.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -391,27 +332,6 @@ namespace Chromium.Remote {
             call.index = index;
             call.Execute();
             return CfrListValue.Wrap(call.__retval);
-        }
-
-        /// <summary>
-        /// Sets the value at the specified index. Returns true (1) if the value was
-        /// set successfully. If |value| represents simple data then the underlying
-        /// data will be copied and modifications to |value| will not modify this
-        /// object. If |value| represents complex data (binary, dictionary or list)
-        /// then the underlying data will be referenced and modifications to |value|
-        /// will modify this object.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
-        /// </remarks>
-        public bool SetValue(int index, CfrValue value) {
-            var call = new CfxListValueSetValueRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
-            call.index = index;
-            call.value = CfrObject.Unwrap(value);
-            call.Execute();
-            return call.__retval;
         }
 
         /// <summary>
@@ -500,7 +420,8 @@ namespace Chromium.Remote {
 
         /// <summary>
         /// Sets the value at the specified index as type binary. Returns true (1) if
-        /// the value was set successfully. If |value| is currently owned by another
+        /// the value was set successfully. After calling this function the |value|
+        /// object will no longer be valid. If |value| is currently owned by another
         /// object then the value will be copied and the |value| reference will not
         /// change. Otherwise, ownership will be transferred to this object and the
         /// |value| reference will be invalidated.
@@ -520,7 +441,8 @@ namespace Chromium.Remote {
 
         /// <summary>
         /// Sets the value at the specified index as type dict. Returns true (1) if the
-        /// value was set successfully. If |value| is currently owned by another object
+        /// value was set successfully. After calling this function the |value| object
+        /// will no longer be valid. If |value| is currently owned by another object
         /// then the value will be copied and the |value| reference will not change.
         /// Otherwise, ownership will be transferred to this object and the |value|
         /// reference will be invalidated.
@@ -540,7 +462,8 @@ namespace Chromium.Remote {
 
         /// <summary>
         /// Sets the value at the specified index as type list. Returns true (1) if the
-        /// value was set successfully. If |value| is currently owned by another object
+        /// value was set successfully. After calling this function the |value| object
+        /// will no longer be valid. If |value| is currently owned by another object
         /// then the value will be copied and the |value| reference will not change.
         /// Otherwise, ownership will be transferred to this object and the |value|
         /// reference will be invalidated.
