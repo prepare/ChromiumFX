@@ -114,7 +114,7 @@ namespace Chromium.WebBrowser {
         internal static void RaiseOnRemoteContextCreated() {
             var handler = OnRemoteContextCreated;
             if(handler != null) {
-                handler(new OnRemoteContextCreatedEventArgs());
+                handler(EventArgs.Empty);
             }
         }
 
