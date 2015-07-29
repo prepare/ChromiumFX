@@ -36,56 +36,60 @@ using System.Runtime.InteropServices;
 
 namespace Chromium.Remote {
 
-    /// <summary>
-    /// Provides access to the remote process unmanaged memory.
-    /// </summary>
-    public class CfrMarshal {
+    public partial class CfrRuntime {
 
         /// <summary>
-        /// Call Marshal.AllocHGlobal in the target process.
+        /// Provides access to the remote process unmanaged memory.
+        /// A thread must be in a remote context in order to access these function.
         /// </summary>
-        public static RemotePtr AllocHGlobal(int cb) {
-            var call = new CfrMarshalAllocHGlobalRenderProcessCall();
-            call.cb = cb;
-            call.Execute();
-            return new RemotePtr(call.__retval);
-        }
+        public class Marshal {
 
-        /// <summary>
-        /// Call Marshal.FreeHGlobal in the target process.
-        /// </summary>
-        public static void FreeHGlobal(RemotePtr hglobal) {
-            var call = new CfrMarshalFreeHGlobalRenderProcessCall();
-            call.hglobal = hglobal.ptr;
-            call.Execute();
-        }
+            /// <summary>
+            /// Call Marshal.AllocHGlobal in the target process.
+            /// </summary>
+            public static RemotePtr AllocHGlobal(int cb) {
+                var call = new CfrMarshalAllocHGlobalRenderProcessCall();
+                call.cb = cb;
+                call.Execute();
+                return new RemotePtr(call.__retval);
+            }
 
-        /// <summary>
-        /// Call Marshal.Copy in the target process.
-        /// </summary>
-        public static void Copy(byte[] source, int startIndex, RemotePtr destination, int length) {
-            var call = new CfrMarshalCopyToNativeRenderProcessCall();
-            call.source = source;
-            call.startIndex = startIndex;
-            call.destination = destination.ptr;
-            call.length = length;
-            call.Execute();
-        }
+            /// <summary>
+            /// Call Marshal.FreeHGlobal in the target process.
+            /// </summary>
+            public static void FreeHGlobal(RemotePtr hglobal) {
+                var call = new CfrMarshalFreeHGlobalRenderProcessCall();
+                call.hglobal = hglobal.ptr;
+                call.Execute();
+            }
 
-        /// <summary>
-        /// Call Marshal.Copy in the target process.
-        /// </summary>
-        public static void Copy(RemotePtr source, byte[] destination, int startIndex, int length) {
-            var call = new CfrMarshalCopyToManagedRenderProcessCall();
-            call.source = source.ptr;
-            call.destination = destination;
-            call.startIndex = startIndex;
-            call.length = length;
-            call.Execute();
+            /// <summary>
+            /// Call Marshal.Copy in the target process.
+            /// </summary>
+            public static void Copy(byte[] source, int startIndex, RemotePtr destination, int length) {
+                var call = new CfrMarshalCopyToNativeRenderProcessCall();
+                call.source = source;
+                call.startIndex = startIndex;
+                call.destination = destination.ptr;
+                call.length = length;
+                call.Execute();
+            }
 
+            /// <summary>
+            /// Call Marshal.Copy in the target process.
+            /// </summary>
+            public static void Copy(RemotePtr source, byte[] destination, int startIndex, int length) {
+                var call = new CfrMarshalCopyToManagedRenderProcessCall();
+                call.source = source.ptr;
+                call.destination = destination;
+                call.startIndex = startIndex;
+                call.length = length;
+                call.Execute();
+
+            }
         }
     }
-
+    
     internal class CfrMarshalAllocHGlobalRenderProcessCall : RenderProcessCall {
 
         internal int cb;
@@ -192,3 +196,4 @@ namespace Chromium.Remote {
     }
 
 }
+
