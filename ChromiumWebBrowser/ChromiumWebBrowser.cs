@@ -489,16 +489,13 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public Object RenderThreadInvoke(Delegate method, params Object[] args) {
             object retval = null;
-            int remoteThreadId = CfxRemoteProcessContext.RemoteThreadId;
-            var remoteContext = CfxRemoteProcessContext.CurrentContext;
+            var remoteContext = CfxRemoteThreadContext.CurrentContext;
             Invoke((MethodInvoker)(() => {
-                CfxRemoteProcessContext.SetThreadAffinity(remoteThreadId);
                 if(remoteContext != null) remoteContext.Enter();
                 try {
                     retval = method.DynamicInvoke(args);
                 } finally {
                     if(remoteContext != null) remoteContext.Exit();
-                    CfxRemoteProcessContext.SetThreadAffinity(0);
                 }
             }));
             return retval;
@@ -514,16 +511,13 @@ namespace Chromium.WebBrowser {
         /// 3) The invoked code needs to call into the render process.
         /// </summary>
         public void RenderThreadInvoke(MethodInvoker method) {
-            int remoteThreadId = CfxRemoteProcessContext.RemoteThreadId;
-            var remoteContext = CfxRemoteProcessContext.CurrentContext;
+            var remoteContext = CfxRemoteThreadContext.CurrentContext;
             Invoke((MethodInvoker)(() => {
-                CfxRemoteProcessContext.SetThreadAffinity(remoteThreadId);
                 if(remoteContext != null) remoteContext.Enter();
                 try {
                     method.Invoke();
                 } finally {
                     if(remoteContext != null) remoteContext.Exit();
-                    CfxRemoteProcessContext.SetThreadAffinity(0);
                 }
             }));
         }

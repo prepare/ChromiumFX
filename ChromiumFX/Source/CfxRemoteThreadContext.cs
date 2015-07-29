@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Chromium.Source {
+namespace Chromium {
+    
     /// <summary>
     /// Represents the context of a remote thread in the render process. In the scope of a 
     /// remote callback event, the executing thread is always in the context of the
@@ -10,6 +11,15 @@ namespace Chromium.Source {
     /// correct marshaling of remote calls within the scope of an invoked method.
     /// </summary>
     public class CfxRemoteThreadContext {
+
+        internal static int currentThreadId {
+            get {
+                if(IsInContext)
+                    return CurrentContext.ThreadId;
+                else
+                    return 0;
+            }
+        }
 
         /// <summary>
         /// Represents the remote context of the render process this thread context belongs to.
@@ -84,7 +94,7 @@ namespace Chromium.Source {
             }
         }
 
-        internal static void ResetContextStackTo(int count) {
+        internal static void resetStack(int count) {
             if(contextStack == null) return;
             while(contextStack.Count > count)
                 contextStack.Pop();
