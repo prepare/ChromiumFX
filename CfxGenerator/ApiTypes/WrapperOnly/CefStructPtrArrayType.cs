@@ -49,7 +49,7 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
     }
 
     public override string ProxySymbol {
-        get { return "ulong[]"; }
+        get { return "IntPtr[]"; }
     }
 
     public override string RemoteSymbol {
@@ -160,7 +160,7 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
 
     public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
         b.BeginIf("{0} != null", var);
-        b.AppendLine("call.{0} = new ulong[{0}.Length];", var);
+        b.AppendLine("call.{0} = new IntPtr[{0}.Length];", var);
         b.BeginBlock("for(int i = 0; i < {0}.Length; ++i)", var);
         b.AppendLine("call.{0}[i] = {1};", var, StructPtr.RemoteUnwrapExpression(var + "[i]"));
         b.EndBlock();

@@ -42,6 +42,7 @@ namespace Chromium.Remote {
 
         internal override System.IO.Stream CreateServerPipeOutputStream(string name) {
             var s = new NamedPipeServerStream(name, PipeDirection.Out, 1);
+            //return s;
             return new PipeWriteBufferStream(s);
         }
 
@@ -51,6 +52,7 @@ namespace Chromium.Remote {
 
         internal override System.IO.Stream CreateClientPipeOutputStream(string name) {
             var s = new NamedPipeClientStream(".", name, PipeDirection.Out);
+            //return s;
             return new PipeWriteBufferStream(s);
         }
 

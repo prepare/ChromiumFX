@@ -40,23 +40,15 @@ using Chromium.Remote;
 namespace Chromium {
     internal class CfxArray {
 
-        internal static IntPtr[] GetNativePtrs<T>(T[] values) where T : CfxBase {
+        internal static IntPtr[] GetProxyIds<T>(T[] values) where T : CfxBase {
             if(values == null) return null;
             var retval = new IntPtr[values.Length];
-            for(int i = 0; i < values.Length; ++i)
-                retval[i] = CfxBase.Unwrap(values[i]);
-            return retval;
-        }
-
-        internal static ulong[] GetProxyIds<T>(T[] values) where T : CfxBase {
-            if(values == null) return null;
-            var retval = new ulong[values.Length];
             for(int i = 0; i < values.Length; ++i)
                 retval[i] = RemoteProxy.Wrap(values[i]);
             return retval;
         }
 
-        internal static T[] GetCfrObjects<T>(ulong[] proxyIds, Func<ulong, T> wrapFunction) where T : CfrObject {
+        internal static T[] GetCfrObjects<T>(IntPtr[] proxyIds, Func<IntPtr, T> wrapFunction) where T : CfrObject {
             if(proxyIds == null) return null;
             var retval = new T[proxyIds.Length];
             for(int i = 0; i < proxyIds.Length; ++i)

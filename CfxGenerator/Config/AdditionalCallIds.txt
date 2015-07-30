@@ -1,6 +1,5 @@
 ﻿ExecuteRemoteProcessRemoteCall
 ReleaseProxyRemoteCall
-GetRemotePtrRemoteCall
 
 CfrMarshalAllocHGlobalRenderProcessCall
 CfrMarshalFreeHGlobalRenderProcessCall

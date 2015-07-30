@@ -41,7 +41,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxV8StackTraceGetCurrentRenderProcessCall) {}
 
         internal int frameLimit;
-        internal ulong __retval;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(frameLimit);
@@ -69,7 +69,7 @@ namespace Chromium.Remote {
         internal CfxV8StackTraceIsValidRenderProcessCall()
             : base(RemoteCallId.CfxV8StackTraceIsValidRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -99,7 +99,7 @@ namespace Chromium.Remote {
         internal CfxV8StackTraceGetFrameCountRenderProcessCall()
             : base(RemoteCallId.CfxV8StackTraceGetFrameCountRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -129,9 +129,9 @@ namespace Chromium.Remote {
         internal CfxV8StackTraceGetFrameRenderProcessCall()
             : base(RemoteCallId.CfxV8StackTraceGetFrameRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int index;
-        internal ulong __retval;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);

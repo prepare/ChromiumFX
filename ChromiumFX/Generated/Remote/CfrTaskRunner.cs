@@ -51,8 +51,8 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrTaskRunner Wrap(ulong proxyId) {
-            if(proxyId == 0) return null;
+        internal static CfrTaskRunner Wrap(IntPtr proxyId) {
+            if(proxyId == IntPtr.Zero) return null;
             lock(weakCache) {
                 var cfrObj = (CfrTaskRunner)weakCache.Get(proxyId);
                 if(cfrObj == null) {
@@ -125,7 +125,7 @@ namespace Chromium.Remote {
         }
 
 
-        private CfrTaskRunner(ulong proxyId) : base(proxyId) {}
+        private CfrTaskRunner(IntPtr proxyId) : base(proxyId) {}
 
         /// <summary>
         /// Returns true (1) if this object is pointing to the same task runner as
@@ -207,7 +207,7 @@ namespace Chromium.Remote {
             return call.__retval;
         }
 
-        internal override void OnDispose(ulong proxyId) {
+        internal override void OnDispose(IntPtr proxyId) {
             weakCache.Remove(proxyId);
         }
     }

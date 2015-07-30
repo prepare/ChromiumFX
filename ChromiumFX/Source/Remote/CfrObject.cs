@@ -39,22 +39,22 @@ namespace Chromium.Remote {
     /// </summary>
     public abstract class CfrObject : IDisposable {
 
-        internal static ulong Unwrap(CfrObject remoteObject) {
-            return remoteObject == null ? 0 : remoteObject.proxyId;
+        internal static IntPtr Unwrap(CfrObject remoteObject) {
+            return remoteObject == null ? IntPtr.Zero : remoteObject.proxyId;
         }
 
         internal readonly CfxRemoteProcessContext remoteContext;
-        internal ulong m_proxyId;
+        internal IntPtr m_proxyId;
 
 
-        internal CfrObject(ulong proxyId) {
+        internal CfrObject(IntPtr proxyId) {
             this.m_proxyId = proxyId;
             this.remoteContext = CfxRemoteProcessContext.CurrentContext;
         }
-        
-        internal ulong proxyId {
+
+        internal IntPtr proxyId {
             get {
-                if(m_proxyId == 0) {
+                if(m_proxyId == IntPtr.Zero) {
                     throw new ObjectDisposedException(this.GetType().Name);
                 } else {
                     return m_proxyId;
@@ -74,18 +74,15 @@ namespace Chromium.Remote {
         /// </summary>
         public RemotePtr RemotePtr {
             get {
-                var call = new GetRemotePtrRemoteCall();
-                call.proxyId = proxyId;
-                call.Execute();
-                return new RemotePtr(call.retval);
+                return new RemotePtr(proxyId);
             }
         }
 
 
-        internal abstract void OnDispose(ulong proxyId);
+        internal abstract void OnDispose(IntPtr proxyId);
 
         private void Release() {
-            if(m_proxyId != 0) {
+            if(m_proxyId != IntPtr.Zero) {
                 try {
                     OnDispose(m_proxyId);
                     if(remoteContext.connection.connectionLostException == null) {
@@ -95,7 +92,7 @@ namespace Chromium.Remote {
                     }
                 } catch {
                 } finally {
-                    m_proxyId = 0;
+                    m_proxyId = IntPtr.Zero;
                 }
             }
         }
@@ -107,19 +104,6 @@ namespace Chromium.Remote {
 
         ~CfrObject() {
             Release();
-        }
-    }
-
-    internal class GetRemotePtrRemoteCall : RenderProcessCall {
-        internal GetRemotePtrRemoteCall() : base(RemoteCallId.GetRemotePtrRemoteCall) { }
-        internal ulong proxyId;
-        internal IntPtr retval;
-        protected override void WriteArgs(StreamHandler h) { h.Write(proxyId); }
-        protected override void ReadArgs(StreamHandler h) { h.Read(out proxyId); }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var obj = RemoteProxy.Unwrap(proxyId);
-            retval = obj.NativePtr;
         }
     }
 }

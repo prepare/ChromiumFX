@@ -50,8 +50,8 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrV8Accessor Wrap(ulong proxyId) {
-            if(proxyId == 0) return null;
+        internal static CfrV8Accessor Wrap(IntPtr proxyId) {
+            if(proxyId == IntPtr.Zero) return null;
             lock(weakCache) {
                 var cfrObj = (CfrV8Accessor)weakCache.Get(proxyId);
                 if(cfrObj == null) {
@@ -63,7 +63,7 @@ namespace Chromium.Remote {
         }
 
 
-        internal static ulong CreateRemote() {
+        internal static IntPtr CreateRemote() {
             var call = new CfxV8AccessorCtorRenderProcessCall();
             call.Execute();
             return call.__retval;
@@ -84,7 +84,7 @@ namespace Chromium.Remote {
         }
 
 
-        private CfrV8Accessor(ulong proxyId) : base(proxyId) {}
+        private CfrV8Accessor(IntPtr proxyId) : base(proxyId) {}
         [Obsolete("new CfrV8Accessor(CfrRuntime) is deprecated, please use new CfrV8Accessor() without CfrRuntime instead.")]
         public CfrV8Accessor(CfrRuntime remoteRuntime) : base(CreateRemote()) {
             weakCache.Add(this.proxyId, this);
@@ -159,7 +159,7 @@ namespace Chromium.Remote {
         CfrV8AccessorSetEventHandler m_Set;
 
 
-        internal override void OnDispose(ulong proxyId) {
+        internal override void OnDispose(IntPtr proxyId) {
             weakCache.Remove(proxyId);
         }
     }

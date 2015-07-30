@@ -40,13 +40,7 @@ namespace Chromium.Remote {
         internal CfxPostDataElementCreateRenderProcessCall()
             : base(RemoteCallId.CfxPostDataElementCreateRenderProcessCall) {}
 
-        internal ulong __retval;
-
-        protected override void WriteArgs(StreamHandler h) {
-        }
-
-        protected override void ReadArgs(StreamHandler h) {
-        }
+        internal IntPtr __retval;
 
         protected override void WriteReturn(StreamHandler h) {
             h.Write(__retval);
@@ -66,7 +60,7 @@ namespace Chromium.Remote {
         internal CfxPostDataElementIsReadOnlyRenderProcessCall()
             : base(RemoteCallId.CfxPostDataElementIsReadOnlyRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -96,7 +90,7 @@ namespace Chromium.Remote {
         internal CfxPostDataElementSetToEmptyRenderProcessCall()
             : base(RemoteCallId.CfxPostDataElementSetToEmptyRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -104,12 +98,6 @@ namespace Chromium.Remote {
 
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out self);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -123,7 +111,7 @@ namespace Chromium.Remote {
         internal CfxPostDataElementSetToFileRenderProcessCall()
             : base(RemoteCallId.CfxPostDataElementSetToFileRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string fileName;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -134,12 +122,6 @@ namespace Chromium.Remote {
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out self);
             h.Read(out fileName);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -153,7 +135,7 @@ namespace Chromium.Remote {
         internal CfxPostDataElementSetToBytesRenderProcessCall()
             : base(RemoteCallId.CfxPostDataElementSetToBytesRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int size;
         internal IntPtr bytes;
 
@@ -169,12 +151,6 @@ namespace Chromium.Remote {
             h.Read(out bytes);
         }
 
-        protected override void WriteReturn(StreamHandler h) {
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
-        }
-
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxPostDataElement)RemoteProxy.Unwrap(self);
             self_local.SetToBytes(size, bytes);
@@ -186,7 +162,7 @@ namespace Chromium.Remote {
         internal CfxPostDataElementGetTypeRenderProcessCall()
             : base(RemoteCallId.CfxPostDataElementGetTypeRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -216,7 +192,7 @@ namespace Chromium.Remote {
         internal CfxPostDataElementGetFileRenderProcessCall()
             : base(RemoteCallId.CfxPostDataElementGetFileRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -246,7 +222,7 @@ namespace Chromium.Remote {
         internal CfxPostDataElementGetBytesCountRenderProcessCall()
             : base(RemoteCallId.CfxPostDataElementGetBytesCountRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -276,7 +252,7 @@ namespace Chromium.Remote {
         internal CfxPostDataElementGetBytesRenderProcessCall()
             : base(RemoteCallId.CfxPostDataElementGetBytesRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int size;
         internal IntPtr bytes;
         internal int __retval;

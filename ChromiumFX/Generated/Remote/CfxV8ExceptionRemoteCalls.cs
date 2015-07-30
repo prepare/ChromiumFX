@@ -40,7 +40,7 @@ namespace Chromium.Remote {
         internal CfxV8ExceptionGetMessageRenderProcessCall()
             : base(RemoteCallId.CfxV8ExceptionGetMessageRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -70,7 +70,7 @@ namespace Chromium.Remote {
         internal CfxV8ExceptionGetSourceLineRenderProcessCall()
             : base(RemoteCallId.CfxV8ExceptionGetSourceLineRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -100,7 +100,7 @@ namespace Chromium.Remote {
         internal CfxV8ExceptionGetScriptResourceNameRenderProcessCall()
             : base(RemoteCallId.CfxV8ExceptionGetScriptResourceNameRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -130,7 +130,7 @@ namespace Chromium.Remote {
         internal CfxV8ExceptionGetLineNumberRenderProcessCall()
             : base(RemoteCallId.CfxV8ExceptionGetLineNumberRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -160,7 +160,7 @@ namespace Chromium.Remote {
         internal CfxV8ExceptionGetStartPositionRenderProcessCall()
             : base(RemoteCallId.CfxV8ExceptionGetStartPositionRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -190,7 +190,7 @@ namespace Chromium.Remote {
         internal CfxV8ExceptionGetEndPositionRenderProcessCall()
             : base(RemoteCallId.CfxV8ExceptionGetEndPositionRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -220,7 +220,7 @@ namespace Chromium.Remote {
         internal CfxV8ExceptionGetStartColumnRenderProcessCall()
             : base(RemoteCallId.CfxV8ExceptionGetStartColumnRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -250,7 +250,7 @@ namespace Chromium.Remote {
         internal CfxV8ExceptionGetEndColumnRenderProcessCall()
             : base(RemoteCallId.CfxV8ExceptionGetEndColumnRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {

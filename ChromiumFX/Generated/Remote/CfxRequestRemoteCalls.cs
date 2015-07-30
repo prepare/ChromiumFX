@@ -40,13 +40,7 @@ namespace Chromium.Remote {
         internal CfxRequestCreateRenderProcessCall()
             : base(RemoteCallId.CfxRequestCreateRenderProcessCall) {}
 
-        internal ulong __retval;
-
-        protected override void WriteArgs(StreamHandler h) {
-        }
-
-        protected override void ReadArgs(StreamHandler h) {
-        }
+        internal IntPtr __retval;
 
         protected override void WriteReturn(StreamHandler h) {
             h.Write(__retval);
@@ -66,7 +60,7 @@ namespace Chromium.Remote {
         internal CfxRequestIsReadOnlyRenderProcessCall()
             : base(RemoteCallId.CfxRequestIsReadOnlyRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -96,7 +90,7 @@ namespace Chromium.Remote {
         internal CfxRequestGetUrlRenderProcessCall()
             : base(RemoteCallId.CfxRequestGetUrlRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -126,7 +120,7 @@ namespace Chromium.Remote {
         internal CfxRequestSetUrlRenderProcessCall()
             : base(RemoteCallId.CfxRequestSetUrlRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string value;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -137,12 +131,6 @@ namespace Chromium.Remote {
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out self);
             h.Read(out value);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -156,7 +144,7 @@ namespace Chromium.Remote {
         internal CfxRequestGetMethodRenderProcessCall()
             : base(RemoteCallId.CfxRequestGetMethodRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -186,7 +174,7 @@ namespace Chromium.Remote {
         internal CfxRequestSetMethodRenderProcessCall()
             : base(RemoteCallId.CfxRequestSetMethodRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string value;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -197,12 +185,6 @@ namespace Chromium.Remote {
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out self);
             h.Read(out value);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -216,8 +198,8 @@ namespace Chromium.Remote {
         internal CfxRequestGetPostDataRenderProcessCall()
             : base(RemoteCallId.CfxRequestGetPostDataRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong __retval;
+        internal IntPtr self;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -246,8 +228,8 @@ namespace Chromium.Remote {
         internal CfxRequestSetPostDataRenderProcessCall()
             : base(RemoteCallId.CfxRequestSetPostDataRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong value;
+        internal IntPtr self;
+        internal IntPtr value;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -257,12 +239,6 @@ namespace Chromium.Remote {
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out self);
             h.Read(out value);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -276,7 +252,7 @@ namespace Chromium.Remote {
         internal CfxRequestGetHeaderMapRenderProcessCall()
             : base(RemoteCallId.CfxRequestGetHeaderMapRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal System.Collections.Generic.List<string[]> __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -306,7 +282,7 @@ namespace Chromium.Remote {
         internal CfxRequestSetHeaderMapRenderProcessCall()
             : base(RemoteCallId.CfxRequestSetHeaderMapRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal System.Collections.Generic.List<string[]> headerMap;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -317,12 +293,6 @@ namespace Chromium.Remote {
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out self);
             h.Read(out headerMap);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -336,10 +306,10 @@ namespace Chromium.Remote {
         internal CfxRequestSetRenderProcessCall()
             : base(RemoteCallId.CfxRequestSetRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string url;
         internal string method;
-        internal ulong postData;
+        internal IntPtr postData;
         internal System.Collections.Generic.List<string[]> headerMap;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -358,12 +328,6 @@ namespace Chromium.Remote {
             h.Read(out headerMap);
         }
 
-        protected override void WriteReturn(StreamHandler h) {
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
-        }
-
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxRequest)RemoteProxy.Unwrap(self);
             self_local.Set(url, method, (CfxPostData)RemoteProxy.Unwrap(postData), headerMap);
@@ -375,7 +339,7 @@ namespace Chromium.Remote {
         internal CfxRequestGetFlagsRenderProcessCall()
             : base(RemoteCallId.CfxRequestGetFlagsRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -405,7 +369,7 @@ namespace Chromium.Remote {
         internal CfxRequestSetFlagsRenderProcessCall()
             : base(RemoteCallId.CfxRequestSetFlagsRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int value;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -416,12 +380,6 @@ namespace Chromium.Remote {
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out self);
             h.Read(out value);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -435,7 +393,7 @@ namespace Chromium.Remote {
         internal CfxRequestGetFirstPartyForCookiesRenderProcessCall()
             : base(RemoteCallId.CfxRequestGetFirstPartyForCookiesRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -465,7 +423,7 @@ namespace Chromium.Remote {
         internal CfxRequestSetFirstPartyForCookiesRenderProcessCall()
             : base(RemoteCallId.CfxRequestSetFirstPartyForCookiesRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string value;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -476,12 +434,6 @@ namespace Chromium.Remote {
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out self);
             h.Read(out value);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -495,7 +447,7 @@ namespace Chromium.Remote {
         internal CfxRequestGetResourceTypeRenderProcessCall()
             : base(RemoteCallId.CfxRequestGetResourceTypeRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -525,7 +477,7 @@ namespace Chromium.Remote {
         internal CfxRequestGetTransitionTypeRenderProcessCall()
             : base(RemoteCallId.CfxRequestGetTransitionTypeRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -555,7 +507,7 @@ namespace Chromium.Remote {
         internal CfxRequestGetIdentifierRenderProcessCall()
             : base(RemoteCallId.CfxRequestGetIdentifierRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal ulong __retval;
 
         protected override void WriteArgs(StreamHandler h) {

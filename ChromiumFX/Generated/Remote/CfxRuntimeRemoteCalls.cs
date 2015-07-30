@@ -69,7 +69,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxRuntimePostDelayedTaskRenderProcessCall) {}
 
         internal int threadId;
-        internal ulong task;
+        internal IntPtr task;
         internal long delayMs;
         internal bool __retval;
 
@@ -104,7 +104,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxRuntimePostTaskRenderProcessCall) {}
 
         internal int threadId;
-        internal ulong task;
+        internal IntPtr task;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -137,7 +137,7 @@ namespace Chromium.Remote {
 
         internal string extensionName;
         internal string javascriptCode;
-        internal ulong handler;
+        internal IntPtr handler;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {

@@ -42,7 +42,7 @@ namespace Chromium.Remote {
         internal CfxV8HandlerCtorRenderProcessCall()
             : base(RemoteCallId.CfxV8HandlerCtorRenderProcessCall) {}
 
-        internal ulong __retval;
+        internal IntPtr __retval;
         protected override void WriteReturn(StreamHandler h) { h.Write(__retval); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out __retval); }
 
@@ -75,7 +75,7 @@ namespace Chromium.Remote {
         internal CfxV8HandlerExecuteActivateRenderProcessCall()
             : base(RemoteCallId.CfxV8HandlerExecuteActivateRenderProcessCall) {}
 
-        internal ulong sender;
+        internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
@@ -90,7 +90,7 @@ namespace Chromium.Remote {
         internal CfxV8HandlerExecuteDeactivateRenderProcessCall()
             : base(RemoteCallId.CfxV8HandlerExecuteDeactivateRenderProcessCall) {}
 
-        internal ulong sender;
+        internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
@@ -133,7 +133,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxV8HandlerExecuteGetObjectRenderProcessCall) {}
 
         internal ulong eventArgsId;
-        internal ulong value;
+        internal IntPtr value;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(eventArgsId);
@@ -160,7 +160,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxV8HandlerExecuteGetArgumentsRenderProcessCall) {}
 
         internal ulong eventArgsId;
-        internal ulong[] value;
+        internal IntPtr[] value;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(eventArgsId);
@@ -237,7 +237,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxV8HandlerExecuteSetReturnValueRenderProcessCall) {}
 
         internal ulong eventArgsId;
-        internal ulong value;
+        internal IntPtr value;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(eventArgsId);

@@ -40,13 +40,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueCreateRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueCreateRenderProcessCall) {}
 
-        internal ulong __retval;
-
-        protected override void WriteArgs(StreamHandler h) {
-        }
-
-        protected override void ReadArgs(StreamHandler h) {
-        }
+        internal IntPtr __retval;
 
         protected override void WriteReturn(StreamHandler h) {
             h.Write(__retval);
@@ -66,7 +60,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueIsValidRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueIsValidRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -96,7 +90,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueIsOwnedRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueIsOwnedRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -126,7 +120,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueIsReadOnlyRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueIsReadOnlyRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -156,8 +150,8 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueIsSameRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueIsSameRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong that;
+        internal IntPtr self;
+        internal IntPtr that;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -189,8 +183,8 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueIsEqualRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueIsEqualRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong that;
+        internal IntPtr self;
+        internal IntPtr that;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -222,9 +216,9 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueCopyRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueCopyRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool excludeEmptyChildren;
-        internal ulong __retval;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -255,7 +249,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueGetSizeRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueGetSizeRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -285,7 +279,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueClearRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueClearRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -315,7 +309,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueHasKeyRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueHasKeyRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
         internal bool __retval;
 
@@ -348,7 +342,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueGetKeysRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueGetKeysRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal System.Collections.Generic.List<string> keys;
         internal bool __retval;
 
@@ -381,7 +375,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueRemoveRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueRemoveRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
         internal bool __retval;
 
@@ -414,7 +408,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueGetTypeRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueGetTypeRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
         internal int __retval;
 
@@ -447,9 +441,9 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueGetValueRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueGetValueRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
-        internal ulong __retval;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -480,7 +474,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueGetBoolRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueGetBoolRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
         internal bool __retval;
 
@@ -513,7 +507,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueGetIntRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueGetIntRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
         internal int __retval;
 
@@ -546,7 +540,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueGetDoubleRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueGetDoubleRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
         internal double __retval;
 
@@ -579,7 +573,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueGetStringRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueGetStringRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
         internal string __retval;
 
@@ -612,9 +606,9 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueGetBinaryRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueGetBinaryRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
-        internal ulong __retval;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -645,9 +639,9 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueGetDictionaryRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueGetDictionaryRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
-        internal ulong __retval;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -678,9 +672,9 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueGetListRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueGetListRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
-        internal ulong __retval;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -711,9 +705,9 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueSetValueRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueSetValueRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
-        internal ulong value;
+        internal IntPtr value;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -747,7 +741,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueSetNullRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueSetNullRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
         internal bool __retval;
 
@@ -780,7 +774,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueSetBoolRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueSetBoolRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
         internal bool value;
         internal bool __retval;
@@ -816,7 +810,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueSetIntRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueSetIntRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
         internal int value;
         internal bool __retval;
@@ -852,7 +846,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueSetDoubleRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueSetDoubleRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
         internal double value;
         internal bool __retval;
@@ -888,7 +882,7 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueSetStringRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueSetStringRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
         internal string value;
         internal bool __retval;
@@ -924,9 +918,9 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueSetBinaryRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueSetBinaryRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
-        internal ulong value;
+        internal IntPtr value;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -960,9 +954,9 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueSetDictionaryRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueSetDictionaryRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
-        internal ulong value;
+        internal IntPtr value;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -996,9 +990,9 @@ namespace Chromium.Remote {
         internal CfxDictionaryValueSetListRenderProcessCall()
             : base(RemoteCallId.CfxDictionaryValueSetListRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string key;
-        internal ulong value;
+        internal IntPtr value;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {

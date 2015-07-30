@@ -40,7 +40,6 @@ namespace Chromium {
     public abstract class CfxObject : IDisposable {
 
         private IntPtr m_nativePtr;
-        internal ulong remoteId;
                 
         internal CfxObject() {}
 

@@ -423,48 +423,55 @@ public class Signature {
         }
 
         b.AppendLine();
-
-        b.BeginBlock("protected override void WriteArgs(StreamHandler h)");
-        foreach(var arg in ManagedArguments) {
-            if(arg.ArgumentType.IsIn) {
-                arg.EmitRemoteWrite(b);
+        if(ManagedArguments.Length > 0) {
+            b.BeginBlock("protected override void WriteArgs(StreamHandler h)");
+            foreach(var arg in ManagedArguments) {
+                if(arg.ArgumentType.IsIn) {
+                    arg.EmitRemoteWrite(b);
+                }
             }
-        }
-        b.EndBlock();
-        b.AppendLine();
+            b.EndBlock();
+            b.AppendLine();
 
-        b.BeginBlock("protected override void ReadArgs(StreamHandler h)");
-        foreach(var arg in ManagedArguments) {
-            if(arg.ArgumentType.IsIn) {
-                arg.EmitRemoteRead(b);
+            b.BeginBlock("protected override void ReadArgs(StreamHandler h)");
+            foreach(var arg in ManagedArguments) {
+                if(arg.ArgumentType.IsIn) {
+                    arg.EmitRemoteRead(b);
+                }
             }
+            b.EndBlock();
+            b.AppendLine();
         }
-        b.EndBlock();
-        b.AppendLine();
 
-        b.BeginBlock("protected override void WriteReturn(StreamHandler h)");
-        foreach(var arg in ManagedArguments) {
-            if(arg.ArgumentType.IsOut) {
-                arg.EmitRemoteWrite(b);
-            }
-        }
-        if(!PublicReturnType.IsVoid) {
-            b.AppendLine("h.Write(__retval);", PublicReturnType.PublicSymbol);
-        }
-        b.EndBlock();
-        b.AppendLine();
-
-        b.BeginBlock("protected override void ReadReturn(StreamHandler h)");
+        var outArgs = new List<Argument>();
         foreach(var arg in ManagedArguments) {
             if(arg.ArgumentType.IsOut) {
-                arg.EmitRemoteRead(b);
+                outArgs.Add(arg);
             }
         }
-        if(!PublicReturnType.IsVoid) {
-            b.AppendLine("h.Read(out __retval);", PublicReturnType.PublicSymbol);
+
+        if(outArgs.Count > 0 || !PublicReturnType.IsVoid) {
+
+            b.BeginBlock("protected override void WriteReturn(StreamHandler h)");
+            foreach(var arg in outArgs) {
+                arg.EmitRemoteWrite(b);
+            }
+            if(!PublicReturnType.IsVoid) {
+                b.AppendLine("h.Write(__retval);", PublicReturnType.PublicSymbol);
+            }
+            b.EndBlock();
+            b.AppendLine();
+
+            b.BeginBlock("protected override void ReadReturn(StreamHandler h)");
+            foreach(var arg in outArgs) {
+                arg.EmitRemoteRead(b);
+            }
+            if(!PublicReturnType.IsVoid) {
+                b.AppendLine("h.Read(out __retval);", PublicReturnType.PublicSymbol);
+            }
+            b.EndBlock();
+            b.AppendLine();
         }
-        b.EndBlock();
-        b.AppendLine();
 
         b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
         EmitExecuteInTargetProcess(b);

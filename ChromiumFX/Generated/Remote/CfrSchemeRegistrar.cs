@@ -46,8 +46,8 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrSchemeRegistrar Wrap(ulong proxyId) {
-            if(proxyId == 0) return null;
+        internal static CfrSchemeRegistrar Wrap(IntPtr proxyId) {
+            if(proxyId == IntPtr.Zero) return null;
             lock(weakCache) {
                 var cfrObj = (CfrSchemeRegistrar)weakCache.Get(proxyId);
                 if(cfrObj == null) {
@@ -60,7 +60,7 @@ namespace Chromium.Remote {
 
 
 
-        private CfrSchemeRegistrar(ulong proxyId) : base(proxyId) {}
+        private CfrSchemeRegistrar(IntPtr proxyId) : base(proxyId) {}
 
         /// <summary>
         /// Register a custom scheme. This function should not be called for the built-
@@ -117,7 +117,7 @@ namespace Chromium.Remote {
             return call.__retval;
         }
 
-        internal override void OnDispose(ulong proxyId) {
+        internal override void OnDispose(IntPtr proxyId) {
             weakCache.Remove(proxyId);
         }
     }

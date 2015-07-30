@@ -554,7 +554,6 @@ namespace Chromium.Remote {
             () => { return new CfxValueSetListRenderProcessCall(); },
             () => { return new ExecuteRemoteProcessRemoteCall(); },
             () => { return new ReleaseProxyRemoteCall(); },
-            () => { return new GetRemotePtrRemoteCall(); },
             () => { return new CfrMarshalAllocHGlobalRenderProcessCall(); },
             () => { return new CfrMarshalFreeHGlobalRenderProcessCall(); },
             () => { return new CfrMarshalCopyToNativeRenderProcessCall(); },

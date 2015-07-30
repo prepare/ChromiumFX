@@ -40,13 +40,7 @@ namespace Chromium.Remote {
         internal CfxTaskRunnerGetForCurrentThreadRenderProcessCall()
             : base(RemoteCallId.CfxTaskRunnerGetForCurrentThreadRenderProcessCall) {}
 
-        internal ulong __retval;
-
-        protected override void WriteArgs(StreamHandler h) {
-        }
-
-        protected override void ReadArgs(StreamHandler h) {
-        }
+        internal IntPtr __retval;
 
         protected override void WriteReturn(StreamHandler h) {
             h.Write(__retval);
@@ -67,7 +61,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxTaskRunnerGetForThreadRenderProcessCall) {}
 
         internal int threadId;
-        internal ulong __retval;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(threadId);
@@ -95,8 +89,8 @@ namespace Chromium.Remote {
         internal CfxTaskRunnerIsSameRenderProcessCall()
             : base(RemoteCallId.CfxTaskRunnerIsSameRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong that;
+        internal IntPtr self;
+        internal IntPtr that;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -128,7 +122,7 @@ namespace Chromium.Remote {
         internal CfxTaskRunnerBelongsToCurrentThreadRenderProcessCall()
             : base(RemoteCallId.CfxTaskRunnerBelongsToCurrentThreadRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -158,7 +152,7 @@ namespace Chromium.Remote {
         internal CfxTaskRunnerBelongsToThreadRenderProcessCall()
             : base(RemoteCallId.CfxTaskRunnerBelongsToThreadRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int threadId;
         internal bool __retval;
 
@@ -191,8 +185,8 @@ namespace Chromium.Remote {
         internal CfxTaskRunnerPostTaskRenderProcessCall()
             : base(RemoteCallId.CfxTaskRunnerPostTaskRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong task;
+        internal IntPtr self;
+        internal IntPtr task;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -224,8 +218,8 @@ namespace Chromium.Remote {
         internal CfxTaskRunnerPostDelayedTaskRenderProcessCall()
             : base(RemoteCallId.CfxTaskRunnerPostDelayedTaskRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong task;
+        internal IntPtr self;
+        internal IntPtr task;
         internal long delayMs;
         internal bool __retval;
 

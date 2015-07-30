@@ -85,6 +85,9 @@ namespace Chromium.Remote {
             writer = new Thread(WriteLoopEntry);
             reader = new Thread(ReadLoopEntry);
 
+            writer.Name = "cfx_rpc_writer";
+            reader.Name = "cfx_rpc_reader";
+
             writer.IsBackground = true;
             reader.IsBackground = true;
             

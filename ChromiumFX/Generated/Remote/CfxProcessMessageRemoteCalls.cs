@@ -41,7 +41,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxProcessMessageCreateRenderProcessCall) {}
 
         internal string name;
-        internal ulong __retval;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(name);
@@ -69,7 +69,7 @@ namespace Chromium.Remote {
         internal CfxProcessMessageIsValidRenderProcessCall()
             : base(RemoteCallId.CfxProcessMessageIsValidRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -99,7 +99,7 @@ namespace Chromium.Remote {
         internal CfxProcessMessageIsReadOnlyRenderProcessCall()
             : base(RemoteCallId.CfxProcessMessageIsReadOnlyRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -129,8 +129,8 @@ namespace Chromium.Remote {
         internal CfxProcessMessageCopyRenderProcessCall()
             : base(RemoteCallId.CfxProcessMessageCopyRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong __retval;
+        internal IntPtr self;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -159,7 +159,7 @@ namespace Chromium.Remote {
         internal CfxProcessMessageGetNameRenderProcessCall()
             : base(RemoteCallId.CfxProcessMessageGetNameRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -189,8 +189,8 @@ namespace Chromium.Remote {
         internal CfxProcessMessageGetArgumentListRenderProcessCall()
             : base(RemoteCallId.CfxProcessMessageGetArgumentListRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong __retval;
+        internal IntPtr self;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);

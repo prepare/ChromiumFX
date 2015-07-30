@@ -50,8 +50,8 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrV8Context Wrap(ulong proxyId) {
-            if(proxyId == 0) return null;
+        internal static CfrV8Context Wrap(IntPtr proxyId) {
+            if(proxyId == IntPtr.Zero) return null;
             lock(weakCache) {
                 var cfrObj = (CfrV8Context)weakCache.Get(proxyId);
                 if(cfrObj == null) {
@@ -145,7 +145,7 @@ namespace Chromium.Remote {
         }
 
 
-        private CfrV8Context(ulong proxyId) : base(proxyId) {}
+        private CfrV8Context(IntPtr proxyId) : base(proxyId) {}
 
         /// <summary>
         /// Returns the task runner associated with this context. V8 handles can only
@@ -303,7 +303,7 @@ namespace Chromium.Remote {
             return call.__retval;
         }
 
-        internal override void OnDispose(ulong proxyId) {
+        internal override void OnDispose(IntPtr proxyId) {
             weakCache.Remove(proxyId);
         }
     }

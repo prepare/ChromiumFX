@@ -40,7 +40,7 @@ namespace Chromium.Remote {
         internal CfxTimeCtorRenderProcessCall()
             : base(RemoteCallId.CfxTimeCtorRenderProcessCall) {}
 
-        internal ulong __retval;
+        internal IntPtr __retval;
         protected override void WriteReturn(StreamHandler h) { h.Write(__retval); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out __retval); }
 
@@ -53,7 +53,7 @@ namespace Chromium.Remote {
 
         internal CfxTimeGetYearRenderProcessCall()
             : base(RemoteCallId.CfxTimeGetYearRenderProcessCall) {}
-        internal ulong sender;
+        internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
@@ -68,7 +68,7 @@ namespace Chromium.Remote {
 
         internal CfxTimeSetYearRenderProcessCall()
             : base(RemoteCallId.CfxTimeSetYearRenderProcessCall) {}
-        internal ulong sender;
+        internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
@@ -81,7 +81,7 @@ namespace Chromium.Remote {
 
         internal CfxTimeGetMonthRenderProcessCall()
             : base(RemoteCallId.CfxTimeGetMonthRenderProcessCall) {}
-        internal ulong sender;
+        internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
@@ -96,7 +96,7 @@ namespace Chromium.Remote {
 
         internal CfxTimeSetMonthRenderProcessCall()
             : base(RemoteCallId.CfxTimeSetMonthRenderProcessCall) {}
-        internal ulong sender;
+        internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
@@ -109,7 +109,7 @@ namespace Chromium.Remote {
 
         internal CfxTimeGetDayOfWeekRenderProcessCall()
             : base(RemoteCallId.CfxTimeGetDayOfWeekRenderProcessCall) {}
-        internal ulong sender;
+        internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
@@ -124,7 +124,7 @@ namespace Chromium.Remote {
 
         internal CfxTimeSetDayOfWeekRenderProcessCall()
             : base(RemoteCallId.CfxTimeSetDayOfWeekRenderProcessCall) {}
-        internal ulong sender;
+        internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
@@ -137,7 +137,7 @@ namespace Chromium.Remote {
 
         internal CfxTimeGetDayOfMonthRenderProcessCall()
             : base(RemoteCallId.CfxTimeGetDayOfMonthRenderProcessCall) {}
-        internal ulong sender;
+        internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
@@ -152,7 +152,7 @@ namespace Chromium.Remote {
 
         internal CfxTimeSetDayOfMonthRenderProcessCall()
             : base(RemoteCallId.CfxTimeSetDayOfMonthRenderProcessCall) {}
-        internal ulong sender;
+        internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
@@ -165,7 +165,7 @@ namespace Chromium.Remote {
 
         internal CfxTimeGetHourRenderProcessCall()
             : base(RemoteCallId.CfxTimeGetHourRenderProcessCall) {}
-        internal ulong sender;
+        internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
@@ -180,7 +180,7 @@ namespace Chromium.Remote {
 
         internal CfxTimeSetHourRenderProcessCall()
             : base(RemoteCallId.CfxTimeSetHourRenderProcessCall) {}
-        internal ulong sender;
+        internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
@@ -193,7 +193,7 @@ namespace Chromium.Remote {
 
         internal CfxTimeGetMinuteRenderProcessCall()
             : base(RemoteCallId.CfxTimeGetMinuteRenderProcessCall) {}
-        internal ulong sender;
+        internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
@@ -208,7 +208,7 @@ namespace Chromium.Remote {
 
         internal CfxTimeSetMinuteRenderProcessCall()
             : base(RemoteCallId.CfxTimeSetMinuteRenderProcessCall) {}
-        internal ulong sender;
+        internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
@@ -221,7 +221,7 @@ namespace Chromium.Remote {
 
         internal CfxTimeGetSecondRenderProcessCall()
             : base(RemoteCallId.CfxTimeGetSecondRenderProcessCall) {}
-        internal ulong sender;
+        internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
@@ -236,7 +236,7 @@ namespace Chromium.Remote {
 
         internal CfxTimeSetSecondRenderProcessCall()
             : base(RemoteCallId.CfxTimeSetSecondRenderProcessCall) {}
-        internal ulong sender;
+        internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
@@ -249,7 +249,7 @@ namespace Chromium.Remote {
 
         internal CfxTimeGetMillisecondRenderProcessCall()
             : base(RemoteCallId.CfxTimeGetMillisecondRenderProcessCall) {}
-        internal ulong sender;
+        internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
@@ -264,7 +264,7 @@ namespace Chromium.Remote {
 
         internal CfxTimeSetMillisecondRenderProcessCall()
             : base(RemoteCallId.CfxTimeSetMillisecondRenderProcessCall) {}
-        internal ulong sender;
+        internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }

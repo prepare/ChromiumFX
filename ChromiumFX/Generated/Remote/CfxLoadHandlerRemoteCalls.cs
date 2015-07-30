@@ -42,7 +42,7 @@ namespace Chromium.Remote {
         internal CfxLoadHandlerCtorRenderProcessCall()
             : base(RemoteCallId.CfxLoadHandlerCtorRenderProcessCall) {}
 
-        internal ulong __retval;
+        internal IntPtr __retval;
         protected override void WriteReturn(StreamHandler h) { h.Write(__retval); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out __retval); }
 
@@ -75,7 +75,7 @@ namespace Chromium.Remote {
         internal CfxOnLoadingStateChangeActivateRenderProcessCall()
             : base(RemoteCallId.CfxOnLoadingStateChangeActivateRenderProcessCall) {}
 
-        internal ulong sender;
+        internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
@@ -90,7 +90,7 @@ namespace Chromium.Remote {
         internal CfxOnLoadingStateChangeDeactivateRenderProcessCall()
             : base(RemoteCallId.CfxOnLoadingStateChangeDeactivateRenderProcessCall) {}
 
-        internal ulong sender;
+        internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
@@ -106,7 +106,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxOnLoadingStateChangeGetBrowserRenderProcessCall) {}
 
         internal ulong eventArgsId;
-        internal ulong value;
+        internal IntPtr value;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(eventArgsId);
@@ -232,7 +232,7 @@ namespace Chromium.Remote {
         internal CfxOnLoadStartActivateRenderProcessCall()
             : base(RemoteCallId.CfxOnLoadStartActivateRenderProcessCall) {}
 
-        internal ulong sender;
+        internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
@@ -247,7 +247,7 @@ namespace Chromium.Remote {
         internal CfxOnLoadStartDeactivateRenderProcessCall()
             : base(RemoteCallId.CfxOnLoadStartDeactivateRenderProcessCall) {}
 
-        internal ulong sender;
+        internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
@@ -263,7 +263,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxOnLoadStartGetBrowserRenderProcessCall) {}
 
         internal ulong eventArgsId;
-        internal ulong value;
+        internal IntPtr value;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(eventArgsId);
@@ -290,7 +290,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxOnLoadStartGetFrameRenderProcessCall) {}
 
         internal ulong eventArgsId;
-        internal ulong value;
+        internal IntPtr value;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(eventArgsId);
@@ -335,7 +335,7 @@ namespace Chromium.Remote {
         internal CfxOnLoadEndActivateRenderProcessCall()
             : base(RemoteCallId.CfxOnLoadEndActivateRenderProcessCall) {}
 
-        internal ulong sender;
+        internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
@@ -350,7 +350,7 @@ namespace Chromium.Remote {
         internal CfxOnLoadEndDeactivateRenderProcessCall()
             : base(RemoteCallId.CfxOnLoadEndDeactivateRenderProcessCall) {}
 
-        internal ulong sender;
+        internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
@@ -366,7 +366,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxOnLoadEndGetBrowserRenderProcessCall) {}
 
         internal ulong eventArgsId;
-        internal ulong value;
+        internal IntPtr value;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(eventArgsId);
@@ -393,7 +393,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxOnLoadEndGetFrameRenderProcessCall) {}
 
         internal ulong eventArgsId;
-        internal ulong value;
+        internal IntPtr value;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(eventArgsId);
@@ -465,7 +465,7 @@ namespace Chromium.Remote {
         internal CfxOnLoadErrorActivateRenderProcessCall()
             : base(RemoteCallId.CfxOnLoadErrorActivateRenderProcessCall) {}
 
-        internal ulong sender;
+        internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
@@ -480,7 +480,7 @@ namespace Chromium.Remote {
         internal CfxOnLoadErrorDeactivateRenderProcessCall()
             : base(RemoteCallId.CfxOnLoadErrorDeactivateRenderProcessCall) {}
 
-        internal ulong sender;
+        internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
@@ -496,7 +496,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxOnLoadErrorGetBrowserRenderProcessCall) {}
 
         internal ulong eventArgsId;
-        internal ulong value;
+        internal IntPtr value;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(eventArgsId);
@@ -523,7 +523,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxOnLoadErrorGetFrameRenderProcessCall) {}
 
         internal ulong eventArgsId;
-        internal ulong value;
+        internal IntPtr value;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(eventArgsId);

@@ -53,7 +53,7 @@ namespace Chromium.Remote {
         internal CfxRuntimeExecuteProcessRenderProcessCall()
             : base(RemoteCallId.CfxRuntimeExecuteProcessRenderProcessCall) { }
 
-        internal ulong application;
+        internal IntPtr application;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
