@@ -50,29 +50,28 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public event CfrV8HandlerExecuteEventHandler Execute;
 
-        /// <summary>
-        /// If true, then the function is executed on the thread that owns the browser's 
-        /// underlying window handle within the context of the calling remote thread.
-        /// </summary>
+        [Obsolete("Deprecated. Please use InvokeMode instead.")]
         public bool InvokeOnBrowser { get; private set; }
 
         /// <summary>
         /// Creates a new javascript function to be added as a property 
-        /// to a browser frame's global object or to a JSObject.
+        /// to a browser frame's global object or to a child object.
         /// </summary>
         public JSFunction()
-            : base(JSPropertyType.Function) {
+            : base(JSPropertyType.Function, JSInvokeMode.Inherit) {
         }
 
         /// <summary>
         /// Creates a new javascript function to be added as a property 
-        /// to a browser frame's global object or to a JSObject.
-        /// If invokeOnBrowser is true, then the function is executed on the thread that 
-        /// owns the browser's underlying window handle within the context of the calling remote thread.
+        /// to a browser frame's global object or to a child object.
         /// </summary>
+        public JSFunction(JSInvokeMode invokeMode)
+            : base(JSPropertyType.Function, invokeMode) {
+        }
+
+        [Obsolete("Deprecated. Please use InvokeMode instead.")]
         public JSFunction(bool invokeOnBrowser)
-            : base(JSPropertyType.Function) {
-            this.InvokeOnBrowser = invokeOnBrowser;
+            : base(JSPropertyType.Function, invokeOnBrowser ? JSInvokeMode.Invoke : JSInvokeMode.DontInvoke) {
         }
 
         internal void SetV8Handler(CfrV8Handler handler) {
@@ -82,7 +81,7 @@ namespace Chromium.WebBrowser {
         private void handler_Execute(object sender, CfrV8HandlerExecuteEventArgs e) {
             var eventHandler = Execute;
             if(eventHandler != null) {
-                if(InvokeOnBrowser) {
+                if(WillInvoke) {
                     Browser.RenderThreadInvoke((MethodInvoker)(() => { eventHandler(this, e); }));
                 } else {
                     eventHandler(this, e);

@@ -45,40 +45,28 @@ namespace Chromium.WebBrowser {
         private readonly Dictionary<string, JSProperty> jsProperties = new Dictionary<string, JSProperty>();
         private CfrV8Accessor v8Accessor;
 
-        /// <summary>
-        /// If true, dynamic properties and functions in this object 
-        /// are executed on the thread that owns the browser's 
-        /// underlying window handle, unless otherwise specified 
-        /// in the function/dynamic property constructor,  
-        /// within the context of the calling remote thread.
-        /// </summary>
+        [Obsolete("Deprecated. Please use InvokeMode instead.")]
         public bool InvokeOnBrowser { get; private set; }
 
         /// <summary>
         /// Creates a new javascript object to be added as a property 
         /// to a browser frame's global object or a child object.
-        /// Dynamic properties and functions in this object are executed 
-        /// on the thread that owns the browser's underlying window handle, 
-        /// unless otherwise specified in the function/dynamic property constructor,
-        /// within the context of the calling remote thread.
         /// </summary>
         public JSObject()
-            : base(JSPropertyType.Object) {
-                this.InvokeOnBrowser = true;
+            : base(JSPropertyType.Object, JSInvokeMode.Inherit) {
         }
 
         /// <summary>
         /// Creates a new javascript object to be added as a property 
         /// to a browser frame's global object or a child object.
-        /// If invokeOnBrowser is true, dynamic properties and functions 
-        /// in this object are executed on the thread that owns the browser's 
-        /// underlying window handle, unless otherwise specified in the 
-        /// function/dynamic property constructor,
-        /// within the context of the calling remote thread.
         /// </summary>
+        public JSObject(JSInvokeMode invokeMode)
+            : base(JSPropertyType.Object, invokeMode) {
+        }
+
+        [Obsolete("Deprecated. Please use InvokeMode instead.")]
         public JSObject(bool invokeOnBrowser)
-            : base(JSPropertyType.Object) {
-            this.InvokeOnBrowser = invokeOnBrowser;
+            : base(JSPropertyType.Object, invokeOnBrowser ? JSInvokeMode.Invoke : JSInvokeMode.DontInvoke) {
         }
 
         /// <summary>
@@ -218,22 +206,23 @@ namespace Chromium.WebBrowser {
 
         /// <summary>
         /// Add a javascript function as a property to this object.
-        /// If this object's InvokeOnBrowser property is true, the 
-        /// function is executed on the thread that owns the browser's 
-        /// underlying window handle, within the context of the calling remote thread.
         /// </summary>
         public JSFunction AddFunction(string functionName) {
-            var f = new JSFunction(InvokeOnBrowser);
+            var f = new JSFunction();
             Add(functionName, f);
             return f;
         }
 
         /// <summary>
         /// Add a javascript function as a property to this object.
-        /// If invokeOnBrowser is true, the function is executed on 
-        /// the thread that owns the browser's underlying window handle,  
-        /// within the context of the calling remote thread
         /// </summary>
+        public JSFunction AddFunction(string functionName, JSInvokeMode invokeMode) {
+            var f = new JSFunction(invokeMode);
+            Add(functionName, f);
+            return f;
+        }
+
+        [Obsolete("Deprecated. Please use InvokeMode instead.")]
         public JSFunction AddFunction(string functionName, bool invokeOnBrowser) {
             var f = new JSFunction(invokeOnBrowser);
             Add(functionName, f);
@@ -242,45 +231,48 @@ namespace Chromium.WebBrowser {
 
         /// <summary>
         /// Add another javascript object as a property to this object.
-        /// This object's InvokeOnBrowser property will be propagated 
-        /// to the child object.
         /// </summary>
         public JSObject AddObject(string objectName) {
-            var o = new JSObject(InvokeOnBrowser);
+            var o = new JSObject();
             Add(objectName, o);
             return o;
         }
 
         /// <summary>
-        /// Add another javascript object with the specified
-        /// invokeOnBrowser behaviour as a property to this object.
+        /// Add another javascript object as a property to this object.
         /// </summary>
+        public JSObject AddObject(string objectName, JSInvokeMode invokeMode) {
+            var o = new JSObject(invokeMode);
+            Add(objectName, o);
+            return o;
+        }
+        
+        [Obsolete("Deprecated. Please use InvokeMode instead.")]
         public JSObject AddObject(string objectName, bool invokeOnBrowser) {
-            var o = new JSObject(InvokeOnBrowser);
+            var o = new JSObject(invokeOnBrowser);
             Add(objectName, o);
             return o;
         }
 
         /// <summary>
         /// Add a dynamic javascript property to this object.
-        /// If this object's InvokeOnBrowser property is true, 
-        /// the property's setter and getter events are executed 
-        /// on the thread that owns the browser's 
-        /// underlying window handle, within the context of the calling remote thread.
         /// </summary>
         public JSDynamicProperty AddDynamicProperty(string propertyName) {
-            var p = new JSDynamicProperty(InvokeOnBrowser);
+            var p = new JSDynamicProperty();
             Add(propertyName, p);
             return p;
         }
 
         /// <summary>
         /// Add a dynamic javascript property to this object.
-        /// If invokeOnBrowser is true, the property's setter 
-        /// and getter events are executed on the thread that 
-        /// owns the browser's underlying window handle,  
-        /// within the context of the calling remote thread.
         /// </summary>
+        public JSDynamicProperty AddDynamicProperty(string propertyName, JSInvokeMode invokeMode) {
+            var p = new JSDynamicProperty(invokeMode);
+            Add(propertyName, p);
+            return p;
+        }
+
+        [Obsolete("Deprecated. Please use InvokeMode instead.")]
         public JSDynamicProperty AddDynamicProperty(string propertyName, bool invokeOnBrowser) {
             var p = new JSDynamicProperty(invokeOnBrowser);
             Add(propertyName, p);
