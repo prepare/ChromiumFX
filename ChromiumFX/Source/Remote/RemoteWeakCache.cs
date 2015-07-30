@@ -48,8 +48,8 @@ namespace Chromium.Remote {
                 }
             }
             public readonly CfxRemoteProcessContext remoteContext;
-            public readonly ulong proxyId;
-            public CacheKey(ulong proxyId) {
+            public readonly IntPtr proxyId;
+            public CacheKey(IntPtr proxyId) {
                 this.remoteContext = CfxRemoteProcessContext.CurrentContext;
                 this.proxyId = proxyId;
             }
@@ -61,12 +61,12 @@ namespace Chromium.Remote {
             cache = new Dictionary<CacheKey, WeakReference>(new CacheKey.Comparer());
         }
 
-        public void Add(ulong proxyId, object obj) {
+        public void Add(IntPtr proxyId, object obj) {
             // always locked by caller
             cache.Add(new CacheKey(proxyId), new WeakReference(obj, false));
         }
 
-        public object Get(ulong proxyId) {
+        public object Get(IntPtr proxyId) {
             // always locked by caller
             WeakReference r;
             if(cache.TryGetValue(new CacheKey(proxyId), out r))
@@ -76,7 +76,7 @@ namespace Chromium.Remote {
         }
 
 
-        public void Remove(ulong proxyId) {
+        public void Remove(IntPtr proxyId) {
             lock(this) {
                 cache.Remove(new CacheKey(proxyId));
             }

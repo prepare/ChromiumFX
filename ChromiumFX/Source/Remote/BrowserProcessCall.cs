@@ -65,7 +65,7 @@ namespace Chromium.Remote {
         }
 
 
-        internal ulong sender;
+        internal IntPtr sender;
         internal ulong eventArgsId;
 
         internal BrowserProcessCall(RemoteCallId callId) : base(callId) {}

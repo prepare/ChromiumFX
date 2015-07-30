@@ -40,13 +40,7 @@ namespace Chromium.Remote {
         internal CfxPostDataCreateRenderProcessCall()
             : base(RemoteCallId.CfxPostDataCreateRenderProcessCall) {}
 
-        internal ulong __retval;
-
-        protected override void WriteArgs(StreamHandler h) {
-        }
-
-        protected override void ReadArgs(StreamHandler h) {
-        }
+        internal IntPtr __retval;
 
         protected override void WriteReturn(StreamHandler h) {
             h.Write(__retval);
@@ -66,7 +60,7 @@ namespace Chromium.Remote {
         internal CfxPostDataIsReadOnlyRenderProcessCall()
             : base(RemoteCallId.CfxPostDataIsReadOnlyRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -96,7 +90,7 @@ namespace Chromium.Remote {
         internal CfxPostDataGetElementCountRenderProcessCall()
             : base(RemoteCallId.CfxPostDataGetElementCountRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -126,8 +120,8 @@ namespace Chromium.Remote {
         internal CfxPostDataGetElementsRenderProcessCall()
             : base(RemoteCallId.CfxPostDataGetElementsRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong[] __retval;
+        internal IntPtr self;
+        internal IntPtr[] __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -148,7 +142,7 @@ namespace Chromium.Remote {
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var elements = ((CfxPostData)RemoteProxy.Unwrap(self)).Elements;
             if(elements != null) {
-                __retval = new ulong[elements.Length];
+                __retval = new IntPtr[elements.Length];
                 for(int i = 0; i < elements.Length; ++i) {
                     __retval[i] = RemoteProxy.Wrap(elements[i]);
                 }
@@ -161,8 +155,8 @@ namespace Chromium.Remote {
         internal CfxPostDataRemoveElementRenderProcessCall()
             : base(RemoteCallId.CfxPostDataRemoveElementRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong element;
+        internal IntPtr self;
+        internal IntPtr element;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -194,8 +188,8 @@ namespace Chromium.Remote {
         internal CfxPostDataAddElementRenderProcessCall()
             : base(RemoteCallId.CfxPostDataAddElementRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong element;
+        internal IntPtr self;
+        internal IntPtr element;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -227,7 +221,7 @@ namespace Chromium.Remote {
         internal CfxPostDataRemoveElementsRenderProcessCall()
             : base(RemoteCallId.CfxPostDataRemoveElementsRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -235,12 +229,6 @@ namespace Chromium.Remote {
 
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out self);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {

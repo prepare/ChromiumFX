@@ -54,7 +54,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxBinaryValueCreateFromArrayRenderProcessCall) { }
 
         internal byte[] data;
-        internal ulong __retval;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(data);

@@ -50,8 +50,8 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrV8StackFrame Wrap(ulong proxyId) {
-            if(proxyId == 0) return null;
+        internal static CfrV8StackFrame Wrap(IntPtr proxyId) {
+            if(proxyId == IntPtr.Zero) return null;
             lock(weakCache) {
                 var cfrObj = (CfrV8StackFrame)weakCache.Get(proxyId);
                 if(cfrObj == null) {
@@ -64,7 +64,7 @@ namespace Chromium.Remote {
 
 
 
-        private CfrV8StackFrame(ulong proxyId) : base(proxyId) {}
+        private CfrV8StackFrame(IntPtr proxyId) : base(proxyId) {}
 
         /// <summary>
         /// Returns true (1) if the underlying handle is valid and it can be accessed
@@ -199,7 +199,7 @@ namespace Chromium.Remote {
             }
         }
 
-        internal override void OnDispose(ulong proxyId) {
+        internal override void OnDispose(IntPtr proxyId) {
             weakCache.Remove(proxyId);
         }
     }

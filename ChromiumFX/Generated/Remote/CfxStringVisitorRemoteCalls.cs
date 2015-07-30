@@ -42,7 +42,7 @@ namespace Chromium.Remote {
         internal CfxStringVisitorCtorRenderProcessCall()
             : base(RemoteCallId.CfxStringVisitorCtorRenderProcessCall) {}
 
-        internal ulong __retval;
+        internal IntPtr __retval;
         protected override void WriteReturn(StreamHandler h) { h.Write(__retval); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out __retval); }
 
@@ -75,7 +75,7 @@ namespace Chromium.Remote {
         internal CfxStringVisitorVisitActivateRenderProcessCall()
             : base(RemoteCallId.CfxStringVisitorVisitActivateRenderProcessCall) {}
 
-        internal ulong sender;
+        internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
@@ -90,7 +90,7 @@ namespace Chromium.Remote {
         internal CfxStringVisitorVisitDeactivateRenderProcessCall()
             : base(RemoteCallId.CfxStringVisitorVisitDeactivateRenderProcessCall) {}
 
-        internal ulong sender;
+        internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 

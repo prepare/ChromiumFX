@@ -46,8 +46,8 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrProcessMessage Wrap(ulong proxyId) {
-            if(proxyId == 0) return null;
+        internal static CfrProcessMessage Wrap(IntPtr proxyId) {
+            if(proxyId == IntPtr.Zero) return null;
             lock(weakCache) {
                 var cfrObj = (CfrProcessMessage)weakCache.Get(proxyId);
                 if(cfrObj == null) {
@@ -89,7 +89,7 @@ namespace Chromium.Remote {
         }
 
 
-        private CfrProcessMessage(ulong proxyId) : base(proxyId) {}
+        private CfrProcessMessage(IntPtr proxyId) : base(proxyId) {}
 
         /// <summary>
         /// Returns true (1) if this object is valid. Do not call any other functions
@@ -171,7 +171,7 @@ namespace Chromium.Remote {
             return CfrProcessMessage.Wrap(call.__retval);
         }
 
-        internal override void OnDispose(ulong proxyId) {
+        internal override void OnDispose(IntPtr proxyId) {
             weakCache.Remove(proxyId);
         }
     }

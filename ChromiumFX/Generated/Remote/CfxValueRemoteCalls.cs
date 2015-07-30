@@ -40,13 +40,7 @@ namespace Chromium.Remote {
         internal CfxValueCreateRenderProcessCall()
             : base(RemoteCallId.CfxValueCreateRenderProcessCall) {}
 
-        internal ulong __retval;
-
-        protected override void WriteArgs(StreamHandler h) {
-        }
-
-        protected override void ReadArgs(StreamHandler h) {
-        }
+        internal IntPtr __retval;
 
         protected override void WriteReturn(StreamHandler h) {
             h.Write(__retval);
@@ -66,7 +60,7 @@ namespace Chromium.Remote {
         internal CfxValueIsValidRenderProcessCall()
             : base(RemoteCallId.CfxValueIsValidRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -96,7 +90,7 @@ namespace Chromium.Remote {
         internal CfxValueIsOwnedRenderProcessCall()
             : base(RemoteCallId.CfxValueIsOwnedRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -126,7 +120,7 @@ namespace Chromium.Remote {
         internal CfxValueIsReadOnlyRenderProcessCall()
             : base(RemoteCallId.CfxValueIsReadOnlyRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -156,8 +150,8 @@ namespace Chromium.Remote {
         internal CfxValueIsSameRenderProcessCall()
             : base(RemoteCallId.CfxValueIsSameRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong that;
+        internal IntPtr self;
+        internal IntPtr that;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -189,8 +183,8 @@ namespace Chromium.Remote {
         internal CfxValueIsEqualRenderProcessCall()
             : base(RemoteCallId.CfxValueIsEqualRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong that;
+        internal IntPtr self;
+        internal IntPtr that;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -222,8 +216,8 @@ namespace Chromium.Remote {
         internal CfxValueCopyRenderProcessCall()
             : base(RemoteCallId.CfxValueCopyRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong __retval;
+        internal IntPtr self;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -252,7 +246,7 @@ namespace Chromium.Remote {
         internal CfxValueGetTypeRenderProcessCall()
             : base(RemoteCallId.CfxValueGetTypeRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -282,7 +276,7 @@ namespace Chromium.Remote {
         internal CfxValueGetBoolRenderProcessCall()
             : base(RemoteCallId.CfxValueGetBoolRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -312,7 +306,7 @@ namespace Chromium.Remote {
         internal CfxValueGetIntRenderProcessCall()
             : base(RemoteCallId.CfxValueGetIntRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -342,7 +336,7 @@ namespace Chromium.Remote {
         internal CfxValueGetDoubleRenderProcessCall()
             : base(RemoteCallId.CfxValueGetDoubleRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal double __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -372,7 +366,7 @@ namespace Chromium.Remote {
         internal CfxValueGetStringRenderProcessCall()
             : base(RemoteCallId.CfxValueGetStringRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -402,8 +396,8 @@ namespace Chromium.Remote {
         internal CfxValueGetBinaryRenderProcessCall()
             : base(RemoteCallId.CfxValueGetBinaryRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong __retval;
+        internal IntPtr self;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -432,8 +426,8 @@ namespace Chromium.Remote {
         internal CfxValueGetDictionaryRenderProcessCall()
             : base(RemoteCallId.CfxValueGetDictionaryRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong __retval;
+        internal IntPtr self;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -462,8 +456,8 @@ namespace Chromium.Remote {
         internal CfxValueGetListRenderProcessCall()
             : base(RemoteCallId.CfxValueGetListRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong __retval;
+        internal IntPtr self;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -492,7 +486,7 @@ namespace Chromium.Remote {
         internal CfxValueSetNullRenderProcessCall()
             : base(RemoteCallId.CfxValueSetNullRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -522,7 +516,7 @@ namespace Chromium.Remote {
         internal CfxValueSetBoolRenderProcessCall()
             : base(RemoteCallId.CfxValueSetBoolRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool value;
         internal bool __retval;
 
@@ -555,7 +549,7 @@ namespace Chromium.Remote {
         internal CfxValueSetIntRenderProcessCall()
             : base(RemoteCallId.CfxValueSetIntRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int value;
         internal bool __retval;
 
@@ -588,7 +582,7 @@ namespace Chromium.Remote {
         internal CfxValueSetDoubleRenderProcessCall()
             : base(RemoteCallId.CfxValueSetDoubleRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal double value;
         internal bool __retval;
 
@@ -621,7 +615,7 @@ namespace Chromium.Remote {
         internal CfxValueSetStringRenderProcessCall()
             : base(RemoteCallId.CfxValueSetStringRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string value;
         internal bool __retval;
 
@@ -654,8 +648,8 @@ namespace Chromium.Remote {
         internal CfxValueSetBinaryRenderProcessCall()
             : base(RemoteCallId.CfxValueSetBinaryRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong value;
+        internal IntPtr self;
+        internal IntPtr value;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -687,8 +681,8 @@ namespace Chromium.Remote {
         internal CfxValueSetDictionaryRenderProcessCall()
             : base(RemoteCallId.CfxValueSetDictionaryRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong value;
+        internal IntPtr self;
+        internal IntPtr value;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -720,8 +714,8 @@ namespace Chromium.Remote {
         internal CfxValueSetListRenderProcessCall()
             : base(RemoteCallId.CfxValueSetListRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong value;
+        internal IntPtr self;
+        internal IntPtr value;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {

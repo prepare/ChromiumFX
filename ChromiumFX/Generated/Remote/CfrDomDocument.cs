@@ -47,8 +47,8 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrDomDocument Wrap(ulong proxyId) {
-            if(proxyId == 0) return null;
+        internal static CfrDomDocument Wrap(IntPtr proxyId) {
+            if(proxyId == IntPtr.Zero) return null;
             lock(weakCache) {
                 var cfrObj = (CfrDomDocument)weakCache.Get(proxyId);
                 if(cfrObj == null) {
@@ -61,7 +61,7 @@ namespace Chromium.Remote {
 
 
 
-        private CfrDomDocument(ulong proxyId) : base(proxyId) {}
+        private CfrDomDocument(IntPtr proxyId) : base(proxyId) {}
 
         /// <summary>
         /// Returns the document type.
@@ -286,7 +286,7 @@ namespace Chromium.Remote {
             return call.__retval;
         }
 
-        internal override void OnDispose(ulong proxyId) {
+        internal override void OnDispose(IntPtr proxyId) {
             weakCache.Remove(proxyId);
         }
     }

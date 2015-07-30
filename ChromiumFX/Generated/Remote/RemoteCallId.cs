@@ -552,7 +552,6 @@ namespace Chromium.Remote {
         CfxValueSetListRenderProcessCall,
         ExecuteRemoteProcessRemoteCall,
         ReleaseProxyRemoteCall,
-        GetRemotePtrRemoteCall,
         CfrMarshalAllocHGlobalRenderProcessCall,
         CfrMarshalFreeHGlobalRenderProcessCall,
         CfrMarshalCopyToNativeRenderProcessCall,

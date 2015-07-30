@@ -50,8 +50,8 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrV8Value Wrap(ulong proxyId) {
-            if(proxyId == 0) return null;
+        internal static CfrV8Value Wrap(IntPtr proxyId) {
+            if(proxyId == IntPtr.Zero) return null;
             lock(weakCache) {
                 var cfrObj = (CfrV8Value)weakCache.Get(proxyId);
                 if(cfrObj == null) {
@@ -411,7 +411,7 @@ namespace Chromium.Remote {
         }
 
 
-        private CfrV8Value(ulong proxyId) : base(proxyId) {}
+        private CfrV8Value(IntPtr proxyId) : base(proxyId) {}
 
         /// <summary>
         /// Returns true (1) if the underlying handle is valid and it can be accessed
@@ -1143,7 +1143,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.@object = CfrObject.Unwrap(@object);
             if(arguments != null) {
-                call.arguments = new ulong[arguments.Length];
+                call.arguments = new IntPtr[arguments.Length];
                 for(int i = 0; i < arguments.Length; ++i) {
                     call.arguments[i] = CfrObject.Unwrap(arguments[i]);
                 }
@@ -1170,7 +1170,7 @@ namespace Chromium.Remote {
             call.context = CfrObject.Unwrap(context);
             call.@object = CfrObject.Unwrap(@object);
             if(arguments != null) {
-                call.arguments = new ulong[arguments.Length];
+                call.arguments = new IntPtr[arguments.Length];
                 for(int i = 0; i < arguments.Length; ++i) {
                     call.arguments[i] = CfrObject.Unwrap(arguments[i]);
                 }
@@ -1179,7 +1179,7 @@ namespace Chromium.Remote {
             return CfrV8Value.Wrap(call.__retval);
         }
 
-        internal override void OnDispose(ulong proxyId) {
+        internal override void OnDispose(IntPtr proxyId) {
             weakCache.Remove(proxyId);
         }
     }

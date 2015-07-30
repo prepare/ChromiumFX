@@ -42,7 +42,7 @@ namespace Chromium.Remote {
         internal CfxResourceBundleHandlerCtorRenderProcessCall()
             : base(RemoteCallId.CfxResourceBundleHandlerCtorRenderProcessCall) {}
 
-        internal ulong __retval;
+        internal IntPtr __retval;
         protected override void WriteReturn(StreamHandler h) { h.Write(__retval); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out __retval); }
 
@@ -75,7 +75,7 @@ namespace Chromium.Remote {
         internal CfxGetLocalizedStringActivateRenderProcessCall()
             : base(RemoteCallId.CfxGetLocalizedStringActivateRenderProcessCall) {}
 
-        internal ulong sender;
+        internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
@@ -90,7 +90,7 @@ namespace Chromium.Remote {
         internal CfxGetLocalizedStringDeactivateRenderProcessCall()
             : base(RemoteCallId.CfxGetLocalizedStringDeactivateRenderProcessCall) {}
 
-        internal ulong sender;
+        internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
@@ -224,7 +224,7 @@ namespace Chromium.Remote {
         internal CfxGetDataResourceActivateRenderProcessCall()
             : base(RemoteCallId.CfxGetDataResourceActivateRenderProcessCall) {}
 
-        internal ulong sender;
+        internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
@@ -239,7 +239,7 @@ namespace Chromium.Remote {
         internal CfxGetDataResourceDeactivateRenderProcessCall()
             : base(RemoteCallId.CfxGetDataResourceDeactivateRenderProcessCall) {}
 
-        internal ulong sender;
+        internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 

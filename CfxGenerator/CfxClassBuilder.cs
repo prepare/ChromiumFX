@@ -758,7 +758,7 @@ public class CfxClassBuilder {
         if(NeedsConstructor) {
             b.BeginRemoteCallClass(ClassName + "Ctor", false, callIds);
             b.AppendLine();
-            b.AppendLine("internal ulong __retval;");
+            b.AppendLine("internal IntPtr __retval;");
             b.AppendLine("protected override void WriteReturn(StreamHandler h) { h.Write(__retval); }");
             b.AppendLine("protected override void ReadReturn(StreamHandler h) { h.Read(out __retval); }");
             b.AppendLine();
@@ -772,7 +772,7 @@ public class CfxClassBuilder {
         if(Category == StructCategory.Values) {
             foreach(var sm in StructMembers) {
                 b.BeginRemoteCallClass(ClassName + "Get" + sm.PublicName, false, callIds);
-                b.AppendLine("internal ulong sender;");
+                b.AppendLine("internal IntPtr sender;");
                 b.AppendLine("internal {0} value;", sm.MemberType.ProxySymbol);
                 b.AppendLine("protected override void WriteArgs(StreamHandler h) { h.Write(sender); }");
                 b.AppendLine("protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }");
@@ -784,7 +784,7 @@ public class CfxClassBuilder {
                 b.EndBlock();
                 b.EndBlock();
                 b.BeginRemoteCallClass(ClassName + "Set" + sm.PublicName, false, callIds);
-                b.AppendLine("internal ulong sender;");
+                b.AppendLine("internal IntPtr sender;");
                 b.AppendLine("internal {0} value;", sm.MemberType.ProxySymbol);
                 b.AppendLine("protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }");
                 b.AppendLine("protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }");
@@ -823,7 +823,7 @@ public class CfxClassBuilder {
 
                     b.BeginRemoteCallClass(cb.EventName + "Activate", false, callIds);
                     b.AppendLine();
-                    b.AppendLine("internal ulong sender;");
+                    b.AppendLine("internal IntPtr sender;");
                     b.AppendLine("protected override void WriteArgs(StreamHandler h) { h.Write(sender); }");
                     b.AppendLine("protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }");
                     b.AppendLine();
@@ -836,7 +836,7 @@ public class CfxClassBuilder {
 
                     b.BeginRemoteCallClass(cb.EventName + "Deactivate", false, callIds);
                     b.AppendLine();
-                    b.AppendLine("internal ulong sender;");
+                    b.AppendLine("internal IntPtr sender;");
                     b.AppendLine("protected override void WriteArgs(StreamHandler h) { h.Write(sender); }");
                     b.AppendLine("protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }");
                     b.AppendLine();
@@ -979,8 +979,8 @@ public class CfxClassBuilder {
 
         b.AppendLine("private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();");
         b.AppendLine();
-        b.BeginFunction("Wrap", RemoteClassName, "ulong proxyId", "internal static");
-        b.AppendLine("if(proxyId == 0) return null;");
+        b.BeginFunction("Wrap", RemoteClassName, "IntPtr proxyId", "internal static");
+        b.AppendLine("if(proxyId == IntPtr.Zero) return null;");
         b.BeginBlock("lock(weakCache)");
         b.AppendLine("var cfrObj = ({0})weakCache.Get(proxyId);", RemoteClassName);
         b.BeginBlock("if(cfrObj == null)");
@@ -994,7 +994,7 @@ public class CfxClassBuilder {
         b.AppendLine();
 
         if(NeedsConstructor) {
-            b.BeginFunction("CreateRemote", "ulong", "", "internal static");
+            b.BeginFunction("CreateRemote", "IntPtr", "", "internal static");
             b.AppendLine("var call = new {0}CtorRenderProcessCall();", ClassName);
             b.AppendLine("call.Execute();");
             b.AppendLine("return call.__retval;");
@@ -1020,7 +1020,7 @@ public class CfxClassBuilder {
 
         b.AppendLine();
 
-        b.AppendLine("private {0}(ulong proxyId) : base(proxyId) {{}}", RemoteClassName);
+        b.AppendLine("private {0}(IntPtr proxyId) : base(proxyId) {{}}", RemoteClassName);
 
         if(NeedsConstructor) {
             b.AppendLine("[Obsolete(\"new {0}(CfrRuntime) is deprecated, please use new {0}() without CfrRuntime instead.\")]", RemoteClassName);
@@ -1129,7 +1129,7 @@ public class CfxClassBuilder {
                 break;
         }
 
-        b.BeginFunction("OnDispose", "void", "ulong proxyId", "internal override");
+        b.BeginFunction("OnDispose", "void", "IntPtr proxyId", "internal override");
         b.AppendLine("weakCache.Remove(proxyId);");
         b.EndBlock();
 

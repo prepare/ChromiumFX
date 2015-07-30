@@ -76,7 +76,7 @@ return retval;";
     protected override void EmitExecuteInTargetProcess(CodeBuilder b) {
         b.AppendLine("var elements = ((CfxPostData)RemoteProxy.Unwrap(self)).Elements;");
         b.BeginIf("elements != null");
-        b.AppendLine("__retval = new ulong[elements.Length];");
+        b.AppendLine("__retval = new IntPtr[elements.Length];");
         b.BeginFor("elements.Length");
         b.AppendLine("__retval[i] = RemoteProxy.Wrap(elements[i]);");
         b.EndBlock();

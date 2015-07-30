@@ -49,7 +49,7 @@ public class CefStructPtrType : ApiType {
     }
 
     public override string ProxySymbol {
-        get { return "ulong"; }
+        get { return "IntPtr"; }
     }
 
     public override string RemoteSymbol {

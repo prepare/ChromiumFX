@@ -40,7 +40,7 @@ namespace Chromium.Remote {
         internal CfxV8StackFrameIsValidRenderProcessCall()
             : base(RemoteCallId.CfxV8StackFrameIsValidRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -70,7 +70,7 @@ namespace Chromium.Remote {
         internal CfxV8StackFrameGetScriptNameRenderProcessCall()
             : base(RemoteCallId.CfxV8StackFrameGetScriptNameRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -100,7 +100,7 @@ namespace Chromium.Remote {
         internal CfxV8StackFrameGetScriptNameOrSourceUrlRenderProcessCall()
             : base(RemoteCallId.CfxV8StackFrameGetScriptNameOrSourceUrlRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -130,7 +130,7 @@ namespace Chromium.Remote {
         internal CfxV8StackFrameGetFunctionNameRenderProcessCall()
             : base(RemoteCallId.CfxV8StackFrameGetFunctionNameRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -160,7 +160,7 @@ namespace Chromium.Remote {
         internal CfxV8StackFrameGetLineNumberRenderProcessCall()
             : base(RemoteCallId.CfxV8StackFrameGetLineNumberRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -190,7 +190,7 @@ namespace Chromium.Remote {
         internal CfxV8StackFrameGetColumnRenderProcessCall()
             : base(RemoteCallId.CfxV8StackFrameGetColumnRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -220,7 +220,7 @@ namespace Chromium.Remote {
         internal CfxV8StackFrameIsEvalRenderProcessCall()
             : base(RemoteCallId.CfxV8StackFrameIsEvalRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -250,7 +250,7 @@ namespace Chromium.Remote {
         internal CfxV8StackFrameIsConstructorRenderProcessCall()
             : base(RemoteCallId.CfxV8StackFrameIsConstructorRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {

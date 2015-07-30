@@ -32,49 +32,42 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Chromium.Remote {
     internal class RemoteProxy {
 
-        private static Dictionary<ulong, CfxObject> objects = new Dictionary<ulong, CfxObject>();
+        private static Dictionary<IntPtr, CfxObject> objects = new Dictionary<IntPtr, CfxObject>();
 
-        private static ulong globalProxyId;
-
-        internal static ulong Wrap(CfxObject o) {
-            if(o == null) return 0;
-            if(o.remoteId == 0) {
-                lock(objects) {
-                    if(o.remoteId == 0) {
-                        ++globalProxyId;
-                        objects.Add(globalProxyId, o);
-                        o.remoteId = globalProxyId;
-                    }
+        internal static IntPtr Wrap(CfxObject o) {
+            if(o == null) return IntPtr.Zero;
+            lock(objects) {
+                if(!objects.ContainsKey(o.nativePtrUnchecked)) {
+                    objects.Add(o.nativePtrUnchecked, o);
                 }
             }
-            return o.remoteId;
+            return o.nativePtrUnchecked;
         }
 
-        internal static CfxObject Unwrap(ulong proxyId) {
+        internal static CfxObject Unwrap(IntPtr proxyId) {
             lock(objects) {
                 CfxObject o;
                 objects.TryGetValue(proxyId, out o);
+                Debug.Assert(proxyId == IntPtr.Zero || proxyId == o.nativePtrUnchecked);
                 return o;
             }
         }
 
-        internal static void Release(ulong proxyId) {
+        internal static void Release(IntPtr proxyId) {
             lock(objects) {
-                CfxObject o;
-                if(objects.TryGetValue(proxyId, out o))
-                    o.remoteId = 0;
                 objects.Remove(proxyId);
             }
         }
     }
 
     internal class ReleaseProxyRemoteCall : RenderProcessCall {
-        internal ReleaseProxyRemoteCall() : base(RemoteCallId.ReleaseProxyRemoteCall, true) {}
-        internal ulong proxyId;
+        internal ReleaseProxyRemoteCall() : base(RemoteCallId.ReleaseProxyRemoteCall, true) { }
+        internal IntPtr proxyId;
         protected override void WriteArgs(StreamHandler h) { h.Write(proxyId); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out proxyId); }
 

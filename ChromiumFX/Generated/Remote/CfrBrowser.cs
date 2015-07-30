@@ -49,8 +49,8 @@ namespace Chromium.Remote {
 
         private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal static CfrBrowser Wrap(ulong proxyId) {
-            if(proxyId == 0) return null;
+        internal static CfrBrowser Wrap(IntPtr proxyId) {
+            if(proxyId == IntPtr.Zero) return null;
             lock(weakCache) {
                 var cfrObj = (CfrBrowser)weakCache.Get(proxyId);
                 if(cfrObj == null) {
@@ -63,7 +63,7 @@ namespace Chromium.Remote {
 
 
 
-        private CfrBrowser(ulong proxyId) : base(proxyId) {}
+        private CfrBrowser(IntPtr proxyId) : base(proxyId) {}
 
         /// <summary>
         /// Returns true (1) if the browser can navigate backwards.
@@ -367,7 +367,7 @@ namespace Chromium.Remote {
             return call.__retval;
         }
 
-        internal override void OnDispose(ulong proxyId) {
+        internal override void OnDispose(IntPtr proxyId) {
             weakCache.Remove(proxyId);
         }
     }

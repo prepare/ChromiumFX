@@ -40,7 +40,7 @@ namespace Chromium.Remote {
         internal CfxDomNodeGetTypeRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeGetTypeRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -70,7 +70,7 @@ namespace Chromium.Remote {
         internal CfxDomNodeIsTextRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeIsTextRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -100,7 +100,7 @@ namespace Chromium.Remote {
         internal CfxDomNodeIsElementRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeIsElementRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -130,7 +130,7 @@ namespace Chromium.Remote {
         internal CfxDomNodeIsEditableRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeIsEditableRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -160,7 +160,7 @@ namespace Chromium.Remote {
         internal CfxDomNodeIsFormControlElementRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeIsFormControlElementRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -190,7 +190,7 @@ namespace Chromium.Remote {
         internal CfxDomNodeGetFormControlElementTypeRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeGetFormControlElementTypeRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -220,8 +220,8 @@ namespace Chromium.Remote {
         internal CfxDomNodeIsSameRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeIsSameRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong that;
+        internal IntPtr self;
+        internal IntPtr that;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -253,7 +253,7 @@ namespace Chromium.Remote {
         internal CfxDomNodeGetNameRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeGetNameRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -283,7 +283,7 @@ namespace Chromium.Remote {
         internal CfxDomNodeGetValueRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeGetValueRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -313,7 +313,7 @@ namespace Chromium.Remote {
         internal CfxDomNodeSetValueRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeSetValueRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string value;
         internal bool __retval;
 
@@ -346,7 +346,7 @@ namespace Chromium.Remote {
         internal CfxDomNodeGetAsMarkupRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeGetAsMarkupRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -376,8 +376,8 @@ namespace Chromium.Remote {
         internal CfxDomNodeGetDocumentRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeGetDocumentRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong __retval;
+        internal IntPtr self;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -406,8 +406,8 @@ namespace Chromium.Remote {
         internal CfxDomNodeGetParentRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeGetParentRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong __retval;
+        internal IntPtr self;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -436,8 +436,8 @@ namespace Chromium.Remote {
         internal CfxDomNodeGetPreviousSiblingRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeGetPreviousSiblingRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong __retval;
+        internal IntPtr self;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -466,8 +466,8 @@ namespace Chromium.Remote {
         internal CfxDomNodeGetNextSiblingRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeGetNextSiblingRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong __retval;
+        internal IntPtr self;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -496,7 +496,7 @@ namespace Chromium.Remote {
         internal CfxDomNodeHasChildrenRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeHasChildrenRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -526,8 +526,8 @@ namespace Chromium.Remote {
         internal CfxDomNodeGetFirstChildRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeGetFirstChildRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong __retval;
+        internal IntPtr self;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -556,8 +556,8 @@ namespace Chromium.Remote {
         internal CfxDomNodeGetLastChildRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeGetLastChildRenderProcessCall) {}
 
-        internal ulong self;
-        internal ulong __retval;
+        internal IntPtr self;
+        internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(self);
@@ -586,7 +586,7 @@ namespace Chromium.Remote {
         internal CfxDomNodeGetElementTagNameRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeGetElementTagNameRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -616,7 +616,7 @@ namespace Chromium.Remote {
         internal CfxDomNodeHasElementAttributesRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeHasElementAttributesRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -646,7 +646,7 @@ namespace Chromium.Remote {
         internal CfxDomNodeHasElementAttributeRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeHasElementAttributeRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string attrName;
         internal bool __retval;
 
@@ -679,7 +679,7 @@ namespace Chromium.Remote {
         internal CfxDomNodeGetElementAttributeRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeGetElementAttributeRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string attrName;
         internal string __retval;
 
@@ -712,7 +712,7 @@ namespace Chromium.Remote {
         internal CfxDomNodeGetElementAttributesRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeGetElementAttributesRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal System.Collections.Generic.List<string[]> __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -742,7 +742,7 @@ namespace Chromium.Remote {
         internal CfxDomNodeSetElementAttributeRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeSetElementAttributeRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string attrName;
         internal string value;
         internal bool __retval;
@@ -778,7 +778,7 @@ namespace Chromium.Remote {
         internal CfxDomNodeGetElementInnerTextRenderProcessCall()
             : base(RemoteCallId.CfxDomNodeGetElementInnerTextRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {

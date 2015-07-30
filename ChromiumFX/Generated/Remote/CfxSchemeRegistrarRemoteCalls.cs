@@ -40,7 +40,7 @@ namespace Chromium.Remote {
         internal CfxSchemeRegistrarAddCustomSchemeRenderProcessCall()
             : base(RemoteCallId.CfxSchemeRegistrarAddCustomSchemeRenderProcessCall) {}
 
-        internal ulong self;
+        internal IntPtr self;
         internal string schemeName;
         internal bool isStandard;
         internal bool isLocal;

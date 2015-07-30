@@ -42,7 +42,7 @@ namespace Chromium.Remote {
         internal CfxDomVisitorCtorRenderProcessCall()
             : base(RemoteCallId.CfxDomVisitorCtorRenderProcessCall) {}
 
-        internal ulong __retval;
+        internal IntPtr __retval;
         protected override void WriteReturn(StreamHandler h) { h.Write(__retval); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out __retval); }
 
@@ -75,7 +75,7 @@ namespace Chromium.Remote {
         internal CfxDomVisitorVisitActivateRenderProcessCall()
             : base(RemoteCallId.CfxDomVisitorVisitActivateRenderProcessCall) {}
 
-        internal ulong sender;
+        internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
@@ -90,7 +90,7 @@ namespace Chromium.Remote {
         internal CfxDomVisitorVisitDeactivateRenderProcessCall()
             : base(RemoteCallId.CfxDomVisitorVisitDeactivateRenderProcessCall) {}
 
-        internal ulong sender;
+        internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
@@ -106,7 +106,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxDomVisitorVisitGetDocumentRenderProcessCall) {}
 
         internal ulong eventArgsId;
-        internal ulong value;
+        internal IntPtr value;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(eventArgsId);
