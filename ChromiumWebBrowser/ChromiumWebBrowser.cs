@@ -720,14 +720,15 @@ namespace Chromium.WebBrowser {
             var rb = remoteBrowser;
             if(rb == null) return false;
             try {
-                rb.RemoteContext.Enter();
+                var ctx = rb.RemoteContext;
+                ctx.Enter();
                 try {
                     var taskRunner = CfrTaskRunner.GetForThread(CfxThreadId.Renderer);
                     var task = new VisitDomTask(this, callback);
                     taskRunner.PostTask(task);
                     return true;
                 } finally {
-                    rb.RemoteContext.Exit();
+                    ctx.Exit();
                 }
             } catch(System.IO.IOException) {
                 return false;
