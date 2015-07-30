@@ -62,29 +62,26 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public event CfrV8AccessorSetEventHandler PropertySet;
 
-        /// <summary>
-        /// If true, then the PropertyGet and PropertySet events 
-        /// are executed on the thread that owns the browser's 
-        /// underlying window handle within the context of the calling remote thread.
-        /// </summary>
+        [Obsolete("Deprecated. Please use InvokeMode instead.")]
         public bool InvokeOnBrowser { get; private set; }
 
         /// <summary>
         /// Creates a new dynamic javascript property to be added to a JSObject.
         /// </summary>
         public JSDynamicProperty()
-            : base(JSPropertyType.Dynamic) {
+            : base(JSPropertyType.Dynamic, JSInvokeMode.Inherit) {
         }
 
         /// <summary>
         /// Creates a new dynamic javascript property to be added to a JSObject.
-        /// If invokeOnBrowser is true, then the PropertyGet and PropertySet 
-        /// events are executed on the thread that owns the browser's 
-        /// underlying window handle within the context of the calling remote thread.
         /// </summary>
+        public JSDynamicProperty(JSInvokeMode invokeMode)
+            : base(JSPropertyType.Dynamic, invokeMode) {
+        }
+
+        [Obsolete("Deprecated. Please use InvokeMode instead.")]
         public JSDynamicProperty(bool invokeOnBrowser)
-            : base(JSPropertyType.Dynamic) {
-            this.InvokeOnBrowser = invokeOnBrowser;
+            : base(JSPropertyType.Dynamic, invokeOnBrowser ? JSInvokeMode.Invoke : JSInvokeMode.DontInvoke) {
         }
 
         internal void RaisePropertySet(CfrV8AccessorSetEventArgs e) {
@@ -97,7 +94,7 @@ namespace Chromium.WebBrowser {
                 //e.Exception = "Property is readonly.";
                 e.SetReturnValue(true);
             } else {
-                if(InvokeOnBrowser) {
+                if(WillInvoke) {
                     Browser.RenderThreadInvoke((MethodInvoker)(() => h.Invoke(this, e)));
                 } else {
                     h.Invoke(this, e);
@@ -111,7 +108,7 @@ namespace Chromium.WebBrowser {
                 e.Retval = CfrV8Value.CreateUndefined();
                 e.SetReturnValue(true);
             } else {
-                if(InvokeOnBrowser) {
+                if(WillInvoke) {
                     Browser.RenderThreadInvoke((MethodInvoker)(() => h.Invoke(this, e)));
                 } else {
                     h.Invoke(this, e);

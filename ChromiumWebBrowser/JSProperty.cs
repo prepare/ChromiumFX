@@ -44,6 +44,29 @@ namespace Chromium.WebBrowser {
     }
 
     /// <summary>
+    /// Modes for the JSProperty.InvokeMode property.
+    /// </summary>
+    public enum JSInvokeMode {
+        /// <summary>
+        /// Inherit from parent object. This is the default mode
+        /// for javascript properties.
+        /// </summary>
+        Inherit,
+        /// <summary>
+        /// Callbacks from the render process are executed on the 
+        /// thread that owns the browser's underlying window handle
+        /// within the context of the calling remote thread.
+        /// This is the default mode for the webbrowser object.
+        /// </summary>
+        Invoke,
+        /// <summary>
+        /// Callback from the render process are executed on the
+        /// worker thread which marshals the callback.
+        /// </summary>
+        DontInvoke
+    }
+
+    /// <summary>
     /// Represents a javascript property in the render process to be added to 
     /// a browser frame's global object or to a child object.
     /// </summary>
@@ -55,6 +78,37 @@ namespace Chromium.WebBrowser {
         public JSPropertyType PropertyType { get; private set; }
 
         /// <summary>
+        /// The invoke mode for this property. See also JSInvokeMode.
+        /// Changes to the invoke mode will be effective after the next
+        /// time the browser creates a V8 context for the target frame.
+        /// </summary>
+        public JSInvokeMode InvokeMode { get; set; }
+
+        /// <summary>
+        /// Indicates whether render process callbacks on this javascript
+        /// property will be executed on the thread that owns the 
+        /// browser's underlying window handle.
+        /// Depends on the invoke mode and, if invoke mode is inherit, 
+        /// also on the parent object's and/or browser's invoke mode.
+        /// </summary>
+        public bool WillInvoke {
+            get {
+                switch(InvokeMode) {
+                    case JSInvokeMode.Invoke:
+                        return true;
+                    case JSInvokeMode.DontInvoke:
+                        return false;
+                    default:
+                        if(m_parent != null)
+                            return m_parent.WillInvoke;
+                        if(m_browser != null)
+                            return m_browser.RemoteCallbacksWillInvoke;
+                        return true;
+                }
+            }
+        }
+
+        /// <summary>
         /// The name of this property.
         /// May be null if this property is still unbound.
         /// </summary>
@@ -63,10 +117,10 @@ namespace Chromium.WebBrowser {
         private ChromiumWebBrowser m_browser;
         private JSObject m_parent;
 
-        internal CfrV8Context v8Context {get; private set; }
+        internal CfrV8Context v8Context { get; private set; }
         private CfrV8Value v8Value;
 
-        internal JSProperty(JSPropertyType type) {
+        internal JSProperty(JSPropertyType type, JSInvokeMode invokeMode) {
             PropertyType = type;
         }
 
@@ -76,7 +130,7 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public ChromiumWebBrowser Browser {
             get {
-                
+
                 if(m_browser != null)
                     return m_browser;
 
@@ -100,7 +154,7 @@ namespace Chromium.WebBrowser {
 
         /* protected AND internal */
         internal abstract CfrV8Value CreateV8Value();
-        
+
         internal CfrV8Value GetV8Value(CfrV8Context context) {
             if(v8Value == null || !Object.ReferenceEquals(v8Context, context)) {
                 v8Context = context;

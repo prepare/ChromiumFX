@@ -166,7 +166,27 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public CfxBrowserHost BrowserHost { get; private set; }
 
+        /// <summary>
+        /// The invoke mode for this browser. See also JSInvokeMode.
+        /// Changes to the invoke mode will be effective after the next
+        /// time the browser creates a V8 context. If this is set to
+        /// "Inherit", then "Invoke" will be assumed. The invoke mode
+        /// also applies to VisitDom and EvaluateJavascript.
+        /// </summary>
+        public JSInvokeMode RemoteCallbackInvokeMode { get; set; }
 
+        /// <summary>
+        /// Indicates whether render process callbacks on this browser
+        /// will be executed on the thread that owns the 
+        /// browser's underlying window handle.
+        /// Depends on the invoke mode. If the invoke mode is set to
+        /// "Inherit", then "Invoke" will be assumed.
+        /// </summary>
+        public bool RemoteCallbacksWillInvoke {
+            get {
+                return RemoteCallbackInvokeMode != JSInvokeMode.DontInvoke;
+            }
+        }
 
         private readonly object browserSyncRoot = new object();
         private IntPtr browserWindowHandle;
@@ -527,8 +547,7 @@ namespace Chromium.WebBrowser {
         /// Evaluation is done asynchronously in the render process.
         /// Returns false if the remote browser is currently unavailable.
         /// If this function returns false, then |callback| will not be called. Otherwise,
-        /// |callback| will be called on the thread that owns this browser control's 
-        /// underlying window handle within the context of the calling remote thread.
+        /// |callback| will be called according to the InvokeMode setting.
         /// Use with care:
         /// The callback may never be called if the render process gets killed prematurely.
         /// Otherwise, the returned CfrV8Value may be null if evaluation in the render process fails.
@@ -565,23 +584,31 @@ namespace Chromium.WebBrowser {
                 this.wb = wb;
                 this.code = code;
                 this.callback = callback;
-                this.Execute += Task_Execute;
+                this.Execute += (s, e) => {
+                    if(wb.RemoteCallbacksWillInvoke)
+                        wb.RenderThreadInvoke((MethodInvoker)(() => { Task_Execute(e); }));
+                    else
+                        Task_Execute(e);   
+                };
             }
 
-            void Task_Execute(object sender, CfrEventArgs e) {
+            void Task_Execute(CfrEventArgs e) {
+                bool evalSucceeded = false;
                 try {
                     CfrV8Value retval;
                     CfrV8Exception ex;
                     var context = wb.remoteBrowser.MainFrame.V8Context;
                     var result = context.Eval(code, out retval, out ex);
+                    evalSucceeded = true;
                     if(result) {
-                        wb.RenderThreadInvoke((MethodInvoker)(() => { callback(retval, ex); }));
+                        callback(retval, ex);
                     } else {
-                        wb.RenderThreadInvoke((MethodInvoker)(() => { callback(null, null); }));
+                        callback(null, null);
                     }
 
                 } catch {
-                    wb.RenderThreadInvoke((MethodInvoker)(() => { callback(null, null); }));
+                    if(!evalSucceeded)
+                        callback(null, null);
                 }
             }
         }
@@ -591,11 +618,6 @@ namespace Chromium.WebBrowser {
         /// Any changes to the global object's properties will be available 
         /// after the next time a V8 context is created in the render process
         /// for the main frame of this browser.
-        /// Dynamic properties and functions in this object 
-        /// are executed on the thread that owns the browser's 
-        /// underlying window handle, unless otherwise specified 
-        /// in the function/dynamic property constructor, and
-        /// within the context of the calling remote thread.
         /// </summary>
         public JSObject GlobalObject { get; private set; }
 
@@ -604,11 +626,6 @@ namespace Chromium.WebBrowser {
         /// Any changes to the global object's properties will be available 
         /// after the next time a V8 context is created in the render process
         /// of this browser for a frame with this name.
-        /// Dynamic properties and functions in this object 
-        /// are executed on the thread that owns the browser's 
-        /// underlying window handle, unless otherwise specified 
-        /// in the function/dynamic property constructor, and 
-        /// within the context of the calling remote thread.
         /// </summary>
         public JSObject GlobalObjectForFrame(string frameName) {
             JSObject obj;
@@ -685,8 +702,8 @@ namespace Chromium.WebBrowser {
         /// Visit the DOM in the remote browser's main frame.
         /// Returns false if the remote browser is currently unavailable.
         /// If this function returns false, then |callback| will not be called. Otherwise,
-        /// |callback| will be called on the thread that owns this browser control's 
-        /// underlying window handle within the context of the calling remote thread.
+        /// |callback| will be called according to the InvokeMode setting.
+        /// 
         /// The document object passed to the callback represents a snapshot 
         /// of the DOM at the time the callback is executed.
         /// DOM objects are only valid for the scope of the callback. Do not
@@ -714,7 +731,7 @@ namespace Chromium.WebBrowser {
                 }
             } catch(System.IO.IOException) {
                 return false;
-            } 
+            }
         }
 
         private class VisitDomTask : CfrTask {
@@ -728,17 +745,17 @@ namespace Chromium.WebBrowser {
                 this.callback = callback;
                 this.Execute += Task_Execute;
                 visitor = new CfrDomVisitor();
-                visitor.Visit += visitor_Visit;
+                visitor.Visit += (s, e) => {
+                    if(wb.RemoteCallbacksWillInvoke)
+                        wb.RenderThreadInvoke((MethodInvoker)(() => { callback(e.Document, wb.remoteBrowser); }));
+                    else
+                        callback(e.Document, wb.remoteBrowser);
+                };
             }
 
             void Task_Execute(object sender, CfrEventArgs e) {
                 wb.remoteBrowser.MainFrame.VisitDom(visitor);
             }
-
-            void visitor_Visit(object sender, CfrDomVisitorVisitEventArgs e) {
-                wb.RenderThreadInvoke((MethodInvoker)(() => { callback(e.Document, wb.remoteBrowser); }));
-            }
-
         }
 
 
@@ -775,8 +792,6 @@ namespace Chromium.WebBrowser {
         /// <summary>
         /// Called after a remote browser has been created. When browsing cross-origin a new
         /// browser will be created before the old browser is destroyed.
-        /// The event is executed on the thread that owns this browser control's 
-        /// underlying window handle within the context of the calling remote thread.
         /// 
         /// Applications may keep a reference to the CfrBrowser object outside the scope 
         /// of this event, but you have to be aware that those objects become invalid as soon
@@ -936,8 +951,8 @@ namespace Chromium.WebBrowser {
             var h = RemoteBrowserCreated;
             if(h != null) {
                 var e = new RemoteBrowserCreatedEventArgs(remoteBrowser);
-                if(InvokeRequired) {
-                    Invoke((MethodInvoker)(() => { h(this, e); }));
+                if(RemoteCallbacksWillInvoke && InvokeRequired) {
+                    RenderThreadInvoke(() => { h(this, e); });
                 } else {
                     h(this, e);
                 }
