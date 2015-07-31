@@ -74,11 +74,7 @@ namespace Chromium {
             var eventHandler = self.m_Visit;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
-            if(e.m_document_wrapped == null) {
-                CfxApi.cfx_release(e.m_document);
-            } else {
-                e.m_document_wrapped.Dispose();
-            }
+            if(e.m_document_wrapped == null) CfxApi.cfx_release(e.m_document);
         }
 
         internal CfxDomVisitor(IntPtr nativePtr) : base(nativePtr) {}

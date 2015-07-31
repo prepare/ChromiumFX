@@ -113,7 +113,7 @@ namespace Chromium.Remote {
             call.isStandard = isStandard;
             call.isLocal = isLocal;
             call.isDisplayIsolated = isDisplayIsolated;
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 

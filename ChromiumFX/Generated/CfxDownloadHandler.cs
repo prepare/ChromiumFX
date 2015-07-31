@@ -75,11 +75,7 @@ namespace Chromium {
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            if(e.m_download_item_wrapped == null) {
-                CfxApi.cfx_release(e.m_download_item);
-            } else {
-                e.m_download_item_wrapped.Dispose();
-            }
+            if(e.m_download_item_wrapped == null) CfxApi.cfx_release(e.m_download_item);
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
         }
 
@@ -99,11 +95,7 @@ namespace Chromium {
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            if(e.m_download_item_wrapped == null) {
-                CfxApi.cfx_release(e.m_download_item);
-            } else {
-                e.m_download_item_wrapped.Dispose();
-            }
+            if(e.m_download_item_wrapped == null) CfxApi.cfx_release(e.m_download_item);
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
         }
 

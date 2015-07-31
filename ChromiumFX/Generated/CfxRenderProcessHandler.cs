@@ -75,11 +75,7 @@ namespace Chromium {
             var eventHandler = self.m_OnRenderThreadCreated;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
-            if(e.m_extra_info_wrapped == null) {
-                CfxApi.cfx_release(e.m_extra_info);
-            } else {
-                e.m_extra_info_wrapped.Dispose();
-            }
+            if(e.m_extra_info_wrapped == null) CfxApi.cfx_release(e.m_extra_info);
         }
 
         // on_web_kit_initialized
@@ -255,11 +251,7 @@ namespace Chromium {
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
-            if(e.m_node_wrapped == null) {
-                CfxApi.cfx_release(e.m_node);
-            } else {
-                e.m_node_wrapped.Dispose();
-            }
+            if(e.m_node_wrapped == null) CfxApi.cfx_release(e.m_node);
         }
 
         // on_process_message_received
@@ -279,11 +271,7 @@ namespace Chromium {
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            if(e.m_message_wrapped == null) {
-                CfxApi.cfx_release(e.m_message);
-            } else {
-                e.m_message_wrapped.Dispose();
-            }
+            if(e.m_message_wrapped == null) CfxApi.cfx_release(e.m_message);
             __retval = e.m_returnValue ? 1 : 0;
         }
 

@@ -47,7 +47,7 @@ namespace Chromium.Remote {
         public static bool CurrentlyOn(CfxThreadId threadId) {
             var call = new CfxRuntimeCurrentlyOnRenderProcessCall();
             call.threadId = (int)threadId;
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return call.__retval;
         }
 
@@ -65,7 +65,7 @@ namespace Chromium.Remote {
             call.threadId = (int)threadId;
             call.task = CfrObject.Unwrap(task);
             call.delayMs = delayMs;
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return call.__retval;
         }
 
@@ -81,7 +81,7 @@ namespace Chromium.Remote {
             var call = new CfxRuntimePostTaskRenderProcessCall();
             call.threadId = (int)threadId;
             call.task = CfrObject.Unwrap(task);
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return call.__retval;
         }
 
@@ -148,7 +148,7 @@ namespace Chromium.Remote {
             call.extensionName = extensionName;
             call.javascriptCode = javascriptCode;
             call.handler = CfrObject.Unwrap(handler);
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return call.__retval;
         }
 

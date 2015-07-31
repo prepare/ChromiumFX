@@ -74,11 +74,7 @@ namespace Chromium {
             var eventHandler = self.m_OnBeforeCommandLineProcessing;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
-            if(e.m_command_line_wrapped == null) {
-                CfxApi.cfx_release(e.m_command_line);
-            } else {
-                e.m_command_line_wrapped.Dispose();
-            }
+            if(e.m_command_line_wrapped == null) CfxApi.cfx_release(e.m_command_line);
         }
 
         // on_register_custom_schemes
@@ -96,11 +92,7 @@ namespace Chromium {
             var eventHandler = self.m_OnRegisterCustomSchemes;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
-            if(e.m_registrar_wrapped == null) {
-                CfxApi.cfx_release(e.m_registrar);
-            } else {
-                e.m_registrar_wrapped.Dispose();
-            }
+            if(e.m_registrar_wrapped == null) CfxApi.cfx_release(e.m_registrar);
         }
 
         // get_resource_bundle_handler

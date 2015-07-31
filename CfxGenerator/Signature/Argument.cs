@@ -39,8 +39,6 @@ public class Argument {
     public bool IsThisArgument;
     public bool IsPropertySetterArgument;
 
-    public bool DoNotKeep;
-
     public Argument(Parser.ArgumentData ad, ApiTypeBuilder api, int index) {
         this.ArgumentType = api.GetApiType(ad.ArgumentType, ad.IsConst);
         this.VarName = ad.Var;

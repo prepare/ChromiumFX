@@ -73,7 +73,7 @@ namespace Chromium.Remote {
         [Obsolete("GetCurrentContext(CfrRuntime, ...) is deprecated, please use GetCurrentContext(...) without CfrRuntime instead.")]
         public static CfrV8Context GetCurrentContext(CfrRuntime remoteRuntime) {
             var call = new CfxV8ContextGetCurrentContextRenderProcessCall();
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrV8Context.Wrap(call.__retval);
         }
 
@@ -86,7 +86,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public static CfrV8Context GetCurrentContext() {
             var call = new CfxV8ContextGetCurrentContextRenderProcessCall();
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrV8Context.Wrap(call.__retval);
         }
 
@@ -100,7 +100,7 @@ namespace Chromium.Remote {
         [Obsolete("GetEnteredContext(CfrRuntime, ...) is deprecated, please use GetEnteredContext(...) without CfrRuntime instead.")]
         public static CfrV8Context GetEnteredContext(CfrRuntime remoteRuntime) {
             var call = new CfxV8ContextGetEnteredContextRenderProcessCall();
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrV8Context.Wrap(call.__retval);
         }
 
@@ -113,7 +113,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public static CfrV8Context GetEnteredContext() {
             var call = new CfxV8ContextGetEnteredContextRenderProcessCall();
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrV8Context.Wrap(call.__retval);
         }
 
@@ -127,7 +127,7 @@ namespace Chromium.Remote {
         [Obsolete("InContext(CfrRuntime, ...) is deprecated, please use InContext(...) without CfrRuntime instead.")]
         public static bool InContext(CfrRuntime remoteRuntime) {
             var call = new CfxV8ContextInContextRenderProcessCall();
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return call.__retval;
         }
 
@@ -140,7 +140,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public static bool InContext() {
             var call = new CfxV8ContextInContextRenderProcessCall();
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return call.__retval;
         }
 
@@ -160,7 +160,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8ContextGetTaskRunnerRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return CfrTaskRunner.Wrap(call.__retval);
             }
         }
@@ -178,7 +178,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8ContextIsValidRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -195,7 +195,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8ContextGetBrowserRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return CfrBrowser.Wrap(call.__retval);
             }
         }
@@ -212,7 +212,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8ContextGetFrameRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return CfrFrame.Wrap(call.__retval);
             }
         }
@@ -229,7 +229,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8ContextGetGlobalRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return CfrV8Value.Wrap(call.__retval);
             }
         }
@@ -248,7 +248,7 @@ namespace Chromium.Remote {
         public bool Enter() {
             var call = new CfxV8ContextEnterRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -263,7 +263,7 @@ namespace Chromium.Remote {
         public bool Exit() {
             var call = new CfxV8ContextExitRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -279,7 +279,7 @@ namespace Chromium.Remote {
             var call = new CfxV8ContextIsSameRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.that = CfrObject.Unwrap(that);
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -297,7 +297,7 @@ namespace Chromium.Remote {
             var call = new CfxV8ContextEvalRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.code = code;
-            call.RequestExecution();
+            call.RequestExecution(this);
             retval = CfrV8Value.Wrap(call.retval);
             exception = CfrV8Exception.Wrap(call.exception);
             return call.__retval;

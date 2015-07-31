@@ -56,13 +56,26 @@ namespace Chromium.Remote {
             this.returnImmediately = returnImmediately;
         }
 
-        internal void RequestExecution() {
 
-            RemoteConnection connection;
-            if(RemoteClient.connection != null) {
-                connection = RemoteClient.connection;
-            } else {
-                connection = CfxRemoteCallContext.CurrentContext.connection;
+        internal void RequestExecution(CfrObject owner) {
+            RequestExecution(owner.connection);
+        }
+
+        internal void RequestExecution(RemoteConnection connection) {
+            
+            if(CfxRemoteCallContext.IsInContext && CfxRemoteCallContext.CurrentContext.connection != connection) {
+                // The thread is in a remote call context, but the requestor wants to call
+                // on another connection. This can happen if a CfrObject method from one connection
+                // is used within the scope of a callback from another connection.
+                // In this case, the call has to be made in a temporary context with remote thread id zero.
+                var ctx = new CfxRemoteCallContext(connection, 0);
+                ctx.Enter();
+                try {
+                    RequestExecution(connection);
+                } finally {
+                    ctx.Exit();
+                }
+                return;
             }
 
             if(returnImmediately) {

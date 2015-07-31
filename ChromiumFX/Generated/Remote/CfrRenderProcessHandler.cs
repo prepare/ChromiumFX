@@ -64,7 +64,7 @@ namespace Chromium.Remote {
 
         internal static IntPtr CreateRemote() {
             var call = new CfxRenderProcessHandlerCtorRenderProcessCall();
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return call.__retval;
         }
 
@@ -170,7 +170,7 @@ namespace Chromium.Remote {
                 if(m_OnRenderThreadCreated == null) {
                     var call = new CfxOnRenderThreadCreatedActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
                 m_OnRenderThreadCreated += value;
             }
@@ -179,7 +179,7 @@ namespace Chromium.Remote {
                 if(m_OnRenderThreadCreated == null) {
                     var call = new CfxOnRenderThreadCreatedDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
             }
         }
@@ -199,7 +199,7 @@ namespace Chromium.Remote {
                 if(m_OnWebKitInitialized == null) {
                     var call = new CfxOnWebKitInitializedActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
                 m_OnWebKitInitialized += value;
             }
@@ -208,7 +208,7 @@ namespace Chromium.Remote {
                 if(m_OnWebKitInitialized == null) {
                     var call = new CfxOnWebKitInitializedDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
             }
         }
@@ -230,7 +230,7 @@ namespace Chromium.Remote {
                 if(m_OnBrowserCreated == null) {
                     var call = new CfxOnBrowserCreatedActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
                 m_OnBrowserCreated += value;
             }
@@ -239,7 +239,7 @@ namespace Chromium.Remote {
                 if(m_OnBrowserCreated == null) {
                     var call = new CfxOnBrowserCreatedDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
             }
         }
@@ -259,7 +259,7 @@ namespace Chromium.Remote {
                 if(m_OnBrowserDestroyed == null) {
                     var call = new CfxOnBrowserDestroyedActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
                 m_OnBrowserDestroyed += value;
             }
@@ -268,7 +268,7 @@ namespace Chromium.Remote {
                 if(m_OnBrowserDestroyed == null) {
                     var call = new CfxOnBrowserDestroyedDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
             }
         }
@@ -288,7 +288,7 @@ namespace Chromium.Remote {
                 if(m_GetLoadHandler == null) {
                     var call = new CfxGetLoadHandlerActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
                 m_GetLoadHandler += value;
             }
@@ -297,7 +297,7 @@ namespace Chromium.Remote {
                 if(m_GetLoadHandler == null) {
                     var call = new CfxGetLoadHandlerDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
             }
         }
@@ -319,7 +319,7 @@ namespace Chromium.Remote {
                 if(m_OnBeforeNavigation == null) {
                     var call = new CfxOnBeforeNavigationActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
                 m_OnBeforeNavigation += value;
             }
@@ -328,7 +328,7 @@ namespace Chromium.Remote {
                 if(m_OnBeforeNavigation == null) {
                     var call = new CfxOnBeforeNavigationDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
             }
         }
@@ -353,7 +353,7 @@ namespace Chromium.Remote {
                 if(m_OnContextCreated == null) {
                     var call = new CfxOnContextCreatedActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
                 m_OnContextCreated += value;
             }
@@ -362,7 +362,7 @@ namespace Chromium.Remote {
                 if(m_OnContextCreated == null) {
                     var call = new CfxOnContextCreatedDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
             }
         }
@@ -383,7 +383,7 @@ namespace Chromium.Remote {
                 if(m_OnContextReleased == null) {
                     var call = new CfxOnContextReleasedActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
                 m_OnContextReleased += value;
             }
@@ -392,7 +392,7 @@ namespace Chromium.Remote {
                 if(m_OnContextReleased == null) {
                     var call = new CfxOnContextReleasedDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
             }
         }
@@ -414,7 +414,7 @@ namespace Chromium.Remote {
                 if(m_OnUncaughtException == null) {
                     var call = new CfxOnUncaughtExceptionActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
                 m_OnUncaughtException += value;
             }
@@ -423,7 +423,7 @@ namespace Chromium.Remote {
                 if(m_OnUncaughtException == null) {
                     var call = new CfxOnUncaughtExceptionDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
             }
         }
@@ -448,7 +448,7 @@ namespace Chromium.Remote {
                 if(m_OnFocusedNodeChanged == null) {
                     var call = new CfxOnFocusedNodeChangedActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
                 m_OnFocusedNodeChanged += value;
             }
@@ -457,7 +457,7 @@ namespace Chromium.Remote {
                 if(m_OnFocusedNodeChanged == null) {
                     var call = new CfxOnFocusedNodeChangedDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
             }
         }
@@ -479,7 +479,7 @@ namespace Chromium.Remote {
                 if(m_OnProcessMessageReceived == null) {
                     var call = new CfxOnProcessMessageReceivedActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
                 m_OnProcessMessageReceived += value;
             }
@@ -488,7 +488,7 @@ namespace Chromium.Remote {
                 if(m_OnProcessMessageReceived == null) {
                     var call = new CfxOnProcessMessageReceivedDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
             }
         }
@@ -542,7 +542,7 @@ namespace Chromium.Remote {
                         ExtraInfoFetched = true;
                         var call = new CfxOnRenderThreadCreatedGetExtraInfoRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_ExtraInfo = CfrListValue.Wrap(call.value);
                     }
                     return m_ExtraInfo;
@@ -592,7 +592,7 @@ namespace Chromium.Remote {
                         BrowserFetched = true;
                         var call = new CfxOnBrowserCreatedGetBrowserRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Browser = CfrBrowser.Wrap(call.value);
                     }
                     return m_Browser;
@@ -637,7 +637,7 @@ namespace Chromium.Remote {
                         BrowserFetched = true;
                         var call = new CfxOnBrowserDestroyedGetBrowserRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Browser = CfrBrowser.Wrap(call.value);
                     }
                     return m_Browser;
@@ -683,7 +683,7 @@ namespace Chromium.Remote {
                 var call = new CfxGetLoadHandlerSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
                 call.value = CfrObject.Unwrap(returnValue);
-                call.RequestExecution();
+                call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                 returnValueSet = true;
             }
         }
@@ -735,7 +735,7 @@ namespace Chromium.Remote {
                         BrowserFetched = true;
                         var call = new CfxOnBeforeNavigationGetBrowserRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Browser = CfrBrowser.Wrap(call.value);
                     }
                     return m_Browser;
@@ -751,7 +751,7 @@ namespace Chromium.Remote {
                         FrameFetched = true;
                         var call = new CfxOnBeforeNavigationGetFrameRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Frame = CfrFrame.Wrap(call.value);
                     }
                     return m_Frame;
@@ -767,7 +767,7 @@ namespace Chromium.Remote {
                         RequestFetched = true;
                         var call = new CfxOnBeforeNavigationGetRequestRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Request = CfrRequest.Wrap(call.value);
                     }
                     return m_Request;
@@ -783,7 +783,7 @@ namespace Chromium.Remote {
                         NavigationTypeFetched = true;
                         var call = new CfxOnBeforeNavigationGetNavigationTypeRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_NavigationType = (CfxNavigationType)call.value;
                     }
                     return m_NavigationType;
@@ -799,7 +799,7 @@ namespace Chromium.Remote {
                         IsRedirectFetched = true;
                         var call = new CfxOnBeforeNavigationGetIsRedirectRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_IsRedirect = call.value;
                     }
                     return m_IsRedirect;
@@ -816,7 +816,7 @@ namespace Chromium.Remote {
                 var call = new CfxOnBeforeNavigationSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
                 call.value = returnValue;
-                call.RequestExecution();
+                call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                 returnValueSet = true;
             }
 
@@ -872,7 +872,7 @@ namespace Chromium.Remote {
                         BrowserFetched = true;
                         var call = new CfxOnContextCreatedGetBrowserRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Browser = CfrBrowser.Wrap(call.value);
                     }
                     return m_Browser;
@@ -888,7 +888,7 @@ namespace Chromium.Remote {
                         FrameFetched = true;
                         var call = new CfxOnContextCreatedGetFrameRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Frame = CfrFrame.Wrap(call.value);
                     }
                     return m_Frame;
@@ -904,7 +904,7 @@ namespace Chromium.Remote {
                         ContextFetched = true;
                         var call = new CfxOnContextCreatedGetContextRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Context = CfrV8Context.Wrap(call.value);
                     }
                     return m_Context;
@@ -955,7 +955,7 @@ namespace Chromium.Remote {
                         BrowserFetched = true;
                         var call = new CfxOnContextReleasedGetBrowserRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Browser = CfrBrowser.Wrap(call.value);
                     }
                     return m_Browser;
@@ -971,7 +971,7 @@ namespace Chromium.Remote {
                         FrameFetched = true;
                         var call = new CfxOnContextReleasedGetFrameRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Frame = CfrFrame.Wrap(call.value);
                     }
                     return m_Frame;
@@ -987,7 +987,7 @@ namespace Chromium.Remote {
                         ContextFetched = true;
                         var call = new CfxOnContextReleasedGetContextRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Context = CfrV8Context.Wrap(call.value);
                     }
                     return m_Context;
@@ -1044,7 +1044,7 @@ namespace Chromium.Remote {
                         BrowserFetched = true;
                         var call = new CfxOnUncaughtExceptionGetBrowserRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Browser = CfrBrowser.Wrap(call.value);
                     }
                     return m_Browser;
@@ -1060,7 +1060,7 @@ namespace Chromium.Remote {
                         FrameFetched = true;
                         var call = new CfxOnUncaughtExceptionGetFrameRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Frame = CfrFrame.Wrap(call.value);
                     }
                     return m_Frame;
@@ -1076,7 +1076,7 @@ namespace Chromium.Remote {
                         ContextFetched = true;
                         var call = new CfxOnUncaughtExceptionGetContextRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Context = CfrV8Context.Wrap(call.value);
                     }
                     return m_Context;
@@ -1092,7 +1092,7 @@ namespace Chromium.Remote {
                         ExceptionFetched = true;
                         var call = new CfxOnUncaughtExceptionGetExceptionRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Exception = CfrV8Exception.Wrap(call.value);
                     }
                     return m_Exception;
@@ -1108,7 +1108,7 @@ namespace Chromium.Remote {
                         StackTraceFetched = true;
                         var call = new CfxOnUncaughtExceptionGetStackTraceRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_StackTrace = CfrV8StackTrace.Wrap(call.value);
                     }
                     return m_StackTrace;
@@ -1167,7 +1167,7 @@ namespace Chromium.Remote {
                         BrowserFetched = true;
                         var call = new CfxOnFocusedNodeChangedGetBrowserRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Browser = CfrBrowser.Wrap(call.value);
                     }
                     return m_Browser;
@@ -1183,7 +1183,7 @@ namespace Chromium.Remote {
                         FrameFetched = true;
                         var call = new CfxOnFocusedNodeChangedGetFrameRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Frame = CfrFrame.Wrap(call.value);
                     }
                     return m_Frame;
@@ -1199,7 +1199,7 @@ namespace Chromium.Remote {
                         NodeFetched = true;
                         var call = new CfxOnFocusedNodeChangedGetNodeRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Node = CfrDomNode.Wrap(call.value);
                     }
                     return m_Node;
@@ -1254,7 +1254,7 @@ namespace Chromium.Remote {
                         BrowserFetched = true;
                         var call = new CfxOnProcessMessageReceivedGetBrowserRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Browser = CfrBrowser.Wrap(call.value);
                     }
                     return m_Browser;
@@ -1270,7 +1270,7 @@ namespace Chromium.Remote {
                         SourceProcessFetched = true;
                         var call = new CfxOnProcessMessageReceivedGetSourceProcessRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_SourceProcess = (CfxProcessId)call.value;
                     }
                     return m_SourceProcess;
@@ -1286,7 +1286,7 @@ namespace Chromium.Remote {
                         MessageFetched = true;
                         var call = new CfxOnProcessMessageReceivedGetMessageRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Message = CfrProcessMessage.Wrap(call.value);
                     }
                     return m_Message;
@@ -1303,7 +1303,7 @@ namespace Chromium.Remote {
                 var call = new CfxOnProcessMessageReceivedSetReturnValueRenderProcessCall();
                 call.eventArgsId = eventArgsId;
                 call.value = returnValue;
-                call.RequestExecution();
+                call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                 returnValueSet = true;
             }
 

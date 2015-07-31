@@ -335,20 +335,11 @@ public class Signature {
     }
 
     public void EmitPostPublicEventHandlerCallStatements(CodeBuilder b) {
-        GeneratorConfig.FindDoNotKeepParameters((CefCallbackType)Owner);
-
+        
         for(var i = 1; i <= ManagedArguments.Count() - 1; i++) {
             ManagedArguments[i].EmitPostPublicRaiseEventStatements(b);
             if(ManagedArguments[i].TypeIsRefCounted) {
-                if(ManagedArguments[i].DoNotKeep) {
-                    b.BeginIf("e.m_{0}_wrapped == null", ManagedArguments[i].VarName);
-                    b.AppendLine("CfxApi.cfx_release(e.m_{0});", ManagedArguments[i].VarName);
-                    b.BeginElse();
-                    b.AppendLine("e.m_{0}_wrapped.Dispose();", ManagedArguments[i].VarName);
-                    b.EndBlock();
-                } else {
-                    b.AppendLine("if(e.m_{0}_wrapped == null) CfxApi.cfx_release(e.m_{0});", ManagedArguments[i].VarName);
-                }
+                b.AppendLine("if(e.m_{0}_wrapped == null) CfxApi.cfx_release(e.m_{0});", ManagedArguments[i].VarName);
             }
         }
         EmitPostPublicEventHandlerReturnValueStatements(b);
@@ -398,7 +389,10 @@ public class Signature {
             }
         }
 
-        b.AppendLine("call.RequestExecution();");
+        if(Owner is CefExportFunction)
+            b.AppendLine("call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);");
+        else
+            b.AppendLine("call.RequestExecution(this);");
 
         foreach(var arg in ManagedArguments) {
             if(arg.ArgumentType.IsOut) {

@@ -70,7 +70,7 @@ namespace Chromium.Remote {
         public static CfrProcessMessage Create(CfrRuntime remoteRuntime, string name) {
             var call = new CfxProcessMessageCreateRenderProcessCall();
             call.name = name;
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrProcessMessage.Wrap(call.__retval);
         }
 
@@ -84,7 +84,7 @@ namespace Chromium.Remote {
         public static CfrProcessMessage Create(string name) {
             var call = new CfxProcessMessageCreateRenderProcessCall();
             call.name = name;
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrProcessMessage.Wrap(call.__retval);
         }
 
@@ -103,7 +103,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxProcessMessageIsValidRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -120,7 +120,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxProcessMessageIsReadOnlyRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -136,7 +136,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxProcessMessageGetNameRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -152,7 +152,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxProcessMessageGetArgumentListRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return CfrListValue.Wrap(call.__retval);
             }
         }
@@ -167,7 +167,7 @@ namespace Chromium.Remote {
         public CfrProcessMessage Copy() {
             var call = new CfxProcessMessageCopyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.RequestExecution();
+            call.RequestExecution(this);
             return CfrProcessMessage.Wrap(call.__retval);
         }
 

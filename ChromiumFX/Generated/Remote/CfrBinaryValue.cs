@@ -72,7 +72,7 @@ namespace Chromium.Remote {
             var call = new CfxBinaryValueCreateRenderProcessCall();
             call.data = data.ptr;
             call.dataSize = dataSize;
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrBinaryValue.Wrap(call.__retval);
         }
 
@@ -88,7 +88,7 @@ namespace Chromium.Remote {
             var call = new CfxBinaryValueCreateRenderProcessCall();
             call.data = data.ptr;
             call.dataSize = dataSize;
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrBinaryValue.Wrap(call.__retval);
         }
 
@@ -109,7 +109,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxBinaryValueIsValidRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -125,7 +125,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxBinaryValueIsOwnedRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -141,7 +141,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxBinaryValueGetSizeRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -158,7 +158,7 @@ namespace Chromium.Remote {
             var call = new CfxBinaryValueIsSameRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.that = CfrObject.Unwrap(that);
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -174,7 +174,7 @@ namespace Chromium.Remote {
             var call = new CfxBinaryValueIsEqualRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.that = CfrObject.Unwrap(that);
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -188,7 +188,7 @@ namespace Chromium.Remote {
         public CfrBinaryValue Copy() {
             var call = new CfxBinaryValueCopyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.RequestExecution();
+            call.RequestExecution(this);
             return CfrBinaryValue.Wrap(call.__retval);
         }
 
@@ -206,7 +206,7 @@ namespace Chromium.Remote {
             call.buffer = buffer.ptr;
             call.bufferSize = bufferSize;
             call.dataOffset = dataOffset;
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 

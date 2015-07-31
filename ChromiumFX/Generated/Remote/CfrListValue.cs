@@ -69,7 +69,7 @@ namespace Chromium.Remote {
         [Obsolete("Create(CfrRuntime, ...) is deprecated, please use Create(...) without CfrRuntime instead.")]
         public static CfrListValue Create(CfrRuntime remoteRuntime) {
             var call = new CfxListValueCreateRenderProcessCall();
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrListValue.Wrap(call.__retval);
         }
 
@@ -82,7 +82,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public static CfrListValue Create() {
             var call = new CfxListValueCreateRenderProcessCall();
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrListValue.Wrap(call.__retval);
         }
 
@@ -103,7 +103,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxListValueIsValidRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -119,7 +119,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxListValueIsOwnedRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -136,7 +136,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxListValueIsReadOnlyRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -152,7 +152,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxListValueGetSizeRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -170,7 +170,7 @@ namespace Chromium.Remote {
             var call = new CfxListValueIsSameRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.that = CfrObject.Unwrap(that);
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -186,7 +186,7 @@ namespace Chromium.Remote {
             var call = new CfxListValueIsEqualRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.that = CfrObject.Unwrap(that);
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -200,7 +200,7 @@ namespace Chromium.Remote {
         public CfrListValue Copy() {
             var call = new CfxListValueCopyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.RequestExecution();
+            call.RequestExecution(this);
             return CfrListValue.Wrap(call.__retval);
         }
 
@@ -216,7 +216,7 @@ namespace Chromium.Remote {
             var call = new CfxListValueSetSizeRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.size = size;
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -230,7 +230,7 @@ namespace Chromium.Remote {
         public bool Clear() {
             var call = new CfxListValueClearRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -245,7 +245,7 @@ namespace Chromium.Remote {
             var call = new CfxListValueRemoveRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.index = index;
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -260,7 +260,7 @@ namespace Chromium.Remote {
             var call = new CfxListValueGetTypeRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.index = index;
-            call.RequestExecution();
+            call.RequestExecution(this);
             return (CfxValueType)call.__retval;
         }
 
@@ -279,7 +279,7 @@ namespace Chromium.Remote {
             var call = new CfxListValueGetValueRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.index = index;
-            call.RequestExecution();
+            call.RequestExecution(this);
             return CfrValue.Wrap(call.__retval);
         }
 
@@ -294,7 +294,7 @@ namespace Chromium.Remote {
             var call = new CfxListValueGetBoolRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.index = index;
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -309,7 +309,7 @@ namespace Chromium.Remote {
             var call = new CfxListValueGetIntRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.index = index;
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -324,7 +324,7 @@ namespace Chromium.Remote {
             var call = new CfxListValueGetDoubleRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.index = index;
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -339,7 +339,7 @@ namespace Chromium.Remote {
             var call = new CfxListValueGetStringRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.index = index;
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -355,7 +355,7 @@ namespace Chromium.Remote {
             var call = new CfxListValueGetBinaryRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.index = index;
-            call.RequestExecution();
+            call.RequestExecution(this);
             return CfrBinaryValue.Wrap(call.__retval);
         }
 
@@ -372,7 +372,7 @@ namespace Chromium.Remote {
             var call = new CfxListValueGetDictionaryRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.index = index;
-            call.RequestExecution();
+            call.RequestExecution(this);
             return CfrDictionaryValue.Wrap(call.__retval);
         }
 
@@ -389,7 +389,7 @@ namespace Chromium.Remote {
             var call = new CfxListValueGetListRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.index = index;
-            call.RequestExecution();
+            call.RequestExecution(this);
             return CfrListValue.Wrap(call.__retval);
         }
 
@@ -410,7 +410,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.index = index;
             call.value = CfrObject.Unwrap(value);
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -426,7 +426,7 @@ namespace Chromium.Remote {
             var call = new CfxListValueSetNullRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.index = index;
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -443,7 +443,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.index = index;
             call.value = value;
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -460,7 +460,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.index = index;
             call.value = value;
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -477,7 +477,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.index = index;
             call.value = value;
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -494,7 +494,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.index = index;
             call.value = value;
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -514,7 +514,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.index = index;
             call.value = CfrObject.Unwrap(value);
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -534,7 +534,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.index = index;
             call.value = CfrObject.Unwrap(value);
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -554,7 +554,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.index = index;
             call.value = CfrObject.Unwrap(value);
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
