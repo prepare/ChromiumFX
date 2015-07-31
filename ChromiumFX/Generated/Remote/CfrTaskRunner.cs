@@ -76,7 +76,7 @@ namespace Chromium.Remote {
         [Obsolete("GetForCurrentThread(CfrRuntime, ...) is deprecated, please use GetForCurrentThread(...) without CfrRuntime instead.")]
         public static CfrTaskRunner GetForCurrentThread(CfrRuntime remoteRuntime) {
             var call = new CfxTaskRunnerGetForCurrentThreadRenderProcessCall();
-            call.Execute();
+            call.RequestExecution();
             return CfrTaskRunner.Wrap(call.__retval);
         }
 
@@ -91,7 +91,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public static CfrTaskRunner GetForCurrentThread() {
             var call = new CfxTaskRunnerGetForCurrentThreadRenderProcessCall();
-            call.Execute();
+            call.RequestExecution();
             return CfrTaskRunner.Wrap(call.__retval);
         }
 
@@ -106,7 +106,7 @@ namespace Chromium.Remote {
         public static CfrTaskRunner GetForThread(CfrRuntime remoteRuntime, CfxThreadId threadId) {
             var call = new CfxTaskRunnerGetForThreadRenderProcessCall();
             call.threadId = (int)threadId;
-            call.Execute();
+            call.RequestExecution();
             return CfrTaskRunner.Wrap(call.__retval);
         }
 
@@ -120,7 +120,7 @@ namespace Chromium.Remote {
         public static CfrTaskRunner GetForThread(CfxThreadId threadId) {
             var call = new CfxTaskRunnerGetForThreadRenderProcessCall();
             call.threadId = (int)threadId;
-            call.Execute();
+            call.RequestExecution();
             return CfrTaskRunner.Wrap(call.__retval);
         }
 
@@ -139,7 +139,7 @@ namespace Chromium.Remote {
             var call = new CfxTaskRunnerIsSameRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.that = CfrObject.Unwrap(that);
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -153,7 +153,7 @@ namespace Chromium.Remote {
         public bool BelongsToCurrentThread() {
             var call = new CfxTaskRunnerBelongsToCurrentThreadRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -168,7 +168,7 @@ namespace Chromium.Remote {
             var call = new CfxTaskRunnerBelongsToThreadRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.threadId = (int)threadId;
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -184,7 +184,7 @@ namespace Chromium.Remote {
             var call = new CfxTaskRunnerPostTaskRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.task = CfrObject.Unwrap(task);
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -203,7 +203,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.task = CfrObject.Unwrap(task);
             call.delayMs = delayMs;
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 

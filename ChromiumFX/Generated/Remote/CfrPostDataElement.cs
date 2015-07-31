@@ -70,7 +70,7 @@ namespace Chromium.Remote {
         [Obsolete("Create(CfrRuntime, ...) is deprecated, please use Create(...) without CfrRuntime instead.")]
         public static CfrPostDataElement Create(CfrRuntime remoteRuntime) {
             var call = new CfxPostDataElementCreateRenderProcessCall();
-            call.Execute();
+            call.RequestExecution();
             return CfrPostDataElement.Wrap(call.__retval);
         }
 
@@ -83,7 +83,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public static CfrPostDataElement Create() {
             var call = new CfxPostDataElementCreateRenderProcessCall();
-            call.Execute();
+            call.RequestExecution();
             return CfrPostDataElement.Wrap(call.__retval);
         }
 
@@ -101,7 +101,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxPostDataElementIsReadOnlyRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute();
+                call.RequestExecution();
                 return call.__retval;
             }
         }
@@ -117,7 +117,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxPostDataElementGetTypeRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute();
+                call.RequestExecution();
                 return (CfxPostdataElementType)call.__retval;
             }
         }
@@ -133,7 +133,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxPostDataElementGetFileRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute();
+                call.RequestExecution();
                 return call.__retval;
             }
         }
@@ -149,7 +149,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxPostDataElementGetBytesCountRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute();
+                call.RequestExecution();
                 return call.__retval;
             }
         }
@@ -164,7 +164,7 @@ namespace Chromium.Remote {
         public void SetToEmpty() {
             var call = new CfxPostDataElementSetToEmptyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.Execute();
+            call.RequestExecution();
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Chromium.Remote {
             var call = new CfxPostDataElementSetToFileRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.fileName = fileName;
-            call.Execute();
+            call.RequestExecution();
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.size = size;
             call.bytes = bytes.ptr;
-            call.Execute();
+            call.RequestExecution();
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.size = size;
             call.bytes = bytes.ptr;
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 

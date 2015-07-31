@@ -369,7 +369,7 @@ public class CefCallbackType : ApiType, ISignatureOwner {
                 b.AppendLine("{0}Fetched = true;", arg.PublicPropertyName);
                 b.AppendLine("var call = new {0}Get{1}RenderProcessCall();", EventName, arg.PublicPropertyName);
                 b.AppendLine("call.eventArgsId = eventArgsId;");
-                b.AppendLine("call.Execute();");
+                b.AppendLine("call.RequestExecution();");
                 b.AppendLine("m_{0} = {1};", arg.PublicPropertyName, arg.ArgumentType.RemoteWrapExpression("call.value"));
                 b.EndBlock();
                 b.AppendLine("return m_{0};", arg.PublicPropertyName);
@@ -385,7 +385,7 @@ public class CefCallbackType : ApiType, ISignatureOwner {
                 b.AppendLine("var call = new {0}Set{1}RenderProcessCall();", EventName, arg.PublicPropertyName);
                 b.AppendLine("call.eventArgsId = eventArgsId;");
                 b.AppendLine("call.value = {0};", arg.ArgumentType.RemoteUnwrapExpression("value"));
-                b.AppendLine("call.Execute();");
+                b.AppendLine("call.RequestExecution();");
                 b.EndBlock();
             }
             b.EndBlock();
@@ -404,7 +404,7 @@ public class CefCallbackType : ApiType, ISignatureOwner {
             b.AppendLine("var call = new {0}SetReturnValueRenderProcessCall();", EventName);
             b.AppendLine("call.eventArgsId = eventArgsId;");
             b.AppendLine("call.value = {0};", Signature.PublicReturnType.RemoteUnwrapExpression("returnValue"));
-            b.AppendLine("call.Execute();");
+            b.AppendLine("call.RequestExecution();");
             b.AppendLine("returnValueSet = true;");
             b.EndBlock();
         }
@@ -452,7 +452,7 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         b.BeginBlock("if(m_{0} == null)", PublicName);
         b.AppendLine("var call = new {0}ActivateRenderProcessCall();", EventName);
         b.AppendLine("call.sender = proxyId;");
-        b.AppendLine("call.Execute();");
+        b.AppendLine("call.RequestExecution();");
         b.EndBlock();
         b.AppendLine("m_{0} += value;", PublicName);
         b.EndBlock();
@@ -461,7 +461,7 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         b.BeginBlock("if(m_{0} == null)", PublicName);
         b.AppendLine("var call = new {0}DeactivateRenderProcessCall();", EventName);
         b.AppendLine("call.sender = proxyId;");
-        b.AppendLine("call.Execute();");
+        b.AppendLine("call.RequestExecution();");
         b.EndBlock();
         b.EndBlock();
         b.EndBlock();

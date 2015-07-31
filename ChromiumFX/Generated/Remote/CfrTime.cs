@@ -61,7 +61,7 @@ namespace Chromium.Remote {
 
         internal static IntPtr CreateRemote() {
             var call = new CfxTimeCtorRenderProcessCall();
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -82,7 +82,7 @@ namespace Chromium.Remote {
                 if(!m_Year_fetched) {
                     var call = new CfxTimeGetYearRenderProcessCall();
                     call.sender = this.proxyId;
-                    call.Execute();
+                    call.RequestExecution();
                     m_Year = call.value;
                     m_Year_fetched = true;
                 }
@@ -92,7 +92,7 @@ namespace Chromium.Remote {
                 var call = new CfxTimeSetYearRenderProcessCall();
                 call.sender = this.proxyId;
                 call.value = value;
-                call.Execute();
+                call.RequestExecution();
                 m_Year = value;
                 m_Year_fetched = true;
             }
@@ -106,7 +106,7 @@ namespace Chromium.Remote {
                 if(!m_Month_fetched) {
                     var call = new CfxTimeGetMonthRenderProcessCall();
                     call.sender = this.proxyId;
-                    call.Execute();
+                    call.RequestExecution();
                     m_Month = call.value;
                     m_Month_fetched = true;
                 }
@@ -116,7 +116,7 @@ namespace Chromium.Remote {
                 var call = new CfxTimeSetMonthRenderProcessCall();
                 call.sender = this.proxyId;
                 call.value = value;
-                call.Execute();
+                call.RequestExecution();
                 m_Month = value;
                 m_Month_fetched = true;
             }
@@ -130,7 +130,7 @@ namespace Chromium.Remote {
                 if(!m_DayOfWeek_fetched) {
                     var call = new CfxTimeGetDayOfWeekRenderProcessCall();
                     call.sender = this.proxyId;
-                    call.Execute();
+                    call.RequestExecution();
                     m_DayOfWeek = call.value;
                     m_DayOfWeek_fetched = true;
                 }
@@ -140,7 +140,7 @@ namespace Chromium.Remote {
                 var call = new CfxTimeSetDayOfWeekRenderProcessCall();
                 call.sender = this.proxyId;
                 call.value = value;
-                call.Execute();
+                call.RequestExecution();
                 m_DayOfWeek = value;
                 m_DayOfWeek_fetched = true;
             }
@@ -154,7 +154,7 @@ namespace Chromium.Remote {
                 if(!m_DayOfMonth_fetched) {
                     var call = new CfxTimeGetDayOfMonthRenderProcessCall();
                     call.sender = this.proxyId;
-                    call.Execute();
+                    call.RequestExecution();
                     m_DayOfMonth = call.value;
                     m_DayOfMonth_fetched = true;
                 }
@@ -164,7 +164,7 @@ namespace Chromium.Remote {
                 var call = new CfxTimeSetDayOfMonthRenderProcessCall();
                 call.sender = this.proxyId;
                 call.value = value;
-                call.Execute();
+                call.RequestExecution();
                 m_DayOfMonth = value;
                 m_DayOfMonth_fetched = true;
             }
@@ -178,7 +178,7 @@ namespace Chromium.Remote {
                 if(!m_Hour_fetched) {
                     var call = new CfxTimeGetHourRenderProcessCall();
                     call.sender = this.proxyId;
-                    call.Execute();
+                    call.RequestExecution();
                     m_Hour = call.value;
                     m_Hour_fetched = true;
                 }
@@ -188,7 +188,7 @@ namespace Chromium.Remote {
                 var call = new CfxTimeSetHourRenderProcessCall();
                 call.sender = this.proxyId;
                 call.value = value;
-                call.Execute();
+                call.RequestExecution();
                 m_Hour = value;
                 m_Hour_fetched = true;
             }
@@ -202,7 +202,7 @@ namespace Chromium.Remote {
                 if(!m_Minute_fetched) {
                     var call = new CfxTimeGetMinuteRenderProcessCall();
                     call.sender = this.proxyId;
-                    call.Execute();
+                    call.RequestExecution();
                     m_Minute = call.value;
                     m_Minute_fetched = true;
                 }
@@ -212,7 +212,7 @@ namespace Chromium.Remote {
                 var call = new CfxTimeSetMinuteRenderProcessCall();
                 call.sender = this.proxyId;
                 call.value = value;
-                call.Execute();
+                call.RequestExecution();
                 m_Minute = value;
                 m_Minute_fetched = true;
             }
@@ -226,7 +226,7 @@ namespace Chromium.Remote {
                 if(!m_Second_fetched) {
                     var call = new CfxTimeGetSecondRenderProcessCall();
                     call.sender = this.proxyId;
-                    call.Execute();
+                    call.RequestExecution();
                     m_Second = call.value;
                     m_Second_fetched = true;
                 }
@@ -236,7 +236,7 @@ namespace Chromium.Remote {
                 var call = new CfxTimeSetSecondRenderProcessCall();
                 call.sender = this.proxyId;
                 call.value = value;
-                call.Execute();
+                call.RequestExecution();
                 m_Second = value;
                 m_Second_fetched = true;
             }
@@ -257,7 +257,7 @@ namespace Chromium.Remote {
                 if(!m_Millisecond_fetched) {
                     var call = new CfxTimeGetMillisecondRenderProcessCall();
                     call.sender = this.proxyId;
-                    call.Execute();
+                    call.RequestExecution();
                     m_Millisecond = call.value;
                     m_Millisecond_fetched = true;
                 }
@@ -267,7 +267,7 @@ namespace Chromium.Remote {
                 var call = new CfxTimeSetMillisecondRenderProcessCall();
                 call.sender = this.proxyId;
                 call.value = value;
-                call.Execute();
+                call.RequestExecution();
                 m_Millisecond = value;
                 m_Millisecond_fetched = true;
             }

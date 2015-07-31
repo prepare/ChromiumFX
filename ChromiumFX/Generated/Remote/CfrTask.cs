@@ -67,7 +67,7 @@ namespace Chromium.Remote {
 
         internal static IntPtr CreateRemote() {
             var call = new CfxTaskCtorRenderProcessCall();
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -100,7 +100,7 @@ namespace Chromium.Remote {
                 if(m_Execute == null) {
                     var call = new CfxTaskExecuteActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.Execute();
+                    call.RequestExecution();
                 }
                 m_Execute += value;
             }
@@ -109,7 +109,7 @@ namespace Chromium.Remote {
                 if(m_Execute == null) {
                     var call = new CfxTaskExecuteDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.Execute();
+                    call.RequestExecution();
                 }
             }
         }

@@ -809,7 +809,7 @@ public class CfxClassBuilder {
                     b.AppendLine("var call = new {0}BrowserProcessCall();", cb.EventName);
                     b.AppendLine("call.sender = RemoteProxy.Wrap((CfxBase)sender);");
                     b.AppendLine("call.eventArgsId = AddEventArgs(e);");
-                    b.AppendLine("call.Execute();");
+                    b.AppendLine("call.RequestExecution();");
                     b.AppendLine("RemoveEventArgs(call.eventArgsId);");
                     b.EndBlock();
 
@@ -996,7 +996,7 @@ public class CfxClassBuilder {
         if(NeedsConstructor) {
             b.BeginFunction("CreateRemote", "IntPtr", "", "internal static");
             b.AppendLine("var call = new {0}CtorRenderProcessCall();", ClassName);
-            b.AppendLine("call.Execute();");
+            b.AppendLine("call.RequestExecution();");
             b.AppendLine("return call.__retval;");
             b.EndBlock();
         }
@@ -1107,7 +1107,7 @@ public class CfxClassBuilder {
                         b.BeginIf("!m_{0}_fetched", sm.PublicName);
                         b.AppendLine("var call = new {0}Get{1}RenderProcessCall();", ClassName, sm.PublicName);
                         b.AppendLine("call.sender = this.proxyId;");
-                        b.AppendLine("call.Execute();");
+                        b.AppendLine("call.RequestExecution();");
                         b.AppendLine("m_{0} = {1};", sm.PublicName, sm.MemberType.RemoteWrapExpression("call.value"));
                         b.AppendLine("m_{0}_fetched = true;", sm.PublicName);
                         b.EndBlock();
@@ -1117,7 +1117,7 @@ public class CfxClassBuilder {
                         b.AppendLine("var call = new {0}Set{1}RenderProcessCall();", ClassName, sm.PublicName);
                         b.AppendLine("call.sender = this.proxyId;");
                         b.AppendLine("call.value = {0};", sm.MemberType.RemoteUnwrapExpression("value"));
-                        b.AppendLine("call.Execute();");
+                        b.AppendLine("call.RequestExecution();");
                         b.AppendLine("m_{0} = value;", sm.PublicName);
                         b.AppendLine("m_{0}_fetched = true;", sm.PublicName);
                         b.EndBlock();
