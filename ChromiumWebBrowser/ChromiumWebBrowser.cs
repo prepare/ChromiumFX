@@ -508,17 +508,17 @@ namespace Chromium.WebBrowser {
         /// 3) The invoked code needs to call into the render process.
         /// </summary>
         public Object RenderThreadInvoke(Delegate method, params Object[] args) {
-            if(!CfxRemoteThreadContext.IsInContext) {
+            if(!CfxRemoteCallContext.IsInContext) {
                 return method.DynamicInvoke(args);
             }
             object retval = null;
-            var remoteContext = CfxRemoteThreadContext.CurrentContext;
+            var context = CfxRemoteCallContext.CurrentContext;
             Invoke((MethodInvoker)(() => {
-                remoteContext.Enter();
+                context.Enter();
                 try {
                     retval = method.DynamicInvoke(args);
                 } finally {
-                    remoteContext.Exit();
+                    context.Exit();
                 }
             }));
             return retval;
@@ -534,17 +534,17 @@ namespace Chromium.WebBrowser {
         /// 3) The invoked code needs to call into the render process.
         /// </summary>
         public void RenderThreadInvoke(MethodInvoker method) {
-            if(!CfxRemoteThreadContext.IsInContext) {
+            if(!CfxRemoteCallContext.IsInContext) {
                 method.Invoke();
                 return;
             }
-            var remoteContext = CfxRemoteThreadContext.CurrentContext;
+            var context = CfxRemoteCallContext.CurrentContext;
             Invoke((MethodInvoker)(() => {
-                remoteContext.Enter();
+                context.Enter();
                 try {
                     method.Invoke();
                 } finally {
-                    remoteContext.Exit();
+                    context.Exit();
                 }
             }));
         }
@@ -567,14 +567,15 @@ namespace Chromium.WebBrowser {
             var rb = remoteBrowser;
             if(rb == null) return false;
             try {
-                rb.RemoteContext.Enter();
+                var ctx = rb.CreateRemoteCallContext();
+                ctx.Enter();
                 try {
                     var taskRunner = CfrTaskRunner.GetForThread(CfxThreadId.Renderer);
                     var task = new EvaluateTask(this, code, callback);
                     taskRunner.PostTask(task);
                     return true;
                 } finally {
-                    rb.RemoteContext.Exit();
+                    ctx.Exit();
                 }
             } catch(System.IO.IOException) {
                 return false;
@@ -727,7 +728,7 @@ namespace Chromium.WebBrowser {
             var rb = remoteBrowser;
             if(rb == null) return false;
             try {
-                var ctx = rb.RemoteContext;
+                var ctx = rb.CreateRemoteCallContext();
                 ctx.Enter();
                 try {
                     var taskRunner = CfrTaskRunner.GetForThread(CfxThreadId.Renderer);

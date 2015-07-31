@@ -35,62 +35,21 @@ using System.Diagnostics;
 using Chromium.Remote;
 
 namespace Chromium {
-
+    
     /// <summary>
-    /// Delegate for the entry callback of the render process remote layer.
+    /// Enables access to static members and constructors of remote (Cfr*) classes.
+    /// In the scope of a remote callback event, the executing thread is always in 
+    /// the context of the calling thread in the render process.
     /// </summary>
-    /// <returns></returns>
-    public delegate int CfxRenderProcessMainDelegate();
+    public class CfxRemoteCallContext {
 
-    /// <summary>
-    /// Represents the context of a remote render process. Unless in the scope of a 
-    /// remote callback event, a context must be explicitly entered before calling 
-    /// constructors or static members on remote (Cfr*) classes. In the scope of a 
-    /// remote callback event, the executing thread is always in the context of the
-    /// render process which originated the callback.
-    /// </summary>
-    public class CfxRemoteProcessContext {
-
-        /// <summary>
-        /// Indicates if the remoting framework is initialized. The remoting framework is
-        /// initialized if CfxRuntime.Initialize has been called with a valid
-        /// render process main callback. 
-        /// </summary>
-        public static bool RemotingInitialized {
-            get { return RemoteService.renderProcessMainCallback != null; }
-        }
-
-        
-
-
-        internal readonly RemoteConnection connection;
-
-        internal CfxRemoteProcessContext(RemoteConnection connection) {
-            this.connection = connection;
-        }
-
-
-        [ThreadStatic]
-        private static Stack<CfxRemoteProcessContext> contextStack;
-
-        /// <summary>
-        /// Enter the context of a remote render process. Calls to Enter()/Exit() 
-        /// must be balanced. Use try/finally constructs to make sure that 
-        /// Exit() is called the same number of times as Enter().
-        /// </summary>
-        public void Enter() {
-            if(contextStack == null) contextStack = new Stack<CfxRemoteProcessContext>();
-            contextStack.Push(this);
-        }
-
-        /// <summary>
-        /// Exit the context of a remote render process. Throws an exception if the 
-        /// calling thread is not currently in this remote context.
-        /// </summary>
-        public void Exit() {
-            if(contextStack == null || contextStack.Count == 0 || this != contextStack.Peek())
-                throw new CfxException("The calling thread is not currently in this remote context");
-            contextStack.Pop();
+        internal static int currentThreadId {
+            get {
+                if(IsInContext)
+                    return CurrentContext.ThreadId;
+                else
+                    return 0;
+            }
         }
 
         /// <summary>
@@ -103,20 +62,58 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Returns the current remote context for the calling thread. Throws an exception if the 
-        /// calling thread is not currently in the context of a remote render process.
+        /// Within the scope of a render process callback, the managed thread id of the 
+        /// calling thread in the render process. Zero if the context is not 
+        /// in the scope of a render process callback.
         /// </summary>
-        public static CfxRemoteProcessContext CurrentContext {
+        public int ThreadId { get; private set; }
+
+        internal RemoteConnection connection { get; private set; }
+
+        internal CfxRemoteCallContext(RemoteConnection connection, int threadId) {
+            this.connection = connection;
+            ThreadId = threadId;
+        }
+
+
+        [ThreadStatic]
+        private static Stack<CfxRemoteCallContext> contextStack;
+
+        /// <summary>
+        /// Enter the context of a remote thread. Calls to Enter()/Exit() 
+        /// must be balanced. Use try/finally constructs to make sure that 
+        /// Exit() is called the same number of times as Enter().
+        /// </summary>
+        public void Enter() {
+            if(contextStack == null) contextStack = new Stack<CfxRemoteCallContext>();
+            contextStack.Push(this);
+        }
+
+        /// <summary>
+        /// Exit the context of a remote thread. Throws an exception if the 
+        /// calling thread is not currently in this remote thread context.
+        /// </summary>
+        public void Exit() {
+            if(contextStack == null || contextStack.Count == 0 || this != contextStack.Peek())
+                throw new CfxException("The calling thread is not currently in this remote call context");
+            contextStack.Pop();
+        }
+
+        /// <summary>
+        /// Returns the current context for the calling thread. Throws an exception if the 
+        /// calling thread is not currently in a remote call context.
+        /// </summary>
+        public static CfxRemoteCallContext CurrentContext {
             get {
                 if(contextStack != null && contextStack.Count > 0)
                     return contextStack.Peek();
                 else
-                    throw new CfxException("The calling thread is not currently in the context of a remote render process");
+                    throw new CfxException("The calling thread is not currently in a remote call context");
             }
         }
 
         /// <summary>
-        /// True if the calling thread is currently in the context of a remote render process, false otherwise.
+        /// True if the calling thread is currently in a remote call context, false otherwise.
         /// </summary>
         public static bool IsInContext {
             get {

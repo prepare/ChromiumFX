@@ -54,7 +54,7 @@ namespace CfxTestApplication {
             LogWriteLine();
 
             ChromiumWebBrowser.OnRemoteContextCreated += (e) =>
-                LogWriteLine("Remote context created for render process id {0} on remote thread id {1}", CfxRemoteProcessContext.CurrentContext.ProcessId, CfxRemoteThreadContext.CurrentContext.ThreadId);
+                LogWriteLine("Remote context created for render process id {0} on remote thread id {1}", CfxRemoteCallContext.CurrentContext.ProcessId, CfxRemoteCallContext.CurrentContext.ThreadId);
 
             LoadUrlButton.Click += new EventHandler(LoadUrlButton_Click);
             UrlTextBox.KeyDown += new KeyEventHandler(UrlTextBox_KeyDown);

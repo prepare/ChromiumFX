@@ -43,13 +43,13 @@ namespace Chromium.Remote {
             return remoteObject == null ? IntPtr.Zero : remoteObject.proxyId;
         }
 
-        internal readonly CfxRemoteProcessContext remoteContext;
+        internal readonly RemoteConnection connection;
         internal IntPtr m_proxyId;
 
 
         internal CfrObject(IntPtr proxyId) {
             this.m_proxyId = proxyId;
-            this.remoteContext = CfxRemoteProcessContext.CurrentContext;
+            this.connection = CfxRemoteCallContext.CurrentContext.connection;
         }
 
         internal IntPtr proxyId {
@@ -63,10 +63,13 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// The remote context of the render process 
-        /// this object belongs to.
+        /// Creates a remote call context for the render process this 
+        /// object belongs to.
         /// </summary>
-        public CfxRemoteProcessContext RemoteContext { get { return remoteContext; } }
+        /// <returns></returns>
+        public CfxRemoteCallContext CreateRemoteCallContext() {
+            return new CfxRemoteCallContext(connection, 0);
+        }
 
         /// <summary>
         /// Address of the underlying native CEF object
@@ -85,7 +88,7 @@ namespace Chromium.Remote {
             if(m_proxyId != IntPtr.Zero) {
                 try {
                     OnDispose(m_proxyId);
-                    if(remoteContext.connection.connectionLostException == null) {
+                    if(connection.connectionLostException == null) {
                         var call = new ReleaseProxyRemoteCall();
                         call.proxyId = m_proxyId;
                         call.Execute();

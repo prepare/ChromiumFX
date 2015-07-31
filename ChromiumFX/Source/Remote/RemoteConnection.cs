@@ -56,8 +56,6 @@ namespace Chromium.Remote {
 
         private readonly object syncRoot = new object();
 
-        internal readonly CfxRemoteProcessContext remoteContext;
-
         internal bool ShuttingDown { get; private set; }
         internal Exception connectionLostException { get; private set; }
 
@@ -75,8 +73,6 @@ namespace Chromium.Remote {
             requestQueue = new Queue<RemoteCall>();
             responseQueue = new Queue<RemoteCall>();
             streamHandler = new StreamHandler(pipeIn, pipeOut);
-
-            remoteContext = new CfxRemoteProcessContext(this);
 
             if(!isClient) {
                 CfxRuntime.OnCfxShutdown += new Action(CfxRuntime_OnCfxShutdown);
