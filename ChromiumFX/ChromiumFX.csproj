@@ -229,8 +229,7 @@
     <Compile Include="Source\CfxDebug.cs" />
     <Compile Include="Source\CfxMainArgsLinux.cs" />
     <Compile Include="Source\CfxPlatform.cs" />
-    <Compile Include="Source\CfxRemoteProcessContext.cs" />
-    <Compile Include="Source\CfxRemoteThreadContext.cs" />
+    <Compile Include="Source\CfxRemoteCallContext.cs" />
     <Compile Include="Source\CfxTime.cs" />
     <Compile Include="Source\CfxWindowInfo.cs" />
     <Compile Include="Source\NativeFunctionLoader.cs" />
@@ -252,7 +251,6 @@
     <Compile Include="Source\Remote\CfrObject.cs" />
     <Compile Include="Source\Remote\CfrRuntime.cs" />
     <Compile Include="Source\Remote\CfrV8Value.cs" />
-    <Compile Include="Source\CfxRemoting.cs" />
     <Compile Include="Source\Remote\CfrStructure.cs" />
     <Compile Include="Source\Remote\CfrMarshal.cs" />
     <Compile Include="Source\Remote\RemoteCall.cs" />

@@ -62,7 +62,7 @@ namespace Chromium.Remote {
             if(RemoteClient.connection != null) {
                 connection = RemoteClient.connection;
             } else {
-                connection = CfxRemoteProcessContext.CurrentContext.connection;
+                connection = CfxRemoteCallContext.CurrentContext.connection;
             }
 
             if(returnImmediately) {
@@ -85,7 +85,7 @@ namespace Chromium.Remote {
                 localThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
                 connection.callStack.Push(this);
 
-                remoteThreadId = CfxRemoteThreadContext.currentThreadId;
+                remoteThreadId = CfxRemoteCallContext.currentThreadId;
 
                 connection.EnqueueRequest(this);
 
@@ -169,23 +169,16 @@ namespace Chromium.Remote {
                 return;
             }
 
-            var threadContext = new CfxRemoteThreadContext(connection.remoteContext, remoteThreadId);
+            var threadContext = new CfxRemoteCallContext(connection, remoteThreadId);
             threadContext.Enter();
-            var processStackCount = CfxRemoteProcessContext.ContextStackCount;
-            var threadStackCount = CfxRemoteThreadContext.ContextStackCount;
+            var threadStackCount = CfxRemoteCallContext.ContextStackCount;
 
             try {
                 ExecuteInTargetProcess(connection);
             } finally {
-                if(threadStackCount != CfxRemoteThreadContext.ContextStackCount || CfxRemoteThreadContext.CurrentContext != threadContext) {
-                    CfxRemoteThreadContext.resetStack(threadStackCount - 1);
-                    CfxRemoteProcessContext.resetStack(processStackCount - 1);
-                    throw new CfxException("Unbalanced remote thread context stack. Make sure to balance calls to CfxRemoteThreadContext.Enter() and CfxRemoteThreadContext.Exit() in all render process callback events.");
-                }
-                if(processStackCount != CfxRemoteProcessContext.ContextStackCount || CfxRemoteProcessContext.CurrentContext != connection.remoteContext) {
-                    CfxRemoteThreadContext.resetStack(threadStackCount - 1);
-                    CfxRemoteProcessContext.resetStack(processStackCount - 1);
-                    throw new CfxException("Unbalanced remote process context stack. Make sure to balance calls to CfxRemoteProcessContext.Enter() and CfxRemoteProcessContext.Exit() in all render process callback events.");
+                if(threadStackCount != CfxRemoteCallContext.ContextStackCount || CfxRemoteCallContext.CurrentContext != threadContext) {
+                    CfxRemoteCallContext.resetStack(threadStackCount - 1);
+                    throw new CfxException("Unbalanced remote call context stack. Make sure to balance calls to CfxRemoteCallContext.Enter() and CfxRemoteCallContext.Exit() in all render process callback events.");
                 }
                 threadContext.Exit();
             }

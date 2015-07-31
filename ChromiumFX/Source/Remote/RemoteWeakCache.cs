@@ -39,18 +39,18 @@ namespace Chromium.Remote {
         private class CacheKey {
             internal class Comparer : IEqualityComparer<CacheKey> {
                 public bool Equals(CacheKey x, CacheKey y) {
-                    return x.remoteContext == y.remoteContext && x.proxyId == y.proxyId;
+                    return x.connection == y.connection && x.proxyId == y.proxyId;
                 }
                 public int GetHashCode(CacheKey obj) {
                     unchecked {
-                        return obj.remoteContext.GetHashCode() + obj.proxyId.GetHashCode();
+                        return obj.connection.GetHashCode() + obj.proxyId.GetHashCode();
                     }
                 }
             }
-            public readonly CfxRemoteProcessContext remoteContext;
-            public readonly IntPtr proxyId;
-            public CacheKey(IntPtr proxyId) {
-                this.remoteContext = CfxRemoteProcessContext.CurrentContext;
+            internal readonly RemoteConnection connection;
+            internal readonly IntPtr proxyId;
+            internal CacheKey(IntPtr proxyId) {
+                this.connection = CfxRemoteCallContext.CurrentContext.connection;
                 this.proxyId = proxyId;
             }
         }
