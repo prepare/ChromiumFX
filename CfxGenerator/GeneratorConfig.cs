@@ -58,29 +58,6 @@ public class GeneratorConfig {
         }
     }
 
-    public static void FindDoNotKeepParameters(CefCallbackType cb) {
-        var cc = string.Join(" ", cb.Comments.Lines);
-
-        var phrase = Regex.Match(cc, "\\bnot\\s+keep\\b[^.]+\\.").Value;
-        if(phrase.Length == 0)
-            return;
-
-        foreach(var arg in cb.Signature.ManagedArguments) {
-            if(arg.ArgumentType.IsCefStructPtrType && arg.VarName != "self") {
-                if(arg.ArgumentType.OriginalSymbol.StartsWith("cef_dom")) {
-                    arg.DoNotKeep = true;
-                    //Debug.Print("{0}::{1}({2} {3})", cb.Parent.OriginalSymbol, cb.OriginalSymbol, arg.ArgumentType.OriginalSymbol, arg.VarName)
-                } else if(Regex.Match(phrase, "\\b" + arg.VarName + "\\b").Success) {
-                    arg.DoNotKeep = true;
-                    //Debug.Print("{0}::{1}({2} {3})", cb.Parent.OriginalSymbol, cb.OriginalSymbol, arg.ArgumentType.OriginalSymbol, arg.VarName)
-                } else if(Regex.Match(phrase, "\\b" + arg.ArgumentType.OriginalSymbol + "\\b").Success) {
-                    arg.DoNotKeep = true;
-                    //Debug.Print("{0}::{1}({2} {3})", cb.Parent.OriginalSymbol, cb.OriginalSymbol, arg.ArgumentType.OriginalSymbol, arg.VarName)
-                }
-            }
-        }
-    }
-
     private static string[] privateWrapperFunctions = AssemblyResources.GetLines("PrivateWrapper.txt");
 
     public static bool HasPrivateWrapper(string item) {

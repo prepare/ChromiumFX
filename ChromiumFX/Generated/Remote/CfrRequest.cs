@@ -70,7 +70,7 @@ namespace Chromium.Remote {
         [Obsolete("Create(CfrRuntime, ...) is deprecated, please use Create(...) without CfrRuntime instead.")]
         public static CfrRequest Create(CfrRuntime remoteRuntime) {
             var call = new CfxRequestCreateRenderProcessCall();
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrRequest.Wrap(call.__retval);
         }
 
@@ -83,7 +83,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public static CfrRequest Create() {
             var call = new CfxRequestCreateRenderProcessCall();
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrRequest.Wrap(call.__retval);
         }
 
@@ -101,7 +101,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxRequestIsReadOnlyRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -119,14 +119,14 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxRequestGetUrlRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
             set {
                 var call = new CfxRequestSetUrlRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
                 call.value = value;
-                call.RequestExecution();
+                call.RequestExecution(this);
             }
         }
 
@@ -144,14 +144,14 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxRequestGetMethodRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
             set {
                 var call = new CfxRequestSetMethodRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
                 call.value = value;
-                call.RequestExecution();
+                call.RequestExecution(this);
             }
         }
 
@@ -168,14 +168,14 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxRequestGetPostDataRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return CfrPostData.Wrap(call.__retval);
             }
             set {
                 var call = new CfxRequestSetPostDataRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
                 call.value = CfrObject.Unwrap(value);
-                call.RequestExecution();
+                call.RequestExecution(this);
             }
         }
 
@@ -194,14 +194,14 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxRequestGetFlagsRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
             set {
                 var call = new CfxRequestSetFlagsRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
                 call.value = value;
-                call.RequestExecution();
+                call.RequestExecution(this);
             }
         }
 
@@ -220,14 +220,14 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxRequestGetFirstPartyForCookiesRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
             set {
                 var call = new CfxRequestSetFirstPartyForCookiesRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
                 call.value = value;
-                call.RequestExecution();
+                call.RequestExecution(this);
             }
         }
 
@@ -243,7 +243,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxRequestGetResourceTypeRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return (CfxResourceType)call.__retval;
             }
         }
@@ -261,7 +261,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxRequestGetTransitionTypeRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return (CfxTransitionType)call.__retval;
             }
         }
@@ -279,7 +279,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxRequestGetIdentifierRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -294,7 +294,7 @@ namespace Chromium.Remote {
         public System.Collections.Generic.List<string[]> GetHeaderMap() {
             var call = new CfxRequestGetHeaderMapRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -309,7 +309,7 @@ namespace Chromium.Remote {
             var call = new CfxRequestSetHeaderMapRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.headerMap = headerMap;
-            call.RequestExecution();
+            call.RequestExecution(this);
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Chromium.Remote {
             call.method = method;
             call.postData = CfrObject.Unwrap(postData);
             call.headerMap = headerMap;
-            call.RequestExecution();
+            call.RequestExecution(this);
         }
 
         internal override void OnDispose(IntPtr proxyId) {

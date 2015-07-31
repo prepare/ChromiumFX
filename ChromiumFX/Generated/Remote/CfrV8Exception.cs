@@ -74,7 +74,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8ExceptionGetMessageRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -90,7 +90,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8ExceptionGetSourceLineRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -107,7 +107,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8ExceptionGetScriptResourceNameRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -124,7 +124,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8ExceptionGetLineNumberRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -141,7 +141,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8ExceptionGetStartPositionRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -158,7 +158,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8ExceptionGetEndPositionRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -175,7 +175,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8ExceptionGetStartColumnRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -192,7 +192,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8ExceptionGetEndColumnRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }

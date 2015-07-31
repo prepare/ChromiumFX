@@ -76,16 +76,8 @@ namespace Chromium {
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
-            if(e.m_params_wrapped == null) {
-                CfxApi.cfx_release(e.m_params);
-            } else {
-                e.m_params_wrapped.Dispose();
-            }
-            if(e.m_model_wrapped == null) {
-                CfxApi.cfx_release(e.m_model);
-            } else {
-                e.m_model_wrapped.Dispose();
-            }
+            if(e.m_params_wrapped == null) CfxApi.cfx_release(e.m_params);
+            if(e.m_model_wrapped == null) CfxApi.cfx_release(e.m_model);
         }
 
         // on_context_menu_command
@@ -106,11 +98,7 @@ namespace Chromium {
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
-            if(e.m_params_wrapped == null) {
-                CfxApi.cfx_release(e.m_params);
-            } else {
-                e.m_params_wrapped.Dispose();
-            }
+            if(e.m_params_wrapped == null) CfxApi.cfx_release(e.m_params);
             __retval = e.m_returnValue ? 1 : 0;
         }
 

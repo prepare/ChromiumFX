@@ -62,7 +62,7 @@ namespace Chromium.Remote {
 
         internal static IntPtr CreateRemote() {
             var call = new CfxStringVisitorCtorRenderProcessCall();
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return call.__retval;
         }
 
@@ -95,7 +95,7 @@ namespace Chromium.Remote {
                 if(m_Visit == null) {
                     var call = new CfxStringVisitorVisitActivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
                 m_Visit += value;
             }
@@ -104,7 +104,7 @@ namespace Chromium.Remote {
                 if(m_Visit == null) {
                     var call = new CfxStringVisitorVisitDeactivateRenderProcessCall();
                     call.sender = proxyId;
-                    call.RequestExecution();
+                    call.RequestExecution(this);
                 }
             }
         }
@@ -152,7 +152,7 @@ namespace Chromium.Remote {
                         StringFetched = true;
                         var call = new CfxStringVisitorVisitGetStringRenderProcessCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_String = call.value;
                     }
                     return m_String;

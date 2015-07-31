@@ -70,7 +70,7 @@ namespace Chromium.Remote {
         [Obsolete("Create(CfrRuntime, ...) is deprecated, please use Create(...) without CfrRuntime instead.")]
         public static CfrPostData Create(CfrRuntime remoteRuntime) {
             var call = new CfxPostDataCreateRenderProcessCall();
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrPostData.Wrap(call.__retval);
         }
 
@@ -83,7 +83,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public static CfrPostData Create() {
             var call = new CfxPostDataCreateRenderProcessCall();
-            call.RequestExecution();
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrPostData.Wrap(call.__retval);
         }
 
@@ -101,7 +101,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxPostDataIsReadOnlyRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -117,7 +117,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxPostDataGetElementCountRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 return call.__retval;
             }
         }
@@ -133,7 +133,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxPostDataGetElementsRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.RequestExecution();
+                call.RequestExecution(this);
                 if(call.__retval == null) return null;
                 var retval = new CfrPostDataElement[call.__retval.Length];
                 for(int i = 0; i < retval.Length; ++i) {
@@ -155,7 +155,7 @@ namespace Chromium.Remote {
             var call = new CfxPostDataRemoveElementRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.element = CfrObject.Unwrap(element);
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -170,7 +170,7 @@ namespace Chromium.Remote {
             var call = new CfxPostDataAddElementRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.element = CfrObject.Unwrap(element);
-            call.RequestExecution();
+            call.RequestExecution(this);
             return call.__retval;
         }
 
@@ -184,7 +184,7 @@ namespace Chromium.Remote {
         public void RemoveElements() {
             var call = new CfxPostDataRemoveElementsRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.RequestExecution();
+            call.RequestExecution(this);
         }
 
         internal override void OnDispose(IntPtr proxyId) {

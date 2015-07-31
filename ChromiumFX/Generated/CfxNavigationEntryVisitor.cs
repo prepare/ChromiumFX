@@ -75,11 +75,7 @@ namespace Chromium {
             var eventHandler = self.m_Visit;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
-            if(e.m_entry_wrapped == null) {
-                CfxApi.cfx_release(e.m_entry);
-            } else {
-                e.m_entry_wrapped.Dispose();
-            }
+            if(e.m_entry_wrapped == null) CfxApi.cfx_release(e.m_entry);
             __retval = e.m_returnValue ? 1 : 0;
         }
 

@@ -341,11 +341,7 @@ namespace Chromium {
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            if(e.m_message_wrapped == null) {
-                CfxApi.cfx_release(e.m_message);
-            } else {
-                e.m_message_wrapped.Dispose();
-            }
+            if(e.m_message_wrapped == null) CfxApi.cfx_release(e.m_message);
             __retval = e.m_returnValue ? 1 : 0;
         }
 

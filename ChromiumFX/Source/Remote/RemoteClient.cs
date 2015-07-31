@@ -48,7 +48,7 @@ namespace Chromium.Remote {
             connection = new RemoteConnection(pipeIn, pipeOut, true);
 
             var call = new ExecuteRemoteProcessRemoteCall();
-            call.RequestExecution();
+            call.RequestExecution(connection);
             return call.__retval;
 
         }
