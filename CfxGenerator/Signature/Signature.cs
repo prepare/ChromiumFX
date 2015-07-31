@@ -398,7 +398,7 @@ public class Signature {
             }
         }
 
-        b.AppendLine("call.Execute();");
+        b.AppendLine("call.RequestExecution();");
 
         foreach(var arg in ManagedArguments) {
             if(arg.ArgumentType.IsOut) {

@@ -56,7 +56,7 @@ namespace Chromium.Remote {
             this.returnImmediately = returnImmediately;
         }
 
-        internal void Execute() {
+        internal void RequestExecution() {
 
             RemoteConnection connection;
             if(RemoteClient.connection != null) {

@@ -91,7 +91,7 @@ namespace Chromium.Remote {
                     if(connection.connectionLostException == null) {
                         var call = new ReleaseProxyRemoteCall();
                         call.proxyId = m_proxyId;
-                        call.Execute();
+                        call.RequestExecution();
                     }
                 } catch {
                 } finally {

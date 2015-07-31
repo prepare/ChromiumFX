@@ -75,7 +75,7 @@ namespace Chromium.Remote {
         public static CfrV8StackTrace GetCurrent(CfrRuntime remoteRuntime, int frameLimit) {
             var call = new CfxV8StackTraceGetCurrentRenderProcessCall();
             call.frameLimit = frameLimit;
-            call.Execute();
+            call.RequestExecution();
             return CfrV8StackTrace.Wrap(call.__retval);
         }
 
@@ -90,7 +90,7 @@ namespace Chromium.Remote {
         public static CfrV8StackTrace GetCurrent(int frameLimit) {
             var call = new CfxV8StackTraceGetCurrentRenderProcessCall();
             call.frameLimit = frameLimit;
-            call.Execute();
+            call.RequestExecution();
             return CfrV8StackTrace.Wrap(call.__retval);
         }
 
@@ -110,7 +110,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8StackTraceIsValidRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute();
+                call.RequestExecution();
                 return call.__retval;
             }
         }
@@ -126,7 +126,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxV8StackTraceGetFrameCountRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute();
+                call.RequestExecution();
                 return call.__retval;
             }
         }
@@ -142,7 +142,7 @@ namespace Chromium.Remote {
             var call = new CfxV8StackTraceGetFrameRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.index = index;
-            call.Execute();
+            call.RequestExecution();
             return CfrV8StackFrame.Wrap(call.__retval);
         }
 

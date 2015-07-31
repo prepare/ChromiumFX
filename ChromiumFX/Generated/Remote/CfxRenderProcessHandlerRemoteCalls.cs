@@ -60,7 +60,7 @@ namespace Chromium.Remote {
             var call = new CfxOnRenderThreadCreatedBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute();
+            call.RequestExecution();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -136,7 +136,7 @@ namespace Chromium.Remote {
             var call = new CfxOnWebKitInitializedBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute();
+            call.RequestExecution();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -185,7 +185,7 @@ namespace Chromium.Remote {
             var call = new CfxOnBrowserCreatedBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute();
+            call.RequestExecution();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -261,7 +261,7 @@ namespace Chromium.Remote {
             var call = new CfxOnBrowserDestroyedBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute();
+            call.RequestExecution();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -337,7 +337,7 @@ namespace Chromium.Remote {
             var call = new CfxGetLoadHandlerBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute();
+            call.RequestExecution();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -409,7 +409,7 @@ namespace Chromium.Remote {
             var call = new CfxOnBeforeNavigationBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute();
+            call.RequestExecution();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -616,7 +616,7 @@ namespace Chromium.Remote {
             var call = new CfxOnContextCreatedBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute();
+            call.RequestExecution();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -746,7 +746,7 @@ namespace Chromium.Remote {
             var call = new CfxOnContextReleasedBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute();
+            call.RequestExecution();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -876,7 +876,7 @@ namespace Chromium.Remote {
             var call = new CfxOnUncaughtExceptionBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute();
+            call.RequestExecution();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -1060,7 +1060,7 @@ namespace Chromium.Remote {
             var call = new CfxOnFocusedNodeChangedBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute();
+            call.RequestExecution();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -1190,7 +1190,7 @@ namespace Chromium.Remote {
             var call = new CfxOnProcessMessageReceivedBrowserProcessCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
-            call.Execute();
+            call.RequestExecution();
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {

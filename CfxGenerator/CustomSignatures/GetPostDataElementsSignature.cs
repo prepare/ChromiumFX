@@ -86,7 +86,7 @@ return retval;";
     public override void EmitRemoteCall(CodeBuilder b) {
         b.AppendLine("var call = new CfxPostDataGetElementsRenderProcessCall();");
         b.AppendLine("call.self = CfrObject.Unwrap(this);");
-        b.AppendLine("call.Execute();");
+        b.AppendLine("call.RequestExecution();");
         b.AppendLine("if(call.__retval == null) return null;");
         b.AppendLine("var retval = new CfrPostDataElement[call.__retval.Length];");
         b.BeginFor("retval.Length");

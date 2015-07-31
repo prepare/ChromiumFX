@@ -70,7 +70,7 @@ namespace Chromium.Remote {
         [Obsolete("Create(CfrRuntime, ...) is deprecated, please use Create(...) without CfrRuntime instead.")]
         public static CfrDictionaryValue Create(CfrRuntime remoteRuntime) {
             var call = new CfxDictionaryValueCreateRenderProcessCall();
-            call.Execute();
+            call.RequestExecution();
             return CfrDictionaryValue.Wrap(call.__retval);
         }
 
@@ -83,7 +83,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public static CfrDictionaryValue Create() {
             var call = new CfxDictionaryValueCreateRenderProcessCall();
-            call.Execute();
+            call.RequestExecution();
             return CfrDictionaryValue.Wrap(call.__retval);
         }
 
@@ -104,7 +104,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxDictionaryValueIsValidRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute();
+                call.RequestExecution();
                 return call.__retval;
             }
         }
@@ -120,7 +120,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxDictionaryValueIsOwnedRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute();
+                call.RequestExecution();
                 return call.__retval;
             }
         }
@@ -137,7 +137,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxDictionaryValueIsReadOnlyRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute();
+                call.RequestExecution();
                 return call.__retval;
             }
         }
@@ -153,7 +153,7 @@ namespace Chromium.Remote {
             get {
                 var call = new CfxDictionaryValueGetSizeRenderProcessCall();
                 call.self = CfrObject.Unwrap(this);
-                call.Execute();
+                call.RequestExecution();
                 return call.__retval;
             }
         }
@@ -171,7 +171,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueIsSameRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.that = CfrObject.Unwrap(that);
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -187,7 +187,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueIsEqualRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.that = CfrObject.Unwrap(that);
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -203,7 +203,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueCopyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.excludeEmptyChildren = excludeEmptyChildren;
-            call.Execute();
+            call.RequestExecution();
             return CfrDictionaryValue.Wrap(call.__retval);
         }
 
@@ -217,7 +217,7 @@ namespace Chromium.Remote {
         public bool Clear() {
             var call = new CfxDictionaryValueClearRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -232,7 +232,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueHasKeyRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -247,7 +247,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueGetKeysRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.keys = keys;
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -263,7 +263,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueRemoveRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -278,7 +278,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueGetTypeRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;
-            call.Execute();
+            call.RequestExecution();
             return (CfxValueType)call.__retval;
         }
 
@@ -297,7 +297,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueGetValueRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;
-            call.Execute();
+            call.RequestExecution();
             return CfrValue.Wrap(call.__retval);
         }
 
@@ -312,7 +312,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueGetBoolRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -327,7 +327,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueGetIntRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -342,7 +342,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueGetDoubleRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -357,7 +357,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueGetStringRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -373,7 +373,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueGetBinaryRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;
-            call.Execute();
+            call.RequestExecution();
             return CfrBinaryValue.Wrap(call.__retval);
         }
 
@@ -390,7 +390,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueGetDictionaryRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;
-            call.Execute();
+            call.RequestExecution();
             return CfrDictionaryValue.Wrap(call.__retval);
         }
 
@@ -407,7 +407,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueGetListRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;
-            call.Execute();
+            call.RequestExecution();
             return CfrListValue.Wrap(call.__retval);
         }
 
@@ -428,7 +428,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.key = key;
             call.value = CfrObject.Unwrap(value);
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -444,7 +444,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueSetNullRenderProcessCall();
             call.self = CfrObject.Unwrap(this);
             call.key = key;
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -461,7 +461,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.key = key;
             call.value = value;
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -478,7 +478,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.key = key;
             call.value = value;
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -495,7 +495,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.key = key;
             call.value = value;
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -512,7 +512,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.key = key;
             call.value = value;
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -532,7 +532,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.key = key;
             call.value = CfrObject.Unwrap(value);
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -552,7 +552,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.key = key;
             call.value = CfrObject.Unwrap(value);
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -572,7 +572,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.key = key;
             call.value = CfrObject.Unwrap(value);
-            call.Execute();
+            call.RequestExecution();
             return call.__retval;
         }
 
