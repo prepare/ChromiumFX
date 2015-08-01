@@ -235,7 +235,7 @@
     <Compile Include="Source\NativeFunctionLoader.cs" />
     <Compile Include="Source\CfxMainArgs.cs" />
     <Compile Include="Source\Remote\PipeFactory.cs" />
-    <Compile Include="Source\Remote\PipeWriteBufferStream.cs" />
+    <Compile Include="Source\Remote\PipeBufferStream.cs" />
     <Compile Include="Source\Remote\WindowsPipeFactory.cs" />
     <Compile Include="Source\Remote\WorkerPool.cs" />
     <Compile Include="Source\StringFunctions.cs" />
