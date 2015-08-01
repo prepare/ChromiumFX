@@ -57,8 +57,7 @@ namespace Chromium.Remote {
 
         internal RemoteCall(RemoteCallId callId, bool returnImmediately) {
             this.callId = callId;
-            this.returnImmediately = false;
-            //this.returnImmediately = returnImmediately;
+            this.returnImmediately = returnImmediately;
         }
 
 
