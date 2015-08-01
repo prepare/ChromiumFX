@@ -32,6 +32,8 @@
 
 
 using System;
+using System.Diagnostics;
+using System.Threading;
 
 namespace Chromium.Remote {
     internal abstract class RemoteCall {
@@ -138,7 +140,7 @@ namespace Chromium.Remote {
 
             if(returnImmediately) {
                 ReadArgs(connection.streamHandler);
-                System.Threading.ThreadPool.QueueUserWorkItem(ExecutionThreadEntry, connection);
+                WorkerPool.EnqueueTask(() => ExecutionThreadEntry(connection));
                 return;
             }
 
@@ -155,7 +157,7 @@ namespace Chromium.Remote {
                     System.Threading.Monitor.PulseAll(call.waitLock);
                 }
             } else {
-                System.Threading.ThreadPool.QueueUserWorkItem(ExecutionThreadEntry, connection);
+                WorkerPool.EnqueueTask(() => ExecutionThreadEntry(connection));
             }
         }
 
@@ -173,9 +175,7 @@ namespace Chromium.Remote {
             }
         }
 
-        private void ExecutionThreadEntry(object state) {
-
-            var connection = (RemoteConnection)state;
+        private void ExecutionThreadEntry(RemoteConnection connection) {
 
             if(returnImmediately) {
                 ExecuteInTargetProcess(connection);
