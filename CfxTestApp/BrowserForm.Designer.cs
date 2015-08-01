@@ -71,12 +71,13 @@ namespace CfxTestApplication {
             this.CreditsButton = new System.Windows.Forms.ToolStripButton();
             this.miscDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.systemNetCompatibilityTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearContextMenuModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.WebBrowser = new Chromium.WebBrowser.ChromiumWebBrowser();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.LogTextBox = new System.Windows.Forms.TextBox();
-            this.clearContextMenuModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.remoteLayerStressTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -224,7 +225,8 @@ namespace CfxTestApplication {
             this.miscDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.miscDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.systemNetCompatibilityTestToolStripMenuItem,
-            this.clearContextMenuModelToolStripMenuItem});
+            this.clearContextMenuModelToolStripMenuItem,
+            this.remoteLayerStressTestToolStripMenuItem});
             this.miscDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("miscDropDownButton.Image")));
             this.miscDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.miscDropDownButton.Name = "miscDropDownButton";
@@ -237,6 +239,14 @@ namespace CfxTestApplication {
             this.systemNetCompatibilityTestToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.systemNetCompatibilityTestToolStripMenuItem.Text = "System.Net compatibility test";
             this.systemNetCompatibilityTestToolStripMenuItem.Click += new System.EventHandler(this.systemNetCompatibilityTestToolStripMenuItem_Click);
+            // 
+            // clearContextMenuModelToolStripMenuItem
+            // 
+            this.clearContextMenuModelToolStripMenuItem.CheckOnClick = true;
+            this.clearContextMenuModelToolStripMenuItem.Name = "clearContextMenuModelToolStripMenuItem";
+            this.clearContextMenuModelToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.clearContextMenuModelToolStripMenuItem.Text = "Clear context menu model";
+            this.clearContextMenuModelToolStripMenuItem.Click += new System.EventHandler(this.clearContextMenuModelToolStripMenuItem_Click);
             // 
             // printButton
             // 
@@ -301,13 +311,12 @@ namespace CfxTestApplication {
             this.LogTextBox.Size = new System.Drawing.Size(1441, 166);
             this.LogTextBox.TabIndex = 0;
             // 
-            // clearContextMenuModelToolStripMenuItem
+            // remoteLayerStressTestToolStripMenuItem
             // 
-            this.clearContextMenuModelToolStripMenuItem.CheckOnClick = true;
-            this.clearContextMenuModelToolStripMenuItem.Name = "clearContextMenuModelToolStripMenuItem";
-            this.clearContextMenuModelToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
-            this.clearContextMenuModelToolStripMenuItem.Text = "Clear context menu model";
-            this.clearContextMenuModelToolStripMenuItem.Click += new System.EventHandler(this.clearContextMenuModelToolStripMenuItem_Click);
+            this.remoteLayerStressTestToolStripMenuItem.Name = "remoteLayerStressTestToolStripMenuItem";
+            this.remoteLayerStressTestToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.remoteLayerStressTestToolStripMenuItem.Text = "Remote Layer Stress Test";
+            this.remoteLayerStressTestToolStripMenuItem.Click += new System.EventHandler(this.remoteLayerStressTestToolStripMenuItem_Click);
             // 
             // BrowserForm
             // 
@@ -356,5 +365,6 @@ namespace CfxTestApplication {
         private System.Windows.Forms.ToolStripButton printButton;
         private System.Windows.Forms.ToolStripButton JSHelloWorldButton;
         private System.Windows.Forms.ToolStripMenuItem clearContextMenuModelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem remoteLayerStressTestToolStripMenuItem;
     }
 }

@@ -39,6 +39,7 @@ using Chromium.Event;
 using Chromium.Remote;
 using Chromium.Remote.Event;
 using Chromium.WebBrowser;
+using System.Threading;
 
 namespace CfxTestApplication {
     public partial class BrowserForm : Form {
@@ -83,6 +84,9 @@ namespace CfxTestApplication {
                         testlog(arg2);
                         return 'This text is returned from doubleCallback()';
                     }
+                    function clearTestLog() {
+                        document.getElementById('testfunc_result').innerHTML = '';
+                    }
                 </script>
                 </head>
                 <body>
@@ -92,31 +96,31 @@ namespace CfxTestApplication {
                     <img src='http://localresource/image'><br><br>
                     <a href='http://www.google.com/' onclick=""window.open('http://www.google.com/', 'Popup test', 'width=800,height=600,scrollbars=yes'); return false;"">open popup</a>
                     <br><br>
-                    <button onclick=""document.getElementById('testfunc_result').innerHTML += '<br>' + CfxHelloWorld('this is the hello world function');"">Execute CfxHelloWorld()</button>
-                    <button onclick=""
+                    <button id='testbutton1' onclick=""document.getElementById('testfunc_result').innerHTML += '<br>' + CfxHelloWorld('this is the hello world function');"">Execute CfxHelloWorld()</button>
+                    <button id='testbutton2' onclick=""
                         testlog('TestObject = ' + TestObject);
                         testlog('TestObject.testFunction = ' + TestObject.testFunction);
                         TestObject.testFunction('this is the test function');
                     "">Execute TestObject.testFunction()</button>
-                    <button onclick=""
+                    <button id='testbutton3' onclick=""
                         testlog('TestObject = ' + TestObject);
                         testlog('TestObject.anotherObject = ' + TestObject.anotherObject);
                         testlog('TestObject.anotherObject.anotherTestFunction = ' + TestObject.anotherObject.anotherTestFunction);
                         testlog(TestObject.anotherObject.anotherTestFunction('this is the other test function'));
                     "">Execute TestObject.anotherObject.anotherTestFunction()</button>
-                    <button onclick=""
+                    <button id='testbutton4' onclick=""
                         testlog('TestObject.dynamicProperty = ' + TestObject.dynamicProperty);
                         testlog('(define TestObject.dynamicProperty += 100)');
                         TestObject.dynamicProperty += 100;
                         testlog('TestObject.dynamicProperty = ' + TestObject.dynamicProperty);
                     "">Defined TestObject properties</button>
-                    <button onclick=""
+                    <button id='testbutton5' onclick=""
                         testlog('TestObject.foo = ' + TestObject.foo);
                         testlog('(define TestObject.foo = 100)');
                         TestObject.foo = 100;
                         testlog('TestObject.foo = ' + TestObject.foo);
                     "">Undefined TestObject properties</button>
-                    <button onclick=""
+                    <button id='testbutton6' onclick=""
                         testlog('Call native function testDoubleCallback(doubleCallback). Return value:');
                         testlog('Return value: ' + testDoubleCallback(doubleCallback));
                     "">Double Callback</button>
@@ -343,5 +347,55 @@ namespace CfxTestApplication {
             }
         }
 
+        private void remoteLayerStressTestToolStripMenuItem_Click(object sender, EventArgs e) {
+
+            if(Debugger.IsAttached) {
+                var answer = MessageBox.Show("Running this function with an debugger attached might perform very badly, especially if native debugging is enabled. Continue anyway?", "Attached debugger detected", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if(answer == DialogResult.Cancel) return;
+            }
+
+            var t = new Thread(RemoteLayerStressTest);
+            t.IsBackground = true;
+            t.Name = "stress test";
+            t.Start();
+        }
+
+        private void RemoteLayerStressTest() {
+
+            for(int i = 0; i < 100; ++i) {
+
+                WebBrowser.ExecuteJavascript("document.getElementById('testbutton1').click()");
+
+                WebBrowser.ExecuteJavascript("document.getElementById('testbutton2').click()");
+
+                WebBrowser.EvaluateJavascript("document.getElementById('testbutton3').click()", (value, exception) => {
+                    LogWriteLine("document.getElementById('testbutton3').click()");
+                    LogWriteLine(value.StringValue);
+                });
+
+                WebBrowser.ExecuteJavascript("document.getElementById('testbutton4').click()");
+
+                WebBrowser.EvaluateJavascript("document.getElementById('testbutton5').click()", (value, exception) => {
+                    LogWriteLine("document.getElementById('testbutton5').click()");
+                    LogWriteLine(value.StringValue);
+                });
+
+                WebBrowser.ExecuteJavascript("document.getElementById('testbutton6').click()");
+
+                WebBrowser.EvaluateJavascript("doubleCallback('foo', 123)", (value, exception) => {
+                    LogWriteLine("doubleCallback('foo', 123)");
+                    LogWriteLine(value.StringValue);
+                });
+
+                WebBrowser.VisitDom((doc, b) => {
+                    LogWriteLine("VisitDom {0} {1}", doc.ToString(), b.ToString());
+                    LogWriteLine("testbutton6", doc.GetElementById("testbutton6").AsMarkup);
+                });
+
+                // give the browser some time to render and do message loop work
+                //Thread.Sleep(20);
+
+            }
+        }
     }
 }
