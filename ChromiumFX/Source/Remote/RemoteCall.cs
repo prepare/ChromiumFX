@@ -48,6 +48,8 @@ namespace Chromium.Remote {
         internal int localThreadId;
         private int remoteThreadId;
 
+        private bool responseReceived;
+
         internal RemoteCall(RemoteCallId callId) {
             this.callId = callId;
             this.returnImmediately = false;
@@ -55,7 +57,8 @@ namespace Chromium.Remote {
 
         internal RemoteCall(RemoteCallId callId, bool returnImmediately) {
             this.callId = callId;
-            this.returnImmediately = returnImmediately;
+            this.returnImmediately = false;
+            //this.returnImmediately = returnImmediately;
         }
 
 
@@ -106,6 +109,16 @@ namespace Chromium.Remote {
 
                 for(; ; ) {
 
+                    if(responseReceived) {
+                        Debug.Assert(reentryCall == null);
+                        return;
+                    }
+
+                    if(this.reentryCall != null) {
+                        reentryCall.ExecutionThreadEntry(connection);
+                        reentryCall = null;
+                    }
+
                     if(!connection.ShuttingDown && connection.connectionLostException == null)
                         System.Threading.Monitor.Wait(waitLock);
 
@@ -114,13 +127,6 @@ namespace Chromium.Remote {
                     else if(connection.connectionLostException != null) {
                         throw new CfxException("Remote connection lost.", connection.connectionLostException);
                     }
-
-                    if(this.reentryCall == null) {
-                        return;
-                    }
-
-                    reentryCall.ExecutionThreadEntry(connection);
-                    reentryCall = null;
                 }
             }
         }
@@ -171,6 +177,7 @@ namespace Chromium.Remote {
         internal void ReadResponse(StreamHandler h) {
             ReadReturn(h);
             lock(waitLock) {
+                responseReceived = true;
                 System.Threading.Monitor.PulseAll(waitLock);
             }
         }
