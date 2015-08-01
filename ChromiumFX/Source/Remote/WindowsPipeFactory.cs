@@ -37,35 +37,35 @@ namespace Chromium.Remote {
     class WindowsPipeFactory : PipeFactory {
 
         internal override System.IO.Stream CreateServerPipeInputStream(string name) {
-            return new NamedPipeServerStream(name, PipeDirection.In, 1);
+            var s = new NamedPipeServerStream(name, PipeDirection.In, 1);
+            return new PipeBufferStream(s);
         }
 
         internal override System.IO.Stream CreateServerPipeOutputStream(string name) {
             var s = new NamedPipeServerStream(name, PipeDirection.Out, 1);
-            //return s;
-            return new PipeWriteBufferStream(s);
+            return new PipeBufferStream(s);
         }
 
         internal override System.IO.Stream CreateClientPipeInputStream(string name) {
-            return new NamedPipeClientStream(".", name, PipeDirection.In);
+            var s = new NamedPipeClientStream(".", name, PipeDirection.In);
+            return new PipeBufferStream(s);
         }
 
         internal override System.IO.Stream CreateClientPipeOutputStream(string name) {
             var s = new NamedPipeClientStream(".", name, PipeDirection.Out);
-            //return s;
-            return new PipeWriteBufferStream(s);
+            return new PipeBufferStream(s);
         }
 
         internal override void WaitForConnection(System.IO.Stream serverStream) {
-            if(serverStream is PipeWriteBufferStream)
-                ((NamedPipeServerStream)((PipeWriteBufferStream)serverStream).pipe).WaitForConnection();
+            if(serverStream is PipeBufferStream)
+                ((NamedPipeServerStream)((PipeBufferStream)serverStream).pipe).WaitForConnection();
             else
                 ((NamedPipeServerStream)serverStream).WaitForConnection();
         }
 
         internal override void Connect(System.IO.Stream clientStream) {
-            if(clientStream is PipeWriteBufferStream)
-                ((NamedPipeClientStream)((PipeWriteBufferStream)clientStream).pipe).Connect();
+            if(clientStream is PipeBufferStream)
+                ((NamedPipeClientStream)((PipeBufferStream)clientStream).pipe).Connect();
             else
                 ((NamedPipeClientStream)clientStream).Connect();
         }
