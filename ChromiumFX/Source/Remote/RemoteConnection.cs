@@ -48,8 +48,7 @@ namespace Chromium.Remote {
 
         private readonly bool isClient;
 
-        private readonly Queue<RemoteCall> requestQueue;
-        private readonly Queue<RemoteCall> responseQueue;
+        private readonly Queue<Action<StreamHandler>> writeQueue = new Queue<Action<StreamHandler>>();
 
         private readonly Thread writer;
         private readonly Thread reader;
@@ -70,8 +69,6 @@ namespace Chromium.Remote {
 
             callStack = new RemoteCallStack();
 
-            requestQueue = new Queue<RemoteCall>();
-            responseQueue = new Queue<RemoteCall>();
             streamHandler = new StreamHandler(pipeIn, pipeOut);
 
             if(!isClient) {
@@ -97,19 +94,11 @@ namespace Chromium.Remote {
             RemoteService.connections.Remove(this);
         }
 
-        internal void EnqueueRequest(RemoteCall call) {
+        internal void EnqueueWrite(Action<StreamHandler> callback) {
             lock(syncRoot) {
-                if(requestQueue.Count + responseQueue.Count == 0)
+                if(writeQueue.Count == 0)
                     Monitor.PulseAll(syncRoot);
-                requestQueue.Enqueue(call);
-            }
-        }
-
-        internal void EnqueueResponse(RemoteCall call) {
-            lock(syncRoot) {
-                if(requestQueue.Count + responseQueue.Count == 0)
-                    Monitor.PulseAll(syncRoot);
-                responseQueue.Enqueue(call);
+                writeQueue.Enqueue(callback);
             }
         }
 
@@ -148,23 +137,16 @@ namespace Chromium.Remote {
 
         private void WriteLoop() {
             for(; ; ) {
-                RemoteCall request = null;
-                RemoteCall response = null;
+                Action<StreamHandler> writeCallback = null;
                 lock(syncRoot) {
-                    if(requestQueue.Count + responseQueue.Count == 0) {
+                    if(writeQueue.Count == 0) {
                         Monitor.Wait(syncRoot);
-                        if(requestQueue.Count + responseQueue.Count == 0)
+                        if(writeQueue.Count == 0)
                             return;
                     }
-                    if(requestQueue.Count > 0)
-                        request = requestQueue.Dequeue();
-                    if(responseQueue.Count > 0)
-                        response = responseQueue.Dequeue();
+                    writeCallback = writeQueue.Dequeue();
                 }
-                if(request != null)
-                    request.WriteRequest(streamHandler);
-                if(response != null)
-                    response.WriteResponse(streamHandler);
+                writeCallback.Invoke(streamHandler);
             }
         }
 

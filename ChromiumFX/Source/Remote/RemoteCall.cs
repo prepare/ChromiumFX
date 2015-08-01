@@ -88,7 +88,7 @@ namespace Chromium.Remote {
                     return;
                 else if(connection.connectionLostException != null)
                     throw new CfxException("Remote connection lost.", connection.connectionLostException);
-                connection.EnqueueRequest(this);
+                connection.EnqueueWrite(WriteRequest);
                 return;
             }
 
@@ -105,7 +105,7 @@ namespace Chromium.Remote {
 
                 remoteThreadId = CfxRemoteCallContext.currentThreadId;
 
-                connection.EnqueueRequest(this);
+                connection.EnqueueWrite(WriteRequest);
 
                 for(; ; ) {
 
@@ -202,8 +202,8 @@ namespace Chromium.Remote {
                 }
                 threadContext.Exit();
             }
-            
-            connection.EnqueueResponse(this);
+
+            connection.EnqueueWrite(WriteResponse);
         }
 
         protected virtual void WriteArgs(StreamHandler h) { }
