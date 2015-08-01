@@ -69,15 +69,22 @@ namespace Chromium.Remote {
         public object Get(IntPtr proxyId) {
             // always locked by caller
             WeakReference r;
-            if(cache.TryGetValue(new CacheKey(proxyId), out r))
+            var key = new CacheKey(proxyId);
+            if(cache.TryGetValue(key, out r)) {
+                var retval = r.Target;
+                if(retval == null) {
+                    // Happens if the object was collected but not yet finalized.
+                    // Remove the key so the subsequent call to Add won't fail.
+                    cache.Remove(new CacheKey(proxyId));
+                }
                 return r.Target;
-            else
-                return null;
+            }
+            return null;
         }
 
 
         public void Remove(IntPtr proxyId) {
-            lock(this) {
+            lock (this) {
                 cache.Remove(new CacheKey(proxyId));
             }
         }
