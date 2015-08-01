@@ -60,10 +60,10 @@ namespace Chromium.Remote {
         internal Exception connectionLostException { get; private set; }
 
         internal readonly RemoteCallStack callStack;
-        
+
 
         internal RemoteConnection(Stream pipeIn, Stream pipeOut, bool isClient) {
-            
+
             this.pipeIn = pipeIn;
             this.pipeOut = pipeOut;
             this.isClient = isClient;
@@ -86,7 +86,7 @@ namespace Chromium.Remote {
 
             writer.IsBackground = true;
             reader.IsBackground = true;
-            
+
             writer.Start();
             reader.Start();
         }
@@ -147,7 +147,7 @@ namespace Chromium.Remote {
         }
 
         private void WriteLoop() {
-            for(;;) {
+            for(; ; ) {
                 RemoteCall request = null;
                 RemoteCall response = null;
                 lock(syncRoot) {
@@ -156,9 +156,9 @@ namespace Chromium.Remote {
                         if(requestQueue.Count + responseQueue.Count == 0)
                             return;
                     }
-                    if(requestQueue.Count > 0) 
+                    if(requestQueue.Count > 0)
                         request = requestQueue.Dequeue();
-                    if(responseQueue.Count > 0) 
+                    if(responseQueue.Count > 0)
                         response = responseQueue.Dequeue();
                 }
                 if(request != null)
@@ -169,7 +169,7 @@ namespace Chromium.Remote {
         }
 
         private void ReadLoop() {
-            for(;;) {
+            for(; ; ) {
                 var callId = streamHandler.ReadUInt16();
                 if(callId == ushort.MaxValue) {
                     var threadId = streamHandler.ReadInt32();
