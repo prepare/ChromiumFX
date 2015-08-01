@@ -58,8 +58,6 @@ namespace Chromium.WebBrowser {
             try {
                 var retval = CfrRuntime.ExecuteProcess(app);
                 return retval;
-            } catch(Exception) {
-                return 100;
             } finally {
                 var handler = OnExit;
                 if(handler != null)
