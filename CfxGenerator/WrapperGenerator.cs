@@ -65,7 +65,7 @@ public class WrapperGenerator {
     }
 
     public void Run() {
-        var fileManager = new GeneratedFileManager("libcfx\\Generated");
+        var fileManager = new GeneratedFileManager(System.IO.Path.Combine("libcfx", "Generated"));
         BuildLibCfx(fileManager);
         BuildAmalgamation(fileManager);
         BuildHeaders(fileManager);
@@ -74,7 +74,7 @@ public class WrapperGenerator {
 
         generatedCSFiles = new List<string>();
 
-        fileManager = new GeneratedFileManager("ChromiumFX\\Generated");
+		fileManager = new GeneratedFileManager(System.IO.Path.Combine("ChromiumFX", "Generated"));
         BuildPInvokeApi(fileManager);
         BuildEnums(fileManager);
         BuildCfxRuntime(fileManager);
@@ -84,7 +84,7 @@ public class WrapperGenerator {
         fileManager.DeleteObsoleteFiles();
         generatedCSFiles.AddRange(fileManager.GetNewFiles());
 
-        fileManager = new GeneratedFileManager("ChromiumFX\\Generated\\Remote");
+		fileManager = new GeneratedFileManager(System.IO.Path.Combine("ChromiumFX", "Generated", "Remote"));
         BuildRemoteCalls(fileManager);
         BuildCfrRuntime(fileManager);
         BuildRemoteClasses(fileManager);
@@ -132,7 +132,7 @@ public class WrapperGenerator {
 
     private void BuildHeaders(GeneratedFileManager fileManager) {
         var b = new CodeBuilder();
-        var files = Directory.GetFiles("cef\\include\\capi");
+		var files = Directory.GetFiles(System.IO.Path.Combine("cef", "include", "capi"));
         foreach(var f in files) {
             var f1 = f.Replace("\\", "/");
             b.AppendLine("#include \"{0}\"", f1.Substring(4));
