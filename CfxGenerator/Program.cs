@@ -30,10 +30,11 @@
 
 
 using System;
+using System.IO;
 
 internal static class Program {
 
-    public const string CfxPath = "..\\..\\..\\..\\ChromiumFX";
+
 
     public static int EmitDebugInfo = 0;
 
@@ -41,10 +42,17 @@ internal static class Program {
 
     public static void Main() {
 
+		// find project directory
+		var path = Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
+		while(Path.GetFileName(path) != "linux" && Path.GetFileName(path) != "CfxGenerator")
+			path = Path.GetDirectoryName(path);
+
+		path = Path.GetDirectoryName(path);
+
         //GeneratedFileManager.PatchFilesLicense(CfxPath);
         //Environment.Exit(0);
 
-        Environment.CurrentDirectory = CfxPath;
+        Environment.CurrentDirectory = path;
 
         var parser = new ApiTypeBuilder();
         var decls = parser.GetDeclarations();
