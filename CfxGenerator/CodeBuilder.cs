@@ -125,7 +125,7 @@ public class CodeBuilder {
     public void AppendLine() {
         CommitCurrentLine();
         EmitDebugInfo();
-        builder.AppendLine();
+        builder.Append("\r\n");
     }
 
     public void AppendLine(string line) {
