@@ -89,8 +89,8 @@ public class GeneratorConfig {
 
     private static void FindPartialClasses() {
         partialClasses = new HashSet<string>();
-        FindPartialClasses("ChromiumFX\\Source");
-        FindPartialClasses("ChromiumFX\\Source\\Remote");
+        FindPartialClasses(System.IO.Path.Combine("ChromiumFX", "Source"));
+        FindPartialClasses(System.IO.Path.Combine("ChromiumFX", "Source", "Remote"));
     }
 
     private static void FindPartialClasses(string path) {
