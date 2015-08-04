@@ -263,7 +263,6 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         b.AppendLine();
 
         for(var i = 1; i <= Signature.ManagedArguments.Count() - 1; i++) {
-            var arg = Signature.ManagedArguments[i];
             Signature.ManagedArguments[i].EmitPublicEventArgFields(b);
         }
         b.AppendLine();
@@ -417,7 +416,6 @@ public class CefCallbackType : ApiType, ISignatureOwner {
     }
 
     public void EmitPublicEvent(CodeBuilder b, int cbIndex, CommentData comments) {
-        var callbackName = Parent.CfxName + "_" + Name;
         b.AppendSummaryAndRemarks(comments, false, true);
         b.BeginBlock("public event {0} {1}", EventHandlerName, CSharp.Escape(PublicName));
         b.BeginBlock("add");

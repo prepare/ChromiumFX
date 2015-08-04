@@ -32,16 +32,11 @@
 using System.Collections.Generic;
 
 public class SignatureWithStructArray : Signature {
-    private int arrayIndex;
-
-    private int countIndex;
 
     private Argument[] m_publicArguments;
 
     public SignatureWithStructArray(ISignatureOwner parent, Parser.SignatureData sd, ApiTypeBuilder api, int arrayIndex, int countIndex)
         : base(parent, sd, api) {
-        this.arrayIndex = arrayIndex;
-        this.countIndex = countIndex;
 
         var list = new List<Argument>();
         for(var i = 0; i <= Arguments.Length - 1; i++) {
