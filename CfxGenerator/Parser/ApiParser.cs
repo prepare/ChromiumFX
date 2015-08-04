@@ -213,7 +213,7 @@ namespace Parser {
                 e.Name = m.Groups[2].Value;
 
                 var mm1 = memberEx.Matches(m.Groups[1].Value);
-                List<CefEnumType.EnumMember> members = new List<CefEnumType.EnumMember>();
+                
                 for(var i = 0; i <= mm1.Count - 1; i++) {
                     var em = new EnumMemberData();
                     em.Name = mm1[i].Groups[1].Value;
