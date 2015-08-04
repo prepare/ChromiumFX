@@ -107,10 +107,10 @@ public class WrapperGenerator {
     private string ProjectMatch(Match m) {
         if(generatedCSFiles != null) {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine();
+            sb.Append("\r\n");
             for(var i = 0; i <= generatedCSFiles.Count - 2; i++) {
                 sb.AppendFormat("    <Compile Include=\"{0}\" />", generatedCSFiles[i].Substring(11));
-                sb.AppendLine();
+                sb.AppendLine("\r\n");
             }
             sb.AppendFormat("    <Compile Include=\"{0}\" />", generatedCSFiles[generatedCSFiles.Count - 1].Substring(11));
             generatedCSFiles = null;
