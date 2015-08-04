@@ -21,8 +21,8 @@
     <SourceDirectory>.</SourceDirectory>
     <Includes>
       <Includes>
-        <Include>${ProjectDir}/cef</Include>
         <Include>${ProjectDir}/../libcfx/Generated</Include>
+        <Include>${ProjectDir}/../cef</Include>
       </Includes>
     </Includes>
     <ExtraCompilerArguments>-std=c99
