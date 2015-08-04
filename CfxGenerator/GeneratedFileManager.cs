@@ -104,6 +104,7 @@ public class GeneratedFileManager {
     }
 
     public static void PatchFilesLicense(string dir) {
+		Debug.Assert (false);
         var licenseStub = AssemblyResources.GetString("LicenseStub");
 
         var files = Directory.GetFiles(dir);

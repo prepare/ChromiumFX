@@ -47,7 +47,7 @@ namespace Parser {
         private Dictionary<string, string> codeFiles = new Dictionary<string, string>();
 
         public static string ParseApiHash() {
-            var code = File.ReadAllText("cef\\include\\cef_version.h");
+			var code = File.ReadAllText(System.IO.Path.Combine("cef", "include", "cef_version.h"));
             var ex = new Regex(@"CEF_API_HASH_UNIVERSAL ""(\w+)""");
             Debug.Assert(ex.IsMatch(code));
             return ex.Match(code).Groups[1].Value;
@@ -56,12 +56,12 @@ namespace Parser {
         public CefApiData Parse() {
             ParseCppHeaders();
 
-            AddFile("cef\\include\\cef_version.h");
+			AddFile(System.IO.Path.Combine("cef", "include", "cef_version.h"));
 
-            AddFile("cef\\include\\internal\\cef_types.h");
-            AddFile("cef\\include\\internal\\cef_time.h");
+			AddFile(System.IO.Path.Combine("cef", "include", "internal", "cef_types.h"));
+			AddFile(System.IO.Path.Combine("cef", "include", "internal", "cef_time.h"));
 
-            var files = Directory.GetFiles("cef\\include\\capi");
+			var files = Directory.GetFiles(System.IO.Path.Combine("cef", "include", "capi"));
             foreach(var f in files) {
                 AddFile(f);
             }
@@ -70,12 +70,12 @@ namespace Parser {
             var structs = new List<StructData>();
             var funcs = new List<FunctionData>();
 
-            ParseEnums(StripComments(codeFiles["cef\\include\\internal\\cef_types.h"]), enums);
+			ParseEnums(StripComments(codeFiles[System.IO.Path.Combine("cef", "include", "internal", "cef_types.h")]), enums);
 
             foreach(var cf in codeFiles) {
                 var code = StripComments(cf.Value);
                 ParseStructs(code, structs);
-                if(cf.Key != "cef\\include\\internal\\cef_time.h") {
+				if(cf.Key != System.IO.Path.Combine("cef", "include", "internal", "cef_time.h")) {
                     ParseFunctions(code, funcs);
                 }
             }
@@ -148,9 +148,9 @@ namespace Parser {
             //    Stop
             //End If
 
-            var stringListCode = File.ReadAllText("cef\\include\\internal\\cef_string_list.h");
-            var stringMapCode = File.ReadAllText("cef\\include\\internal\\cef_string_map.h");
-            var stringMultiMapCode = File.ReadAllText("cef\\include\\internal\\cef_string_multimap.h");
+			var stringListCode = File.ReadAllText(System.IO.Path.Combine("cef", "include", "internal", "cef_string_list.h"));
+			var stringMapCode = File.ReadAllText(System.IO.Path.Combine("cef", "include", "internal", "cef_string_map.h"));
+			var stringMultiMapCode = File.ReadAllText(System.IO.Path.Combine("cef", "include", "internal", "cef_string_multimap.h"));
 
             funcs.Clear();
             ParseFunctions(stringListCode, funcs);
@@ -160,11 +160,11 @@ namespace Parser {
 
             ParseComments(api);
 
-            var pa = ParsePlatformApi("cef\\include\\internal\\cef_types_win.h");
+			var pa = ParsePlatformApi(System.IO.Path.Combine("cef", "include", "internal", "cef_types_win.h"));
             api.CefFunctionsWindows = pa.CefFunctions;
             api.CefStructsWindows = pa.CefStructs;
 
-            pa = ParsePlatformApi("linux\\cef\\include\\internal\\cef_types_linux.h");
+			pa = ParsePlatformApi(System.IO.Path.Combine("cef", "include", "internal", "cef_types_linux.h"));
             api.CefFunctionsLinux = pa.CefFunctions;
             api.CefStructsLinux = pa.CefStructs;
 
@@ -494,7 +494,7 @@ namespace Parser {
             var funcEx = new Regex("(\\w+)\\s*\\((.*?)\\)", RegexOptions.Singleline);
             var boolParamEx = new Regex("\\bbool\\b(?:\\s*[&*])?\\s*\\b(\\w+)\\b");
 
-            var files = Directory.GetFiles("cef\\include");
+			var files = Directory.GetFiles(System.IO.Path.Combine("cef", "include"));
             foreach(var f in files) {
                 var code = File.ReadAllText(f);
 

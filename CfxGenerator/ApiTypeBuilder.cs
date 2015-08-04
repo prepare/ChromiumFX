@@ -55,18 +55,20 @@ public class ApiTypeBuilder {
         return BuildTypes();
     }
 
+	private string serializedApi = System.IO.Path.Combine("cef", "SerializedApi.data");
+
     private void Serialize(Parser.CefApiData apiData) {
         var formatter = new BinaryFormatter();
-        var stream = new FileStream("cef\\SerializedApi.data", FileMode.Create, FileAccess.Write, FileShare.None);
+		var stream = new FileStream(serializedApi, FileMode.Create, FileAccess.Write, FileShare.None);
         formatter.Serialize(stream, apiData);
         stream.Close();
     }
 
     private Parser.CefApiData Deserialize() {
-        if(!File.Exists("cef\\SerializedApi.data"))
+		if(!File.Exists(serializedApi))
             return null;
         var formatter = new BinaryFormatter();
-        var stream = new FileStream("cef\\SerializedApi.data", FileMode.Open, FileAccess.Read, FileShare.Read);
+		var stream = new FileStream(serializedApi, FileMode.Open, FileAccess.Read, FileShare.Read);
         try {
             return (Parser.CefApiData)formatter.Deserialize(stream);
         } catch(Exception) {
