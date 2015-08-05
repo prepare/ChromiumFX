@@ -40,8 +40,8 @@
     <CompileTarget>SharedLibrary</CompileTarget>
     <Includes>
       <Includes>
-        <Include>/home/wolfgang/chromiumfx/linux/cef</Include>
-        <Include>/home/wolfgang/chromiumfx/libcfx/Generated</Include>
+        <Include>${ProjectDir}/../cef</Include>
+        <Include>${ProjectDir}/../libcfx/Generated</Include>
       </Includes>
     </Includes>
     <OptimizationLevel>3</OptimizationLevel>
