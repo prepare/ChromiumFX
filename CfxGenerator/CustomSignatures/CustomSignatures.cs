@@ -51,7 +51,7 @@ public class CustomSignatures {
                 return new SignatureWithStructPtrArray(owner, sd, api, 3, 2);
 
             case "cef_render_handler::on_paint":
-                return new OnPaintSignature(owner, sd, api);
+                return new SignatureWithStructArray(owner, sd, api, 4, 3);
 
             case "cef_post_data::get_elements":
                 return new GetPostDataElementsSignature(owner, sd, api);

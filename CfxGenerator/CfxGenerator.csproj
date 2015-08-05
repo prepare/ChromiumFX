@@ -54,7 +54,6 @@
     <Compile Include="ApiTypes\CefEnumType.cs" />
     <Compile Include="ApiTypes\CefPlatformBasePtrType.cs" />
     <Compile Include="ApiTypes\CefPlatformStructType.cs" />
-    <Compile Include="ApiTypes\CefRectArrayType.cs" />
     <Compile Include="ApiTypes\CefStringListType.cs" />
     <Compile Include="ApiTypes\CefStringMapType.cs" />
     <Compile Include="ApiTypes\CefStringMultimapType.cs" />
@@ -93,7 +92,6 @@
     <Compile Include="CustomSignatures\GetFrameIdentifiersSignature.cs" />
     <Compile Include="CustomSignatures\GetPageRangesSignature.cs" />
     <Compile Include="CustomSignatures\GetPostDataElementsSignature.cs" />
-    <Compile Include="CustomSignatures\OnPaintSignature.cs" />
     <Compile Include="CustomSignatures\OutStringToRetvalSignature.cs" />
     <Compile Include="CustomSignatures\SignatureWithStructArray.cs" />
     <Compile Include="CustomSignatures\SignatureWithStructPtrArray.cs" />

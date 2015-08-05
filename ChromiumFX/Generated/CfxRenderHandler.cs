@@ -181,11 +181,11 @@ namespace Chromium {
 
         // on_paint
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_render_handler_on_paint_delegate(IntPtr gcHandlePtr, IntPtr browser, CfxPaintElementType type, int dirtyRectsCount, IntPtr dirtyRects, IntPtr buffer, int width, int height);
+        private delegate void cfx_render_handler_on_paint_delegate(IntPtr gcHandlePtr, IntPtr browser, CfxPaintElementType type, int dirtyRectsCount, IntPtr dirtyRects, ref int dirtyRects_flags, IntPtr buffer, int width, int height);
         private static cfx_render_handler_on_paint_delegate cfx_render_handler_on_paint;
         private static IntPtr cfx_render_handler_on_paint_ptr;
 
-        internal static void on_paint(IntPtr gcHandlePtr, IntPtr browser, CfxPaintElementType type, int dirtyRectsCount, IntPtr dirtyRects, IntPtr buffer, int width, int height) {
+        internal static void on_paint(IntPtr gcHandlePtr, IntPtr browser, CfxPaintElementType type, int dirtyRectsCount, IntPtr dirtyRects, ref int dirtyRects_flags, IntPtr buffer, int width, int height) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 return;
@@ -195,6 +195,7 @@ namespace Chromium {
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
+            dirtyRects_flags = e.m_dirtyRects_managed == null ? 1 : 0;
         }
 
         // on_cursor_change
@@ -1174,8 +1175,7 @@ namespace Chromium {
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
             internal CfxPaintElementType m_type;
-            internal IntPtr m_dirtyRects;
-            internal int m_dirtyRectsCount;
+            internal IntPtr[] m_dirtyRects;
             internal CfxRect[] m_dirtyRects_managed;
             internal IntPtr m_buffer;
             internal int m_width;
@@ -1184,8 +1184,10 @@ namespace Chromium {
             internal CfxOnPaintEventArgs(IntPtr browser, CfxPaintElementType type, IntPtr dirtyRects, int dirtyRectsCount, IntPtr buffer, int width, int height) {
                 m_browser = browser;
                 m_type = type;
-                m_dirtyRects = dirtyRects;
-                m_dirtyRectsCount = dirtyRectsCount;
+                m_dirtyRects = new IntPtr[dirtyRectsCount];
+                if(dirtyRectsCount > 0) {
+                    System.Runtime.InteropServices.Marshal.Copy(dirtyRects, m_dirtyRects, 0, dirtyRectsCount);
+                }
                 m_buffer = buffer;
                 m_width = width;
                 m_height = height;
@@ -1217,17 +1219,9 @@ namespace Chromium {
                 get {
                     CheckAccess();
                     if(m_dirtyRects_managed == null) {
-                        if(m_dirtyRectsCount == 0) return new CfxRect[0];
-                        var buffer = new int[4 * m_dirtyRectsCount];
-                        System.Runtime.InteropServices.Marshal.Copy(m_dirtyRects, buffer, 0, buffer.Length);
-                        m_dirtyRects_managed = new CfxRect[m_dirtyRectsCount];
-                        for (var i = 0; i < m_dirtyRectsCount;) {
-                            m_dirtyRects_managed[i] = new CfxRect() {
-                                X = buffer[i++],
-                                Y = buffer[i++],
-                                Width = buffer[i++],
-                                Height = buffer[i++]
-                            };
+                        m_dirtyRects_managed = new CfxRect[m_dirtyRects.Length];
+                        for(int i = 0; i < m_dirtyRects.Length; ++i) {
+                            m_dirtyRects_managed[i] = CfxRect.WrapOwned(m_dirtyRects[i]);
                         }
                     }
                     return m_dirtyRects_managed;
