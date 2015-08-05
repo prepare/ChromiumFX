@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CfxGenerator", "CfxGenerator.csproj", "{629726B3-913E-424D-9D96-2C1BF151F880}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CfxGenerator", "..\CfxGenerator\CfxGenerator.csproj", "{BEC79EF6-997A-4F56-9CEF-F01AC28BDEF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,19 +9,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{629726B3-913E-424D-9D96-2C1BF151F880}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{629726B3-913E-424D-9D96-2C1BF151F880}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{629726B3-913E-424D-9D96-2C1BF151F880}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{629726B3-913E-424D-9D96-2C1BF151F880}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEC79EF6-997A-4F56-9CEF-F01AC28BDEF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEC79EF6-997A-4F56-9CEF-F01AC28BDEF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEC79EF6-997A-4F56-9CEF-F01AC28BDEF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEC79EF6-997A-4F56-9CEF-F01AC28BDEF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = CfxGenerator.csproj
-		Policies = $0
-		$0.TextStylePolicy = $1
-		$1.FileWidth = 120
-		$1.EolMarker = Windows
-		$1.inheritsSet = VisualStudio
-		$1.inheritsScope = text/plain
-		$1.scope = text/plain
+		StartupItem = ..\CfxGenerator\CfxGenerator.csproj
 	EndGlobalSection
 EndGlobal
