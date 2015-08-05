@@ -387,7 +387,7 @@ namespace Parser {
 
             regex = new Regex(commentPattern + "\\s*typedef\\s+enum\\s*{[^}]+}\\s*(\\w+)_t\\s*;", RegexOptions.Multiline);
 
-            var enumFile = "cef\\include\\internal\\cef_types.h";
+            var enumFile = System.IO.Path.Combine("cef", "include", "internal", "cef_types.h");
             if(codeFiles.ContainsKey(enumFile)) {
                 var enumCode = codeFiles[enumFile];
                 ParseComments(enumFile, enumCode, regex, comments);
