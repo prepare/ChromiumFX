@@ -108,6 +108,10 @@ public class ApiType {
         }
     }
 
+    public virtual string NativeCallbackSignature(string var, bool isConst) {
+        return NativeCallSignature(var, isConst);
+    }
+
     public virtual string PInvokeCallSignature(string var) {
         if(PInvokeSymbol == null)
             return null;

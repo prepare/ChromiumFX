@@ -31,11 +31,14 @@
 
 // Array of structs, cef_struct_t *array
 
+using System.Diagnostics;
+
 // inherit from CefStructPtrArrayType because the public layer is the same
 public class CefStructArrayType : CefStructPtrArrayType {
 
     public CefStructArrayType(Argument structArg, Argument countArg)
         : base(new Argument(structArg, new CefStructPtrPtrType(structArg.ArgumentType.AsCefStructPtrType, "*")), countArg) {
+        Debug.Assert(Struct.ClassBuilder.Category == StructCategory.Values);
     }
 
     public override bool IsOut {
@@ -46,6 +49,12 @@ public class CefStructArrayType : CefStructPtrArrayType {
         get { return StructPtr.PInvokeSymbol; }
     }
 
+    public override string OriginalSymbol {
+        get {
+            return StructPtr.OriginalSymbol;
+        }
+    }
+
     public override string NativeSymbol {
         get { return StructPtr.NativeSymbol + "*"; }
     }
@@ -54,8 +63,16 @@ public class CefStructArrayType : CefStructPtrArrayType {
         return string.Format("{0}, out int {1}_nomem", base.PInvokeCallSignature(var), var);
     }
 
+    public override string PInvokeCallbackSignature(string var) {
+        return string.Format("{0} {1}, ref int {1}_flags", PInvokeSymbol, var);
+    }
+
     public override string NativeCallSignature(string var, bool isConst) {
         return string.Format("{0}, int* {1}_nomem", base.NativeCallSignature(var, isConst), var);
+    }
+
+    public override string NativeCallbackSignature(string var, bool isConst) {
+        return string.Format("{0} {1}, int* {1}_flags", NativeSymbol, var);
     }
 
     public override string PublicUnwrapExpression(string var) {
@@ -64,6 +81,10 @@ public class CefStructArrayType : CefStructPtrArrayType {
 
     public override string NativeUnwrapExpression(string var) {
         return string.Format("{0}_tmp", var);
+    }
+
+    public override string NativeWrapExpression(string var) {
+        return string.Format("{0}_array, &{0}_flags", var);
     }
 
     public override void EmitPrePublicCallStatements(CodeBuilder b, string var) {
@@ -93,5 +114,33 @@ public class CefStructArrayType : CefStructPtrArrayType {
 
     public override void EmitPostNativeCallStatements(CodeBuilder b, string var) {
         b.AppendLine("if({0}_tmp) free({0}_tmp);", var);
+    }
+
+    public override void EmitPreNativeCallbackStatements(CodeBuilder b, string var) {
+        b.AppendLine("int {0}_flags;", var);
+        b.AppendLine("{0} **{1}_array = malloc({2} * sizeof({0}*));", Struct.OriginalSymbol, var, CountArg.VarName);
+        b.BeginBlock("if({0}_array)", var);
+        b.BeginFor(CountArg.VarName);
+        b.AppendLine("{0}_array[i] = malloc(sizeof({0}));", var);
+        b.AppendLine("*{0}_array[i] = {0}[i];", var);
+        b.EndBlock();
+        b.AppendLine("{0}_flags = 0;", var);
+        b.BeginElse();
+        b.AppendLine("{0} = 0;", CountArg.VarName);
+        b.AppendLine("{0}_flags = 1;", var);
+        b.EndBlock();
+    }
+
+    public override void EmitPostNativeCallbackStatements(CodeBuilder b, string var) {
+        b.BeginIf("{0}_flags", var);
+        b.BeginFor(CountArg.VarName);
+        b.AppendLine("free({0}_array[i]);", var);
+        b.EndBlock();
+        b.EndBlock();
+        b.AppendLine("free({0}_array);", var);
+    }
+
+    public override void EmitPostPublicRaiseEventStatements(CodeBuilder b, string var) {
+        b.AppendLine("{0}_flags = e.m_{0}_managed == null ? 1 : 0;", var);
     }
 }
