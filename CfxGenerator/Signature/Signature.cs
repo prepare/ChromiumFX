@@ -191,7 +191,7 @@ public class Signature {
                 args.Add(ReturnType.NativeOutSignature("__retval"));
             }
             for(var i = 1; i <= Arguments.Length - 1; i++) {
-                args.Add(Arguments[i].NativeCallSignature);
+                args.Add(Arguments[i].NativeCallbackSignature);
             }
             return args.Join();
         }

@@ -134,6 +134,10 @@ public class Argument {
         get { return ArgumentType.NativeCallSignature(VarName, IsConst); }
     }
 
+    public string NativeCallbackSignature {
+        get { return ArgumentType.NativeCallbackSignature(VarName, IsConst); }
+    }
+
     public string PInvokeCallSignature {
         get { return ArgumentType.PInvokeCallSignature(VarName); }
     }

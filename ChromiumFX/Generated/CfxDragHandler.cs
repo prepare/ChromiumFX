@@ -82,20 +82,21 @@ namespace Chromium {
 
         // on_draggable_regions_changed
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_drag_handler_on_draggable_regions_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, int regionsCount, IntPtr regions);
+        private delegate void cfx_drag_handler_on_draggable_regions_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, int regionsCount, IntPtr regions, ref int regions_flags);
         private static cfx_drag_handler_on_draggable_regions_changed_delegate cfx_drag_handler_on_draggable_regions_changed;
         private static IntPtr cfx_drag_handler_on_draggable_regions_changed_ptr;
 
-        internal static void on_draggable_regions_changed(IntPtr gcHandlePtr, IntPtr browser, int regionsCount, IntPtr regions) {
+        internal static void on_draggable_regions_changed(IntPtr gcHandlePtr, IntPtr browser, int regionsCount, IntPtr regions, ref int regions_flags) {
             var self = (CfxDragHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 return;
             }
-            var e = new CfxOnDraggableRegionsChangedEventArgs(browser, regionsCount, regions);
+            var e = new CfxOnDraggableRegionsChangedEventArgs(browser, regions, regionsCount);
             var eventHandler = self.m_OnDraggableRegionsChanged;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
+            regions_flags = e.m_regions_managed == null ? 1 : 0;
         }
 
         internal CfxDragHandler(IntPtr nativePtr) : base(nativePtr) {}
@@ -302,14 +303,15 @@ namespace Chromium {
 
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
-            internal int m_regionsCount;
-            internal IntPtr m_regions;
-            internal CfxDraggableRegion m_regions_wrapped;
+            internal IntPtr[] m_regions;
+            internal CfxDraggableRegion[] m_regions_managed;
 
-            internal CfxOnDraggableRegionsChangedEventArgs(IntPtr browser, int regionsCount, IntPtr regions) {
+            internal CfxOnDraggableRegionsChangedEventArgs(IntPtr browser, IntPtr regions, int regionsCount) {
                 m_browser = browser;
-                m_regionsCount = regionsCount;
-                m_regions = regions;
+                m_regions = new IntPtr[regionsCount];
+                if(regionsCount > 0) {
+                    System.Runtime.InteropServices.Marshal.Copy(regions, m_regions, 0, regionsCount);
+                }
             }
 
             /// <summary>
@@ -323,27 +325,23 @@ namespace Chromium {
                 }
             }
             /// <summary>
-            /// Get the RegionsCount parameter for the <see cref="CfxDragHandler.OnDraggableRegionsChanged"/> callback.
-            /// </summary>
-            public int RegionsCount {
-                get {
-                    CheckAccess();
-                    return m_regionsCount;
-                }
-            }
-            /// <summary>
             /// Get the Regions parameter for the <see cref="CfxDragHandler.OnDraggableRegionsChanged"/> callback.
             /// </summary>
-            public CfxDraggableRegion Regions {
+            public CfxDraggableRegion[] Regions {
                 get {
                     CheckAccess();
-                    if(m_regions_wrapped == null) m_regions_wrapped = CfxDraggableRegion.Wrap(m_regions);
-                    return m_regions_wrapped;
+                    if(m_regions_managed == null) {
+                        m_regions_managed = new CfxDraggableRegion[m_regions.Length];
+                        for(int i = 0; i < m_regions.Length; ++i) {
+                            m_regions_managed[i] = CfxDraggableRegion.WrapOwned(m_regions[i]);
+                        }
+                    }
+                    return m_regions_managed;
                 }
             }
 
             public override string ToString() {
-                return String.Format("Browser={{{0}}}, RegionsCount={{{1}}}, Regions={{{2}}}", Browser, RegionsCount, Regions);
+                return String.Format("Browser={{{0}}}, Regions={{{1}}}", Browser, Regions);
             }
         }
 

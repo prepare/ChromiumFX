@@ -65,6 +65,9 @@ public class CustomSignatures {
             case "cef_print_settings::get_page_ranges":
                 return new GetPageRangesSignature(owner, sd, api, 2, 1);
 
+            case "cef_drag_handler::on_draggable_regions_changed":
+                return new SignatureWithStructArray(owner, sd, api, 3, 2);
+
             default:
                 return null;
         }
