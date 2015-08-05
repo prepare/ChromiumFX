@@ -110,7 +110,7 @@ public class WrapperGenerator {
             sb.Append("\r\n");
             for(var i = 0; i <= generatedCSFiles.Count - 2; i++) {
                 sb.AppendFormat("    <Compile Include=\"{0}\" />", generatedCSFiles[i].Substring(11));
-                sb.AppendLine("\r\n");
+                sb.Append("\r\n");
             }
             sb.AppendFormat("    <Compile Include=\"{0}\" />", generatedCSFiles[generatedCSFiles.Count - 1].Substring(11));
             generatedCSFiles = null;
