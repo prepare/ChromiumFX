@@ -39,6 +39,15 @@ namespace Windowless {
         [STAThread]
         static void Main() {
 
+
+            var path = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
+
+            while(!System.IO.File.Exists(System.IO.Path.Combine(path, "Readme.md")))
+                path = System.IO.Path.GetDirectoryName(path);
+
+            CfxRuntime.LibCefDirPath = System.IO.Path.Combine(path, "cef", "Release64");
+            CfxRuntime.LibCfxDirPath = System.IO.Path.Combine(path, "Build", "Release");
+
             var exitCode = CfxRuntime.ExecuteProcess(null);
             if(exitCode >= 0) {
                 Environment.Exit(exitCode);
@@ -52,6 +61,9 @@ namespace Windowless {
             settings.NoSandbox = true;
             settings.SingleProcess = true;
             settings.LogSeverity = CfxLogSeverity.Disable;
+
+            settings.ResourcesDirPath = System.IO.Path.Combine(path, "cef", "Resources");
+            settings.LocalesDirPath = System.IO.Path.Combine(path, "cef", "Resources", "locales");
 
             if(!CfxRuntime.Initialize(settings, null))
                 Environment.Exit(-1);
