@@ -39,7 +39,7 @@ namespace Chromium {
     /// </summary>
     /// <remarks>
     /// See also the original CEF documentation in
-    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/linux/cef/include/internal/cef_types_linux.h">linux/cef/include/internal/cef_types_linux.h</see>.
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types_linux.h">cef/include/internal/cef_types_linux.h</see>.
     /// </remarks>
     internal sealed partial class CfxMainArgsLinux : CfxStructure {
 

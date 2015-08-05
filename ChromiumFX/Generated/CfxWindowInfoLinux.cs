@@ -39,7 +39,7 @@ namespace Chromium {
     /// </summary>
     /// <remarks>
     /// See also the original CEF documentation in
-    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/linux/cef/include/internal/cef_types_linux.h">linux/cef/include/internal/cef_types_linux.h</see>.
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types_linux.h">cef/include/internal/cef_types_linux.h</see>.
     /// </remarks>
     internal sealed class CfxWindowInfoLinux : CfxStructure {
 
@@ -112,7 +112,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/linux/cef/include/internal/cef_types_linux.h">linux/cef/include/internal/cef_types_linux.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types_linux.h">cef/include/internal/cef_types_linux.h</see>.
         /// </remarks>
         public IntPtr ParentWindow {
             get {
@@ -137,7 +137,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/linux/cef/include/internal/cef_types_linux.h">linux/cef/include/internal/cef_types_linux.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types_linux.h">cef/include/internal/cef_types_linux.h</see>.
         /// </remarks>
         public bool WindowlessRenderingEnabled {
             get {
@@ -158,7 +158,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/linux/cef/include/internal/cef_types_linux.h">linux/cef/include/internal/cef_types_linux.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types_linux.h">cef/include/internal/cef_types_linux.h</see>.
         /// </remarks>
         public bool TransparentPaintingEnabled {
             get {
@@ -176,7 +176,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/linux/cef/include/internal/cef_types_linux.h">linux/cef/include/internal/cef_types_linux.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types_linux.h">cef/include/internal/cef_types_linux.h</see>.
         /// </remarks>
         public IntPtr Window {
             get {
