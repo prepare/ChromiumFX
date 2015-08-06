@@ -193,7 +193,7 @@ namespace Windowless {
 
         void lifeSpanHandler_OnAfterCreated(object sender, Chromium.Event.CfxOnAfterCreatedEventArgs e) {
             browser = e.Browser;
-            browser.MainFrame.LoadUrl("about:credit");
+            browser.MainFrame.LoadUrl("about:version");
         }
 
 
