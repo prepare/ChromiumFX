@@ -32,6 +32,7 @@
 using System;
 using System.Windows.Forms;
 using Chromium;
+using System.Diagnostics;
 
 namespace Windowless {
     static class Program {
@@ -40,13 +41,17 @@ namespace Windowless {
         static void Main() {
 
 
-            var path = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
+            var assemblyDir = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
 
-            while(!System.IO.File.Exists(System.IO.Path.Combine(path, "Readme.md")))
-                path = System.IO.Path.GetDirectoryName(path);
+            var projectRoot = assemblyDir;
+            while(!System.IO.File.Exists(System.IO.Path.Combine(projectRoot, "Readme.md")))
+                projectRoot = System.IO.Path.GetDirectoryName(projectRoot);
 
-            CfxRuntime.LibCefDirPath = System.IO.Path.Combine(path, "cef", "Release64");
-            CfxRuntime.LibCfxDirPath = System.IO.Path.Combine(path, "Build", "Release");
+            CfxRuntime.LibCefDirPath = System.IO.Path.Combine(projectRoot, "cef", "Release64");
+            CfxRuntime.LibCfxDirPath = System.IO.Path.Combine(projectRoot, "Build", "Release");
+
+            var LD_LIBRARY_PATH = Environment.GetEnvironmentVariable("LD_LIBRARY_PATH");
+            Debug.Print(LD_LIBRARY_PATH);
 
             var exitCode = CfxRuntime.ExecuteProcess(null);
             if(exitCode >= 0) {
@@ -59,11 +64,14 @@ namespace Windowless {
             var settings = new CfxSettings();
             settings.WindowlessRenderingEnabled = true;
             settings.NoSandbox = true;
-            settings.SingleProcess = true;
-            settings.LogSeverity = CfxLogSeverity.Disable;
 
-            settings.ResourcesDirPath = System.IO.Path.Combine(path, "cef", "Resources");
-            settings.LocalesDirPath = System.IO.Path.Combine(path, "cef", "Resources", "locales");
+            //settings.SingleProcess = true;
+            settings.BrowserSubprocessPath = System.IO.Path.Combine(assemblyDir, "windowless");
+
+            //settings.LogSeverity = CfxLogSeverity.Disable;
+
+            settings.ResourcesDirPath = System.IO.Path.Combine(projectRoot, "cef", "Resources");
+            settings.LocalesDirPath = System.IO.Path.Combine(projectRoot, "cef", "Resources", "locales");
 
             if(!CfxRuntime.Initialize(settings, null))
                 Environment.Exit(-1);
