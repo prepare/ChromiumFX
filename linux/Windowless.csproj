@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{48D83F36-CEDD-401F-9E31-295794956424}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>LinuxTestApp</RootNamespace>
+    <RootNamespace>Windowless</RootNamespace>
     <AssemblyName>Windowless</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -19,6 +19,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <EnvironmentVariables>
+      <EnvironmentVariables>
+        <Variable name="LD_PRELOAD" value="libcef.so" />
+        <Variable name="LD_LIBRARY_PATH" value=".:../../cef/Release64" />
+      </EnvironmentVariables>
+    </EnvironmentVariables>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
