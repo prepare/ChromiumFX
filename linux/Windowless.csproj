@@ -19,12 +19,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <EnvironmentVariables>
-      <EnvironmentVariables>
-        <Variable name="LD_PRELOAD" value="libcef.so" />
-        <Variable name="LD_LIBRARY_PATH" value=".:../../cef/Release64" />
-      </EnvironmentVariables>
-    </EnvironmentVariables>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="Execute" command="sh windowless" workingdir="/home/wborgsm/chromiumfx/Build/Debug" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -33,6 +32,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="Execute" command="sh windowless" workingdir="/home/wborgsm/chromiumfx/Build/Release" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -53,5 +57,11 @@
       <Project>{36972B7C-3A3A-465F-B064-51B525FD4C14}</Project>
       <Name>ChromiumFX</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="windowless">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+    </None>
   </ItemGroup>
 </Project>
