@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{48D83F36-CEDD-401F-9E31-295794956424}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>LinuxTestApp</RootNamespace>
+    <RootNamespace>Windowless</RootNamespace>
     <AssemblyName>Windowless</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -19,6 +19,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="Execute" command="sh windowless" workingdir="/home/wborgsm/chromiumfx/Build/Debug" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -27,14 +32,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="Execute" command="sh windowless" workingdir="/home/wborgsm/chromiumfx/Build/Release" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\ChromiumFX\ChromiumFX.csproj">
-      <Project>{36972B7C-3A3A-465F-B064-51B525FD4C14}</Project>
-      <Name>ChromiumFX</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Tests\Windowless\BrowserControl.cs">
       <Link>BrowserControl.cs</Link>
@@ -47,5 +51,17 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Drawing" />
     <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ChromiumFX\ChromiumFX.csproj">
+      <Project>{36972B7C-3A3A-465F-B064-51B525FD4C14}</Project>
+      <Name>ChromiumFX</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="windowless">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+    </None>
   </ItemGroup>
 </Project>
