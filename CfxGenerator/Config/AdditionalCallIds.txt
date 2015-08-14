@@ -1,0 +1,11 @@
+﻿ExecuteRemoteProcessRemoteCall
+ReleaseProxyRemoteCall
+
+CfrMarshalAllocHGlobalRenderProcessCall
+CfrMarshalFreeHGlobalRenderProcessCall
+CfrMarshalCopyToNativeRenderProcessCall
+CfrMarshalCopyToManagedRenderProcessCall
+
+CfxBinaryValueCreateFromArrayRenderProcessCall
+
+CfxRuntimeExecuteProcessRenderProcessCall

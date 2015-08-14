@@ -1,0 +1,15 @@
+﻿cef_cookie
+cef_time
+cef_key_event
+cef_popup_features
+cef_window_info_windows
+cef_window_info_linux
+cef_window_info_macos
+cef_rect
+cef_geoposition
+cef_browser_settings
+cef_screen_info
+cef_cursor_info
+cef_point
+cef_page_range
+cef_draggable_region

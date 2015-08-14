@@ -1,0 +1,17 @@
+
+* CEF versions known to work with ChromiumFX 3.2357.3:
+  - CEF 3.2357.1287
+  - CEF 3.2357.1283
+  - CEF 3.2357.1281
+  - CEF 3.2357.1280
+  
+* CEF versions known to work with ChromiumFX 3.2171.17:
+  - CEF 3.2171.2069
+  - CEF 3.2171.2039
+  - CEF 3.2171.1979
+
+Download CEF binaries at:
+http://www.magpcss.net/cef_downloads/
+https://cefbuilds.com/
+
+For more information see https://bitbucket.org/chromiumfx/chromiumfx/wiki/Project#markdown-header-application-layout
