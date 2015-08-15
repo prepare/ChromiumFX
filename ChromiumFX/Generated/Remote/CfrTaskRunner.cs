@@ -75,9 +75,7 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("GetForCurrentThread(CfrRuntime, ...) is deprecated, please use GetForCurrentThread(...) without CfrRuntime instead.")]
         public static CfrTaskRunner GetForCurrentThread(CfrRuntime remoteRuntime) {
-            var call = new CfxTaskRunnerGetForCurrentThreadRenderProcessCall();
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrTaskRunner.Wrap(call.__retval);
+            throw new NotSupportedException("this call is no longer supported");
         }
 
         /// <summary>
@@ -104,10 +102,7 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("GetForThread(CfrRuntime, ...) is deprecated, please use GetForThread(...) without CfrRuntime instead.")]
         public static CfrTaskRunner GetForThread(CfrRuntime remoteRuntime, CfxThreadId threadId) {
-            var call = new CfxTaskRunnerGetForThreadRenderProcessCall();
-            call.threadId = (int)threadId;
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrTaskRunner.Wrap(call.__retval);
+            throw new NotSupportedException("this call is no longer supported");
         }
 
         /// <summary>

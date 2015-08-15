@@ -51,7 +51,7 @@ namespace Chromium.Remote
         }
 
         [Obsolete("CfrEventArgs.RemoteRuntime is deprecated.")]
-        public CfrRuntime RemoteRuntime { get { return new CfrRuntime(); } }
+        public CfrRuntime RemoteRuntime { get { throw new NotSupportedException("this call is no longer supported"); } }
 
     }
 

@@ -72,9 +72,7 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("GetCurrentContext(CfrRuntime, ...) is deprecated, please use GetCurrentContext(...) without CfrRuntime instead.")]
         public static CfrV8Context GetCurrentContext(CfrRuntime remoteRuntime) {
-            var call = new CfxV8ContextGetCurrentContextRenderProcessCall();
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrV8Context.Wrap(call.__retval);
+            throw new NotSupportedException("this call is no longer supported");
         }
 
         /// <summary>
@@ -99,9 +97,7 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("GetEnteredContext(CfrRuntime, ...) is deprecated, please use GetEnteredContext(...) without CfrRuntime instead.")]
         public static CfrV8Context GetEnteredContext(CfrRuntime remoteRuntime) {
-            var call = new CfxV8ContextGetEnteredContextRenderProcessCall();
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrV8Context.Wrap(call.__retval);
+            throw new NotSupportedException("this call is no longer supported");
         }
 
         /// <summary>
@@ -126,9 +122,7 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("InContext(CfrRuntime, ...) is deprecated, please use InContext(...) without CfrRuntime instead.")]
         public static bool InContext(CfrRuntime remoteRuntime) {
-            var call = new CfxV8ContextInContextRenderProcessCall();
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return call.__retval;
+            throw new NotSupportedException("this call is no longer supported");
         }
 
         /// <summary>

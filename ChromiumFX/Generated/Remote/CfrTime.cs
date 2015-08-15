@@ -68,7 +68,7 @@ namespace Chromium.Remote {
         private CfrTime(IntPtr proxyId) : base(proxyId) {}
         [Obsolete("new CfrTime(CfrRuntime) is deprecated, please use new CfrTime() without CfrRuntime instead.")]
         public CfrTime(CfrRuntime remoteRuntime) : base(CreateRemote()) {
-            weakCache.Add(this.proxyId, this);
+            throw new NotSupportedException("this call is no longer supported");
         }
         public CfrTime() : base(CreateRemote()) {
             weakCache.Add(this.proxyId, this);
