@@ -68,9 +68,7 @@ namespace Chromium.Remote {
         /// </remarks>
         [Obsolete("Create(CfrRuntime, ...) is deprecated, please use Create(...) without CfrRuntime instead.")]
         public static CfrListValue Create(CfrRuntime remoteRuntime) {
-            var call = new CfxListValueCreateRenderProcessCall();
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrListValue.Wrap(call.__retval);
+            throw new NotSupportedException("this call is no longer supported");
         }
 
         /// <summary>
