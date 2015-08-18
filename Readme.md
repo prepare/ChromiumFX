@@ -53,7 +53,13 @@ This is a summary of the most important changes and those relevant to embedders 
 
 ### Version 3.2171.17 ###
 - This is a backport of ChromiumFX 3.2357.3 for the 3.2171 branch.   
- 
+
+### Version 3.2357.4 ###
+- The platform toolset has been changed to v140, development is now done in VS 2015 Community. So in order to build libcef.dll, VS 2015 is required or change the toolset back to v120. The precompiled binaries should continue to work with previous versions of Visual Studio.
+- CfxDragHandler.OnDraggableRegionsChanged was fixed.
+- The deprecated functions in the remote layer now throw NotSupportedException because they were not reliable any more.
+- Internal improvements without API changes and some bug fixes.
+
 ### Version 3.2357.3 ###
 - A 64-bit build is now available at cefbuilds.com for CEF 3.2357.1283 and it's compatible with this version. CEF 3.2357.1281 32-bit is still compatible as well.
 - Instead of passing around a CfrRuntime object, the remote layer now uses remote process and thread contexts with thread-local and mostly transparent enter/exit semantics to keep track of remote callbacks. This implied a few changes in the public API of ChromiumFX and a lot of methods are deprecated now and will be deleted in a future release.
