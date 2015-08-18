@@ -356,6 +356,9 @@ public class Signature {
             } else {
                 cd.Lines = new string[] { string.Format("Set the {0} out parameter for the <see cref=\"{1}.{2}\"/> callback.", arg.PublicPropertyName, Owner.PublicClassName, Owner.PublicFunctionName) };
             }
+            if(arg.ArgumentType is CefStructArrayType && arg.ArgumentType.IsIn) {
+                cd.Lines = cd.Lines.Concat(new string[] { "Do not keep a reference to the elements of this array outside of this function." }).ToArray();
+            }
             b.AppendSummary(cd);
             b.BeginBlock("public {0} {1}", arg.ArgumentType.PublicSymbol, arg.PublicPropertyName);
             if(arg.ArgumentType.IsIn) {

@@ -82,21 +82,25 @@ namespace Chromium {
 
         // on_draggable_regions_changed
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_drag_handler_on_draggable_regions_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, int regionsCount, IntPtr regions, ref int regions_flags);
+        private delegate void cfx_drag_handler_on_draggable_regions_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, int regionsCount, IntPtr regions, int regions_structsize);
         private static cfx_drag_handler_on_draggable_regions_changed_delegate cfx_drag_handler_on_draggable_regions_changed;
         private static IntPtr cfx_drag_handler_on_draggable_regions_changed_ptr;
 
-        internal static void on_draggable_regions_changed(IntPtr gcHandlePtr, IntPtr browser, int regionsCount, IntPtr regions, ref int regions_flags) {
+        internal static void on_draggable_regions_changed(IntPtr gcHandlePtr, IntPtr browser, int regionsCount, IntPtr regions, int regions_structsize) {
             var self = (CfxDragHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 return;
             }
-            var e = new CfxOnDraggableRegionsChangedEventArgs(browser, regions, regionsCount);
+            var e = new CfxOnDraggableRegionsChangedEventArgs(browser, regions, regionsCount, regions_structsize);
             var eventHandler = self.m_OnDraggableRegionsChanged;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            regions_flags = e.m_regions_managed == null ? 1 : 0;
+            if(e.m_regions_managed != null) {
+                for(int i = 0; i < e.m_regions_managed.Length; ++i) {
+                    e.m_regions_managed[i].Dispose();
+                }
+            }
         }
 
         internal CfxDragHandler(IntPtr nativePtr) : base(nativePtr) {}
@@ -303,15 +307,16 @@ namespace Chromium {
 
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
-            internal IntPtr[] m_regions;
+            IntPtr m_regions;
+            int m_regions_structsize;
+            int m_regionsCount;
             internal CfxDraggableRegion[] m_regions_managed;
 
-            internal CfxOnDraggableRegionsChangedEventArgs(IntPtr browser, IntPtr regions, int regionsCount) {
+            internal CfxOnDraggableRegionsChangedEventArgs(IntPtr browser, IntPtr regions, int regionsCount, int regions_structsize) {
                 m_browser = browser;
-                m_regions = new IntPtr[regionsCount];
-                if(regionsCount > 0) {
-                    System.Runtime.InteropServices.Marshal.Copy(regions, m_regions, 0, regionsCount);
-                }
+                m_regions = regions;
+                m_regions_structsize = regions_structsize;
+                m_regionsCount = regionsCount;
             }
 
             /// <summary>
@@ -326,14 +331,15 @@ namespace Chromium {
             }
             /// <summary>
             /// Get the Regions parameter for the <see cref="CfxDragHandler.OnDraggableRegionsChanged"/> callback.
+            /// Do not keep a reference to the elements of this array outside of this function.
             /// </summary>
             public CfxDraggableRegion[] Regions {
                 get {
                     CheckAccess();
                     if(m_regions_managed == null) {
-                        m_regions_managed = new CfxDraggableRegion[m_regions.Length];
-                        for(int i = 0; i < m_regions.Length; ++i) {
-                            m_regions_managed[i] = CfxDraggableRegion.WrapOwned(m_regions[i]);
+                        m_regions_managed = new CfxDraggableRegion[m_regionsCount];
+                        for(int i = 0; i < m_regionsCount; ++i) {
+                            m_regions_managed[i] = CfxDraggableRegion.Wrap(m_regions + (i * m_regions_structsize));
                         }
                     }
                     return m_regions_managed;

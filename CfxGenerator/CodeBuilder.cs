@@ -222,6 +222,10 @@ public class CodeBuilder {
         BeginBlock("for(int i = 0; i < {0}; ++i)", limit);
     }
 
+    public void BeginFor(string limit, params object[] pm) {
+        BeginFor(string.Format(limit, pm));
+    }
+
     public void BeginElse() {
         EndBlock("else {");
         IncreaseIndent();

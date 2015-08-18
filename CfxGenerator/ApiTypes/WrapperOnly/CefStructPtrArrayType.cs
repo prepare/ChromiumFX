@@ -133,12 +133,7 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
         b.BeginIf("m_{0}_managed == null", var);
         b.AppendLine("m_{0}_managed = new {1}[m_{0}.Length];", var, Struct.ClassName);
         b.BeginBlock("for(int i = 0; i < m_{0}.Length; ++i)", var);
-        if(Struct.ClassBuilder.Category == StructCategory.Values) {
-            Debug.Assert(this is CefStructArrayType);
-            b.AppendLine("m_{0}_managed[i] = {1}.WrapOwned(m_{0}[i]);", var, Struct.ClassName);
-        } else {
-            b.AppendLine("m_{0}_managed[i] = {1}.Wrap(m_{0}[i]);", var, Struct.ClassName);
-        }
+        b.AppendLine("m_{0}_managed[i] = {1}.Wrap(m_{0}[i]);", var, Struct.ClassName);
         b.EndBlock();
         b.EndBlock();
         b.AppendLine("return m_{0}_managed;", var);

@@ -64,7 +64,7 @@ public class CefStructArrayType : CefStructPtrArrayType {
     }
 
     public override string PInvokeCallbackSignature(string var) {
-        return string.Format("{0} {1}, ref int {1}_flags", PInvokeSymbol, var);
+        return string.Format("IntPtr {1}, int {1}_structsize", PInvokeSymbol, var);
     }
 
     public override string NativeCallSignature(string var, bool isConst) {
@@ -72,7 +72,7 @@ public class CefStructArrayType : CefStructPtrArrayType {
     }
 
     public override string NativeCallbackSignature(string var, bool isConst) {
-        return string.Format("{0} {1}, int* {1}_flags", NativeSymbol, var);
+        return string.Format("{0} {1}, int {1}_structsize", StructPtr.NativeSymbol, var);
     }
 
     public override string PublicUnwrapExpression(string var) {
@@ -84,7 +84,15 @@ public class CefStructArrayType : CefStructPtrArrayType {
     }
 
     public override string NativeWrapExpression(string var) {
-        return string.Format("{0}_array, &{0}_flags", var);
+        return string.Format("{0}, (int)sizeof({1})", var, Struct.OriginalSymbol);
+    }
+
+    public override string PublicEventConstructorSignature(string var) {
+        return string.Format("{0}, int {1}_structsize", base.PublicEventConstructorSignature(var), var);
+    }
+
+    public override string PublicEventConstructorCall(string var) {
+        return string.Format("{0}, {1}_structsize", base.PublicEventConstructorCall(var), var);
     }
 
     public override void EmitPrePublicCallStatements(CodeBuilder b, string var) {
@@ -116,31 +124,34 @@ public class CefStructArrayType : CefStructPtrArrayType {
         b.AppendLine("if({0}_tmp) free({0}_tmp);", var);
     }
 
-    public override void EmitPreNativeCallbackStatements(CodeBuilder b, string var) {
-        b.AppendLine("int {0}_flags;", var);
-        b.AppendLine("{0} **{1}_array = malloc({2} * sizeof({0}*));", Struct.OriginalSymbol, var, CountArg.VarName);
-        b.BeginBlock("if({0}_array)", var);
-        b.BeginFor(CountArg.VarName);
-        b.AppendLine("{0}_array[i] = malloc(sizeof({0}));", var);
-        b.AppendLine("*{0}_array[i] = {0}[i];", var);
-        b.EndBlock();
-        b.AppendLine("{0}_flags = 0;", var);
-        b.BeginElse();
-        b.AppendLine("{0} = 0;", CountArg.VarName);
-        b.AppendLine("{0}_flags = 1;", var);
-        b.EndBlock();
+    public override void EmitPublicEventArgFields(CodeBuilder b, string var) {
+        b.AppendLine("IntPtr m_{0};", var);
+        b.AppendLine("int m_{0}_structsize;", var);
+        b.AppendLine("int m_{0};", CountArg.VarName);
+        b.AppendLine("internal {0} m_{1}_managed;", PublicSymbol, var);
     }
 
-    public override void EmitPostNativeCallbackStatements(CodeBuilder b, string var) {
-        b.BeginIf("{0}_flags", var);
-        b.BeginFor(CountArg.VarName);
-        b.AppendLine("free({0}_array[i]);", var);
+    public override void EmitPublicEventCtorStatements(CodeBuilder b, string var) {
+        b.AppendLine("m_{0} = {0};", var);
+        b.AppendLine("m_{0}_structsize = {0}_structsize;", var);
+        b.AppendLine("m_{0} = {0};", CountArg.VarName);
+    }
+
+    public override void EmitPublicEventArgGetterStatements(CodeBuilder b, string var) {
+        b.BeginIf("m_{0}_managed == null", var);
+        b.AppendLine("m_{0}_managed = new {1}[m_{2}];", var, Struct.ClassName, CountArg.VarName);
+        b.BeginFor("m_" + CountArg.VarName);
+        b.AppendLine("m_{0}_managed[i] = {1}.Wrap(m_{0} + (i * m_{0}_structsize));", var, Struct.ClassName);
         b.EndBlock();
         b.EndBlock();
-        b.AppendLine("free({0}_array);", var);
+        b.AppendLine("return m_{0}_managed;", var);
     }
 
     public override void EmitPostPublicRaiseEventStatements(CodeBuilder b, string var) {
-        b.AppendLine("{0}_flags = e.m_{0}_managed == null ? 1 : 0;", var);
+        b.BeginIf("e.m_{0}_managed != null", var);
+        b.BeginFor("e.m_{0}_managed.Length", var);
+        b.AppendLine("e.m_{0}_managed[i].Dispose();", var);
+        b.EndBlock();
+        b.EndBlock();
     }
 }
