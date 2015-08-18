@@ -51,14 +51,17 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
-### Version 3.2171.17 ###
-- This is a backport of ChromiumFX 3.2357.3 for the 3.2171 branch.   
+### Version 3.2171.18 ###
+- This is a backport of ChromiumFX 3.2357.4 for the 3.2171 branch.   
 
 ### Version 3.2357.4 ###
 - The platform toolset has been changed to v140, development is now done in VS 2015 Community. So in order to build libcef.dll, VS 2015 is required or change the toolset back to v120. The precompiled binaries should continue to work with previous versions of Visual Studio.
 - CfxDragHandler.OnDraggableRegionsChanged was fixed.
 - The deprecated functions in the remote layer now throw NotSupportedException because they were not reliable any more.
 - Internal improvements without API changes and some bug fixes.
+
+### Version 3.2171.17 ###
+- This is a backport of ChromiumFX 3.2357.3 for the 3.2171 branch.   
 
 ### Version 3.2357.3 ###
 - A 64-bit build is now available at cefbuilds.com for CEF 3.2357.1283 and it's compatible with this version. CEF 3.2357.1281 32-bit is still compatible as well.
