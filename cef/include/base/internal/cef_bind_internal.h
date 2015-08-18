@@ -44,7 +44,7 @@
 #endif
 
 namespace base {
-namespace cef_internal {
+namespace internal {
 
 // See base/callback.h for user documentation.
 //
@@ -2805,7 +2805,7 @@ struct BindState<Runnable, RunType, void(P1, P2, P3, P4, P5, P6,
   P7 p7_;
 };
 
-}  // namespace cef_internal
+}  // namespace internal
 }  // namespace base
 
 #endif  // CEF_INCLUDE_BASE_INTERNAL_CEF_BIND_INTERNAL_H_
