@@ -145,72 +145,6 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueIsSameRenderProcessCall : RenderProcessCall {
-
-        internal CfxDictionaryValueIsSameRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueIsSameRenderProcessCall) {}
-
-        internal IntPtr self;
-        internal IntPtr that;
-        internal bool __retval;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
-            h.Write(that);
-        }
-
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
-            h.Read(out that);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-            h.Write(__retval);
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
-            h.Read(out __retval);
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxDictionaryValue)RemoteProxy.Unwrap(self);
-            __retval = self_local.IsSame((CfxDictionaryValue)RemoteProxy.Unwrap(that));
-        }
-    }
-
-    internal class CfxDictionaryValueIsEqualRenderProcessCall : RenderProcessCall {
-
-        internal CfxDictionaryValueIsEqualRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueIsEqualRenderProcessCall) {}
-
-        internal IntPtr self;
-        internal IntPtr that;
-        internal bool __retval;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
-            h.Write(that);
-        }
-
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
-            h.Read(out that);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-            h.Write(__retval);
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
-            h.Read(out __retval);
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxDictionaryValue)RemoteProxy.Unwrap(self);
-            __retval = self_local.IsEqual((CfxDictionaryValue)RemoteProxy.Unwrap(that));
-        }
-    }
-
     internal class CfxDictionaryValueCopyRenderProcessCall : RenderProcessCall {
 
         internal CfxDictionaryValueCopyRenderProcessCall()
@@ -433,39 +367,6 @@ namespace Chromium.Remote {
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxDictionaryValue)RemoteProxy.Unwrap(self);
             __retval = (int)self_local.GetType(key);
-        }
-    }
-
-    internal class CfxDictionaryValueGetValueRenderProcessCall : RenderProcessCall {
-
-        internal CfxDictionaryValueGetValueRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueGetValueRenderProcessCall) {}
-
-        internal IntPtr self;
-        internal string key;
-        internal IntPtr __retval;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
-            h.Write(key);
-        }
-
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
-            h.Read(out key);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-            h.Write(__retval);
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
-            h.Read(out __retval);
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxDictionaryValue)RemoteProxy.Unwrap(self);
-            __retval = RemoteProxy.Wrap(self_local.GetValue(key));
         }
     }
 
@@ -697,42 +598,6 @@ namespace Chromium.Remote {
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self_local = (CfxDictionaryValue)RemoteProxy.Unwrap(self);
             __retval = RemoteProxy.Wrap(self_local.GetList(key));
-        }
-    }
-
-    internal class CfxDictionaryValueSetValueRenderProcessCall : RenderProcessCall {
-
-        internal CfxDictionaryValueSetValueRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueSetValueRenderProcessCall) {}
-
-        internal IntPtr self;
-        internal string key;
-        internal IntPtr value;
-        internal bool __retval;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
-            h.Write(key);
-            h.Write(value);
-        }
-
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
-            h.Read(out key);
-            h.Read(out value);
-        }
-
-        protected override void WriteReturn(StreamHandler h) {
-            h.Write(__retval);
-        }
-
-        protected override void ReadReturn(StreamHandler h) {
-            h.Read(out __retval);
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxDictionaryValue)RemoteProxy.Unwrap(self);
-            __retval = self_local.SetValue(key, (CfxValue)RemoteProxy.Unwrap(value));
         }
     }
 

@@ -67,6 +67,11 @@ static int cfx_begin_tracing(char16 *categories_str, int categories_length, cef_
     return cef_begin_tracing(&categories, callback);
 }
 
+// CEF_EXPORT int cef_build_revision();
+static int cfx_build_revision() {
+    return cef_build_revision();
+}
+
 // CEF_EXPORT int cef_clear_cross_origin_whitelist();
 static int cfx_clear_cross_origin_whitelist() {
     return cef_clear_cross_origin_whitelist();
@@ -181,27 +186,6 @@ static int64 cfx_now_from_system_trace_time() {
     return cef_now_from_system_trace_time();
 }
 
-// CEF_EXPORT int cef_parse_csscolor(const cef_string_t* string, int strict, cef_color_t* color);
-static int cfx_parse_csscolor(char16 *string_str, int string_length, int strict, uint32* color) {
-    cef_string_t string = { string_str, string_length, 0 };
-    return cef_parse_csscolor(&string, strict, color);
-}
-
-// CEF_EXPORT cef_value_t* cef_parse_json(const cef_string_t* json_string, cef_json_parser_options_t options);
-static cef_value_t* cfx_parse_json(char16 *json_string_str, int json_string_length, cef_json_parser_options_t options) {
-    cef_string_t json_string = { json_string_str, json_string_length, 0 };
-    return cef_parse_json(&json_string, options);
-}
-
-// CEF_EXPORT cef_value_t* cef_parse_jsonand_return_error(const cef_string_t* json_string, cef_json_parser_options_t options, cef_json_parser_error_t* error_code_out, cef_string_t* error_msg_out);
-static cef_value_t* cfx_parse_jsonand_return_error(char16 *json_string_str, int json_string_length, cef_json_parser_options_t options, cef_json_parser_error_t* error_code_out, char16 **error_msg_out_str, int *error_msg_out_length) {
-    cef_string_t json_string = { json_string_str, json_string_length, 0 };
-    cef_string_t error_msg_out = { *error_msg_out_str, *error_msg_out_length, 0 };
-    cef_value_t* __ret_val_ = cef_parse_jsonand_return_error(&json_string, options, error_code_out, &error_msg_out);
-    *error_msg_out_str = error_msg_out.str; *error_msg_out_length = (int)error_msg_out.length;
-    return __ret_val_;
-}
-
 // CEF_EXPORT int cef_parse_url(const cef_string_t* url, cef_urlparts_t* parts);
 static int cfx_parse_url(char16 *url_str, int url_length, cef_urlparts_t* parts) {
     cef_string_t url = { url_str, url_length, 0 };
@@ -287,18 +271,6 @@ static void cfx_unregister_internal_web_plugin(char16 *path_str, int path_length
     cef_unregister_internal_web_plugin(&path);
 }
 
-// CEF_EXPORT cef_string_userfree_t cef_uridecode(const cef_string_t* text, int convert_to_utf8, cef_uri_unescape_rule_t unescape_rule);
-static cef_string_userfree_t cfx_uridecode(char16 *text_str, int text_length, int convert_to_utf8, cef_uri_unescape_rule_t unescape_rule) {
-    cef_string_t text = { text_str, text_length, 0 };
-    return cef_uridecode(&text, convert_to_utf8, unescape_rule);
-}
-
-// CEF_EXPORT cef_string_userfree_t cef_uriencode(const cef_string_t* text, int use_plus);
-static cef_string_userfree_t cfx_uriencode(char16 *text_str, int text_length, int use_plus) {
-    cef_string_t text = { text_str, text_length, 0 };
-    return cef_uriencode(&text, use_plus);
-}
-
 // CEF_EXPORT int cef_version_info(int entry);
 static int cfx_version_info(int entry) {
     return cef_version_info(entry);
@@ -308,12 +280,6 @@ static int cfx_version_info(int entry) {
 static void cfx_visit_web_plugin_info(cef_web_plugin_info_visitor_t* visitor) {
     if(visitor) ((cef_base_t*)visitor)->add_ref((cef_base_t*)visitor);
     cef_visit_web_plugin_info(visitor);
-}
-
-// CEF_EXPORT cef_string_userfree_t cef_write_json(cef_value_t* node, cef_json_writer_options_t options);
-static cef_string_userfree_t cfx_write_json(cef_value_t* node, cef_json_writer_options_t options) {
-    if(node) ((cef_base_t*)node)->add_ref((cef_base_t*)node);
-    return cef_write_json(node, options);
 }
 
 
