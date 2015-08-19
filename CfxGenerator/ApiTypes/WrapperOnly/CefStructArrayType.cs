@@ -64,7 +64,7 @@ public class CefStructArrayType : CefStructPtrArrayType {
     }
 
     public override string PInvokeCallbackSignature(string var) {
-        return string.Format("IntPtr {1}, int {1}_structsize", PInvokeSymbol, var);
+        return string.Format("IntPtr {0}, int {0}_structsize", var);
     }
 
     public override string NativeCallSignature(string var, bool isConst) {

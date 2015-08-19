@@ -31,6 +31,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public class ApiType {
 
@@ -332,7 +333,8 @@ public class ApiType {
 
     public virtual CefStructType AsCefStructType {
         get {
-            throw new Exception();
+            Debug.Assert(false);
+            return null;
         }
     }
 
@@ -342,7 +344,8 @@ public class ApiType {
 
     public virtual CefPlatformStructType AsCefPlatformStructType {
         get {
-            throw new Exception();
+            Debug.Assert(false);
+            return null;
         }
     }
 
@@ -352,7 +355,8 @@ public class ApiType {
 
     public virtual CefStringType AsCefStringType {
         get {
-            throw new Exception();
+            Debug.Assert(false);
+            return null;
         }
     }
 
@@ -362,7 +366,8 @@ public class ApiType {
 
     public virtual CefEnumType AsCefEnumType {
         get {
-            throw new Exception();
+            Debug.Assert(false);
+            return null;
         }
     }
 
@@ -372,7 +377,8 @@ public class ApiType {
 
     public virtual CefStructPtrType AsCefStructPtrType {
         get {
-            throw new Exception();
+            Debug.Assert(false);
+            return null;
         }
     }
 
@@ -382,7 +388,8 @@ public class ApiType {
 
     public virtual CefStructPtrPtrType AsCefStructPtrPtrType {
         get {
-            throw new Exception();
+            Debug.Assert(false);
+            return null;
         }
     }
 
@@ -392,7 +399,8 @@ public class ApiType {
 
     public virtual CefStringPtrTypeConst AsCefStringPtrTypeConst {
         get {
-            throw new Exception();
+            Debug.Assert(false);
+            return null;
         }
     }
 
@@ -402,7 +410,8 @@ public class ApiType {
 
     public virtual CefStringPtrType AsCefStringPtrType {
         get {
-            throw new Exception();
+            Debug.Assert(false);
+            return null;
         }
     }
 
@@ -412,7 +421,8 @@ public class ApiType {
 
     public virtual CefCallbackType AsCefCallbackType {
         get {
-            throw new Exception();
+            Debug.Assert(false);
+            return null;
         }
     }
 
@@ -422,7 +432,8 @@ public class ApiType {
 
     public virtual BlittableType AsBlittableType {
         get {
-            throw new Exception();
+            Debug.Assert(false);
+            return null;
         }
     }
 

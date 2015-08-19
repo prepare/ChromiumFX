@@ -505,9 +505,9 @@ public class Signature {
             if(suffixLength > 0) {
                 var arrName = Arguments[i].VarName.Substring(0, Arguments[i].VarName.Length - suffixLength);
                 if(i > 0 && Arguments[i - 1].VarName.StartsWith(arrName)) {
-                    Debug.Print("{0} {1} {2} {3}", Owner.CallMode, Owner.CefName, Arguments[i - 1], Arguments[i]);
+                    Debug.Print("UnhandledArrayArgument {0} {1} {2} {3}", Owner.CallMode, Owner.CefName, Arguments[i - 1], Arguments[i]);
                 } else if(i < Arguments.Length - 1 && Arguments[i + 1].VarName.StartsWith(arrName)) {
-                    Debug.Print("{0} {1} {2} {3}", Owner.CallMode, Owner.CefName, Arguments[i], Arguments[i + 1]);
+                    Debug.Print("UnhandledArrayArgument {0} {1} {2} {3}", Owner.CallMode, Owner.CefName, Arguments[i], Arguments[i + 1]);
                 } else {
                 }
             }
