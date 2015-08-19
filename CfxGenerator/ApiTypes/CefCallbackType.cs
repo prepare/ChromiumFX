@@ -36,17 +36,15 @@ public class CefCallbackType : ApiType, ISignatureOwner {
     public readonly Signature Signature;
     public readonly CefStructType Parent;
 
-    public readonly CommentData Comments;
-
-    public string PropertyName;
+    public CommentData Comments { get; private set; }
 
     private CfxCallMode m_callMode;
-    private readonly CefConfigData cefConfig;
+    public CefConfigData CefConfig { get; private set; }
 
     private string cppApiName {
         get {
-            if(cefConfig != null) {
-                return cefConfig.CppApiName;
+            if(CefConfig != null) {
+                return CefConfig.CppApiName;
             } else {
                 return null;
             }
@@ -57,7 +55,7 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         : base(name) {
         this.Parent = parent;
         this.Comments = comments;
-        this.cefConfig = cefConfig;
+        this.CefConfig = cefConfig;
 
         if(category == StructCategory.ApiCallbacks) {
             m_callMode = CfxCallMode.Callback;
@@ -283,9 +281,9 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         if(!Signature.PublicReturnType.IsVoid) {
             var cd = new CommentData();
             cd.Lines = new string[] {
-				string.Format("Set the return value for the <see cref=\"{0}.{1}\"/> callback.", Parent.ClassName, PublicFunctionName),
-				"Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown."
-			};
+                string.Format("Set the return value for the <see cref=\"{0}.{1}\"/> callback.", Parent.ClassName, PublicFunctionName),
+                "Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown."
+            };
             b.AppendSummary(cd);
             b.BeginBlock("public void SetReturnValue({0} returnValue)", Signature.PublicReturnType.PublicSymbol);
             b.AppendLine("CheckAccess();");
@@ -392,9 +390,9 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         if(!Signature.PublicReturnType.IsVoid) {
             var cd = new CommentData();
             cd.Lines = new string[] {
-				string.Format("Set the return value for the <see cref=\"{0}.{1}\"/> render process callback.", Parent.RemoteClassName, PublicFunctionName),
-				"Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown."
-			};
+                string.Format("Set the return value for the <see cref=\"{0}.{1}\"/> render process callback.", Parent.RemoteClassName, PublicFunctionName),
+                "Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown."
+            };
             b.AppendSummary(cd);
             b.BeginBlock("public void SetReturnValue({0} returnValue)", Signature.PublicReturnType.RemoteSymbol);
             b.BeginIf("returnValueSet");
@@ -510,11 +508,9 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         get { return PublicName; }
     }
 
-    public string PublicPropertyName {
-        get { return PropertyName; }
-    }
+    public string PublicPropertyName { get; set; }
 
-    string ISignatureOwner.PropertyName {
+    public string PropertyName {
         get { return PublicPropertyName; }
     }
 
@@ -530,21 +526,5 @@ public class CefCallbackType : ApiType, ISignatureOwner {
 
     public string PublicClassName {
         get { return Parent.ClassName; }
-    }
-
-    public CommentData Comments1 {
-        get { return Comments; }
-    }
-
-    CommentData ISignatureOwner.Comments {
-        get { return Comments1; }
-    }
-
-    public CefConfigData CefConfig1 {
-        get { return cefConfig; }
-    }
-
-    CefConfigData ISignatureOwner.CefConfig {
-        get { return CefConfig1; }
     }
 }

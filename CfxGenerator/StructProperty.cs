@@ -39,10 +39,10 @@ public class StructProperty {
         this.Setter = setter;
         this.IsBoolean = isBoolean;
         getter.IsProperty = true;
-        getter.Callback.PropertyName = PropertyName;
+        getter.Callback.PublicPropertyName = PropertyName;
         if(setter != null) {
             setter.IsProperty = true;
-            setter.Callback.PropertyName = PropertyName;
+            setter.Callback.PublicPropertyName = PropertyName;
         }
     }
 

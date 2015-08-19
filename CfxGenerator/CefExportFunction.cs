@@ -44,7 +44,7 @@ public class CefExportFunction : ISignatureOwner {
     public readonly Signature Signature;
     public readonly bool PrivateWrapper;
 
-    public readonly CommentData Comments;
+    public CommentData Comments { get; private set;  }
 
     public readonly CefType Parent;
 
@@ -148,12 +148,8 @@ public class CefExportFunction : ISignatureOwner {
         return string.Format("CEF_EXPORT {1} {0}({2});", Name, ReturnType, Signature);
     }
 
-    public CfxCallMode CallType {
+    public CfxCallMode CallMode {
         get { return CfxCallMode.FunctionCall; }
-    }
-
-    CfxCallMode ISignatureOwner.CallMode {
-        get { return CallType; }
     }
 
     public string CefName {
@@ -184,14 +180,6 @@ public class CefExportFunction : ISignatureOwner {
                 return "CfxRuntime";
             }
         }
-    }
-
-    public CommentData Comments1 {
-        get { return Comments; }
-    }
-
-    CommentData ISignatureOwner.Comments {
-        get { return Comments1; }
     }
 
     public CefConfigData CefConfig {

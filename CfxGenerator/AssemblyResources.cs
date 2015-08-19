@@ -70,23 +70,20 @@ public class AssemblyResources {
 
     public static string GetString(string partialName) {
         using(var stream = GetStream(partialName)) {
-            using(var reader = new System.IO.StreamReader(stream)) {
-                return reader.ReadToEnd();
-            }
+            return new System.IO.StreamReader(stream).ReadToEnd();
         }
     }
 
     public static string[] GetLines(string partialName) {
         using(var stream = GetStream(partialName)) {
-            using(var reader = new System.IO.StreamReader(stream)) {
-                var ll = new List<string>();
-                var l = reader.ReadLine();
-                while(l != null) {
-                    ll.Add(l);
-                    l = reader.ReadLine();
-                }
-                return ll.ToArray();
+            var reader = new System.IO.StreamReader(stream);
+            var ll = new List<string>();
+            var l = reader.ReadLine();
+            while(l != null) {
+                ll.Add(l);
+                l = reader.ReadLine();
             }
+            return ll.ToArray();
         }
     }
 
