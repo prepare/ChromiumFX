@@ -155,27 +155,10 @@ namespace CfxTestApplication {
                     UrlTextBox.Text = WebBrowser.Url.ToString();
             };
 
-            WebBrowser.OnLoadingStateChange += ContinueLoadStressTest;
-
             WebBrowser.LoadUrl("http://localresource/text.html");
 
         }
 
-        int loadStressTestCounter;
-
-        private void BeginLoadStressTest(object sender, EventArgs e) {
-            loadStressTestCounter = 1000;
-            WebBrowser.LoadUrl("http://localresource/text.html");
-        }
-
-        private void ContinueLoadStressTest(object sender, CfxOnLoadingStateChangeEventArgs e) {
-            if(!e.IsLoading) {
-                if(loadStressTestCounter > 0) {
-                    --loadStressTestCounter;
-                    WebBrowser.LoadUrl("http://localresource/text.html");
-                }
-            }
-        }
 
         void VisitDomButton_Click(object sender, EventArgs e) {
             var retval = WebBrowser.VisitDom(VisitDOMCallback);
