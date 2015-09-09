@@ -31,6 +31,7 @@
 
 
 using System;
+using System.Diagnostics;
 
 namespace Chromium.Remote {
 
@@ -93,7 +94,13 @@ namespace Chromium.Remote {
                         call.proxyId = m_proxyId;
                         call.RequestExecution(this);
                     }
+#if DEBUG
+                } catch(Exception e) {
+                    Debug.Print("Exception cought in CfrObject.Release():");
+                    Debug.Print(e.ToString());
+#else
                 } catch {
+#endif
                 } finally {
                     m_proxyId = IntPtr.Zero;
                 }
