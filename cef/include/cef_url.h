@@ -1,4 +1,4 @@
-// Copyright (c) 2015 Marshall A. Greenblatt. All rights reserved.
+// Copyright (c) 2012 Marshall A. Greenblatt. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -34,35 +34,44 @@
 // tools directory for more information.
 //
 
-#ifndef CEF_INCLUDE_CEF_FIND_HANDLER_H_
-#define CEF_INCLUDE_CEF_FIND_HANDLER_H_
+#ifndef CEF_INCLUDE_CEF_URL_H_
+#define CEF_INCLUDE_CEF_URL_H_
 #pragma once
 
+#include <vector>
+
 #include "include/cef_base.h"
-#include "include/cef_browser.h"
 
 ///
-// Implement this interface to handle events related to find results. The
-// methods of this class will be called on the UI thread.
+// Parse the specified |url| into its component parts.
+// Returns false if the URL is empty or invalid.
 ///
-/*--cef(source=client)--*/
-class CefFindHandler : public virtual CefBase {
- public:
-  ///
-  // Called to report find results returned by CefBrowserHost::Find().
-  // |identifer| is the identifier passed to Find(), |count| is the number of
-  // matches currently identified, |selectionRect| is the location of where the
-  // match was found (in window coordinates), |activeMatchOrdinal| is the
-  // current position in the search results, and |finalUpdate| is true if this
-  // is the last find notification.
-  ///
-  /*--cef()--*/
-  virtual void OnFindResult(CefRefPtr<CefBrowser> browser,
-                            int identifier,
-                            int count,
-                            const CefRect& selectionRect,
-                            int activeMatchOrdinal,
-                            bool finalUpdate) {}
-};
+/*--cef()--*/
+bool CefParseURL(const CefString& url,
+                 CefURLParts& parts);
 
-#endif  // CEF_INCLUDE_CEF_FIND_HANDLER_H_
+///
+// Creates a URL from the specified |parts|, which must contain a non-empty
+// spec or a non-empty host and path (at a minimum), but not both.
+// Returns false if |parts| isn't initialized as described.
+///
+/*--cef()--*/
+bool CefCreateURL(const CefURLParts& parts,
+                  CefString& url);
+
+///
+// Returns the mime type for the specified file extension or an empty string if
+// unknown.
+///
+/*--cef()--*/
+CefString CefGetMimeType(const CefString& extension);
+
+// Get the extensions associated with the given mime type. This should be passed
+// in lower case. There could be multiple extensions for a given mime type, like
+// "html,htm" for "text/html", or "txt,text,html,..." for "text/*". Any existing
+// elements in the provided vector will not be erased.
+/*--cef()--*/
+void CefGetExtensionsForMimeType(const CefString& mime_type,
+                                 std::vector<CefString>& extensions);
+
+#endif  // CEF_INCLUDE_CEF_URL_H_
