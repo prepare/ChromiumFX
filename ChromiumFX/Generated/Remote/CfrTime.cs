@@ -44,10 +44,9 @@ namespace Chromium.Remote {
     /// </remarks>
     public sealed partial class CfrTime : CfrStructure {
 
-        private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
-
         internal static CfrTime Wrap(IntPtr proxyId) {
             if(proxyId == IntPtr.Zero) return null;
+            var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
             lock(weakCache) {
                 var cfrObj = (CfrTime)weakCache.Get(proxyId);
                 if(cfrObj == null) {
@@ -71,7 +70,7 @@ namespace Chromium.Remote {
             throw new NotSupportedException("this call is no longer supported");
         }
         public CfrTime() : base(CreateRemote()) {
-            weakCache.Add(this.proxyId, this);
+            connection.weakCache.Add(proxyId, this);
         }
 
         int m_Year;
@@ -274,7 +273,7 @@ namespace Chromium.Remote {
         }
 
         internal override void OnDispose(IntPtr proxyId) {
-            weakCache.Remove(proxyId);
+            connection.weakCache.Remove(proxyId);
         }
     }
 }

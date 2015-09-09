@@ -259,7 +259,6 @@
     <Compile Include="Source\Remote\CfrMarshal.cs" />
     <Compile Include="Source\Remote\RemoteCall.cs" />
     <Compile Include="Source\Remote\RemoteCallStack.cs" />
-    <Compile Include="Source\Remote\RemoteWeakCache.cs" />
     <Compile Include="Source\Remote\RemoteConnection.cs" />
     <Compile Include="Source\Remote\BrowserProcessCall.cs" />
     <Compile Include="Source\Remote\RenderProcessCall.cs" />
