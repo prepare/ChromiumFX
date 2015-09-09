@@ -118,7 +118,6 @@ namespace Chromium {
         /// hash value will be returned:
         /// 0 - CEF_API_HASH_PLATFORM
         /// 1 - CEF_API_HASH_UNIVERSAL
-        /// 2 - CEF_COMMIT_HASH
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -153,6 +152,17 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Returns the CEF build revision for the libcef library.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/cef_version.h">cef/include/cef_version.h</see>.
+        /// </remarks>
+        public static int BuildRevision() {
+            return CfxApi.cfx_build_revision();
+        }
+
+        /// <summary>
         /// Remove all entries from the cross-origin access whitelist. Returns false (0)
         /// if the whitelist cannot be accessed.
         /// </summary>
@@ -165,11 +175,8 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Clear all scheme handler factories registered with the global request
-        /// context. Returns false (0) on error. This function may be called on any
-        /// thread in the browser process. Using this function is equivalent to calling c
-        /// ef_request_tContext::cef_request_context_get_global_context()->clear_scheme_h
-        /// andler_factories().
+        /// Clear all registered scheme handler factories. Returns false (0) on error.
+        /// This function may be called on any thread in the browser process.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -186,7 +193,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
         /// </remarks>
         public static bool CreateUrl(CfxUrlParts parts, ref string url) {
             var url_pinned = new PinnedString(url);
@@ -291,7 +298,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
         /// </remarks>
         public static void GetExtensionsForMimeType(string mimeType, System.Collections.Generic.List<string> extensions) {
             var mimeType_pinned = new PinnedString(mimeType);
@@ -323,7 +330,7 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
         /// </remarks>
         public static string GetMimeType(string extension) {
             var extension_pinned = new PinnedString(extension);
@@ -412,68 +419,12 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Parses |string| which represents a CSS color value. If |strict| is true (1)
-        /// strict parsing rules will be applied. Returns true (1) on success or false
-        /// (0) on error. If parsing succeeds |color| will be set to the color value
-        /// otherwise |color| will remain unchanged.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
-        /// </remarks>
-        public static bool ParseCssColor(string @string, bool strict, ref CfxColor color) {
-            var string_pinned = new PinnedString(@string);
-            var __retval = CfxApi.cfx_parse_csscolor(string_pinned.Obj.PinnedPtr, string_pinned.Length, strict ? 1 : 0, ref color.color);
-            string_pinned.Obj.Free();
-            return 0 != __retval;
-        }
-
-        /// <summary>
-        /// Parses the specified |jsonString| and returns a dictionary or list
-        /// representation. If JSON parsing fails this function returns NULL.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
-        /// </remarks>
-        public static CfxValue ParseJson(string jsonString, CfxJsonParserOptions options) {
-            var jsonString_pinned = new PinnedString(jsonString);
-            var __retval = CfxApi.cfx_parse_json(jsonString_pinned.Obj.PinnedPtr, jsonString_pinned.Length, options);
-            jsonString_pinned.Obj.Free();
-            return CfxValue.Wrap(__retval);
-        }
-
-        /// <summary>
-        /// Parses the specified |jsonString| and returns a dictionary or list
-        /// representation. If JSON parsing fails this function returns NULL and
-        /// populates |errorCodeOut| and |errorMsgOut| with an error code and a
-        /// formatted error message respectively.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
-        /// </remarks>
-        public static CfxValue ParseJsonAndReturnError(string jsonString, CfxJsonParserOptions options, out CfxJsonParserError errorCodeOut, ref string errorMsgOut) {
-            var jsonString_pinned = new PinnedString(jsonString);
-            var errorMsgOut_pinned = new PinnedString(errorMsgOut);
-            IntPtr errorMsgOut_str = errorMsgOut_pinned.Obj.PinnedPtr;
-            int errorMsgOut_length = errorMsgOut_pinned.Length;
-            var __retval = CfxApi.cfx_parse_jsonand_return_error(jsonString_pinned.Obj.PinnedPtr, jsonString_pinned.Length, options, out errorCodeOut, ref errorMsgOut_str, ref errorMsgOut_length);
-            jsonString_pinned.Obj.Free();
-            if(errorMsgOut_str != errorMsgOut_pinned.Obj.PinnedPtr) {
-                errorMsgOut = System.Runtime.InteropServices.Marshal.PtrToStringUni(errorMsgOut_str, errorMsgOut_length);
-            }
-            errorMsgOut_pinned.Obj.Free();
-            return CfxValue.Wrap(__retval);
-        }
-
-        /// <summary>
         /// Parse the specified |url| into its component parts. Returns false (0) if the
         /// URL is NULL or invalid.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_url_capi.h">cef/include/capi/cef_url_capi.h</see>.
         /// </remarks>
         public static bool ParseUrl(string url, CfxUrlParts parts) {
             var url_pinned = new PinnedString(url);
@@ -601,19 +552,17 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Register a scheme handler factory with the global request context. An NULL
-        /// |domainName| value for a standard scheme will cause the factory to match all
-        /// domain names. The |domainName| value will be ignored for non-standard
-        /// schemes. If |schemeName| is a built-in scheme and no handler is returned by
-        /// |factory| then the built-in scheme handler factory will be called. If
-        /// |schemeName| is a custom scheme then you must also implement the
-        /// CfxApp.OnRegisterCustomSchemes() function in all processes. This
-        /// function may be called multiple times to change or remove the factory that
-        /// matches the specified |schemeName| and optional |domainName|. Returns false
-        /// (0) if an error occurs. This function may be called on any thread in the
-        /// browser process. Using this function is equivalent to calling CfxRequestCo
-        /// ntext::cef_request_context_get_global_context()->register_scheme_handler_fact
-        /// ory().
+        /// Register a scheme handler factory for the specified |schemeName| and
+        /// optional |domainName|. An NULL |domainName| value for a standard scheme
+        /// will cause the factory to match all domain names. The |domainName| value
+        /// will be ignored for non-standard schemes. If |schemeName| is a built-in
+        /// scheme and no handler is returned by |factory| then the built-in scheme
+        /// handler factory will be called. If |schemeName| is a custom scheme then also
+        /// implement the CfxApp.OnRegisterCustomSchemes() function in all
+        /// processes. This function may be called multiple times to change or remove the
+        /// factory that matches the specified |schemeName| and optional |domainName|.
+        /// Returns false (0) if an error occurs. This function may be called on any
+        /// thread in the browser process.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -732,48 +681,10 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Unescapes |text| and returns the result. Unescaping consists of looking for
-        /// the exact pattern "%XX" where each X is a hex digit and converting to the
-        /// character with the numerical value of those digits (e.g. "i%20=%203%3b"
-        /// unescapes to "i = 3;"). If |convertToUtf8| is true (1) this function will
-        /// attempt to interpret the initial decoded result as UTF-8. If the result is
-        /// convertable into UTF-8 it will be returned as converted. Otherwise the
-        /// initial decoded result will be returned.  The |unescapeRule| parameter
-        /// supports further customization the decoding process.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
-        /// </remarks>
-        public static string UriDecode(string text, bool convertToUtf8, CfxUriUnescapeRule unescapeRule) {
-            var text_pinned = new PinnedString(text);
-            var __retval = CfxApi.cfx_uridecode(text_pinned.Obj.PinnedPtr, text_pinned.Length, convertToUtf8 ? 1 : 0, unescapeRule);
-            text_pinned.Obj.Free();
-            return StringFunctions.ConvertStringUserfree(__retval);
-        }
-
-        /// <summary>
-        /// Escapes characters in |text| which are unsuitable for use as a query
-        /// parameter value. Everything except alphanumerics and -_.!~*'() will be
-        /// converted to "%XX". If |usePlus| is true (1) spaces will change to "+". The
-        /// result is basically the same as encodeURIComponent in Javacript.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
-        /// </remarks>
-        public static string UriEncode(string text, bool usePlus) {
-            var text_pinned = new PinnedString(text);
-            var __retval = CfxApi.cfx_uriencode(text_pinned.Obj.PinnedPtr, text_pinned.Length, usePlus ? 1 : 0);
-            text_pinned.Obj.Free();
-            return StringFunctions.ConvertStringUserfree(__retval);
-        }
-
-        /// <summary>
         /// Returns CEF version information for the libcef library. The |entry|
         /// parameter describes which version component will be returned:
         /// 0 - CEF_VERSION_MAJOR
-        /// 1 - CEF_COMMIT_NUMBER
+        /// 1 - CEF_REVISION
         /// 2 - CHROME_VERSION_MAJOR
         /// 3 - CHROME_VERSION_MINOR
         /// 4 - CHROME_VERSION_BUILD
@@ -797,19 +708,6 @@ namespace Chromium {
         /// </remarks>
         public static void VisitWebPluginInfo(CfxWebPluginInfoVisitor visitor) {
             CfxApi.cfx_visit_web_plugin_info(CfxWebPluginInfoVisitor.Unwrap(visitor));
-        }
-
-        /// <summary>
-        /// Generates a JSON string from the specified root |node| which should be a
-        /// dictionary or list value. Returns an NULL string on failure. This function
-        /// requires exclusive access to |node| including any underlying data.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
-        /// </remarks>
-        public static string WriteJson(CfxValue node, CfxJsonWriterOptions options) {
-            return StringFunctions.ConvertStringUserfree(CfxApi.cfx_write_json(CfxValue.Unwrap(node), options));
         }
 
         public class Linux {

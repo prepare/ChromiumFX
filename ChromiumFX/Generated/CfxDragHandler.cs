@@ -71,36 +71,13 @@ namespace Chromium {
                 __retval = default(int);
                 return;
             }
-            var e = new CfxOnDragEnterEventArgs(browser, dragData, mask);
+            var e = new CfxDragHandlerOnDragEnterEventArgs(browser, dragData, mask);
             var eventHandler = self.m_OnDragEnter;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_dragData_wrapped == null) CfxApi.cfx_release(e.m_dragData);
             __retval = e.m_returnValue ? 1 : 0;
-        }
-
-        // on_draggable_regions_changed
-        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_drag_handler_on_draggable_regions_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, int regionsCount, IntPtr regions, int regions_structsize);
-        private static cfx_drag_handler_on_draggable_regions_changed_delegate cfx_drag_handler_on_draggable_regions_changed;
-        private static IntPtr cfx_drag_handler_on_draggable_regions_changed_ptr;
-
-        internal static void on_draggable_regions_changed(IntPtr gcHandlePtr, IntPtr browser, int regionsCount, IntPtr regions, int regions_structsize) {
-            var self = (CfxDragHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
-                return;
-            }
-            var e = new CfxOnDraggableRegionsChangedEventArgs(browser, regions, regionsCount, regions_structsize);
-            var eventHandler = self.m_OnDraggableRegionsChanged;
-            if(eventHandler != null) eventHandler(self, e);
-            e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            if(e.m_regions_managed != null) {
-                for(int i = 0; i < e.m_regions_managed.Length; ++i) {
-                    e.m_regions_managed[i].Dispose();
-                }
-            }
         }
 
         internal CfxDragHandler(IntPtr nativePtr) : base(nativePtr) {}
@@ -116,7 +93,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_drag_handler_capi.h">cef/include/capi/cef_drag_handler_capi.h</see>.
         /// </remarks>
-        public event CfxOnDragEnterEventHandler OnDragEnter {
+        public event CfxDragHandlerOnDragEnterEventHandler OnDragEnter {
             add {
                 lock(eventLock) {
                     if(m_OnDragEnter == null) {
@@ -139,52 +116,12 @@ namespace Chromium {
             }
         }
 
-        private CfxOnDragEnterEventHandler m_OnDragEnter;
-
-        /// <summary>
-        /// Called whenever draggable regions for the browser window change. These can
-        /// be specified using the '-webkit-app-region: drag/no-drag' CSS-property. If
-        /// draggable regions are never defined in a document this function will also
-        /// never be called. If the last draggable region is removed from a document
-        /// this function will be called with an NULL vector.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_drag_handler_capi.h">cef/include/capi/cef_drag_handler_capi.h</see>.
-        /// </remarks>
-        public event CfxOnDraggableRegionsChangedEventHandler OnDraggableRegionsChanged {
-            add {
-                lock(eventLock) {
-                    if(m_OnDraggableRegionsChanged == null) {
-                        if(cfx_drag_handler_on_draggable_regions_changed == null) {
-                            cfx_drag_handler_on_draggable_regions_changed = on_draggable_regions_changed;
-                            cfx_drag_handler_on_draggable_regions_changed_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_drag_handler_on_draggable_regions_changed);
-                        }
-                        CfxApi.cfx_drag_handler_set_managed_callback(NativePtr, 1, cfx_drag_handler_on_draggable_regions_changed_ptr);
-                    }
-                    m_OnDraggableRegionsChanged += value;
-                }
-            }
-            remove {
-                lock(eventLock) {
-                    m_OnDraggableRegionsChanged -= value;
-                    if(m_OnDraggableRegionsChanged == null) {
-                        CfxApi.cfx_drag_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
-                    }
-                }
-            }
-        }
-
-        private CfxOnDraggableRegionsChangedEventHandler m_OnDraggableRegionsChanged;
+        private CfxDragHandlerOnDragEnterEventHandler m_OnDragEnter;
 
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnDragEnter != null) {
                 m_OnDragEnter = null;
                 CfxApi.cfx_drag_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
-            }
-            if(m_OnDraggableRegionsChanged != null) {
-                m_OnDraggableRegionsChanged = null;
-                CfxApi.cfx_drag_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -203,7 +140,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_drag_handler_capi.h">cef/include/capi/cef_drag_handler_capi.h</see>.
         /// </remarks>
-        public delegate void CfxOnDragEnterEventHandler(object sender, CfxOnDragEnterEventArgs e);
+        public delegate void CfxDragHandlerOnDragEnterEventHandler(object sender, CfxDragHandlerOnDragEnterEventArgs e);
 
         /// <summary>
         /// Called when an external drag event enters the browser window. |DragData|
@@ -215,7 +152,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_drag_handler_capi.h">cef/include/capi/cef_drag_handler_capi.h</see>.
         /// </remarks>
-        public class CfxOnDragEnterEventArgs : CfxEventArgs {
+        public class CfxDragHandlerOnDragEnterEventArgs : CfxEventArgs {
 
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
@@ -226,7 +163,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnDragEnterEventArgs(IntPtr browser, IntPtr dragData, CfxDragOperationsMask mask) {
+            internal CfxDragHandlerOnDragEnterEventArgs(IntPtr browser, IntPtr dragData, CfxDragOperationsMask mask) {
                 m_browser = browser;
                 m_dragData = dragData;
                 m_mask = mask;
@@ -276,78 +213,6 @@ namespace Chromium {
 
             public override string ToString() {
                 return String.Format("Browser={{{0}}}, DragData={{{1}}}, Mask={{{2}}}", Browser, DragData, Mask);
-            }
-        }
-
-        /// <summary>
-        /// Called whenever draggable regions for the browser window change. These can
-        /// be specified using the '-webkit-app-region: drag/no-drag' CSS-property. If
-        /// draggable regions are never defined in a document this function will also
-        /// never be called. If the last draggable region is removed from a document
-        /// this function will be called with an NULL vector.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_drag_handler_capi.h">cef/include/capi/cef_drag_handler_capi.h</see>.
-        /// </remarks>
-        public delegate void CfxOnDraggableRegionsChangedEventHandler(object sender, CfxOnDraggableRegionsChangedEventArgs e);
-
-        /// <summary>
-        /// Called whenever draggable regions for the browser window change. These can
-        /// be specified using the '-webkit-app-region: drag/no-drag' CSS-property. If
-        /// draggable regions are never defined in a document this function will also
-        /// never be called. If the last draggable region is removed from a document
-        /// this function will be called with an NULL vector.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_drag_handler_capi.h">cef/include/capi/cef_drag_handler_capi.h</see>.
-        /// </remarks>
-        public class CfxOnDraggableRegionsChangedEventArgs : CfxEventArgs {
-
-            internal IntPtr m_browser;
-            internal CfxBrowser m_browser_wrapped;
-            IntPtr m_regions;
-            int m_regions_structsize;
-            int m_regionsCount;
-            internal CfxDraggableRegion[] m_regions_managed;
-
-            internal CfxOnDraggableRegionsChangedEventArgs(IntPtr browser, IntPtr regions, int regionsCount, int regions_structsize) {
-                m_browser = browser;
-                m_regions = regions;
-                m_regions_structsize = regions_structsize;
-                m_regionsCount = regionsCount;
-            }
-
-            /// <summary>
-            /// Get the Browser parameter for the <see cref="CfxDragHandler.OnDraggableRegionsChanged"/> callback.
-            /// </summary>
-            public CfxBrowser Browser {
-                get {
-                    CheckAccess();
-                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                    return m_browser_wrapped;
-                }
-            }
-            /// <summary>
-            /// Get the Regions parameter for the <see cref="CfxDragHandler.OnDraggableRegionsChanged"/> callback.
-            /// Do not keep a reference to the elements of this array outside of this function.
-            /// </summary>
-            public CfxDraggableRegion[] Regions {
-                get {
-                    CheckAccess();
-                    if(m_regions_managed == null) {
-                        m_regions_managed = new CfxDraggableRegion[m_regionsCount];
-                        for(int i = 0; i < m_regionsCount; ++i) {
-                            m_regions_managed[i] = CfxDraggableRegion.Wrap(m_regions + (i * m_regions_structsize));
-                        }
-                    }
-                    return m_regions_managed;
-                }
-            }
-
-            public override string ToString() {
-                return String.Format("Browser={{{0}}}, Regions={{{1}}}", Browser, Regions);
             }
         }
 

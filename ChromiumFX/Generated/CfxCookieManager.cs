@@ -69,18 +69,14 @@ namespace Chromium {
 
         /// <summary>
         /// Returns the global cookie manager. By default data will be stored at
-        /// CfxSettings.CachePath if specified or in memory otherwise. If |callback| is
-        /// non-NULL it will be executed asnychronously on the IO thread after the
-        /// manager's storage has been initialized. Using this function is equivalent to
-        /// calling CfxRequestContext.CfxRequestContextGetGlobalContext()->get_d
-        /// efault_cookie_manager().
+        /// CfxSettings.CachePath if specified or in memory otherwise.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
         /// </remarks>
-        public static CfxCookieManager GetGlobalManager(CfxCompletionCallback callback) {
-            return CfxCookieManager.Wrap(CfxApi.cfx_cookie_manager_get_global_manager(CfxCompletionCallback.Unwrap(callback)));
+        public static CfxCookieManager GetGlobalManager() {
+            return CfxCookieManager.Wrap(CfxApi.cfx_cookie_manager_get_global_manager());
         }
 
         /// <summary>
@@ -88,44 +84,41 @@ namespace Chromium {
         /// only. Otherwise, data will be stored at the specified |path|. To persist
         /// session cookies (cookies without an expiry date or validity interval) set
         /// |persistSessionCookies| to true (1). Session cookies are generally intended
-        /// to be transient and most Web browsers do not persist them. If |callback| is
-        /// non-NULL it will be executed asnychronously on the IO thread after the
-        /// manager's storage has been initialized.
+        /// to be transient and most Web browsers do not persist them. Returns NULL if
+        /// creation fails.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
         /// </remarks>
-        public static CfxCookieManager CreateManager(string path, bool persistSessionCookies, CfxCompletionCallback callback) {
+        public static CfxCookieManager CreateManager(string path, bool persistSessionCookies) {
             var path_pinned = new PinnedString(path);
-            var __retval = CfxApi.cfx_cookie_manager_create_manager(path_pinned.Obj.PinnedPtr, path_pinned.Length, persistSessionCookies ? 1 : 0, CfxCompletionCallback.Unwrap(callback));
+            var __retval = CfxApi.cfx_cookie_manager_create_manager(path_pinned.Obj.PinnedPtr, path_pinned.Length, persistSessionCookies ? 1 : 0);
             path_pinned.Obj.Free();
             return CfxCookieManager.Wrap(__retval);
         }
 
         /// <summary>
         /// Set the schemes supported by this manager. By default only "http" and
-        /// "https" schemes are supported. If |callback| is non-NULL it will be
-        /// executed asnychronously on the IO thread after the change has been applied.
-        /// Must be called before any cookies are accessed.
+        /// "https" schemes are supported. Must be called before any cookies are
+        /// accessed.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
         /// </remarks>
-        public void SetSupportedSchemes(System.Collections.Generic.List<string> schemes, CfxCompletionCallback callback) {
+        public void SetSupportedSchemes(System.Collections.Generic.List<string> schemes) {
             PinnedString[] schemes_handles;
             var schemes_unwrapped = StringFunctions.UnwrapCfxStringList(schemes, out schemes_handles);
-            CfxApi.cfx_cookie_manager_set_supported_schemes(NativePtr, schemes_unwrapped, CfxCompletionCallback.Unwrap(callback));
+            CfxApi.cfx_cookie_manager_set_supported_schemes(NativePtr, schemes_unwrapped);
             StringFunctions.FreePinnedStrings(schemes_handles);
             StringFunctions.CfxStringListCopyToManaged(schemes_unwrapped, schemes);
             CfxApi.cfx_string_list_free(schemes_unwrapped);
         }
 
         /// <summary>
-        /// Visit all cookies on the IO thread. The returned cookies are ordered by
-        /// longest path, then by earliest creation date. Returns false (0) if cookies
-        /// cannot be accessed.
+        /// Visit all cookies. The returned cookies are ordered by longest path, then
+        /// by earliest creation date. Returns false (0) if cookies cannot be accessed.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -136,11 +129,11 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Visit a subset of cookies on the IO thread. The results are filtered by the
-        /// given url scheme, host, domain and path. If |includeHttpOnly| is true (1)
-        /// HTTP-only cookies will also be included in the results. The returned
-        /// cookies are ordered by longest path, then by earliest creation date.
-        /// Returns false (0) if cookies cannot be accessed.
+        /// Visit a subset of cookies. The results are filtered by the given url
+        /// scheme, host, domain and path. If |includeHttpOnly| is true (1) HTTP-only
+        /// cookies will also be included in the results. The returned cookies are
+        /// ordered by longest path, then by earliest creation date. Returns false (0)
+        /// if cookies cannot be accessed.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -157,41 +150,38 @@ namespace Chromium {
         /// Sets a cookie given a valid URL and explicit user-provided cookie
         /// attributes. This function expects each attribute to be well-formed. It will
         /// check for disallowed characters (e.g. the ';' character is disallowed
-        /// within the cookie value attribute) and fail without setting the cookie if
-        /// such characters are found. If |callback| is non-NULL it will be executed
-        /// asnychronously on the IO thread after the cookie has been set. Returns
-        /// false (0) if an invalid URL is specified or if cookies cannot be accessed.
+        /// within the cookie value attribute) and will return false (0) without
+        /// setting the cookie if such characters are found. This function must be
+        /// called on the IO thread.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
         /// </remarks>
-        public bool SetCookie(string url, CfxCookie cookie, CfxSetCookieCallback callback) {
+        public bool SetCookie(string url, CfxCookie cookie) {
             var url_pinned = new PinnedString(url);
-            var __retval = CfxApi.cfx_cookie_manager_set_cookie(NativePtr, url_pinned.Obj.PinnedPtr, url_pinned.Length, CfxCookie.Unwrap(cookie), CfxSetCookieCallback.Unwrap(callback));
+            var __retval = CfxApi.cfx_cookie_manager_set_cookie(NativePtr, url_pinned.Obj.PinnedPtr, url_pinned.Length, CfxCookie.Unwrap(cookie));
             url_pinned.Obj.Free();
             return 0 != __retval;
         }
 
         /// <summary>
         /// Delete all cookies that match the specified parameters. If both |url| and
-        /// |cookieName| values are specified all host and domain cookies matching
+        /// values |cookieName| are specified all host and domain cookies matching
         /// both will be deleted. If only |url| is specified all host cookies (but not
         /// domain cookies) irrespective of path will be deleted. If |url| is NULL all
-        /// cookies for all hosts and domains will be deleted. If |callback| is non-
-        /// NULL it will be executed asnychronously on the IO thread after the cookies
-        /// have been deleted. Returns false (0) if a non-NULL invalid URL is specified
-        /// or if cookies cannot be accessed. Cookies can alternately be deleted using
-        /// the Visit*Cookies() functions.
+        /// cookies for all hosts and domains will be deleted. Returns false (0) if a
+        /// non- NULL invalid URL is specified or if cookies cannot be accessed. This
+        /// function must be called on the IO thread.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
         /// </remarks>
-        public bool DeleteCookies(string url, string cookieName, CfxDeleteCookiesCallback callback) {
+        public bool DeleteCookies(string url, string cookieName) {
             var url_pinned = new PinnedString(url);
             var cookieName_pinned = new PinnedString(cookieName);
-            var __retval = CfxApi.cfx_cookie_manager_delete_cookies(NativePtr, url_pinned.Obj.PinnedPtr, url_pinned.Length, cookieName_pinned.Obj.PinnedPtr, cookieName_pinned.Length, CfxDeleteCookiesCallback.Unwrap(callback));
+            var __retval = CfxApi.cfx_cookie_manager_delete_cookies(NativePtr, url_pinned.Obj.PinnedPtr, url_pinned.Length, cookieName_pinned.Obj.PinnedPtr, cookieName_pinned.Length);
             url_pinned.Obj.Free();
             cookieName_pinned.Obj.Free();
             return 0 != __retval;
@@ -203,25 +193,24 @@ namespace Chromium {
         /// stored at the specified |path|. To persist session cookies (cookies without
         /// an expiry date or validity interval) set |persistSessionCookies| to true
         /// (1). Session cookies are generally intended to be transient and most Web
-        /// browsers do not persist them. If |callback| is non-NULL it will be executed
-        /// asnychronously on the IO thread after the manager's storage has been
-        /// initialized. Returns false (0) if cookies cannot be accessed.
+        /// browsers do not persist them. Returns false (0) if cookies cannot be
+        /// accessed.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
         /// </remarks>
-        public bool SetStoragePath(string path, bool persistSessionCookies, CfxCompletionCallback callback) {
+        public bool SetStoragePath(string path, bool persistSessionCookies) {
             var path_pinned = new PinnedString(path);
-            var __retval = CfxApi.cfx_cookie_manager_set_storage_path(NativePtr, path_pinned.Obj.PinnedPtr, path_pinned.Length, persistSessionCookies ? 1 : 0, CfxCompletionCallback.Unwrap(callback));
+            var __retval = CfxApi.cfx_cookie_manager_set_storage_path(NativePtr, path_pinned.Obj.PinnedPtr, path_pinned.Length, persistSessionCookies ? 1 : 0);
             path_pinned.Obj.Free();
             return 0 != __retval;
         }
 
         /// <summary>
-        /// Flush the backing store (if any) to disk. If |callback| is non-NULL it will
-        /// be executed asnychronously on the IO thread after the flush is complete.
-        /// Returns false (0) if cookies cannot be accessed.
+        /// Flush the backing store (if any) to disk and execute the specified
+        /// |callback| on the IO thread when done. Returns false (0) if cookies cannot
+        /// be accessed.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
