@@ -45,10 +45,9 @@ namespace Chromium.Remote {
     /// </remarks>
     public class CfrStringVisitor : CfrBase {
 
-        private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
-
         internal static CfrStringVisitor Wrap(IntPtr proxyId) {
             if(proxyId == IntPtr.Zero) return null;
+            var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
             lock(weakCache) {
                 var cfrObj = (CfrStringVisitor)weakCache.Get(proxyId);
                 if(cfrObj == null) {
@@ -80,7 +79,7 @@ namespace Chromium.Remote {
             throw new NotSupportedException("this call is no longer supported");
         }
         public CfrStringVisitor() : base(CreateRemote()) {
-            weakCache.Add(this.proxyId, this);
+            connection.weakCache.Add(proxyId, this);
         }
 
         /// <summary>
@@ -113,7 +112,7 @@ namespace Chromium.Remote {
 
 
         internal override void OnDispose(IntPtr proxyId) {
-            weakCache.Remove(proxyId);
+            connection.weakCache.Remove(proxyId);
         }
     }
 

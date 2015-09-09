@@ -32,38 +32,47 @@ using System;
 using System.Collections.Generic;
 
 namespace Chromium {
-    internal class WeakCache {
+    internal class WeakCacheBase {
 
-        private readonly Dictionary<IntPtr, WeakReference> cache;
+        protected readonly Dictionary<IntPtr, WeakReference> cache = new Dictionary<IntPtr, WeakReference>();
 
-        public WeakCache() {
-            cache = new Dictionary<IntPtr, WeakReference>();
+        internal object Get(IntPtr key) {
+            // always locked by caller
+            WeakReference r;
+            if(cache.TryGetValue(key, out r)) {
+                var retval = r.Target;
+                if(retval == null) {
+                    // Happens if the object was collected but not yet finalized.
+                    // Remove the key so the subsequent call to Add won't fail.
+                    cache.Remove(key);
+                }
+                return retval;
+            } else {
+                return null;
+            }
+        }
+
+        internal void Remove(IntPtr key) {
+            lock(this) {
+                cache.Remove(key);
+            }
+        }
+    }
+
+    internal class WeakCache : WeakCacheBase {
+
+        internal WeakCache() {
             CfxRuntime.OnCfxShutdown += this.OnShutdown;
         }
 
-        public void Add(CfxBase obj) {
+        internal void Add(CfxBase obj) {
             // always locked by caller
             cache.Add(obj.nativePtrUnchecked, new WeakReference(obj, false));
         }
 
-        public object Get(IntPtr ptr) {
-            // always locked by caller
-            WeakReference r;
-            if(cache.TryGetValue(ptr, out r))
-                return r.Target;
-            else
-                return null;
-        }
-
-        public void Remove(IntPtr ptr) {
-            lock(this) {
-                cache.Remove(ptr);
-            }
-        }
-
         private void OnShutdown() {
             lock(this) {
-                // cannot use foreach because obj.Dispose() will cause Remove()
+                // cannot use foreach on cache because obj.Dispose() will cause Remove()
                 // to be called modifying the collection
                 WeakReference[] refs = new WeakReference[cache.Count];
                 cache.Values.CopyTo(refs, 0);
@@ -71,6 +80,15 @@ namespace Chromium {
                     var obj = (CfxBase)r.Target;
                     if(obj != null) obj.Dispose();
                 }
+            }
+        }
+    }
+
+    namespace Remote {
+        internal class RemoteWeakCache : WeakCacheBase {
+            internal void Add(IntPtr key, object obj) {
+                // always locked by caller
+                cache.Add(key, new WeakReference(obj, false));
             }
         }
     }

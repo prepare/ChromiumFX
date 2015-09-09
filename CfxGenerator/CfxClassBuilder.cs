@@ -977,10 +977,9 @@ public class CfxClassBuilder {
         }
         b.AppendLine();
 
-        b.AppendLine("private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();");
-        b.AppendLine();
         b.BeginFunction("Wrap", RemoteClassName, "IntPtr proxyId", "internal static");
         b.AppendLine("if(proxyId == IntPtr.Zero) return null;");
+        b.AppendLine("var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;");
         b.BeginBlock("lock(weakCache)");
         b.AppendLine("var cfrObj = ({0})weakCache.Get(proxyId);", RemoteClassName);
         b.BeginBlock("if(cfrObj == null)");
@@ -1028,7 +1027,7 @@ public class CfxClassBuilder {
             b.AppendLine("throw new NotSupportedException(\"this call is no longer supported\");");
             b.EndBlock();
             b.BeginBlock("public {0}() : base(CreateRemote())", RemoteClassName);
-            b.AppendLine("weakCache.Add(this.proxyId, this);");
+            b.AppendLine("connection.weakCache.Add(proxyId, this);");
             b.EndBlock();
         }
 
@@ -1130,7 +1129,7 @@ public class CfxClassBuilder {
         }
 
         b.BeginFunction("OnDispose", "void", "IntPtr proxyId", "internal override");
-        b.AppendLine("weakCache.Remove(proxyId);");
+        b.AppendLine("connection.weakCache.Remove(proxyId);");
         b.EndBlock();
 
         b.EndBlock();

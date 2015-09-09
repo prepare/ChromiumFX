@@ -46,10 +46,9 @@ namespace Chromium.Remote {
     /// </remarks>
     public class CfrValue : CfrBase {
 
-        private static readonly RemoteWeakCache weakCache = new RemoteWeakCache();
-
         internal static CfrValue Wrap(IntPtr proxyId) {
             if(proxyId == IntPtr.Zero) return null;
+            var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
             lock(weakCache) {
                 var cfrObj = (CfrValue)weakCache.Get(proxyId);
                 if(cfrObj == null) {
@@ -464,7 +463,7 @@ namespace Chromium.Remote {
         }
 
         internal override void OnDispose(IntPtr proxyId) {
-            weakCache.Remove(proxyId);
+            connection.weakCache.Remove(proxyId);
         }
     }
 }

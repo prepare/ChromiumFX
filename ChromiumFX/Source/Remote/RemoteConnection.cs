@@ -60,6 +60,8 @@ namespace Chromium.Remote {
 
         internal readonly RemoteCallStack callStack;
 
+        internal readonly RemoteWeakCache weakCache = new RemoteWeakCache();
+
 
         internal RemoteConnection(Stream pipeIn, Stream pipeOut, bool isClient) {
 
