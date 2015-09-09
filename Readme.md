@@ -51,6 +51,9 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2357.5 ###
+- This is a bugfix release which addresses issues #27 and #29. The remote proxies of objects living in the render process did not release those objects due to a bug introduced in version 3.2357.3, causing a memory leak.
+
 ### Version 3.2171.18 ###
 - This is a backport of ChromiumFX 3.2357.4 for the 3.2171 branch.   
 
