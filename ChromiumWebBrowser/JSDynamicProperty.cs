@@ -62,9 +62,6 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public event CfrV8AccessorSetEventHandler PropertySet;
 
-        [Obsolete("Deprecated. Please use InvokeMode instead.")]
-        public bool InvokeOnBrowser { get; private set; }
-
         /// <summary>
         /// Creates a new dynamic javascript property to be added to a JSObject.
         /// </summary>
@@ -77,11 +74,6 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public JSDynamicProperty(JSInvokeMode invokeMode)
             : base(JSPropertyType.Dynamic, invokeMode) {
-        }
-
-        [Obsolete("Deprecated. Please use InvokeMode instead.")]
-        public JSDynamicProperty(bool invokeOnBrowser)
-            : base(JSPropertyType.Dynamic, invokeOnBrowser ? JSInvokeMode.Invoke : JSInvokeMode.DontInvoke) {
         }
 
         internal void RaisePropertySet(CfrV8AccessorSetEventArgs e) {

@@ -70,19 +70,6 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        [Obsolete("GetCurrent(CfrRuntime, ...) is deprecated, please use GetCurrent(...) without CfrRuntime instead.")]
-        public static CfrV8StackTrace GetCurrent(CfrRuntime remoteRuntime, int frameLimit) {
-            throw new NotSupportedException("this call is no longer supported");
-        }
-
-        /// <summary>
-        /// Returns the stack trace for the currently active context. |frameLimit| is
-        /// the maximum number of frames that will be captured.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
-        /// </remarks>
         public static CfrV8StackTrace GetCurrent(int frameLimit) {
             var call = new CfxV8StackTraceGetCurrentRenderProcessCall();
             call.frameLimit = frameLimit;

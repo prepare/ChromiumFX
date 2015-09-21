@@ -49,10 +49,6 @@ namespace Chromium.Remote
             if(m_isInvalid)
                 throw new CfxException("Do not keep/use a reference to callback event arguments outside the scope of the event handler.");
         }
-
-        [Obsolete("CfrEventArgs.RemoteRuntime is deprecated.")]
-        public CfrRuntime RemoteRuntime { get { throw new NotSupportedException("this call is no longer supported"); } }
-
     }
 
     public delegate void CfrEventHandler(object sender, CfrEventArgs e);

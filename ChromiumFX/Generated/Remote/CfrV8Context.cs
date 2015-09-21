@@ -69,18 +69,6 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        [Obsolete("GetCurrentContext(CfrRuntime, ...) is deprecated, please use GetCurrentContext(...) without CfrRuntime instead.")]
-        public static CfrV8Context GetCurrentContext(CfrRuntime remoteRuntime) {
-            throw new NotSupportedException("this call is no longer supported");
-        }
-
-        /// <summary>
-        /// Returns the current (top) context object in the V8 context stack.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
-        /// </remarks>
         public static CfrV8Context GetCurrentContext() {
             var call = new CfxV8ContextGetCurrentContextRenderProcessCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
@@ -94,34 +82,10 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        [Obsolete("GetEnteredContext(CfrRuntime, ...) is deprecated, please use GetEnteredContext(...) without CfrRuntime instead.")]
-        public static CfrV8Context GetEnteredContext(CfrRuntime remoteRuntime) {
-            throw new NotSupportedException("this call is no longer supported");
-        }
-
-        /// <summary>
-        /// Returns the entered (bottom) context object in the V8 context stack.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
-        /// </remarks>
         public static CfrV8Context GetEnteredContext() {
             var call = new CfxV8ContextGetEnteredContextRenderProcessCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrV8Context.Wrap(call.__retval);
-        }
-
-        /// <summary>
-        /// Returns true (1) if V8 is currently inside a context.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
-        /// </remarks>
-        [Obsolete("InContext(CfrRuntime, ...) is deprecated, please use InContext(...) without CfrRuntime instead.")]
-        public static bool InContext(CfrRuntime remoteRuntime) {
-            throw new NotSupportedException("this call is no longer supported");
         }
 
         /// <summary>

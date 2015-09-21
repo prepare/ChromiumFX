@@ -72,36 +72,10 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
-        [Obsolete("GetForCurrentThread(CfrRuntime, ...) is deprecated, please use GetForCurrentThread(...) without CfrRuntime instead.")]
-        public static CfrTaskRunner GetForCurrentThread(CfrRuntime remoteRuntime) {
-            throw new NotSupportedException("this call is no longer supported");
-        }
-
-        /// <summary>
-        /// Returns the task runner for the current thread. Only CEF threads will have
-        /// task runners. An NULL reference will be returned if this function is called
-        /// on an invalid thread.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
-        /// </remarks>
         public static CfrTaskRunner GetForCurrentThread() {
             var call = new CfxTaskRunnerGetForCurrentThreadRenderProcessCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrTaskRunner.Wrap(call.__retval);
-        }
-
-        /// <summary>
-        /// Returns the task runner for the specified CEF thread.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
-        /// </remarks>
-        [Obsolete("GetForThread(CfrRuntime, ...) is deprecated, please use GetForThread(...) without CfrRuntime instead.")]
-        public static CfrTaskRunner GetForThread(CfrRuntime remoteRuntime, CfxThreadId threadId) {
-            throw new NotSupportedException("this call is no longer supported");
         }
 
         /// <summary>

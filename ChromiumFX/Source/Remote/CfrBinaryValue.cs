@@ -39,7 +39,7 @@ namespace Chromium.Remote {
         /// Creates a new object that is not owned by any other object. The specified
         /// |data| will be copied.
         /// </summary>
-        public static CfrBinaryValue Create(CfrRuntime remoteRuntime, byte[] data) {
+        public static CfrBinaryValue Create(byte[] data) {
             var call = new CfxBinaryValueCreateFromArrayRenderProcessCall();
             call.data = data;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);

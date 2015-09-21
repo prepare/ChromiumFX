@@ -72,35 +72,10 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
         /// </remarks>
-        [Obsolete("Create(CfrRuntime, ...) is deprecated, please use Create(...) without CfrRuntime instead.")]
-        public static CfrCommandLine Create(CfrRuntime remoteRuntime) {
-            throw new NotSupportedException("this call is no longer supported");
-        }
-
-        /// <summary>
-        /// Create a new CfrCommandLine instance.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
-        /// </remarks>
         public static CfrCommandLine Create() {
             var call = new CfxCommandLineCreateRenderProcessCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrCommandLine.Wrap(call.__retval);
-        }
-
-        /// <summary>
-        /// Returns the singleton global CfrCommandLine object. The returned object
-        /// will be read-only.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
-        /// </remarks>
-        [Obsolete("GetGlobal(CfrRuntime, ...) is deprecated, please use GetGlobal(...) without CfrRuntime instead.")]
-        public static CfrCommandLine GetGlobal(CfrRuntime remoteRuntime) {
-            throw new NotSupportedException("this call is no longer supported");
         }
 
         /// <summary>
