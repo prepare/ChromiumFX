@@ -645,66 +645,6 @@ namespace Chromium.WebBrowser {
             return obj;
         }
 
-        [Obsolete("AddGlobalJSProperty is deprecated, please use GlobalObject.Add instead.")]
-        public void AddGlobalJSProperty(string propertyName, JSProperty globalProperty) {
-            GlobalObject.Add(propertyName, globalProperty);
-        }
-
-        [Obsolete("AddGlobalJSProperty is deprecated, please use GlobalObjectForFrame(frameName).Add instead.")]
-        public void AddGlobalJSProperty(string frameName, string propertyName, JSProperty globalProperty) {
-            GlobalObjectForFrame(frameName).Add(propertyName, globalProperty);
-        }
-
-        [Obsolete("AddGlobalJSFunction is deprecated, please use GlobalObject.AddFunction instead.")]
-        public JSFunction AddGlobalJSFunction(string functionName) {
-            return GlobalObject.AddFunction(functionName);
-        }
-
-        [Obsolete("AddGlobalJSFunction is deprecated, please use GlobalObject.AddFunction instead.")]
-        public JSFunction AddGlobalJSFunction(string functionName, bool invokeOnBrowser) {
-            return GlobalObject.AddFunction(functionName, invokeOnBrowser);
-        }
-
-        [Obsolete("AddGlobalJSFunction is deprecated, please use GlobalObjectForFrame(frameName).AddFunction instead.")]
-        public JSFunction AddGlobalJSFunction(string frameName, string functionName) {
-            var f = new JSFunction(true);
-            AddGlobalJSProperty(frameName, functionName, f);
-            return f;
-        }
-
-        [Obsolete("AddGlobalJSFunction is deprecated, please use GlobalObjectForFrame(frameName).AddFunction instead.")]
-        public JSFunction AddGlobalJSFunction(string frameName, string functionName, bool invokeOnBrowser) {
-            var f = new JSFunction(invokeOnBrowser);
-            AddGlobalJSProperty(frameName, functionName, f);
-            return f;
-        }
-
-
-        [Obsolete("AddGlobalJSObject is deprecated, please use GlobalObject.AddObject instead.")]
-        public JSObject AddGlobalJSObject(string objectName) {
-            return GlobalObject.AddObject(objectName);
-        }
-
-        [Obsolete("AddGlobalJSObject is deprecated, please use GlobalObject.AddObject instead.")]
-        public JSObject AddGlobalJSObject(string objectName, bool invokeOnBrowser) {
-            return GlobalObject.AddObject(objectName, invokeOnBrowser);
-        }
-
-        [Obsolete("AddGlobalJSObject is deprecated, please use GlobalObjectForFrame(frameName).AddObject instead.")]
-        public JSObject AddGlobalJSObject(string frameName, string objectName) {
-            var o = new JSObject(true);
-            AddGlobalJSProperty(frameName, objectName, o);
-            return o;
-        }
-
-        [Obsolete("AddGlobalJSObject is deprecated, please use GlobalObjectForFrame(frameName).AddObject instead.")]
-        public JSObject AddGlobalJSObject(string frameName, string objectName, bool invokeOnBrowser) {
-            var o = new JSObject(invokeOnBrowser);
-            AddGlobalJSProperty(frameName, objectName, o);
-            return o;
-        }
-
-
 
         /// <summary>
         /// Visit the DOM in the remote browser's main frame.

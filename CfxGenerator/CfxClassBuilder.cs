@@ -1015,10 +1015,6 @@ public class CfxClassBuilder {
         b.AppendLine("private {0}(IntPtr proxyId) : base(proxyId) {{}}", RemoteClassName);
 
         if(NeedsConstructor) {
-            b.AppendLine("[Obsolete(\"new {0}(CfrRuntime) is deprecated, please use new {0}() without CfrRuntime instead.\")]", RemoteClassName);
-            b.BeginBlock("public {0}(CfrRuntime remoteRuntime) : base(CreateRemote())", RemoteClassName);
-            b.AppendLine("throw new NotSupportedException(\"this call is no longer supported\");");
-            b.EndBlock();
             b.BeginBlock("public {0}() : base(CreateRemote())", RemoteClassName);
             b.AppendLine("connection.weakCache.Add(proxyId, this);");
             b.EndBlock();

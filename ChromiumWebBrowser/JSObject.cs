@@ -45,9 +45,6 @@ namespace Chromium.WebBrowser {
         private readonly Dictionary<string, JSProperty> jsProperties = new Dictionary<string, JSProperty>();
         private CfrV8Accessor v8Accessor;
 
-        [Obsolete("Deprecated. Please use InvokeMode instead.")]
-        public bool InvokeOnBrowser { get; private set; }
-
         /// <summary>
         /// Creates a new javascript object to be added as a property 
         /// to a browser frame's global object or a child object.
@@ -62,11 +59,6 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public JSObject(JSInvokeMode invokeMode)
             : base(JSPropertyType.Object, invokeMode) {
-        }
-
-        [Obsolete("Deprecated. Please use InvokeMode instead.")]
-        public JSObject(bool invokeOnBrowser)
-            : base(JSPropertyType.Object, invokeOnBrowser ? JSInvokeMode.Invoke : JSInvokeMode.DontInvoke) {
         }
 
         /// <summary>
@@ -196,14 +188,6 @@ namespace Chromium.WebBrowser {
             return jsProperties.GetEnumerator();
         }
 
-        [Obsolete("AddProperty is deprecated, please use Add instead.")]
-        public void AddProperty(string propertyName, JSProperty property) {
-            property.SetParent(propertyName, this);
-            if(jsProperties.ContainsKey(propertyName))
-                throw new ChromiumWebBrowserException("Property already exists.");
-            jsProperties.Add(propertyName, property);
-        }
-
         /// <summary>
         /// Add a javascript function as a property to this object.
         /// </summary>
@@ -218,13 +202,6 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public JSFunction AddFunction(string functionName, JSInvokeMode invokeMode) {
             var f = new JSFunction(invokeMode);
-            Add(functionName, f);
-            return f;
-        }
-
-        [Obsolete("Deprecated. Please use InvokeMode instead.")]
-        public JSFunction AddFunction(string functionName, bool invokeOnBrowser) {
-            var f = new JSFunction(invokeOnBrowser);
             Add(functionName, f);
             return f;
         }
@@ -247,13 +224,6 @@ namespace Chromium.WebBrowser {
             return o;
         }
         
-        [Obsolete("Deprecated. Please use InvokeMode instead.")]
-        public JSObject AddObject(string objectName, bool invokeOnBrowser) {
-            var o = new JSObject(invokeOnBrowser);
-            Add(objectName, o);
-            return o;
-        }
-
         /// <summary>
         /// Add a dynamic javascript property to this object.
         /// </summary>
@@ -268,13 +238,6 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public JSDynamicProperty AddDynamicProperty(string propertyName, JSInvokeMode invokeMode) {
             var p = new JSDynamicProperty(invokeMode);
-            Add(propertyName, p);
-            return p;
-        }
-
-        [Obsolete("Deprecated. Please use InvokeMode instead.")]
-        public JSDynamicProperty AddDynamicProperty(string propertyName, bool invokeOnBrowser) {
-            var p = new JSDynamicProperty(invokeOnBrowser);
             Add(propertyName, p);
             return p;
         }

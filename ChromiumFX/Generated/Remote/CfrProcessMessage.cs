@@ -65,18 +65,6 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
         /// </remarks>
-        [Obsolete("Create(CfrRuntime, ...) is deprecated, please use Create(...) without CfrRuntime instead.")]
-        public static CfrProcessMessage Create(CfrRuntime remoteRuntime, string name) {
-            throw new NotSupportedException("this call is no longer supported");
-        }
-
-        /// <summary>
-        /// Create a new CfrProcessMessage object with the specified name.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
-        /// </remarks>
         public static CfrProcessMessage Create(string name) {
             var call = new CfxProcessMessageCreateRenderProcessCall();
             call.name = name;

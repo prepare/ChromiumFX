@@ -39,7 +39,7 @@ namespace Chromium.Remote {
             return new DateTime(time.Year, time.Month, time.DayOfMonth, time.Hour, time.Minute, time.Second, time.Millisecond, DateTimeKind.Utc);
         }
 
-        public static CfrTime FromUniversalTime(DateTime time, CfrRuntime remoteRuntime) {
+        public static CfrTime FromUniversalTime(DateTime time) {
 
             if (time.Kind != DateTimeKind.Utc)
                 throw new ArgumentException("time must be of kind DateTimeKind.Utc", "time");

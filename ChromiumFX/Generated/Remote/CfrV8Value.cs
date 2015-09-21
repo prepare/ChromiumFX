@@ -69,18 +69,6 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        [Obsolete("CreateUndefined(CfrRuntime, ...) is deprecated, please use CreateUndefined(...) without CfrRuntime instead.")]
-        public static CfrV8Value CreateUndefined(CfrRuntime remoteRuntime) {
-            throw new NotSupportedException("this call is no longer supported");
-        }
-
-        /// <summary>
-        /// Create a new CfrV8Value object of type undefined.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
-        /// </remarks>
         public static CfrV8Value CreateUndefined() {
             var call = new CfxV8ValueCreateUndefinedRenderProcessCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
@@ -94,34 +82,10 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        [Obsolete("CreateNull(CfrRuntime, ...) is deprecated, please use CreateNull(...) without CfrRuntime instead.")]
-        public static CfrV8Value CreateNull(CfrRuntime remoteRuntime) {
-            throw new NotSupportedException("this call is no longer supported");
-        }
-
-        /// <summary>
-        /// Create a new CfrV8Value object of type null.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
-        /// </remarks>
         public static CfrV8Value CreateNull() {
             var call = new CfxV8ValueCreateNullRenderProcessCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrV8Value.Wrap(call.__retval);
-        }
-
-        /// <summary>
-        /// Create a new CfrV8Value object of type bool.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
-        /// </remarks>
-        [Obsolete("CreateBool(CfrRuntime, ...) is deprecated, please use CreateBool(...) without CfrRuntime instead.")]
-        public static CfrV8Value CreateBool(CfrRuntime remoteRuntime, bool value) {
-            throw new NotSupportedException("this call is no longer supported");
         }
 
         /// <summary>
@@ -145,18 +109,6 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        [Obsolete("CreateInt(CfrRuntime, ...) is deprecated, please use CreateInt(...) without CfrRuntime instead.")]
-        public static CfrV8Value CreateInt(CfrRuntime remoteRuntime, int value) {
-            throw new NotSupportedException("this call is no longer supported");
-        }
-
-        /// <summary>
-        /// Create a new CfrV8Value object of type int.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
-        /// </remarks>
         public static CfrV8Value CreateInt(int value) {
             var call = new CfxV8ValueCreateIntRenderProcessCall();
             call.value = value;
@@ -171,35 +123,11 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        [Obsolete("CreateUint(CfrRuntime, ...) is deprecated, please use CreateUint(...) without CfrRuntime instead.")]
-        public static CfrV8Value CreateUint(CfrRuntime remoteRuntime, uint value) {
-            throw new NotSupportedException("this call is no longer supported");
-        }
-
-        /// <summary>
-        /// Create a new CfrV8Value object of type unsigned int.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
-        /// </remarks>
         public static CfrV8Value CreateUint(uint value) {
             var call = new CfxV8ValueCreateUintRenderProcessCall();
             call.value = value;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrV8Value.Wrap(call.__retval);
-        }
-
-        /// <summary>
-        /// Create a new CfrV8Value object of type double.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
-        /// </remarks>
-        [Obsolete("CreateDouble(CfrRuntime, ...) is deprecated, please use CreateDouble(...) without CfrRuntime instead.")]
-        public static CfrV8Value CreateDouble(CfrRuntime remoteRuntime, double value) {
-            throw new NotSupportedException("this call is no longer supported");
         }
 
         /// <summary>
@@ -226,21 +154,6 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        [Obsolete("CreateDate(CfrRuntime, ...) is deprecated, please use CreateDate(...) without CfrRuntime instead.")]
-        public static CfrV8Value CreateDate(CfrRuntime remoteRuntime, CfrTime date) {
-            throw new NotSupportedException("this call is no longer supported");
-        }
-
-        /// <summary>
-        /// Create a new CfrV8Value object of type Date. This function should only be
-        /// called from within the scope of a CfrRenderProcessHandler,
-        /// CfrV8Handler or CfrV8Accessor callback, or in combination with calling
-        /// enter() and exit() on a stored CfrV8Context reference.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
-        /// </remarks>
         public static CfrV8Value CreateDate(CfrTime date) {
             var call = new CfxV8ValueCreateDateRenderProcessCall();
             call.date = CfrObject.Unwrap(date);
@@ -255,39 +168,11 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        [Obsolete("CreateString(CfrRuntime, ...) is deprecated, please use CreateString(...) without CfrRuntime instead.")]
-        public static CfrV8Value CreateString(CfrRuntime remoteRuntime, string value) {
-            throw new NotSupportedException("this call is no longer supported");
-        }
-
-        /// <summary>
-        /// Create a new CfrV8Value object of type string.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
-        /// </remarks>
         public static CfrV8Value CreateString(string value) {
             var call = new CfxV8ValueCreateStringRenderProcessCall();
             call.value = value;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrV8Value.Wrap(call.__retval);
-        }
-
-        /// <summary>
-        /// Create a new CfrV8Value object of type object with optional accessor. This
-        /// function should only be called from within the scope of a
-        /// CfrRenderProcessHandler, CfrV8Handler or CfrV8Accessor callback,
-        /// or in combination with calling enter() and exit() on a stored CfrV8Context
-        /// reference.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
-        /// </remarks>
-        [Obsolete("CreateObject(CfrRuntime, ...) is deprecated, please use CreateObject(...) without CfrRuntime instead.")]
-        public static CfrV8Value CreateObject(CfrRuntime remoteRuntime, CfrV8Accessor accessor) {
-            throw new NotSupportedException("this call is no longer supported");
         }
 
         /// <summary>
@@ -320,43 +205,11 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        [Obsolete("CreateArray(CfrRuntime, ...) is deprecated, please use CreateArray(...) without CfrRuntime instead.")]
-        public static CfrV8Value CreateArray(CfrRuntime remoteRuntime, int length) {
-            throw new NotSupportedException("this call is no longer supported");
-        }
-
-        /// <summary>
-        /// Create a new CfrV8Value object of type array with the specified |length|.
-        /// If |length| is negative the returned array will have length 0. This function
-        /// should only be called from within the scope of a
-        /// CfrRenderProcessHandler, CfrV8Handler or CfrV8Accessor callback,
-        /// or in combination with calling enter() and exit() on a stored CfrV8Context
-        /// reference.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
-        /// </remarks>
         public static CfrV8Value CreateArray(int length) {
             var call = new CfxV8ValueCreateArrayRenderProcessCall();
             call.length = length;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrV8Value.Wrap(call.__retval);
-        }
-
-        /// <summary>
-        /// Create a new CfrV8Value object of type function. This function should only
-        /// be called from within the scope of a CfrRenderProcessHandler,
-        /// CfrV8Handler or CfrV8Accessor callback, or in combination with calling
-        /// enter() and exit() on a stored CfrV8Context reference.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
-        /// </remarks>
-        [Obsolete("CreateFunction(CfrRuntime, ...) is deprecated, please use CreateFunction(...) without CfrRuntime instead.")]
-        public static CfrV8Value CreateFunction(CfrRuntime remoteRuntime, string name, CfrV8Handler handler) {
-            throw new NotSupportedException("this call is no longer supported");
         }
 
         /// <summary>

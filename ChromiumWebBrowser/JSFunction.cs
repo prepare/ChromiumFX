@@ -50,9 +50,6 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public event CfrV8HandlerExecuteEventHandler Execute;
 
-        [Obsolete("Deprecated. Please use InvokeMode instead.")]
-        public bool InvokeOnBrowser { get; private set; }
-
         /// <summary>
         /// Creates a new javascript function to be added as a property 
         /// to a browser frame's global object or to a child object.
@@ -67,11 +64,6 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public JSFunction(JSInvokeMode invokeMode)
             : base(JSPropertyType.Function, invokeMode) {
-        }
-
-        [Obsolete("Deprecated. Please use InvokeMode instead.")]
-        public JSFunction(bool invokeOnBrowser)
-            : base(JSPropertyType.Function, invokeOnBrowser ? JSInvokeMode.Invoke : JSInvokeMode.DontInvoke) {
         }
 
         internal void SetV8Handler(CfrV8Handler handler) {

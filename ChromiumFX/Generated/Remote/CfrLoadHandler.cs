@@ -97,10 +97,6 @@ namespace Chromium.Remote {
 
 
         private CfrLoadHandler(IntPtr proxyId) : base(proxyId) {}
-        [Obsolete("new CfrLoadHandler(CfrRuntime) is deprecated, please use new CfrLoadHandler() without CfrRuntime instead.")]
-        public CfrLoadHandler(CfrRuntime remoteRuntime) : base(CreateRemote()) {
-            throw new NotSupportedException("this call is no longer supported");
-        }
         public CfrLoadHandler() : base(CreateRemote()) {
             connection.weakCache.Add(proxyId, this);
         }
