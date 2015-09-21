@@ -68,7 +68,8 @@ namespace Chromium {
         /// The maximum rate in frames per second (fps) that CfxRenderHandler.OnPaint
         /// will be called for a windowless browser. The actual fps may be lower if
         /// the browser cannot generate frames at the requested rate. The minimum
-        /// value is 1 and the maximum value is 60 (default 30).
+        /// value is 1 and the maximum value is 60 (default 30). This value can also be
+        /// changed dynamically via CfxBrowserHost.SetWindowlessFrameRate.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

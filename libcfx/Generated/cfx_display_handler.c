@@ -102,6 +102,15 @@ void CEF_CALLBACK cfx_display_handler_on_favicon_urlchange(cef_display_handler_t
 }
 
 
+// on_fullscreen_mode_change
+
+void (CEF_CALLBACK *cfx_display_handler_on_fullscreen_mode_change_callback)(gc_handle_t self, cef_browser_t* browser, int fullscreen);
+
+void CEF_CALLBACK cfx_display_handler_on_fullscreen_mode_change(cef_display_handler_t* self, cef_browser_t* browser, int fullscreen) {
+    cfx_display_handler_on_fullscreen_mode_change_callback(((cfx_display_handler_t*)self)->gc_handle, browser, fullscreen);
+}
+
+
 // on_tooltip
 
 void (CEF_CALLBACK *cfx_display_handler_on_tooltip_callback)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 **text_str, int *text_length);
@@ -157,16 +166,21 @@ static void cfx_display_handler_set_managed_callback(cef_display_handler_t* self
         self->on_favicon_urlchange = callback ? cfx_display_handler_on_favicon_urlchange : 0;
         break;
     case 3:
+        if(callback && !cfx_display_handler_on_fullscreen_mode_change_callback)
+            cfx_display_handler_on_fullscreen_mode_change_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int fullscreen)) callback;
+        self->on_fullscreen_mode_change = callback ? cfx_display_handler_on_fullscreen_mode_change : 0;
+        break;
+    case 4:
         if(callback && !cfx_display_handler_on_tooltip_callback)
             cfx_display_handler_on_tooltip_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 **text_str, int *text_length)) callback;
         self->on_tooltip = callback ? cfx_display_handler_on_tooltip : 0;
         break;
-    case 4:
+    case 5:
         if(callback && !cfx_display_handler_on_status_message_callback)
             cfx_display_handler_on_status_message_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, char16 *value_str, int value_length)) callback;
         self->on_status_message = callback ? cfx_display_handler_on_status_message : 0;
         break;
-    case 5:
+    case 6:
         if(callback && !cfx_display_handler_on_console_message_callback)
             cfx_display_handler_on_console_message_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *message_str, int message_length, char16 *source_str, int source_length, int line)) callback;
         self->on_console_message = callback ? cfx_display_handler_on_console_message : 0;

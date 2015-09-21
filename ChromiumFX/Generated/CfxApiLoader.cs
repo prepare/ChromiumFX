@@ -46,6 +46,7 @@ namespace Chromium {
             cfx_create_url,
             cfx_currently_on,
             cfx_do_message_loop_work,
+            cfx_enable_highdpi_support,
             cfx_end_tracing,
             cfx_execute_process,
             cfx_force_web_plugin_shutdown,
@@ -130,6 +131,7 @@ namespace Chromium {
             cfx_browser_host_run_file_dialog,
             cfx_browser_host_start_download,
             cfx_browser_host_print,
+            cfx_browser_host_print_to_pdf,
             cfx_browser_host_find,
             cfx_browser_host_stop_finding,
             cfx_browser_host_show_dev_tools,
@@ -151,6 +153,8 @@ namespace Chromium {
             cfx_browser_host_send_focus_event,
             cfx_browser_host_send_capture_lost_event,
             cfx_browser_host_notify_move_or_resize_started,
+            cfx_browser_host_get_windowless_frame_rate,
+            cfx_browser_host_set_windowless_frame_rate,
             cfx_browser_host_get_nstext_input_context,
             cfx_browser_host_handle_key_event_before_text_input_client,
             cfx_browser_host_handle_key_event_after_text_input_client,
@@ -660,7 +664,6 @@ namespace Chromium {
             cfx_navigation_entry_get_title,
             cfx_navigation_entry_get_transition_type,
             cfx_navigation_entry_has_post_data,
-            cfx_navigation_entry_get_frame_name,
             cfx_navigation_entry_get_completion_time,
             cfx_navigation_entry_get_http_status_code,
             cfx_navigation_entry_visitor_ctor,
@@ -672,6 +675,37 @@ namespace Chromium {
             cfx_page_range_get_from,
             cfx_page_range_set_to,
             cfx_page_range_get_to,
+            cfx_pdf_print_callback_ctor,
+            cfx_pdf_print_callback_get_gc_handle,
+            cfx_pdf_print_callback_set_managed_callback,
+            cfx_pdf_print_settings_ctor,
+            cfx_pdf_print_settings_dtor,
+            cfx_pdf_print_settings_set_header_footer_title,
+            cfx_pdf_print_settings_get_header_footer_title,
+            cfx_pdf_print_settings_set_header_footer_url,
+            cfx_pdf_print_settings_get_header_footer_url,
+            cfx_pdf_print_settings_set_page_width,
+            cfx_pdf_print_settings_get_page_width,
+            cfx_pdf_print_settings_set_page_height,
+            cfx_pdf_print_settings_get_page_height,
+            cfx_pdf_print_settings_set_margin_top,
+            cfx_pdf_print_settings_get_margin_top,
+            cfx_pdf_print_settings_set_margin_right,
+            cfx_pdf_print_settings_get_margin_right,
+            cfx_pdf_print_settings_set_margin_bottom,
+            cfx_pdf_print_settings_get_margin_bottom,
+            cfx_pdf_print_settings_set_margin_left,
+            cfx_pdf_print_settings_get_margin_left,
+            cfx_pdf_print_settings_set_margin_type,
+            cfx_pdf_print_settings_get_margin_type,
+            cfx_pdf_print_settings_set_header_footer_enabled,
+            cfx_pdf_print_settings_get_header_footer_enabled,
+            cfx_pdf_print_settings_set_selection_only,
+            cfx_pdf_print_settings_get_selection_only,
+            cfx_pdf_print_settings_set_landscape,
+            cfx_pdf_print_settings_get_landscape,
+            cfx_pdf_print_settings_set_backgrounds_enabled,
+            cfx_pdf_print_settings_get_backgrounds_enabled,
             cfx_point_ctor,
             cfx_point_dtor,
             cfx_point_set_x,
@@ -1273,6 +1307,7 @@ namespace Chromium {
             CfxApi.cfx_create_url = (CfxApi.cfx_create_url_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_create_url, typeof(CfxApi.cfx_create_url_delegate));
             CfxApi.cfx_currently_on = (CfxApi.cfx_currently_on_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_currently_on, typeof(CfxApi.cfx_currently_on_delegate));
             CfxApi.cfx_do_message_loop_work = (CfxApi.cfx_do_message_loop_work_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_do_message_loop_work, typeof(CfxApi.cfx_do_message_loop_work_delegate));
+            CfxApi.cfx_enable_highdpi_support = (CfxApi.cfx_enable_highdpi_support_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_enable_highdpi_support, typeof(CfxApi.cfx_enable_highdpi_support_delegate));
             CfxApi.cfx_end_tracing = (CfxApi.cfx_end_tracing_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_end_tracing, typeof(CfxApi.cfx_end_tracing_delegate));
             CfxApi.cfx_execute_process = (CfxApi.cfx_execute_process_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_execute_process, typeof(CfxApi.cfx_execute_process_delegate));
             CfxApi.cfx_force_web_plugin_shutdown = (CfxApi.cfx_force_web_plugin_shutdown_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_force_web_plugin_shutdown, typeof(CfxApi.cfx_force_web_plugin_shutdown_delegate));
@@ -1429,6 +1464,7 @@ namespace Chromium {
             CfxApi.cfx_browser_host_run_file_dialog = (CfxApi.cfx_browser_host_run_file_dialog_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_run_file_dialog, typeof(CfxApi.cfx_browser_host_run_file_dialog_delegate));
             CfxApi.cfx_browser_host_start_download = (CfxApi.cfx_browser_host_start_download_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_start_download, typeof(CfxApi.cfx_browser_host_start_download_delegate));
             CfxApi.cfx_browser_host_print = (CfxApi.cfx_browser_host_print_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_print, typeof(CfxApi.cfx_browser_host_print_delegate));
+            CfxApi.cfx_browser_host_print_to_pdf = (CfxApi.cfx_browser_host_print_to_pdf_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_print_to_pdf, typeof(CfxApi.cfx_browser_host_print_to_pdf_delegate));
             CfxApi.cfx_browser_host_find = (CfxApi.cfx_browser_host_find_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_find, typeof(CfxApi.cfx_browser_host_find_delegate));
             CfxApi.cfx_browser_host_stop_finding = (CfxApi.cfx_browser_host_stop_finding_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_stop_finding, typeof(CfxApi.cfx_browser_host_stop_finding_delegate));
             CfxApi.cfx_browser_host_show_dev_tools = (CfxApi.cfx_browser_host_show_dev_tools_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_show_dev_tools, typeof(CfxApi.cfx_browser_host_show_dev_tools_delegate));
@@ -1450,6 +1486,8 @@ namespace Chromium {
             CfxApi.cfx_browser_host_send_focus_event = (CfxApi.cfx_browser_host_send_focus_event_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_send_focus_event, typeof(CfxApi.cfx_browser_host_send_focus_event_delegate));
             CfxApi.cfx_browser_host_send_capture_lost_event = (CfxApi.cfx_browser_host_send_capture_lost_event_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_send_capture_lost_event, typeof(CfxApi.cfx_browser_host_send_capture_lost_event_delegate));
             CfxApi.cfx_browser_host_notify_move_or_resize_started = (CfxApi.cfx_browser_host_notify_move_or_resize_started_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_notify_move_or_resize_started, typeof(CfxApi.cfx_browser_host_notify_move_or_resize_started_delegate));
+            CfxApi.cfx_browser_host_get_windowless_frame_rate = (CfxApi.cfx_browser_host_get_windowless_frame_rate_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_get_windowless_frame_rate, typeof(CfxApi.cfx_browser_host_get_windowless_frame_rate_delegate));
+            CfxApi.cfx_browser_host_set_windowless_frame_rate = (CfxApi.cfx_browser_host_set_windowless_frame_rate_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_set_windowless_frame_rate, typeof(CfxApi.cfx_browser_host_set_windowless_frame_rate_delegate));
             CfxApi.cfx_browser_host_get_nstext_input_context = (CfxApi.cfx_browser_host_get_nstext_input_context_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_get_nstext_input_context, typeof(CfxApi.cfx_browser_host_get_nstext_input_context_delegate));
             CfxApi.cfx_browser_host_handle_key_event_before_text_input_client = (CfxApi.cfx_browser_host_handle_key_event_before_text_input_client_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_handle_key_event_before_text_input_client, typeof(CfxApi.cfx_browser_host_handle_key_event_before_text_input_client_delegate));
             CfxApi.cfx_browser_host_handle_key_event_after_text_input_client = (CfxApi.cfx_browser_host_handle_key_event_after_text_input_client_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_handle_key_event_after_text_input_client, typeof(CfxApi.cfx_browser_host_handle_key_event_after_text_input_client_delegate));
@@ -2281,7 +2319,6 @@ namespace Chromium {
             CfxApi.cfx_navigation_entry_get_title = (CfxApi.cfx_navigation_entry_get_title_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_navigation_entry_get_title, typeof(CfxApi.cfx_navigation_entry_get_title_delegate));
             CfxApi.cfx_navigation_entry_get_transition_type = (CfxApi.cfx_navigation_entry_get_transition_type_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_navigation_entry_get_transition_type, typeof(CfxApi.cfx_navigation_entry_get_transition_type_delegate));
             CfxApi.cfx_navigation_entry_has_post_data = (CfxApi.cfx_navigation_entry_has_post_data_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_navigation_entry_has_post_data, typeof(CfxApi.cfx_navigation_entry_has_post_data_delegate));
-            CfxApi.cfx_navigation_entry_get_frame_name = (CfxApi.cfx_navigation_entry_get_frame_name_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_navigation_entry_get_frame_name, typeof(CfxApi.cfx_navigation_entry_get_frame_name_delegate));
             CfxApi.cfx_navigation_entry_get_completion_time = (CfxApi.cfx_navigation_entry_get_completion_time_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_navigation_entry_get_completion_time, typeof(CfxApi.cfx_navigation_entry_get_completion_time_delegate));
             CfxApi.cfx_navigation_entry_get_http_status_code = (CfxApi.cfx_navigation_entry_get_http_status_code_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_navigation_entry_get_http_status_code, typeof(CfxApi.cfx_navigation_entry_get_http_status_code_delegate));
         }
@@ -2307,6 +2344,51 @@ namespace Chromium {
             CfxApi.cfx_page_range_get_from = (CfxApi.cfx_page_range_get_from_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_page_range_get_from, typeof(CfxApi.cfx_page_range_get_from_delegate));
             CfxApi.cfx_page_range_set_to = (CfxApi.cfx_page_range_set_to_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_page_range_set_to, typeof(CfxApi.cfx_page_range_set_to_delegate));
             CfxApi.cfx_page_range_get_to = (CfxApi.cfx_page_range_get_to_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_page_range_get_to, typeof(CfxApi.cfx_page_range_get_to_delegate));
+        }
+
+        private static bool CfxPdfPrintCallbackApiLoaded;
+        internal static void LoadCfxPdfPrintCallbackApi() {
+            if(CfxPdfPrintCallbackApiLoaded) return;
+            CfxPdfPrintCallbackApiLoaded = true;
+            CfxApi.Probe();
+            CfxApi.cfx_pdf_print_callback_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_callback_ctor, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
+            CfxApi.cfx_pdf_print_callback_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_callback_get_gc_handle, typeof(CfxApi.cfx_get_gc_handle_delegate));
+            CfxApi.cfx_pdf_print_callback_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_callback_set_managed_callback, typeof(CfxApi.cfx_set_callback_delegate));
+        }
+
+        private static bool CfxPdfPrintSettingsApiLoaded;
+        internal static void LoadCfxPdfPrintSettingsApi() {
+            if(CfxPdfPrintSettingsApiLoaded) return;
+            CfxPdfPrintSettingsApiLoaded = true;
+            CfxApi.Probe();
+            CfxApi.cfx_pdf_print_settings_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_ctor, typeof(CfxApi.cfx_ctor_delegate));
+            CfxApi.cfx_pdf_print_settings_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_dtor, typeof(CfxApi.cfx_dtor_delegate));
+            CfxApi.cfx_pdf_print_settings_set_header_footer_title = (CfxApi.cfx_pdf_print_settings_set_header_footer_title_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_set_header_footer_title, typeof(CfxApi.cfx_pdf_print_settings_set_header_footer_title_delegate));
+            CfxApi.cfx_pdf_print_settings_get_header_footer_title = (CfxApi.cfx_pdf_print_settings_get_header_footer_title_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_get_header_footer_title, typeof(CfxApi.cfx_pdf_print_settings_get_header_footer_title_delegate));
+            CfxApi.cfx_pdf_print_settings_set_header_footer_url = (CfxApi.cfx_pdf_print_settings_set_header_footer_url_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_set_header_footer_url, typeof(CfxApi.cfx_pdf_print_settings_set_header_footer_url_delegate));
+            CfxApi.cfx_pdf_print_settings_get_header_footer_url = (CfxApi.cfx_pdf_print_settings_get_header_footer_url_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_get_header_footer_url, typeof(CfxApi.cfx_pdf_print_settings_get_header_footer_url_delegate));
+            CfxApi.cfx_pdf_print_settings_set_page_width = (CfxApi.cfx_pdf_print_settings_set_page_width_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_set_page_width, typeof(CfxApi.cfx_pdf_print_settings_set_page_width_delegate));
+            CfxApi.cfx_pdf_print_settings_get_page_width = (CfxApi.cfx_pdf_print_settings_get_page_width_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_get_page_width, typeof(CfxApi.cfx_pdf_print_settings_get_page_width_delegate));
+            CfxApi.cfx_pdf_print_settings_set_page_height = (CfxApi.cfx_pdf_print_settings_set_page_height_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_set_page_height, typeof(CfxApi.cfx_pdf_print_settings_set_page_height_delegate));
+            CfxApi.cfx_pdf_print_settings_get_page_height = (CfxApi.cfx_pdf_print_settings_get_page_height_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_get_page_height, typeof(CfxApi.cfx_pdf_print_settings_get_page_height_delegate));
+            CfxApi.cfx_pdf_print_settings_set_margin_top = (CfxApi.cfx_pdf_print_settings_set_margin_top_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_set_margin_top, typeof(CfxApi.cfx_pdf_print_settings_set_margin_top_delegate));
+            CfxApi.cfx_pdf_print_settings_get_margin_top = (CfxApi.cfx_pdf_print_settings_get_margin_top_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_get_margin_top, typeof(CfxApi.cfx_pdf_print_settings_get_margin_top_delegate));
+            CfxApi.cfx_pdf_print_settings_set_margin_right = (CfxApi.cfx_pdf_print_settings_set_margin_right_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_set_margin_right, typeof(CfxApi.cfx_pdf_print_settings_set_margin_right_delegate));
+            CfxApi.cfx_pdf_print_settings_get_margin_right = (CfxApi.cfx_pdf_print_settings_get_margin_right_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_get_margin_right, typeof(CfxApi.cfx_pdf_print_settings_get_margin_right_delegate));
+            CfxApi.cfx_pdf_print_settings_set_margin_bottom = (CfxApi.cfx_pdf_print_settings_set_margin_bottom_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_set_margin_bottom, typeof(CfxApi.cfx_pdf_print_settings_set_margin_bottom_delegate));
+            CfxApi.cfx_pdf_print_settings_get_margin_bottom = (CfxApi.cfx_pdf_print_settings_get_margin_bottom_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_get_margin_bottom, typeof(CfxApi.cfx_pdf_print_settings_get_margin_bottom_delegate));
+            CfxApi.cfx_pdf_print_settings_set_margin_left = (CfxApi.cfx_pdf_print_settings_set_margin_left_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_set_margin_left, typeof(CfxApi.cfx_pdf_print_settings_set_margin_left_delegate));
+            CfxApi.cfx_pdf_print_settings_get_margin_left = (CfxApi.cfx_pdf_print_settings_get_margin_left_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_get_margin_left, typeof(CfxApi.cfx_pdf_print_settings_get_margin_left_delegate));
+            CfxApi.cfx_pdf_print_settings_set_margin_type = (CfxApi.cfx_pdf_print_settings_set_margin_type_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_set_margin_type, typeof(CfxApi.cfx_pdf_print_settings_set_margin_type_delegate));
+            CfxApi.cfx_pdf_print_settings_get_margin_type = (CfxApi.cfx_pdf_print_settings_get_margin_type_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_get_margin_type, typeof(CfxApi.cfx_pdf_print_settings_get_margin_type_delegate));
+            CfxApi.cfx_pdf_print_settings_set_header_footer_enabled = (CfxApi.cfx_pdf_print_settings_set_header_footer_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_set_header_footer_enabled, typeof(CfxApi.cfx_pdf_print_settings_set_header_footer_enabled_delegate));
+            CfxApi.cfx_pdf_print_settings_get_header_footer_enabled = (CfxApi.cfx_pdf_print_settings_get_header_footer_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_get_header_footer_enabled, typeof(CfxApi.cfx_pdf_print_settings_get_header_footer_enabled_delegate));
+            CfxApi.cfx_pdf_print_settings_set_selection_only = (CfxApi.cfx_pdf_print_settings_set_selection_only_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_set_selection_only, typeof(CfxApi.cfx_pdf_print_settings_set_selection_only_delegate));
+            CfxApi.cfx_pdf_print_settings_get_selection_only = (CfxApi.cfx_pdf_print_settings_get_selection_only_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_get_selection_only, typeof(CfxApi.cfx_pdf_print_settings_get_selection_only_delegate));
+            CfxApi.cfx_pdf_print_settings_set_landscape = (CfxApi.cfx_pdf_print_settings_set_landscape_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_set_landscape, typeof(CfxApi.cfx_pdf_print_settings_set_landscape_delegate));
+            CfxApi.cfx_pdf_print_settings_get_landscape = (CfxApi.cfx_pdf_print_settings_get_landscape_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_get_landscape, typeof(CfxApi.cfx_pdf_print_settings_get_landscape_delegate));
+            CfxApi.cfx_pdf_print_settings_set_backgrounds_enabled = (CfxApi.cfx_pdf_print_settings_set_backgrounds_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_set_backgrounds_enabled, typeof(CfxApi.cfx_pdf_print_settings_set_backgrounds_enabled_delegate));
+            CfxApi.cfx_pdf_print_settings_get_backgrounds_enabled = (CfxApi.cfx_pdf_print_settings_get_backgrounds_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_get_backgrounds_enabled, typeof(CfxApi.cfx_pdf_print_settings_get_backgrounds_enabled_delegate));
         }
 
         private static bool CfxPointApiLoaded;

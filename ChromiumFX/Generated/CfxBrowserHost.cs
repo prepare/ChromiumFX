@@ -218,6 +218,32 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Returns the maximum rate in frames per second (fps) that
+        /// CfxRenderHandler:: OnPaint will be called for a windowless browser. The
+        /// actual fps may be lower if the browser cannot generate frames at the
+        /// requested rate. The minimum value is 1 and the maximum value is 60 (default
+        /// 30). This function can only be called on the UI thread.
+        /// 
+        /// Set the maximum rate in frames per second (fps) that CfxRenderHandler::
+        /// OnPaint will be called for a windowless browser. The actual fps may be
+        /// lower if the browser cannot generate frames at the requested rate. The
+        /// minimum value is 1 and the maximum value is 60 (default 30). Can also be
+        /// set at browser creation via CfxBrowserSettings.WindowlessFrameRate.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
+        public int WindowlessFrameRate {
+            get {
+                return CfxApi.cfx_browser_host_get_windowless_frame_rate(NativePtr);
+            }
+            set {
+                CfxApi.cfx_browser_host_set_windowless_frame_rate(NativePtr, value);
+            }
+        }
+
+        /// <summary>
         /// Get the NSTextInputContext implementation for enabling IME on Mac when
         /// window rendering is disabled.
         /// </summary>
@@ -327,6 +353,22 @@ namespace Chromium {
         /// </remarks>
         public void Print() {
             CfxApi.cfx_browser_host_print(NativePtr);
+        }
+
+        /// <summary>
+        /// Print the current browser contents to the PDF file specified by |path| and
+        /// execute |callback| on completion. The caller is responsible for deleting
+        /// |path| when done. For PDF printing to work on Linux you must implement the
+        /// CfxPrintHandler.GetPdfPaperSize function.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
+        public void PrintToPdf(string path, CfxPdfPrintSettings settings, CfxPdfPrintCallback callback) {
+            var path_pinned = new PinnedString(path);
+            CfxApi.cfx_browser_host_print_to_pdf(NativePtr, path_pinned.Obj.PinnedPtr, path_pinned.Length, CfxPdfPrintSettings.Unwrap(settings), CfxPdfPrintCallback.Unwrap(callback));
+            path_pinned.Obj.Free();
         }
 
         /// <summary>

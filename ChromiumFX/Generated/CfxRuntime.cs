@@ -229,6 +229,19 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Call during process startup to enable High-DPI support on Windows 7 or newer.
+        /// Older versions of Windows should be left DPI-unaware because they do not
+        /// support DirectWrite and GDI fonts are kerned very badly.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
+        /// </remarks>
+        public static void EnableHighDpiSupport() {
+            CfxApi.cfx_enable_highdpi_support();
+        }
+
+        /// <summary>
         /// Stop tracing events on all processes.
         /// This function will fail and return false (0) if a previous call to
         /// CfxEndTracingAsync is already pending or if CfxBeginTracing was not called.

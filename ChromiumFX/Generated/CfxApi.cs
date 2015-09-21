@@ -80,6 +80,10 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_do_message_loop_work_delegate();
         public static cfx_do_message_loop_work_delegate cfx_do_message_loop_work;
+        // CEF_EXPORT void cef_enable_highdpi_support();
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_enable_highdpi_support_delegate();
+        public static cfx_enable_highdpi_support_delegate cfx_enable_highdpi_support;
         // CEF_EXPORT int cef_end_tracing(const cef_string_t* tracing_file, cef_end_tracing_callback_t* callback);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate int cfx_end_tracing_delegate(IntPtr tracing_file_str, int tracing_file_length, IntPtr callback);
@@ -570,6 +574,11 @@ namespace Chromium {
         public delegate void cfx_browser_host_print_delegate(IntPtr self);
         public static cfx_browser_host_print_delegate cfx_browser_host_print;
 
+        // static void cfx_browser_host_print_to_pdf(cef_browser_host_t* self, char16 *path_str, int path_length, const cef_pdf_print_settings_t* settings, cef_pdf_print_callback_t* callback)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_browser_host_print_to_pdf_delegate(IntPtr self, IntPtr path_str, int path_length, IntPtr settings, IntPtr callback);
+        public static cfx_browser_host_print_to_pdf_delegate cfx_browser_host_print_to_pdf;
+
         // static void cfx_browser_host_find(cef_browser_host_t* self, int identifier, char16 *searchText_str, int searchText_length, int forward, int matchCase, int findNext)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_browser_host_find_delegate(IntPtr self, int identifier, IntPtr searchText_str, int searchText_length, int forward, int matchCase, int findNext);
@@ -674,6 +683,16 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_browser_host_notify_move_or_resize_started_delegate(IntPtr self);
         public static cfx_browser_host_notify_move_or_resize_started_delegate cfx_browser_host_notify_move_or_resize_started;
+
+        // static int cfx_browser_host_get_windowless_frame_rate(cef_browser_host_t* self)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate int cfx_browser_host_get_windowless_frame_rate_delegate(IntPtr self);
+        public static cfx_browser_host_get_windowless_frame_rate_delegate cfx_browser_host_get_windowless_frame_rate;
+
+        // static void cfx_browser_host_set_windowless_frame_rate(cef_browser_host_t* self, int frame_rate)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_browser_host_set_windowless_frame_rate_delegate(IntPtr self, int frame_rate);
+        public static cfx_browser_host_set_windowless_frame_rate_delegate cfx_browser_host_set_windowless_frame_rate;
 
         // static cef_text_input_context_t cfx_browser_host_get_nstext_input_context(cef_browser_host_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -3018,11 +3037,6 @@ namespace Chromium {
         public delegate int cfx_navigation_entry_has_post_data_delegate(IntPtr self);
         public static cfx_navigation_entry_has_post_data_delegate cfx_navigation_entry_has_post_data;
 
-        // static cef_string_userfree_t cfx_navigation_entry_get_frame_name(cef_navigation_entry_t* self)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate IntPtr cfx_navigation_entry_get_frame_name_delegate(IntPtr self);
-        public static cfx_navigation_entry_get_frame_name_delegate cfx_navigation_entry_get_frame_name;
-
         // static cef_time_t* cfx_navigation_entry_get_completion_time(cef_navigation_entry_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate IntPtr cfx_navigation_entry_get_completion_time_delegate(IntPtr self);
@@ -3065,6 +3079,138 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_page_range_get_to_delegate(IntPtr self, out int to);
         public static cfx_page_range_get_to_delegate cfx_page_range_get_to;
+
+
+        // CfxPdfPrintCallback
+
+        public static cfx_ctor_with_gc_handle_delegate cfx_pdf_print_callback_ctor;
+        public static cfx_get_gc_handle_delegate cfx_pdf_print_callback_get_gc_handle;
+        public static cfx_set_callback_delegate cfx_pdf_print_callback_set_managed_callback;
+
+
+        // CfxPdfPrintSettings
+
+        // static cef_pdf_print_settings_t* cfx_pdf_print_settings_ctor()
+        public static cfx_ctor_delegate cfx_pdf_print_settings_ctor;
+        // static void cfx_pdf_print_settings_dtor(cef_pdf_print_settings_t* ptr)
+        public static cfx_dtor_delegate cfx_pdf_print_settings_dtor;
+
+        // static void cfx_pdf_print_settings_set_header_footer_title(cef_pdf_print_settings_t *self, char16 *header_footer_title_str, int header_footer_title_length)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_set_header_footer_title_delegate(IntPtr self, IntPtr header_footer_title_str, int header_footer_title_length);
+        public static cfx_pdf_print_settings_set_header_footer_title_delegate cfx_pdf_print_settings_set_header_footer_title;
+        // static void cfx_pdf_print_settings_get_header_footer_title(cef_pdf_print_settings_t *self, char16 **header_footer_title_str, int *header_footer_title_length)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_get_header_footer_title_delegate(IntPtr self, out IntPtr header_footer_title_str, out int header_footer_title_length);
+        public static cfx_pdf_print_settings_get_header_footer_title_delegate cfx_pdf_print_settings_get_header_footer_title;
+
+        // static void cfx_pdf_print_settings_set_header_footer_url(cef_pdf_print_settings_t *self, char16 *header_footer_url_str, int header_footer_url_length)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_set_header_footer_url_delegate(IntPtr self, IntPtr header_footer_url_str, int header_footer_url_length);
+        public static cfx_pdf_print_settings_set_header_footer_url_delegate cfx_pdf_print_settings_set_header_footer_url;
+        // static void cfx_pdf_print_settings_get_header_footer_url(cef_pdf_print_settings_t *self, char16 **header_footer_url_str, int *header_footer_url_length)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_get_header_footer_url_delegate(IntPtr self, out IntPtr header_footer_url_str, out int header_footer_url_length);
+        public static cfx_pdf_print_settings_get_header_footer_url_delegate cfx_pdf_print_settings_get_header_footer_url;
+
+        // static void cfx_pdf_print_settings_set_page_width(cef_pdf_print_settings_t *self, int page_width)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_set_page_width_delegate(IntPtr self, int page_width);
+        public static cfx_pdf_print_settings_set_page_width_delegate cfx_pdf_print_settings_set_page_width;
+        // static void cfx_pdf_print_settings_get_page_width(cef_pdf_print_settings_t *self, int* page_width)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_get_page_width_delegate(IntPtr self, out int page_width);
+        public static cfx_pdf_print_settings_get_page_width_delegate cfx_pdf_print_settings_get_page_width;
+
+        // static void cfx_pdf_print_settings_set_page_height(cef_pdf_print_settings_t *self, int page_height)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_set_page_height_delegate(IntPtr self, int page_height);
+        public static cfx_pdf_print_settings_set_page_height_delegate cfx_pdf_print_settings_set_page_height;
+        // static void cfx_pdf_print_settings_get_page_height(cef_pdf_print_settings_t *self, int* page_height)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_get_page_height_delegate(IntPtr self, out int page_height);
+        public static cfx_pdf_print_settings_get_page_height_delegate cfx_pdf_print_settings_get_page_height;
+
+        // static void cfx_pdf_print_settings_set_margin_top(cef_pdf_print_settings_t *self, double margin_top)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_set_margin_top_delegate(IntPtr self, double margin_top);
+        public static cfx_pdf_print_settings_set_margin_top_delegate cfx_pdf_print_settings_set_margin_top;
+        // static void cfx_pdf_print_settings_get_margin_top(cef_pdf_print_settings_t *self, double* margin_top)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_get_margin_top_delegate(IntPtr self, out double margin_top);
+        public static cfx_pdf_print_settings_get_margin_top_delegate cfx_pdf_print_settings_get_margin_top;
+
+        // static void cfx_pdf_print_settings_set_margin_right(cef_pdf_print_settings_t *self, double margin_right)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_set_margin_right_delegate(IntPtr self, double margin_right);
+        public static cfx_pdf_print_settings_set_margin_right_delegate cfx_pdf_print_settings_set_margin_right;
+        // static void cfx_pdf_print_settings_get_margin_right(cef_pdf_print_settings_t *self, double* margin_right)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_get_margin_right_delegate(IntPtr self, out double margin_right);
+        public static cfx_pdf_print_settings_get_margin_right_delegate cfx_pdf_print_settings_get_margin_right;
+
+        // static void cfx_pdf_print_settings_set_margin_bottom(cef_pdf_print_settings_t *self, double margin_bottom)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_set_margin_bottom_delegate(IntPtr self, double margin_bottom);
+        public static cfx_pdf_print_settings_set_margin_bottom_delegate cfx_pdf_print_settings_set_margin_bottom;
+        // static void cfx_pdf_print_settings_get_margin_bottom(cef_pdf_print_settings_t *self, double* margin_bottom)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_get_margin_bottom_delegate(IntPtr self, out double margin_bottom);
+        public static cfx_pdf_print_settings_get_margin_bottom_delegate cfx_pdf_print_settings_get_margin_bottom;
+
+        // static void cfx_pdf_print_settings_set_margin_left(cef_pdf_print_settings_t *self, double margin_left)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_set_margin_left_delegate(IntPtr self, double margin_left);
+        public static cfx_pdf_print_settings_set_margin_left_delegate cfx_pdf_print_settings_set_margin_left;
+        // static void cfx_pdf_print_settings_get_margin_left(cef_pdf_print_settings_t *self, double* margin_left)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_get_margin_left_delegate(IntPtr self, out double margin_left);
+        public static cfx_pdf_print_settings_get_margin_left_delegate cfx_pdf_print_settings_get_margin_left;
+
+        // static void cfx_pdf_print_settings_set_margin_type(cef_pdf_print_settings_t *self, cef_pdf_print_margin_type_t margin_type)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_set_margin_type_delegate(IntPtr self, CfxPdfPrintMarginType margin_type);
+        public static cfx_pdf_print_settings_set_margin_type_delegate cfx_pdf_print_settings_set_margin_type;
+        // static void cfx_pdf_print_settings_get_margin_type(cef_pdf_print_settings_t *self, cef_pdf_print_margin_type_t* margin_type)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_get_margin_type_delegate(IntPtr self, out CfxPdfPrintMarginType margin_type);
+        public static cfx_pdf_print_settings_get_margin_type_delegate cfx_pdf_print_settings_get_margin_type;
+
+        // static void cfx_pdf_print_settings_set_header_footer_enabled(cef_pdf_print_settings_t *self, int header_footer_enabled)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_set_header_footer_enabled_delegate(IntPtr self, int header_footer_enabled);
+        public static cfx_pdf_print_settings_set_header_footer_enabled_delegate cfx_pdf_print_settings_set_header_footer_enabled;
+        // static void cfx_pdf_print_settings_get_header_footer_enabled(cef_pdf_print_settings_t *self, int* header_footer_enabled)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_get_header_footer_enabled_delegate(IntPtr self, out int header_footer_enabled);
+        public static cfx_pdf_print_settings_get_header_footer_enabled_delegate cfx_pdf_print_settings_get_header_footer_enabled;
+
+        // static void cfx_pdf_print_settings_set_selection_only(cef_pdf_print_settings_t *self, int selection_only)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_set_selection_only_delegate(IntPtr self, int selection_only);
+        public static cfx_pdf_print_settings_set_selection_only_delegate cfx_pdf_print_settings_set_selection_only;
+        // static void cfx_pdf_print_settings_get_selection_only(cef_pdf_print_settings_t *self, int* selection_only)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_get_selection_only_delegate(IntPtr self, out int selection_only);
+        public static cfx_pdf_print_settings_get_selection_only_delegate cfx_pdf_print_settings_get_selection_only;
+
+        // static void cfx_pdf_print_settings_set_landscape(cef_pdf_print_settings_t *self, int landscape)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_set_landscape_delegate(IntPtr self, int landscape);
+        public static cfx_pdf_print_settings_set_landscape_delegate cfx_pdf_print_settings_set_landscape;
+        // static void cfx_pdf_print_settings_get_landscape(cef_pdf_print_settings_t *self, int* landscape)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_get_landscape_delegate(IntPtr self, out int landscape);
+        public static cfx_pdf_print_settings_get_landscape_delegate cfx_pdf_print_settings_get_landscape;
+
+        // static void cfx_pdf_print_settings_set_backgrounds_enabled(cef_pdf_print_settings_t *self, int backgrounds_enabled)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_set_backgrounds_enabled_delegate(IntPtr self, int backgrounds_enabled);
+        public static cfx_pdf_print_settings_set_backgrounds_enabled_delegate cfx_pdf_print_settings_set_backgrounds_enabled;
+        // static void cfx_pdf_print_settings_get_backgrounds_enabled(cef_pdf_print_settings_t *self, int* backgrounds_enabled)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_pdf_print_settings_get_backgrounds_enabled_delegate(IntPtr self, out int backgrounds_enabled);
+        public static cfx_pdf_print_settings_get_backgrounds_enabled_delegate cfx_pdf_print_settings_get_backgrounds_enabled;
 
 
         // CfxPoint
@@ -5647,9 +5793,9 @@ namespace Chromium {
         public delegate long cfx_zip_reader_get_file_size_delegate(IntPtr self);
         public static cfx_zip_reader_get_file_size_delegate cfx_zip_reader_get_file_size;
 
-        // static uint64 cfx_zip_reader_get_file_last_modified(cef_zip_reader_t* self)
+        // static cef_time_t* cfx_zip_reader_get_file_last_modified(cef_zip_reader_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate ulong cfx_zip_reader_get_file_last_modified_delegate(IntPtr self);
+        public delegate IntPtr cfx_zip_reader_get_file_last_modified_delegate(IntPtr self);
         public static cfx_zip_reader_get_file_last_modified_delegate cfx_zip_reader_get_file_last_modified;
 
         // static int cfx_zip_reader_open_file(cef_zip_reader_t* self, char16 *password_str, int password_length)
