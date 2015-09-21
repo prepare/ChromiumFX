@@ -86,6 +86,8 @@
 #include "cfx_navigation_entry.c"
 #include "cfx_navigation_entry_visitor.c"
 #include "cfx_page_range.c"
+#include "cfx_pdf_print_callback.c"
+#include "cfx_pdf_print_settings.c"
 #include "cfx_point.c"
 #include "cfx_popup_features.c"
 #include "cfx_post_data.c"

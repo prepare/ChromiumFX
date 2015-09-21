@@ -74,11 +74,6 @@ static int cfx_navigation_entry_has_post_data(cef_navigation_entry_t* self) {
     return self->has_post_data(self);
 }
 
-// get_frame_name
-static cef_string_userfree_t cfx_navigation_entry_get_frame_name(cef_navigation_entry_t* self) {
-    return self->get_frame_name(self);
-}
-
 // get_completion_time
 static cef_time_t* cfx_navigation_entry_get_completion_time(cef_navigation_entry_t* self) {
     cef_time_t __retval_tmp = self->get_completion_time(self);

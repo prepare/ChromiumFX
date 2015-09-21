@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -102,6 +102,8 @@
     <Compile Include="Generated\CfxNavigationEntry.cs" />
     <Compile Include="Generated\CfxNavigationEntryVisitor.cs" />
     <Compile Include="Generated\CfxPageRange.cs" />
+    <Compile Include="Generated\CfxPdfPrintCallback.cs" />
+    <Compile Include="Generated\CfxPdfPrintSettings.cs" />
     <Compile Include="Generated\CfxPoint.cs" />
     <Compile Include="Generated\CfxPopupFeatures.cs" />
     <Compile Include="Generated\CfxPostData.cs" />

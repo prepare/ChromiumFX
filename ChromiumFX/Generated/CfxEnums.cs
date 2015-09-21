@@ -742,6 +742,31 @@ namespace Chromium {
         UserData
     }
     /// <summary>
+    /// Margin type for PDF printing.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxPdfPrintMarginType {
+        /// <summary>
+        /// Default margins.
+        /// </summary>
+        Default,
+        /// <summary>
+        /// No margins.
+        /// </summary>
+        None,
+        /// <summary>
+        /// Minimum margins.
+        /// </summary>
+        Minimum,
+        /// <summary>
+        /// Custom margins using the |margin_*| values from CfxPdfPrintSettings.
+        /// </summary>
+        Custom
+    }
+    /// <summary>
     /// Post data elements may represent either bytes or files.
     /// </summary>
     /// <remarks>

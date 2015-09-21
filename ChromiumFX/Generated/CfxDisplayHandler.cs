@@ -114,6 +114,24 @@ namespace Chromium {
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
 
+        // on_fullscreen_mode_change
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_display_handler_on_fullscreen_mode_change_delegate(IntPtr gcHandlePtr, IntPtr browser, int fullscreen);
+        private static cfx_display_handler_on_fullscreen_mode_change_delegate cfx_display_handler_on_fullscreen_mode_change;
+        private static IntPtr cfx_display_handler_on_fullscreen_mode_change_ptr;
+
+        internal static void on_fullscreen_mode_change(IntPtr gcHandlePtr, IntPtr browser, int fullscreen) {
+            var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null) {
+                return;
+            }
+            var e = new CfxOnFullscreenModeChangeEventArgs(browser, fullscreen);
+            var eventHandler = self.m_OnFullscreenModeChange;
+            if(eventHandler != null) eventHandler(self, e);
+            e.m_isInvalid = true;
+            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
+        }
+
         // on_tooltip
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void cfx_display_handler_on_tooltip_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, ref IntPtr text_str, ref int text_length);
@@ -277,6 +295,42 @@ namespace Chromium {
         private CfxOnFaviconUrlchangeEventHandler m_OnFaviconUrlchange;
 
         /// <summary>
+        /// Called when web content in the page has toggled fullscreen mode. If
+        /// |Fullscreen| is true (1) the content will automatically be sized to fill
+        /// the browser content area. If |Fullscreen| is false (0) the content will
+        /// automatically return to its original size and position. The client is
+        /// responsible for resizing the browser if desired.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
+        public event CfxOnFullscreenModeChangeEventHandler OnFullscreenModeChange {
+            add {
+                lock(eventLock) {
+                    if(m_OnFullscreenModeChange == null) {
+                        if(cfx_display_handler_on_fullscreen_mode_change == null) {
+                            cfx_display_handler_on_fullscreen_mode_change = on_fullscreen_mode_change;
+                            cfx_display_handler_on_fullscreen_mode_change_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_display_handler_on_fullscreen_mode_change);
+                        }
+                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 3, cfx_display_handler_on_fullscreen_mode_change_ptr);
+                    }
+                    m_OnFullscreenModeChange += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_OnFullscreenModeChange -= value;
+                    if(m_OnFullscreenModeChange == null) {
+                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                    }
+                }
+            }
+        }
+
+        private CfxOnFullscreenModeChangeEventHandler m_OnFullscreenModeChange;
+
+        /// <summary>
         /// Called when the browser is about to display a tooltip. |Text| contains the
         /// text that will be displayed in the tooltip. To handle the display of the
         /// tooltip yourself return true (1). Otherwise, you can optionally modify
@@ -296,7 +350,7 @@ namespace Chromium {
                             cfx_display_handler_on_tooltip = on_tooltip;
                             cfx_display_handler_on_tooltip_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_display_handler_on_tooltip);
                         }
-                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 3, cfx_display_handler_on_tooltip_ptr);
+                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 4, cfx_display_handler_on_tooltip_ptr);
                     }
                     m_OnTooltip += value;
                 }
@@ -305,7 +359,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnTooltip -= value;
                     if(m_OnTooltip == null) {
-                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
                     }
                 }
             }
@@ -329,7 +383,7 @@ namespace Chromium {
                             cfx_display_handler_on_status_message = on_status_message;
                             cfx_display_handler_on_status_message_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_display_handler_on_status_message);
                         }
-                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 4, cfx_display_handler_on_status_message_ptr);
+                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 5, cfx_display_handler_on_status_message_ptr);
                     }
                     m_OnStatusMessage += value;
                 }
@@ -338,7 +392,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnStatusMessage -= value;
                     if(m_OnStatusMessage == null) {
-                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
+                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 5, IntPtr.Zero);
                     }
                 }
             }
@@ -362,7 +416,7 @@ namespace Chromium {
                             cfx_display_handler_on_console_message = on_console_message;
                             cfx_display_handler_on_console_message_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_display_handler_on_console_message);
                         }
-                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 5, cfx_display_handler_on_console_message_ptr);
+                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 6, cfx_display_handler_on_console_message_ptr);
                     }
                     m_OnConsoleMessage += value;
                 }
@@ -371,7 +425,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnConsoleMessage -= value;
                     if(m_OnConsoleMessage == null) {
-                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 5, IntPtr.Zero);
+                        CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 6, IntPtr.Zero);
                     }
                 }
             }
@@ -392,17 +446,21 @@ namespace Chromium {
                 m_OnFaviconUrlchange = null;
                 CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
             }
+            if(m_OnFullscreenModeChange != null) {
+                m_OnFullscreenModeChange = null;
+                CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+            }
             if(m_OnTooltip != null) {
                 m_OnTooltip = null;
-                CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
             }
             if(m_OnStatusMessage != null) {
                 m_OnStatusMessage = null;
-                CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
+                CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 5, IntPtr.Zero);
             }
             if(m_OnConsoleMessage != null) {
                 m_OnConsoleMessage = null;
-                CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 5, IntPtr.Zero);
+                CfxApi.cfx_display_handler_set_managed_callback(NativePtr, 6, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -585,6 +643,66 @@ namespace Chromium {
 
             public override string ToString() {
                 return String.Format("Browser={{{0}}}, IconUrls={{{1}}}", Browser, IconUrls);
+            }
+        }
+
+        /// <summary>
+        /// Called when web content in the page has toggled fullscreen mode. If
+        /// |Fullscreen| is true (1) the content will automatically be sized to fill
+        /// the browser content area. If |Fullscreen| is false (0) the content will
+        /// automatically return to its original size and position. The client is
+        /// responsible for resizing the browser if desired.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxOnFullscreenModeChangeEventHandler(object sender, CfxOnFullscreenModeChangeEventArgs e);
+
+        /// <summary>
+        /// Called when web content in the page has toggled fullscreen mode. If
+        /// |Fullscreen| is true (1) the content will automatically be sized to fill
+        /// the browser content area. If |Fullscreen| is false (0) the content will
+        /// automatically return to its original size and position. The client is
+        /// responsible for resizing the browser if desired.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_display_handler_capi.h">cef/include/capi/cef_display_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxOnFullscreenModeChangeEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal int m_fullscreen;
+
+            internal CfxOnFullscreenModeChangeEventArgs(IntPtr browser, int fullscreen) {
+                m_browser = browser;
+                m_fullscreen = fullscreen;
+            }
+
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxDisplayHandler.OnFullscreenModeChange"/> callback.
+            /// </summary>
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the Fullscreen parameter for the <see cref="CfxDisplayHandler.OnFullscreenModeChange"/> callback.
+            /// </summary>
+            public bool Fullscreen {
+                get {
+                    CheckAccess();
+                    return 0 != m_fullscreen;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Fullscreen={{{1}}}", Browser, Fullscreen);
             }
         }
 

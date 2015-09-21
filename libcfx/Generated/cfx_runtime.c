@@ -95,6 +95,11 @@ static void cfx_do_message_loop_work() {
     cef_do_message_loop_work();
 }
 
+// CEF_EXPORT void cef_enable_highdpi_support();
+static void cfx_enable_highdpi_support() {
+    cef_enable_highdpi_support();
+}
+
 // CEF_EXPORT int cef_end_tracing(const cef_string_t* tracing_file, cef_end_tracing_callback_t* callback);
 static int cfx_end_tracing(char16 *tracing_file_str, int tracing_file_length, cef_end_tracing_callback_t* callback) {
     cef_string_t tracing_file = { tracing_file_str, tracing_file_length, 0 };

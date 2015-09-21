@@ -114,9 +114,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_zip_reader_capi.h">cef/include/capi/cef_zip_reader_capi.h</see>.
         /// </remarks>
-        public DateTime FileLastModified {
+        public CfxTime FileLastModified {
             get {
-                return TimeFunctions.FromTimeT(CfxApi.cfx_zip_reader_get_file_last_modified(NativePtr));
+                return CfxTime.WrapOwned(CfxApi.cfx_zip_reader_get_file_last_modified(NativePtr));
             }
         }
 

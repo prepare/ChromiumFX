@@ -122,6 +122,13 @@ static void cfx_browser_host_print(cef_browser_host_t* self) {
     self->print(self);
 }
 
+// print_to_pdf
+static void cfx_browser_host_print_to_pdf(cef_browser_host_t* self, char16 *path_str, int path_length, const cef_pdf_print_settings_t* settings, cef_pdf_print_callback_t* callback) {
+    cef_string_t path = { path_str, path_length, 0 };
+    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    self->print_to_pdf(self, &path, settings, callback);
+}
+
 // find
 static void cfx_browser_host_find(cef_browser_host_t* self, int identifier, char16 *searchText_str, int searchText_length, int forward, int matchCase, int findNext) {
     cef_string_t searchText = { searchText_str, searchText_length, 0 };
@@ -230,6 +237,16 @@ static void cfx_browser_host_send_capture_lost_event(cef_browser_host_t* self) {
 // notify_move_or_resize_started
 static void cfx_browser_host_notify_move_or_resize_started(cef_browser_host_t* self) {
     self->notify_move_or_resize_started(self);
+}
+
+// get_windowless_frame_rate
+static int cfx_browser_host_get_windowless_frame_rate(cef_browser_host_t* self) {
+    return self->get_windowless_frame_rate(self);
+}
+
+// set_windowless_frame_rate
+static void cfx_browser_host_set_windowless_frame_rate(cef_browser_host_t* self, int frame_rate) {
+    self->set_windowless_frame_rate(self, frame_rate);
 }
 
 // get_nstext_input_context

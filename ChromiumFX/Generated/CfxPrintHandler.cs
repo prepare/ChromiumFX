@@ -134,6 +134,25 @@ namespace Chromium {
             e.m_isInvalid = true;
         }
 
+        // get_pdf_paper_size
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_print_handler_get_pdf_paper_size_delegate(IntPtr gcHandlePtr, out IntPtr __retval, int device_units_per_inch);
+        private static cfx_print_handler_get_pdf_paper_size_delegate cfx_print_handler_get_pdf_paper_size;
+        private static IntPtr cfx_print_handler_get_pdf_paper_size_ptr;
+
+        internal static void get_pdf_paper_size(IntPtr gcHandlePtr, out IntPtr __retval, int device_units_per_inch) {
+            var self = (CfxPrintHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null) {
+                __retval = default(IntPtr);
+                return;
+            }
+            var e = new CfxGetPdfPaperSizeEventArgs(device_units_per_inch);
+            var eventHandler = self.m_GetPdfPaperSize;
+            if(eventHandler != null) eventHandler(self, e);
+            e.m_isInvalid = true;
+            __retval = CfxSize.Unwrap(e.m_returnValue);
+        }
+
         internal CfxPrintHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxPrintHandler() : base(CfxApi.cfx_print_handler_ctor) {}
 
@@ -271,6 +290,39 @@ namespace Chromium {
 
         private CfxEventHandler m_OnPrintReset;
 
+        /// <summary>
+        /// Return the PDF paper size in device units. Used in combination with
+        /// CfxBrowserHost.PrintToPdf().
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
+        public event CfxGetPdfPaperSizeEventHandler GetPdfPaperSize {
+            add {
+                lock(eventLock) {
+                    if(m_GetPdfPaperSize == null) {
+                        if(cfx_print_handler_get_pdf_paper_size == null) {
+                            cfx_print_handler_get_pdf_paper_size = get_pdf_paper_size;
+                            cfx_print_handler_get_pdf_paper_size_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_print_handler_get_pdf_paper_size);
+                        }
+                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 4, cfx_print_handler_get_pdf_paper_size_ptr);
+                    }
+                    m_GetPdfPaperSize += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_GetPdfPaperSize -= value;
+                    if(m_GetPdfPaperSize == null) {
+                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
+                    }
+                }
+            }
+        }
+
+        private CfxGetPdfPaperSizeEventHandler m_GetPdfPaperSize;
+
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnPrintSettings != null) {
                 m_OnPrintSettings = null;
@@ -287,6 +339,10 @@ namespace Chromium {
             if(m_OnPrintReset != null) {
                 m_OnPrintReset = null;
                 CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+            }
+            if(m_GetPdfPaperSize != null) {
+                m_GetPdfPaperSize = null;
+                CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -512,6 +568,62 @@ namespace Chromium {
             }
         }
 
+
+        /// <summary>
+        /// Return the PDF paper size in device units. Used in combination with
+        /// CfxBrowserHost.PrintToPdf().
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxGetPdfPaperSizeEventHandler(object sender, CfxGetPdfPaperSizeEventArgs e);
+
+        /// <summary>
+        /// Return the PDF paper size in device units. Used in combination with
+        /// CfxBrowserHost.PrintToPdf().
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxGetPdfPaperSizeEventArgs : CfxEventArgs {
+
+            internal int m_device_units_per_inch;
+
+            internal CfxSize m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxGetPdfPaperSizeEventArgs(int device_units_per_inch) {
+                m_device_units_per_inch = device_units_per_inch;
+            }
+
+            /// <summary>
+            /// Get the DeviceUnitsPerInch parameter for the <see cref="CfxPrintHandler.GetPdfPaperSize"/> callback.
+            /// </summary>
+            public int DeviceUnitsPerInch {
+                get {
+                    CheckAccess();
+                    return m_device_units_per_inch;
+                }
+            }
+            /// <summary>
+            /// Set the return value for the <see cref="CfxPrintHandler.GetPdfPaperSize"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
+            /// </summary>
+            public void SetReturnValue(CfxSize returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("DeviceUnitsPerInch={{{0}}}", DeviceUnitsPerInch);
+            }
+        }
 
     }
 }

@@ -41,6 +41,7 @@ static int (*cef_clear_scheme_handler_factories_ptr)();
 static int (*cef_create_url_ptr)(const cef_urlparts_t* parts, cef_string_t* url);
 static int (*cef_currently_on_ptr)(cef_thread_id_t threadId);
 static void (*cef_do_message_loop_work_ptr)();
+static void (*cef_enable_highdpi_support_ptr)();
 static int (*cef_end_tracing_ptr)(const cef_string_t* tracing_file, cef_end_tracing_callback_t* callback);
 static int (*cef_execute_process_ptr)(const cef_main_args_t* args, cef_app_t* application, void* windows_sandbox_info);
 static void (*cef_force_web_plugin_shutdown_ptr)(const cef_string_t* path);
@@ -156,6 +157,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_create_url_ptr = (int (*)(const cef_urlparts_t*, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_create_url");
     cef_currently_on_ptr = (int (*)(cef_thread_id_t))cfx_platform_get_fptr(libcef, "cef_currently_on");
     cef_do_message_loop_work_ptr = (void (*)())cfx_platform_get_fptr(libcef, "cef_do_message_loop_work");
+    cef_enable_highdpi_support_ptr = (void (*)())cfx_platform_get_fptr(libcef, "cef_enable_highdpi_support");
     cef_end_tracing_ptr = (int (*)(const cef_string_t*, cef_end_tracing_callback_t*))cfx_platform_get_fptr(libcef, "cef_end_tracing");
     cef_execute_process_ptr = (int (*)(const cef_main_args_t*, cef_app_t*, void*))cfx_platform_get_fptr(libcef, "cef_execute_process");
     cef_force_web_plugin_shutdown_ptr = (void (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_force_web_plugin_shutdown");
@@ -272,6 +274,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_create_url cef_create_url_ptr
 #define cef_currently_on cef_currently_on_ptr
 #define cef_do_message_loop_work cef_do_message_loop_work_ptr
+#define cef_enable_highdpi_support cef_enable_highdpi_support_ptr
 #define cef_end_tracing cef_end_tracing_ptr
 #define cef_execute_process cef_execute_process_ptr
 #define cef_force_web_plugin_shutdown cef_force_web_plugin_shutdown_ptr

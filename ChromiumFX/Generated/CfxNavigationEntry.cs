@@ -161,20 +161,6 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Returns the name of the sub-frame that navigated or an NULL value if the
-        /// main frame navigated.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
-        /// </remarks>
-        public string FrameName {
-            get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_navigation_entry_get_frame_name(NativePtr));
-            }
-        }
-
-        /// <summary>
         /// Returns the time for the last known successful navigation completion. A
         /// navigation may be completed more than once if the page is reloaded. May be
         /// 0 if the navigation has not yet completed.
