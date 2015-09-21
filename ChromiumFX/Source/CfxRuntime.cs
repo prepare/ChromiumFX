@@ -35,7 +35,7 @@ namespace Chromium {
     /// <summary>
     /// Collection of global static CEF functions.
     /// </summary>
-    partial class CfxRuntime {
+    public static partial class CfxRuntime {
 
         internal static event Action OnCfxShutdown;
 

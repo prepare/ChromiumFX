@@ -40,7 +40,7 @@ namespace Chromium.Remote {
     /// Collection of global static CEF functions acessible in the render process.
     /// A thread must be in a remote context in order to access these function.
     /// </summary>
-    public partial class CfrRuntime {
+    public static partial class CfrRuntime {
 
         /// <summary>
         /// This function should be called from the render process startup callback
