@@ -51,6 +51,10 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2454.0 ###
+- Upgrade to CEF release branch 3.2454. This brings in some CEF API changes.
+- All obsolete/deprecated functions have been deleted.
+
 ### Version 3.2171.19 ###
 - This is a backport of ChromiumFX 3.2357.5 for the 3.2171 branch.   
 
