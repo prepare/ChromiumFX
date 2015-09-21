@@ -217,6 +217,12 @@ public class ApiType {
     public virtual void EmitPostNativeCallbackStatements(CodeBuilder b, string var) {
     }
 
+    public virtual void EmitNativeCallbackReturnStatements(CodeBuilder b, string var) {
+        if(!IsVoid) {
+            b.AppendLine("return {0};", NativeUnwrapExpression(var));
+        }
+    }
+
     public virtual void EmitPreNativeCallStatements(CodeBuilder b, string var) {
     }
 

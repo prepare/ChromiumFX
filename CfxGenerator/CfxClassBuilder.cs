@@ -202,7 +202,7 @@ public class CfxClassBuilder {
                 foreach(var sm in StructMembers) {
                     if(sm.MemberType.IsCefCallbackType && !sm.IsProperty) {
                         m_structFunctions.Add(sm);
-                    } 
+                    }
                 }
             }
         }
@@ -330,14 +330,7 @@ public class CfxClassBuilder {
                     arg.EmitPostNativeCallbackStatements(b);
                 }
 
-                if(!cb.NativeReturnType.IsVoid) {
-                    if(cb.NativeReturnType.IsCefStructPtrType) {
-                        b.BeginIf("__retval");
-                        b.AppendLine("((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);");
-                        b.EndBlock();
-                    }
-                    b.AppendLine("return __retval;");
-                }
+                cb.NativeReturnType.EmitNativeCallbackReturnStatements(b, "__retval");
 
                 b.EndBlock();
                 b.AppendLine();

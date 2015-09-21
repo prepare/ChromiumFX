@@ -86,6 +86,13 @@ public class CefStructPtrType : ApiType {
         }
     }
 
+    public override void EmitNativeCallbackReturnStatements(CodeBuilder b, string var) {
+        b.BeginIf("__retval");
+        b.AppendLine("((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);");
+        b.EndBlock();
+        base.EmitNativeCallbackReturnStatements(b, var);
+    }
+
     public override void EmitPublicEventArgGetterStatements(CodeBuilder b, string var) {
         b.AppendLine("if(m_{0}_wrapped == null) m_{0}_wrapped = {1};", var, PublicWrapExpression("m_" + var));
         b.AppendLine("return m_{0}_wrapped;", var);
