@@ -82,7 +82,7 @@ void (CEF_CALLBACK *cfx_read_handler_read_callback)(gc_handle_t self, int* __ret
 size_t CEF_CALLBACK cfx_read_handler_read(cef_read_handler_t* self, void* ptr, size_t size, size_t n) {
     int __retval;
     cfx_read_handler_read_callback(((cfx_read_handler_t*)self)->gc_handle, &__retval, ptr, (int)(size), (int)(n));
-    return __retval;
+    return (size_t)(__retval);
 }
 
 

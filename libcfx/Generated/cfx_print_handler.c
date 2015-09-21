@@ -122,7 +122,8 @@ void (CEF_CALLBACK *cfx_print_handler_get_pdf_paper_size_callback)(gc_handle_t s
 cef_size_t CEF_CALLBACK cfx_print_handler_get_pdf_paper_size(cef_print_handler_t* self, int device_units_per_inch) {
     cef_size_t* __retval;
     cfx_print_handler_get_pdf_paper_size_callback(((cfx_print_handler_t*)self)->gc_handle, &__retval, device_units_per_inch);
-    return __retval;
+    // TODO: possible race with managed GC?
+    return *(__retval);
 }
 
 

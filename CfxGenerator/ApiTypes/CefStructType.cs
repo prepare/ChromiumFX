@@ -89,6 +89,11 @@ public class CefStructType : CefType {
         }
     }
 
+    public override void EmitNativeCallbackReturnStatements(CodeBuilder b, string var) {
+        b.AppendComment("TODO: possible race with managed GC?");
+        base.EmitNativeCallbackReturnStatements(b, var);
+    }
+
     public override string NativeWrapExpression(string var) {
         return string.Format("&({0})", var);
     }

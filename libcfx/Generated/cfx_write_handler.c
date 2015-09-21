@@ -82,7 +82,7 @@ void (CEF_CALLBACK *cfx_write_handler_write_callback)(gc_handle_t self, int* __r
 size_t CEF_CALLBACK cfx_write_handler_write(cef_write_handler_t* self, const void* ptr, size_t size, size_t n) {
     int __retval;
     cfx_write_handler_write_callback(((cfx_write_handler_t*)self)->gc_handle, &__retval, ptr, (int)(size), (int)(n));
-    return __retval;
+    return (size_t)(__retval);
 }
 
 
