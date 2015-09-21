@@ -192,6 +192,7 @@ public class CSharp {
         name = name.Replace("Jsonand", "JsonAnd");
         name = name.Replace("decode", "Decode");
         name = name.Replace("encode", "Encode");
+        name = name.Replace("Highdpi", "HighDpi");
 
         name = name.Replace("ConText", "Context");
         name = name.Replace("DisAllowed", "Disallowed");
