@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChromiumFX", "..\ChromiumFX\ChromiumFX.csproj", "{36972B7C-3A3A-465F-B064-51B525FD4C14}"
+EndProject
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "libcfx64", "libcfx64.cproj", "{995EB518-A3F7-47AE-A3DA-C1E86EBBFD23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windowless", "Windowless.csproj", "{48D83F36-CEDD-401F-9E31-295794956424}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{36972B7C-3A3A-465F-B064-51B525FD4C14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36972B7C-3A3A-465F-B064-51B525FD4C14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36972B7C-3A3A-465F-B064-51B525FD4C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36972B7C-3A3A-465F-B064-51B525FD4C14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48D83F36-CEDD-401F-9E31-295794956424}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48D83F36-CEDD-401F-9E31-295794956424}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48D83F36-CEDD-401F-9E31-295794956424}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48D83F36-CEDD-401F-9E31-295794956424}.Release|Any CPU.Build.0 = Release|Any CPU
+		{995EB518-A3F7-47AE-A3DA-C1E86EBBFD23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{995EB518-A3F7-47AE-A3DA-C1E86EBBFD23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{995EB518-A3F7-47AE-A3DA-C1E86EBBFD23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{995EB518-A3F7-47AE-A3DA-C1E86EBBFD23}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Windowless.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.FileWidth = 120
+		$1.EolMarker = Windows
+		$1.inheritsSet = VisualStudio
+		$1.inheritsScope = text/plain
+		$1.scope = text/plain
+		$0.TextStylePolicy = $2
+		$2.inheritsSet = null
+		$2.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $3
+		$3.BeforeMethodDeclarationParentheses = False
+		$3.BeforeMethodCallParentheses = False
+		$3.BeforeConstructorDeclarationParentheses = False
+		$3.BeforeIndexerDeclarationBracket = False
+		$3.BeforeDelegateDeclarationParentheses = False
+		$3.AfterDelegateDeclarationParameterComma = True
+		$3.NewParentheses = False
+		$3.IfParentheses = False
+		$3.WhileParentheses = False
+		$3.ForParentheses = False
+		$3.ForeachParentheses = False
+		$3.CatchParentheses = False
+		$3.SwitchParentheses = False
+		$3.LockParentheses = False
+		$3.UsingParentheses = False
+		$3.SpacesBeforeBrackets = False
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/x-csharp
+		$3.scope = text/x-csharp
+		$0.TextStylePolicy = $4
+		$4.inheritsSet = null
+		$4.scope = text/x-csrc
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{995EB518-A3F7-47AE-A3DA-C1E86EBBFD23}</ProjectGuid>
+    <Compiler>
+      <Compiler ctype="GccCompiler" />
+    </Compiler>
+    <Language>C</Language>
+    <Target>Bin</Target>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\Build\Debug</OutputPath>
+    <OutputName>libcfx64</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <DefineSymbols>DEBUG MONODEVELOP CFX_LINUX</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <Includes>
+      <Includes>
+        <Include>${ProjectDir}/../libcfx/Generated</Include>
+        <Include>${ProjectDir}/../cef</Include>
+      </Includes>
+    </Includes>
+    <ExtraCompilerArguments>-std=c99
+-g
+-ggdb
+</ExtraCompilerArguments>
+    <ExtraLinkerArguments>-ldl
+-g
+-ggdb
+</ExtraLinkerArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>..\Build\Release</OutputPath>
+    <OutputName>libcfx64</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <Includes>
+      <Includes>
+        <Include>${ProjectDir}/../cef</Include>
+        <Include>${ProjectDir}/../libcfx/Generated</Include>
+      </Includes>
+    </Includes>
+    <OptimizationLevel>3</OptimizationLevel>
+    <ExtraCompilerArguments>-std=c99
+-g
+-ggdb</ExtraCompilerArguments>
+    <DefineSymbols>MONODEVELOP CFX_LINUX</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <ExtraLinkerArguments>-ldl
+-g
+-ggdb</ExtraLinkerArguments>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\libcfx\Source\libcfx.c">
+      <Link>libcfx64.c</Link>
+    </Compile>
+  </ItemGroup>
+</Project>
