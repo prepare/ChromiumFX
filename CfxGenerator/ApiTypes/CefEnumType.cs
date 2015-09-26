@@ -110,7 +110,7 @@ public class CefEnumType : ApiType {
         return string.Format("({0}){1}", PublicSymbol, var);
     }
 
-    private static string[] additionalFlags = { "CfxV8PropertyAttribute" };
+    private static string[] additionalFlags = { "CfxV8PropertyAttribute", "CfxDragOperationsMask", "CfxFileDialogMode", "CfxJsonWriterOptions", "CfxTransitionType", "CfxV8AccessControl" };
 
     public void EmitEnum(CodeBuilder b) {
         var enumName = CSharp.ApplyStyle(CfxName);
