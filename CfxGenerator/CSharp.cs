@@ -193,6 +193,8 @@ public class CSharp {
         name = name.Replace("decode", "Decode");
         name = name.Replace("encode", "Encode");
         name = name.Replace("Highdpi", "HighDpi");
+        name = name.Replace("prompt", "Prompt");
+        name = name.Replace("Hideread", "HideRead");
 
         name = name.Replace("ConText", "Context");
         name = name.Replace("DisAllowed", "Disallowed");
