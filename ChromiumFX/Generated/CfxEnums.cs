@@ -434,11 +434,11 @@ namespace Chromium {
         /// Prompt to overwrite if the user selects an existing file with the Save
         /// dialog.
         /// </summary>
-        OverwritepromptFlag = unchecked((int)0x01000000),
+        OverwritePromptFlag = unchecked((int)0x01000000),
         /// <summary>
         /// Do not display read-only files.
         /// </summary>
-        HidereadOnlyFlag = unchecked((int)0x02000000)
+        HideReadOnlyFlag = unchecked((int)0x02000000)
     }
     /// <summary>
     /// Focus sources.
