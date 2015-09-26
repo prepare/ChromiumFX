@@ -86,7 +86,7 @@ namespace Chromium.Remote {
                 if(connection.ShuttingDown)
                     return;
                 else if(connection.connectionLostException != null)
-                    throw new CfxException("Remote connection lost.", connection.connectionLostException);
+                    throw new CfxRemotingException("Remote connection lost.", connection.connectionLostException);
                 connection.EnqueueWrite(WriteRequest);
                 return;
             }
@@ -124,7 +124,7 @@ namespace Chromium.Remote {
                     if(connection.ShuttingDown)
                         return;
                     else if(connection.connectionLostException != null) {
-                        throw new CfxException("Remote connection lost.", connection.connectionLostException);
+                        throw new CfxRemotingException("Remote connection lost.", connection.connectionLostException);
                     }
                 }
             }

@@ -40,5 +40,14 @@ namespace Chromium {
         internal CfxException(string message) : base(message) { }
         internal CfxException(string message, Exception inner) : base(message, inner) { }
     }
+
+    /// <summary>
+    /// The exception that is thrown when an error in the remote layer occurs.
+    /// </summary>
+    public class CfxRemotingException : CfxException {
+        internal CfxRemotingException() : base() { }
+        internal CfxRemotingException(string message) : base(message) { }
+        internal CfxRemotingException(string message, Exception inner) : base(message, inner) { }
+    }
 }
 
