@@ -72,12 +72,13 @@ namespace CfxTestApplication {
             this.miscDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.systemNetCompatibilityTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearContextMenuModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.remoteLayerStressTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.WebBrowser = new Chromium.WebBrowser.ChromiumWebBrowser();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.LogTextBox = new System.Windows.Forms.TextBox();
-            this.remoteLayerStressTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.evaluateJavascriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -177,7 +178,7 @@ namespace CfxTestApplication {
             this.JSTestPageButton.Image = ((System.Drawing.Image)(resources.GetObject("JSTestPageButton.Image")));
             this.JSTestPageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.JSTestPageButton.Name = "JSTestPageButton";
-            this.JSTestPageButton.Size = new System.Drawing.Size(104, 22);
+            this.JSTestPageButton.Size = new System.Drawing.Size(103, 22);
             this.JSTestPageButton.Text = "Load JS Test Page";
             // 
             // VisitDomButton
@@ -205,7 +206,7 @@ namespace CfxTestApplication {
             this.ShowDevToolsButton.Image = ((System.Drawing.Image)(resources.GetObject("ShowDevToolsButton.Image")));
             this.ShowDevToolsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ShowDevToolsButton.Name = "ShowDevToolsButton";
-            this.ShowDevToolsButton.Size = new System.Drawing.Size(89, 22);
+            this.ShowDevToolsButton.Size = new System.Drawing.Size(88, 22);
             this.ShowDevToolsButton.Text = "ShowDevTools";
             this.ShowDevToolsButton.Click += new System.EventHandler(this.ShowDevToolsButton_Click);
             // 
@@ -226,7 +227,8 @@ namespace CfxTestApplication {
             this.miscDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.systemNetCompatibilityTestToolStripMenuItem,
             this.clearContextMenuModelToolStripMenuItem,
-            this.remoteLayerStressTestToolStripMenuItem});
+            this.remoteLayerStressTestToolStripMenuItem,
+            this.evaluateJavascriptToolStripMenuItem});
             this.miscDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("miscDropDownButton.Image")));
             this.miscDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.miscDropDownButton.Name = "miscDropDownButton";
@@ -247,6 +249,13 @@ namespace CfxTestApplication {
             this.clearContextMenuModelToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.clearContextMenuModelToolStripMenuItem.Text = "Clear context menu model";
             this.clearContextMenuModelToolStripMenuItem.Click += new System.EventHandler(this.clearContextMenuModelToolStripMenuItem_Click);
+            // 
+            // remoteLayerStressTestToolStripMenuItem
+            // 
+            this.remoteLayerStressTestToolStripMenuItem.Name = "remoteLayerStressTestToolStripMenuItem";
+            this.remoteLayerStressTestToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.remoteLayerStressTestToolStripMenuItem.Text = "Remote Layer Stress Test";
+            this.remoteLayerStressTestToolStripMenuItem.Click += new System.EventHandler(this.remoteLayerStressTestToolStripMenuItem_Click);
             // 
             // printButton
             // 
@@ -279,6 +288,7 @@ namespace CfxTestApplication {
             this.WebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.WebBrowser.Location = new System.Drawing.Point(0, 0);
             this.WebBrowser.Name = "WebBrowser";
+            this.WebBrowser.RemoteCallbackInvokeMode = Chromium.WebBrowser.JSInvokeMode.Inherit;
             this.WebBrowser.Size = new System.Drawing.Size(1441, 605);
             this.WebBrowser.TabIndex = 2;
             this.WebBrowser.Text = "cfxWebBrowser2";
@@ -311,12 +321,12 @@ namespace CfxTestApplication {
             this.LogTextBox.Size = new System.Drawing.Size(1441, 166);
             this.LogTextBox.TabIndex = 0;
             // 
-            // remoteLayerStressTestToolStripMenuItem
+            // evaluateJavascriptToolStripMenuItem
             // 
-            this.remoteLayerStressTestToolStripMenuItem.Name = "remoteLayerStressTestToolStripMenuItem";
-            this.remoteLayerStressTestToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
-            this.remoteLayerStressTestToolStripMenuItem.Text = "Remote Layer Stress Test";
-            this.remoteLayerStressTestToolStripMenuItem.Click += new System.EventHandler(this.remoteLayerStressTestToolStripMenuItem_Click);
+            this.evaluateJavascriptToolStripMenuItem.Name = "evaluateJavascriptToolStripMenuItem";
+            this.evaluateJavascriptToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.evaluateJavascriptToolStripMenuItem.Text = "Evaluate Javascript";
+            this.evaluateJavascriptToolStripMenuItem.Click += new System.EventHandler(this.evaluateJavascriptToolStripMenuItem_Click);
             // 
             // BrowserForm
             // 
@@ -366,5 +376,6 @@ namespace CfxTestApplication {
         private System.Windows.Forms.ToolStripButton JSHelloWorldButton;
         private System.Windows.Forms.ToolStripMenuItem clearContextMenuModelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem remoteLayerStressTestToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem evaluateJavascriptToolStripMenuItem;
     }
 }

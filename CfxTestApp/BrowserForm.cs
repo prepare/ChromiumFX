@@ -397,5 +397,20 @@ namespace CfxTestApplication {
 
             }
         }
+
+        private void evaluateJavascriptToolStripMenuItem_Click(object sender, EventArgs e) {
+            LogWriteLine("Request evaluation for [document.body.scrollWidth, document.body.scrollHeight]");
+            WebBrowser.EvaluateJavascript("[document.body.scrollWidth,document.body.scrollHeight]", (value, exception) =>
+            {
+                if(value != null) {
+                    LogWriteLine("Evaluation callback with value: scrollWidth={0}, scrollHeight={1}.",
+                    value.GetValue(0).IntValue, value.GetValue(1).IntValue);
+                } else if(exception != null) {
+                    LogWriteLine("Evaluation callback with exception: {0}.", exception.Message);
+                } else {
+                    LogWriteLine("Evaluation callback with value == null && exception == null.");
+                }
+            });
+        }
     }
 }
