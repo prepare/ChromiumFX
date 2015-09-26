@@ -554,10 +554,14 @@ namespace Chromium.WebBrowser {
         /// Evaluation is done asynchronously in the render process.
         /// Returns false if the remote browser is currently unavailable.
         /// If this function returns false, then |callback| will not be called. Otherwise,
-        /// |callback| will be called according to the InvokeMode setting.
+        /// |callback| will be called asynchronously in the context of the render thread and,
+        /// if InvokeMode is set to Invoke, on the thread that owns the browser's underlying window handle.
+        /// 
         /// Use with care:
         /// The callback may never be called if the render process gets killed prematurely.
-        /// Otherwise, the returned CfrV8Value may be null if evaluation in the render process fails.
+        /// On success the CfrV8Value argument of the callback will be set to the return value
+        /// of the evaluated script, if any. On failure the CfrV8Exception argument of the callback
+        /// will be set to the exception thrown by the evaluated script, if any.
         /// Do not block the callback since it blocks the render thread.
         /// </summary>
         /// <param name="code">The javascript code to evaluate.</param>
@@ -577,7 +581,7 @@ namespace Chromium.WebBrowser {
                 } finally {
                     ctx.Exit();
                 }
-            } catch(System.IO.IOException) {
+            } catch(CfxRemotingException) {
                 return false;
             }
         }
@@ -596,27 +600,25 @@ namespace Chromium.WebBrowser {
                     if(wb.RemoteCallbacksWillInvoke)
                         wb.RenderThreadInvoke((MethodInvoker)(() => { Task_Execute(e); }));
                     else
-                        Task_Execute(e);   
+                        Task_Execute(e);
                 };
             }
 
             void Task_Execute(CfrEventArgs e) {
-                bool evalSucceeded = false;
+                CfrV8Value retval;
+                CfrV8Exception ex;
+                bool result = false;
                 try {
-                    CfrV8Value retval;
-                    CfrV8Exception ex;
                     var context = wb.remoteBrowser.MainFrame.V8Context;
-                    var result = context.Eval(code, out retval, out ex);
-                    evalSucceeded = true;
-                    if(result) {
-                        callback(retval, ex);
-                    } else {
-                        callback(null, null);
-                    }
-
+                    result = context.Eval(code, out retval, out ex);
                 } catch {
-                    if(!evalSucceeded)
-                        callback(null, null);
+                    callback(null, null);
+                    return;
+                }
+                if(result) {
+                    callback(retval, null);
+                } else {
+                    callback(null, ex);
                 }
             }
         }
@@ -678,7 +680,7 @@ namespace Chromium.WebBrowser {
                 } finally {
                     ctx.Exit();
                 }
-            } catch(System.IO.IOException) {
+            } catch(CfxRemotingException) {
                 return false;
             }
         }
