@@ -400,7 +400,7 @@ namespace CfxTestApplication {
 
         private void evaluateJavascriptToolStripMenuItem_Click(object sender, EventArgs e) {
             LogWriteLine("Request evaluation for [document.body.scrollWidth, document.body.scrollHeight]");
-            WebBrowser.EvaluateJavascript("[document.body.scrollWidth,document.body.scrollHeight]", (value, exception) =>
+            var retval = WebBrowser.EvaluateJavascript("[document.body.scrollWidth,document.body.scrollHeight]", (value, exception) =>
             {
                 if(value != null) {
                     LogWriteLine("Evaluation callback with value: scrollWidth={0}, scrollHeight={1}.",
@@ -411,6 +411,9 @@ namespace CfxTestApplication {
                     LogWriteLine("Evaluation callback with value == null && exception == null.");
                 }
             });
+            if(!retval) {
+                LogWriteLine("WebBrowser.EvaluateJavascript returned false, evaluation will not succeed.");
+            }
         }
     }
 }
