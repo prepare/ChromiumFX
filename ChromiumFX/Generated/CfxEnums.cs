@@ -290,6 +290,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
     /// </remarks>
+    [Flags()]
     public enum CfxDragOperationsMask {
         DragOperationNone = unchecked((int)0),
         DragOperationCopy = unchecked((int)1),
@@ -403,6 +404,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
     /// </remarks>
+    [Flags()]
     public enum CfxFileDialogMode {
         /// <summary>
         /// Requires that the file exists before allowing the user to pick it.
@@ -521,6 +523,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
     /// </remarks>
+    [Flags()]
     public enum CfxJsonWriterOptions {
         /// <summary>
         /// Default behavior.
@@ -997,6 +1000,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
     /// </remarks>
+    [Flags()]
     public enum CfxTransitionType {
         /// <summary>
         /// Source is a link click or the JavaScript window.open function. This is
@@ -1183,6 +1187,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
     /// </remarks>
+    [Flags()]
     public enum CfxV8AccessControl {
         Default = unchecked((int)0),
         AllCanRead = unchecked((int)1),
