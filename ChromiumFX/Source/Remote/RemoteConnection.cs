@@ -93,7 +93,10 @@ namespace Chromium.Remote {
         void CfxRuntime_OnCfxShutdown() {
             ShuttingDown = true;
             callStack.ReleaseAll();
-            RemoteService.connections.Remove(this);
+            // The connection may have already been removed
+            // in OnConnectionLost
+            if(RemoteService.connections.Contains(this))
+                RemoteService.connections.Remove(this);
         }
 
         internal void EnqueueWrite(Action<StreamHandler> callback) {
@@ -177,8 +180,12 @@ namespace Chromium.Remote {
                     return;
                 connectionLostException = ex;
                 callStack.ReleaseAll();
-                if(!isClient)
-                    RemoteService.connections.Remove(this);
+                if(!isClient) {
+                    // The connection may have already been removed
+                    // in CfxRuntime_OnCfxShutdown
+                    if(RemoteService.connections.Contains(this))
+                        RemoteService.connections.Remove(this);
+                }
             }
         }
     }
