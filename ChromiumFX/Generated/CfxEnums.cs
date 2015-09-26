@@ -880,15 +880,15 @@ namespace Chromium {
         /// <summary>
         /// Cancel immediately.
         /// </summary>
-        Ancel = unchecked((int)0),
+        Cancel = unchecked((int)0),
         /// <summary>
         /// Continue immediately.
         /// </summary>
-        Ontinue,
+        Continue,
         /// <summary>
         /// Continue asynchronously (usually via a callback).
         /// </summary>
-        OntinueAsync
+        ContinueAsync
     }
     /// <summary>
     /// Represents the state of a setting.
