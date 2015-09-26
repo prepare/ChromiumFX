@@ -29,7 +29,9 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+using System.Diagnostics;
 using System.Linq;
+using System.Text;
 
 public class CefEnumType : ApiType {
 
@@ -119,24 +121,30 @@ public class CefEnumType : ApiType {
             b.AppendLine("[Flags()]");
         }
 
-        var varPrefix = members[0].Name;
-        for(var i = 1; i <= members.Length - 1; i++) {
-            if(varPrefix.Length > members[i].Name.Length) {
-                varPrefix = varPrefix.Substring(0, members[i].Name.Length);
-            }
-            for(var c = 0; c <= varPrefix.Length - 1; c++) {
-                if(varPrefix[c] != members[i].Name[c]) {
-                    varPrefix = varPrefix.Substring(0, c);
+        var prefixBuilder = new StringBuilder();
+        var allEqual = true;
+
+        do {
+            char c = members[0].Name[prefixBuilder.Length];
+            for(var i = 1; i <= members.Length - 1; i++) {
+                if(c != members[i].Name[prefixBuilder.Length]) {
+                    allEqual = false;
                     break;
                 }
             }
-            if(varPrefix.Length == 0)
-                break; 
+            if(allEqual)
+                prefixBuilder.Append(c);
+
+        } while(allEqual);
+
+        if(prefixBuilder.Length > 0) {
+            while(prefixBuilder[prefixBuilder.Length - 1] != '_')
+                prefixBuilder.Length -= 1;
         }
 
         b.BeginBlock("public enum {0}", enumName);
         foreach(var m in members) {
-            var var = CSharp.ApplyStyle(m.Name.Substring(varPrefix.Length));
+            var var = CSharp.ApplyStyle(m.Name.Substring(prefixBuilder.Length));
             b.AppendSummary(m.Comments);
             b.Append(var);
             if(m.Value != null) {
