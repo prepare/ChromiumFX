@@ -122,6 +122,7 @@ namespace Chromium.WebBrowser {
 
         internal JSProperty(JSPropertyType type, JSInvokeMode invokeMode) {
             PropertyType = type;
+            InvokeMode = invokeMode;
         }
 
         /// <summary>
