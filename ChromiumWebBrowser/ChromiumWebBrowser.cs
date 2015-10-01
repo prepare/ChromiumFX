@@ -32,6 +32,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Forms;
 using Chromium;
 using Chromium.Event;
@@ -46,6 +47,7 @@ namespace Chromium.WebBrowser {
     /// <summary>
     /// Windows Forms webbrowser control based on ChromiumFX.
     /// </summary>
+    [DesignerCategory("")]
     public class ChromiumWebBrowser : Control {
 
         private static CfxBrowserSettings defaultBrowserSettings;
