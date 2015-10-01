@@ -69,6 +69,22 @@ namespace CfxTestApplication {
 
             WebBrowser.GlobalObject.Add("TestObject", new JsTestObject(this));
 
+
+            var sleepFunction = new JSFunction(JSInvokeMode.DontInvoke);
+            sleepFunction.Execute += (s, e) => {
+                LogWriteLine("Sleep function: sleep 5 seconds...");
+                Thread.Sleep(5000);
+                try {
+                    var x = e.Arguments[0].IntValue;
+                    LogWriteLine("Sleep function: Event args accessed sucessfully.");
+                } catch(Exception ex) {
+                    LogWriteLine("Sleep function: Error accessing event args:");
+                    LogWriteLine(ex.ToString());
+                }
+            };
+
+            WebBrowser.GlobalObject.Add("SleepFunction", sleepFunction);
+
             var html = @"
 
                 <html>
@@ -414,6 +430,10 @@ namespace CfxTestApplication {
             if(!retval) {
                 LogWriteLine("WebBrowser.EvaluateJavascript returned false, evaluation will not succeed.");
             }
+        }
+
+        private void executeSleepFunctionToolStripMenuItem_Click(object sender, EventArgs e) {
+            WebBrowser.ExecuteJavascript("SleepFunction(0);");
         }
     }
 }
