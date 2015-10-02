@@ -184,8 +184,19 @@ namespace Chromium.Remote {
         private void ExecutionThreadEntry(RemoteConnection connection) {
 
             if(returnImmediately) {
+                // only happens in calls from the browser to the renderer
+                CfxDebug.Assert(connection == RemoteClient.connection);
                 ExecuteInTargetProcess(connection);
                 return;
+            }
+
+            if(RemoteClient.connection == null) {
+                if(!CfxRemoteCallbackManager.IncrementCallbackCount(connection.remoteProcessId)) {
+                    // The application has suspended remote callbacks.
+                    // Write the response without ececuting event handlers, returning default values.
+                    connection.EnqueueWrite(WriteResponse);
+                    return;
+                }
             }
 
             var threadContext = new CfxRemoteCallContext(connection, remoteThreadId);
@@ -195,6 +206,9 @@ namespace Chromium.Remote {
             try {
                 ExecuteInTargetProcess(connection);
             } finally {
+                if(RemoteClient.connection == null) {
+                    CfxRemoteCallbackManager.DecrementCallbackCount(connection.remoteProcessId);
+                }
                 if(threadStackCount != CfxRemoteCallContext.ContextStackCount || CfxRemoteCallContext.CurrentContext != threadContext) {
                     CfxRemoteCallContext.resetStack(threadStackCount - 1);
                     throw new CfxException("Unbalanced remote call context stack. Make sure to balance calls to CfxRemoteCallContext.Enter() and CfxRemoteCallContext.Exit() in all render process callback events.");
