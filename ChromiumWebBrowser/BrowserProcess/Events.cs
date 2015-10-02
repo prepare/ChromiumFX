@@ -38,8 +38,9 @@ namespace Chromium.WebBrowser.Event {
     public delegate void OnBeforeCommandLineProcessingEventHandler(CfxOnBeforeCommandLineProcessingEventArgs e);
     public delegate void OnRegisterCustomSchemesEventHandler(CfxOnRegisterCustomSchemesEventArgs e);
     public delegate void OnBeforeCfxInitializeEventHandler(OnBeforeCfxInitializeEventArgs e);
+    [Obsolete()]
     public delegate void OnRemoteContextCreatedEventHandler(EventArgs e);
-
+    
     public class OnBeforeCfxInitializeEventArgs : EventArgs {
         public CfxSettings Settings { get; private set; }
         public CfxBrowserProcessHandler ProcessHandler { get; private set; }
@@ -55,6 +56,15 @@ namespace Chromium.WebBrowser.Event {
         public CfxBrowser Browser { get; private set; }
         internal BrowserCreatedEventArgs(CfxBrowser browser) {
             Browser = browser;
+        }
+    }
+
+    public delegate void RemoteProcessCreatedEventHandler(RemoteProcessCreatedEventArgs e);
+
+    public class RemoteProcessCreatedEventArgs : EventArgs {
+        public CfrRenderProcessHandler RenderProcessHandler { get; private set; }
+        internal RemoteProcessCreatedEventArgs(CfrRenderProcessHandler renderProcessHandler) {
+            RenderProcessHandler = renderProcessHandler;
         }
     }
 
