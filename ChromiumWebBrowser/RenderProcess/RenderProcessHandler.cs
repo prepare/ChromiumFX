@@ -44,10 +44,8 @@ namespace Chromium.WebBrowser {
         internal RenderProcessHandler(RenderProcess remoteProcess) {
             this.remoteProcess = remoteProcess;
 
-            this.OnContextCreated += new CfrOnContextCreatedEventHandler(RenderProcessHandler_OnContextCreated);
-            this.OnBrowserCreated += new CfrOnBrowserCreatedEventHandler(RenderProcessHandler_OnBrowserCreated);
-            //this.OnRenderThreadCreated += new CfrOnRenderThreadCreatedEventHandler(RenderProcessHandler_OnRenderThreadCreated);
-            //this.OnUncaughtException += new CfrOnUncaughtExceptionEventHandler(RenderProcessHandler_OnUncaughtException);
+            this.OnContextCreated += RenderProcessHandler_OnContextCreated;
+            this.OnBrowserCreated += RenderProcessHandler_OnBrowserCreated;
         }
 
         void RenderProcessHandler_OnUncaughtException(object sender, CfrOnUncaughtExceptionEventArgs e) {
@@ -57,14 +55,24 @@ namespace Chromium.WebBrowser {
             }
         }
 
-        void RenderProcessHandler_OnRenderThreadCreated(object sender, CfrOnRenderThreadCreatedEventArgs e) {
-            //System.Diagnostics.Debug.Print("RenderProcessHandler_OnRenderThreadCreated");
-        }
-
         void RenderProcessHandler_OnBrowserCreated(object sender, CfrOnBrowserCreatedEventArgs e) {
             var id = e.Browser.Identifier;
             var wb = ChromiumWebBrowser.GetBrowser(id);
             if(wb != null) {
+
+                var rp = wb.remoteProcess;
+                if(rp != null && rp != this.remoteProcess) {
+                    // A new process has been created for the browser.
+                    // The old process is still alive, but probably it gets
+                    // killed soon after this callback returns.
+                    // So we suspend all callbacks from the old process.
+                    // If there are currently executing callbacks, 
+                    // this call will block until they are finished. 
+                    // When this call returns, it should be safe to 
+                    // continue execution and let the old process die.
+                    CfxRemoteCallbackManager.SuspendCallbacks(rp.RemoteProcessId);
+                }
+
                 wb.SetRemoteBrowser(e.Browser, remoteProcess);
             }
         }

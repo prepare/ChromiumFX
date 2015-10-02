@@ -52,7 +52,10 @@ namespace Chromium.WebBrowser {
 
         internal event Action<RenderProcess> OnExit;
 
+        internal int RemoteProcessId { get; private set; }
+
         private RenderProcess() {
+            RemoteProcessId = CfxRemoteCallContext.CurrentContext.ProcessId;
             app = new CfrApp();
             processHandler = new RenderProcessHandler(this);
             app.GetRenderProcessHandler += (s, e) => e.SetReturnValue(processHandler);
