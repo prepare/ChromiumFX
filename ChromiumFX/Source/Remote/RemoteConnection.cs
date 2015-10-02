@@ -44,6 +44,7 @@ namespace Chromium.Remote {
         private readonly Stream pipeOut;
         internal readonly StreamHandler streamHandler;
 
+        internal int localProcessId { get; private set; }
         internal int remoteProcessId { get; private set; }
 
         private readonly bool isClient;
@@ -69,6 +70,7 @@ namespace Chromium.Remote {
             this.pipeOut = pipeOut;
             this.isClient = isClient;
 
+            localProcessId = Process.GetCurrentProcess().Id;
             callStack = new RemoteCallStack();
 
             streamHandler = new StreamHandler(pipeIn, pipeOut);
@@ -110,7 +112,7 @@ namespace Chromium.Remote {
         internal void WriteLoopEntry() {
             try {
                 Connect(pipeOut);
-                streamHandler.Write(Process.GetCurrentProcess().Id);
+                streamHandler.Write(localProcessId);
                 streamHandler.Flush();
                 WriteLoop();
             } catch(EndOfStreamException ex) {
