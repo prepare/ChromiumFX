@@ -54,8 +54,19 @@ namespace CfxTestApplication {
             LogWriteLine("Platform OS: {0}; Arch: {1}", CfxRuntime.PlatformOS, CfxRuntime.PlatformArch);
             LogWriteLine();
 
-            ChromiumWebBrowser.OnRemoteContextCreated += (e) =>
-                LogWriteLine("Remote context created for render process id {0} on remote thread id {1}", CfxRemoteCallContext.CurrentContext.ProcessId, CfxRemoteCallContext.CurrentContext.ThreadId);
+            ChromiumWebBrowser.RemoteProcessCreated += (e) => {
+                LogWriteLine("Remote render process created with process id {0}", CfxRemoteCallContext.CurrentContext.ProcessId, CfxRemoteCallContext.CurrentContext.ThreadId);
+                e.RenderProcessHandler.OnRenderThreadCreated += (s, e1) => {
+                    LogWriteLine("RenderProcessHandler.OnRenderThreadCreated, process id = {0}", CfxRemoteCallContext.CurrentContext.ProcessId);
+                };
+                e.RenderProcessHandler.OnBrowserDestroyed += (s, e1) => {
+                    // this is never reached. 
+                    LogWriteLine("RenderProcessHandler.OnBrowserDestroyed, process id = {0}, browser id = {1}", CfxRemoteCallContext.CurrentContext.ProcessId, e1.Browser.Identifier);
+                };
+                e.RenderProcessHandler.OnBrowserCreated += (s, e1) => {
+                    LogWriteLine("RenderProcessHandler.OnBrowserCreated, process id = {0}, browser id = {1}", CfxRemoteCallContext.CurrentContext.ProcessId, e1.Browser.Identifier);
+                };
+            };
 
             LoadUrlButton.Click += new EventHandler(LoadUrlButton_Click);
             UrlTextBox.KeyDown += new KeyEventHandler(UrlTextBox_KeyDown);
