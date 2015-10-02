@@ -34,7 +34,7 @@ using System.Diagnostics;
 using System.Threading;
 
 namespace Chromium.Remote {
-    static class WorkerPool {
+    internal static class WorkerPool {
 
         static readonly object syncLock = new object();
         static readonly Queue<Action> tasks = new Queue<Action>();
@@ -45,7 +45,6 @@ namespace Chromium.Remote {
             lock(syncLock) {
                 if(waitingThreads == 0) {
                     ++totalThreads;
-                    Debug.Print("WorkerPool: " + totalThreads);
                     var t = new Thread(Pool);
                     t.IsBackground = true;
                     t.Name = "cfx_rpc_worker";
