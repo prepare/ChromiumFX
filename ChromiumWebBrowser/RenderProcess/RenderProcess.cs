@@ -38,9 +38,13 @@ namespace Chromium.WebBrowser {
     internal class RenderProcess {
 
         internal static int RenderProcessMain() {
-            ChromiumWebBrowser.RaiseOnRemoteContextCreated();
-            var rp = new RenderProcess();
-            return rp.Startup();
+            try {
+                var rp = new RenderProcess();
+                ChromiumWebBrowser.RaiseRemoteProcessCreated(rp.processHandler);
+                return rp.RemoteMain();
+            } catch(CfxRemotingException) {
+                return -1;
+            }
         }
         
         private readonly CfrApp app;
@@ -54,7 +58,7 @@ namespace Chromium.WebBrowser {
             app.GetRenderProcessHandler += (s, e) => e.SetReturnValue(processHandler);
         }
 
-        private int Startup() {
+        private int RemoteMain() {
             try {
                 var retval = CfrRuntime.ExecuteProcess(app);
                 return retval;

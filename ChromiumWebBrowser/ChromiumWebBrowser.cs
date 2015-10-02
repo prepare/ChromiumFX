@@ -112,6 +112,19 @@ namespace Chromium.WebBrowser {
             }
         }
 
+        /// <summary>
+        /// For each new render process created, provides an opportunity to subscribe
+        /// to CfrRenderProcessHandler remote callback events.
+        /// </summary>
+        public static event RemoteProcessCreatedEventHandler RemoteProcessCreated;
+        internal static void RaiseRemoteProcessCreated(CfrRenderProcessHandler renderProcessHandler) {
+            var ev = RemoteProcessCreated;
+            if(ev != null) {
+                ev(new RemoteProcessCreatedEventArgs(renderProcessHandler));
+            }
+        }
+
+        [Obsolete("OnRemoteContextCreated is deprecated, use RemoteProcessCreated instead.")]
         public static event OnRemoteContextCreatedEventHandler OnRemoteContextCreated;
         internal static void RaiseOnRemoteContextCreated() {
             var handler = OnRemoteContextCreated;
