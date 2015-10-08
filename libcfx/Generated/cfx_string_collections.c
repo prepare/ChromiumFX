@@ -31,10 +31,6 @@
 // Generated file. Do not edit.
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_string_list_t cef_string_list_alloc();
 static cef_string_list_t cfx_string_list_alloc() {
     return cef_string_list_alloc();
@@ -184,6 +180,3 @@ static void cfx_string_multimap_free(cef_string_multimap_t map) {
     cef_string_multimap_free(map);
 }
 
-#ifdef __cplusplus
-} // extern "C"
-#endif

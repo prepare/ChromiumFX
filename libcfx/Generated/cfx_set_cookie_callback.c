@@ -33,10 +33,6 @@
 
 // cef_set_cookie_callback
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_set_cookie_callback_t {
     cef_set_cookie_callback_t cef_set_cookie_callback;
     unsigned int ref_count;
@@ -93,8 +89,4 @@ static void cfx_set_cookie_callback_set_managed_callback(cef_set_cookie_callback
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

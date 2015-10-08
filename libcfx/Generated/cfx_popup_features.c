@@ -33,10 +33,6 @@
 
 // cef_popup_features
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 static cef_popup_features_t* cfx_popup_features_ctor() {
     return (cef_popup_features_t*)calloc(1, sizeof(cef_popup_features_t));
 }
@@ -185,8 +181,4 @@ static void cfx_popup_features_get_additionalFeatures(cef_popup_features_t *self
     *additionalFeatures = self->additionalFeatures;
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

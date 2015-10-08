@@ -33,10 +33,6 @@
 
 // cef_zip_reader
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_zip_reader_t* cef_zip_reader_create(cef_stream_reader_t* stream);
 static cef_zip_reader_t* cfx_zip_reader_create(cef_stream_reader_t* stream) {
     if(stream) ((cef_base_t*)stream)->add_ref((cef_base_t*)stream);
@@ -107,8 +103,4 @@ static int cfx_zip_reader_eof(cef_zip_reader_t* self) {
     return self->eof(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

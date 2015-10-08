@@ -33,10 +33,6 @@
 
 // cef_scheme_registrar
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // add_custom_scheme
@@ -45,8 +41,4 @@ static int cfx_scheme_registrar_add_custom_scheme(cef_scheme_registrar_t* self, 
     return self->add_custom_scheme(self, &scheme_name, is_standard, is_local, is_display_isolated);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

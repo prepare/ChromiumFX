@@ -33,10 +33,6 @@
 
 // cef_v8exception
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // get_message
@@ -79,8 +75,4 @@ static int cfx_v8exception_get_end_column(cef_v8exception_t* self) {
     return self->get_end_column(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

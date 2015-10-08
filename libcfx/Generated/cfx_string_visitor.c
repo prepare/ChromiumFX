@@ -33,10 +33,6 @@
 
 // cef_string_visitor
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_string_visitor_t {
     cef_string_visitor_t cef_string_visitor;
     unsigned int ref_count;
@@ -93,8 +89,4 @@ static void cfx_string_visitor_set_managed_callback(cef_string_visitor_t* self, 
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

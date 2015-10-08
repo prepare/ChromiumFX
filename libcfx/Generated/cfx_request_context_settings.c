@@ -33,10 +33,6 @@
 
 // cef_request_context_settings
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 static cef_request_context_settings_t* cfx_request_context_settings_ctor() {
     cef_request_context_settings_t* self = (cef_request_context_settings_t*)calloc(1, sizeof(cef_request_context_settings_t));
     if(!self) return 0;
@@ -84,8 +80,4 @@ static void cfx_request_context_settings_get_accept_language_list(cef_request_co
     *accept_language_list_length = (int)self->accept_language_list.length;
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

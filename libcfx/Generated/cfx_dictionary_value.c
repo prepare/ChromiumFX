@@ -33,10 +33,6 @@
 
 // cef_dictionary_value
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_dictionary_value_t* cef_dictionary_value_create();
 static cef_dictionary_value_t* cfx_dictionary_value_create() {
     return cef_dictionary_value_create();
@@ -215,8 +211,4 @@ static int cfx_dictionary_value_set_list(cef_dictionary_value_t* self, char16 *k
     return self->set_list(self, &key, value);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

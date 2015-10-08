@@ -33,10 +33,6 @@
 
 // cef_render_handler
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_render_handler_t {
     cef_render_handler_t cef_render_handler;
     unsigned int ref_count;
@@ -243,8 +239,4 @@ static void cfx_render_handler_set_managed_callback(cef_render_handler_t* self, 
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

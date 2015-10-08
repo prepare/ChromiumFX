@@ -33,10 +33,6 @@
 
 // cef_key_event
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 static cef_key_event_t* cfx_key_event_ctor() {
     return (cef_key_event_t*)calloc(1, sizeof(cef_key_event_t));
 }
@@ -109,8 +105,4 @@ static void cfx_key_event_get_focus_on_editable_field(cef_key_event_t *self, int
     *focus_on_editable_field = self->focus_on_editable_field;
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

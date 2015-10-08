@@ -33,10 +33,6 @@
 
 // cef_geolocation_handler
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_geolocation_handler_t {
     cef_geolocation_handler_t cef_geolocation_handler;
     unsigned int ref_count;
@@ -109,8 +105,4 @@ static void cfx_geolocation_handler_set_managed_callback(cef_geolocation_handler
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

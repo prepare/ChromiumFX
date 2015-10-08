@@ -33,10 +33,6 @@
 
 // cef_print_settings
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_print_settings_t* cef_print_settings_create();
 static cef_print_settings_t* cfx_print_settings_create() {
     return cef_print_settings_create();
@@ -181,8 +177,4 @@ static cef_duplex_mode_t cfx_print_settings_get_duplex_mode(cef_print_settings_t
     return self->get_duplex_mode(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

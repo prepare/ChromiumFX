@@ -33,10 +33,6 @@
 
 // cef_v8context
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_v8context_t* cef_v8context_get_current_context();
 static cef_v8context_t* cfx_v8context_get_current_context() {
     return cef_v8context_get_current_context();
@@ -98,8 +94,4 @@ static int cfx_v8context_eval(cef_v8context_t* self, char16 *code_str, int code_
     return self->eval(self, &code, retval, exception);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

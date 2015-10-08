@@ -33,10 +33,6 @@
 
 // cef_geoposition
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 static cef_geoposition_t* cfx_geoposition_ctor() {
     return (cef_geoposition_t*)calloc(1, sizeof(cef_geoposition_t));
 }
@@ -127,8 +123,4 @@ static void cfx_geoposition_get_error_message(cef_geoposition_t *self, char16 **
     *error_message_length = (int)self->error_message.length;
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

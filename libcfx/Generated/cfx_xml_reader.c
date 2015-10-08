@@ -33,10 +33,6 @@
 
 // cef_xml_reader
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_xml_reader_t* cef_xml_reader_create(cef_stream_reader_t* stream, cef_xml_encoding_type_t encodingType, const cef_string_t* URI);
 static cef_xml_reader_t* cfx_xml_reader_create(cef_stream_reader_t* stream, cef_xml_encoding_type_t encodingType, char16 *URI_str, int URI_length) {
     if(stream) ((cef_base_t*)stream)->add_ref((cef_base_t*)stream);
@@ -196,8 +192,4 @@ static int cfx_xml_reader_move_to_carrying_element(cef_xml_reader_t* self) {
     return self->move_to_carrying_element(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

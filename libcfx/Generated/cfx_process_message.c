@@ -33,10 +33,6 @@
 
 // cef_process_message
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_process_message_t* cef_process_message_create(const cef_string_t* name);
 static cef_process_message_t* cfx_process_message_create(char16 *name_str, int name_length) {
     cef_string_t name = { name_str, name_length, 0 };
@@ -69,8 +65,4 @@ static cef_list_value_t* cfx_process_message_get_argument_list(cef_process_messa
     return self->get_argument_list(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

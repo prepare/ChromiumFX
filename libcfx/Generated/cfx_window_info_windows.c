@@ -33,10 +33,6 @@
 
 // cef_window_info_windows
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #ifdef CFX_WINDOWS
 
 static cef_window_info_t* cfx_window_info_windows_ctor() {
@@ -174,8 +170,4 @@ static void cfx_window_info_windows_get_window(cef_window_info_t *self, cef_wind
 #define cfx_window_info_windows_get_window 0
 #endif //ifdef CFX_WINDOWS
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

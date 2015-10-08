@@ -33,10 +33,6 @@
 
 // cef_write_handler
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_write_handler_t {
     cef_write_handler_t cef_write_handler;
     unsigned int ref_count;
@@ -159,8 +155,4 @@ static void cfx_write_handler_set_managed_callback(cef_write_handler_t* self, in
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

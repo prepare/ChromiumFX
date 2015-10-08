@@ -33,10 +33,6 @@
 
 // cef_browser
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // get_host
@@ -148,8 +144,4 @@ static int cfx_browser_send_process_message(cef_browser_t* self, cef_process_id_
     return self->send_process_message(self, target_process, message);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

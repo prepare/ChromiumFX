@@ -33,10 +33,6 @@
 
 // cef_page_range
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 static cef_page_range_t* cfx_page_range_ctor() {
     return (cef_page_range_t*)calloc(1, sizeof(cef_page_range_t));
 }
@@ -61,8 +57,4 @@ static void cfx_page_range_get_to(cef_page_range_t *self, int* to) {
     *to = self->to;
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

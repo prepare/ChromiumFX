@@ -204,15 +204,13 @@ public class WrapperGenerator {
 
     private void BuildLibCfx(GeneratedFileManager fileManager) {
         var b = new CodeBuilder();
-        CodeSnippets.BeginExternC(b);
-        b.AppendLine();
+
         foreach(var f in decls.ExportFunctions) {
             f.EmitNativeFunction(b);
             b.AppendLine();
         }
         b.AppendLine();
 
-        CodeSnippets.EndExternC(b);
         fileManager.WriteFileIfContentChanged("cfx_runtime.c", b.ToString());
 
         b.Clear();
@@ -223,13 +221,11 @@ public class WrapperGenerator {
             b.Clear();
         }
 
-        CodeSnippets.BeginExternC(b);
-        b.AppendLine();
         foreach(var f in decls.StringCollectionFunctions) {
             f.EmitNativeFunction(b);
             b.AppendLine();
         }
-        CodeSnippets.EndExternC(b);
+
         fileManager.WriteFileIfContentChanged("cfx_string_collections.c", b.ToString());
         b.Clear();
     }

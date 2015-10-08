@@ -33,10 +33,6 @@
 
 // cef_sslcert_principal
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // get_display_name
@@ -84,8 +80,4 @@ static void cfx_sslcert_principal_get_domain_components(cef_sslcert_principal_t*
     self->get_domain_components(self, components);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

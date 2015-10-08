@@ -33,10 +33,6 @@
 
 // cef_jsdialog_callback
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // cont
@@ -45,8 +41,4 @@ static void cfx_jsdialog_callback_cont(cef_jsdialog_callback_t* self, int succes
     self->cont(self, success, &user_input);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

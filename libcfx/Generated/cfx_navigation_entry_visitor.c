@@ -33,10 +33,6 @@
 
 // cef_navigation_entry_visitor
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_navigation_entry_visitor_t {
     cef_navigation_entry_visitor_t cef_navigation_entry_visitor;
     unsigned int ref_count;
@@ -95,8 +91,4 @@ static void cfx_navigation_entry_visitor_set_managed_callback(cef_navigation_ent
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

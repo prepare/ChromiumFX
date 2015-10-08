@@ -33,10 +33,6 @@
 
 // cef_delete_cookies_callback
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_delete_cookies_callback_t {
     cef_delete_cookies_callback_t cef_delete_cookies_callback;
     unsigned int ref_count;
@@ -93,8 +89,4 @@ static void cfx_delete_cookies_callback_set_managed_callback(cef_delete_cookies_
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

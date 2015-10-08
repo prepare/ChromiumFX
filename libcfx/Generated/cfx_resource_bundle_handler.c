@@ -33,10 +33,6 @@
 
 // cef_resource_bundle_handler
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_resource_bundle_handler_t {
     cef_resource_bundle_handler_t cef_resource_bundle_handler;
     unsigned int ref_count;
@@ -117,8 +113,4 @@ static void cfx_resource_bundle_handler_set_managed_callback(cef_resource_bundle
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

@@ -33,10 +33,6 @@
 
 // cef_task_runner
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_task_runner_t* cef_task_runner_get_for_current_thread();
 static cef_task_runner_t* cfx_task_runner_get_for_current_thread() {
     return cef_task_runner_get_for_current_thread();
@@ -75,8 +71,4 @@ static int cfx_task_runner_post_delayed_task(cef_task_runner_t* self, cef_task_t
     return self->post_delayed_task(self, task, delay_ms);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

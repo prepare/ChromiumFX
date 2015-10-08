@@ -33,10 +33,6 @@
 
 // cef_file_dialog_callback
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // cont
@@ -49,8 +45,4 @@ static void cfx_file_dialog_callback_cancel(cef_file_dialog_callback_t* self) {
     self->cancel(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

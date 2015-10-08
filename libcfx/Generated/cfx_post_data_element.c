@@ -33,10 +33,6 @@
 
 // cef_post_data_element
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_post_data_element_t* cef_post_data_element_create();
 static cef_post_data_element_t* cfx_post_data_element_create() {
     return cef_post_data_element_create();
@@ -84,8 +80,4 @@ static int cfx_post_data_element_get_bytes(cef_post_data_element_t* self, int si
     return (int)(self->get_bytes(self, (size_t)(size), bytes));
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

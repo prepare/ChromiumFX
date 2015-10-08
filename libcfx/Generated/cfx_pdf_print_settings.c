@@ -33,10 +33,6 @@
 
 // cef_pdf_print_settings
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 static cef_pdf_print_settings_t* cfx_pdf_print_settings_ctor() {
     return (cef_pdf_print_settings_t*)calloc(1, sizeof(cef_pdf_print_settings_t));
 }
@@ -153,8 +149,4 @@ static void cfx_pdf_print_settings_get_backgrounds_enabled(cef_pdf_print_setting
     *backgrounds_enabled = self->backgrounds_enabled;
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

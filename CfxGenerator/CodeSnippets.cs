@@ -66,16 +66,4 @@ public class CodeSnippets {
     public static void EmitPInvokeDelegateInitialization(CodeBuilder b, string functionName) {
         b.AppendLine("CfxApi.{0} = (CfxApi.{0}_delegate)CfxApi.GetDelegate(FunctionIndex.{0}, typeof(CfxApi.{0}_delegate));", functionName);
     }
-
-    public static void BeginExternC(CodeBuilder b) {
-        b.AppendLine("#ifdef __cplusplus");
-        b.AppendLine("extern \"C\" {");
-        b.AppendLine("#endif");
-    }
-
-    public static void EndExternC(CodeBuilder b) {
-        b.AppendLine("#ifdef __cplusplus");
-        b.AppendLine("} // extern \"C\"");
-        b.AppendLine("#endif");
-    }
 }

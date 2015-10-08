@@ -33,10 +33,6 @@
 
 // cef_browser_process_handler
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_browser_process_handler_t {
     cef_browser_process_handler_t cef_browser_process_handler;
     unsigned int ref_count;
@@ -140,8 +136,4 @@ static void cfx_browser_process_handler_set_managed_callback(cef_browser_process
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

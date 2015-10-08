@@ -33,10 +33,6 @@
 
 // cef_domdocument
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // get_type
@@ -111,8 +107,4 @@ static cef_string_userfree_t cfx_domdocument_get_complete_url(cef_domdocument_t*
     return self->get_complete_url(self, &partialURL);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

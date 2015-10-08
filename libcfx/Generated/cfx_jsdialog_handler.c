@@ -33,10 +33,6 @@
 
 // cef_jsdialog_handler
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_jsdialog_handler_t {
     cef_jsdialog_handler_t cef_jsdialog_handler;
     unsigned int ref_count;
@@ -139,8 +135,4 @@ static void cfx_jsdialog_handler_set_managed_callback(cef_jsdialog_handler_t* se
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

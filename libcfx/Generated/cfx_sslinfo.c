@@ -33,10 +33,6 @@
 
 // cef_sslinfo
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // get_subject
@@ -76,8 +72,4 @@ static cef_binary_value_t* cfx_sslinfo_get_pemencoded(cef_sslinfo_t* self) {
     return self->get_pemencoded(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

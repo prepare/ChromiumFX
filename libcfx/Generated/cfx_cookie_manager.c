@@ -33,10 +33,6 @@
 
 // cef_cookie_manager
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_cookie_manager_t* cef_cookie_manager_get_global_manager(cef_completion_callback_t* callback);
 static cef_cookie_manager_t* cfx_cookie_manager_get_global_manager(cef_completion_callback_t* callback) {
     if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
@@ -97,8 +93,4 @@ static int cfx_cookie_manager_flush_store(cef_cookie_manager_t* self, cef_comple
     return self->flush_store(self, callback);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

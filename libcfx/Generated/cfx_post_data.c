@@ -33,10 +33,6 @@
 
 // cef_post_data
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_post_data_t* cef_post_data_create();
 static cef_post_data_t* cfx_post_data_create() {
     return cef_post_data_create();
@@ -76,8 +72,4 @@ static void cfx_post_data_remove_elements(cef_post_data_t* self) {
     self->remove_elements(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

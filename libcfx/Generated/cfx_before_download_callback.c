@@ -33,10 +33,6 @@
 
 // cef_before_download_callback
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // cont
@@ -45,8 +41,4 @@ static void cfx_before_download_callback_cont(cef_before_download_callback_t* se
     self->cont(self, &download_path, show_dialog);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

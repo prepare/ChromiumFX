@@ -33,10 +33,6 @@
 
 // cef_window_info_linux
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #ifdef CFX_LINUX
 
 static cef_window_info_t* cfx_window_info_linux_ctor() {
@@ -132,8 +128,4 @@ static void cfx_window_info_linux_get_window(cef_window_info_t *self, cef_window
 #define cfx_window_info_linux_get_window 0
 #endif //ifdef CFX_LINUX
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

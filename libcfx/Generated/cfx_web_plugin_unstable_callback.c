@@ -33,10 +33,6 @@
 
 // cef_web_plugin_unstable_callback
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_web_plugin_unstable_callback_t {
     cef_web_plugin_unstable_callback_t cef_web_plugin_unstable_callback;
     unsigned int ref_count;
@@ -93,8 +89,4 @@ static void cfx_web_plugin_unstable_callback_set_managed_callback(cef_web_plugin
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

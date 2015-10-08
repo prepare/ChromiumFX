@@ -33,10 +33,6 @@
 
 // cef_response
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_response_t* cef_response_create();
 static cef_response_t* cfx_response_create() {
     return cef_response_create();
@@ -96,8 +92,4 @@ static void cfx_response_set_header_map(cef_response_t* self, cef_string_multima
     self->set_header_map(self, headerMap);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

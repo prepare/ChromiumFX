@@ -33,10 +33,6 @@
 
 // cef_value
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_value_t* cef_value_create();
 static cef_value_t* cfx_value_create() {
     return cef_value_create();
@@ -159,8 +155,4 @@ static int cfx_value_set_list(cef_value_t* self, cef_list_value_t* value) {
     return self->set_list(self, value);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

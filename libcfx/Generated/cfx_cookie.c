@@ -33,10 +33,6 @@
 
 // cef_cookie
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 static cef_cookie_t* cfx_cookie_ctor() {
     return (cef_cookie_t*)calloc(1, sizeof(cef_cookie_t));
 }
@@ -133,8 +129,4 @@ static void cfx_cookie_get_expires(cef_cookie_t *self, cef_time_t** expires) {
     *expires = &(self->expires);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

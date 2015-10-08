@@ -33,10 +33,6 @@
 
 // cef_pdf_print_callback
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_pdf_print_callback_t {
     cef_pdf_print_callback_t cef_pdf_print_callback;
     unsigned int ref_count;
@@ -93,8 +89,4 @@ static void cfx_pdf_print_callback_set_managed_callback(cef_pdf_print_callback_t
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

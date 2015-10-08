@@ -33,10 +33,6 @@
 
 // cef_print_job_callback
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // cont
@@ -44,8 +40,4 @@ static void cfx_print_job_callback_cont(cef_print_job_callback_t* self) {
     self->cont(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

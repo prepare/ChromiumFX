@@ -33,10 +33,6 @@
 
 // cef_command_line
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_command_line_t* cef_command_line_create();
 static cef_command_line_t* cfx_command_line_create() {
     return cef_command_line_create();
@@ -156,8 +152,4 @@ static void cfx_command_line_prepend_wrapper(cef_command_line_t* self, char16 *w
     self->prepend_wrapper(self, &wrapper);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

@@ -33,10 +33,6 @@
 
 // cef_point
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 static cef_point_t* cfx_point_ctor() {
     return (cef_point_t*)calloc(1, sizeof(cef_point_t));
 }
@@ -61,8 +57,4 @@ static void cfx_point_get_y(cef_point_t *self, int* y) {
     *y = self->y;
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

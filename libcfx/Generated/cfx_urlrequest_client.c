@@ -33,10 +33,6 @@
 
 // cef_urlrequest_client
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_urlrequest_client_t {
     cef_urlrequest_client_t cef_urlrequest_client;
     unsigned int ref_count;
@@ -151,8 +147,4 @@ static void cfx_urlrequest_client_set_managed_callback(cef_urlrequest_client_t* 
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

@@ -33,10 +33,6 @@
 
 // cef_menu_model
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // clear
@@ -294,8 +290,4 @@ static int cfx_menu_model_get_accelerator_at(cef_menu_model_t* self, int index, 
     return self->get_accelerator_at(self, index, key_code, shift_pressed, ctrl_pressed, alt_pressed);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

@@ -33,10 +33,6 @@
 
 // cef_run_file_dialog_callback
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_run_file_dialog_callback_t {
     cef_run_file_dialog_callback_t cef_run_file_dialog_callback;
     unsigned int ref_count;
@@ -93,8 +89,4 @@ static void cfx_run_file_dialog_callback_set_managed_callback(cef_run_file_dialo
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

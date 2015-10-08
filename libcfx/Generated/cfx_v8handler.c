@@ -33,10 +33,6 @@
 
 // cef_v8handler
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_v8handler_t {
     cef_v8handler_t cef_v8handler;
     unsigned int ref_count;
@@ -102,8 +98,4 @@ static void cfx_v8handler_set_managed_callback(cef_v8handler_t* self, int index,
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

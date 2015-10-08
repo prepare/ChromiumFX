@@ -33,10 +33,6 @@
 
 // cef_end_tracing_callback
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_end_tracing_callback_t {
     cef_end_tracing_callback_t cef_end_tracing_callback;
     unsigned int ref_count;
@@ -93,8 +89,4 @@ static void cfx_end_tracing_callback_set_managed_callback(cef_end_tracing_callba
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 
