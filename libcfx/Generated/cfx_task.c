@@ -33,10 +33,6 @@
 
 // cef_task
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_task_t {
     cef_task_t cef_task;
     unsigned int ref_count;
@@ -93,8 +89,4 @@ static void cfx_task_set_managed_callback(cef_task_t* self, int index, void* cal
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

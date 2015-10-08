@@ -223,8 +223,6 @@ public class CfxClassBuilder {
     public void EmitNativeWrapper(CodeBuilder b) {
         b.AppendComment(cefStruct.Name);
         b.AppendLine();
-        CodeSnippets.BeginExternC(b);
-        b.AppendLine();
 
         switch(Category) {
             case StructCategory.ApiCalls:
@@ -239,8 +237,6 @@ public class CfxClassBuilder {
                 EmitNativeValueStruct(b);
                 break;
         }
-        b.AppendLine();
-        CodeSnippets.EndExternC(b);
         b.AppendLine();
     }
 

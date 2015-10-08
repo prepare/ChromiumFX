@@ -33,10 +33,6 @@
 
 // cef_main_args_linux
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #ifdef CFX_LINUX
 
 static cef_main_args_t* cfx_main_args_linux_ctor() {
@@ -72,8 +68,4 @@ static void cfx_main_args_linux_get_argv(cef_main_args_t *self, char*** argv) {
 #define cfx_main_args_linux_get_argv 0
 #endif //ifdef CFX_LINUX
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

@@ -33,10 +33,6 @@
 
 // cef_drag_handler
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_drag_handler_t {
     cef_drag_handler_t cef_drag_handler;
     unsigned int ref_count;
@@ -109,8 +105,4 @@ static void cfx_drag_handler_set_managed_callback(cef_drag_handler_t* self, int 
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

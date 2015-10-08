@@ -33,10 +33,6 @@
 
 // cef_frame
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // is_valid
@@ -168,8 +164,4 @@ static void cfx_frame_visit_dom(cef_frame_t* self, cef_domvisitor_t* visitor) {
     self->visit_dom(self, visitor);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

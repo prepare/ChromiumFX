@@ -33,10 +33,6 @@
 
 // cef_drag_data
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_drag_data_t* cef_drag_data_create();
 static cef_drag_data_t* cfx_drag_data_create() {
     return cef_drag_data_create();
@@ -162,8 +158,4 @@ static void cfx_drag_data_add_file(cef_drag_data_t* self, char16 *path_str, int 
     self->add_file(self, &path, &display_name);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

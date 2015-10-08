@@ -33,10 +33,6 @@
 
 // cef_life_span_handler
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_life_span_handler_t {
     cef_life_span_handler_t cef_life_span_handler;
     unsigned int ref_count;
@@ -156,8 +152,4 @@ static void cfx_life_span_handler_set_managed_callback(cef_life_span_handler_t* 
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

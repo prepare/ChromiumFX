@@ -33,10 +33,6 @@
 
 // cef_draggable_region
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 static cef_draggable_region_t* cfx_draggable_region_ctor() {
     return (cef_draggable_region_t*)calloc(1, sizeof(cef_draggable_region_t));
 }
@@ -61,8 +57,4 @@ static void cfx_draggable_region_get_draggable(cef_draggable_region_t *self, int
     *draggable = self->draggable;
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

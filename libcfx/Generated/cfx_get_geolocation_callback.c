@@ -33,10 +33,6 @@
 
 // cef_get_geolocation_callback
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_get_geolocation_callback_t {
     cef_get_geolocation_callback_t cef_get_geolocation_callback;
     unsigned int ref_count;
@@ -93,8 +89,4 @@ static void cfx_get_geolocation_callback_set_managed_callback(cef_get_geolocatio
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

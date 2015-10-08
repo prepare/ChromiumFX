@@ -33,10 +33,6 @@
 
 // cef_domnode
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // get_type
@@ -170,8 +166,4 @@ static cef_string_userfree_t cfx_domnode_get_element_inner_text(cef_domnode_t* s
     return self->get_element_inner_text(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

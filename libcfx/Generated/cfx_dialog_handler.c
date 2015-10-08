@@ -33,10 +33,6 @@
 
 // cef_dialog_handler
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_dialog_handler_t {
     cef_dialog_handler_t cef_dialog_handler;
     unsigned int ref_count;
@@ -95,8 +91,4 @@ static void cfx_dialog_handler_set_managed_callback(cef_dialog_handler_t* self, 
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

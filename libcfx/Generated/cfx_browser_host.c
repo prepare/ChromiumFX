@@ -33,10 +33,6 @@
 
 // cef_browser_host
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT int cef_browser_host_create_browser(const cef_window_info_t* windowInfo, cef_client_t* client, const cef_string_t* url, const cef_browser_settings_t* settings, cef_request_context_t* request_context);
 static int cfx_browser_host_create_browser(const cef_window_info_t* windowInfo, cef_client_t* client, char16 *url_str, int url_length, const cef_browser_settings_t* settings, cef_request_context_t* request_context) {
     if(client) ((cef_base_t*)client)->add_ref((cef_base_t*)client);
@@ -295,8 +291,4 @@ static void cfx_browser_host_drag_source_system_drag_ended(cef_browser_host_t* s
     self->drag_source_system_drag_ended(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

@@ -33,10 +33,6 @@
 
 // cef_domvisitor
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_domvisitor_t {
     cef_domvisitor_t cef_domvisitor;
     unsigned int ref_count;
@@ -93,8 +89,4 @@ static void cfx_domvisitor_set_managed_callback(cef_domvisitor_t* self, int inde
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

@@ -33,10 +33,6 @@
 
 // cef_stream_reader
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_stream_reader_t* cef_stream_reader_create_for_file(const cef_string_t* fileName);
 static cef_stream_reader_t* cfx_stream_reader_create_for_file(char16 *fileName_str, int fileName_length) {
     cef_string_t fileName = { fileName_str, fileName_length, 0 };
@@ -78,8 +74,4 @@ static int cfx_stream_reader_may_block(cef_stream_reader_t* self) {
     return self->may_block(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

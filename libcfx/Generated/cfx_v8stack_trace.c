@@ -33,10 +33,6 @@
 
 // cef_v8stack_trace
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_v8stack_trace_t* cef_v8stack_trace_get_current(int frame_limit);
 static cef_v8stack_trace_t* cfx_v8stack_trace_get_current(int frame_limit) {
     return cef_v8stack_trace_get_current(frame_limit);
@@ -58,8 +54,4 @@ static cef_v8stack_frame_t* cfx_v8stack_trace_get_frame(cef_v8stack_trace_t* sel
     return self->get_frame(self, index);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

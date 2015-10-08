@@ -31,10 +31,6 @@
 // Generated file. Do not edit.
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT int cef_add_cross_origin_whitelist_entry(const cef_string_t* source_origin, const cef_string_t* target_protocol, const cef_string_t* target_domain, int allow_target_subdomains);
 static int cfx_add_cross_origin_whitelist_entry(char16 *source_origin_str, int source_origin_length, char16 *target_protocol_str, int target_protocol_length, char16 *target_domain_str, int target_domain_length, int allow_target_subdomains) {
     cef_string_t source_origin = { source_origin_str, source_origin_length, 0 };
@@ -322,6 +318,3 @@ static cef_string_userfree_t cfx_write_json(cef_value_t* node, cef_json_writer_o
 }
 
 
-#ifdef __cplusplus
-} // extern "C"
-#endif

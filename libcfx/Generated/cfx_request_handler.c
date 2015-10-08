@@ -33,10 +33,6 @@
 
 // cef_request_handler
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_request_handler_t {
     cef_request_handler_t cef_request_handler;
     unsigned int ref_count;
@@ -302,8 +298,4 @@ static void cfx_request_handler_set_managed_callback(cef_request_handler_t* self
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

@@ -33,10 +33,6 @@
 
 // cef_main_args_windows
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #ifdef CFX_WINDOWS
 
 static cef_main_args_t* cfx_main_args_windows_ctor() {
@@ -62,8 +58,4 @@ static void cfx_main_args_windows_get_instance(cef_main_args_t *self, HINSTANCE*
 #define cfx_main_args_windows_get_instance 0
 #endif //ifdef CFX_WINDOWS
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

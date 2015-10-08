@@ -33,10 +33,6 @@
 
 // cef_time
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 static cef_time_t* cfx_time_ctor() {
     return (cef_time_t*)calloc(1, sizeof(cef_time_t));
 }
@@ -109,8 +105,4 @@ static void cfx_time_get_millisecond(cef_time_t *self, int* millisecond) {
     *millisecond = self->millisecond;
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

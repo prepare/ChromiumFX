@@ -33,10 +33,6 @@
 
 // cef_mouse_event
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 static cef_mouse_event_t* cfx_mouse_event_ctor() {
     return (cef_mouse_event_t*)calloc(1, sizeof(cef_mouse_event_t));
 }
@@ -69,8 +65,4 @@ static void cfx_mouse_event_get_modifiers(cef_mouse_event_t *self, uint32* modif
     *modifiers = self->modifiers;
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

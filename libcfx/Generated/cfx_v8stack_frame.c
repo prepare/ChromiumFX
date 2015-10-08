@@ -33,10 +33,6 @@
 
 // cef_v8stack_frame
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // is_valid
@@ -79,8 +75,4 @@ static int cfx_v8stack_frame_is_constructor(cef_v8stack_frame_t* self) {
     return self->is_constructor(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

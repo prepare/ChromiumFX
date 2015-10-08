@@ -33,10 +33,6 @@
 
 // cef_download_item
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // is_valid
@@ -126,8 +122,4 @@ static cef_string_userfree_t cfx_download_item_get_mime_type(cef_download_item_t
     return self->get_mime_type(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

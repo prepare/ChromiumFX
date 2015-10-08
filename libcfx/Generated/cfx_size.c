@@ -33,10 +33,6 @@
 
 // cef_size
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 static cef_size_t* cfx_size_ctor() {
     return (cef_size_t*)calloc(1, sizeof(cef_size_t));
 }
@@ -61,8 +57,4 @@ static void cfx_size_get_height(cef_size_t *self, int* height) {
     *height = self->height;
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

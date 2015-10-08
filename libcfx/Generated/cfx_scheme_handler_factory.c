@@ -33,10 +33,6 @@
 
 // cef_scheme_handler_factory
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_scheme_handler_factory_t {
     cef_scheme_handler_factory_t cef_scheme_handler_factory;
     unsigned int ref_count;
@@ -98,8 +94,4 @@ static void cfx_scheme_handler_factory_set_managed_callback(cef_scheme_handler_f
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

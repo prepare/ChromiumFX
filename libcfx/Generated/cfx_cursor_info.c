@@ -33,10 +33,6 @@
 
 // cef_cursor_info
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 static cef_cursor_info_t* cfx_cursor_info_ctor() {
     return (cef_cursor_info_t*)calloc(1, sizeof(cef_cursor_info_t));
 }
@@ -69,8 +65,4 @@ static void cfx_cursor_info_get_buffer(cef_cursor_info_t *self, void** buffer) {
     *buffer = self->buffer;
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

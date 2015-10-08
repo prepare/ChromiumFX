@@ -33,10 +33,6 @@
 
 // cef_client
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_client_t {
     cef_client_t cef_client;
     unsigned int ref_count;
@@ -361,8 +357,4 @@ static void cfx_client_set_managed_callback(cef_client_t* self, int index, void*
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

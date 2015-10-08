@@ -33,10 +33,6 @@
 
 // cef_request
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_request_t* cef_request_create();
 static cef_request_t* cfx_request_create() {
     return cef_request_create();
@@ -135,8 +131,4 @@ static uint64 cfx_request_get_identifier(cef_request_t* self) {
     return self->get_identifier(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

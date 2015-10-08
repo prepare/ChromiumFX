@@ -33,10 +33,6 @@
 
 // cef_urlrequest
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_urlrequest_t* cef_urlrequest_create(cef_request_t* request, cef_urlrequest_client_t* client, cef_request_context_t* request_context);
 static cef_urlrequest_t* cfx_urlrequest_create(cef_request_t* request, cef_urlrequest_client_t* client, cef_request_context_t* request_context) {
     if(request) ((cef_base_t*)request)->add_ref((cef_base_t*)request);
@@ -76,8 +72,4 @@ static void cfx_urlrequest_cancel(cef_urlrequest_t* self) {
     self->cancel(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

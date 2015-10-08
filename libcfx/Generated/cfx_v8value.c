@@ -33,10 +33,6 @@
 
 // cef_v8value
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_v8value_t* cef_v8value_create_undefined();
 static cef_v8value_t* cfx_v8value_create_undefined() {
     return cef_v8value_create_undefined();
@@ -329,8 +325,4 @@ static cef_v8value_t* cfx_v8value_execute_function_with_context(cef_v8value_t* s
     return self->execute_function_with_context(self, context, object, (size_t)(argumentsCount), arguments);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

@@ -33,10 +33,6 @@
 
 // cef_auth_callback
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // cont
@@ -51,8 +47,4 @@ static void cfx_auth_callback_cancel(cef_auth_callback_t* self) {
     self->cancel(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

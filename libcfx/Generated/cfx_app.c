@@ -33,10 +33,6 @@
 
 // cef_app
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_app_t {
     cef_app_t cef_app;
     unsigned int ref_count;
@@ -164,8 +160,4 @@ static void cfx_app_set_managed_callback(cef_app_t* self, int index, void* callb
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

@@ -33,10 +33,6 @@
 
 // cef_find_handler
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_find_handler_t {
     cef_find_handler_t cef_find_handler;
     unsigned int ref_count;
@@ -93,8 +89,4 @@ static void cfx_find_handler_set_managed_callback(cef_find_handler_t* self, int 
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

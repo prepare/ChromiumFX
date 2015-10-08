@@ -33,10 +33,6 @@
 
 // cef_web_plugin_info
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // get_name
@@ -59,8 +55,4 @@ static cef_string_userfree_t cfx_web_plugin_info_get_description(cef_web_plugin_
     return self->get_description(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

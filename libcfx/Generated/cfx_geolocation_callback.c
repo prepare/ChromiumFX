@@ -33,10 +33,6 @@
 
 // cef_geolocation_callback
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // cont
@@ -44,8 +40,4 @@ static void cfx_geolocation_callback_cont(cef_geolocation_callback_t* self, int 
     self->cont(self, allow);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

@@ -33,10 +33,6 @@
 
 // cef_request_context
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // CEF_EXPORT cef_request_context_t* cef_request_context_get_global_context();
 static cef_request_context_t* cfx_request_context_get_global_context() {
     return cef_request_context_get_global_context();
@@ -94,8 +90,4 @@ static int cfx_request_context_clear_scheme_handler_factories(cef_request_contex
     return self->clear_scheme_handler_factories(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

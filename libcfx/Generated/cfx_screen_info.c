@@ -33,10 +33,6 @@
 
 // cef_screen_info
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 static cef_screen_info_t* cfx_screen_info_ctor() {
     return (cef_screen_info_t*)calloc(1, sizeof(cef_screen_info_t));
 }
@@ -93,8 +89,4 @@ static void cfx_screen_info_get_available_rect(cef_screen_info_t *self, cef_rect
     *available_rect = &(self->available_rect);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

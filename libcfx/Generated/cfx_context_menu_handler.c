@@ -33,10 +33,6 @@
 
 // cef_context_menu_handler
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_context_menu_handler_t {
     cef_context_menu_handler_t cef_context_menu_handler;
     unsigned int ref_count;
@@ -123,8 +119,4 @@ static void cfx_context_menu_handler_set_managed_callback(cef_context_menu_handl
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

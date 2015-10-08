@@ -33,10 +33,6 @@
 
 // cef_urlparts
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 static cef_urlparts_t* cfx_urlparts_ctor() {
     return (cef_urlparts_t*)calloc(1, sizeof(cef_urlparts_t));
 }
@@ -135,8 +131,4 @@ static void cfx_urlparts_get_query(cef_urlparts_t *self, char16 **query_str, int
     *query_length = (int)self->query.length;
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

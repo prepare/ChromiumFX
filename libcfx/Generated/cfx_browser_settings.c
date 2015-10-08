@@ -33,10 +33,6 @@
 
 // cef_browser_settings
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 static cef_browser_settings_t* cfx_browser_settings_ctor() {
     cef_browser_settings_t* self = (cef_browser_settings_t*)calloc(1, sizeof(cef_browser_settings_t));
     if(!self) return 0;
@@ -336,8 +332,4 @@ static void cfx_browser_settings_get_accept_language_list(cef_browser_settings_t
     *accept_language_list_length = (int)self->accept_language_list.length;
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

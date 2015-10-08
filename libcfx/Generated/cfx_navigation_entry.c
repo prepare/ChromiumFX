@@ -33,10 +33,6 @@
 
 // cef_navigation_entry
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // is_valid
@@ -85,8 +81,4 @@ static int cfx_navigation_entry_get_http_status_code(cef_navigation_entry_t* sel
     return self->get_http_status_code(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

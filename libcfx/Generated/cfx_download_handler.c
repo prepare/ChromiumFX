@@ -33,10 +33,6 @@
 
 // cef_download_handler
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_download_handler_t {
     cef_download_handler_t cef_download_handler;
     unsigned int ref_count;
@@ -107,8 +103,4 @@ static void cfx_download_handler_set_managed_callback(cef_download_handler_t* se
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

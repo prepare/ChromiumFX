@@ -33,10 +33,6 @@
 
 // cef_web_plugin_info_visitor
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct _cfx_web_plugin_info_visitor_t {
     cef_web_plugin_info_visitor_t cef_web_plugin_info_visitor;
     unsigned int ref_count;
@@ -95,8 +91,4 @@ static void cfx_web_plugin_info_visitor_set_managed_callback(cef_web_plugin_info
         break;
     }
 }
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

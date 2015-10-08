@@ -33,10 +33,6 @@
 
 // cef_context_menu_params
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // get_xcoord
@@ -129,8 +125,4 @@ static cef_context_menu_edit_state_flags_t cfx_context_menu_params_get_edit_stat
     return self->get_edit_state_flags(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 

@@ -33,10 +33,6 @@
 
 // cef_download_item_callback
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // cef_base_t base
 
 // cancel
@@ -54,8 +50,4 @@ static void cfx_download_item_callback_resume(cef_download_item_callback_t* self
     self->resume(self);
 }
 
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 
