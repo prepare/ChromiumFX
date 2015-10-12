@@ -37,8 +37,6 @@
 static cef_post_data_t* cfx_post_data_create() {
     return cef_post_data_create();
 }
-// cef_base_t base
-
 // is_read_only
 static int cfx_post_data_is_read_only(cef_post_data_t* self) {
     return self->is_read_only(self);

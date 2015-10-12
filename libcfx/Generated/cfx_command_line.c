@@ -41,8 +41,6 @@ static cef_command_line_t* cfx_command_line_create() {
 static cef_command_line_t* cfx_command_line_get_global() {
     return cef_command_line_get_global();
 }
-// cef_base_t base
-
 // is_valid
 static int cfx_command_line_is_valid(cef_command_line_t* self) {
     return self->is_valid(self);

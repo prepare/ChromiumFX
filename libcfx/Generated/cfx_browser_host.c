@@ -47,8 +47,6 @@ static cef_browser_t* cfx_browser_host_create_browser_sync(const cef_window_info
     if(request_context) ((cef_base_t*)request_context)->add_ref((cef_base_t*)request_context);
     return cef_browser_host_create_browser_sync(windowInfo, client, &url, settings, request_context);
 }
-// cef_base_t base
-
 // get_browser
 static cef_browser_t* cfx_browser_host_get_browser(cef_browser_host_t* self) {
     return self->get_browser(self);

@@ -38,8 +38,6 @@ static cef_zip_reader_t* cfx_zip_reader_create(cef_stream_reader_t* stream) {
     if(stream) ((cef_base_t*)stream)->add_ref((cef_base_t*)stream);
     return cef_zip_reader_create(stream);
 }
-// cef_base_t base
-
 // move_to_first_file
 static int cfx_zip_reader_move_to_first_file(cef_zip_reader_t* self) {
     return self->move_to_first_file(self);

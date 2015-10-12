@@ -47,8 +47,6 @@ static cef_stream_reader_t* cfx_stream_reader_create_for_handler(cef_read_handle
     if(handler) ((cef_base_t*)handler)->add_ref((cef_base_t*)handler);
     return cef_stream_reader_create_for_handler(handler);
 }
-// cef_base_t base
-
 // read
 static int cfx_stream_reader_read(cef_stream_reader_t* self, void* ptr, int size, int n) {
     return (int)(self->read(self, ptr, (size_t)(size), (size_t)(n)));

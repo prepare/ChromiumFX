@@ -33,8 +33,6 @@
 
 // cef_sslcert_principal
 
-// cef_base_t base
-
 // get_display_name
 static cef_string_userfree_t cfx_sslcert_principal_get_display_name(cef_sslcert_principal_t* self) {
     return self->get_display_name(self);

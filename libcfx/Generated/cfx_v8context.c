@@ -45,8 +45,6 @@ static cef_v8context_t* cfx_v8context_get_entered_context() {
 static int cfx_v8context_in_context() {
     return cef_v8context_in_context();
 }
-// cef_base_t base
-
 // get_task_runner
 static cef_task_runner_t* cfx_v8context_get_task_runner(cef_v8context_t* self) {
     return self->get_task_runner(self);

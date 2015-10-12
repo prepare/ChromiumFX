@@ -33,8 +33,6 @@
 
 // cef_domnode
 
-// cef_base_t base
-
 // get_type
 static cef_dom_node_type_t cfx_domnode_get_type(cef_domnode_t* self) {
     return self->get_type(self);

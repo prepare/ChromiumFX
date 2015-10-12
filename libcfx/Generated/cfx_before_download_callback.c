@@ -33,8 +33,6 @@
 
 // cef_before_download_callback
 
-// cef_base_t base
-
 // cont
 static void cfx_before_download_callback_cont(cef_before_download_callback_t* self, char16 *download_path_str, int download_path_length, int show_dialog) {
     cef_string_t download_path = { download_path_str, download_path_length, 0 };

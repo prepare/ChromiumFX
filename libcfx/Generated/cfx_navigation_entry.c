@@ -33,8 +33,6 @@
 
 // cef_navigation_entry
 
-// cef_base_t base
-
 // is_valid
 static int cfx_navigation_entry_is_valid(cef_navigation_entry_t* self) {
     return self->is_valid(self);

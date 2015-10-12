@@ -37,8 +37,6 @@
 static cef_request_t* cfx_request_create() {
     return cef_request_create();
 }
-// cef_base_t base
-
 // is_read_only
 static int cfx_request_is_read_only(cef_request_t* self) {
     return self->is_read_only(self);

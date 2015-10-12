@@ -37,8 +37,6 @@
 static cef_drag_data_t* cfx_drag_data_create() {
     return cef_drag_data_create();
 }
-// cef_base_t base
-
 // clone
 static cef_drag_data_t* cfx_drag_data_clone(cef_drag_data_t* self) {
     return self->clone(self);

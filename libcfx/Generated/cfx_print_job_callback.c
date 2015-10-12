@@ -33,8 +33,6 @@
 
 // cef_print_job_callback
 
-// cef_base_t base
-
 // cont
 static void cfx_print_job_callback_cont(cef_print_job_callback_t* self) {
     self->cont(self);

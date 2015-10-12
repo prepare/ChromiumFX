@@ -33,8 +33,6 @@
 
 // cef_request_callback
 
-// cef_base_t base
-
 // cont
 static void cfx_request_callback_cont(cef_request_callback_t* self, int allow) {
     self->cont(self, allow);

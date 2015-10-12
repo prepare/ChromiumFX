@@ -39,8 +39,6 @@ static cef_xml_reader_t* cfx_xml_reader_create(cef_stream_reader_t* stream, cef_
     cef_string_t URI = { URI_str, URI_length, 0 };
     return cef_xml_reader_create(stream, encodingType, &URI);
 }
-// cef_base_t base
-
 // move_to_next_node
 static int cfx_xml_reader_move_to_next_node(cef_xml_reader_t* self) {
     return self->move_to_next_node(self);

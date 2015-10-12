@@ -37,8 +37,6 @@
 static cef_print_settings_t* cfx_print_settings_create() {
     return cef_print_settings_create();
 }
-// cef_base_t base
-
 // is_valid
 static int cfx_print_settings_is_valid(cef_print_settings_t* self) {
     return self->is_valid(self);

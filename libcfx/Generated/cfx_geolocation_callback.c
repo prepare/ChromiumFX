@@ -33,8 +33,6 @@
 
 // cef_geolocation_callback
 
-// cef_base_t base
-
 // cont
 static void cfx_geolocation_callback_cont(cef_geolocation_callback_t* self, int allow) {
     self->cont(self, allow);

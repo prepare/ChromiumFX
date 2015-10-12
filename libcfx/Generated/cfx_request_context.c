@@ -42,8 +42,6 @@ static cef_request_context_t* cfx_request_context_create_context(const cef_reque
     if(handler) ((cef_base_t*)handler)->add_ref((cef_base_t*)handler);
     return cef_request_context_create_context(settings, handler);
 }
-// cef_base_t base
-
 // is_same
 static int cfx_request_context_is_same(cef_request_context_t* self, cef_request_context_t* other) {
     if(other) ((cef_base_t*)other)->add_ref((cef_base_t*)other);

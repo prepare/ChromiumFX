@@ -33,8 +33,6 @@
 
 // cef_browser
 
-// cef_base_t base
-
 // get_host
 static cef_browser_host_t* cfx_browser_get_host(cef_browser_t* self) {
     return self->get_host(self);

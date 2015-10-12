@@ -43,8 +43,6 @@ static cef_stream_writer_t* cfx_stream_writer_create_for_handler(cef_write_handl
     if(handler) ((cef_base_t*)handler)->add_ref((cef_base_t*)handler);
     return cef_stream_writer_create_for_handler(handler);
 }
-// cef_base_t base
-
 // write
 static int cfx_stream_writer_write(cef_stream_writer_t* self, const void* ptr, int size, int n) {
     return (int)(self->write(self, ptr, (size_t)(size), (size_t)(n)));

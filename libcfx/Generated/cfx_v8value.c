@@ -81,8 +81,6 @@ static cef_v8value_t* cfx_v8value_create_function(char16 *name_str, int name_len
     if(handler) ((cef_base_t*)handler)->add_ref((cef_base_t*)handler);
     return cef_v8value_create_function(&name, handler);
 }
-// cef_base_t base
-
 // is_valid
 static int cfx_v8value_is_valid(cef_v8value_t* self) {
     return self->is_valid(self);

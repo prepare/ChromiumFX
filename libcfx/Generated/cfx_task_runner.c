@@ -41,8 +41,6 @@ static cef_task_runner_t* cfx_task_runner_get_for_current_thread() {
 static cef_task_runner_t* cfx_task_runner_get_for_thread(cef_thread_id_t threadId) {
     return cef_task_runner_get_for_thread(threadId);
 }
-// cef_base_t base
-
 // is_same
 static int cfx_task_runner_is_same(cef_task_runner_t* self, cef_task_runner_t* that) {
     if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
