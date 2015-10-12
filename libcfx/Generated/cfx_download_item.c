@@ -33,8 +33,6 @@
 
 // cef_download_item
 
-// cef_base_t base
-
 // is_valid
 static int cfx_download_item_is_valid(cef_download_item_t* self) {
     return self->is_valid(self);

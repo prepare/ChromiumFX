@@ -38,8 +38,6 @@ static cef_process_message_t* cfx_process_message_create(char16 *name_str, int n
     cef_string_t name = { name_str, name_length, 0 };
     return cef_process_message_create(&name);
 }
-// cef_base_t base
-
 // is_valid
 static int cfx_process_message_is_valid(cef_process_message_t* self) {
     return self->is_valid(self);

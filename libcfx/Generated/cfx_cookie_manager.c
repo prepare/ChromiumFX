@@ -44,8 +44,6 @@ static cef_cookie_manager_t* cfx_cookie_manager_create_manager(char16 *path_str,
     if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
     return cef_cookie_manager_create_manager(&path, persist_session_cookies, callback);
 }
-// cef_base_t base
-
 // set_supported_schemes
 static void cfx_cookie_manager_set_supported_schemes(cef_cookie_manager_t* self, cef_string_list_t schemes, cef_completion_callback_t* callback) {
     if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);

@@ -246,6 +246,8 @@ public class CfxClassBuilder {
         }
 
         foreach(var sm in StructMembers) {
+            if(sm.MemberType.Name == "cef_base_t")
+                continue;
             b.AppendLine("// {0}", sm);
             if(sm.MemberType.IsCefCallbackType) {
                 var cb = sm.MemberType.AsCefCallbackType;

@@ -33,8 +33,6 @@
 
 // cef_download_item_callback
 
-// cef_base_t base
-
 // cancel
 static void cfx_download_item_callback_cancel(cef_download_item_callback_t* self) {
     self->cancel(self);

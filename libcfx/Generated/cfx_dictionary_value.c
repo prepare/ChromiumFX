@@ -37,8 +37,6 @@
 static cef_dictionary_value_t* cfx_dictionary_value_create() {
     return cef_dictionary_value_create();
 }
-// cef_base_t base
-
 // is_valid
 static int cfx_dictionary_value_is_valid(cef_dictionary_value_t* self) {
     return self->is_valid(self);

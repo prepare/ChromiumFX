@@ -40,8 +40,6 @@ static cef_urlrequest_t* cfx_urlrequest_create(cef_request_t* request, cef_urlre
     if(request_context) ((cef_base_t*)request_context)->add_ref((cef_base_t*)request_context);
     return cef_urlrequest_create(request, client, request_context);
 }
-// cef_base_t base
-
 // get_request
 static cef_request_t* cfx_urlrequest_get_request(cef_urlrequest_t* self) {
     return self->get_request(self);

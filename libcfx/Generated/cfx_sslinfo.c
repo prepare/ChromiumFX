@@ -33,8 +33,6 @@
 
 // cef_sslinfo
 
-// cef_base_t base
-
 // get_subject
 static cef_sslcert_principal_t* cfx_sslinfo_get_subject(cef_sslinfo_t* self) {
     return self->get_subject(self);

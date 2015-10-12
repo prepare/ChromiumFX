@@ -33,8 +33,6 @@
 
 // cef_menu_model
 
-// cef_base_t base
-
 // clear
 static int cfx_menu_model_clear(cef_menu_model_t* self) {
     return self->clear(self);

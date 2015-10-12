@@ -33,8 +33,6 @@
 
 // cef_frame
 
-// cef_base_t base
-
 // is_valid
 static int cfx_frame_is_valid(cef_frame_t* self) {
     return self->is_valid(self);

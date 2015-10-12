@@ -33,8 +33,6 @@
 
 // cef_v8exception
 
-// cef_base_t base
-
 // get_message
 static cef_string_userfree_t cfx_v8exception_get_message(cef_v8exception_t* self) {
     return self->get_message(self);

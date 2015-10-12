@@ -37,8 +37,6 @@
 static cef_v8stack_trace_t* cfx_v8stack_trace_get_current(int frame_limit) {
     return cef_v8stack_trace_get_current(frame_limit);
 }
-// cef_base_t base
-
 // is_valid
 static int cfx_v8stack_trace_is_valid(cef_v8stack_trace_t* self) {
     return self->is_valid(self);

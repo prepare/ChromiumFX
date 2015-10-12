@@ -33,8 +33,6 @@
 
 // cef_jsdialog_callback
 
-// cef_base_t base
-
 // cont
 static void cfx_jsdialog_callback_cont(cef_jsdialog_callback_t* self, int success, char16 *user_input_str, int user_input_length) {
     cef_string_t user_input = { user_input_str, user_input_length, 0 };

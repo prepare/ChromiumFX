@@ -33,8 +33,6 @@
 
 // cef_domdocument
 
-// cef_base_t base
-
 // get_type
 static cef_dom_document_type_t cfx_domdocument_get_type(cef_domdocument_t* self) {
     return self->get_type(self);

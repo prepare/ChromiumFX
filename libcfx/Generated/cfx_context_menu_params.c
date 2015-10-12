@@ -33,8 +33,6 @@
 
 // cef_context_menu_params
 
-// cef_base_t base
-
 // get_xcoord
 static int cfx_context_menu_params_get_xcoord(cef_context_menu_params_t* self) {
     return self->get_xcoord(self);

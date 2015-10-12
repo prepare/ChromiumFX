@@ -37,8 +37,6 @@
 static cef_binary_value_t* cfx_binary_value_create(const void* data, int data_size) {
     return cef_binary_value_create(data, (size_t)(data_size));
 }
-// cef_base_t base
-
 // is_valid
 static int cfx_binary_value_is_valid(cef_binary_value_t* self) {
     return self->is_valid(self);
