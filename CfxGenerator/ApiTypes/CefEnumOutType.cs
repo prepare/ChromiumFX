@@ -45,12 +45,12 @@ public class CefEnumOutType : CefType {
         get { return cefEnum.PublicSymbol; }
     }
 
-    public override string PInvokeCallSignature(string var) {
-        return "out " + cefEnum.PInvokeCallSignature(var);
+    public override string PInvokeCallParameter(string var) {
+        return "out " + cefEnum.PInvokeCallParameter(var);
     }
 
-    public override string PublicCallSignature(string var) {
-        return "out " + cefEnum.PublicCallSignature(var);
+    public override string PublicCallParameter(string var) {
+        return "out " + cefEnum.PublicCallParameter(var);
     }
 
     public override string PublicUnwrapExpression(string var) {

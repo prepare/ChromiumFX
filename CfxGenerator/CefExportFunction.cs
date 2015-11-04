@@ -91,7 +91,7 @@ public class CefExportFunction : ISignatureOwner {
         if(Platform != CefPlatform.Independent) {
             b.AppendLine("#ifdef CFX_" + Platform.ToString().ToUpperInvariant());
         }
-        b.BeginBlock(Signature.NativeSignature(CfxName));
+        b.BeginBlock(Signature.NativeFunctionHeader(CfxName));
         Signature.EmitNativeCall(b, Name);
         b.EndBlock();
         if(Platform != CefPlatform.Independent) {
@@ -110,7 +110,7 @@ public class CefExportFunction : ISignatureOwner {
             modifiers += " static";
         }
 
-        b.BeginFunction(Signature.PublicSignature(PublicName), modifiers);
+        b.BeginFunction(Signature.PublicFunctionHeader(PublicName), modifiers);
         if(Platform != CefPlatform.Independent) {
             b.AppendLine("CfxApi.CheckPlatformOS(CfxPlatformOS.{0});", Platform.ToString());
         }
@@ -123,16 +123,16 @@ public class CefExportFunction : ISignatureOwner {
         b.AppendSummaryAndRemarks(Comments, true);
 
         if(Parent == null) {
-            b.BeginFunction(PublicFunctionName, ReturnType.RemoteSymbol, Signature.RemoteSignature, "public static");
+            b.BeginFunction(PublicFunctionName, ReturnType.RemoteSymbol, Signature.RemoteParameterList, "public static");
             Signature.EmitRemoteCall(b);
         } else {
-            var sig = Signature.RemoteSignature;
+            var sig = Signature.RemoteParameterList;
             if(string.IsNullOrWhiteSpace(sig)) {
                 sig = "CfrRuntime remoteRuntime";
             } else {
                 sig = "CfrRuntime remoteRuntime, " + sig;
             }
-            b.BeginFunction(PublicFunctionName, ReturnType.RemoteSymbol, Signature.RemoteSignature, "public static");
+            b.BeginFunction(PublicFunctionName, ReturnType.RemoteSymbol, Signature.RemoteParameterList, "public static");
             Signature.EmitRemoteCall(b);
         }
         b.EndBlock();

@@ -59,19 +59,19 @@ public class CefStructArrayType : CefStructPtrArrayType {
         get { return StructPtr.NativeSymbol + "*"; }
     }
 
-    public override string PInvokeCallSignature(string var) {
-        return string.Format("{0}, out int {1}_nomem", base.PInvokeCallSignature(var), var);
+    public override string PInvokeCallParameter(string var) {
+        return string.Format("{0}, out int {1}_nomem", base.PInvokeCallParameter(var), var);
     }
 
-    public override string PInvokeCallbackSignature(string var) {
+    public override string PInvokeCallbackParameter(string var) {
         return string.Format("IntPtr {0}, int {0}_structsize", var);
     }
 
-    public override string NativeCallSignature(string var, bool isConst) {
-        return string.Format("{0}, int* {1}_nomem", base.NativeCallSignature(var, isConst), var);
+    public override string NativeCallParameter(string var, bool isConst) {
+        return string.Format("{0}, int* {1}_nomem", base.NativeCallParameter(var, isConst), var);
     }
 
-    public override string NativeCallbackSignature(string var, bool isConst) {
+    public override string NativeCallbackParameter(string var, bool isConst) {
         return string.Format("{0} {1}, int {1}_structsize", StructPtr.NativeSymbol, var);
     }
 
@@ -87,12 +87,12 @@ public class CefStructArrayType : CefStructPtrArrayType {
         return string.Format("{0}, (int)sizeof({1})", var, Struct.OriginalSymbol);
     }
 
-    public override string PublicEventConstructorSignature(string var) {
-        return string.Format("{0}, int {1}_structsize", base.PublicEventConstructorSignature(var), var);
+    public override string PublicEventConstructorParameter(string var) {
+        return string.Format("{0}, int {1}_structsize", base.PublicEventConstructorParameter(var), var);
     }
 
-    public override string PublicEventConstructorCall(string var) {
-        return string.Format("{0}, {1}_structsize", base.PublicEventConstructorCall(var), var);
+    public override string PublicEventConstructorArgument(string var) {
+        return string.Format("{0}, {1}_structsize", base.PublicEventConstructorArgument(var), var);
     }
 
     public override void EmitPrePublicCallStatements(CodeBuilder b, string var) {

@@ -39,7 +39,7 @@ public class CefStringType : SpecialType {
         get { return "string"; }
     }
 
-    public override string NativeCallSignature(string var, bool isConst) {
+    public override string NativeCallParameter(string var, bool isConst) {
         return string.Format("char16 *{0}_str, int {0}_length", var);
     }
 
@@ -47,7 +47,7 @@ public class CefStringType : SpecialType {
         return string.Format("char16 **{0}_str, int *{0}_length", var);
     }
 
-    public override string PInvokeCallSignature(string var) {
+    public override string PInvokeCallParameter(string var) {
         return string.Format("IntPtr {0}_str, int {0}_length", var);
     }
 

@@ -39,11 +39,11 @@ public class CefStringPtrTypeConst : ApiType {
         get { return "string"; }
     }
 
-    public override string NativeCallSignature(string var, bool isConst) {
+    public override string NativeCallParameter(string var, bool isConst) {
         return string.Format("char16 *{0}_str, int {0}_length", var);
     }
 
-    public override string PInvokeCallSignature(string var) {
+    public override string PInvokeCallParameter(string var) {
         return string.Format("IntPtr {0}_str, int {0}_length", var);
     }
 
@@ -63,7 +63,7 @@ public class CefStringPtrTypeConst : ApiType {
         return string.Format("{0}_pinned.Obj.PinnedPtr, {0}_pinned.Length", var);
     }
 
-    public override string PublicEventConstructorCall(string var) {
+    public override string PublicEventConstructorArgument(string var) {
         return string.Format("{0}_str, {0}_length", var);
     }
 

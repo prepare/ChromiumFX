@@ -81,12 +81,12 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
         return var + "_unwrapped";
     }
 
-    public override string PublicEventConstructorSignature(string var) {
-        return StructPtr.PublicEventConstructorSignature(var) + ", " + CountArg.PublicEventConstructorSignature;
+    public override string PublicEventConstructorParameter(string var) {
+        return StructPtr.PublicEventConstructorParameter(var) + ", " + CountArg.PublicEventConstructorParameter;
     }
 
-    public override string PublicEventConstructorCall(string var) {
-        return StructPtr.PublicEventConstructorCall(var) + ", " + CountArg.PublicEventConstructorCall;
+    public override string PublicEventConstructorArgument(string var) {
+        return StructPtr.PublicEventConstructorArgument(var) + ", " + CountArg.PublicEventConstructorArgument;
     }
 
     public override void EmitPreNativeCallStatements(CodeBuilder b, string var) {

@@ -81,7 +81,7 @@ public class BooleanIntegerOutType : NumericOutType {
         get { return "bool"; }
     }
 
-    public override string PublicCallSignature(string var) {
+    public override string PublicCallParameter(string var) {
         return "out bool " + var;
     }
 
