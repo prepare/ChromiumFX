@@ -32,7 +32,7 @@
 public class GetPageRangesSignature : SignatureWithStructArray {
 
     public GetPageRangesSignature(ISignatureOwner parent, Parser.SignatureData sd, ApiTypeBuilder api, int arrayIndex, int countIndex)
-        : base(parent, sd, api, arrayIndex, countIndex) {
+        : base(SignatureType.LibraryCall, parent, sd, api, arrayIndex, countIndex) {
     }
 
     public override Argument[] ManagedArguments {

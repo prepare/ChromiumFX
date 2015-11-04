@@ -62,10 +62,12 @@ public class CefCallbackType : ApiType, ISignatureOwner {
 
         if(category == StructCategory.ApiCallbacks) {
             m_callMode = CfxCallMode.Callback;
+            this.Signature = Signature.Create(SignatureType.ClientCallback, this, sd, api);
         } else {
             m_callMode = CfxCallMode.FunctionCall;
+            this.Signature = Signature.Create(SignatureType.LibraryCall, this, sd, api);
         }
-        this.Signature = Signature.Create(this, sd, api);
+        
     }
 
     public ApiType NativeReturnType {

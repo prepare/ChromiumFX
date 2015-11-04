@@ -33,12 +33,17 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
+public enum SignatureType {
+    LibraryCall,
+    ClientCallback
+}
+
 public class Signature {
 
-    public static Signature Create(ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api) {
-        var s = CustomSignatures.ForFunction(owner, sd, api);
+    public static Signature Create(SignatureType type, ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api) {
+        var s = CustomSignatures.ForFunction(type, owner, sd, api);
         if(s == null) {
-            return new Signature(owner, sd, api);
+            return new Signature(type, owner, sd, api);
         } else {
             return s;
         }
@@ -62,6 +67,8 @@ public class Signature {
         }
     }
 
+    public SignatureType Type { get; private set; }
+
     public readonly ISignatureOwner Owner;
     public readonly Argument[] Arguments;
     public readonly ApiType ReturnType;
@@ -70,8 +77,9 @@ public class Signature {
 
     protected ArgList args = new ArgList();
 
-    protected Signature(ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api) {
-        this.Owner = owner;
+    protected Signature(SignatureType type, ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api) {
+        Type = type;
+        Owner = owner;
         var args = new List<Argument>();
         var index = 0;
 

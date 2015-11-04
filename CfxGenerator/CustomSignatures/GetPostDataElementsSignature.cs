@@ -32,7 +32,7 @@
 public class GetPostDataElementsSignature : Signature {
 
     public GetPostDataElementsSignature(ISignatureOwner parent, Parser.SignatureData sd, ApiTypeBuilder api)
-        : base(parent, sd, api) {
+        : base(SignatureType.LibraryCall, parent, sd, api) {
     }
 
     public override Argument[] ManagedArguments {
