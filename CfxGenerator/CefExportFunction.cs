@@ -177,6 +177,6 @@ public class CefExportFunction : ISignatureOwner {
     }
 
     public CefConfigData CefConfig {
-        get { return null; }
+        get { return new CefConfigData(); }
     }
 }
