@@ -43,7 +43,7 @@ public class GetPageRangesSignature : SignatureWithStructArray {
         get { return new WrapperArrayType("CfxPageRange"); }
     }
 
-    public override string PInvokeSignature(string functionName) {
+    public override string PInvokeFunctionHeader(string functionName) {
         return "void cfx_print_settings_get_page_ranges_delegate(IntPtr self, ref int rangesCount, IntPtr ranges, out int ranges_nomem)";
     }
 

@@ -47,7 +47,7 @@ public class CefColorRefType : ApiType {
         get { return "CfxColor"; }
     }
 
-    public override string PublicCallSignature(string var) {
+    public override string PublicCallParameter(string var) {
         return string.Concat("ref ", PublicSymbol, " ", var);
     }
 

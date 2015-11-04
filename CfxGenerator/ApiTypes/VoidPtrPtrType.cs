@@ -47,7 +47,7 @@ public class VoidPtrPtrType : ApiType {
         get { return "IntPtr"; }
     }
 
-    public override string PInvokeCallSignature(string var) {
+    public override string PInvokeCallParameter(string var) {
         return "out IntPtr " + CSharp.Escape(var);
     }
 }

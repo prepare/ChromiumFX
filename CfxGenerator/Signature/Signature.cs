@@ -126,60 +126,57 @@ public class Signature {
         get { return ReturnType; }
     }
 
-    public string NativeCallback {
+    public string NativeArgumentList {
         get {
-            args.Add(string.Format("(({0}*)self)->gc_handle", Arguments[0].ArgumentType.AsCefStructPtrType.Struct.CfxNativeSymbol));
-            if(!ReturnType.IsVoid) {
-                args.Add("&__retval");
-            }
-            for(var i = 1; i <= Arguments.Length - 1; i++) {
-                args.Add(Arguments[i].NativeWrapExpression);
+            if(Type == SignatureType.ClientCallback) {
+                args.Add(string.Format("(({0}*)self)->gc_handle", Arguments[0].ArgumentType.AsCefStructPtrType.Struct.CfxNativeSymbol));
+                if(!ReturnType.IsVoid) {
+                    args.Add("&__retval");
+                }
+                for(var i = 1; i <= Arguments.Length - 1; i++) {
+                    args.Add(Arguments[i].NativeWrapExpression);
+                }
+            } else {
+                for(var i = 0; i <= Arguments.Length - 1; i++) {
+                    args.Add(Arguments[i].NativeUnwrapExpression);
+                }
             }
             return args.Join();
         }
     }
 
-    public string NativeCall {
-        get {
-            for(var i = 0; i <= Arguments.Length - 1; i++) {
-                args.Add(Arguments[i].NativeUnwrapExpression);
-            }
-            return args.Join();
-        }
-    }
-
-    public string PublicEventConstructorSignature {
+    public string PublicEventConstructorArgumentList {
         get {
             for(var i = 1; i <= ManagedArguments.Count() - 1; i++) {
                 if(ManagedArguments[i].ArgumentType.IsIn) {
-                    args.Add(ManagedArguments[i].PublicEventConstructorSignature);
+                    args.Add(ManagedArguments[i].PublicEventConstructorParameter);
                 }
             }
             return args.Join();
         }
     }
 
-    public string PublicEventConstructorCall {
+    public string PublicEventConstructorParameterList {
         get {
             for(var i = 1; i <= ManagedArguments.Length - 1; i++) {
                 if(ManagedArguments[i].ArgumentType.IsIn) {
-                    args.Add(ManagedArguments[i].PublicEventConstructorCall);
+                    args.Add(ManagedArguments[i].PublicEventConstructorArgument);
                 }
             }
             return args.Join();
         }
     }
 
-    public string OriginalSignature {
+    public string OriginalParameterList {
         get {
             foreach(var arg in Arguments) {
-                args.Add(arg.OriginalSignature);
+                args.Add(arg.OriginalParameter);
             }
             return args.Join();
         }
     }
 
-    public string OriginalSignatureUnnamed {
+    public string OriginalParameterListUnnamed {
         get {
             foreach(var arg in Arguments) {
                 if(arg.IsConst) {
@@ -192,66 +189,69 @@ public class Signature {
         }
     }
 
-    public string NativeCallbackPtrSignature {
+    public virtual string NativeParameterList {
         get {
-            args.Add("gc_handle_t self");
-            if(!ReturnType.IsVoid) {
-                args.Add(ReturnType.NativeOutSignature("__retval"));
-            }
-            for(var i = 1; i <= Arguments.Length - 1; i++) {
-                args.Add(Arguments[i].NativeCallbackSignature);
+            if(Type == SignatureType.ClientCallback) {
+                args.Add("gc_handle_t self");
+                if(!ReturnType.IsVoid) {
+                    args.Add(ReturnType.NativeOutSignature("__retval"));
+                }
+                for(var i = 1; i <= Arguments.Length - 1; i++) {
+                    args.Add(Arguments[i].NativeCallbackParameter);
+                }
+            } else {
+                for(var i = 0; i <= Arguments.Length - 1; i++) {
+                    args.Add(Arguments[i].NativeCallParameter);
+                }
             }
             return args.Join();
         }
     }
 
-    public virtual string NativeSignature(string functionName) {
-        for(var i = 0; i <= Arguments.Length - 1; i++) {
-            args.Add(Arguments[i].NativeCallSignature);
-        }
+    public virtual string NativeFunctionHeader(string functionName) {
 
         var retType = ReturnType.NativeSymbol;
         if(ReturnValueIsConst) {
             retType = "const " + retType;
         }
 
-        return string.Format("static {0} {1}({2})", retType, functionName, args.Join());
+        return string.Format("static {0} {1}({2})", retType, functionName, NativeParameterList);
     }
 
-    public virtual string PInvokeSignature(string functionName) {
+    public virtual string PInvokeFunctionHeader(string functionName) {
         for(var i = 0; i <= Arguments.Length - 1; i++) {
-            args.Add(Arguments[i].PInvokeCallSignature);
+            args.Add(Arguments[i].PInvokeCallParameter);
         }
         return string.Format("{0} {1}({2})", ReturnType.PInvokeSymbol, functionName, args.Join());
     }
 
-    public string PInvokeCallbackSignature {
+    public string PInvokeParameterList {
         get {
             args.Add("IntPtr gcHandlePtr");
             if(!ReturnType.IsVoid) {
                 args.Add(ReturnType.PInvokeOutSignature("__retval"));
             }
             for(var i = 1; i <= Arguments.Count() - 1; i++) {
-                args.Add(Arguments[i].PInvokeCallbackSignature);
+                args.Add(Arguments[i].PInvokeCallbackParameter);
             }
             return args.Join();
         }
     }
 
-    public virtual string PublicSignature(string functionName) {
+    public virtual string PublicFunctionHeader(string functionName) {
         foreach(var arg in ManagedArguments) {
-            if(arg.PublicSignature != null) {
-                args.Add(arg.PublicSignature);
+            if(arg.PublicCallParameter != null) {
+                args.Add(arg.PublicCallParameter);
             }
         }
         return string.Format("{0} {1}({2})", PublicReturnType.PublicSymbol, functionName, args.Join());
     }
 
-    public string RemoteSignature {
+    public string RemoteParameterList {
         get {
             foreach(var arg in RemoteArguments) {
-                if(arg.RemoteSignature != null) {
-                    args.Add(arg.RemoteSignature);
+                if(arg.RemoteCallParameter != null) {
+                    args.Add(arg.RemoteCallParameter);
                 }
             }
             return args.Join();
@@ -343,7 +343,7 @@ public class Signature {
     }
 
     public void EmitPostPublicEventHandlerCallStatements(CodeBuilder b) {
-        
+
         for(var i = 1; i <= ManagedArguments.Count() - 1; i++) {
             ManagedArguments[i].EmitPostPublicRaiseEventStatements(b);
             if(ManagedArguments[i].TypeIsRefCounted) {
@@ -490,7 +490,7 @@ public class Signature {
             Arguments[i].EmitPostNativeCallStatements(b1);
         }
 
-        var functionCall = string.Format("{0}({1})", functionName, NativeCall);
+        var functionCall = string.Format("{0}({1})", functionName, NativeArgumentList);
         ReturnType.EmitNativeReturnStatements(b, functionCall, b1);
     }
 

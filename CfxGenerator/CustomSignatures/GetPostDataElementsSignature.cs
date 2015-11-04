@@ -43,11 +43,11 @@ public class GetPostDataElementsSignature : Signature {
         get { return new CefStructPtrArrayType(Arguments[2], Arguments[1]); }
     }
 
-    public override string NativeSignature(string functionName) {
+    public override string NativeFunctionHeader(string functionName) {
         return "static void cfx_post_data_get_elements(cef_post_data_t* self, int elementsCount, cef_post_data_element_t** elements)";
     }
 
-    public override string PInvokeSignature(string functionName) {
+    public override string PInvokeFunctionHeader(string functionName) {
         return "void cfx_post_data_get_elements_delegate(IntPtr self, int elementsCount, IntPtr elements)";
     }
 

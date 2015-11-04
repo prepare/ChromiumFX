@@ -32,7 +32,7 @@
 public class CodeSnippets {
 
     public static void EmitPInvokeDelegate(CodeBuilder b, string functionName, Signature signature) {
-        EmitPInvokeDelegate(b, signature.PInvokeSignature(functionName + "_delegate"), functionName);
+        EmitPInvokeDelegate(b, signature.PInvokeFunctionHeader(functionName + "_delegate"), functionName);
     }
 
     public static void EmitPInvokeDelegate(CodeBuilder b, string delegateSignature, string functionName) {
@@ -41,7 +41,7 @@ public class CodeSnippets {
     }
 
     public static void EmitPInvokeCallbackDelegate(CodeBuilder b, string functionName, Signature signature) {
-        EmitDelegate(b, functionName, "void", signature.PInvokeCallbackSignature, "StdCall", true, true);
+        EmitDelegate(b, functionName, "void", signature.PInvokeParameterList, "StdCall", true, true);
     }
 
     public static void EmitDelegate(CodeBuilder b, string functionName, string returnType, string arguments, string callingConvention, bool fullyQualified, bool priv) {

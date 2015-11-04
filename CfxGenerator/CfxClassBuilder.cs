@@ -251,7 +251,7 @@ public class CfxClassBuilder {
             b.AppendLine("// {0}", sm);
             if(sm.MemberType.IsCefCallbackType) {
                 var cb = sm.MemberType.AsCefCallbackType;
-                b.BeginBlock(cb.Signature.NativeSignature(CfxName + "_" + sm.Name));
+                b.BeginBlock(cb.Signature.NativeFunctionHeader(CfxName + "_" + sm.Name));
                 cb.Signature.EmitNativeCall(b, "self->" + sm.Name);
                 b.EndBlock();
             }
@@ -311,9 +311,9 @@ public class CfxClassBuilder {
 
                 var cb = sm.MemberType.AsCefCallbackType;
 
-                b.AppendLine("void (CEF_CALLBACK *{0}_callback)({1});", cb.NativeCallbackName, cb.Signature.NativeCallbackPtrSignature);
+                b.AppendLine("void (CEF_CALLBACK *{0}_callback)({1});", cb.NativeCallbackName, cb.Signature.NativeParameterList);
                 b.AppendLine();
-                b.BeginBlock("{0} CEF_CALLBACK {1}({2})", cb.NativeReturnType.OriginalSymbol, cb.NativeCallbackName, cb.Signature.OriginalSignature);
+                b.BeginBlock("{0} CEF_CALLBACK {1}({2})", cb.NativeReturnType.OriginalSymbol, cb.NativeCallbackName, cb.Signature.OriginalParameterList);
                 if(!cb.NativeReturnType.IsVoid) {
                     b.AppendLine("{0} __retval;", cb.NativeReturnType.NativeSymbol);
                 }
@@ -322,7 +322,7 @@ public class CfxClassBuilder {
                     arg.EmitPreNativeCallbackStatements(b);
                 }
 
-                b.AppendLine("{0}_callback({1});", cb.NativeCallbackName, cb.Signature.NativeCallback);
+                b.AppendLine("{0}_callback({1});", cb.NativeCallbackName, cb.Signature.NativeArgumentList);
 
                 foreach(var arg in cb.Signature.Arguments) {
                     arg.EmitPostNativeCallbackStatements(b);
@@ -346,7 +346,7 @@ public class CfxClassBuilder {
                 b.IncreaseIndent();
                 b.AppendLine("if(callback && !{0}_callback)", sm.MemberType.AsCefCallbackType.NativeCallbackName);
                 b.IncreaseIndent();
-                b.AppendLine("{0}_callback = (void (CEF_CALLBACK *)({1})) callback;", sm.MemberType.AsCefCallbackType.NativeCallbackName, sm.MemberType.AsCefCallbackType.Signature.NativeCallbackPtrSignature, index);
+                b.AppendLine("{0}_callback = (void (CEF_CALLBACK *)({1})) callback;", sm.MemberType.AsCefCallbackType.NativeCallbackName, sm.MemberType.AsCefCallbackType.Signature.NativeParameterList, index);
                 b.DecreaseIndent();
                 b.AppendLine("self->{0} = callback ? {1} : 0;", sm.Name, sm.MemberType.AsCefCallbackType.NativeCallbackName);
                 b.AppendLine("break;");
@@ -390,7 +390,7 @@ public class CfxClassBuilder {
         foreach(var sm in StructMembers) {
             if(sm.Name != "size") {
                 b.AppendComment("{0}->{1}", cefStruct.OriginalSymbol, sm.Name);
-                b.BeginBlock("static void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, cefStruct.OriginalSymbol, sm.MemberType.NativeCallSignature(sm.Name, false));
+                b.BeginBlock("static void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, cefStruct.OriginalSymbol, sm.MemberType.NativeCallParameter(sm.Name, false));
                 sm.MemberType.EmitAssignToNativeStructMember(b, sm.Name);
                 b.EndBlock();
                 b.BeginBlock("static void {0}_get_{1}({2} *self, {3})", CfxName, sm.Name, cefStruct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name));
@@ -406,7 +406,7 @@ public class CfxClassBuilder {
             b.AppendLine("#define {0}_dtor 0", CfxName);
             foreach(var sm in StructMembers) {
                 if(sm.Name != "size") {
-                    b.AppendLine("#define {0}_set_{1} 0", CfxName, sm.Name, cefStruct.OriginalSymbol, sm.MemberType.NativeCallSignature(sm.Name, false));
+                    b.AppendLine("#define {0}_set_{1} 0", CfxName, sm.Name, cefStruct.OriginalSymbol, sm.MemberType.NativeCallParameter(sm.Name, false));
                     b.AppendLine("#define {0}_get_{1} 0", CfxName, sm.Name, cefStruct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name));
                 }
             }
@@ -437,9 +437,9 @@ public class CfxClassBuilder {
 
                 foreach(var sm in StructMembers) {
                     if(sm.Name != "size") {
-                        b.AppendComment("static void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, cefStruct.OriginalSymbol, sm.MemberType.NativeCallSignature(sm.Name, false));
+                        b.AppendComment("static void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, cefStruct.OriginalSymbol, sm.MemberType.NativeCallParameter(sm.Name, false));
                         b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]");
-                        b.AppendLine("public delegate void {0}_set_{1}_delegate(IntPtr self, {2});", CfxName, sm.Name, sm.MemberType.PInvokeCallSignature(sm.Name));
+                        b.AppendLine("public delegate void {0}_set_{1}_delegate(IntPtr self, {2});", CfxName, sm.Name, sm.MemberType.PInvokeCallParameter(sm.Name));
                         b.AppendLine("public static {0}_set_{1}_delegate {0}_set_{1};", CfxName, sm.Name);
                         b.AppendComment("static void {0}_get_{1}({2} *self, {3})", CfxName, sm.Name, cefStruct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name));
                         b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]");
@@ -456,7 +456,7 @@ public class CfxClassBuilder {
                 foreach(var sm in StructMembers) {
                     if(sm.MemberType.IsCefCallbackType) {
                         var cb = sm.MemberType.AsCefCallbackType;
-                        b.AppendComment(cb.Signature.NativeSignature(CfxName + "_" + sm.Name));
+                        b.AppendComment(cb.Signature.NativeFunctionHeader(CfxName + "_" + sm.Name));
                         CodeSnippets.EmitPInvokeDelegate(b, CfxName + "_" + sm.Name, cb.Signature);
                         b.AppendLine();
                     }
@@ -604,7 +604,7 @@ public class CfxClassBuilder {
             b.AppendLine("private static IntPtr {0}_{1}_ptr;", CfxName, sm.Name);
             b.AppendLine();
 
-            b.BeginFunction(sm.Name, "void", sig.PInvokeCallbackSignature, "internal static");
+            b.BeginFunction(sm.Name, "void", sig.PInvokeParameterList, "internal static");
             //b.AppendLine("var handle = System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr);")
             b.AppendLine("var self = ({0})System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;", ClassName);
             b.BeginIf("self == null");
@@ -618,7 +618,7 @@ public class CfxClassBuilder {
             }
             b.AppendLine("return;");
             b.EndBlock();
-            b.AppendLine("var e = new {0}({1});", cb.PublicEventArgsClassName, sig.PublicEventConstructorCall);
+            b.AppendLine("var e = new {0}({1});", cb.PublicEventArgsClassName, sig.PublicEventConstructorParameterList);
             b.AppendLine("var eventHandler = self.m_{0};", cb.PublicName);
             b.AppendLine("if(eventHandler != null) eventHandler(self, e);", cb.PublicName);
             b.AppendLine("e.m_isInvalid = true;");
@@ -1070,7 +1070,7 @@ public class CfxClassBuilder {
                     if(GeneratorConfig.CreateRemoteProxy(cefStruct.Name + "::" + sm.Name)) {
                         var cb = sm.MemberType.AsCefCallbackType;
                         b.AppendSummaryAndRemarks(sm.Comments, true);
-                        b.BeginFunction(sm.PublicName, cb.RemoteReturnType.RemoteSymbol, cb.Signature.RemoteSignature);
+                        b.BeginFunction(sm.PublicName, cb.RemoteReturnType.RemoteSymbol, cb.Signature.RemoteParameterList);
                         cb.Signature.EmitRemoteCall(b);
                         b.EndBlock();
                         b.AppendLine();

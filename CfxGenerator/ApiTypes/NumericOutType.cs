@@ -41,12 +41,12 @@ public class NumericOutType : ApiType {
         get { return BaseType.PInvokeSymbol; }
     }
 
-    public override string PInvokeCallSignature(string var) {
-        return "out " + BaseType.PInvokeCallSignature(var);
+    public override string PInvokeCallParameter(string var) {
+        return "out " + BaseType.PInvokeCallParameter(var);
     }
 
-    public override string PublicCallSignature(string var) {
-        return "out " + BaseType.PublicCallSignature(var);
+    public override string PublicCallParameter(string var) {
+        return "out " + BaseType.PublicCallParameter(var);
     }
 
     public override string PublicUnwrapExpression(string var) {

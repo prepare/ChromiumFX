@@ -43,15 +43,15 @@ public class GetFrameIdentifiersSignature : Signature {
         get { return new WrapperArrayType("long"); }
     }
 
-    public override string NativeSignature(string functionName) {
+    public override string NativeFunctionHeader(string functionName) {
         return "static void cfx_browser_get_frame_identifiers(cef_browser_t* self, int identifiersCount, int64* identifiers)";
     }
 
-    public override string PInvokeSignature(string functionName) {
+    public override string PInvokeFunctionHeader(string functionName) {
         return "void cfx_browser_get_frame_identifiers_delegate(IntPtr self, int identifiersCount, IntPtr identifiers)";
     }
 
-    public override string PublicSignature(string functionName) {
+    public override string PublicFunctionHeader(string functionName) {
         return "long[] GetFrameIdentifiers()";
     }
 

@@ -98,7 +98,7 @@ public class ApiType {
         }
     }
 
-    public virtual string NativeCallSignature(string var, bool isConst) {
+    public virtual string NativeCallParameter(string var, bool isConst) {
         if(NativeSymbol == null) {
             return null;
         }
@@ -109,11 +109,11 @@ public class ApiType {
         }
     }
 
-    public virtual string NativeCallbackSignature(string var, bool isConst) {
-        return NativeCallSignature(var, isConst);
+    public virtual string NativeCallbackParameter(string var, bool isConst) {
+        return NativeCallParameter(var, isConst);
     }
 
-    public virtual string PInvokeCallSignature(string var) {
+    public virtual string PInvokeCallParameter(string var) {
         if(PInvokeSymbol == null)
             return null;
         return string.Format("{0} {1}", PInvokeSymbol, CSharp.Escape(var));
@@ -125,25 +125,25 @@ public class ApiType {
         return string.Concat(NativeSymbol, "* ", var);
     }
 
-    public virtual string PInvokeCallbackSignature(string var) {
-        return PInvokeCallSignature(var);
+    public virtual string PInvokeCallbackParameter(string var) {
+        return PInvokeCallParameter(var);
     }
 
-    public virtual string PublicEventConstructorSignature(string var) {
-        return PInvokeCallbackSignature(var);
+    public virtual string PublicEventConstructorParameter(string var) {
+        return PInvokeCallbackParameter(var);
     }
 
     public virtual string PInvokeOutSignature(string var) {
         if(PInvokeSymbol == null)
             return null;
-        return "out " + PInvokeCallSignature(var);
+        return "out " + PInvokeCallParameter(var);
     }
 
     public virtual string PInvokeOutArgument(string var) {
         return "out " + CSharp.Escape(var);
     }
 
-    public virtual string PublicCallSignature(string var) {
+    public virtual string PublicCallParameter(string var) {
         if(PublicSymbol == null)
             return null;
         return string.Format("{0} {1}", PublicSymbol, CSharp.Escape(var));
@@ -155,7 +155,7 @@ public class ApiType {
         return string.Format("{0} {1}", ProxySymbol, CSharp.Escape(var));
     }
 
-    public virtual string RemoteCallSignature(string var) {
+    public virtual string RemoteCallParameter(string var) {
         if(RemoteSymbol == null)
             return null;
         return string.Format("{0} {1}", RemoteSymbol, CSharp.Escape(var));
@@ -207,7 +207,7 @@ public class ApiType {
         }
     }
 
-    public virtual string PublicEventConstructorCall(string var) {
+    public virtual string PublicEventConstructorArgument(string var) {
         return CSharp.Escape(var);
     }
 

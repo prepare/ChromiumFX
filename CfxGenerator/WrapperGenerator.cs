@@ -155,7 +155,7 @@ public class WrapperGenerator {
             if(f.Platform != CefPlatform.Independent) {
                 b.AppendLine("#ifdef CFX_" + f.Platform.ToString().ToUpperInvariant());
             }
-            b.AppendLine("static {0} (*{1}_ptr)({2});", retSymbol, f.Name, f.Signature.OriginalSignature);
+            b.AppendLine("static {0} (*{1}_ptr)({2});", retSymbol, f.Name, f.Signature.OriginalParameterList);
             if(f.Platform != CefPlatform.Independent) {
                 b.AppendLine("#endif");
             }
@@ -168,7 +168,7 @@ public class WrapperGenerator {
                 if(f.Platform != CefPlatform.Independent) {
                     b.AppendLine("#ifdef CFX_" + f.Platform.ToString().ToUpperInvariant());
                 }
-                b.AppendLine("{0}_ptr = ({1} (*)({2}))cfx_platform_get_fptr(libcef, \"{0}\");", f.Name, f.ReturnType.OriginalSymbol, f.Signature.OriginalSignatureUnnamed);
+                b.AppendLine("{0}_ptr = ({1} (*)({2}))cfx_platform_get_fptr(libcef, \"{0}\");", f.Name, f.ReturnType.OriginalSymbol, f.Signature.OriginalParameterListUnnamed);
                 if(f.Platform != CefPlatform.Independent) {
                     b.AppendLine("#endif");
                 }

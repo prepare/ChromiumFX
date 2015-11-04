@@ -116,11 +116,11 @@ public class Argument {
         }
     }
 
-    public string PublicEventConstructorCall {
-        get { return ArgumentType.PublicEventConstructorCall(VarName); }
+    public string PublicEventConstructorArgument {
+        get { return ArgumentType.PublicEventConstructorArgument(VarName); }
     }
 
-    public string OriginalSignature {
+    public string OriginalParameter {
         get {
             if(IsConst) {
                 return string.Concat("const ", ArgumentType.OriginalSymbol, " ", VarName);
@@ -130,39 +130,39 @@ public class Argument {
         }
     }
 
-    public string NativeCallSignature {
-        get { return ArgumentType.NativeCallSignature(VarName, IsConst); }
+    public string NativeCallParameter {
+        get { return ArgumentType.NativeCallParameter(VarName, IsConst); }
     }
 
-    public string NativeCallbackSignature {
-        get { return ArgumentType.NativeCallbackSignature(VarName, IsConst); }
+    public string NativeCallbackParameter {
+        get { return ArgumentType.NativeCallbackParameter(VarName, IsConst); }
     }
 
-    public string PInvokeCallSignature {
-        get { return ArgumentType.PInvokeCallSignature(VarName); }
+    public string PInvokeCallParameter {
+        get { return ArgumentType.PInvokeCallParameter(VarName); }
     }
 
-    public string PInvokeCallbackSignature {
-        get { return ArgumentType.PInvokeCallbackSignature(VarName); }
+    public string PInvokeCallbackParameter {
+        get { return ArgumentType.PInvokeCallbackParameter(VarName); }
     }
 
-    public string PublicEventConstructorSignature {
-        get { return ArgumentType.PublicEventConstructorSignature(VarName); }
+    public string PublicEventConstructorParameter {
+        get { return ArgumentType.PublicEventConstructorParameter(VarName); }
     }
 
-    public virtual string PublicSignature {
+    public virtual string PublicCallParameter {
         get {
             if(IsThisArgument)
                 return null;
-            return ArgumentType.PublicCallSignature(PublicVarName);
+            return ArgumentType.PublicCallParameter(PublicVarName);
         }
     }
 
-    public string RemoteSignature {
+    public string RemoteCallParameter {
         get {
             if(IsThisArgument)
                 return null;
-            return ArgumentType.RemoteCallSignature(PublicVarName);
+            return ArgumentType.RemoteCallParameter(PublicVarName);
         }
     }
 

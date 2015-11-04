@@ -55,20 +55,20 @@ public class CefStructOutType : CefStructPtrPtrType {
         get { return StructPtr.RemoteSymbol; }
     }
 
-    public override string PInvokeCallSignature(string var) {
+    public override string PInvokeCallParameter(string var) {
         return "out IntPtr " + var;
     }
 
-    public override string PublicCallSignature(string var) {
-        return "out " + StructPtr.PublicCallSignature(var);
+    public override string PublicCallParameter(string var) {
+        return "out " + StructPtr.PublicCallParameter(var);
     }
 
     public override string ProxyCallSignature(string var) {
         return "out " + StructPtr.ProxyCallSignature(var);
     }
 
-    public override string RemoteCallSignature(string var) {
-        return "out " + StructPtr.RemoteCallSignature(var);
+    public override string RemoteCallParameter(string var) {
+        return "out " + StructPtr.RemoteCallParameter(var);
     }
 
     public override string PublicUnwrapExpression(string var) {
@@ -87,11 +87,11 @@ public class CefStructOutType : CefStructPtrPtrType {
         return string.Format("{0}.Wrap({1})", Struct.RemoteClassName, var);
     }
 
-    public override string PublicEventConstructorSignature(string var) {
+    public override string PublicEventConstructorParameter(string var) {
         return null;
     }
 
-    public override string PublicEventConstructorCall(string var) {
+    public override string PublicEventConstructorArgument(string var) {
         return null;
     }
 

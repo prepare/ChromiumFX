@@ -205,9 +205,9 @@ public class CefCallbackType : ApiType, ISignatureOwner {
 
     public void EmitPublicFunction(CodeBuilder b) {
         if(GeneratorConfig.HasPrivateWrapper(Parent.Name + "::" + Name)) {
-            b.BeginFunction(Signature.PublicSignature(PublicName), "private");
+            b.BeginFunction(Signature.PublicFunctionHeader(PublicName), "private");
         } else {
-            b.BeginFunction(Signature.PublicSignature(PublicName));
+            b.BeginFunction(Signature.PublicFunctionHeader(PublicName));
         }
         Signature.EmitPublicCall(b);
         b.EndBlock();
@@ -276,7 +276,7 @@ public class CefCallbackType : ApiType, ISignatureOwner {
             b.AppendLine();
         }
 
-        b.BeginBlock("internal {0}({1})", PublicEventArgsClassName, Signature.PublicEventConstructorSignature);
+        b.BeginBlock("internal {0}({1})", PublicEventArgsClassName, Signature.PublicEventConstructorArgumentList);
         Signature.EmitPublicEventCtorStatements(b);
         b.EndBlock();
         b.AppendLine();
