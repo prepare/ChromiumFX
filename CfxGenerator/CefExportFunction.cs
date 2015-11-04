@@ -44,7 +44,7 @@ public class CefExportFunction : ISignatureOwner {
     public readonly Signature Signature;
     public readonly bool PrivateWrapper;
 
-    public CommentData Comments { get; private set;  }
+    public CommentData Comments { get; private set; }
 
     public readonly CefType Parent;
 
@@ -55,7 +55,7 @@ public class CefExportFunction : ISignatureOwner {
     public CefExportFunction(CefType parent, Parser.FunctionData fd, ApiTypeBuilder api, CefPlatform platform) {
         this.Name = fd.Name;
         this.Comments = fd.Comments;
-        this.Signature = Signature.Create(this, fd.Signature, api);
+        this.Signature = Signature.Create(SignatureType.LibraryCall, this, fd.Signature, api);
         this.PrivateWrapper = GeneratorConfig.HasPrivateWrapper(this.Name);
         this.Parent = parent;
         this.Platform = platform;

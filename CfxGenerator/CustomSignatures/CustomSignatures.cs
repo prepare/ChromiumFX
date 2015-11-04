@@ -29,9 +29,11 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+using System.Diagnostics;
+
 public class CustomSignatures {
 
-    public static Signature ForFunction(ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api) {
+    public static Signature ForFunction(SignatureType type, ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api) {
         if(owner.CefName.Contains("::get_") && sd.Arguments.Count == 2) {
             if(sd.ReturnType.Name == "void" && string.IsNullOrEmpty(sd.ReturnType.Indirection)) {
                 if(sd.Arguments[1].ArgumentType.Name.StartsWith("cef_string_list") || sd.Arguments[1].ArgumentType.Name.StartsWith("cef_string_m")) {
@@ -40,18 +42,23 @@ public class CustomSignatures {
             }
         }
 
+        if(owner.CefConfig.CountFunction != null && sd.Arguments.Count == 3 && sd.ReturnType.Name == "void") {
+
+            Debug.Print(owner.CefName);
+        }
+
         switch(owner.CefName) {
             case "cef_browser::get_frame_identifiers":
                 return new GetFrameIdentifiersSignature(owner, sd, api);
 
             case "cef_v8value::execute_function_with_context":
-                return new SignatureWithStructPtrArray(owner, sd, api, 4, 3);
+                return new SignatureWithStructPtrArray(SignatureType.LibraryCall, owner, sd, api, 4, 3);
 
             case "cef_v8value::execute_function":
-                return new SignatureWithStructPtrArray(owner, sd, api, 3, 2);
+                return new SignatureWithStructPtrArray(SignatureType.LibraryCall, owner, sd, api, 3, 2);
 
             case "cef_render_handler::on_paint":
-                return new SignatureWithStructArray(owner, sd, api, 4, 3);
+                return new SignatureWithStructArray(SignatureType.ClientCallback, owner, sd, api, 4, 3);
 
             case "cef_post_data::get_elements":
                 return new GetPostDataElementsSignature(owner, sd, api);
@@ -60,13 +67,13 @@ public class CustomSignatures {
                 return new CefV8HandlerExecuteSignature(owner, sd, api);
 
             case "cef_print_settings::set_page_ranges":
-                return new SignatureWithStructArray(owner, sd, api, 2, 1);
+                return new SignatureWithStructArray(SignatureType.LibraryCall, owner, sd, api, 2, 1);
 
             case "cef_print_settings::get_page_ranges":
                 return new GetPageRangesSignature(owner, sd, api, 2, 1);
 
             case "cef_drag_handler::on_draggable_regions_changed":
-                return new SignatureWithStructArray(owner, sd, api, 3, 2);
+                return new SignatureWithStructArray(SignatureType.ClientCallback, owner, sd, api, 3, 2);
 
             default:
                 return null;

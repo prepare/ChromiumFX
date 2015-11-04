@@ -32,7 +32,7 @@
 public class OutStringToRetvalSignature : Signature {
 
     public OutStringToRetvalSignature(ISignatureOwner parent, Parser.SignatureData sd, ApiTypeBuilder api, int arrayIndex, int countIndex)
-        : base(parent, sd, api) {
+        : base(SignatureType.LibraryCall, parent, sd, api) {
         if(this.ReturnType.Name != "int")
             System.Diagnostics.Debugger.Break();
 

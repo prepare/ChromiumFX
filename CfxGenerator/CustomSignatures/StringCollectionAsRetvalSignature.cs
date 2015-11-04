@@ -32,7 +32,7 @@
 public class StringCollectionAsRetvalSignature : Signature {
 
     public StringCollectionAsRetvalSignature(ISignatureOwner parent, Parser.SignatureData sd, ApiTypeBuilder api)
-        : base(parent, sd, api) {
+        : base(SignatureType.LibraryCall, parent, sd, api) {
     }
 
     public override Argument[] ManagedArguments {
