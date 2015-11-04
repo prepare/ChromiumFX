@@ -55,7 +55,10 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         : base(name) {
         this.Parent = parent;
         this.Comments = comments;
-        this.CefConfig = cefConfig;
+        if(cefConfig == null)
+            CefConfig = new CefConfigData();
+        else
+            CefConfig = cefConfig;
 
         if(category == StructCategory.ApiCallbacks) {
             m_callMode = CfxCallMode.Callback;
