@@ -50,4 +50,12 @@ public class VoidPtrPtrType : ApiType {
     public override string PInvokeCallParameter(string var) {
         return "out IntPtr " + CSharp.Escape(var);
     }
+
+    public override string PublicCallParameter(string var) {
+        return "out IntPtr " + CSharp.Escape(var);
+    }
+
+    public override string PublicCallArgument(string var) {
+        return "out " + CSharp.Escape(var);
+    }
 }
