@@ -150,11 +150,19 @@ public class Argument {
         get { return ArgumentType.PublicEventConstructorParameter(VarName); }
     }
 
-    public virtual string PublicCallParameter {
+    public string PublicCallParameter {
         get {
             if(IsThisArgument)
                 return null;
             return ArgumentType.PublicCallParameter(PublicVarName);
+        }
+    }
+
+    public string PublicCallArgument {
+        get {
+            if(IsThisArgument)
+                return "NativePtr";
+            return ArgumentType.PublicCallArgument(PublicVarName);
         }
     }
 

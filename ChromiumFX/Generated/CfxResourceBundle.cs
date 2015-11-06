@@ -106,8 +106,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_capi.h">cef/include/capi/cef_resource_bundle_capi.h</see>.
         /// </remarks>
-        public bool GetDataResource(int resourceId, IntPtr data, out int dataSize) {
-            return 0 != CfxApi.cfx_resource_bundle_get_data_resource(NativePtr, resourceId, data, out dataSize);
+        public bool GetDataResource(int resourceId, out IntPtr data, out int dataSize) {
+            return 0 != CfxApi.cfx_resource_bundle_get_data_resource(NativePtr, resourceId, out data, out dataSize);
         }
 
         /// <summary>
@@ -124,8 +124,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_capi.h">cef/include/capi/cef_resource_bundle_capi.h</see>.
         /// </remarks>
-        public bool GetDataResourceForScale(int resourceId, CfxScaleFactor scaleFactor, IntPtr data, out int dataSize) {
-            return 0 != CfxApi.cfx_resource_bundle_get_data_resource_for_scale(NativePtr, resourceId, scaleFactor, data, out dataSize);
+        public bool GetDataResourceForScale(int resourceId, CfxScaleFactor scaleFactor, out IntPtr data, out int dataSize) {
+            return 0 != CfxApi.cfx_resource_bundle_get_data_resource_for_scale(NativePtr, resourceId, scaleFactor, out data, out dataSize);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {
