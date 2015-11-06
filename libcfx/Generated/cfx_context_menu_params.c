@@ -123,4 +123,14 @@ static cef_context_menu_edit_state_flags_t cfx_context_menu_params_get_edit_stat
     return self->get_edit_state_flags(self);
 }
 
+// is_custom_menu
+static int cfx_context_menu_params_is_custom_menu(cef_context_menu_params_t* self) {
+    return self->is_custom_menu(self);
+}
+
+// is_pepper_menu
+static int cfx_context_menu_params_is_pepper_menu(cef_context_menu_params_t* self) {
+    return self->is_pepper_menu(self);
+}
+
 

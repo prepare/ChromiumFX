@@ -302,6 +302,34 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Returns true (1) if the context menu contains items specified by the
+        /// renderer process (for example, plugin placeholder or pepper plugin menu
+        /// items).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
+        public bool IsCustomMenu {
+            get {
+                return 0 != CfxApi.cfx_context_menu_params_is_custom_menu(NativePtr);
+            }
+        }
+
+        /// <summary>
+        /// Returns true (1) if the context menu was invoked from a pepper plugin.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
+        public bool IsPepperMenu {
+            get {
+                return 0 != CfxApi.cfx_context_menu_params_is_pepper_menu(NativePtr);
+            }
+        }
+
+        /// <summary>
         /// Returns true (1) if suggestions exist, false (0) otherwise. Fills in
         /// |suggestions| from the spell check service for the misspelled word if there
         /// is one.

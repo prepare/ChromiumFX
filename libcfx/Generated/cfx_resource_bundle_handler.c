@@ -73,12 +73,12 @@ static gc_handle_t cfx_resource_bundle_handler_get_gc_handle(cfx_resource_bundle
 
 // get_localized_string
 
-void (CEF_CALLBACK *cfx_resource_bundle_handler_get_localized_string_callback)(gc_handle_t self, int* __retval, int message_id, char16 **string_str, int *string_length);
+void (CEF_CALLBACK *cfx_resource_bundle_handler_get_localized_string_callback)(gc_handle_t self, int* __retval, int string_id, char16 **string_str, int *string_length);
 
-int CEF_CALLBACK cfx_resource_bundle_handler_get_localized_string(cef_resource_bundle_handler_t* self, int message_id, cef_string_t* string) {
+int CEF_CALLBACK cfx_resource_bundle_handler_get_localized_string(cef_resource_bundle_handler_t* self, int string_id, cef_string_t* string) {
     int __retval;
     char16* string_tmp_str = string->str; int string_tmp_length = (int)string->length;
-    cfx_resource_bundle_handler_get_localized_string_callback(((cfx_resource_bundle_handler_t*)self)->gc_handle, &__retval, message_id, &(string_tmp_str), &(string_tmp_length));
+    cfx_resource_bundle_handler_get_localized_string_callback(((cfx_resource_bundle_handler_t*)self)->gc_handle, &__retval, string_id, &(string_tmp_str), &(string_tmp_length));
     if(string_tmp_str != string->str) {
         if(string->dtor) string->dtor(string->str);
         cef_string_set(string_tmp_str, string_tmp_length, string, 1);
@@ -99,17 +99,33 @@ int CEF_CALLBACK cfx_resource_bundle_handler_get_data_resource(cef_resource_bund
 }
 
 
+// get_data_resource_for_scale
+
+void (CEF_CALLBACK *cfx_resource_bundle_handler_get_data_resource_for_scale_callback)(gc_handle_t self, int* __retval, int resource_id, cef_scale_factor_t scale_factor, void** data, size_t* data_size);
+
+int CEF_CALLBACK cfx_resource_bundle_handler_get_data_resource_for_scale(cef_resource_bundle_handler_t* self, int resource_id, cef_scale_factor_t scale_factor, void** data, size_t* data_size) {
+    int __retval;
+    cfx_resource_bundle_handler_get_data_resource_for_scale_callback(((cfx_resource_bundle_handler_t*)self)->gc_handle, &__retval, resource_id, scale_factor, data, data_size);
+    return __retval;
+}
+
+
 static void cfx_resource_bundle_handler_set_managed_callback(cef_resource_bundle_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_resource_bundle_handler_get_localized_string_callback)
-            cfx_resource_bundle_handler_get_localized_string_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int message_id, char16 **string_str, int *string_length)) callback;
+            cfx_resource_bundle_handler_get_localized_string_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int string_id, char16 **string_str, int *string_length)) callback;
         self->get_localized_string = callback ? cfx_resource_bundle_handler_get_localized_string : 0;
         break;
     case 1:
         if(callback && !cfx_resource_bundle_handler_get_data_resource_callback)
             cfx_resource_bundle_handler_get_data_resource_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int resource_id, void** data, size_t* data_size)) callback;
         self->get_data_resource = callback ? cfx_resource_bundle_handler_get_data_resource : 0;
+        break;
+    case 2:
+        if(callback && !cfx_resource_bundle_handler_get_data_resource_for_scale_callback)
+            cfx_resource_bundle_handler_get_data_resource_for_scale_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int resource_id, cef_scale_factor_t scale_factor, void** data, size_t* data_size)) callback;
+        self->get_data_resource_for_scale = callback ? cfx_resource_bundle_handler_get_data_resource_for_scale : 0;
         break;
     }
 }

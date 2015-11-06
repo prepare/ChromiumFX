@@ -37,8 +37,9 @@ namespace Chromium {
     using Event;
 
     /// <summary>
-    /// Structure used to implement a custom resource bundle structure. The functions
-    /// of this structure may be called on multiple threads.
+    /// Structure used to implement a custom resource bundle structure. See
+    /// CfxSettings for additional options related to resource bundle loading. The
+    /// functions of this structure may be called on multiple threads.
     /// </summary>
     /// <remarks>
     /// See also the original CEF documentation in
@@ -61,17 +62,17 @@ namespace Chromium {
 
         // get_localized_string
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_resource_bundle_handler_get_localized_string_delegate(IntPtr gcHandlePtr, out int __retval, int message_id, ref IntPtr string_str, ref int string_length);
+        private delegate void cfx_resource_bundle_handler_get_localized_string_delegate(IntPtr gcHandlePtr, out int __retval, int string_id, ref IntPtr string_str, ref int string_length);
         private static cfx_resource_bundle_handler_get_localized_string_delegate cfx_resource_bundle_handler_get_localized_string;
         private static IntPtr cfx_resource_bundle_handler_get_localized_string_ptr;
 
-        internal static void get_localized_string(IntPtr gcHandlePtr, out int __retval, int message_id, ref IntPtr string_str, ref int string_length) {
+        internal static void get_localized_string(IntPtr gcHandlePtr, out int __retval, int string_id, ref IntPtr string_str, ref int string_length) {
             var self = (CfxResourceBundleHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
                 return;
             }
-            var e = new CfxGetLocalizedStringEventArgs(message_id, string_str, string_length);
+            var e = new CfxGetLocalizedStringEventArgs(string_id, string_str, string_length);
             var eventHandler = self.m_GetLocalizedString;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
@@ -106,14 +107,37 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
+        // get_data_resource_for_scale
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_resource_bundle_handler_get_data_resource_for_scale_delegate(IntPtr gcHandlePtr, out int __retval, int resource_id, CfxScaleFactor scale_factor, out IntPtr data, out int data_size);
+        private static cfx_resource_bundle_handler_get_data_resource_for_scale_delegate cfx_resource_bundle_handler_get_data_resource_for_scale;
+        private static IntPtr cfx_resource_bundle_handler_get_data_resource_for_scale_ptr;
+
+        internal static void get_data_resource_for_scale(IntPtr gcHandlePtr, out int __retval, int resource_id, CfxScaleFactor scale_factor, out IntPtr data, out int data_size) {
+            var self = (CfxResourceBundleHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null) {
+                __retval = default(int);
+                data = default(IntPtr);
+                data_size = default(int);
+                return;
+            }
+            var e = new CfxGetDataResourceForScaleEventArgs(resource_id, scale_factor);
+            var eventHandler = self.m_GetDataResourceForScale;
+            if(eventHandler != null) eventHandler(self, e);
+            e.m_isInvalid = true;
+            data = e.m_data;
+            data_size = e.m_data_size;
+            __retval = e.m_returnValue ? 1 : 0;
+        }
+
         internal CfxResourceBundleHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxResourceBundleHandler() : base(CfxApi.cfx_resource_bundle_handler_ctor) {}
 
         /// <summary>
-        /// Called to retrieve a localized translation for the string specified by
-        /// |MessageId|. To provide the translation set |String| to the translation
-        /// string and return true (1). To use the default translation return false
-        /// (0). Supported message IDs are listed in cef_pack_strings.h.
+        /// Called to retrieve a localized translation for the specified |StringId|.
+        /// To provide the translation set |String| to the translation string and
+        /// return true (1). To use the default translation return false (0). Include
+        /// cef_pack_strings.h for a listing of valid string ID values.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -145,12 +169,12 @@ namespace Chromium {
         private CfxGetLocalizedStringEventHandler m_GetLocalizedString;
 
         /// <summary>
-        /// Called to retrieve data for the resource specified by |ResourceId|. To
-        /// provide the resource data set |Data| and |DataSize| to the data pointer
+        /// Called to retrieve data for the specified scale independent |ResourceId|.
+        /// To provide the resource data set |Data| and |DataSize| to the data pointer
         /// and size respectively and return true (1). To use the default resource data
         /// return false (0). The resource data will not be copied and must remain
-        /// resident in memory. Supported resource IDs are listed in
-        /// cef_pack_resources.h.
+        /// resident in memory. Include cef_pack_resources.h for a listing of valid
+        /// resource ID values.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -181,6 +205,43 @@ namespace Chromium {
 
         private CfxGetDataResourceEventHandler m_GetDataResource;
 
+        /// <summary>
+        /// Called to retrieve data for the specified |ResourceId| nearest the scale
+        /// factor |ScaleFactor|. To provide the resource data set |Data| and
+        /// |DataSize| to the data pointer and size respectively and return true (1).
+        /// To use the default resource data return false (0). The resource data will
+        /// not be copied and must remain resident in memory. Include
+        /// cef_pack_resources.h for a listing of valid resource ID values.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+        /// </remarks>
+        public event CfxGetDataResourceForScaleEventHandler GetDataResourceForScale {
+            add {
+                lock(eventLock) {
+                    if(m_GetDataResourceForScale == null) {
+                        if(cfx_resource_bundle_handler_get_data_resource_for_scale == null) {
+                            cfx_resource_bundle_handler_get_data_resource_for_scale = get_data_resource_for_scale;
+                            cfx_resource_bundle_handler_get_data_resource_for_scale_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_resource_bundle_handler_get_data_resource_for_scale);
+                        }
+                        CfxApi.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 2, cfx_resource_bundle_handler_get_data_resource_for_scale_ptr);
+                    }
+                    m_GetDataResourceForScale += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_GetDataResourceForScale -= value;
+                    if(m_GetDataResourceForScale == null) {
+                        CfxApi.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                    }
+                }
+            }
+        }
+
+        private CfxGetDataResourceForScaleEventHandler m_GetDataResourceForScale;
+
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_GetLocalizedString != null) {
                 m_GetLocalizedString = null;
@@ -190,6 +251,10 @@ namespace Chromium {
                 m_GetDataResource = null;
                 CfxApi.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
+            if(m_GetDataResourceForScale != null) {
+                m_GetDataResourceForScale = null;
+                CfxApi.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+            }
             base.OnDispose(nativePtr);
         }
     }
@@ -198,10 +263,10 @@ namespace Chromium {
     namespace Event {
 
         /// <summary>
-        /// Called to retrieve a localized translation for the string specified by
-        /// |MessageId|. To provide the translation set |String| to the translation
-        /// string and return true (1). To use the default translation return false
-        /// (0). Supported message IDs are listed in cef_pack_strings.h.
+        /// Called to retrieve a localized translation for the specified |StringId|.
+        /// To provide the translation set |String| to the translation string and
+        /// return true (1). To use the default translation return false (0). Include
+        /// cef_pack_strings.h for a listing of valid string ID values.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -210,10 +275,10 @@ namespace Chromium {
         public delegate void CfxGetLocalizedStringEventHandler(object sender, CfxGetLocalizedStringEventArgs e);
 
         /// <summary>
-        /// Called to retrieve a localized translation for the string specified by
-        /// |MessageId|. To provide the translation set |String| to the translation
-        /// string and return true (1). To use the default translation return false
-        /// (0). Supported message IDs are listed in cef_pack_strings.h.
+        /// Called to retrieve a localized translation for the specified |StringId|.
+        /// To provide the translation set |String| to the translation string and
+        /// return true (1). To use the default translation return false (0). Include
+        /// cef_pack_strings.h for a listing of valid string ID values.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -221,7 +286,7 @@ namespace Chromium {
         /// </remarks>
         public class CfxGetLocalizedStringEventArgs : CfxEventArgs {
 
-            internal int m_message_id;
+            internal int m_string_id;
             internal IntPtr m_string_str;
             internal int m_string_length;
             internal string m_string_wrapped;
@@ -230,19 +295,19 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxGetLocalizedStringEventArgs(int message_id, IntPtr string_str, int string_length) {
-                m_message_id = message_id;
+            internal CfxGetLocalizedStringEventArgs(int string_id, IntPtr string_str, int string_length) {
+                m_string_id = string_id;
                 m_string_str = string_str;
                 m_string_length = string_length;
             }
 
             /// <summary>
-            /// Get the MessageId parameter for the <see cref="CfxResourceBundleHandler.GetLocalizedString"/> callback.
+            /// Get the StringId parameter for the <see cref="CfxResourceBundleHandler.GetLocalizedString"/> callback.
             /// </summary>
-            public int MessageId {
+            public int StringId {
                 get {
                     CheckAccess();
-                    return m_message_id;
+                    return m_string_id;
                 }
             }
             /// <summary>
@@ -276,17 +341,17 @@ namespace Chromium {
             }
 
             public override string ToString() {
-                return String.Format("MessageId={{{0}}}, String={{{1}}}", MessageId, String);
+                return String.Format("StringId={{{0}}}, String={{{1}}}", StringId, String);
             }
         }
 
         /// <summary>
-        /// Called to retrieve data for the resource specified by |ResourceId|. To
-        /// provide the resource data set |Data| and |DataSize| to the data pointer
+        /// Called to retrieve data for the specified scale independent |ResourceId|.
+        /// To provide the resource data set |Data| and |DataSize| to the data pointer
         /// and size respectively and return true (1). To use the default resource data
         /// return false (0). The resource data will not be copied and must remain
-        /// resident in memory. Supported resource IDs are listed in
-        /// cef_pack_resources.h.
+        /// resident in memory. Include cef_pack_resources.h for a listing of valid
+        /// resource ID values.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -295,12 +360,12 @@ namespace Chromium {
         public delegate void CfxGetDataResourceEventHandler(object sender, CfxGetDataResourceEventArgs e);
 
         /// <summary>
-        /// Called to retrieve data for the resource specified by |ResourceId|. To
-        /// provide the resource data set |Data| and |DataSize| to the data pointer
+        /// Called to retrieve data for the specified scale independent |ResourceId|.
+        /// To provide the resource data set |Data| and |DataSize| to the data pointer
         /// and size respectively and return true (1). To use the default resource data
         /// return false (0). The resource data will not be copied and must remain
-        /// resident in memory. Supported resource IDs are listed in
-        /// cef_pack_resources.h.
+        /// resident in memory. Include cef_pack_resources.h for a listing of valid
+        /// resource ID values.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -361,6 +426,101 @@ namespace Chromium {
 
             public override string ToString() {
                 return String.Format("ResourceId={{{0}}}", ResourceId);
+            }
+        }
+
+        /// <summary>
+        /// Called to retrieve data for the specified |ResourceId| nearest the scale
+        /// factor |ScaleFactor|. To provide the resource data set |Data| and
+        /// |DataSize| to the data pointer and size respectively and return true (1).
+        /// To use the default resource data return false (0). The resource data will
+        /// not be copied and must remain resident in memory. Include
+        /// cef_pack_resources.h for a listing of valid resource ID values.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxGetDataResourceForScaleEventHandler(object sender, CfxGetDataResourceForScaleEventArgs e);
+
+        /// <summary>
+        /// Called to retrieve data for the specified |ResourceId| nearest the scale
+        /// factor |ScaleFactor|. To provide the resource data set |Data| and
+        /// |DataSize| to the data pointer and size respectively and return true (1).
+        /// To use the default resource data return false (0). The resource data will
+        /// not be copied and must remain resident in memory. Include
+        /// cef_pack_resources.h for a listing of valid resource ID values.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxGetDataResourceForScaleEventArgs : CfxEventArgs {
+
+            internal int m_resource_id;
+            internal CfxScaleFactor m_scale_factor;
+            internal IntPtr m_data;
+            internal int m_data_size;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxGetDataResourceForScaleEventArgs(int resource_id, CfxScaleFactor scale_factor) {
+                m_resource_id = resource_id;
+                m_scale_factor = scale_factor;
+            }
+
+            /// <summary>
+            /// Get the ResourceId parameter for the <see cref="CfxResourceBundleHandler.GetDataResourceForScale"/> callback.
+            /// </summary>
+            public int ResourceId {
+                get {
+                    CheckAccess();
+                    return m_resource_id;
+                }
+            }
+            /// <summary>
+            /// Get the ScaleFactor parameter for the <see cref="CfxResourceBundleHandler.GetDataResourceForScale"/> callback.
+            /// </summary>
+            public CfxScaleFactor ScaleFactor {
+                get {
+                    CheckAccess();
+                    return m_scale_factor;
+                }
+            }
+            /// <summary>
+            /// Set the Data out parameter for the <see cref="CfxResourceBundleHandler.GetDataResourceForScale"/> callback.
+            /// </summary>
+            public IntPtr Data {
+                set {
+                    CheckAccess();
+                    m_data = value;
+                }
+            }
+            /// <summary>
+            /// Set the DataSize out parameter for the <see cref="CfxResourceBundleHandler.GetDataResourceForScale"/> callback.
+            /// </summary>
+            public int DataSize {
+                set {
+                    CheckAccess();
+                    m_data_size = value;
+                }
+            }
+            /// <summary>
+            /// Set the return value for the <see cref="CfxResourceBundleHandler.GetDataResourceForScale"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
+            /// </summary>
+            public void SetReturnValue(bool returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("ResourceId={{{0}}}, ScaleFactor={{{1}}}", ResourceId, ScaleFactor);
             }
         }
 

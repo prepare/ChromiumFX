@@ -31,7 +31,7 @@
 // Generated file. Do not edit.
 
 
-static void* cfx_function_pointers[1258] =  {
+static void* cfx_function_pointers[1267] =  {
     (void*)cfx_add_cross_origin_whitelist_entry,
     (void*)cfx_add_web_plugin_directory,
     (void*)cfx_add_web_plugin_path,
@@ -284,6 +284,8 @@ static void* cfx_function_pointers[1258] =  {
     (void*)cfx_context_menu_params_is_editable,
     (void*)cfx_context_menu_params_is_spell_check_enabled,
     (void*)cfx_context_menu_params_get_edit_state_flags,
+    (void*)cfx_context_menu_params_is_custom_menu,
+    (void*)cfx_context_menu_params_is_pepper_menu,
     (void*)cfx_cookie_ctor,
     (void*)cfx_cookie_dtor,
     (void*)cfx_cookie_set_name,
@@ -845,6 +847,7 @@ static void* cfx_function_pointers[1258] =  {
     (void*)cfx_request_context_get_default_cookie_manager,
     (void*)cfx_request_context_register_scheme_handler_factory,
     (void*)cfx_request_context_clear_scheme_handler_factories,
+    (void*)cfx_request_context_purge_plugin_list_cache,
     (void*)cfx_request_context_handler_ctor,
     (void*)cfx_request_context_handler_get_gc_handle,
     (void*)cfx_request_context_handler_set_managed_callback,
@@ -861,6 +864,10 @@ static void* cfx_function_pointers[1258] =  {
     (void*)cfx_request_handler_ctor,
     (void*)cfx_request_handler_get_gc_handle,
     (void*)cfx_request_handler_set_managed_callback,
+    (void*)cfx_resource_bundle_get_global,
+    (void*)cfx_resource_bundle_get_localized_string,
+    (void*)cfx_resource_bundle_get_data_resource,
+    (void*)cfx_resource_bundle_get_data_resource_for_scale,
     (void*)cfx_resource_bundle_handler_ctor,
     (void*)cfx_resource_bundle_handler_get_gc_handle,
     (void*)cfx_resource_bundle_handler_set_managed_callback,
@@ -878,6 +885,8 @@ static void* cfx_function_pointers[1258] =  {
     (void*)cfx_response_get_header,
     (void*)cfx_response_get_header_map,
     (void*)cfx_response_set_header_map,
+    (void*)cfx_run_context_menu_callback_cont,
+    (void*)cfx_run_context_menu_callback_cancel,
     (void*)cfx_run_file_dialog_callback_ctor,
     (void*)cfx_run_file_dialog_callback_get_gc_handle,
     (void*)cfx_run_file_dialog_callback_set_managed_callback,

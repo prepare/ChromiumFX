@@ -85,12 +85,28 @@ cef_cookie_manager_t* CEF_CALLBACK cfx_request_context_handler_get_cookie_manage
 }
 
 
+// on_before_plugin_load
+
+void (CEF_CALLBACK *cfx_request_context_handler_on_before_plugin_load_callback)(gc_handle_t self, int* __retval, char16 *mime_type_str, int mime_type_length, char16 *plugin_url_str, int plugin_url_length, char16 *top_origin_url_str, int top_origin_url_length, cef_web_plugin_info_t* plugin_info, cef_plugin_policy_t* plugin_policy);
+
+int CEF_CALLBACK cfx_request_context_handler_on_before_plugin_load(cef_request_context_handler_t* self, const cef_string_t* mime_type, const cef_string_t* plugin_url, const cef_string_t* top_origin_url, cef_web_plugin_info_t* plugin_info, cef_plugin_policy_t* plugin_policy) {
+    int __retval;
+    cfx_request_context_handler_on_before_plugin_load_callback(((cfx_request_context_handler_t*)self)->gc_handle, &__retval, mime_type ? mime_type->str : 0, mime_type ? (int)mime_type->length : 0, plugin_url ? plugin_url->str : 0, plugin_url ? (int)plugin_url->length : 0, top_origin_url ? top_origin_url->str : 0, top_origin_url ? (int)top_origin_url->length : 0, plugin_info, plugin_policy);
+    return __retval;
+}
+
+
 static void cfx_request_context_handler_set_managed_callback(cef_request_context_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
         if(callback && !cfx_request_context_handler_get_cookie_manager_callback)
             cfx_request_context_handler_get_cookie_manager_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_cookie_manager_t** __retval)) callback;
         self->get_cookie_manager = callback ? cfx_request_context_handler_get_cookie_manager : 0;
+        break;
+    case 1:
+        if(callback && !cfx_request_context_handler_on_before_plugin_load_callback)
+            cfx_request_context_handler_on_before_plugin_load_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, char16 *mime_type_str, int mime_type_length, char16 *plugin_url_str, int plugin_url_length, char16 *top_origin_url_str, int top_origin_url_length, cef_web_plugin_info_t* plugin_info, cef_plugin_policy_t* plugin_policy)) callback;
+        self->on_before_plugin_load = callback ? cfx_request_context_handler_on_before_plugin_load : 0;
         break;
     }
 }
