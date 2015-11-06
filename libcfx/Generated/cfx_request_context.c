@@ -88,4 +88,9 @@ static int cfx_request_context_clear_scheme_handler_factories(cef_request_contex
     return self->clear_scheme_handler_factories(self);
 }
 
+// purge_plugin_list_cache
+static void cfx_request_context_purge_plugin_list_cache(cef_request_context_t* self, int reload_pages) {
+    self->purge_plugin_list_cache(self, reload_pages);
+}
+
 

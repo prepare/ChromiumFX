@@ -280,27 +280,6 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
-        // on_before_plugin_load
-        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_request_handler_on_before_plugin_load_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr url_str, int url_length, IntPtr policy_url_str, int policy_url_length, IntPtr info);
-        private static cfx_request_handler_on_before_plugin_load_delegate cfx_request_handler_on_before_plugin_load;
-        private static IntPtr cfx_request_handler_on_before_plugin_load_ptr;
-
-        internal static void on_before_plugin_load(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr url_str, int url_length, IntPtr policy_url_str, int policy_url_length, IntPtr info) {
-            var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
-                __retval = default(int);
-                return;
-            }
-            var e = new CfxOnBeforePluginLoadEventArgs(browser, url_str, url_length, policy_url_str, policy_url_length, info);
-            var eventHandler = self.m_OnBeforePluginLoad;
-            if(eventHandler != null) eventHandler(self, e);
-            e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            if(e.m_info_wrapped == null) CfxApi.cfx_release(e.m_info);
-            __retval = e.m_returnValue ? 1 : 0;
-        }
-
         // on_plugin_crashed
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void cfx_request_handler_on_plugin_crashed_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr plugin_path_str, int plugin_path_length);
@@ -733,39 +712,6 @@ namespace Chromium {
         private CfxOnCertificateErrorEventHandler m_OnCertificateError;
 
         /// <summary>
-        /// Called on the browser process IO thread before a plugin is loaded. Return
-        /// true (1) to block loading of the plugin.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
-        /// </remarks>
-        public event CfxOnBeforePluginLoadEventHandler OnBeforePluginLoad {
-            add {
-                lock(eventLock) {
-                    if(m_OnBeforePluginLoad == null) {
-                        if(cfx_request_handler_on_before_plugin_load == null) {
-                            cfx_request_handler_on_before_plugin_load = on_before_plugin_load;
-                            cfx_request_handler_on_before_plugin_load_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_before_plugin_load);
-                        }
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 10, cfx_request_handler_on_before_plugin_load_ptr);
-                    }
-                    m_OnBeforePluginLoad += value;
-                }
-            }
-            remove {
-                lock(eventLock) {
-                    m_OnBeforePluginLoad -= value;
-                    if(m_OnBeforePluginLoad == null) {
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 10, IntPtr.Zero);
-                    }
-                }
-            }
-        }
-
-        private CfxOnBeforePluginLoadEventHandler m_OnBeforePluginLoad;
-
-        /// <summary>
         /// Called on the browser process UI thread when a plugin has crashed.
         /// |PluginPath| is the path of the plugin that crashed.
         /// </summary>
@@ -781,7 +727,7 @@ namespace Chromium {
                             cfx_request_handler_on_plugin_crashed = on_plugin_crashed;
                             cfx_request_handler_on_plugin_crashed_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_plugin_crashed);
                         }
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 11, cfx_request_handler_on_plugin_crashed_ptr);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 10, cfx_request_handler_on_plugin_crashed_ptr);
                     }
                     m_OnPluginCrashed += value;
                 }
@@ -790,7 +736,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnPluginCrashed -= value;
                     if(m_OnPluginCrashed == null) {
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 11, IntPtr.Zero);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 10, IntPtr.Zero);
                     }
                 }
             }
@@ -815,7 +761,7 @@ namespace Chromium {
                             cfx_request_handler_on_render_view_ready = on_render_view_ready;
                             cfx_request_handler_on_render_view_ready_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_render_view_ready);
                         }
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 12, cfx_request_handler_on_render_view_ready_ptr);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 11, cfx_request_handler_on_render_view_ready_ptr);
                     }
                     m_OnRenderViewReady += value;
                 }
@@ -824,7 +770,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnRenderViewReady -= value;
                     if(m_OnRenderViewReady == null) {
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 12, IntPtr.Zero);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 11, IntPtr.Zero);
                     }
                 }
             }
@@ -848,7 +794,7 @@ namespace Chromium {
                             cfx_request_handler_on_render_process_terminated = on_render_process_terminated;
                             cfx_request_handler_on_render_process_terminated_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_render_process_terminated);
                         }
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 13, cfx_request_handler_on_render_process_terminated_ptr);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 12, cfx_request_handler_on_render_process_terminated_ptr);
                     }
                     m_OnRenderProcessTerminated += value;
                 }
@@ -857,7 +803,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnRenderProcessTerminated -= value;
                     if(m_OnRenderProcessTerminated == null) {
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 13, IntPtr.Zero);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 12, IntPtr.Zero);
                     }
                 }
             }
@@ -906,21 +852,17 @@ namespace Chromium {
                 m_OnCertificateError = null;
                 CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 9, IntPtr.Zero);
             }
-            if(m_OnBeforePluginLoad != null) {
-                m_OnBeforePluginLoad = null;
-                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 10, IntPtr.Zero);
-            }
             if(m_OnPluginCrashed != null) {
                 m_OnPluginCrashed = null;
-                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 11, IntPtr.Zero);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 10, IntPtr.Zero);
             }
             if(m_OnRenderViewReady != null) {
                 m_OnRenderViewReady = null;
-                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 12, IntPtr.Zero);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 11, IntPtr.Zero);
             }
             if(m_OnRenderProcessTerminated != null) {
                 m_OnRenderProcessTerminated = null;
-                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 13, IntPtr.Zero);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 12, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -2013,107 +1955,6 @@ namespace Chromium {
 
             public override string ToString() {
                 return String.Format("Browser={{{0}}}, CertError={{{1}}}, RequestUrl={{{2}}}, SslInfo={{{3}}}, Callback={{{4}}}", Browser, CertError, RequestUrl, SslInfo, Callback);
-            }
-        }
-
-        /// <summary>
-        /// Called on the browser process IO thread before a plugin is loaded. Return
-        /// true (1) to block loading of the plugin.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
-        /// </remarks>
-        public delegate void CfxOnBeforePluginLoadEventHandler(object sender, CfxOnBeforePluginLoadEventArgs e);
-
-        /// <summary>
-        /// Called on the browser process IO thread before a plugin is loaded. Return
-        /// true (1) to block loading of the plugin.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
-        /// </remarks>
-        public class CfxOnBeforePluginLoadEventArgs : CfxEventArgs {
-
-            internal IntPtr m_browser;
-            internal CfxBrowser m_browser_wrapped;
-            internal IntPtr m_url_str;
-            internal int m_url_length;
-            internal string m_url;
-            internal IntPtr m_policy_url_str;
-            internal int m_policy_url_length;
-            internal string m_policy_url;
-            internal IntPtr m_info;
-            internal CfxWebPluginInfo m_info_wrapped;
-
-            internal bool m_returnValue;
-            private bool returnValueSet;
-
-            internal CfxOnBeforePluginLoadEventArgs(IntPtr browser, IntPtr url_str, int url_length, IntPtr policy_url_str, int policy_url_length, IntPtr info) {
-                m_browser = browser;
-                m_url_str = url_str;
-                m_url_length = url_length;
-                m_policy_url_str = policy_url_str;
-                m_policy_url_length = policy_url_length;
-                m_info = info;
-            }
-
-            /// <summary>
-            /// Get the Browser parameter for the <see cref="CfxRequestHandler.OnBeforePluginLoad"/> callback.
-            /// </summary>
-            public CfxBrowser Browser {
-                get {
-                    CheckAccess();
-                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
-                    return m_browser_wrapped;
-                }
-            }
-            /// <summary>
-            /// Get the Url parameter for the <see cref="CfxRequestHandler.OnBeforePluginLoad"/> callback.
-            /// </summary>
-            public string Url {
-                get {
-                    CheckAccess();
-                    m_url = StringFunctions.PtrToStringUni(m_url_str, m_url_length);
-                    return m_url;
-                }
-            }
-            /// <summary>
-            /// Get the PolicyUrl parameter for the <see cref="CfxRequestHandler.OnBeforePluginLoad"/> callback.
-            /// </summary>
-            public string PolicyUrl {
-                get {
-                    CheckAccess();
-                    m_policy_url = StringFunctions.PtrToStringUni(m_policy_url_str, m_policy_url_length);
-                    return m_policy_url;
-                }
-            }
-            /// <summary>
-            /// Get the Info parameter for the <see cref="CfxRequestHandler.OnBeforePluginLoad"/> callback.
-            /// </summary>
-            public CfxWebPluginInfo Info {
-                get {
-                    CheckAccess();
-                    if(m_info_wrapped == null) m_info_wrapped = CfxWebPluginInfo.Wrap(m_info);
-                    return m_info_wrapped;
-                }
-            }
-            /// <summary>
-            /// Set the return value for the <see cref="CfxRequestHandler.OnBeforePluginLoad"/> callback.
-            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
-            /// </summary>
-            public void SetReturnValue(bool returnValue) {
-                CheckAccess();
-                if(returnValueSet) {
-                    throw new CfxException("The return value has already been set");
-                }
-                returnValueSet = true;
-                this.m_returnValue = returnValue;
-            }
-
-            public override string ToString() {
-                return String.Format("Browser={{{0}}}, Url={{{1}}}, PolicyUrl={{{2}}}, Info={{{3}}}", Browser, Url, PolicyUrl, Info);
             }
         }
 

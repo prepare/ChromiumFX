@@ -37,8 +37,9 @@ namespace Chromium.Remote {
     using Event;
 
     /// <summary>
-    /// Structure used to implement a custom resource bundle structure. The functions
-    /// of this structure may be called on multiple threads.
+    /// Structure used to implement a custom resource bundle structure. See
+    /// CfrSettings for additional options related to resource bundle loading. The
+    /// functions of this structure may be called on multiple threads.
     /// </summary>
     /// <remarks>
     /// See also the original CEF documentation in
@@ -80,6 +81,13 @@ namespace Chromium.Remote {
             e.m_isInvalid = true;
         }
 
+        internal void raise_GetDataResourceForScale(object sender, CfrGetDataResourceForScaleEventArgs e) {
+            var handler = m_GetDataResourceForScale;
+            if(handler == null) return;
+            handler(this, e);
+            e.m_isInvalid = true;
+        }
+
 
         private CfrResourceBundleHandler(IntPtr proxyId) : base(proxyId) {}
         public CfrResourceBundleHandler() : base(CreateRemote()) {
@@ -87,10 +95,10 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Called to retrieve a localized translation for the string specified by
-        /// |MessageId|. To provide the translation set |String| to the translation
-        /// string and return true (1). To use the default translation return false
-        /// (0). Supported message IDs are listed in cef_pack_strings.h.
+        /// Called to retrieve a localized translation for the specified |StringId|.
+        /// To provide the translation set |String| to the translation string and
+        /// return true (1). To use the default translation return false (0). Include
+        /// cef_pack_strings.h for a listing of valid string ID values.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -119,12 +127,12 @@ namespace Chromium.Remote {
 
 
         /// <summary>
-        /// Called to retrieve data for the resource specified by |ResourceId|. To
-        /// provide the resource data set |Data| and |DataSize| to the data pointer
+        /// Called to retrieve data for the specified scale independent |ResourceId|.
+        /// To provide the resource data set |Data| and |DataSize| to the data pointer
         /// and size respectively and return true (1). To use the default resource data
         /// return false (0). The resource data will not be copied and must remain
-        /// resident in memory. Supported resource IDs are listed in
-        /// cef_pack_resources.h.
+        /// resident in memory. Include cef_pack_resources.h for a listing of valid
+        /// resource ID values.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -152,6 +160,40 @@ namespace Chromium.Remote {
         CfrGetDataResourceEventHandler m_GetDataResource;
 
 
+        /// <summary>
+        /// Called to retrieve data for the specified |ResourceId| nearest the scale
+        /// factor |ScaleFactor|. To provide the resource data set |Data| and
+        /// |DataSize| to the data pointer and size respectively and return true (1).
+        /// To use the default resource data return false (0). The resource data will
+        /// not be copied and must remain resident in memory. Include
+        /// cef_pack_resources.h for a listing of valid resource ID values.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+        /// </remarks>
+        public event CfrGetDataResourceForScaleEventHandler GetDataResourceForScale {
+            add {
+                if(m_GetDataResourceForScale == null) {
+                    var call = new CfxGetDataResourceForScaleActivateRenderProcessCall();
+                    call.sender = proxyId;
+                    call.RequestExecution(this);
+                }
+                m_GetDataResourceForScale += value;
+            }
+            remove {
+                m_GetDataResourceForScale -= value;
+                if(m_GetDataResourceForScale == null) {
+                    var call = new CfxGetDataResourceForScaleDeactivateRenderProcessCall();
+                    call.sender = proxyId;
+                    call.RequestExecution(this);
+                }
+            }
+        }
+
+        CfrGetDataResourceForScaleEventHandler m_GetDataResourceForScale;
+
+
         internal override void OnDispose(IntPtr proxyId) {
             connection.weakCache.Remove(proxyId);
         }
@@ -160,10 +202,10 @@ namespace Chromium.Remote {
     namespace Event {
 
         /// <summary>
-        /// Called to retrieve a localized translation for the string specified by
-        /// |MessageId|. To provide the translation set |String| to the translation
-        /// string and return true (1). To use the default translation return false
-        /// (0). Supported message IDs are listed in cef_pack_strings.h.
+        /// Called to retrieve a localized translation for the specified |StringId|.
+        /// To provide the translation set |String| to the translation string and
+        /// return true (1). To use the default translation return false (0). Include
+        /// cef_pack_strings.h for a listing of valid string ID values.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -172,10 +214,10 @@ namespace Chromium.Remote {
         public delegate void CfrGetLocalizedStringEventHandler(object sender, CfrGetLocalizedStringEventArgs e);
 
         /// <summary>
-        /// Called to retrieve a localized translation for the string specified by
-        /// |MessageId|. To provide the translation set |String| to the translation
-        /// string and return true (1). To use the default translation return false
-        /// (0). Supported message IDs are listed in cef_pack_strings.h.
+        /// Called to retrieve a localized translation for the specified |StringId|.
+        /// To provide the translation set |String| to the translation string and
+        /// return true (1). To use the default translation return false (0). Include
+        /// cef_pack_strings.h for a listing of valid string ID values.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -183,8 +225,8 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrGetLocalizedStringEventArgs : CfrEventArgs {
 
-            bool MessageIdFetched;
-            int m_MessageId;
+            bool StringIdFetched;
+            int m_StringId;
             bool StringFetched;
             string m_String;
 
@@ -193,19 +235,19 @@ namespace Chromium.Remote {
             internal CfrGetLocalizedStringEventArgs(ulong eventArgsId) : base(eventArgsId) {}
 
             /// <summary>
-            /// Get the MessageId parameter for the <see cref="CfrResourceBundleHandler.GetLocalizedString"/> render process callback.
+            /// Get the StringId parameter for the <see cref="CfrResourceBundleHandler.GetLocalizedString"/> render process callback.
             /// </summary>
-            public int MessageId {
+            public int StringId {
                 get {
                     CheckAccess();
-                    if(!MessageIdFetched) {
-                        MessageIdFetched = true;
-                        var call = new CfxGetLocalizedStringGetMessageIdRenderProcessCall();
+                    if(!StringIdFetched) {
+                        StringIdFetched = true;
+                        var call = new CfxGetLocalizedStringGetStringIdRenderProcessCall();
                         call.eventArgsId = eventArgsId;
                         call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-                        m_MessageId = call.value;
+                        m_StringId = call.value;
                     }
-                    return m_MessageId;
+                    return m_StringId;
                 }
             }
             /// <summary>
@@ -249,17 +291,17 @@ namespace Chromium.Remote {
             }
 
             public override string ToString() {
-                return String.Format("MessageId={{{0}}}, String={{{1}}}", MessageId, String);
+                return String.Format("StringId={{{0}}}, String={{{1}}}", StringId, String);
             }
         }
 
         /// <summary>
-        /// Called to retrieve data for the resource specified by |ResourceId|. To
-        /// provide the resource data set |Data| and |DataSize| to the data pointer
+        /// Called to retrieve data for the specified scale independent |ResourceId|.
+        /// To provide the resource data set |Data| and |DataSize| to the data pointer
         /// and size respectively and return true (1). To use the default resource data
         /// return false (0). The resource data will not be copied and must remain
-        /// resident in memory. Supported resource IDs are listed in
-        /// cef_pack_resources.h.
+        /// resident in memory. Include cef_pack_resources.h for a listing of valid
+        /// resource ID values.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -268,12 +310,12 @@ namespace Chromium.Remote {
         public delegate void CfrGetDataResourceEventHandler(object sender, CfrGetDataResourceEventArgs e);
 
         /// <summary>
-        /// Called to retrieve data for the resource specified by |ResourceId|. To
-        /// provide the resource data set |Data| and |DataSize| to the data pointer
+        /// Called to retrieve data for the specified scale independent |ResourceId|.
+        /// To provide the resource data set |Data| and |DataSize| to the data pointer
         /// and size respectively and return true (1). To use the default resource data
         /// return false (0). The resource data will not be copied and must remain
-        /// resident in memory. Supported resource IDs are listed in
-        /// cef_pack_resources.h.
+        /// resident in memory. Include cef_pack_resources.h for a listing of valid
+        /// resource ID values.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -345,6 +387,119 @@ namespace Chromium.Remote {
 
             public override string ToString() {
                 return String.Format("ResourceId={{{0}}}", ResourceId);
+            }
+        }
+
+        /// <summary>
+        /// Called to retrieve data for the specified |ResourceId| nearest the scale
+        /// factor |ScaleFactor|. To provide the resource data set |Data| and
+        /// |DataSize| to the data pointer and size respectively and return true (1).
+        /// To use the default resource data return false (0). The resource data will
+        /// not be copied and must remain resident in memory. Include
+        /// cef_pack_resources.h for a listing of valid resource ID values.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfrGetDataResourceForScaleEventHandler(object sender, CfrGetDataResourceForScaleEventArgs e);
+
+        /// <summary>
+        /// Called to retrieve data for the specified |ResourceId| nearest the scale
+        /// factor |ScaleFactor|. To provide the resource data set |Data| and
+        /// |DataSize| to the data pointer and size respectively and return true (1).
+        /// To use the default resource data return false (0). The resource data will
+        /// not be copied and must remain resident in memory. Include
+        /// cef_pack_resources.h for a listing of valid resource ID values.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
+        /// </remarks>
+        public class CfrGetDataResourceForScaleEventArgs : CfrEventArgs {
+
+            bool ResourceIdFetched;
+            int m_ResourceId;
+            bool ScaleFactorFetched;
+            CfxScaleFactor m_ScaleFactor;
+
+            private bool returnValueSet;
+
+            internal CfrGetDataResourceForScaleEventArgs(ulong eventArgsId) : base(eventArgsId) {}
+
+            /// <summary>
+            /// Get the ResourceId parameter for the <see cref="CfrResourceBundleHandler.GetDataResourceForScale"/> render process callback.
+            /// </summary>
+            public int ResourceId {
+                get {
+                    CheckAccess();
+                    if(!ResourceIdFetched) {
+                        ResourceIdFetched = true;
+                        var call = new CfxGetDataResourceForScaleGetResourceIdRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                        m_ResourceId = call.value;
+                    }
+                    return m_ResourceId;
+                }
+            }
+            /// <summary>
+            /// Get the ScaleFactor parameter for the <see cref="CfrResourceBundleHandler.GetDataResourceForScale"/> render process callback.
+            /// </summary>
+            public CfxScaleFactor ScaleFactor {
+                get {
+                    CheckAccess();
+                    if(!ScaleFactorFetched) {
+                        ScaleFactorFetched = true;
+                        var call = new CfxGetDataResourceForScaleGetScaleFactorRenderProcessCall();
+                        call.eventArgsId = eventArgsId;
+                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                        m_ScaleFactor = (CfxScaleFactor)call.value;
+                    }
+                    return m_ScaleFactor;
+                }
+            }
+            /// <summary>
+            /// Set the Data out parameter for the <see cref="CfrResourceBundleHandler.GetDataResourceForScale"/> render process callback.
+            /// </summary>
+            public RemotePtr Data {
+                set {
+                    CheckAccess();
+                    var call = new CfxGetDataResourceForScaleSetDataRenderProcessCall();
+                    call.eventArgsId = eventArgsId;
+                    call.value = value.ptr;
+                    call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                }
+            }
+            /// <summary>
+            /// Set the DataSize out parameter for the <see cref="CfrResourceBundleHandler.GetDataResourceForScale"/> render process callback.
+            /// </summary>
+            public int DataSize {
+                set {
+                    CheckAccess();
+                    var call = new CfxGetDataResourceForScaleSetDataSizeRenderProcessCall();
+                    call.eventArgsId = eventArgsId;
+                    call.value = value;
+                    call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                }
+            }
+            /// <summary>
+            /// Set the return value for the <see cref="CfrResourceBundleHandler.GetDataResourceForScale"/> render process callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
+            /// </summary>
+            public void SetReturnValue(bool returnValue) {
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                var call = new CfxGetDataResourceForScaleSetReturnValueRenderProcessCall();
+                call.eventArgsId = eventArgsId;
+                call.value = returnValue;
+                call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                returnValueSet = true;
+            }
+
+            public override string ToString() {
+                return String.Format("ResourceId={{{0}}}, ScaleFactor={{{1}}}", ResourceId, ScaleFactor);
             }
         }
 

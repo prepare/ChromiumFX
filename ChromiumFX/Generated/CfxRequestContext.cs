@@ -222,6 +222,21 @@ namespace Chromium {
             return 0 != CfxApi.cfx_request_context_clear_scheme_handler_factories(NativePtr);
         }
 
+        /// <summary>
+        /// Tells all renderer processes associated with this context to throw away
+        /// their plugin list cache. If |reloadPages| is true (1) they will also
+        /// reload all pages with plugins.
+        /// CfxRequestContextHandler.OnBeforePluginLoad may be called to rebuild
+        /// the plugin list cache.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
+        public void PurgePluginListCache(bool reloadPages) {
+            CfxApi.cfx_request_context_purge_plugin_list_cache(NativePtr, reloadPages ? 1 : 0);
+        }
+
         internal override void OnDispose(IntPtr nativePtr) {
             weakCache.Remove(nativePtr);
             base.OnDispose(nativePtr);

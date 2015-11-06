@@ -186,17 +186,6 @@ int CEF_CALLBACK cfx_request_handler_on_certificate_error(cef_request_handler_t*
 }
 
 
-// on_before_plugin_load
-
-void (CEF_CALLBACK *cfx_request_handler_on_before_plugin_load_callback)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *url_str, int url_length, char16 *policy_url_str, int policy_url_length, cef_web_plugin_info_t* info);
-
-int CEF_CALLBACK cfx_request_handler_on_before_plugin_load(cef_request_handler_t* self, cef_browser_t* browser, const cef_string_t* url, const cef_string_t* policy_url, cef_web_plugin_info_t* info) {
-    int __retval;
-    cfx_request_handler_on_before_plugin_load_callback(((cfx_request_handler_t*)self)->gc_handle, &__retval, browser, url ? url->str : 0, url ? (int)url->length : 0, policy_url ? policy_url->str : 0, policy_url ? (int)policy_url->length : 0, info);
-    return __retval;
-}
-
-
 // on_plugin_crashed
 
 void (CEF_CALLBACK *cfx_request_handler_on_plugin_crashed_callback)(gc_handle_t self, cef_browser_t* browser, char16 *plugin_path_str, int plugin_path_length);
@@ -277,21 +266,16 @@ static void cfx_request_handler_set_managed_callback(cef_request_handler_t* self
         self->on_certificate_error = callback ? cfx_request_handler_on_certificate_error : 0;
         break;
     case 10:
-        if(callback && !cfx_request_handler_on_before_plugin_load_callback)
-            cfx_request_handler_on_before_plugin_load_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *url_str, int url_length, char16 *policy_url_str, int policy_url_length, cef_web_plugin_info_t* info)) callback;
-        self->on_before_plugin_load = callback ? cfx_request_handler_on_before_plugin_load : 0;
-        break;
-    case 11:
         if(callback && !cfx_request_handler_on_plugin_crashed_callback)
             cfx_request_handler_on_plugin_crashed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, char16 *plugin_path_str, int plugin_path_length)) callback;
         self->on_plugin_crashed = callback ? cfx_request_handler_on_plugin_crashed : 0;
         break;
-    case 12:
+    case 11:
         if(callback && !cfx_request_handler_on_render_view_ready_callback)
             cfx_request_handler_on_render_view_ready_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) callback;
         self->on_render_view_ready = callback ? cfx_request_handler_on_render_view_ready : 0;
         break;
-    case 13:
+    case 12:
         if(callback && !cfx_request_handler_on_render_process_terminated_callback)
             cfx_request_handler_on_render_process_terminated_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_termination_status_t status)) callback;
         self->on_render_process_terminated = callback ? cfx_request_handler_on_render_process_terminated : 0;

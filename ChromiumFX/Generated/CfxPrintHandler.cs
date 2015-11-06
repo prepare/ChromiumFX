@@ -59,6 +59,24 @@ namespace Chromium {
 
         private static object eventLock = new object();
 
+        // on_print_start
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_print_handler_on_print_start_delegate(IntPtr gcHandlePtr, IntPtr browser);
+        private static cfx_print_handler_on_print_start_delegate cfx_print_handler_on_print_start;
+        private static IntPtr cfx_print_handler_on_print_start_ptr;
+
+        internal static void on_print_start(IntPtr gcHandlePtr, IntPtr browser) {
+            var self = (CfxPrintHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null) {
+                return;
+            }
+            var e = new CfxOnPrintStartEventArgs(browser);
+            var eventHandler = self.m_OnPrintStart;
+            if(eventHandler != null) eventHandler(self, e);
+            e.m_isInvalid = true;
+            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
+        }
+
         // on_print_settings
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void cfx_print_handler_on_print_settings_delegate(IntPtr gcHandlePtr, IntPtr settings, int get_defaults);
@@ -157,6 +175,41 @@ namespace Chromium {
         public CfxPrintHandler() : base(CfxApi.cfx_print_handler_ctor) {}
 
         /// <summary>
+        /// Called when printing has started for the specified |Browser|. This function
+        /// will be called before the other OnPrint*() functions and irrespective of
+        /// how printing was initiated (e.g. CfxBrowserHost.Print(), JavaScript
+        /// window.print() or PDF extension print button).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
+        public event CfxOnPrintStartEventHandler OnPrintStart {
+            add {
+                lock(eventLock) {
+                    if(m_OnPrintStart == null) {
+                        if(cfx_print_handler_on_print_start == null) {
+                            cfx_print_handler_on_print_start = on_print_start;
+                            cfx_print_handler_on_print_start_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_print_handler_on_print_start);
+                        }
+                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 0, cfx_print_handler_on_print_start_ptr);
+                    }
+                    m_OnPrintStart += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_OnPrintStart -= value;
+                    if(m_OnPrintStart == null) {
+                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                    }
+                }
+            }
+        }
+
+        private CfxOnPrintStartEventHandler m_OnPrintStart;
+
+        /// <summary>
         /// Synchronize |Settings| with client state. If |GetDefaults| is true (1)
         /// then populate |Settings| with the default print settings. Do not keep a
         /// reference to |Settings| outside of this callback.
@@ -173,7 +226,7 @@ namespace Chromium {
                             cfx_print_handler_on_print_settings = on_print_settings;
                             cfx_print_handler_on_print_settings_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_print_handler_on_print_settings);
                         }
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 0, cfx_print_handler_on_print_settings_ptr);
+                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 1, cfx_print_handler_on_print_settings_ptr);
                     }
                     m_OnPrintSettings += value;
                 }
@@ -182,7 +235,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnPrintSettings -= value;
                     if(m_OnPrintSettings == null) {
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
                     }
                 }
             }
@@ -207,7 +260,7 @@ namespace Chromium {
                             cfx_print_handler_on_print_dialog = on_print_dialog;
                             cfx_print_handler_on_print_dialog_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_print_handler_on_print_dialog);
                         }
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 1, cfx_print_handler_on_print_dialog_ptr);
+                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 2, cfx_print_handler_on_print_dialog_ptr);
                     }
                     m_OnPrintDialog += value;
                 }
@@ -216,7 +269,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnPrintDialog -= value;
                     if(m_OnPrintDialog == null) {
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
                     }
                 }
             }
@@ -241,7 +294,7 @@ namespace Chromium {
                             cfx_print_handler_on_print_job = on_print_job;
                             cfx_print_handler_on_print_job_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_print_handler_on_print_job);
                         }
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 2, cfx_print_handler_on_print_job_ptr);
+                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 3, cfx_print_handler_on_print_job_ptr);
                     }
                     m_OnPrintJob += value;
                 }
@@ -250,7 +303,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnPrintJob -= value;
                     if(m_OnPrintJob == null) {
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
                     }
                 }
             }
@@ -273,7 +326,7 @@ namespace Chromium {
                             cfx_print_handler_on_print_reset = on_print_reset;
                             cfx_print_handler_on_print_reset_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_print_handler_on_print_reset);
                         }
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 3, cfx_print_handler_on_print_reset_ptr);
+                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 4, cfx_print_handler_on_print_reset_ptr);
                     }
                     m_OnPrintReset += value;
                 }
@@ -282,7 +335,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnPrintReset -= value;
                     if(m_OnPrintReset == null) {
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
                     }
                 }
             }
@@ -306,7 +359,7 @@ namespace Chromium {
                             cfx_print_handler_get_pdf_paper_size = get_pdf_paper_size;
                             cfx_print_handler_get_pdf_paper_size_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_print_handler_get_pdf_paper_size);
                         }
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 4, cfx_print_handler_get_pdf_paper_size_ptr);
+                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 5, cfx_print_handler_get_pdf_paper_size_ptr);
                     }
                     m_GetPdfPaperSize += value;
                 }
@@ -315,7 +368,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetPdfPaperSize -= value;
                     if(m_GetPdfPaperSize == null) {
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
+                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 5, IntPtr.Zero);
                     }
                 }
             }
@@ -324,25 +377,29 @@ namespace Chromium {
         private CfxGetPdfPaperSizeEventHandler m_GetPdfPaperSize;
 
         internal override void OnDispose(IntPtr nativePtr) {
+            if(m_OnPrintStart != null) {
+                m_OnPrintStart = null;
+                CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+            }
             if(m_OnPrintSettings != null) {
                 m_OnPrintSettings = null;
-                CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
             if(m_OnPrintDialog != null) {
                 m_OnPrintDialog = null;
-                CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
             }
             if(m_OnPrintJob != null) {
                 m_OnPrintJob = null;
-                CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
             }
             if(m_OnPrintReset != null) {
                 m_OnPrintReset = null;
-                CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
             }
             if(m_GetPdfPaperSize != null) {
                 m_GetPdfPaperSize = null;
-                CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
+                CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 5, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -350,6 +407,53 @@ namespace Chromium {
 
 
     namespace Event {
+
+        /// <summary>
+        /// Called when printing has started for the specified |Browser|. This function
+        /// will be called before the other OnPrint*() functions and irrespective of
+        /// how printing was initiated (e.g. CfxBrowserHost.Print(), JavaScript
+        /// window.print() or PDF extension print button).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxOnPrintStartEventHandler(object sender, CfxOnPrintStartEventArgs e);
+
+        /// <summary>
+        /// Called when printing has started for the specified |Browser|. This function
+        /// will be called before the other OnPrint*() functions and irrespective of
+        /// how printing was initiated (e.g. CfxBrowserHost.Print(), JavaScript
+        /// window.print() or PDF extension print button).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxOnPrintStartEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+
+            internal CfxOnPrintStartEventArgs(IntPtr browser) {
+                m_browser = browser;
+            }
+
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxPrintHandler.OnPrintStart"/> callback.
+            /// </summary>
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}", Browser);
+            }
+        }
 
         /// <summary>
         /// Synchronize |Settings| with client state. If |GetDefaults| is true (1)

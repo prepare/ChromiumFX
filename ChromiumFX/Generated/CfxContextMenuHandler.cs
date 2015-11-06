@@ -80,6 +80,30 @@ namespace Chromium {
             if(e.m_model_wrapped == null) CfxApi.cfx_release(e.m_model);
         }
 
+        // run_context_menu
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_context_menu_handler_run_context_menu_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr parameters, IntPtr model, IntPtr callback);
+        private static cfx_context_menu_handler_run_context_menu_delegate cfx_context_menu_handler_run_context_menu;
+        private static IntPtr cfx_context_menu_handler_run_context_menu_ptr;
+
+        internal static void run_context_menu(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr parameters, IntPtr model, IntPtr callback) {
+            var self = (CfxContextMenuHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null) {
+                __retval = default(int);
+                return;
+            }
+            var e = new CfxRunContextMenuEventArgs(browser, frame, parameters, model, callback);
+            var eventHandler = self.m_RunContextMenu;
+            if(eventHandler != null) eventHandler(self, e);
+            e.m_isInvalid = true;
+            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
+            if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
+            if(e.m_params_wrapped == null) CfxApi.cfx_release(e.m_params);
+            if(e.m_model_wrapped == null) CfxApi.cfx_release(e.m_model);
+            if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
+            __retval = e.m_returnValue ? 1 : 0;
+        }
+
         // on_context_menu_command
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void cfx_context_menu_handler_on_context_menu_command_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr parameters, int command_id, CfxEventFlags event_flags);
@@ -161,6 +185,43 @@ namespace Chromium {
         private CfxOnBeforeContextMenuEventHandler m_OnBeforeContextMenu;
 
         /// <summary>
+        /// Called to allow custom display of the context menu. |Params| provides
+        /// information about the context menu state. |Model| contains the context menu
+        /// model resulting from OnBeforeContextMenu. For custom display return true
+        /// (1) and execute |Callback| either synchronously or asynchronously with the
+        /// selected command ID. For default display return false (0). Do not keep
+        /// references to |Params| or |Model| outside of this callback.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
+        public event CfxRunContextMenuEventHandler RunContextMenu {
+            add {
+                lock(eventLock) {
+                    if(m_RunContextMenu == null) {
+                        if(cfx_context_menu_handler_run_context_menu == null) {
+                            cfx_context_menu_handler_run_context_menu = run_context_menu;
+                            cfx_context_menu_handler_run_context_menu_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_context_menu_handler_run_context_menu);
+                        }
+                        CfxApi.cfx_context_menu_handler_set_managed_callback(NativePtr, 1, cfx_context_menu_handler_run_context_menu_ptr);
+                    }
+                    m_RunContextMenu += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_RunContextMenu -= value;
+                    if(m_RunContextMenu == null) {
+                        CfxApi.cfx_context_menu_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                    }
+                }
+            }
+        }
+
+        private CfxRunContextMenuEventHandler m_RunContextMenu;
+
+        /// <summary>
         /// Called to execute a command selected from the context menu. Return true (1)
         /// if the command was handled or false (0) for the default implementation. See
         /// CfxMenuId for the command ids that have default implementations. All
@@ -181,7 +242,7 @@ namespace Chromium {
                             cfx_context_menu_handler_on_context_menu_command = on_context_menu_command;
                             cfx_context_menu_handler_on_context_menu_command_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_context_menu_handler_on_context_menu_command);
                         }
-                        CfxApi.cfx_context_menu_handler_set_managed_callback(NativePtr, 1, cfx_context_menu_handler_on_context_menu_command_ptr);
+                        CfxApi.cfx_context_menu_handler_set_managed_callback(NativePtr, 2, cfx_context_menu_handler_on_context_menu_command_ptr);
                     }
                     m_OnContextMenuCommand += value;
                 }
@@ -190,7 +251,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnContextMenuCommand -= value;
                     if(m_OnContextMenuCommand == null) {
-                        CfxApi.cfx_context_menu_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.cfx_context_menu_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
                     }
                 }
             }
@@ -214,7 +275,7 @@ namespace Chromium {
                             cfx_context_menu_handler_on_context_menu_dismissed = on_context_menu_dismissed;
                             cfx_context_menu_handler_on_context_menu_dismissed_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_context_menu_handler_on_context_menu_dismissed);
                         }
-                        CfxApi.cfx_context_menu_handler_set_managed_callback(NativePtr, 2, cfx_context_menu_handler_on_context_menu_dismissed_ptr);
+                        CfxApi.cfx_context_menu_handler_set_managed_callback(NativePtr, 3, cfx_context_menu_handler_on_context_menu_dismissed_ptr);
                     }
                     m_OnContextMenuDismissed += value;
                 }
@@ -223,7 +284,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnContextMenuDismissed -= value;
                     if(m_OnContextMenuDismissed == null) {
-                        CfxApi.cfx_context_menu_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                        CfxApi.cfx_context_menu_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
                     }
                 }
             }
@@ -236,13 +297,17 @@ namespace Chromium {
                 m_OnBeforeContextMenu = null;
                 CfxApi.cfx_context_menu_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
+            if(m_RunContextMenu != null) {
+                m_RunContextMenu = null;
+                CfxApi.cfx_context_menu_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+            }
             if(m_OnContextMenuCommand != null) {
                 m_OnContextMenuCommand = null;
-                CfxApi.cfx_context_menu_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.cfx_context_menu_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
             }
             if(m_OnContextMenuDismissed != null) {
                 m_OnContextMenuDismissed = null;
-                CfxApi.cfx_context_menu_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                CfxApi.cfx_context_menu_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -336,6 +401,124 @@ namespace Chromium {
 
             public override string ToString() {
                 return String.Format("Browser={{{0}}}, Frame={{{1}}}, Params={{{2}}}, Model={{{3}}}", Browser, Frame, Params, Model);
+            }
+        }
+
+        /// <summary>
+        /// Called to allow custom display of the context menu. |Params| provides
+        /// information about the context menu state. |Model| contains the context menu
+        /// model resulting from OnBeforeContextMenu. For custom display return true
+        /// (1) and execute |Callback| either synchronously or asynchronously with the
+        /// selected command ID. For default display return false (0). Do not keep
+        /// references to |Params| or |Model| outside of this callback.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxRunContextMenuEventHandler(object sender, CfxRunContextMenuEventArgs e);
+
+        /// <summary>
+        /// Called to allow custom display of the context menu. |Params| provides
+        /// information about the context menu state. |Model| contains the context menu
+        /// model resulting from OnBeforeContextMenu. For custom display return true
+        /// (1) and execute |Callback| either synchronously or asynchronously with the
+        /// selected command ID. For default display return false (0). Do not keep
+        /// references to |Params| or |Model| outside of this callback.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxRunContextMenuEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_frame;
+            internal CfxFrame m_frame_wrapped;
+            internal IntPtr m_params;
+            internal CfxContextMenuParams m_params_wrapped;
+            internal IntPtr m_model;
+            internal CfxMenuModel m_model_wrapped;
+            internal IntPtr m_callback;
+            internal CfxRunContextMenuCallback m_callback_wrapped;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxRunContextMenuEventArgs(IntPtr browser, IntPtr frame, IntPtr parameters, IntPtr model, IntPtr callback) {
+                m_browser = browser;
+                m_frame = frame;
+                m_params = parameters;
+                m_model = model;
+                m_callback = callback;
+            }
+
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxContextMenuHandler.RunContextMenu"/> callback.
+            /// </summary>
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxContextMenuHandler.RunContextMenu"/> callback.
+            /// </summary>
+            public CfxFrame Frame {
+                get {
+                    CheckAccess();
+                    if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
+                    return m_frame_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the Params parameter for the <see cref="CfxContextMenuHandler.RunContextMenu"/> callback.
+            /// </summary>
+            public CfxContextMenuParams Params {
+                get {
+                    CheckAccess();
+                    if(m_params_wrapped == null) m_params_wrapped = CfxContextMenuParams.Wrap(m_params);
+                    return m_params_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the Model parameter for the <see cref="CfxContextMenuHandler.RunContextMenu"/> callback.
+            /// </summary>
+            public CfxMenuModel Model {
+                get {
+                    CheckAccess();
+                    if(m_model_wrapped == null) m_model_wrapped = CfxMenuModel.Wrap(m_model);
+                    return m_model_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the Callback parameter for the <see cref="CfxContextMenuHandler.RunContextMenu"/> callback.
+            /// </summary>
+            public CfxRunContextMenuCallback Callback {
+                get {
+                    CheckAccess();
+                    if(m_callback_wrapped == null) m_callback_wrapped = CfxRunContextMenuCallback.Wrap(m_callback);
+                    return m_callback_wrapped;
+                }
+            }
+            /// <summary>
+            /// Set the return value for the <see cref="CfxContextMenuHandler.RunContextMenu"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
+            /// </summary>
+            public void SetReturnValue(bool returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, Params={{{2}}}, Model={{{3}}}, Callback={{{4}}}", Browser, Frame, Params, Model, Callback);
             }
         }
 
