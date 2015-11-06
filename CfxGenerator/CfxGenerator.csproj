@@ -52,7 +52,7 @@
     <Compile Include="ApiTypes\CefBaseType.cs" />
     <Compile Include="ApiTypes\CefCallbackType.cs" />
     <Compile Include="ApiTypes\CefColorType.cs" />
-    <Compile Include="ApiTypes\CefEnumOutType.cs" />
+    <Compile Include="ApiTypes\CefEnumPtrType.cs" />
     <Compile Include="ApiTypes\CefEnumType.cs" />
     <Compile Include="ApiTypes\CefPlatformBasePtrType.cs" />
     <Compile Include="ApiTypes\CefPlatformStructType.cs" />
