@@ -936,15 +936,15 @@ namespace Chromium {
     /// </remarks>
     public enum CfxScaleFactor {
         None = unchecked((int)0),
-        100p,
-        125p,
-        133p,
-        140p,
-        150p,
-        180p,
-        200p,
-        250p,
-        300p
+        ScaleFactor100p,
+        ScaleFactor125p,
+        ScaleFactor133p,
+        ScaleFactor140p,
+        ScaleFactor150p,
+        ScaleFactor180p,
+        ScaleFactor200p,
+        ScaleFactor250p,
+        ScaleFactor300p
     }
     /// <summary>
     /// Represents the state of a setting.
