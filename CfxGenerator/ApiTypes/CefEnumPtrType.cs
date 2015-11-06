@@ -29,10 +29,10 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-public class CefEnumOutType : CefType {
+public class CefEnumPtrType : CefType {
     private CefEnumType cefEnum;
 
-    public CefEnumOutType(CefEnumType cefEnum)
+    public CefEnumPtrType(CefEnumType cefEnum)
         : base(cefEnum.Name + "*") {
         this.cefEnum = cefEnum;
     }
@@ -49,11 +49,38 @@ public class CefEnumOutType : CefType {
         return "out " + cefEnum.PInvokeCallParameter(var);
     }
 
+    public override string PInvokeCallbackParameter(string var) {
+        return "ref " + cefEnum.PInvokeCallParameter(var);
+    }
+
     public override string PublicCallParameter(string var) {
         return "out " + cefEnum.PublicCallParameter(var);
     }
 
-    public override string PublicUnwrapExpression(string var) {
+    public override string PublicCallArgument(string var) {
         return "out " + var;
     }
+
+    public override void EmitPublicEventArgFields(CodeBuilder b, string var) {
+        b.AppendLine("internal {0} m_{1};", PublicSymbol, var);
+    }
+
+    public override string PublicEventConstructorParameter(string var) {
+        return PublicSymbol + " " + var;
+    }
+
+    public override void EmitPostPublicRaiseEventStatements(CodeBuilder b, string var) {
+        b.AppendLine("{0} = e.m_{0};", var);
+    }
+
+    //public override void EmitPublicEventArgSetterStatements(CodeBuilder b, string var) {
+    //    b.AppendLine("m_{0} = value;", var);
+    //}
+
+    public override bool IsOut {
+        get {
+            return true;
+        }
+    }
+
 }
