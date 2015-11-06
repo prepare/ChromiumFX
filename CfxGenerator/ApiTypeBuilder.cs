@@ -236,7 +236,7 @@ public class ApiTypeBuilder {
 
         if(t.IsCefEnumType) {
             if(td.Indirection == "*") {
-                t = new CefEnumOutType(t.AsCefEnumType);
+                t = new CefEnumPtrType(t.AsCefEnumType);
             } else {
                 System.Diagnostics.Debugger.Break();
             }

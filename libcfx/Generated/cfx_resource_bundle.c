@@ -28,32 +28,28 @@
 // TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE 
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+// Generated file. Do not edit.
 
-public class CefEnumOutType : CefType {
-    private CefEnumType cefEnum;
 
-    public CefEnumOutType(CefEnumType cefEnum)
-        : base(cefEnum.Name + "*") {
-        this.cefEnum = cefEnum;
-    }
+// cef_resource_bundle
 
-    public override string OriginalSymbol {
-        get { return cefEnum.OriginalSymbol + "*"; }
-    }
-
-    public override string PublicSymbol {
-        get { return cefEnum.PublicSymbol; }
-    }
-
-    public override string PInvokeCallParameter(string var) {
-        return "out " + cefEnum.PInvokeCallParameter(var);
-    }
-
-    public override string PublicCallParameter(string var) {
-        return "out " + cefEnum.PublicCallParameter(var);
-    }
-
-    public override string PublicUnwrapExpression(string var) {
-        return "out " + var;
-    }
+// CEF_EXPORT cef_resource_bundle_t* cef_resource_bundle_get_global();
+static cef_resource_bundle_t* cfx_resource_bundle_get_global() {
+    return cef_resource_bundle_get_global();
 }
+// get_localized_string
+static cef_string_userfree_t cfx_resource_bundle_get_localized_string(cef_resource_bundle_t* self, int string_id) {
+    return self->get_localized_string(self, string_id);
+}
+
+// get_data_resource
+static int cfx_resource_bundle_get_data_resource(cef_resource_bundle_t* self, int resource_id, void** data, size_t* data_size) {
+    return self->get_data_resource(self, resource_id, data, data_size);
+}
+
+// get_data_resource_for_scale
+static int cfx_resource_bundle_get_data_resource_for_scale(cef_resource_bundle_t* self, int resource_id, cef_scale_factor_t scale_factor, void** data, size_t* data_size) {
+    return self->get_data_resource_for_scale(self, resource_id, scale_factor, data, data_size);
+}
+
+

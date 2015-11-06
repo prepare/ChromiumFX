@@ -238,13 +238,30 @@ public class Signature {
         }
     }
 
-    public virtual string PublicFunctionHeader(string functionName) {
-        foreach(var arg in ManagedArguments) {
-            if(arg.PublicCallParameter != null) {
-                args.Add(arg.PublicCallParameter);
+    public string PublicParameterList {
+        get {
+            Debug.Assert(Type == SignatureType.LibraryCall);
+            foreach(var arg in ManagedArguments) {
+                if(arg.PublicCallParameter != null) {
+                    args.Add(arg.PublicCallParameter);
+                }
             }
+            return args.Join();
         }
-        return string.Format("{0} {1}({2})", PublicReturnType.PublicSymbol, functionName, args.Join());
+    }
+
+    public string PublicArgumentList {
+        get {
+            Debug.Assert(Type == SignatureType.LibraryCall);
+            foreach(var arg in ManagedArguments) {
+                args.Add(arg.PublicCallArgument);
+            }
+            return args.Join();
+        }
+    }
+
+    public virtual string PublicFunctionHeader(string functionName) {
+        return string.Format("{0} {1}({2})", PublicReturnType.PublicSymbol, functionName, PublicParameterList);
     }
 
     public string RemoteParameterList {
@@ -259,12 +276,8 @@ public class Signature {
     }
 
     public virtual void EmitPublicCall(CodeBuilder b) {
-        foreach(var arg in ManagedArguments) {
-            args.Add(arg.PublicUnwrapExpression);
-        }
-        var callArgs = args.Join();
 
-        var apiCall = string.Format("CfxApi.{0}({1})", Owner.CfxApiFunctionName, callArgs);
+        var apiCall = string.Format("CfxApi.{0}({1})", Owner.CfxApiFunctionName, PublicArgumentList);
 
         for(var i = 0; i <= ManagedArguments.Length - 1; i++) {
             ManagedArguments[i].EmitPrePublicCallStatements(b);
@@ -503,9 +516,15 @@ public class Signature {
             return;
         if(Owner.CefName == "cef_resource_bundle_handler::get_data_resource")
             return;
+        if(Owner.CefName == "cef_resource_bundle_handler::get_data_resource_for_scale")
+            return;
         if(Owner.CefName == "cef_urlrequest_client::on_download_data")
             return;
         if(Owner.CefName == "cef_zip_reader::read_file")
+            return;
+        if(Owner.CefName == "cef_resource_bundle::get_data_resource")
+            return;
+        if(Owner.CefName == "cef_resource_bundle::get_data_resource_for_scale")
             return;
 
         for(var i = 0; i <= Arguments.Length - 1; i++) {

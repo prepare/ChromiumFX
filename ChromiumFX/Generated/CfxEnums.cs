@@ -640,6 +640,12 @@ namespace Chromium {
         NoSpellingSuggestions = unchecked((int)205),
         AddToDictionary = unchecked((int)206),
         /// <summary>
+        /// Custom menu items originating from the renderer process. For example,
+        /// plugin placeholder menu items or Flash menu items.
+        /// </summary>
+        CustomFirst = unchecked((int)220),
+        CustomLast = unchecked((int)250),
+        /// <summary>
         /// All user-defined menu IDs should come between MENU_ID_USER_FIRST and
         /// MENU_ID_USER_LAST to avoid overlapping the Chromium and CEF ID ranges
         /// defined in the tools/gritsettings/resource_ids file.
@@ -770,6 +776,32 @@ namespace Chromium {
         Custom
     }
     /// <summary>
+    /// Plugin policies supported by CfxRequestContextHandler.OnBeforePluginLoad.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxPluginPolicy {
+        /// <summary>
+        /// Allow the content.
+        /// </summary>
+        Allow,
+        /// <summary>
+        /// Allow important content and block unimportant content based on heuristics.
+        /// The user can manually load blocked content.
+        /// </summary>
+        DetectImportant,
+        /// <summary>
+        /// Block the content. The user can manually load blocked content.
+        /// </summary>
+        Block,
+        /// <summary>
+        /// Disable the content. The user cannot load disabled content.
+        /// </summary>
+        Disable
+    }
+    /// <summary>
     /// Post data elements may represent either bytes or files.
     /// </summary>
     /// <remarks>
@@ -892,6 +924,27 @@ namespace Chromium {
         /// Continue asynchronously (usually via a callback).
         /// </summary>
         ContinueAsync
+    }
+    /// <summary>
+    /// Supported UI scale factors for the platform. SCALE_FACTOR_NONE is used for
+    /// density independent resources such as string, html/js files or an image that
+    /// can be used for any scale factors (such as wallpapers).
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxScaleFactor {
+        None = unchecked((int)0),
+        ScaleFactor100p,
+        ScaleFactor125p,
+        ScaleFactor133p,
+        ScaleFactor140p,
+        ScaleFactor150p,
+        ScaleFactor180p,
+        ScaleFactor200p,
+        ScaleFactor250p,
+        ScaleFactor300p
     }
     /// <summary>
     /// Represents the state of a setting.

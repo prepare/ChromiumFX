@@ -44,7 +44,7 @@ public class CustomSignatures {
 
         if(owner.CefConfig.CountFunction != null && sd.Arguments.Count == 3 && sd.ReturnType.Name == "void") {
 
-            Debug.Print(owner.CefName);
+            //Debug.Print(owner.CefName);
         }
 
         switch(owner.CefName) {

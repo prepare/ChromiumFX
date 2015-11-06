@@ -1299,6 +1299,16 @@ namespace Chromium {
         public delegate CfxContextMenuEditStateFlags cfx_context_menu_params_get_edit_state_flags_delegate(IntPtr self);
         public static cfx_context_menu_params_get_edit_state_flags_delegate cfx_context_menu_params_get_edit_state_flags;
 
+        // static int cfx_context_menu_params_is_custom_menu(cef_context_menu_params_t* self)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate int cfx_context_menu_params_is_custom_menu_delegate(IntPtr self);
+        public static cfx_context_menu_params_is_custom_menu_delegate cfx_context_menu_params_is_custom_menu;
+
+        // static int cfx_context_menu_params_is_pepper_menu(cef_context_menu_params_t* self)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate int cfx_context_menu_params_is_pepper_menu_delegate(IntPtr self);
+        public static cfx_context_menu_params_is_pepper_menu_delegate cfx_context_menu_params_is_pepper_menu;
+
 
         // CfxCookie
 
@@ -3892,6 +3902,11 @@ namespace Chromium {
         public delegate int cfx_request_context_clear_scheme_handler_factories_delegate(IntPtr self);
         public static cfx_request_context_clear_scheme_handler_factories_delegate cfx_request_context_clear_scheme_handler_factories;
 
+        // static void cfx_request_context_purge_plugin_list_cache(cef_request_context_t* self, int reload_pages)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_request_context_purge_plugin_list_cache_delegate(IntPtr self, int reload_pages);
+        public static cfx_request_context_purge_plugin_list_cache_delegate cfx_request_context_purge_plugin_list_cache;
+
 
         // CfxRequestContextHandler
 
@@ -3949,6 +3964,29 @@ namespace Chromium {
         public static cfx_ctor_with_gc_handle_delegate cfx_request_handler_ctor;
         public static cfx_get_gc_handle_delegate cfx_request_handler_get_gc_handle;
         public static cfx_set_callback_delegate cfx_request_handler_set_managed_callback;
+
+
+        // CfxResourceBundle
+
+        // CEF_EXPORT cef_resource_bundle_t* cef_resource_bundle_get_global();
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate IntPtr cfx_resource_bundle_get_global_delegate();
+        public static cfx_resource_bundle_get_global_delegate cfx_resource_bundle_get_global;
+
+        // static cef_string_userfree_t cfx_resource_bundle_get_localized_string(cef_resource_bundle_t* self, int string_id)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate IntPtr cfx_resource_bundle_get_localized_string_delegate(IntPtr self, int string_id);
+        public static cfx_resource_bundle_get_localized_string_delegate cfx_resource_bundle_get_localized_string;
+
+        // static int cfx_resource_bundle_get_data_resource(cef_resource_bundle_t* self, int resource_id, void** data, size_t* data_size)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate int cfx_resource_bundle_get_data_resource_delegate(IntPtr self, int resource_id, out IntPtr data, out int data_size);
+        public static cfx_resource_bundle_get_data_resource_delegate cfx_resource_bundle_get_data_resource;
+
+        // static int cfx_resource_bundle_get_data_resource_for_scale(cef_resource_bundle_t* self, int resource_id, cef_scale_factor_t scale_factor, void** data, size_t* data_size)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate int cfx_resource_bundle_get_data_resource_for_scale_delegate(IntPtr self, int resource_id, CfxScaleFactor scale_factor, out IntPtr data, out int data_size);
+        public static cfx_resource_bundle_get_data_resource_for_scale_delegate cfx_resource_bundle_get_data_resource_for_scale;
 
 
         // CfxResourceBundleHandler
@@ -4021,6 +4059,19 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_response_set_header_map_delegate(IntPtr self, IntPtr headerMap);
         public static cfx_response_set_header_map_delegate cfx_response_set_header_map;
+
+
+        // CfxRunContextMenuCallback
+
+        // static void cfx_run_context_menu_callback_cont(cef_run_context_menu_callback_t* self, int command_id, cef_event_flags_t event_flags)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_run_context_menu_callback_cont_delegate(IntPtr self, int command_id, CfxEventFlags event_flags);
+        public static cfx_run_context_menu_callback_cont_delegate cfx_run_context_menu_callback_cont;
+
+        // static void cfx_run_context_menu_callback_cancel(cef_run_context_menu_callback_t* self)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_run_context_menu_callback_cancel_delegate(IntPtr self);
+        public static cfx_run_context_menu_callback_cancel_delegate cfx_run_context_menu_callback_cancel;
 
 
         // CfxRunFileDialogCallback
