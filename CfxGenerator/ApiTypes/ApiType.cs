@@ -149,6 +149,10 @@ public class ApiType {
         return string.Format("{0} {1}", PublicSymbol, CSharp.Escape(var));
     }
 
+    public virtual string PublicCallArgument(string var) {
+        return PublicUnwrapExpression(var);
+    }
+
     public virtual string ProxyCallSignature(string var) {
         if(ProxySymbol == null)
             return null;

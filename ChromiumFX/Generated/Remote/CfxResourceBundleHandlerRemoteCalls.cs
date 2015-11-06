@@ -100,10 +100,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetLocalizedStringGetMessageIdRenderProcessCall : RenderProcessCall {
+    internal class CfxGetLocalizedStringGetStringIdRenderProcessCall : RenderProcessCall {
 
-        internal CfxGetLocalizedStringGetMessageIdRenderProcessCall()
-            : base(RemoteCallId.CfxGetLocalizedStringGetMessageIdRenderProcessCall) {}
+        internal CfxGetLocalizedStringGetStringIdRenderProcessCall()
+            : base(RemoteCallId.CfxGetLocalizedStringGetStringIdRenderProcessCall) {}
 
         internal ulong eventArgsId;
         internal int value;
@@ -123,7 +123,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var e = (CfxGetLocalizedStringEventArgs)BrowserProcessCall.GetEventArgs(eventArgsId);
-            value = e.MessageId;
+            value = e.StringId;
         }
     }
 
@@ -341,6 +341,178 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var e = (CfxGetDataResourceEventArgs)BrowserProcessCall.GetEventArgs(eventArgsId);
+            e.SetReturnValue(value);
+        }
+    }
+
+    internal class CfxGetDataResourceForScaleBrowserProcessCall : BrowserProcessCall {
+
+        internal CfxGetDataResourceForScaleBrowserProcessCall()
+            : base(RemoteCallId.CfxGetDataResourceForScaleBrowserProcessCall) {}
+
+        internal static void EventCall(object sender, CfxGetDataResourceForScaleEventArgs e) {
+            var call = new CfxGetDataResourceForScaleBrowserProcessCall();
+            call.sender = RemoteProxy.Wrap((CfxBase)sender);
+            call.eventArgsId = AddEventArgs(e);
+            call.RequestExecution(RemoteClient.connection);
+            RemoveEventArgs(call.eventArgsId);
+        }
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var sender = CfrResourceBundleHandler.Wrap(this.sender);
+            var e = new CfrGetDataResourceForScaleEventArgs(eventArgsId);
+            sender.raise_GetDataResourceForScale(sender, e);
+        }
+    }
+
+    internal class CfxGetDataResourceForScaleActivateRenderProcessCall : RenderProcessCall {
+
+        internal CfxGetDataResourceForScaleActivateRenderProcessCall()
+            : base(RemoteCallId.CfxGetDataResourceForScaleActivateRenderProcessCall) {}
+
+        internal IntPtr sender;
+        protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
+        protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var sender = (CfxResourceBundleHandler)RemoteProxy.Unwrap(this.sender);
+            sender.GetDataResourceForScale += CfxGetDataResourceForScaleBrowserProcessCall.EventCall;
+        }
+    }
+
+    internal class CfxGetDataResourceForScaleDeactivateRenderProcessCall : RenderProcessCall {
+
+        internal CfxGetDataResourceForScaleDeactivateRenderProcessCall()
+            : base(RemoteCallId.CfxGetDataResourceForScaleDeactivateRenderProcessCall) {}
+
+        internal IntPtr sender;
+        protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
+        protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var sender = (CfxResourceBundleHandler)RemoteProxy.Unwrap(this.sender);
+            sender.GetDataResourceForScale -= CfxGetDataResourceForScaleBrowserProcessCall.EventCall;
+        }
+    }
+
+    internal class CfxGetDataResourceForScaleGetResourceIdRenderProcessCall : RenderProcessCall {
+
+        internal CfxGetDataResourceForScaleGetResourceIdRenderProcessCall()
+            : base(RemoteCallId.CfxGetDataResourceForScaleGetResourceIdRenderProcessCall) {}
+
+        internal ulong eventArgsId;
+        internal int value;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(eventArgsId);
+        }
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out eventArgsId);
+        }
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(value);
+        }
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out value);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var e = (CfxGetDataResourceForScaleEventArgs)BrowserProcessCall.GetEventArgs(eventArgsId);
+            value = e.ResourceId;
+        }
+    }
+
+    internal class CfxGetDataResourceForScaleGetScaleFactorRenderProcessCall : RenderProcessCall {
+
+        internal CfxGetDataResourceForScaleGetScaleFactorRenderProcessCall()
+            : base(RemoteCallId.CfxGetDataResourceForScaleGetScaleFactorRenderProcessCall) {}
+
+        internal ulong eventArgsId;
+        internal int value;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(eventArgsId);
+        }
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out eventArgsId);
+        }
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(value);
+        }
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out value);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var e = (CfxGetDataResourceForScaleEventArgs)BrowserProcessCall.GetEventArgs(eventArgsId);
+            value = (int)e.ScaleFactor;
+        }
+    }
+
+    internal class CfxGetDataResourceForScaleSetDataRenderProcessCall : RenderProcessCall {
+
+        internal CfxGetDataResourceForScaleSetDataRenderProcessCall()
+            : base(RemoteCallId.CfxGetDataResourceForScaleSetDataRenderProcessCall) {}
+
+        internal ulong eventArgsId;
+        internal IntPtr value;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(eventArgsId);
+            h.Write(value);
+        }
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out eventArgsId);
+            h.Read(out value);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var e = (CfxGetDataResourceForScaleEventArgs)BrowserProcessCall.GetEventArgs(eventArgsId);
+            e.Data = value;
+        }
+    }
+
+    internal class CfxGetDataResourceForScaleSetDataSizeRenderProcessCall : RenderProcessCall {
+
+        internal CfxGetDataResourceForScaleSetDataSizeRenderProcessCall()
+            : base(RemoteCallId.CfxGetDataResourceForScaleSetDataSizeRenderProcessCall) {}
+
+        internal ulong eventArgsId;
+        internal int value;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(eventArgsId);
+            h.Write(value);
+        }
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out eventArgsId);
+            h.Read(out value);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var e = (CfxGetDataResourceForScaleEventArgs)BrowserProcessCall.GetEventArgs(eventArgsId);
+            e.DataSize = value;
+        }
+    }
+
+    internal class CfxGetDataResourceForScaleSetReturnValueRenderProcessCall : RenderProcessCall {
+
+        internal CfxGetDataResourceForScaleSetReturnValueRenderProcessCall()
+            : base(RemoteCallId.CfxGetDataResourceForScaleSetReturnValueRenderProcessCall) {}
+
+        internal ulong eventArgsId;
+        internal bool value;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(eventArgsId);
+            h.Write(value);
+        }
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out eventArgsId);
+            h.Read(out value);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var e = (CfxGetDataResourceForScaleEventArgs)BrowserProcessCall.GetEventArgs(eventArgsId);
             e.SetReturnValue(value);
         }
     }

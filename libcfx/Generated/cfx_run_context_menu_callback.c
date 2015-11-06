@@ -28,34 +28,19 @@
 // TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE 
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+// Generated file. Do not edit.
 
-public class VoidPtrPtrType : ApiType {
 
-    public VoidPtrPtrType()
-        : base("void**") {
-    }
+// cef_run_context_menu_callback
 
-    public override bool IsIn {
-        get { return false; }
-    }
-
-    public override bool IsOut {
-        get { return true; }
-    }
-
-    public override string PInvokeSymbol {
-        get { return "IntPtr"; }
-    }
-
-    public override string PInvokeCallParameter(string var) {
-        return "out IntPtr " + CSharp.Escape(var);
-    }
-
-    public override string PublicCallParameter(string var) {
-        return "out IntPtr " + CSharp.Escape(var);
-    }
-
-    public override string PublicCallArgument(string var) {
-        return "out " + CSharp.Escape(var);
-    }
+// cont
+static void cfx_run_context_menu_callback_cont(cef_run_context_menu_callback_t* self, int command_id, cef_event_flags_t event_flags) {
+    self->cont(self, command_id, event_flags);
 }
+
+// cancel
+static void cfx_run_context_menu_callback_cancel(cef_run_context_menu_callback_t* self) {
+    self->cancel(self);
+}
+
+

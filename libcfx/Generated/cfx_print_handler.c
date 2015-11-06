@@ -71,6 +71,15 @@ static gc_handle_t cfx_print_handler_get_gc_handle(cfx_print_handler_t* self) {
     return self->gc_handle;
 }
 
+// on_print_start
+
+void (CEF_CALLBACK *cfx_print_handler_on_print_start_callback)(gc_handle_t self, cef_browser_t* browser);
+
+void CEF_CALLBACK cfx_print_handler_on_print_start(cef_print_handler_t* self, cef_browser_t* browser) {
+    cfx_print_handler_on_print_start_callback(((cfx_print_handler_t*)self)->gc_handle, browser);
+}
+
+
 // on_print_settings
 
 void (CEF_CALLBACK *cfx_print_handler_on_print_settings_callback)(gc_handle_t self, cef_print_settings_t* settings, int get_defaults);
@@ -126,26 +135,31 @@ cef_size_t CEF_CALLBACK cfx_print_handler_get_pdf_paper_size(cef_print_handler_t
 static void cfx_print_handler_set_managed_callback(cef_print_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
+        if(callback && !cfx_print_handler_on_print_start_callback)
+            cfx_print_handler_on_print_start_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) callback;
+        self->on_print_start = callback ? cfx_print_handler_on_print_start : 0;
+        break;
+    case 1:
         if(callback && !cfx_print_handler_on_print_settings_callback)
             cfx_print_handler_on_print_settings_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_print_settings_t* settings, int get_defaults)) callback;
         self->on_print_settings = callback ? cfx_print_handler_on_print_settings : 0;
         break;
-    case 1:
+    case 2:
         if(callback && !cfx_print_handler_on_print_dialog_callback)
             cfx_print_handler_on_print_dialog_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int has_selection, cef_print_dialog_callback_t* callback)) callback;
         self->on_print_dialog = callback ? cfx_print_handler_on_print_dialog : 0;
         break;
-    case 2:
+    case 3:
         if(callback && !cfx_print_handler_on_print_job_callback)
             cfx_print_handler_on_print_job_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, char16 *document_name_str, int document_name_length, char16 *pdf_file_path_str, int pdf_file_path_length, cef_print_job_callback_t* callback)) callback;
         self->on_print_job = callback ? cfx_print_handler_on_print_job : 0;
         break;
-    case 3:
+    case 4:
         if(callback && !cfx_print_handler_on_print_reset_callback)
             cfx_print_handler_on_print_reset_callback = (void (CEF_CALLBACK *)(gc_handle_t self)) callback;
         self->on_print_reset = callback ? cfx_print_handler_on_print_reset : 0;
         break;
-    case 4:
+    case 5:
         if(callback && !cfx_print_handler_get_pdf_paper_size_callback)
             cfx_print_handler_get_pdf_paper_size_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_size_t** __retval, int device_units_per_inch)) callback;
         self->get_pdf_paper_size = callback ? cfx_print_handler_get_pdf_paper_size : 0;

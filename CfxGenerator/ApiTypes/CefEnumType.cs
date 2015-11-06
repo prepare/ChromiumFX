@@ -137,14 +137,24 @@ public class CefEnumType : ApiType {
 
         } while(allEqual);
 
-        if(prefixBuilder.Length > 0) {
-            while(prefixBuilder[prefixBuilder.Length - 1] != '_')
-                prefixBuilder.Length -= 1;
-        }
+        while(prefixBuilder.Length > 0 && prefixBuilder[prefixBuilder.Length - 1] != '_')
+            --prefixBuilder.Length;
 
         b.BeginBlock("public enum {0}", enumName);
         foreach(var m in members) {
             var var = CSharp.ApplyStyle(m.Name.Substring(prefixBuilder.Length));
+
+            if(char.IsDigit(var[0])) {
+                switch(enumName) {
+                    case "CfxScaleFactor":
+                        var = "ScaleFactor" + var;
+                        break;
+                    default:
+                        Debug.Assert(false);
+                        break;
+                }
+            }
+
             b.AppendSummary(m.Comments);
             b.Append(var);
             if(m.Value != null) {

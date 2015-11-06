@@ -95,6 +95,7 @@ static cef_process_message_t* (*cef_process_message_create_ptr)(const cef_string
 static cef_request_t* (*cef_request_create_ptr)();
 static cef_request_context_t* (*cef_request_context_get_global_context_ptr)();
 static cef_request_context_t* (*cef_request_context_create_context_ptr)(const cef_request_context_settings_t* settings, cef_request_context_handler_t* handler);
+static cef_resource_bundle_t* (*cef_resource_bundle_get_global_ptr)();
 static cef_response_t* (*cef_response_create_ptr)();
 static cef_stream_reader_t* (*cef_stream_reader_create_for_file_ptr)(const cef_string_t* fileName);
 static cef_stream_reader_t* (*cef_stream_reader_create_for_data_ptr)(void* data, size_t size);
@@ -211,6 +212,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_request_create_ptr = (cef_request_t* (*)())cfx_platform_get_fptr(libcef, "cef_request_create");
     cef_request_context_get_global_context_ptr = (cef_request_context_t* (*)())cfx_platform_get_fptr(libcef, "cef_request_context_get_global_context");
     cef_request_context_create_context_ptr = (cef_request_context_t* (*)(const cef_request_context_settings_t*, cef_request_context_handler_t*))cfx_platform_get_fptr(libcef, "cef_request_context_create_context");
+    cef_resource_bundle_get_global_ptr = (cef_resource_bundle_t* (*)())cfx_platform_get_fptr(libcef, "cef_resource_bundle_get_global");
     cef_response_create_ptr = (cef_response_t* (*)())cfx_platform_get_fptr(libcef, "cef_response_create");
     cef_stream_reader_create_for_file_ptr = (cef_stream_reader_t* (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_stream_reader_create_for_file");
     cef_stream_reader_create_for_data_ptr = (cef_stream_reader_t* (*)(void*, size_t))cfx_platform_get_fptr(libcef, "cef_stream_reader_create_for_data");
@@ -328,6 +330,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_request_create cef_request_create_ptr
 #define cef_request_context_get_global_context cef_request_context_get_global_context_ptr
 #define cef_request_context_create_context cef_request_context_create_context_ptr
+#define cef_resource_bundle_get_global cef_resource_bundle_get_global_ptr
 #define cef_response_create cef_response_create_ptr
 #define cef_stream_reader_create_for_file cef_stream_reader_create_for_file_ptr
 #define cef_stream_reader_create_for_data cef_stream_reader_create_for_data_ptr
