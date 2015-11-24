@@ -478,15 +478,19 @@ namespace Chromium.WebBrowser {
         /// Search for |searchText|. |forward| indicates whether to search forward or
         /// backward within the page. |matchCase| indicates whether the search should
         /// be case-sensitive.
-        /// Returns the identifier for this find operation (see also CfxFindHandler).
+        /// Returns the identifier for this find operation (see also CfxFindHandler),
+        /// or -1 if the browser has not yet been created.
         /// </summary>
         public int Find(string searchText, bool forward, bool matchCase) {
+            if(BrowserHost == null)
+                return -1;
             var findNext = currentFindText == searchText && currentMatchCase == matchCase;
             if(!findNext) {
                 currentFindText = searchText;
                 currentMatchCase = matchCase;
                 ++findId;
             }
+
             BrowserHost.Find(findId, searchText, forward, matchCase, findNext);
             return findId;
         }
@@ -494,7 +498,8 @@ namespace Chromium.WebBrowser {
         /// <summary>
         /// Search for |searchText|. |forward| indicates whether to search forward or
         /// backward within the page. The search will be case-insensitive.
-        /// Returns the identifier for this find operation (see also CfxFindHandler).
+        /// Returns the identifier for this find operation (see also CfxFindHandler),
+        /// or -1 if the browser has not yet been created.
         /// </summary>
         public int Find(string searchText, bool forward) {
             return Find(searchText, forward, false);
@@ -502,7 +507,8 @@ namespace Chromium.WebBrowser {
 
         /// <summary>
         /// Search for |searchText|. The search will be forward and case-insensitive.
-        /// Returns the identifier for this find operation (see also CfxFindHandler).
+        /// Returns the identifier for this find operation (see also CfxFindHandler),
+        /// or -1 if the browser has not yet been created.
         /// </summary>
         public int Find(string searchText) {
             return Find(searchText, true, false);
