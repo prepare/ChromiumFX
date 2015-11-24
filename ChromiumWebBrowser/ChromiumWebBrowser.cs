@@ -360,6 +360,11 @@ namespace Chromium.WebBrowser {
         public CfxDialogHandler DialogHandler { get { return client.DialogHandler; } }
 
         /// <summary>
+        /// Returns the find handler for this browser.
+        /// </summary>
+        public CfxFindHandler FindHandler { get { return client.FindHandler; } }
+
+        /// <summary>
         /// Returns the focus handler for this browser.
         /// </summary>
         public CfxFocusHandler FocusHandler { get { return client.FocusHandler; } }
