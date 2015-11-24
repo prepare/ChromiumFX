@@ -477,29 +477,33 @@ namespace Chromium.WebBrowser {
         /// Search for |searchText|. |forward| indicates whether to search forward or
         /// backward within the page. |matchCase| indicates whether the search should
         /// be case-sensitive.
+        /// Returns the identifier for this find operation (see also CfxFindHandler).
         /// </summary>
-        public void Find(string searchText, bool forward, bool matchCase) {
+        public int Find(string searchText, bool forward, bool matchCase) {
             var findNext = currentFindText == searchText;
             if(!findNext) {
                 currentFindText = searchText;
                 ++findId;
             }
             BrowserHost.Find(findId, searchText, forward, matchCase, findNext);
+            return findId;
         }
 
         /// <summary>
         /// Search for |searchText|. |forward| indicates whether to search forward or
         /// backward within the page. The search will be case-insensitive.
+        /// Returns the identifier for this find operation (see also CfxFindHandler).
         /// </summary>
-        public void Find(string searchText, bool forward) {
-            Find(searchText, forward, false);
+        public int Find(string searchText, bool forward) {
+            return Find(searchText, forward, false);
         }
 
         /// <summary>
         /// Search for |searchText|. The search will be forward and case-insensitive.
+        /// Returns the identifier for this find operation (see also CfxFindHandler).
         /// </summary>
-        public void Find(string searchText) {
-            Find(searchText, true, false);
+        public int Find(string searchText) {
+            return Find(searchText, true, false);
         }
 
 
