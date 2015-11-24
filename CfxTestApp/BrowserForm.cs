@@ -184,6 +184,8 @@ namespace CfxTestApplication {
 
             WebBrowser.LoadUrl("http://localresource/text.html");
 
+            WebBrowser.FindToolbar.Visible = true;
+            
         }
 
 
@@ -445,6 +447,10 @@ namespace CfxTestApplication {
 
         private void executeSleepFunctionToolStripMenuItem_Click(object sender, EventArgs e) {
             WebBrowser.ExecuteJavascript("SleepFunction(0);");
+        }
+
+        private void toggleFindToolbarToolStripMenuItem_Click(object sender, EventArgs e) {
+            WebBrowser.FindToolbar.Visible = !WebBrowser.FindToolbar.Visible;
         }
     }
 }

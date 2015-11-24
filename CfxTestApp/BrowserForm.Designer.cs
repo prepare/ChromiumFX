@@ -74,12 +74,13 @@ namespace CfxTestApplication {
             this.clearContextMenuModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.remoteLayerStressTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.evaluateJavascriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.executeSleepFunctionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toggleFindToolbarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.WebBrowser = new Chromium.WebBrowser.ChromiumWebBrowser();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.LogTextBox = new System.Windows.Forms.TextBox();
-            this.executeSleepFunctionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -230,7 +231,8 @@ namespace CfxTestApplication {
             this.clearContextMenuModelToolStripMenuItem,
             this.remoteLayerStressTestToolStripMenuItem,
             this.evaluateJavascriptToolStripMenuItem,
-            this.executeSleepFunctionToolStripMenuItem});
+            this.executeSleepFunctionToolStripMenuItem,
+            this.toggleFindToolbarToolStripMenuItem});
             this.miscDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("miscDropDownButton.Image")));
             this.miscDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.miscDropDownButton.Name = "miscDropDownButton";
@@ -265,6 +267,20 @@ namespace CfxTestApplication {
             this.evaluateJavascriptToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.evaluateJavascriptToolStripMenuItem.Text = "Evaluate Javascript";
             this.evaluateJavascriptToolStripMenuItem.Click += new System.EventHandler(this.evaluateJavascriptToolStripMenuItem_Click);
+            // 
+            // executeSleepFunctionToolStripMenuItem
+            // 
+            this.executeSleepFunctionToolStripMenuItem.Name = "executeSleepFunctionToolStripMenuItem";
+            this.executeSleepFunctionToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.executeSleepFunctionToolStripMenuItem.Text = "Execute SleepFunction";
+            this.executeSleepFunctionToolStripMenuItem.Click += new System.EventHandler(this.executeSleepFunctionToolStripMenuItem_Click);
+            // 
+            // toggleFindToolbarToolStripMenuItem
+            // 
+            this.toggleFindToolbarToolStripMenuItem.Name = "toggleFindToolbarToolStripMenuItem";
+            this.toggleFindToolbarToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.toggleFindToolbarToolStripMenuItem.Text = "Toggle Find Toolbar";
+            this.toggleFindToolbarToolStripMenuItem.Click += new System.EventHandler(this.toggleFindToolbarToolStripMenuItem_Click);
             // 
             // printButton
             // 
@@ -330,13 +346,6 @@ namespace CfxTestApplication {
             this.LogTextBox.Size = new System.Drawing.Size(1441, 166);
             this.LogTextBox.TabIndex = 0;
             // 
-            // executeSleepFunctionToolStripMenuItem
-            // 
-            this.executeSleepFunctionToolStripMenuItem.Name = "executeSleepFunctionToolStripMenuItem";
-            this.executeSleepFunctionToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
-            this.executeSleepFunctionToolStripMenuItem.Text = "Execute SleepFunction";
-            this.executeSleepFunctionToolStripMenuItem.Click += new System.EventHandler(this.executeSleepFunctionToolStripMenuItem_Click);
-            // 
             // BrowserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -387,5 +396,6 @@ namespace CfxTestApplication {
         private System.Windows.Forms.ToolStripMenuItem remoteLayerStressTestToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem evaluateJavascriptToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem executeSleepFunctionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toggleFindToolbarToolStripMenuItem;
     }
 }
