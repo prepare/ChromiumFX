@@ -432,7 +432,7 @@ namespace Chromium.WebBrowser {
             if(Browser != null)
                 Browser.MainFrame.LoadUrl(url);
             else {
-                lock(browserSyncRoot) {
+                lock (browserSyncRoot) {
                     if(Browser != null) {
                         Browser.MainFrame.LoadUrl(url);
                     } else {
@@ -451,7 +451,7 @@ namespace Chromium.WebBrowser {
             if(Browser != null) {
                 Browser.MainFrame.LoadString(stringVal, url);
             } else {
-                lock(browserSyncRoot) {
+                lock (browserSyncRoot) {
                     if(Browser != null) {
                         Browser.MainFrame.LoadString(stringVal, url);
                     } else {
@@ -512,6 +512,20 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public int Find(string searchText) {
             return Find(searchText, true, false);
+        }
+
+
+        private FindToolbar m_findToolbar;
+
+        /// <summary>
+        /// Get the find toolbar of this browser window.
+        /// </summary>
+        public FindToolbar FindToolbar {
+            get {
+                if(m_findToolbar == null)
+                    m_findToolbar = new FindToolbar(this);
+                return m_findToolbar;
+            }
         }
 
 
@@ -792,14 +806,14 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public event CfxOnLoadingStateChangeEventHandler OnLoadingStateChange {
             add {
-                lock(browserSyncRoot) {
+                lock (browserSyncRoot) {
                     if(m_OnLoadingStateChange == null)
                         client.LoadHandler.OnLoadingStateChange += RaiseOnLoadingStateChange;
                     m_OnLoadingStateChange += value;
                 }
             }
             remove {
-                lock(browserSyncRoot) {
+                lock (browserSyncRoot) {
                     m_OnLoadingStateChange -= value;
                     if(m_OnLoadingStateChange == null)
                         client.LoadHandler.OnLoadingStateChange -= RaiseOnLoadingStateChange;
@@ -827,14 +841,14 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public event CfxOnBeforeContextMenuEventHandler OnBeforeContextMenu {
             add {
-                lock(browserSyncRoot) {
+                lock (browserSyncRoot) {
                     if(m_OnBeforeContextMenu == null)
                         client.ContextMenuHandler.OnBeforeContextMenu += RaiseOnBeforeContextMenu;
                     m_OnBeforeContextMenu += value;
                 }
             }
             remove {
-                lock(browserSyncRoot) {
+                lock (browserSyncRoot) {
                     m_OnBeforeContextMenu -= value;
                     if(m_OnBeforeContextMenu == null)
                         client.ContextMenuHandler.OnBeforeContextMenu -= RaiseOnBeforeContextMenu;
@@ -864,14 +878,14 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public event CfxOnContextMenuCommandEventHandler OnContextMenuCommand {
             add {
-                lock(browserSyncRoot) {
+                lock (browserSyncRoot) {
                     if(m_OnContextMenuCommand == null)
                         client.ContextMenuHandler.OnContextMenuCommand += RaiseOnContextMenuCommand;
                     m_OnContextMenuCommand += value;
                 }
             }
             remove {
-                lock(browserSyncRoot) {
+                lock (browserSyncRoot) {
                     m_OnContextMenuCommand -= value;
                     if(m_OnContextMenuCommand == null)
                         client.ContextMenuHandler.OnContextMenuCommand -= RaiseOnContextMenuCommand;
@@ -916,7 +930,7 @@ namespace Chromium.WebBrowser {
         }
 
         private void AfterSetBrowserTasks(object state) {
-            lock(browserSyncRoot) {
+            lock (browserSyncRoot) {
                 if(m_loadUrlDeferred != null) {
                     if(m_loadStringDeferred != null) {
                         Browser.MainFrame.LoadString(m_loadStringDeferred, m_loadUrlDeferred);
@@ -962,11 +976,19 @@ namespace Chromium.WebBrowser {
             if(BrowserHost != null) BrowserHost.SetFocus(true);
         }
 
-
         protected override void OnResize(System.EventArgs e) {
             base.OnResize(e);
+            ResizeBrowserWindow();
+        }
+
+        internal void ResizeBrowserWindow() {
             if(browserWindowHandle != IntPtr.Zero && this.Height > 0 && this.Width > 0) {
-                SetWindowPos(browserWindowHandle, IntPtr.Zero, 0, 0, Width, Height, SWP_NOMOVE | SWP_NOZORDER);
+                int h;
+                if(m_findToolbar == null || !m_findToolbar.Visible)
+                    h = Height;
+                else
+                    h = m_findToolbar.Top;
+                SetWindowPos(browserWindowHandle, IntPtr.Zero, 0, 0, Width, h, SWP_NOMOVE | SWP_NOZORDER);
             }
         }
 
