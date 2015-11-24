@@ -472,6 +472,7 @@ namespace Chromium.WebBrowser {
 
         private int findId;
         private string currentFindText;
+        private bool currentMatchCase;
 
         /// <summary>
         /// Search for |searchText|. |forward| indicates whether to search forward or
@@ -480,9 +481,10 @@ namespace Chromium.WebBrowser {
         /// Returns the identifier for this find operation (see also CfxFindHandler).
         /// </summary>
         public int Find(string searchText, bool forward, bool matchCase) {
-            var findNext = currentFindText == searchText;
+            var findNext = currentFindText == searchText && currentMatchCase == matchCase;
             if(!findNext) {
                 currentFindText = searchText;
+                currentMatchCase = matchCase;
                 ++findId;
             }
             BrowserHost.Find(findId, searchText, forward, matchCase, findNext);
