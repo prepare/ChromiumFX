@@ -48,6 +48,7 @@ namespace Chromium.WebBrowser {
         private CfxDownloadHandler downloadHandler;
         private CfxDragHandler dragHandler;
         private CfxDialogHandler dialogHandler;
+        private CfxFindHandler findHandler;
         private CfxFocusHandler focusHandler;
         private CfxGeolocationHandler geolocationHandler;
         private CfxJsDialogHandler jsDialogHandler;
@@ -118,6 +119,16 @@ namespace Chromium.WebBrowser {
                     this.GetDialogHandler += (s, e) => e.SetReturnValue(dialogHandler);
                 }
                 return dialogHandler;
+            }
+        }
+
+        internal CfxFindHandler FindHandler {
+            get {
+                if(findHandler == null) {
+                    findHandler = new CfxFindHandler();
+                    this.GetFindHandler += (s, e) => e.SetReturnValue(findHandler);
+                }
+                return findHandler;
             }
         }
 
