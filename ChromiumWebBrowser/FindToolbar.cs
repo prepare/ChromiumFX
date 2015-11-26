@@ -40,11 +40,11 @@ using System.Drawing;
 
 namespace Chromium.WebBrowser {
 
-    public class FindToolbar {
+    [DesignerCategory("")]
+    public class FindToolbar : Control {
 
         private ChromiumWebBrowser wb;
 
-        private Panel panel = new Panel();
         private TextBox textBox = new TextBox();
         private Button downButton = new Button();
         private Button upButton = new Button();
@@ -54,8 +54,6 @@ namespace Chromium.WebBrowser {
 
         private ToolTip toolTip = new ToolTip();
 
-        private bool m_visible;
-
         private int lastFindId;
         private bool m_matchCase;
 
@@ -64,16 +62,39 @@ namespace Chromium.WebBrowser {
 
             this.wb = wb;
 
-            panel.Font = new Font("Microsoft Sans Serif", 11);
+            Font = new Font("Microsoft Sans Serif", 11);
 
-            downButton.Parent = panel;
-            upButton.Parent = panel;
-            matchCaseButton.Parent = panel;
-            resultLabel.Parent = panel;
-            textBox.Parent = panel;
-            closeButton.Parent = panel;
+            SetStyle(ControlStyles.FixedWidth
+                | ControlStyles.FixedHeight
+                | ControlStyles.SupportsTransparentBackColor
+                | ControlStyles.EnableNotifyMessage
+                | ControlStyles.DoubleBuffer
+                | ControlStyles.OptimizedDoubleBuffer
+                | ControlStyles.UseTextForAccessibility
+                | ControlStyles.Selectable
+                , false);
 
-            textBox.Font = new Font(panel.Font, FontStyle.Italic);
+            SetStyle(ControlStyles.UserPaint
+                | ControlStyles.AllPaintingInWmPaint
+                | ControlStyles.Opaque
+                | ControlStyles.ResizeRedraw
+                | ControlStyles.StandardClick
+                | ControlStyles.StandardDoubleClick
+                | ControlStyles.UserMouse
+                | ControlStyles.CacheText
+                | ControlStyles.ContainerControl
+                , true);
+
+            Visible = false;
+
+            downButton.Parent = this;
+            upButton.Parent = this;
+            matchCaseButton.Parent = this;
+            resultLabel.Parent = this;
+            textBox.Parent = this;
+            closeButton.Parent = this;
+
+            textBox.Font = new Font(Font, FontStyle.Italic);
             textBox.Left = 10;
             textBox.Top = 8;
             textBox.Width = 200;
@@ -93,7 +114,7 @@ namespace Chromium.WebBrowser {
                     Find(true);
             };
 
-            upButton.Font = new Font(panel.Font.FontFamily, 9);
+            upButton.Font = new Font(Font.FontFamily, 9);
             upButton.SetBounds(textBox.Left + textBox.Width - 1, textBox.Top, textBox.Height, textBox.Height);
             SetButtonStyle(upButton);
             upButton.Text = "▲";
@@ -107,7 +128,7 @@ namespace Chromium.WebBrowser {
 
             toolTip.SetToolTip(upButton, "Goto previous match");
 
-            downButton.Font = new Font(panel.Font.FontFamily, 9);
+            downButton.Font = new Font(Font.FontFamily, 9);
             downButton.SetBounds(upButton.Left + upButton.Width - 1, textBox.Top, textBox.Height, textBox.Height);
             SetButtonStyle(downButton);
             downButton.Text = "▼";
@@ -143,18 +164,16 @@ namespace Chromium.WebBrowser {
             resultLabel.Top = matchCaseButton.Top + 3;
             resultLabel.AutoSize = true;
             
-            panel.Width = wb.Width + 4;
-            panel.Height = textBox.Height + 15;
-            panel.Left = -2;
-            panel.Top = wb.Height - panel.Height + 2;
-            panel.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
-            panel.BorderStyle = BorderStyle.FixedSingle;
-            panel.BackColor = Color.WhiteSmoke;
+            Width = wb.Width;
+            Height = textBox.Height + 12;
+            Top = wb.Height - Height;
+            Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+            BackColor = Color.WhiteSmoke;
 
             
             closeButton.Height = upButton.Height;
             closeButton.Width = closeButton.Height;
-            closeButton.Left = panel.Width - closeButton.Width - 10;
+            closeButton.Left = Width - closeButton.Width - 10;
             closeButton.Top = upButton.Top;
             closeButton.Text = "❌";
             closeButton.ForeColor = Color.DimGray;
@@ -169,6 +188,8 @@ namespace Chromium.WebBrowser {
             closeButton.Click += (s, e) => {
                 Visible = false;
             };
+
+            closeButton.GotFocus += (s, e) => { textBox.Focus(); };
 
             SendMessage(textBox.Handle, 0x1501, 1, "Find in page");
 
@@ -195,6 +216,11 @@ namespace Chromium.WebBrowser {
                     });
                 }
             };
+        }
+
+        protected override void OnPaint(PaintEventArgs e) {
+            e.Graphics.FillRectangle(Brushes.WhiteSmoke, e.ClipRectangle);
+            e.Graphics.DrawLine(Pens.LightGray, 0, 0, Width, 0);
         }
 
         private void ChangeMatchCase() {
@@ -226,37 +252,32 @@ namespace Chromium.WebBrowser {
             lastFindId = wb.Find(textBox.Text, forward, m_matchCase);
         }
 
-        internal int Top {
-            get {
-                return panel.Top;
-            }
-        }
-
         /// <summary>
-        /// Get or set a value indicating wether to show the find toolbar.
+        /// Get or set a value indicating whether the find toolbar is displayed.
         /// </summary>
-        public bool Visible {
+        public new bool Visible {
             get {
-                return m_visible;
+                return base.Visible;
             }
             set {
-                m_visible = value;
-                if(m_visible) {
-                    panel.Parent = wb;
+                if(base.Visible == value) return;
+                base.Visible = value;
+                if(value) {
+                    Parent = wb;
                     if(textBox.Text.Length > 0)
                         wb.Find(null);
                     
                 } else {
                     if(textBox.Text.Length == 0)
                         wb.Find(null);
-                    panel.Parent = null;
+                    Parent = null;
                 }
                 wb.ResizeBrowserWindow();
             }
         }
 
         /// <summary>
-        /// Get or set a value indicating wether to show the close button.
+        /// Get or set a value indicating whether the close button is displayed.
         /// </summary>
         public bool CloseButtonVisible {
             get {
