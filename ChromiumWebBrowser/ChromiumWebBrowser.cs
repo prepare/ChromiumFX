@@ -914,7 +914,7 @@ namespace Chromium.WebBrowser {
             browserWindowHandle = BrowserHost.WindowHandle;
             browserId = Browser.Identifier;
             browsers.Add(browserId, this);
-            SetWindowPos(browserWindowHandle, IntPtr.Zero, 0, 0, Width, Height, SWP_NOMOVE | SWP_NOZORDER);
+            ResizeBrowserWindow();
 
             var handler = BrowserCreated;
             if(handler != null) {
