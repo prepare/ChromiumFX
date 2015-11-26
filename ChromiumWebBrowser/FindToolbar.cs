@@ -64,7 +64,16 @@ namespace Chromium.WebBrowser {
 
             this.wb = wb;
 
-            textBox.Font = new Font(textBox.Font.FontFamily, 10, FontStyle.Italic);
+            panel.Font = new Font("Microsoft Sans Serif", 11);
+
+            downButton.Parent = panel;
+            upButton.Parent = panel;
+            matchCaseButton.Parent = panel;
+            resultLabel.Parent = panel;
+            textBox.Parent = panel;
+            closeButton.Parent = panel;
+
+            textBox.Font = new Font(panel.Font, FontStyle.Italic);
             textBox.Left = 10;
             textBox.Top = 8;
             textBox.Width = 200;
@@ -84,31 +93,40 @@ namespace Chromium.WebBrowser {
                     Find(true);
             };
 
+            upButton.Font = new Font(panel.Font.FontFamily, 9);
             upButton.SetBounds(textBox.Left + textBox.Width - 1, textBox.Top, textBox.Height, textBox.Height);
             SetButtonStyle(upButton);
             upButton.Text = "▲";
+            upButton.TextAlign = ContentAlignment.MiddleCenter;
+
             upButton.Click += (s, e) => {
                 Find(false);
             };
-            upButton.Parent = panel;
+
+            upButton.GotFocus += (s, e) => { textBox.Focus(); };
+
             toolTip.SetToolTip(upButton, "Goto previous match");
 
+            downButton.Font = new Font(panel.Font.FontFamily, 9);
             downButton.SetBounds(upButton.Left + upButton.Width - 1, textBox.Top, textBox.Height, textBox.Height);
             SetButtonStyle(downButton);
             downButton.Text = "▼";
+            upButton.TextAlign = ContentAlignment.MiddleCenter;
+
             downButton.Click += (s, e) => {
                 Find(true);
             };
-            downButton.Parent = panel;
+
+            downButton.GotFocus += (s, e) => { textBox.Focus(); };
+
             toolTip.SetToolTip(downButton, "Goto next match");
 
             matchCaseButton.Text = "Match Case";
             matchCaseButton.ForeColor = Color.DimGray;
             matchCaseButton.Left = downButton.Left + downButton.Width + 10;
             matchCaseButton.Top = downButton.Top;
-            matchCaseButton.Width = 90;
+            matchCaseButton.Width = 110;
             matchCaseButton.Height = downButton.Height;
-            matchCaseButton.Font = new Font(textBox.Font.FontFamily, 10);
             matchCaseButton.FlatStyle = FlatStyle.Flat;
             matchCaseButton.FlatAppearance.BorderSize = 0;
             matchCaseButton.BackColor = Color.Transparent;
@@ -120,15 +138,11 @@ namespace Chromium.WebBrowser {
 
             matchCaseButton.GotFocus += (s, e) => { textBox.Focus(); };
 
-            matchCaseButton.Parent = panel;
-
-            resultLabel.Font = new Font(textBox.Font.FontFamily, 10);
             resultLabel.ForeColor = Color.DimGray;
             resultLabel.Left = matchCaseButton.Left + matchCaseButton.Width + 10;
             resultLabel.Top = matchCaseButton.Top + 3;
             resultLabel.AutoSize = true;
-            resultLabel.Parent = panel;
-
+            
             panel.Width = wb.Width + 4;
             panel.Height = textBox.Height + 15;
             panel.Left = -2;
@@ -137,8 +151,7 @@ namespace Chromium.WebBrowser {
             panel.BorderStyle = BorderStyle.FixedSingle;
             panel.BackColor = Color.WhiteSmoke;
 
-            textBox.Parent = panel;
-
+            
             closeButton.Height = upButton.Height;
             closeButton.Width = closeButton.Height;
             closeButton.Left = panel.Width - closeButton.Width - 10;
@@ -151,7 +164,6 @@ namespace Chromium.WebBrowser {
             toolTip.SetToolTip(closeButton, "Close the Find Bar");
 
             closeButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            closeButton.Parent = panel;
             
 
             closeButton.Click += (s, e) => {
