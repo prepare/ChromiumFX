@@ -110,8 +110,10 @@ namespace Chromium.WebBrowser {
             };
 
             textBox.KeyDown += (s, e) => {
-                if(e.KeyCode == Keys.Return)
-                    Find(true);
+                if(e.KeyCode == Keys.Return) {
+                    Find(e.Shift ? false : true);
+                    e.Handled = true;
+                }
             };
 
             upButton.Font = new Font(Font.FontFamily, 9);
