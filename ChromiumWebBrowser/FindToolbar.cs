@@ -62,7 +62,7 @@ namespace Chromium.WebBrowser {
 
             this.wb = wb;
 
-            Font = new Font("Microsoft Sans Serif", 11);
+            Font = new Font("Microsoft Sans Serif", 10);
 
             SetStyle(ControlStyles.FixedWidth
                 | ControlStyles.FixedHeight
