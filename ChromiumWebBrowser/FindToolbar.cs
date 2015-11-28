@@ -198,7 +198,7 @@ namespace Chromium.WebBrowser {
             // Once a find toolbar is created for a browser, it is kept until the browser is destroyed.
             // So there is no need to unsubscribe from this event.
             wb.FindHandler.OnFindResult += (s, e) => {
-                if(e.Identifier == lastFindId) {
+                if(e.FinalUpdate && e.Identifier == lastFindId) {
                     var count = e.Count;
                     BeginInvoke(() => {
                         if(count == 0 && textBox.Text.Length > 0) {
