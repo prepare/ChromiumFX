@@ -57,6 +57,7 @@ namespace Chromium.WebBrowser {
         private int lastFindId;
         private bool m_matchCase;
 
+        private bool autoSearchSuspended;
 
         internal FindToolbar(ChromiumWebBrowser wb) {
 
@@ -106,7 +107,8 @@ namespace Chromium.WebBrowser {
                 } else if(textBox.Text.Length > 0 && textBox.Font.Style == FontStyle.Italic) {
                     textBox.Font = new Font(textBox.Font, FontStyle.Regular);
                 }
-                Find(true);
+                if(!autoSearchSuspended)
+                    Find(true);
             };
 
             textBox.KeyDown += (s, e) => {
@@ -304,10 +306,44 @@ namespace Chromium.WebBrowser {
         }
 
         /// <summary>
-        /// Sets the text and performs a search.
+        /// Sets the text in the find box and performs a search.
         /// </summary>
-        public void SetSearchText(string text) {
+        public void Search(string text) {
             textBox.Text = text;
+        }
+
+        [Obsolete("SetSearchText is deprecated. Use Search instead.")]
+        public void SetSearchText(string text) {
+            Search(text);
+        }
+
+
+        /// <summary>
+        /// The text in the find box.
+        /// Setting the text clears any previous search results currently displayed.
+        /// </summary>
+        public string FindText {
+            get {
+                return textBox.Text;
+            }
+            set {
+                lastFindId = wb.Find("", false, false);
+                autoSearchSuspended = true;
+                textBox.Text = value;
+                autoSearchSuspended = false;
+            }
+        }
+
+        /// <summary>
+        /// Sets input focus to the find box.
+        /// </summary>
+        /// <returns></returns>
+        public bool FocusFindText() {
+            return textBox.Focus();
+        }
+
+        protected override void OnGotFocus(EventArgs e) {
+            textBox.Focus();
         }
 
         [DllImport("user32.dll")]
