@@ -832,6 +832,32 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public event RemoteBrowserCreatedEventHandler RemoteBrowserCreated;
 
+        private void InvokeCallback(MethodInvoker method) {
+
+            if(!InvokeRequired) {
+                method.Invoke();
+                return;
+            }
+
+            // Use BeginInvoke and Wait instead of Invoke.
+            // Invoke marshals exceptions back to the calling thread.
+            // We want exceptions to be thrown in place.
+
+            var waitLock = new object();
+            lock (waitLock) {
+                BeginInvoke((MethodInvoker)(() => {
+                    try {
+                        method.Invoke();
+                    } finally {
+                        lock (waitLock) {
+                            Monitor.PulseAll(waitLock);
+                        }
+                    }
+                }));
+                Monitor.Wait(waitLock);
+            }
+        }
+
         /// <summary>
         /// Called when the loading state has changed. This callback will be executed
         /// twice -- once when loading is initiated either programmatically or by user
@@ -861,7 +887,7 @@ namespace Chromium.WebBrowser {
         private void RaiseOnLoadingStateChange(object sender, CfxOnLoadingStateChangeEventArgs e) {
             var handler = m_OnLoadingStateChange;
             if(handler != null) {
-                Invoke((MethodInvoker)(() => { handler(this, e); }));
+                InvokeCallback(() => { handler(this, e); });
             }
         }
 
@@ -896,7 +922,7 @@ namespace Chromium.WebBrowser {
         private void RaiseOnBeforeContextMenu(object sender, CfxOnBeforeContextMenuEventArgs e) {
             var handler = m_OnBeforeContextMenu;
             if(handler != null) {
-                Invoke((MethodInvoker)(() => { handler(this, e); }));
+                InvokeCallback(() => { handler(this, e); });
             }
         }
 
@@ -933,7 +959,7 @@ namespace Chromium.WebBrowser {
         private void RaiseOnContextMenuCommand(object sender, CfxOnContextMenuCommandEventArgs e) {
             var handler = m_OnContextMenuCommand;
             if(handler != null) {
-                Invoke((MethodInvoker)(() => { handler(this, e); }));
+                InvokeCallback(() => { handler(this, e); });
             }
         }
 
@@ -955,11 +981,7 @@ namespace Chromium.WebBrowser {
             var handler = BrowserCreated;
             if(handler != null) {
                 var e1 = new BrowserCreatedEventArgs(e.Browser);
-                if(InvokeRequired) {
-                    Invoke((MethodInvoker)(() => { handler(this, e1); }));
-                } else {
-                    handler(this, e1);
-                }
+                InvokeCallback(() => { handler(this, e1); });
             }
 
             System.Threading.ThreadPool.QueueUserWorkItem(AfterSetBrowserTasks);
