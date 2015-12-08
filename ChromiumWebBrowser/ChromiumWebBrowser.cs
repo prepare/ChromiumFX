@@ -33,6 +33,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Windows.Forms;
 using Chromium;
 using Chromium.Event;
@@ -554,19 +555,36 @@ namespace Chromium.WebBrowser {
         /// 3) The invoked code needs to call into the render process.
         /// </summary>
         public Object RenderThreadInvoke(Delegate method, params Object[] args) {
+
             if(!CfxRemoteCallContext.IsInContext) {
-                return method.DynamicInvoke(args);
+                throw new ChromiumWebBrowserException("Can't use RenderThreadInvoke without being in the scope of a render process callback.");
             }
+
+            if(!InvokeRequired)
+                return method.DynamicInvoke(args);
+
             object retval = null;
             var context = CfxRemoteCallContext.CurrentContext;
-            Invoke((MethodInvoker)(() => {
-                context.Enter();
-                try {
-                    retval = method.DynamicInvoke(args);
-                } finally {
-                    context.Exit();
-                }
-            }));
+
+            // Use BeginInvoke and Wait instead of Invoke.
+            // Invoke marshals exceptions back to the calling thread.
+            // We want exceptions to be thrown in place.
+
+            var waitLock = new object();
+            lock (waitLock) {
+                BeginInvoke((MethodInvoker)(() => {
+                    context.Enter();
+                    try {
+                        retval = method.DynamicInvoke(args);
+                    } finally {
+                        context.Exit();
+                        lock (waitLock) {
+                            Monitor.PulseAll(waitLock);
+                        }
+                    }
+                }));
+                Monitor.Wait(waitLock);
+            }
             return retval;
         }
 
@@ -580,19 +598,37 @@ namespace Chromium.WebBrowser {
         /// 3) The invoked code needs to call into the render process.
         /// </summary>
         public void RenderThreadInvoke(MethodInvoker method) {
+
             if(!CfxRemoteCallContext.IsInContext) {
+                throw new ChromiumWebBrowserException("Can't use RenderThreadInvoke without being in the scope of a render process callback.");
+            }
+
+            if(!InvokeRequired) {
                 method.Invoke();
                 return;
             }
+
             var context = CfxRemoteCallContext.CurrentContext;
-            Invoke((MethodInvoker)(() => {
-                context.Enter();
-                try {
-                    method.Invoke();
-                } finally {
-                    context.Exit();
-                }
-            }));
+
+            // Use BeginInvoke and Wait instead of Invoke.
+            // Invoke marshals exceptions back to the calling thread.
+            // We want exceptions to be thrown in place.
+
+            var waitLock = new object();
+            lock (waitLock) {
+                BeginInvoke((MethodInvoker)(() => {
+                    context.Enter();
+                    try {
+                        method.Invoke();
+                    } finally {
+                        context.Exit();
+                        lock (waitLock) {
+                            Monitor.PulseAll(waitLock);
+                        }
+                    }
+                }));
+                Monitor.Wait(waitLock);
+            }
         }
 
         /// <summary>
