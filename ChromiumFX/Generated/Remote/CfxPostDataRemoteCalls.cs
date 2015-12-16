@@ -85,6 +85,36 @@ namespace Chromium.Remote {
         }
     }
 
+    internal class CfxPostDataHasExcludedElementsRenderProcessCall : RenderProcessCall {
+
+        internal CfxPostDataHasExcludedElementsRenderProcessCall()
+            : base(RemoteCallId.CfxPostDataHasExcludedElementsRenderProcessCall) {}
+
+        internal IntPtr self;
+        internal bool __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(self);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out self);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var self_local = (CfxPostData)RemoteProxy.Unwrap(self);
+            __retval = self_local.HasExcludedElements;
+        }
+    }
+
     internal class CfxPostDataGetElementCountRenderProcessCall : RenderProcessCall {
 
         internal CfxPostDataGetElementCountRenderProcessCall()

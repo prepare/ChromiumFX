@@ -119,6 +119,13 @@ static void cfx_force_web_plugin_shutdown(char16 *path_str, int path_length) {
     cef_force_web_plugin_shutdown(&path);
 }
 
+// CEF_EXPORT cef_string_userfree_t cef_format_url_for_security_display(const cef_string_t* origin_url, const cef_string_t* languages);
+static cef_string_userfree_t cfx_format_url_for_security_display(char16 *origin_url_str, int origin_url_length, char16 *languages_str, int languages_length) {
+    cef_string_t origin_url = { origin_url_str, origin_url_length, 0 };
+    cef_string_t languages = { languages_str, languages_length, 0 };
+    return cef_format_url_for_security_display(&origin_url, &languages);
+}
+
 // CEF_EXPORT void cef_get_extensions_for_mime_type(const cef_string_t* mime_type, cef_string_list_t extensions);
 static void cfx_get_extensions_for_mime_type(char16 *mime_type_str, int mime_type_length, cef_string_list_t extensions) {
     cef_string_t mime_type = { mime_type_str, mime_type_length, 0 };
