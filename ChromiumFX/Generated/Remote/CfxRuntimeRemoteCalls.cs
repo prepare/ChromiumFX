@@ -63,6 +63,38 @@ namespace Chromium.Remote {
         }
     }
 
+    internal class CfxRuntimeFormatUrlForSecurityDisplayRenderProcessCall : RenderProcessCall {
+
+        internal CfxRuntimeFormatUrlForSecurityDisplayRenderProcessCall()
+            : base(RemoteCallId.CfxRuntimeFormatUrlForSecurityDisplayRenderProcessCall) {}
+
+        internal string originUrl;
+        internal string languages;
+        internal string __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(originUrl);
+            h.Write(languages);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out originUrl);
+            h.Read(out languages);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            __retval = CfxRuntime.FormatUrlForSecurityDisplay(originUrl, languages);
+        }
+    }
+
     internal class CfxRuntimePostDelayedTaskRenderProcessCall : RenderProcessCall {
 
         internal CfxRuntimePostDelayedTaskRenderProcessCall()

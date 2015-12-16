@@ -50,6 +50,7 @@ namespace Chromium {
             cfx_end_tracing,
             cfx_execute_process,
             cfx_force_web_plugin_shutdown,
+            cfx_format_url_for_security_display,
             cfx_get_extensions_for_mime_type,
             cfx_get_geolocation,
             cfx_get_mime_type,
@@ -207,8 +208,6 @@ namespace Chromium {
             cfx_browser_settings_get_javascript_dom_paste,
             cfx_browser_settings_set_caret_browsing,
             cfx_browser_settings_get_caret_browsing,
-            cfx_browser_settings_set_java,
-            cfx_browser_settings_get_java,
             cfx_browser_settings_set_plugins,
             cfx_browser_settings_get_plugins,
             cfx_browser_settings_set_universal_access_from_file_urls,
@@ -752,6 +751,7 @@ namespace Chromium {
             cfx_popup_features_get_additionalFeatures,
             cfx_post_data_create,
             cfx_post_data_is_read_only,
+            cfx_post_data_has_excluded_elements,
             cfx_post_data_get_element_count,
             cfx_post_data_get_elements,
             cfx_post_data_remove_element,
@@ -827,6 +827,9 @@ namespace Chromium {
             cfx_request_set_url,
             cfx_request_get_method,
             cfx_request_set_method,
+            cfx_request_set_referrer,
+            cfx_request_get_referrer_url,
+            cfx_request_get_referrer_policy,
             cfx_request_get_post_data,
             cfx_request_set_post_data,
             cfx_request_get_header_map,
@@ -852,6 +855,11 @@ namespace Chromium {
             cfx_request_context_register_scheme_handler_factory,
             cfx_request_context_clear_scheme_handler_factories,
             cfx_request_context_purge_plugin_list_cache,
+            cfx_request_context_has_preference,
+            cfx_request_context_get_preference,
+            cfx_request_context_get_all_preferences,
+            cfx_request_context_can_set_preference,
+            cfx_request_context_set_preference,
             cfx_request_context_handler_ctor,
             cfx_request_context_handler_get_gc_handle,
             cfx_request_context_handler_set_managed_callback,
@@ -861,6 +869,8 @@ namespace Chromium {
             cfx_request_context_settings_get_cache_path,
             cfx_request_context_settings_set_persist_session_cookies,
             cfx_request_context_settings_get_persist_session_cookies,
+            cfx_request_context_settings_set_persist_user_preferences,
+            cfx_request_context_settings_get_persist_user_preferences,
             cfx_request_context_settings_set_ignore_certificate_errors,
             cfx_request_context_settings_get_ignore_certificate_errors,
             cfx_request_context_settings_set_accept_language_list,
@@ -935,6 +945,8 @@ namespace Chromium {
             cfx_settings_get_user_data_path,
             cfx_settings_set_persist_session_cookies,
             cfx_settings_get_persist_session_cookies,
+            cfx_settings_set_persist_user_preferences,
+            cfx_settings_get_persist_user_preferences,
             cfx_settings_set_user_agent,
             cfx_settings_get_user_agent,
             cfx_settings_set_product_version,
@@ -1320,6 +1332,7 @@ namespace Chromium {
             CfxApi.cfx_end_tracing = (CfxApi.cfx_end_tracing_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_end_tracing, typeof(CfxApi.cfx_end_tracing_delegate));
             CfxApi.cfx_execute_process = (CfxApi.cfx_execute_process_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_execute_process, typeof(CfxApi.cfx_execute_process_delegate));
             CfxApi.cfx_force_web_plugin_shutdown = (CfxApi.cfx_force_web_plugin_shutdown_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_force_web_plugin_shutdown, typeof(CfxApi.cfx_force_web_plugin_shutdown_delegate));
+            CfxApi.cfx_format_url_for_security_display = (CfxApi.cfx_format_url_for_security_display_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_format_url_for_security_display, typeof(CfxApi.cfx_format_url_for_security_display_delegate));
             CfxApi.cfx_get_extensions_for_mime_type = (CfxApi.cfx_get_extensions_for_mime_type_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_get_extensions_for_mime_type, typeof(CfxApi.cfx_get_extensions_for_mime_type_delegate));
             CfxApi.cfx_get_geolocation = (CfxApi.cfx_get_geolocation_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_get_geolocation, typeof(CfxApi.cfx_get_geolocation_delegate));
             CfxApi.cfx_get_mime_type = (CfxApi.cfx_get_mime_type_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_get_mime_type, typeof(CfxApi.cfx_get_mime_type_delegate));
@@ -1563,8 +1576,6 @@ namespace Chromium {
             CfxApi.cfx_browser_settings_get_javascript_dom_paste = (CfxApi.cfx_browser_settings_get_javascript_dom_paste_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_settings_get_javascript_dom_paste, typeof(CfxApi.cfx_browser_settings_get_javascript_dom_paste_delegate));
             CfxApi.cfx_browser_settings_set_caret_browsing = (CfxApi.cfx_browser_settings_set_caret_browsing_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_settings_set_caret_browsing, typeof(CfxApi.cfx_browser_settings_set_caret_browsing_delegate));
             CfxApi.cfx_browser_settings_get_caret_browsing = (CfxApi.cfx_browser_settings_get_caret_browsing_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_settings_get_caret_browsing, typeof(CfxApi.cfx_browser_settings_get_caret_browsing_delegate));
-            CfxApi.cfx_browser_settings_set_java = (CfxApi.cfx_browser_settings_set_java_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_settings_set_java, typeof(CfxApi.cfx_browser_settings_set_java_delegate));
-            CfxApi.cfx_browser_settings_get_java = (CfxApi.cfx_browser_settings_get_java_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_settings_get_java, typeof(CfxApi.cfx_browser_settings_get_java_delegate));
             CfxApi.cfx_browser_settings_set_plugins = (CfxApi.cfx_browser_settings_set_plugins_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_settings_set_plugins, typeof(CfxApi.cfx_browser_settings_set_plugins_delegate));
             CfxApi.cfx_browser_settings_get_plugins = (CfxApi.cfx_browser_settings_get_plugins_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_settings_get_plugins, typeof(CfxApi.cfx_browser_settings_get_plugins_delegate));
             CfxApi.cfx_browser_settings_set_universal_access_from_file_urls = (CfxApi.cfx_browser_settings_set_universal_access_from_file_urls_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_settings_set_universal_access_from_file_urls, typeof(CfxApi.cfx_browser_settings_set_universal_access_from_file_urls_delegate));
@@ -2465,6 +2476,7 @@ namespace Chromium {
             CfxApi.Probe();
             CfxApi.cfx_post_data_create = (CfxApi.cfx_post_data_create_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_post_data_create, typeof(CfxApi.cfx_post_data_create_delegate));
             CfxApi.cfx_post_data_is_read_only = (CfxApi.cfx_post_data_is_read_only_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_post_data_is_read_only, typeof(CfxApi.cfx_post_data_is_read_only_delegate));
+            CfxApi.cfx_post_data_has_excluded_elements = (CfxApi.cfx_post_data_has_excluded_elements_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_post_data_has_excluded_elements, typeof(CfxApi.cfx_post_data_has_excluded_elements_delegate));
             CfxApi.cfx_post_data_get_element_count = (CfxApi.cfx_post_data_get_element_count_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_post_data_get_element_count, typeof(CfxApi.cfx_post_data_get_element_count_delegate));
             CfxApi.cfx_post_data_get_elements = (CfxApi.cfx_post_data_get_elements_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_post_data_get_elements, typeof(CfxApi.cfx_post_data_get_elements_delegate));
             CfxApi.cfx_post_data_remove_element = (CfxApi.cfx_post_data_remove_element_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_post_data_remove_element, typeof(CfxApi.cfx_post_data_remove_element_delegate));
@@ -2617,6 +2629,9 @@ namespace Chromium {
             CfxApi.cfx_request_set_url = (CfxApi.cfx_request_set_url_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_set_url, typeof(CfxApi.cfx_request_set_url_delegate));
             CfxApi.cfx_request_get_method = (CfxApi.cfx_request_get_method_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_get_method, typeof(CfxApi.cfx_request_get_method_delegate));
             CfxApi.cfx_request_set_method = (CfxApi.cfx_request_set_method_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_set_method, typeof(CfxApi.cfx_request_set_method_delegate));
+            CfxApi.cfx_request_set_referrer = (CfxApi.cfx_request_set_referrer_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_set_referrer, typeof(CfxApi.cfx_request_set_referrer_delegate));
+            CfxApi.cfx_request_get_referrer_url = (CfxApi.cfx_request_get_referrer_url_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_get_referrer_url, typeof(CfxApi.cfx_request_get_referrer_url_delegate));
+            CfxApi.cfx_request_get_referrer_policy = (CfxApi.cfx_request_get_referrer_policy_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_get_referrer_policy, typeof(CfxApi.cfx_request_get_referrer_policy_delegate));
             CfxApi.cfx_request_get_post_data = (CfxApi.cfx_request_get_post_data_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_get_post_data, typeof(CfxApi.cfx_request_get_post_data_delegate));
             CfxApi.cfx_request_set_post_data = (CfxApi.cfx_request_set_post_data_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_set_post_data, typeof(CfxApi.cfx_request_set_post_data_delegate));
             CfxApi.cfx_request_get_header_map = (CfxApi.cfx_request_get_header_map_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_get_header_map, typeof(CfxApi.cfx_request_get_header_map_delegate));
@@ -2656,6 +2671,11 @@ namespace Chromium {
             CfxApi.cfx_request_context_register_scheme_handler_factory = (CfxApi.cfx_request_context_register_scheme_handler_factory_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_register_scheme_handler_factory, typeof(CfxApi.cfx_request_context_register_scheme_handler_factory_delegate));
             CfxApi.cfx_request_context_clear_scheme_handler_factories = (CfxApi.cfx_request_context_clear_scheme_handler_factories_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_clear_scheme_handler_factories, typeof(CfxApi.cfx_request_context_clear_scheme_handler_factories_delegate));
             CfxApi.cfx_request_context_purge_plugin_list_cache = (CfxApi.cfx_request_context_purge_plugin_list_cache_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_purge_plugin_list_cache, typeof(CfxApi.cfx_request_context_purge_plugin_list_cache_delegate));
+            CfxApi.cfx_request_context_has_preference = (CfxApi.cfx_request_context_has_preference_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_has_preference, typeof(CfxApi.cfx_request_context_has_preference_delegate));
+            CfxApi.cfx_request_context_get_preference = (CfxApi.cfx_request_context_get_preference_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_get_preference, typeof(CfxApi.cfx_request_context_get_preference_delegate));
+            CfxApi.cfx_request_context_get_all_preferences = (CfxApi.cfx_request_context_get_all_preferences_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_get_all_preferences, typeof(CfxApi.cfx_request_context_get_all_preferences_delegate));
+            CfxApi.cfx_request_context_can_set_preference = (CfxApi.cfx_request_context_can_set_preference_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_can_set_preference, typeof(CfxApi.cfx_request_context_can_set_preference_delegate));
+            CfxApi.cfx_request_context_set_preference = (CfxApi.cfx_request_context_set_preference_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_set_preference, typeof(CfxApi.cfx_request_context_set_preference_delegate));
         }
 
         private static bool CfxRequestContextHandlerApiLoaded;
@@ -2679,6 +2699,8 @@ namespace Chromium {
             CfxApi.cfx_request_context_settings_get_cache_path = (CfxApi.cfx_request_context_settings_get_cache_path_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_settings_get_cache_path, typeof(CfxApi.cfx_request_context_settings_get_cache_path_delegate));
             CfxApi.cfx_request_context_settings_set_persist_session_cookies = (CfxApi.cfx_request_context_settings_set_persist_session_cookies_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_settings_set_persist_session_cookies, typeof(CfxApi.cfx_request_context_settings_set_persist_session_cookies_delegate));
             CfxApi.cfx_request_context_settings_get_persist_session_cookies = (CfxApi.cfx_request_context_settings_get_persist_session_cookies_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_settings_get_persist_session_cookies, typeof(CfxApi.cfx_request_context_settings_get_persist_session_cookies_delegate));
+            CfxApi.cfx_request_context_settings_set_persist_user_preferences = (CfxApi.cfx_request_context_settings_set_persist_user_preferences_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_settings_set_persist_user_preferences, typeof(CfxApi.cfx_request_context_settings_set_persist_user_preferences_delegate));
+            CfxApi.cfx_request_context_settings_get_persist_user_preferences = (CfxApi.cfx_request_context_settings_get_persist_user_preferences_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_settings_get_persist_user_preferences, typeof(CfxApi.cfx_request_context_settings_get_persist_user_preferences_delegate));
             CfxApi.cfx_request_context_settings_set_ignore_certificate_errors = (CfxApi.cfx_request_context_settings_set_ignore_certificate_errors_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_settings_set_ignore_certificate_errors, typeof(CfxApi.cfx_request_context_settings_set_ignore_certificate_errors_delegate));
             CfxApi.cfx_request_context_settings_get_ignore_certificate_errors = (CfxApi.cfx_request_context_settings_get_ignore_certificate_errors_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_settings_get_ignore_certificate_errors, typeof(CfxApi.cfx_request_context_settings_get_ignore_certificate_errors_delegate));
             CfxApi.cfx_request_context_settings_set_accept_language_list = (CfxApi.cfx_request_context_settings_set_accept_language_list_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_request_context_settings_set_accept_language_list, typeof(CfxApi.cfx_request_context_settings_set_accept_language_list_delegate));
@@ -2837,6 +2859,8 @@ namespace Chromium {
             CfxApi.cfx_settings_get_user_data_path = (CfxApi.cfx_settings_get_user_data_path_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_get_user_data_path, typeof(CfxApi.cfx_settings_get_user_data_path_delegate));
             CfxApi.cfx_settings_set_persist_session_cookies = (CfxApi.cfx_settings_set_persist_session_cookies_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_set_persist_session_cookies, typeof(CfxApi.cfx_settings_set_persist_session_cookies_delegate));
             CfxApi.cfx_settings_get_persist_session_cookies = (CfxApi.cfx_settings_get_persist_session_cookies_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_get_persist_session_cookies, typeof(CfxApi.cfx_settings_get_persist_session_cookies_delegate));
+            CfxApi.cfx_settings_set_persist_user_preferences = (CfxApi.cfx_settings_set_persist_user_preferences_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_set_persist_user_preferences, typeof(CfxApi.cfx_settings_set_persist_user_preferences_delegate));
+            CfxApi.cfx_settings_get_persist_user_preferences = (CfxApi.cfx_settings_get_persist_user_preferences_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_get_persist_user_preferences, typeof(CfxApi.cfx_settings_get_persist_user_preferences_delegate));
             CfxApi.cfx_settings_set_user_agent = (CfxApi.cfx_settings_set_user_agent_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_set_user_agent, typeof(CfxApi.cfx_settings_set_user_agent_delegate));
             CfxApi.cfx_settings_get_user_agent = (CfxApi.cfx_settings_get_user_agent_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_get_user_agent, typeof(CfxApi.cfx_settings_get_user_agent_delegate));
             CfxApi.cfx_settings_set_product_version = (CfxApi.cfx_settings_set_product_version_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_set_product_version, typeof(CfxApi.cfx_settings_set_product_version_delegate));

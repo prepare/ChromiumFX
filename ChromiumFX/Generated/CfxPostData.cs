@@ -92,6 +92,22 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Returns true (1) if the underlying POST data includes elements that are not
+        /// represented by this CfxPostData object (for example, multi-part file
+        /// upload data). Modifying CfxPostData objects with excluded elements may
+        /// result in the request failing.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
+        public bool HasExcludedElements {
+            get {
+                return 0 != CfxApi.cfx_post_data_has_excluded_elements(NativePtr);
+            }
+        }
+
+        /// <summary>
         /// Returns the number of existing post data elements.
         /// </summary>
         /// <remarks>

@@ -79,8 +79,8 @@ namespace Chromium {
         /// <summary>
         /// To persist session cookies (cookies without an expiry date or validity
         /// interval) by default when using the global cookie manager set this value to
-        /// true. Session cookies are generally intended to be transient and most Web
-        /// browsers do not persist them. Can be set globally using the
+        /// true (1). Session cookies are generally intended to be transient and most
+        /// Web browsers do not persist them. Can be set globally using the
         /// CfxSettings.PersistSessionCookies value. This value will be ignored if
         /// |cachePath| is empty or if it matches the CfxSettings.CachePath value.
         /// </summary>
@@ -96,6 +96,27 @@ namespace Chromium {
             }
             set {
                 CfxApi.cfx_request_context_settings_set_persist_session_cookies(nativePtrUnchecked, value ? 1 : 0);
+            }
+        }
+
+        /// <summary>
+        /// To persist user preferences as a JSON file in the cache path directory set
+        /// this value to true (1). Can be set globally using the
+        /// CfxSettings.PersistUserPreferences value. This value will be ignored if
+        /// |cachePath| is empty or if it matches the CfxSettings.CachePath value.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
+        public bool PersistUserPreferences {
+            get {
+                int value;
+                CfxApi.cfx_request_context_settings_get_persist_user_preferences(nativePtrUnchecked, out value);
+                return 0 != value;
+            }
+            set {
+                CfxApi.cfx_request_context_settings_set_persist_user_preferences(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 

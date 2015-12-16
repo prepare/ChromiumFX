@@ -63,6 +63,14 @@ static void cfx_request_context_settings_get_persist_session_cookies(cef_request
     *persist_session_cookies = self->persist_session_cookies;
 }
 
+// cef_request_context_settings_t->persist_user_preferences
+static void cfx_request_context_settings_set_persist_user_preferences(cef_request_context_settings_t *self, int persist_user_preferences) {
+    self->persist_user_preferences = persist_user_preferences;
+}
+static void cfx_request_context_settings_get_persist_user_preferences(cef_request_context_settings_t *self, int* persist_user_preferences) {
+    *persist_user_preferences = self->persist_user_preferences;
+}
+
 // cef_request_context_settings_t->ignore_certificate_errors
 static void cfx_request_context_settings_set_ignore_certificate_errors(cef_request_context_settings_t *self, int ignore_certificate_errors) {
     self->ignore_certificate_errors = ignore_certificate_errors;

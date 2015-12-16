@@ -195,6 +195,27 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
+        // on_resource_load_complete
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_request_handler_on_resource_load_complete_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr request, IntPtr response, CfxUrlRequestStatus status, long received_content_length);
+        private static cfx_request_handler_on_resource_load_complete_delegate cfx_request_handler_on_resource_load_complete;
+        private static IntPtr cfx_request_handler_on_resource_load_complete_ptr;
+
+        internal static void on_resource_load_complete(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr request, IntPtr response, CfxUrlRequestStatus status, long received_content_length) {
+            var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null) {
+                return;
+            }
+            var e = new CfxOnResourceLoadCompleteEventArgs(browser, frame, request, response, status, received_content_length);
+            var eventHandler = self.m_OnResourceLoadComplete;
+            if(eventHandler != null) eventHandler(self, e);
+            e.m_isInvalid = true;
+            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
+            if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
+            if(e.m_request_wrapped == null) CfxApi.cfx_release(e.m_request);
+            if(e.m_response_wrapped == null) CfxApi.cfx_release(e.m_response);
+        }
+
         // get_auth_credentials
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void cfx_request_handler_get_auth_credentials_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, int isProxy, IntPtr host_str, int host_length, int port, IntPtr realm_str, int realm_length, IntPtr scheme_str, int scheme_length, IntPtr callback);
@@ -563,6 +584,41 @@ namespace Chromium {
         private CfxOnResourceResponseEventHandler m_OnResourceResponse;
 
         /// <summary>
+        /// Called on the IO thread when a resource load has completed. |Request| and
+        /// |Response| represent the request and response respectively and cannot be
+        /// modified in this callback. |Status| indicates the load completion status.
+        /// |ReceivedContentLength| is the number of response bytes actually read.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
+        public event CfxOnResourceLoadCompleteEventHandler OnResourceLoadComplete {
+            add {
+                lock(eventLock) {
+                    if(m_OnResourceLoadComplete == null) {
+                        if(cfx_request_handler_on_resource_load_complete == null) {
+                            cfx_request_handler_on_resource_load_complete = on_resource_load_complete;
+                            cfx_request_handler_on_resource_load_complete_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_resource_load_complete);
+                        }
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 6, cfx_request_handler_on_resource_load_complete_ptr);
+                    }
+                    m_OnResourceLoadComplete += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_OnResourceLoadComplete -= value;
+                    if(m_OnResourceLoadComplete == null) {
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 6, IntPtr.Zero);
+                    }
+                }
+            }
+        }
+
+        private CfxOnResourceLoadCompleteEventHandler m_OnResourceLoadComplete;
+
+        /// <summary>
         /// Called on the IO thread when the browser needs credentials from the user.
         /// |IsProxy| indicates whether the host is a proxy server. |Host| contains the
         /// hostname and |Port| contains the port number. Return true (1) to continue
@@ -582,7 +638,7 @@ namespace Chromium {
                             cfx_request_handler_get_auth_credentials = get_auth_credentials;
                             cfx_request_handler_get_auth_credentials_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_get_auth_credentials);
                         }
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 6, cfx_request_handler_get_auth_credentials_ptr);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 7, cfx_request_handler_get_auth_credentials_ptr);
                     }
                     m_GetAuthCredentials += value;
                 }
@@ -591,7 +647,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetAuthCredentials -= value;
                     if(m_GetAuthCredentials == null) {
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 6, IntPtr.Zero);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 7, IntPtr.Zero);
                     }
                 }
             }
@@ -620,7 +676,7 @@ namespace Chromium {
                             cfx_request_handler_on_quota_request = on_quota_request;
                             cfx_request_handler_on_quota_request_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_quota_request);
                         }
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 7, cfx_request_handler_on_quota_request_ptr);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 8, cfx_request_handler_on_quota_request_ptr);
                     }
                     m_OnQuotaRequest += value;
                 }
@@ -629,7 +685,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnQuotaRequest -= value;
                     if(m_OnQuotaRequest == null) {
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 7, IntPtr.Zero);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 8, IntPtr.Zero);
                     }
                 }
             }
@@ -656,7 +712,7 @@ namespace Chromium {
                             cfx_request_handler_on_protocol_execution = on_protocol_execution;
                             cfx_request_handler_on_protocol_execution_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_protocol_execution);
                         }
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 8, cfx_request_handler_on_protocol_execution_ptr);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 9, cfx_request_handler_on_protocol_execution_ptr);
                     }
                     m_OnProtocolExecution += value;
                 }
@@ -665,7 +721,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnProtocolExecution -= value;
                     if(m_OnProtocolExecution == null) {
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 8, IntPtr.Zero);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 9, IntPtr.Zero);
                     }
                 }
             }
@@ -694,7 +750,7 @@ namespace Chromium {
                             cfx_request_handler_on_certificate_error = on_certificate_error;
                             cfx_request_handler_on_certificate_error_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_certificate_error);
                         }
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 9, cfx_request_handler_on_certificate_error_ptr);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 10, cfx_request_handler_on_certificate_error_ptr);
                     }
                     m_OnCertificateError += value;
                 }
@@ -703,7 +759,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnCertificateError -= value;
                     if(m_OnCertificateError == null) {
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 9, IntPtr.Zero);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 10, IntPtr.Zero);
                     }
                 }
             }
@@ -727,7 +783,7 @@ namespace Chromium {
                             cfx_request_handler_on_plugin_crashed = on_plugin_crashed;
                             cfx_request_handler_on_plugin_crashed_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_plugin_crashed);
                         }
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 10, cfx_request_handler_on_plugin_crashed_ptr);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 11, cfx_request_handler_on_plugin_crashed_ptr);
                     }
                     m_OnPluginCrashed += value;
                 }
@@ -736,7 +792,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnPluginCrashed -= value;
                     if(m_OnPluginCrashed == null) {
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 10, IntPtr.Zero);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 11, IntPtr.Zero);
                     }
                 }
             }
@@ -761,7 +817,7 @@ namespace Chromium {
                             cfx_request_handler_on_render_view_ready = on_render_view_ready;
                             cfx_request_handler_on_render_view_ready_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_render_view_ready);
                         }
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 11, cfx_request_handler_on_render_view_ready_ptr);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 12, cfx_request_handler_on_render_view_ready_ptr);
                     }
                     m_OnRenderViewReady += value;
                 }
@@ -770,7 +826,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnRenderViewReady -= value;
                     if(m_OnRenderViewReady == null) {
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 11, IntPtr.Zero);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 12, IntPtr.Zero);
                     }
                 }
             }
@@ -794,7 +850,7 @@ namespace Chromium {
                             cfx_request_handler_on_render_process_terminated = on_render_process_terminated;
                             cfx_request_handler_on_render_process_terminated_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_handler_on_render_process_terminated);
                         }
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 12, cfx_request_handler_on_render_process_terminated_ptr);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 13, cfx_request_handler_on_render_process_terminated_ptr);
                     }
                     m_OnRenderProcessTerminated += value;
                 }
@@ -803,7 +859,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnRenderProcessTerminated -= value;
                     if(m_OnRenderProcessTerminated == null) {
-                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 12, IntPtr.Zero);
+                        CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 13, IntPtr.Zero);
                     }
                 }
             }
@@ -836,33 +892,37 @@ namespace Chromium {
                 m_OnResourceResponse = null;
                 CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 5, IntPtr.Zero);
             }
+            if(m_OnResourceLoadComplete != null) {
+                m_OnResourceLoadComplete = null;
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 6, IntPtr.Zero);
+            }
             if(m_GetAuthCredentials != null) {
                 m_GetAuthCredentials = null;
-                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 6, IntPtr.Zero);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 7, IntPtr.Zero);
             }
             if(m_OnQuotaRequest != null) {
                 m_OnQuotaRequest = null;
-                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 7, IntPtr.Zero);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 8, IntPtr.Zero);
             }
             if(m_OnProtocolExecution != null) {
                 m_OnProtocolExecution = null;
-                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 8, IntPtr.Zero);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 9, IntPtr.Zero);
             }
             if(m_OnCertificateError != null) {
                 m_OnCertificateError = null;
-                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 9, IntPtr.Zero);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 10, IntPtr.Zero);
             }
             if(m_OnPluginCrashed != null) {
                 m_OnPluginCrashed = null;
-                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 10, IntPtr.Zero);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 11, IntPtr.Zero);
             }
             if(m_OnRenderViewReady != null) {
                 m_OnRenderViewReady = null;
-                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 11, IntPtr.Zero);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 12, IntPtr.Zero);
             }
             if(m_OnRenderProcessTerminated != null) {
                 m_OnRenderProcessTerminated = null;
-                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 12, IntPtr.Zero);
+                CfxApi.cfx_request_handler_set_managed_callback(NativePtr, 13, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -1495,6 +1555,114 @@ namespace Chromium {
 
             public override string ToString() {
                 return String.Format("Browser={{{0}}}, Frame={{{1}}}, Request={{{2}}}, Response={{{3}}}", Browser, Frame, Request, Response);
+            }
+        }
+
+        /// <summary>
+        /// Called on the IO thread when a resource load has completed. |Request| and
+        /// |Response| represent the request and response respectively and cannot be
+        /// modified in this callback. |Status| indicates the load completion status.
+        /// |ReceivedContentLength| is the number of response bytes actually read.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxOnResourceLoadCompleteEventHandler(object sender, CfxOnResourceLoadCompleteEventArgs e);
+
+        /// <summary>
+        /// Called on the IO thread when a resource load has completed. |Request| and
+        /// |Response| represent the request and response respectively and cannot be
+        /// modified in this callback. |Status| indicates the load completion status.
+        /// |ReceivedContentLength| is the number of response bytes actually read.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxOnResourceLoadCompleteEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_frame;
+            internal CfxFrame m_frame_wrapped;
+            internal IntPtr m_request;
+            internal CfxRequest m_request_wrapped;
+            internal IntPtr m_response;
+            internal CfxResponse m_response_wrapped;
+            internal CfxUrlRequestStatus m_status;
+            internal long m_received_content_length;
+
+            internal CfxOnResourceLoadCompleteEventArgs(IntPtr browser, IntPtr frame, IntPtr request, IntPtr response, CfxUrlRequestStatus status, long received_content_length) {
+                m_browser = browser;
+                m_frame = frame;
+                m_request = request;
+                m_response = response;
+                m_status = status;
+                m_received_content_length = received_content_length;
+            }
+
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRequestHandler.OnResourceLoadComplete"/> callback.
+            /// </summary>
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the Frame parameter for the <see cref="CfxRequestHandler.OnResourceLoadComplete"/> callback.
+            /// </summary>
+            public CfxFrame Frame {
+                get {
+                    CheckAccess();
+                    if(m_frame_wrapped == null) m_frame_wrapped = CfxFrame.Wrap(m_frame);
+                    return m_frame_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the Request parameter for the <see cref="CfxRequestHandler.OnResourceLoadComplete"/> callback.
+            /// </summary>
+            public CfxRequest Request {
+                get {
+                    CheckAccess();
+                    if(m_request_wrapped == null) m_request_wrapped = CfxRequest.Wrap(m_request);
+                    return m_request_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the Response parameter for the <see cref="CfxRequestHandler.OnResourceLoadComplete"/> callback.
+            /// </summary>
+            public CfxResponse Response {
+                get {
+                    CheckAccess();
+                    if(m_response_wrapped == null) m_response_wrapped = CfxResponse.Wrap(m_response);
+                    return m_response_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the Status parameter for the <see cref="CfxRequestHandler.OnResourceLoadComplete"/> callback.
+            /// </summary>
+            public CfxUrlRequestStatus Status {
+                get {
+                    CheckAccess();
+                    return m_status;
+                }
+            }
+            /// <summary>
+            /// Get the ReceivedContentLength parameter for the <see cref="CfxRequestHandler.OnResourceLoadComplete"/> callback.
+            /// </summary>
+            public long ReceivedContentLength {
+                get {
+                    CheckAccess();
+                    return m_received_content_length;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, Request={{{2}}}, Response={{{3}}}, Status={{{4}}}, ReceivedContentLength={{{5}}}", Browser, Frame, Request, Response, Status, ReceivedContentLength);
             }
         }
 

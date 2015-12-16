@@ -211,14 +211,6 @@ static void cfx_browser_settings_get_caret_browsing(cef_browser_settings_t *self
     *caret_browsing = self->caret_browsing;
 }
 
-// cef_browser_settings_t->java
-static void cfx_browser_settings_set_java(cef_browser_settings_t *self, cef_state_t java) {
-    self->java = java;
-}
-static void cfx_browser_settings_get_java(cef_browser_settings_t *self, cef_state_t* java) {
-    *java = self->java;
-}
-
 // cef_browser_settings_t->plugins
 static void cfx_browser_settings_set_plugins(cef_browser_settings_t *self, cef_state_t plugins) {
     self->plugins = plugins;

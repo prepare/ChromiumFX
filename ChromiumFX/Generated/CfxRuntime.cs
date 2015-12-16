@@ -297,6 +297,29 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// This is a convenience function for formatting a URL in a concise and human-
+        /// friendly way to help users make security-related decisions (or in other
+        /// circumstances when people need to distinguish sites, origins, or otherwise-
+        /// simplified URLs from each other). Internationalized domain names (IDN) may be
+        /// presented in Unicode if |languages| accepts the Unicode representation. The
+        /// returned value will (a) omit the path for standard schemes, excepting file
+        /// and filesystem, and (b) omit the port if it is the default for the scheme. Do
+        /// not use this for URLs which will be parsed or sent to other applications.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
+        /// </remarks>
+        public static string FormatUrlForSecurityDisplay(string originUrl, string languages) {
+            var originUrl_pinned = new PinnedString(originUrl);
+            var languages_pinned = new PinnedString(languages);
+            var __retval = CfxApi.cfx_format_url_for_security_display(originUrl_pinned.Obj.PinnedPtr, originUrl_pinned.Length, languages_pinned.Obj.PinnedPtr, languages_pinned.Length);
+            originUrl_pinned.Obj.Free();
+            languages_pinned.Obj.Free();
+            return StringFunctions.ConvertStringUserfree(__retval);
+        }
+
+        /// <summary>
         /// Get the extensions associated with the given mime type. This should be passed
         /// in lower case. There could be multiple extensions for a given mime type, like
         /// "html,htm" for "text/html", or "txt,text,html,..." for "text/*". Any existing

@@ -42,6 +42,11 @@ static int cfx_post_data_is_read_only(cef_post_data_t* self) {
     return self->is_read_only(self);
 }
 
+// has_excluded_elements
+static int cfx_post_data_has_excluded_elements(cef_post_data_t* self) {
+    return self->has_excluded_elements(self);
+}
+
 // get_element_count
 static int cfx_post_data_get_element_count(cef_post_data_t* self) {
     return (int)(self->get_element_count(self));

@@ -130,6 +130,14 @@ static void cfx_settings_get_persist_session_cookies(cef_settings_t *self, int* 
     *persist_session_cookies = self->persist_session_cookies;
 }
 
+// cef_settings_t->persist_user_preferences
+static void cfx_settings_set_persist_user_preferences(cef_settings_t *self, int persist_user_preferences) {
+    self->persist_user_preferences = persist_user_preferences;
+}
+static void cfx_settings_get_persist_user_preferences(cef_settings_t *self, int* persist_user_preferences) {
+    *persist_user_preferences = self->persist_user_preferences;
+}
+
 // cef_settings_t->user_agent
 static void cfx_settings_set_user_agent(cef_settings_t *self, char16 *user_agent_str, int user_agent_length) {
     cef_string_utf16_set(user_agent_str, user_agent_length, &(self->user_agent), 1);

@@ -831,6 +831,45 @@ namespace Chromium {
         Renderer
     }
     /// <summary>
+    /// Policy for how the Referrer HTTP header value will be sent during navigation.
+    /// If the `--no-referrers` command-line flag is specified then the policy value
+    /// will be ignored and the Referrer value will never be sent.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxReferrerPolicy {
+        /// <summary>
+        /// Always send the complete Referrer value.
+        /// </summary>
+        Always,
+        /// <summary>
+        /// Use the default policy. This is REFERRER_POLICY_ORIGIN_WHEN_CROSS_ORIGIN
+        /// when the `--reduced-referrer-granularity` command-line flag is specified
+        /// and REFERRER_POLICY_NO_REFERRER_WHEN_DOWNGRADE otherwise.
+        /// </summary>
+        Default,
+        /// <summary>
+        /// When navigating from HTTPS to HTTP do not send the Referrer value.
+        /// Otherwise, send the complete Referrer value.
+        /// </summary>
+        NoReferrerWhenDowngrade,
+        /// <summary>
+        /// Never send the Referrer value.
+        /// </summary>
+        Never,
+        /// <summary>
+        /// Only send the origin component of the Referrer value.
+        /// </summary>
+        Origin,
+        /// <summary>
+        /// When navigating cross-origin only send the origin component of the Referrer
+        /// value. Otherwise, send the complete Referrer value.
+        /// </summary>
+        OriginWhenCrossOrigin
+    }
+    /// <summary>
     /// Resource type for a request.
     /// </summary>
     /// <remarks>
@@ -1199,7 +1238,6 @@ namespace Chromium {
         SkipCache = unchecked((int)1 << 0),
         AllowCachedCredentials = unchecked((int)1 << 1),
         ReportUploadProgress = unchecked((int)1 << 3),
-        ReportRawHeaders = unchecked((int)1 << 5),
         NoDownloadData = unchecked((int)1 << 6),
         NoRetryOn5xx = unchecked((int)1 << 7)
     }
