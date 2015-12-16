@@ -92,6 +92,25 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
+        /// Returns true (1) if the underlying POST data includes elements that are not
+        /// represented by this CfrPostData object (for example, multi-part file
+        /// upload data). Modifying CfrPostData objects with excluded elements may
+        /// result in the request failing.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
+        public bool HasExcludedElements {
+            get {
+                var call = new CfxPostDataHasExcludedElementsRenderProcessCall();
+                call.self = CfrObject.Unwrap(this);
+                call.RequestExecution(this);
+                return call.__retval;
+            }
+        }
+
+        /// <summary>
         /// Returns the number of existing post data elements.
         /// </summary>
         /// <remarks>

@@ -38,6 +38,7 @@ namespace Chromium.Remote {
         private delegate RemoteCall RemoteCallCtor();
         private static RemoteCallCtor[] callConstructors =  {
             () => { return new CfxRuntimeCurrentlyOnRenderProcessCall(); },
+            () => { return new CfxRuntimeFormatUrlForSecurityDisplayRenderProcessCall(); },
             () => { return new CfxRuntimePostDelayedTaskRenderProcessCall(); },
             () => { return new CfxRuntimePostTaskRenderProcessCall(); },
             () => { return new CfxRuntimeRegisterExtensionRenderProcessCall(); },
@@ -264,6 +265,7 @@ namespace Chromium.Remote {
             () => { return new CfxOnLoadErrorGetFailedUrlRenderProcessCall(); },
             () => { return new CfxPostDataCreateRenderProcessCall(); },
             () => { return new CfxPostDataIsReadOnlyRenderProcessCall(); },
+            () => { return new CfxPostDataHasExcludedElementsRenderProcessCall(); },
             () => { return new CfxPostDataGetElementCountRenderProcessCall(); },
             () => { return new CfxPostDataGetElementsRenderProcessCall(); },
             () => { return new CfxPostDataRemoveElementRenderProcessCall(); },
@@ -352,6 +354,9 @@ namespace Chromium.Remote {
             () => { return new CfxRequestSetUrlRenderProcessCall(); },
             () => { return new CfxRequestGetMethodRenderProcessCall(); },
             () => { return new CfxRequestSetMethodRenderProcessCall(); },
+            () => { return new CfxRequestSetReferrerRenderProcessCall(); },
+            () => { return new CfxRequestGetReferrerUrlRenderProcessCall(); },
+            () => { return new CfxRequestGetReferrerPolicyRenderProcessCall(); },
             () => { return new CfxRequestGetPostDataRenderProcessCall(); },
             () => { return new CfxRequestSetPostDataRenderProcessCall(); },
             () => { return new CfxRequestGetHeaderMapRenderProcessCall(); },

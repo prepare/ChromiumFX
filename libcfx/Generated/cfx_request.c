@@ -64,6 +64,22 @@ static void cfx_request_set_method(cef_request_t* self, char16 *method_str, int 
     self->set_method(self, &method);
 }
 
+// set_referrer
+static void cfx_request_set_referrer(cef_request_t* self, char16 *referrer_url_str, int referrer_url_length, cef_referrer_policy_t policy) {
+    cef_string_t referrer_url = { referrer_url_str, referrer_url_length, 0 };
+    self->set_referrer(self, &referrer_url, policy);
+}
+
+// get_referrer_url
+static cef_string_userfree_t cfx_request_get_referrer_url(cef_request_t* self) {
+    return self->get_referrer_url(self);
+}
+
+// get_referrer_policy
+static cef_referrer_policy_t cfx_request_get_referrer_policy(cef_request_t* self) {
+    return self->get_referrer_policy(self);
+}
+
 // get_post_data
 static cef_post_data_t* cfx_request_get_post_data(cef_request_t* self) {
     return self->get_post_data(self);

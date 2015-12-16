@@ -45,6 +45,7 @@ static void (*cef_enable_highdpi_support_ptr)();
 static int (*cef_end_tracing_ptr)(const cef_string_t* tracing_file, cef_end_tracing_callback_t* callback);
 static int (*cef_execute_process_ptr)(const cef_main_args_t* args, cef_app_t* application, void* windows_sandbox_info);
 static void (*cef_force_web_plugin_shutdown_ptr)(const cef_string_t* path);
+static cef_string_userfree_t (*cef_format_url_for_security_display_ptr)(const cef_string_t* origin_url, const cef_string_t* languages);
 static void (*cef_get_extensions_for_mime_type_ptr)(const cef_string_t* mime_type, cef_string_list_t extensions);
 static int (*cef_get_geolocation_ptr)(cef_get_geolocation_callback_t* callback);
 static cef_string_userfree_t (*cef_get_mime_type_ptr)(const cef_string_t* extension);
@@ -162,6 +163,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_end_tracing_ptr = (int (*)(const cef_string_t*, cef_end_tracing_callback_t*))cfx_platform_get_fptr(libcef, "cef_end_tracing");
     cef_execute_process_ptr = (int (*)(const cef_main_args_t*, cef_app_t*, void*))cfx_platform_get_fptr(libcef, "cef_execute_process");
     cef_force_web_plugin_shutdown_ptr = (void (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_force_web_plugin_shutdown");
+    cef_format_url_for_security_display_ptr = (cef_string_userfree_t (*)(const cef_string_t*, const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_format_url_for_security_display");
     cef_get_extensions_for_mime_type_ptr = (void (*)(const cef_string_t*, cef_string_list_t))cfx_platform_get_fptr(libcef, "cef_get_extensions_for_mime_type");
     cef_get_geolocation_ptr = (int (*)(cef_get_geolocation_callback_t*))cfx_platform_get_fptr(libcef, "cef_get_geolocation");
     cef_get_mime_type_ptr = (cef_string_userfree_t (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_get_mime_type");
@@ -280,6 +282,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_end_tracing cef_end_tracing_ptr
 #define cef_execute_process cef_execute_process_ptr
 #define cef_force_web_plugin_shutdown cef_force_web_plugin_shutdown_ptr
+#define cef_format_url_for_security_display cef_format_url_for_security_display_ptr
 #define cef_get_extensions_for_mime_type cef_get_extensions_for_mime_type_ptr
 #define cef_get_geolocation cef_get_geolocation_ptr
 #define cef_get_mime_type cef_get_mime_type_ptr

@@ -52,6 +52,28 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
+        /// This is a convenience function for formatting a URL in a concise and human-
+        /// friendly way to help users make security-related decisions (or in other
+        /// circumstances when people need to distinguish sites, origins, or otherwise-
+        /// simplified URLs from each other). Internationalized domain names (IDN) may be
+        /// presented in Unicode if |languages| accepts the Unicode representation. The
+        /// returned value will (a) omit the path for standard schemes, excepting file
+        /// and filesystem, and (b) omit the port if it is the default for the scheme. Do
+        /// not use this for URLs which will be parsed or sent to other applications.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
+        /// </remarks>
+        public static string FormatUrlForSecurityDisplay(string originUrl, string languages) {
+            var call = new CfxRuntimeFormatUrlForSecurityDisplayRenderProcessCall();
+            call.originUrl = originUrl;
+            call.languages = languages;
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+            return call.__retval;
+        }
+
+        /// <summary>
         /// Post a task for delayed execution on the specified thread. Equivalent to
         /// using CfrTaskRunner.GetForThread(threadId).PostDelayedTask(task,
         /// delay_ms).
