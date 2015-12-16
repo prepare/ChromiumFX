@@ -51,6 +51,9 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2526.0 ###
+- Update to cef version 3.2526.1359 with API changes.
+
 ### Version 3.2454.2 ###
 - Expose the FindHandler through ChromiumWebBrowser.
 - Implement a Find Toolbar for the ChromiumWebBrowser Control.
