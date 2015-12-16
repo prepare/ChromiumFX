@@ -131,6 +131,32 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Get the referrer URL.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
+        public string ReferrerUrl {
+            get {
+                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_request_get_referrer_url(NativePtr));
+            }
+        }
+
+        /// <summary>
+        /// Get the referrer policy.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
+        public CfxReferrerPolicy ReferrerPolicy {
+            get {
+                return CfxApi.cfx_request_get_referrer_policy(NativePtr);
+            }
+        }
+
+        /// <summary>
         /// Get or set the post data.
         /// </summary>
         /// <remarks>
@@ -233,7 +259,22 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Get the header values.
+        /// Set the referrer URL and policy. If non-NULL the referrer URL must be fully
+        /// qualified with an HTTP or HTTPS scheme component. Any username, password or
+        /// ref component will be removed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
+        public void SetReferrer(string referrerUrl, CfxReferrerPolicy policy) {
+            var referrerUrl_pinned = new PinnedString(referrerUrl);
+            CfxApi.cfx_request_set_referrer(NativePtr, referrerUrl_pinned.Obj.PinnedPtr, referrerUrl_pinned.Length, policy);
+            referrerUrl_pinned.Obj.Free();
+        }
+
+        /// <summary>
+        /// Get the header values. Will not include the Referer value if any.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -251,7 +292,8 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Set the header values.
+        /// Set the header values. If a Referer value exists in the header map it will
+        /// be removed and ignored.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

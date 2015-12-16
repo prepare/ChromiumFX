@@ -141,6 +141,38 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
+        /// Get the referrer URL.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
+        public string ReferrerUrl {
+            get {
+                var call = new CfxRequestGetReferrerUrlRenderProcessCall();
+                call.self = CfrObject.Unwrap(this);
+                call.RequestExecution(this);
+                return call.__retval;
+            }
+        }
+
+        /// <summary>
+        /// Get the referrer policy.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
+        public CfxReferrerPolicy ReferrerPolicy {
+            get {
+                var call = new CfxRequestGetReferrerPolicyRenderProcessCall();
+                call.self = CfrObject.Unwrap(this);
+                call.RequestExecution(this);
+                return (CfxReferrerPolicy)call.__retval;
+            }
+        }
+
+        /// <summary>
         /// Get the post data.
         /// 
         /// Set the post data.
@@ -270,7 +302,24 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Get the header values.
+        /// Set the referrer URL and policy. If non-NULL the referrer URL must be fully
+        /// qualified with an HTTP or HTTPS scheme component. Any username, password or
+        /// ref component will be removed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
+        /// </remarks>
+        public void SetReferrer(string referrerUrl, CfxReferrerPolicy policy) {
+            var call = new CfxRequestSetReferrerRenderProcessCall();
+            call.self = CfrObject.Unwrap(this);
+            call.referrerUrl = referrerUrl;
+            call.policy = (int)policy;
+            call.RequestExecution(this);
+        }
+
+        /// <summary>
+        /// Get the header values. Will not include the Referer value if any.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -284,7 +333,8 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Set the header values.
+        /// Set the header values. If a Referer value exists in the header map it will
+        /// be removed and ignored.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

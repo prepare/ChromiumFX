@@ -384,25 +384,6 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Controls whether the Java plugin will be loaded. Also configurable using
-        /// the "disable-java" command-line switch.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
-        /// </remarks>
-        public CfxState Java {
-            get {
-                CfxState value;
-                CfxApi.cfx_browser_settings_get_java(nativePtrUnchecked, out value);
-                return value;
-            }
-            set {
-                CfxApi.cfx_browser_settings_set_java(nativePtrUnchecked, value);
-            }
-        }
-
-        /// <summary>
         /// Controls whether any plugins will be loaded. Also configurable using the
         /// "disable-plugins" command-line switch.
         /// </summary>
@@ -469,7 +450,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
         /// </remarks>
-        public CfxState WebSecUrity {
+        public CfxState WebSecurity {
             get {
                 CfxState value;
                 CfxApi.cfx_browser_settings_get_web_security(nativePtrUnchecked, out value);

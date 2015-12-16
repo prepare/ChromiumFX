@@ -96,6 +96,10 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_force_web_plugin_shutdown_delegate(IntPtr path_str, int path_length);
         public static cfx_force_web_plugin_shutdown_delegate cfx_force_web_plugin_shutdown;
+        // CEF_EXPORT cef_string_userfree_t cef_format_url_for_security_display(const cef_string_t* origin_url, const cef_string_t* languages);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate IntPtr cfx_format_url_for_security_display_delegate(IntPtr origin_url_str, int origin_url_length, IntPtr languages_str, int languages_length);
+        public static cfx_format_url_for_security_display_delegate cfx_format_url_for_security_display;
         // CEF_EXPORT void cef_get_extensions_for_mime_type(const cef_string_t* mime_type, cef_string_list_t extensions);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_get_extensions_for_mime_type_delegate(IntPtr mime_type_str, int mime_type_length, IntPtr extensions);
@@ -924,15 +928,6 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_browser_settings_get_caret_browsing_delegate(IntPtr self, out CfxState caret_browsing);
         public static cfx_browser_settings_get_caret_browsing_delegate cfx_browser_settings_get_caret_browsing;
-
-        // static void cfx_browser_settings_set_java(cef_browser_settings_t *self, cef_state_t java)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_java_delegate(IntPtr self, CfxState java);
-        public static cfx_browser_settings_set_java_delegate cfx_browser_settings_set_java;
-        // static void cfx_browser_settings_get_java(cef_browser_settings_t *self, cef_state_t* java)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_java_delegate(IntPtr self, out CfxState java);
-        public static cfx_browser_settings_get_java_delegate cfx_browser_settings_get_java;
 
         // static void cfx_browser_settings_set_plugins(cef_browser_settings_t *self, cef_state_t plugins)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -3422,6 +3417,11 @@ namespace Chromium {
         public delegate int cfx_post_data_is_read_only_delegate(IntPtr self);
         public static cfx_post_data_is_read_only_delegate cfx_post_data_is_read_only;
 
+        // static int cfx_post_data_has_excluded_elements(cef_post_data_t* self)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate int cfx_post_data_has_excluded_elements_delegate(IntPtr self);
+        public static cfx_post_data_has_excluded_elements_delegate cfx_post_data_has_excluded_elements;
+
         // static int cfx_post_data_get_element_count(cef_post_data_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate int cfx_post_data_get_element_count_delegate(IntPtr self);
@@ -3777,6 +3777,21 @@ namespace Chromium {
         public delegate void cfx_request_set_method_delegate(IntPtr self, IntPtr method_str, int method_length);
         public static cfx_request_set_method_delegate cfx_request_set_method;
 
+        // static void cfx_request_set_referrer(cef_request_t* self, char16 *referrer_url_str, int referrer_url_length, cef_referrer_policy_t policy)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_request_set_referrer_delegate(IntPtr self, IntPtr referrer_url_str, int referrer_url_length, CfxReferrerPolicy policy);
+        public static cfx_request_set_referrer_delegate cfx_request_set_referrer;
+
+        // static cef_string_userfree_t cfx_request_get_referrer_url(cef_request_t* self)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate IntPtr cfx_request_get_referrer_url_delegate(IntPtr self);
+        public static cfx_request_get_referrer_url_delegate cfx_request_get_referrer_url;
+
+        // static cef_referrer_policy_t cfx_request_get_referrer_policy(cef_request_t* self)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate CfxReferrerPolicy cfx_request_get_referrer_policy_delegate(IntPtr self);
+        public static cfx_request_get_referrer_policy_delegate cfx_request_get_referrer_policy;
+
         // static cef_post_data_t* cfx_request_get_post_data(cef_request_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate IntPtr cfx_request_get_post_data_delegate(IntPtr self);
@@ -3907,6 +3922,31 @@ namespace Chromium {
         public delegate void cfx_request_context_purge_plugin_list_cache_delegate(IntPtr self, int reload_pages);
         public static cfx_request_context_purge_plugin_list_cache_delegate cfx_request_context_purge_plugin_list_cache;
 
+        // static int cfx_request_context_has_preference(cef_request_context_t* self, char16 *name_str, int name_length)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate int cfx_request_context_has_preference_delegate(IntPtr self, IntPtr name_str, int name_length);
+        public static cfx_request_context_has_preference_delegate cfx_request_context_has_preference;
+
+        // static cef_value_t* cfx_request_context_get_preference(cef_request_context_t* self, char16 *name_str, int name_length)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate IntPtr cfx_request_context_get_preference_delegate(IntPtr self, IntPtr name_str, int name_length);
+        public static cfx_request_context_get_preference_delegate cfx_request_context_get_preference;
+
+        // static cef_dictionary_value_t* cfx_request_context_get_all_preferences(cef_request_context_t* self, int include_defaults)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate IntPtr cfx_request_context_get_all_preferences_delegate(IntPtr self, int include_defaults);
+        public static cfx_request_context_get_all_preferences_delegate cfx_request_context_get_all_preferences;
+
+        // static int cfx_request_context_can_set_preference(cef_request_context_t* self, char16 *name_str, int name_length)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate int cfx_request_context_can_set_preference_delegate(IntPtr self, IntPtr name_str, int name_length);
+        public static cfx_request_context_can_set_preference_delegate cfx_request_context_can_set_preference;
+
+        // static int cfx_request_context_set_preference(cef_request_context_t* self, char16 *name_str, int name_length, cef_value_t* value, char16 **error_str, int *error_length)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate int cfx_request_context_set_preference_delegate(IntPtr self, IntPtr name_str, int name_length, IntPtr value, ref IntPtr error_str, ref int error_length);
+        public static cfx_request_context_set_preference_delegate cfx_request_context_set_preference;
+
 
         // CfxRequestContextHandler
 
@@ -3939,6 +3979,15 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_request_context_settings_get_persist_session_cookies_delegate(IntPtr self, out int persist_session_cookies);
         public static cfx_request_context_settings_get_persist_session_cookies_delegate cfx_request_context_settings_get_persist_session_cookies;
+
+        // static void cfx_request_context_settings_set_persist_user_preferences(cef_request_context_settings_t *self, int persist_user_preferences)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_request_context_settings_set_persist_user_preferences_delegate(IntPtr self, int persist_user_preferences);
+        public static cfx_request_context_settings_set_persist_user_preferences_delegate cfx_request_context_settings_set_persist_user_preferences;
+        // static void cfx_request_context_settings_get_persist_user_preferences(cef_request_context_settings_t *self, int* persist_user_preferences)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_request_context_settings_get_persist_user_preferences_delegate(IntPtr self, out int persist_user_preferences);
+        public static cfx_request_context_settings_get_persist_user_preferences_delegate cfx_request_context_settings_get_persist_user_preferences;
 
         // static void cfx_request_context_settings_set_ignore_certificate_errors(cef_request_context_settings_t *self, int ignore_certificate_errors)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -4252,6 +4301,15 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_settings_get_persist_session_cookies_delegate(IntPtr self, out int persist_session_cookies);
         public static cfx_settings_get_persist_session_cookies_delegate cfx_settings_get_persist_session_cookies;
+
+        // static void cfx_settings_set_persist_user_preferences(cef_settings_t *self, int persist_user_preferences)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_settings_set_persist_user_preferences_delegate(IntPtr self, int persist_user_preferences);
+        public static cfx_settings_set_persist_user_preferences_delegate cfx_settings_set_persist_user_preferences;
+        // static void cfx_settings_get_persist_user_preferences(cef_settings_t *self, int* persist_user_preferences)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_settings_get_persist_user_preferences_delegate(IntPtr self, out int persist_user_preferences);
+        public static cfx_settings_get_persist_user_preferences_delegate cfx_settings_get_persist_user_preferences;
 
         // static void cfx_settings_set_user_agent(cef_settings_t *self, char16 *user_agent_str, int user_agent_length)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]

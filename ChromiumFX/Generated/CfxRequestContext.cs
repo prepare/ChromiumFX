@@ -237,6 +237,97 @@ namespace Chromium {
             CfxApi.cfx_request_context_purge_plugin_list_cache(NativePtr, reloadPages ? 1 : 0);
         }
 
+        /// <summary>
+        /// Returns true (1) if a preference with the specified |name| exists. This
+        /// function must be called on the browser process UI thread.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
+        public bool HasPreference(string name) {
+            var name_pinned = new PinnedString(name);
+            var __retval = CfxApi.cfx_request_context_has_preference(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length);
+            name_pinned.Obj.Free();
+            return 0 != __retval;
+        }
+
+        /// <summary>
+        /// Returns the value for the preference with the specified |name|. Returns
+        /// NULL if the preference does not exist. The returned object contains a copy
+        /// of the underlying preference value and modifications to the returned object
+        /// will not modify the underlying preference value. This function must be
+        /// called on the browser process UI thread.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
+        public CfxValue GetPreference(string name) {
+            var name_pinned = new PinnedString(name);
+            var __retval = CfxApi.cfx_request_context_get_preference(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length);
+            name_pinned.Obj.Free();
+            return CfxValue.Wrap(__retval);
+        }
+
+        /// <summary>
+        /// Returns all preferences as a dictionary. If |includeDefaults| is true (1)
+        /// then preferences currently at their default value will be included. The
+        /// returned object contains a copy of the underlying preference values and
+        /// modifications to the returned object will not modify the underlying
+        /// preference values. This function must be called on the browser process UI
+        /// thread.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
+        public CfxDictionaryValue GetAllPreferences(bool includeDefaults) {
+            return CfxDictionaryValue.Wrap(CfxApi.cfx_request_context_get_all_preferences(NativePtr, includeDefaults ? 1 : 0));
+        }
+
+        /// <summary>
+        /// Returns true (1) if the preference with the specified |name| can be
+        /// modified using SetPreference. As one example preferences set via the
+        /// command-line usually cannot be modified. This function must be called on
+        /// the browser process UI thread.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
+        public bool CanSetPreference(string name) {
+            var name_pinned = new PinnedString(name);
+            var __retval = CfxApi.cfx_request_context_can_set_preference(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length);
+            name_pinned.Obj.Free();
+            return 0 != __retval;
+        }
+
+        /// <summary>
+        /// Set the |value| associated with preference |name|. Returns true (1) if the
+        /// value is set successfully and false (0) otherwise. If |value| is NULL the
+        /// preference will be restored to its default value. If setting the preference
+        /// fails then |error| will be populated with a detailed description of the
+        /// problem. This function must be called on the browser process UI thread.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
+        public bool SetPreference(string name, CfxValue value, ref string error) {
+            var name_pinned = new PinnedString(name);
+            var error_pinned = new PinnedString(error);
+            IntPtr error_str = error_pinned.Obj.PinnedPtr;
+            int error_length = error_pinned.Length;
+            var __retval = CfxApi.cfx_request_context_set_preference(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length, CfxValue.Unwrap(value), ref error_str, ref error_length);
+            name_pinned.Obj.Free();
+            if(error_str != error_pinned.Obj.PinnedPtr) {
+                error = System.Runtime.InteropServices.Marshal.PtrToStringUni(error_str, error_length);
+            }
+            error_pinned.Obj.Free();
+            return 0 != __retval;
+        }
+
         internal override void OnDispose(IntPtr nativePtr) {
             weakCache.Remove(nativePtr);
             base.OnDispose(nativePtr);

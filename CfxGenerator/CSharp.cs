@@ -200,6 +200,7 @@ public class CSharp {
         name = name.Replace("DisAllowed", "Disallowed");
         name = name.Replace("ubMenu", "ubmenu");
         name = name.Replace("Uring", "uring");
+        name = name.Replace("SecUrity", "Security");
         return name;
     }
 

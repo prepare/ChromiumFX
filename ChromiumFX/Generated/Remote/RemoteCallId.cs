@@ -36,6 +36,7 @@ using System;
 namespace Chromium.Remote {
     internal enum RemoteCallId : ushort {
         CfxRuntimeCurrentlyOnRenderProcessCall,
+        CfxRuntimeFormatUrlForSecurityDisplayRenderProcessCall,
         CfxRuntimePostDelayedTaskRenderProcessCall,
         CfxRuntimePostTaskRenderProcessCall,
         CfxRuntimeRegisterExtensionRenderProcessCall,
@@ -262,6 +263,7 @@ namespace Chromium.Remote {
         CfxOnLoadErrorGetFailedUrlRenderProcessCall,
         CfxPostDataCreateRenderProcessCall,
         CfxPostDataIsReadOnlyRenderProcessCall,
+        CfxPostDataHasExcludedElementsRenderProcessCall,
         CfxPostDataGetElementCountRenderProcessCall,
         CfxPostDataGetElementsRenderProcessCall,
         CfxPostDataRemoveElementRenderProcessCall,
@@ -350,6 +352,9 @@ namespace Chromium.Remote {
         CfxRequestSetUrlRenderProcessCall,
         CfxRequestGetMethodRenderProcessCall,
         CfxRequestSetMethodRenderProcessCall,
+        CfxRequestSetReferrerRenderProcessCall,
+        CfxRequestGetReferrerUrlRenderProcessCall,
+        CfxRequestGetReferrerPolicyRenderProcessCall,
         CfxRequestGetPostDataRenderProcessCall,
         CfxRequestSetPostDataRenderProcessCall,
         CfxRequestGetHeaderMapRenderProcessCall,

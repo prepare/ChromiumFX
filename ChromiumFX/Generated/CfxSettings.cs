@@ -233,9 +233,9 @@ namespace Chromium {
         /// <summary>
         /// To persist session cookies (cookies without an expiry date or validity
         /// interval) by default when using the global cookie manager set this value to
-        /// true. Session cookies are generally intended to be transient and most Web
-        /// browsers do not persist them. A |cachePath| value must also be specified
-        /// to enable this feature. Also configurable using the
+        /// true (1). Session cookies are generally intended to be transient and most
+        /// Web browsers do not persist them. A |cachePath| value must also be
+        /// specified to enable this feature. Also configurable using the
         /// "persist-session-cookies" command-line switch. Can be overridden for
         /// individual CfxRequestContext instances via the
         /// CfxRequestContextSettings.PersistSessionCookies value.
@@ -252,6 +252,29 @@ namespace Chromium {
             }
             set {
                 CfxApi.cfx_settings_set_persist_session_cookies(nativePtrUnchecked, value ? 1 : 0);
+            }
+        }
+
+        /// <summary>
+        /// To persist user preferences as a JSON file in the cache path directory set
+        /// this value to true (1). A |cachePath| value must also be specified
+        /// to enable this feature. Also configurable using the
+        /// "persist-user-preferences" command-line switch. Can be overridden for
+        /// individual CfxRequestContext instances via the
+        /// CfxRequestContextSettings.PersistUserPreferences value.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
+        public bool PersistUserPreferences {
+            get {
+                int value;
+                CfxApi.cfx_settings_get_persist_user_preferences(nativePtrUnchecked, out value);
+                return 0 != value;
+            }
+            set {
+                CfxApi.cfx_settings_set_persist_user_preferences(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -328,10 +351,12 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// The directory and file name to use for the debug log. If empty, the
-        /// default name of "debug.log" will be used and the file will be written
-        /// to the application directory. Also configurable using the "log-file"
-        /// command-line switch.
+        /// The directory and file name to use for the debug log. If empty a default
+        /// log file name and location will be used. On Windows and Linux a "debug.log"
+        /// file will be written in the main executable directory. On Mac OS X a
+        /// "~/Library/Logs/&lt;app name>_debug.log" file will be written where &lt;app name>
+        /// is the name of the main app executable. Also configurable using the
+        /// "log-file" command-line switch.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
