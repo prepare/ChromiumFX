@@ -51,6 +51,11 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2454.2 ###
+- Expose the FindHandler through ChromiumWebBrowser.
+- Implement a Find Toolbar for the ChromiumWebBrowser Control.
+- Use BeginInvoke and Wait instead of Invoke for marshalled render process invokes.
+
 ### Version 3.2454.1 ###
 - Update to cef version 3.2454.1344. The CEF API has changed since the last supported version, need updated cef binaries for this release.
 - Resolved issue #35
