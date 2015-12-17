@@ -281,7 +281,35 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         b.EndBlock();
         b.AppendLine();
 
-        Signature.EmitPublicEventArgProperties(b);
+        for(var i = 1; i <= Signature.ManagedArguments.Count() - 1; i++) {
+            var arg = Signature.ManagedArguments[i];
+            var cd = new CommentData();
+            if(arg.ArgumentType.IsIn && arg.ArgumentType.IsOut) {
+                cd.Lines = new string[] { string.Format("Get or set the {0} parameter for the <see cref=\"{1}.{2}\"/> callback.", arg.PublicPropertyName, Parent.ClassName, PublicName) };
+            } else if(arg.ArgumentType.IsIn) {
+                cd.Lines = new string[] { string.Format("Get the {0} parameter for the <see cref=\"{1}.{2}\"/> callback.", arg.PublicPropertyName, Parent.ClassName, PublicName) };
+            } else {
+                cd.Lines = new string[] { string.Format("Set the {0} out parameter for the <see cref=\"{1}.{2}\"/> callback.", arg.PublicPropertyName, Parent.ClassName, PublicName) };
+            }
+            if(arg.ArgumentType is CefStructArrayType && arg.ArgumentType.IsIn) {
+                cd.Lines = cd.Lines.Concat(new string[] { "Do not keep a reference to the elements of this array outside of this function." }).ToArray();
+            }
+            b.AppendSummary(cd);
+            b.BeginBlock("public {0} {1}", arg.ArgumentType.PublicSymbol, arg.PublicPropertyName);
+            if(arg.ArgumentType.IsIn) {
+                b.BeginBlock("get");
+                b.AppendLine("CheckAccess();");
+                arg.EmitPublicEventArgGetterStatements(b);
+                b.EndBlock();
+            }
+            if(arg.ArgumentType.IsOut) {
+                b.BeginBlock("set");
+                b.AppendLine("CheckAccess();");
+                arg.EmitPublicEventArgSetterStatements(b);
+                b.EndBlock();
+            }
+            b.EndBlock();
+        }
 
         if(!Signature.PublicReturnType.IsVoid) {
             var cd = new CommentData();
