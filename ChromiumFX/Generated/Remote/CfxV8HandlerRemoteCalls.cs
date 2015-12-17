@@ -204,33 +204,6 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8HandlerExecuteGetExceptionRenderProcessCall : RenderProcessCall {
-
-        internal CfxV8HandlerExecuteGetExceptionRenderProcessCall()
-            : base(RemoteCallId.CfxV8HandlerExecuteGetExceptionRenderProcessCall) {}
-
-        internal ulong eventArgsId;
-        internal string value;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(eventArgsId);
-        }
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out eventArgsId);
-        }
-        protected override void WriteReturn(StreamHandler h) {
-            h.Write(value);
-        }
-        protected override void ReadReturn(StreamHandler h) {
-            h.Read(out value);
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxV8HandlerExecuteEventArgs)BrowserProcessCall.GetEventArgs(eventArgsId);
-            value = e.Exception;
-        }
-    }
-
     internal class CfxV8HandlerExecuteSetReturnValueRenderProcessCall : RenderProcessCall {
 
         internal CfxV8HandlerExecuteSetReturnValueRenderProcessCall()

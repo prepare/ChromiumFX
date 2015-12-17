@@ -36,6 +36,8 @@ public class CefV8HandlerExecuteSignature : SignatureWithStructPtrArray {
 
     public CefV8HandlerExecuteSignature(ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api)
         : base(SignatureType.ClientCallback, owner, sd, api, 4, 3) {
+        Arguments[6] = new Argument(Arguments[6], new CefStringOutType());
+        base.ManagedArguments[5] = new Argument(base.ManagedArguments[5], new CefStringOutType());
         var list = new List<Argument>();
         foreach(var arg in base.ManagedArguments) {
             if(arg.VarName != "retval") {

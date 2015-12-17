@@ -473,7 +473,6 @@ namespace Chromium.Remote {
             () => { return new CfxV8HandlerExecuteGetObjectRenderProcessCall(); },
             () => { return new CfxV8HandlerExecuteGetArgumentsRenderProcessCall(); },
             () => { return new CfxV8HandlerExecuteSetExceptionRenderProcessCall(); },
-            () => { return new CfxV8HandlerExecuteGetExceptionRenderProcessCall(); },
             () => { return new CfxV8HandlerExecuteSetReturnValueRenderProcessCall(); },
             () => { return new CfxV8StackFrameIsValidRenderProcessCall(); },
             () => { return new CfxV8StackFrameGetScriptNameRenderProcessCall(); },

@@ -61,6 +61,7 @@
     <Compile Include="ApiTypes\CefStringListType.cs" />
     <Compile Include="ApiTypes\CefStringMapType.cs" />
     <Compile Include="ApiTypes\CefStringMultimapType.cs" />
+    <Compile Include="ApiTypes\CefStringOutType.cs" />
     <Compile Include="ApiTypes\CefStringPtrType.cs" />
     <Compile Include="ApiTypes\CefStringPtrTypeConst.cs" />
     <Compile Include="ApiTypes\CefStringType.cs" />

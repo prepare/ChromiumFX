@@ -31,8 +31,8 @@
 
 public class CefStringPtrTypeConst : ApiType {
 
-    public CefStringPtrTypeConst(CefStringType baseType)
-        : base(baseType.Name + "*") {
+    public CefStringPtrTypeConst()
+        : base("cef_string_t*") {
     }
 
     public override string PublicSymbol {

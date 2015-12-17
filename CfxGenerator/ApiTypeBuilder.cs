@@ -42,7 +42,7 @@ public class ApiTypeBuilder {
 
     private SortedDictionary<string, ApiType> apiTypes;
 
-    private CefStringPtrTypeConst constStringPtrType;
+    private CefStringPtrTypeConst constStringPtrType = new CefStringPtrTypeConst();
 
     public CefApiDeclarations GetDeclarations() {
         apiData = Deserialize();
@@ -55,20 +55,20 @@ public class ApiTypeBuilder {
         return BuildTypes();
     }
 
-	private string serializedApi = System.IO.Path.Combine("cef", "SerializedApi.data");
+    private string serializedApi = System.IO.Path.Combine("cef", "SerializedApi.data");
 
     private void Serialize(Parser.CefApiData apiData) {
         var formatter = new BinaryFormatter();
-		var stream = new FileStream(serializedApi, FileMode.Create, FileAccess.Write, FileShare.None);
+        var stream = new FileStream(serializedApi, FileMode.Create, FileAccess.Write, FileShare.None);
         formatter.Serialize(stream, apiData);
         stream.Close();
     }
 
     private Parser.CefApiData Deserialize() {
-		if(!File.Exists(serializedApi))
+        if(!File.Exists(serializedApi))
             return null;
         var formatter = new BinaryFormatter();
-		var stream = new FileStream(serializedApi, FileMode.Open, FileAccess.Read, FileShare.Read);
+        var stream = new FileStream(serializedApi, FileMode.Open, FileAccess.Read, FileShare.Read);
         try {
             return (Parser.CefApiData)formatter.Deserialize(stream);
         } catch(Exception) {
@@ -102,11 +102,8 @@ public class ApiTypeBuilder {
         AddType(new CefPlatformBasePtrType("cef_window_info_t*"));
         AddType(new CefPlatformBasePtrType("cef_main_args_t*"));
 
-        ApiType tStr = new CefStringType();
-        AddType(tStr);
-        AddType(new CefStringPtrType(tStr.AsCefStringType));
-        constStringPtrType = new CefStringPtrTypeConst(tStr.AsCefStringType);
-
+        AddType(new CefStringType());
+        AddType(new CefStringPtrType());
         AddType(new CefStringUserFreeType());
 
         NumericType.CreateAll(this);
