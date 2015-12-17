@@ -120,8 +120,13 @@ public class CefStringPtrType : ApiType {
     }
 
     public override void EmitPostPublicCallStatements(CodeBuilder b, string var) {
-        b.BeginBlock("if({0}_str != {0}_pinned.Obj.PinnedPtr)", var);
+        b.BeginIf("{0}_str != {0}_pinned.Obj.PinnedPtr", var);
+        b.BeginIf("{0}_length > 0", var);
         b.AppendLine("{0} = System.Runtime.InteropServices.Marshal.PtrToStringUni({0}_str, {0}_length);", var);
+        b.AppendLine("// free the native string?", var);
+        b.BeginElse();
+        b.AppendLine("{0} = null;", var);
+        b.EndBlock();
         b.EndBlock();
         b.AppendLine("{0}_pinned.Obj.Free();", var);
     }

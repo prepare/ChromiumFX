@@ -322,7 +322,12 @@ namespace Chromium {
             var __retval = CfxApi.cfx_request_context_set_preference(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length, CfxValue.Unwrap(value), ref error_str, ref error_length);
             name_pinned.Obj.Free();
             if(error_str != error_pinned.Obj.PinnedPtr) {
-                error = System.Runtime.InteropServices.Marshal.PtrToStringUni(error_str, error_length);
+                if(error_length > 0) {
+                    error = System.Runtime.InteropServices.Marshal.PtrToStringUni(error_str, error_length);
+                    // free the native string?
+                } else {
+                    error = null;
+                }
             }
             error_pinned.Obj.Free();
             return 0 != __retval;

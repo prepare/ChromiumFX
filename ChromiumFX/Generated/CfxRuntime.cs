@@ -194,7 +194,12 @@ namespace Chromium {
             int url_length = url_pinned.Length;
             var __retval = CfxApi.cfx_create_url(CfxUrlParts.Unwrap(parts), ref url_str, ref url_length);
             if(url_str != url_pinned.Obj.PinnedPtr) {
-                url = System.Runtime.InteropServices.Marshal.PtrToStringUni(url_str, url_length);
+                if(url_length > 0) {
+                    url = System.Runtime.InteropServices.Marshal.PtrToStringUni(url_str, url_length);
+                    // free the native string?
+                } else {
+                    url = null;
+                }
             }
             url_pinned.Obj.Free();
             return 0 != __retval;
@@ -382,7 +387,12 @@ namespace Chromium {
             int path_length = path_pinned.Length;
             var __retval = CfxApi.cfx_get_path(key, ref path_str, ref path_length);
             if(path_str != path_pinned.Obj.PinnedPtr) {
-                path = System.Runtime.InteropServices.Marshal.PtrToStringUni(path_str, path_length);
+                if(path_length > 0) {
+                    path = System.Runtime.InteropServices.Marshal.PtrToStringUni(path_str, path_length);
+                    // free the native string?
+                } else {
+                    path = null;
+                }
             }
             path_pinned.Obj.Free();
             return 0 != __retval;
@@ -497,7 +507,12 @@ namespace Chromium {
             var __retval = CfxApi.cfx_parse_jsonand_return_error(jsonString_pinned.Obj.PinnedPtr, jsonString_pinned.Length, options, out errorCodeOut, ref errorMsgOut_str, ref errorMsgOut_length);
             jsonString_pinned.Obj.Free();
             if(errorMsgOut_str != errorMsgOut_pinned.Obj.PinnedPtr) {
-                errorMsgOut = System.Runtime.InteropServices.Marshal.PtrToStringUni(errorMsgOut_str, errorMsgOut_length);
+                if(errorMsgOut_length > 0) {
+                    errorMsgOut = System.Runtime.InteropServices.Marshal.PtrToStringUni(errorMsgOut_str, errorMsgOut_length);
+                    // free the native string?
+                } else {
+                    errorMsgOut = null;
+                }
             }
             errorMsgOut_pinned.Obj.Free();
             return CfxValue.Wrap(__retval);
