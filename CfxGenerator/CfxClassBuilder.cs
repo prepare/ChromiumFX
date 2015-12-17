@@ -613,7 +613,7 @@ public class CfxClassBuilder {
             }
             foreach(var arg in sig.Arguments) {
                 if(arg.ArgumentType.IsOut && !arg.ArgumentType.IsIn) {
-                    b.AppendLine("{0} = default({1});", arg.VarName, arg.ArgumentType.PInvokeSymbol);
+                    arg.ArgumentType.EmitSetPInvokeParamToDefaultStatements(b, arg.VarName);
                 }
             }
             b.AppendLine("return;");

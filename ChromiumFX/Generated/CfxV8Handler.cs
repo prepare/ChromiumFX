@@ -62,18 +62,20 @@ namespace Chromium {
 
         // execute
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_v8handler_execute_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, int argumentsCount, IntPtr arguments, out IntPtr retval, ref IntPtr exception_str, ref int exception_length);
+        private delegate void cfx_v8handler_execute_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, int argumentsCount, IntPtr arguments, out IntPtr retval, out IntPtr exception_str, out int exception_length);
         private static cfx_v8handler_execute_delegate cfx_v8handler_execute;
         private static IntPtr cfx_v8handler_execute_ptr;
 
-        internal static void execute(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, int argumentsCount, IntPtr arguments, out IntPtr retval, ref IntPtr exception_str, ref int exception_length) {
+        internal static void execute(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, int argumentsCount, IntPtr arguments, out IntPtr retval, out IntPtr exception_str, out int exception_length) {
             var self = (CfxV8Handler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
                 retval = default(IntPtr);
+                exception_str = IntPtr.Zero;
+                exception_length = 0;
                 return;
             }
-            var e = new CfxV8HandlerExecuteEventArgs(name_str, name_length, @object, arguments, argumentsCount, exception_str, exception_length);
+            var e = new CfxV8HandlerExecuteEventArgs(name_str, name_length, @object, arguments, argumentsCount);
             var eventHandler = self.m_Execute;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
@@ -83,10 +85,13 @@ namespace Chromium {
                     CfxApi.cfx_release(e.m_arguments[i]);
                 }
             }
-            if(e.m_exception_changed) {
+            if(e.m_exception_wrapped != null && e.m_exception_wrapped.Length > 0) {
                 var exception_pinned = new PinnedString(e.m_exception_wrapped);
                 exception_str = exception_pinned.Obj.PinnedPtr;
                 exception_length = exception_pinned.Length;
+            } else {
+                exception_str = IntPtr.Zero;
+                exception_length = 0;
             }
             if(e.m_returnValue != null) {
                 retval = CfxV8Value.Unwrap(e.m_returnValue);
@@ -181,15 +186,12 @@ namespace Chromium {
             internal CfxV8Value m_object_wrapped;
             internal IntPtr[] m_arguments;
             internal CfxV8Value[] m_arguments_managed;
-            internal IntPtr m_exception_str;
-            internal int m_exception_length;
             internal string m_exception_wrapped;
-            internal bool m_exception_changed;
 
             internal CfxV8Value m_returnValue;
             private bool returnValueSet;
 
-            internal CfxV8HandlerExecuteEventArgs(IntPtr name_str, int name_length, IntPtr @object, IntPtr arguments, int argumentsCount, IntPtr exception_str, int exception_length) {
+            internal CfxV8HandlerExecuteEventArgs(IntPtr name_str, int name_length, IntPtr @object, IntPtr arguments, int argumentsCount) {
                 m_name_str = name_str;
                 m_name_length = name_length;
                 m_object = @object;
@@ -197,8 +199,6 @@ namespace Chromium {
                 if(argumentsCount > 0) {
                     System.Runtime.InteropServices.Marshal.Copy(arguments, m_arguments, 0, argumentsCount);
                 }
-                m_exception_str = exception_str;
-                m_exception_length = exception_length;
             }
 
             /// <summary>
@@ -237,20 +237,12 @@ namespace Chromium {
                 }
             }
             /// <summary>
-            /// Get or set the Exception parameter for the <see cref="CfxV8Handler.Execute"/> callback.
+            /// Set the Exception out parameter for the <see cref="CfxV8Handler.Execute"/> callback.
             /// </summary>
             public string Exception {
-                get {
-                    CheckAccess();
-                    if(!m_exception_changed && m_exception_wrapped == null) {
-                        m_exception_wrapped = StringFunctions.PtrToStringUni(m_exception_str, m_exception_length);
-                    }
-                    return m_exception_wrapped;
-                }
                 set {
                     CheckAccess();
                     m_exception_wrapped = value;
-                    m_exception_changed = true;
                 }
             }
             /// <summary>
@@ -267,7 +259,7 @@ namespace Chromium {
             }
 
             public override string ToString() {
-                return String.Format("Name={{{0}}}, Object={{{1}}}, Arguments={{{2}}}, Exception={{{3}}}", Name, Object, Arguments, Exception);
+                return String.Format("Name={{{0}}}, Object={{{1}}}, Arguments={{{2}}}", Name, Object, Arguments);
             }
         }
 

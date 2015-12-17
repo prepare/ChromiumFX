@@ -471,7 +471,6 @@ namespace Chromium.Remote {
         CfxV8HandlerExecuteGetObjectRenderProcessCall,
         CfxV8HandlerExecuteGetArgumentsRenderProcessCall,
         CfxV8HandlerExecuteSetExceptionRenderProcessCall,
-        CfxV8HandlerExecuteGetExceptionRenderProcessCall,
         CfxV8HandlerExecuteSetReturnValueRenderProcessCall,
         CfxV8StackFrameIsValidRenderProcessCall,
         CfxV8StackFrameGetScriptNameRenderProcessCall,

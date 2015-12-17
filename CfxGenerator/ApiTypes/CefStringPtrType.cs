@@ -31,12 +31,18 @@
 
 public class CefStringPtrType : ApiType {
 
-    public CefStringPtrType(CefStringType baseType)
-        : base(baseType.Name + "*") {
+    public CefStringPtrType()
+        : base("cef_string_t*") {
     }
 
     public override bool IsOut {
         get { return true; }
+    }
+
+    public override string PInvokeSymbol {
+        get {
+            return "IntPtr";
+        }
     }
 
     public override string PublicSymbol {

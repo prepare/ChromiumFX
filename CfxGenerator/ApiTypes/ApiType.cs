@@ -302,6 +302,10 @@ public class ApiType {
         }
     }
 
+    public virtual void EmitSetPInvokeParamToDefaultStatements(CodeBuilder b, string var) {
+        b.AppendLine("{0} = default({1});", var, PInvokeSymbol);
+    }
+
     public void EmitRemoteCallFields(CodeBuilder b, string var) {
         b.AppendLine("internal {0} {1};", ProxySymbol, var);
     }
