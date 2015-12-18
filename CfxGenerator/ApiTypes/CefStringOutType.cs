@@ -59,7 +59,7 @@ public class CefStringOutType : CefStringPtrType {
     }
 
     public override void EmitPreNativeCallbackStatements(CodeBuilder b, string var) {
-        b.AppendLine("char16* {0}_tmp_str; int {0}_tmp_length;", var);
+        b.AppendLine("char16* {0}_tmp_str = 0; int {0}_tmp_length = 0;", var);
     }
 
     public override void EmitPostNativeCallbackStatements(CodeBuilder b, string var) {
