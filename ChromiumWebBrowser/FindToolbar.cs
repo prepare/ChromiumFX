@@ -102,13 +102,17 @@ namespace Chromium.WebBrowser {
             textBox.ForeColor = Color.DimGray;
 
             textBox.TextChanged += (s, e) => {
-                if(textBox.Text.Length == 0 && textBox.Font.Style != FontStyle.Italic) {
-                    textBox.Font = new Font(textBox.Font, FontStyle.Italic);
-                } else if(textBox.Text.Length > 0 && textBox.Font.Style == FontStyle.Italic) {
-                    textBox.Font = new Font(textBox.Font, FontStyle.Regular);
+                if(textBox.Text.Length == 0) {
+                    if(textBox.Font.Style != FontStyle.Italic)
+                        textBox.Font = new Font(textBox.Font, FontStyle.Italic);
+                    wb.BrowserHost.StopFinding(true);
+                    UpdateMatchInfo(0);
+                } else {
+                    if(textBox.Font.Style == FontStyle.Italic)
+                        textBox.Font = new Font(textBox.Font, FontStyle.Regular);
+                    if(!autoSearchSuspended)
+                        Find(true);
                 }
-                if(!autoSearchSuspended)
-                    Find(true);
             };
 
             textBox.KeyDown += (s, e) => {
@@ -167,14 +171,14 @@ namespace Chromium.WebBrowser {
             resultLabel.Left = matchCaseButton.Left + matchCaseButton.Width + 10;
             resultLabel.Top = matchCaseButton.Top + 3;
             resultLabel.AutoSize = true;
-            
+
             Width = wb.Width;
             Height = textBox.Height + 12;
             Top = wb.Height - Height;
             Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
             BackColor = Color.WhiteSmoke;
 
-            
+
             closeButton.Height = upButton.Height;
             closeButton.Width = closeButton.Height;
             closeButton.Left = Width - closeButton.Width - 10;
@@ -186,7 +190,7 @@ namespace Chromium.WebBrowser {
             toolTip.SetToolTip(closeButton, "Close the Find Bar");
 
             closeButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            
+
 
             closeButton.Click += (s, e) => {
                 Visible = false;
@@ -201,24 +205,26 @@ namespace Chromium.WebBrowser {
             wb.FindHandler.OnFindResult += (s, e) => {
                 if(e.FinalUpdate && e.Identifier == lastFindId) {
                     var count = e.Count;
-                    BeginInvoke(() => {
-                        if(count == 0 && textBox.Text.Length > 0) {
-                            textBox.BackColor = Color.LightCoral;
-                            textBox.ForeColor = Color.White;
-                            resultLabel.Text = "Phrase not found";
-                        } else {
-                            textBox.BackColor = TextBox.DefaultBackColor;
-                            textBox.ForeColor = Color.DimGray;
-                            if(textBox.Text.Length > 0) {
-                                resultLabel.Text = String.Format("{0} match{1}", 
-                                    count, count == 1 ? "" : "es");
-                            } else {
-                                resultLabel.Text = String.Empty;
-                            }
-                        }
-                    });
+                    BeginInvoke(() => UpdateMatchInfo(count));
                 }
             };
+        }
+
+        private void UpdateMatchInfo(int count) {
+            if(count == 0 && textBox.Text.Length > 0) {
+                textBox.BackColor = Color.LightCoral;
+                textBox.ForeColor = Color.White;
+                resultLabel.Text = "Phrase not found";
+            } else {
+                textBox.BackColor = TextBox.DefaultBackColor;
+                textBox.ForeColor = Color.DimGray;
+                if(textBox.Text.Length > 0) {
+                    resultLabel.Text = String.Format("{0} match{1}",
+                        count, count == 1 ? "" : "es");
+                } else {
+                    resultLabel.Text = String.Empty;
+                }
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e) {
@@ -269,7 +275,7 @@ namespace Chromium.WebBrowser {
                     Parent = wb;
                     if(textBox.Text.Length > 0)
                         wb.Find(null);
-                    
+
                 } else {
                     if(textBox.Text.Length == 0)
                         wb.Find(null);
