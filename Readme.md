@@ -51,6 +51,11 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2526.1 ###
+- Use images for the buttons in the find toolbar because the previously used unicode characters may not be available everywhere.
+- Clear previous find results when the find textbox is emptied.
+- Fix v8 handler: return true (1) when the exception string is set.
+
 ### Version 3.2526.0 ###
 - Update to cef version 3.2526.1359 with API changes.
 
