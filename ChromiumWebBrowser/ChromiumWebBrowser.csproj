@@ -50,6 +50,7 @@
     <Compile Include="BrowserProcess\RequestHandler.cs" />
     <Compile Include="ChromiumWebBrowserException.cs" />
     <Compile Include="FindToolbar.cs" />
+    <Compile Include="Images.cs" />
     <Compile Include="JSDynamicProperty.cs" />
     <Compile Include="JSFunction.cs" />
     <Compile Include="BrowserProcess\LifeSpanHandler.cs" />

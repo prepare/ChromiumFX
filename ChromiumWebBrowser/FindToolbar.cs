@@ -121,7 +121,7 @@ namespace Chromium.WebBrowser {
             upButton.Font = new Font(Font.FontFamily, 9);
             upButton.SetBounds(textBox.Left + textBox.Width - 1, textBox.Top, textBox.Height, textBox.Height);
             SetButtonStyle(upButton);
-            upButton.Text = "▲";
+            upButton.Image = Images.ArrowUp.Create();
             upButton.TextAlign = ContentAlignment.MiddleCenter;
 
             upButton.Click += (s, e) => {
@@ -135,7 +135,7 @@ namespace Chromium.WebBrowser {
             downButton.Font = new Font(Font.FontFamily, 9);
             downButton.SetBounds(upButton.Left + upButton.Width - 1, textBox.Top, textBox.Height, textBox.Height);
             SetButtonStyle(downButton);
-            downButton.Text = "▼";
+            downButton.Image = Images.ArrowDown.Create();
             upButton.TextAlign = ContentAlignment.MiddleCenter;
 
             downButton.Click += (s, e) => {
@@ -179,11 +179,10 @@ namespace Chromium.WebBrowser {
             closeButton.Width = closeButton.Height;
             closeButton.Left = Width - closeButton.Width - 10;
             closeButton.Top = upButton.Top;
-            closeButton.Text = "❌";
-            closeButton.ForeColor = Color.DimGray;
+            closeButton.BackColor = Color.Transparent;
+            closeButton.Image = Images.Cross.Create();
             closeButton.FlatStyle = FlatStyle.Flat;
             closeButton.FlatAppearance.BorderSize = 0;
-            closeButton.BackColor = Color.Transparent;
             toolTip.SetToolTip(closeButton, "Close the Find Bar");
 
             closeButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
