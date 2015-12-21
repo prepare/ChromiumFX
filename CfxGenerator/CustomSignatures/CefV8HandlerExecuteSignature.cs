@@ -56,12 +56,7 @@ public class CefV8HandlerExecuteSignature : SignatureWithStructPtrArray {
     }
 
     protected override void EmitPostPublicEventHandlerReturnValueStatements(CodeBuilder b) {
-        b.BeginIf("e.m_returnValue != null");
         b.AppendLine("retval = CfxV8Value.Unwrap(e.m_returnValue);");
-        b.AppendLine("__retval = 1;");
-        b.BeginElse();
-        b.AppendLine("retval = IntPtr.Zero;");
-        b.AppendLine("__retval = 0;");
-        b.EndBlock();
+        b.AppendLine("__retval = e.m_returnValue != null || e.m_exception_wrapped != null ? 1 : 0;");
     }
 }

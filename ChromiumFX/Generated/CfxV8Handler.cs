@@ -93,13 +93,8 @@ namespace Chromium {
                 exception_str = IntPtr.Zero;
                 exception_length = 0;
             }
-            if(e.m_returnValue != null) {
-                retval = CfxV8Value.Unwrap(e.m_returnValue);
-                __retval = 1;
-            } else {
-                retval = IntPtr.Zero;
-                __retval = 0;
-            }
+            retval = CfxV8Value.Unwrap(e.m_returnValue);
+            __retval = e.m_returnValue != null || e.m_exception_wrapped != null ? 1 : 0;
         }
 
         internal CfxV8Handler(IntPtr nativePtr) : base(nativePtr) {}
