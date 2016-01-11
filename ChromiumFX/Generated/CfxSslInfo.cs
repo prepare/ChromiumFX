@@ -67,6 +67,47 @@ namespace Chromium {
         internal CfxSslInfo(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
+        /// Returns a bitmask containing any and all problems verifying the server
+        /// certificate.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// </remarks>
+        public CfxCertStatus CertStatus {
+            get {
+                return CfxApi.cfx_sslinfo_get_cert_status(NativePtr);
+            }
+        }
+
+        /// <summary>
+        /// Returns true (1) if the certificate status has any error, major or minor.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// </remarks>
+        public bool IsCertStatusError {
+            get {
+                return 0 != CfxApi.cfx_sslinfo_is_cert_status_error(NativePtr);
+            }
+        }
+
+        /// <summary>
+        /// Returns true (1) if the certificate status represents only minor errors
+        /// (e.g. failure to verify certificate revocation).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// </remarks>
+        public bool IsCertStatusMinorError {
+            get {
+                return 0 != CfxApi.cfx_sslinfo_is_cert_status_minor_error(NativePtr);
+            }
+        }
+
+        /// <summary>
         /// Returns the subject of the X.509 certificate. For HTTPS server certificates
         /// this represents the web server.  The common name of the subject should
         /// match the host name of the web server.
@@ -160,6 +201,50 @@ namespace Chromium {
             get {
                 return CfxBinaryValue.Wrap(CfxApi.cfx_sslinfo_get_pemencoded(NativePtr));
             }
+        }
+
+        /// <summary>
+        /// Returns the number of certificates in the issuer chain. If 0, the
+        /// certificate is self-signed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// </remarks>
+        public int IssuerChainSize {
+            get {
+                return CfxApi.cfx_sslinfo_get_issuer_chain_size(NativePtr);
+            }
+        }
+
+        /// <summary>
+        /// Returns the DER encoded data for the certificate issuer chain. If we failed
+        /// to encode a certificate in the chain it is still present in the array but
+        /// is an NULL string.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// </remarks>
+        public void GetDerEncodedIssuerChain(out int chainCount, out CfxBinaryValue chain) {
+            IntPtr chain_ptr;
+            CfxApi.cfx_sslinfo_get_derencoded_issuer_chain(NativePtr, out chainCount, out chain_ptr);
+            chain = CfxBinaryValue.Wrap(chain_ptr);
+        }
+
+        /// <summary>
+        /// Returns the PEM encoded data for the certificate issuer chain. If we failed
+        /// to encode a certificate in the chain it is still present in the array but
+        /// is an NULL string.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// </remarks>
+        public void GetPemEncodedIssuerChain(out int chainCount, out CfxBinaryValue chain) {
+            IntPtr chain_ptr;
+            CfxApi.cfx_sslinfo_get_pemencoded_issuer_chain(NativePtr, out chainCount, out chain_ptr);
+            chain = CfxBinaryValue.Wrap(chain_ptr);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

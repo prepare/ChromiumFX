@@ -494,6 +494,8 @@ public class Signature {
             return;
         if(Owner.CefName == "cef_resource_bundle::get_data_resource_for_scale")
             return;
+        if(Owner.CefName == "cef_response_filter::filter")
+            return;
 
         for(var i = 0; i <= Arguments.Length - 1; i++) {
             var suffixLength = CountArgumentSuffixLength(Arguments[i]);
