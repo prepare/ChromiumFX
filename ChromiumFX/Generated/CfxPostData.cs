@@ -129,7 +129,7 @@ namespace Chromium {
         /// </remarks>
         public CfxPostDataElement[] Elements {
             get {
-                int count = GetElementCount();
+                int count = ElementCount;
                 if(count == 0) return new CfxPostDataElement[0];
                 IntPtr[] ptrs = new IntPtr[count];
                 var ptrs_p = new PinnedObject(ptrs);
