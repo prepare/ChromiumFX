@@ -321,15 +321,14 @@ namespace Chromium {
     /// </remarks>
     [Flags()]
     public enum CfxDragOperationsMask {
-        DragOperationNone = unchecked((int)0),
-        DragOperationCopy = unchecked((int)1),
-        DragOperationLink = unchecked((int)2),
-        DragOperationGeneric = unchecked((int)4),
-        DragOperationPrivate = unchecked((int)8),
-        DragOperationMove = unchecked((int)16),
-        DragOperationDelete = unchecked((int)32),
-        DragOperationEvery,
-        UintMax
+        None = unchecked((int)0),
+        Copy = unchecked((int)1),
+        Link = unchecked((int)2),
+        Generic = unchecked((int)4),
+        Private = unchecked((int)8),
+        Move = unchecked((int)16),
+        Delete = unchecked((int)32),
+        Every = unchecked((int)UINT_MAX)
     }
     /// <summary>
     /// Print job duplex mode values.
@@ -380,7 +379,7 @@ namespace Chromium {
         SslVersionOrCipherMismatch = unchecked((int)-113),
         SslRenegotiationRequested = unchecked((int)-114),
         CertCommonNameInvalid = unchecked((int)-200),
-        CertBegin = unchecked((int)E),
+        CertBegin = unchecked((int)ERR_CERT_COMMON_NAME_INVALID),
         CertDateInvalid = unchecked((int)-201),
         CertAuthorityInvalid = unchecked((int)-202),
         CertContainsErrors = unchecked((int)-203),
@@ -393,7 +392,7 @@ namespace Chromium {
         CertWeakKey = unchecked((int)-211),
         CertNameConstraintViolation = unchecked((int)-212),
         CertValidityTooLong = unchecked((int)-213),
-        CertEnd = unchecked((int)E),
+        CertEnd = unchecked((int)ERR_CERT_VALIDITY_TOO_LONG),
         InvalidUrl = unchecked((int)-300),
         DisallowedUrlScheme = unchecked((int)-301),
         UnknownUrlScheme = unchecked((int)-302),

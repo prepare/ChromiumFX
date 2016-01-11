@@ -202,7 +202,7 @@ namespace Parser {
             codeFiles.Add(filename, fcode);
         }
 
-        private Regex memberEx = new Regex("\\b(\\w+)\\s*(?:=\\s*((?:[0-9xA-Fa-f<+-]|\\s)+))?");
+        private Regex memberEx = new Regex("\\b(\\w+)\\s*(?:=\\s*((?:[\\w<+-]|\\s)+))?");
         private Regex enumRegex = new Regex("typedef\\s+enum\\s*{(.*?)}\\s*(\\w+?)_t\\s*;", RegexOptions.Singleline);
 
         private void ParseEnums(string code, List<EnumData> enums) {
