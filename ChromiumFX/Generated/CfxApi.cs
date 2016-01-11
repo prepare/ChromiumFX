@@ -4585,14 +4585,14 @@ namespace Chromium {
         public delegate int cfx_sslinfo_get_issuer_chain_size_delegate(IntPtr self);
         public static cfx_sslinfo_get_issuer_chain_size_delegate cfx_sslinfo_get_issuer_chain_size;
 
-        // static void cfx_sslinfo_get_derencoded_issuer_chain(cef_sslinfo_t* self, size_t* chainCount, cef_binary_value_t** chain)
+        // static void cfx_sslinfo_get_derencoded_issuer_chain(cef_sslinfo_t* self, int chainCount, cef_binary_value_t** chain)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_sslinfo_get_derencoded_issuer_chain_delegate(IntPtr self, out int chainCount, out IntPtr chain);
+        public delegate void cfx_sslinfo_get_derencoded_issuer_chain_delegate(IntPtr self, int chainCount, IntPtr chain);
         public static cfx_sslinfo_get_derencoded_issuer_chain_delegate cfx_sslinfo_get_derencoded_issuer_chain;
 
-        // static void cfx_sslinfo_get_pemencoded_issuer_chain(cef_sslinfo_t* self, size_t* chainCount, cef_binary_value_t** chain)
+        // static void cfx_sslinfo_get_pemencoded_issuer_chain(cef_sslinfo_t* self, int chainCount, cef_binary_value_t** chain)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_sslinfo_get_pemencoded_issuer_chain_delegate(IntPtr self, out int chainCount, out IntPtr chain);
+        public delegate void cfx_sslinfo_get_pemencoded_issuer_chain_delegate(IntPtr self, int chainCount, IntPtr chain);
         public static cfx_sslinfo_get_pemencoded_issuer_chain_delegate cfx_sslinfo_get_pemencoded_issuer_chain;
 
 

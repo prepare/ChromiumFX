@@ -29,10 +29,12 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-public class GetPostDataElementsSignature : Signature {
+using System.Diagnostics;
 
-    public GetPostDataElementsSignature(ISignatureOwner parent, Parser.SignatureData sd, ApiTypeBuilder api)
-        : base(SignatureType.LibraryCall, parent, sd, api) {
+public class StructArrayGetterSignature : Signature {
+
+    public StructArrayGetterSignature(ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api)
+        : base(SignatureType.LibraryCall, owner, sd, api) {
     }
 
     public override Argument[] ManagedArguments {
@@ -44,36 +46,43 @@ public class GetPostDataElementsSignature : Signature {
     }
 
     public override string NativeFunctionHeader(string functionName) {
-        return "static void cfx_post_data_get_elements(cef_post_data_t* self, int elementsCount, cef_post_data_element_t** elements)";
+        return string.Format("static void {0}({1} self, int {2}, {3})",
+                                functionName, Arguments[0].ArgumentType.OriginalSymbol, 
+                                Arguments[1].VarName, Arguments[2].NativeCallParameter);
     }
 
     public override string PInvokeFunctionHeader(string functionName) {
-        return "void cfx_post_data_get_elements_delegate(IntPtr self, int elementsCount, IntPtr elements)";
+        return string.Format("void {0}(IntPtr self, int {1}, IntPtr {2})",
+                                functionName, Arguments[1].VarName, Arguments[2].VarName);
     }
 
     public override void EmitNativeCall(CodeBuilder b, string functionName) {
-        b.AppendLine("size_t tmp_elementsCount = (size_t)elementsCount;");
-        b.AppendLine("self->get_elements(self, &tmp_elementsCount, elements);");
+        b.AppendLine("size_t tmp_{0} = (size_t){0};", Arguments[1].VarName);
+        b.AppendLine("{0}(self, &tmp_{1}, {2});",
+                        functionName, Arguments[1].VarName, Arguments[2].VarName);
     }
 
     public override void EmitPublicCall(CodeBuilder b) {
+        b.AppendLine("int count = {0}();", Owner.CefConfig.CountFunction.Substring(Owner.CefConfig.CountFunction.IndexOf(":") + 1));
+        b.AppendLine("if(count == 0) return new {0}[0];", Arguments[2].ArgumentType.PublicSymbol);
         var code =
-@"int count = CfxApi.cfx_post_data_get_element_count(NativePtr);
-if(count == 0) return new CfxPostDataElement[0];
-IntPtr[] ptrs = new IntPtr[count];
+@"IntPtr[] ptrs = new IntPtr[count];
 var ptrs_p = new PinnedObject(ptrs);
-CfxApi.cfx_post_data_get_elements(NativePtr, count, ptrs_p.PinnedPtr);
+CfxApi.{0}(NativePtr, count, ptrs_p.PinnedPtr);
 ptrs_p.Free();
-CfxPostDataElement[] retval = new CfxPostDataElement[count];
-for(int i = 0; i < count; ++i) {
-    retval[i] = CfxPostDataElement.Wrap(ptrs[i]);
-}
+{1}[] retval = new {1}[count];
+for(int i = 0; i < count; ++i) {{
+    retval[i] = {1}.Wrap(ptrs[i]);
+}}
 return retval;";
 
-        b.AppendMultiline(code);
+        b.AppendMultiline(code,
+                Owner.CfxApiFunctionName,
+                Arguments[2].ArgumentType.PublicSymbol);
     }
 
     protected override void EmitExecuteInTargetProcess(CodeBuilder b) {
+        Debug.Assert(Arguments[2].ArgumentType.PublicSymbol == "CfxPostDataElement");
         b.AppendLine("var elements = ((CfxPostData)RemoteProxy.Unwrap(self)).Elements;");
         b.BeginIf("elements != null");
         b.AppendLine("__retval = new IntPtr[elements.Length];");
@@ -84,6 +93,7 @@ return retval;";
     }
 
     public override void EmitRemoteCall(CodeBuilder b) {
+        Debug.Assert(Arguments[2].ArgumentType.PublicSymbol == "CfxPostDataElement");
         b.AppendLine("var call = new CfxPostDataGetElementsRenderProcessCall();");
         b.AppendLine("call.self = CfrObject.Unwrap(this);");
         b.AppendLine("call.RequestExecution(this);");
