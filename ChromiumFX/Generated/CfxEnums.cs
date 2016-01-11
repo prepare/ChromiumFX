@@ -328,7 +328,7 @@ namespace Chromium {
         Private = unchecked((int)8),
         Move = unchecked((int)16),
         Delete = unchecked((int)32),
-        Every = unchecked((int)UINT_MAX)
+        Every = unchecked((int)UInt32.MaxValue)
     }
     /// <summary>
     /// Print job duplex mode values.
@@ -379,7 +379,7 @@ namespace Chromium {
         SslVersionOrCipherMismatch = unchecked((int)-113),
         SslRenegotiationRequested = unchecked((int)-114),
         CertCommonNameInvalid = unchecked((int)-200),
-        CertBegin = unchecked((int)ERR_CERT_COMMON_NAME_INVALID),
+        CertBegin = CertCommonNameInvalid,
         CertDateInvalid = unchecked((int)-201),
         CertAuthorityInvalid = unchecked((int)-202),
         CertContainsErrors = unchecked((int)-203),
@@ -392,7 +392,7 @@ namespace Chromium {
         CertWeakKey = unchecked((int)-211),
         CertNameConstraintViolation = unchecked((int)-212),
         CertValidityTooLong = unchecked((int)-213),
-        CertEnd = unchecked((int)ERR_CERT_VALIDITY_TOO_LONG),
+        CertEnd = CertValidityTooLong,
         InvalidUrl = unchecked((int)-300),
         DisallowedUrlScheme = unchecked((int)-301),
         UnknownUrlScheme = unchecked((int)-302),

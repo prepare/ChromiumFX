@@ -112,6 +112,20 @@ public class CefEnumType : ApiType {
 
     private static string[] additionalFlags = { "CfxV8PropertyAttribute", "CfxDragOperationsMask", "CfxFileDialogMode", "CfxJsonWriterOptions", "CfxTransitionType", "CfxV8AccessControl" };
 
+    private static string GetEnumMemberValue(string originalValue) {
+        switch(originalValue) {
+
+            case "ERR_CERT_COMMON_NAME_INVALID":
+                return "CertCommonNameInvalid";
+            case "ERR_CERT_VALIDITY_TOO_LONG":
+                return "CertValidityTooLong";
+            case "UINT_MAX":
+                return "unchecked((int)UInt32.MaxValue)";
+            default:
+                return string.Format("unchecked((int){0})", originalValue);
+        }
+    }
+
     public void EmitEnum(CodeBuilder b) {
         var enumName = CSharp.ApplyStyle(CfxName);
 
@@ -158,7 +172,7 @@ public class CefEnumType : ApiType {
             b.AppendSummary(m.Comments);
             b.Append(var);
             if(m.Value != null) {
-                b.Append(" = unchecked((int){0})", m.Value);
+                b.Append(" = {0}", GetEnumMemberValue(m.Value));
             }
             b.AppendLine(",");
         }
