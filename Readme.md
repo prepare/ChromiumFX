@@ -51,6 +51,10 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2526.2 ###
+- Update to cef version 3.2526.1366 with API changes. Older CEF binaries won't work with this version.
+- In the course of update, the CfxDragOperationsMask enumeration was changed and a bug was fixed which caused a wrong conversion of CfxDragOperationsMask.Every.
+
 ### Version 3.2526.1 ###
 - Use images for the buttons in the find toolbar because the previously used unicode characters may not be available everywhere.
 - Clear previous find results when the find textbox is emptied.
