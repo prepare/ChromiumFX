@@ -111,6 +111,7 @@
 #include "cfx_resource_bundle_handler.c"
 #include "cfx_resource_handler.c"
 #include "cfx_response.c"
+#include "cfx_response_filter.c"
 #include "cfx_run_context_menu_callback.c"
 #include "cfx_run_file_dialog_callback.c"
 #include "cfx_scheme_handler_factory.c"

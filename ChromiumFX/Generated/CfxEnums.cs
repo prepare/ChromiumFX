@@ -35,6 +35,35 @@ using System;
 
 namespace Chromium {
     /// <summary>
+    /// Supported certificate status code values. See net\cert\cert_status_flags.h
+    /// for more information. CERT_STATUS_NONE is new in CEF because we use an
+    /// enum while cert_status_flags.h uses a typedef and static const variables.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxCertStatus {
+        None = unchecked((int)0),
+        CommonNameInvalid = unchecked((int)1 << 0),
+        DateInvalid = unchecked((int)1 << 1),
+        AuthorityInvalid = unchecked((int)1 << 2),
+        NoRevocationMechanism = unchecked((int)1 << 4),
+        UnableToCheckRevocation = unchecked((int)1 << 5),
+        Revoked = unchecked((int)1 << 6),
+        Invalid = unchecked((int)1 << 7),
+        WeakSignatureAlgorithm = unchecked((int)1 << 8),
+        NonUniqueName = unchecked((int)1 << 10),
+        WeakKey = unchecked((int)1 << 11),
+        PinnedKeyMissing = unchecked((int)1 << 13),
+        NameConstraintViolation = unchecked((int)1 << 14),
+        ValidityTooLong = unchecked((int)1 << 15),
+        IsEv = unchecked((int)1 << 16),
+        RevCheckingEnabled = unchecked((int)1 << 17),
+        Sha1SignaturePresent = unchecked((int)1 << 19),
+        CtComplianceFailed = unchecked((int)1 << 20)
+    }
+    /// <summary>
     /// Print job color mode values.
     /// </summary>
     /// <remarks>
@@ -351,6 +380,7 @@ namespace Chromium {
         SslVersionOrCipherMismatch = unchecked((int)-113),
         SslRenegotiationRequested = unchecked((int)-114),
         CertCommonNameInvalid = unchecked((int)-200),
+        CertBegin = unchecked((int)E),
         CertDateInvalid = unchecked((int)-201),
         CertAuthorityInvalid = unchecked((int)-202),
         CertContainsErrors = unchecked((int)-203),
@@ -358,7 +388,12 @@ namespace Chromium {
         CertUnableToCheckRevocation = unchecked((int)-205),
         CertRevoked = unchecked((int)-206),
         CertInvalid = unchecked((int)-207),
-        CertEnd = unchecked((int)-208),
+        CertWeakSignatureAlgorithm = unchecked((int)-208),
+        CertNonUniqueName = unchecked((int)-210),
+        CertWeakKey = unchecked((int)-211),
+        CertNameConstraintViolation = unchecked((int)-212),
+        CertValidityTooLong = unchecked((int)-213),
+        CertEnd = unchecked((int)E),
         InvalidUrl = unchecked((int)-300),
         DisallowedUrlScheme = unchecked((int)-301),
         UnknownUrlScheme = unchecked((int)-302),
@@ -942,6 +977,29 @@ namespace Chromium {
         /// Main resource of a service worker.
         /// </summary>
         ServiceWorker
+    }
+    /// <summary>
+    /// Return values for CfxResponseFilter.Filter().
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxResponseFilterStatus {
+        /// <summary>
+        /// Some or all of the pre-filter data was read successfully but more data is
+        /// needed in order to continue filtering (filtered output is pending).
+        /// </summary>
+        NeedMoreData,
+        /// <summary>
+        /// Some or all of the pre-filter data was read successfully and all available
+        /// filtered output has been written.
+        /// </summary>
+        Done,
+        /// <summary>
+        /// An error occurred during filtering.
+        /// </summary>
+        Error
     }
     /// <summary>
     /// Return value types.

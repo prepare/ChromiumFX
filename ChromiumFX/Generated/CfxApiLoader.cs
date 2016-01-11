@@ -899,6 +899,9 @@ namespace Chromium {
             cfx_response_get_header,
             cfx_response_get_header_map,
             cfx_response_set_header_map,
+            cfx_response_filter_ctor,
+            cfx_response_filter_get_gc_handle,
+            cfx_response_filter_set_managed_callback,
             cfx_run_context_menu_callback_cont,
             cfx_run_context_menu_callback_cancel,
             cfx_run_file_dialog_callback_ctor,
@@ -992,6 +995,9 @@ namespace Chromium {
             cfx_sslcert_principal_get_organization_names,
             cfx_sslcert_principal_get_organization_unit_names,
             cfx_sslcert_principal_get_domain_components,
+            cfx_sslinfo_get_cert_status,
+            cfx_sslinfo_is_cert_status_error,
+            cfx_sslinfo_is_cert_status_minor_error,
             cfx_sslinfo_get_subject,
             cfx_sslinfo_get_issuer,
             cfx_sslinfo_get_serial_number,
@@ -999,6 +1005,9 @@ namespace Chromium {
             cfx_sslinfo_get_valid_expiry,
             cfx_sslinfo_get_derencoded,
             cfx_sslinfo_get_pemencoded,
+            cfx_sslinfo_get_issuer_chain_size,
+            cfx_sslinfo_get_derencoded_issuer_chain,
+            cfx_sslinfo_get_pemencoded_issuer_chain,
             cfx_stream_reader_create_for_file,
             cfx_stream_reader_create_for_data,
             cfx_stream_reader_create_for_handler,
@@ -2766,6 +2775,16 @@ namespace Chromium {
             CfxApi.cfx_response_set_header_map = (CfxApi.cfx_response_set_header_map_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_response_set_header_map, typeof(CfxApi.cfx_response_set_header_map_delegate));
         }
 
+        private static bool CfxResponseFilterApiLoaded;
+        internal static void LoadCfxResponseFilterApi() {
+            if(CfxResponseFilterApiLoaded) return;
+            CfxResponseFilterApiLoaded = true;
+            CfxApi.Probe();
+            CfxApi.cfx_response_filter_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_response_filter_ctor, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
+            CfxApi.cfx_response_filter_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_response_filter_get_gc_handle, typeof(CfxApi.cfx_get_gc_handle_delegate));
+            CfxApi.cfx_response_filter_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_response_filter_set_managed_callback, typeof(CfxApi.cfx_set_callback_delegate));
+        }
+
         private static bool CfxRunContextMenuCallbackApiLoaded;
         internal static void LoadCfxRunContextMenuCallbackApi() {
             if(CfxRunContextMenuCallbackApiLoaded) return;
@@ -2927,6 +2946,9 @@ namespace Chromium {
             if(CfxSslInfoApiLoaded) return;
             CfxSslInfoApiLoaded = true;
             CfxApi.Probe();
+            CfxApi.cfx_sslinfo_get_cert_status = (CfxApi.cfx_sslinfo_get_cert_status_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslinfo_get_cert_status, typeof(CfxApi.cfx_sslinfo_get_cert_status_delegate));
+            CfxApi.cfx_sslinfo_is_cert_status_error = (CfxApi.cfx_sslinfo_is_cert_status_error_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslinfo_is_cert_status_error, typeof(CfxApi.cfx_sslinfo_is_cert_status_error_delegate));
+            CfxApi.cfx_sslinfo_is_cert_status_minor_error = (CfxApi.cfx_sslinfo_is_cert_status_minor_error_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslinfo_is_cert_status_minor_error, typeof(CfxApi.cfx_sslinfo_is_cert_status_minor_error_delegate));
             CfxApi.cfx_sslinfo_get_subject = (CfxApi.cfx_sslinfo_get_subject_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslinfo_get_subject, typeof(CfxApi.cfx_sslinfo_get_subject_delegate));
             CfxApi.cfx_sslinfo_get_issuer = (CfxApi.cfx_sslinfo_get_issuer_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslinfo_get_issuer, typeof(CfxApi.cfx_sslinfo_get_issuer_delegate));
             CfxApi.cfx_sslinfo_get_serial_number = (CfxApi.cfx_sslinfo_get_serial_number_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslinfo_get_serial_number, typeof(CfxApi.cfx_sslinfo_get_serial_number_delegate));
@@ -2934,6 +2956,9 @@ namespace Chromium {
             CfxApi.cfx_sslinfo_get_valid_expiry = (CfxApi.cfx_sslinfo_get_valid_expiry_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslinfo_get_valid_expiry, typeof(CfxApi.cfx_sslinfo_get_valid_expiry_delegate));
             CfxApi.cfx_sslinfo_get_derencoded = (CfxApi.cfx_sslinfo_get_derencoded_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslinfo_get_derencoded, typeof(CfxApi.cfx_sslinfo_get_derencoded_delegate));
             CfxApi.cfx_sslinfo_get_pemencoded = (CfxApi.cfx_sslinfo_get_pemencoded_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslinfo_get_pemencoded, typeof(CfxApi.cfx_sslinfo_get_pemencoded_delegate));
+            CfxApi.cfx_sslinfo_get_issuer_chain_size = (CfxApi.cfx_sslinfo_get_issuer_chain_size_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslinfo_get_issuer_chain_size, typeof(CfxApi.cfx_sslinfo_get_issuer_chain_size_delegate));
+            CfxApi.cfx_sslinfo_get_derencoded_issuer_chain = (CfxApi.cfx_sslinfo_get_derencoded_issuer_chain_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslinfo_get_derencoded_issuer_chain, typeof(CfxApi.cfx_sslinfo_get_derencoded_issuer_chain_delegate));
+            CfxApi.cfx_sslinfo_get_pemencoded_issuer_chain = (CfxApi.cfx_sslinfo_get_pemencoded_issuer_chain_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslinfo_get_pemencoded_issuer_chain, typeof(CfxApi.cfx_sslinfo_get_pemencoded_issuer_chain_delegate));
         }
 
         private static bool CfxStreamReaderApiLoaded;

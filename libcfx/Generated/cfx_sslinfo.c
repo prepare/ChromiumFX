@@ -33,6 +33,21 @@
 
 // cef_sslinfo
 
+// get_cert_status
+static cef_cert_status_t cfx_sslinfo_get_cert_status(cef_sslinfo_t* self) {
+    return self->get_cert_status(self);
+}
+
+// is_cert_status_error
+static int cfx_sslinfo_is_cert_status_error(cef_sslinfo_t* self) {
+    return self->is_cert_status_error(self);
+}
+
+// is_cert_status_minor_error
+static int cfx_sslinfo_is_cert_status_minor_error(cef_sslinfo_t* self) {
+    return self->is_cert_status_minor_error(self);
+}
+
 // get_subject
 static cef_sslcert_principal_t* cfx_sslinfo_get_subject(cef_sslinfo_t* self) {
     return self->get_subject(self);
@@ -68,6 +83,21 @@ static cef_binary_value_t* cfx_sslinfo_get_derencoded(cef_sslinfo_t* self) {
 // get_pemencoded
 static cef_binary_value_t* cfx_sslinfo_get_pemencoded(cef_sslinfo_t* self) {
     return self->get_pemencoded(self);
+}
+
+// get_issuer_chain_size
+static int cfx_sslinfo_get_issuer_chain_size(cef_sslinfo_t* self) {
+    return (int)(self->get_issuer_chain_size(self));
+}
+
+// get_derencoded_issuer_chain
+static void cfx_sslinfo_get_derencoded_issuer_chain(cef_sslinfo_t* self, size_t* chainCount, cef_binary_value_t** chain) {
+    self->get_derencoded_issuer_chain(self, chainCount, chain);
+}
+
+// get_pemencoded_issuer_chain
+static void cfx_sslinfo_get_pemencoded_issuer_chain(cef_sslinfo_t* self, size_t* chainCount, cef_binary_value_t** chain) {
+    self->get_pemencoded_issuer_chain(self, chainCount, chain);
 }
 
 

@@ -4110,6 +4110,13 @@ namespace Chromium {
         public static cfx_response_set_header_map_delegate cfx_response_set_header_map;
 
 
+        // CfxResponseFilter
+
+        public static cfx_ctor_with_gc_handle_delegate cfx_response_filter_ctor;
+        public static cfx_get_gc_handle_delegate cfx_response_filter_get_gc_handle;
+        public static cfx_set_callback_delegate cfx_response_filter_set_managed_callback;
+
+
         // CfxRunContextMenuCallback
 
         // static void cfx_run_context_menu_callback_cont(cef_run_context_menu_callback_t* self, int command_id, cef_event_flags_t event_flags)
@@ -4523,6 +4530,21 @@ namespace Chromium {
 
         // CfxSslInfo
 
+        // static cef_cert_status_t cfx_sslinfo_get_cert_status(cef_sslinfo_t* self)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate CfxCertStatus cfx_sslinfo_get_cert_status_delegate(IntPtr self);
+        public static cfx_sslinfo_get_cert_status_delegate cfx_sslinfo_get_cert_status;
+
+        // static int cfx_sslinfo_is_cert_status_error(cef_sslinfo_t* self)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate int cfx_sslinfo_is_cert_status_error_delegate(IntPtr self);
+        public static cfx_sslinfo_is_cert_status_error_delegate cfx_sslinfo_is_cert_status_error;
+
+        // static int cfx_sslinfo_is_cert_status_minor_error(cef_sslinfo_t* self)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate int cfx_sslinfo_is_cert_status_minor_error_delegate(IntPtr self);
+        public static cfx_sslinfo_is_cert_status_minor_error_delegate cfx_sslinfo_is_cert_status_minor_error;
+
         // static cef_sslcert_principal_t* cfx_sslinfo_get_subject(cef_sslinfo_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate IntPtr cfx_sslinfo_get_subject_delegate(IntPtr self);
@@ -4557,6 +4579,21 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate IntPtr cfx_sslinfo_get_pemencoded_delegate(IntPtr self);
         public static cfx_sslinfo_get_pemencoded_delegate cfx_sslinfo_get_pemencoded;
+
+        // static int cfx_sslinfo_get_issuer_chain_size(cef_sslinfo_t* self)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate int cfx_sslinfo_get_issuer_chain_size_delegate(IntPtr self);
+        public static cfx_sslinfo_get_issuer_chain_size_delegate cfx_sslinfo_get_issuer_chain_size;
+
+        // static void cfx_sslinfo_get_derencoded_issuer_chain(cef_sslinfo_t* self, size_t* chainCount, cef_binary_value_t** chain)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_sslinfo_get_derencoded_issuer_chain_delegate(IntPtr self, out int chainCount, out IntPtr chain);
+        public static cfx_sslinfo_get_derencoded_issuer_chain_delegate cfx_sslinfo_get_derencoded_issuer_chain;
+
+        // static void cfx_sslinfo_get_pemencoded_issuer_chain(cef_sslinfo_t* self, size_t* chainCount, cef_binary_value_t** chain)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate void cfx_sslinfo_get_pemencoded_issuer_chain_delegate(IntPtr self, out int chainCount, out IntPtr chain);
+        public static cfx_sslinfo_get_pemencoded_issuer_chain_delegate cfx_sslinfo_get_pemencoded_issuer_chain;
 
 
         // CfxStreamReader

@@ -127,6 +127,7 @@
     <Compile Include="Generated\CfxResourceBundleHandler.cs" />
     <Compile Include="Generated\CfxResourceHandler.cs" />
     <Compile Include="Generated\CfxResponse.cs" />
+    <Compile Include="Generated\CfxResponseFilter.cs" />
     <Compile Include="Generated\CfxRunContextMenuCallback.cs" />
     <Compile Include="Generated\CfxRunFileDialogCallback.cs" />
     <Compile Include="Generated\CfxRuntime.cs" />

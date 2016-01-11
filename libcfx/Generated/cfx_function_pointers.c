@@ -31,7 +31,7 @@
 // Generated file. Do not edit.
 
 
-static void* cfx_function_pointers[1279] =  {
+static void* cfx_function_pointers[1288] =  {
     (void*)cfx_add_cross_origin_whitelist_entry,
     (void*)cfx_add_web_plugin_directory,
     (void*)cfx_add_web_plugin_path,
@@ -895,6 +895,9 @@ static void* cfx_function_pointers[1279] =  {
     (void*)cfx_response_get_header,
     (void*)cfx_response_get_header_map,
     (void*)cfx_response_set_header_map,
+    (void*)cfx_response_filter_ctor,
+    (void*)cfx_response_filter_get_gc_handle,
+    (void*)cfx_response_filter_set_managed_callback,
     (void*)cfx_run_context_menu_callback_cont,
     (void*)cfx_run_context_menu_callback_cancel,
     (void*)cfx_run_file_dialog_callback_ctor,
@@ -988,6 +991,9 @@ static void* cfx_function_pointers[1279] =  {
     (void*)cfx_sslcert_principal_get_organization_names,
     (void*)cfx_sslcert_principal_get_organization_unit_names,
     (void*)cfx_sslcert_principal_get_domain_components,
+    (void*)cfx_sslinfo_get_cert_status,
+    (void*)cfx_sslinfo_is_cert_status_error,
+    (void*)cfx_sslinfo_is_cert_status_minor_error,
     (void*)cfx_sslinfo_get_subject,
     (void*)cfx_sslinfo_get_issuer,
     (void*)cfx_sslinfo_get_serial_number,
@@ -995,6 +1001,9 @@ static void* cfx_function_pointers[1279] =  {
     (void*)cfx_sslinfo_get_valid_expiry,
     (void*)cfx_sslinfo_get_derencoded,
     (void*)cfx_sslinfo_get_pemencoded,
+    (void*)cfx_sslinfo_get_issuer_chain_size,
+    (void*)cfx_sslinfo_get_derencoded_issuer_chain,
+    (void*)cfx_sslinfo_get_pemencoded_issuer_chain,
     (void*)cfx_stream_reader_create_for_file,
     (void*)cfx_stream_reader_create_for_data,
     (void*)cfx_stream_reader_create_for_handler,
