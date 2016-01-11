@@ -228,7 +228,7 @@ namespace Chromium {
         /// </remarks>
         public CfxBinaryValue[] DerEncodedIssuerChain {
             get {
-                int count = GetIssuerChainSize();
+                int count = IssuerChainSize;
                 if(count == 0) return new CfxBinaryValue[0];
                 IntPtr[] ptrs = new IntPtr[count];
                 var ptrs_p = new PinnedObject(ptrs);
@@ -253,7 +253,7 @@ namespace Chromium {
         /// </remarks>
         public CfxBinaryValue[] PemEncodedIssuerChain {
             get {
-                int count = GetIssuerChainSize();
+                int count = IssuerChainSize;
                 if(count == 0) return new CfxBinaryValue[0];
                 IntPtr[] ptrs = new IntPtr[count];
                 var ptrs_p = new PinnedObject(ptrs);

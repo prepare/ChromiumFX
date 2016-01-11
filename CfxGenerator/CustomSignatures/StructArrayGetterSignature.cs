@@ -63,7 +63,11 @@ public class StructArrayGetterSignature : Signature {
     }
 
     public override void EmitPublicCall(CodeBuilder b) {
-        b.AppendLine("int count = {0}();", Owner.CefConfig.CountFunction.Substring(Owner.CefConfig.CountFunction.IndexOf(":") + 1));
+        var countFunc = Owner.CefConfig.CountFunction.Substring(Owner.CefConfig.CountFunction.IndexOf(":") + 1);
+        // it's translated into a property
+        Debug.Assert(countFunc.StartsWith("Get"));
+        countFunc = countFunc.Substring(3);
+        b.AppendLine("int count = {0};", countFunc);
         b.AppendLine("if(count == 0) return new {0}[0];", Arguments[2].ArgumentType.PublicSymbol);
         var code =
 @"IntPtr[] ptrs = new IntPtr[count];
