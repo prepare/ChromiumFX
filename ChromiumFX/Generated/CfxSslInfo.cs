@@ -226,10 +226,20 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
         /// </remarks>
-        public void GetDerEncodedIssuerChain(out int chainCount, out CfxBinaryValue chain) {
-            IntPtr chain_ptr;
-            CfxApi.cfx_sslinfo_get_derencoded_issuer_chain(NativePtr, out chainCount, out chain_ptr);
-            chain = CfxBinaryValue.Wrap(chain_ptr);
+        public CfxBinaryValue[] DerEncodedIssuerChain {
+            get {
+                int count = GetIssuerChainSize();
+                if(count == 0) return new CfxBinaryValue[0];
+                IntPtr[] ptrs = new IntPtr[count];
+                var ptrs_p = new PinnedObject(ptrs);
+                CfxApi.cfx_sslinfo_get_derencoded_issuer_chain(NativePtr, count, ptrs_p.PinnedPtr);
+                ptrs_p.Free();
+                CfxBinaryValue[] retval = new CfxBinaryValue[count];
+                for(int i = 0; i < count; ++i) {
+                    retval[i] = CfxBinaryValue.Wrap(ptrs[i]);
+                }
+                return retval;
+            }
         }
 
         /// <summary>
@@ -241,10 +251,20 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
         /// </remarks>
-        public void GetPemEncodedIssuerChain(out int chainCount, out CfxBinaryValue chain) {
-            IntPtr chain_ptr;
-            CfxApi.cfx_sslinfo_get_pemencoded_issuer_chain(NativePtr, out chainCount, out chain_ptr);
-            chain = CfxBinaryValue.Wrap(chain_ptr);
+        public CfxBinaryValue[] PemEncodedIssuerChain {
+            get {
+                int count = GetIssuerChainSize();
+                if(count == 0) return new CfxBinaryValue[0];
+                IntPtr[] ptrs = new IntPtr[count];
+                var ptrs_p = new PinnedObject(ptrs);
+                CfxApi.cfx_sslinfo_get_pemencoded_issuer_chain(NativePtr, count, ptrs_p.PinnedPtr);
+                ptrs_p.Free();
+                CfxBinaryValue[] retval = new CfxBinaryValue[count];
+                for(int i = 0; i < count; ++i) {
+                    retval[i] = CfxBinaryValue.Wrap(ptrs[i]);
+                }
+                return retval;
+            }
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

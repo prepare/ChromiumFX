@@ -61,7 +61,9 @@ public class CustomSignatures {
                 return new SignatureWithStructArray(SignatureType.ClientCallback, owner, sd, api, 4, 3);
 
             case "cef_post_data::get_elements":
-                return new GetPostDataElementsSignature(owner, sd, api);
+            case "cef_sslinfo::get_derencoded_issuer_chain":
+            case "cef_sslinfo::get_pemencoded_issuer_chain":
+                return new StructArrayGetterSignature(owner, sd, api);
 
             case "cef_v8handler::execute":
                 return new CefV8HandlerExecuteSignature(owner, sd, api);
