@@ -953,7 +953,7 @@ namespace Chromium.WebBrowser {
             var handler = BrowserCreated;
             if(handler != null) {
                 var e1 = new BrowserCreatedEventArgs(e.Browser);
-                InvokeCallback(() => { handler(this, e1); });
+                handler(this, e1);
             }
 
             System.Threading.ThreadPool.QueueUserWorkItem(AfterSetBrowserTasks);
