@@ -177,9 +177,11 @@ namespace CfxTestApplication {
                     }
             };
 
-            WebBrowser.OnLoadingStateChange += (s, e) => {
-                if(!e.IsLoading)
+            WebBrowser.LoadHandler.OnLoadingStateChange += (s, e) => {
+                if(e.IsLoading) return;
+                BeginInvoke((MethodInvoker)(() => {
                     UrlTextBox.Text = WebBrowser.Url.ToString();
+                }));
             };
 
             WebBrowser.LoadUrl("http://localresource/text.html");

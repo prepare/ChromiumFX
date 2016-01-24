@@ -858,14 +858,7 @@ namespace Chromium.WebBrowser {
             }
         }
 
-        /// <summary>
-        /// Called when the loading state has changed. This callback will be executed
-        /// twice -- once when loading is initiated either programmatically or by user
-        /// action, and once when loading is terminated due to completion, cancellation
-        /// of failure.
-        /// The event is executed on the thread that owns this browser control's 
-        /// underlying window handle.
-        /// </summary>
+        [Obsolete("OnLoadingStateChange is deprecated. Please use LoadHandler.OnLoadingStateChange.")]
         public event CfxOnLoadingStateChangeEventHandler OnLoadingStateChange {
             add {
                 lock (browserSyncRoot) {
@@ -892,15 +885,7 @@ namespace Chromium.WebBrowser {
         }
 
 
-        /// <summary>
-        /// Called before a context menu is displayed. |Params| provides information
-        /// about the context menu state. |Model| initially contains the default
-        /// context menu. The |Model| can be cleared to show no context menu or
-        /// modified to show a custom menu. Do not keep references to |Params| or
-        /// |Model| outside of this callback.
-        /// The event is executed on the thread that owns this browser control's 
-        /// underlying window handle.
-        /// </summary>
+        [Obsolete("OnBeforeContextMenu is deprecated. Please use ContextMenuHandler.OnBeforeContextMenu.")]
         public event CfxOnBeforeContextMenuEventHandler OnBeforeContextMenu {
             add {
                 lock (browserSyncRoot) {
@@ -927,17 +912,7 @@ namespace Chromium.WebBrowser {
         }
 
 
-        /// <summary>
-        /// Called to execute a command selected from the context menu. Return true (1)
-        /// if the command was handled or false (0) for the default implementation. See
-        /// CfxMenuId for the command ids that have default implementations. All
-        /// user-defined command ids should be between MENU_ID_USER_FIRST and
-        /// MENU_ID_USER_LAST. |Params| will have the same values as what was passed to
-        /// on_before_context_menu(). Do not keep a reference to |Params| outside of
-        /// this callback.
-        /// The event is executed on the thread that owns this browser control's 
-        /// underlying window handle.
-        /// </summary>
+        [Obsolete("OnContextMenuCommand is deprecated. Please use ContextMenuHandler.OnContextMenuCommand.")]
         public event CfxOnContextMenuCommandEventHandler OnContextMenuCommand {
             add {
                 lock (browserSyncRoot) {
@@ -962,9 +937,6 @@ namespace Chromium.WebBrowser {
                 InvokeCallback(() => { handler(this, e); });
             }
         }
-
-        //TODO: create more browser events on the client handler events, invoking the UI thread.
-
 
 
         private string m_loadUrlDeferred;
