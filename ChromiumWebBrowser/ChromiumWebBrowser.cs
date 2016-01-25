@@ -637,7 +637,7 @@ namespace Chromium.WebBrowser {
         /// Returns false if the remote browser is currently unavailable.
         /// If this function returns false, then |callback| will not be called. Otherwise,
         /// |callback| will be called asynchronously in the context of the render thread and,
-        /// if InvokeMode is set to Invoke, on the thread that owns the browser's underlying window handle.
+        /// if RemoteCallbackInvokeMode is set to Invoke, on the thread that owns the browser's underlying window handle.
         /// 
         /// Use with care:
         /// The callback may never be called if the render process gets killed prematurely.
