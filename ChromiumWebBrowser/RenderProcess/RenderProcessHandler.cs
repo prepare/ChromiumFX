@@ -88,6 +88,7 @@ namespace Chromium.WebBrowser {
                         SetProperties(e.Context, obj);
                     }
                 }
+                wb.RaiseOnV8ContextCreated(e);
             }
         }
 

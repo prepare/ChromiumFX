@@ -791,6 +791,37 @@ namespace Chromium.WebBrowser {
             }
         }
 
+        // Callbacks from the associated render process handler
+
+        /// <summary>
+        /// Called immediately after the V8 context for a frame has been created. To
+        /// retrieve the JavaScript 'window' object use the
+        /// CfrV8Context.GetGlobal() function. V8 handles can only be accessed
+        /// from the thread on which they are created. A task runner for posting tasks
+        /// on the associated thread can be retrieved via the
+        /// CfrV8Context.GetTaskRunner() function.
+        /// 
+        /// All javascript properties/functions defined through GlobalObject or GlobalObjectForFrame
+        /// are made available before this event is executed.
+        /// 
+        /// If RemoteCallbackInvokeMode is set to Invoke, then this event is executed on the 
+        /// thread that owns the browser's underlying window handle.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
+        /// </remarks>
+        public event CfrOnContextCreatedEventHandler OnV8ContextCreated;
+
+        internal void RaiseOnV8ContextCreated(CfrOnContextCreatedEventArgs e) {
+            var eventHandler = OnV8ContextCreated;
+            if(eventHandler == null) return;
+            if(RemoteCallbacksWillInvoke)
+                RenderThreadInvoke(() => eventHandler(this, e));
+            else
+                eventHandler(this, e);
+        }
+
 
         /// <summary>
         /// Set a resource to be used for the specified URL.
@@ -813,7 +844,6 @@ namespace Chromium.WebBrowser {
         public void RemoveWebResource(string url) {
             webResources.Remove(url);
         }
-
 
         /// <summary>
         /// Raised after the CfxBrowser object for this WebBrowser has been created.
