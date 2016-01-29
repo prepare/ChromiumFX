@@ -211,7 +211,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public CfxValueType GetType(int index) {
-            return CfxApi.cfx_list_value_get_type(NativePtr, index);
+            return (CfxValueType)CfxApi.cfx_list_value_get_type(NativePtr, index);
         }
 
         /// <summary>

@@ -143,7 +143,7 @@ namespace Chromium {
         /// </remarks>
         public CfxTransitionType TransitionType {
             get {
-                return CfxApi.cfx_navigation_entry_get_transition_type(NativePtr);
+                return (CfxTransitionType)CfxApi.cfx_navigation_entry_get_transition_type(NativePtr);
             }
         }
 

@@ -152,11 +152,11 @@ namespace Chromium {
 
         // on_before_navigation
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_render_process_handler_on_before_navigation_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr request, CfxNavigationType navigation_type, int is_redirect);
+        private delegate void cfx_render_process_handler_on_before_navigation_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr request, int navigation_type, int is_redirect);
         private static cfx_render_process_handler_on_before_navigation_delegate cfx_render_process_handler_on_before_navigation;
         private static IntPtr cfx_render_process_handler_on_before_navigation_ptr;
 
-        internal static void on_before_navigation(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr request, CfxNavigationType navigation_type, int is_redirect) {
+        internal static void on_before_navigation(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr request, int navigation_type, int is_redirect) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
@@ -256,11 +256,11 @@ namespace Chromium {
 
         // on_process_message_received
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_render_process_handler_on_process_message_received_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxProcessId source_process, IntPtr message);
+        private delegate void cfx_render_process_handler_on_process_message_received_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int source_process, IntPtr message);
         private static cfx_render_process_handler_on_process_message_received_delegate cfx_render_process_handler_on_process_message_received;
         private static IntPtr cfx_render_process_handler_on_process_message_received_ptr;
 
-        internal static void on_process_message_received(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxProcessId source_process, IntPtr message) {
+        internal static void on_process_message_received(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int source_process, IntPtr message) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
@@ -867,13 +867,13 @@ namespace Chromium {
             internal CfxFrame m_frame_wrapped;
             internal IntPtr m_request;
             internal CfxRequest m_request_wrapped;
-            internal CfxNavigationType m_navigation_type;
+            internal int m_navigation_type;
             internal int m_is_redirect;
 
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnBeforeNavigationEventArgs(IntPtr browser, IntPtr frame, IntPtr request, CfxNavigationType navigation_type, int is_redirect) {
+            internal CfxOnBeforeNavigationEventArgs(IntPtr browser, IntPtr frame, IntPtr request, int navigation_type, int is_redirect) {
                 m_browser = browser;
                 m_frame = frame;
                 m_request = request;
@@ -917,7 +917,7 @@ namespace Chromium {
             public CfxNavigationType NavigationType {
                 get {
                     CheckAccess();
-                    return m_navigation_type;
+                    return (CfxNavigationType)m_navigation_type;
                 }
             }
             /// <summary>

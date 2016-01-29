@@ -61,11 +61,11 @@ namespace Chromium {
 
         // on_file_dialog
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_dialog_handler_on_file_dialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxFileDialogMode mode, IntPtr title_str, int title_length, IntPtr default_file_path_str, int default_file_path_length, IntPtr accept_filters, int selected_accept_filter, IntPtr callback);
+        private delegate void cfx_dialog_handler_on_file_dialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int mode, IntPtr title_str, int title_length, IntPtr default_file_path_str, int default_file_path_length, IntPtr accept_filters, int selected_accept_filter, IntPtr callback);
         private static cfx_dialog_handler_on_file_dialog_delegate cfx_dialog_handler_on_file_dialog;
         private static IntPtr cfx_dialog_handler_on_file_dialog_ptr;
 
-        internal static void on_file_dialog(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxFileDialogMode mode, IntPtr title_str, int title_length, IntPtr default_file_path_str, int default_file_path_length, IntPtr accept_filters, int selected_accept_filter, IntPtr callback) {
+        internal static void on_file_dialog(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int mode, IntPtr title_str, int title_length, IntPtr default_file_path_str, int default_file_path_length, IntPtr accept_filters, int selected_accept_filter, IntPtr callback) {
             var self = (CfxDialogHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
@@ -183,7 +183,7 @@ namespace Chromium {
 
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
-            internal CfxFileDialogMode m_mode;
+            internal int m_mode;
             internal IntPtr m_title_str;
             internal int m_title_length;
             internal string m_title;
@@ -198,7 +198,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxDialogHandlerOnFileDialogEventArgs(IntPtr browser, CfxFileDialogMode mode, IntPtr title_str, int title_length, IntPtr default_file_path_str, int default_file_path_length, IntPtr accept_filters, int selected_accept_filter, IntPtr callback) {
+            internal CfxDialogHandlerOnFileDialogEventArgs(IntPtr browser, int mode, IntPtr title_str, int title_length, IntPtr default_file_path_str, int default_file_path_length, IntPtr accept_filters, int selected_accept_filter, IntPtr callback) {
                 m_browser = browser;
                 m_mode = mode;
                 m_title_str = title_str;
@@ -226,7 +226,7 @@ namespace Chromium {
             public CfxFileDialogMode Mode {
                 get {
                     CheckAccess();
-                    return m_mode;
+                    return (CfxFileDialogMode)m_mode;
                 }
             }
             /// <summary>

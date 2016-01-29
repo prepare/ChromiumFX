@@ -106,11 +106,11 @@ namespace Chromium {
 
         // on_context_menu_command
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_context_menu_handler_on_context_menu_command_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr parameters, int command_id, CfxEventFlags event_flags);
+        private delegate void cfx_context_menu_handler_on_context_menu_command_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr parameters, int command_id, int event_flags);
         private static cfx_context_menu_handler_on_context_menu_command_delegate cfx_context_menu_handler_on_context_menu_command;
         private static IntPtr cfx_context_menu_handler_on_context_menu_command_ptr;
 
-        internal static void on_context_menu_command(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr parameters, int command_id, CfxEventFlags event_flags) {
+        internal static void on_context_menu_command(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr parameters, int command_id, int event_flags) {
             var self = (CfxContextMenuHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
@@ -559,12 +559,12 @@ namespace Chromium {
             internal IntPtr m_params;
             internal CfxContextMenuParams m_params_wrapped;
             internal int m_command_id;
-            internal CfxEventFlags m_event_flags;
+            internal int m_event_flags;
 
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnContextMenuCommandEventArgs(IntPtr browser, IntPtr frame, IntPtr parameters, int command_id, CfxEventFlags event_flags) {
+            internal CfxOnContextMenuCommandEventArgs(IntPtr browser, IntPtr frame, IntPtr parameters, int command_id, int event_flags) {
                 m_browser = browser;
                 m_frame = frame;
                 m_params = parameters;
@@ -617,7 +617,7 @@ namespace Chromium {
             public CfxEventFlags EventFlags {
                 get {
                     CheckAccess();
-                    return m_event_flags;
+                    return (CfxEventFlags)m_event_flags;
                 }
             }
             /// <summary>

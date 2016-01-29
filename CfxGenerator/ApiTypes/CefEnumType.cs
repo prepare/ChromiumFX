@@ -78,6 +78,14 @@ public class CefEnumType : ApiType {
         get { return Name + "_t"; }
     }
 
+    public override string PInvokeSymbol {
+        get { return "int"; }
+    }
+
+    public override string PublicSymbol {
+        get { return CSharp.ApplyStyle(CfxName); }
+    }
+
     public override string ProxySymbol {
         get { return "int"; }
     }
@@ -90,8 +98,16 @@ public class CefEnumType : ApiType {
         get { return "cfx_" + Name.Substring(4); }
     }
 
-    public override string PInvokeSymbol {
-        get { return CSharp.ApplyStyle(CfxName); }
+    public override string PublicCallArgument(string var) {
+        return string.Format("(int){0}", var);
+    }
+
+    public override string PublicWrapExpression(string var) {
+        return string.Format("({0}){1}", PublicSymbol, var);
+    }
+
+    public override string PublicUnwrapExpression(string var) {
+        return "(int)" + var;
     }
 
     public override string RemoteUnwrapExpression(string var) {

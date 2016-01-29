@@ -41,6 +41,12 @@ public class CefEnumPtrType : CefType {
         get { return cefEnum.OriginalSymbol + "*"; }
     }
 
+    public override string PInvokeSymbol {
+        get {
+            return cefEnum.PInvokeSymbol;
+        }
+    }
+
     public override string PublicSymbol {
         get { return cefEnum.PublicSymbol; }
     }
@@ -58,24 +64,32 @@ public class CefEnumPtrType : CefType {
     }
 
     public override string PublicCallArgument(string var) {
-        return "out " + var;
+        return string.Format("out {0}_tmp", var);
     }
 
-    public override void EmitPublicEventArgFields(CodeBuilder b, string var) {
-        b.AppendLine("internal {0} m_{1};", PublicSymbol, var);
+    public override string PublicWrapExpression(string var) {
+        return cefEnum.PublicWrapExpression(var);
+    }
+
+    public override string PublicUnwrapExpression(string var) {
+        return cefEnum.PublicUnwrapExpression(var);
     }
 
     public override string PublicEventConstructorParameter(string var) {
-        return PublicSymbol + " " + var;
+        return PInvokeSymbol + " " + var;
+    }
+
+    public override void EmitPrePublicCallStatements(CodeBuilder b, string var) {
+        b.AppendLine("int {0}_tmp;", var);
+    }
+
+    public override void EmitPostPublicCallStatements(CodeBuilder b, string var) {
+        b.AppendLine("{0} = ({1}){0}_tmp;", var, cefEnum.PublicSymbol);
     }
 
     public override void EmitPostPublicRaiseEventStatements(CodeBuilder b, string var) {
         b.AppendLine("{0} = e.m_{0};", var);
     }
-
-    //public override void EmitPublicEventArgSetterStatements(CodeBuilder b, string var) {
-    //    b.AppendLine("m_{0} = value;", var);
-    //}
 
     public override bool IsOut {
         get {

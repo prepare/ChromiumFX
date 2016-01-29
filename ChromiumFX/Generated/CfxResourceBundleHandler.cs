@@ -109,11 +109,11 @@ namespace Chromium {
 
         // get_data_resource_for_scale
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_resource_bundle_handler_get_data_resource_for_scale_delegate(IntPtr gcHandlePtr, out int __retval, int resource_id, CfxScaleFactor scale_factor, out IntPtr data, out int data_size);
+        private delegate void cfx_resource_bundle_handler_get_data_resource_for_scale_delegate(IntPtr gcHandlePtr, out int __retval, int resource_id, int scale_factor, out IntPtr data, out int data_size);
         private static cfx_resource_bundle_handler_get_data_resource_for_scale_delegate cfx_resource_bundle_handler_get_data_resource_for_scale;
         private static IntPtr cfx_resource_bundle_handler_get_data_resource_for_scale_ptr;
 
-        internal static void get_data_resource_for_scale(IntPtr gcHandlePtr, out int __retval, int resource_id, CfxScaleFactor scale_factor, out IntPtr data, out int data_size) {
+        internal static void get_data_resource_for_scale(IntPtr gcHandlePtr, out int __retval, int resource_id, int scale_factor, out IntPtr data, out int data_size) {
             var self = (CfxResourceBundleHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
@@ -458,14 +458,14 @@ namespace Chromium {
         public class CfxGetDataResourceForScaleEventArgs : CfxEventArgs {
 
             internal int m_resource_id;
-            internal CfxScaleFactor m_scale_factor;
+            internal int m_scale_factor;
             internal IntPtr m_data;
             internal int m_data_size;
 
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxGetDataResourceForScaleEventArgs(int resource_id, CfxScaleFactor scale_factor) {
+            internal CfxGetDataResourceForScaleEventArgs(int resource_id, int scale_factor) {
                 m_resource_id = resource_id;
                 m_scale_factor = scale_factor;
             }
@@ -485,7 +485,7 @@ namespace Chromium {
             public CfxScaleFactor ScaleFactor {
                 get {
                     CheckAccess();
-                    return m_scale_factor;
+                    return (CfxScaleFactor)m_scale_factor;
                 }
             }
             /// <summary>

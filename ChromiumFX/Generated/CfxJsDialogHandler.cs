@@ -61,11 +61,11 @@ namespace Chromium {
 
         // on_jsdialog
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_jsdialog_handler_on_jsdialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr origin_url_str, int origin_url_length, IntPtr accept_lang_str, int accept_lang_length, CfxJsDialogType dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback, out int suppress_message);
+        private delegate void cfx_jsdialog_handler_on_jsdialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr origin_url_str, int origin_url_length, IntPtr accept_lang_str, int accept_lang_length, int dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback, out int suppress_message);
         private static cfx_jsdialog_handler_on_jsdialog_delegate cfx_jsdialog_handler_on_jsdialog;
         private static IntPtr cfx_jsdialog_handler_on_jsdialog_ptr;
 
-        internal static void on_jsdialog(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr origin_url_str, int origin_url_length, IntPtr accept_lang_str, int accept_lang_length, CfxJsDialogType dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback, out int suppress_message) {
+        internal static void on_jsdialog(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr origin_url_str, int origin_url_length, IntPtr accept_lang_str, int accept_lang_length, int dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback, out int suppress_message) {
             var self = (CfxJsDialogHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
@@ -369,7 +369,7 @@ namespace Chromium {
             internal IntPtr m_accept_lang_str;
             internal int m_accept_lang_length;
             internal string m_accept_lang;
-            internal CfxJsDialogType m_dialog_type;
+            internal int m_dialog_type;
             internal IntPtr m_message_text_str;
             internal int m_message_text_length;
             internal string m_message_text;
@@ -383,7 +383,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnJsDialogEventArgs(IntPtr browser, IntPtr origin_url_str, int origin_url_length, IntPtr accept_lang_str, int accept_lang_length, CfxJsDialogType dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback) {
+            internal CfxOnJsDialogEventArgs(IntPtr browser, IntPtr origin_url_str, int origin_url_length, IntPtr accept_lang_str, int accept_lang_length, int dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback) {
                 m_browser = browser;
                 m_origin_url_str = origin_url_str;
                 m_origin_url_length = origin_url_length;
@@ -433,7 +433,7 @@ namespace Chromium {
             public CfxJsDialogType DialogType {
                 get {
                     CheckAccess();
-                    return m_dialog_type;
+                    return (CfxJsDialogType)m_dialog_type;
                 }
             }
             /// <summary>

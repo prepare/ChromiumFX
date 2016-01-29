@@ -125,7 +125,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_capi.h">cef/include/capi/cef_resource_bundle_capi.h</see>.
         /// </remarks>
         public bool GetDataResourceForScale(int resourceId, CfxScaleFactor scaleFactor, out IntPtr data, out int dataSize) {
-            return 0 != CfxApi.cfx_resource_bundle_get_data_resource_for_scale(NativePtr, resourceId, scaleFactor, out data, out dataSize);
+            return 0 != CfxApi.cfx_resource_bundle_get_data_resource_for_scale(NativePtr, resourceId, (int)scaleFactor, out data, out dataSize);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

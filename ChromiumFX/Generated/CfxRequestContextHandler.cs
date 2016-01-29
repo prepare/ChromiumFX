@@ -81,11 +81,11 @@ namespace Chromium {
 
         // on_before_plugin_load
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_request_context_handler_on_before_plugin_load_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr mime_type_str, int mime_type_length, IntPtr plugin_url_str, int plugin_url_length, IntPtr top_origin_url_str, int top_origin_url_length, IntPtr plugin_info, ref CfxPluginPolicy plugin_policy);
+        private delegate void cfx_request_context_handler_on_before_plugin_load_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr mime_type_str, int mime_type_length, IntPtr plugin_url_str, int plugin_url_length, IntPtr top_origin_url_str, int top_origin_url_length, IntPtr plugin_info, ref int plugin_policy);
         private static cfx_request_context_handler_on_before_plugin_load_delegate cfx_request_context_handler_on_before_plugin_load;
         private static IntPtr cfx_request_context_handler_on_before_plugin_load_ptr;
 
-        internal static void on_before_plugin_load(IntPtr gcHandlePtr, out int __retval, IntPtr mime_type_str, int mime_type_length, IntPtr plugin_url_str, int plugin_url_length, IntPtr top_origin_url_str, int top_origin_url_length, IntPtr plugin_info, ref CfxPluginPolicy plugin_policy) {
+        internal static void on_before_plugin_load(IntPtr gcHandlePtr, out int __retval, IntPtr mime_type_str, int mime_type_length, IntPtr plugin_url_str, int plugin_url_length, IntPtr top_origin_url_str, int top_origin_url_length, IntPtr plugin_info, ref int plugin_policy) {
             var self = (CfxRequestContextHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
@@ -299,12 +299,12 @@ namespace Chromium {
             internal string m_top_origin_url;
             internal IntPtr m_plugin_info;
             internal CfxWebPluginInfo m_plugin_info_wrapped;
-            internal CfxPluginPolicy m_plugin_policy;
+            internal int m_plugin_policy;
 
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnBeforePluginLoadEventArgs(IntPtr mime_type_str, int mime_type_length, IntPtr plugin_url_str, int plugin_url_length, IntPtr top_origin_url_str, int top_origin_url_length, IntPtr plugin_info, CfxPluginPolicy plugin_policy) {
+            internal CfxOnBeforePluginLoadEventArgs(IntPtr mime_type_str, int mime_type_length, IntPtr plugin_url_str, int plugin_url_length, IntPtr top_origin_url_str, int top_origin_url_length, IntPtr plugin_info, int plugin_policy) {
                 m_mime_type_str = mime_type_str;
                 m_mime_type_length = mime_type_length;
                 m_plugin_url_str = plugin_url_str;
@@ -361,11 +361,11 @@ namespace Chromium {
             public CfxPluginPolicy PluginPolicy {
                 get {
                     CheckAccess();
-                    return m_plugin_policy;
+                    return (CfxPluginPolicy)m_plugin_policy;
                 }
                 set {
                     CheckAccess();
-                    m_plugin_policy = value;
+                    m_plugin_policy = (int)value;
                 }
             }
             /// <summary>

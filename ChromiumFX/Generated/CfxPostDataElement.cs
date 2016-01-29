@@ -100,7 +100,7 @@ namespace Chromium {
         /// </remarks>
         public CfxPostdataElementType Type {
             get {
-                return CfxApi.cfx_post_data_element_get_type(NativePtr);
+                return (CfxPostdataElementType)CfxApi.cfx_post_data_element_get_type(NativePtr);
             }
         }
 

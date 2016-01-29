@@ -76,7 +76,7 @@ namespace Chromium {
         /// </remarks>
         public CfxDomNodeType Type {
             get {
-                return CfxApi.cfx_domnode_get_type(NativePtr);
+                return (CfxDomNodeType)CfxApi.cfx_domnode_get_type(NativePtr);
             }
         }
 

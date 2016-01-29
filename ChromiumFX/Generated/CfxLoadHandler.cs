@@ -118,11 +118,11 @@ namespace Chromium {
 
         // on_load_error
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_load_handler_on_load_error_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, CfxErrorCode errorCode, IntPtr errorText_str, int errorText_length, IntPtr failedUrl_str, int failedUrl_length);
+        private delegate void cfx_load_handler_on_load_error_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, int errorCode, IntPtr errorText_str, int errorText_length, IntPtr failedUrl_str, int failedUrl_length);
         private static cfx_load_handler_on_load_error_delegate cfx_load_handler_on_load_error;
         private static IntPtr cfx_load_handler_on_load_error_ptr;
 
-        internal static void on_load_error(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, CfxErrorCode errorCode, IntPtr errorText_str, int errorText_length, IntPtr failedUrl_str, int failedUrl_length) {
+        internal static void on_load_error(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, int errorCode, IntPtr errorText_str, int errorText_length, IntPtr failedUrl_str, int failedUrl_length) {
             var self = (CfxLoadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 return;
@@ -556,7 +556,7 @@ namespace Chromium {
             internal CfxBrowser m_browser_wrapped;
             internal IntPtr m_frame;
             internal CfxFrame m_frame_wrapped;
-            internal CfxErrorCode m_errorCode;
+            internal int m_errorCode;
             internal IntPtr m_errorText_str;
             internal int m_errorText_length;
             internal string m_errorText;
@@ -564,7 +564,7 @@ namespace Chromium {
             internal int m_failedUrl_length;
             internal string m_failedUrl;
 
-            internal CfxOnLoadErrorEventArgs(IntPtr browser, IntPtr frame, CfxErrorCode errorCode, IntPtr errorText_str, int errorText_length, IntPtr failedUrl_str, int failedUrl_length) {
+            internal CfxOnLoadErrorEventArgs(IntPtr browser, IntPtr frame, int errorCode, IntPtr errorText_str, int errorText_length, IntPtr failedUrl_str, int failedUrl_length) {
                 m_browser = browser;
                 m_frame = frame;
                 m_errorCode = errorCode;
@@ -600,7 +600,7 @@ namespace Chromium {
             public CfxErrorCode ErrorCode {
                 get {
                     CheckAccess();
-                    return m_errorCode;
+                    return (CfxErrorCode)m_errorCode;
                 }
             }
             /// <summary>

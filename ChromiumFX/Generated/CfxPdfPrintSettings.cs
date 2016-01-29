@@ -184,12 +184,12 @@ namespace Chromium {
         /// </remarks>
         public CfxPdfPrintMarginType MarginType {
             get {
-                CfxPdfPrintMarginType value;
+                int value;
                 CfxApi.cfx_pdf_print_settings_get_margin_type(nativePtrUnchecked, out value);
-                return value;
+                return (CfxPdfPrintMarginType)value;
             }
             set {
-                CfxApi.cfx_pdf_print_settings_set_margin_type(nativePtrUnchecked, value);
+                CfxApi.cfx_pdf_print_settings_set_margin_type(nativePtrUnchecked, (int)value);
             }
         }
 

@@ -326,11 +326,11 @@ namespace Chromium {
 
         // on_process_message_received
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_client_on_process_message_received_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxProcessId source_process, IntPtr message);
+        private delegate void cfx_client_on_process_message_received_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int source_process, IntPtr message);
         private static cfx_client_on_process_message_received_delegate cfx_client_on_process_message_received;
         private static IntPtr cfx_client_on_process_message_received_ptr;
 
-        internal static void on_process_message_received(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxProcessId source_process, IntPtr message) {
+        internal static void on_process_message_received(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int source_process, IntPtr message) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
@@ -1483,14 +1483,14 @@ namespace Chromium {
 
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
-            internal CfxProcessId m_source_process;
+            internal int m_source_process;
             internal IntPtr m_message;
             internal CfxProcessMessage m_message_wrapped;
 
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnProcessMessageReceivedEventArgs(IntPtr browser, CfxProcessId source_process, IntPtr message) {
+            internal CfxOnProcessMessageReceivedEventArgs(IntPtr browser, int source_process, IntPtr message) {
                 m_browser = browser;
                 m_source_process = source_process;
                 m_message = message;
@@ -1512,7 +1512,7 @@ namespace Chromium {
             public CfxProcessId SourceProcess {
                 get {
                     CheckAccess();
-                    return m_source_process;
+                    return (CfxProcessId)m_source_process;
                 }
             }
             /// <summary>

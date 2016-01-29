@@ -388,12 +388,12 @@ namespace Chromium {
         /// </remarks>
         public CfxLogSeverity LogSeverity {
             get {
-                CfxLogSeverity value;
+                int value;
                 CfxApi.cfx_settings_get_log_severity(nativePtrUnchecked, out value);
-                return value;
+                return (CfxLogSeverity)value;
             }
             set {
-                CfxApi.cfx_settings_set_log_severity(nativePtrUnchecked, value);
+                CfxApi.cfx_settings_set_log_severity(nativePtrUnchecked, (int)value);
             }
         }
 

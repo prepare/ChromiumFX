@@ -129,7 +129,7 @@ namespace Chromium {
         /// </remarks>
         public CfxUrlRequestStatus RequestStatus {
             get {
-                return CfxApi.cfx_urlrequest_get_request_status(NativePtr);
+                return (CfxUrlRequestStatus)CfxApi.cfx_urlrequest_get_request_status(NativePtr);
             }
         }
 
@@ -143,7 +143,7 @@ namespace Chromium {
         /// </remarks>
         public CfxErrorCode RequestError {
             get {
-                return CfxApi.cfx_urlrequest_get_request_error(NativePtr);
+                return (CfxErrorCode)CfxApi.cfx_urlrequest_get_request_error(NativePtr);
             }
         }
 

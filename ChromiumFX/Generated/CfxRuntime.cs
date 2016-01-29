@@ -214,7 +214,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static bool CurrentlyOn(CfxThreadId threadId) {
-            return 0 != CfxApi.cfx_currently_on(threadId);
+            return 0 != CfxApi.cfx_currently_on((int)threadId);
         }
 
         /// <summary>
@@ -385,7 +385,7 @@ namespace Chromium {
             var path_pinned = new PinnedString(path);
             IntPtr path_str = path_pinned.Obj.PinnedPtr;
             int path_length = path_pinned.Length;
-            var __retval = CfxApi.cfx_get_path(key, ref path_str, ref path_length);
+            var __retval = CfxApi.cfx_get_path((int)key, ref path_str, ref path_length);
             if(path_str != path_pinned.Obj.PinnedPtr) {
                 if(path_length > 0) {
                     path = System.Runtime.InteropServices.Marshal.PtrToStringUni(path_str, path_length);
@@ -484,7 +484,7 @@ namespace Chromium {
         /// </remarks>
         public static CfxValue ParseJson(string jsonString, CfxJsonParserOptions options) {
             var jsonString_pinned = new PinnedString(jsonString);
-            var __retval = CfxApi.cfx_parse_json(jsonString_pinned.Obj.PinnedPtr, jsonString_pinned.Length, options);
+            var __retval = CfxApi.cfx_parse_json(jsonString_pinned.Obj.PinnedPtr, jsonString_pinned.Length, (int)options);
             jsonString_pinned.Obj.Free();
             return CfxValue.Wrap(__retval);
         }
@@ -501,11 +501,13 @@ namespace Chromium {
         /// </remarks>
         public static CfxValue ParseJsonAndReturnError(string jsonString, CfxJsonParserOptions options, out CfxJsonParserError errorCodeOut, ref string errorMsgOut) {
             var jsonString_pinned = new PinnedString(jsonString);
+            int errorCodeOut_tmp;
             var errorMsgOut_pinned = new PinnedString(errorMsgOut);
             IntPtr errorMsgOut_str = errorMsgOut_pinned.Obj.PinnedPtr;
             int errorMsgOut_length = errorMsgOut_pinned.Length;
-            var __retval = CfxApi.cfx_parse_jsonand_return_error(jsonString_pinned.Obj.PinnedPtr, jsonString_pinned.Length, options, out errorCodeOut, ref errorMsgOut_str, ref errorMsgOut_length);
+            var __retval = CfxApi.cfx_parse_jsonand_return_error(jsonString_pinned.Obj.PinnedPtr, jsonString_pinned.Length, (int)options, out errorCodeOut_tmp, ref errorMsgOut_str, ref errorMsgOut_length);
             jsonString_pinned.Obj.Free();
+            errorCodeOut = (CfxJsonParserError)errorCodeOut_tmp;
             if(errorMsgOut_str != errorMsgOut_pinned.Obj.PinnedPtr) {
                 if(errorMsgOut_length > 0) {
                     errorMsgOut = System.Runtime.InteropServices.Marshal.PtrToStringUni(errorMsgOut_str, errorMsgOut_length);
@@ -543,7 +545,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static bool PostDelayedTask(CfxThreadId threadId, CfxTask task, long delayMs) {
-            return 0 != CfxApi.cfx_post_delayed_task(threadId, CfxTask.Unwrap(task), delayMs);
+            return 0 != CfxApi.cfx_post_delayed_task((int)threadId, CfxTask.Unwrap(task), delayMs);
         }
 
         /// <summary>
@@ -555,7 +557,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static bool PostTask(CfxThreadId threadId, CfxTask task) {
-            return 0 != CfxApi.cfx_post_task(threadId, CfxTask.Unwrap(task));
+            return 0 != CfxApi.cfx_post_task((int)threadId, CfxTask.Unwrap(task));
         }
 
         /// <summary>
@@ -798,7 +800,7 @@ namespace Chromium {
         /// </remarks>
         public static string UriDecode(string text, bool convertToUtf8, CfxUriUnescapeRule unescapeRule) {
             var text_pinned = new PinnedString(text);
-            var __retval = CfxApi.cfx_uridecode(text_pinned.Obj.PinnedPtr, text_pinned.Length, convertToUtf8 ? 1 : 0, unescapeRule);
+            var __retval = CfxApi.cfx_uridecode(text_pinned.Obj.PinnedPtr, text_pinned.Length, convertToUtf8 ? 1 : 0, (int)unescapeRule);
             text_pinned.Obj.Free();
             return StringFunctions.ConvertStringUserfree(__retval);
         }
@@ -860,7 +862,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
         /// </remarks>
         public static string WriteJson(CfxValue node, CfxJsonWriterOptions options) {
-            return StringFunctions.ConvertStringUserfree(CfxApi.cfx_write_json(CfxValue.Unwrap(node), options));
+            return StringFunctions.ConvertStringUserfree(CfxApi.cfx_write_json(CfxValue.Unwrap(node), (int)options));
         }
 
         public class Linux {

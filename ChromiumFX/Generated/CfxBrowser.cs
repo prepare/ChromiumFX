@@ -338,7 +338,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
         public bool SendProcessMessage(CfxProcessId targetProcess, CfxProcessMessage message) {
-            return 0 != CfxApi.cfx_browser_send_process_message(NativePtr, targetProcess, CfxProcessMessage.Unwrap(message));
+            return 0 != CfxApi.cfx_browser_send_process_message(NativePtr, (int)targetProcess, CfxProcessMessage.Unwrap(message));
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

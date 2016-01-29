@@ -83,11 +83,11 @@ namespace Chromium {
 
         // on_open_urlfrom_tab
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_request_handler_on_open_urlfrom_tab_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, CfxWindowOpenDisposition target_disposition, int user_gesture);
+        private delegate void cfx_request_handler_on_open_urlfrom_tab_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, int target_disposition, int user_gesture);
         private static cfx_request_handler_on_open_urlfrom_tab_delegate cfx_request_handler_on_open_urlfrom_tab;
         private static IntPtr cfx_request_handler_on_open_urlfrom_tab_ptr;
 
-        internal static void on_open_urlfrom_tab(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, CfxWindowOpenDisposition target_disposition, int user_gesture) {
+        internal static void on_open_urlfrom_tab(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, int target_disposition, int user_gesture) {
             var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
@@ -104,14 +104,14 @@ namespace Chromium {
 
         // on_before_resource_load
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_request_handler_on_before_resource_load_delegate(IntPtr gcHandlePtr, out CfxReturnValue __retval, IntPtr browser, IntPtr frame, IntPtr request, IntPtr callback);
+        private delegate void cfx_request_handler_on_before_resource_load_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr request, IntPtr callback);
         private static cfx_request_handler_on_before_resource_load_delegate cfx_request_handler_on_before_resource_load;
         private static IntPtr cfx_request_handler_on_before_resource_load_ptr;
 
-        internal static void on_before_resource_load(IntPtr gcHandlePtr, out CfxReturnValue __retval, IntPtr browser, IntPtr frame, IntPtr request, IntPtr callback) {
+        internal static void on_before_resource_load(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr request, IntPtr callback) {
             var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
-                __retval = default(CfxReturnValue);
+                __retval = default(int);
                 return;
             }
             var e = new CfxOnBeforeResourceLoadEventArgs(browser, frame, request, callback);
@@ -122,7 +122,7 @@ namespace Chromium {
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
             if(e.m_request_wrapped == null) CfxApi.cfx_release(e.m_request);
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
-            __retval = e.m_returnValue;
+            __retval = (int)e.m_returnValue;
         }
 
         // get_resource_handler
@@ -220,11 +220,11 @@ namespace Chromium {
 
         // on_resource_load_complete
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_request_handler_on_resource_load_complete_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr request, IntPtr response, CfxUrlRequestStatus status, long received_content_length);
+        private delegate void cfx_request_handler_on_resource_load_complete_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr request, IntPtr response, int status, long received_content_length);
         private static cfx_request_handler_on_resource_load_complete_delegate cfx_request_handler_on_resource_load_complete;
         private static IntPtr cfx_request_handler_on_resource_load_complete_ptr;
 
-        internal static void on_resource_load_complete(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr request, IntPtr response, CfxUrlRequestStatus status, long received_content_length) {
+        internal static void on_resource_load_complete(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr request, IntPtr response, int status, long received_content_length) {
             var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 return;
@@ -304,11 +304,11 @@ namespace Chromium {
 
         // on_certificate_error
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_request_handler_on_certificate_error_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxErrorCode cert_error, IntPtr request_url_str, int request_url_length, IntPtr ssl_info, IntPtr callback);
+        private delegate void cfx_request_handler_on_certificate_error_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int cert_error, IntPtr request_url_str, int request_url_length, IntPtr ssl_info, IntPtr callback);
         private static cfx_request_handler_on_certificate_error_delegate cfx_request_handler_on_certificate_error;
         private static IntPtr cfx_request_handler_on_certificate_error_ptr;
 
-        internal static void on_certificate_error(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxErrorCode cert_error, IntPtr request_url_str, int request_url_length, IntPtr ssl_info, IntPtr callback) {
+        internal static void on_certificate_error(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int cert_error, IntPtr request_url_str, int request_url_length, IntPtr ssl_info, IntPtr callback) {
             var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
@@ -362,11 +362,11 @@ namespace Chromium {
 
         // on_render_process_terminated
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_request_handler_on_render_process_terminated_delegate(IntPtr gcHandlePtr, IntPtr browser, CfxTerminationStatus status);
+        private delegate void cfx_request_handler_on_render_process_terminated_delegate(IntPtr gcHandlePtr, IntPtr browser, int status);
         private static cfx_request_handler_on_render_process_terminated_delegate cfx_request_handler_on_render_process_terminated;
         private static IntPtr cfx_request_handler_on_render_process_terminated_ptr;
 
-        internal static void on_render_process_terminated(IntPtr gcHandlePtr, IntPtr browser, CfxTerminationStatus status) {
+        internal static void on_render_process_terminated(IntPtr gcHandlePtr, IntPtr browser, int status) {
             var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 return;
@@ -1153,13 +1153,13 @@ namespace Chromium {
             internal IntPtr m_target_url_str;
             internal int m_target_url_length;
             internal string m_target_url;
-            internal CfxWindowOpenDisposition m_target_disposition;
+            internal int m_target_disposition;
             internal int m_user_gesture;
 
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnOpenUrlfromTabEventArgs(IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, CfxWindowOpenDisposition target_disposition, int user_gesture) {
+            internal CfxOnOpenUrlfromTabEventArgs(IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, int target_disposition, int user_gesture) {
                 m_browser = browser;
                 m_frame = frame;
                 m_target_url_str = target_url_str;
@@ -1204,7 +1204,7 @@ namespace Chromium {
             public CfxWindowOpenDisposition TargetDisposition {
                 get {
                     CheckAccess();
-                    return m_target_disposition;
+                    return (CfxWindowOpenDisposition)m_target_disposition;
                 }
             }
             /// <summary>
@@ -1753,10 +1753,10 @@ namespace Chromium {
             internal CfxRequest m_request_wrapped;
             internal IntPtr m_response;
             internal CfxResponse m_response_wrapped;
-            internal CfxUrlRequestStatus m_status;
+            internal int m_status;
             internal long m_received_content_length;
 
-            internal CfxOnResourceLoadCompleteEventArgs(IntPtr browser, IntPtr frame, IntPtr request, IntPtr response, CfxUrlRequestStatus status, long received_content_length) {
+            internal CfxOnResourceLoadCompleteEventArgs(IntPtr browser, IntPtr frame, IntPtr request, IntPtr response, int status, long received_content_length) {
                 m_browser = browser;
                 m_frame = frame;
                 m_request = request;
@@ -1811,7 +1811,7 @@ namespace Chromium {
             public CfxUrlRequestStatus Status {
                 get {
                     CheckAccess();
-                    return m_status;
+                    return (CfxUrlRequestStatus)m_status;
                 }
             }
             /// <summary>
@@ -2207,7 +2207,7 @@ namespace Chromium {
 
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
-            internal CfxErrorCode m_cert_error;
+            internal int m_cert_error;
             internal IntPtr m_request_url_str;
             internal int m_request_url_length;
             internal string m_request_url;
@@ -2219,7 +2219,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnCertificateErrorEventArgs(IntPtr browser, CfxErrorCode cert_error, IntPtr request_url_str, int request_url_length, IntPtr ssl_info, IntPtr callback) {
+            internal CfxOnCertificateErrorEventArgs(IntPtr browser, int cert_error, IntPtr request_url_str, int request_url_length, IntPtr ssl_info, IntPtr callback) {
                 m_browser = browser;
                 m_cert_error = cert_error;
                 m_request_url_str = request_url_str;
@@ -2244,7 +2244,7 @@ namespace Chromium {
             public CfxErrorCode CertError {
                 get {
                     CheckAccess();
-                    return m_cert_error;
+                    return (CfxErrorCode)m_cert_error;
                 }
             }
             /// <summary>
@@ -2420,9 +2420,9 @@ namespace Chromium {
 
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
-            internal CfxTerminationStatus m_status;
+            internal int m_status;
 
-            internal CfxOnRenderProcessTerminatedEventArgs(IntPtr browser, CfxTerminationStatus status) {
+            internal CfxOnRenderProcessTerminatedEventArgs(IntPtr browser, int status) {
                 m_browser = browser;
                 m_status = status;
             }
@@ -2443,7 +2443,7 @@ namespace Chromium {
             public CfxTerminationStatus Status {
                 get {
                     CheckAccess();
-                    return m_status;
+                    return (CfxTerminationStatus)m_status;
                 }
             }
 

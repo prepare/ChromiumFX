@@ -181,11 +181,11 @@ namespace Chromium {
 
         // on_paint
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_render_handler_on_paint_delegate(IntPtr gcHandlePtr, IntPtr browser, CfxPaintElementType type, int dirtyRectsCount, IntPtr dirtyRects, int dirtyRects_structsize, IntPtr buffer, int width, int height);
+        private delegate void cfx_render_handler_on_paint_delegate(IntPtr gcHandlePtr, IntPtr browser, int type, int dirtyRectsCount, IntPtr dirtyRects, int dirtyRects_structsize, IntPtr buffer, int width, int height);
         private static cfx_render_handler_on_paint_delegate cfx_render_handler_on_paint;
         private static IntPtr cfx_render_handler_on_paint_ptr;
 
-        internal static void on_paint(IntPtr gcHandlePtr, IntPtr browser, CfxPaintElementType type, int dirtyRectsCount, IntPtr dirtyRects, int dirtyRects_structsize, IntPtr buffer, int width, int height) {
+        internal static void on_paint(IntPtr gcHandlePtr, IntPtr browser, int type, int dirtyRectsCount, IntPtr dirtyRects, int dirtyRects_structsize, IntPtr buffer, int width, int height) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 return;
@@ -204,11 +204,11 @@ namespace Chromium {
 
         // on_cursor_change
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_render_handler_on_cursor_change_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr cursor, CfxCursorType type, IntPtr custom_cursor_info);
+        private delegate void cfx_render_handler_on_cursor_change_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr cursor, int type, IntPtr custom_cursor_info);
         private static cfx_render_handler_on_cursor_change_delegate cfx_render_handler_on_cursor_change;
         private static IntPtr cfx_render_handler_on_cursor_change_ptr;
 
-        internal static void on_cursor_change(IntPtr gcHandlePtr, IntPtr browser, IntPtr cursor, CfxCursorType type, IntPtr custom_cursor_info) {
+        internal static void on_cursor_change(IntPtr gcHandlePtr, IntPtr browser, IntPtr cursor, int type, IntPtr custom_cursor_info) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 return;
@@ -222,11 +222,11 @@ namespace Chromium {
 
         // start_dragging
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_render_handler_start_dragging_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr drag_data, CfxDragOperationsMask allowed_ops, int x, int y);
+        private delegate void cfx_render_handler_start_dragging_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr drag_data, int allowed_ops, int x, int y);
         private static cfx_render_handler_start_dragging_delegate cfx_render_handler_start_dragging;
         private static IntPtr cfx_render_handler_start_dragging_ptr;
 
-        internal static void start_dragging(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr drag_data, CfxDragOperationsMask allowed_ops, int x, int y) {
+        internal static void start_dragging(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr drag_data, int allowed_ops, int x, int y) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
@@ -243,11 +243,11 @@ namespace Chromium {
 
         // update_drag_cursor
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_render_handler_update_drag_cursor_delegate(IntPtr gcHandlePtr, IntPtr browser, CfxDragOperationsMask operation);
+        private delegate void cfx_render_handler_update_drag_cursor_delegate(IntPtr gcHandlePtr, IntPtr browser, int operation);
         private static cfx_render_handler_update_drag_cursor_delegate cfx_render_handler_update_drag_cursor;
         private static IntPtr cfx_render_handler_update_drag_cursor_ptr;
 
-        internal static void update_drag_cursor(IntPtr gcHandlePtr, IntPtr browser, CfxDragOperationsMask operation) {
+        internal static void update_drag_cursor(IntPtr gcHandlePtr, IntPtr browser, int operation) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 return;
@@ -1178,7 +1178,7 @@ namespace Chromium {
 
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
-            internal CfxPaintElementType m_type;
+            internal int m_type;
             IntPtr m_dirtyRects;
             int m_dirtyRects_structsize;
             int m_dirtyRectsCount;
@@ -1187,7 +1187,7 @@ namespace Chromium {
             internal int m_width;
             internal int m_height;
 
-            internal CfxOnPaintEventArgs(IntPtr browser, CfxPaintElementType type, IntPtr dirtyRects, int dirtyRectsCount, int dirtyRects_structsize, IntPtr buffer, int width, int height) {
+            internal CfxOnPaintEventArgs(IntPtr browser, int type, IntPtr dirtyRects, int dirtyRectsCount, int dirtyRects_structsize, IntPtr buffer, int width, int height) {
                 m_browser = browser;
                 m_type = type;
                 m_dirtyRects = dirtyRects;
@@ -1214,7 +1214,7 @@ namespace Chromium {
             public CfxPaintElementType Type {
                 get {
                     CheckAccess();
-                    return m_type;
+                    return (CfxPaintElementType)m_type;
                 }
             }
             /// <summary>
@@ -1289,11 +1289,11 @@ namespace Chromium {
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
             internal IntPtr m_cursor;
-            internal CfxCursorType m_type;
+            internal int m_type;
             internal IntPtr m_custom_cursor_info;
             internal CfxCursorInfo m_custom_cursor_info_wrapped;
 
-            internal CfxOnCursorChangeEventArgs(IntPtr browser, IntPtr cursor, CfxCursorType type, IntPtr custom_cursor_info) {
+            internal CfxOnCursorChangeEventArgs(IntPtr browser, IntPtr cursor, int type, IntPtr custom_cursor_info) {
                 m_browser = browser;
                 m_cursor = cursor;
                 m_type = type;
@@ -1325,7 +1325,7 @@ namespace Chromium {
             public CfxCursorType Type {
                 get {
                     CheckAccess();
-                    return m_type;
+                    return (CfxCursorType)m_type;
                 }
             }
             /// <summary>
@@ -1384,14 +1384,14 @@ namespace Chromium {
             internal CfxBrowser m_browser_wrapped;
             internal IntPtr m_drag_data;
             internal CfxDragData m_drag_data_wrapped;
-            internal CfxDragOperationsMask m_allowed_ops;
+            internal int m_allowed_ops;
             internal int m_x;
             internal int m_y;
 
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxStartDraggingEventArgs(IntPtr browser, IntPtr drag_data, CfxDragOperationsMask allowed_ops, int x, int y) {
+            internal CfxStartDraggingEventArgs(IntPtr browser, IntPtr drag_data, int allowed_ops, int x, int y) {
                 m_browser = browser;
                 m_drag_data = drag_data;
                 m_allowed_ops = allowed_ops;
@@ -1425,7 +1425,7 @@ namespace Chromium {
             public CfxDragOperationsMask AllowedOps {
                 get {
                     CheckAccess();
-                    return m_allowed_ops;
+                    return (CfxDragOperationsMask)m_allowed_ops;
                 }
             }
             /// <summary>
@@ -1488,9 +1488,9 @@ namespace Chromium {
 
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
-            internal CfxDragOperationsMask m_operation;
+            internal int m_operation;
 
-            internal CfxUpdateDragCursorEventArgs(IntPtr browser, CfxDragOperationsMask operation) {
+            internal CfxUpdateDragCursorEventArgs(IntPtr browser, int operation) {
                 m_browser = browser;
                 m_operation = operation;
             }
@@ -1511,7 +1511,7 @@ namespace Chromium {
             public CfxDragOperationsMask Operation {
                 get {
                     CheckAccess();
-                    return m_operation;
+                    return (CfxDragOperationsMask)m_operation;
                 }
             }
 

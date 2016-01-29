@@ -62,11 +62,11 @@ namespace Chromium {
 
         // on_before_popup
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_life_span_handler_on_before_popup_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, CfxWindowOpenDisposition target_disposition, int user_gesture, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access);
+        private delegate void cfx_life_span_handler_on_before_popup_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, int target_disposition, int user_gesture, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access);
         private static cfx_life_span_handler_on_before_popup_delegate cfx_life_span_handler_on_before_popup;
         private static IntPtr cfx_life_span_handler_on_before_popup_ptr;
 
-        internal static void on_before_popup(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, CfxWindowOpenDisposition target_disposition, int user_gesture, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access) {
+        internal static void on_before_popup(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, int target_disposition, int user_gesture, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
@@ -481,7 +481,7 @@ namespace Chromium {
             internal IntPtr m_target_frame_name_str;
             internal int m_target_frame_name_length;
             internal string m_target_frame_name;
-            internal CfxWindowOpenDisposition m_target_disposition;
+            internal int m_target_disposition;
             internal int m_user_gesture;
             internal IntPtr m_popupFeatures;
             internal CfxPopupFeatures m_popupFeatures_wrapped;
@@ -494,7 +494,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnBeforePopupEventArgs(IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, CfxWindowOpenDisposition target_disposition, int user_gesture, IntPtr popupFeatures, IntPtr windowInfo, IntPtr settings) {
+            internal CfxOnBeforePopupEventArgs(IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, int target_disposition, int user_gesture, IntPtr popupFeatures, IntPtr windowInfo, IntPtr settings) {
                 m_browser = browser;
                 m_frame = frame;
                 m_target_url_str = target_url_str;
@@ -554,7 +554,7 @@ namespace Chromium {
             public CfxWindowOpenDisposition TargetDisposition {
                 get {
                     CheckAccess();
-                    return m_target_disposition;
+                    return (CfxWindowOpenDisposition)m_target_disposition;
                 }
             }
             /// <summary>

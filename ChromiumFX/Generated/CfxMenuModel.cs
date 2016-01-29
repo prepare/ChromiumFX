@@ -351,7 +351,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public CfxMenuItemType GetType(int commandId) {
-            return CfxApi.cfx_menu_model_get_type(NativePtr, commandId);
+            return (CfxMenuItemType)CfxApi.cfx_menu_model_get_type(NativePtr, commandId);
         }
 
         /// <summary>
@@ -362,7 +362,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public CfxMenuItemType GetTypeAt(int index) {
-            return CfxApi.cfx_menu_model_get_type_at(NativePtr, index);
+            return (CfxMenuItemType)CfxApi.cfx_menu_model_get_type_at(NativePtr, index);
         }
 
         /// <summary>

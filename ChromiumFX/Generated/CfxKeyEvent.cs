@@ -70,12 +70,12 @@ namespace Chromium {
         /// </remarks>
         public CfxKeyEventType Type {
             get {
-                CfxKeyEventType value;
+                int value;
                 CfxApi.cfx_key_event_get_type(nativePtrUnchecked, out value);
-                return value;
+                return (CfxKeyEventType)value;
             }
             set {
-                CfxApi.cfx_key_event_set_type(nativePtrUnchecked, value);
+                CfxApi.cfx_key_event_set_type(nativePtrUnchecked, (int)value);
             }
         }
 

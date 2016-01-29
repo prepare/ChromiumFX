@@ -323,7 +323,7 @@ namespace Chromium {
             var defaultFilePath_pinned = new PinnedString(defaultFilePath);
             PinnedString[] acceptFilters_handles;
             var acceptFilters_unwrapped = StringFunctions.UnwrapCfxStringList(acceptFilters, out acceptFilters_handles);
-            CfxApi.cfx_browser_host_run_file_dialog(NativePtr, mode, title_pinned.Obj.PinnedPtr, title_pinned.Length, defaultFilePath_pinned.Obj.PinnedPtr, defaultFilePath_pinned.Length, acceptFilters_unwrapped, selectedAcceptFilter, CfxRunFileDialogCallback.Unwrap(callback));
+            CfxApi.cfx_browser_host_run_file_dialog(NativePtr, (int)mode, title_pinned.Obj.PinnedPtr, title_pinned.Length, defaultFilePath_pinned.Obj.PinnedPtr, defaultFilePath_pinned.Length, acceptFilters_unwrapped, selectedAcceptFilter, CfxRunFileDialogCallback.Unwrap(callback));
             title_pinned.Obj.Free();
             defaultFilePath_pinned.Obj.Free();
             StringFunctions.FreePinnedStrings(acceptFilters_handles);
@@ -529,7 +529,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
         public void Invalidate(CfxPaintElementType type) {
-            CfxApi.cfx_browser_host_invalidate(NativePtr, type);
+            CfxApi.cfx_browser_host_invalidate(NativePtr, (int)type);
         }
 
         /// <summary>
@@ -552,7 +552,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
         public void SendMouseClickEvent(CfxMouseEvent @event, CfxMouseButtonType type, bool mouseUp, int clickCount) {
-            CfxApi.cfx_browser_host_send_mouse_click_event(NativePtr, CfxMouseEvent.Unwrap(@event), type, mouseUp ? 1 : 0, clickCount);
+            CfxApi.cfx_browser_host_send_mouse_click_event(NativePtr, CfxMouseEvent.Unwrap(@event), (int)type, mouseUp ? 1 : 0, clickCount);
         }
 
         /// <summary>
@@ -653,7 +653,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
         public void DragTargetDragEnter(CfxDragData dragData, CfxMouseEvent @event, CfxDragOperationsMask allowedOps) {
-            CfxApi.cfx_browser_host_drag_target_drag_enter(NativePtr, CfxDragData.Unwrap(dragData), CfxMouseEvent.Unwrap(@event), allowedOps);
+            CfxApi.cfx_browser_host_drag_target_drag_enter(NativePtr, CfxDragData.Unwrap(dragData), CfxMouseEvent.Unwrap(@event), (int)allowedOps);
         }
 
         /// <summary>
@@ -667,7 +667,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
         public void DragTargetDragOver(CfxMouseEvent @event, CfxDragOperationsMask allowedOps) {
-            CfxApi.cfx_browser_host_drag_target_drag_over(NativePtr, CfxMouseEvent.Unwrap(@event), allowedOps);
+            CfxApi.cfx_browser_host_drag_target_drag_over(NativePtr, CfxMouseEvent.Unwrap(@event), (int)allowedOps);
         }
 
         /// <summary>
@@ -712,7 +712,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
         public void DragSourceEndedAt(int x, int y, CfxDragOperationsMask op) {
-            CfxApi.cfx_browser_host_drag_source_ended_at(NativePtr, x, y, op);
+            CfxApi.cfx_browser_host_drag_source_ended_at(NativePtr, x, y, (int)op);
         }
 
         /// <summary>

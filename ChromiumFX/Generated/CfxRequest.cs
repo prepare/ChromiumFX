@@ -152,7 +152,7 @@ namespace Chromium {
         /// </remarks>
         public CfxReferrerPolicy ReferrerPolicy {
             get {
-                return CfxApi.cfx_request_get_referrer_policy(NativePtr);
+                return (CfxReferrerPolicy)CfxApi.cfx_request_get_referrer_policy(NativePtr);
             }
         }
 
@@ -224,7 +224,7 @@ namespace Chromium {
         /// </remarks>
         public CfxResourceType ResourceType {
             get {
-                return CfxApi.cfx_request_get_resource_type(NativePtr);
+                return (CfxResourceType)CfxApi.cfx_request_get_resource_type(NativePtr);
             }
         }
 
@@ -239,7 +239,7 @@ namespace Chromium {
         /// </remarks>
         public CfxTransitionType TransitionType {
             get {
-                return CfxApi.cfx_request_get_transition_type(NativePtr);
+                return (CfxTransitionType)CfxApi.cfx_request_get_transition_type(NativePtr);
             }
         }
 
@@ -269,7 +269,7 @@ namespace Chromium {
         /// </remarks>
         public void SetReferrer(string referrerUrl, CfxReferrerPolicy policy) {
             var referrerUrl_pinned = new PinnedString(referrerUrl);
-            CfxApi.cfx_request_set_referrer(NativePtr, referrerUrl_pinned.Obj.PinnedPtr, referrerUrl_pinned.Length, policy);
+            CfxApi.cfx_request_set_referrer(NativePtr, referrerUrl_pinned.Obj.PinnedPtr, referrerUrl_pinned.Length, (int)policy);
             referrerUrl_pinned.Obj.Free();
         }
 

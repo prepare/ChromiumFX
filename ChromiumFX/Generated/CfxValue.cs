@@ -133,7 +133,7 @@ namespace Chromium {
         /// </remarks>
         public CfxValueType Type {
             get {
-                return CfxApi.cfx_value_get_type(NativePtr);
+                return (CfxValueType)CfxApi.cfx_value_get_type(NativePtr);
             }
         }
 

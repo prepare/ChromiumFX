@@ -254,12 +254,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState RemoteFonts {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_remote_fonts(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_remote_fonts(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_remote_fonts(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -273,12 +273,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState Javascript {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_javascript(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_javascript(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_javascript(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -293,12 +293,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState JavascriptOpenWindows {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_javascript_open_windows(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_javascript_open_windows(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_javascript_open_windows(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -315,12 +315,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState JavascriptCloseWindows {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_javascript_close_windows(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_javascript_close_windows(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_javascript_close_windows(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -334,12 +334,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState JavascriptAccessClipboard {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_javascript_access_clipboard(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_javascript_access_clipboard(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_javascript_access_clipboard(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -355,12 +355,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState JavascriptDomPaste {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_javascript_dom_paste(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_javascript_dom_paste(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_javascript_dom_paste(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -374,12 +374,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState CaretBrowsing {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_caret_browsing(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_caret_browsing(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_caret_browsing(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -393,12 +393,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState Plugins {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_plugins(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_plugins(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_plugins(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -412,12 +412,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState UniversalAccessFromFileUrls {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_universal_access_from_file_urls(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_universal_access_from_file_urls(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_universal_access_from_file_urls(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -431,12 +431,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState FileAccessFromFileUrls {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_file_access_from_file_urls(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_file_access_from_file_urls(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_file_access_from_file_urls(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -452,12 +452,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState WebSecurity {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_web_security(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_web_security(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_web_security(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -472,12 +472,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState ImageLoading {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_image_loading(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_image_loading(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_image_loading(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -492,12 +492,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState ImageShrinkStandaloneToFit {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_image_shrink_standalone_to_fit(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_image_shrink_standalone_to_fit(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_image_shrink_standalone_to_fit(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -511,12 +511,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState TextAreaResize {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_text_area_resize(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_text_area_resize(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_text_area_resize(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -530,12 +530,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState TabToLinks {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_tab_to_links(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_tab_to_links(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_tab_to_links(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -549,12 +549,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState LocalStorage {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_local_storage(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_local_storage(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_local_storage(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -568,12 +568,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState Databases {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_databases(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_databases(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_databases(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -587,12 +587,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState ApplicationCache {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_application_cache(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_application_cache(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_application_cache(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -607,12 +607,12 @@ namespace Chromium {
         /// </remarks>
         public CfxState Webgl {
             get {
-                CfxState value;
+                int value;
                 CfxApi.cfx_browser_settings_get_webgl(nativePtrUnchecked, out value);
-                return value;
+                return (CfxState)value;
             }
             set {
-                CfxApi.cfx_browser_settings_set_webgl(nativePtrUnchecked, value);
+                CfxApi.cfx_browser_settings_set_webgl(nativePtrUnchecked, (int)value);
             }
         }
 

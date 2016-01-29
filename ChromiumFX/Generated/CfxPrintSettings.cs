@@ -187,10 +187,10 @@ namespace Chromium {
         /// </remarks>
         public CfxColorModel ColorModel {
             get {
-                return CfxApi.cfx_print_settings_get_color_model(NativePtr);
+                return (CfxColorModel)CfxApi.cfx_print_settings_get_color_model(NativePtr);
             }
             set {
-                CfxApi.cfx_print_settings_set_color_model(NativePtr, value);
+                CfxApi.cfx_print_settings_set_color_model(NativePtr, (int)value);
             }
         }
 
@@ -219,10 +219,10 @@ namespace Chromium {
         /// </remarks>
         public CfxDuplexMode DuplexMode {
             get {
-                return CfxApi.cfx_print_settings_get_duplex_mode(NativePtr);
+                return (CfxDuplexMode)CfxApi.cfx_print_settings_get_duplex_mode(NativePtr);
             }
             set {
-                CfxApi.cfx_print_settings_set_duplex_mode(NativePtr, value);
+                CfxApi.cfx_print_settings_set_duplex_mode(NativePtr, (int)value);
             }
         }
 

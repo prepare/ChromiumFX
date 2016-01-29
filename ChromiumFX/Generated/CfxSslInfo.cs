@@ -76,7 +76,7 @@ namespace Chromium {
         /// </remarks>
         public CfxCertStatus CertStatus {
             get {
-                return CfxApi.cfx_sslinfo_get_cert_status(NativePtr);
+                return (CfxCertStatus)CfxApi.cfx_sslinfo_get_cert_status(NativePtr);
             }
         }
 

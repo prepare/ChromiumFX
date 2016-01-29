@@ -80,14 +80,14 @@ namespace Chromium {
 
         // filter
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_response_filter_filter_delegate(IntPtr gcHandlePtr, out CfxResponseFilterStatus __retval, IntPtr data_in, int data_in_size, out int data_in_read, IntPtr data_out, int data_out_size, out int data_out_written);
+        private delegate void cfx_response_filter_filter_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr data_in, int data_in_size, out int data_in_read, IntPtr data_out, int data_out_size, out int data_out_written);
         private static cfx_response_filter_filter_delegate cfx_response_filter_filter;
         private static IntPtr cfx_response_filter_filter_ptr;
 
-        internal static void filter(IntPtr gcHandlePtr, out CfxResponseFilterStatus __retval, IntPtr data_in, int data_in_size, out int data_in_read, IntPtr data_out, int data_out_size, out int data_out_written) {
+        internal static void filter(IntPtr gcHandlePtr, out int __retval, IntPtr data_in, int data_in_size, out int data_in_read, IntPtr data_out, int data_out_size, out int data_out_written) {
             var self = (CfxResponseFilter)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
-                __retval = default(CfxResponseFilterStatus);
+                __retval = default(int);
                 data_in_read = default(int);
                 data_out_written = default(int);
                 return;
@@ -98,7 +98,7 @@ namespace Chromium {
             e.m_isInvalid = true;
             data_in_read = e.m_data_in_read;
             data_out_written = e.m_data_out_written;
-            __retval = e.m_returnValue;
+            __retval = (int)e.m_returnValue;
         }
 
         internal CfxResponseFilter(IntPtr nativePtr) : base(nativePtr) {}

@@ -217,12 +217,12 @@ namespace Chromium {
         /// </remarks>
         public CfxGeopositionErrorCode ErrorCode {
             get {
-                CfxGeopositionErrorCode value;
+                int value;
                 CfxApi.cfx_geoposition_get_error_code(nativePtrUnchecked, out value);
-                return value;
+                return (CfxGeopositionErrorCode)value;
             }
             set {
-                CfxApi.cfx_geoposition_set_error_code(nativePtrUnchecked, value);
+                CfxApi.cfx_geoposition_set_error_code(nativePtrUnchecked, (int)value);
             }
         }
 

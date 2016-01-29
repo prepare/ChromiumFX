@@ -105,7 +105,7 @@ namespace Chromium {
         /// </remarks>
         public CfxContextMenuTypeFlags TypeFlags {
             get {
-                return CfxApi.cfx_context_menu_params_get_type_flags(NativePtr);
+                return (CfxContextMenuTypeFlags)CfxApi.cfx_context_menu_params_get_type_flags(NativePtr);
             }
         }
 
@@ -214,7 +214,7 @@ namespace Chromium {
         /// </remarks>
         public CfxContextMenuMediaType MediaType {
             get {
-                return CfxApi.cfx_context_menu_params_get_media_type(NativePtr);
+                return (CfxContextMenuMediaType)CfxApi.cfx_context_menu_params_get_media_type(NativePtr);
             }
         }
 
@@ -228,7 +228,7 @@ namespace Chromium {
         /// </remarks>
         public CfxContextMenuMediaStateFlags MediaStateFlags {
             get {
-                return CfxApi.cfx_context_menu_params_get_media_state_flags(NativePtr);
+                return (CfxContextMenuMediaStateFlags)CfxApi.cfx_context_menu_params_get_media_state_flags(NativePtr);
             }
         }
 
@@ -297,7 +297,7 @@ namespace Chromium {
         /// </remarks>
         public CfxContextMenuEditStateFlags EditStateFlags {
             get {
-                return CfxApi.cfx_context_menu_params_get_edit_state_flags(NativePtr);
+                return (CfxContextMenuEditStateFlags)CfxApi.cfx_context_menu_params_get_edit_state_flags(NativePtr);
             }
         }
 

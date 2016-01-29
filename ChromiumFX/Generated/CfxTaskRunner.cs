@@ -92,7 +92,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static CfxTaskRunner GetForThread(CfxThreadId threadId) {
-            return CfxTaskRunner.Wrap(CfxApi.cfx_task_runner_get_for_thread(threadId));
+            return CfxTaskRunner.Wrap(CfxApi.cfx_task_runner_get_for_thread((int)threadId));
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public bool BelongsToThread(CfxThreadId threadId) {
-            return 0 != CfxApi.cfx_task_runner_belongs_to_thread(NativePtr, threadId);
+            return 0 != CfxApi.cfx_task_runner_belongs_to_thread(NativePtr, (int)threadId);
         }
 
         /// <summary>

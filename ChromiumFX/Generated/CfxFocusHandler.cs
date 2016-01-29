@@ -79,11 +79,11 @@ namespace Chromium {
 
         // on_set_focus
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_focus_handler_on_set_focus_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxFocusSource source);
+        private delegate void cfx_focus_handler_on_set_focus_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int source);
         private static cfx_focus_handler_on_set_focus_delegate cfx_focus_handler_on_set_focus;
         private static IntPtr cfx_focus_handler_on_set_focus_ptr;
 
-        internal static void on_set_focus(IntPtr gcHandlePtr, out int __retval, IntPtr browser, CfxFocusSource source) {
+        internal static void on_set_focus(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int source) {
             var self = (CfxFocusHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
@@ -321,12 +321,12 @@ namespace Chromium {
 
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
-            internal CfxFocusSource m_source;
+            internal int m_source;
 
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnSetFocusEventArgs(IntPtr browser, CfxFocusSource source) {
+            internal CfxOnSetFocusEventArgs(IntPtr browser, int source) {
                 m_browser = browser;
                 m_source = source;
             }
@@ -347,7 +347,7 @@ namespace Chromium {
             public CfxFocusSource Source {
                 get {
                     CheckAccess();
-                    return m_source;
+                    return (CfxFocusSource)m_source;
                 }
             }
             /// <summary>

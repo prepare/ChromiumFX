@@ -78,7 +78,7 @@ namespace Chromium {
         /// </remarks>
         public static CfxXmlReader Create(CfxStreamReader stream, CfxXmlEncodingType encodingType, string uri) {
             var uri_pinned = new PinnedString(uri);
-            var __retval = CfxApi.cfx_xml_reader_create(CfxStreamReader.Unwrap(stream), encodingType, uri_pinned.Obj.PinnedPtr, uri_pinned.Length);
+            var __retval = CfxApi.cfx_xml_reader_create(CfxStreamReader.Unwrap(stream), (int)encodingType, uri_pinned.Obj.PinnedPtr, uri_pinned.Length);
             uri_pinned.Obj.Free();
             return CfxXmlReader.Wrap(__retval);
         }
@@ -107,7 +107,7 @@ namespace Chromium {
         /// </remarks>
         public CfxXmlNodeType Type {
             get {
-                return CfxApi.cfx_xml_reader_get_type(NativePtr);
+                return (CfxXmlNodeType)CfxApi.cfx_xml_reader_get_type(NativePtr);
             }
         }
 

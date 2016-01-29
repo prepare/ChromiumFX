@@ -75,7 +75,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
         /// </remarks>
         public void Continue(int commandId, CfxEventFlags eventFlags) {
-            CfxApi.cfx_run_context_menu_callback_cont(NativePtr, commandId, eventFlags);
+            CfxApi.cfx_run_context_menu_callback_cont(NativePtr, commandId, (int)eventFlags);
         }
 
         /// <summary>

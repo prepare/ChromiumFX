@@ -61,11 +61,11 @@ namespace Chromium {
 
         // on_drag_enter
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_drag_handler_on_drag_enter_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr dragData, CfxDragOperationsMask mask);
+        private delegate void cfx_drag_handler_on_drag_enter_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr dragData, int mask);
         private static cfx_drag_handler_on_drag_enter_delegate cfx_drag_handler_on_drag_enter;
         private static IntPtr cfx_drag_handler_on_drag_enter_ptr;
 
-        internal static void on_drag_enter(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr dragData, CfxDragOperationsMask mask) {
+        internal static void on_drag_enter(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr dragData, int mask) {
             var self = (CfxDragHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
@@ -221,12 +221,12 @@ namespace Chromium {
             internal CfxBrowser m_browser_wrapped;
             internal IntPtr m_dragData;
             internal CfxDragData m_dragData_wrapped;
-            internal CfxDragOperationsMask m_mask;
+            internal int m_mask;
 
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnDragEnterEventArgs(IntPtr browser, IntPtr dragData, CfxDragOperationsMask mask) {
+            internal CfxOnDragEnterEventArgs(IntPtr browser, IntPtr dragData, int mask) {
                 m_browser = browser;
                 m_dragData = dragData;
                 m_mask = mask;
@@ -258,7 +258,7 @@ namespace Chromium {
             public CfxDragOperationsMask Mask {
                 get {
                     CheckAccess();
-                    return m_mask;
+                    return (CfxDragOperationsMask)m_mask;
                 }
             }
             /// <summary>

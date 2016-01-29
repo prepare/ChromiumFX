@@ -74,7 +74,7 @@ namespace Chromium {
         public static cfx_create_url_delegate cfx_create_url;
         // CEF_EXPORT int cef_currently_on(cef_thread_id_t threadId);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate int cfx_currently_on_delegate(CfxThreadId threadId);
+        public delegate int cfx_currently_on_delegate(int threadId);
         public static cfx_currently_on_delegate cfx_currently_on;
         // CEF_EXPORT void cef_do_message_loop_work();
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -114,7 +114,7 @@ namespace Chromium {
         public static cfx_get_mime_type_delegate cfx_get_mime_type;
         // CEF_EXPORT int cef_get_path(cef_path_key_t key, cef_string_t* path);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate int cfx_get_path_delegate(CfxPathKey key, ref IntPtr path_str, ref int path_length);
+        public delegate int cfx_get_path_delegate(int key, ref IntPtr path_str, ref int path_length);
         public static cfx_get_path_delegate cfx_get_path;
         // CEF_EXPORT XDisplay* cef_get_xdisplay();
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -142,11 +142,11 @@ namespace Chromium {
         public static cfx_parse_csscolor_delegate cfx_parse_csscolor;
         // CEF_EXPORT cef_value_t* cef_parse_json(const cef_string_t* json_string, cef_json_parser_options_t options);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate IntPtr cfx_parse_json_delegate(IntPtr json_string_str, int json_string_length, CfxJsonParserOptions options);
+        public delegate IntPtr cfx_parse_json_delegate(IntPtr json_string_str, int json_string_length, int options);
         public static cfx_parse_json_delegate cfx_parse_json;
         // CEF_EXPORT cef_value_t* cef_parse_jsonand_return_error(const cef_string_t* json_string, cef_json_parser_options_t options, cef_json_parser_error_t* error_code_out, cef_string_t* error_msg_out);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate IntPtr cfx_parse_jsonand_return_error_delegate(IntPtr json_string_str, int json_string_length, CfxJsonParserOptions options, out CfxJsonParserError error_code_out, ref IntPtr error_msg_out_str, ref int error_msg_out_length);
+        public delegate IntPtr cfx_parse_jsonand_return_error_delegate(IntPtr json_string_str, int json_string_length, int options, out int error_code_out, ref IntPtr error_msg_out_str, ref int error_msg_out_length);
         public static cfx_parse_jsonand_return_error_delegate cfx_parse_jsonand_return_error;
         // CEF_EXPORT int cef_parse_url(const cef_string_t* url, cef_urlparts_t* parts);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -154,11 +154,11 @@ namespace Chromium {
         public static cfx_parse_url_delegate cfx_parse_url;
         // CEF_EXPORT int cef_post_delayed_task(cef_thread_id_t threadId, cef_task_t* task, int64 delay_ms);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate int cfx_post_delayed_task_delegate(CfxThreadId threadId, IntPtr task, long delay_ms);
+        public delegate int cfx_post_delayed_task_delegate(int threadId, IntPtr task, long delay_ms);
         public static cfx_post_delayed_task_delegate cfx_post_delayed_task;
         // CEF_EXPORT int cef_post_task(cef_thread_id_t threadId, cef_task_t* task);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate int cfx_post_task_delegate(CfxThreadId threadId, IntPtr task);
+        public delegate int cfx_post_task_delegate(int threadId, IntPtr task);
         public static cfx_post_task_delegate cfx_post_task;
         // CEF_EXPORT void cef_quit_message_loop();
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -206,7 +206,7 @@ namespace Chromium {
         public static cfx_unregister_internal_web_plugin_delegate cfx_unregister_internal_web_plugin;
         // CEF_EXPORT cef_string_userfree_t cef_uridecode(const cef_string_t* text, int convert_to_utf8, cef_uri_unescape_rule_t unescape_rule);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate IntPtr cfx_uridecode_delegate(IntPtr text_str, int text_length, int convert_to_utf8, CfxUriUnescapeRule unescape_rule);
+        public delegate IntPtr cfx_uridecode_delegate(IntPtr text_str, int text_length, int convert_to_utf8, int unescape_rule);
         public static cfx_uridecode_delegate cfx_uridecode;
         // CEF_EXPORT cef_string_userfree_t cef_uriencode(const cef_string_t* text, int use_plus);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -222,7 +222,7 @@ namespace Chromium {
         public static cfx_visit_web_plugin_info_delegate cfx_visit_web_plugin_info;
         // CEF_EXPORT cef_string_userfree_t cef_write_json(cef_value_t* node, cef_json_writer_options_t options);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate IntPtr cfx_write_json_delegate(IntPtr node, CfxJsonWriterOptions options);
+        public delegate IntPtr cfx_write_json_delegate(IntPtr node, int options);
         public static cfx_write_json_delegate cfx_write_json;
 
         // CEF_EXPORT cef_string_list_t cef_string_list_alloc();
@@ -498,7 +498,7 @@ namespace Chromium {
 
         // static int cfx_browser_send_process_message(cef_browser_t* self, cef_process_id_t target_process, cef_process_message_t* message)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate int cfx_browser_send_process_message_delegate(IntPtr self, CfxProcessId target_process, IntPtr message);
+        public delegate int cfx_browser_send_process_message_delegate(IntPtr self, int target_process, IntPtr message);
         public static cfx_browser_send_process_message_delegate cfx_browser_send_process_message;
 
 
@@ -565,7 +565,7 @@ namespace Chromium {
 
         // static void cfx_browser_host_run_file_dialog(cef_browser_host_t* self, cef_file_dialog_mode_t mode, char16 *title_str, int title_length, char16 *default_file_path_str, int default_file_path_length, cef_string_list_t accept_filters, int selected_accept_filter, cef_run_file_dialog_callback_t* callback)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_host_run_file_dialog_delegate(IntPtr self, CfxFileDialogMode mode, IntPtr title_str, int title_length, IntPtr default_file_path_str, int default_file_path_length, IntPtr accept_filters, int selected_accept_filter, IntPtr callback);
+        public delegate void cfx_browser_host_run_file_dialog_delegate(IntPtr self, int mode, IntPtr title_str, int title_length, IntPtr default_file_path_str, int default_file_path_length, IntPtr accept_filters, int selected_accept_filter, IntPtr callback);
         public static cfx_browser_host_run_file_dialog_delegate cfx_browser_host_run_file_dialog;
 
         // static void cfx_browser_host_start_download(cef_browser_host_t* self, char16 *url_str, int url_length)
@@ -650,7 +650,7 @@ namespace Chromium {
 
         // static void cfx_browser_host_invalidate(cef_browser_host_t* self, cef_paint_element_type_t type)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_host_invalidate_delegate(IntPtr self, CfxPaintElementType type);
+        public delegate void cfx_browser_host_invalidate_delegate(IntPtr self, int type);
         public static cfx_browser_host_invalidate_delegate cfx_browser_host_invalidate;
 
         // static void cfx_browser_host_send_key_event(cef_browser_host_t* self, const cef_key_event_t* event)
@@ -660,7 +660,7 @@ namespace Chromium {
 
         // static void cfx_browser_host_send_mouse_click_event(cef_browser_host_t* self, const cef_mouse_event_t* event, cef_mouse_button_type_t type, int mouseUp, int clickCount)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_host_send_mouse_click_event_delegate(IntPtr self, IntPtr @event, CfxMouseButtonType type, int mouseUp, int clickCount);
+        public delegate void cfx_browser_host_send_mouse_click_event_delegate(IntPtr self, IntPtr @event, int type, int mouseUp, int clickCount);
         public static cfx_browser_host_send_mouse_click_event_delegate cfx_browser_host_send_mouse_click_event;
 
         // static void cfx_browser_host_send_mouse_move_event(cef_browser_host_t* self, const cef_mouse_event_t* event, int mouseLeave)
@@ -715,12 +715,12 @@ namespace Chromium {
 
         // static void cfx_browser_host_drag_target_drag_enter(cef_browser_host_t* self, cef_drag_data_t* drag_data, const cef_mouse_event_t* event, cef_drag_operations_mask_t allowed_ops)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_host_drag_target_drag_enter_delegate(IntPtr self, IntPtr drag_data, IntPtr @event, CfxDragOperationsMask allowed_ops);
+        public delegate void cfx_browser_host_drag_target_drag_enter_delegate(IntPtr self, IntPtr drag_data, IntPtr @event, int allowed_ops);
         public static cfx_browser_host_drag_target_drag_enter_delegate cfx_browser_host_drag_target_drag_enter;
 
         // static void cfx_browser_host_drag_target_drag_over(cef_browser_host_t* self, const cef_mouse_event_t* event, cef_drag_operations_mask_t allowed_ops)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_host_drag_target_drag_over_delegate(IntPtr self, IntPtr @event, CfxDragOperationsMask allowed_ops);
+        public delegate void cfx_browser_host_drag_target_drag_over_delegate(IntPtr self, IntPtr @event, int allowed_ops);
         public static cfx_browser_host_drag_target_drag_over_delegate cfx_browser_host_drag_target_drag_over;
 
         // static void cfx_browser_host_drag_target_drag_leave(cef_browser_host_t* self)
@@ -735,7 +735,7 @@ namespace Chromium {
 
         // static void cfx_browser_host_drag_source_ended_at(cef_browser_host_t* self, int x, int y, cef_drag_operations_mask_t op)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_host_drag_source_ended_at_delegate(IntPtr self, int x, int y, CfxDragOperationsMask op);
+        public delegate void cfx_browser_host_drag_source_ended_at_delegate(IntPtr self, int x, int y, int op);
         public static cfx_browser_host_drag_source_ended_at_delegate cfx_browser_host_drag_source_ended_at;
 
         // static void cfx_browser_host_drag_source_system_drag_ended(cef_browser_host_t* self)
@@ -868,173 +868,173 @@ namespace Chromium {
 
         // static void cfx_browser_settings_set_remote_fonts(cef_browser_settings_t *self, cef_state_t remote_fonts)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_remote_fonts_delegate(IntPtr self, CfxState remote_fonts);
+        public delegate void cfx_browser_settings_set_remote_fonts_delegate(IntPtr self, int remote_fonts);
         public static cfx_browser_settings_set_remote_fonts_delegate cfx_browser_settings_set_remote_fonts;
         // static void cfx_browser_settings_get_remote_fonts(cef_browser_settings_t *self, cef_state_t* remote_fonts)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_remote_fonts_delegate(IntPtr self, out CfxState remote_fonts);
+        public delegate void cfx_browser_settings_get_remote_fonts_delegate(IntPtr self, out int remote_fonts);
         public static cfx_browser_settings_get_remote_fonts_delegate cfx_browser_settings_get_remote_fonts;
 
         // static void cfx_browser_settings_set_javascript(cef_browser_settings_t *self, cef_state_t javascript)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_javascript_delegate(IntPtr self, CfxState javascript);
+        public delegate void cfx_browser_settings_set_javascript_delegate(IntPtr self, int javascript);
         public static cfx_browser_settings_set_javascript_delegate cfx_browser_settings_set_javascript;
         // static void cfx_browser_settings_get_javascript(cef_browser_settings_t *self, cef_state_t* javascript)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_javascript_delegate(IntPtr self, out CfxState javascript);
+        public delegate void cfx_browser_settings_get_javascript_delegate(IntPtr self, out int javascript);
         public static cfx_browser_settings_get_javascript_delegate cfx_browser_settings_get_javascript;
 
         // static void cfx_browser_settings_set_javascript_open_windows(cef_browser_settings_t *self, cef_state_t javascript_open_windows)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_javascript_open_windows_delegate(IntPtr self, CfxState javascript_open_windows);
+        public delegate void cfx_browser_settings_set_javascript_open_windows_delegate(IntPtr self, int javascript_open_windows);
         public static cfx_browser_settings_set_javascript_open_windows_delegate cfx_browser_settings_set_javascript_open_windows;
         // static void cfx_browser_settings_get_javascript_open_windows(cef_browser_settings_t *self, cef_state_t* javascript_open_windows)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_javascript_open_windows_delegate(IntPtr self, out CfxState javascript_open_windows);
+        public delegate void cfx_browser_settings_get_javascript_open_windows_delegate(IntPtr self, out int javascript_open_windows);
         public static cfx_browser_settings_get_javascript_open_windows_delegate cfx_browser_settings_get_javascript_open_windows;
 
         // static void cfx_browser_settings_set_javascript_close_windows(cef_browser_settings_t *self, cef_state_t javascript_close_windows)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_javascript_close_windows_delegate(IntPtr self, CfxState javascript_close_windows);
+        public delegate void cfx_browser_settings_set_javascript_close_windows_delegate(IntPtr self, int javascript_close_windows);
         public static cfx_browser_settings_set_javascript_close_windows_delegate cfx_browser_settings_set_javascript_close_windows;
         // static void cfx_browser_settings_get_javascript_close_windows(cef_browser_settings_t *self, cef_state_t* javascript_close_windows)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_javascript_close_windows_delegate(IntPtr self, out CfxState javascript_close_windows);
+        public delegate void cfx_browser_settings_get_javascript_close_windows_delegate(IntPtr self, out int javascript_close_windows);
         public static cfx_browser_settings_get_javascript_close_windows_delegate cfx_browser_settings_get_javascript_close_windows;
 
         // static void cfx_browser_settings_set_javascript_access_clipboard(cef_browser_settings_t *self, cef_state_t javascript_access_clipboard)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_javascript_access_clipboard_delegate(IntPtr self, CfxState javascript_access_clipboard);
+        public delegate void cfx_browser_settings_set_javascript_access_clipboard_delegate(IntPtr self, int javascript_access_clipboard);
         public static cfx_browser_settings_set_javascript_access_clipboard_delegate cfx_browser_settings_set_javascript_access_clipboard;
         // static void cfx_browser_settings_get_javascript_access_clipboard(cef_browser_settings_t *self, cef_state_t* javascript_access_clipboard)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_javascript_access_clipboard_delegate(IntPtr self, out CfxState javascript_access_clipboard);
+        public delegate void cfx_browser_settings_get_javascript_access_clipboard_delegate(IntPtr self, out int javascript_access_clipboard);
         public static cfx_browser_settings_get_javascript_access_clipboard_delegate cfx_browser_settings_get_javascript_access_clipboard;
 
         // static void cfx_browser_settings_set_javascript_dom_paste(cef_browser_settings_t *self, cef_state_t javascript_dom_paste)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_javascript_dom_paste_delegate(IntPtr self, CfxState javascript_dom_paste);
+        public delegate void cfx_browser_settings_set_javascript_dom_paste_delegate(IntPtr self, int javascript_dom_paste);
         public static cfx_browser_settings_set_javascript_dom_paste_delegate cfx_browser_settings_set_javascript_dom_paste;
         // static void cfx_browser_settings_get_javascript_dom_paste(cef_browser_settings_t *self, cef_state_t* javascript_dom_paste)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_javascript_dom_paste_delegate(IntPtr self, out CfxState javascript_dom_paste);
+        public delegate void cfx_browser_settings_get_javascript_dom_paste_delegate(IntPtr self, out int javascript_dom_paste);
         public static cfx_browser_settings_get_javascript_dom_paste_delegate cfx_browser_settings_get_javascript_dom_paste;
 
         // static void cfx_browser_settings_set_caret_browsing(cef_browser_settings_t *self, cef_state_t caret_browsing)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_caret_browsing_delegate(IntPtr self, CfxState caret_browsing);
+        public delegate void cfx_browser_settings_set_caret_browsing_delegate(IntPtr self, int caret_browsing);
         public static cfx_browser_settings_set_caret_browsing_delegate cfx_browser_settings_set_caret_browsing;
         // static void cfx_browser_settings_get_caret_browsing(cef_browser_settings_t *self, cef_state_t* caret_browsing)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_caret_browsing_delegate(IntPtr self, out CfxState caret_browsing);
+        public delegate void cfx_browser_settings_get_caret_browsing_delegate(IntPtr self, out int caret_browsing);
         public static cfx_browser_settings_get_caret_browsing_delegate cfx_browser_settings_get_caret_browsing;
 
         // static void cfx_browser_settings_set_plugins(cef_browser_settings_t *self, cef_state_t plugins)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_plugins_delegate(IntPtr self, CfxState plugins);
+        public delegate void cfx_browser_settings_set_plugins_delegate(IntPtr self, int plugins);
         public static cfx_browser_settings_set_plugins_delegate cfx_browser_settings_set_plugins;
         // static void cfx_browser_settings_get_plugins(cef_browser_settings_t *self, cef_state_t* plugins)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_plugins_delegate(IntPtr self, out CfxState plugins);
+        public delegate void cfx_browser_settings_get_plugins_delegate(IntPtr self, out int plugins);
         public static cfx_browser_settings_get_plugins_delegate cfx_browser_settings_get_plugins;
 
         // static void cfx_browser_settings_set_universal_access_from_file_urls(cef_browser_settings_t *self, cef_state_t universal_access_from_file_urls)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_universal_access_from_file_urls_delegate(IntPtr self, CfxState universal_access_from_file_urls);
+        public delegate void cfx_browser_settings_set_universal_access_from_file_urls_delegate(IntPtr self, int universal_access_from_file_urls);
         public static cfx_browser_settings_set_universal_access_from_file_urls_delegate cfx_browser_settings_set_universal_access_from_file_urls;
         // static void cfx_browser_settings_get_universal_access_from_file_urls(cef_browser_settings_t *self, cef_state_t* universal_access_from_file_urls)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_universal_access_from_file_urls_delegate(IntPtr self, out CfxState universal_access_from_file_urls);
+        public delegate void cfx_browser_settings_get_universal_access_from_file_urls_delegate(IntPtr self, out int universal_access_from_file_urls);
         public static cfx_browser_settings_get_universal_access_from_file_urls_delegate cfx_browser_settings_get_universal_access_from_file_urls;
 
         // static void cfx_browser_settings_set_file_access_from_file_urls(cef_browser_settings_t *self, cef_state_t file_access_from_file_urls)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_file_access_from_file_urls_delegate(IntPtr self, CfxState file_access_from_file_urls);
+        public delegate void cfx_browser_settings_set_file_access_from_file_urls_delegate(IntPtr self, int file_access_from_file_urls);
         public static cfx_browser_settings_set_file_access_from_file_urls_delegate cfx_browser_settings_set_file_access_from_file_urls;
         // static void cfx_browser_settings_get_file_access_from_file_urls(cef_browser_settings_t *self, cef_state_t* file_access_from_file_urls)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_file_access_from_file_urls_delegate(IntPtr self, out CfxState file_access_from_file_urls);
+        public delegate void cfx_browser_settings_get_file_access_from_file_urls_delegate(IntPtr self, out int file_access_from_file_urls);
         public static cfx_browser_settings_get_file_access_from_file_urls_delegate cfx_browser_settings_get_file_access_from_file_urls;
 
         // static void cfx_browser_settings_set_web_security(cef_browser_settings_t *self, cef_state_t web_security)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_web_security_delegate(IntPtr self, CfxState web_security);
+        public delegate void cfx_browser_settings_set_web_security_delegate(IntPtr self, int web_security);
         public static cfx_browser_settings_set_web_security_delegate cfx_browser_settings_set_web_security;
         // static void cfx_browser_settings_get_web_security(cef_browser_settings_t *self, cef_state_t* web_security)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_web_security_delegate(IntPtr self, out CfxState web_security);
+        public delegate void cfx_browser_settings_get_web_security_delegate(IntPtr self, out int web_security);
         public static cfx_browser_settings_get_web_security_delegate cfx_browser_settings_get_web_security;
 
         // static void cfx_browser_settings_set_image_loading(cef_browser_settings_t *self, cef_state_t image_loading)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_image_loading_delegate(IntPtr self, CfxState image_loading);
+        public delegate void cfx_browser_settings_set_image_loading_delegate(IntPtr self, int image_loading);
         public static cfx_browser_settings_set_image_loading_delegate cfx_browser_settings_set_image_loading;
         // static void cfx_browser_settings_get_image_loading(cef_browser_settings_t *self, cef_state_t* image_loading)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_image_loading_delegate(IntPtr self, out CfxState image_loading);
+        public delegate void cfx_browser_settings_get_image_loading_delegate(IntPtr self, out int image_loading);
         public static cfx_browser_settings_get_image_loading_delegate cfx_browser_settings_get_image_loading;
 
         // static void cfx_browser_settings_set_image_shrink_standalone_to_fit(cef_browser_settings_t *self, cef_state_t image_shrink_standalone_to_fit)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_image_shrink_standalone_to_fit_delegate(IntPtr self, CfxState image_shrink_standalone_to_fit);
+        public delegate void cfx_browser_settings_set_image_shrink_standalone_to_fit_delegate(IntPtr self, int image_shrink_standalone_to_fit);
         public static cfx_browser_settings_set_image_shrink_standalone_to_fit_delegate cfx_browser_settings_set_image_shrink_standalone_to_fit;
         // static void cfx_browser_settings_get_image_shrink_standalone_to_fit(cef_browser_settings_t *self, cef_state_t* image_shrink_standalone_to_fit)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_image_shrink_standalone_to_fit_delegate(IntPtr self, out CfxState image_shrink_standalone_to_fit);
+        public delegate void cfx_browser_settings_get_image_shrink_standalone_to_fit_delegate(IntPtr self, out int image_shrink_standalone_to_fit);
         public static cfx_browser_settings_get_image_shrink_standalone_to_fit_delegate cfx_browser_settings_get_image_shrink_standalone_to_fit;
 
         // static void cfx_browser_settings_set_text_area_resize(cef_browser_settings_t *self, cef_state_t text_area_resize)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_text_area_resize_delegate(IntPtr self, CfxState text_area_resize);
+        public delegate void cfx_browser_settings_set_text_area_resize_delegate(IntPtr self, int text_area_resize);
         public static cfx_browser_settings_set_text_area_resize_delegate cfx_browser_settings_set_text_area_resize;
         // static void cfx_browser_settings_get_text_area_resize(cef_browser_settings_t *self, cef_state_t* text_area_resize)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_text_area_resize_delegate(IntPtr self, out CfxState text_area_resize);
+        public delegate void cfx_browser_settings_get_text_area_resize_delegate(IntPtr self, out int text_area_resize);
         public static cfx_browser_settings_get_text_area_resize_delegate cfx_browser_settings_get_text_area_resize;
 
         // static void cfx_browser_settings_set_tab_to_links(cef_browser_settings_t *self, cef_state_t tab_to_links)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_tab_to_links_delegate(IntPtr self, CfxState tab_to_links);
+        public delegate void cfx_browser_settings_set_tab_to_links_delegate(IntPtr self, int tab_to_links);
         public static cfx_browser_settings_set_tab_to_links_delegate cfx_browser_settings_set_tab_to_links;
         // static void cfx_browser_settings_get_tab_to_links(cef_browser_settings_t *self, cef_state_t* tab_to_links)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_tab_to_links_delegate(IntPtr self, out CfxState tab_to_links);
+        public delegate void cfx_browser_settings_get_tab_to_links_delegate(IntPtr self, out int tab_to_links);
         public static cfx_browser_settings_get_tab_to_links_delegate cfx_browser_settings_get_tab_to_links;
 
         // static void cfx_browser_settings_set_local_storage(cef_browser_settings_t *self, cef_state_t local_storage)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_local_storage_delegate(IntPtr self, CfxState local_storage);
+        public delegate void cfx_browser_settings_set_local_storage_delegate(IntPtr self, int local_storage);
         public static cfx_browser_settings_set_local_storage_delegate cfx_browser_settings_set_local_storage;
         // static void cfx_browser_settings_get_local_storage(cef_browser_settings_t *self, cef_state_t* local_storage)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_local_storage_delegate(IntPtr self, out CfxState local_storage);
+        public delegate void cfx_browser_settings_get_local_storage_delegate(IntPtr self, out int local_storage);
         public static cfx_browser_settings_get_local_storage_delegate cfx_browser_settings_get_local_storage;
 
         // static void cfx_browser_settings_set_databases(cef_browser_settings_t *self, cef_state_t databases)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_databases_delegate(IntPtr self, CfxState databases);
+        public delegate void cfx_browser_settings_set_databases_delegate(IntPtr self, int databases);
         public static cfx_browser_settings_set_databases_delegate cfx_browser_settings_set_databases;
         // static void cfx_browser_settings_get_databases(cef_browser_settings_t *self, cef_state_t* databases)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_databases_delegate(IntPtr self, out CfxState databases);
+        public delegate void cfx_browser_settings_get_databases_delegate(IntPtr self, out int databases);
         public static cfx_browser_settings_get_databases_delegate cfx_browser_settings_get_databases;
 
         // static void cfx_browser_settings_set_application_cache(cef_browser_settings_t *self, cef_state_t application_cache)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_application_cache_delegate(IntPtr self, CfxState application_cache);
+        public delegate void cfx_browser_settings_set_application_cache_delegate(IntPtr self, int application_cache);
         public static cfx_browser_settings_set_application_cache_delegate cfx_browser_settings_set_application_cache;
         // static void cfx_browser_settings_get_application_cache(cef_browser_settings_t *self, cef_state_t* application_cache)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_application_cache_delegate(IntPtr self, out CfxState application_cache);
+        public delegate void cfx_browser_settings_get_application_cache_delegate(IntPtr self, out int application_cache);
         public static cfx_browser_settings_get_application_cache_delegate cfx_browser_settings_get_application_cache;
 
         // static void cfx_browser_settings_set_webgl(cef_browser_settings_t *self, cef_state_t webgl)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_set_webgl_delegate(IntPtr self, CfxState webgl);
+        public delegate void cfx_browser_settings_set_webgl_delegate(IntPtr self, int webgl);
         public static cfx_browser_settings_set_webgl_delegate cfx_browser_settings_set_webgl;
         // static void cfx_browser_settings_get_webgl(cef_browser_settings_t *self, cef_state_t* webgl)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_browser_settings_get_webgl_delegate(IntPtr self, out CfxState webgl);
+        public delegate void cfx_browser_settings_get_webgl_delegate(IntPtr self, out int webgl);
         public static cfx_browser_settings_get_webgl_delegate cfx_browser_settings_get_webgl;
 
         // static void cfx_browser_settings_set_background_color(cef_browser_settings_t *self, uint32 background_color)
@@ -1216,7 +1216,7 @@ namespace Chromium {
 
         // static cef_context_menu_type_flags_t cfx_context_menu_params_get_type_flags(cef_context_menu_params_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxContextMenuTypeFlags cfx_context_menu_params_get_type_flags_delegate(IntPtr self);
+        public delegate int cfx_context_menu_params_get_type_flags_delegate(IntPtr self);
         public static cfx_context_menu_params_get_type_flags_delegate cfx_context_menu_params_get_type_flags;
 
         // static cef_string_userfree_t cfx_context_menu_params_get_link_url(cef_context_menu_params_t* self)
@@ -1256,12 +1256,12 @@ namespace Chromium {
 
         // static cef_context_menu_media_type_t cfx_context_menu_params_get_media_type(cef_context_menu_params_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxContextMenuMediaType cfx_context_menu_params_get_media_type_delegate(IntPtr self);
+        public delegate int cfx_context_menu_params_get_media_type_delegate(IntPtr self);
         public static cfx_context_menu_params_get_media_type_delegate cfx_context_menu_params_get_media_type;
 
         // static cef_context_menu_media_state_flags_t cfx_context_menu_params_get_media_state_flags(cef_context_menu_params_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxContextMenuMediaStateFlags cfx_context_menu_params_get_media_state_flags_delegate(IntPtr self);
+        public delegate int cfx_context_menu_params_get_media_state_flags_delegate(IntPtr self);
         public static cfx_context_menu_params_get_media_state_flags_delegate cfx_context_menu_params_get_media_state_flags;
 
         // static cef_string_userfree_t cfx_context_menu_params_get_selection_text(cef_context_menu_params_t* self)
@@ -1291,7 +1291,7 @@ namespace Chromium {
 
         // static cef_context_menu_edit_state_flags_t cfx_context_menu_params_get_edit_state_flags(cef_context_menu_params_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxContextMenuEditStateFlags cfx_context_menu_params_get_edit_state_flags_delegate(IntPtr self);
+        public delegate int cfx_context_menu_params_get_edit_state_flags_delegate(IntPtr self);
         public static cfx_context_menu_params_get_edit_state_flags_delegate cfx_context_menu_params_get_edit_state_flags;
 
         // static int cfx_context_menu_params_is_custom_menu(cef_context_menu_params_t* self)
@@ -1570,7 +1570,7 @@ namespace Chromium {
 
         // static cef_value_type_t cfx_dictionary_value_get_type(cef_dictionary_value_t* self, char16 *key_str, int key_length)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxValueType cfx_dictionary_value_get_type_delegate(IntPtr self, IntPtr key_str, int key_length);
+        public delegate int cfx_dictionary_value_get_type_delegate(IntPtr self, IntPtr key_str, int key_length);
         public static cfx_dictionary_value_get_type_delegate cfx_dictionary_value_get_type;
 
         // static cef_value_t* cfx_dictionary_value_get_value(cef_dictionary_value_t* self, char16 *key_str, int key_length)
@@ -1670,7 +1670,7 @@ namespace Chromium {
 
         // static cef_dom_document_type_t cfx_domdocument_get_type(cef_domdocument_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxDomDocumentType cfx_domdocument_get_type_delegate(IntPtr self);
+        public delegate int cfx_domdocument_get_type_delegate(IntPtr self);
         public static cfx_domdocument_get_type_delegate cfx_domdocument_get_type;
 
         // static cef_domnode_t* cfx_domdocument_get_document(cef_domdocument_t* self)
@@ -1743,7 +1743,7 @@ namespace Chromium {
 
         // static cef_dom_node_type_t cfx_domnode_get_type(cef_domnode_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxDomNodeType cfx_domnode_get_type_delegate(IntPtr self);
+        public delegate int cfx_domnode_get_type_delegate(IntPtr self);
         public static cfx_domnode_get_type_delegate cfx_domnode_get_type;
 
         // static int cfx_domnode_is_text(cef_domnode_t* self)
@@ -2391,11 +2391,11 @@ namespace Chromium {
 
         // static void cfx_geoposition_set_error_code(cef_geoposition_t *self, cef_geoposition_error_code_t error_code)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_geoposition_set_error_code_delegate(IntPtr self, CfxGeopositionErrorCode error_code);
+        public delegate void cfx_geoposition_set_error_code_delegate(IntPtr self, int error_code);
         public static cfx_geoposition_set_error_code_delegate cfx_geoposition_set_error_code;
         // static void cfx_geoposition_get_error_code(cef_geoposition_t *self, cef_geoposition_error_code_t* error_code)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_geoposition_get_error_code_delegate(IntPtr self, out CfxGeopositionErrorCode error_code);
+        public delegate void cfx_geoposition_get_error_code_delegate(IntPtr self, out int error_code);
         public static cfx_geoposition_get_error_code_delegate cfx_geoposition_get_error_code;
 
         // static void cfx_geoposition_set_error_message(cef_geoposition_t *self, char16 *error_message_str, int error_message_length)
@@ -2439,11 +2439,11 @@ namespace Chromium {
 
         // static void cfx_key_event_set_type(cef_key_event_t *self, cef_key_event_type_t type)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_key_event_set_type_delegate(IntPtr self, CfxKeyEventType type);
+        public delegate void cfx_key_event_set_type_delegate(IntPtr self, int type);
         public static cfx_key_event_set_type_delegate cfx_key_event_set_type;
         // static void cfx_key_event_get_type(cef_key_event_t *self, cef_key_event_type_t* type)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_key_event_get_type_delegate(IntPtr self, out CfxKeyEventType type);
+        public delegate void cfx_key_event_get_type_delegate(IntPtr self, out int type);
         public static cfx_key_event_get_type_delegate cfx_key_event_get_type;
 
         // static void cfx_key_event_set_modifiers(cef_key_event_t *self, uint32 modifiers)
@@ -2583,7 +2583,7 @@ namespace Chromium {
 
         // static cef_value_type_t cfx_list_value_get_type(cef_list_value_t* self, int index)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxValueType cfx_list_value_get_type_delegate(IntPtr self, int index);
+        public delegate int cfx_list_value_get_type_delegate(IntPtr self, int index);
         public static cfx_list_value_get_type_delegate cfx_list_value_get_type;
 
         // static cef_value_t* cfx_list_value_get_value(cef_list_value_t* self, int index)
@@ -2831,12 +2831,12 @@ namespace Chromium {
 
         // static cef_menu_item_type_t cfx_menu_model_get_type(cef_menu_model_t* self, int command_id)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxMenuItemType cfx_menu_model_get_type_delegate(IntPtr self, int command_id);
+        public delegate int cfx_menu_model_get_type_delegate(IntPtr self, int command_id);
         public static cfx_menu_model_get_type_delegate cfx_menu_model_get_type;
 
         // static cef_menu_item_type_t cfx_menu_model_get_type_at(cef_menu_model_t* self, int index)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxMenuItemType cfx_menu_model_get_type_at_delegate(IntPtr self, int index);
+        public delegate int cfx_menu_model_get_type_at_delegate(IntPtr self, int index);
         public static cfx_menu_model_get_type_at_delegate cfx_menu_model_get_type_at;
 
         // static int cfx_menu_model_get_group_id(cef_menu_model_t* self, int command_id)
@@ -3034,7 +3034,7 @@ namespace Chromium {
 
         // static cef_transition_type_t cfx_navigation_entry_get_transition_type(cef_navigation_entry_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxTransitionType cfx_navigation_entry_get_transition_type_delegate(IntPtr self);
+        public delegate int cfx_navigation_entry_get_transition_type_delegate(IntPtr self);
         public static cfx_navigation_entry_get_transition_type_delegate cfx_navigation_entry_get_transition_type;
 
         // static int cfx_navigation_entry_has_post_data(cef_navigation_entry_t* self)
@@ -3174,11 +3174,11 @@ namespace Chromium {
 
         // static void cfx_pdf_print_settings_set_margin_type(cef_pdf_print_settings_t *self, cef_pdf_print_margin_type_t margin_type)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_pdf_print_settings_set_margin_type_delegate(IntPtr self, CfxPdfPrintMarginType margin_type);
+        public delegate void cfx_pdf_print_settings_set_margin_type_delegate(IntPtr self, int margin_type);
         public static cfx_pdf_print_settings_set_margin_type_delegate cfx_pdf_print_settings_set_margin_type;
         // static void cfx_pdf_print_settings_get_margin_type(cef_pdf_print_settings_t *self, cef_pdf_print_margin_type_t* margin_type)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_pdf_print_settings_get_margin_type_delegate(IntPtr self, out CfxPdfPrintMarginType margin_type);
+        public delegate void cfx_pdf_print_settings_get_margin_type_delegate(IntPtr self, out int margin_type);
         public static cfx_pdf_print_settings_get_margin_type_delegate cfx_pdf_print_settings_get_margin_type;
 
         // static void cfx_pdf_print_settings_set_header_footer_enabled(cef_pdf_print_settings_t *self, int header_footer_enabled)
@@ -3477,7 +3477,7 @@ namespace Chromium {
 
         // static cef_postdataelement_type_t cfx_post_data_element_get_type(cef_post_data_element_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxPostdataElementType cfx_post_data_element_get_type_delegate(IntPtr self);
+        public delegate int cfx_post_data_element_get_type_delegate(IntPtr self);
         public static cfx_post_data_element_get_type_delegate cfx_post_data_element_get_type;
 
         // static cef_string_userfree_t cfx_post_data_element_get_file(cef_post_data_element_t* self)
@@ -3618,12 +3618,12 @@ namespace Chromium {
 
         // static void cfx_print_settings_set_color_model(cef_print_settings_t* self, cef_color_model_t model)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_print_settings_set_color_model_delegate(IntPtr self, CfxColorModel model);
+        public delegate void cfx_print_settings_set_color_model_delegate(IntPtr self, int model);
         public static cfx_print_settings_set_color_model_delegate cfx_print_settings_set_color_model;
 
         // static cef_color_model_t cfx_print_settings_get_color_model(cef_print_settings_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxColorModel cfx_print_settings_get_color_model_delegate(IntPtr self);
+        public delegate int cfx_print_settings_get_color_model_delegate(IntPtr self);
         public static cfx_print_settings_get_color_model_delegate cfx_print_settings_get_color_model;
 
         // static void cfx_print_settings_set_copies(cef_print_settings_t* self, int copies)
@@ -3638,12 +3638,12 @@ namespace Chromium {
 
         // static void cfx_print_settings_set_duplex_mode(cef_print_settings_t* self, cef_duplex_mode_t mode)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_print_settings_set_duplex_mode_delegate(IntPtr self, CfxDuplexMode mode);
+        public delegate void cfx_print_settings_set_duplex_mode_delegate(IntPtr self, int mode);
         public static cfx_print_settings_set_duplex_mode_delegate cfx_print_settings_set_duplex_mode;
 
         // static cef_duplex_mode_t cfx_print_settings_get_duplex_mode(cef_print_settings_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxDuplexMode cfx_print_settings_get_duplex_mode_delegate(IntPtr self);
+        public delegate int cfx_print_settings_get_duplex_mode_delegate(IntPtr self);
         public static cfx_print_settings_get_duplex_mode_delegate cfx_print_settings_get_duplex_mode;
 
 
@@ -3779,7 +3779,7 @@ namespace Chromium {
 
         // static void cfx_request_set_referrer(cef_request_t* self, char16 *referrer_url_str, int referrer_url_length, cef_referrer_policy_t policy)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_request_set_referrer_delegate(IntPtr self, IntPtr referrer_url_str, int referrer_url_length, CfxReferrerPolicy policy);
+        public delegate void cfx_request_set_referrer_delegate(IntPtr self, IntPtr referrer_url_str, int referrer_url_length, int policy);
         public static cfx_request_set_referrer_delegate cfx_request_set_referrer;
 
         // static cef_string_userfree_t cfx_request_get_referrer_url(cef_request_t* self)
@@ -3789,7 +3789,7 @@ namespace Chromium {
 
         // static cef_referrer_policy_t cfx_request_get_referrer_policy(cef_request_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxReferrerPolicy cfx_request_get_referrer_policy_delegate(IntPtr self);
+        public delegate int cfx_request_get_referrer_policy_delegate(IntPtr self);
         public static cfx_request_get_referrer_policy_delegate cfx_request_get_referrer_policy;
 
         // static cef_post_data_t* cfx_request_get_post_data(cef_request_t* self)
@@ -3839,12 +3839,12 @@ namespace Chromium {
 
         // static cef_resource_type_t cfx_request_get_resource_type(cef_request_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxResourceType cfx_request_get_resource_type_delegate(IntPtr self);
+        public delegate int cfx_request_get_resource_type_delegate(IntPtr self);
         public static cfx_request_get_resource_type_delegate cfx_request_get_resource_type;
 
         // static cef_transition_type_t cfx_request_get_transition_type(cef_request_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxTransitionType cfx_request_get_transition_type_delegate(IntPtr self);
+        public delegate int cfx_request_get_transition_type_delegate(IntPtr self);
         public static cfx_request_get_transition_type_delegate cfx_request_get_transition_type;
 
         // static uint64 cfx_request_get_identifier(cef_request_t* self)
@@ -4034,7 +4034,7 @@ namespace Chromium {
 
         // static int cfx_resource_bundle_get_data_resource_for_scale(cef_resource_bundle_t* self, int resource_id, cef_scale_factor_t scale_factor, void** data, size_t* data_size)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate int cfx_resource_bundle_get_data_resource_for_scale_delegate(IntPtr self, int resource_id, CfxScaleFactor scale_factor, out IntPtr data, out int data_size);
+        public delegate int cfx_resource_bundle_get_data_resource_for_scale_delegate(IntPtr self, int resource_id, int scale_factor, out IntPtr data, out int data_size);
         public static cfx_resource_bundle_get_data_resource_for_scale_delegate cfx_resource_bundle_get_data_resource_for_scale;
 
 
@@ -4121,7 +4121,7 @@ namespace Chromium {
 
         // static void cfx_run_context_menu_callback_cont(cef_run_context_menu_callback_t* self, int command_id, cef_event_flags_t event_flags)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_run_context_menu_callback_cont_delegate(IntPtr self, int command_id, CfxEventFlags event_flags);
+        public delegate void cfx_run_context_menu_callback_cont_delegate(IntPtr self, int command_id, int event_flags);
         public static cfx_run_context_menu_callback_cont_delegate cfx_run_context_menu_callback_cont;
 
         // static void cfx_run_context_menu_callback_cancel(cef_run_context_menu_callback_t* self)
@@ -4356,11 +4356,11 @@ namespace Chromium {
 
         // static void cfx_settings_set_log_severity(cef_settings_t *self, cef_log_severity_t log_severity)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_settings_set_log_severity_delegate(IntPtr self, CfxLogSeverity log_severity);
+        public delegate void cfx_settings_set_log_severity_delegate(IntPtr self, int log_severity);
         public static cfx_settings_set_log_severity_delegate cfx_settings_set_log_severity;
         // static void cfx_settings_get_log_severity(cef_settings_t *self, cef_log_severity_t* log_severity)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_settings_get_log_severity_delegate(IntPtr self, out CfxLogSeverity log_severity);
+        public delegate void cfx_settings_get_log_severity_delegate(IntPtr self, out int log_severity);
         public static cfx_settings_get_log_severity_delegate cfx_settings_get_log_severity;
 
         // static void cfx_settings_set_javascript_flags(cef_settings_t *self, char16 *javascript_flags_str, int javascript_flags_length)
@@ -4532,7 +4532,7 @@ namespace Chromium {
 
         // static cef_cert_status_t cfx_sslinfo_get_cert_status(cef_sslinfo_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxCertStatus cfx_sslinfo_get_cert_status_delegate(IntPtr self);
+        public delegate int cfx_sslinfo_get_cert_status_delegate(IntPtr self);
         public static cfx_sslinfo_get_cert_status_delegate cfx_sslinfo_get_cert_status;
 
         // static int cfx_sslinfo_is_cert_status_error(cef_sslinfo_t* self)
@@ -4696,7 +4696,7 @@ namespace Chromium {
         public static cfx_task_runner_get_for_current_thread_delegate cfx_task_runner_get_for_current_thread;
         // CEF_EXPORT cef_task_runner_t* cef_task_runner_get_for_thread(cef_thread_id_t threadId);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate IntPtr cfx_task_runner_get_for_thread_delegate(CfxThreadId threadId);
+        public delegate IntPtr cfx_task_runner_get_for_thread_delegate(int threadId);
         public static cfx_task_runner_get_for_thread_delegate cfx_task_runner_get_for_thread;
 
         // static int cfx_task_runner_is_same(cef_task_runner_t* self, cef_task_runner_t* that)
@@ -4711,7 +4711,7 @@ namespace Chromium {
 
         // static int cfx_task_runner_belongs_to_thread(cef_task_runner_t* self, cef_thread_id_t threadId)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate int cfx_task_runner_belongs_to_thread_delegate(IntPtr self, CfxThreadId threadId);
+        public delegate int cfx_task_runner_belongs_to_thread_delegate(IntPtr self, int threadId);
         public static cfx_task_runner_belongs_to_thread_delegate cfx_task_runner_belongs_to_thread;
 
         // static int cfx_task_runner_post_task(cef_task_runner_t* self, cef_task_t* task)
@@ -4913,12 +4913,12 @@ namespace Chromium {
 
         // static cef_urlrequest_status_t cfx_urlrequest_get_request_status(cef_urlrequest_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxUrlRequestStatus cfx_urlrequest_get_request_status_delegate(IntPtr self);
+        public delegate int cfx_urlrequest_get_request_status_delegate(IntPtr self);
         public static cfx_urlrequest_get_request_status_delegate cfx_urlrequest_get_request_status;
 
         // static cef_errorcode_t cfx_urlrequest_get_request_error(cef_urlrequest_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxErrorCode cfx_urlrequest_get_request_error_delegate(IntPtr self);
+        public delegate int cfx_urlrequest_get_request_error_delegate(IntPtr self);
         public static cfx_urlrequest_get_request_error_delegate cfx_urlrequest_get_request_error;
 
         // static cef_response_t* cfx_urlrequest_get_response(cef_urlrequest_t* self)
@@ -5327,7 +5327,7 @@ namespace Chromium {
 
         // static int cfx_v8value_set_value_bykey(cef_v8value_t* self, char16 *key_str, int key_length, cef_v8value_t* value, cef_v8_propertyattribute_t attribute)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate int cfx_v8value_set_value_bykey_delegate(IntPtr self, IntPtr key_str, int key_length, IntPtr value, CfxV8PropertyAttribute attribute);
+        public delegate int cfx_v8value_set_value_bykey_delegate(IntPtr self, IntPtr key_str, int key_length, IntPtr value, int attribute);
         public static cfx_v8value_set_value_bykey_delegate cfx_v8value_set_value_bykey;
 
         // static int cfx_v8value_set_value_byindex(cef_v8value_t* self, int index, cef_v8value_t* value)
@@ -5337,7 +5337,7 @@ namespace Chromium {
 
         // static int cfx_v8value_set_value_byaccessor(cef_v8value_t* self, char16 *key_str, int key_length, cef_v8_accesscontrol_t settings, cef_v8_propertyattribute_t attribute)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate int cfx_v8value_set_value_byaccessor_delegate(IntPtr self, IntPtr key_str, int key_length, CfxV8AccessControl settings, CfxV8PropertyAttribute attribute);
+        public delegate int cfx_v8value_set_value_byaccessor_delegate(IntPtr self, IntPtr key_str, int key_length, int settings, int attribute);
         public static cfx_v8value_set_value_byaccessor_delegate cfx_v8value_set_value_byaccessor;
 
         // static int cfx_v8value_get_keys(cef_v8value_t* self, cef_string_list_t keys)
@@ -5430,7 +5430,7 @@ namespace Chromium {
 
         // static cef_value_type_t cfx_value_get_type(cef_value_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxValueType cfx_value_get_type_delegate(IntPtr self);
+        public delegate int cfx_value_get_type_delegate(IntPtr self);
         public static cfx_value_get_type_delegate cfx_value_get_type;
 
         // static int cfx_value_get_bool(cef_value_t* self)
@@ -5753,7 +5753,7 @@ namespace Chromium {
 
         // CEF_EXPORT cef_xml_reader_t* cef_xml_reader_create(cef_stream_reader_t* stream, cef_xml_encoding_type_t encodingType, const cef_string_t* URI);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate IntPtr cfx_xml_reader_create_delegate(IntPtr stream, CfxXmlEncodingType encodingType, IntPtr URI_str, int URI_length);
+        public delegate IntPtr cfx_xml_reader_create_delegate(IntPtr stream, int encodingType, IntPtr URI_str, int URI_length);
         public static cfx_xml_reader_create_delegate cfx_xml_reader_create;
 
         // static int cfx_xml_reader_move_to_next_node(cef_xml_reader_t* self)
@@ -5778,7 +5778,7 @@ namespace Chromium {
 
         // static cef_xml_node_type_t cfx_xml_reader_get_type(cef_xml_reader_t* self)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate CfxXmlNodeType cfx_xml_reader_get_type_delegate(IntPtr self);
+        public delegate int cfx_xml_reader_get_type_delegate(IntPtr self);
         public static cfx_xml_reader_get_type_delegate cfx_xml_reader_get_type;
 
         // static int cfx_xml_reader_get_depth(cef_xml_reader_t* self)

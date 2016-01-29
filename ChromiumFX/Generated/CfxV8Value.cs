@@ -711,7 +711,7 @@ namespace Chromium {
         /// </remarks>
         public bool SetValue(string key, CfxV8Value value, CfxV8PropertyAttribute attribute) {
             var key_pinned = new PinnedString(key);
-            var __retval = CfxApi.cfx_v8value_set_value_bykey(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, CfxV8Value.Unwrap(value), attribute);
+            var __retval = CfxApi.cfx_v8value_set_value_bykey(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, CfxV8Value.Unwrap(value), (int)attribute);
             key_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -743,7 +743,7 @@ namespace Chromium {
         /// </remarks>
         public bool SetValue(string key, CfxV8AccessControl settings, CfxV8PropertyAttribute attribute) {
             var key_pinned = new PinnedString(key);
-            var __retval = CfxApi.cfx_v8value_set_value_byaccessor(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, settings, attribute);
+            var __retval = CfxApi.cfx_v8value_set_value_byaccessor(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, (int)settings, (int)attribute);
             key_pinned.Obj.Free();
             return 0 != __retval;
         }
