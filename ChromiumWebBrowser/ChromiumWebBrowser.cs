@@ -888,7 +888,7 @@ namespace Chromium.WebBrowser {
             }
         }
 
-        [Obsolete("OnLoadingStateChange is deprecated. Please use LoadHandler.OnLoadingStateChange.")]
+        [Obsolete("OnLoadingStateChange is deprecated. Please use LoadHandler.OnLoadingStateChange and check for invalid cross-thread operations.")]
         public event CfxOnLoadingStateChangeEventHandler OnLoadingStateChange {
             add {
                 lock (browserSyncRoot) {
@@ -915,7 +915,7 @@ namespace Chromium.WebBrowser {
         }
 
 
-        [Obsolete("OnBeforeContextMenu is deprecated. Please use ContextMenuHandler.OnBeforeContextMenu.")]
+        [Obsolete("OnBeforeContextMenu is deprecated. Please use ContextMenuHandler.OnBeforeContextMenu and check for invalid cross-thread operations.")]
         public event CfxOnBeforeContextMenuEventHandler OnBeforeContextMenu {
             add {
                 lock (browserSyncRoot) {
@@ -942,7 +942,7 @@ namespace Chromium.WebBrowser {
         }
 
 
-        [Obsolete("OnContextMenuCommand is deprecated. Please use ContextMenuHandler.OnContextMenuCommand.")]
+        [Obsolete("OnContextMenuCommand is deprecated. Please use ContextMenuHandler.OnContextMenuCommand and check for invalid cross-thread operations.")]
         public event CfxOnContextMenuCommandEventHandler OnContextMenuCommand {
             add {
                 lock (browserSyncRoot) {
