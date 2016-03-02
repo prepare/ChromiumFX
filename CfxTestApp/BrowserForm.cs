@@ -121,7 +121,8 @@ namespace CfxTestApplication {
                     <hr><br><br>
                     Local resource image:<br>
                     <img src='http://localresource/image'><br><br>
-                    <a href='http://www.google.com/' onclick=""window.open('http://www.google.com/', 'Popup test', 'width=800,height=600,scrollbars=yes'); return false;"">open popup</a>
+                    <a href='http://www.google.com/' onclick=""window.open('http://www.google.com/', 'Popup test', 'width=800,height=600,scrollbars=yes'); return false;"">open popup window.open</a>
+                    <a href='http://www.google.com/' target=blank>open popup target=blank</a>
                     <br><br>
                     <button id='testbutton1' onclick=""document.getElementById('testfunc_result').innerHTML += '<br>' + CfxHelloWorld('this is the hello world function');"">Execute CfxHelloWorld()</button>
                     <button id='testbutton2' onclick=""
@@ -171,7 +172,7 @@ namespace CfxTestApplication {
             WebBrowser.LifeSpanHandler.OnBeforePopup += (s, e) => {
                 LogCallback(s, e);
                 var ff = e.PopupFeatures.AdditionalFeatures;
-                if(ff != null) 
+                if(ff != null)
                     foreach(var f in ff) {
                         LogWriteLine("Additional popup feature: {0}", f);
                     }
