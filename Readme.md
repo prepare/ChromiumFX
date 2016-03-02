@@ -51,6 +51,11 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2526.3 ###
+- The CEF client callback events with automatic UI thread invocation were deprecated. In some callbacks, CEF expects the callback arguments to be accessed exclusively from the thread performing the callback so the automatic Control.Invoke caused some problems. See also issue #48. Embedding applications have to manually invoke in order to access UI elements from within a CEF client callback.
+- Expose the remote OnV8ContextCreated event handler in the ChromiumWebBrowser control.
+
+
 ### Version 3.2526.2 ###
 - Update to cef version 3.2526.1366 with API changes. Older CEF binaries won't work with this version.
 - In the course of update, the CfxDragOperationsMask enumeration was changed and a bug was fixed which caused a wrong conversion of CfxDragOperationsMask.Every.
