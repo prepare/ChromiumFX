@@ -1050,10 +1050,13 @@ namespace Chromium.WebBrowser {
         internal void ResizeBrowserWindow() {
             if(browserWindowHandle != IntPtr.Zero && this.Height > 0 && this.Width > 0) {
                 int h;
-                if(m_findToolbar == null || !m_findToolbar.Visible)
+                if(m_findToolbar == null || !m_findToolbar.Visible) {
                     h = Height;
-                else
+                } else {
+                    m_findToolbar.Width = Width;
+                    m_findToolbar.Top = Height - m_findToolbar.Height;
                     h = m_findToolbar.Top;
+                }
                 SetWindowPos(browserWindowHandle, IntPtr.Zero, 0, 0, Width, h, SWP_NOMOVE | SWP_NOZORDER);
             }
         }

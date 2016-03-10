@@ -172,12 +172,8 @@ namespace Chromium.WebBrowser {
             resultLabel.Top = matchCaseButton.Top + 3;
             resultLabel.AutoSize = true;
 
-            Width = wb.Width;
             Height = textBox.Height + 12;
-            Top = wb.Height - Height;
-            Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
             BackColor = Color.WhiteSmoke;
-
 
             closeButton.Height = upButton.Height;
             closeButton.Width = closeButton.Height;
