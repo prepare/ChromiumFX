@@ -308,6 +308,12 @@ namespace Chromium.WebBrowser {
         /// </summary>
         public void CreateBrowser(CfxRequestContext requestContext) {
 
+            // avoid illegal cross-thread calls
+            if(InvokeRequired) {
+                Invoke((MethodInvoker)(() => CreateBrowser(requestContext)));
+                return;
+            }
+
             var windowInfo = new CfxWindowInfo();
             windowInfo.SetAsChild(Handle, 0, 0, Height > 0 ? Height : 500, Width > 0 ? Width : 500);
             if(!CfxBrowserHost.CreateBrowser(windowInfo, client, initialUrl, DefaultBrowserSettings, requestContext))
