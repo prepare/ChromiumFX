@@ -298,7 +298,29 @@ namespace Chromium.WebBrowser {
         /// was instanciated with createImmediately == false.
         /// </summary>
         public void CreateBrowser() {
-            CreateBrowser(null);
+            CreateBrowser((CfxRequestContext)null);
+        }
+
+        /// <summary>
+        /// Creates the underlying CfxBrowser with the default CfxRequestContext
+        /// and the given initial URL.
+        /// This method should only be called if this ChromiumWebBrowser
+        /// was instanciated with createImmediately == false.
+        /// </summary>
+        public void CreateBrowser(string initialUrl) {
+            this.initialUrl = initialUrl;
+            CreateBrowser((CfxRequestContext)null);
+        }
+
+        /// <summary>
+        /// Creates the underlying CfxBrowser with the given 
+        /// CfxRequestContext and initial URL.
+        /// This method should only be called if this ChromiumWebBrowser
+        /// was instanciated with createImmediately == false.
+        /// </summary>
+        public void CreateBrowser(string initialUrl, CfxRequestContext requestContext) {
+            this.initialUrl = initialUrl;
+            CreateBrowser(requestContext);
         }
 
         /// <summary>
