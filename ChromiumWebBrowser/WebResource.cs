@@ -71,6 +71,25 @@ namespace Chromium.WebBrowser {
         }
 
         /// <summary>
+        /// Creates a WebResource from the given image
+        /// for registration with a ChromiumWebBrowser control.
+        /// The mime type will be set according to the image format.
+        /// </summary>
+        public WebResource(Image image, ImageFormat format) {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+            foreach(var c in codecs) {
+                if(c.FormatID == format.Guid) {
+                    mimeType = c.MimeType;
+                    var imgData = new System.IO.MemoryStream();
+                    image.Save(imgData, format);
+                    data = imgData.ToArray();
+                    return;
+                }
+            }
+            throw new ChromiumWebBrowserException("No mime type for the given image format.");
+        }
+
+        /// <summary>
         /// Creates a WebResource from the given text
         /// for registration with a ChromiumWebBrowser control.
         /// The mime type will be text/html
