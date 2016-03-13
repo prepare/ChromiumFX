@@ -310,6 +310,7 @@ namespace Chromium.WebBrowser {
         /// Sets the text in the find box and performs a search.
         /// </summary>
         public void Search(string text) {
+            Visible = true;
             textBox.Text = text;
         }
 
