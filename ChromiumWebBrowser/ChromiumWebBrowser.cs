@@ -1075,8 +1075,15 @@ namespace Chromium.WebBrowser {
                 if(m_findToolbar == null || !m_findToolbar.Visible) {
                     h = Height;
                 } else {
-                    m_findToolbar.Width = Width;
-                    m_findToolbar.Top = Height - m_findToolbar.Height;
+                    if(InvokeRequired) {
+                        Invoke((MethodInvoker)(() => {
+                            m_findToolbar.Width = Width;
+                            m_findToolbar.Top = Height - m_findToolbar.Height;
+                        }));
+                    } else {
+                        m_findToolbar.Width = Width;
+                        m_findToolbar.Top = Height - m_findToolbar.Height;
+                    }
                     h = m_findToolbar.Top;
                 }
                 SetWindowPos(browserWindowHandle, IntPtr.Zero, 0, 0, Width, h, SWP_NOMOVE | SWP_NOZORDER);
