@@ -269,12 +269,8 @@ namespace Chromium.WebBrowser {
                 base.Visible = value;
                 if(value) {
                     Parent = wb;
-                    if(textBox.Text.Length > 0)
-                        wb.Find(null);
-
                 } else {
-                    if(textBox.Text.Length == 0)
-                        wb.Find(null);
+                    textBox.Text = null;
                     Parent = null;
                 }
                 wb.ResizeBrowserWindow();
