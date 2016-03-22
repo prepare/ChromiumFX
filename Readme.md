@@ -11,7 +11,7 @@
 ### ChromiumFX.dll ###
 
 * **[Managed wrapper](https://bitbucket.org/chromiumfx/chromiumfx/wiki/Project) for the complete CEF API**
-* **[Remote wrapper](https://bitbucket.org/chromiumfx/chromiumfx/wiki/Walkthrough_02) for full access to DOM and V8 from within the browser process**
+* **[Remote wrapper](https://bitbucket.org/chromiumfx/chromiumfx/wiki/Walkthrough_02) to access DOM and V8 in the render process from the browser process**
 
 ### ChromiumWebBrowser.dll ###
 
