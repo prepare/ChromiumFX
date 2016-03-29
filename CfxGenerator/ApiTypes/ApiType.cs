@@ -165,9 +165,9 @@ public class ApiType {
         return string.Format("{0} {1}", RemoteSymbol, CSharp.Escape(var));
     }
 
-    //public virtual string NativeWrapExpression(string var) {
-    //    return var;
-    //}
+    public virtual string NativeWrapExpression(string var) {
+        return var;
+    }
 
     public virtual string NativeUnwrapExpression(string var) {
         return var;
