@@ -467,5 +467,44 @@ namespace CfxTestApplication {
         private void toggleFindToolbarToolStripMenuItem_Click(object sender, EventArgs e) {
             WebBrowser.FindToolbar.Visible = !WebBrowser.FindToolbar.Visible;
         }
+
+        private void evaluateJavascriptSynchronouslyToolStripMenuItem_Click(object sender, EventArgs e) {
+
+            if(CfxRemoteCallContext.IsInContext && CfrRuntime.CurrentlyOn(CfxThreadId.Renderer)) {
+                throw new Exception("Doing this on the render thread would deadlock.");
+            }
+
+            var waitLock = new object();
+            lock(waitLock) {
+
+                string documentAllLength = null;
+
+                var evaluationStarted = WebBrowser.EvaluateJavascript("'document.all.length = ' + document.all.length", 
+                    // Don't invoke, otherwise the ui thread will deadlock!
+                    JSInvokeMode.DontInvoke, 
+                    (v, ex) => {
+                        Monitor.Enter(waitLock);
+                        try {
+                            documentAllLength = v.StringValue;
+                        } finally {
+                            Monitor.PulseAll(waitLock);
+                            Monitor.Exit(waitLock);
+                        }
+                    }
+                );
+
+                if(evaluationStarted) {
+                    var success = Monitor.Wait(waitLock, 5000);
+                    if(success) {
+                        LogWriteLine("Synchronous evaluation succeeded: {0}", documentAllLength);
+                    } else {
+                        LogWriteLine("Evaluation not finished after 5 seconds, giving up.");
+                    }
+
+                } else {
+                    LogWriteLine("Failed to start evaluation.");
+                }
+            }
+        }
     }
 }

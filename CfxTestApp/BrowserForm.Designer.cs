@@ -81,6 +81,7 @@ namespace CfxTestApplication {
             this.WebBrowser = new Chromium.WebBrowser.ChromiumWebBrowser();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.LogTextBox = new System.Windows.Forms.TextBox();
+            this.evaluateJavascriptSynchronouslyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -232,7 +233,8 @@ namespace CfxTestApplication {
             this.remoteLayerStressTestToolStripMenuItem,
             this.evaluateJavascriptToolStripMenuItem,
             this.executeSleepFunctionToolStripMenuItem,
-            this.toggleFindToolbarToolStripMenuItem});
+            this.toggleFindToolbarToolStripMenuItem,
+            this.evaluateJavascriptSynchronouslyToolStripMenuItem});
             this.miscDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("miscDropDownButton.Image")));
             this.miscDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.miscDropDownButton.Name = "miscDropDownButton";
@@ -242,7 +244,7 @@ namespace CfxTestApplication {
             // systemNetCompatibilityTestToolStripMenuItem
             // 
             this.systemNetCompatibilityTestToolStripMenuItem.Name = "systemNetCompatibilityTestToolStripMenuItem";
-            this.systemNetCompatibilityTestToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.systemNetCompatibilityTestToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
             this.systemNetCompatibilityTestToolStripMenuItem.Text = "System.Net compatibility test";
             this.systemNetCompatibilityTestToolStripMenuItem.Click += new System.EventHandler(this.systemNetCompatibilityTestToolStripMenuItem_Click);
             // 
@@ -250,35 +252,35 @@ namespace CfxTestApplication {
             // 
             this.clearContextMenuModelToolStripMenuItem.CheckOnClick = true;
             this.clearContextMenuModelToolStripMenuItem.Name = "clearContextMenuModelToolStripMenuItem";
-            this.clearContextMenuModelToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.clearContextMenuModelToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
             this.clearContextMenuModelToolStripMenuItem.Text = "Clear context menu model";
             this.clearContextMenuModelToolStripMenuItem.Click += new System.EventHandler(this.clearContextMenuModelToolStripMenuItem_Click);
             // 
             // remoteLayerStressTestToolStripMenuItem
             // 
             this.remoteLayerStressTestToolStripMenuItem.Name = "remoteLayerStressTestToolStripMenuItem";
-            this.remoteLayerStressTestToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.remoteLayerStressTestToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
             this.remoteLayerStressTestToolStripMenuItem.Text = "Remote Layer Stress Test";
             this.remoteLayerStressTestToolStripMenuItem.Click += new System.EventHandler(this.remoteLayerStressTestToolStripMenuItem_Click);
             // 
             // evaluateJavascriptToolStripMenuItem
             // 
             this.evaluateJavascriptToolStripMenuItem.Name = "evaluateJavascriptToolStripMenuItem";
-            this.evaluateJavascriptToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.evaluateJavascriptToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
             this.evaluateJavascriptToolStripMenuItem.Text = "Evaluate Javascript";
             this.evaluateJavascriptToolStripMenuItem.Click += new System.EventHandler(this.evaluateJavascriptToolStripMenuItem_Click);
             // 
             // executeSleepFunctionToolStripMenuItem
             // 
             this.executeSleepFunctionToolStripMenuItem.Name = "executeSleepFunctionToolStripMenuItem";
-            this.executeSleepFunctionToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.executeSleepFunctionToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
             this.executeSleepFunctionToolStripMenuItem.Text = "Execute SleepFunction";
             this.executeSleepFunctionToolStripMenuItem.Click += new System.EventHandler(this.executeSleepFunctionToolStripMenuItem_Click);
             // 
             // toggleFindToolbarToolStripMenuItem
             // 
             this.toggleFindToolbarToolStripMenuItem.Name = "toggleFindToolbarToolStripMenuItem";
-            this.toggleFindToolbarToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.toggleFindToolbarToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
             this.toggleFindToolbarToolStripMenuItem.Text = "Toggle Find Toolbar";
             this.toggleFindToolbarToolStripMenuItem.Click += new System.EventHandler(this.toggleFindToolbarToolStripMenuItem_Click);
             // 
@@ -346,6 +348,13 @@ namespace CfxTestApplication {
             this.LogTextBox.Size = new System.Drawing.Size(1441, 166);
             this.LogTextBox.TabIndex = 0;
             // 
+            // evaluateJavascriptSynchronouslyToolStripMenuItem
+            // 
+            this.evaluateJavascriptSynchronouslyToolStripMenuItem.Name = "evaluateJavascriptSynchronouslyToolStripMenuItem";
+            this.evaluateJavascriptSynchronouslyToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.evaluateJavascriptSynchronouslyToolStripMenuItem.Text = "EvaluateJavascript Synchronously";
+            this.evaluateJavascriptSynchronouslyToolStripMenuItem.Click += new System.EventHandler(this.evaluateJavascriptSynchronouslyToolStripMenuItem_Click);
+            // 
             // BrowserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -397,5 +406,6 @@ namespace CfxTestApplication {
         private System.Windows.Forms.ToolStripMenuItem evaluateJavascriptToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem executeSleepFunctionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toggleFindToolbarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem evaluateJavascriptSynchronouslyToolStripMenuItem;
     }
 }
