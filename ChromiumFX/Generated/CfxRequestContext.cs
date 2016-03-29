@@ -333,6 +333,72 @@ namespace Chromium {
             return 0 != __retval;
         }
 
+        /// <summary>
+        /// Clears all certificate exceptions that were added as part of handling
+        /// CfxRequestHandler.OnCertificateError(). If you call this it is
+        /// recommended that you also call close_all_connections() or you risk not
+        /// being prompted again for server certificates if you reconnect quickly. If
+        /// |callback| is non-NULL it will be executed on the UI thread after
+        /// completion.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
+        public void ClearCertificateExceptions(CfxCompletionCallback callback) {
+            CfxApi.cfx_request_context_clear_certificate_exceptions(NativePtr, CfxCompletionCallback.Unwrap(callback));
+        }
+
+        /// <summary>
+        /// Clears all active and idle connections that Chromium currently has. This is
+        /// only recommended if you have released all other CEF objects but don't yet
+        /// want to call cef_shutdown(). If |callback| is non-NULL it will be executed
+        /// on the UI thread after completion.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
+        public void CloseAllConnections(CfxCompletionCallback callback) {
+            CfxApi.cfx_request_context_close_all_connections(NativePtr, CfxCompletionCallback.Unwrap(callback));
+        }
+
+        /// <summary>
+        /// Attempts to resolve |origin| to a list of associated IP addresses.
+        /// |callback| will be executed on the UI thread after completion.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
+        public void ResolveHost(string origin, CfxResolveCallback callback) {
+            var origin_pinned = new PinnedString(origin);
+            CfxApi.cfx_request_context_resolve_host(NativePtr, origin_pinned.Obj.PinnedPtr, origin_pinned.Length, CfxResolveCallback.Unwrap(callback));
+            origin_pinned.Obj.Free();
+        }
+
+        /// <summary>
+        /// Attempts to resolve |origin| to a list of associated IP addresses using
+        /// cached data. |resolvedIps| will be populated with the list of resolved IP
+        /// addresses or NULL if no cached data is available. Returns ERR_NONE on
+        /// success. This function must be called on the browser process IO thread.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
+        public CfxErrorCode ResolveHostCached(string origin, System.Collections.Generic.List<string> resolvedIps) {
+            var origin_pinned = new PinnedString(origin);
+            PinnedString[] resolvedIps_handles;
+            var resolvedIps_unwrapped = StringFunctions.UnwrapCfxStringList(resolvedIps, out resolvedIps_handles);
+            var __retval = CfxApi.cfx_request_context_resolve_host_cached(NativePtr, origin_pinned.Obj.PinnedPtr, origin_pinned.Length, resolvedIps_unwrapped);
+            origin_pinned.Obj.Free();
+            StringFunctions.FreePinnedStrings(resolvedIps_handles);
+            StringFunctions.CfxStringListCopyToManaged(resolvedIps_unwrapped, resolvedIps);
+            CfxApi.cfx_string_list_free(resolvedIps_unwrapped);
+            return (CfxErrorCode)__retval;
+        }
+
         internal override void OnDispose(IntPtr nativePtr) {
             weakCache.Remove(nativePtr);
             base.OnDispose(nativePtr);
