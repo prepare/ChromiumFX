@@ -107,6 +107,7 @@
 #include "cfx_request_context_handler.c"
 #include "cfx_request_context_settings.c"
 #include "cfx_request_handler.c"
+#include "cfx_resolve_callback.c"
 #include "cfx_resource_bundle.c"
 #include "cfx_resource_bundle_handler.c"
 #include "cfx_resource_handler.c"
