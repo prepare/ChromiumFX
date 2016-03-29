@@ -665,7 +665,8 @@ namespace Chromium.WebBrowser {
         /// Returns false if the remote browser is currently unavailable.
         /// If this function returns false, then |callback| will not be called. Otherwise,
         /// |callback| will be called asynchronously in the context of the render thread and,
-        /// if RemoteCallbackInvokeMode is set to Invoke, on the thread that owns the browser's underlying window handle.
+        /// if RemoteCallbackInvokeMode is set to Invoke, on the thread that owns the 
+        /// browser's underlying window handle.
         /// 
         /// Use with care:
         /// The callback may never be called if the render process gets killed prematurely.
@@ -674,10 +675,29 @@ namespace Chromium.WebBrowser {
         /// will be set to the exception thrown by the evaluated script, if any.
         /// Do not block the callback since it blocks the render thread.
         /// </summary>
-        /// <param name="code">The javascript code to evaluate.</param>
-        /// <param name="callback"></param>
-        /// <returns></returns>
         public bool EvaluateJavascript(string code, Action<CfrV8Value, CfrV8Exception> callback) {
+            return EvaluateJavascript(code, JSInvokeMode.Inherit, callback);
+        }
+
+        /// <summary>
+        /// Evaluate a string of javascript code in the browser's main frame.
+        /// Evaluation is done asynchronously in the render process.
+        /// Returns false if the remote browser is currently unavailable.
+        /// If this function returns false, then |callback| will not be called. Otherwise,
+        /// |callback| will be called asynchronously in the context of the render thread.
+        /// 
+        /// If |invokeMode| is set to Invoke, |callback| will be called on the thread that 
+        /// owns the browser's underlying window handle. If |invokeMode| is set to Inherit,
+        /// |callback| will be called according to RemoteCallbackInvokeMode.
+        /// 
+        /// Use with care:
+        /// The callback may never be called if the render process gets killed prematurely.
+        /// On success the CfrV8Value argument of the callback will be set to the return value
+        /// of the evaluated script, if any. On failure the CfrV8Exception argument of the callback
+        /// will be set to the exception thrown by the evaluated script, if any.
+        /// Do not block the callback since it blocks the render thread.
+        /// </summary>
+        public bool EvaluateJavascript(string code, JSInvokeMode invokeMode, Action<CfrV8Value, CfrV8Exception> callback) {
             var rb = remoteBrowser;
             if(rb == null) return false;
             try {
@@ -685,7 +705,7 @@ namespace Chromium.WebBrowser {
                 ctx.Enter();
                 try {
                     var taskRunner = CfrTaskRunner.GetForThread(CfxThreadId.Renderer);
-                    var task = new EvaluateTask(this, code, callback);
+                    var task = new EvaluateTask(this, code, invokeMode, callback);
                     taskRunner.PostTask(task);
                     return true;
                 } finally {
@@ -700,15 +720,17 @@ namespace Chromium.WebBrowser {
 
             ChromiumWebBrowser wb;
             string code;
+            JSInvokeMode invokeMode;
             Action<CfrV8Value, CfrV8Exception> callback;
 
-            internal EvaluateTask(ChromiumWebBrowser wb, string code, Action<CfrV8Value, CfrV8Exception> callback) {
+            internal EvaluateTask(ChromiumWebBrowser wb, string code, JSInvokeMode invokeMode, Action<CfrV8Value, CfrV8Exception> callback) {
                 this.wb = wb;
                 this.code = code;
+                this.invokeMode = invokeMode;
                 this.callback = callback;
-                this.Execute += (s, e) => {
-                    if(wb.RemoteCallbacksWillInvoke)
-                        wb.RenderThreadInvoke((MethodInvoker)(() => { Task_Execute(e); }));
+                Execute += (s, e) => {
+                    if(invokeMode == JSInvokeMode.Invoke || (invokeMode == JSInvokeMode.Inherit && wb.RemoteCallbacksWillInvoke))
+                        wb.RenderThreadInvoke(() => Task_Execute(e));
                     else
                         Task_Execute(e);
                 };
