@@ -31,7 +31,7 @@
 // Generated file. Do not edit.
 
 
-static void* cfx_function_pointers[1288] =  {
+static void* cfx_function_pointers[1295] =  {
     (void*)cfx_add_cross_origin_whitelist_entry,
     (void*)cfx_add_web_plugin_directory,
     (void*)cfx_add_web_plugin_path,
@@ -856,6 +856,10 @@ static void* cfx_function_pointers[1288] =  {
     (void*)cfx_request_context_get_all_preferences,
     (void*)cfx_request_context_can_set_preference,
     (void*)cfx_request_context_set_preference,
+    (void*)cfx_request_context_clear_certificate_exceptions,
+    (void*)cfx_request_context_close_all_connections,
+    (void*)cfx_request_context_resolve_host,
+    (void*)cfx_request_context_resolve_host_cached,
     (void*)cfx_request_context_handler_ctor,
     (void*)cfx_request_context_handler_get_gc_handle,
     (void*)cfx_request_context_handler_set_managed_callback,
@@ -874,6 +878,9 @@ static void* cfx_function_pointers[1288] =  {
     (void*)cfx_request_handler_ctor,
     (void*)cfx_request_handler_get_gc_handle,
     (void*)cfx_request_handler_set_managed_callback,
+    (void*)cfx_resolve_callback_ctor,
+    (void*)cfx_resolve_callback_get_gc_handle,
+    (void*)cfx_resolve_callback_set_managed_callback,
     (void*)cfx_resource_bundle_get_global,
     (void*)cfx_resource_bundle_get_localized_string,
     (void*)cfx_resource_bundle_get_data_resource,

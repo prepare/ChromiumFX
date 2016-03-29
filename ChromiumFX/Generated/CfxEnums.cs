@@ -975,7 +975,15 @@ namespace Chromium {
         /// <summary>
         /// Main resource of a service worker.
         /// </summary>
-        ServiceWorker
+        ServiceWorker,
+        /// <summary>
+        /// A report of Content Security Policy violations.
+        /// </summary>
+        CspReport,
+        /// <summary>
+        /// A resource that a plugin requested.
+        /// </summary>
+        PluginResource
     }
     /// <summary>
     /// Return values for CfxResponseFilter.Filter().
