@@ -51,10 +51,16 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2623.0 ###
+- Updated to CEF 3.2623.1395, with CEF API changes.
+- The WebResource facility has a new constructor with image format information.
+- ChromiumWebBrowser has new CreateBrowser overloads with initial url parameters.
+- Some issues were fixed, specially for the built-in find toolbar.
+- As of this version, **no more binaries in the download section**. ChromiumFX builds out of the box with VS 2015 Community.
+
 ### Version 3.2526.3 ###
 - The CEF client callback events with automatic UI thread invocation were deprecated. In some callbacks, CEF expects the callback arguments to be accessed exclusively from the thread performing the callback so the automatic Control.Invoke caused some problems. See also issue #48. Embedding applications have to manually invoke in order to access UI elements from within a CEF client callback.
 - Expose the remote OnV8ContextCreated event handler in the ChromiumWebBrowser control.
-
 
 ### Version 3.2526.2 ###
 - Update to cef version 3.2526.1366 with API changes. Older CEF binaries won't work with this version.
