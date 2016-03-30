@@ -84,10 +84,10 @@ int CEF_CALLBACK cfx_geolocation_handler_on_request_geolocation_permission(cef_g
 
 // on_cancel_geolocation_permission
 
-void (CEF_CALLBACK *cfx_geolocation_handler_on_cancel_geolocation_permission_callback)(gc_handle_t self, cef_browser_t* browser, int request_id);
+void (CEF_CALLBACK *cfx_geolocation_handler_on_cancel_geolocation_permission_callback)(gc_handle_t self, cef_browser_t* browser, char16 *requesting_url_str, int requesting_url_length, int request_id);
 
-void CEF_CALLBACK cfx_geolocation_handler_on_cancel_geolocation_permission(cef_geolocation_handler_t* self, cef_browser_t* browser, int request_id) {
-    cfx_geolocation_handler_on_cancel_geolocation_permission_callback(((cfx_geolocation_handler_t*)self)->gc_handle, browser, request_id);
+void CEF_CALLBACK cfx_geolocation_handler_on_cancel_geolocation_permission(cef_geolocation_handler_t* self, cef_browser_t* browser, const cef_string_t* requesting_url, int request_id) {
+    cfx_geolocation_handler_on_cancel_geolocation_permission_callback(((cfx_geolocation_handler_t*)self)->gc_handle, browser, requesting_url ? requesting_url->str : 0, requesting_url ? (int)requesting_url->length : 0, request_id);
 }
 
 
@@ -100,7 +100,7 @@ static void cfx_geolocation_handler_set_managed_callback(cef_geolocation_handler
         break;
     case 1:
         if(callback && !cfx_geolocation_handler_on_cancel_geolocation_permission_callback)
-            cfx_geolocation_handler_on_cancel_geolocation_permission_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int request_id)) callback;
+            cfx_geolocation_handler_on_cancel_geolocation_permission_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, char16 *requesting_url_str, int requesting_url_length, int request_id)) callback;
         self->on_cancel_geolocation_permission = callback ? cfx_geolocation_handler_on_cancel_geolocation_permission : 0;
         break;
     }

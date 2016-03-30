@@ -793,9 +793,10 @@ namespace Chromium {
         /// Called on the UI thread to handle requests for URLs with an invalid SSL
         /// certificate. Return true (1) and call CfxRequestCallback.Continue() either
         /// in this function or at a later time to continue or cancel the request.
-        /// Return false (0) to cancel the request immediately. If
-        /// CfxSettings.IgnoreCertificateErrors is set all invalid certificates will
-        /// be accepted without calling this function.
+        /// Return false (0) to cancel the request immediately. If |Callback| is NULL
+        /// the error cannot be recovered from and the request will be canceled
+        /// automatically. If CfxSettings.IgnoreCertificateErrors is set all invalid
+        /// certificates will be accepted without calling this function.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -2178,9 +2179,10 @@ namespace Chromium {
         /// Called on the UI thread to handle requests for URLs with an invalid SSL
         /// certificate. Return true (1) and call CfxRequestCallback.Continue() either
         /// in this function or at a later time to continue or cancel the request.
-        /// Return false (0) to cancel the request immediately. If
-        /// CfxSettings.IgnoreCertificateErrors is set all invalid certificates will
-        /// be accepted without calling this function.
+        /// Return false (0) to cancel the request immediately. If |Callback| is NULL
+        /// the error cannot be recovered from and the request will be canceled
+        /// automatically. If CfxSettings.IgnoreCertificateErrors is set all invalid
+        /// certificates will be accepted without calling this function.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -2192,9 +2194,10 @@ namespace Chromium {
         /// Called on the UI thread to handle requests for URLs with an invalid SSL
         /// certificate. Return true (1) and call CfxRequestCallback.Continue() either
         /// in this function or at a later time to continue or cancel the request.
-        /// Return false (0) to cancel the request immediately. If
-        /// CfxSettings.IgnoreCertificateErrors is set all invalid certificates will
-        /// be accepted without calling this function.
+        /// Return false (0) to cancel the request immediately. If |Callback| is NULL
+        /// the error cannot be recovered from and the request will be canceled
+        /// automatically. If CfxSettings.IgnoreCertificateErrors is set all invalid
+        /// certificates will be accepted without calling this function.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
