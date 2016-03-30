@@ -105,8 +105,7 @@ namespace Chromium.Remote {
         /// Called when the loading state has changed. This callback will be executed
         /// twice -- once when loading is initiated either programmatically or by user
         /// action, and once when loading is terminated due to completion, cancellation
-        /// of failure. It will be called before any calls to OnLoadStart and after all
-        /// calls to OnLoadError and/or OnLoadEnd.
+        /// of failure.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -139,9 +138,9 @@ namespace Chromium.Remote {
         /// never be NULL -- call the is_main() function to check if this frame is the
         /// main frame. Multiple frames may be loading at the same time. Sub-frames may
         /// start or continue loading after the main frame load has ended. This
-        /// function will always be called for all frames irrespective of whether the
-        /// request completes successfully. For notification of overall browser load
-        /// status use OnLoadingStateChange instead.
+        /// function may not be called for a particular frame if the load request for
+        /// that frame fails. For notification of overall browser load status use
+        /// OnLoadingStateChange instead.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -175,8 +174,7 @@ namespace Chromium.Remote {
         /// main frame. Multiple frames may be loading at the same time. Sub-frames may
         /// start or continue loading after the main frame load has ended. This
         /// function will always be called for all frames irrespective of whether the
-        /// request completes successfully. For notification of overall browser load
-        /// status use OnLoadingStateChange instead.
+        /// request completes successfully.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -247,8 +245,7 @@ namespace Chromium.Remote {
         /// Called when the loading state has changed. This callback will be executed
         /// twice -- once when loading is initiated either programmatically or by user
         /// action, and once when loading is terminated due to completion, cancellation
-        /// of failure. It will be called before any calls to OnLoadStart and after all
-        /// calls to OnLoadError and/or OnLoadEnd.
+        /// of failure.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -260,8 +257,7 @@ namespace Chromium.Remote {
         /// Called when the loading state has changed. This callback will be executed
         /// twice -- once when loading is initiated either programmatically or by user
         /// action, and once when loading is terminated due to completion, cancellation
-        /// of failure. It will be called before any calls to OnLoadStart and after all
-        /// calls to OnLoadError and/or OnLoadEnd.
+        /// of failure.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -355,9 +351,9 @@ namespace Chromium.Remote {
         /// never be NULL -- call the is_main() function to check if this frame is the
         /// main frame. Multiple frames may be loading at the same time. Sub-frames may
         /// start or continue loading after the main frame load has ended. This
-        /// function will always be called for all frames irrespective of whether the
-        /// request completes successfully. For notification of overall browser load
-        /// status use OnLoadingStateChange instead.
+        /// function may not be called for a particular frame if the load request for
+        /// that frame fails. For notification of overall browser load status use
+        /// OnLoadingStateChange instead.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -370,9 +366,9 @@ namespace Chromium.Remote {
         /// never be NULL -- call the is_main() function to check if this frame is the
         /// main frame. Multiple frames may be loading at the same time. Sub-frames may
         /// start or continue loading after the main frame load has ended. This
-        /// function will always be called for all frames irrespective of whether the
-        /// request completes successfully. For notification of overall browser load
-        /// status use OnLoadingStateChange instead.
+        /// function may not be called for a particular frame if the load request for
+        /// that frame fails. For notification of overall browser load status use
+        /// OnLoadingStateChange instead.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -431,8 +427,7 @@ namespace Chromium.Remote {
         /// main frame. Multiple frames may be loading at the same time. Sub-frames may
         /// start or continue loading after the main frame load has ended. This
         /// function will always be called for all frames irrespective of whether the
-        /// request completes successfully. For notification of overall browser load
-        /// status use OnLoadingStateChange instead.
+        /// request completes successfully.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -446,8 +441,7 @@ namespace Chromium.Remote {
         /// main frame. Multiple frames may be loading at the same time. Sub-frames may
         /// start or continue loading after the main frame load has ended. This
         /// function will always be called for all frames irrespective of whether the
-        /// request completes successfully. For notification of overall browser load
-        /// status use OnLoadingStateChange instead.
+        /// request completes successfully.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

@@ -1,15 +1,15 @@
 Chromium Embedded Framework (CEF) Standard Binary Distribution for Windows
 -------------------------------------------------------------------------------
 
-Date:             March 22, 2016
+Date:             January 10, 2016
 
-CEF Version:      3.2623.1395.g3034273
+CEF Version:      3.2526.1366.g8617e7c
 CEF URL:          https://bitbucket.org/chromiumembedded/cef.git
-                  @3034273cb99755b2da07955b1b87ae9c2d035244
+                  @8617e7c22c1215e26aff2a594bb1165b8972b9b1
 
-Chromium Verison: 49.0.2623.87
+Chromium Verison: 47.0.2526.80
 Chromium URL:     https://chromium.googlesource.com/chromium/src.git
-                  @14be2126e6ab550acd9154a949680736ee42fb48
+                  @037a6fde9231f53aa6c5762eb6c5e649ea5068e5
 
 This distribution contains all components necessary to build and distribute an
 application using CEF on the Windows platform. Please see the LICENSING
@@ -43,8 +43,9 @@ Release     Contains libcef.dll, libcef.lib and other components required to
             executable and will be copied there as part of the build process.
 
 Resources   Contains resources required by libcef.dll. By default these files
-            should be placed in the same directory as libcef.dll and will be
-            copied there as part of the build process.
+            should be placed in the same directory as libcef.dll. By default
+            these files should be placed in the same directory as libcef.dll
+            and will be copied there as part of the build process.
 
 
 USAGE
