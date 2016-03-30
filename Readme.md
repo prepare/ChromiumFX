@@ -51,6 +51,9 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2526.4 ###
+- This is a backport of ChromiumFX 3.2623.1 for the 3.2526 branch. 3.2623 is broken (see issue #65).
+
 ### Version 3.2623.1 ###
 - Fix a race condition in ChromiumWebBrowser.EvaluateJavascript (fixes issue #64)
 
