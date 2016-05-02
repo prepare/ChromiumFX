@@ -51,6 +51,10 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2526.5 ###
+- Fix a bug which prevented the usage of the exception parameter in the V8 handler callback (see issue #73).
+- Do not throw an exception in the render process if the RPC connection gets lost. Allows the render process to exit gracefully when the browser process gets killed.
+
 ### Version 3.2526.4 ###
 - This is a backport of ChromiumFX 3.2623.1 for the 3.2526 branch. 3.2623 is broken (see issue #65).
 

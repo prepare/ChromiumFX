@@ -35,8 +35,8 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("ChromiumFX")]
 [assembly: AssemblyDescription("Chromium for .NET based on the Chromium Embedded Framework (CEF).")]
-[assembly: AssemblyCopyright("Copyright © 2014-2015 Wolfgang Borgsmüller")]
+[assembly: AssemblyCopyright("Copyright © 2014-2016 Wolfgang Borgsmüller")]
 
 [assembly: ComVisible(false)]
 
-[assembly: AssemblyVersion("3.2526.4")]
+[assembly: AssemblyVersion("3.2526.5")]
