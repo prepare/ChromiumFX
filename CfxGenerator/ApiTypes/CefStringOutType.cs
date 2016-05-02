@@ -14,11 +14,25 @@ public class CefStringOutType : CefStringPtrType {
         }
     }
 
+    public override string NativeCallbackParameter(string var, bool isConst) {
+        return string.Format("char16 **{0}_str, int *{0}_length, gc_handle_t *{0}_gc_handle", var);
+    }
+
+    public override string NativeWrapExpression(string var) {
+        return string.Format("&{0}_tmp_str, &{0}_tmp_length, &{0}_gc_handle", var);
+    }
+
     public override string PInvokeCallParameter(string var) {
+        Debug.Assert(false);
         return string.Format("out IntPtr {0}_str, out int {0}_length", var);
     }
 
+    public override string PInvokeCallbackParameter(string var) {
+        return string.Format("out IntPtr {0}_str, out int {0}_length, out IntPtr {0}_gc_handle", var);
+    }
+
     public override string PublicCallParameter(string var) {
+        Debug.Assert(false);
         return string.Format("out string {0}", var);
     }
 
@@ -59,13 +73,13 @@ public class CefStringOutType : CefStringPtrType {
     }
 
     public override void EmitPreNativeCallbackStatements(CodeBuilder b, string var) {
-        b.AppendLine("char16* {0}_tmp_str = 0; int {0}_tmp_length = 0;", var);
+        b.AppendLine("char16* {0}_tmp_str = 0; int {0}_tmp_length = 0; gc_handle_t *{0}_gc_handle = 0;", var);
     }
 
     public override void EmitPostNativeCallbackStatements(CodeBuilder b, string var) {
         b.BeginIf("{0}_tmp_length > 0", var);
         b.AppendLine("cef_string_set({0}_tmp_str, {0}_tmp_length, {0}, 1);", var);
-        b.AppendLine("cfx_gc_handle_free((gc_handle_t){0}_tmp_str);", var);
+        b.AppendLine("cfx_gc_handle_free({0}_gc_handle);", var);
         b.EndBlock();
     }
 
@@ -104,15 +118,18 @@ public class CefStringOutType : CefStringPtrType {
         b.AppendLine("var {0}_pinned = new PinnedString(e.m_{0}_wrapped);", var);
         b.AppendLine("{0}_str = {0}_pinned.Obj.PinnedPtr;", var);
         b.AppendLine("{0}_length = {0}_pinned.Length;", var);
+        b.AppendLine("{0}_gc_handle = {0}_pinned.Obj.ToIntPtr();", var);
         b.BeginElse();
         b.AppendLine("{0}_str = IntPtr.Zero;", var);
         b.AppendLine("{0}_length = 0;", var);
+        b.AppendLine("{0}_gc_handle = IntPtr.Zero;", var);
         b.EndBlock();
     }
 
     public override void EmitSetPInvokeParamToDefaultStatements(CodeBuilder b, string var) {
         b.AppendLine("{0}_str = IntPtr.Zero;", var);
         b.AppendLine("{0}_length = 0;", var);
+        b.AppendLine("{0}_gc_handle = IntPtr.Zero;", var);
     }
 
 }
