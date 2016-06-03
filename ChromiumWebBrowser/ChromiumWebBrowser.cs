@@ -172,13 +172,15 @@ namespace Chromium.WebBrowser {
 
         /// <summary>
         /// Returns the CfxBrowser object for this ChromiumWebBrowser.
-        /// Might be null if the browser has not yet been created 
+        /// Might be null if the browser has not yet been created.
+        /// Wait for the BrowserCreated event before accessing this property.
         /// </summary>
         public CfxBrowser Browser { get; private set; }
 
         /// <summary>
         /// Returns the CfxBrowserHost object for this ChromiumWebBrowser.
-        /// Might be null if the browser has not yet been created 
+        /// Might be null if the browser has not yet been created.
+        /// Wait for the BrowserCreated event before accessing this property.
         /// </summary>
         public CfxBrowserHost BrowserHost { get; private set; }
 
