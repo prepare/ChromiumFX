@@ -78,6 +78,18 @@ namespace CfxTestApplication {
             WebBrowser.GlobalObject.AddFunction("CfxHelloWorld").Execute += CfxHelloWorld_Execute;
             WebBrowser.GlobalObject.AddFunction("testDoubleCallback").Execute += TestDoubleCallback_Execute;
 
+            // related to issue #65
+            WebBrowser.GlobalObject.AddFunction("ArrayTestCallback").Execute += (s, e1) => {
+                var array = e1.Arguments[0];
+                var v0 = array.GetValue(0);
+                var v1 = array.GetValue(1);
+                if(v0 != null) {
+                    LogWriteLine("Array test function works: v0 = {0}, v1 = {1}", v0.IntValue, v1.IntValue);
+                } else {
+                    LogWriteLine("Array test function: array is broken.");
+                }
+            };
+
             WebBrowser.GlobalObject.Add("TestObject", new JsTestObject(this));
 
 
@@ -510,6 +522,11 @@ namespace CfxTestApplication {
                     LogWriteLine("Failed to start evaluation.");
                 }
             }
+        }
+
+        private void executeArrayTestFunctionToolStripMenuItem_Click(object sender, EventArgs e) {
+            // Related to issue #65
+            WebBrowser.ExecuteJavascript("ArrayTestCallback([document.body.scrollWidth, document.body.scrollHeight])");
         }
     }
 }
