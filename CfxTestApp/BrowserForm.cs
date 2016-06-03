@@ -447,8 +447,13 @@ namespace CfxTestApplication {
             var retval = WebBrowser.EvaluateJavascript("[document.body.scrollWidth,document.body.scrollHeight]", (value, exception) =>
             {
                 if(value != null) {
-                    LogWriteLine("Evaluation callback with value: scrollWidth={0}, scrollHeight={1}.",
-                    value.GetValue(0).IntValue, value.GetValue(1).IntValue);
+                    var v0 = value.GetValue(0);
+                    if(v0 == null) {
+                        MessageBox.Show("This test is broken, please refer to issue #65 in the project repo.");
+                    } else {
+                        LogWriteLine("Evaluation callback with value: scrollWidth={0}, scrollHeight={1}.",
+                        value.GetValue(0).IntValue, value.GetValue(1).IntValue);
+                    }
                 } else if(exception != null) {
                     LogWriteLine("Evaluation callback with exception: {0}.", exception.Message);
                 } else {
