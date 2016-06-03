@@ -34,8 +34,8 @@
 // more information.
 //
 
-#ifndef CEF_INCLUDE_CAPI_CEF_RESPONSE_FILTER_CAPI_H_
-#define CEF_INCLUDE_CAPI_CEF_RESPONSE_FILTER_CAPI_H_
+#ifndef CEF_INCLUDE_CAPI_CEF_MENU_MODEL_DELEGATE_CAPI_H_
+#define CEF_INCLUDE_CAPI_CEF_MENU_MODEL_DELEGATE_CAPI_H_
 #pragma once
 
 #include "include/capi/cef_base_capi.h"
@@ -44,50 +44,37 @@
 extern "C" {
 #endif
 
+struct _cef_menu_model_t;
 
 ///
-// Implement this structure to filter resource response content. The functions
-// of this structure will be called on the browser process IO thread.
+// Implement this structure to handle menu model events. The functions of this
+// structure will be called on the browser process UI thread unless otherwise
+// indicated.
 ///
-typedef struct _cef_response_filter_t {
+typedef struct _cef_menu_model_delegate_t {
   ///
   // Base structure.
   ///
   cef_base_t base;
 
   ///
-  // Initialize the response filter. Will only be called a single time. The
-  // filter will not be installed if this function returns false (0).
+  // Perform the action associated with the specified |command_id| and optional
+  // |event_flags|.
   ///
-  int (CEF_CALLBACK *init_filter)(struct _cef_response_filter_t* self);
+  void (CEF_CALLBACK *execute_command)(struct _cef_menu_model_delegate_t* self,
+      struct _cef_menu_model_t* menu_model, int command_id,
+      cef_event_flags_t event_flags);
 
   ///
-  // Called to filter a chunk of data. |data_in| is the input buffer containing
-  // |data_in_size| bytes of pre-filter data (|data_in| will be NULL if
-  // |data_in_size| is zero). |data_out| is the output buffer that can accept up
-  // to |data_out_size| bytes of filtered output data. Set |data_in_read| to the
-  // number of bytes that were read from |data_in|. Set |data_out_written| to
-  // the number of bytes that were written into |data_out|. If some or all of
-  // the pre-filter data was read successfully but more data is needed in order
-  // to continue filtering (filtered output is pending) return
-  // RESPONSE_FILTER_NEED_MORE_DATA. If some or all of the pre-filter data was
-  // read successfully and all available filtered output has been written return
-  // RESPONSE_FILTER_DONE. If an error occurs during filtering return
-  // RESPONSE_FILTER_ERROR. This function will be called repeatedly until there
-  // is no more data to filter (resource response is complete), |data_in_read|
-  // matches |data_in_size| (all available pre-filter bytes have been read), and
-  // the function returns RESPONSE_FILTER_DONE or RESPONSE_FILTER_ERROR. Do not
-  // keep a reference to the buffers passed to this function.
+  // The menu is about to show.
   ///
-  cef_response_filter_status_t (CEF_CALLBACK *filter)(
-      struct _cef_response_filter_t* self, void* data_in, size_t data_in_size,
-      size_t* data_in_read, void* data_out, size_t data_out_size,
-      size_t* data_out_written);
-} cef_response_filter_t;
+  void (CEF_CALLBACK *menu_will_show)(struct _cef_menu_model_delegate_t* self,
+      struct _cef_menu_model_t* menu_model);
+} cef_menu_model_delegate_t;
 
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // CEF_INCLUDE_CAPI_CEF_RESPONSE_FILTER_CAPI_H_
+#endif  // CEF_INCLUDE_CAPI_CEF_MENU_MODEL_DELEGATE_CAPI_H_

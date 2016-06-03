@@ -1,4 +1,4 @@
-// Copyright (c) 2012 Marshall A. Greenblatt. All rights reserved.
+// Copyright (c) 2016 Marshall A. Greenblatt. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -34,43 +34,49 @@
 // tools directory for more information.
 //
 
-#ifndef CEF_INCLUDE_CEF_KEYBOARD_HANDLER_H_
-#define CEF_INCLUDE_CEF_KEYBOARD_HANDLER_H_
+#ifndef CEF_INCLUDE_VIEWS_CEF_MENU_MODEL_DELEGATE_H_
+#define CEF_INCLUDE_VIEWS_CEF_MENU_MODEL_DELEGATE_H_
 #pragma once
 
 #include "include/cef_base.h"
-#include "include/cef_browser.h"
+
+class CefMenuModel;
 
 ///
-// Implement this interface to handle events related to keyboard input. The
-// methods of this class will be called on the UI thread.
+// Implement this interface to handle menu model events. The methods of this
+// class will be called on the browser process UI thread unless otherwise
+// indicated.
 ///
 /*--cef(source=client)--*/
-class CefKeyboardHandler : public virtual CefBase {
+class CefMenuModelDelegate : public virtual CefBase {
  public:
   ///
-  // Called before a keyboard event is sent to the renderer. |event| contains
-  // information about the keyboard event. |os_event| is the operating system
-  // event message, if any. Return true if the event was handled or false
-  // otherwise. If the event will be handled in OnKeyEvent() as a keyboard
-  // shortcut set |is_keyboard_shortcut| to true and return false.
+  // Perform the action associated with the specified |command_id| and
+  // optional |event_flags|.
   ///
   /*--cef()--*/
-  virtual bool OnPreKeyEvent(CefRefPtr<CefBrowser> browser,
-                             const CefKeyEvent& event,
-                             CefEventHandle os_event,
-                             bool* is_keyboard_shortcut) { return false; }
+  virtual void ExecuteCommand(CefRefPtr<CefMenuModel> menu_model,
+                              int command_id,
+                              cef_event_flags_t event_flags) =0;
 
   ///
-  // Called after the renderer and JavaScript in the page has had a chance to
-  // handle the event. |event| contains information about the keyboard event.
-  // |os_event| is the operating system event message, if any. Return true if
-  // the keyboard event was handled or false otherwise.
+  // The menu is about to show.
   ///
   /*--cef()--*/
-  virtual bool OnKeyEvent(CefRefPtr<CefBrowser> browser,
-                          const CefKeyEvent& event,
-                          CefEventHandle os_event) { return false; }
+  virtual void MenuWillShow(CefRefPtr<CefMenuModel> menu_model) {};
+
+  ///
+  // The menu has closed.
+  ///
+  /*--cef()--*/
+  virtual void MenuClosed(CefRefPtr<CefMenuModel> menu_model) {};
+
+  ///
+  // Optionally modify a menu item label. Return true if |label| was modified.
+  ///
+  /*--cef()--*/
+  virtual bool FormatLabel(CefRefPtr<CefMenuModel> menu_model,
+                           CefString& label) { return false; };
 };
 
-#endif  // CEF_INCLUDE_CEF_KEYBOARD_HANDLER_H_
+#endif  // CEF_INCLUDE_VIEWS_CEF_MENU_MODEL_DELEGATE_H_
