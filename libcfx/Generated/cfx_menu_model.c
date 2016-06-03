@@ -33,6 +33,11 @@
 
 // cef_menu_model
 
+// CEF_EXPORT cef_menu_model_t* cef_menu_model_create(cef_menu_model_delegate_t* delegate);
+static cef_menu_model_t* cfx_menu_model_create(cef_menu_model_delegate_t* delegate) {
+    if(delegate) ((cef_base_t*)delegate)->add_ref((cef_base_t*)delegate);
+    return cef_menu_model_create(delegate);
+}
 // clear
 static int cfx_menu_model_clear(cef_menu_model_t* self) {
     return self->clear(self);

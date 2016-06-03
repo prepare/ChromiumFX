@@ -39,18 +39,6 @@ static int cfx_add_cross_origin_whitelist_entry(char16 *source_origin_str, int s
     return cef_add_cross_origin_whitelist_entry(&source_origin, &target_protocol, &target_domain, allow_target_subdomains);
 }
 
-// CEF_EXPORT void cef_add_web_plugin_directory(const cef_string_t* dir);
-static void cfx_add_web_plugin_directory(char16 *dir_str, int dir_length) {
-    cef_string_t dir = { dir_str, dir_length, 0 };
-    cef_add_web_plugin_directory(&dir);
-}
-
-// CEF_EXPORT void cef_add_web_plugin_path(const cef_string_t* path);
-static void cfx_add_web_plugin_path(char16 *path_str, int path_length) {
-    cef_string_t path = { path_str, path_length, 0 };
-    cef_add_web_plugin_path(&path);
-}
-
 // CEF_EXPORT char* cef_api_hash(int entry);
 static const char* cfx_api_hash(int entry) {
     return cef_api_hash(entry);
@@ -113,17 +101,10 @@ static int cfx_execute_process(const cef_main_args_t* args, cef_app_t* applicati
     return cef_execute_process(args, application, windows_sandbox_info);
 }
 
-// CEF_EXPORT void cef_force_web_plugin_shutdown(const cef_string_t* path);
-static void cfx_force_web_plugin_shutdown(char16 *path_str, int path_length) {
-    cef_string_t path = { path_str, path_length, 0 };
-    cef_force_web_plugin_shutdown(&path);
-}
-
-// CEF_EXPORT cef_string_userfree_t cef_format_url_for_security_display(const cef_string_t* origin_url, const cef_string_t* languages);
-static cef_string_userfree_t cfx_format_url_for_security_display(char16 *origin_url_str, int origin_url_length, char16 *languages_str, int languages_length) {
+// CEF_EXPORT cef_string_userfree_t cef_format_url_for_security_display(const cef_string_t* origin_url);
+static cef_string_userfree_t cfx_format_url_for_security_display(char16 *origin_url_str, int origin_url_length) {
     cef_string_t origin_url = { origin_url_str, origin_url_length, 0 };
-    cef_string_t languages = { languages_str, languages_length, 0 };
-    return cef_format_url_for_security_display(&origin_url, &languages);
+    return cef_format_url_for_security_display(&origin_url);
 }
 
 // CEF_EXPORT void cef_get_extensions_for_mime_type(const cef_string_t* mime_type, cef_string_list_t extensions);
@@ -187,12 +168,6 @@ static int cfx_launch_process(cef_command_line_t* command_line) {
 // CEF_EXPORT int64 cef_now_from_system_trace_time();
 static int64 cfx_now_from_system_trace_time() {
     return cef_now_from_system_trace_time();
-}
-
-// CEF_EXPORT int cef_parse_csscolor(const cef_string_t* string, int strict, cef_color_t* color);
-static int cfx_parse_csscolor(char16 *string_str, int string_length, int strict, uint32* color) {
-    cef_string_t string = { string_str, string_length, 0 };
-    return cef_parse_csscolor(&string, strict, color);
 }
 
 // CEF_EXPORT cef_value_t* cef_parse_json(const cef_string_t* json_string, cef_json_parser_options_t options);
@@ -266,12 +241,6 @@ static int cfx_remove_cross_origin_whitelist_entry(char16 *source_origin_str, in
     cef_string_t target_protocol = { target_protocol_str, target_protocol_length, 0 };
     cef_string_t target_domain = { target_domain_str, target_domain_length, 0 };
     return cef_remove_cross_origin_whitelist_entry(&source_origin, &target_protocol, &target_domain, allow_target_subdomains);
-}
-
-// CEF_EXPORT void cef_remove_web_plugin_path(const cef_string_t* path);
-static void cfx_remove_web_plugin_path(char16 *path_str, int path_length) {
-    cef_string_t path = { path_str, path_length, 0 };
-    cef_remove_web_plugin_path(&path);
 }
 
 // CEF_EXPORT void cef_run_message_loop();

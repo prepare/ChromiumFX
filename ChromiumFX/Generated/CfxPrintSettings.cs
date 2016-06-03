@@ -268,14 +268,14 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
         /// </remarks>
-        public void SetPageRanges(CfxPageRange[] ranges) {
+        public void SetPageRanges(CfxRange[] ranges) {
             int ranges_length;
             IntPtr[] ranges_ptrs;
             if(ranges != null) {
                 ranges_length = ranges.Length;
                 ranges_ptrs = new IntPtr[ranges_length];
                 for(int i = 0; i < ranges_length; ++i) {
-                    ranges_ptrs[i] = CfxPageRange.Unwrap(ranges[i]);
+                    ranges_ptrs[i] = CfxRange.Unwrap(ranges[i]);
                 }
             } else {
                 ranges_length = 0;
@@ -297,7 +297,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
         /// </remarks>
-        public CfxPageRange[] GetPageRanges() {
+        public CfxRange[] GetPageRanges() {
             int rangesCount = CfxApi.cfx_print_settings_get_page_ranges_count(NativePtr);
             IntPtr[] pp = new IntPtr[rangesCount];
             PinnedObject pp_pinned = new PinnedObject(pp);
@@ -307,9 +307,9 @@ namespace Chromium {
             if(ranges_nomem != 0) {
                 throw new OutOfMemoryException();
             }
-            var retval = new CfxPageRange[rangesCount];
+            var retval = new CfxRange[rangesCount];
             for(int i = 0; i < rangesCount; ++i) {
-                retval[i] = CfxPageRange.WrapOwned(pp[i]);
+                retval[i] = CfxRange.WrapOwned(pp[i]);
             }
             return retval;
         }

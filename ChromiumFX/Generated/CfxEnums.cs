@@ -35,6 +35,40 @@ using System;
 
 namespace Chromium {
     /// <summary>
+    /// Describes how to interpret the alpha component of a pixel.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxAlphaType {
+        /// <summary>
+        /// No transparency. The alpha component is ignored.
+        /// </summary>
+        Opaque,
+        /// <summary>
+        /// Transparency with pre-multiplied alpha component.
+        /// </summary>
+        Premultiplied,
+        /// <summary>
+        /// Transparency with post-multiplied alpha component.
+        /// </summary>
+        Postmultiplied
+    }
+    /// <summary>
+    /// Specifies the button display state.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxButtonState {
+        Normal,
+        Hovered,
+        Pressed,
+        Disabled
+    }
+    /// <summary>
     /// Supported certificate status code values. See net\cert\cert_status_flags.h
     /// for more information. CERT_STATUS_NONE is new in CEF because we use an
     /// enum while cert_status_flags.h uses a typedef and static const variables.
@@ -92,6 +126,23 @@ namespace Chromium {
         ProcessColorModelCmyk,
         ProcessColorModelGreyscale,
         ProcessColorModelRgb
+    }
+    /// <summary>
+    /// Describes how to interpret the components of a pixel.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxColorType {
+        /// <summary>
+        /// RGBA with 8 bits per pixel (32bits total).
+        /// </summary>
+        Rgba8888,
+        /// <summary>
+        /// BGRA with 8 bits per pixel (32bits total).
+        /// </summary>
+        Bgra8888
     }
     /// <summary>
     /// Supported context menu edit state bit flags.
@@ -185,6 +236,32 @@ namespace Chromium {
         Media = unchecked((int)1 << 3),
         Selection = unchecked((int)1 << 4),
         Editable = unchecked((int)1 << 5)
+    }
+    /// <summary>
+    /// Specifies where along the cross axis the CfxBoxLayout child views should be
+    /// laid out.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxCrossAxisAlignment {
+        /// <summary>
+        /// Child views will be stretched to fit.
+        /// </summary>
+        Stretch,
+        /// <summary>
+        /// Child views will be left-aligned.
+        /// </summary>
+        Start,
+        /// <summary>
+        /// Child views will be center-aligned.
+        /// </summary>
+        Center,
+        /// <summary>
+        /// Child views will be right-aligned.
+        /// </summary>
+        End
     }
     /// <summary>
     /// Cursor type values.
@@ -505,6 +582,27 @@ namespace Chromium {
         Timeout
     }
     /// <summary>
+    /// Specifies the horizontal text alignment mode.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxHorizontalAlignment {
+        /// <summary>
+        /// Align the text's left edge with that of its display area.
+        /// </summary>
+        Left,
+        /// <summary>
+        /// Align the text's center with that of its display area.
+        /// </summary>
+        Center,
+        /// <summary>
+        /// Align the text's right edge with that of its display area.
+        /// </summary>
+        Right
+    }
+    /// <summary>
     /// Supported JavaScript dialog types.
     /// </summary>
     /// <remarks>
@@ -628,6 +726,41 @@ namespace Chromium {
         /// Completely disable logging.
         /// </summary>
         Disable = unchecked((int)99)
+    }
+    /// <summary>
+    /// Specifies where along the main axis the CfxBoxLayout child views should be
+    /// laid out.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxMainAxisAlignment {
+        /// <summary>
+        /// Child views will be left-aligned.
+        /// </summary>
+        Start,
+        /// <summary>
+        /// Child views will be center-aligned.
+        /// </summary>
+        Center,
+        /// <summary>
+        /// Child views will be right-aligned.
+        /// </summary>
+        End
+    }
+    /// <summary>
+    /// Specifies how a menu will be anchored for non-RTL languages. The opposite
+    /// position will be used for RTL languages.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxMenuAnchorPosition {
+        Topleft,
+        Topright,
+        Bottomcenter
     }
     /// <summary>
     /// Supported menu IDs. Non-English translations can be provided for the
@@ -975,7 +1108,15 @@ namespace Chromium {
         /// <summary>
         /// Main resource of a service worker.
         /// </summary>
-        ServiceWorker
+        ServiceWorker,
+        /// <summary>
+        /// A report of Content Security Policy violations.
+        /// </summary>
+        CspReport,
+        /// <summary>
+        /// A resource that a plugin requested.
+        /// </summary>
+        PluginResource
     }
     /// <summary>
     /// Return values for CfxResponseFilter.Filter().
@@ -1094,6 +1235,20 @@ namespace Chromium {
         /// Segmentation fault.
         /// </summary>
         ProcessCrashed
+    }
+    /// <summary>
+    /// Text style types. Should be kepy in sync with gfx::TextStyle.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxTextStyle {
+        Bold,
+        Italic,
+        Strike,
+        DiagonalStrike,
+        Underline
     }
     /// <summary>
     /// Existing thread IDs.
@@ -1243,41 +1398,12 @@ namespace Chromium {
         /// Don't unescape anything at all.
         /// </summary>
         None = unchecked((int)0),
-        /// <summary>
-        /// Don't unescape anything special, but all normal unescaping will happen.
-        /// This is a placeholder and can't be combined with other flags (since it's
-        /// just the absence of them). All other unescape rules imply "normal" in
-        /// addition to their special meaning. Things like escaped letters, digits,
-        /// and most symbols will get unescaped with this mode.
-        /// </summary>
-        Normal = unchecked((int)1),
-        /// <summary>
-        /// Convert %20 to spaces. In some places where we're showing URLs, we may
-        /// want this. In places where the URL may be copied and pasted out, then
-        /// you wouldn't want this since it might not be interpreted in one piece
-        /// by other applications.
-        /// </summary>
-        Spaces = unchecked((int)2),
-        /// <summary>
-        /// Unescapes various characters that will change the meaning of URLs,
-        /// including '%', '+', '&amp;', '/', '#'. If we unescaped these characters, the
-        /// resulting URL won't be the same as the source one. This flag is used when
-        /// generating final output like filenames for URLs where we won't be
-        /// interpreting as a URL and want to do as much unescaping as possible.
-        /// </summary>
-        UrlSpecialChars = unchecked((int)4),
-        /// <summary>
-        /// Unescapes control characters such as %01. This INCLUDES NULLs. This is
-        /// used for rare cases such as data: URL decoding where the result is binary
-        /// data. This flag also unescapes BiDi control characters.
-        /// DO NOT use CONTROL_CHARS if the URL is going to be displayed in the UI
-        /// for security reasons.
-        /// </summary>
-        ControlChars = unchecked((int)8),
-        /// <summary>
-        /// URL queries use "+" for space. This flag controls that replacement.
-        /// </summary>
-        ReplacePlusWithSpace = unchecked((int)16)
+        Normal = unchecked((int)1 << 0),
+        Spaces = unchecked((int)1 << 1),
+        PathSeparators = unchecked((int)1 << 2),
+        UrlSpecialCharsExceptPathSeparators = unchecked((int)1 << 3),
+        SpoofingAndControlChars = unchecked((int)1 << 4),
+        ReplacePlusWithSpace = unchecked((int)1 << 5)
     }
     /// <summary>
     /// Flags used to customize the behavior of CfxURLRequest.

@@ -56,19 +56,18 @@ namespace Chromium.Remote {
         /// friendly way to help users make security-related decisions (or in other
         /// circumstances when people need to distinguish sites, origins, or otherwise-
         /// simplified URLs from each other). Internationalized domain names (IDN) may be
-        /// presented in Unicode if |languages| accepts the Unicode representation. The
-        /// returned value will (a) omit the path for standard schemes, excepting file
-        /// and filesystem, and (b) omit the port if it is the default for the scheme. Do
-        /// not use this for URLs which will be parsed or sent to other applications.
+        /// presented in Unicode if the conversion is considered safe. The returned value
+        /// will (a) omit the path for standard schemes, excepting file and filesystem,
+        /// and (b) omit the port if it is the default for the scheme. Do not use this
+        /// for URLs which will be parsed or sent to other applications.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
         /// </remarks>
-        public static string FormatUrlForSecurityDisplay(string originUrl, string languages) {
+        public static string FormatUrlForSecurityDisplay(string originUrl) {
             var call = new CfxRuntimeFormatUrlForSecurityDisplayRenderProcessCall();
             call.originUrl = originUrl;
-            call.languages = languages;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return call.__retval;
         }

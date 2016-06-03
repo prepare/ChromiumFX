@@ -42,6 +42,16 @@ static int cfx_response_is_read_only(cef_response_t* self) {
     return self->is_read_only(self);
 }
 
+// get_error
+static cef_errorcode_t cfx_response_get_error(cef_response_t* self) {
+    return self->get_error(self);
+}
+
+// set_error
+static void cfx_response_set_error(cef_response_t* self, cef_errorcode_t error) {
+    self->set_error(self, error);
+}
+
 // get_status
 static int cfx_response_get_status(cef_response_t* self) {
     return self->get_status(self);

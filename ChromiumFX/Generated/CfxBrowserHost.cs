@@ -117,7 +117,9 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Retrieve the window handle for this browser.
+        /// Retrieve the window handle for this browser. If this browser is wrapped in
+        /// a CfxBrowserView this function should be called on the browser process
+        /// UI thread and it will return the handle for the top-level native window.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -131,8 +133,9 @@ namespace Chromium {
 
         /// <summary>
         /// Retrieve the window handle of the browser that opened this browser. Will
-        /// return NULL for non-popup windows. This function can be used in combination
-        /// with custom handling of modal windows.
+        /// return NULL for non-popup windows or if this browser is wrapped in a
+        /// CfxBrowserView. This function can be used in combination with custom
+        /// handling of modal windows.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -141,6 +144,19 @@ namespace Chromium {
         public IntPtr OpenerWindowHandle {
             get {
                 return CfxApi.cfx_browser_host_get_opener_window_handle(NativePtr);
+            }
+        }
+
+        /// <summary>
+        /// Returns true (1) if this browser is wrapped in a CfxBrowserView.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
+        public bool HasView {
+            get {
+                return 0 != CfxApi.cfx_browser_host_has_view(NativePtr);
             }
         }
 
@@ -276,6 +292,22 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Helper for closing a browser. Call this function from the top-level window
+        /// close handler. Internally this calls CloseBrowser(false (0)) if the close
+        /// has not yet been initiated. This function returns false (0) while the close
+        /// is pending and true (1) after the close has completed. See close_browser()
+        /// and CfxLifeSpanHandler.DoClose() documentation for additional usage
+        /// information. This function must be called on the browser process UI thread.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
+        public bool TryCloseBrowser() {
+            return 0 != CfxApi.cfx_browser_host_try_close_browser(NativePtr);
+        }
+
+        /// <summary>
         /// Set whether the browser is focused.
         /// </summary>
         /// <remarks>
@@ -284,18 +316,6 @@ namespace Chromium {
         /// </remarks>
         public void SetFocus(bool focus) {
             CfxApi.cfx_browser_host_set_focus(NativePtr, focus ? 1 : 0);
-        }
-
-        /// <summary>
-        /// Set whether the window containing the browser is visible
-        /// (minimized/unminimized, app hidden/unhidden, etc). Only used on Mac OS X.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
-        /// </remarks>
-        public void SetWindowVisibility(bool visible) {
-            CfxApi.cfx_browser_host_set_window_visibility(NativePtr, visible ? 1 : 0);
         }
 
         /// <summary>
@@ -342,6 +362,28 @@ namespace Chromium {
             var url_pinned = new PinnedString(url);
             CfxApi.cfx_browser_host_start_download(NativePtr, url_pinned.Obj.PinnedPtr, url_pinned.Length);
             url_pinned.Obj.Free();
+        }
+
+        /// <summary>
+        /// Download |imageUrl| and execute |callback| on completion with the images
+        /// received from the renderer. If |isFavicon| is true (1) then cookies are
+        /// not sent and not accepted during download. Images with density independent
+        /// pixel (DIP) sizes larger than |maxImageSize| are filtered out from the
+        /// image results. Versions of the image at different scale factors may be
+        /// downloaded up to the maximum scale factor supported by the system. If there
+        /// are no image results &lt;= |maxImageSize| then the smallest image is resized
+        /// to |maxImageSize| and is the only result. A |maxImageSize| of 0 means
+        /// unlimited. If |bypassCache| is true (1) then |imageUrl| is requested from
+        /// the server even if it is present in the browser cache.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
+        public void DownloadImage(string imageUrl, bool isFavicon, uint maxImageSize, bool bypassCache, CfxDownloadImageCallback callback) {
+            var imageUrl_pinned = new PinnedString(imageUrl);
+            CfxApi.cfx_browser_host_download_image(NativePtr, imageUrl_pinned.Obj.PinnedPtr, imageUrl_pinned.Length, isFavicon ? 1 : 0, maxImageSize, bypassCache ? 1 : 0, CfxDownloadImageCallback.Unwrap(callback));
+            imageUrl_pinned.Obj.Free();
         }
 
         /// <summary>
@@ -402,7 +444,9 @@ namespace Chromium {
 
         /// <summary>
         /// Open developer tools in its own window. If |inspectElementAt| is non-
-        /// NULL the element at the specified (x,y) location will be inspected.
+        /// NULL the element at the specified (x,y) location will be inspected. The
+        /// |windowInfo| parameter will be ignored if this browser is wrapped in a
+        /// CfxBrowserView.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

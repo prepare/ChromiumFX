@@ -40,7 +40,7 @@ public class GetPageRangesSignature : SignatureWithStructArray {
     }
 
     public override ApiType PublicReturnType {
-        get { return new WrapperArrayType("CfxPageRange"); }
+        get { return new WrapperArrayType("CfxRange"); }
     }
 
     public override string PInvokeFunctionHeader(string functionName) {
@@ -57,20 +57,20 @@ public class GetPageRangesSignature : SignatureWithStructArray {
         b.BeginBlock("if(ranges_nomem != 0)");
         b.AppendLine("throw new OutOfMemoryException();");
         b.EndBlock();
-        b.AppendLine("var retval = new CfxPageRange[rangesCount];");
+        b.AppendLine("var retval = new CfxRange[rangesCount];");
         b.BeginFor("rangesCount");
-        b.AppendLine("retval[i] = CfxPageRange.WrapOwned(pp[i]);");
+        b.AppendLine("retval[i] = CfxRange.WrapOwned(pp[i]);");
         b.EndBlock();
         b.AppendLine("return retval;");
     }
 
     public override void EmitNativeCall(CodeBuilder b, string functionName) {
-        b.AppendLine("cef_page_range_t *ranges_tmp = (cef_page_range_t*)malloc(*rangesCount * sizeof(cef_page_range_t));");
+        b.AppendLine("cef_range_t *ranges_tmp = (cef_range_t*)malloc(*rangesCount * sizeof(cef_range_t));");
         b.BeginIf("ranges_tmp");
         b.AppendLine("*ranges_nomem = 0;");
         b.AppendLine("self->get_page_ranges(self, rangesCount, ranges_tmp);");
         b.BeginBlock("for(size_t i = 0; i < *rangesCount; ++i)");
-        b.AppendLine("ranges[i] = (cef_page_range_t*)malloc(sizeof(cef_page_range_t));");
+        b.AppendLine("ranges[i] = (cef_range_t*)malloc(sizeof(cef_range_t));");
         b.AppendLine("*ranges[i] = ranges_tmp[i];");
         b.EndBlock();
         b.AppendLine("free(ranges_tmp);");

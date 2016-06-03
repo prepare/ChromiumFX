@@ -229,7 +229,8 @@ namespace Chromium {
         /// (0) or the specified number of bytes have been read. Use the |Response|
         /// object to set the mime type, http status code and other optional header
         /// values. To redirect the request to a new URL set |RedirectUrl| to the new
-        /// URL.
+        /// URL. If an error occured while setting up the request you can call
+        /// set_error() on |Response| to indicate the error condition.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -512,7 +513,8 @@ namespace Chromium {
         /// (0) or the specified number of bytes have been read. Use the |Response|
         /// object to set the mime type, http status code and other optional header
         /// values. To redirect the request to a new URL set |RedirectUrl| to the new
-        /// URL.
+        /// URL. If an error occured while setting up the request you can call
+        /// set_error() on |Response| to indicate the error condition.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -528,7 +530,8 @@ namespace Chromium {
         /// (0) or the specified number of bytes have been read. Use the |Response|
         /// object to set the mime type, http status code and other optional header
         /// values. To redirect the request to a new URL set |RedirectUrl| to the new
-        /// URL.
+        /// URL. If an error occured while setting up the request you can call
+        /// set_error() on |Response| to indicate the error condition.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

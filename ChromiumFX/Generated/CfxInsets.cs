@@ -35,51 +35,73 @@ using System;
 
 namespace Chromium {
     /// <summary>
-    /// Structure representing a print job page range.
+    /// Structure representing insets.
     /// </summary>
     /// <remarks>
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
     /// </remarks>
-    public sealed class CfxPageRange : CfxStructure {
+    public sealed class CfxInsets : CfxStructure {
 
-        static CfxPageRange () {
-            CfxApiLoader.LoadCfxPageRangeApi();
+        static CfxInsets () {
+            CfxApiLoader.LoadCfxInsetsApi();
         }
 
-        internal static CfxPageRange Wrap(IntPtr nativePtr) {
+        internal static CfxInsets Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxPageRange(nativePtr);
+            return new CfxInsets(nativePtr);
         }
 
-        internal static CfxPageRange WrapOwned(IntPtr nativePtr) {
+        internal static CfxInsets WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxPageRange(nativePtr, CfxApi.cfx_page_range_dtor);
+            return new CfxInsets(nativePtr, CfxApi.cfx_insets_dtor);
         }
 
-        public CfxPageRange() : base(CfxApi.cfx_page_range_ctor, CfxApi.cfx_page_range_dtor) {}
-        internal CfxPageRange(IntPtr nativePtr) : base(nativePtr) {}
-        internal CfxPageRange(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
+        public CfxInsets() : base(CfxApi.cfx_insets_ctor, CfxApi.cfx_insets_dtor) {}
+        internal CfxInsets(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxInsets(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
-        public int From {
+        public int Top {
             get {
                 int value;
-                CfxApi.cfx_page_range_get_from(nativePtrUnchecked, out value);
+                CfxApi.cfx_insets_get_top(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_page_range_set_from(nativePtrUnchecked, value);
+                CfxApi.cfx_insets_set_top(nativePtrUnchecked, value);
             }
         }
 
-        public int To {
+        public int Left {
             get {
                 int value;
-                CfxApi.cfx_page_range_get_to(nativePtrUnchecked, out value);
+                CfxApi.cfx_insets_get_left(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_page_range_set_to(nativePtrUnchecked, value);
+                CfxApi.cfx_insets_set_left(nativePtrUnchecked, value);
+            }
+        }
+
+        public int Bottom {
+            get {
+                int value;
+                CfxApi.cfx_insets_get_bottom(nativePtrUnchecked, out value);
+                return value;
+            }
+            set {
+                CfxApi.cfx_insets_set_bottom(nativePtrUnchecked, value);
+            }
+        }
+
+        public int Right {
+            get {
+                int value;
+                CfxApi.cfx_insets_get_right(nativePtrUnchecked, out value);
+                return value;
+            }
+            set {
+                CfxApi.cfx_insets_set_right(nativePtrUnchecked, value);
             }
         }
 

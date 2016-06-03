@@ -126,4 +126,29 @@ static int cfx_request_context_set_preference(cef_request_context_t* self, char1
     return __ret_val_;
 }
 
+// clear_certificate_exceptions
+static void cfx_request_context_clear_certificate_exceptions(cef_request_context_t* self, cef_completion_callback_t* callback) {
+    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    self->clear_certificate_exceptions(self, callback);
+}
+
+// close_all_connections
+static void cfx_request_context_close_all_connections(cef_request_context_t* self, cef_completion_callback_t* callback) {
+    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    self->close_all_connections(self, callback);
+}
+
+// resolve_host
+static void cfx_request_context_resolve_host(cef_request_context_t* self, char16 *origin_str, int origin_length, cef_resolve_callback_t* callback) {
+    cef_string_t origin = { origin_str, origin_length, 0 };
+    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    self->resolve_host(self, &origin, callback);
+}
+
+// resolve_host_cached
+static cef_errorcode_t cfx_request_context_resolve_host_cached(cef_request_context_t* self, char16 *origin_str, int origin_length, cef_string_list_t resolved_ips) {
+    cef_string_t origin = { origin_str, origin_length, 0 };
+    return self->resolve_host_cached(self, &origin, resolved_ips);
+}
+
 

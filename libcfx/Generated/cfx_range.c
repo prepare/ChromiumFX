@@ -31,29 +31,29 @@
 // Generated file. Do not edit.
 
 
-// cef_page_range
+// cef_range
 
-static cef_page_range_t* cfx_page_range_ctor() {
-    return (cef_page_range_t*)calloc(1, sizeof(cef_page_range_t));
+static cef_range_t* cfx_range_ctor() {
+    return (cef_range_t*)calloc(1, sizeof(cef_range_t));
 }
 
-static void cfx_page_range_dtor(cef_page_range_t* self) {
+static void cfx_range_dtor(cef_range_t* self) {
     free(self);
 }
 
-// cef_page_range_t->from
-static void cfx_page_range_set_from(cef_page_range_t *self, int from) {
+// cef_range_t->from
+static void cfx_range_set_from(cef_range_t *self, int from) {
     self->from = from;
 }
-static void cfx_page_range_get_from(cef_page_range_t *self, int* from) {
+static void cfx_range_get_from(cef_range_t *self, int* from) {
     *from = self->from;
 }
 
-// cef_page_range_t->to
-static void cfx_page_range_set_to(cef_page_range_t *self, int to) {
+// cef_range_t->to
+static void cfx_range_set_to(cef_range_t *self, int to) {
     self->to = to;
 }
-static void cfx_page_range_get_to(cef_page_range_t *self, int* to) {
+static void cfx_range_get_to(cef_range_t *self, int* to) {
     *to = self->to;
 }
 

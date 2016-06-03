@@ -73,7 +73,7 @@ public class CefStringOutType : CefStringPtrType {
     }
 
     public override void EmitPreNativeCallbackStatements(CodeBuilder b, string var) {
-        b.AppendLine("char16* {0}_tmp_str = 0; int {0}_tmp_length = 0; gc_handle_t *{0}_gc_handle = 0;", var);
+        b.AppendLine("char16* {0}_tmp_str = 0; int {0}_tmp_length = 0; gc_handle_t {0}_gc_handle = 0;", var);
     }
 
     public override void EmitPostNativeCallbackStatements(CodeBuilder b, string var) {

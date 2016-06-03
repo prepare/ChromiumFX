@@ -39,6 +39,7 @@ public class CSharp {
             case "string":
             case "checked":
             case "object":
+            case "delegate":
                 return "@" + symbol;
 
             case "params":

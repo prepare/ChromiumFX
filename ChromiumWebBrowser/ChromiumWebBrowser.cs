@@ -676,6 +676,11 @@ namespace Chromium.WebBrowser {
         /// of the evaluated script, if any. On failure the CfrV8Exception argument of the callback
         /// will be set to the exception thrown by the evaluated script, if any.
         /// Do not block the callback since it blocks the render thread.
+        /// 
+        /// *** WARNING ***
+        /// In CEF 3.2623 and higher, the return value of the evaluation 
+        /// seems to be broken in some cases (see also issue #65).
+        /// 
         /// </summary>
         public bool EvaluateJavascript(string code, Action<CfrV8Value, CfrV8Exception> callback) {
             return EvaluateJavascript(code, JSInvokeMode.Inherit, callback);
@@ -698,6 +703,11 @@ namespace Chromium.WebBrowser {
         /// of the evaluated script, if any. On failure the CfrV8Exception argument of the callback
         /// will be set to the exception thrown by the evaluated script, if any.
         /// Do not block the callback since it blocks the render thread.
+        /// 
+        /// *** WARNING ***
+        /// In CEF 3.2623 and higher, the return value of the evaluation 
+        /// seems to be broken in some cases (see also issue #65).
+        /// 
         /// </summary>
         public bool EvaluateJavascript(string code, JSInvokeMode invokeMode, Action<CfrV8Value, CfrV8Exception> callback) {
             var rb = remoteBrowser;

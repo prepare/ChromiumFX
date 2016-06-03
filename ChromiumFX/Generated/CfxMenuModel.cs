@@ -70,6 +70,17 @@ namespace Chromium {
         internal CfxMenuModel(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
+        /// Create a new MenuModel with the specified |delegate|.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
+        /// </remarks>
+        public static CfxMenuModel Create(CfxMenuModelDelegate @delegate) {
+            return CfxMenuModel.Wrap(CfxApi.cfx_menu_model_create(CfxMenuModelDelegate.Unwrap(@delegate)));
+        }
+
+        /// <summary>
         /// Returns the number of items in this menu.
         /// </summary>
         /// <remarks>

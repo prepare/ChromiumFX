@@ -57,14 +57,14 @@ static void cfx_browser_host_close_browser(cef_browser_host_t* self, int force_c
     self->close_browser(self, force_close);
 }
 
+// try_close_browser
+static int cfx_browser_host_try_close_browser(cef_browser_host_t* self) {
+    return self->try_close_browser(self);
+}
+
 // set_focus
 static void cfx_browser_host_set_focus(cef_browser_host_t* self, int focus) {
     self->set_focus(self, focus);
-}
-
-// set_window_visibility
-static void cfx_browser_host_set_window_visibility(cef_browser_host_t* self, int visible) {
-    self->set_window_visibility(self, visible);
 }
 
 // get_window_handle
@@ -75,6 +75,11 @@ static cef_window_handle_t cfx_browser_host_get_window_handle(cef_browser_host_t
 // get_opener_window_handle
 static cef_window_handle_t cfx_browser_host_get_opener_window_handle(cef_browser_host_t* self) {
     return self->get_opener_window_handle(self);
+}
+
+// has_view
+static int cfx_browser_host_has_view(cef_browser_host_t* self) {
+    return self->has_view(self);
 }
 
 // get_client
@@ -109,6 +114,13 @@ static void cfx_browser_host_run_file_dialog(cef_browser_host_t* self, cef_file_
 static void cfx_browser_host_start_download(cef_browser_host_t* self, char16 *url_str, int url_length) {
     cef_string_t url = { url_str, url_length, 0 };
     self->start_download(self, &url);
+}
+
+// download_image
+static void cfx_browser_host_download_image(cef_browser_host_t* self, char16 *image_url_str, int image_url_length, int is_favicon, uint32 max_image_size, int bypass_cache, cef_download_image_callback_t* callback) {
+    cef_string_t image_url = { image_url_str, image_url_length, 0 };
+    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    self->download_image(self, &image_url, is_favicon, max_image_size, bypass_cache, callback);
 }
 
 // print
