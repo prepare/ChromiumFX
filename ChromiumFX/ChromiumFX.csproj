@@ -51,6 +51,7 @@
     <Compile Include="Generated\CfxAuthCallback.cs" />
     <Compile Include="Generated\CfxBeforeDownloadCallback.cs" />
     <Compile Include="Generated\CfxBinaryValue.cs" />
+    <Compile Include="Generated\CfxBoxLayoutSettings.cs" />
     <Compile Include="Generated\CfxBrowser.cs" />
     <Compile Include="Generated\CfxBrowserHost.cs" />
     <Compile Include="Generated\CfxBrowserProcessHandler.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Generated\CfxDomNode.cs" />
     <Compile Include="Generated\CfxDomVisitor.cs" />
     <Compile Include="Generated\CfxDownloadHandler.cs" />
+    <Compile Include="Generated\CfxDownloadImageCallback.cs" />
     <Compile Include="Generated\CfxDownloadItem.cs" />
     <Compile Include="Generated\CfxDownloadItemCallback.cs" />
     <Compile Include="Generated\CfxDragData.cs" />
@@ -88,6 +90,8 @@
     <Compile Include="Generated\CfxGeolocationHandler.cs" />
     <Compile Include="Generated\CfxGeoposition.cs" />
     <Compile Include="Generated\CfxGetGeolocationCallback.cs" />
+    <Compile Include="Generated\CfxImage.cs" />
+    <Compile Include="Generated\CfxInsets.cs" />
     <Compile Include="Generated\CfxJsDialogCallback.cs" />
     <Compile Include="Generated\CfxJsDialogHandler.cs" />
     <Compile Include="Generated\CfxKeyboardHandler.cs" />
@@ -98,10 +102,10 @@
     <Compile Include="Generated\CfxMainArgsLinux.cs" />
     <Compile Include="Generated\CfxMainArgsWindows.cs" />
     <Compile Include="Generated\CfxMenuModel.cs" />
+    <Compile Include="Generated\CfxMenuModelDelegate.cs" />
     <Compile Include="Generated\CfxMouseEvent.cs" />
     <Compile Include="Generated\CfxNavigationEntry.cs" />
     <Compile Include="Generated\CfxNavigationEntryVisitor.cs" />
-    <Compile Include="Generated\CfxPageRange.cs" />
     <Compile Include="Generated\CfxPdfPrintCallback.cs" />
     <Compile Include="Generated\CfxPdfPrintSettings.cs" />
     <Compile Include="Generated\CfxPoint.cs" />
@@ -113,6 +117,7 @@
     <Compile Include="Generated\CfxPrintJobCallback.cs" />
     <Compile Include="Generated\CfxPrintSettings.cs" />
     <Compile Include="Generated\CfxProcessMessage.cs" />
+    <Compile Include="Generated\CfxRange.cs" />
     <Compile Include="Generated\CfxReadHandler.cs" />
     <Compile Include="Generated\CfxRect.cs" />
     <Compile Include="Generated\CfxRenderHandler.cs" />
@@ -123,6 +128,7 @@
     <Compile Include="Generated\CfxRequestContextHandler.cs" />
     <Compile Include="Generated\CfxRequestContextSettings.cs" />
     <Compile Include="Generated\CfxRequestHandler.cs" />
+    <Compile Include="Generated\CfxResolveCallback.cs" />
     <Compile Include="Generated\CfxResourceBundle.cs" />
     <Compile Include="Generated\CfxResourceBundleHandler.cs" />
     <Compile Include="Generated\CfxResourceHandler.cs" />

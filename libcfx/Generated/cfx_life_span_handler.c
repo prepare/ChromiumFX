@@ -92,17 +92,6 @@ void CEF_CALLBACK cfx_life_span_handler_on_after_created(cef_life_span_handler_t
 }
 
 
-// run_modal
-
-void (CEF_CALLBACK *cfx_life_span_handler_run_modal_callback)(gc_handle_t self, int* __retval, cef_browser_t* browser);
-
-int CEF_CALLBACK cfx_life_span_handler_run_modal(cef_life_span_handler_t* self, cef_browser_t* browser) {
-    int __retval;
-    cfx_life_span_handler_run_modal_callback(((cfx_life_span_handler_t*)self)->gc_handle, &__retval, browser);
-    return __retval;
-}
-
-
 // do_close
 
 void (CEF_CALLBACK *cfx_life_span_handler_do_close_callback)(gc_handle_t self, int* __retval, cef_browser_t* browser);
@@ -136,16 +125,11 @@ static void cfx_life_span_handler_set_managed_callback(cef_life_span_handler_t* 
         self->on_after_created = callback ? cfx_life_span_handler_on_after_created : 0;
         break;
     case 2:
-        if(callback && !cfx_life_span_handler_run_modal_callback)
-            cfx_life_span_handler_run_modal_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser)) callback;
-        self->run_modal = callback ? cfx_life_span_handler_run_modal : 0;
-        break;
-    case 3:
         if(callback && !cfx_life_span_handler_do_close_callback)
             cfx_life_span_handler_do_close_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser)) callback;
         self->do_close = callback ? cfx_life_span_handler_do_close : 0;
         break;
-    case 4:
+    case 3:
         if(callback && !cfx_life_span_handler_on_before_close_callback)
             cfx_life_span_handler_on_before_close_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) callback;
         self->on_before_close = callback ? cfx_life_span_handler_on_before_close : 0;

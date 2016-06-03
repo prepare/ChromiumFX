@@ -61,18 +61,18 @@ namespace Chromium {
 
         // on_jsdialog
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_jsdialog_handler_on_jsdialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr origin_url_str, int origin_url_length, IntPtr accept_lang_str, int accept_lang_length, int dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback, out int suppress_message);
+        private delegate void cfx_jsdialog_handler_on_jsdialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr origin_url_str, int origin_url_length, int dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback, out int suppress_message);
         private static cfx_jsdialog_handler_on_jsdialog_delegate cfx_jsdialog_handler_on_jsdialog;
         private static IntPtr cfx_jsdialog_handler_on_jsdialog_ptr;
 
-        internal static void on_jsdialog(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr origin_url_str, int origin_url_length, IntPtr accept_lang_str, int accept_lang_length, int dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback, out int suppress_message) {
+        internal static void on_jsdialog(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr origin_url_str, int origin_url_length, int dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback, out int suppress_message) {
             var self = (CfxJsDialogHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
                 suppress_message = default(int);
                 return;
             }
-            var e = new CfxOnJsDialogEventArgs(browser, origin_url_str, origin_url_length, accept_lang_str, accept_lang_length, dialog_type, message_text_str, message_text_length, default_prompt_text_str, default_prompt_text_length, callback);
+            var e = new CfxOnJsDialogEventArgs(browser, origin_url_str, origin_url_length, dialog_type, message_text_str, message_text_length, default_prompt_text_str, default_prompt_text_length, callback);
             var eventHandler = self.m_OnJsDialog;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
@@ -143,21 +143,21 @@ namespace Chromium {
         public CfxJsDialogHandler() : base(CfxApi.cfx_jsdialog_handler_ctor) {}
 
         /// <summary>
-        /// Called to run a JavaScript dialog. If |OriginUrl| and |AcceptLang| are
-        /// non-NULL they can be passed to the CfxFormatUrlForSecurityDisplay function
-        /// to retrieve a secure and user-friendly display string. The
-        /// |DefaultPromptText| value will be specified for prompt dialogs only. Set
-        /// |SuppressMessage| to true (1) and return false (0) to suppress the message
-        /// (suppressing messages is preferable to immediately executing the callback
-        /// as this is used to detect presumably malicious behavior like spamming alert
-        /// messages in onbeforeunload). Set |SuppressMessage| to false (0) and return
-        /// false (0) to use the default implementation (the default implementation
-        /// will show one modal dialog at a time and suppress any additional dialog
-        /// requests until the displayed dialog is dismissed). Return true (1) if the
-        /// application will use a custom dialog or if the callback has been executed
-        /// immediately. Custom dialogs may be either modal or modeless. If a custom
-        /// dialog is used the application must execute |Callback| once the custom
-        /// dialog is dismissed.
+        /// Called to run a JavaScript dialog. If |OriginUrl| is non-NULL it can be
+        /// passed to the CfxFormatUrlForSecurityDisplay function to retrieve a secure
+        /// and user-friendly display string. The |DefaultPromptText| value will be
+        /// specified for prompt dialogs only. Set |SuppressMessage| to true (1) and
+        /// return false (0) to suppress the message (suppressing messages is
+        /// preferable to immediately executing the callback as this is used to detect
+        /// presumably malicious behavior like spamming alert messages in
+        /// onbeforeunload). Set |SuppressMessage| to false (0) and return false (0)
+        /// to use the default implementation (the default implementation will show one
+        /// modal dialog at a time and suppress any additional dialog requests until
+        /// the displayed dialog is dismissed). Return true (1) if the application will
+        /// use a custom dialog or if the callback has been executed immediately.
+        /// Custom dialogs may be either modal or modeless. If a custom dialog is used
+        /// the application must execute |Callback| once the custom dialog is
+        /// dismissed.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -316,21 +316,21 @@ namespace Chromium {
     namespace Event {
 
         /// <summary>
-        /// Called to run a JavaScript dialog. If |OriginUrl| and |AcceptLang| are
-        /// non-NULL they can be passed to the CfxFormatUrlForSecurityDisplay function
-        /// to retrieve a secure and user-friendly display string. The
-        /// |DefaultPromptText| value will be specified for prompt dialogs only. Set
-        /// |SuppressMessage| to true (1) and return false (0) to suppress the message
-        /// (suppressing messages is preferable to immediately executing the callback
-        /// as this is used to detect presumably malicious behavior like spamming alert
-        /// messages in onbeforeunload). Set |SuppressMessage| to false (0) and return
-        /// false (0) to use the default implementation (the default implementation
-        /// will show one modal dialog at a time and suppress any additional dialog
-        /// requests until the displayed dialog is dismissed). Return true (1) if the
-        /// application will use a custom dialog or if the callback has been executed
-        /// immediately. Custom dialogs may be either modal or modeless. If a custom
-        /// dialog is used the application must execute |Callback| once the custom
-        /// dialog is dismissed.
+        /// Called to run a JavaScript dialog. If |OriginUrl| is non-NULL it can be
+        /// passed to the CfxFormatUrlForSecurityDisplay function to retrieve a secure
+        /// and user-friendly display string. The |DefaultPromptText| value will be
+        /// specified for prompt dialogs only. Set |SuppressMessage| to true (1) and
+        /// return false (0) to suppress the message (suppressing messages is
+        /// preferable to immediately executing the callback as this is used to detect
+        /// presumably malicious behavior like spamming alert messages in
+        /// onbeforeunload). Set |SuppressMessage| to false (0) and return false (0)
+        /// to use the default implementation (the default implementation will show one
+        /// modal dialog at a time and suppress any additional dialog requests until
+        /// the displayed dialog is dismissed). Return true (1) if the application will
+        /// use a custom dialog or if the callback has been executed immediately.
+        /// Custom dialogs may be either modal or modeless. If a custom dialog is used
+        /// the application must execute |Callback| once the custom dialog is
+        /// dismissed.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -339,21 +339,21 @@ namespace Chromium {
         public delegate void CfxOnJsDialogEventHandler(object sender, CfxOnJsDialogEventArgs e);
 
         /// <summary>
-        /// Called to run a JavaScript dialog. If |OriginUrl| and |AcceptLang| are
-        /// non-NULL they can be passed to the CfxFormatUrlForSecurityDisplay function
-        /// to retrieve a secure and user-friendly display string. The
-        /// |DefaultPromptText| value will be specified for prompt dialogs only. Set
-        /// |SuppressMessage| to true (1) and return false (0) to suppress the message
-        /// (suppressing messages is preferable to immediately executing the callback
-        /// as this is used to detect presumably malicious behavior like spamming alert
-        /// messages in onbeforeunload). Set |SuppressMessage| to false (0) and return
-        /// false (0) to use the default implementation (the default implementation
-        /// will show one modal dialog at a time and suppress any additional dialog
-        /// requests until the displayed dialog is dismissed). Return true (1) if the
-        /// application will use a custom dialog or if the callback has been executed
-        /// immediately. Custom dialogs may be either modal or modeless. If a custom
-        /// dialog is used the application must execute |Callback| once the custom
-        /// dialog is dismissed.
+        /// Called to run a JavaScript dialog. If |OriginUrl| is non-NULL it can be
+        /// passed to the CfxFormatUrlForSecurityDisplay function to retrieve a secure
+        /// and user-friendly display string. The |DefaultPromptText| value will be
+        /// specified for prompt dialogs only. Set |SuppressMessage| to true (1) and
+        /// return false (0) to suppress the message (suppressing messages is
+        /// preferable to immediately executing the callback as this is used to detect
+        /// presumably malicious behavior like spamming alert messages in
+        /// onbeforeunload). Set |SuppressMessage| to false (0) and return false (0)
+        /// to use the default implementation (the default implementation will show one
+        /// modal dialog at a time and suppress any additional dialog requests until
+        /// the displayed dialog is dismissed). Return true (1) if the application will
+        /// use a custom dialog or if the callback has been executed immediately.
+        /// Custom dialogs may be either modal or modeless. If a custom dialog is used
+        /// the application must execute |Callback| once the custom dialog is
+        /// dismissed.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -366,9 +366,6 @@ namespace Chromium {
             internal IntPtr m_origin_url_str;
             internal int m_origin_url_length;
             internal string m_origin_url;
-            internal IntPtr m_accept_lang_str;
-            internal int m_accept_lang_length;
-            internal string m_accept_lang;
             internal int m_dialog_type;
             internal IntPtr m_message_text_str;
             internal int m_message_text_length;
@@ -383,12 +380,10 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnJsDialogEventArgs(IntPtr browser, IntPtr origin_url_str, int origin_url_length, IntPtr accept_lang_str, int accept_lang_length, int dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback) {
+            internal CfxOnJsDialogEventArgs(IntPtr browser, IntPtr origin_url_str, int origin_url_length, int dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback) {
                 m_browser = browser;
                 m_origin_url_str = origin_url_str;
                 m_origin_url_length = origin_url_length;
-                m_accept_lang_str = accept_lang_str;
-                m_accept_lang_length = accept_lang_length;
                 m_dialog_type = dialog_type;
                 m_message_text_str = message_text_str;
                 m_message_text_length = message_text_length;
@@ -415,16 +410,6 @@ namespace Chromium {
                     CheckAccess();
                     m_origin_url = StringFunctions.PtrToStringUni(m_origin_url_str, m_origin_url_length);
                     return m_origin_url;
-                }
-            }
-            /// <summary>
-            /// Get the AcceptLang parameter for the <see cref="CfxJsDialogHandler.OnJsDialog"/> callback.
-            /// </summary>
-            public string AcceptLang {
-                get {
-                    CheckAccess();
-                    m_accept_lang = StringFunctions.PtrToStringUni(m_accept_lang_str, m_accept_lang_length);
-                    return m_accept_lang;
                 }
             }
             /// <summary>
@@ -489,7 +474,7 @@ namespace Chromium {
             }
 
             public override string ToString() {
-                return String.Format("Browser={{{0}}}, OriginUrl={{{1}}}, AcceptLang={{{2}}}, DialogType={{{3}}}, MessageText={{{4}}}, DefaultPromptText={{{5}}}, Callback={{{6}}}", Browser, OriginUrl, AcceptLang, DialogType, MessageText, DefaultPromptText, Callback);
+                return String.Format("Browser={{{0}}}, OriginUrl={{{1}}}, DialogType={{{2}}}, MessageText={{{3}}}, DefaultPromptText={{{4}}}, Callback={{{5}}}", Browser, OriginUrl, DialogType, MessageText, DefaultPromptText, Callback);
             }
         }
 

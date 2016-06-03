@@ -83,36 +83,6 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Add a plugin directory. This change may not take affect until after
-        /// cef_refresh_web_plugins() is called. Can be called on any thread in the
-        /// browser process.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
-        /// </remarks>
-        public static void AddWebPluginDirectory(string dir) {
-            var dir_pinned = new PinnedString(dir);
-            CfxApi.cfx_add_web_plugin_directory(dir_pinned.Obj.PinnedPtr, dir_pinned.Length);
-            dir_pinned.Obj.Free();
-        }
-
-        /// <summary>
-        /// Add a plugin path (directory + file). This change may not take affect until
-        /// after cef_refresh_web_plugins() is called. Can be called on any thread in the
-        /// browser process.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
-        /// </remarks>
-        public static void AddWebPluginPath(string path) {
-            var path_pinned = new PinnedString(path);
-            CfxApi.cfx_add_web_plugin_path(path_pinned.Obj.PinnedPtr, path_pinned.Length);
-            path_pinned.Obj.Free();
-        }
-
-        /// <summary>
         /// Returns CEF API hashes for the libcef library. The returned string is owned
         /// by the library and should not be freed. The |entry| parameter describes which
         /// hash value will be returned:
@@ -288,39 +258,23 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Force a plugin to shutdown. Can be called on any thread in the browser
-        /// process but will be executed on the IO thread.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
-        /// </remarks>
-        public static void ForceWebPluginShutdown(string path) {
-            var path_pinned = new PinnedString(path);
-            CfxApi.cfx_force_web_plugin_shutdown(path_pinned.Obj.PinnedPtr, path_pinned.Length);
-            path_pinned.Obj.Free();
-        }
-
-        /// <summary>
         /// This is a convenience function for formatting a URL in a concise and human-
         /// friendly way to help users make security-related decisions (or in other
         /// circumstances when people need to distinguish sites, origins, or otherwise-
         /// simplified URLs from each other). Internationalized domain names (IDN) may be
-        /// presented in Unicode if |languages| accepts the Unicode representation. The
-        /// returned value will (a) omit the path for standard schemes, excepting file
-        /// and filesystem, and (b) omit the port if it is the default for the scheme. Do
-        /// not use this for URLs which will be parsed or sent to other applications.
+        /// presented in Unicode if the conversion is considered safe. The returned value
+        /// will (a) omit the path for standard schemes, excepting file and filesystem,
+        /// and (b) omit the port if it is the default for the scheme. Do not use this
+        /// for URLs which will be parsed or sent to other applications.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
         /// </remarks>
-        public static string FormatUrlForSecurityDisplay(string originUrl, string languages) {
+        public static string FormatUrlForSecurityDisplay(string originUrl) {
             var originUrl_pinned = new PinnedString(originUrl);
-            var languages_pinned = new PinnedString(languages);
-            var __retval = CfxApi.cfx_format_url_for_security_display(originUrl_pinned.Obj.PinnedPtr, originUrl_pinned.Length, languages_pinned.Obj.PinnedPtr, languages_pinned.Length);
+            var __retval = CfxApi.cfx_format_url_for_security_display(originUrl_pinned.Obj.PinnedPtr, originUrl_pinned.Length);
             originUrl_pinned.Obj.Free();
-            languages_pinned.Obj.Free();
             return StringFunctions.ConvertStringUserfree(__retval);
         }
 
@@ -455,23 +409,6 @@ namespace Chromium {
         /// </remarks>
         public static long NowFromSystemTraceTime() {
             return CfxApi.cfx_now_from_system_trace_time();
-        }
-
-        /// <summary>
-        /// Parses |string| which represents a CSS color value. If |strict| is true (1)
-        /// strict parsing rules will be applied. Returns true (1) on success or false
-        /// (0) on error. If parsing succeeds |color| will be set to the color value
-        /// otherwise |color| will remain unchanged.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
-        /// </remarks>
-        public static bool ParseCssColor(string @string, bool strict, ref CfxColor color) {
-            var string_pinned = new PinnedString(@string);
-            var __retval = CfxApi.cfx_parse_csscolor(string_pinned.Obj.PinnedPtr, string_pinned.Length, strict ? 1 : 0, ref color.color);
-            string_pinned.Obj.Free();
-            return 0 != __retval;
         }
 
         /// <summary>
@@ -712,21 +649,6 @@ namespace Chromium {
             targetProtocol_pinned.Obj.Free();
             targetDomain_pinned.Obj.Free();
             return 0 != __retval;
-        }
-
-        /// <summary>
-        /// Remove a plugin path (directory + file). This change may not take affect
-        /// until after cef_refresh_web_plugins() is called. Can be called on any thread
-        /// in the browser process.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
-        /// </remarks>
-        public static void RemoveWebPluginPath(string path) {
-            var path_pinned = new PinnedString(path);
-            CfxApi.cfx_remove_web_plugin_path(path_pinned.Obj.PinnedPtr, path_pinned.Length);
-            path_pinned.Obj.Free();
         }
 
         /// <summary>

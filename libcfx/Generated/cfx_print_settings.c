@@ -89,8 +89,8 @@ static int cfx_print_settings_get_dpi(cef_print_settings_t* self) {
 }
 
 // set_page_ranges
-static void cfx_print_settings_set_page_ranges(cef_print_settings_t* self, int rangesCount, cef_page_range_t const** ranges, int* ranges_nomem) {
-    cef_page_range_t *ranges_tmp = (cef_page_range_t*)malloc(rangesCount * sizeof(cef_page_range_t));
+static void cfx_print_settings_set_page_ranges(cef_print_settings_t* self, int rangesCount, cef_range_t const** ranges, int* ranges_nomem) {
+    cef_range_t *ranges_tmp = (cef_range_t*)malloc(rangesCount * sizeof(cef_range_t));
     if(ranges_tmp) {
         for(int i = 0; i < rangesCount; ++i) {
             ranges_tmp[i] = *ranges[i];
@@ -110,13 +110,13 @@ static int cfx_print_settings_get_page_ranges_count(cef_print_settings_t* self) 
 }
 
 // get_page_ranges
-static void cfx_print_settings_get_page_ranges(cef_print_settings_t* self, size_t* rangesCount, cef_page_range_t** ranges, int* ranges_nomem) {
-    cef_page_range_t *ranges_tmp = (cef_page_range_t*)malloc(*rangesCount * sizeof(cef_page_range_t));
+static void cfx_print_settings_get_page_ranges(cef_print_settings_t* self, size_t* rangesCount, cef_range_t** ranges, int* ranges_nomem) {
+    cef_range_t *ranges_tmp = (cef_range_t*)malloc(*rangesCount * sizeof(cef_range_t));
     if(ranges_tmp) {
         *ranges_nomem = 0;
         self->get_page_ranges(self, rangesCount, ranges_tmp);
         for(size_t i = 0; i < *rangesCount; ++i) {
-            ranges[i] = (cef_page_range_t*)malloc(sizeof(cef_page_range_t));
+            ranges[i] = (cef_range_t*)malloc(sizeof(cef_range_t));
             *ranges[i] = ranges_tmp[i];
         }
         free(ranges_tmp);

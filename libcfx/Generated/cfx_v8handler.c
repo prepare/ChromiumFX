@@ -77,7 +77,7 @@ void (CEF_CALLBACK *cfx_v8handler_execute_callback)(gc_handle_t self, int* __ret
 
 int CEF_CALLBACK cfx_v8handler_execute(cef_v8handler_t* self, const cef_string_t* name, cef_v8value_t* object, size_t argumentsCount, cef_v8value_t* const* arguments, cef_v8value_t** retval, cef_string_t* exception) {
     int __retval;
-    char16* exception_tmp_str = 0; int exception_tmp_length = 0; gc_handle_t *exception_gc_handle = 0;
+    char16* exception_tmp_str = 0; int exception_tmp_length = 0; gc_handle_t exception_gc_handle = 0;
     cfx_v8handler_execute_callback(((cfx_v8handler_t*)self)->gc_handle, &__retval, name ? name->str : 0, name ? (int)name->length : 0, object, (int)(argumentsCount), arguments, retval, &exception_tmp_str, &exception_tmp_length, &exception_gc_handle);
     if(*retval)((cef_base_t*)*retval)->add_ref((cef_base_t*)*retval);
     if(exception_tmp_length > 0) {

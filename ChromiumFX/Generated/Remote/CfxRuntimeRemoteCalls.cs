@@ -69,17 +69,14 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxRuntimeFormatUrlForSecurityDisplayRenderProcessCall) {}
 
         internal string originUrl;
-        internal string languages;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(originUrl);
-            h.Write(languages);
         }
 
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out originUrl);
-            h.Read(out languages);
         }
 
         protected override void WriteReturn(StreamHandler h) {
@@ -91,7 +88,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxRuntime.FormatUrlForSecurityDisplay(originUrl, languages);
+            __retval = CfxRuntime.FormatUrlForSecurityDisplay(originUrl);
         }
     }
 

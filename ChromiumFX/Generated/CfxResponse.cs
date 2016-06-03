@@ -92,6 +92,25 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Get the response error code. Returns ERR_NONE if there was no error.
+        /// 
+        /// Set the response error code. This can be used by custom scheme handlers to
+        /// return errors during initial request processing.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
+        /// </remarks>
+        public CfxErrorCode Error {
+            get {
+                return (CfxErrorCode)CfxApi.cfx_response_get_error(NativePtr);
+            }
+            set {
+                CfxApi.cfx_response_set_error(NativePtr, (int)value);
+            }
+        }
+
+        /// <summary>
         /// Get or set the response status code.
         /// </summary>
         /// <remarks>

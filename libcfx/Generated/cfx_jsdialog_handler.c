@@ -73,11 +73,11 @@ static gc_handle_t cfx_jsdialog_handler_get_gc_handle(cfx_jsdialog_handler_t* se
 
 // on_jsdialog
 
-void (CEF_CALLBACK *cfx_jsdialog_handler_on_jsdialog_callback)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *origin_url_str, int origin_url_length, char16 *accept_lang_str, int accept_lang_length, cef_jsdialog_type_t dialog_type, char16 *message_text_str, int message_text_length, char16 *default_prompt_text_str, int default_prompt_text_length, cef_jsdialog_callback_t* callback, int* suppress_message);
+void (CEF_CALLBACK *cfx_jsdialog_handler_on_jsdialog_callback)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *origin_url_str, int origin_url_length, cef_jsdialog_type_t dialog_type, char16 *message_text_str, int message_text_length, char16 *default_prompt_text_str, int default_prompt_text_length, cef_jsdialog_callback_t* callback, int* suppress_message);
 
-int CEF_CALLBACK cfx_jsdialog_handler_on_jsdialog(cef_jsdialog_handler_t* self, cef_browser_t* browser, const cef_string_t* origin_url, const cef_string_t* accept_lang, cef_jsdialog_type_t dialog_type, const cef_string_t* message_text, const cef_string_t* default_prompt_text, cef_jsdialog_callback_t* callback, int* suppress_message) {
+int CEF_CALLBACK cfx_jsdialog_handler_on_jsdialog(cef_jsdialog_handler_t* self, cef_browser_t* browser, const cef_string_t* origin_url, cef_jsdialog_type_t dialog_type, const cef_string_t* message_text, const cef_string_t* default_prompt_text, cef_jsdialog_callback_t* callback, int* suppress_message) {
     int __retval;
-    cfx_jsdialog_handler_on_jsdialog_callback(((cfx_jsdialog_handler_t*)self)->gc_handle, &__retval, browser, origin_url ? origin_url->str : 0, origin_url ? (int)origin_url->length : 0, accept_lang ? accept_lang->str : 0, accept_lang ? (int)accept_lang->length : 0, dialog_type, message_text ? message_text->str : 0, message_text ? (int)message_text->length : 0, default_prompt_text ? default_prompt_text->str : 0, default_prompt_text ? (int)default_prompt_text->length : 0, callback, suppress_message);
+    cfx_jsdialog_handler_on_jsdialog_callback(((cfx_jsdialog_handler_t*)self)->gc_handle, &__retval, browser, origin_url ? origin_url->str : 0, origin_url ? (int)origin_url->length : 0, dialog_type, message_text ? message_text->str : 0, message_text ? (int)message_text->length : 0, default_prompt_text ? default_prompt_text->str : 0, default_prompt_text ? (int)default_prompt_text->length : 0, callback, suppress_message);
     return __retval;
 }
 
@@ -115,7 +115,7 @@ static void cfx_jsdialog_handler_set_managed_callback(cef_jsdialog_handler_t* se
     switch(index) {
     case 0:
         if(callback && !cfx_jsdialog_handler_on_jsdialog_callback)
-            cfx_jsdialog_handler_on_jsdialog_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *origin_url_str, int origin_url_length, char16 *accept_lang_str, int accept_lang_length, cef_jsdialog_type_t dialog_type, char16 *message_text_str, int message_text_length, char16 *default_prompt_text_str, int default_prompt_text_length, cef_jsdialog_callback_t* callback, int* suppress_message)) callback;
+            cfx_jsdialog_handler_on_jsdialog_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *origin_url_str, int origin_url_length, cef_jsdialog_type_t dialog_type, char16 *message_text_str, int message_text_length, char16 *default_prompt_text_str, int default_prompt_text_length, cef_jsdialog_callback_t* callback, int* suppress_message)) callback;
         self->on_jsdialog = callback ? cfx_jsdialog_handler_on_jsdialog : 0;
         break;
     case 1:
