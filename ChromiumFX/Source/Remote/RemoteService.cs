@@ -46,10 +46,10 @@ namespace Chromium.Remote {
     internal class RemoteService {
 
         internal static CfxRenderProcessMainDelegate renderProcessMainCallback;
-        internal static readonly List<RemoteConnection> connections = new List<RemoteConnection>();
-
+        
         private static CfxApp m_app;
         private static CfxBrowserProcessHandler m_browserProcessHandler;
+        private static readonly List<RemoteConnection> connections = new List<RemoteConnection>();
 
         internal static void Initialize(CfxRenderProcessMainDelegate renderProcessMainCallback, ref CfxApp app) {
 
@@ -77,8 +77,19 @@ namespace Chromium.Remote {
                 var pipeIn = PipeFactory.Instance.CreateServerPipeInputStream(pipeName + "si");
                 var pipeOut = PipeFactory.Instance.CreateServerPipeOutputStream(pipeName + "so");
                 var connection = new RemoteConnection(pipeIn, pipeOut, false);
-                connections.Add(connection);
+                lock(connections) {
+                    connections.Add(connection);
+                }
                 e.CommandLine.AppendSwitchWithValue("cfxremote", pipeName);
+            }
+        }
+
+        internal static void RemoveConnection(RemoteConnection c) {
+            // On shutdown, different threads may try to remove the same connection.
+            // Need to lock and check if the connection is still in the list
+            lock (connections) {
+                if(connections.Contains(c))
+                    connections.Remove(c);
             }
         }
     }
