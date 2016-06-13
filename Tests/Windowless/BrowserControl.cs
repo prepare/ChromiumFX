@@ -50,16 +50,16 @@ namespace Windowless {
 
         private Bitmap pixelBuffer;
         private object pbLock = new object();
-                
+
         public BrowserControl() {
 
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
 
             lifeSpanHandler = new CfxLifeSpanHandler();
             lifeSpanHandler.OnAfterCreated += lifeSpanHandler_OnAfterCreated;
-            
+
             renderHandler = new CfxRenderHandler();
-            
+
             renderHandler.GetRootScreenRect += renderHandler_GetRootScreenRect;
             renderHandler.GetScreenInfo += renderHandler_GetScreenInfo;
             renderHandler.GetScreenPoint += renderHandler_GetScreenPoint;
@@ -75,7 +75,7 @@ namespace Windowless {
             loadHandler = new CfxLoadHandler();
 
             loadHandler.OnLoadError += loadHandler_OnLoadError;
-            
+
             client = new CfxClient();
             client.GetLifeSpanHandler += (sender, e) => e.SetReturnValue(lifeSpanHandler);
             client.GetRenderHandler += (sender, e) => e.SetReturnValue(renderHandler);
@@ -85,7 +85,7 @@ namespace Windowless {
 
             var windowInfo = new CfxWindowInfo();
             windowInfo.SetAsWindowless(false);
-            
+
             // Create handle now for InvokeRequired to work properly 
             CreateHandle();
             CfxBrowserHost.CreateBrowser(windowInfo, client, "about:blank", settings, null);
@@ -125,8 +125,8 @@ namespace Windowless {
         }
 
         void renderHandler_OnPaint(object sender, Chromium.Event.CfxOnPaintEventArgs e) {
-            
-            lock(pbLock) {
+
+            lock (pbLock) {
                 if(pixelBuffer == null || pixelBuffer.Width < e.Width || pixelBuffer.Height < e.Height) {
                     pixelBuffer = new Bitmap(e.Width, e.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
                 }
@@ -153,7 +153,7 @@ namespace Windowless {
         }
 
         void renderHandler_GetViewRect(object sender, Chromium.Event.CfxGetViewRectEventArgs e) {
-            
+
             if(InvokeRequired) {
                 Invoke((MethodInvoker)(() => renderHandler_GetViewRect(sender, e)));
                 return;
@@ -177,7 +177,7 @@ namespace Windowless {
             }
 
             if(!IsDisposed) {
-                var origin = PointToScreen(new Point(e.ViewX , e.ViewY));
+                var origin = PointToScreen(new Point(e.ViewX, e.ViewY));
                 e.ScreenX = origin.X;
                 e.ScreenY = origin.Y;
                 e.SetReturnValue(true);
@@ -210,21 +210,20 @@ namespace Windowless {
         }
 
         protected override void OnPaint(PaintEventArgs e) {
-            lock(pbLock) {
+            lock (pbLock) {
                 if(pixelBuffer != null)
                     e.Graphics.DrawImage(pixelBuffer, e.ClipRectangle, e.ClipRectangle, GraphicsUnit.Pixel);
             }
         }
 
-        
         // mouse events
         // this is not complete
 
         private readonly CfxMouseEvent mouseEventProxy = new CfxMouseEvent();
 
         private void SetMouseEvent(MouseEventArgs e) {
-                mouseEventProxy.X = e.X;
-                mouseEventProxy.Y = e.Y;
+            mouseEventProxy.X = e.X;
+            mouseEventProxy.Y = e.Y;
         }
 
         protected override void OnMouseMove(MouseEventArgs e) {
