@@ -73,7 +73,15 @@ namespace Windowless {
             settings.ResourcesDirPath = System.IO.Path.Combine(projectRoot, "cef", "Resources");
             settings.LocalesDirPath = System.IO.Path.Combine(projectRoot, "cef", "Resources", "locales");
 
-            if(!CfxRuntime.Initialize(settings, null))
+            var app = new CfxApp();
+            app.OnBeforeCommandLineProcessing += (s, e) => {
+                // optimizations following recommendations from issue #84
+                e.CommandLine.AppendSwitch("disable-gpu");
+                e.CommandLine.AppendSwitch("disable-gpu-compositing");
+                e.CommandLine.AppendSwitch("disable-gpu-vsync");
+            };
+
+            if(!CfxRuntime.Initialize(settings, app))
                 Environment.Exit(-1);
 
 
