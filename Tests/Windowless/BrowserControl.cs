@@ -194,8 +194,16 @@ namespace Windowless {
         void lifeSpanHandler_OnAfterCreated(object sender, Chromium.Event.CfxOnAfterCreatedEventArgs e) {
             browser = e.Browser;
             browser.MainFrame.LoadUrl("about:version");
+            if(Focused) {
+                browser.Host.SendFocusEvent(true);
+            }
         }
 
+        protected override void OnGotFocus(EventArgs e) {
+            if(browser != null) {
+                browser.Host.SendFocusEvent(true);
+            }
+        }
 
         // control overrides
 
@@ -254,6 +262,7 @@ namespace Windowless {
                         t = CfxMouseButtonType.Left;
                         break;
                 }
+                browser.Host.SendFocusEvent(true);
                 browser.Host.SendMouseClickEvent(mouseEventProxy, t, false, e.Clicks);
             }
         }
@@ -273,6 +282,21 @@ namespace Windowless {
                         break;
                 }
                 browser.Host.SendMouseClickEvent(mouseEventProxy, t, true, e.Clicks);
+            }
+        }
+
+        // key events
+        // this is not complete
+
+        protected override void OnKeyPress(KeyPressEventArgs e) {
+            if(e.KeyChar == 7) {
+                // ctrl+g - load google so we have a page with text input
+                browser.MainFrame.LoadUrl("https://www.google.com");
+            } else {
+                var k = new CfxKeyEvent();
+                k.WindowsKeyCode = e.KeyChar;
+                k.Type = CfxKeyEventType.Char;
+                browser.Host.SendKeyEvent(k);
             }
         }
     }
