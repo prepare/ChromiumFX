@@ -211,5 +211,10 @@ namespace Chromium {
                 handles[ih++] = hValue;
             }
         }
+
+        internal static void CopyCfxStringList(List<string> source, List<string> target) {
+            target.Clear();
+            target.AddRange(source);
+        }
     }
 }

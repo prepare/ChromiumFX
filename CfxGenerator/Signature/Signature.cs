@@ -389,6 +389,8 @@ public class Signature {
         foreach(var arg in ManagedArguments) {
             if(arg.ArgumentType.IsOut) {
                 arg.EmitPostRemoteCallStatements(b);
+            } else if(arg.ArgumentType.IsStringCollectionType && Owner.CefName.Contains("::get_")) {
+                arg.EmitPostRemoteCallStatements(b);
             }
         }
 
@@ -432,6 +434,8 @@ public class Signature {
         var outArgs = new List<Argument>();
         foreach(var arg in ManagedArguments) {
             if(arg.ArgumentType.IsOut) {
+                outArgs.Add(arg);
+            } else if(arg.ArgumentType.IsStringCollectionType && Owner.CefName.Contains("::get_")) {
                 outArgs.Add(arg);
             }
         }

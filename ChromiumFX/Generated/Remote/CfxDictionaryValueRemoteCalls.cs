@@ -357,10 +357,12 @@ namespace Chromium.Remote {
         }
 
         protected override void WriteReturn(StreamHandler h) {
+            h.Write(keys);
             h.Write(__retval);
         }
 
         protected override void ReadReturn(StreamHandler h) {
+            h.Read(out keys);
             h.Read(out __retval);
         }
 

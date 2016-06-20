@@ -900,8 +900,7 @@ namespace Chromium.Remote {
             call.self = CfrObject.Unwrap(this);
             call.keys = keys;
             call.RequestExecution(this);
-            keys.Clear();
-            call.keys.ForEach(s => keys.Add(s));
+            StringFunctions.CopyCfxStringList(call.keys, keys);
             return call.__retval;
         }
 
