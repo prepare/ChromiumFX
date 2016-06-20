@@ -77,12 +77,13 @@ namespace CfxTestApplication {
             this.executeSleepFunctionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toggleFindToolbarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.evaluateJavascriptSynchronouslyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.executeArrayTestFunctionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.WebBrowser = new Chromium.WebBrowser.ChromiumWebBrowser();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.LogTextBox = new System.Windows.Forms.TextBox();
-            this.executeArrayTestFunctionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listKeysInDocumentObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -236,7 +237,8 @@ namespace CfxTestApplication {
             this.executeSleepFunctionToolStripMenuItem,
             this.toggleFindToolbarToolStripMenuItem,
             this.evaluateJavascriptSynchronouslyToolStripMenuItem,
-            this.executeArrayTestFunctionToolStripMenuItem});
+            this.executeArrayTestFunctionToolStripMenuItem,
+            this.listKeysInDocumentObjectToolStripMenuItem});
             this.miscDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("miscDropDownButton.Image")));
             this.miscDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.miscDropDownButton.Name = "miscDropDownButton";
@@ -292,6 +294,13 @@ namespace CfxTestApplication {
             this.evaluateJavascriptSynchronouslyToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             this.evaluateJavascriptSynchronouslyToolStripMenuItem.Text = "EvaluateJavascript Synchronously";
             this.evaluateJavascriptSynchronouslyToolStripMenuItem.Click += new System.EventHandler(this.evaluateJavascriptSynchronouslyToolStripMenuItem_Click);
+            // 
+            // executeArrayTestFunctionToolStripMenuItem
+            // 
+            this.executeArrayTestFunctionToolStripMenuItem.Name = "executeArrayTestFunctionToolStripMenuItem";
+            this.executeArrayTestFunctionToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.executeArrayTestFunctionToolStripMenuItem.Text = "Execute Array Test Function";
+            this.executeArrayTestFunctionToolStripMenuItem.Click += new System.EventHandler(this.executeArrayTestFunctionToolStripMenuItem_Click);
             // 
             // printButton
             // 
@@ -357,12 +366,12 @@ namespace CfxTestApplication {
             this.LogTextBox.Size = new System.Drawing.Size(1441, 166);
             this.LogTextBox.TabIndex = 0;
             // 
-            // executeArrayTestFunctionToolStripMenuItem
+            // listKeysInDocumentObjectToolStripMenuItem
             // 
-            this.executeArrayTestFunctionToolStripMenuItem.Name = "executeArrayTestFunctionToolStripMenuItem";
-            this.executeArrayTestFunctionToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
-            this.executeArrayTestFunctionToolStripMenuItem.Text = "Execute Array Test Function";
-            this.executeArrayTestFunctionToolStripMenuItem.Click += new System.EventHandler(this.executeArrayTestFunctionToolStripMenuItem_Click);
+            this.listKeysInDocumentObjectToolStripMenuItem.Name = "listKeysInDocumentObjectToolStripMenuItem";
+            this.listKeysInDocumentObjectToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.listKeysInDocumentObjectToolStripMenuItem.Text = "List keys in document object";
+            this.listKeysInDocumentObjectToolStripMenuItem.Click += new System.EventHandler(this.listKeysInDocumentObjectToolStripMenuItem_Click);
             // 
             // BrowserForm
             // 
@@ -417,5 +426,6 @@ namespace CfxTestApplication {
         private System.Windows.Forms.ToolStripMenuItem toggleFindToolbarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem evaluateJavascriptSynchronouslyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem executeArrayTestFunctionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem listKeysInDocumentObjectToolStripMenuItem;
     }
 }

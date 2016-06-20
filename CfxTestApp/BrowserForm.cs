@@ -40,6 +40,7 @@ using Chromium.Remote;
 using Chromium.Remote.Event;
 using Chromium.WebBrowser;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace CfxTestApplication {
     public partial class BrowserForm : Form {
@@ -87,6 +88,18 @@ namespace CfxTestApplication {
                     LogWriteLine("Array test function works: v0 = {0}, v1 = {1}", v0.IntValue, v1.IntValue);
                 } else {
                     LogWriteLine("Array test function: array is broken.");
+                }
+            };
+
+            // related to pull request #1
+            WebBrowser.GlobalObject.AddFunction("ListKeysInDocumentObject").Execute += (s, e1) => {
+                var doc = e1.Arguments[0];
+                List<string> keys = new List<string>();
+                if(doc.GetKeys(keys)) {
+                    LogWriteLine("document has {0} keys:", keys.Count);
+                    keys.ForEach(k => LogWriteLine(k));
+                } else {
+                    LogWriteLine("GetKeys returned false.");
                 }
             };
 
@@ -527,6 +540,10 @@ namespace CfxTestApplication {
         private void executeArrayTestFunctionToolStripMenuItem_Click(object sender, EventArgs e) {
             // Related to issue #65
             WebBrowser.ExecuteJavascript("ArrayTestCallback([document.body.scrollWidth, document.body.scrollHeight])");
+        }
+
+        private void listKeysInDocumentObjectToolStripMenuItem_Click(object sender, EventArgs e) {
+            WebBrowser.ExecuteJavascript("ListKeysInDocumentObject(document)");
         }
     }
 }
