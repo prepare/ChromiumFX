@@ -61,6 +61,13 @@ static int cfx_clear_scheme_handler_factories() {
     return cef_clear_scheme_handler_factories();
 }
 
+// CEF_EXPORT cef_request_context_t* cef_create_context_shared(cef_request_context_t* other, cef_request_context_handler_t* handler);
+static cef_request_context_t* cfx_create_context_shared(cef_request_context_t* other, cef_request_context_handler_t* handler) {
+    if(other) ((cef_base_t*)other)->add_ref((cef_base_t*)other);
+    if(handler) ((cef_base_t*)handler)->add_ref((cef_base_t*)handler);
+    return cef_create_context_shared(other, handler);
+}
+
 // CEF_EXPORT int cef_create_url(const cef_urlparts_t* parts, cef_string_t* url);
 static int cfx_create_url(const cef_urlparts_t* parts, char16 **url_str, int *url_length) {
     cef_string_t url = { *url_str, *url_length, 0 };

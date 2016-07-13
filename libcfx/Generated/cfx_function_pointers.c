@@ -31,12 +31,13 @@
 // Generated file. Do not edit.
 
 
-static void* cfx_function_pointers[1345] =  {
+static void* cfx_function_pointers[1347] =  {
     (void*)cfx_add_cross_origin_whitelist_entry,
     (void*)cfx_api_hash,
     (void*)cfx_begin_tracing,
     (void*)cfx_clear_cross_origin_whitelist,
     (void*)cfx_clear_scheme_handler_factories,
+    (void*)cfx_create_context_shared,
     (void*)cfx_create_url,
     (void*)cfx_currently_on,
     (void*)cfx_do_message_loop_work,
@@ -150,6 +151,7 @@ static void* cfx_function_pointers[1345] =  {
     (void*)cfx_browser_host_stop_finding,
     (void*)cfx_browser_host_show_dev_tools,
     (void*)cfx_browser_host_close_dev_tools,
+    (void*)cfx_browser_host_has_dev_tools,
     (void*)cfx_browser_host_get_navigation_entries,
     (void*)cfx_browser_host_set_mouse_cursor_change_disabled,
     (void*)cfx_browser_host_is_mouse_cursor_change_disabled,

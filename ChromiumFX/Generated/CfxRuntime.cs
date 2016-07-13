@@ -150,6 +150,18 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Creates a new context object that shares storage with |other| and uses an
+        /// optional |handler|.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
+        /// </remarks>
+        public static CfxRequestContext CreateContextShared(CfxRequestContext other, CfxRequestContextHandler handler) {
+            return CfxRequestContext.Wrap(CfxApi.cfx_create_context_shared(CfxRequestContext.Unwrap(other), CfxRequestContextHandler.Unwrap(handler)));
+        }
+
+        /// <summary>
         /// Creates a URL from the specified |parts|, which must contain a non-NULL spec
         /// or a non-NULL host and path (at a minimum), but not both. Returns false (0)
         /// if |parts| isn't initialized as described.

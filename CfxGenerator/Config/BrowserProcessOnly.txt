@@ -10,8 +10,10 @@ cef_browser::get_host
 cef_build_revision
 cef_clear_cross_origin_whitelist
 cef_clear_scheme_handler_factories
+cef_create_context_shared
 cef_create_url
 cef_do_message_loop_work
+cef_enable_highdpi_support
 cef_end_tracing
 cef_end_tracing_async
 cef_force_web_plugin_shutdown
@@ -45,4 +47,3 @@ cef_uriencode
 cef_version_info
 cef_visit_web_plugin_info
 cef_write_json
-cef_enable_highdpi_support

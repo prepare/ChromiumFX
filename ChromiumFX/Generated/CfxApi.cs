@@ -60,6 +60,10 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate int cfx_clear_scheme_handler_factories_delegate();
         public static cfx_clear_scheme_handler_factories_delegate cfx_clear_scheme_handler_factories;
+        // CEF_EXPORT cef_request_context_t* cef_create_context_shared(cef_request_context_t* other, cef_request_context_handler_t* handler);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate IntPtr cfx_create_context_shared_delegate(IntPtr other, IntPtr handler);
+        public static cfx_create_context_shared_delegate cfx_create_context_shared;
         // CEF_EXPORT int cef_create_url(const cef_urlparts_t* parts, cef_string_t* url);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate int cfx_create_url_delegate(IntPtr parts, ref IntPtr url_str, ref int url_length);
@@ -681,6 +685,11 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_browser_host_close_dev_tools_delegate(IntPtr self);
         public static cfx_browser_host_close_dev_tools_delegate cfx_browser_host_close_dev_tools;
+
+        // static int cfx_browser_host_has_dev_tools(cef_browser_host_t* self)
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+        public delegate int cfx_browser_host_has_dev_tools_delegate(IntPtr self);
+        public static cfx_browser_host_has_dev_tools_delegate cfx_browser_host_has_dev_tools;
 
         // static void cfx_browser_host_get_navigation_entries(cef_browser_host_t* self, cef_navigation_entry_visitor_t* visitor, int current_only)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]

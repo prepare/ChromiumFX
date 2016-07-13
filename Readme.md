@@ -51,6 +51,10 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2704.1 ###
+- Some fixes and updates in sample code.
+- Update to CEF 3.2704.1434 with API changes.
+
 ### Version 3.2704.0 ###
 - Issue #65 seems to take some time to get fixed upstream, so I decided to move on since 3.2526 is quite outdated. The test in the test application that triggers issue #65 has been "fixed" with a warning. Another warning was added to ChromiumWebBrowser.EvaluateJavascript. It is kind of possible to work around this issue using ExecuteJavascript instead of EvaluateJavascript (see the new test "ArrayTestFunction" in the test application's misc menu).
 - CEF has a new "Views" API. ChromiumFX does not yet implement that new API.

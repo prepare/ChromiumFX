@@ -41,6 +41,7 @@ namespace Chromium {
             cfx_begin_tracing,
             cfx_clear_cross_origin_whitelist,
             cfx_clear_scheme_handler_factories,
+            cfx_create_context_shared,
             cfx_create_url,
             cfx_currently_on,
             cfx_do_message_loop_work,
@@ -154,6 +155,7 @@ namespace Chromium {
             cfx_browser_host_stop_finding,
             cfx_browser_host_show_dev_tools,
             cfx_browser_host_close_dev_tools,
+            cfx_browser_host_has_dev_tools,
             cfx_browser_host_get_navigation_entries,
             cfx_browser_host_set_mouse_cursor_change_disabled,
             cfx_browser_host_is_mouse_cursor_change_disabled,
@@ -1389,6 +1391,7 @@ namespace Chromium {
             CfxApi.cfx_begin_tracing = (CfxApi.cfx_begin_tracing_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_begin_tracing, typeof(CfxApi.cfx_begin_tracing_delegate));
             CfxApi.cfx_clear_cross_origin_whitelist = (CfxApi.cfx_clear_cross_origin_whitelist_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_clear_cross_origin_whitelist, typeof(CfxApi.cfx_clear_cross_origin_whitelist_delegate));
             CfxApi.cfx_clear_scheme_handler_factories = (CfxApi.cfx_clear_scheme_handler_factories_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_clear_scheme_handler_factories, typeof(CfxApi.cfx_clear_scheme_handler_factories_delegate));
+            CfxApi.cfx_create_context_shared = (CfxApi.cfx_create_context_shared_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_create_context_shared, typeof(CfxApi.cfx_create_context_shared_delegate));
             CfxApi.cfx_create_url = (CfxApi.cfx_create_url_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_create_url, typeof(CfxApi.cfx_create_url_delegate));
             CfxApi.cfx_currently_on = (CfxApi.cfx_currently_on_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_currently_on, typeof(CfxApi.cfx_currently_on_delegate));
             CfxApi.cfx_do_message_loop_work = (CfxApi.cfx_do_message_loop_work_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_do_message_loop_work, typeof(CfxApi.cfx_do_message_loop_work_delegate));
@@ -1581,6 +1584,7 @@ namespace Chromium {
             CfxApi.cfx_browser_host_stop_finding = (CfxApi.cfx_browser_host_stop_finding_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_stop_finding, typeof(CfxApi.cfx_browser_host_stop_finding_delegate));
             CfxApi.cfx_browser_host_show_dev_tools = (CfxApi.cfx_browser_host_show_dev_tools_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_show_dev_tools, typeof(CfxApi.cfx_browser_host_show_dev_tools_delegate));
             CfxApi.cfx_browser_host_close_dev_tools = (CfxApi.cfx_browser_host_close_dev_tools_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_close_dev_tools, typeof(CfxApi.cfx_browser_host_close_dev_tools_delegate));
+            CfxApi.cfx_browser_host_has_dev_tools = (CfxApi.cfx_browser_host_has_dev_tools_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_has_dev_tools, typeof(CfxApi.cfx_browser_host_has_dev_tools_delegate));
             CfxApi.cfx_browser_host_get_navigation_entries = (CfxApi.cfx_browser_host_get_navigation_entries_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_get_navigation_entries, typeof(CfxApi.cfx_browser_host_get_navigation_entries_delegate));
             CfxApi.cfx_browser_host_set_mouse_cursor_change_disabled = (CfxApi.cfx_browser_host_set_mouse_cursor_change_disabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_set_mouse_cursor_change_disabled, typeof(CfxApi.cfx_browser_host_set_mouse_cursor_change_disabled_delegate));
             CfxApi.cfx_browser_host_is_mouse_cursor_change_disabled = (CfxApi.cfx_browser_host_is_mouse_cursor_change_disabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_host_is_mouse_cursor_change_disabled, typeof(CfxApi.cfx_browser_host_is_mouse_cursor_change_disabled_delegate));
