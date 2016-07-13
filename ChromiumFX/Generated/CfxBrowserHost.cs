@@ -208,6 +208,20 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Returns true (1) if this browser currently has an associated DevTools
+        /// browser. Must be called on the browser process UI thread.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
+        public bool HasDevTools {
+            get {
+                return 0 != CfxApi.cfx_browser_host_has_dev_tools(NativePtr);
+            }
+        }
+
+        /// <summary>
         /// Returns true (1) if mouse cursor change is disabled.
         /// </summary>
         /// <remarks>
@@ -443,10 +457,13 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Open developer tools in its own window. If |inspectElementAt| is non-
-        /// NULL the element at the specified (x,y) location will be inspected. The
-        /// |windowInfo| parameter will be ignored if this browser is wrapped in a
-        /// CfxBrowserView.
+        /// Open developer tools (DevTools) in its own browser. The DevTools browser
+        /// will remain associated with this browser. If the DevTools browser is
+        /// already open then it will be focused, in which case the |windowInfo|,
+        /// |client| and |settings| parameters will be ignored. If |inspectElementAt|
+        /// is non-NULL then the element at the specified (x,y) location will be
+        /// inspected. The |windowInfo| parameter will be ignored if this browser is
+        /// wrapped in a CfxBrowserView.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -457,8 +474,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Explicitly close the developer tools window if one exists for this browser
-        /// instance.
+        /// Explicitly close the associated DevTools browser, if any.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

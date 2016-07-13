@@ -157,6 +157,11 @@ static void cfx_browser_host_close_dev_tools(cef_browser_host_t* self) {
     self->close_dev_tools(self);
 }
 
+// has_dev_tools
+static int cfx_browser_host_has_dev_tools(cef_browser_host_t* self) {
+    return self->has_dev_tools(self);
+}
+
 // get_navigation_entries
 static void cfx_browser_host_get_navigation_entries(cef_browser_host_t* self, cef_navigation_entry_visitor_t* visitor, int current_only) {
     if(visitor) ((cef_base_t*)visitor)->add_ref((cef_base_t*)visitor);

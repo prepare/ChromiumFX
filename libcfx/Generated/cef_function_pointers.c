@@ -36,6 +36,7 @@ static const char* (*cef_api_hash_ptr)(int entry);
 static int (*cef_begin_tracing_ptr)(const cef_string_t* categories, cef_completion_callback_t* callback);
 static int (*cef_clear_cross_origin_whitelist_ptr)();
 static int (*cef_clear_scheme_handler_factories_ptr)();
+static cef_request_context_t* (*cef_create_context_shared_ptr)(cef_request_context_t* other, cef_request_context_handler_t* handler);
 static int (*cef_create_url_ptr)(const cef_urlparts_t* parts, cef_string_t* url);
 static int (*cef_currently_on_ptr)(cef_thread_id_t threadId);
 static void (*cef_do_message_loop_work_ptr)();
@@ -151,6 +152,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_begin_tracing_ptr = (int (*)(const cef_string_t*, cef_completion_callback_t*))cfx_platform_get_fptr(libcef, "cef_begin_tracing");
     cef_clear_cross_origin_whitelist_ptr = (int (*)())cfx_platform_get_fptr(libcef, "cef_clear_cross_origin_whitelist");
     cef_clear_scheme_handler_factories_ptr = (int (*)())cfx_platform_get_fptr(libcef, "cef_clear_scheme_handler_factories");
+    cef_create_context_shared_ptr = (cef_request_context_t* (*)(cef_request_context_t*, cef_request_context_handler_t*))cfx_platform_get_fptr(libcef, "cef_create_context_shared");
     cef_create_url_ptr = (int (*)(const cef_urlparts_t*, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_create_url");
     cef_currently_on_ptr = (int (*)(cef_thread_id_t))cfx_platform_get_fptr(libcef, "cef_currently_on");
     cef_do_message_loop_work_ptr = (void (*)())cfx_platform_get_fptr(libcef, "cef_do_message_loop_work");
@@ -267,6 +269,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_begin_tracing cef_begin_tracing_ptr
 #define cef_clear_cross_origin_whitelist cef_clear_cross_origin_whitelist_ptr
 #define cef_clear_scheme_handler_factories cef_clear_scheme_handler_factories_ptr
+#define cef_create_context_shared cef_create_context_shared_ptr
 #define cef_create_url cef_create_url_ptr
 #define cef_currently_on cef_currently_on_ptr
 #define cef_do_message_loop_work cef_do_message_loop_work_ptr
