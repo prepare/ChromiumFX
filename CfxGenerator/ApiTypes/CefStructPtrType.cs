@@ -72,6 +72,14 @@ public class CefStructPtrType : ApiType {
         return string.Format("RemoteProxy.Wrap({0})", CSharp.Escape(var));
     }
 
+    public override string ProxyReturnExpression(string var) {
+        return var;
+    }
+
+    public override string ProxyCallArgument(string var) {
+        return CSharp.Escape(var);
+    }
+
     public override string RemoteUnwrapExpression(string var) {
         return string.Format("CfrObject.Unwrap({0})", CSharp.Escape(var));
     }
@@ -101,6 +109,13 @@ public class CefStructPtrType : ApiType {
     public override void EmitPublicEventArgFields(CodeBuilder b, string var) {
         base.EmitPublicEventArgFields(b, var);
         b.AppendLine("internal {0} m_{1}_wrapped;", PublicSymbol, var);
+    }
+
+    public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
+        if(var == "this")
+            b.AppendLine("call.@this = proxyId;");
+        else
+            b.AppendLine("call.{0} = CfrObject.Unwrap({0});", CSharp.Escape(var));
     }
 
     public override string PInvokeSymbol {

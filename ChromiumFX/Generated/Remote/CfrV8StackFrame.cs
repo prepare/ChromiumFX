@@ -77,7 +77,7 @@ namespace Chromium.Remote {
         public bool IsValid {
             get {
                 var call = new CfxV8StackFrameIsValidRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -93,7 +93,7 @@ namespace Chromium.Remote {
         public string ScriptName {
             get {
                 var call = new CfxV8StackFrameGetScriptNameRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -111,7 +111,7 @@ namespace Chromium.Remote {
         public string ScriptNameOrSourceUrl {
             get {
                 var call = new CfxV8StackFrameGetScriptNameOrSourceUrlRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -127,7 +127,7 @@ namespace Chromium.Remote {
         public string FunctionName {
             get {
                 var call = new CfxV8StackFrameGetFunctionNameRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -143,7 +143,7 @@ namespace Chromium.Remote {
         public int LineNumber {
             get {
                 var call = new CfxV8StackFrameGetLineNumberRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -160,7 +160,7 @@ namespace Chromium.Remote {
         public int Column {
             get {
                 var call = new CfxV8StackFrameGetColumnRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -176,7 +176,7 @@ namespace Chromium.Remote {
         public bool IsEval {
             get {
                 var call = new CfxV8StackFrameIsEvalRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -192,7 +192,7 @@ namespace Chromium.Remote {
         public bool IsConstructor {
             get {
                 var call = new CfxV8StackFrameIsConstructorRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }

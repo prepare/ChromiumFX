@@ -51,7 +51,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = RemoteProxy.Wrap(CfxPostDataElement.Create());
+            __retval = CfxApi.cfx_post_data_element_create();
         }
     }
 
@@ -60,15 +60,15 @@ namespace Chromium.Remote {
         internal CfxPostDataElementIsReadOnlyRenderProcessCall()
             : base(RemoteCallId.CfxPostDataElementIsReadOnlyRenderProcessCall) {}
 
-        internal IntPtr self;
+        internal IntPtr @this;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
+            h.Write(@this);
         }
 
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
+            h.Read(out @this);
         }
 
         protected override void WriteReturn(StreamHandler h) {
@@ -80,8 +80,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxPostDataElement)RemoteProxy.Unwrap(self);
-            __retval = self_local.IsReadOnly;
+            __retval = 0 != CfxApi.cfx_post_data_element_is_read_only(@this);
         }
     }
 
@@ -90,19 +89,18 @@ namespace Chromium.Remote {
         internal CfxPostDataElementSetToEmptyRenderProcessCall()
             : base(RemoteCallId.CfxPostDataElementSetToEmptyRenderProcessCall) {}
 
-        internal IntPtr self;
+        internal IntPtr @this;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
+            h.Write(@this);
         }
 
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
+            h.Read(out @this);
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxPostDataElement)RemoteProxy.Unwrap(self);
-            self_local.SetToEmpty();
+            CfxApi.cfx_post_data_element_set_to_empty(@this);
         }
     }
 
@@ -111,22 +109,23 @@ namespace Chromium.Remote {
         internal CfxPostDataElementSetToFileRenderProcessCall()
             : base(RemoteCallId.CfxPostDataElementSetToFileRenderProcessCall) {}
 
-        internal IntPtr self;
+        internal IntPtr @this;
         internal string fileName;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
+            h.Write(@this);
             h.Write(fileName);
         }
 
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
+            h.Read(out @this);
             h.Read(out fileName);
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxPostDataElement)RemoteProxy.Unwrap(self);
-            self_local.SetToFile(fileName);
+            var fileName_pinned = new PinnedString(fileName);
+            CfxApi.cfx_post_data_element_set_to_file(@this, fileName_pinned.Obj.PinnedPtr, fileName_pinned.Length);
+            fileName_pinned.Obj.Free();
         }
     }
 
@@ -135,25 +134,24 @@ namespace Chromium.Remote {
         internal CfxPostDataElementSetToBytesRenderProcessCall()
             : base(RemoteCallId.CfxPostDataElementSetToBytesRenderProcessCall) {}
 
-        internal IntPtr self;
+        internal IntPtr @this;
         internal int size;
         internal IntPtr bytes;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
+            h.Write(@this);
             h.Write(size);
             h.Write(bytes);
         }
 
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
+            h.Read(out @this);
             h.Read(out size);
             h.Read(out bytes);
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxPostDataElement)RemoteProxy.Unwrap(self);
-            self_local.SetToBytes(size, bytes);
+            CfxApi.cfx_post_data_element_set_to_bytes(@this, size, bytes);
         }
     }
 
@@ -162,15 +160,15 @@ namespace Chromium.Remote {
         internal CfxPostDataElementGetTypeRenderProcessCall()
             : base(RemoteCallId.CfxPostDataElementGetTypeRenderProcessCall) {}
 
-        internal IntPtr self;
+        internal IntPtr @this;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
+            h.Write(@this);
         }
 
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
+            h.Read(out @this);
         }
 
         protected override void WriteReturn(StreamHandler h) {
@@ -182,8 +180,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxPostDataElement)RemoteProxy.Unwrap(self);
-            __retval = (int)self_local.Type;
+            __retval = CfxApi.cfx_post_data_element_get_type(@this);
         }
     }
 
@@ -192,15 +189,15 @@ namespace Chromium.Remote {
         internal CfxPostDataElementGetFileRenderProcessCall()
             : base(RemoteCallId.CfxPostDataElementGetFileRenderProcessCall) {}
 
-        internal IntPtr self;
+        internal IntPtr @this;
         internal string __retval;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
+            h.Write(@this);
         }
 
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
+            h.Read(out @this);
         }
 
         protected override void WriteReturn(StreamHandler h) {
@@ -212,8 +209,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxPostDataElement)RemoteProxy.Unwrap(self);
-            __retval = self_local.File;
+            __retval = StringFunctions.ConvertStringUserfree(CfxApi.cfx_post_data_element_get_file(@this));
         }
     }
 
@@ -222,15 +218,15 @@ namespace Chromium.Remote {
         internal CfxPostDataElementGetBytesCountRenderProcessCall()
             : base(RemoteCallId.CfxPostDataElementGetBytesCountRenderProcessCall) {}
 
-        internal IntPtr self;
+        internal IntPtr @this;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
+            h.Write(@this);
         }
 
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
+            h.Read(out @this);
         }
 
         protected override void WriteReturn(StreamHandler h) {
@@ -242,8 +238,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxPostDataElement)RemoteProxy.Unwrap(self);
-            __retval = self_local.BytesCount;
+            __retval = CfxApi.cfx_post_data_element_get_bytes_count(@this);
         }
     }
 
@@ -252,19 +247,19 @@ namespace Chromium.Remote {
         internal CfxPostDataElementGetBytesRenderProcessCall()
             : base(RemoteCallId.CfxPostDataElementGetBytesRenderProcessCall) {}
 
-        internal IntPtr self;
+        internal IntPtr @this;
         internal int size;
         internal IntPtr bytes;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
+            h.Write(@this);
             h.Write(size);
             h.Write(bytes);
         }
 
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
+            h.Read(out @this);
             h.Read(out size);
             h.Read(out bytes);
         }
@@ -278,8 +273,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxPostDataElement)RemoteProxy.Unwrap(self);
-            __retval = self_local.GetBytes(size, bytes);
+            __retval = CfxApi.cfx_post_data_element_get_bytes(@this, size, bytes);
         }
     }
 

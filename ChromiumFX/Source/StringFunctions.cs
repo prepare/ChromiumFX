@@ -78,11 +78,7 @@ namespace Chromium {
 
         // used in api calls to set and get data
         internal static IntPtr UnwrapCfxStringList(List<string> list, out PinnedString[] handles) {
-
-            var target = CfxApi.cfx_string_list_alloc();
-            if(target == IntPtr.Zero)
-                throw new OutOfMemoryException();
-
+            var target = AllocCfxStringList();
             CfxStringListCopyToNative(list, target, out handles);
             return target;
         }
@@ -94,10 +90,7 @@ namespace Chromium {
 
         // used in api call to get data
         internal static IntPtr UnwrapCfxStringMap(List<string[]> map, out PinnedString[] handles) {
-            var target = CfxApi.cfx_string_map_alloc();
-            if(target == IntPtr.Zero)
-                throw new OutOfMemoryException();
-
+            var target = AllocCfxStringMap();
             CfxStringMapCopyToNative(map, target, out handles);
             return target;
         }
@@ -109,16 +102,46 @@ namespace Chromium {
 
         // used in api calls to set and get data
         internal static IntPtr UnwrapCfxStringMultimap(List<string[]> map, out PinnedString[] handles) {
-            var target = CfxApi.cfx_string_multimap_alloc();
-            if(target == IntPtr.Zero)
-                throw new OutOfMemoryException();
-
+            var target = AllocCfxStringMultimap();
             CfxStringMultimapCopyToNative(map, target, out handles);
             return target;
         }
 
         internal static void FreePinnedStrings(PinnedString[] handles) {
             foreach(var h in handles) h.Obj.Free();
+        }
+
+        internal static IntPtr AllocCfxStringList() {
+            var target = CfxApi.cfx_string_list_alloc();
+            if(target == IntPtr.Zero)
+                throw new OutOfMemoryException();
+            return target;
+        }
+
+        internal static void FreeCfxStringList(IntPtr ptr) {
+            CfxApi.cfx_string_list_free(ptr);
+        }
+
+        internal static IntPtr AllocCfxStringMap() {
+            var target = CfxApi.cfx_string_map_alloc();
+            if(target == IntPtr.Zero)
+                throw new OutOfMemoryException();
+            return target;
+        }
+
+        internal static void FreeCfxStringMap(IntPtr ptr) {
+            CfxApi.cfx_string_map_free(ptr);
+        }
+
+        internal static IntPtr AllocCfxStringMultimap() {
+            var target = CfxApi.cfx_string_multimap_alloc();
+            if(target == IntPtr.Zero)
+                throw new OutOfMemoryException();
+            return target;
+        }
+
+        internal static void FreeCfxStringMultimap(IntPtr ptr) {
+            CfxApi.cfx_string_multimap_free(ptr);
         }
 
         internal static void CfxStringListCopyToManaged(IntPtr source, List<string> target) {

@@ -260,6 +260,16 @@ public class Signature {
         }
     }
 
+    public string ProxyArgumentList {
+        get {
+            Debug.Assert(Type == SignatureType.LibraryCall);
+            foreach(var arg in ManagedArguments) {
+                args.Add(arg.ProxyCallArgument);
+            }
+            return args.Join();
+        }
+    }
+
     public virtual string PublicFunctionHeader(string functionName) {
         return string.Format("{0} {1}({2})", PublicReturnType.PublicSymbol, functionName, PublicParameterList);
     }
@@ -303,47 +313,20 @@ public class Signature {
     }
 
     protected virtual void EmitExecuteInTargetProcess(CodeBuilder b) {
-        switch(Owner.CallMode) {
-            case CfxCallMode.FunctionCall:
 
-                foreach(var arg in ManagedArguments) {
-                    if(!arg.IsThisArgument) {
-                        arg.EmitPreProxyCallStatements(b);
-                        args.Add(arg.ProxyCallArgument);
-                    }
-                }
+        for(var i = 0; i <= ManagedArguments.Length - 1; i++) {
+            ManagedArguments[i].EmitPreProxyCallStatements(b);
+        }
 
-                string fCall = null;
-                if(ManagedArguments.Length > 0 && ManagedArguments[0].IsThisArgument) {
-                    b.AppendLine("var self_local = ({0})RemoteProxy.Unwrap(self);", ManagedArguments[0].ArgumentType.PublicSymbol);
-                    fCall = string.Format("self_local.{0}({1})", Owner.PublicFunctionName, args.Join());
-                } else {
-                    fCall = string.Format("{0}.{1}({2})", Owner.PublicClassName, Owner.PublicFunctionName, args.Join());
-                }
+        var apiCall = string.Format("CfxApi.{0}({1})", Owner.CfxApiFunctionName, ProxyArgumentList);
+        if(PublicReturnType.IsVoid) {
+            b.AppendLine(apiCall + ";");
+        } else {
+            b.AppendLine("__retval = {0};", PublicReturnType.ProxyReturnExpression(apiCall));
+        }
 
-                if(!PublicReturnType.IsVoid) {
-                    b.AppendLine("__retval = {0};", PublicReturnType.ProxyWrapExpression(fCall));
-                } else {
-                    b.AppendLine(fCall + ";");
-                }
-
-                foreach(var arg in ManagedArguments) {
-                    if(!arg.IsThisArgument) {
-                        arg.EmitPostProxyCallStatements(b);
-                    }
-                }
-
-                break;
-
-            case CfxCallMode.PropertyGetter:
-                b.AppendLine("var self_local = ({0})RemoteProxy.Unwrap(self);", ManagedArguments[0].ArgumentType.PublicSymbol);
-                b.AppendLine("__retval = {0};", PublicReturnType.ProxyWrapExpression("self_local." + Owner.PropertyName));
-                break;
-
-            case CfxCallMode.PropertySetter:
-                b.AppendLine("var self_local = ({0})RemoteProxy.Unwrap(self);", ManagedArguments[0].ArgumentType.PublicSymbol);
-                b.AppendLine("self_local.{0} = {1};", Owner.PropertyName, ManagedArguments[1].ProxyCallArgument);
-                break;
+        for(var i = 0; i <= ManagedArguments.Length - 1; i++) {
+            ManagedArguments[i].EmitPostProxyCallStatements(b);
         }
     }
 

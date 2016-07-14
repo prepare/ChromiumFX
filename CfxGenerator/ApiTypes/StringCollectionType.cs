@@ -72,4 +72,10 @@ public class StringCollectionType : CefType {
     public override bool IsStringCollectionType {
         get { return true; }
     }
+
+    public override StringCollectionType AsStringCollectionType {
+        get {
+            return this;
+        }
+    }
 }

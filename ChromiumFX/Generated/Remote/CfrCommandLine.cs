@@ -106,7 +106,7 @@ namespace Chromium.Remote {
         public bool IsValid {
             get {
                 var call = new CfxCommandLineIsValidRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -123,7 +123,7 @@ namespace Chromium.Remote {
         public bool IsReadOnly {
             get {
                 var call = new CfxCommandLineIsReadOnlyRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -140,7 +140,7 @@ namespace Chromium.Remote {
         public string CommandLineString {
             get {
                 var call = new CfxCommandLineGetCommandLineStringRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -158,13 +158,13 @@ namespace Chromium.Remote {
         public string Program {
             get {
                 var call = new CfxCommandLineGetProgramRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
             set {
                 var call = new CfxCommandLineSetProgramRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.value = value;
                 call.RequestExecution(this);
             }
@@ -180,7 +180,7 @@ namespace Chromium.Remote {
         public bool HasSwitches {
             get {
                 var call = new CfxCommandLineHasSwitchesRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -196,7 +196,7 @@ namespace Chromium.Remote {
         public bool HasArguments {
             get {
                 var call = new CfxCommandLineHasArgumentsRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -211,7 +211,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrCommandLine Copy() {
             var call = new CfxCommandLineCopyRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.RequestExecution(this);
             return CfrCommandLine.Wrap(call.__retval);
         }
@@ -227,7 +227,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public void InitFromArgv(int argc, RemotePtr argv) {
             var call = new CfxCommandLineInitFromArgvRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.argc = argc;
             call.argv = argv.ptr;
             call.RequestExecution(this);
@@ -243,7 +243,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public void InitFromString(string commandLine) {
             var call = new CfxCommandLineInitFromStringRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.commandLine = commandLine;
             call.RequestExecution(this);
         }
@@ -258,7 +258,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public void Reset() {
             var call = new CfxCommandLineResetRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.RequestExecution(this);
         }
 
@@ -272,7 +272,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public System.Collections.Generic.List<string> GetArgv() {
             var call = new CfxCommandLineGetArgvRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.RequestExecution(this);
             return call.__retval;
         }
@@ -286,7 +286,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool HasSwitch(string name) {
             var call = new CfxCommandLineHasSwitchRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.name = name;
             call.RequestExecution(this);
             return call.__retval;
@@ -302,7 +302,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public string GetSwitchValue(string name) {
             var call = new CfxCommandLineGetSwitchValueRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.name = name;
             call.RequestExecution(this);
             return call.__retval;
@@ -318,7 +318,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public System.Collections.Generic.List<string[]> GetSwitches() {
             var call = new CfxCommandLineGetSwitchesRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.RequestExecution(this);
             return call.__retval;
         }
@@ -333,7 +333,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public void AppendSwitch(string name) {
             var call = new CfxCommandLineAppendSwitchRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.name = name;
             call.RequestExecution(this);
         }
@@ -347,7 +347,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public void AppendSwitchWithValue(string name, string value) {
             var call = new CfxCommandLineAppendSwitchWithValueRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.name = name;
             call.value = value;
             call.RequestExecution(this);
@@ -362,7 +362,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public System.Collections.Generic.List<string> GetArguments() {
             var call = new CfxCommandLineGetArgumentsRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.RequestExecution(this);
             return call.__retval;
         }
@@ -376,7 +376,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public void AppendArgument(string argument) {
             var call = new CfxCommandLineAppendArgumentRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.argument = argument;
             call.RequestExecution(this);
         }
@@ -391,7 +391,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public void PrependWrapper(string wrapper) {
             var call = new CfxCommandLinePrependWrapperRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.wrapper = wrapper;
             call.RequestExecution(this);
         }

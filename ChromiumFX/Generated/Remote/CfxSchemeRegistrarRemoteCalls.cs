@@ -40,7 +40,7 @@ namespace Chromium.Remote {
         internal CfxSchemeRegistrarAddCustomSchemeRenderProcessCall()
             : base(RemoteCallId.CfxSchemeRegistrarAddCustomSchemeRenderProcessCall) {}
 
-        internal IntPtr self;
+        internal IntPtr @this;
         internal string schemeName;
         internal bool isStandard;
         internal bool isLocal;
@@ -48,7 +48,7 @@ namespace Chromium.Remote {
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
+            h.Write(@this);
             h.Write(schemeName);
             h.Write(isStandard);
             h.Write(isLocal);
@@ -56,7 +56,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
+            h.Read(out @this);
             h.Read(out schemeName);
             h.Read(out isStandard);
             h.Read(out isLocal);
@@ -72,8 +72,9 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxSchemeRegistrar)RemoteProxy.Unwrap(self);
-            __retval = self_local.AddCustomScheme(schemeName, isStandard, isLocal, isDisplayIsolated);
+            var schemeName_pinned = new PinnedString(schemeName);
+            __retval = 0 != CfxApi.cfx_scheme_registrar_add_custom_scheme(@this, schemeName_pinned.Obj.PinnedPtr, schemeName_pinned.Length, isStandard ? 1 : 0, isLocal ? 1 : 0, isDisplayIsolated ? 1 : 0);
+            schemeName_pinned.Obj.Free();
         }
     }
 

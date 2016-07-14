@@ -48,6 +48,24 @@ public class BlittablePtrType : ApiType {
         get { return "IntPtr"; }
     }
 
+    public override string RemoteSymbol {
+        get {
+            return "RemotePtr";
+        }
+    }
+
+    public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
+        switch(RemoteSymbol) {
+            case "RemotePtr":
+                b.AppendLine("call.{0} = {0}.ptr;", CSharp.Escape(var));
+                return;
+            default:
+                base.EmitPreRemoteCallStatements(b, var);
+                return;
+        }
+
+    }
+
     private string[] _matches;
 
     public override string[] ParserMatches {

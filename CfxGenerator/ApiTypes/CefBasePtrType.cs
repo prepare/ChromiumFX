@@ -47,6 +47,15 @@ public class CefBasePtrType : ApiType {
         get { return "IntPtr"; }
     }
 
+    public override string RemoteSymbol {
+        get { return "RemotePtr"; }
+    }
+
+    public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
+        b.AppendLine("call.{0} = {0}.ptr;", CSharp.Escape(var));
+    }
+
+
     public override string PublicWrapExpression(string var) {
         return string.Format("CfxBase.Cast({0})", var);
     }
@@ -61,5 +70,13 @@ public class CefBasePtrType : ApiType {
 
     public override string ProxyUnwrapExpression(string var) {
         return string.Format("CfxBase.Cast({0})", var);
+    }
+
+    public override string ProxyReturnExpression(string var) {
+        return var;
+    }
+
+    public override string ProxyCallArgument(string var) {
+        return var;
     }
 }

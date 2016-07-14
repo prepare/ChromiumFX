@@ -106,6 +106,11 @@ public class CefStructType : CefType {
         return string.Format("{0}.WrapOwned({1})", ClassName, var);
     }
 
+    public override string ProxyReturnExpression(string var) {
+        // TODO: remote object must WrapOwned the ptr
+        return var;
+    }
+
     public override string PublicWrapExpression(string var) {
         return string.Format("{0}.Wrap({1})", ClassName, var);
     }

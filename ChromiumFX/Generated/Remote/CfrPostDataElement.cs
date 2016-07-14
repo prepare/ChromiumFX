@@ -85,7 +85,7 @@ namespace Chromium.Remote {
         public bool IsReadOnly {
             get {
                 var call = new CfxPostDataElementIsReadOnlyRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -101,7 +101,7 @@ namespace Chromium.Remote {
         public CfxPostdataElementType Type {
             get {
                 var call = new CfxPostDataElementGetTypeRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return (CfxPostdataElementType)call.__retval;
             }
@@ -117,7 +117,7 @@ namespace Chromium.Remote {
         public string File {
             get {
                 var call = new CfxPostDataElementGetFileRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -133,7 +133,7 @@ namespace Chromium.Remote {
         public int BytesCount {
             get {
                 var call = new CfxPostDataElementGetBytesCountRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -148,7 +148,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public void SetToEmpty() {
             var call = new CfxPostDataElementSetToEmptyRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.RequestExecution(this);
         }
 
@@ -161,7 +161,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public void SetToFile(string fileName) {
             var call = new CfxPostDataElementSetToFileRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.fileName = fileName;
             call.RequestExecution(this);
         }
@@ -176,7 +176,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public void SetToBytes(int size, RemotePtr bytes) {
             var call = new CfxPostDataElementSetToBytesRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.size = size;
             call.bytes = bytes.ptr;
             call.RequestExecution(this);
@@ -192,7 +192,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public int GetBytes(int size, RemotePtr bytes) {
             var call = new CfxPostDataElementGetBytesRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.size = size;
             call.bytes = bytes.ptr;
             call.RequestExecution(this);

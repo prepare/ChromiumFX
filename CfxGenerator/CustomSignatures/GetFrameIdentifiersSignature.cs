@@ -70,6 +70,15 @@ public class GetFrameIdentifiersSignature : Signature {
         b.AppendLine("return retval;");
     }
 
+    protected override void EmitExecuteInTargetProcess(CodeBuilder b) {
+        b.AppendLine("int identifiersCount = CfxApi.cfx_browser_get_frame_count(@this);");
+        b.AppendLine("__retval = new long[identifiersCount];");
+        b.AppendLine("if(identifiersCount == 0) return;");
+        b.AppendLine("var retval_p = new PinnedObject(__retval);");
+        b.AppendLine("CfxApi.cfx_browser_get_frame_identifiers(@this, identifiersCount, retval_p.PinnedPtr);");
+        b.AppendLine("retval_p.Free();");
+    }
+
     public override void DebugPrintUnhandledArrayArguments() {
     }
 }

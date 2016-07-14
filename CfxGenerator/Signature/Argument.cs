@@ -73,7 +73,7 @@ public class Argument {
     }
 
     public string ProxyVarName {
-        get { return IsThisArgument ? "self" : PublicVarName; }
+        get { return CSharp.Escape(PublicVarName); }
     }
 
     public string PublicPropertyName {

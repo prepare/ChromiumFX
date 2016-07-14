@@ -90,7 +90,7 @@ namespace Chromium.Remote {
         public bool IsValid {
             get {
                 var call = new CfxBinaryValueIsValidRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -106,7 +106,7 @@ namespace Chromium.Remote {
         public bool IsOwned {
             get {
                 var call = new CfxBinaryValueIsOwnedRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -122,7 +122,7 @@ namespace Chromium.Remote {
         public int Size {
             get {
                 var call = new CfxBinaryValueGetSizeRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -138,7 +138,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsSame(CfrBinaryValue that) {
             var call = new CfxBinaryValueIsSameRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.that = CfrObject.Unwrap(that);
             call.RequestExecution(this);
             return call.__retval;
@@ -154,7 +154,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsEqual(CfrBinaryValue that) {
             var call = new CfxBinaryValueIsEqualRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.that = CfrObject.Unwrap(that);
             call.RequestExecution(this);
             return call.__retval;
@@ -169,7 +169,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrBinaryValue Copy() {
             var call = new CfxBinaryValueCopyRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.RequestExecution(this);
             return CfrBinaryValue.Wrap(call.__retval);
         }
@@ -184,7 +184,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public int GetData(RemotePtr buffer, int bufferSize, int dataOffset) {
             var call = new CfxBinaryValueGetDataRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.buffer = buffer.ptr;
             call.bufferSize = bufferSize;
             call.dataOffset = dataOffset;

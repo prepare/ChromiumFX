@@ -63,7 +63,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = RemoteProxy.Wrap(CfxBinaryValue.Create(data, dataSize));
+            __retval = CfxApi.cfx_binary_value_create(data, dataSize);
         }
     }
 
@@ -72,15 +72,15 @@ namespace Chromium.Remote {
         internal CfxBinaryValueIsValidRenderProcessCall()
             : base(RemoteCallId.CfxBinaryValueIsValidRenderProcessCall) {}
 
-        internal IntPtr self;
+        internal IntPtr @this;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
+            h.Write(@this);
         }
 
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
+            h.Read(out @this);
         }
 
         protected override void WriteReturn(StreamHandler h) {
@@ -92,8 +92,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxBinaryValue)RemoteProxy.Unwrap(self);
-            __retval = self_local.IsValid;
+            __retval = 0 != CfxApi.cfx_binary_value_is_valid(@this);
         }
     }
 
@@ -102,15 +101,15 @@ namespace Chromium.Remote {
         internal CfxBinaryValueIsOwnedRenderProcessCall()
             : base(RemoteCallId.CfxBinaryValueIsOwnedRenderProcessCall) {}
 
-        internal IntPtr self;
+        internal IntPtr @this;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
+            h.Write(@this);
         }
 
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
+            h.Read(out @this);
         }
 
         protected override void WriteReturn(StreamHandler h) {
@@ -122,8 +121,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxBinaryValue)RemoteProxy.Unwrap(self);
-            __retval = self_local.IsOwned;
+            __retval = 0 != CfxApi.cfx_binary_value_is_owned(@this);
         }
     }
 
@@ -132,17 +130,17 @@ namespace Chromium.Remote {
         internal CfxBinaryValueIsSameRenderProcessCall()
             : base(RemoteCallId.CfxBinaryValueIsSameRenderProcessCall) {}
 
-        internal IntPtr self;
+        internal IntPtr @this;
         internal IntPtr that;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
+            h.Write(@this);
             h.Write(that);
         }
 
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
+            h.Read(out @this);
             h.Read(out that);
         }
 
@@ -155,8 +153,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxBinaryValue)RemoteProxy.Unwrap(self);
-            __retval = self_local.IsSame((CfxBinaryValue)RemoteProxy.Unwrap(that));
+            __retval = 0 != CfxApi.cfx_binary_value_is_same(@this, that);
         }
     }
 
@@ -165,17 +162,17 @@ namespace Chromium.Remote {
         internal CfxBinaryValueIsEqualRenderProcessCall()
             : base(RemoteCallId.CfxBinaryValueIsEqualRenderProcessCall) {}
 
-        internal IntPtr self;
+        internal IntPtr @this;
         internal IntPtr that;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
+            h.Write(@this);
             h.Write(that);
         }
 
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
+            h.Read(out @this);
             h.Read(out that);
         }
 
@@ -188,8 +185,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxBinaryValue)RemoteProxy.Unwrap(self);
-            __retval = self_local.IsEqual((CfxBinaryValue)RemoteProxy.Unwrap(that));
+            __retval = 0 != CfxApi.cfx_binary_value_is_equal(@this, that);
         }
     }
 
@@ -198,15 +194,15 @@ namespace Chromium.Remote {
         internal CfxBinaryValueCopyRenderProcessCall()
             : base(RemoteCallId.CfxBinaryValueCopyRenderProcessCall) {}
 
-        internal IntPtr self;
+        internal IntPtr @this;
         internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
+            h.Write(@this);
         }
 
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
+            h.Read(out @this);
         }
 
         protected override void WriteReturn(StreamHandler h) {
@@ -218,8 +214,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxBinaryValue)RemoteProxy.Unwrap(self);
-            __retval = RemoteProxy.Wrap(self_local.Copy());
+            __retval = CfxApi.cfx_binary_value_copy(@this);
         }
     }
 
@@ -228,15 +223,15 @@ namespace Chromium.Remote {
         internal CfxBinaryValueGetSizeRenderProcessCall()
             : base(RemoteCallId.CfxBinaryValueGetSizeRenderProcessCall) {}
 
-        internal IntPtr self;
+        internal IntPtr @this;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
+            h.Write(@this);
         }
 
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
+            h.Read(out @this);
         }
 
         protected override void WriteReturn(StreamHandler h) {
@@ -248,8 +243,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxBinaryValue)RemoteProxy.Unwrap(self);
-            __retval = self_local.Size;
+            __retval = CfxApi.cfx_binary_value_get_size(@this);
         }
     }
 
@@ -258,21 +252,21 @@ namespace Chromium.Remote {
         internal CfxBinaryValueGetDataRenderProcessCall()
             : base(RemoteCallId.CfxBinaryValueGetDataRenderProcessCall) {}
 
-        internal IntPtr self;
+        internal IntPtr @this;
         internal IntPtr buffer;
         internal int bufferSize;
         internal int dataOffset;
         internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(self);
+            h.Write(@this);
             h.Write(buffer);
             h.Write(bufferSize);
             h.Write(dataOffset);
         }
 
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out self);
+            h.Read(out @this);
             h.Read(out buffer);
             h.Read(out bufferSize);
             h.Read(out dataOffset);
@@ -287,8 +281,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self_local = (CfxBinaryValue)RemoteProxy.Unwrap(self);
-            __retval = self_local.GetData(buffer, bufferSize, dataOffset);
+            __retval = CfxApi.cfx_binary_value_get_data(@this, buffer, bufferSize, dataOffset);
         }
     }
 
