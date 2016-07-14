@@ -80,42 +80,6 @@ public class Argument {
         get { return CSharp.Escape(CSharp.ApplyStyle(VarName, false)); }
     }
 
-    public string NativeWrapExpression {
-        get { return ArgumentType.NativeWrapExpression(VarName); }
-    }
-
-    public string NativeUnwrapExpression {
-        get { return ArgumentType.NativeUnwrapExpression(VarName); }
-    }
-
-    public string PublicWrapExpression {
-        get { return ArgumentType.PublicWrapExpression(PublicVarName); }
-    }
-
-    public string PublicUnwrapExpression {
-        get {
-            if(IsThisArgument)
-                return "NativePtr";
-            return ArgumentType.PublicUnwrapExpression(PublicVarName);
-        }
-    }
-
-    public string ProxyUnwrapExpression {
-        get {
-            if(IsThisArgument)
-                return null;
-            return ArgumentType.ProxyUnwrapExpression(PublicVarName);
-        }
-    }
-
-    public string RemoteUnwrapExpression {
-        get {
-            if(IsThisArgument)
-                return "remotePtr";
-            return ArgumentType.RemoteUnwrapExpression(CSharp.Escape(PublicVarName));
-        }
-    }
-
     public string PublicEventConstructorArgument {
         get { return ArgumentType.PublicEventConstructorArgument(VarName); }
     }
@@ -134,8 +98,16 @@ public class Argument {
         get { return ArgumentType.NativeCallParameter(VarName, IsConst); }
     }
 
+    public string NativeCallArgument {
+        get { return ArgumentType.NativeCallArgument(VarName); }
+    }
+
     public string NativeCallbackParameter {
         get { return ArgumentType.NativeCallbackParameter(VarName, IsConst); }
+    }
+
+    public string NativeCallbackArgument {
+        get { return ArgumentType.NativeCallbackArgument(VarName); }
     }
 
     public string PInvokeCallParameter {
@@ -163,6 +135,12 @@ public class Argument {
             if(IsThisArgument)
                 return "NativePtr";
             return ArgumentType.PublicCallArgument(PublicVarName);
+        }
+    }
+
+    public string ProxyCallArgument {
+        get {
+            return ArgumentType.ProxyCallArgument(PublicVarName);
         }
     }
 

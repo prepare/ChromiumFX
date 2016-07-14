@@ -46,7 +46,7 @@ public class StringCollectionAsRetvalSignature : Signature {
     public override void EmitPublicCall(CodeBuilder b) {
         b.AppendLine("{0} {1} = new {0}();", base.ManagedArguments[1].ArgumentType.PublicSymbol, base.ManagedArguments[1].VarName);
         base.ManagedArguments[1].EmitPrePublicCallStatements(b);
-        b.AppendLine(string.Format("CfxApi.{0}(NativePtr, {1});", Owner.CfxApiFunctionName, base.ManagedArguments[1].PublicUnwrapExpression));
+        b.AppendLine(string.Format("CfxApi.{0}(NativePtr, {1});", Owner.CfxApiFunctionName, base.ManagedArguments[1].PublicCallArgument));
         base.ManagedArguments[1].EmitPostPublicStatements(b);
         b.AppendLine("return {0};", base.ManagedArguments[1].VarName);
     }

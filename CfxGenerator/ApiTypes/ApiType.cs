@@ -109,8 +109,20 @@ public class ApiType {
         }
     }
 
+    public virtual string NativeCallArgument(string var) {
+        return NativeUnwrapExpression(var);
+    }
+
+    public virtual string NativeReturnExpression(string var) {
+        return NativeWrapExpression(var);
+    }
+
     public virtual string NativeCallbackParameter(string var, bool isConst) {
         return NativeCallParameter(var, isConst);
+    }
+
+    public virtual string NativeCallbackArgument(string var) {
+        return NativeWrapExpression(var);
     }
 
     public virtual string PInvokeCallParameter(string var) {
@@ -153,10 +165,14 @@ public class ApiType {
         return PublicUnwrapExpression(var);
     }
 
-    public virtual string ProxyCallSignature(string var) {
+    public virtual string ProxyCallParameter(string var) {
         if(ProxySymbol == null)
             return null;
         return string.Format("{0} {1}", ProxySymbol, CSharp.Escape(var));
+    }
+
+    public virtual string ProxyCallArgument(string var) {
+        return ProxyUnwrapExpression(var);
     }
 
     public virtual string RemoteCallParameter(string var) {

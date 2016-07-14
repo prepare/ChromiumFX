@@ -134,11 +134,11 @@ public class Signature {
                     args.Add("&__retval");
                 }
                 for(var i = 1; i <= Arguments.Length - 1; i++) {
-                    args.Add(Arguments[i].NativeWrapExpression);
+                    args.Add(Arguments[i].NativeCallbackArgument);
                 }
             } else {
                 for(var i = 0; i <= Arguments.Length - 1; i++) {
-                    args.Add(Arguments[i].NativeUnwrapExpression);
+                    args.Add(Arguments[i].NativeCallArgument);
                 }
             }
             return args.Join();
@@ -309,7 +309,7 @@ public class Signature {
                 foreach(var arg in ManagedArguments) {
                     if(!arg.IsThisArgument) {
                         arg.EmitPreProxyCallStatements(b);
-                        args.Add(arg.ProxyUnwrapExpression);
+                        args.Add(arg.ProxyCallArgument);
                     }
                 }
 
@@ -342,7 +342,7 @@ public class Signature {
 
             case CfxCallMode.PropertySetter:
                 b.AppendLine("var self_local = ({0})RemoteProxy.Unwrap(self);", ManagedArguments[0].ArgumentType.PublicSymbol);
-                b.AppendLine("self_local.{0} = {1};", Owner.PropertyName, ManagedArguments[1].ProxyUnwrapExpression);
+                b.AppendLine("self_local.{0} = {1};", Owner.PropertyName, ManagedArguments[1].ProxyCallArgument);
                 break;
         }
     }

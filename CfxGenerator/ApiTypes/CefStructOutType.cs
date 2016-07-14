@@ -63,8 +63,8 @@ public class CefStructOutType : CefStructPtrPtrType {
         return "out " + StructPtr.PublicCallParameter(var);
     }
 
-    public override string ProxyCallSignature(string var) {
-        return "out " + StructPtr.ProxyCallSignature(var);
+    public override string ProxyCallParameter(string var) {
+        return "out " + StructPtr.ProxyCallParameter(var);
     }
 
     public override string RemoteCallParameter(string var) {
