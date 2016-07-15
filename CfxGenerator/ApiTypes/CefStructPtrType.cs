@@ -65,7 +65,7 @@ public class CefStructPtrType : ApiType {
     }
 
     public override string ProxyUnwrapExpression(string var) {
-        return string.Format("({0})RemoteProxy.Unwrap({1})", Struct.ClassName, CSharp.Escape(var));
+        return string.Format("({0})RemoteProxy.Unwrap({1}, (ptr) => new {0}(ptr))", Struct.ClassName, CSharp.Escape(var));
     }
 
     public override string ProxyWrapExpression(string var) {

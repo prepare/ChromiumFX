@@ -73,7 +73,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxRuntime.ExecuteProcessInternal((CfxApp)RemoteProxy.Unwrap(application));
+            __retval = CfxRuntime.ExecuteProcessInternal((CfxApp)RemoteProxy.Unwrap(application, null));
         }
     }
 

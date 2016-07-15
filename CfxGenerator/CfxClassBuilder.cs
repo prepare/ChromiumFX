@@ -759,7 +759,7 @@ public class CfxClassBuilder {
                 b.AppendLine("protected override void WriteReturn(StreamHandler h) { h.Write(value); }");
                 b.AppendLine("protected override void ReadReturn(StreamHandler h) { h.Read(out value); }");
                 b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-                b.AppendLine("var sender = ({0})RemoteProxy.Unwrap(this.sender);", ClassName);
+                b.AppendLine("var sender = ({0})RemoteProxy.Unwrap(this.sender, null);", ClassName);
                 b.AppendLine("value = {0};", sm.MemberType.ProxyWrapExpression("sender." + sm.PublicName));
                 b.EndBlock();
                 b.EndBlock();
@@ -769,7 +769,7 @@ public class CfxClassBuilder {
                 b.AppendLine("protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }");
                 b.AppendLine("protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }");
                 b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-                b.AppendLine("var sender = ({0})RemoteProxy.Unwrap(this.sender);", ClassName);
+                b.AppendLine("var sender = ({0})RemoteProxy.Unwrap(this.sender, null);", ClassName);
                 b.AppendLine("sender.{0} = {1};", sm.PublicName, sm.MemberType.ProxyUnwrapExpression("value"));
                 b.EndBlock();
                 b.EndBlock();
@@ -808,7 +808,7 @@ public class CfxClassBuilder {
                     b.AppendLine("protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }");
                     b.AppendLine();
                     b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-                    b.AppendLine("var sender = ({0})RemoteProxy.Unwrap(this.sender);", ClassName);
+                    b.AppendLine("var sender = ({0})RemoteProxy.Unwrap(this.sender, null);", ClassName);
                     b.AppendLine("sender.{0} += {1}BrowserProcessCall.EventCall;", cb.PublicName, StructMembers[i].Callback.EventName);
                     b.EndBlock();
                     b.EndBlock();
@@ -821,7 +821,7 @@ public class CfxClassBuilder {
                     b.AppendLine("protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }");
                     b.AppendLine();
                     b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-                    b.AppendLine("var sender = ({0})RemoteProxy.Unwrap(this.sender);", ClassName);
+                    b.AppendLine("var sender = ({0})RemoteProxy.Unwrap(this.sender, null);", ClassName);
                     b.AppendLine("sender.{0} -= {1}BrowserProcessCall.EventCall;", cb.PublicName, cb.EventName);
                     b.EndBlock();
                     b.EndBlock();

@@ -80,7 +80,7 @@ namespace Chromium.Remote {
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTask)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxTask)RemoteProxy.Unwrap(this.sender, null);
             sender.Execute += CfxTaskExecuteBrowserProcessCall.EventCall;
         }
     }
@@ -95,7 +95,7 @@ namespace Chromium.Remote {
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTask)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxTask)RemoteProxy.Unwrap(this.sender, null);
             sender.Execute -= CfxTaskExecuteBrowserProcessCall.EventCall;
         }
     }

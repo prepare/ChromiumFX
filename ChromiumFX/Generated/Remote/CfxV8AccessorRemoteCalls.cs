@@ -80,7 +80,7 @@ namespace Chromium.Remote {
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxV8Accessor)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxV8Accessor)RemoteProxy.Unwrap(this.sender, null);
             sender.Get += CfxV8AccessorGetBrowserProcessCall.EventCall;
         }
     }
@@ -95,7 +95,7 @@ namespace Chromium.Remote {
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxV8Accessor)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxV8Accessor)RemoteProxy.Unwrap(this.sender, null);
             sender.Get -= CfxV8AccessorGetBrowserProcessCall.EventCall;
         }
     }
@@ -173,7 +173,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var e = (CfxV8AccessorGetEventArgs)BrowserProcessCall.GetEventArgs(eventArgsId);
-            e.Retval = (CfxV8Value)RemoteProxy.Unwrap(value);
+            e.Retval = (CfxV8Value)RemoteProxy.Unwrap(value, (ptr) => new CfxV8Value(ptr));
         }
     }
 
@@ -279,7 +279,7 @@ namespace Chromium.Remote {
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxV8Accessor)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxV8Accessor)RemoteProxy.Unwrap(this.sender, null);
             sender.Set += CfxV8AccessorSetBrowserProcessCall.EventCall;
         }
     }
@@ -294,7 +294,7 @@ namespace Chromium.Remote {
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxV8Accessor)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxV8Accessor)RemoteProxy.Unwrap(this.sender, null);
             sender.Set -= CfxV8AccessorSetBrowserProcessCall.EventCall;
         }
     }
