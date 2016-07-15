@@ -44,10 +44,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxContextMenuParams : CfxBase {
 
-        static CfxContextMenuParams () {
-            CfxApiLoader.LoadCfxContextMenuParamsApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxContextMenuParams Wrap(IntPtr nativePtr) {
@@ -77,7 +73,7 @@ namespace Chromium {
         /// </remarks>
         public int Xcoord {
             get {
-                return CfxApi.cfx_context_menu_params_get_xcoord(NativePtr);
+                return CfxApi.ContextMenuParams.cfx_context_menu_params_get_xcoord(NativePtr);
             }
         }
 
@@ -91,7 +87,7 @@ namespace Chromium {
         /// </remarks>
         public int Ycoord {
             get {
-                return CfxApi.cfx_context_menu_params_get_ycoord(NativePtr);
+                return CfxApi.ContextMenuParams.cfx_context_menu_params_get_ycoord(NativePtr);
             }
         }
 
@@ -105,7 +101,7 @@ namespace Chromium {
         /// </remarks>
         public CfxContextMenuTypeFlags TypeFlags {
             get {
-                return (CfxContextMenuTypeFlags)CfxApi.cfx_context_menu_params_get_type_flags(NativePtr);
+                return (CfxContextMenuTypeFlags)CfxApi.ContextMenuParams.cfx_context_menu_params_get_type_flags(NativePtr);
             }
         }
 
@@ -119,7 +115,7 @@ namespace Chromium {
         /// </remarks>
         public string LinkUrl {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_context_menu_params_get_link_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.ContextMenuParams.cfx_context_menu_params_get_link_url(NativePtr));
             }
         }
 
@@ -133,7 +129,7 @@ namespace Chromium {
         /// </remarks>
         public string UnfilteredLinkUrl {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_context_menu_params_get_unfiltered_link_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.ContextMenuParams.cfx_context_menu_params_get_unfiltered_link_url(NativePtr));
             }
         }
 
@@ -147,7 +143,7 @@ namespace Chromium {
         /// </remarks>
         public string SourceUrl {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_context_menu_params_get_source_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.ContextMenuParams.cfx_context_menu_params_get_source_url(NativePtr));
             }
         }
 
@@ -161,7 +157,7 @@ namespace Chromium {
         /// </remarks>
         public bool HasImageContents {
             get {
-                return 0 != CfxApi.cfx_context_menu_params_has_image_contents(NativePtr);
+                return 0 != CfxApi.ContextMenuParams.cfx_context_menu_params_has_image_contents(NativePtr);
             }
         }
 
@@ -174,7 +170,7 @@ namespace Chromium {
         /// </remarks>
         public string PageUrl {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_context_menu_params_get_page_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.ContextMenuParams.cfx_context_menu_params_get_page_url(NativePtr));
             }
         }
 
@@ -187,7 +183,7 @@ namespace Chromium {
         /// </remarks>
         public string FrameUrl {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_context_menu_params_get_frame_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.ContextMenuParams.cfx_context_menu_params_get_frame_url(NativePtr));
             }
         }
 
@@ -201,7 +197,7 @@ namespace Chromium {
         /// </remarks>
         public string FrameCharset {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_context_menu_params_get_frame_charset(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.ContextMenuParams.cfx_context_menu_params_get_frame_charset(NativePtr));
             }
         }
 
@@ -214,7 +210,7 @@ namespace Chromium {
         /// </remarks>
         public CfxContextMenuMediaType MediaType {
             get {
-                return (CfxContextMenuMediaType)CfxApi.cfx_context_menu_params_get_media_type(NativePtr);
+                return (CfxContextMenuMediaType)CfxApi.ContextMenuParams.cfx_context_menu_params_get_media_type(NativePtr);
             }
         }
 
@@ -228,7 +224,7 @@ namespace Chromium {
         /// </remarks>
         public CfxContextMenuMediaStateFlags MediaStateFlags {
             get {
-                return (CfxContextMenuMediaStateFlags)CfxApi.cfx_context_menu_params_get_media_state_flags(NativePtr);
+                return (CfxContextMenuMediaStateFlags)CfxApi.ContextMenuParams.cfx_context_menu_params_get_media_state_flags(NativePtr);
             }
         }
 
@@ -242,7 +238,7 @@ namespace Chromium {
         /// </remarks>
         public string SelectionText {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_context_menu_params_get_selection_text(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.ContextMenuParams.cfx_context_menu_params_get_selection_text(NativePtr));
             }
         }
 
@@ -256,7 +252,7 @@ namespace Chromium {
         /// </remarks>
         public string MisspelledWord {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_context_menu_params_get_misspelled_word(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.ContextMenuParams.cfx_context_menu_params_get_misspelled_word(NativePtr));
             }
         }
 
@@ -269,7 +265,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsEditable {
             get {
-                return 0 != CfxApi.cfx_context_menu_params_is_editable(NativePtr);
+                return 0 != CfxApi.ContextMenuParams.cfx_context_menu_params_is_editable(NativePtr);
             }
         }
 
@@ -283,7 +279,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsSpellCheckEnabled {
             get {
-                return 0 != CfxApi.cfx_context_menu_params_is_spell_check_enabled(NativePtr);
+                return 0 != CfxApi.ContextMenuParams.cfx_context_menu_params_is_spell_check_enabled(NativePtr);
             }
         }
 
@@ -297,7 +293,7 @@ namespace Chromium {
         /// </remarks>
         public CfxContextMenuEditStateFlags EditStateFlags {
             get {
-                return (CfxContextMenuEditStateFlags)CfxApi.cfx_context_menu_params_get_edit_state_flags(NativePtr);
+                return (CfxContextMenuEditStateFlags)CfxApi.ContextMenuParams.cfx_context_menu_params_get_edit_state_flags(NativePtr);
             }
         }
 
@@ -312,7 +308,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsCustomMenu {
             get {
-                return 0 != CfxApi.cfx_context_menu_params_is_custom_menu(NativePtr);
+                return 0 != CfxApi.ContextMenuParams.cfx_context_menu_params_is_custom_menu(NativePtr);
             }
         }
 
@@ -325,7 +321,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsPepperMenu {
             get {
-                return 0 != CfxApi.cfx_context_menu_params_is_pepper_menu(NativePtr);
+                return 0 != CfxApi.ContextMenuParams.cfx_context_menu_params_is_pepper_menu(NativePtr);
             }
         }
 
@@ -341,10 +337,10 @@ namespace Chromium {
         public bool GetDictionarySuggestions(System.Collections.Generic.List<string> suggestions) {
             PinnedString[] suggestions_handles;
             var suggestions_unwrapped = StringFunctions.UnwrapCfxStringList(suggestions, out suggestions_handles);
-            var __retval = CfxApi.cfx_context_menu_params_get_dictionary_suggestions(NativePtr, suggestions_unwrapped);
+            var __retval = CfxApi.ContextMenuParams.cfx_context_menu_params_get_dictionary_suggestions(NativePtr, suggestions_unwrapped);
             StringFunctions.FreePinnedStrings(suggestions_handles);
             StringFunctions.CfxStringListCopyToManaged(suggestions_unwrapped, suggestions);
-            CfxApi.cfx_string_list_free(suggestions_unwrapped);
+            CfxApi.Runtime.cfx_string_list_free(suggestions_unwrapped);
             return 0 != __retval;
         }
 

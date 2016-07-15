@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxDraggableRegion : CfxStructure {
 
-        static CfxDraggableRegion () {
-            CfxApiLoader.LoadCfxDraggableRegionApi();
-        }
-
         internal static CfxDraggableRegion Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxDraggableRegion(nativePtr);
@@ -54,10 +50,10 @@ namespace Chromium {
 
         internal static CfxDraggableRegion WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxDraggableRegion(nativePtr, CfxApi.cfx_draggable_region_dtor);
+            return new CfxDraggableRegion(nativePtr, CfxApi.DraggableRegion.cfx_draggable_region_dtor);
         }
 
-        public CfxDraggableRegion() : base(CfxApi.cfx_draggable_region_ctor, CfxApi.cfx_draggable_region_dtor) {}
+        public CfxDraggableRegion() : base(CfxApi.DraggableRegion.cfx_draggable_region_ctor, CfxApi.DraggableRegion.cfx_draggable_region_dtor) {}
         internal CfxDraggableRegion(IntPtr nativePtr) : base(nativePtr) {}
         internal CfxDraggableRegion(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
@@ -71,11 +67,11 @@ namespace Chromium {
         public CfxRect Bounds {
             get {
                 IntPtr value;
-                CfxApi.cfx_draggable_region_get_bounds(nativePtrUnchecked, out value);
+                CfxApi.DraggableRegion.cfx_draggable_region_get_bounds(nativePtrUnchecked, out value);
                 return CfxRect.Wrap(value);
             }
             set {
-                CfxApi.cfx_draggable_region_set_bounds(nativePtrUnchecked, CfxRect.Unwrap(value));
+                CfxApi.DraggableRegion.cfx_draggable_region_set_bounds(nativePtrUnchecked, CfxRect.Unwrap(value));
             }
         }
 
@@ -89,11 +85,11 @@ namespace Chromium {
         public bool Draggable {
             get {
                 int value;
-                CfxApi.cfx_draggable_region_get_draggable(nativePtrUnchecked, out value);
+                CfxApi.DraggableRegion.cfx_draggable_region_get_draggable(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_draggable_region_set_draggable(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.DraggableRegion.cfx_draggable_region_set_draggable(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 

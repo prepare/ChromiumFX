@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxNavigationEntry : CfxBase {
 
-        static CfxNavigationEntry () {
-            CfxApiLoader.LoadCfxNavigationEntryApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxNavigationEntry Wrap(IntPtr nativePtr) {
@@ -76,7 +72,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsValid {
             get {
-                return 0 != CfxApi.cfx_navigation_entry_is_valid(NativePtr);
+                return 0 != CfxApi.NavigationEntry.cfx_navigation_entry_is_valid(NativePtr);
             }
         }
 
@@ -90,7 +86,7 @@ namespace Chromium {
         /// </remarks>
         public string Url {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_navigation_entry_get_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.NavigationEntry.cfx_navigation_entry_get_url(NativePtr));
             }
         }
 
@@ -103,7 +99,7 @@ namespace Chromium {
         /// </remarks>
         public string DisplayUrl {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_navigation_entry_get_display_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.NavigationEntry.cfx_navigation_entry_get_display_url(NativePtr));
             }
         }
 
@@ -116,7 +112,7 @@ namespace Chromium {
         /// </remarks>
         public string OriginalUrl {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_navigation_entry_get_original_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.NavigationEntry.cfx_navigation_entry_get_original_url(NativePtr));
             }
         }
 
@@ -129,7 +125,7 @@ namespace Chromium {
         /// </remarks>
         public string Title {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_navigation_entry_get_title(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.NavigationEntry.cfx_navigation_entry_get_title(NativePtr));
             }
         }
 
@@ -143,7 +139,7 @@ namespace Chromium {
         /// </remarks>
         public CfxTransitionType TransitionType {
             get {
-                return (CfxTransitionType)CfxApi.cfx_navigation_entry_get_transition_type(NativePtr);
+                return (CfxTransitionType)CfxApi.NavigationEntry.cfx_navigation_entry_get_transition_type(NativePtr);
             }
         }
 
@@ -156,7 +152,7 @@ namespace Chromium {
         /// </remarks>
         public bool HasPostData {
             get {
-                return 0 != CfxApi.cfx_navigation_entry_has_post_data(NativePtr);
+                return 0 != CfxApi.NavigationEntry.cfx_navigation_entry_has_post_data(NativePtr);
             }
         }
 
@@ -171,7 +167,7 @@ namespace Chromium {
         /// </remarks>
         public CfxTime CompletionTime {
             get {
-                return CfxTime.WrapOwned(CfxApi.cfx_navigation_entry_get_completion_time(NativePtr));
+                return CfxTime.WrapOwned(CfxApi.NavigationEntry.cfx_navigation_entry_get_completion_time(NativePtr));
             }
         }
 
@@ -186,7 +182,7 @@ namespace Chromium {
         /// </remarks>
         public int HttpStatusCode {
             get {
-                return CfxApi.cfx_navigation_entry_get_http_status_code(NativePtr);
+                return CfxApi.NavigationEntry.cfx_navigation_entry_get_http_status_code(NativePtr);
             }
         }
 

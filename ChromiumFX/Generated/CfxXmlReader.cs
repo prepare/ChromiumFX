@@ -45,10 +45,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxXmlReader : CfxBase {
 
-        static CfxXmlReader () {
-            CfxApiLoader.LoadCfxXmlReaderApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxXmlReader Wrap(IntPtr nativePtr) {
@@ -78,7 +74,7 @@ namespace Chromium {
         /// </remarks>
         public static CfxXmlReader Create(CfxStreamReader stream, CfxXmlEncodingType encodingType, string uri) {
             var uri_pinned = new PinnedString(uri);
-            var __retval = CfxApi.cfx_xml_reader_create(CfxStreamReader.Unwrap(stream), (int)encodingType, uri_pinned.Obj.PinnedPtr, uri_pinned.Length);
+            var __retval = CfxApi.XmlReader.cfx_xml_reader_create(CfxStreamReader.Unwrap(stream), (int)encodingType, uri_pinned.Obj.PinnedPtr, uri_pinned.Length);
             uri_pinned.Obj.Free();
             return CfxXmlReader.Wrap(__retval);
         }
@@ -92,7 +88,7 @@ namespace Chromium {
         /// </remarks>
         public bool HasError {
             get {
-                return 0 != CfxApi.cfx_xml_reader_has_error(NativePtr);
+                return 0 != CfxApi.XmlReader.cfx_xml_reader_has_error(NativePtr);
             }
         }
 
@@ -107,7 +103,7 @@ namespace Chromium {
         /// </remarks>
         public CfxXmlNodeType Type {
             get {
-                return (CfxXmlNodeType)CfxApi.cfx_xml_reader_get_type(NativePtr);
+                return (CfxXmlNodeType)CfxApi.XmlReader.cfx_xml_reader_get_type(NativePtr);
             }
         }
 
@@ -120,7 +116,7 @@ namespace Chromium {
         /// </remarks>
         public int Depth {
             get {
-                return CfxApi.cfx_xml_reader_get_depth(NativePtr);
+                return CfxApi.XmlReader.cfx_xml_reader_get_depth(NativePtr);
             }
         }
 
@@ -134,7 +130,7 @@ namespace Chromium {
         /// </remarks>
         public string LocalName {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_local_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_local_name(NativePtr));
             }
         }
 
@@ -148,7 +144,7 @@ namespace Chromium {
         /// </remarks>
         public string Prefix {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_prefix(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_prefix(NativePtr));
             }
         }
 
@@ -162,7 +158,7 @@ namespace Chromium {
         /// </remarks>
         public string QualifiedName {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_qualified_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_qualified_name(NativePtr));
             }
         }
 
@@ -176,7 +172,7 @@ namespace Chromium {
         /// </remarks>
         public string NamespaceUri {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_namespace_uri(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_namespace_uri(NativePtr));
             }
         }
 
@@ -190,7 +186,7 @@ namespace Chromium {
         /// </remarks>
         public string BaseUri {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_base_uri(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_base_uri(NativePtr));
             }
         }
 
@@ -204,7 +200,7 @@ namespace Chromium {
         /// </remarks>
         public string XmlLang {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_xml_lang(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_xml_lang(NativePtr));
             }
         }
 
@@ -218,7 +214,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsEmptyElement {
             get {
-                return 0 != CfxApi.cfx_xml_reader_is_empty_element(NativePtr);
+                return 0 != CfxApi.XmlReader.cfx_xml_reader_is_empty_element(NativePtr);
             }
         }
 
@@ -231,7 +227,7 @@ namespace Chromium {
         /// </remarks>
         public bool HasValue {
             get {
-                return 0 != CfxApi.cfx_xml_reader_has_value(NativePtr);
+                return 0 != CfxApi.XmlReader.cfx_xml_reader_has_value(NativePtr);
             }
         }
 
@@ -244,7 +240,7 @@ namespace Chromium {
         /// </remarks>
         public string Value {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_value(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_value(NativePtr));
             }
         }
 
@@ -257,7 +253,7 @@ namespace Chromium {
         /// </remarks>
         public bool HasAttributes {
             get {
-                return 0 != CfxApi.cfx_xml_reader_has_attributes(NativePtr);
+                return 0 != CfxApi.XmlReader.cfx_xml_reader_has_attributes(NativePtr);
             }
         }
 
@@ -270,7 +266,7 @@ namespace Chromium {
         /// </remarks>
         public int AttributeCount {
             get {
-                return CfxApi.cfx_xml_reader_get_attribute_count(NativePtr);
+                return CfxApi.XmlReader.cfx_xml_reader_get_attribute_count(NativePtr);
             }
         }
 
@@ -283,7 +279,7 @@ namespace Chromium {
         /// </remarks>
         public string InnerXml {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_inner_xml(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_inner_xml(NativePtr));
             }
         }
 
@@ -296,7 +292,7 @@ namespace Chromium {
         /// </remarks>
         public string OuterXml {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_outer_xml(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_outer_xml(NativePtr));
             }
         }
 
@@ -309,7 +305,7 @@ namespace Chromium {
         /// </remarks>
         public int LineNumber {
             get {
-                return CfxApi.cfx_xml_reader_get_line_number(NativePtr);
+                return CfxApi.XmlReader.cfx_xml_reader_get_line_number(NativePtr);
             }
         }
 
@@ -323,7 +319,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
         public bool MoveToNextNode() {
-            return 0 != CfxApi.cfx_xml_reader_move_to_next_node(NativePtr);
+            return 0 != CfxApi.XmlReader.cfx_xml_reader_move_to_next_node(NativePtr);
         }
 
         /// <summary>
@@ -335,7 +331,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
         public bool Close() {
-            return 0 != CfxApi.cfx_xml_reader_close(NativePtr);
+            return 0 != CfxApi.XmlReader.cfx_xml_reader_close(NativePtr);
         }
 
         /// <summary>
@@ -346,7 +342,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
         public string GetError() {
-            return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_error(NativePtr));
+            return StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_error(NativePtr));
         }
 
         /// <summary>
@@ -357,7 +353,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
         public string GetAttribute(int index) {
-            return StringFunctions.ConvertStringUserfree(CfxApi.cfx_xml_reader_get_attribute_byindex(NativePtr, index));
+            return StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_attribute_byindex(NativePtr, index));
         }
 
         /// <summary>
@@ -369,7 +365,7 @@ namespace Chromium {
         /// </remarks>
         public string GetAttribute(string qualifiedName) {
             var qualifiedName_pinned = new PinnedString(qualifiedName);
-            var __retval = CfxApi.cfx_xml_reader_get_attribute_byqname(NativePtr, qualifiedName_pinned.Obj.PinnedPtr, qualifiedName_pinned.Length);
+            var __retval = CfxApi.XmlReader.cfx_xml_reader_get_attribute_byqname(NativePtr, qualifiedName_pinned.Obj.PinnedPtr, qualifiedName_pinned.Length);
             qualifiedName_pinned.Obj.Free();
             return StringFunctions.ConvertStringUserfree(__retval);
         }
@@ -385,7 +381,7 @@ namespace Chromium {
         public string GetAttribute(string localName, string namespaceURI) {
             var localName_pinned = new PinnedString(localName);
             var namespaceURI_pinned = new PinnedString(namespaceURI);
-            var __retval = CfxApi.cfx_xml_reader_get_attribute_bylname(NativePtr, localName_pinned.Obj.PinnedPtr, localName_pinned.Length, namespaceURI_pinned.Obj.PinnedPtr, namespaceURI_pinned.Length);
+            var __retval = CfxApi.XmlReader.cfx_xml_reader_get_attribute_bylname(NativePtr, localName_pinned.Obj.PinnedPtr, localName_pinned.Length, namespaceURI_pinned.Obj.PinnedPtr, namespaceURI_pinned.Length);
             localName_pinned.Obj.Free();
             namespaceURI_pinned.Obj.Free();
             return StringFunctions.ConvertStringUserfree(__retval);
@@ -404,7 +400,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
         public bool MoveToAttribute(int index) {
-            return 0 != CfxApi.cfx_xml_reader_move_to_attribute_byindex(NativePtr, index);
+            return 0 != CfxApi.XmlReader.cfx_xml_reader_move_to_attribute_byindex(NativePtr, index);
         }
 
         /// <summary>
@@ -417,7 +413,7 @@ namespace Chromium {
         /// </remarks>
         public bool MoveToAttribute(string qualifiedName) {
             var qualifiedName_pinned = new PinnedString(qualifiedName);
-            var __retval = CfxApi.cfx_xml_reader_move_to_attribute_byqname(NativePtr, qualifiedName_pinned.Obj.PinnedPtr, qualifiedName_pinned.Length);
+            var __retval = CfxApi.XmlReader.cfx_xml_reader_move_to_attribute_byqname(NativePtr, qualifiedName_pinned.Obj.PinnedPtr, qualifiedName_pinned.Length);
             qualifiedName_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -434,7 +430,7 @@ namespace Chromium {
         public bool MoveToAttribute(string localName, string namespaceURI) {
             var localName_pinned = new PinnedString(localName);
             var namespaceURI_pinned = new PinnedString(namespaceURI);
-            var __retval = CfxApi.cfx_xml_reader_move_to_attribute_bylname(NativePtr, localName_pinned.Obj.PinnedPtr, localName_pinned.Length, namespaceURI_pinned.Obj.PinnedPtr, namespaceURI_pinned.Length);
+            var __retval = CfxApi.XmlReader.cfx_xml_reader_move_to_attribute_bylname(NativePtr, localName_pinned.Obj.PinnedPtr, localName_pinned.Length, namespaceURI_pinned.Obj.PinnedPtr, namespaceURI_pinned.Length);
             localName_pinned.Obj.Free();
             namespaceURI_pinned.Obj.Free();
             return 0 != __retval;
@@ -449,7 +445,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
         public bool MoveToFirstAttribute() {
-            return 0 != CfxApi.cfx_xml_reader_move_to_first_attribute(NativePtr);
+            return 0 != CfxApi.XmlReader.cfx_xml_reader_move_to_first_attribute(NativePtr);
         }
 
         /// <summary>
@@ -461,7 +457,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
         public bool MoveToNextAttribute() {
-            return 0 != CfxApi.cfx_xml_reader_move_to_next_attribute(NativePtr);
+            return 0 != CfxApi.XmlReader.cfx_xml_reader_move_to_next_attribute(NativePtr);
         }
 
         /// <summary>
@@ -473,7 +469,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
         public bool MoveToCarryingElement() {
-            return 0 != CfxApi.cfx_xml_reader_move_to_carrying_element(NativePtr);
+            return 0 != CfxApi.XmlReader.cfx_xml_reader_move_to_carrying_element(NativePtr);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

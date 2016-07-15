@@ -47,13 +47,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxMenuModelDelegate : CfxBase {
 
-        static CfxMenuModelDelegate () {
-            CfxApiLoader.LoadCfxMenuModelDelegateApi();
-        }
-
         internal static CfxMenuModelDelegate Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_menu_model_delegate_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.MenuModelDelegate.cfx_menu_model_delegate_get_gc_handle(nativePtr);
             return (CfxMenuModelDelegate)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -97,7 +93,7 @@ namespace Chromium {
         }
 
         internal CfxMenuModelDelegate(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxMenuModelDelegate() : base(CfxApi.cfx_menu_model_delegate_ctor) {}
+        public CfxMenuModelDelegate() : base(CfxApi.MenuModelDelegate.cfx_menu_model_delegate_ctor) {}
 
         /// <summary>
         /// Perform the action associated with the specified |CommandId| and optional
@@ -115,7 +111,7 @@ namespace Chromium {
                             cfx_menu_model_delegate_execute_command = execute_command;
                             cfx_menu_model_delegate_execute_command_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_menu_model_delegate_execute_command);
                         }
-                        CfxApi.cfx_menu_model_delegate_set_managed_callback(NativePtr, 0, cfx_menu_model_delegate_execute_command_ptr);
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_managed_callback(NativePtr, 0, cfx_menu_model_delegate_execute_command_ptr);
                     }
                     m_ExecuteCommand += value;
                 }
@@ -124,7 +120,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_ExecuteCommand -= value;
                     if(m_ExecuteCommand == null) {
-                        CfxApi.cfx_menu_model_delegate_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -147,7 +143,7 @@ namespace Chromium {
                             cfx_menu_model_delegate_menu_will_show = menu_will_show;
                             cfx_menu_model_delegate_menu_will_show_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_menu_model_delegate_menu_will_show);
                         }
-                        CfxApi.cfx_menu_model_delegate_set_managed_callback(NativePtr, 1, cfx_menu_model_delegate_menu_will_show_ptr);
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_managed_callback(NativePtr, 1, cfx_menu_model_delegate_menu_will_show_ptr);
                     }
                     m_MenuWillShow += value;
                 }
@@ -156,7 +152,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_MenuWillShow -= value;
                     if(m_MenuWillShow == null) {
-                        CfxApi.cfx_menu_model_delegate_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_managed_callback(NativePtr, 1, IntPtr.Zero);
                     }
                 }
             }
@@ -167,11 +163,11 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_ExecuteCommand != null) {
                 m_ExecuteCommand = null;
-                CfxApi.cfx_menu_model_delegate_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_MenuWillShow != null) {
                 m_MenuWillShow = null;
-                CfxApi.cfx_menu_model_delegate_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

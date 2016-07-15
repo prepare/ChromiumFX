@@ -46,10 +46,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxMenuModel : CfxBase {
 
-        static CfxMenuModel () {
-            CfxApiLoader.LoadCfxMenuModelApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxMenuModel Wrap(IntPtr nativePtr) {
@@ -77,7 +73,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public static CfxMenuModel Create(CfxMenuModelDelegate @delegate) {
-            return CfxMenuModel.Wrap(CfxApi.cfx_menu_model_create(CfxMenuModelDelegate.Unwrap(@delegate)));
+            return CfxMenuModel.Wrap(CfxApi.MenuModel.cfx_menu_model_create(CfxMenuModelDelegate.Unwrap(@delegate)));
         }
 
         /// <summary>
@@ -89,7 +85,7 @@ namespace Chromium {
         /// </remarks>
         public int Count {
             get {
-                return CfxApi.cfx_menu_model_get_count(NativePtr);
+                return CfxApi.MenuModel.cfx_menu_model_get_count(NativePtr);
             }
         }
 
@@ -101,7 +97,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool Clear() {
-            return 0 != CfxApi.cfx_menu_model_clear(NativePtr);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_clear(NativePtr);
         }
 
         /// <summary>
@@ -112,7 +108,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool AddSeparator() {
-            return 0 != CfxApi.cfx_menu_model_add_separator(NativePtr);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_add_separator(NativePtr);
         }
 
         /// <summary>
@@ -124,7 +120,7 @@ namespace Chromium {
         /// </remarks>
         public bool AddItem(int commandId, string label) {
             var label_pinned = new PinnedString(label);
-            var __retval = CfxApi.cfx_menu_model_add_item(NativePtr, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length);
+            var __retval = CfxApi.MenuModel.cfx_menu_model_add_item(NativePtr, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length);
             label_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -138,7 +134,7 @@ namespace Chromium {
         /// </remarks>
         public bool AddCheckItem(int commandId, string label) {
             var label_pinned = new PinnedString(label);
-            var __retval = CfxApi.cfx_menu_model_add_check_item(NativePtr, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length);
+            var __retval = CfxApi.MenuModel.cfx_menu_model_add_check_item(NativePtr, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length);
             label_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -153,7 +149,7 @@ namespace Chromium {
         /// </remarks>
         public bool AddRadioItem(int commandId, string label, int groupId) {
             var label_pinned = new PinnedString(label);
-            var __retval = CfxApi.cfx_menu_model_add_radio_item(NativePtr, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length, groupId);
+            var __retval = CfxApi.MenuModel.cfx_menu_model_add_radio_item(NativePtr, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length, groupId);
             label_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -167,7 +163,7 @@ namespace Chromium {
         /// </remarks>
         public CfxMenuModel AddSubmenu(int commandId, string label) {
             var label_pinned = new PinnedString(label);
-            var __retval = CfxApi.cfx_menu_model_add_sub_menu(NativePtr, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length);
+            var __retval = CfxApi.MenuModel.cfx_menu_model_add_sub_menu(NativePtr, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length);
             label_pinned.Obj.Free();
             return CfxMenuModel.Wrap(__retval);
         }
@@ -181,7 +177,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool InsertSeparatorAt(int index) {
-            return 0 != CfxApi.cfx_menu_model_insert_separator_at(NativePtr, index);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_insert_separator_at(NativePtr, index);
         }
 
         /// <summary>
@@ -194,7 +190,7 @@ namespace Chromium {
         /// </remarks>
         public bool InsertItemAt(int index, int commandId, string label) {
             var label_pinned = new PinnedString(label);
-            var __retval = CfxApi.cfx_menu_model_insert_item_at(NativePtr, index, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length);
+            var __retval = CfxApi.MenuModel.cfx_menu_model_insert_item_at(NativePtr, index, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length);
             label_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -209,7 +205,7 @@ namespace Chromium {
         /// </remarks>
         public bool InsertCheckItemAt(int index, int commandId, string label) {
             var label_pinned = new PinnedString(label);
-            var __retval = CfxApi.cfx_menu_model_insert_check_item_at(NativePtr, index, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length);
+            var __retval = CfxApi.MenuModel.cfx_menu_model_insert_check_item_at(NativePtr, index, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length);
             label_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -225,7 +221,7 @@ namespace Chromium {
         /// </remarks>
         public bool InsertRadioItemAt(int index, int commandId, string label, int groupId) {
             var label_pinned = new PinnedString(label);
-            var __retval = CfxApi.cfx_menu_model_insert_radio_item_at(NativePtr, index, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length, groupId);
+            var __retval = CfxApi.MenuModel.cfx_menu_model_insert_radio_item_at(NativePtr, index, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length, groupId);
             label_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -240,7 +236,7 @@ namespace Chromium {
         /// </remarks>
         public CfxMenuModel InsertSubmenuAt(int index, int commandId, string label) {
             var label_pinned = new PinnedString(label);
-            var __retval = CfxApi.cfx_menu_model_insert_sub_menu_at(NativePtr, index, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length);
+            var __retval = CfxApi.MenuModel.cfx_menu_model_insert_sub_menu_at(NativePtr, index, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length);
             label_pinned.Obj.Free();
             return CfxMenuModel.Wrap(__retval);
         }
@@ -254,7 +250,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool Remove(int commandId) {
-            return 0 != CfxApi.cfx_menu_model_remove(NativePtr, commandId);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_remove(NativePtr, commandId);
         }
 
         /// <summary>
@@ -265,7 +261,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool RemoveAt(int index) {
-            return 0 != CfxApi.cfx_menu_model_remove_at(NativePtr, index);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_remove_at(NativePtr, index);
         }
 
         /// <summary>
@@ -277,7 +273,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public int GetIndexOf(int commandId) {
-            return CfxApi.cfx_menu_model_get_index_of(NativePtr, commandId);
+            return CfxApi.MenuModel.cfx_menu_model_get_index_of(NativePtr, commandId);
         }
 
         /// <summary>
@@ -289,7 +285,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public int GetCommandIdAt(int index) {
-            return CfxApi.cfx_menu_model_get_command_id_at(NativePtr, index);
+            return CfxApi.MenuModel.cfx_menu_model_get_command_id_at(NativePtr, index);
         }
 
         /// <summary>
@@ -300,7 +296,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool SetCommandIdAt(int index, int commandId) {
-            return 0 != CfxApi.cfx_menu_model_set_command_id_at(NativePtr, index, commandId);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_set_command_id_at(NativePtr, index, commandId);
         }
 
         /// <summary>
@@ -311,7 +307,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public string GetLabel(int commandId) {
-            return StringFunctions.ConvertStringUserfree(CfxApi.cfx_menu_model_get_label(NativePtr, commandId));
+            return StringFunctions.ConvertStringUserfree(CfxApi.MenuModel.cfx_menu_model_get_label(NativePtr, commandId));
         }
 
         /// <summary>
@@ -323,7 +319,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public string GetLabelAt(int index) {
-            return StringFunctions.ConvertStringUserfree(CfxApi.cfx_menu_model_get_label_at(NativePtr, index));
+            return StringFunctions.ConvertStringUserfree(CfxApi.MenuModel.cfx_menu_model_get_label_at(NativePtr, index));
         }
 
         /// <summary>
@@ -335,7 +331,7 @@ namespace Chromium {
         /// </remarks>
         public bool SetLabel(int commandId, string label) {
             var label_pinned = new PinnedString(label);
-            var __retval = CfxApi.cfx_menu_model_set_label(NativePtr, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length);
+            var __retval = CfxApi.MenuModel.cfx_menu_model_set_label(NativePtr, commandId, label_pinned.Obj.PinnedPtr, label_pinned.Length);
             label_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -349,7 +345,7 @@ namespace Chromium {
         /// </remarks>
         public bool SetLabelAt(int index, string label) {
             var label_pinned = new PinnedString(label);
-            var __retval = CfxApi.cfx_menu_model_set_label_at(NativePtr, index, label_pinned.Obj.PinnedPtr, label_pinned.Length);
+            var __retval = CfxApi.MenuModel.cfx_menu_model_set_label_at(NativePtr, index, label_pinned.Obj.PinnedPtr, label_pinned.Length);
             label_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -362,7 +358,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public CfxMenuItemType GetType(int commandId) {
-            return (CfxMenuItemType)CfxApi.cfx_menu_model_get_type(NativePtr, commandId);
+            return (CfxMenuItemType)CfxApi.MenuModel.cfx_menu_model_get_type(NativePtr, commandId);
         }
 
         /// <summary>
@@ -373,7 +369,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public CfxMenuItemType GetTypeAt(int index) {
-            return (CfxMenuItemType)CfxApi.cfx_menu_model_get_type_at(NativePtr, index);
+            return (CfxMenuItemType)CfxApi.MenuModel.cfx_menu_model_get_type_at(NativePtr, index);
         }
 
         /// <summary>
@@ -384,7 +380,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public int GetGroupId(int commandId) {
-            return CfxApi.cfx_menu_model_get_group_id(NativePtr, commandId);
+            return CfxApi.MenuModel.cfx_menu_model_get_group_id(NativePtr, commandId);
         }
 
         /// <summary>
@@ -395,7 +391,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public int GetGroupIdAt(int index) {
-            return CfxApi.cfx_menu_model_get_group_id_at(NativePtr, index);
+            return CfxApi.MenuModel.cfx_menu_model_get_group_id_at(NativePtr, index);
         }
 
         /// <summary>
@@ -407,7 +403,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool SetGroupId(int commandId, int groupId) {
-            return 0 != CfxApi.cfx_menu_model_set_group_id(NativePtr, commandId, groupId);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_set_group_id(NativePtr, commandId, groupId);
         }
 
         /// <summary>
@@ -418,7 +414,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool SetGroupIdAt(int index, int groupId) {
-            return 0 != CfxApi.cfx_menu_model_set_group_id_at(NativePtr, index, groupId);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_set_group_id_at(NativePtr, index, groupId);
         }
 
         /// <summary>
@@ -429,7 +425,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public CfxMenuModel GetSubmenu(int commandId) {
-            return CfxMenuModel.Wrap(CfxApi.cfx_menu_model_get_sub_menu(NativePtr, commandId));
+            return CfxMenuModel.Wrap(CfxApi.MenuModel.cfx_menu_model_get_sub_menu(NativePtr, commandId));
         }
 
         /// <summary>
@@ -440,7 +436,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public CfxMenuModel GetSubmenuAt(int index) {
-            return CfxMenuModel.Wrap(CfxApi.cfx_menu_model_get_sub_menu_at(NativePtr, index));
+            return CfxMenuModel.Wrap(CfxApi.MenuModel.cfx_menu_model_get_sub_menu_at(NativePtr, index));
         }
 
         /// <summary>
@@ -451,7 +447,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool IsVisible(int commandId) {
-            return 0 != CfxApi.cfx_menu_model_is_visible(NativePtr, commandId);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_is_visible(NativePtr, commandId);
         }
 
         /// <summary>
@@ -462,7 +458,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool IsVisibleAt(int index) {
-            return 0 != CfxApi.cfx_menu_model_is_visible_at(NativePtr, index);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_is_visible_at(NativePtr, index);
         }
 
         /// <summary>
@@ -474,7 +470,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool SetVisible(int commandId, bool visible) {
-            return 0 != CfxApi.cfx_menu_model_set_visible(NativePtr, commandId, visible ? 1 : 0);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_set_visible(NativePtr, commandId, visible ? 1 : 0);
         }
 
         /// <summary>
@@ -486,7 +482,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool SetVisibleAt(int index, bool visible) {
-            return 0 != CfxApi.cfx_menu_model_set_visible_at(NativePtr, index, visible ? 1 : 0);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_set_visible_at(NativePtr, index, visible ? 1 : 0);
         }
 
         /// <summary>
@@ -497,7 +493,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool IsEnabled(int commandId) {
-            return 0 != CfxApi.cfx_menu_model_is_enabled(NativePtr, commandId);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_is_enabled(NativePtr, commandId);
         }
 
         /// <summary>
@@ -508,7 +504,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool IsEnabledAt(int index) {
-            return 0 != CfxApi.cfx_menu_model_is_enabled_at(NativePtr, index);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_is_enabled_at(NativePtr, index);
         }
 
         /// <summary>
@@ -520,7 +516,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool SetEnabled(int commandId, bool enabled) {
-            return 0 != CfxApi.cfx_menu_model_set_enabled(NativePtr, commandId, enabled ? 1 : 0);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_set_enabled(NativePtr, commandId, enabled ? 1 : 0);
         }
 
         /// <summary>
@@ -532,7 +528,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool SetEnabledAt(int index, bool enabled) {
-            return 0 != CfxApi.cfx_menu_model_set_enabled_at(NativePtr, index, enabled ? 1 : 0);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_set_enabled_at(NativePtr, index, enabled ? 1 : 0);
         }
 
         /// <summary>
@@ -544,7 +540,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool IsChecked(int commandId) {
-            return 0 != CfxApi.cfx_menu_model_is_checked(NativePtr, commandId);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_is_checked(NativePtr, commandId);
         }
 
         /// <summary>
@@ -556,7 +552,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool IsCheckedAt(int index) {
-            return 0 != CfxApi.cfx_menu_model_is_checked_at(NativePtr, index);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_is_checked_at(NativePtr, index);
         }
 
         /// <summary>
@@ -568,7 +564,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool SetChecked(int commandId, bool @checked) {
-            return 0 != CfxApi.cfx_menu_model_set_checked(NativePtr, commandId, @checked ? 1 : 0);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_set_checked(NativePtr, commandId, @checked ? 1 : 0);
         }
 
         /// <summary>
@@ -580,7 +576,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool SetCheckedAt(int index, bool @checked) {
-            return 0 != CfxApi.cfx_menu_model_set_checked_at(NativePtr, index, @checked ? 1 : 0);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_set_checked_at(NativePtr, index, @checked ? 1 : 0);
         }
 
         /// <summary>
@@ -592,7 +588,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool HasAccelerator(int commandId) {
-            return 0 != CfxApi.cfx_menu_model_has_accelerator(NativePtr, commandId);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_has_accelerator(NativePtr, commandId);
         }
 
         /// <summary>
@@ -604,7 +600,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool HasAcceleratorAt(int index) {
-            return 0 != CfxApi.cfx_menu_model_has_accelerator_at(NativePtr, index);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_has_accelerator_at(NativePtr, index);
         }
 
         /// <summary>
@@ -616,7 +612,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool SetAccelerator(int commandId, int keyCode, bool shiftPressed, bool ctrlPressed, bool altPressed) {
-            return 0 != CfxApi.cfx_menu_model_set_accelerator(NativePtr, commandId, keyCode, shiftPressed ? 1 : 0, ctrlPressed ? 1 : 0, altPressed ? 1 : 0);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_set_accelerator(NativePtr, commandId, keyCode, shiftPressed ? 1 : 0, ctrlPressed ? 1 : 0, altPressed ? 1 : 0);
         }
 
         /// <summary>
@@ -628,7 +624,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool SetAcceleratorAt(int index, int keyCode, bool shiftPressed, bool ctrlPressed, bool altPressed) {
-            return 0 != CfxApi.cfx_menu_model_set_accelerator_at(NativePtr, index, keyCode, shiftPressed ? 1 : 0, ctrlPressed ? 1 : 0, altPressed ? 1 : 0);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_set_accelerator_at(NativePtr, index, keyCode, shiftPressed ? 1 : 0, ctrlPressed ? 1 : 0, altPressed ? 1 : 0);
         }
 
         /// <summary>
@@ -640,7 +636,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool RemoveAccelerator(int commandId) {
-            return 0 != CfxApi.cfx_menu_model_remove_accelerator(NativePtr, commandId);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_remove_accelerator(NativePtr, commandId);
         }
 
         /// <summary>
@@ -652,7 +648,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
         /// </remarks>
         public bool RemoveAcceleratorAt(int index) {
-            return 0 != CfxApi.cfx_menu_model_remove_accelerator_at(NativePtr, index);
+            return 0 != CfxApi.MenuModel.cfx_menu_model_remove_accelerator_at(NativePtr, index);
         }
 
         /// <summary>
@@ -667,7 +663,7 @@ namespace Chromium {
             int shiftPressed_unwrapped;
             int ctrlPressed_unwrapped;
             int altPressed_unwrapped;
-            var __retval = CfxApi.cfx_menu_model_get_accelerator(NativePtr, commandId, out keyCode, out shiftPressed_unwrapped, out ctrlPressed_unwrapped, out altPressed_unwrapped);
+            var __retval = CfxApi.MenuModel.cfx_menu_model_get_accelerator(NativePtr, commandId, out keyCode, out shiftPressed_unwrapped, out ctrlPressed_unwrapped, out altPressed_unwrapped);
             shiftPressed = shiftPressed_unwrapped != 0;
             ctrlPressed = ctrlPressed_unwrapped != 0;
             altPressed = altPressed_unwrapped != 0;
@@ -686,7 +682,7 @@ namespace Chromium {
             int shiftPressed_unwrapped;
             int ctrlPressed_unwrapped;
             int altPressed_unwrapped;
-            var __retval = CfxApi.cfx_menu_model_get_accelerator_at(NativePtr, index, out keyCode, out shiftPressed_unwrapped, out ctrlPressed_unwrapped, out altPressed_unwrapped);
+            var __retval = CfxApi.MenuModel.cfx_menu_model_get_accelerator_at(NativePtr, index, out keyCode, out shiftPressed_unwrapped, out ctrlPressed_unwrapped, out altPressed_unwrapped);
             shiftPressed = shiftPressed_unwrapped != 0;
             ctrlPressed = ctrlPressed_unwrapped != 0;
             altPressed = altPressed_unwrapped != 0;

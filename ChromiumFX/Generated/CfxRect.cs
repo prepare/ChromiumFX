@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxRect : CfxStructure {
 
-        static CfxRect () {
-            CfxApiLoader.LoadCfxRectApi();
-        }
-
         internal static CfxRect Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxRect(nativePtr);
@@ -54,54 +50,54 @@ namespace Chromium {
 
         internal static CfxRect WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxRect(nativePtr, CfxApi.cfx_rect_dtor);
+            return new CfxRect(nativePtr, CfxApi.Rect.cfx_rect_dtor);
         }
 
-        public CfxRect() : base(CfxApi.cfx_rect_ctor, CfxApi.cfx_rect_dtor) {}
+        public CfxRect() : base(CfxApi.Rect.cfx_rect_ctor, CfxApi.Rect.cfx_rect_dtor) {}
         internal CfxRect(IntPtr nativePtr) : base(nativePtr) {}
         internal CfxRect(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         public int X {
             get {
                 int value;
-                CfxApi.cfx_rect_get_x(nativePtrUnchecked, out value);
+                CfxApi.Rect.cfx_rect_get_x(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_rect_set_x(nativePtrUnchecked, value);
+                CfxApi.Rect.cfx_rect_set_x(nativePtrUnchecked, value);
             }
         }
 
         public int Y {
             get {
                 int value;
-                CfxApi.cfx_rect_get_y(nativePtrUnchecked, out value);
+                CfxApi.Rect.cfx_rect_get_y(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_rect_set_y(nativePtrUnchecked, value);
+                CfxApi.Rect.cfx_rect_set_y(nativePtrUnchecked, value);
             }
         }
 
         public int Width {
             get {
                 int value;
-                CfxApi.cfx_rect_get_width(nativePtrUnchecked, out value);
+                CfxApi.Rect.cfx_rect_get_width(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_rect_set_width(nativePtrUnchecked, value);
+                CfxApi.Rect.cfx_rect_set_width(nativePtrUnchecked, value);
             }
         }
 
         public int Height {
             get {
                 int value;
-                CfxApi.cfx_rect_get_height(nativePtrUnchecked, out value);
+                CfxApi.Rect.cfx_rect_get_height(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_rect_set_height(nativePtrUnchecked, value);
+                CfxApi.Rect.cfx_rect_set_height(nativePtrUnchecked, value);
             }
         }
 

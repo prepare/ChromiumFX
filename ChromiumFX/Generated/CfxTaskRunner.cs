@@ -48,10 +48,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxTaskRunner : CfxBase {
 
-        static CfxTaskRunner () {
-            CfxApiLoader.LoadCfxTaskRunnerApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxTaskRunner Wrap(IntPtr nativePtr) {
@@ -81,7 +77,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static CfxTaskRunner GetForCurrentThread() {
-            return CfxTaskRunner.Wrap(CfxApi.cfx_task_runner_get_for_current_thread());
+            return CfxTaskRunner.Wrap(CfxApi.TaskRunner.cfx_task_runner_get_for_current_thread());
         }
 
         /// <summary>
@@ -92,7 +88,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static CfxTaskRunner GetForThread(CfxThreadId threadId) {
-            return CfxTaskRunner.Wrap(CfxApi.cfx_task_runner_get_for_thread((int)threadId));
+            return CfxTaskRunner.Wrap(CfxApi.TaskRunner.cfx_task_runner_get_for_thread((int)threadId));
         }
 
         /// <summary>
@@ -104,7 +100,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public bool IsSame(CfxTaskRunner that) {
-            return 0 != CfxApi.cfx_task_runner_is_same(NativePtr, CfxTaskRunner.Unwrap(that));
+            return 0 != CfxApi.TaskRunner.cfx_task_runner_is_same(NativePtr, CfxTaskRunner.Unwrap(that));
         }
 
         /// <summary>
@@ -115,7 +111,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public bool BelongsToCurrentThread() {
-            return 0 != CfxApi.cfx_task_runner_belongs_to_current_thread(NativePtr);
+            return 0 != CfxApi.TaskRunner.cfx_task_runner_belongs_to_current_thread(NativePtr);
         }
 
         /// <summary>
@@ -126,7 +122,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public bool BelongsToThread(CfxThreadId threadId) {
-            return 0 != CfxApi.cfx_task_runner_belongs_to_thread(NativePtr, (int)threadId);
+            return 0 != CfxApi.TaskRunner.cfx_task_runner_belongs_to_thread(NativePtr, (int)threadId);
         }
 
         /// <summary>
@@ -138,7 +134,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public bool PostTask(CfxTask task) {
-            return 0 != CfxApi.cfx_task_runner_post_task(NativePtr, CfxTask.Unwrap(task));
+            return 0 != CfxApi.TaskRunner.cfx_task_runner_post_task(NativePtr, CfxTask.Unwrap(task));
         }
 
         /// <summary>
@@ -152,7 +148,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public bool PostDelayedTask(CfxTask task, long delayMs) {
-            return 0 != CfxApi.cfx_task_runner_post_delayed_task(NativePtr, CfxTask.Unwrap(task), delayMs);
+            return 0 != CfxApi.TaskRunner.cfx_task_runner_post_delayed_task(NativePtr, CfxTask.Unwrap(task), delayMs);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

@@ -47,13 +47,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxV8Handler : CfxBase {
 
-        static CfxV8Handler () {
-            CfxApiLoader.LoadCfxV8HandlerApi();
-        }
-
         internal static CfxV8Handler Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_v8handler_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.V8Handler.cfx_v8handler_get_gc_handle(nativePtr);
             return (CfxV8Handler)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -101,7 +97,7 @@ namespace Chromium {
         }
 
         internal CfxV8Handler(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxV8Handler() : base(CfxApi.cfx_v8handler_ctor) {}
+        public CfxV8Handler() : base(CfxApi.V8Handler.cfx_v8handler_ctor) {}
 
         /// <summary>
         /// Handle execution of the function identified by |Name|. |Object| is the
@@ -122,7 +118,7 @@ namespace Chromium {
                             cfx_v8handler_execute = execute;
                             cfx_v8handler_execute_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_v8handler_execute);
                         }
-                        CfxApi.cfx_v8handler_set_managed_callback(NativePtr, 0, cfx_v8handler_execute_ptr);
+                        CfxApi.V8Handler.cfx_v8handler_set_managed_callback(NativePtr, 0, cfx_v8handler_execute_ptr);
                     }
                     m_Execute += value;
                 }
@@ -131,7 +127,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Execute -= value;
                     if(m_Execute == null) {
-                        CfxApi.cfx_v8handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.V8Handler.cfx_v8handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -142,7 +138,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_Execute != null) {
                 m_Execute = null;
-                CfxApi.cfx_v8handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.V8Handler.cfx_v8handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

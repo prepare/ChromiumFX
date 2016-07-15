@@ -73,7 +73,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var schemeName_pinned = new PinnedString(schemeName);
-            __retval = 0 != CfxApi.cfx_scheme_registrar_add_custom_scheme(@this, schemeName_pinned.Obj.PinnedPtr, schemeName_pinned.Length, isStandard ? 1 : 0, isLocal ? 1 : 0, isDisplayIsolated ? 1 : 0);
+            __retval = 0 != CfxApi.SchemeRegistrar.cfx_scheme_registrar_add_custom_scheme(@this, schemeName_pinned.Obj.PinnedPtr, schemeName_pinned.Length, isStandard ? 1 : 0, isLocal ? 1 : 0, isDisplayIsolated ? 1 : 0);
             schemeName_pinned.Obj.Free();
         }
     }

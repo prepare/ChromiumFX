@@ -74,8 +74,8 @@ namespace Chromium {
 
         public CfxWindowInfo() 
             : base(
-                CfxApi.PlatformOS == CfxPlatformOS.Linux ? CfxApi.cfx_window_info_linux_ctor : CfxApi.cfx_window_info_windows_ctor,
-                CfxApi.PlatformOS == CfxPlatformOS.Linux ? CfxApi.cfx_window_info_linux_dtor : CfxApi.cfx_window_info_windows_dtor
+                CfxApi.PlatformOS == CfxPlatformOS.Linux ? CfxApi.WindowInfoLinux.cfx_window_info_linux_ctor : CfxApi.WindowInfoWindows.cfx_window_info_windows_ctor,
+                CfxApi.PlatformOS == CfxPlatformOS.Linux ? CfxApi.WindowInfoLinux.cfx_window_info_linux_dtor : CfxApi.WindowInfoWindows.cfx_window_info_windows_dtor
             )
         {
             switch(CfxApi.PlatformOS) {

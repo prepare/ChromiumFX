@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxRange : CfxStructure {
 
-        static CfxRange () {
-            CfxApiLoader.LoadCfxRangeApi();
-        }
-
         internal static CfxRange Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxRange(nativePtr);
@@ -54,32 +50,32 @@ namespace Chromium {
 
         internal static CfxRange WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxRange(nativePtr, CfxApi.cfx_range_dtor);
+            return new CfxRange(nativePtr, CfxApi.Range.cfx_range_dtor);
         }
 
-        public CfxRange() : base(CfxApi.cfx_range_ctor, CfxApi.cfx_range_dtor) {}
+        public CfxRange() : base(CfxApi.Range.cfx_range_ctor, CfxApi.Range.cfx_range_dtor) {}
         internal CfxRange(IntPtr nativePtr) : base(nativePtr) {}
         internal CfxRange(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         public int From {
             get {
                 int value;
-                CfxApi.cfx_range_get_from(nativePtrUnchecked, out value);
+                CfxApi.Range.cfx_range_get_from(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_range_set_from(nativePtrUnchecked, value);
+                CfxApi.Range.cfx_range_set_from(nativePtrUnchecked, value);
             }
         }
 
         public int To {
             get {
                 int value;
-                CfxApi.cfx_range_get_to(nativePtrUnchecked, out value);
+                CfxApi.Range.cfx_range_get_to(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_range_set_to(nativePtrUnchecked, value);
+                CfxApi.Range.cfx_range_set_to(nativePtrUnchecked, value);
             }
         }
 

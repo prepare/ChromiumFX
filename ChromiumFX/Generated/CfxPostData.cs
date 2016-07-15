@@ -44,10 +44,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxPostData : CfxBase {
 
-        static CfxPostData () {
-            CfxApiLoader.LoadCfxPostDataApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxPostData Wrap(IntPtr nativePtr) {
@@ -75,7 +71,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public static CfxPostData Create() {
-            return CfxPostData.Wrap(CfxApi.cfx_post_data_create());
+            return CfxPostData.Wrap(CfxApi.PostData.cfx_post_data_create());
         }
 
         /// <summary>
@@ -87,7 +83,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsReadOnly {
             get {
-                return 0 != CfxApi.cfx_post_data_is_read_only(NativePtr);
+                return 0 != CfxApi.PostData.cfx_post_data_is_read_only(NativePtr);
             }
         }
 
@@ -103,7 +99,7 @@ namespace Chromium {
         /// </remarks>
         public bool HasExcludedElements {
             get {
-                return 0 != CfxApi.cfx_post_data_has_excluded_elements(NativePtr);
+                return 0 != CfxApi.PostData.cfx_post_data_has_excluded_elements(NativePtr);
             }
         }
 
@@ -116,7 +112,7 @@ namespace Chromium {
         /// </remarks>
         public int ElementCount {
             get {
-                return CfxApi.cfx_post_data_get_element_count(NativePtr);
+                return CfxApi.PostData.cfx_post_data_get_element_count(NativePtr);
             }
         }
 
@@ -133,7 +129,7 @@ namespace Chromium {
                 if(count == 0) return new CfxPostDataElement[0];
                 IntPtr[] ptrs = new IntPtr[count];
                 var ptrs_p = new PinnedObject(ptrs);
-                CfxApi.cfx_post_data_get_elements(NativePtr, count, ptrs_p.PinnedPtr);
+                CfxApi.PostData.cfx_post_data_get_elements(NativePtr, count, ptrs_p.PinnedPtr);
                 ptrs_p.Free();
                 CfxPostDataElement[] retval = new CfxPostDataElement[count];
                 for(int i = 0; i < count; ++i) {
@@ -152,7 +148,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public bool RemoveElement(CfxPostDataElement element) {
-            return 0 != CfxApi.cfx_post_data_remove_element(NativePtr, CfxPostDataElement.Unwrap(element));
+            return 0 != CfxApi.PostData.cfx_post_data_remove_element(NativePtr, CfxPostDataElement.Unwrap(element));
         }
 
         /// <summary>
@@ -163,7 +159,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public bool AddElement(CfxPostDataElement element) {
-            return 0 != CfxApi.cfx_post_data_add_element(NativePtr, CfxPostDataElement.Unwrap(element));
+            return 0 != CfxApi.PostData.cfx_post_data_add_element(NativePtr, CfxPostDataElement.Unwrap(element));
         }
 
         /// <summary>
@@ -174,7 +170,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public void RemoveElements() {
-            CfxApi.cfx_post_data_remove_elements(NativePtr);
+            CfxApi.PostData.cfx_post_data_remove_elements(NativePtr);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

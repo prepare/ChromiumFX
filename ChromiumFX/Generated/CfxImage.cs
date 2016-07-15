@@ -48,10 +48,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxImage : CfxBase {
 
-        static CfxImage () {
-            CfxApiLoader.LoadCfxImageApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxImage Wrap(IntPtr nativePtr) {
@@ -80,7 +76,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_image_capi.h">cef/include/capi/cef_image_capi.h</see>.
         /// </remarks>
         public static CfxImage Create() {
-            return CfxImage.Wrap(CfxApi.cfx_image_create());
+            return CfxImage.Wrap(CfxApi.Image.cfx_image_create());
         }
 
         /// <summary>
@@ -92,7 +88,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsEmpty {
             get {
-                return 0 != CfxApi.cfx_image_is_empty(NativePtr);
+                return 0 != CfxApi.Image.cfx_image_is_empty(NativePtr);
             }
         }
 
@@ -105,7 +101,7 @@ namespace Chromium {
         /// </remarks>
         public int Width {
             get {
-                return CfxApi.cfx_image_get_width(NativePtr);
+                return CfxApi.Image.cfx_image_get_width(NativePtr);
             }
         }
 
@@ -118,7 +114,7 @@ namespace Chromium {
         /// </remarks>
         public int Height {
             get {
-                return CfxApi.cfx_image_get_height(NativePtr);
+                return CfxApi.Image.cfx_image_get_height(NativePtr);
             }
         }
 
@@ -131,7 +127,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_image_capi.h">cef/include/capi/cef_image_capi.h</see>.
         /// </remarks>
         public bool IsSame(CfxImage that) {
-            return 0 != CfxApi.cfx_image_is_same(NativePtr, CfxImage.Unwrap(that));
+            return 0 != CfxApi.Image.cfx_image_is_same(NativePtr, CfxImage.Unwrap(that));
         }
 
         /// <summary>
@@ -146,7 +142,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_image_capi.h">cef/include/capi/cef_image_capi.h</see>.
         /// </remarks>
         public bool AddBitmap(float scaleFactor, int pixelWidth, int pixelHeight, CfxColorType colorType, CfxAlphaType alphaType, IntPtr pixelData, int pixelDataSize) {
-            return 0 != CfxApi.cfx_image_add_bitmap(NativePtr, scaleFactor, pixelWidth, pixelHeight, (int)colorType, (int)alphaType, pixelData, pixelDataSize);
+            return 0 != CfxApi.Image.cfx_image_add_bitmap(NativePtr, scaleFactor, pixelWidth, pixelHeight, (int)colorType, (int)alphaType, pixelData, pixelDataSize);
         }
 
         /// <summary>
@@ -159,7 +155,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_image_capi.h">cef/include/capi/cef_image_capi.h</see>.
         /// </remarks>
         public bool AddPng(float scaleFactor, IntPtr pngData, int pngDataSize) {
-            return 0 != CfxApi.cfx_image_add_png(NativePtr, scaleFactor, pngData, pngDataSize);
+            return 0 != CfxApi.Image.cfx_image_add_png(NativePtr, scaleFactor, pngData, pngDataSize);
         }
 
         /// <summary>
@@ -172,7 +168,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_image_capi.h">cef/include/capi/cef_image_capi.h</see>.
         /// </remarks>
         public bool AddJpeg(float scaleFactor, IntPtr jpegData, int jpegDataSize) {
-            return 0 != CfxApi.cfx_image_add_jpeg(NativePtr, scaleFactor, jpegData, jpegDataSize);
+            return 0 != CfxApi.Image.cfx_image_add_jpeg(NativePtr, scaleFactor, jpegData, jpegDataSize);
         }
 
         /// <summary>
@@ -184,7 +180,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_image_capi.h">cef/include/capi/cef_image_capi.h</see>.
         /// </remarks>
         public bool HasRepresentation(float scaleFactor) {
-            return 0 != CfxApi.cfx_image_has_representation(NativePtr, scaleFactor);
+            return 0 != CfxApi.Image.cfx_image_has_representation(NativePtr, scaleFactor);
         }
 
         /// <summary>
@@ -195,7 +191,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_image_capi.h">cef/include/capi/cef_image_capi.h</see>.
         /// </remarks>
         public bool RemoveRepresentation(float scaleFactor) {
-            return 0 != CfxApi.cfx_image_remove_representation(NativePtr, scaleFactor);
+            return 0 != CfxApi.Image.cfx_image_remove_representation(NativePtr, scaleFactor);
         }
 
         /// <summary>
@@ -209,7 +205,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_image_capi.h">cef/include/capi/cef_image_capi.h</see>.
         /// </remarks>
         public bool GetRepresentationInfo(float scaleFactor, out float actualScaleFactor, out int pixelWidth, out int pixelHeight) {
-            return 0 != CfxApi.cfx_image_get_representation_info(NativePtr, scaleFactor, out actualScaleFactor, out pixelWidth, out pixelHeight);
+            return 0 != CfxApi.Image.cfx_image_get_representation_info(NativePtr, scaleFactor, out actualScaleFactor, out pixelWidth, out pixelHeight);
         }
 
         /// <summary>
@@ -225,7 +221,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_image_capi.h">cef/include/capi/cef_image_capi.h</see>.
         /// </remarks>
         public CfxBinaryValue GetAsBitmap(float scaleFactor, CfxColorType colorType, CfxAlphaType alphaType, out int pixelWidth, out int pixelHeight) {
-            return CfxBinaryValue.Wrap(CfxApi.cfx_image_get_as_bitmap(NativePtr, scaleFactor, (int)colorType, (int)alphaType, out pixelWidth, out pixelHeight));
+            return CfxBinaryValue.Wrap(CfxApi.Image.cfx_image_get_as_bitmap(NativePtr, scaleFactor, (int)colorType, (int)alphaType, out pixelWidth, out pixelHeight));
         }
 
         /// <summary>
@@ -241,7 +237,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_image_capi.h">cef/include/capi/cef_image_capi.h</see>.
         /// </remarks>
         public CfxBinaryValue GetAsPng(float scaleFactor, bool withTransparency, out int pixelWidth, out int pixelHeight) {
-            return CfxBinaryValue.Wrap(CfxApi.cfx_image_get_as_png(NativePtr, scaleFactor, withTransparency ? 1 : 0, out pixelWidth, out pixelHeight));
+            return CfxBinaryValue.Wrap(CfxApi.Image.cfx_image_get_as_png(NativePtr, scaleFactor, withTransparency ? 1 : 0, out pixelWidth, out pixelHeight));
         }
 
         /// <summary>
@@ -258,7 +254,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_image_capi.h">cef/include/capi/cef_image_capi.h</see>.
         /// </remarks>
         public CfxBinaryValue GetAsJpeg(float scaleFactor, int quality, out int pixelWidth, out int pixelHeight) {
-            return CfxBinaryValue.Wrap(CfxApi.cfx_image_get_as_jpeg(NativePtr, scaleFactor, quality, out pixelWidth, out pixelHeight));
+            return CfxBinaryValue.Wrap(CfxApi.Image.cfx_image_get_as_jpeg(NativePtr, scaleFactor, quality, out pixelWidth, out pixelHeight));
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

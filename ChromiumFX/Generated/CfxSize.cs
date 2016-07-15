@@ -43,31 +43,27 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxSize : CfxStructure {
 
-        static CfxSize () {
-            CfxApiLoader.LoadCfxSizeApi();
-        }
-
-        public CfxSize() : base(CfxApi.cfx_size_ctor, CfxApi.cfx_size_dtor) {}
+        public CfxSize() : base(CfxApi.Size.cfx_size_ctor, CfxApi.Size.cfx_size_dtor) {}
 
         public int Width {
             get {
                 int value;
-                CfxApi.cfx_size_get_width(nativePtrUnchecked, out value);
+                CfxApi.Size.cfx_size_get_width(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_size_set_width(nativePtrUnchecked, value);
+                CfxApi.Size.cfx_size_set_width(nativePtrUnchecked, value);
             }
         }
 
         public int Height {
             get {
                 int value;
-                CfxApi.cfx_size_get_height(nativePtrUnchecked, out value);
+                CfxApi.Size.cfx_size_get_height(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_size_set_height(nativePtrUnchecked, value);
+                CfxApi.Size.cfx_size_set_height(nativePtrUnchecked, value);
             }
         }
 

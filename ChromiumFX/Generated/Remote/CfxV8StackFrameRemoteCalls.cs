@@ -60,7 +60,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_v8stack_frame_is_valid(@this);
+            __retval = 0 != CfxApi.V8StackFrame.cfx_v8stack_frame_is_valid(@this);
         }
     }
 
@@ -89,7 +89,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8stack_frame_get_script_name(@this));
+            __retval = StringFunctions.ConvertStringUserfree(CfxApi.V8StackFrame.cfx_v8stack_frame_get_script_name(@this));
         }
     }
 
@@ -118,7 +118,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8stack_frame_get_script_name_or_source_url(@this));
+            __retval = StringFunctions.ConvertStringUserfree(CfxApi.V8StackFrame.cfx_v8stack_frame_get_script_name_or_source_url(@this));
         }
     }
 
@@ -147,7 +147,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8stack_frame_get_function_name(@this));
+            __retval = StringFunctions.ConvertStringUserfree(CfxApi.V8StackFrame.cfx_v8stack_frame_get_function_name(@this));
         }
     }
 
@@ -176,7 +176,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_v8stack_frame_get_line_number(@this);
+            __retval = CfxApi.V8StackFrame.cfx_v8stack_frame_get_line_number(@this);
         }
     }
 
@@ -205,7 +205,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_v8stack_frame_get_column(@this);
+            __retval = CfxApi.V8StackFrame.cfx_v8stack_frame_get_column(@this);
         }
     }
 
@@ -234,7 +234,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_v8stack_frame_is_eval(@this);
+            __retval = 0 != CfxApi.V8StackFrame.cfx_v8stack_frame_is_eval(@this);
         }
     }
 
@@ -263,7 +263,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_v8stack_frame_is_constructor(@this);
+            __retval = 0 != CfxApi.V8StackFrame.cfx_v8stack_frame_is_constructor(@this);
         }
     }
 

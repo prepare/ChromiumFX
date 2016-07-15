@@ -43,33 +43,27 @@ namespace Chromium {
     /// </remarks>
     internal sealed partial class CfxMainArgsLinux : CfxStructure {
 
-        static CfxMainArgsLinux () {
-            if(CfxApi.PlatformOS == CfxPlatformOS.Linux) {
-                CfxApiLoader.LoadCfxMainArgsLinuxApi();
-            }
-        }
-
-        public CfxMainArgsLinux() : base(CfxApi.cfx_main_args_linux_ctor, CfxApi.cfx_main_args_linux_dtor) { CfxApi.CheckPlatformOS(CfxPlatformOS.Linux); }
+        public CfxMainArgsLinux() : base(CfxApi.MainArgsLinux.cfx_main_args_linux_ctor, CfxApi.MainArgsLinux.cfx_main_args_linux_dtor) { CfxApi.CheckPlatformOS(CfxPlatformOS.Linux); }
 
         public int Argc {
             get {
                 int value;
-                CfxApi.cfx_main_args_linux_get_argc(nativePtrUnchecked, out value);
+                CfxApi.MainArgsLinux.cfx_main_args_linux_get_argc(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_main_args_linux_set_argc(nativePtrUnchecked, value);
+                CfxApi.MainArgsLinux.cfx_main_args_linux_set_argc(nativePtrUnchecked, value);
             }
         }
 
         public IntPtr Argv {
             get {
                 IntPtr value;
-                CfxApi.cfx_main_args_linux_get_argv(nativePtrUnchecked, out value);
+                CfxApi.MainArgsLinux.cfx_main_args_linux_get_argv(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_main_args_linux_set_argv(nativePtrUnchecked, value);
+                CfxApi.MainArgsLinux.cfx_main_args_linux_set_argv(nativePtrUnchecked, value);
             }
         }
 

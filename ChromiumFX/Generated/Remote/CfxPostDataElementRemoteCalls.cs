@@ -51,7 +51,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_post_data_element_create();
+            __retval = CfxApi.PostDataElement.cfx_post_data_element_create();
         }
     }
 
@@ -80,7 +80,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_post_data_element_is_read_only(@this);
+            __retval = 0 != CfxApi.PostDataElement.cfx_post_data_element_is_read_only(@this);
         }
     }
 
@@ -100,7 +100,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            CfxApi.cfx_post_data_element_set_to_empty(@this);
+            CfxApi.PostDataElement.cfx_post_data_element_set_to_empty(@this);
         }
     }
 
@@ -124,7 +124,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var fileName_pinned = new PinnedString(fileName);
-            CfxApi.cfx_post_data_element_set_to_file(@this, fileName_pinned.Obj.PinnedPtr, fileName_pinned.Length);
+            CfxApi.PostDataElement.cfx_post_data_element_set_to_file(@this, fileName_pinned.Obj.PinnedPtr, fileName_pinned.Length);
             fileName_pinned.Obj.Free();
         }
     }
@@ -151,7 +151,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            CfxApi.cfx_post_data_element_set_to_bytes(@this, size, bytes);
+            CfxApi.PostDataElement.cfx_post_data_element_set_to_bytes(@this, size, bytes);
         }
     }
 
@@ -180,7 +180,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_post_data_element_get_type(@this);
+            __retval = CfxApi.PostDataElement.cfx_post_data_element_get_type(@this);
         }
     }
 
@@ -209,7 +209,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = StringFunctions.ConvertStringUserfree(CfxApi.cfx_post_data_element_get_file(@this));
+            __retval = StringFunctions.ConvertStringUserfree(CfxApi.PostDataElement.cfx_post_data_element_get_file(@this));
         }
     }
 
@@ -238,7 +238,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_post_data_element_get_bytes_count(@this);
+            __retval = CfxApi.PostDataElement.cfx_post_data_element_get_bytes_count(@this);
         }
     }
 
@@ -273,7 +273,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_post_data_element_get_bytes(@this, size, bytes);
+            __retval = CfxApi.PostDataElement.cfx_post_data_element_get_bytes(@this, size, bytes);
         }
     }
 

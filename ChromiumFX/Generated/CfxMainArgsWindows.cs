@@ -43,22 +43,16 @@ namespace Chromium {
     /// </remarks>
     internal sealed class CfxMainArgsWindows : CfxStructure {
 
-        static CfxMainArgsWindows () {
-            if(CfxApi.PlatformOS == CfxPlatformOS.Windows) {
-                CfxApiLoader.LoadCfxMainArgsWindowsApi();
-            }
-        }
-
-        public CfxMainArgsWindows() : base(CfxApi.cfx_main_args_windows_ctor, CfxApi.cfx_main_args_windows_dtor) { CfxApi.CheckPlatformOS(CfxPlatformOS.Windows); }
+        public CfxMainArgsWindows() : base(CfxApi.MainArgsWindows.cfx_main_args_windows_ctor, CfxApi.MainArgsWindows.cfx_main_args_windows_dtor) { CfxApi.CheckPlatformOS(CfxPlatformOS.Windows); }
 
         public IntPtr Instance {
             get {
                 IntPtr value;
-                CfxApi.cfx_main_args_windows_get_instance(nativePtrUnchecked, out value);
+                CfxApi.MainArgsWindows.cfx_main_args_windows_get_instance(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_main_args_windows_set_instance(nativePtrUnchecked, value);
+                CfxApi.MainArgsWindows.cfx_main_args_windows_set_instance(nativePtrUnchecked, value);
             }
         }
 

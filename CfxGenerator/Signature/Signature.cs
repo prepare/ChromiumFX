@@ -287,7 +287,7 @@ public class Signature {
 
     public virtual void EmitPublicCall(CodeBuilder b) {
 
-        var apiCall = string.Format("CfxApi.{0}({1})", Owner.CfxApiFunctionName, PublicArgumentList);
+        var apiCall = string.Format("CfxApi.{2}.{0}({1})", Owner.CfxApiFunctionName, PublicArgumentList, Owner.PublicClassName.Substring(3));
 
         for(var i = 0; i <= ManagedArguments.Length - 1; i++) {
             ManagedArguments[i].EmitPrePublicCallStatements(b);
@@ -318,7 +318,7 @@ public class Signature {
             ManagedArguments[i].EmitPreProxyCallStatements(b);
         }
 
-        var apiCall = string.Format("CfxApi.{0}({1})", Owner.CfxApiFunctionName, ProxyArgumentList);
+        var apiCall = string.Format("CfxApi.{2}.{0}({1})", Owner.CfxApiFunctionName, ProxyArgumentList, Owner.PublicClassName.Substring(3));
         if(PublicReturnType.IsVoid) {
             b.AppendLine(apiCall + ";");
         } else {

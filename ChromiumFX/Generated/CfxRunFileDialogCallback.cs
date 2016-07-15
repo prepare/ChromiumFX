@@ -46,13 +46,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxRunFileDialogCallback : CfxBase {
 
-        static CfxRunFileDialogCallback () {
-            CfxApiLoader.LoadCfxRunFileDialogCallbackApi();
-        }
-
         internal static CfxRunFileDialogCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_run_file_dialog_callback_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.RunFileDialogCallback.cfx_run_file_dialog_callback_get_gc_handle(nativePtr);
             return (CfxRunFileDialogCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -77,7 +73,7 @@ namespace Chromium {
         }
 
         internal CfxRunFileDialogCallback(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxRunFileDialogCallback() : base(CfxApi.cfx_run_file_dialog_callback_ctor) {}
+        public CfxRunFileDialogCallback() : base(CfxApi.RunFileDialogCallback.cfx_run_file_dialog_callback_ctor) {}
 
         /// <summary>
         /// Called asynchronously after the file dialog is dismissed.
@@ -98,7 +94,7 @@ namespace Chromium {
                             cfx_run_file_dialog_callback_on_file_dialog_dismissed = on_file_dialog_dismissed;
                             cfx_run_file_dialog_callback_on_file_dialog_dismissed_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_run_file_dialog_callback_on_file_dialog_dismissed);
                         }
-                        CfxApi.cfx_run_file_dialog_callback_set_managed_callback(NativePtr, 0, cfx_run_file_dialog_callback_on_file_dialog_dismissed_ptr);
+                        CfxApi.RunFileDialogCallback.cfx_run_file_dialog_callback_set_managed_callback(NativePtr, 0, cfx_run_file_dialog_callback_on_file_dialog_dismissed_ptr);
                     }
                     m_OnFileDialogDismissed += value;
                 }
@@ -107,7 +103,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnFileDialogDismissed -= value;
                     if(m_OnFileDialogDismissed == null) {
-                        CfxApi.cfx_run_file_dialog_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.RunFileDialogCallback.cfx_run_file_dialog_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -118,7 +114,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnFileDialogDismissed != null) {
                 m_OnFileDialogDismissed = null;
-                CfxApi.cfx_run_file_dialog_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.RunFileDialogCallback.cfx_run_file_dialog_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

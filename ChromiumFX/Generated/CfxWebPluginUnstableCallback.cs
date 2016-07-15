@@ -46,13 +46,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxWebPluginUnstableCallback : CfxBase {
 
-        static CfxWebPluginUnstableCallback () {
-            CfxApiLoader.LoadCfxWebPluginUnstableCallbackApi();
-        }
-
         internal static CfxWebPluginUnstableCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_web_plugin_unstable_callback_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.WebPluginUnstableCallback.cfx_web_plugin_unstable_callback_get_gc_handle(nativePtr);
             return (CfxWebPluginUnstableCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -77,7 +73,7 @@ namespace Chromium {
         }
 
         internal CfxWebPluginUnstableCallback(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxWebPluginUnstableCallback() : base(CfxApi.cfx_web_plugin_unstable_callback_ctor) {}
+        public CfxWebPluginUnstableCallback() : base(CfxApi.WebPluginUnstableCallback.cfx_web_plugin_unstable_callback_ctor) {}
 
         /// <summary>
         /// Method that will be called for the requested plugin. |Unstable| will be
@@ -96,7 +92,7 @@ namespace Chromium {
                             cfx_web_plugin_unstable_callback_is_unstable = is_unstable;
                             cfx_web_plugin_unstable_callback_is_unstable_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_web_plugin_unstable_callback_is_unstable);
                         }
-                        CfxApi.cfx_web_plugin_unstable_callback_set_managed_callback(NativePtr, 0, cfx_web_plugin_unstable_callback_is_unstable_ptr);
+                        CfxApi.WebPluginUnstableCallback.cfx_web_plugin_unstable_callback_set_managed_callback(NativePtr, 0, cfx_web_plugin_unstable_callback_is_unstable_ptr);
                     }
                     m_IsUnstable += value;
                 }
@@ -105,7 +101,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_IsUnstable -= value;
                     if(m_IsUnstable == null) {
-                        CfxApi.cfx_web_plugin_unstable_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.WebPluginUnstableCallback.cfx_web_plugin_unstable_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -116,7 +112,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_IsUnstable != null) {
                 m_IsUnstable = null;
-                CfxApi.cfx_web_plugin_unstable_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.WebPluginUnstableCallback.cfx_web_plugin_unstable_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

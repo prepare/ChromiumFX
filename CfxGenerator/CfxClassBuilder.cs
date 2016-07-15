@@ -128,6 +128,7 @@ public class CfxClassBuilder {
     private readonly string CfxNativeSymbol;
     private readonly string CfxName;
     private readonly string ClassName;
+    private readonly string ApiClassName;
 
     private readonly string RemoteClassName;
 
@@ -139,6 +140,7 @@ public class CfxClassBuilder {
         this.CfxNativeSymbol = cefStruct.CfxNativeSymbol;
         this.CfxName = cefStruct.CfxName;
         this.ClassName = cefStruct.ClassName;
+        ApiClassName = ClassName.Substring(3);
         this.RemoteClassName = cefStruct.RemoteClassName;
 
         this.comments = sd.Comments;
@@ -416,7 +418,13 @@ public class CfxClassBuilder {
     }
 
     public void EmitApiDeclarations(CodeBuilder b) {
-        b.AppendComment(ClassName);
+
+        b.BeginClass(ClassName.Substring(3), "internal static");
+        b.AppendLine();
+
+        b.BeginBlock("static {0} ()", ApiClassName);
+        b.AppendLine("CfxApiLoader.Load{0}Api();", ClassName);
+        b.EndBlock();
         b.AppendLine();
 
         if(ExportFunctions.Count() > 0) {
@@ -475,6 +483,8 @@ public class CfxClassBuilder {
 
                 break;
         }
+
+        b.EndBlock();
     }
 
     public void EmitPublicClass(CodeBuilder b) {
@@ -497,11 +507,6 @@ public class CfxClassBuilder {
         b.AppendSummaryAndRemarks(comments);
 
         b.BeginClass(ClassName + " : CfxBase", GeneratorConfig.ClassModifiers(ClassName));
-        b.AppendLine();
-
-        b.BeginBlock("static {0} ()", ClassName);
-        b.AppendLine("CfxApiLoader.Load{0}Api();", ClassName);
-        b.EndBlock();
         b.AppendLine();
 
         b.AppendLine("private static readonly WeakCache weakCache = new WeakCache();");
@@ -578,14 +583,9 @@ public class CfxClassBuilder {
         b.BeginClass(ClassName + " : CfxBase", GeneratorConfig.ClassModifiers(ClassName));
         b.AppendLine();
 
-        b.BeginBlock("static {0} ()", ClassName);
-        b.AppendLine("CfxApiLoader.Load{0}Api();", ClassName);
-        b.EndBlock();
-        b.AppendLine();
-
         b.BeginFunction("Wrap", ClassName, "IntPtr nativePtr", "internal static");
         b.AppendLine("if(nativePtr == IntPtr.Zero) return null;");
-        b.AppendLine("var handlePtr = CfxApi.{0}_get_gc_handle(nativePtr);", CfxName);
+        b.AppendLine("var handlePtr = CfxApi.{0}.{1}_get_gc_handle(nativePtr);", ApiClassName, CfxName);
         b.AppendLine("return ({0})System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;", ClassName);
         b.EndBlock();
         b.AppendLine();
@@ -630,7 +630,7 @@ public class CfxClassBuilder {
         }
 
         b.AppendLine("internal {0}(IntPtr nativePtr) : base(nativePtr) {{}}", ClassName);
-        b.AppendLine("public {0}() : base(CfxApi.{1}_ctor) {{}}", ClassName, CfxName);
+        b.AppendLine("public {0}() : base(CfxApi.{1}.{2}_ctor) {{}}", ClassName, ApiClassName, CfxName);
         b.AppendLine();
 
         var cbIndex = 0;
@@ -645,7 +645,7 @@ public class CfxClassBuilder {
         foreach(var sm in StructCallbacks) {
             b.BeginIf("m_{0} != null", sm.PublicName);
             b.AppendLine("m_{0} = null;", sm.PublicName);
-            b.AppendLine("CfxApi.{0}_set_managed_callback(NativePtr, {1}, IntPtr.Zero);", CfxName, cbIndex);
+            b.AppendLine("CfxApi.{0}.{1}_set_managed_callback(NativePtr, {2}, IntPtr.Zero);", ApiClassName, CfxName, cbIndex);
             b.EndBlock();
             cbIndex += 1;
         }
@@ -680,17 +680,6 @@ public class CfxClassBuilder {
         }
         b.AppendLine();
 
-        b.BeginBlock("static {0} ()", ClassName);
-        if(cefStruct.IsCefPlatformStructType) {
-            b.BeginIf("CfxApi.PlatformOS == CfxPlatformOS.{0}", cefStruct.AsCefPlatformStructType.Platform.ToString());
-        }
-        b.AppendLine("CfxApiLoader.Load{0}Api();", ClassName);
-        if(cefStruct.IsCefPlatformStructType) {
-            b.EndBlock();
-        }
-        b.EndBlock();
-        b.AppendLine();
-
         if(NeedsWrapping) {
             b.BeginFunction("Wrap", ClassName, "IntPtr nativePtr", "internal static");
             b.AppendLine("if(nativePtr == IntPtr.Zero) return null;");
@@ -699,20 +688,20 @@ public class CfxClassBuilder {
             b.AppendLine();
             b.BeginFunction("WrapOwned", ClassName, "IntPtr nativePtr", "internal static");
             b.AppendLine("if(nativePtr == IntPtr.Zero) return null;");
-            b.AppendLine("return new {0}(nativePtr, CfxApi.{1}_dtor);", ClassName, CfxName);
+            b.AppendLine("return new {0}(nativePtr, CfxApi.{1}.{2}_dtor);", ClassName, ApiClassName, CfxName);
             b.EndBlock();
             b.AppendLine();
         }
 
         if(cefStruct.IsCefPlatformStructType) {
-            b.AppendLine("public {0}() : base(CfxApi.{1}_ctor, CfxApi.{1}_dtor) {{ CfxApi.CheckPlatformOS(CfxPlatformOS.{2}); }}", ClassName, CfxName, cefStruct.AsCefPlatformStructType.Platform.ToString());
+            b.AppendLine("public {0}() : base(CfxApi.{1}.{2}_ctor, CfxApi.{1}.{2}_dtor) {{ CfxApi.CheckPlatformOS(CfxPlatformOS.{3}); }}", ClassName, ApiClassName, CfxName, cefStruct.AsCefPlatformStructType.Platform.ToString());
         } else {
-            b.AppendLine("public {0}() : base(CfxApi.{1}_ctor, CfxApi.{1}_dtor) {{}}", ClassName, CfxName);
+            b.AppendLine("public {0}() : base(CfxApi.{1}.{2}_ctor, CfxApi.{1}.{2}_dtor) {{}}", ClassName, ApiClassName, CfxName);
         }
 
         if(NeedsWrapping) {
-            b.AppendLine("internal {0}(IntPtr nativePtr) : base(nativePtr) {{}}", ClassName, CfxName);
-            b.AppendLine("internal {0}(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {{}}", ClassName, CfxName);
+            b.AppendLine("internal {0}(IntPtr nativePtr) : base(nativePtr) {{}}", ClassName);
+            b.AppendLine("internal {0}(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {{}}", ClassName);
         }
         b.AppendLine();
 
@@ -722,12 +711,12 @@ public class CfxClassBuilder {
                 b.BeginBlock("public {1} {0}", CSharp.Escape(sm.PublicName), sm.MemberType.PublicSymbol);
                 b.BeginBlock("get");
                 sm.MemberType.EmitValueStructGetterVars(b, "value");
-                b.AppendLine("CfxApi.{0}_get_{1}(nativePtrUnchecked, {2});", CfxName, sm.Name, sm.MemberType.PInvokeOutArgument("value"));
+                b.AppendLine("CfxApi.{3}.{0}_get_{1}(nativePtrUnchecked, {2});", CfxName, sm.Name, sm.MemberType.PInvokeOutArgument("value"), ApiClassName);
                 b.AppendLine("return {0};", sm.MemberType.PublicWrapExpression("value"));
                 b.EndBlock();
                 b.BeginBlock("set");
                 sm.MemberType.EmitPrePublicCallStatements(b, "value");
-                b.AppendLine("CfxApi.{0}_set_{1}(nativePtrUnchecked, {2});", CfxName, sm.Name, sm.MemberType.PublicUnwrapExpression("value"));
+                b.AppendLine("CfxApi.{3}.{0}_set_{1}(nativePtrUnchecked, {2});", CfxName, sm.Name, sm.MemberType.PublicUnwrapExpression("value"), ApiClassName);
                 sm.MemberType.EmitPostPublicCallStatements(b, "value");
                 b.EndBlock();
                 b.EndBlock();

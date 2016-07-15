@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxPrintJobCallback : CfxBase {
 
-        static CfxPrintJobCallback () {
-            CfxApiLoader.LoadCfxPrintJobCallbackApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxPrintJobCallback Wrap(IntPtr nativePtr) {
@@ -74,7 +70,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
         /// </remarks>
         public void Continue() {
-            CfxApi.cfx_print_job_callback_cont(NativePtr);
+            CfxApi.PrintJobCallback.cfx_print_job_callback_cont(NativePtr);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

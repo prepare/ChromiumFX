@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxSslCertPrincipal : CfxBase {
 
-        static CfxSslCertPrincipal () {
-            CfxApiLoader.LoadCfxSslCertPrincipalApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxSslCertPrincipal Wrap(IntPtr nativePtr) {
@@ -76,7 +72,7 @@ namespace Chromium {
         /// </remarks>
         public string DisplayName {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_sslcert_principal_get_display_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.SslCertPrincipal.cfx_sslcert_principal_get_display_name(NativePtr));
             }
         }
 
@@ -89,7 +85,7 @@ namespace Chromium {
         /// </remarks>
         public string CommonName {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_sslcert_principal_get_common_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.SslCertPrincipal.cfx_sslcert_principal_get_common_name(NativePtr));
             }
         }
 
@@ -102,7 +98,7 @@ namespace Chromium {
         /// </remarks>
         public string LocalityName {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_sslcert_principal_get_locality_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.SslCertPrincipal.cfx_sslcert_principal_get_locality_name(NativePtr));
             }
         }
 
@@ -115,7 +111,7 @@ namespace Chromium {
         /// </remarks>
         public string StateOrProvinceName {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_sslcert_principal_get_state_or_province_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.SslCertPrincipal.cfx_sslcert_principal_get_state_or_province_name(NativePtr));
             }
         }
 
@@ -128,7 +124,7 @@ namespace Chromium {
         /// </remarks>
         public string CountryName {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_sslcert_principal_get_country_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.SslCertPrincipal.cfx_sslcert_principal_get_country_name(NativePtr));
             }
         }
 
@@ -143,10 +139,10 @@ namespace Chromium {
             System.Collections.Generic.List<string> addresses = new System.Collections.Generic.List<string>();
             PinnedString[] addresses_handles;
             var addresses_unwrapped = StringFunctions.UnwrapCfxStringList(addresses, out addresses_handles);
-            CfxApi.cfx_sslcert_principal_get_street_addresses(NativePtr, addresses_unwrapped);
+            CfxApi.SslCertPrincipal.cfx_sslcert_principal_get_street_addresses(NativePtr, addresses_unwrapped);
             StringFunctions.FreePinnedStrings(addresses_handles);
             StringFunctions.CfxStringListCopyToManaged(addresses_unwrapped, addresses);
-            CfxApi.cfx_string_list_free(addresses_unwrapped);
+            CfxApi.Runtime.cfx_string_list_free(addresses_unwrapped);
             return addresses;
         }
 
@@ -161,10 +157,10 @@ namespace Chromium {
             System.Collections.Generic.List<string> names = new System.Collections.Generic.List<string>();
             PinnedString[] names_handles;
             var names_unwrapped = StringFunctions.UnwrapCfxStringList(names, out names_handles);
-            CfxApi.cfx_sslcert_principal_get_organization_names(NativePtr, names_unwrapped);
+            CfxApi.SslCertPrincipal.cfx_sslcert_principal_get_organization_names(NativePtr, names_unwrapped);
             StringFunctions.FreePinnedStrings(names_handles);
             StringFunctions.CfxStringListCopyToManaged(names_unwrapped, names);
-            CfxApi.cfx_string_list_free(names_unwrapped);
+            CfxApi.Runtime.cfx_string_list_free(names_unwrapped);
             return names;
         }
 
@@ -179,10 +175,10 @@ namespace Chromium {
             System.Collections.Generic.List<string> names = new System.Collections.Generic.List<string>();
             PinnedString[] names_handles;
             var names_unwrapped = StringFunctions.UnwrapCfxStringList(names, out names_handles);
-            CfxApi.cfx_sslcert_principal_get_organization_unit_names(NativePtr, names_unwrapped);
+            CfxApi.SslCertPrincipal.cfx_sslcert_principal_get_organization_unit_names(NativePtr, names_unwrapped);
             StringFunctions.FreePinnedStrings(names_handles);
             StringFunctions.CfxStringListCopyToManaged(names_unwrapped, names);
-            CfxApi.cfx_string_list_free(names_unwrapped);
+            CfxApi.Runtime.cfx_string_list_free(names_unwrapped);
             return names;
         }
 
@@ -197,10 +193,10 @@ namespace Chromium {
             System.Collections.Generic.List<string> components = new System.Collections.Generic.List<string>();
             PinnedString[] components_handles;
             var components_unwrapped = StringFunctions.UnwrapCfxStringList(components, out components_handles);
-            CfxApi.cfx_sslcert_principal_get_domain_components(NativePtr, components_unwrapped);
+            CfxApi.SslCertPrincipal.cfx_sslcert_principal_get_domain_components(NativePtr, components_unwrapped);
             StringFunctions.FreePinnedStrings(components_handles);
             StringFunctions.CfxStringListCopyToManaged(components_unwrapped, components);
-            CfxApi.cfx_string_list_free(components_unwrapped);
+            CfxApi.Runtime.cfx_string_list_free(components_unwrapped);
             return components;
         }
 

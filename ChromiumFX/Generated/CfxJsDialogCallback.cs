@@ -44,10 +44,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxJsDialogCallback : CfxBase {
 
-        static CfxJsDialogCallback () {
-            CfxApiLoader.LoadCfxJsDialogCallbackApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxJsDialogCallback Wrap(IntPtr nativePtr) {
@@ -77,7 +73,7 @@ namespace Chromium {
         /// </remarks>
         public void Continue(bool success, string userInput) {
             var userInput_pinned = new PinnedString(userInput);
-            CfxApi.cfx_jsdialog_callback_cont(NativePtr, success ? 1 : 0, userInput_pinned.Obj.PinnedPtr, userInput_pinned.Length);
+            CfxApi.JsDialogCallback.cfx_jsdialog_callback_cont(NativePtr, success ? 1 : 0, userInput_pinned.Obj.PinnedPtr, userInput_pinned.Length);
             userInput_pinned.Obj.Free();
         }
 

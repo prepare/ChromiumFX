@@ -43,11 +43,7 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxPdfPrintSettings : CfxStructure {
 
-        static CfxPdfPrintSettings () {
-            CfxApiLoader.LoadCfxPdfPrintSettingsApi();
-        }
-
-        public CfxPdfPrintSettings() : base(CfxApi.cfx_pdf_print_settings_ctor, CfxApi.cfx_pdf_print_settings_dtor) {}
+        public CfxPdfPrintSettings() : base(CfxApi.PdfPrintSettings.cfx_pdf_print_settings_ctor, CfxApi.PdfPrintSettings.cfx_pdf_print_settings_dtor) {}
 
         /// <summary>
         /// Page title to display in the header. Only used if |headerFooterEnabled|
@@ -61,12 +57,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_pdf_print_settings_get_header_footer_title(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_header_footer_title(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_pdf_print_settings_set_header_footer_title(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_header_footer_title(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
@@ -83,12 +79,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_pdf_print_settings_get_header_footer_url(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_header_footer_url(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_pdf_print_settings_set_header_footer_url(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_header_footer_url(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
@@ -104,22 +100,22 @@ namespace Chromium {
         public int PageWidth {
             get {
                 int value;
-                CfxApi.cfx_pdf_print_settings_get_page_width(nativePtrUnchecked, out value);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_page_width(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_pdf_print_settings_set_page_width(nativePtrUnchecked, value);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_page_width(nativePtrUnchecked, value);
             }
         }
 
         public int PageHeight {
             get {
                 int value;
-                CfxApi.cfx_pdf_print_settings_get_page_height(nativePtrUnchecked, out value);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_page_height(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_pdf_print_settings_set_page_height(nativePtrUnchecked, value);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_page_height(nativePtrUnchecked, value);
             }
         }
 
@@ -134,44 +130,44 @@ namespace Chromium {
         public double MarginTop {
             get {
                 double value;
-                CfxApi.cfx_pdf_print_settings_get_margin_top(nativePtrUnchecked, out value);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_margin_top(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_pdf_print_settings_set_margin_top(nativePtrUnchecked, value);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_margin_top(nativePtrUnchecked, value);
             }
         }
 
         public double MarginRight {
             get {
                 double value;
-                CfxApi.cfx_pdf_print_settings_get_margin_right(nativePtrUnchecked, out value);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_margin_right(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_pdf_print_settings_set_margin_right(nativePtrUnchecked, value);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_margin_right(nativePtrUnchecked, value);
             }
         }
 
         public double MarginBottom {
             get {
                 double value;
-                CfxApi.cfx_pdf_print_settings_get_margin_bottom(nativePtrUnchecked, out value);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_margin_bottom(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_pdf_print_settings_set_margin_bottom(nativePtrUnchecked, value);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_margin_bottom(nativePtrUnchecked, value);
             }
         }
 
         public double MarginLeft {
             get {
                 double value;
-                CfxApi.cfx_pdf_print_settings_get_margin_left(nativePtrUnchecked, out value);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_margin_left(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_pdf_print_settings_set_margin_left(nativePtrUnchecked, value);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_margin_left(nativePtrUnchecked, value);
             }
         }
 
@@ -185,11 +181,11 @@ namespace Chromium {
         public CfxPdfPrintMarginType MarginType {
             get {
                 int value;
-                CfxApi.cfx_pdf_print_settings_get_margin_type(nativePtrUnchecked, out value);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_margin_type(nativePtrUnchecked, out value);
                 return (CfxPdfPrintMarginType)value;
             }
             set {
-                CfxApi.cfx_pdf_print_settings_set_margin_type(nativePtrUnchecked, (int)value);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_margin_type(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -204,11 +200,11 @@ namespace Chromium {
         public bool HeaderFooterEnabled {
             get {
                 int value;
-                CfxApi.cfx_pdf_print_settings_get_header_footer_enabled(nativePtrUnchecked, out value);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_header_footer_enabled(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_pdf_print_settings_set_header_footer_enabled(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_header_footer_enabled(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -222,11 +218,11 @@ namespace Chromium {
         public bool SelectionOnly {
             get {
                 int value;
-                CfxApi.cfx_pdf_print_settings_get_selection_only(nativePtrUnchecked, out value);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_selection_only(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_pdf_print_settings_set_selection_only(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_selection_only(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -240,11 +236,11 @@ namespace Chromium {
         public bool Landscape {
             get {
                 int value;
-                CfxApi.cfx_pdf_print_settings_get_landscape(nativePtrUnchecked, out value);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_landscape(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_pdf_print_settings_set_landscape(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_landscape(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -259,11 +255,11 @@ namespace Chromium {
         public bool BackgroundsEnabled {
             get {
                 int value;
-                CfxApi.cfx_pdf_print_settings_get_backgrounds_enabled(nativePtrUnchecked, out value);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_backgrounds_enabled(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_pdf_print_settings_set_backgrounds_enabled(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_backgrounds_enabled(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 

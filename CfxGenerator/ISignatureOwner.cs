@@ -32,7 +32,7 @@
 public interface ISignatureOwner {
 
     string CefName { get; }
-
+    
     CfxCallMode CallMode { get; }
 
     string CfxApiFunctionName { get; }

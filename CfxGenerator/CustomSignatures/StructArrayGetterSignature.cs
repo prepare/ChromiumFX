@@ -72,7 +72,7 @@ public class StructArrayGetterSignature : Signature {
         var code =
 @"IntPtr[] ptrs = new IntPtr[count];
 var ptrs_p = new PinnedObject(ptrs);
-CfxApi.{0}(NativePtr, count, ptrs_p.PinnedPtr);
+CfxApi.{2}.{0}(NativePtr, count, ptrs_p.PinnedPtr);
 ptrs_p.Free();
 {1}[] retval = new {1}[count];
 for(int i = 0; i < count; ++i) {{
@@ -82,17 +82,18 @@ return retval;";
 
         b.AppendMultiline(code,
                 Owner.CfxApiFunctionName,
-                Arguments[2].ArgumentType.PublicSymbol);
+                Arguments[2].ArgumentType.PublicSymbol,
+                Owner.PublicClassName.Substring(3));
     }
 
     protected override void EmitExecuteInTargetProcess(CodeBuilder b) {
         Debug.Assert(Arguments[2].ArgumentType.PublicSymbol == "CfxPostDataElement");
         var code =
-@"int count = CfxApi.cfx_post_data_get_element_count(@this);
+@"int count = CfxApi.PostData.cfx_post_data_get_element_count(@this);
 __retval = new IntPtr[count];
 if(count == 0) return;
 var ptrs_p = new PinnedObject(__retval);
-CfxApi.cfx_post_data_get_elements(@this, count, ptrs_p.PinnedPtr);
+CfxApi.PostData.cfx_post_data_get_elements(@this, count, ptrs_p.PinnedPtr);
 ptrs_p.Free();
 ";
 

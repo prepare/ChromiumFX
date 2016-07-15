@@ -47,13 +47,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxSchemeHandlerFactory : CfxBase {
 
-        static CfxSchemeHandlerFactory () {
-            CfxApiLoader.LoadCfxSchemeHandlerFactoryApi();
-        }
-
         internal static CfxSchemeHandlerFactory Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_scheme_handler_factory_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.SchemeHandlerFactory.cfx_scheme_handler_factory_get_gc_handle(nativePtr);
             return (CfxSchemeHandlerFactory)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -83,7 +79,7 @@ namespace Chromium {
         }
 
         internal CfxSchemeHandlerFactory(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxSchemeHandlerFactory() : base(CfxApi.cfx_scheme_handler_factory_ctor) {}
+        public CfxSchemeHandlerFactory() : base(CfxApi.SchemeHandlerFactory.cfx_scheme_handler_factory_ctor) {}
 
         /// <summary>
         /// Return a new resource handler instance to handle the request or an NULL
@@ -105,7 +101,7 @@ namespace Chromium {
                             cfx_scheme_handler_factory_create = create;
                             cfx_scheme_handler_factory_create_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_scheme_handler_factory_create);
                         }
-                        CfxApi.cfx_scheme_handler_factory_set_managed_callback(NativePtr, 0, cfx_scheme_handler_factory_create_ptr);
+                        CfxApi.SchemeHandlerFactory.cfx_scheme_handler_factory_set_managed_callback(NativePtr, 0, cfx_scheme_handler_factory_create_ptr);
                     }
                     m_Create += value;
                 }
@@ -114,7 +110,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Create -= value;
                     if(m_Create == null) {
-                        CfxApi.cfx_scheme_handler_factory_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.SchemeHandlerFactory.cfx_scheme_handler_factory_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -125,7 +121,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_Create != null) {
                 m_Create = null;
-                CfxApi.cfx_scheme_handler_factory_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.SchemeHandlerFactory.cfx_scheme_handler_factory_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

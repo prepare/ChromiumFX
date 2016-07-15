@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxFileDialogCallback : CfxBase {
 
-        static CfxFileDialogCallback () {
-            CfxApiLoader.LoadCfxFileDialogCallbackApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxFileDialogCallback Wrap(IntPtr nativePtr) {
@@ -80,10 +76,10 @@ namespace Chromium {
         public void Continue(int selectedAcceptFilter, System.Collections.Generic.List<string> filePaths) {
             PinnedString[] filePaths_handles;
             var filePaths_unwrapped = StringFunctions.UnwrapCfxStringList(filePaths, out filePaths_handles);
-            CfxApi.cfx_file_dialog_callback_cont(NativePtr, selectedAcceptFilter, filePaths_unwrapped);
+            CfxApi.FileDialogCallback.cfx_file_dialog_callback_cont(NativePtr, selectedAcceptFilter, filePaths_unwrapped);
             StringFunctions.FreePinnedStrings(filePaths_handles);
             StringFunctions.CfxStringListCopyToManaged(filePaths_unwrapped, filePaths);
-            CfxApi.cfx_string_list_free(filePaths_unwrapped);
+            CfxApi.Runtime.cfx_string_list_free(filePaths_unwrapped);
         }
 
         /// <summary>
@@ -94,7 +90,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dialog_handler_capi.h">cef/include/capi/cef_dialog_handler_capi.h</see>.
         /// </remarks>
         public void Cancel() {
-            CfxApi.cfx_file_dialog_callback_cancel(NativePtr);
+            CfxApi.FileDialogCallback.cfx_file_dialog_callback_cancel(NativePtr);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

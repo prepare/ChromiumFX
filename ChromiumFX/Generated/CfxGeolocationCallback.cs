@@ -44,10 +44,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxGeolocationCallback : CfxBase {
 
-        static CfxGeolocationCallback () {
-            CfxApiLoader.LoadCfxGeolocationCallbackApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxGeolocationCallback Wrap(IntPtr nativePtr) {
@@ -75,7 +71,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_geolocation_handler_capi.h">cef/include/capi/cef_geolocation_handler_capi.h</see>.
         /// </remarks>
         public void Continue(bool allow) {
-            CfxApi.cfx_geolocation_callback_cont(NativePtr, allow ? 1 : 0);
+            CfxApi.GeolocationCallback.cfx_geolocation_callback_cont(NativePtr, allow ? 1 : 0);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

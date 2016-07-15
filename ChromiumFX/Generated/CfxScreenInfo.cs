@@ -45,10 +45,6 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxScreenInfo : CfxStructure {
 
-        static CfxScreenInfo () {
-            CfxApiLoader.LoadCfxScreenInfoApi();
-        }
-
         internal static CfxScreenInfo Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxScreenInfo(nativePtr);
@@ -56,10 +52,10 @@ namespace Chromium {
 
         internal static CfxScreenInfo WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxScreenInfo(nativePtr, CfxApi.cfx_screen_info_dtor);
+            return new CfxScreenInfo(nativePtr, CfxApi.ScreenInfo.cfx_screen_info_dtor);
         }
 
-        public CfxScreenInfo() : base(CfxApi.cfx_screen_info_ctor, CfxApi.cfx_screen_info_dtor) {}
+        public CfxScreenInfo() : base(CfxApi.ScreenInfo.cfx_screen_info_ctor, CfxApi.ScreenInfo.cfx_screen_info_dtor) {}
         internal CfxScreenInfo(IntPtr nativePtr) : base(nativePtr) {}
         internal CfxScreenInfo(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
@@ -74,11 +70,11 @@ namespace Chromium {
         public float DeviceScaleFactor {
             get {
                 float value;
-                CfxApi.cfx_screen_info_get_device_scale_factor(nativePtrUnchecked, out value);
+                CfxApi.ScreenInfo.cfx_screen_info_get_device_scale_factor(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_screen_info_set_device_scale_factor(nativePtrUnchecked, value);
+                CfxApi.ScreenInfo.cfx_screen_info_set_device_scale_factor(nativePtrUnchecked, value);
             }
         }
 
@@ -92,11 +88,11 @@ namespace Chromium {
         public int Depth {
             get {
                 int value;
-                CfxApi.cfx_screen_info_get_depth(nativePtrUnchecked, out value);
+                CfxApi.ScreenInfo.cfx_screen_info_get_depth(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_screen_info_set_depth(nativePtrUnchecked, value);
+                CfxApi.ScreenInfo.cfx_screen_info_set_depth(nativePtrUnchecked, value);
             }
         }
 
@@ -111,11 +107,11 @@ namespace Chromium {
         public int DepthPerComponent {
             get {
                 int value;
-                CfxApi.cfx_screen_info_get_depth_per_component(nativePtrUnchecked, out value);
+                CfxApi.ScreenInfo.cfx_screen_info_get_depth_per_component(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_screen_info_set_depth_per_component(nativePtrUnchecked, value);
+                CfxApi.ScreenInfo.cfx_screen_info_set_depth_per_component(nativePtrUnchecked, value);
             }
         }
 
@@ -129,11 +125,11 @@ namespace Chromium {
         public bool IsMonochrome {
             get {
                 int value;
-                CfxApi.cfx_screen_info_get_is_monochrome(nativePtrUnchecked, out value);
+                CfxApi.ScreenInfo.cfx_screen_info_get_is_monochrome(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_screen_info_set_is_monochrome(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.ScreenInfo.cfx_screen_info_set_is_monochrome(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -153,11 +149,11 @@ namespace Chromium {
         public CfxRect Rect {
             get {
                 IntPtr value;
-                CfxApi.cfx_screen_info_get_rect(nativePtrUnchecked, out value);
+                CfxApi.ScreenInfo.cfx_screen_info_get_rect(nativePtrUnchecked, out value);
                 return CfxRect.Wrap(value);
             }
             set {
-                CfxApi.cfx_screen_info_set_rect(nativePtrUnchecked, CfxRect.Unwrap(value));
+                CfxApi.ScreenInfo.cfx_screen_info_set_rect(nativePtrUnchecked, CfxRect.Unwrap(value));
             }
         }
 
@@ -180,11 +176,11 @@ namespace Chromium {
         public CfxRect AvailableRect {
             get {
                 IntPtr value;
-                CfxApi.cfx_screen_info_get_available_rect(nativePtrUnchecked, out value);
+                CfxApi.ScreenInfo.cfx_screen_info_get_available_rect(nativePtrUnchecked, out value);
                 return CfxRect.Wrap(value);
             }
             set {
-                CfxApi.cfx_screen_info_set_available_rect(nativePtrUnchecked, CfxRect.Unwrap(value));
+                CfxApi.ScreenInfo.cfx_screen_info_set_available_rect(nativePtrUnchecked, CfxRect.Unwrap(value));
             }
         }
 

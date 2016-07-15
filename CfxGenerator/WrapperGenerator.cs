@@ -295,8 +295,7 @@ public class WrapperGenerator {
 
         b.AppendLine();
 
-        b.AppendComment("global cef export functions");
-        b.AppendLine();
+        b.BeginClass("Runtime", "internal static");
 
         foreach(var f in decls.ExportFunctions) {
             f.EmitPInvokeDeclaration(b);
@@ -306,7 +305,7 @@ public class WrapperGenerator {
         foreach(var f in decls.StringCollectionFunctions) {
             f.EmitPInvokeDeclaration(b);
         }
-        b.AppendLine();
+        b.EndBlock();
 
         b.AppendLine();
 
@@ -337,7 +336,7 @@ public class WrapperGenerator {
             if(f.Platform != CefPlatform.Independent) {
                 b.BeginIf("CfxApi.PlatformOS == CfxPlatformOS.{0}", f.Platform.ToString());
             }
-            CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName);
+            CodeSnippets.EmitPInvokeDelegateInitialization(b, f);
             if(f.Platform != CefPlatform.Independent) {
                 b.EndBlock();
             }
@@ -348,7 +347,7 @@ public class WrapperGenerator {
         b.BeginFunction("void LoadStringCollectionApi()", "internal static");
         b.AppendLine("CfxApi.Probe();");
         foreach(var f in decls.StringCollectionFunctions) {
-            CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName);
+            CodeSnippets.EmitPInvokeDelegateInitialization(b, f);
         }
         b.EndBlock();
         b.AppendLine();
@@ -359,38 +358,41 @@ public class WrapperGenerator {
             b.AppendLine("if({0}ApiLoaded) return;", cefStruct.ClassName);
             b.AppendLine("{0}ApiLoaded = true;", cefStruct.ClassName);
             b.AppendLine("CfxApi.Probe();");
+
+            var apiClassName = cefStruct.ClassName.Substring(3);
+
             switch(cefStruct.ClassBuilder.Category) {
                 case StructCategory.ApiCalls:
                     if(cefStruct.ClassBuilder.ExportFunctions.Count() > 0) {
                         foreach(var f in cefStruct.ClassBuilder.ExportFunctions) {
-                            CodeSnippets.EmitPInvokeDelegateInitialization(b, f.CfxName);
+                            CodeSnippets.EmitPInvokeDelegateInitialization(b, f);
                         }
                     }
                     foreach(var sm in cefStruct.ClassBuilder.StructMembers) {
                         if(sm.MemberType.IsCefCallbackType) {
-                            CodeSnippets.EmitPInvokeDelegateInitialization(b, cefStruct.CfxName + "_" + sm.Name);
+                            CodeSnippets.EmitPInvokeDelegateInitialization(b, sm.MemberType.AsCefCallbackType);
                         }
                     }
 
                     break;
 
                 case StructCategory.ApiCallbacks:
-                    b.AppendLine("CfxApi.{0}_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.{0}_ctor, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));", cefStruct.CfxName);
-                    b.AppendLine("CfxApi.{0}_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.{0}_get_gc_handle, typeof(CfxApi.cfx_get_gc_handle_delegate));", cefStruct.CfxName);
-                    b.AppendLine("CfxApi.{0}_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(FunctionIndex.{0}_set_managed_callback, typeof(CfxApi.cfx_set_callback_delegate));", cefStruct.CfxName);
+                    b.AppendLine("CfxApi.{0}.{1}_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_ctor, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));", apiClassName, cefStruct.CfxName);
+                    b.AppendLine("CfxApi.{0}.{1}_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_get_gc_handle, typeof(CfxApi.cfx_get_gc_handle_delegate));", apiClassName, cefStruct.CfxName);
+                    b.AppendLine("CfxApi.{0}.{1}_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_set_managed_callback, typeof(CfxApi.cfx_set_callback_delegate));", apiClassName, cefStruct.CfxName);
                     if(cefStruct.ClassBuilder.ExportFunctions.Count() > 0) {
                         System.Diagnostics.Debugger.Break();
                     }
                     break;
 
                 case StructCategory.Values:
-                    b.AppendLine("CfxApi.{0}_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(FunctionIndex.{0}_ctor, typeof(CfxApi.cfx_ctor_delegate));", cefStruct.CfxName);
-                    b.AppendLine("CfxApi.{0}_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(FunctionIndex.{0}_dtor, typeof(CfxApi.cfx_dtor_delegate));", cefStruct.CfxName);
+                    b.AppendLine("CfxApi.{0}.{1}_ctor = (CfxApi.cfx_ctor_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_ctor, typeof(CfxApi.cfx_ctor_delegate));", apiClassName, cefStruct.CfxName);
+                    b.AppendLine("CfxApi.{0}.{1}_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_dtor, typeof(CfxApi.cfx_dtor_delegate));", apiClassName, cefStruct.CfxName);
 
                     foreach(var sm in cefStruct.ClassBuilder.StructMembers) {
                         if(sm.Name != "size") {
-                            CodeSnippets.EmitPInvokeDelegateInitialization(b, cefStruct.CfxName + "_set_" + sm.Name);
-                            CodeSnippets.EmitPInvokeDelegateInitialization(b, cefStruct.CfxName + "_get_" + sm.Name);
+                            CodeSnippets.EmitPInvokeDelegateInitialization(b, apiClassName, cefStruct.CfxName + "_set_" + sm.Name);
+                            CodeSnippets.EmitPInvokeDelegateInitialization(b, apiClassName, cefStruct.CfxName + "_get_" + sm.Name);
                         }
                     }
 

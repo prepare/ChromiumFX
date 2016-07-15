@@ -44,11 +44,7 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxRequestContextSettings : CfxStructure {
 
-        static CfxRequestContextSettings () {
-            CfxApiLoader.LoadCfxRequestContextSettingsApi();
-        }
-
-        public CfxRequestContextSettings() : base(CfxApi.cfx_request_context_settings_ctor, CfxApi.cfx_request_context_settings_dtor) {}
+        public CfxRequestContextSettings() : base(CfxApi.RequestContextSettings.cfx_request_context_settings_ctor, CfxApi.RequestContextSettings.cfx_request_context_settings_dtor) {}
 
         /// <summary>
         /// The location where cache data will be stored on disk. If empty then
@@ -66,12 +62,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_request_context_settings_get_cache_path(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.RequestContextSettings.cfx_request_context_settings_get_cache_path(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_request_context_settings_set_cache_path(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.RequestContextSettings.cfx_request_context_settings_set_cache_path(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
@@ -91,11 +87,11 @@ namespace Chromium {
         public bool PersistSessionCookies {
             get {
                 int value;
-                CfxApi.cfx_request_context_settings_get_persist_session_cookies(nativePtrUnchecked, out value);
+                CfxApi.RequestContextSettings.cfx_request_context_settings_get_persist_session_cookies(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_request_context_settings_set_persist_session_cookies(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.RequestContextSettings.cfx_request_context_settings_set_persist_session_cookies(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -112,11 +108,11 @@ namespace Chromium {
         public bool PersistUserPreferences {
             get {
                 int value;
-                CfxApi.cfx_request_context_settings_get_persist_user_preferences(nativePtrUnchecked, out value);
+                CfxApi.RequestContextSettings.cfx_request_context_settings_get_persist_user_preferences(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_request_context_settings_set_persist_user_preferences(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.RequestContextSettings.cfx_request_context_settings_set_persist_user_preferences(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -135,11 +131,11 @@ namespace Chromium {
         public bool IgnoreCertificateErrors {
             get {
                 int value;
-                CfxApi.cfx_request_context_settings_get_ignore_certificate_errors(nativePtrUnchecked, out value);
+                CfxApi.RequestContextSettings.cfx_request_context_settings_get_ignore_certificate_errors(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_request_context_settings_set_ignore_certificate_errors(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.RequestContextSettings.cfx_request_context_settings_set_ignore_certificate_errors(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -159,12 +155,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_request_context_settings_get_accept_language_list(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.RequestContextSettings.cfx_request_context_settings_get_accept_language_list(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_request_context_settings_set_accept_language_list(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.RequestContextSettings.cfx_request_context_settings_set_accept_language_list(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }

@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public sealed partial class CfxTime : CfxStructure {
 
-        static CfxTime () {
-            CfxApiLoader.LoadCfxTimeApi();
-        }
-
         internal static CfxTime Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxTime(nativePtr);
@@ -54,87 +50,87 @@ namespace Chromium {
 
         internal static CfxTime WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxTime(nativePtr, CfxApi.cfx_time_dtor);
+            return new CfxTime(nativePtr, CfxApi.Time.cfx_time_dtor);
         }
 
-        public CfxTime() : base(CfxApi.cfx_time_ctor, CfxApi.cfx_time_dtor) {}
+        public CfxTime() : base(CfxApi.Time.cfx_time_ctor, CfxApi.Time.cfx_time_dtor) {}
         internal CfxTime(IntPtr nativePtr) : base(nativePtr) {}
         internal CfxTime(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         public int Year {
             get {
                 int value;
-                CfxApi.cfx_time_get_year(nativePtrUnchecked, out value);
+                CfxApi.Time.cfx_time_get_year(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_time_set_year(nativePtrUnchecked, value);
+                CfxApi.Time.cfx_time_set_year(nativePtrUnchecked, value);
             }
         }
 
         public int Month {
             get {
                 int value;
-                CfxApi.cfx_time_get_month(nativePtrUnchecked, out value);
+                CfxApi.Time.cfx_time_get_month(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_time_set_month(nativePtrUnchecked, value);
+                CfxApi.Time.cfx_time_set_month(nativePtrUnchecked, value);
             }
         }
 
         public int DayOfWeek {
             get {
                 int value;
-                CfxApi.cfx_time_get_day_of_week(nativePtrUnchecked, out value);
+                CfxApi.Time.cfx_time_get_day_of_week(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_time_set_day_of_week(nativePtrUnchecked, value);
+                CfxApi.Time.cfx_time_set_day_of_week(nativePtrUnchecked, value);
             }
         }
 
         public int DayOfMonth {
             get {
                 int value;
-                CfxApi.cfx_time_get_day_of_month(nativePtrUnchecked, out value);
+                CfxApi.Time.cfx_time_get_day_of_month(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_time_set_day_of_month(nativePtrUnchecked, value);
+                CfxApi.Time.cfx_time_set_day_of_month(nativePtrUnchecked, value);
             }
         }
 
         public int Hour {
             get {
                 int value;
-                CfxApi.cfx_time_get_hour(nativePtrUnchecked, out value);
+                CfxApi.Time.cfx_time_get_hour(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_time_set_hour(nativePtrUnchecked, value);
+                CfxApi.Time.cfx_time_set_hour(nativePtrUnchecked, value);
             }
         }
 
         public int Minute {
             get {
                 int value;
-                CfxApi.cfx_time_get_minute(nativePtrUnchecked, out value);
+                CfxApi.Time.cfx_time_get_minute(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_time_set_minute(nativePtrUnchecked, value);
+                CfxApi.Time.cfx_time_set_minute(nativePtrUnchecked, value);
             }
         }
 
         public int Second {
             get {
                 int value;
-                CfxApi.cfx_time_get_second(nativePtrUnchecked, out value);
+                CfxApi.Time.cfx_time_get_second(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_time_set_second(nativePtrUnchecked, value);
+                CfxApi.Time.cfx_time_set_second(nativePtrUnchecked, value);
             }
         }
 
@@ -148,11 +144,11 @@ namespace Chromium {
         public int Millisecond {
             get {
                 int value;
-                CfxApi.cfx_time_get_millisecond(nativePtrUnchecked, out value);
+                CfxApi.Time.cfx_time_get_millisecond(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_time_set_millisecond(nativePtrUnchecked, value);
+                CfxApi.Time.cfx_time_set_millisecond(nativePtrUnchecked, value);
             }
         }
 

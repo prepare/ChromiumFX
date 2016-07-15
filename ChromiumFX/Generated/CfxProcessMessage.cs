@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxProcessMessage : CfxBase {
 
-        static CfxProcessMessage () {
-            CfxApiLoader.LoadCfxProcessMessageApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxProcessMessage Wrap(IntPtr nativePtr) {
@@ -75,7 +71,7 @@ namespace Chromium {
         /// </remarks>
         public static CfxProcessMessage Create(string name) {
             var name_pinned = new PinnedString(name);
-            var __retval = CfxApi.cfx_process_message_create(name_pinned.Obj.PinnedPtr, name_pinned.Length);
+            var __retval = CfxApi.ProcessMessage.cfx_process_message_create(name_pinned.Obj.PinnedPtr, name_pinned.Length);
             name_pinned.Obj.Free();
             return CfxProcessMessage.Wrap(__retval);
         }
@@ -90,7 +86,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsValid {
             get {
-                return 0 != CfxApi.cfx_process_message_is_valid(NativePtr);
+                return 0 != CfxApi.ProcessMessage.cfx_process_message_is_valid(NativePtr);
             }
         }
 
@@ -104,7 +100,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsReadOnly {
             get {
-                return 0 != CfxApi.cfx_process_message_is_read_only(NativePtr);
+                return 0 != CfxApi.ProcessMessage.cfx_process_message_is_read_only(NativePtr);
             }
         }
 
@@ -117,7 +113,7 @@ namespace Chromium {
         /// </remarks>
         public string Name {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_process_message_get_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.ProcessMessage.cfx_process_message_get_name(NativePtr));
             }
         }
 
@@ -130,7 +126,7 @@ namespace Chromium {
         /// </remarks>
         public CfxListValue ArgumentList {
             get {
-                return CfxListValue.Wrap(CfxApi.cfx_process_message_get_argument_list(NativePtr));
+                return CfxListValue.Wrap(CfxApi.ProcessMessage.cfx_process_message_get_argument_list(NativePtr));
             }
         }
 
@@ -142,7 +138,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
         /// </remarks>
         public CfxProcessMessage Copy() {
-            return CfxProcessMessage.Wrap(CfxApi.cfx_process_message_copy(NativePtr));
+            return CfxProcessMessage.Wrap(CfxApi.ProcessMessage.cfx_process_message_copy(NativePtr));
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

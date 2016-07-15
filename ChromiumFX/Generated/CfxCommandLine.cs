@@ -50,10 +50,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxCommandLine : CfxBase {
 
-        static CfxCommandLine () {
-            CfxApiLoader.LoadCfxCommandLineApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxCommandLine Wrap(IntPtr nativePtr) {
@@ -81,7 +77,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
         /// </remarks>
         public static CfxCommandLine Create() {
-            return CfxCommandLine.Wrap(CfxApi.cfx_command_line_create());
+            return CfxCommandLine.Wrap(CfxApi.CommandLine.cfx_command_line_create());
         }
 
         /// <summary>
@@ -93,7 +89,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
         /// </remarks>
         public static CfxCommandLine GetGlobal() {
-            return CfxCommandLine.Wrap(CfxApi.cfx_command_line_get_global());
+            return CfxCommandLine.Wrap(CfxApi.CommandLine.cfx_command_line_get_global());
         }
 
         /// <summary>
@@ -106,7 +102,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsValid {
             get {
-                return 0 != CfxApi.cfx_command_line_is_valid(NativePtr);
+                return 0 != CfxApi.CommandLine.cfx_command_line_is_valid(NativePtr);
             }
         }
 
@@ -120,7 +116,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsReadOnly {
             get {
-                return 0 != CfxApi.cfx_command_line_is_read_only(NativePtr);
+                return 0 != CfxApi.CommandLine.cfx_command_line_is_read_only(NativePtr);
             }
         }
 
@@ -134,7 +130,7 @@ namespace Chromium {
         /// </remarks>
         public string CommandLineString {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_command_line_get_command_line_string(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.CommandLine.cfx_command_line_get_command_line_string(NativePtr));
             }
         }
 
@@ -147,11 +143,11 @@ namespace Chromium {
         /// </remarks>
         public string Program {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_command_line_get_program(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.CommandLine.cfx_command_line_get_program(NativePtr));
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_command_line_set_program(NativePtr, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.CommandLine.cfx_command_line_set_program(NativePtr, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
@@ -165,7 +161,7 @@ namespace Chromium {
         /// </remarks>
         public bool HasSwitches {
             get {
-                return 0 != CfxApi.cfx_command_line_has_switches(NativePtr);
+                return 0 != CfxApi.CommandLine.cfx_command_line_has_switches(NativePtr);
             }
         }
 
@@ -178,7 +174,7 @@ namespace Chromium {
         /// </remarks>
         public bool HasArguments {
             get {
-                return 0 != CfxApi.cfx_command_line_has_arguments(NativePtr);
+                return 0 != CfxApi.CommandLine.cfx_command_line_has_arguments(NativePtr);
             }
         }
 
@@ -190,7 +186,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
         /// </remarks>
         public CfxCommandLine Copy() {
-            return CfxCommandLine.Wrap(CfxApi.cfx_command_line_copy(NativePtr));
+            return CfxCommandLine.Wrap(CfxApi.CommandLine.cfx_command_line_copy(NativePtr));
         }
 
         /// <summary>
@@ -203,7 +199,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
         /// </remarks>
         public void InitFromArgv(int argc, IntPtr argv) {
-            CfxApi.cfx_command_line_init_from_argv(NativePtr, argc, argv);
+            CfxApi.CommandLine.cfx_command_line_init_from_argv(NativePtr, argc, argv);
         }
 
         /// <summary>
@@ -216,7 +212,7 @@ namespace Chromium {
         /// </remarks>
         public void InitFromString(string commandLine) {
             var commandLine_pinned = new PinnedString(commandLine);
-            CfxApi.cfx_command_line_init_from_string(NativePtr, commandLine_pinned.Obj.PinnedPtr, commandLine_pinned.Length);
+            CfxApi.CommandLine.cfx_command_line_init_from_string(NativePtr, commandLine_pinned.Obj.PinnedPtr, commandLine_pinned.Length);
             commandLine_pinned.Obj.Free();
         }
 
@@ -229,7 +225,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_command_line_capi.h">cef/include/capi/cef_command_line_capi.h</see>.
         /// </remarks>
         public void Reset() {
-            CfxApi.cfx_command_line_reset(NativePtr);
+            CfxApi.CommandLine.cfx_command_line_reset(NativePtr);
         }
 
         /// <summary>
@@ -244,10 +240,10 @@ namespace Chromium {
             System.Collections.Generic.List<string> argv = new System.Collections.Generic.List<string>();
             PinnedString[] argv_handles;
             var argv_unwrapped = StringFunctions.UnwrapCfxStringList(argv, out argv_handles);
-            CfxApi.cfx_command_line_get_argv(NativePtr, argv_unwrapped);
+            CfxApi.CommandLine.cfx_command_line_get_argv(NativePtr, argv_unwrapped);
             StringFunctions.FreePinnedStrings(argv_handles);
             StringFunctions.CfxStringListCopyToManaged(argv_unwrapped, argv);
-            CfxApi.cfx_string_list_free(argv_unwrapped);
+            CfxApi.Runtime.cfx_string_list_free(argv_unwrapped);
             return argv;
         }
 
@@ -260,7 +256,7 @@ namespace Chromium {
         /// </remarks>
         public bool HasSwitch(string name) {
             var name_pinned = new PinnedString(name);
-            var __retval = CfxApi.cfx_command_line_has_switch(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length);
+            var __retval = CfxApi.CommandLine.cfx_command_line_has_switch(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length);
             name_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -275,7 +271,7 @@ namespace Chromium {
         /// </remarks>
         public string GetSwitchValue(string name) {
             var name_pinned = new PinnedString(name);
-            var __retval = CfxApi.cfx_command_line_get_switch_value(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length);
+            var __retval = CfxApi.CommandLine.cfx_command_line_get_switch_value(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length);
             name_pinned.Obj.Free();
             return StringFunctions.ConvertStringUserfree(__retval);
         }
@@ -292,10 +288,10 @@ namespace Chromium {
             System.Collections.Generic.List<string[]> switches = new System.Collections.Generic.List<string[]>();
             PinnedString[] switches_handles;
             var switches_unwrapped = StringFunctions.UnwrapCfxStringMap(switches, out switches_handles);
-            CfxApi.cfx_command_line_get_switches(NativePtr, switches_unwrapped);
+            CfxApi.CommandLine.cfx_command_line_get_switches(NativePtr, switches_unwrapped);
             StringFunctions.FreePinnedStrings(switches_handles);
             StringFunctions.CfxStringMapCopyToManaged(switches_unwrapped, switches);
-            CfxApi.cfx_string_map_free(switches_unwrapped);
+            CfxApi.Runtime.cfx_string_map_free(switches_unwrapped);
             return switches;
         }
 
@@ -309,7 +305,7 @@ namespace Chromium {
         /// </remarks>
         public void AppendSwitch(string name) {
             var name_pinned = new PinnedString(name);
-            CfxApi.cfx_command_line_append_switch(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length);
+            CfxApi.CommandLine.cfx_command_line_append_switch(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length);
             name_pinned.Obj.Free();
         }
 
@@ -323,7 +319,7 @@ namespace Chromium {
         public void AppendSwitchWithValue(string name, string value) {
             var name_pinned = new PinnedString(name);
             var value_pinned = new PinnedString(value);
-            CfxApi.cfx_command_line_append_switch_with_value(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+            CfxApi.CommandLine.cfx_command_line_append_switch_with_value(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length, value_pinned.Obj.PinnedPtr, value_pinned.Length);
             name_pinned.Obj.Free();
             value_pinned.Obj.Free();
         }
@@ -339,10 +335,10 @@ namespace Chromium {
             System.Collections.Generic.List<string> arguments = new System.Collections.Generic.List<string>();
             PinnedString[] arguments_handles;
             var arguments_unwrapped = StringFunctions.UnwrapCfxStringList(arguments, out arguments_handles);
-            CfxApi.cfx_command_line_get_arguments(NativePtr, arguments_unwrapped);
+            CfxApi.CommandLine.cfx_command_line_get_arguments(NativePtr, arguments_unwrapped);
             StringFunctions.FreePinnedStrings(arguments_handles);
             StringFunctions.CfxStringListCopyToManaged(arguments_unwrapped, arguments);
-            CfxApi.cfx_string_list_free(arguments_unwrapped);
+            CfxApi.Runtime.cfx_string_list_free(arguments_unwrapped);
             return arguments;
         }
 
@@ -355,7 +351,7 @@ namespace Chromium {
         /// </remarks>
         public void AppendArgument(string argument) {
             var argument_pinned = new PinnedString(argument);
-            CfxApi.cfx_command_line_append_argument(NativePtr, argument_pinned.Obj.PinnedPtr, argument_pinned.Length);
+            CfxApi.CommandLine.cfx_command_line_append_argument(NativePtr, argument_pinned.Obj.PinnedPtr, argument_pinned.Length);
             argument_pinned.Obj.Free();
         }
 
@@ -369,7 +365,7 @@ namespace Chromium {
         /// </remarks>
         public void PrependWrapper(string wrapper) {
             var wrapper_pinned = new PinnedString(wrapper);
-            CfxApi.cfx_command_line_prepend_wrapper(NativePtr, wrapper_pinned.Obj.PinnedPtr, wrapper_pinned.Length);
+            CfxApi.CommandLine.cfx_command_line_prepend_wrapper(NativePtr, wrapper_pinned.Obj.PinnedPtr, wrapper_pinned.Length);
             wrapper_pinned.Obj.Free();
         }
 

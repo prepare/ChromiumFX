@@ -45,13 +45,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxStringVisitor : CfxBase {
 
-        static CfxStringVisitor () {
-            CfxApiLoader.LoadCfxStringVisitorApi();
-        }
-
         internal static CfxStringVisitor Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_string_visitor_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.StringVisitor.cfx_string_visitor_get_gc_handle(nativePtr);
             return (CfxStringVisitor)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -76,7 +72,7 @@ namespace Chromium {
         }
 
         internal CfxStringVisitor(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxStringVisitor() : base(CfxApi.cfx_string_visitor_ctor) {}
+        public CfxStringVisitor() : base(CfxApi.StringVisitor.cfx_string_visitor_ctor) {}
 
         /// <summary>
         /// Method that will be executed.
@@ -93,7 +89,7 @@ namespace Chromium {
                             cfx_string_visitor_visit = visit;
                             cfx_string_visitor_visit_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_string_visitor_visit);
                         }
-                        CfxApi.cfx_string_visitor_set_managed_callback(NativePtr, 0, cfx_string_visitor_visit_ptr);
+                        CfxApi.StringVisitor.cfx_string_visitor_set_managed_callback(NativePtr, 0, cfx_string_visitor_visit_ptr);
                     }
                     m_Visit += value;
                 }
@@ -102,7 +98,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Visit -= value;
                     if(m_Visit == null) {
-                        CfxApi.cfx_string_visitor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.StringVisitor.cfx_string_visitor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -113,7 +109,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_Visit != null) {
                 m_Visit = null;
-                CfxApi.cfx_string_visitor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.StringVisitor.cfx_string_visitor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

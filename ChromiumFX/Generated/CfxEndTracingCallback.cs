@@ -47,13 +47,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxEndTracingCallback : CfxBase {
 
-        static CfxEndTracingCallback () {
-            CfxApiLoader.LoadCfxEndTracingCallbackApi();
-        }
-
         internal static CfxEndTracingCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_end_tracing_callback_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.EndTracingCallback.cfx_end_tracing_callback_get_gc_handle(nativePtr);
             return (CfxEndTracingCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -78,7 +74,7 @@ namespace Chromium {
         }
 
         internal CfxEndTracingCallback(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxEndTracingCallback() : base(CfxApi.cfx_end_tracing_callback_ctor) {}
+        public CfxEndTracingCallback() : base(CfxApi.EndTracingCallback.cfx_end_tracing_callback_ctor) {}
 
         /// <summary>
         /// Called after all processes have sent their trace data. |TracingFile| is
@@ -97,7 +93,7 @@ namespace Chromium {
                             cfx_end_tracing_callback_on_end_tracing_complete = on_end_tracing_complete;
                             cfx_end_tracing_callback_on_end_tracing_complete_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_end_tracing_callback_on_end_tracing_complete);
                         }
-                        CfxApi.cfx_end_tracing_callback_set_managed_callback(NativePtr, 0, cfx_end_tracing_callback_on_end_tracing_complete_ptr);
+                        CfxApi.EndTracingCallback.cfx_end_tracing_callback_set_managed_callback(NativePtr, 0, cfx_end_tracing_callback_on_end_tracing_complete_ptr);
                     }
                     m_OnEndTracingComplete += value;
                 }
@@ -106,7 +102,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnEndTracingComplete -= value;
                     if(m_OnEndTracingComplete == null) {
-                        CfxApi.cfx_end_tracing_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.EndTracingCallback.cfx_end_tracing_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -117,7 +113,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnEndTracingComplete != null) {
                 m_OnEndTracingComplete = null;
-                CfxApi.cfx_end_tracing_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.EndTracingCallback.cfx_end_tracing_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

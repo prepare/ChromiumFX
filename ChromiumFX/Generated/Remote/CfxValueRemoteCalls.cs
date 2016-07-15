@@ -51,7 +51,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_value_create();
+            __retval = CfxApi.Value.cfx_value_create();
         }
     }
 
@@ -80,7 +80,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_value_is_valid(@this);
+            __retval = 0 != CfxApi.Value.cfx_value_is_valid(@this);
         }
     }
 
@@ -109,7 +109,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_value_is_owned(@this);
+            __retval = 0 != CfxApi.Value.cfx_value_is_owned(@this);
         }
     }
 
@@ -138,7 +138,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_value_is_read_only(@this);
+            __retval = 0 != CfxApi.Value.cfx_value_is_read_only(@this);
         }
     }
 
@@ -170,7 +170,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_value_is_same(@this, that);
+            __retval = 0 != CfxApi.Value.cfx_value_is_same(@this, that);
         }
     }
 
@@ -202,7 +202,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_value_is_equal(@this, that);
+            __retval = 0 != CfxApi.Value.cfx_value_is_equal(@this, that);
         }
     }
 
@@ -231,7 +231,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_value_copy(@this);
+            __retval = CfxApi.Value.cfx_value_copy(@this);
         }
     }
 
@@ -260,7 +260,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_value_get_type(@this);
+            __retval = CfxApi.Value.cfx_value_get_type(@this);
         }
     }
 
@@ -289,7 +289,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_value_get_bool(@this);
+            __retval = 0 != CfxApi.Value.cfx_value_get_bool(@this);
         }
     }
 
@@ -318,7 +318,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_value_get_int(@this);
+            __retval = CfxApi.Value.cfx_value_get_int(@this);
         }
     }
 
@@ -347,7 +347,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_value_get_double(@this);
+            __retval = CfxApi.Value.cfx_value_get_double(@this);
         }
     }
 
@@ -376,7 +376,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = StringFunctions.ConvertStringUserfree(CfxApi.cfx_value_get_string(@this));
+            __retval = StringFunctions.ConvertStringUserfree(CfxApi.Value.cfx_value_get_string(@this));
         }
     }
 
@@ -405,7 +405,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_value_get_binary(@this);
+            __retval = CfxApi.Value.cfx_value_get_binary(@this);
         }
     }
 
@@ -434,7 +434,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_value_get_dictionary(@this);
+            __retval = CfxApi.Value.cfx_value_get_dictionary(@this);
         }
     }
 
@@ -463,7 +463,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_value_get_list(@this);
+            __retval = CfxApi.Value.cfx_value_get_list(@this);
         }
     }
 
@@ -492,7 +492,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_value_set_null(@this);
+            __retval = 0 != CfxApi.Value.cfx_value_set_null(@this);
         }
     }
 
@@ -524,7 +524,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_value_set_bool(@this, value ? 1 : 0);
+            __retval = 0 != CfxApi.Value.cfx_value_set_bool(@this, value ? 1 : 0);
         }
     }
 
@@ -556,7 +556,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_value_set_int(@this, value);
+            __retval = 0 != CfxApi.Value.cfx_value_set_int(@this, value);
         }
     }
 
@@ -588,7 +588,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_value_set_double(@this, value);
+            __retval = 0 != CfxApi.Value.cfx_value_set_double(@this, value);
         }
     }
 
@@ -621,7 +621,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var value_pinned = new PinnedString(value);
-            __retval = 0 != CfxApi.cfx_value_set_string(@this, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+            __retval = 0 != CfxApi.Value.cfx_value_set_string(@this, value_pinned.Obj.PinnedPtr, value_pinned.Length);
             value_pinned.Obj.Free();
         }
     }
@@ -654,7 +654,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_value_set_binary(@this, value);
+            __retval = 0 != CfxApi.Value.cfx_value_set_binary(@this, value);
         }
     }
 
@@ -686,7 +686,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_value_set_dictionary(@this, value);
+            __retval = 0 != CfxApi.Value.cfx_value_set_dictionary(@this, value);
         }
     }
 
@@ -718,7 +718,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_value_set_list(@this, value);
+            __retval = 0 != CfxApi.Value.cfx_value_set_list(@this, value);
         }
     }
 

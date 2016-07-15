@@ -63,7 +63,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_binary_value_create(data, dataSize);
+            __retval = CfxApi.BinaryValue.cfx_binary_value_create(data, dataSize);
         }
     }
 
@@ -92,7 +92,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_binary_value_is_valid(@this);
+            __retval = 0 != CfxApi.BinaryValue.cfx_binary_value_is_valid(@this);
         }
     }
 
@@ -121,7 +121,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_binary_value_is_owned(@this);
+            __retval = 0 != CfxApi.BinaryValue.cfx_binary_value_is_owned(@this);
         }
     }
 
@@ -153,7 +153,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_binary_value_is_same(@this, that);
+            __retval = 0 != CfxApi.BinaryValue.cfx_binary_value_is_same(@this, that);
         }
     }
 
@@ -185,7 +185,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_binary_value_is_equal(@this, that);
+            __retval = 0 != CfxApi.BinaryValue.cfx_binary_value_is_equal(@this, that);
         }
     }
 
@@ -214,7 +214,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_binary_value_copy(@this);
+            __retval = CfxApi.BinaryValue.cfx_binary_value_copy(@this);
         }
     }
 
@@ -243,7 +243,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_binary_value_get_size(@this);
+            __retval = CfxApi.BinaryValue.cfx_binary_value_get_size(@this);
         }
     }
 
@@ -281,7 +281,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_binary_value_get_data(@this, buffer, bufferSize, dataOffset);
+            __retval = CfxApi.BinaryValue.cfx_binary_value_get_data(@this, buffer, bufferSize, dataOffset);
         }
     }
 

@@ -43,11 +43,7 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxMouseEvent : CfxStructure {
 
-        static CfxMouseEvent () {
-            CfxApiLoader.LoadCfxMouseEventApi();
-        }
-
-        public CfxMouseEvent() : base(CfxApi.cfx_mouse_event_ctor, CfxApi.cfx_mouse_event_dtor) {}
+        public CfxMouseEvent() : base(CfxApi.MouseEvent.cfx_mouse_event_ctor, CfxApi.MouseEvent.cfx_mouse_event_dtor) {}
 
         /// <summary>
         /// X coordinate relative to the left side of the view.
@@ -59,11 +55,11 @@ namespace Chromium {
         public int X {
             get {
                 int value;
-                CfxApi.cfx_mouse_event_get_x(nativePtrUnchecked, out value);
+                CfxApi.MouseEvent.cfx_mouse_event_get_x(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_mouse_event_set_x(nativePtrUnchecked, value);
+                CfxApi.MouseEvent.cfx_mouse_event_set_x(nativePtrUnchecked, value);
             }
         }
 
@@ -77,11 +73,11 @@ namespace Chromium {
         public int Y {
             get {
                 int value;
-                CfxApi.cfx_mouse_event_get_y(nativePtrUnchecked, out value);
+                CfxApi.MouseEvent.cfx_mouse_event_get_y(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_mouse_event_set_y(nativePtrUnchecked, value);
+                CfxApi.MouseEvent.cfx_mouse_event_set_y(nativePtrUnchecked, value);
             }
         }
 
@@ -96,11 +92,11 @@ namespace Chromium {
         public uint Modifiers {
             get {
                 uint value;
-                CfxApi.cfx_mouse_event_get_modifiers(nativePtrUnchecked, out value);
+                CfxApi.MouseEvent.cfx_mouse_event_get_modifiers(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_mouse_event_set_modifiers(nativePtrUnchecked, value);
+                CfxApi.MouseEvent.cfx_mouse_event_set_modifiers(nativePtrUnchecked, value);
             }
         }
 

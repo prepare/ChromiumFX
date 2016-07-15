@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxWebPluginInfo : CfxBase {
 
-        static CfxWebPluginInfo () {
-            CfxApiLoader.LoadCfxWebPluginInfoApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxWebPluginInfo Wrap(IntPtr nativePtr) {
@@ -75,7 +71,7 @@ namespace Chromium {
         /// </remarks>
         public string Name {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_web_plugin_info_get_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.WebPluginInfo.cfx_web_plugin_info_get_name(NativePtr));
             }
         }
 
@@ -88,7 +84,7 @@ namespace Chromium {
         /// </remarks>
         public string Path {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_web_plugin_info_get_path(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.WebPluginInfo.cfx_web_plugin_info_get_path(NativePtr));
             }
         }
 
@@ -101,7 +97,7 @@ namespace Chromium {
         /// </remarks>
         public string Version {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_web_plugin_info_get_version(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.WebPluginInfo.cfx_web_plugin_info_get_version(NativePtr));
             }
         }
 
@@ -114,7 +110,7 @@ namespace Chromium {
         /// </remarks>
         public string Description {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_web_plugin_info_get_description(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.WebPluginInfo.cfx_web_plugin_info_get_description(NativePtr));
             }
         }
 

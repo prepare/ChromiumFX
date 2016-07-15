@@ -46,13 +46,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxDownloadHandler : CfxBase {
 
-        static CfxDownloadHandler () {
-            CfxApiLoader.LoadCfxDownloadHandlerApi();
-        }
-
         internal static CfxDownloadHandler Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_download_handler_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.DownloadHandler.cfx_download_handler_get_gc_handle(nativePtr);
             return (CfxDownloadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -100,7 +96,7 @@ namespace Chromium {
         }
 
         internal CfxDownloadHandler(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxDownloadHandler() : base(CfxApi.cfx_download_handler_ctor) {}
+        public CfxDownloadHandler() : base(CfxApi.DownloadHandler.cfx_download_handler_ctor) {}
 
         /// <summary>
         /// Called before a download begins. |SuggestedName| is the suggested name for
@@ -121,7 +117,7 @@ namespace Chromium {
                             cfx_download_handler_on_before_download = on_before_download;
                             cfx_download_handler_on_before_download_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_download_handler_on_before_download);
                         }
-                        CfxApi.cfx_download_handler_set_managed_callback(NativePtr, 0, cfx_download_handler_on_before_download_ptr);
+                        CfxApi.DownloadHandler.cfx_download_handler_set_managed_callback(NativePtr, 0, cfx_download_handler_on_before_download_ptr);
                     }
                     m_OnBeforeDownload += value;
                 }
@@ -130,7 +126,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnBeforeDownload -= value;
                     if(m_OnBeforeDownload == null) {
-                        CfxApi.cfx_download_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.DownloadHandler.cfx_download_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -157,7 +153,7 @@ namespace Chromium {
                             cfx_download_handler_on_download_updated = on_download_updated;
                             cfx_download_handler_on_download_updated_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_download_handler_on_download_updated);
                         }
-                        CfxApi.cfx_download_handler_set_managed_callback(NativePtr, 1, cfx_download_handler_on_download_updated_ptr);
+                        CfxApi.DownloadHandler.cfx_download_handler_set_managed_callback(NativePtr, 1, cfx_download_handler_on_download_updated_ptr);
                     }
                     m_OnDownloadUpdated += value;
                 }
@@ -166,7 +162,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnDownloadUpdated -= value;
                     if(m_OnDownloadUpdated == null) {
-                        CfxApi.cfx_download_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.DownloadHandler.cfx_download_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
                     }
                 }
             }
@@ -177,11 +173,11 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnBeforeDownload != null) {
                 m_OnBeforeDownload = null;
-                CfxApi.cfx_download_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.DownloadHandler.cfx_download_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_OnDownloadUpdated != null) {
                 m_OnDownloadUpdated = null;
-                CfxApi.cfx_download_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.DownloadHandler.cfx_download_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxPrintSettings : CfxBase {
 
-        static CfxPrintSettings () {
-            CfxApiLoader.LoadCfxPrintSettingsApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxPrintSettings Wrap(IntPtr nativePtr) {
@@ -74,7 +70,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
         /// </remarks>
         public static CfxPrintSettings Create() {
-            return CfxPrintSettings.Wrap(CfxApi.cfx_print_settings_create());
+            return CfxPrintSettings.Wrap(CfxApi.PrintSettings.cfx_print_settings_create());
         }
 
         /// <summary>
@@ -87,7 +83,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsValid {
             get {
-                return 0 != CfxApi.cfx_print_settings_is_valid(NativePtr);
+                return 0 != CfxApi.PrintSettings.cfx_print_settings_is_valid(NativePtr);
             }
         }
 
@@ -101,7 +97,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsReadOnly {
             get {
-                return 0 != CfxApi.cfx_print_settings_is_read_only(NativePtr);
+                return 0 != CfxApi.PrintSettings.cfx_print_settings_is_read_only(NativePtr);
             }
         }
 
@@ -114,7 +110,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsLandscape {
             get {
-                return 0 != CfxApi.cfx_print_settings_is_landscape(NativePtr);
+                return 0 != CfxApi.PrintSettings.cfx_print_settings_is_landscape(NativePtr);
             }
         }
 
@@ -127,11 +123,11 @@ namespace Chromium {
         /// </remarks>
         public string DeviceName {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_print_settings_get_device_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.PrintSettings.cfx_print_settings_get_device_name(NativePtr));
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_print_settings_set_device_name(NativePtr, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.PrintSettings.cfx_print_settings_set_device_name(NativePtr, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
@@ -145,10 +141,10 @@ namespace Chromium {
         /// </remarks>
         public int Dpi {
             get {
-                return CfxApi.cfx_print_settings_get_dpi(NativePtr);
+                return CfxApi.PrintSettings.cfx_print_settings_get_dpi(NativePtr);
             }
             set {
-                CfxApi.cfx_print_settings_set_dpi(NativePtr, value);
+                CfxApi.PrintSettings.cfx_print_settings_set_dpi(NativePtr, value);
             }
         }
 
@@ -161,7 +157,7 @@ namespace Chromium {
         /// </remarks>
         public int PageRangesCount {
             get {
-                return CfxApi.cfx_print_settings_get_page_ranges_count(NativePtr);
+                return CfxApi.PrintSettings.cfx_print_settings_get_page_ranges_count(NativePtr);
             }
         }
 
@@ -174,7 +170,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsSelectionOnly {
             get {
-                return 0 != CfxApi.cfx_print_settings_is_selection_only(NativePtr);
+                return 0 != CfxApi.PrintSettings.cfx_print_settings_is_selection_only(NativePtr);
             }
         }
 
@@ -187,10 +183,10 @@ namespace Chromium {
         /// </remarks>
         public CfxColorModel ColorModel {
             get {
-                return (CfxColorModel)CfxApi.cfx_print_settings_get_color_model(NativePtr);
+                return (CfxColorModel)CfxApi.PrintSettings.cfx_print_settings_get_color_model(NativePtr);
             }
             set {
-                CfxApi.cfx_print_settings_set_color_model(NativePtr, (int)value);
+                CfxApi.PrintSettings.cfx_print_settings_set_color_model(NativePtr, (int)value);
             }
         }
 
@@ -203,10 +199,10 @@ namespace Chromium {
         /// </remarks>
         public int Copies {
             get {
-                return CfxApi.cfx_print_settings_get_copies(NativePtr);
+                return CfxApi.PrintSettings.cfx_print_settings_get_copies(NativePtr);
             }
             set {
-                CfxApi.cfx_print_settings_set_copies(NativePtr, value);
+                CfxApi.PrintSettings.cfx_print_settings_set_copies(NativePtr, value);
             }
         }
 
@@ -219,10 +215,10 @@ namespace Chromium {
         /// </remarks>
         public CfxDuplexMode DuplexMode {
             get {
-                return (CfxDuplexMode)CfxApi.cfx_print_settings_get_duplex_mode(NativePtr);
+                return (CfxDuplexMode)CfxApi.PrintSettings.cfx_print_settings_get_duplex_mode(NativePtr);
             }
             set {
-                CfxApi.cfx_print_settings_set_duplex_mode(NativePtr, (int)value);
+                CfxApi.PrintSettings.cfx_print_settings_set_duplex_mode(NativePtr, (int)value);
             }
         }
 
@@ -234,7 +230,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
         /// </remarks>
         public CfxPrintSettings Copy() {
-            return CfxPrintSettings.Wrap(CfxApi.cfx_print_settings_copy(NativePtr));
+            return CfxPrintSettings.Wrap(CfxApi.PrintSettings.cfx_print_settings_copy(NativePtr));
         }
 
         /// <summary>
@@ -245,7 +241,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
         /// </remarks>
         public void SetOrientation(bool landscape) {
-            CfxApi.cfx_print_settings_set_orientation(NativePtr, landscape ? 1 : 0);
+            CfxApi.PrintSettings.cfx_print_settings_set_orientation(NativePtr, landscape ? 1 : 0);
         }
 
         /// <summary>
@@ -258,7 +254,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
         /// </remarks>
         public void SetPrinterPrintableArea(CfxSize physicalSizeDeviceUnits, CfxRect printableAreaDeviceUnits, bool landscapeNeedsFlip) {
-            CfxApi.cfx_print_settings_set_printer_printable_area(NativePtr, CfxSize.Unwrap(physicalSizeDeviceUnits), CfxRect.Unwrap(printableAreaDeviceUnits), landscapeNeedsFlip ? 1 : 0);
+            CfxApi.PrintSettings.cfx_print_settings_set_printer_printable_area(NativePtr, CfxSize.Unwrap(physicalSizeDeviceUnits), CfxRect.Unwrap(printableAreaDeviceUnits), landscapeNeedsFlip ? 1 : 0);
         }
 
         /// <summary>
@@ -283,7 +279,7 @@ namespace Chromium {
             }
             PinnedObject ranges_pinned = new PinnedObject(ranges_ptrs);
             int ranges_nomem;
-            CfxApi.cfx_print_settings_set_page_ranges(NativePtr, ranges_length, ranges_pinned.PinnedPtr, out ranges_nomem);
+            CfxApi.PrintSettings.cfx_print_settings_set_page_ranges(NativePtr, ranges_length, ranges_pinned.PinnedPtr, out ranges_nomem);
             ranges_pinned.Free();
             if(ranges_nomem != 0) {
                 throw new OutOfMemoryException();
@@ -298,11 +294,11 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
         /// </remarks>
         public CfxRange[] GetPageRanges() {
-            int rangesCount = CfxApi.cfx_print_settings_get_page_ranges_count(NativePtr);
+            int rangesCount = CfxApi.PrintSettings.cfx_print_settings_get_page_ranges_count(NativePtr);
             IntPtr[] pp = new IntPtr[rangesCount];
             PinnedObject pp_pinned = new PinnedObject(pp);
             int ranges_nomem;
-            CfxApi.cfx_print_settings_get_page_ranges(NativePtr, ref rangesCount, pp_pinned.PinnedPtr, out ranges_nomem);
+            CfxApi.PrintSettings.cfx_print_settings_get_page_ranges(NativePtr, ref rangesCount, pp_pinned.PinnedPtr, out ranges_nomem);
             pp_pinned.Free();
             if(ranges_nomem != 0) {
                 throw new OutOfMemoryException();
@@ -322,7 +318,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
         /// </remarks>
         public void SetSelectionOnly(bool selectionOnly) {
-            CfxApi.cfx_print_settings_set_selection_only(NativePtr, selectionOnly ? 1 : 0);
+            CfxApi.PrintSettings.cfx_print_settings_set_selection_only(NativePtr, selectionOnly ? 1 : 0);
         }
 
         /// <summary>
@@ -333,7 +329,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
         /// </remarks>
         public void SetCollate(bool collate) {
-            CfxApi.cfx_print_settings_set_collate(NativePtr, collate ? 1 : 0);
+            CfxApi.PrintSettings.cfx_print_settings_set_collate(NativePtr, collate ? 1 : 0);
         }
 
         /// <summary>
@@ -344,7 +340,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
         /// </remarks>
         public bool WillCollate() {
-            return 0 != CfxApi.cfx_print_settings_will_collate(NativePtr);
+            return 0 != CfxApi.PrintSettings.cfx_print_settings_will_collate(NativePtr);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

@@ -44,10 +44,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxV8Exception : CfxBase {
 
-        static CfxV8Exception () {
-            CfxApiLoader.LoadCfxV8ExceptionApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxV8Exception Wrap(IntPtr nativePtr) {
@@ -76,7 +72,7 @@ namespace Chromium {
         /// </remarks>
         public string Message {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8exception_get_message(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.V8Exception.cfx_v8exception_get_message(NativePtr));
             }
         }
 
@@ -89,7 +85,7 @@ namespace Chromium {
         /// </remarks>
         public string SourceLine {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8exception_get_source_line(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.V8Exception.cfx_v8exception_get_source_line(NativePtr));
             }
         }
 
@@ -103,7 +99,7 @@ namespace Chromium {
         /// </remarks>
         public string ScriptResourceName {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8exception_get_script_resource_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.V8Exception.cfx_v8exception_get_script_resource_name(NativePtr));
             }
         }
 
@@ -117,7 +113,7 @@ namespace Chromium {
         /// </remarks>
         public int LineNumber {
             get {
-                return CfxApi.cfx_v8exception_get_line_number(NativePtr);
+                return CfxApi.V8Exception.cfx_v8exception_get_line_number(NativePtr);
             }
         }
 
@@ -131,7 +127,7 @@ namespace Chromium {
         /// </remarks>
         public int StartPosition {
             get {
-                return CfxApi.cfx_v8exception_get_start_position(NativePtr);
+                return CfxApi.V8Exception.cfx_v8exception_get_start_position(NativePtr);
             }
         }
 
@@ -145,7 +141,7 @@ namespace Chromium {
         /// </remarks>
         public int EndPosition {
             get {
-                return CfxApi.cfx_v8exception_get_end_position(NativePtr);
+                return CfxApi.V8Exception.cfx_v8exception_get_end_position(NativePtr);
             }
         }
 
@@ -159,7 +155,7 @@ namespace Chromium {
         /// </remarks>
         public int StartColumn {
             get {
-                return CfxApi.cfx_v8exception_get_start_column(NativePtr);
+                return CfxApi.V8Exception.cfx_v8exception_get_start_column(NativePtr);
             }
         }
 
@@ -173,7 +169,7 @@ namespace Chromium {
         /// </remarks>
         public int EndColumn {
             get {
-                return CfxApi.cfx_v8exception_get_end_column(NativePtr);
+                return CfxApi.V8Exception.cfx_v8exception_get_end_column(NativePtr);
             }
         }
 

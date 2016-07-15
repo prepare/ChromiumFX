@@ -46,13 +46,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxWebPluginInfoVisitor : CfxBase {
 
-        static CfxWebPluginInfoVisitor () {
-            CfxApiLoader.LoadCfxWebPluginInfoVisitorApi();
-        }
-
         internal static CfxWebPluginInfoVisitor Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_web_plugin_info_visitor_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.WebPluginInfoVisitor.cfx_web_plugin_info_visitor_get_gc_handle(nativePtr);
             return (CfxWebPluginInfoVisitor)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -80,7 +76,7 @@ namespace Chromium {
         }
 
         internal CfxWebPluginInfoVisitor(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxWebPluginInfoVisitor() : base(CfxApi.cfx_web_plugin_info_visitor_ctor) {}
+        public CfxWebPluginInfoVisitor() : base(CfxApi.WebPluginInfoVisitor.cfx_web_plugin_info_visitor_ctor) {}
 
         /// <summary>
         /// Method that will be called once for each plugin. |Count| is the 0-based
@@ -100,7 +96,7 @@ namespace Chromium {
                             cfx_web_plugin_info_visitor_visit = visit;
                             cfx_web_plugin_info_visitor_visit_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_web_plugin_info_visitor_visit);
                         }
-                        CfxApi.cfx_web_plugin_info_visitor_set_managed_callback(NativePtr, 0, cfx_web_plugin_info_visitor_visit_ptr);
+                        CfxApi.WebPluginInfoVisitor.cfx_web_plugin_info_visitor_set_managed_callback(NativePtr, 0, cfx_web_plugin_info_visitor_visit_ptr);
                     }
                     m_Visit += value;
                 }
@@ -109,7 +105,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Visit -= value;
                     if(m_Visit == null) {
-                        CfxApi.cfx_web_plugin_info_visitor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.WebPluginInfoVisitor.cfx_web_plugin_info_visitor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -120,7 +116,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_Visit != null) {
                 m_Visit = null;
-                CfxApi.cfx_web_plugin_info_visitor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.WebPluginInfoVisitor.cfx_web_plugin_info_visitor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

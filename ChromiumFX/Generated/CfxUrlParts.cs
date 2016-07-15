@@ -43,11 +43,7 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxUrlParts : CfxStructure {
 
-        static CfxUrlParts () {
-            CfxApiLoader.LoadCfxUrlPartsApi();
-        }
-
-        public CfxUrlParts() : base(CfxApi.cfx_urlparts_ctor, CfxApi.cfx_urlparts_dtor) {}
+        public CfxUrlParts() : base(CfxApi.UrlParts.cfx_urlparts_ctor, CfxApi.UrlParts.cfx_urlparts_dtor) {}
 
         /// <summary>
         /// The complete URL specification.
@@ -60,12 +56,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_urlparts_get_spec(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.UrlParts.cfx_urlparts_get_spec(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_urlparts_set_spec(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.UrlParts.cfx_urlparts_set_spec(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
@@ -81,12 +77,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_urlparts_get_scheme(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.UrlParts.cfx_urlparts_get_scheme(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_urlparts_set_scheme(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.UrlParts.cfx_urlparts_set_scheme(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
@@ -102,12 +98,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_urlparts_get_username(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.UrlParts.cfx_urlparts_get_username(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_urlparts_set_username(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.UrlParts.cfx_urlparts_set_username(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
@@ -123,12 +119,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_urlparts_get_password(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.UrlParts.cfx_urlparts_get_password(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_urlparts_set_password(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.UrlParts.cfx_urlparts_set_password(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
@@ -145,12 +141,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_urlparts_get_host(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.UrlParts.cfx_urlparts_get_host(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_urlparts_set_host(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.UrlParts.cfx_urlparts_set_host(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
@@ -166,12 +162,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_urlparts_get_port(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.UrlParts.cfx_urlparts_get_port(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_urlparts_set_port(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.UrlParts.cfx_urlparts_set_port(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
@@ -190,12 +186,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_urlparts_get_origin(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.UrlParts.cfx_urlparts_get_origin(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_urlparts_set_origin(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.UrlParts.cfx_urlparts_set_origin(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
@@ -211,12 +207,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_urlparts_get_path(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.UrlParts.cfx_urlparts_get_path(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_urlparts_set_path(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.UrlParts.cfx_urlparts_set_path(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
@@ -232,12 +228,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_urlparts_get_query(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.UrlParts.cfx_urlparts_get_query(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_urlparts_set_query(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.UrlParts.cfx_urlparts_set_query(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }

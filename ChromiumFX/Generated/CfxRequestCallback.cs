@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxRequestCallback : CfxBase {
 
-        static CfxRequestCallback () {
-            CfxApiLoader.LoadCfxRequestCallbackApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxRequestCallback Wrap(IntPtr nativePtr) {
@@ -75,7 +71,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
         /// </remarks>
         public void Continue(bool allow) {
-            CfxApi.cfx_request_callback_cont(NativePtr, allow ? 1 : 0);
+            CfxApi.RequestCallback.cfx_request_callback_cont(NativePtr, allow ? 1 : 0);
         }
 
         /// <summary>
@@ -86,7 +82,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
         /// </remarks>
         public void Cancel() {
-            CfxApi.cfx_request_callback_cancel(NativePtr);
+            CfxApi.RequestCallback.cfx_request_callback_cancel(NativePtr);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

@@ -47,13 +47,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxRequestContextHandler : CfxBase {
 
-        static CfxRequestContextHandler () {
-            CfxApiLoader.LoadCfxRequestContextHandlerApi();
-        }
-
         internal static CfxRequestContextHandler Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_request_context_handler_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.RequestContextHandler.cfx_request_context_handler_get_gc_handle(nativePtr);
             return (CfxRequestContextHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -101,7 +97,7 @@ namespace Chromium {
         }
 
         internal CfxRequestContextHandler(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxRequestContextHandler() : base(CfxApi.cfx_request_context_handler_ctor) {}
+        public CfxRequestContextHandler() : base(CfxApi.RequestContextHandler.cfx_request_context_handler_ctor) {}
 
         /// <summary>
         /// Called on the browser process IO thread to retrieve the cookie manager. If
@@ -120,7 +116,7 @@ namespace Chromium {
                             cfx_request_context_handler_get_cookie_manager = get_cookie_manager;
                             cfx_request_context_handler_get_cookie_manager_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_context_handler_get_cookie_manager);
                         }
-                        CfxApi.cfx_request_context_handler_set_managed_callback(NativePtr, 0, cfx_request_context_handler_get_cookie_manager_ptr);
+                        CfxApi.RequestContextHandler.cfx_request_context_handler_set_managed_callback(NativePtr, 0, cfx_request_context_handler_get_cookie_manager_ptr);
                     }
                     m_GetCookieManager += value;
                 }
@@ -129,7 +125,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetCookieManager -= value;
                     if(m_GetCookieManager == null) {
-                        CfxApi.cfx_request_context_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.RequestContextHandler.cfx_request_context_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -166,7 +162,7 @@ namespace Chromium {
                             cfx_request_context_handler_on_before_plugin_load = on_before_plugin_load;
                             cfx_request_context_handler_on_before_plugin_load_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_context_handler_on_before_plugin_load);
                         }
-                        CfxApi.cfx_request_context_handler_set_managed_callback(NativePtr, 1, cfx_request_context_handler_on_before_plugin_load_ptr);
+                        CfxApi.RequestContextHandler.cfx_request_context_handler_set_managed_callback(NativePtr, 1, cfx_request_context_handler_on_before_plugin_load_ptr);
                     }
                     m_OnBeforePluginLoad += value;
                 }
@@ -175,7 +171,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnBeforePluginLoad -= value;
                     if(m_OnBeforePluginLoad == null) {
-                        CfxApi.cfx_request_context_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.RequestContextHandler.cfx_request_context_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
                     }
                 }
             }
@@ -186,11 +182,11 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_GetCookieManager != null) {
                 m_GetCookieManager = null;
-                CfxApi.cfx_request_context_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.RequestContextHandler.cfx_request_context_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_OnBeforePluginLoad != null) {
                 m_OnBeforePluginLoad = null;
-                CfxApi.cfx_request_context_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.RequestContextHandler.cfx_request_context_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

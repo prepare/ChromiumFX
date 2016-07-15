@@ -60,7 +60,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_domnode_get_type(@this);
+            __retval = CfxApi.DomNode.cfx_domnode_get_type(@this);
         }
     }
 
@@ -89,7 +89,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_domnode_is_text(@this);
+            __retval = 0 != CfxApi.DomNode.cfx_domnode_is_text(@this);
         }
     }
 
@@ -118,7 +118,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_domnode_is_element(@this);
+            __retval = 0 != CfxApi.DomNode.cfx_domnode_is_element(@this);
         }
     }
 
@@ -147,7 +147,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_domnode_is_editable(@this);
+            __retval = 0 != CfxApi.DomNode.cfx_domnode_is_editable(@this);
         }
     }
 
@@ -176,7 +176,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_domnode_is_form_control_element(@this);
+            __retval = 0 != CfxApi.DomNode.cfx_domnode_is_form_control_element(@this);
         }
     }
 
@@ -205,7 +205,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_form_control_element_type(@this));
+            __retval = StringFunctions.ConvertStringUserfree(CfxApi.DomNode.cfx_domnode_get_form_control_element_type(@this));
         }
     }
 
@@ -237,7 +237,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_domnode_is_same(@this, that);
+            __retval = 0 != CfxApi.DomNode.cfx_domnode_is_same(@this, that);
         }
     }
 
@@ -266,7 +266,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_name(@this));
+            __retval = StringFunctions.ConvertStringUserfree(CfxApi.DomNode.cfx_domnode_get_name(@this));
         }
     }
 
@@ -295,7 +295,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_value(@this));
+            __retval = StringFunctions.ConvertStringUserfree(CfxApi.DomNode.cfx_domnode_get_value(@this));
         }
     }
 
@@ -328,7 +328,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var value_pinned = new PinnedString(value);
-            __retval = 0 != CfxApi.cfx_domnode_set_value(@this, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+            __retval = 0 != CfxApi.DomNode.cfx_domnode_set_value(@this, value_pinned.Obj.PinnedPtr, value_pinned.Length);
             value_pinned.Obj.Free();
         }
     }
@@ -358,7 +358,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_as_markup(@this));
+            __retval = StringFunctions.ConvertStringUserfree(CfxApi.DomNode.cfx_domnode_get_as_markup(@this));
         }
     }
 
@@ -387,7 +387,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_domnode_get_document(@this);
+            __retval = CfxApi.DomNode.cfx_domnode_get_document(@this);
         }
     }
 
@@ -416,7 +416,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_domnode_get_parent(@this);
+            __retval = CfxApi.DomNode.cfx_domnode_get_parent(@this);
         }
     }
 
@@ -445,7 +445,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_domnode_get_previous_sibling(@this);
+            __retval = CfxApi.DomNode.cfx_domnode_get_previous_sibling(@this);
         }
     }
 
@@ -474,7 +474,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_domnode_get_next_sibling(@this);
+            __retval = CfxApi.DomNode.cfx_domnode_get_next_sibling(@this);
         }
     }
 
@@ -503,7 +503,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_domnode_has_children(@this);
+            __retval = 0 != CfxApi.DomNode.cfx_domnode_has_children(@this);
         }
     }
 
@@ -532,7 +532,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_domnode_get_first_child(@this);
+            __retval = CfxApi.DomNode.cfx_domnode_get_first_child(@this);
         }
     }
 
@@ -561,7 +561,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.cfx_domnode_get_last_child(@this);
+            __retval = CfxApi.DomNode.cfx_domnode_get_last_child(@this);
         }
     }
 
@@ -590,7 +590,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_element_tag_name(@this));
+            __retval = StringFunctions.ConvertStringUserfree(CfxApi.DomNode.cfx_domnode_get_element_tag_name(@this));
         }
     }
 
@@ -619,7 +619,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_domnode_has_element_attributes(@this);
+            __retval = 0 != CfxApi.DomNode.cfx_domnode_has_element_attributes(@this);
         }
     }
 
@@ -652,7 +652,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var attrName_pinned = new PinnedString(attrName);
-            __retval = 0 != CfxApi.cfx_domnode_has_element_attribute(@this, attrName_pinned.Obj.PinnedPtr, attrName_pinned.Length);
+            __retval = 0 != CfxApi.DomNode.cfx_domnode_has_element_attribute(@this, attrName_pinned.Obj.PinnedPtr, attrName_pinned.Length);
             attrName_pinned.Obj.Free();
         }
     }
@@ -686,7 +686,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var attrName_pinned = new PinnedString(attrName);
-            __retval = StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_element_attribute(@this, attrName_pinned.Obj.PinnedPtr, attrName_pinned.Length));
+            __retval = StringFunctions.ConvertStringUserfree(CfxApi.DomNode.cfx_domnode_get_element_attribute(@this, attrName_pinned.Obj.PinnedPtr, attrName_pinned.Length));
             attrName_pinned.Obj.Free();
         }
     }
@@ -718,7 +718,7 @@ namespace Chromium.Remote {
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             __retval = new System.Collections.Generic.List<string[]>();
             var list = StringFunctions.AllocCfxStringMap();
-            CfxApi.cfx_domnode_get_element_attributes(@this, list);
+            CfxApi.DomNode.cfx_domnode_get_element_attributes(@this, list);
             StringFunctions.CfxStringMapCopyToManaged(list, __retval);
             StringFunctions.FreeCfxStringMap(list);
         }
@@ -757,7 +757,7 @@ namespace Chromium.Remote {
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var attrName_pinned = new PinnedString(attrName);
             var value_pinned = new PinnedString(value);
-            __retval = 0 != CfxApi.cfx_domnode_set_element_attribute(@this, attrName_pinned.Obj.PinnedPtr, attrName_pinned.Length, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+            __retval = 0 != CfxApi.DomNode.cfx_domnode_set_element_attribute(@this, attrName_pinned.Obj.PinnedPtr, attrName_pinned.Length, value_pinned.Obj.PinnedPtr, value_pinned.Length);
             attrName_pinned.Obj.Free();
             value_pinned.Obj.Free();
         }
@@ -788,7 +788,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = StringFunctions.ConvertStringUserfree(CfxApi.cfx_domnode_get_element_inner_text(@this));
+            __retval = StringFunctions.ConvertStringUserfree(CfxApi.DomNode.cfx_domnode_get_element_inner_text(@this));
         }
     }
 

@@ -47,10 +47,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxV8Value : CfxBase {
 
-        static CfxV8Value () {
-            CfxApiLoader.LoadCfxV8ValueApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxV8Value Wrap(IntPtr nativePtr) {
@@ -78,7 +74,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public static CfxV8Value CreateUndefined() {
-            return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_undefined());
+            return CfxV8Value.Wrap(CfxApi.V8Value.cfx_v8value_create_undefined());
         }
 
         /// <summary>
@@ -89,7 +85,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public static CfxV8Value CreateNull() {
-            return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_null());
+            return CfxV8Value.Wrap(CfxApi.V8Value.cfx_v8value_create_null());
         }
 
         /// <summary>
@@ -100,7 +96,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public static CfxV8Value CreateBool(bool value) {
-            return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_bool(value ? 1 : 0));
+            return CfxV8Value.Wrap(CfxApi.V8Value.cfx_v8value_create_bool(value ? 1 : 0));
         }
 
         /// <summary>
@@ -111,7 +107,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public static CfxV8Value CreateInt(int value) {
-            return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_int(value));
+            return CfxV8Value.Wrap(CfxApi.V8Value.cfx_v8value_create_int(value));
         }
 
         /// <summary>
@@ -122,7 +118,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public static CfxV8Value CreateUint(uint value) {
-            return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_uint(value));
+            return CfxV8Value.Wrap(CfxApi.V8Value.cfx_v8value_create_uint(value));
         }
 
         /// <summary>
@@ -133,7 +129,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public static CfxV8Value CreateDouble(double value) {
-            return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_double(value));
+            return CfxV8Value.Wrap(CfxApi.V8Value.cfx_v8value_create_double(value));
         }
 
         /// <summary>
@@ -147,7 +143,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public static CfxV8Value CreateDate(CfxTime date) {
-            return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_date(CfxTime.Unwrap(date)));
+            return CfxV8Value.Wrap(CfxApi.V8Value.cfx_v8value_create_date(CfxTime.Unwrap(date)));
         }
 
         /// <summary>
@@ -159,7 +155,7 @@ namespace Chromium {
         /// </remarks>
         public static CfxV8Value CreateString(string value) {
             var value_pinned = new PinnedString(value);
-            var __retval = CfxApi.cfx_v8value_create_string(value_pinned.Obj.PinnedPtr, value_pinned.Length);
+            var __retval = CfxApi.V8Value.cfx_v8value_create_string(value_pinned.Obj.PinnedPtr, value_pinned.Length);
             value_pinned.Obj.Free();
             return CfxV8Value.Wrap(__retval);
         }
@@ -176,7 +172,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public static CfxV8Value CreateObject(CfxV8Accessor accessor) {
-            return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_object(CfxV8Accessor.Unwrap(accessor)));
+            return CfxV8Value.Wrap(CfxApi.V8Value.cfx_v8value_create_object(CfxV8Accessor.Unwrap(accessor)));
         }
 
         /// <summary>
@@ -192,7 +188,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public static CfxV8Value CreateArray(int length) {
-            return CfxV8Value.Wrap(CfxApi.cfx_v8value_create_array(length));
+            return CfxV8Value.Wrap(CfxApi.V8Value.cfx_v8value_create_array(length));
         }
 
         /// <summary>
@@ -207,7 +203,7 @@ namespace Chromium {
         /// </remarks>
         public static CfxV8Value CreateFunction(string name, CfxV8Handler handler) {
             var name_pinned = new PinnedString(name);
-            var __retval = CfxApi.cfx_v8value_create_function(name_pinned.Obj.PinnedPtr, name_pinned.Length, CfxV8Handler.Unwrap(handler));
+            var __retval = CfxApi.V8Value.cfx_v8value_create_function(name_pinned.Obj.PinnedPtr, name_pinned.Length, CfxV8Handler.Unwrap(handler));
             name_pinned.Obj.Free();
             return CfxV8Value.Wrap(__retval);
         }
@@ -223,7 +219,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsValid {
             get {
-                return 0 != CfxApi.cfx_v8value_is_valid(NativePtr);
+                return 0 != CfxApi.V8Value.cfx_v8value_is_valid(NativePtr);
             }
         }
 
@@ -236,7 +232,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsUndefined {
             get {
-                return 0 != CfxApi.cfx_v8value_is_undefined(NativePtr);
+                return 0 != CfxApi.V8Value.cfx_v8value_is_undefined(NativePtr);
             }
         }
 
@@ -249,7 +245,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsNull {
             get {
-                return 0 != CfxApi.cfx_v8value_is_null(NativePtr);
+                return 0 != CfxApi.V8Value.cfx_v8value_is_null(NativePtr);
             }
         }
 
@@ -262,7 +258,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsBool {
             get {
-                return 0 != CfxApi.cfx_v8value_is_bool(NativePtr);
+                return 0 != CfxApi.V8Value.cfx_v8value_is_bool(NativePtr);
             }
         }
 
@@ -275,7 +271,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsInt {
             get {
-                return 0 != CfxApi.cfx_v8value_is_int(NativePtr);
+                return 0 != CfxApi.V8Value.cfx_v8value_is_int(NativePtr);
             }
         }
 
@@ -288,7 +284,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsUint {
             get {
-                return 0 != CfxApi.cfx_v8value_is_uint(NativePtr);
+                return 0 != CfxApi.V8Value.cfx_v8value_is_uint(NativePtr);
             }
         }
 
@@ -301,7 +297,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsDouble {
             get {
-                return 0 != CfxApi.cfx_v8value_is_double(NativePtr);
+                return 0 != CfxApi.V8Value.cfx_v8value_is_double(NativePtr);
             }
         }
 
@@ -314,7 +310,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsDate {
             get {
-                return 0 != CfxApi.cfx_v8value_is_date(NativePtr);
+                return 0 != CfxApi.V8Value.cfx_v8value_is_date(NativePtr);
             }
         }
 
@@ -327,7 +323,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsString {
             get {
-                return 0 != CfxApi.cfx_v8value_is_string(NativePtr);
+                return 0 != CfxApi.V8Value.cfx_v8value_is_string(NativePtr);
             }
         }
 
@@ -340,7 +336,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsObject {
             get {
-                return 0 != CfxApi.cfx_v8value_is_object(NativePtr);
+                return 0 != CfxApi.V8Value.cfx_v8value_is_object(NativePtr);
             }
         }
 
@@ -353,7 +349,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsArray {
             get {
-                return 0 != CfxApi.cfx_v8value_is_array(NativePtr);
+                return 0 != CfxApi.V8Value.cfx_v8value_is_array(NativePtr);
             }
         }
 
@@ -366,7 +362,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsFunction {
             get {
-                return 0 != CfxApi.cfx_v8value_is_function(NativePtr);
+                return 0 != CfxApi.V8Value.cfx_v8value_is_function(NativePtr);
             }
         }
 
@@ -380,7 +376,7 @@ namespace Chromium {
         /// </remarks>
         public bool BoolValue {
             get {
-                return 0 != CfxApi.cfx_v8value_get_bool_value(NativePtr);
+                return 0 != CfxApi.V8Value.cfx_v8value_get_bool_value(NativePtr);
             }
         }
 
@@ -394,7 +390,7 @@ namespace Chromium {
         /// </remarks>
         public int IntValue {
             get {
-                return CfxApi.cfx_v8value_get_int_value(NativePtr);
+                return CfxApi.V8Value.cfx_v8value_get_int_value(NativePtr);
             }
         }
 
@@ -408,7 +404,7 @@ namespace Chromium {
         /// </remarks>
         public uint UintValue {
             get {
-                return CfxApi.cfx_v8value_get_uint_value(NativePtr);
+                return CfxApi.V8Value.cfx_v8value_get_uint_value(NativePtr);
             }
         }
 
@@ -422,7 +418,7 @@ namespace Chromium {
         /// </remarks>
         public double DoubleValue {
             get {
-                return CfxApi.cfx_v8value_get_double_value(NativePtr);
+                return CfxApi.V8Value.cfx_v8value_get_double_value(NativePtr);
             }
         }
 
@@ -436,7 +432,7 @@ namespace Chromium {
         /// </remarks>
         public CfxTime DateValue {
             get {
-                return CfxTime.WrapOwned(CfxApi.cfx_v8value_get_date_value(NativePtr));
+                return CfxTime.WrapOwned(CfxApi.V8Value.cfx_v8value_get_date_value(NativePtr));
             }
         }
 
@@ -450,7 +446,7 @@ namespace Chromium {
         /// </remarks>
         public string StringValue {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8value_get_string_value(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.V8Value.cfx_v8value_get_string_value(NativePtr));
             }
         }
 
@@ -466,7 +462,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsUserCreated {
             get {
-                return 0 != CfxApi.cfx_v8value_is_user_created(NativePtr);
+                return 0 != CfxApi.V8Value.cfx_v8value_is_user_created(NativePtr);
             }
         }
 
@@ -480,7 +476,7 @@ namespace Chromium {
         /// </remarks>
         public bool HasException {
             get {
-                return 0 != CfxApi.cfx_v8value_has_exception(NativePtr);
+                return 0 != CfxApi.V8Value.cfx_v8value_has_exception(NativePtr);
             }
         }
 
@@ -494,7 +490,7 @@ namespace Chromium {
         /// </remarks>
         public CfxV8Exception Exception {
             get {
-                return CfxV8Exception.Wrap(CfxApi.cfx_v8value_get_exception(NativePtr));
+                return CfxV8Exception.Wrap(CfxApi.V8Value.cfx_v8value_get_exception(NativePtr));
             }
         }
 
@@ -507,7 +503,7 @@ namespace Chromium {
         /// </remarks>
         public CfxBase UserData {
             get {
-                return CfxBase.Cast(CfxApi.cfx_v8value_get_user_data(NativePtr));
+                return CfxBase.Cast(CfxApi.V8Value.cfx_v8value_get_user_data(NativePtr));
             }
         }
 
@@ -521,7 +517,7 @@ namespace Chromium {
         /// </remarks>
         public int ExternallyAllocatedMemory {
             get {
-                return CfxApi.cfx_v8value_get_externally_allocated_memory(NativePtr);
+                return CfxApi.V8Value.cfx_v8value_get_externally_allocated_memory(NativePtr);
             }
         }
 
@@ -535,7 +531,7 @@ namespace Chromium {
         /// </remarks>
         public int ArrayLength {
             get {
-                return CfxApi.cfx_v8value_get_array_length(NativePtr);
+                return CfxApi.V8Value.cfx_v8value_get_array_length(NativePtr);
             }
         }
 
@@ -549,7 +545,7 @@ namespace Chromium {
         /// </remarks>
         public string FunctionName {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_v8value_get_function_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.V8Value.cfx_v8value_get_function_name(NativePtr));
             }
         }
 
@@ -562,7 +558,7 @@ namespace Chromium {
         /// </remarks>
         public CfxV8Handler FunctionHandler {
             get {
-                return CfxV8Handler.Wrap(CfxApi.cfx_v8value_get_function_handler(NativePtr));
+                return CfxV8Handler.Wrap(CfxApi.V8Value.cfx_v8value_get_function_handler(NativePtr));
             }
         }
 
@@ -575,7 +571,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public bool IsSame(CfxV8Value that) {
-            return 0 != CfxApi.cfx_v8value_is_same(NativePtr, CfxV8Value.Unwrap(that));
+            return 0 != CfxApi.V8Value.cfx_v8value_is_same(NativePtr, CfxV8Value.Unwrap(that));
         }
 
         /// <summary>
@@ -586,7 +582,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public bool ClearException() {
-            return 0 != CfxApi.cfx_v8value_clear_exception(NativePtr);
+            return 0 != CfxApi.V8Value.cfx_v8value_clear_exception(NativePtr);
         }
 
         /// <summary>
@@ -598,7 +594,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public bool WillRethrowExceptions() {
-            return 0 != CfxApi.cfx_v8value_will_rethrow_exceptions(NativePtr);
+            return 0 != CfxApi.V8Value.cfx_v8value_will_rethrow_exceptions(NativePtr);
         }
 
         /// <summary>
@@ -613,7 +609,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public bool SetRethrowExceptions(bool rethrow) {
-            return 0 != CfxApi.cfx_v8value_set_rethrow_exceptions(NativePtr, rethrow ? 1 : 0);
+            return 0 != CfxApi.V8Value.cfx_v8value_set_rethrow_exceptions(NativePtr, rethrow ? 1 : 0);
         }
 
         /// <summary>
@@ -625,7 +621,7 @@ namespace Chromium {
         /// </remarks>
         public bool HasValue(string key) {
             var key_pinned = new PinnedString(key);
-            var __retval = CfxApi.cfx_v8value_has_value_bykey(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
+            var __retval = CfxApi.V8Value.cfx_v8value_has_value_bykey(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -638,7 +634,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public bool HasValue(int index) {
-            return 0 != CfxApi.cfx_v8value_has_value_byindex(NativePtr, index);
+            return 0 != CfxApi.V8Value.cfx_v8value_has_value_byindex(NativePtr, index);
         }
 
         /// <summary>
@@ -653,7 +649,7 @@ namespace Chromium {
         /// </remarks>
         public bool DeleteValue(string key) {
             var key_pinned = new PinnedString(key);
-            var __retval = CfxApi.cfx_v8value_delete_value_bykey(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
+            var __retval = CfxApi.V8Value.cfx_v8value_delete_value_bykey(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -669,7 +665,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public bool DeleteValue(int index) {
-            return 0 != CfxApi.cfx_v8value_delete_value_byindex(NativePtr, index);
+            return 0 != CfxApi.V8Value.cfx_v8value_delete_value_byindex(NativePtr, index);
         }
 
         /// <summary>
@@ -682,7 +678,7 @@ namespace Chromium {
         /// </remarks>
         public CfxV8Value GetValue(string key) {
             var key_pinned = new PinnedString(key);
-            var __retval = CfxApi.cfx_v8value_get_value_bykey(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
+            var __retval = CfxApi.V8Value.cfx_v8value_get_value_bykey(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
             return CfxV8Value.Wrap(__retval);
         }
@@ -696,7 +692,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public CfxV8Value GetValue(int index) {
-            return CfxV8Value.Wrap(CfxApi.cfx_v8value_get_value_byindex(NativePtr, index));
+            return CfxV8Value.Wrap(CfxApi.V8Value.cfx_v8value_get_value_byindex(NativePtr, index));
         }
 
         /// <summary>
@@ -711,7 +707,7 @@ namespace Chromium {
         /// </remarks>
         public bool SetValue(string key, CfxV8Value value, CfxV8PropertyAttribute attribute) {
             var key_pinned = new PinnedString(key);
-            var __retval = CfxApi.cfx_v8value_set_value_bykey(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, CfxV8Value.Unwrap(value), (int)attribute);
+            var __retval = CfxApi.V8Value.cfx_v8value_set_value_bykey(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, CfxV8Value.Unwrap(value), (int)attribute);
             key_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -727,7 +723,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public bool SetValue(int index, CfxV8Value value) {
-            return 0 != CfxApi.cfx_v8value_set_value_byindex(NativePtr, index, CfxV8Value.Unwrap(value));
+            return 0 != CfxApi.V8Value.cfx_v8value_set_value_byindex(NativePtr, index, CfxV8Value.Unwrap(value));
         }
 
         /// <summary>
@@ -743,7 +739,7 @@ namespace Chromium {
         /// </remarks>
         public bool SetValue(string key, CfxV8AccessControl settings, CfxV8PropertyAttribute attribute) {
             var key_pinned = new PinnedString(key);
-            var __retval = CfxApi.cfx_v8value_set_value_byaccessor(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, (int)settings, (int)attribute);
+            var __retval = CfxApi.V8Value.cfx_v8value_set_value_byaccessor(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, (int)settings, (int)attribute);
             key_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -759,10 +755,10 @@ namespace Chromium {
         public bool GetKeys(System.Collections.Generic.List<string> keys) {
             PinnedString[] keys_handles;
             var keys_unwrapped = StringFunctions.UnwrapCfxStringList(keys, out keys_handles);
-            var __retval = CfxApi.cfx_v8value_get_keys(NativePtr, keys_unwrapped);
+            var __retval = CfxApi.V8Value.cfx_v8value_get_keys(NativePtr, keys_unwrapped);
             StringFunctions.FreePinnedStrings(keys_handles);
             StringFunctions.CfxStringListCopyToManaged(keys_unwrapped, keys);
-            CfxApi.cfx_string_list_free(keys_unwrapped);
+            CfxApi.Runtime.cfx_string_list_free(keys_unwrapped);
             return 0 != __retval;
         }
 
@@ -776,7 +772,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public bool SetUserData(CfxBase userData) {
-            return 0 != CfxApi.cfx_v8value_set_user_data(NativePtr, CfxBase.Unwrap(userData));
+            return 0 != CfxApi.V8Value.cfx_v8value_set_user_data(NativePtr, CfxBase.Unwrap(userData));
         }
 
         /// <summary>
@@ -795,7 +791,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public int AdjustExternallyAllocatedMemory(int changeInBytes) {
-            return CfxApi.cfx_v8value_adjust_externally_allocated_memory(NativePtr, changeInBytes);
+            return CfxApi.V8Value.cfx_v8value_adjust_externally_allocated_memory(NativePtr, changeInBytes);
         }
 
         /// <summary>
@@ -827,7 +823,7 @@ namespace Chromium {
                 arguments_ptrs = null;
             }
             PinnedObject arguments_pinned = new PinnedObject(arguments_ptrs);
-            var __retval = CfxApi.cfx_v8value_execute_function(NativePtr, CfxV8Value.Unwrap(@object), arguments_length, arguments_pinned.PinnedPtr);
+            var __retval = CfxApi.V8Value.cfx_v8value_execute_function(NativePtr, CfxV8Value.Unwrap(@object), arguments_length, arguments_pinned.PinnedPtr);
             arguments_pinned.Free();
             return CfxV8Value.Wrap(__retval);
         }
@@ -858,7 +854,7 @@ namespace Chromium {
                 arguments_ptrs = null;
             }
             PinnedObject arguments_pinned = new PinnedObject(arguments_ptrs);
-            var __retval = CfxApi.cfx_v8value_execute_function_with_context(NativePtr, CfxV8Context.Unwrap(context), CfxV8Value.Unwrap(@object), arguments_length, arguments_pinned.PinnedPtr);
+            var __retval = CfxApi.V8Value.cfx_v8value_execute_function_with_context(NativePtr, CfxV8Context.Unwrap(context), CfxV8Value.Unwrap(@object), arguments_length, arguments_pinned.PinnedPtr);
             arguments_pinned.Free();
             return CfxV8Value.Wrap(__retval);
         }

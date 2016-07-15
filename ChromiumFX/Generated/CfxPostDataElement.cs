@@ -44,10 +44,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxPostDataElement : CfxBase {
 
-        static CfxPostDataElement () {
-            CfxApiLoader.LoadCfxPostDataElementApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxPostDataElement Wrap(IntPtr nativePtr) {
@@ -75,7 +71,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public static CfxPostDataElement Create() {
-            return CfxPostDataElement.Wrap(CfxApi.cfx_post_data_element_create());
+            return CfxPostDataElement.Wrap(CfxApi.PostDataElement.cfx_post_data_element_create());
         }
 
         /// <summary>
@@ -87,7 +83,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsReadOnly {
             get {
-                return 0 != CfxApi.cfx_post_data_element_is_read_only(NativePtr);
+                return 0 != CfxApi.PostDataElement.cfx_post_data_element_is_read_only(NativePtr);
             }
         }
 
@@ -100,7 +96,7 @@ namespace Chromium {
         /// </remarks>
         public CfxPostdataElementType Type {
             get {
-                return (CfxPostdataElementType)CfxApi.cfx_post_data_element_get_type(NativePtr);
+                return (CfxPostdataElementType)CfxApi.PostDataElement.cfx_post_data_element_get_type(NativePtr);
             }
         }
 
@@ -113,7 +109,7 @@ namespace Chromium {
         /// </remarks>
         public string File {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_post_data_element_get_file(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.PostDataElement.cfx_post_data_element_get_file(NativePtr));
             }
         }
 
@@ -126,7 +122,7 @@ namespace Chromium {
         /// </remarks>
         public int BytesCount {
             get {
-                return CfxApi.cfx_post_data_element_get_bytes_count(NativePtr);
+                return CfxApi.PostDataElement.cfx_post_data_element_get_bytes_count(NativePtr);
             }
         }
 
@@ -138,7 +134,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public void SetToEmpty() {
-            CfxApi.cfx_post_data_element_set_to_empty(NativePtr);
+            CfxApi.PostDataElement.cfx_post_data_element_set_to_empty(NativePtr);
         }
 
         /// <summary>
@@ -150,7 +146,7 @@ namespace Chromium {
         /// </remarks>
         public void SetToFile(string fileName) {
             var fileName_pinned = new PinnedString(fileName);
-            CfxApi.cfx_post_data_element_set_to_file(NativePtr, fileName_pinned.Obj.PinnedPtr, fileName_pinned.Length);
+            CfxApi.PostDataElement.cfx_post_data_element_set_to_file(NativePtr, fileName_pinned.Obj.PinnedPtr, fileName_pinned.Length);
             fileName_pinned.Obj.Free();
         }
 
@@ -163,7 +159,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public void SetToBytes(int size, IntPtr bytes) {
-            CfxApi.cfx_post_data_element_set_to_bytes(NativePtr, size, bytes);
+            CfxApi.PostDataElement.cfx_post_data_element_set_to_bytes(NativePtr, size, bytes);
         }
 
         /// <summary>
@@ -175,7 +171,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public int GetBytes(int size, IntPtr bytes) {
-            return CfxApi.cfx_post_data_element_get_bytes(NativePtr, size, bytes);
+            return CfxApi.PostDataElement.cfx_post_data_element_get_bytes(NativePtr, size, bytes);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

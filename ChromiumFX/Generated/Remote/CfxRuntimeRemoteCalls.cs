@@ -59,7 +59,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_currently_on((int)threadId);
+            __retval = 0 != CfxApi.Runtime.cfx_currently_on((int)threadId);
         }
     }
 
@@ -89,7 +89,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var originUrl_pinned = new PinnedString(originUrl);
-            __retval = StringFunctions.ConvertStringUserfree(CfxApi.cfx_format_url_for_security_display(originUrl_pinned.Obj.PinnedPtr, originUrl_pinned.Length));
+            __retval = StringFunctions.ConvertStringUserfree(CfxApi.Runtime.cfx_format_url_for_security_display(originUrl_pinned.Obj.PinnedPtr, originUrl_pinned.Length));
             originUrl_pinned.Obj.Free();
         }
     }
@@ -125,7 +125,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_post_delayed_task((int)threadId, task, delayMs);
+            __retval = 0 != CfxApi.Runtime.cfx_post_delayed_task((int)threadId, task, delayMs);
         }
     }
 
@@ -157,7 +157,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.cfx_post_task((int)threadId, task);
+            __retval = 0 != CfxApi.Runtime.cfx_post_task((int)threadId, task);
         }
     }
 
@@ -194,7 +194,7 @@ namespace Chromium.Remote {
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var extensionName_pinned = new PinnedString(extensionName);
             var javascriptCode_pinned = new PinnedString(javascriptCode);
-            __retval = 0 != CfxApi.cfx_register_extension(extensionName_pinned.Obj.PinnedPtr, extensionName_pinned.Length, javascriptCode_pinned.Obj.PinnedPtr, javascriptCode_pinned.Length, handler);
+            __retval = 0 != CfxApi.Runtime.cfx_register_extension(extensionName_pinned.Obj.PinnedPtr, extensionName_pinned.Length, javascriptCode_pinned.Obj.PinnedPtr, javascriptCode_pinned.Length, handler);
             extensionName_pinned.Obj.Free();
             javascriptCode_pinned.Obj.Free();
         }

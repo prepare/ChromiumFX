@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public partial class CfxBinaryValue : CfxBase {
 
-        static CfxBinaryValue () {
-            CfxApiLoader.LoadCfxBinaryValueApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxBinaryValue Wrap(IntPtr nativePtr) {
@@ -75,7 +71,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public static CfxBinaryValue Create(IntPtr data, int dataSize) {
-            return CfxBinaryValue.Wrap(CfxApi.cfx_binary_value_create(data, dataSize));
+            return CfxBinaryValue.Wrap(CfxApi.BinaryValue.cfx_binary_value_create(data, dataSize));
         }
 
         /// <summary>
@@ -90,7 +86,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsValid {
             get {
-                return 0 != CfxApi.cfx_binary_value_is_valid(NativePtr);
+                return 0 != CfxApi.BinaryValue.cfx_binary_value_is_valid(NativePtr);
             }
         }
 
@@ -103,7 +99,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsOwned {
             get {
-                return 0 != CfxApi.cfx_binary_value_is_owned(NativePtr);
+                return 0 != CfxApi.BinaryValue.cfx_binary_value_is_owned(NativePtr);
             }
         }
 
@@ -116,7 +112,7 @@ namespace Chromium {
         /// </remarks>
         public int Size {
             get {
-                return CfxApi.cfx_binary_value_get_size(NativePtr);
+                return CfxApi.BinaryValue.cfx_binary_value_get_size(NativePtr);
             }
         }
 
@@ -129,7 +125,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public bool IsSame(CfxBinaryValue that) {
-            return 0 != CfxApi.cfx_binary_value_is_same(NativePtr, CfxBinaryValue.Unwrap(that));
+            return 0 != CfxApi.BinaryValue.cfx_binary_value_is_same(NativePtr, CfxBinaryValue.Unwrap(that));
         }
 
         /// <summary>
@@ -141,7 +137,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public bool IsEqual(CfxBinaryValue that) {
-            return 0 != CfxApi.cfx_binary_value_is_equal(NativePtr, CfxBinaryValue.Unwrap(that));
+            return 0 != CfxApi.BinaryValue.cfx_binary_value_is_equal(NativePtr, CfxBinaryValue.Unwrap(that));
         }
 
         /// <summary>
@@ -152,7 +148,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public CfxBinaryValue Copy() {
-            return CfxBinaryValue.Wrap(CfxApi.cfx_binary_value_copy(NativePtr));
+            return CfxBinaryValue.Wrap(CfxApi.BinaryValue.cfx_binary_value_copy(NativePtr));
         }
 
         /// <summary>
@@ -164,7 +160,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public int GetData(IntPtr buffer, int bufferSize, int dataOffset) {
-            return CfxApi.cfx_binary_value_get_data(NativePtr, buffer, bufferSize, dataOffset);
+            return CfxApi.BinaryValue.cfx_binary_value_get_data(NativePtr, buffer, bufferSize, dataOffset);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

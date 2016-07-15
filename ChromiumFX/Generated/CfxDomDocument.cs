@@ -44,10 +44,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxDomDocument : CfxBase {
 
-        static CfxDomDocument () {
-            CfxApiLoader.LoadCfxDomDocumentApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxDomDocument Wrap(IntPtr nativePtr) {
@@ -76,7 +72,7 @@ namespace Chromium {
         /// </remarks>
         public CfxDomDocumentType Type {
             get {
-                return (CfxDomDocumentType)CfxApi.cfx_domdocument_get_type(NativePtr);
+                return (CfxDomDocumentType)CfxApi.DomDocument.cfx_domdocument_get_type(NativePtr);
             }
         }
 
@@ -89,7 +85,7 @@ namespace Chromium {
         /// </remarks>
         public CfxDomNode Document {
             get {
-                return CfxDomNode.Wrap(CfxApi.cfx_domdocument_get_document(NativePtr));
+                return CfxDomNode.Wrap(CfxApi.DomDocument.cfx_domdocument_get_document(NativePtr));
             }
         }
 
@@ -102,7 +98,7 @@ namespace Chromium {
         /// </remarks>
         public CfxDomNode Body {
             get {
-                return CfxDomNode.Wrap(CfxApi.cfx_domdocument_get_body(NativePtr));
+                return CfxDomNode.Wrap(CfxApi.DomDocument.cfx_domdocument_get_body(NativePtr));
             }
         }
 
@@ -115,7 +111,7 @@ namespace Chromium {
         /// </remarks>
         public CfxDomNode Head {
             get {
-                return CfxDomNode.Wrap(CfxApi.cfx_domdocument_get_head(NativePtr));
+                return CfxDomNode.Wrap(CfxApi.DomDocument.cfx_domdocument_get_head(NativePtr));
             }
         }
 
@@ -128,7 +124,7 @@ namespace Chromium {
         /// </remarks>
         public string Title {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domdocument_get_title(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.DomDocument.cfx_domdocument_get_title(NativePtr));
             }
         }
 
@@ -141,7 +137,7 @@ namespace Chromium {
         /// </remarks>
         public CfxDomNode FocusedNode {
             get {
-                return CfxDomNode.Wrap(CfxApi.cfx_domdocument_get_focused_node(NativePtr));
+                return CfxDomNode.Wrap(CfxApi.DomDocument.cfx_domdocument_get_focused_node(NativePtr));
             }
         }
 
@@ -154,7 +150,7 @@ namespace Chromium {
         /// </remarks>
         public bool HasSelection {
             get {
-                return 0 != CfxApi.cfx_domdocument_has_selection(NativePtr);
+                return 0 != CfxApi.DomDocument.cfx_domdocument_has_selection(NativePtr);
             }
         }
 
@@ -167,7 +163,7 @@ namespace Chromium {
         /// </remarks>
         public int SelectionStartOffset {
             get {
-                return CfxApi.cfx_domdocument_get_selection_start_offset(NativePtr);
+                return CfxApi.DomDocument.cfx_domdocument_get_selection_start_offset(NativePtr);
             }
         }
 
@@ -180,7 +176,7 @@ namespace Chromium {
         /// </remarks>
         public int SelectionEndOffset {
             get {
-                return CfxApi.cfx_domdocument_get_selection_end_offset(NativePtr);
+                return CfxApi.DomDocument.cfx_domdocument_get_selection_end_offset(NativePtr);
             }
         }
 
@@ -193,7 +189,7 @@ namespace Chromium {
         /// </remarks>
         public string SelectionAsMarkup {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domdocument_get_selection_as_markup(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.DomDocument.cfx_domdocument_get_selection_as_markup(NativePtr));
             }
         }
 
@@ -206,7 +202,7 @@ namespace Chromium {
         /// </remarks>
         public string SelectionAsText {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domdocument_get_selection_as_text(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.DomDocument.cfx_domdocument_get_selection_as_text(NativePtr));
             }
         }
 
@@ -219,7 +215,7 @@ namespace Chromium {
         /// </remarks>
         public string BaseUrl {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_domdocument_get_base_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.DomDocument.cfx_domdocument_get_base_url(NativePtr));
             }
         }
 
@@ -232,7 +228,7 @@ namespace Chromium {
         /// </remarks>
         public CfxDomNode GetElementById(string id) {
             var id_pinned = new PinnedString(id);
-            var __retval = CfxApi.cfx_domdocument_get_element_by_id(NativePtr, id_pinned.Obj.PinnedPtr, id_pinned.Length);
+            var __retval = CfxApi.DomDocument.cfx_domdocument_get_element_by_id(NativePtr, id_pinned.Obj.PinnedPtr, id_pinned.Length);
             id_pinned.Obj.Free();
             return CfxDomNode.Wrap(__retval);
         }
@@ -247,7 +243,7 @@ namespace Chromium {
         /// </remarks>
         public string GetCompleteUrl(string partialURL) {
             var partialURL_pinned = new PinnedString(partialURL);
-            var __retval = CfxApi.cfx_domdocument_get_complete_url(NativePtr, partialURL_pinned.Obj.PinnedPtr, partialURL_pinned.Length);
+            var __retval = CfxApi.DomDocument.cfx_domdocument_get_complete_url(NativePtr, partialURL_pinned.Obj.PinnedPtr, partialURL_pinned.Length);
             partialURL_pinned.Obj.Free();
             return StringFunctions.ConvertStringUserfree(__retval);
         }

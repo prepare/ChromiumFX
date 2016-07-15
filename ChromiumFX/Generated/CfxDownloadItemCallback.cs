@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxDownloadItemCallback : CfxBase {
 
-        static CfxDownloadItemCallback () {
-            CfxApiLoader.LoadCfxDownloadItemCallbackApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxDownloadItemCallback Wrap(IntPtr nativePtr) {
@@ -74,7 +70,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_download_handler_capi.h">cef/include/capi/cef_download_handler_capi.h</see>.
         /// </remarks>
         public void Cancel() {
-            CfxApi.cfx_download_item_callback_cancel(NativePtr);
+            CfxApi.DownloadItemCallback.cfx_download_item_callback_cancel(NativePtr);
         }
 
         /// <summary>
@@ -85,7 +81,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_download_handler_capi.h">cef/include/capi/cef_download_handler_capi.h</see>.
         /// </remarks>
         public void Pause() {
-            CfxApi.cfx_download_item_callback_pause(NativePtr);
+            CfxApi.DownloadItemCallback.cfx_download_item_callback_pause(NativePtr);
         }
 
         /// <summary>
@@ -96,7 +92,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_download_handler_capi.h">cef/include/capi/cef_download_handler_capi.h</see>.
         /// </remarks>
         public void Resume() {
-            CfxApi.cfx_download_item_callback_resume(NativePtr);
+            CfxApi.DownloadItemCallback.cfx_download_item_callback_resume(NativePtr);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

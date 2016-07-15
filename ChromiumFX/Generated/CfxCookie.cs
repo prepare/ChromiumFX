@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxCookie : CfxStructure {
 
-        static CfxCookie () {
-            CfxApiLoader.LoadCfxCookieApi();
-        }
-
         internal static CfxCookie Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxCookie(nativePtr);
@@ -54,10 +50,10 @@ namespace Chromium {
 
         internal static CfxCookie WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxCookie(nativePtr, CfxApi.cfx_cookie_dtor);
+            return new CfxCookie(nativePtr, CfxApi.Cookie.cfx_cookie_dtor);
         }
 
-        public CfxCookie() : base(CfxApi.cfx_cookie_ctor, CfxApi.cfx_cookie_dtor) {}
+        public CfxCookie() : base(CfxApi.Cookie.cfx_cookie_ctor, CfxApi.Cookie.cfx_cookie_dtor) {}
         internal CfxCookie(IntPtr nativePtr) : base(nativePtr) {}
         internal CfxCookie(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
@@ -72,12 +68,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_cookie_get_name(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.Cookie.cfx_cookie_get_name(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_cookie_set_name(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.Cookie.cfx_cookie_set_name(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
@@ -93,12 +89,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_cookie_get_value(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.Cookie.cfx_cookie_get_value(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_cookie_set_value(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.Cookie.cfx_cookie_set_value(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
@@ -116,12 +112,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_cookie_get_domain(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.Cookie.cfx_cookie_get_domain(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_cookie_set_domain(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.Cookie.cfx_cookie_set_domain(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
@@ -138,12 +134,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_cookie_get_path(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.Cookie.cfx_cookie_get_path(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_cookie_set_path(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.Cookie.cfx_cookie_set_path(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
@@ -158,11 +154,11 @@ namespace Chromium {
         public bool Secure {
             get {
                 int value;
-                CfxApi.cfx_cookie_get_secure(nativePtrUnchecked, out value);
+                CfxApi.Cookie.cfx_cookie_get_secure(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_cookie_set_secure(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.Cookie.cfx_cookie_set_secure(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -176,11 +172,11 @@ namespace Chromium {
         public bool HttpOnly {
             get {
                 int value;
-                CfxApi.cfx_cookie_get_httponly(nativePtrUnchecked, out value);
+                CfxApi.Cookie.cfx_cookie_get_httponly(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_cookie_set_httponly(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.Cookie.cfx_cookie_set_httponly(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -195,11 +191,11 @@ namespace Chromium {
         public CfxTime Creation {
             get {
                 IntPtr value;
-                CfxApi.cfx_cookie_get_creation(nativePtrUnchecked, out value);
+                CfxApi.Cookie.cfx_cookie_get_creation(nativePtrUnchecked, out value);
                 return CfxTime.Wrap(value);
             }
             set {
-                CfxApi.cfx_cookie_set_creation(nativePtrUnchecked, CfxTime.Unwrap(value));
+                CfxApi.Cookie.cfx_cookie_set_creation(nativePtrUnchecked, CfxTime.Unwrap(value));
             }
         }
 
@@ -214,11 +210,11 @@ namespace Chromium {
         public CfxTime LastAccess {
             get {
                 IntPtr value;
-                CfxApi.cfx_cookie_get_last_access(nativePtrUnchecked, out value);
+                CfxApi.Cookie.cfx_cookie_get_last_access(nativePtrUnchecked, out value);
                 return CfxTime.Wrap(value);
             }
             set {
-                CfxApi.cfx_cookie_set_last_access(nativePtrUnchecked, CfxTime.Unwrap(value));
+                CfxApi.Cookie.cfx_cookie_set_last_access(nativePtrUnchecked, CfxTime.Unwrap(value));
             }
         }
 
@@ -232,22 +228,22 @@ namespace Chromium {
         public bool HasExpires {
             get {
                 int value;
-                CfxApi.cfx_cookie_get_has_expires(nativePtrUnchecked, out value);
+                CfxApi.Cookie.cfx_cookie_get_has_expires(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_cookie_set_has_expires(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.Cookie.cfx_cookie_set_has_expires(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
         public CfxTime Expires {
             get {
                 IntPtr value;
-                CfxApi.cfx_cookie_get_expires(nativePtrUnchecked, out value);
+                CfxApi.Cookie.cfx_cookie_get_expires(nativePtrUnchecked, out value);
                 return CfxTime.Wrap(value);
             }
             set {
-                CfxApi.cfx_cookie_set_expires(nativePtrUnchecked, CfxTime.Unwrap(value));
+                CfxApi.Cookie.cfx_cookie_set_expires(nativePtrUnchecked, CfxTime.Unwrap(value));
             }
         }
 

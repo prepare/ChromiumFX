@@ -65,17 +65,17 @@ public class GetFrameIdentifiersSignature : Signature {
         b.AppendLine("if(identifiersCount == 0) return new long[0];");
         b.AppendLine("long[] retval = new long[identifiersCount];");
         b.AppendLine("var retval_p = new PinnedObject(retval);");
-        b.AppendLine("CfxApi.cfx_browser_get_frame_identifiers(NativePtr, identifiersCount, retval_p.PinnedPtr);");
+        b.AppendLine("CfxApi.Browser.cfx_browser_get_frame_identifiers(NativePtr, identifiersCount, retval_p.PinnedPtr);");
         b.AppendLine("retval_p.Free();");
         b.AppendLine("return retval;");
     }
 
     protected override void EmitExecuteInTargetProcess(CodeBuilder b) {
-        b.AppendLine("int identifiersCount = CfxApi.cfx_browser_get_frame_count(@this);");
+        b.AppendLine("int identifiersCount = CfxApi.Browser.cfx_browser_get_frame_count(@this);");
         b.AppendLine("__retval = new long[identifiersCount];");
         b.AppendLine("if(identifiersCount == 0) return;");
         b.AppendLine("var retval_p = new PinnedObject(__retval);");
-        b.AppendLine("CfxApi.cfx_browser_get_frame_identifiers(@this, identifiersCount, retval_p.PinnedPtr);");
+        b.AppendLine("CfxApi.Browser.cfx_browser_get_frame_identifiers(@this, identifiersCount, retval_p.PinnedPtr);");
         b.AppendLine("retval_p.Free();");
     }
 
