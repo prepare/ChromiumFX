@@ -46,13 +46,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxPrintHandler : CfxBase {
 
-        static CfxPrintHandler () {
-            CfxApiLoader.LoadCfxPrintHandlerApi();
-        }
-
         internal static CfxPrintHandler Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_print_handler_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.PrintHandler.cfx_print_handler_get_gc_handle(nativePtr);
             return (CfxPrintHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -172,7 +168,7 @@ namespace Chromium {
         }
 
         internal CfxPrintHandler(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxPrintHandler() : base(CfxApi.cfx_print_handler_ctor) {}
+        public CfxPrintHandler() : base(CfxApi.PrintHandler.cfx_print_handler_ctor) {}
 
         /// <summary>
         /// Called when printing has started for the specified |Browser|. This function
@@ -192,7 +188,7 @@ namespace Chromium {
                             cfx_print_handler_on_print_start = on_print_start;
                             cfx_print_handler_on_print_start_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_print_handler_on_print_start);
                         }
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 0, cfx_print_handler_on_print_start_ptr);
+                        CfxApi.PrintHandler.cfx_print_handler_set_managed_callback(NativePtr, 0, cfx_print_handler_on_print_start_ptr);
                     }
                     m_OnPrintStart += value;
                 }
@@ -201,7 +197,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnPrintStart -= value;
                     if(m_OnPrintStart == null) {
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.PrintHandler.cfx_print_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -226,7 +222,7 @@ namespace Chromium {
                             cfx_print_handler_on_print_settings = on_print_settings;
                             cfx_print_handler_on_print_settings_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_print_handler_on_print_settings);
                         }
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 1, cfx_print_handler_on_print_settings_ptr);
+                        CfxApi.PrintHandler.cfx_print_handler_set_managed_callback(NativePtr, 1, cfx_print_handler_on_print_settings_ptr);
                     }
                     m_OnPrintSettings += value;
                 }
@@ -235,7 +231,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnPrintSettings -= value;
                     if(m_OnPrintSettings == null) {
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.PrintHandler.cfx_print_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
                     }
                 }
             }
@@ -260,7 +256,7 @@ namespace Chromium {
                             cfx_print_handler_on_print_dialog = on_print_dialog;
                             cfx_print_handler_on_print_dialog_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_print_handler_on_print_dialog);
                         }
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 2, cfx_print_handler_on_print_dialog_ptr);
+                        CfxApi.PrintHandler.cfx_print_handler_set_managed_callback(NativePtr, 2, cfx_print_handler_on_print_dialog_ptr);
                     }
                     m_OnPrintDialog += value;
                 }
@@ -269,7 +265,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnPrintDialog -= value;
                     if(m_OnPrintDialog == null) {
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                        CfxApi.PrintHandler.cfx_print_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
                     }
                 }
             }
@@ -294,7 +290,7 @@ namespace Chromium {
                             cfx_print_handler_on_print_job = on_print_job;
                             cfx_print_handler_on_print_job_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_print_handler_on_print_job);
                         }
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 3, cfx_print_handler_on_print_job_ptr);
+                        CfxApi.PrintHandler.cfx_print_handler_set_managed_callback(NativePtr, 3, cfx_print_handler_on_print_job_ptr);
                     }
                     m_OnPrintJob += value;
                 }
@@ -303,7 +299,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnPrintJob -= value;
                     if(m_OnPrintJob == null) {
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                        CfxApi.PrintHandler.cfx_print_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
                     }
                 }
             }
@@ -326,7 +322,7 @@ namespace Chromium {
                             cfx_print_handler_on_print_reset = on_print_reset;
                             cfx_print_handler_on_print_reset_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_print_handler_on_print_reset);
                         }
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 4, cfx_print_handler_on_print_reset_ptr);
+                        CfxApi.PrintHandler.cfx_print_handler_set_managed_callback(NativePtr, 4, cfx_print_handler_on_print_reset_ptr);
                     }
                     m_OnPrintReset += value;
                 }
@@ -335,7 +331,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnPrintReset -= value;
                     if(m_OnPrintReset == null) {
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
+                        CfxApi.PrintHandler.cfx_print_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
                     }
                 }
             }
@@ -359,7 +355,7 @@ namespace Chromium {
                             cfx_print_handler_get_pdf_paper_size = get_pdf_paper_size;
                             cfx_print_handler_get_pdf_paper_size_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_print_handler_get_pdf_paper_size);
                         }
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 5, cfx_print_handler_get_pdf_paper_size_ptr);
+                        CfxApi.PrintHandler.cfx_print_handler_set_managed_callback(NativePtr, 5, cfx_print_handler_get_pdf_paper_size_ptr);
                     }
                     m_GetPdfPaperSize += value;
                 }
@@ -368,7 +364,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetPdfPaperSize -= value;
                     if(m_GetPdfPaperSize == null) {
-                        CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 5, IntPtr.Zero);
+                        CfxApi.PrintHandler.cfx_print_handler_set_managed_callback(NativePtr, 5, IntPtr.Zero);
                     }
                 }
             }
@@ -379,27 +375,27 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnPrintStart != null) {
                 m_OnPrintStart = null;
-                CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.PrintHandler.cfx_print_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_OnPrintSettings != null) {
                 m_OnPrintSettings = null;
-                CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.PrintHandler.cfx_print_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
             if(m_OnPrintDialog != null) {
                 m_OnPrintDialog = null;
-                CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                CfxApi.PrintHandler.cfx_print_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
             }
             if(m_OnPrintJob != null) {
                 m_OnPrintJob = null;
-                CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                CfxApi.PrintHandler.cfx_print_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
             }
             if(m_OnPrintReset != null) {
                 m_OnPrintReset = null;
-                CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
+                CfxApi.PrintHandler.cfx_print_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
             }
             if(m_GetPdfPaperSize != null) {
                 m_GetPdfPaperSize = null;
-                CfxApi.cfx_print_handler_set_managed_callback(NativePtr, 5, IntPtr.Zero);
+                CfxApi.PrintHandler.cfx_print_handler_set_managed_callback(NativePtr, 5, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

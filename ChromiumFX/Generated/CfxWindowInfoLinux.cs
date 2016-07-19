@@ -43,12 +43,6 @@ namespace Chromium {
     /// </remarks>
     internal sealed class CfxWindowInfoLinux : CfxStructure {
 
-        static CfxWindowInfoLinux () {
-            if(CfxApi.PlatformOS == CfxPlatformOS.Linux) {
-                CfxApiLoader.LoadCfxWindowInfoLinuxApi();
-            }
-        }
-
         internal static CfxWindowInfoLinux Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxWindowInfoLinux(nativePtr);
@@ -56,54 +50,54 @@ namespace Chromium {
 
         internal static CfxWindowInfoLinux WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxWindowInfoLinux(nativePtr, CfxApi.cfx_window_info_linux_dtor);
+            return new CfxWindowInfoLinux(nativePtr, CfxApi.WindowInfoLinux.cfx_window_info_linux_dtor);
         }
 
-        public CfxWindowInfoLinux() : base(CfxApi.cfx_window_info_linux_ctor, CfxApi.cfx_window_info_linux_dtor) { CfxApi.CheckPlatformOS(CfxPlatformOS.Linux); }
+        public CfxWindowInfoLinux() : base(CfxApi.WindowInfoLinux.cfx_window_info_linux_ctor, CfxApi.WindowInfoLinux.cfx_window_info_linux_dtor) { CfxApi.CheckPlatformOS(CfxPlatformOS.Linux); }
         internal CfxWindowInfoLinux(IntPtr nativePtr) : base(nativePtr) {}
         internal CfxWindowInfoLinux(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         public uint X {
             get {
                 uint value;
-                CfxApi.cfx_window_info_linux_get_x(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoLinux.cfx_window_info_linux_get_x(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_window_info_linux_set_x(nativePtrUnchecked, value);
+                CfxApi.WindowInfoLinux.cfx_window_info_linux_set_x(nativePtrUnchecked, value);
             }
         }
 
         public uint Y {
             get {
                 uint value;
-                CfxApi.cfx_window_info_linux_get_y(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoLinux.cfx_window_info_linux_get_y(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_window_info_linux_set_y(nativePtrUnchecked, value);
+                CfxApi.WindowInfoLinux.cfx_window_info_linux_set_y(nativePtrUnchecked, value);
             }
         }
 
         public uint Width {
             get {
                 uint value;
-                CfxApi.cfx_window_info_linux_get_width(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoLinux.cfx_window_info_linux_get_width(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_window_info_linux_set_width(nativePtrUnchecked, value);
+                CfxApi.WindowInfoLinux.cfx_window_info_linux_set_width(nativePtrUnchecked, value);
             }
         }
 
         public uint Height {
             get {
                 uint value;
-                CfxApi.cfx_window_info_linux_get_height(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoLinux.cfx_window_info_linux_get_height(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_window_info_linux_set_height(nativePtrUnchecked, value);
+                CfxApi.WindowInfoLinux.cfx_window_info_linux_set_height(nativePtrUnchecked, value);
             }
         }
 
@@ -117,11 +111,11 @@ namespace Chromium {
         public IntPtr ParentWindow {
             get {
                 IntPtr value;
-                CfxApi.cfx_window_info_linux_get_parent_window(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoLinux.cfx_window_info_linux_get_parent_window(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_window_info_linux_set_parent_window(nativePtrUnchecked, value);
+                CfxApi.WindowInfoLinux.cfx_window_info_linux_set_parent_window(nativePtrUnchecked, value);
             }
         }
 
@@ -142,11 +136,11 @@ namespace Chromium {
         public bool WindowlessRenderingEnabled {
             get {
                 int value;
-                CfxApi.cfx_window_info_linux_get_windowless_rendering_enabled(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoLinux.cfx_window_info_linux_get_windowless_rendering_enabled(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_window_info_linux_set_windowless_rendering_enabled(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.WindowInfoLinux.cfx_window_info_linux_set_windowless_rendering_enabled(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -163,11 +157,11 @@ namespace Chromium {
         public bool TransparentPaintingEnabled {
             get {
                 int value;
-                CfxApi.cfx_window_info_linux_get_transparent_painting_enabled(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoLinux.cfx_window_info_linux_get_transparent_painting_enabled(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_window_info_linux_set_transparent_painting_enabled(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.WindowInfoLinux.cfx_window_info_linux_set_transparent_painting_enabled(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -181,11 +175,11 @@ namespace Chromium {
         public IntPtr Window {
             get {
                 IntPtr value;
-                CfxApi.cfx_window_info_linux_get_window(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoLinux.cfx_window_info_linux_get_window(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_window_info_linux_set_window(nativePtrUnchecked, value);
+                CfxApi.WindowInfoLinux.cfx_window_info_linux_set_window(nativePtrUnchecked, value);
             }
         }
 

@@ -105,7 +105,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsSame(CfrTaskRunner that) {
             var call = new CfxTaskRunnerIsSameRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.that = CfrObject.Unwrap(that);
             call.RequestExecution(this);
             return call.__retval;
@@ -120,7 +120,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool BelongsToCurrentThread() {
             var call = new CfxTaskRunnerBelongsToCurrentThreadRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.RequestExecution(this);
             return call.__retval;
         }
@@ -134,7 +134,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool BelongsToThread(CfxThreadId threadId) {
             var call = new CfxTaskRunnerBelongsToThreadRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.threadId = (int)threadId;
             call.RequestExecution(this);
             return call.__retval;
@@ -150,7 +150,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool PostTask(CfrTask task) {
             var call = new CfxTaskRunnerPostTaskRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.task = CfrObject.Unwrap(task);
             call.RequestExecution(this);
             return call.__retval;
@@ -168,7 +168,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool PostDelayedTask(CfrTask task, long delayMs) {
             var call = new CfxTaskRunnerPostDelayedTaskRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.task = CfrObject.Unwrap(task);
             call.delayMs = delayMs;
             call.RequestExecution(this);

@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxCallback : CfxBase {
 
-        static CfxCallback () {
-            CfxApiLoader.LoadCfxCallbackApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxCallback Wrap(IntPtr nativePtr) {
@@ -74,7 +70,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_callback_capi.h">cef/include/capi/cef_callback_capi.h</see>.
         /// </remarks>
         public void Continue() {
-            CfxApi.cfx_callback_cont(NativePtr);
+            CfxApi.Callback.cfx_callback_cont(NativePtr);
         }
 
         /// <summary>
@@ -85,7 +81,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_callback_capi.h">cef/include/capi/cef_callback_capi.h</see>.
         /// </remarks>
         public void Cancel() {
-            CfxApi.cfx_callback_cancel(NativePtr);
+            CfxApi.Callback.cfx_callback_cancel(NativePtr);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

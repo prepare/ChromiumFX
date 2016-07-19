@@ -456,7 +456,7 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         b.AppendLine("{0}_{1} = {1};", Parent.CfxName, Name);
         b.AppendLine("{0}_{1}_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate({0}_{1});", Parent.CfxName, Name);
         b.EndBlock();
-        b.AppendLine("CfxApi.{0}_set_managed_callback(NativePtr, {1}, {0}_{2}_ptr);", Parent.CfxName, cbIndex, Name);
+        b.AppendLine("CfxApi.{3}.{0}_set_managed_callback(NativePtr, {1}, {0}_{2}_ptr);", Parent.CfxName, cbIndex, Name, Parent.ClassName.Substring(3));
         b.EndBlock();
         b.AppendLine("m_{0} += value;", PublicName);
         b.EndBlock();
@@ -465,7 +465,7 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         b.BeginBlock("lock(eventLock)");
         b.AppendLine("m_{0} -= value;", PublicName);
         b.BeginBlock("if(m_{0} == null)", PublicName);
-        b.AppendLine("CfxApi.{0}_set_managed_callback(NativePtr, {1}, IntPtr.Zero);", Parent.CfxName, cbIndex);
+        b.AppendLine("CfxApi.{2}.{0}_set_managed_callback(NativePtr, {1}, IntPtr.Zero);", Parent.CfxName, cbIndex, Parent.ClassName.Substring(3));
         b.EndBlock();
         b.EndBlock();
         b.EndBlock();

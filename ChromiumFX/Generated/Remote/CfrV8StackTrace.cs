@@ -92,7 +92,7 @@ namespace Chromium.Remote {
         public bool IsValid {
             get {
                 var call = new CfxV8StackTraceIsValidRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -108,7 +108,7 @@ namespace Chromium.Remote {
         public int FrameCount {
             get {
                 var call = new CfxV8StackTraceGetFrameCountRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -123,7 +123,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrV8StackFrame GetFrame(int index) {
             var call = new CfxV8StackTraceGetFrameRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.index = index;
             call.RequestExecution(this);
             return CfrV8StackFrame.Wrap(call.__retval);

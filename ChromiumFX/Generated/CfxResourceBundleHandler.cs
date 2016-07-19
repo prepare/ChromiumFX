@@ -47,13 +47,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxResourceBundleHandler : CfxBase {
 
-        static CfxResourceBundleHandler () {
-            CfxApiLoader.LoadCfxResourceBundleHandlerApi();
-        }
-
         internal static CfxResourceBundleHandler Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_resource_bundle_handler_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_get_gc_handle(nativePtr);
             return (CfxResourceBundleHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -131,7 +127,7 @@ namespace Chromium {
         }
 
         internal CfxResourceBundleHandler(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxResourceBundleHandler() : base(CfxApi.cfx_resource_bundle_handler_ctor) {}
+        public CfxResourceBundleHandler() : base(CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_ctor) {}
 
         /// <summary>
         /// Called to retrieve a localized translation for the specified |StringId|.
@@ -151,7 +147,7 @@ namespace Chromium {
                             cfx_resource_bundle_handler_get_localized_string = get_localized_string;
                             cfx_resource_bundle_handler_get_localized_string_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_resource_bundle_handler_get_localized_string);
                         }
-                        CfxApi.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 0, cfx_resource_bundle_handler_get_localized_string_ptr);
+                        CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 0, cfx_resource_bundle_handler_get_localized_string_ptr);
                     }
                     m_GetLocalizedString += value;
                 }
@@ -160,7 +156,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetLocalizedString -= value;
                     if(m_GetLocalizedString == null) {
-                        CfxApi.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -188,7 +184,7 @@ namespace Chromium {
                             cfx_resource_bundle_handler_get_data_resource = get_data_resource;
                             cfx_resource_bundle_handler_get_data_resource_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_resource_bundle_handler_get_data_resource);
                         }
-                        CfxApi.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 1, cfx_resource_bundle_handler_get_data_resource_ptr);
+                        CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 1, cfx_resource_bundle_handler_get_data_resource_ptr);
                     }
                     m_GetDataResource += value;
                 }
@@ -197,7 +193,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetDataResource -= value;
                     if(m_GetDataResource == null) {
-                        CfxApi.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
                     }
                 }
             }
@@ -225,7 +221,7 @@ namespace Chromium {
                             cfx_resource_bundle_handler_get_data_resource_for_scale = get_data_resource_for_scale;
                             cfx_resource_bundle_handler_get_data_resource_for_scale_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_resource_bundle_handler_get_data_resource_for_scale);
                         }
-                        CfxApi.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 2, cfx_resource_bundle_handler_get_data_resource_for_scale_ptr);
+                        CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 2, cfx_resource_bundle_handler_get_data_resource_for_scale_ptr);
                     }
                     m_GetDataResourceForScale += value;
                 }
@@ -234,7 +230,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetDataResourceForScale -= value;
                     if(m_GetDataResourceForScale == null) {
-                        CfxApi.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                        CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
                     }
                 }
             }
@@ -245,15 +241,15 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_GetLocalizedString != null) {
                 m_GetLocalizedString = null;
-                CfxApi.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_GetDataResource != null) {
                 m_GetDataResource = null;
-                CfxApi.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
             if(m_GetDataResourceForScale != null) {
                 m_GetDataResourceForScale = null;
-                CfxApi.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

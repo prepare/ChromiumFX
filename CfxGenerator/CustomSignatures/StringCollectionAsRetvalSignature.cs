@@ -46,8 +46,18 @@ public class StringCollectionAsRetvalSignature : Signature {
     public override void EmitPublicCall(CodeBuilder b) {
         b.AppendLine("{0} {1} = new {0}();", base.ManagedArguments[1].ArgumentType.PublicSymbol, base.ManagedArguments[1].VarName);
         base.ManagedArguments[1].EmitPrePublicCallStatements(b);
-        b.AppendLine(string.Format("CfxApi.{0}(NativePtr, {1});", Owner.CfxApiFunctionName, base.ManagedArguments[1].PublicCallArgument));
+        b.AppendLine(string.Format("CfxApi.{2}.{0}(NativePtr, {1});", Owner.CfxApiFunctionName, base.ManagedArguments[1].PublicCallArgument, Owner.PublicClassName.Substring(3)));
         base.ManagedArguments[1].EmitPostPublicStatements(b);
         b.AppendLine("return {0};", base.ManagedArguments[1].VarName);
     }
+
+    protected override void EmitExecuteInTargetProcess(CodeBuilder b) {
+        var collectionType = base.ManagedArguments[1].ArgumentType.AsStringCollectionType.ClassName;
+        b.AppendLine("__retval = new {0}();", base.ManagedArguments[1].ArgumentType.PublicSymbol);
+        b.AppendLine("var list = StringFunctions.Alloc{0}();", collectionType);
+        b.AppendLine("CfxApi.{0}.{1}(@this, list);", Owner.PublicClassName.Substring(3), Owner.CfxApiFunctionName);
+        b.AppendLine("StringFunctions.{0}CopyToManaged(list, __retval);", collectionType);
+        b.AppendLine("StringFunctions.Free{0}(list);", collectionType);
+    }
+
 }

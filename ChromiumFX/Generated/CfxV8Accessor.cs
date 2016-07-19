@@ -48,13 +48,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxV8Accessor : CfxBase {
 
-        static CfxV8Accessor () {
-            CfxApiLoader.LoadCfxV8AccessorApi();
-        }
-
         internal static CfxV8Accessor Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_v8accessor_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.V8Accessor.cfx_v8accessor_get_gc_handle(nativePtr);
             return (CfxV8Accessor)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -115,7 +111,7 @@ namespace Chromium {
         }
 
         internal CfxV8Accessor(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxV8Accessor() : base(CfxApi.cfx_v8accessor_ctor) {}
+        public CfxV8Accessor() : base(CfxApi.V8Accessor.cfx_v8accessor_ctor) {}
 
         /// <summary>
         /// Handle retrieval the accessor value identified by |Name|. |Object| is the
@@ -136,7 +132,7 @@ namespace Chromium {
                             cfx_v8accessor_get = get;
                             cfx_v8accessor_get_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_v8accessor_get);
                         }
-                        CfxApi.cfx_v8accessor_set_managed_callback(NativePtr, 0, cfx_v8accessor_get_ptr);
+                        CfxApi.V8Accessor.cfx_v8accessor_set_managed_callback(NativePtr, 0, cfx_v8accessor_get_ptr);
                     }
                     m_Get += value;
                 }
@@ -145,7 +141,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Get -= value;
                     if(m_Get == null) {
-                        CfxApi.cfx_v8accessor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.V8Accessor.cfx_v8accessor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -172,7 +168,7 @@ namespace Chromium {
                             cfx_v8accessor_set = set;
                             cfx_v8accessor_set_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_v8accessor_set);
                         }
-                        CfxApi.cfx_v8accessor_set_managed_callback(NativePtr, 1, cfx_v8accessor_set_ptr);
+                        CfxApi.V8Accessor.cfx_v8accessor_set_managed_callback(NativePtr, 1, cfx_v8accessor_set_ptr);
                     }
                     m_Set += value;
                 }
@@ -181,7 +177,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Set -= value;
                     if(m_Set == null) {
-                        CfxApi.cfx_v8accessor_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.V8Accessor.cfx_v8accessor_set_managed_callback(NativePtr, 1, IntPtr.Zero);
                     }
                 }
             }
@@ -192,11 +188,11 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_Get != null) {
                 m_Get = null;
-                CfxApi.cfx_v8accessor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.V8Accessor.cfx_v8accessor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_Set != null) {
                 m_Set = null;
-                CfxApi.cfx_v8accessor_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.V8Accessor.cfx_v8accessor_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

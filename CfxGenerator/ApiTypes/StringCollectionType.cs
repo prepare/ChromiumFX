@@ -55,7 +55,7 @@ public class StringCollectionType : CefType {
     public override void EmitPostPublicCallStatements(CodeBuilder b, string var) {
         b.AppendLine("StringFunctions.FreePinnedStrings({0}_handles);", var);
         b.AppendLine("StringFunctions.{0}CopyToManaged({1}_unwrapped, {1});", ClassName, var);
-        b.AppendLine("CfxApi.{0}_free({1}_unwrapped);", CfxName, var);
+        b.AppendLine("CfxApi.Runtime.{0}_free({1}_unwrapped);", CfxName, var);
     }
 
     public override void EmitNativeValueStructDtorStatements(CodeBuilder b, string var) {
@@ -71,5 +71,11 @@ public class StringCollectionType : CefType {
 
     public override bool IsStringCollectionType {
         get { return true; }
+    }
+
+    public override StringCollectionType AsStringCollectionType {
+        get {
+            return this;
+        }
     }
 }

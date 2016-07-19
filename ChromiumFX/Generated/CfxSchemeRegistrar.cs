@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxSchemeRegistrar : CfxBase {
 
-        static CfxSchemeRegistrar () {
-            CfxApiLoader.LoadCfxSchemeRegistrarApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxSchemeRegistrar Wrap(IntPtr nativePtr) {
@@ -112,7 +108,7 @@ namespace Chromium {
         /// </remarks>
         public bool AddCustomScheme(string schemeName, bool isStandard, bool isLocal, bool isDisplayIsolated) {
             var schemeName_pinned = new PinnedString(schemeName);
-            var __retval = CfxApi.cfx_scheme_registrar_add_custom_scheme(NativePtr, schemeName_pinned.Obj.PinnedPtr, schemeName_pinned.Length, isStandard ? 1 : 0, isLocal ? 1 : 0, isDisplayIsolated ? 1 : 0);
+            var __retval = CfxApi.SchemeRegistrar.cfx_scheme_registrar_add_custom_scheme(NativePtr, schemeName_pinned.Obj.PinnedPtr, schemeName_pinned.Length, isStandard ? 1 : 0, isLocal ? 1 : 0, isDisplayIsolated ? 1 : 0);
             schemeName_pinned.Obj.Free();
             return 0 != __retval;
         }

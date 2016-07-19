@@ -40,6 +40,7 @@ public class CSharp {
             case "checked":
             case "object":
             case "delegate":
+            case "this":
                 return "@" + symbol;
 
             case "params":

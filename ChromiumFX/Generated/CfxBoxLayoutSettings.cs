@@ -43,11 +43,7 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxBoxLayoutSettings : CfxStructure {
 
-        static CfxBoxLayoutSettings () {
-            CfxApiLoader.LoadCfxBoxLayoutSettingsApi();
-        }
-
-        public CfxBoxLayoutSettings() : base(CfxApi.cfx_box_layout_settings_ctor, CfxApi.cfx_box_layout_settings_dtor) {}
+        public CfxBoxLayoutSettings() : base(CfxApi.BoxLayoutSettings.cfx_box_layout_settings_ctor, CfxApi.BoxLayoutSettings.cfx_box_layout_settings_dtor) {}
 
         /// <summary>
         /// If true (1) the layout will be horizontal, otherwise the layout will be
@@ -60,11 +56,11 @@ namespace Chromium {
         public bool Horizontal {
             get {
                 int value;
-                CfxApi.cfx_box_layout_settings_get_horizontal(nativePtrUnchecked, out value);
+                CfxApi.BoxLayoutSettings.cfx_box_layout_settings_get_horizontal(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_box_layout_settings_set_horizontal(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.BoxLayoutSettings.cfx_box_layout_settings_set_horizontal(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -79,11 +75,11 @@ namespace Chromium {
         public int InsideBorderHorizontalSpacing {
             get {
                 int value;
-                CfxApi.cfx_box_layout_settings_get_inside_border_horizontal_spacing(nativePtrUnchecked, out value);
+                CfxApi.BoxLayoutSettings.cfx_box_layout_settings_get_inside_border_horizontal_spacing(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_box_layout_settings_set_inside_border_horizontal_spacing(nativePtrUnchecked, value);
+                CfxApi.BoxLayoutSettings.cfx_box_layout_settings_set_inside_border_horizontal_spacing(nativePtrUnchecked, value);
             }
         }
 
@@ -98,11 +94,11 @@ namespace Chromium {
         public int InsideBorderVerticalSpacing {
             get {
                 int value;
-                CfxApi.cfx_box_layout_settings_get_inside_border_vertical_spacing(nativePtrUnchecked, out value);
+                CfxApi.BoxLayoutSettings.cfx_box_layout_settings_get_inside_border_vertical_spacing(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_box_layout_settings_set_inside_border_vertical_spacing(nativePtrUnchecked, value);
+                CfxApi.BoxLayoutSettings.cfx_box_layout_settings_set_inside_border_vertical_spacing(nativePtrUnchecked, value);
             }
         }
 
@@ -116,11 +112,11 @@ namespace Chromium {
         public CfxInsets InsideBorderInsets {
             get {
                 IntPtr value;
-                CfxApi.cfx_box_layout_settings_get_inside_border_insets(nativePtrUnchecked, out value);
+                CfxApi.BoxLayoutSettings.cfx_box_layout_settings_get_inside_border_insets(nativePtrUnchecked, out value);
                 return CfxInsets.Wrap(value);
             }
             set {
-                CfxApi.cfx_box_layout_settings_set_inside_border_insets(nativePtrUnchecked, CfxInsets.Unwrap(value));
+                CfxApi.BoxLayoutSettings.cfx_box_layout_settings_set_inside_border_insets(nativePtrUnchecked, CfxInsets.Unwrap(value));
             }
         }
 
@@ -134,11 +130,11 @@ namespace Chromium {
         public int BetweenChildSpacing {
             get {
                 int value;
-                CfxApi.cfx_box_layout_settings_get_between_child_spacing(nativePtrUnchecked, out value);
+                CfxApi.BoxLayoutSettings.cfx_box_layout_settings_get_between_child_spacing(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_box_layout_settings_set_between_child_spacing(nativePtrUnchecked, value);
+                CfxApi.BoxLayoutSettings.cfx_box_layout_settings_set_between_child_spacing(nativePtrUnchecked, value);
             }
         }
 
@@ -152,11 +148,11 @@ namespace Chromium {
         public CfxMainAxisAlignment MainAxisAlignment {
             get {
                 int value;
-                CfxApi.cfx_box_layout_settings_get_main_axis_alignment(nativePtrUnchecked, out value);
+                CfxApi.BoxLayoutSettings.cfx_box_layout_settings_get_main_axis_alignment(nativePtrUnchecked, out value);
                 return (CfxMainAxisAlignment)value;
             }
             set {
-                CfxApi.cfx_box_layout_settings_set_main_axis_alignment(nativePtrUnchecked, (int)value);
+                CfxApi.BoxLayoutSettings.cfx_box_layout_settings_set_main_axis_alignment(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -170,11 +166,11 @@ namespace Chromium {
         public CfxCrossAxisAlignment CrossAxisAlignment {
             get {
                 int value;
-                CfxApi.cfx_box_layout_settings_get_cross_axis_alignment(nativePtrUnchecked, out value);
+                CfxApi.BoxLayoutSettings.cfx_box_layout_settings_get_cross_axis_alignment(nativePtrUnchecked, out value);
                 return (CfxCrossAxisAlignment)value;
             }
             set {
-                CfxApi.cfx_box_layout_settings_set_cross_axis_alignment(nativePtrUnchecked, (int)value);
+                CfxApi.BoxLayoutSettings.cfx_box_layout_settings_set_cross_axis_alignment(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -188,11 +184,11 @@ namespace Chromium {
         public int MinimumCrossAxisSize {
             get {
                 int value;
-                CfxApi.cfx_box_layout_settings_get_minimum_cross_axis_size(nativePtrUnchecked, out value);
+                CfxApi.BoxLayoutSettings.cfx_box_layout_settings_get_minimum_cross_axis_size(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_box_layout_settings_set_minimum_cross_axis_size(nativePtrUnchecked, value);
+                CfxApi.BoxLayoutSettings.cfx_box_layout_settings_set_minimum_cross_axis_size(nativePtrUnchecked, value);
             }
         }
 
@@ -210,11 +206,11 @@ namespace Chromium {
         public int DefaultFlex {
             get {
                 int value;
-                CfxApi.cfx_box_layout_settings_get_default_flex(nativePtrUnchecked, out value);
+                CfxApi.BoxLayoutSettings.cfx_box_layout_settings_get_default_flex(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_box_layout_settings_set_default_flex(nativePtrUnchecked, value);
+                CfxApi.BoxLayoutSettings.cfx_box_layout_settings_set_default_flex(nativePtrUnchecked, value);
             }
         }
 

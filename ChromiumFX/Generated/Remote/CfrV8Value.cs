@@ -245,7 +245,7 @@ namespace Chromium.Remote {
         public bool IsValid {
             get {
                 var call = new CfxV8ValueIsValidRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -261,7 +261,7 @@ namespace Chromium.Remote {
         public bool IsUndefined {
             get {
                 var call = new CfxV8ValueIsUndefinedRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -277,7 +277,7 @@ namespace Chromium.Remote {
         public bool IsNull {
             get {
                 var call = new CfxV8ValueIsNullRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -293,7 +293,7 @@ namespace Chromium.Remote {
         public bool IsBool {
             get {
                 var call = new CfxV8ValueIsBoolRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -309,7 +309,7 @@ namespace Chromium.Remote {
         public bool IsInt {
             get {
                 var call = new CfxV8ValueIsIntRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -325,7 +325,7 @@ namespace Chromium.Remote {
         public bool IsUint {
             get {
                 var call = new CfxV8ValueIsUintRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -341,7 +341,7 @@ namespace Chromium.Remote {
         public bool IsDouble {
             get {
                 var call = new CfxV8ValueIsDoubleRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -357,7 +357,7 @@ namespace Chromium.Remote {
         public bool IsDate {
             get {
                 var call = new CfxV8ValueIsDateRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -373,7 +373,7 @@ namespace Chromium.Remote {
         public bool IsString {
             get {
                 var call = new CfxV8ValueIsStringRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -389,7 +389,7 @@ namespace Chromium.Remote {
         public bool IsObject {
             get {
                 var call = new CfxV8ValueIsObjectRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -405,7 +405,7 @@ namespace Chromium.Remote {
         public bool IsArray {
             get {
                 var call = new CfxV8ValueIsArrayRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -421,7 +421,7 @@ namespace Chromium.Remote {
         public bool IsFunction {
             get {
                 var call = new CfxV8ValueIsFunctionRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -438,7 +438,7 @@ namespace Chromium.Remote {
         public bool BoolValue {
             get {
                 var call = new CfxV8ValueGetBoolValueRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -455,7 +455,7 @@ namespace Chromium.Remote {
         public int IntValue {
             get {
                 var call = new CfxV8ValueGetIntValueRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -472,7 +472,7 @@ namespace Chromium.Remote {
         public uint UintValue {
             get {
                 var call = new CfxV8ValueGetUintValueRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -489,7 +489,7 @@ namespace Chromium.Remote {
         public double DoubleValue {
             get {
                 var call = new CfxV8ValueGetDoubleValueRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -506,7 +506,7 @@ namespace Chromium.Remote {
         public CfrTime DateValue {
             get {
                 var call = new CfxV8ValueGetDateValueRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return CfrTime.Wrap(call.__retval);
             }
@@ -523,7 +523,7 @@ namespace Chromium.Remote {
         public string StringValue {
             get {
                 var call = new CfxV8ValueGetStringValueRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -542,7 +542,7 @@ namespace Chromium.Remote {
         public bool IsUserCreated {
             get {
                 var call = new CfxV8ValueIsUserCreatedRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -559,7 +559,7 @@ namespace Chromium.Remote {
         public bool HasException {
             get {
                 var call = new CfxV8ValueHasExceptionRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -576,7 +576,7 @@ namespace Chromium.Remote {
         public CfrV8Exception Exception {
             get {
                 var call = new CfxV8ValueGetExceptionRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return CfrV8Exception.Wrap(call.__retval);
             }
@@ -592,7 +592,7 @@ namespace Chromium.Remote {
         public RemotePtr UserData {
             get {
                 var call = new CfxV8ValueGetUserDataRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return new RemotePtr(call.__retval);
             }
@@ -609,7 +609,7 @@ namespace Chromium.Remote {
         public int ExternallyAllocatedMemory {
             get {
                 var call = new CfxV8ValueGetExternallyAllocatedMemoryRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -626,7 +626,7 @@ namespace Chromium.Remote {
         public int ArrayLength {
             get {
                 var call = new CfxV8ValueGetArrayLengthRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -643,7 +643,7 @@ namespace Chromium.Remote {
         public string FunctionName {
             get {
                 var call = new CfxV8ValueGetFunctionNameRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -659,7 +659,7 @@ namespace Chromium.Remote {
         public CfrV8Handler FunctionHandler {
             get {
                 var call = new CfxV8ValueGetFunctionHandlerRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return CfrV8Handler.Wrap(call.__retval);
             }
@@ -675,7 +675,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsSame(CfrV8Value that) {
             var call = new CfxV8ValueIsSameRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.that = CfrObject.Unwrap(that);
             call.RequestExecution(this);
             return call.__retval;
@@ -690,7 +690,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool ClearException() {
             var call = new CfxV8ValueClearExceptionRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.RequestExecution(this);
             return call.__retval;
         }
@@ -705,7 +705,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool WillRethrowExceptions() {
             var call = new CfxV8ValueWillRethrowExceptionsRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.RequestExecution(this);
             return call.__retval;
         }
@@ -723,7 +723,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool SetRethrowExceptions(bool rethrow) {
             var call = new CfxV8ValueSetRethrowExceptionsRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.rethrow = rethrow;
             call.RequestExecution(this);
             return call.__retval;
@@ -738,7 +738,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool HasValue(string key) {
             var call = new CfxV8ValueHasValueByKeyRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.key = key;
             call.RequestExecution(this);
             return call.__retval;
@@ -753,7 +753,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool HasValue(int index) {
             var call = new CfxV8ValueHasValueByIndexRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.index = index;
             call.RequestExecution(this);
             return call.__retval;
@@ -771,7 +771,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool DeleteValue(string key) {
             var call = new CfxV8ValueDeleteValueByKeyRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.key = key;
             call.RequestExecution(this);
             return call.__retval;
@@ -789,7 +789,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool DeleteValue(int index) {
             var call = new CfxV8ValueDeleteValueByIndexRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.index = index;
             call.RequestExecution(this);
             return call.__retval;
@@ -805,7 +805,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrV8Value GetValue(string key) {
             var call = new CfxV8ValueGetValueByKeyRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.key = key;
             call.RequestExecution(this);
             return CfrV8Value.Wrap(call.__retval);
@@ -821,7 +821,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrV8Value GetValue(int index) {
             var call = new CfxV8ValueGetValueByIndexRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.index = index;
             call.RequestExecution(this);
             return CfrV8Value.Wrap(call.__retval);
@@ -839,7 +839,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool SetValue(string key, CfrV8Value value, CfxV8PropertyAttribute attribute) {
             var call = new CfxV8ValueSetValueByKeyRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.key = key;
             call.value = CfrObject.Unwrap(value);
             call.attribute = (int)attribute;
@@ -859,7 +859,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool SetValue(int index, CfrV8Value value) {
             var call = new CfxV8ValueSetValueByIndexRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.index = index;
             call.value = CfrObject.Unwrap(value);
             call.RequestExecution(this);
@@ -879,7 +879,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool SetValue(string key, CfxV8AccessControl settings, CfxV8PropertyAttribute attribute) {
             var call = new CfxV8ValueSetValueByAccessorRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.key = key;
             call.settings = (int)settings;
             call.attribute = (int)attribute;
@@ -897,7 +897,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool GetKeys(System.Collections.Generic.List<string> keys) {
             var call = new CfxV8ValueGetKeysRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.keys = keys;
             call.RequestExecution(this);
             StringFunctions.CopyCfxStringList(call.keys, keys);
@@ -915,7 +915,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool SetUserData(RemotePtr userData) {
             var call = new CfxV8ValueSetUserDataRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.userData = userData.ptr;
             call.RequestExecution(this);
             return call.__retval;
@@ -938,7 +938,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public int AdjustExternallyAllocatedMemory(int changeInBytes) {
             var call = new CfxV8ValueAdjustExternallyAllocatedMemoryRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.changeInBytes = changeInBytes;
             call.RequestExecution(this);
             return call.__retval;
@@ -961,7 +961,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrV8Value ExecuteFunction(CfrV8Value @object, CfrV8Value[] arguments) {
             var call = new CfxV8ValueExecuteFunctionRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.@object = CfrObject.Unwrap(@object);
             if(arguments != null) {
                 call.arguments = new IntPtr[arguments.Length];
@@ -987,7 +987,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrV8Value ExecuteFunctionWithContext(CfrV8Context context, CfrV8Value @object, CfrV8Value[] arguments) {
             var call = new CfxV8ValueExecuteFunctionWithContextRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.context = CfrObject.Unwrap(context);
             call.@object = CfrObject.Unwrap(@object);
             if(arguments != null) {

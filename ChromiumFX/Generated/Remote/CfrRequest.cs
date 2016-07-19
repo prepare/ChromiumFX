@@ -85,7 +85,7 @@ namespace Chromium.Remote {
         public bool IsReadOnly {
             get {
                 var call = new CfxRequestIsReadOnlyRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -103,13 +103,13 @@ namespace Chromium.Remote {
         public string Url {
             get {
                 var call = new CfxRequestGetUrlRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
             set {
                 var call = new CfxRequestSetUrlRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.value = value;
                 call.RequestExecution(this);
             }
@@ -128,13 +128,13 @@ namespace Chromium.Remote {
         public string Method {
             get {
                 var call = new CfxRequestGetMethodRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
             set {
                 var call = new CfxRequestSetMethodRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.value = value;
                 call.RequestExecution(this);
             }
@@ -150,7 +150,7 @@ namespace Chromium.Remote {
         public string ReferrerUrl {
             get {
                 var call = new CfxRequestGetReferrerUrlRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -166,7 +166,7 @@ namespace Chromium.Remote {
         public CfxReferrerPolicy ReferrerPolicy {
             get {
                 var call = new CfxRequestGetReferrerPolicyRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return (CfxReferrerPolicy)call.__retval;
             }
@@ -184,13 +184,13 @@ namespace Chromium.Remote {
         public CfrPostData PostData {
             get {
                 var call = new CfxRequestGetPostDataRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return CfrPostData.Wrap(call.__retval);
             }
             set {
                 var call = new CfxRequestSetPostDataRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.value = CfrObject.Unwrap(value);
                 call.RequestExecution(this);
             }
@@ -210,13 +210,13 @@ namespace Chromium.Remote {
         public int Flags {
             get {
                 var call = new CfxRequestGetFlagsRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
             set {
                 var call = new CfxRequestSetFlagsRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.value = value;
                 call.RequestExecution(this);
             }
@@ -236,13 +236,13 @@ namespace Chromium.Remote {
         public string FirstPartyForCookies {
             get {
                 var call = new CfxRequestGetFirstPartyForCookiesRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
             set {
                 var call = new CfxRequestSetFirstPartyForCookiesRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.value = value;
                 call.RequestExecution(this);
             }
@@ -259,7 +259,7 @@ namespace Chromium.Remote {
         public CfxResourceType ResourceType {
             get {
                 var call = new CfxRequestGetResourceTypeRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return (CfxResourceType)call.__retval;
             }
@@ -277,7 +277,7 @@ namespace Chromium.Remote {
         public CfxTransitionType TransitionType {
             get {
                 var call = new CfxRequestGetTransitionTypeRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return (CfxTransitionType)call.__retval;
             }
@@ -295,7 +295,7 @@ namespace Chromium.Remote {
         public ulong Identifier {
             get {
                 var call = new CfxRequestGetIdentifierRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -312,7 +312,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public void SetReferrer(string referrerUrl, CfxReferrerPolicy policy) {
             var call = new CfxRequestSetReferrerRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.referrerUrl = referrerUrl;
             call.policy = (int)policy;
             call.RequestExecution(this);
@@ -327,7 +327,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public System.Collections.Generic.List<string[]> GetHeaderMap() {
             var call = new CfxRequestGetHeaderMapRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.RequestExecution(this);
             return call.__retval;
         }
@@ -342,7 +342,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public void SetHeaderMap(System.Collections.Generic.List<string[]> headerMap) {
             var call = new CfxRequestSetHeaderMapRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.headerMap = headerMap;
             call.RequestExecution(this);
         }
@@ -356,7 +356,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public void Set(string url, string method, CfrPostData postData, System.Collections.Generic.List<string[]> headerMap) {
             var call = new CfxRequestSetRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.url = url;
             call.method = method;
             call.postData = CfrObject.Unwrap(postData);

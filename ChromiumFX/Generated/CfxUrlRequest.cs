@@ -47,10 +47,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxUrlRequest : CfxBase {
 
-        static CfxUrlRequest () {
-            CfxApiLoader.LoadCfxUrlRequestApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxUrlRequest Wrap(IntPtr nativePtr) {
@@ -90,7 +86,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
         /// </remarks>
         public static CfxUrlRequest Create(CfxRequest request, CfxUrlRequestClient client, CfxRequestContext requestContext) {
-            return CfxUrlRequest.Wrap(CfxApi.cfx_urlrequest_create(CfxRequest.Unwrap(request), CfxUrlRequestClient.Unwrap(client), CfxRequestContext.Unwrap(requestContext)));
+            return CfxUrlRequest.Wrap(CfxApi.UrlRequest.cfx_urlrequest_create(CfxRequest.Unwrap(request), CfxUrlRequestClient.Unwrap(client), CfxRequestContext.Unwrap(requestContext)));
         }
 
         /// <summary>
@@ -103,7 +99,7 @@ namespace Chromium {
         /// </remarks>
         public CfxRequest Request {
             get {
-                return CfxRequest.Wrap(CfxApi.cfx_urlrequest_get_request(NativePtr));
+                return CfxRequest.Wrap(CfxApi.UrlRequest.cfx_urlrequest_get_request(NativePtr));
             }
         }
 
@@ -116,7 +112,7 @@ namespace Chromium {
         /// </remarks>
         public CfxUrlRequestClient Client {
             get {
-                return CfxUrlRequestClient.Wrap(CfxApi.cfx_urlrequest_get_client(NativePtr));
+                return CfxUrlRequestClient.Wrap(CfxApi.UrlRequest.cfx_urlrequest_get_client(NativePtr));
             }
         }
 
@@ -129,7 +125,7 @@ namespace Chromium {
         /// </remarks>
         public CfxUrlRequestStatus RequestStatus {
             get {
-                return (CfxUrlRequestStatus)CfxApi.cfx_urlrequest_get_request_status(NativePtr);
+                return (CfxUrlRequestStatus)CfxApi.UrlRequest.cfx_urlrequest_get_request_status(NativePtr);
             }
         }
 
@@ -143,7 +139,7 @@ namespace Chromium {
         /// </remarks>
         public CfxErrorCode RequestError {
             get {
-                return (CfxErrorCode)CfxApi.cfx_urlrequest_get_request_error(NativePtr);
+                return (CfxErrorCode)CfxApi.UrlRequest.cfx_urlrequest_get_request_error(NativePtr);
             }
         }
 
@@ -158,7 +154,7 @@ namespace Chromium {
         /// </remarks>
         public CfxResponse Response {
             get {
-                return CfxResponse.Wrap(CfxApi.cfx_urlrequest_get_response(NativePtr));
+                return CfxResponse.Wrap(CfxApi.UrlRequest.cfx_urlrequest_get_response(NativePtr));
             }
         }
 
@@ -170,7 +166,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
         /// </remarks>
         public void Cancel() {
-            CfxApi.cfx_urlrequest_cancel(NativePtr);
+            CfxApi.UrlRequest.cfx_urlrequest_cancel(NativePtr);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

@@ -45,13 +45,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxResolveCallback : CfxBase {
 
-        static CfxResolveCallback () {
-            CfxApiLoader.LoadCfxResolveCallbackApi();
-        }
-
         internal static CfxResolveCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_resolve_callback_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.ResolveCallback.cfx_resolve_callback_get_gc_handle(nativePtr);
             return (CfxResolveCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -76,7 +72,7 @@ namespace Chromium {
         }
 
         internal CfxResolveCallback(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxResolveCallback() : base(CfxApi.cfx_resolve_callback_ctor) {}
+        public CfxResolveCallback() : base(CfxApi.ResolveCallback.cfx_resolve_callback_ctor) {}
 
         /// <summary>
         /// Called after the ResolveHost request has completed. |Result| will be the
@@ -95,7 +91,7 @@ namespace Chromium {
                             cfx_resolve_callback_on_resolve_completed = on_resolve_completed;
                             cfx_resolve_callback_on_resolve_completed_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_resolve_callback_on_resolve_completed);
                         }
-                        CfxApi.cfx_resolve_callback_set_managed_callback(NativePtr, 0, cfx_resolve_callback_on_resolve_completed_ptr);
+                        CfxApi.ResolveCallback.cfx_resolve_callback_set_managed_callback(NativePtr, 0, cfx_resolve_callback_on_resolve_completed_ptr);
                     }
                     m_OnResolveCompleted += value;
                 }
@@ -104,7 +100,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnResolveCompleted -= value;
                     if(m_OnResolveCompleted == null) {
-                        CfxApi.cfx_resolve_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.ResolveCallback.cfx_resolve_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -115,7 +111,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnResolveCompleted != null) {
                 m_OnResolveCompleted = null;
-                CfxApi.cfx_resolve_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.ResolveCallback.cfx_resolve_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

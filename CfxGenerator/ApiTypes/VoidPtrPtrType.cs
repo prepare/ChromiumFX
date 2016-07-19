@@ -47,6 +47,16 @@ public class VoidPtrPtrType : ApiType {
         get { return "IntPtr"; }
     }
 
+    public override string RemoteSymbol {
+        get {
+            return "RemotePtr";
+        }
+    }
+
+    public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
+        b.AppendLine("call.{0} = {0}.ptr;", CSharp.Escape(var));
+    }
+
     public override string PInvokeCallParameter(string var) {
         return "out IntPtr " + CSharp.Escape(var);
     }

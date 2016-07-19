@@ -44,10 +44,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxAuthCallback : CfxBase {
 
-        static CfxAuthCallback () {
-            CfxApiLoader.LoadCfxAuthCallbackApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxAuthCallback Wrap(IntPtr nativePtr) {
@@ -77,7 +73,7 @@ namespace Chromium {
         public void Continue(string userName, string password) {
             var userName_pinned = new PinnedString(userName);
             var password_pinned = new PinnedString(password);
-            CfxApi.cfx_auth_callback_cont(NativePtr, userName_pinned.Obj.PinnedPtr, userName_pinned.Length, password_pinned.Obj.PinnedPtr, password_pinned.Length);
+            CfxApi.AuthCallback.cfx_auth_callback_cont(NativePtr, userName_pinned.Obj.PinnedPtr, userName_pinned.Length, password_pinned.Obj.PinnedPtr, password_pinned.Length);
             userName_pinned.Obj.Free();
             password_pinned.Obj.Free();
         }
@@ -90,7 +86,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_auth_callback_capi.h">cef/include/capi/cef_auth_callback_capi.h</see>.
         /// </remarks>
         public void Cancel() {
-            CfxApi.cfx_auth_callback_cancel(NativePtr);
+            CfxApi.AuthCallback.cfx_auth_callback_cancel(NativePtr);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

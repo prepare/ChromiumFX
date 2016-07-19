@@ -79,6 +79,17 @@ public class BlittableType : ApiType {
         }
     }
 
+    public override string RemoteSymbol {
+        get {
+            switch(Name) {
+                case "void*":
+                    return "RemotePtr";
+                default:
+                    return base.RemoteSymbol;
+            }
+        }
+    }
+
     public override string NativeWrapExpression(string var) {
         switch(Name) {
             case "bool":
@@ -141,6 +152,19 @@ public class BlittableType : ApiType {
                 return base.PublicWrapExpression(var);
         }
     }
+
+    public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
+        switch(RemoteSymbol) {
+            case "RemotePtr":
+                b.AppendLine("call.{0} = {0}.ptr;", CSharp.Escape(var));
+                return;
+            default:
+                base.EmitPreRemoteCallStatements(b, var);
+                return;
+        }
+        
+    }
+
 
     public override bool IsBlittableType {
         get { return true; }

@@ -75,7 +75,7 @@ namespace Chromium {
             var sourceOrigin_pinned = new PinnedString(sourceOrigin);
             var targetProtocol_pinned = new PinnedString(targetProtocol);
             var targetDomain_pinned = new PinnedString(targetDomain);
-            var __retval = CfxApi.cfx_add_cross_origin_whitelist_entry(sourceOrigin_pinned.Obj.PinnedPtr, sourceOrigin_pinned.Length, targetProtocol_pinned.Obj.PinnedPtr, targetProtocol_pinned.Length, targetDomain_pinned.Obj.PinnedPtr, targetDomain_pinned.Length, allowTargetSubdomains ? 1 : 0);
+            var __retval = CfxApi.Runtime.cfx_add_cross_origin_whitelist_entry(sourceOrigin_pinned.Obj.PinnedPtr, sourceOrigin_pinned.Length, targetProtocol_pinned.Obj.PinnedPtr, targetProtocol_pinned.Length, targetDomain_pinned.Obj.PinnedPtr, targetDomain_pinned.Length, allowTargetSubdomains ? 1 : 0);
             sourceOrigin_pinned.Obj.Free();
             targetProtocol_pinned.Obj.Free();
             targetDomain_pinned.Obj.Free();
@@ -95,7 +95,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/cef_version.h">cef/include/cef_version.h</see>.
         /// </remarks>
         public static string ApiHash(int entry) {
-            return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(CfxApi.cfx_api_hash(entry));
+            return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(CfxApi.Runtime.cfx_api_hash(entry));
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Chromium {
         /// </remarks>
         public static bool BeginTracing(string categories, CfxCompletionCallback callback) {
             var categories_pinned = new PinnedString(categories);
-            var __retval = CfxApi.cfx_begin_tracing(categories_pinned.Obj.PinnedPtr, categories_pinned.Length, CfxCompletionCallback.Unwrap(callback));
+            var __retval = CfxApi.Runtime.cfx_begin_tracing(categories_pinned.Obj.PinnedPtr, categories_pinned.Length, CfxCompletionCallback.Unwrap(callback));
             categories_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -131,7 +131,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_origin_whitelist_capi.h">cef/include/capi/cef_origin_whitelist_capi.h</see>.
         /// </remarks>
         public static bool ClearCrossOriginWhitelist() {
-            return 0 != CfxApi.cfx_clear_cross_origin_whitelist();
+            return 0 != CfxApi.Runtime.cfx_clear_cross_origin_whitelist();
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
         /// </remarks>
         public static bool ClearSchemeHandlerFactories() {
-            return 0 != CfxApi.cfx_clear_scheme_handler_factories();
+            return 0 != CfxApi.Runtime.cfx_clear_scheme_handler_factories();
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
         /// </remarks>
         public static CfxRequestContext CreateContextShared(CfxRequestContext other, CfxRequestContextHandler handler) {
-            return CfxRequestContext.Wrap(CfxApi.cfx_create_context_shared(CfxRequestContext.Unwrap(other), CfxRequestContextHandler.Unwrap(handler)));
+            return CfxRequestContext.Wrap(CfxApi.Runtime.cfx_create_context_shared(CfxRequestContext.Unwrap(other), CfxRequestContextHandler.Unwrap(handler)));
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Chromium {
             var url_pinned = new PinnedString(url);
             IntPtr url_str = url_pinned.Obj.PinnedPtr;
             int url_length = url_pinned.Length;
-            var __retval = CfxApi.cfx_create_url(CfxUrlParts.Unwrap(parts), ref url_str, ref url_length);
+            var __retval = CfxApi.Runtime.cfx_create_url(CfxUrlParts.Unwrap(parts), ref url_str, ref url_length);
             if(url_str != url_pinned.Obj.PinnedPtr) {
                 if(url_length > 0) {
                     url = System.Runtime.InteropServices.Marshal.PtrToStringUni(url_str, url_length);
@@ -196,7 +196,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static bool CurrentlyOn(CfxThreadId threadId) {
-            return 0 != CfxApi.cfx_currently_on((int)threadId);
+            return 0 != CfxApi.Runtime.cfx_currently_on((int)threadId);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
         public static void DoMessageLoopWork() {
-            CfxApi.cfx_do_message_loop_work();
+            CfxApi.Runtime.cfx_do_message_loop_work();
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
         public static void EnableHighDpiSupport() {
-            CfxApi.cfx_enable_highdpi_support();
+            CfxApi.Runtime.cfx_enable_highdpi_support();
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace Chromium {
         /// </remarks>
         public static bool EndTracing(string tracingFile, CfxEndTracingCallback callback) {
             var tracingFile_pinned = new PinnedString(tracingFile);
-            var __retval = CfxApi.cfx_end_tracing(tracingFile_pinned.Obj.PinnedPtr, tracingFile_pinned.Length, CfxEndTracingCallback.Unwrap(callback));
+            var __retval = CfxApi.Runtime.cfx_end_tracing(tracingFile_pinned.Obj.PinnedPtr, tracingFile_pinned.Length, CfxEndTracingCallback.Unwrap(callback));
             tracingFile_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -266,7 +266,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
         private static int ExecuteProcessPrivate(CfxMainArgs args, CfxApp application, IntPtr windowsSandboxInfo) {
-            return CfxApi.cfx_execute_process(CfxMainArgs.Unwrap(args), CfxApp.Unwrap(application), windowsSandboxInfo);
+            return CfxApi.Runtime.cfx_execute_process(CfxMainArgs.Unwrap(args), CfxApp.Unwrap(application), windowsSandboxInfo);
         }
 
         /// <summary>
@@ -285,7 +285,7 @@ namespace Chromium {
         /// </remarks>
         public static string FormatUrlForSecurityDisplay(string originUrl) {
             var originUrl_pinned = new PinnedString(originUrl);
-            var __retval = CfxApi.cfx_format_url_for_security_display(originUrl_pinned.Obj.PinnedPtr, originUrl_pinned.Length);
+            var __retval = CfxApi.Runtime.cfx_format_url_for_security_display(originUrl_pinned.Obj.PinnedPtr, originUrl_pinned.Length);
             originUrl_pinned.Obj.Free();
             return StringFunctions.ConvertStringUserfree(__retval);
         }
@@ -304,11 +304,11 @@ namespace Chromium {
             var mimeType_pinned = new PinnedString(mimeType);
             PinnedString[] extensions_handles;
             var extensions_unwrapped = StringFunctions.UnwrapCfxStringList(extensions, out extensions_handles);
-            CfxApi.cfx_get_extensions_for_mime_type(mimeType_pinned.Obj.PinnedPtr, mimeType_pinned.Length, extensions_unwrapped);
+            CfxApi.Runtime.cfx_get_extensions_for_mime_type(mimeType_pinned.Obj.PinnedPtr, mimeType_pinned.Length, extensions_unwrapped);
             mimeType_pinned.Obj.Free();
             StringFunctions.FreePinnedStrings(extensions_handles);
             StringFunctions.CfxStringListCopyToManaged(extensions_unwrapped, extensions);
-            CfxApi.cfx_string_list_free(extensions_unwrapped);
+            CfxApi.Runtime.cfx_string_list_free(extensions_unwrapped);
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_geolocation_capi.h">cef/include/capi/cef_geolocation_capi.h</see>.
         /// </remarks>
         public static bool GetGeolocation(CfxGetGeolocationCallback callback) {
-            return 0 != CfxApi.cfx_get_geolocation(CfxGetGeolocationCallback.Unwrap(callback));
+            return 0 != CfxApi.Runtime.cfx_get_geolocation(CfxGetGeolocationCallback.Unwrap(callback));
         }
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace Chromium {
         /// </remarks>
         public static string GetMimeType(string extension) {
             var extension_pinned = new PinnedString(extension);
-            var __retval = CfxApi.cfx_get_mime_type(extension_pinned.Obj.PinnedPtr, extension_pinned.Length);
+            var __retval = CfxApi.Runtime.cfx_get_mime_type(extension_pinned.Obj.PinnedPtr, extension_pinned.Length);
             extension_pinned.Obj.Free();
             return StringFunctions.ConvertStringUserfree(__retval);
         }
@@ -351,7 +351,7 @@ namespace Chromium {
             var path_pinned = new PinnedString(path);
             IntPtr path_str = path_pinned.Obj.PinnedPtr;
             int path_length = path_pinned.Length;
-            var __retval = CfxApi.cfx_get_path((int)key, ref path_str, ref path_length);
+            var __retval = CfxApi.Runtime.cfx_get_path((int)key, ref path_str, ref path_length);
             if(path_str != path_pinned.Obj.PinnedPtr) {
                 if(path_length > 0) {
                     path = System.Runtime.InteropServices.Marshal.PtrToStringUni(path_str, path_length);
@@ -376,7 +376,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
         private static bool InitializePrivate(CfxMainArgs args, CfxSettings settings, CfxApp application, IntPtr windowsSandboxInfo) {
-            return 0 != CfxApi.cfx_initialize(CfxMainArgs.Unwrap(args), CfxSettings.Unwrap(settings), CfxApp.Unwrap(application), windowsSandboxInfo);
+            return 0 != CfxApi.Runtime.cfx_initialize(CfxMainArgs.Unwrap(args), CfxSettings.Unwrap(settings), CfxApp.Unwrap(application), windowsSandboxInfo);
         }
 
         /// <summary>
@@ -389,7 +389,7 @@ namespace Chromium {
         /// </remarks>
         public static void IsWebPluginUnstable(string path, CfxWebPluginUnstableCallback callback) {
             var path_pinned = new PinnedString(path);
-            CfxApi.cfx_is_web_plugin_unstable(path_pinned.Obj.PinnedPtr, path_pinned.Length, CfxWebPluginUnstableCallback.Unwrap(callback));
+            CfxApi.Runtime.cfx_is_web_plugin_unstable(path_pinned.Obj.PinnedPtr, path_pinned.Length, CfxWebPluginUnstableCallback.Unwrap(callback));
             path_pinned.Obj.Free();
         }
 
@@ -407,7 +407,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_process_util_capi.h">cef/include/capi/cef_process_util_capi.h</see>.
         /// </remarks>
         public static bool LaunchProcess(CfxCommandLine commandLine) {
-            return 0 != CfxApi.cfx_launch_process(CfxCommandLine.Unwrap(commandLine));
+            return 0 != CfxApi.Runtime.cfx_launch_process(CfxCommandLine.Unwrap(commandLine));
         }
 
         /// <summary>
@@ -420,7 +420,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_trace_capi.h">cef/include/capi/cef_trace_capi.h</see>.
         /// </remarks>
         public static long NowFromSystemTraceTime() {
-            return CfxApi.cfx_now_from_system_trace_time();
+            return CfxApi.Runtime.cfx_now_from_system_trace_time();
         }
 
         /// <summary>
@@ -433,7 +433,7 @@ namespace Chromium {
         /// </remarks>
         public static CfxValue ParseJson(string jsonString, CfxJsonParserOptions options) {
             var jsonString_pinned = new PinnedString(jsonString);
-            var __retval = CfxApi.cfx_parse_json(jsonString_pinned.Obj.PinnedPtr, jsonString_pinned.Length, (int)options);
+            var __retval = CfxApi.Runtime.cfx_parse_json(jsonString_pinned.Obj.PinnedPtr, jsonString_pinned.Length, (int)options);
             jsonString_pinned.Obj.Free();
             return CfxValue.Wrap(__retval);
         }
@@ -454,7 +454,7 @@ namespace Chromium {
             var errorMsgOut_pinned = new PinnedString(errorMsgOut);
             IntPtr errorMsgOut_str = errorMsgOut_pinned.Obj.PinnedPtr;
             int errorMsgOut_length = errorMsgOut_pinned.Length;
-            var __retval = CfxApi.cfx_parse_jsonand_return_error(jsonString_pinned.Obj.PinnedPtr, jsonString_pinned.Length, (int)options, out errorCodeOut_tmp, ref errorMsgOut_str, ref errorMsgOut_length);
+            var __retval = CfxApi.Runtime.cfx_parse_jsonand_return_error(jsonString_pinned.Obj.PinnedPtr, jsonString_pinned.Length, (int)options, out errorCodeOut_tmp, ref errorMsgOut_str, ref errorMsgOut_length);
             jsonString_pinned.Obj.Free();
             errorCodeOut = (CfxJsonParserError)errorCodeOut_tmp;
             if(errorMsgOut_str != errorMsgOut_pinned.Obj.PinnedPtr) {
@@ -479,7 +479,7 @@ namespace Chromium {
         /// </remarks>
         public static bool ParseUrl(string url, CfxUrlParts parts) {
             var url_pinned = new PinnedString(url);
-            var __retval = CfxApi.cfx_parse_url(url_pinned.Obj.PinnedPtr, url_pinned.Length, CfxUrlParts.Unwrap(parts));
+            var __retval = CfxApi.Runtime.cfx_parse_url(url_pinned.Obj.PinnedPtr, url_pinned.Length, CfxUrlParts.Unwrap(parts));
             url_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -494,7 +494,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static bool PostDelayedTask(CfxThreadId threadId, CfxTask task, long delayMs) {
-            return 0 != CfxApi.cfx_post_delayed_task((int)threadId, CfxTask.Unwrap(task), delayMs);
+            return 0 != CfxApi.Runtime.cfx_post_delayed_task((int)threadId, CfxTask.Unwrap(task), delayMs);
         }
 
         /// <summary>
@@ -506,7 +506,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static bool PostTask(CfxThreadId threadId, CfxTask task) {
-            return 0 != CfxApi.cfx_post_task((int)threadId, CfxTask.Unwrap(task));
+            return 0 != CfxApi.Runtime.cfx_post_task((int)threadId, CfxTask.Unwrap(task));
         }
 
         /// <summary>
@@ -519,7 +519,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
         public static void QuitMessageLoop() {
-            CfxApi.cfx_quit_message_loop();
+            CfxApi.Runtime.cfx_quit_message_loop();
         }
 
         /// <summary>
@@ -532,7 +532,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
         public static void RefreshWebPlugins() {
-            CfxApi.cfx_refresh_web_plugins();
+            CfxApi.Runtime.cfx_refresh_web_plugins();
         }
 
         /// <summary>
@@ -596,7 +596,7 @@ namespace Chromium {
         public static bool RegisterExtension(string extensionName, string javascriptCode, CfxV8Handler handler) {
             var extensionName_pinned = new PinnedString(extensionName);
             var javascriptCode_pinned = new PinnedString(javascriptCode);
-            var __retval = CfxApi.cfx_register_extension(extensionName_pinned.Obj.PinnedPtr, extensionName_pinned.Length, javascriptCode_pinned.Obj.PinnedPtr, javascriptCode_pinned.Length, CfxV8Handler.Unwrap(handler));
+            var __retval = CfxApi.Runtime.cfx_register_extension(extensionName_pinned.Obj.PinnedPtr, extensionName_pinned.Length, javascriptCode_pinned.Obj.PinnedPtr, javascriptCode_pinned.Length, CfxV8Handler.Unwrap(handler));
             extensionName_pinned.Obj.Free();
             javascriptCode_pinned.Obj.Free();
             return 0 != __retval;
@@ -624,7 +624,7 @@ namespace Chromium {
         public static bool RegisterSchemeHandlerFactory(string schemeName, string domainName, CfxSchemeHandlerFactory factory) {
             var schemeName_pinned = new PinnedString(schemeName);
             var domainName_pinned = new PinnedString(domainName);
-            var __retval = CfxApi.cfx_register_scheme_handler_factory(schemeName_pinned.Obj.PinnedPtr, schemeName_pinned.Length, domainName_pinned.Obj.PinnedPtr, domainName_pinned.Length, CfxSchemeHandlerFactory.Unwrap(factory));
+            var __retval = CfxApi.Runtime.cfx_register_scheme_handler_factory(schemeName_pinned.Obj.PinnedPtr, schemeName_pinned.Length, domainName_pinned.Obj.PinnedPtr, domainName_pinned.Length, CfxSchemeHandlerFactory.Unwrap(factory));
             schemeName_pinned.Obj.Free();
             domainName_pinned.Obj.Free();
             return 0 != __retval;
@@ -640,7 +640,7 @@ namespace Chromium {
         /// </remarks>
         public static void RegisterWebPluginCrash(string path) {
             var path_pinned = new PinnedString(path);
-            CfxApi.cfx_register_web_plugin_crash(path_pinned.Obj.PinnedPtr, path_pinned.Length);
+            CfxApi.Runtime.cfx_register_web_plugin_crash(path_pinned.Obj.PinnedPtr, path_pinned.Length);
             path_pinned.Obj.Free();
         }
 
@@ -656,7 +656,7 @@ namespace Chromium {
             var sourceOrigin_pinned = new PinnedString(sourceOrigin);
             var targetProtocol_pinned = new PinnedString(targetProtocol);
             var targetDomain_pinned = new PinnedString(targetDomain);
-            var __retval = CfxApi.cfx_remove_cross_origin_whitelist_entry(sourceOrigin_pinned.Obj.PinnedPtr, sourceOrigin_pinned.Length, targetProtocol_pinned.Obj.PinnedPtr, targetProtocol_pinned.Length, targetDomain_pinned.Obj.PinnedPtr, targetDomain_pinned.Length, allowTargetSubdomains ? 1 : 0);
+            var __retval = CfxApi.Runtime.cfx_remove_cross_origin_whitelist_entry(sourceOrigin_pinned.Obj.PinnedPtr, sourceOrigin_pinned.Length, targetProtocol_pinned.Obj.PinnedPtr, targetProtocol_pinned.Length, targetDomain_pinned.Obj.PinnedPtr, targetDomain_pinned.Length, allowTargetSubdomains ? 1 : 0);
             sourceOrigin_pinned.Obj.Free();
             targetProtocol_pinned.Obj.Free();
             targetDomain_pinned.Obj.Free();
@@ -676,7 +676,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
         public static void RunMessageLoop() {
-            CfxApi.cfx_run_message_loop();
+            CfxApi.Runtime.cfx_run_message_loop();
         }
 
         /// <summary>
@@ -688,7 +688,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
         public static void SetOsModalLoop(bool osModalLoop) {
-            CfxApi.cfx_set_osmodal_loop(osModalLoop ? 1 : 0);
+            CfxApi.Runtime.cfx_set_osmodal_loop(osModalLoop ? 1 : 0);
         }
 
         /// <summary>
@@ -700,7 +700,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
         /// </remarks>
         private static void ShutdownPrivate() {
-            CfxApi.cfx_shutdown();
+            CfxApi.Runtime.cfx_shutdown();
         }
 
         /// <summary>
@@ -714,7 +714,7 @@ namespace Chromium {
         /// </remarks>
         public static void UnregisterInternalWebPlugin(string path) {
             var path_pinned = new PinnedString(path);
-            CfxApi.cfx_unregister_internal_web_plugin(path_pinned.Obj.PinnedPtr, path_pinned.Length);
+            CfxApi.Runtime.cfx_unregister_internal_web_plugin(path_pinned.Obj.PinnedPtr, path_pinned.Length);
             path_pinned.Obj.Free();
         }
 
@@ -734,7 +734,7 @@ namespace Chromium {
         /// </remarks>
         public static string UriDecode(string text, bool convertToUtf8, CfxUriUnescapeRule unescapeRule) {
             var text_pinned = new PinnedString(text);
-            var __retval = CfxApi.cfx_uridecode(text_pinned.Obj.PinnedPtr, text_pinned.Length, convertToUtf8 ? 1 : 0, (int)unescapeRule);
+            var __retval = CfxApi.Runtime.cfx_uridecode(text_pinned.Obj.PinnedPtr, text_pinned.Length, convertToUtf8 ? 1 : 0, (int)unescapeRule);
             text_pinned.Obj.Free();
             return StringFunctions.ConvertStringUserfree(__retval);
         }
@@ -751,7 +751,7 @@ namespace Chromium {
         /// </remarks>
         public static string UriEncode(string text, bool usePlus) {
             var text_pinned = new PinnedString(text);
-            var __retval = CfxApi.cfx_uriencode(text_pinned.Obj.PinnedPtr, text_pinned.Length, usePlus ? 1 : 0);
+            var __retval = CfxApi.Runtime.cfx_uriencode(text_pinned.Obj.PinnedPtr, text_pinned.Length, usePlus ? 1 : 0);
             text_pinned.Obj.Free();
             return StringFunctions.ConvertStringUserfree(__retval);
         }
@@ -771,7 +771,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/cef_version.h">cef/include/cef_version.h</see>.
         /// </remarks>
         public static int VersionInfo(int entry) {
-            return CfxApi.cfx_version_info(entry);
+            return CfxApi.Runtime.cfx_version_info(entry);
         }
 
         /// <summary>
@@ -783,7 +783,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_web_plugin_capi.h">cef/include/capi/cef_web_plugin_capi.h</see>.
         /// </remarks>
         public static void VisitWebPluginInfo(CfxWebPluginInfoVisitor visitor) {
-            CfxApi.cfx_visit_web_plugin_info(CfxWebPluginInfoVisitor.Unwrap(visitor));
+            CfxApi.Runtime.cfx_visit_web_plugin_info(CfxWebPluginInfoVisitor.Unwrap(visitor));
         }
 
         /// <summary>
@@ -796,7 +796,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
         /// </remarks>
         public static string WriteJson(CfxValue node, CfxJsonWriterOptions options) {
-            return StringFunctions.ConvertStringUserfree(CfxApi.cfx_write_json(CfxValue.Unwrap(node), (int)options));
+            return StringFunctions.ConvertStringUserfree(CfxApi.Runtime.cfx_write_json(CfxValue.Unwrap(node), (int)options));
         }
 
         public class Linux {
@@ -811,7 +811,7 @@ namespace Chromium {
             /// </remarks>
             public static IntPtr GetXDisplay() {
                 CfxApi.CheckPlatformOS(CfxPlatformOS.Linux);
-                return CfxApi.cfx_get_xdisplay();
+                return CfxApi.Runtime.cfx_get_xdisplay();
             }
 
         }

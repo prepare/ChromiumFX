@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxInsets : CfxStructure {
 
-        static CfxInsets () {
-            CfxApiLoader.LoadCfxInsetsApi();
-        }
-
         internal static CfxInsets Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxInsets(nativePtr);
@@ -54,54 +50,54 @@ namespace Chromium {
 
         internal static CfxInsets WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxInsets(nativePtr, CfxApi.cfx_insets_dtor);
+            return new CfxInsets(nativePtr, CfxApi.Insets.cfx_insets_dtor);
         }
 
-        public CfxInsets() : base(CfxApi.cfx_insets_ctor, CfxApi.cfx_insets_dtor) {}
+        public CfxInsets() : base(CfxApi.Insets.cfx_insets_ctor, CfxApi.Insets.cfx_insets_dtor) {}
         internal CfxInsets(IntPtr nativePtr) : base(nativePtr) {}
         internal CfxInsets(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         public int Top {
             get {
                 int value;
-                CfxApi.cfx_insets_get_top(nativePtrUnchecked, out value);
+                CfxApi.Insets.cfx_insets_get_top(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_insets_set_top(nativePtrUnchecked, value);
+                CfxApi.Insets.cfx_insets_set_top(nativePtrUnchecked, value);
             }
         }
 
         public int Left {
             get {
                 int value;
-                CfxApi.cfx_insets_get_left(nativePtrUnchecked, out value);
+                CfxApi.Insets.cfx_insets_get_left(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_insets_set_left(nativePtrUnchecked, value);
+                CfxApi.Insets.cfx_insets_set_left(nativePtrUnchecked, value);
             }
         }
 
         public int Bottom {
             get {
                 int value;
-                CfxApi.cfx_insets_get_bottom(nativePtrUnchecked, out value);
+                CfxApi.Insets.cfx_insets_get_bottom(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_insets_set_bottom(nativePtrUnchecked, value);
+                CfxApi.Insets.cfx_insets_set_bottom(nativePtrUnchecked, value);
             }
         }
 
         public int Right {
             get {
                 int value;
-                CfxApi.cfx_insets_get_right(nativePtrUnchecked, out value);
+                CfxApi.Insets.cfx_insets_get_right(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_insets_set_right(nativePtrUnchecked, value);
+                CfxApi.Insets.cfx_insets_set_right(nativePtrUnchecked, value);
             }
         }
 

@@ -46,13 +46,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxKeyboardHandler : CfxBase {
 
-        static CfxKeyboardHandler () {
-            CfxApiLoader.LoadCfxKeyboardHandlerApi();
-        }
-
         internal static CfxKeyboardHandler Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_keyboard_handler_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.KeyboardHandler.cfx_keyboard_handler_get_gc_handle(nativePtr);
             return (CfxKeyboardHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -102,7 +98,7 @@ namespace Chromium {
         }
 
         internal CfxKeyboardHandler(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxKeyboardHandler() : base(CfxApi.cfx_keyboard_handler_ctor) {}
+        public CfxKeyboardHandler() : base(CfxApi.KeyboardHandler.cfx_keyboard_handler_ctor) {}
 
         /// <summary>
         /// Called before a keyboard event is sent to the renderer. |Event| contains
@@ -123,7 +119,7 @@ namespace Chromium {
                             cfx_keyboard_handler_on_pre_key_event = on_pre_key_event;
                             cfx_keyboard_handler_on_pre_key_event_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_keyboard_handler_on_pre_key_event);
                         }
-                        CfxApi.cfx_keyboard_handler_set_managed_callback(NativePtr, 0, cfx_keyboard_handler_on_pre_key_event_ptr);
+                        CfxApi.KeyboardHandler.cfx_keyboard_handler_set_managed_callback(NativePtr, 0, cfx_keyboard_handler_on_pre_key_event_ptr);
                     }
                     m_OnPreKeyEvent += value;
                 }
@@ -132,7 +128,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnPreKeyEvent -= value;
                     if(m_OnPreKeyEvent == null) {
-                        CfxApi.cfx_keyboard_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.KeyboardHandler.cfx_keyboard_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -158,7 +154,7 @@ namespace Chromium {
                             cfx_keyboard_handler_on_key_event = on_key_event;
                             cfx_keyboard_handler_on_key_event_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_keyboard_handler_on_key_event);
                         }
-                        CfxApi.cfx_keyboard_handler_set_managed_callback(NativePtr, 1, cfx_keyboard_handler_on_key_event_ptr);
+                        CfxApi.KeyboardHandler.cfx_keyboard_handler_set_managed_callback(NativePtr, 1, cfx_keyboard_handler_on_key_event_ptr);
                     }
                     m_OnKeyEvent += value;
                 }
@@ -167,7 +163,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnKeyEvent -= value;
                     if(m_OnKeyEvent == null) {
-                        CfxApi.cfx_keyboard_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.KeyboardHandler.cfx_keyboard_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
                     }
                 }
             }
@@ -178,11 +174,11 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnPreKeyEvent != null) {
                 m_OnPreKeyEvent = null;
-                CfxApi.cfx_keyboard_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.KeyboardHandler.cfx_keyboard_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_OnKeyEvent != null) {
                 m_OnKeyEvent = null;
-                CfxApi.cfx_keyboard_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.KeyboardHandler.cfx_keyboard_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

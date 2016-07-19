@@ -46,13 +46,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxDomVisitor : CfxBase {
 
-        static CfxDomVisitor () {
-            CfxApiLoader.LoadCfxDomVisitorApi();
-        }
-
         internal static CfxDomVisitor Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_domvisitor_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.DomVisitor.cfx_domvisitor_get_gc_handle(nativePtr);
             return (CfxDomVisitor)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -78,7 +74,7 @@ namespace Chromium {
         }
 
         internal CfxDomVisitor(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxDomVisitor() : base(CfxApi.cfx_domvisitor_ctor) {}
+        public CfxDomVisitor() : base(CfxApi.DomVisitor.cfx_domvisitor_ctor) {}
 
         /// <summary>
         /// Method executed for visiting the DOM. The document object passed to this
@@ -99,7 +95,7 @@ namespace Chromium {
                             cfx_domvisitor_visit = visit;
                             cfx_domvisitor_visit_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_domvisitor_visit);
                         }
-                        CfxApi.cfx_domvisitor_set_managed_callback(NativePtr, 0, cfx_domvisitor_visit_ptr);
+                        CfxApi.DomVisitor.cfx_domvisitor_set_managed_callback(NativePtr, 0, cfx_domvisitor_visit_ptr);
                     }
                     m_Visit += value;
                 }
@@ -108,7 +104,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Visit -= value;
                     if(m_Visit == null) {
-                        CfxApi.cfx_domvisitor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.DomVisitor.cfx_domvisitor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -119,7 +115,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_Visit != null) {
                 m_Visit = null;
-                CfxApi.cfx_domvisitor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.DomVisitor.cfx_domvisitor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

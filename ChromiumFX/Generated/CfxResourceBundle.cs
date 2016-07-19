@@ -47,10 +47,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxResourceBundle : CfxBase {
 
-        static CfxResourceBundle () {
-            CfxApiLoader.LoadCfxResourceBundleApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxResourceBundle Wrap(IntPtr nativePtr) {
@@ -78,7 +74,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_capi.h">cef/include/capi/cef_resource_bundle_capi.h</see>.
         /// </remarks>
         public static CfxResourceBundle GetGlobal() {
-            return CfxResourceBundle.Wrap(CfxApi.cfx_resource_bundle_get_global());
+            return CfxResourceBundle.Wrap(CfxApi.ResourceBundle.cfx_resource_bundle_get_global());
         }
 
         /// <summary>
@@ -91,7 +87,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_capi.h">cef/include/capi/cef_resource_bundle_capi.h</see>.
         /// </remarks>
         public string GetLocalizedString(int stringId) {
-            return StringFunctions.ConvertStringUserfree(CfxApi.cfx_resource_bundle_get_localized_string(NativePtr, stringId));
+            return StringFunctions.ConvertStringUserfree(CfxApi.ResourceBundle.cfx_resource_bundle_get_localized_string(NativePtr, stringId));
         }
 
         /// <summary>
@@ -107,7 +103,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_capi.h">cef/include/capi/cef_resource_bundle_capi.h</see>.
         /// </remarks>
         public bool GetDataResource(int resourceId, out IntPtr data, out int dataSize) {
-            return 0 != CfxApi.cfx_resource_bundle_get_data_resource(NativePtr, resourceId, out data, out dataSize);
+            return 0 != CfxApi.ResourceBundle.cfx_resource_bundle_get_data_resource(NativePtr, resourceId, out data, out dataSize);
         }
 
         /// <summary>
@@ -125,7 +121,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_capi.h">cef/include/capi/cef_resource_bundle_capi.h</see>.
         /// </remarks>
         public bool GetDataResourceForScale(int resourceId, CfxScaleFactor scaleFactor, out IntPtr data, out int dataSize) {
-            return 0 != CfxApi.cfx_resource_bundle_get_data_resource_for_scale(NativePtr, resourceId, (int)scaleFactor, out data, out dataSize);
+            return 0 != CfxApi.ResourceBundle.cfx_resource_bundle_get_data_resource_for_scale(NativePtr, resourceId, (int)scaleFactor, out data, out dataSize);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

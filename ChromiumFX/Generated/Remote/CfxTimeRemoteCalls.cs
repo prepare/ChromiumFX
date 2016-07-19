@@ -60,7 +60,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
             value = sender.Year;
         }
     }
@@ -73,7 +73,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
             sender.Year = value;
         }
     }
@@ -88,7 +88,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
             value = sender.Month;
         }
     }
@@ -101,7 +101,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
             sender.Month = value;
         }
     }
@@ -116,7 +116,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
             value = sender.DayOfWeek;
         }
     }
@@ -129,7 +129,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
             sender.DayOfWeek = value;
         }
     }
@@ -144,7 +144,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
             value = sender.DayOfMonth;
         }
     }
@@ -157,7 +157,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
             sender.DayOfMonth = value;
         }
     }
@@ -172,7 +172,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
             value = sender.Hour;
         }
     }
@@ -185,7 +185,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
             sender.Hour = value;
         }
     }
@@ -200,7 +200,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
             value = sender.Minute;
         }
     }
@@ -213,7 +213,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
             sender.Minute = value;
         }
     }
@@ -228,7 +228,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
             value = sender.Second;
         }
     }
@@ -241,7 +241,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
             sender.Second = value;
         }
     }
@@ -256,7 +256,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
             value = sender.Millisecond;
         }
     }
@@ -269,7 +269,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender);
+            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
             sender.Millisecond = value;
         }
     }

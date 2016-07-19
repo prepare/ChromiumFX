@@ -89,13 +89,7 @@ public class ApiType {
     }
 
     public virtual string RemoteSymbol {
-        get {
-            if(ProxySymbol == "IntPtr") {
-                return "RemotePtr";
-            } else {
-                return ProxySymbol;
-            }
-        }
+        get { return ProxySymbol; }
     }
 
     public virtual string NativeCallParameter(string var, bool isConst) {
@@ -172,7 +166,7 @@ public class ApiType {
     }
 
     public virtual string ProxyCallArgument(string var) {
-        return ProxyUnwrapExpression(var);
+        return PublicCallArgument(var);
     }
 
     public virtual string RemoteCallParameter(string var) {
@@ -207,6 +201,10 @@ public class ApiType {
 
     public virtual string ProxyUnwrapExpression(string var) {
         return CSharp.Escape(var);
+    }
+
+    public virtual string ProxyReturnExpression(string var) {
+        return PublicReturnExpression(var);
     }
 
     public virtual string RemoteWrapExpression(string var) {
@@ -272,13 +270,15 @@ public class ApiType {
     }
 
     public virtual void EmitPreProxyCallStatements(CodeBuilder b, string var) {
+        EmitPrePublicCallStatements(b, var);
     }
 
     public virtual void EmitPostProxyCallStatements(CodeBuilder b, string var) {
+        EmitPostPublicCallStatements(b, var);
     }
 
     public virtual void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
-        b.AppendLine("call.{0} = {1};", var == "this" ? "self" : CSharp.Escape(var), RemoteUnwrapExpression(var));
+        b.AppendLine("call.{0} = {0};", CSharp.Escape(var));
     }
 
     public virtual void EmitPostRemoteCallStatements(CodeBuilder b, string var) {
@@ -469,6 +469,13 @@ public class ApiType {
 
     public virtual bool IsStringCollectionType {
         get { return false; }
+    }
+
+    public virtual StringCollectionType AsStringCollectionType {
+        get {
+            Debug.Assert(false);
+            return null;
+        }
     }
 
     public override string ToString() {

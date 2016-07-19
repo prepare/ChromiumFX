@@ -44,10 +44,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxCookieManager : CfxBase {
 
-        static CfxCookieManager () {
-            CfxApiLoader.LoadCfxCookieManagerApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxCookieManager Wrap(IntPtr nativePtr) {
@@ -80,7 +76,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
         /// </remarks>
         public static CfxCookieManager GetGlobalManager(CfxCompletionCallback callback) {
-            return CfxCookieManager.Wrap(CfxApi.cfx_cookie_manager_get_global_manager(CfxCompletionCallback.Unwrap(callback)));
+            return CfxCookieManager.Wrap(CfxApi.CookieManager.cfx_cookie_manager_get_global_manager(CfxCompletionCallback.Unwrap(callback)));
         }
 
         /// <summary>
@@ -98,7 +94,7 @@ namespace Chromium {
         /// </remarks>
         public static CfxCookieManager CreateManager(string path, bool persistSessionCookies, CfxCompletionCallback callback) {
             var path_pinned = new PinnedString(path);
-            var __retval = CfxApi.cfx_cookie_manager_create_manager(path_pinned.Obj.PinnedPtr, path_pinned.Length, persistSessionCookies ? 1 : 0, CfxCompletionCallback.Unwrap(callback));
+            var __retval = CfxApi.CookieManager.cfx_cookie_manager_create_manager(path_pinned.Obj.PinnedPtr, path_pinned.Length, persistSessionCookies ? 1 : 0, CfxCompletionCallback.Unwrap(callback));
             path_pinned.Obj.Free();
             return CfxCookieManager.Wrap(__retval);
         }
@@ -116,10 +112,10 @@ namespace Chromium {
         public void SetSupportedSchemes(System.Collections.Generic.List<string> schemes, CfxCompletionCallback callback) {
             PinnedString[] schemes_handles;
             var schemes_unwrapped = StringFunctions.UnwrapCfxStringList(schemes, out schemes_handles);
-            CfxApi.cfx_cookie_manager_set_supported_schemes(NativePtr, schemes_unwrapped, CfxCompletionCallback.Unwrap(callback));
+            CfxApi.CookieManager.cfx_cookie_manager_set_supported_schemes(NativePtr, schemes_unwrapped, CfxCompletionCallback.Unwrap(callback));
             StringFunctions.FreePinnedStrings(schemes_handles);
             StringFunctions.CfxStringListCopyToManaged(schemes_unwrapped, schemes);
-            CfxApi.cfx_string_list_free(schemes_unwrapped);
+            CfxApi.Runtime.cfx_string_list_free(schemes_unwrapped);
         }
 
         /// <summary>
@@ -132,7 +128,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
         /// </remarks>
         public bool VisitAllCookies(CfxCookieVisitor visitor) {
-            return 0 != CfxApi.cfx_cookie_manager_visit_all_cookies(NativePtr, CfxCookieVisitor.Unwrap(visitor));
+            return 0 != CfxApi.CookieManager.cfx_cookie_manager_visit_all_cookies(NativePtr, CfxCookieVisitor.Unwrap(visitor));
         }
 
         /// <summary>
@@ -148,7 +144,7 @@ namespace Chromium {
         /// </remarks>
         public bool VisitUrlCookies(string url, bool includeHttpOnly, CfxCookieVisitor visitor) {
             var url_pinned = new PinnedString(url);
-            var __retval = CfxApi.cfx_cookie_manager_visit_url_cookies(NativePtr, url_pinned.Obj.PinnedPtr, url_pinned.Length, includeHttpOnly ? 1 : 0, CfxCookieVisitor.Unwrap(visitor));
+            var __retval = CfxApi.CookieManager.cfx_cookie_manager_visit_url_cookies(NativePtr, url_pinned.Obj.PinnedPtr, url_pinned.Length, includeHttpOnly ? 1 : 0, CfxCookieVisitor.Unwrap(visitor));
             url_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -168,7 +164,7 @@ namespace Chromium {
         /// </remarks>
         public bool SetCookie(string url, CfxCookie cookie, CfxSetCookieCallback callback) {
             var url_pinned = new PinnedString(url);
-            var __retval = CfxApi.cfx_cookie_manager_set_cookie(NativePtr, url_pinned.Obj.PinnedPtr, url_pinned.Length, CfxCookie.Unwrap(cookie), CfxSetCookieCallback.Unwrap(callback));
+            var __retval = CfxApi.CookieManager.cfx_cookie_manager_set_cookie(NativePtr, url_pinned.Obj.PinnedPtr, url_pinned.Length, CfxCookie.Unwrap(cookie), CfxSetCookieCallback.Unwrap(callback));
             url_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -191,7 +187,7 @@ namespace Chromium {
         public bool DeleteCookies(string url, string cookieName, CfxDeleteCookiesCallback callback) {
             var url_pinned = new PinnedString(url);
             var cookieName_pinned = new PinnedString(cookieName);
-            var __retval = CfxApi.cfx_cookie_manager_delete_cookies(NativePtr, url_pinned.Obj.PinnedPtr, url_pinned.Length, cookieName_pinned.Obj.PinnedPtr, cookieName_pinned.Length, CfxDeleteCookiesCallback.Unwrap(callback));
+            var __retval = CfxApi.CookieManager.cfx_cookie_manager_delete_cookies(NativePtr, url_pinned.Obj.PinnedPtr, url_pinned.Length, cookieName_pinned.Obj.PinnedPtr, cookieName_pinned.Length, CfxDeleteCookiesCallback.Unwrap(callback));
             url_pinned.Obj.Free();
             cookieName_pinned.Obj.Free();
             return 0 != __retval;
@@ -213,7 +209,7 @@ namespace Chromium {
         /// </remarks>
         public bool SetStoragePath(string path, bool persistSessionCookies, CfxCompletionCallback callback) {
             var path_pinned = new PinnedString(path);
-            var __retval = CfxApi.cfx_cookie_manager_set_storage_path(NativePtr, path_pinned.Obj.PinnedPtr, path_pinned.Length, persistSessionCookies ? 1 : 0, CfxCompletionCallback.Unwrap(callback));
+            var __retval = CfxApi.CookieManager.cfx_cookie_manager_set_storage_path(NativePtr, path_pinned.Obj.PinnedPtr, path_pinned.Length, persistSessionCookies ? 1 : 0, CfxCompletionCallback.Unwrap(callback));
             path_pinned.Obj.Free();
             return 0 != __retval;
         }
@@ -228,7 +224,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
         /// </remarks>
         public bool FlushStore(CfxCompletionCallback callback) {
-            return 0 != CfxApi.cfx_cookie_manager_flush_store(NativePtr, CfxCompletionCallback.Unwrap(callback));
+            return 0 != CfxApi.CookieManager.cfx_cookie_manager_flush_store(NativePtr, CfxCompletionCallback.Unwrap(callback));
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

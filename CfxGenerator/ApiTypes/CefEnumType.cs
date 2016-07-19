@@ -90,6 +90,10 @@ public class CefEnumType : ApiType {
         get { return "int"; }
     }
 
+    public override string ProxyReturnExpression(string var) {
+        return var;
+    }
+
     public override string RemoteSymbol {
         get { return PublicSymbol; }
     }
@@ -127,6 +131,10 @@ public class CefEnumType : ApiType {
     }
 
     private static string[] additionalFlags = { "CfxV8PropertyAttribute", "CfxDragOperationsMask", "CfxFileDialogMode", "CfxJsonWriterOptions", "CfxTransitionType", "CfxV8AccessControl" };
+
+    public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
+        b.AppendLine("call.{0} = (int){0};", CSharp.Escape(var));
+    }
 
     private static string GetEnumMemberValue(string originalValue) {
         switch(originalValue) {

@@ -45,10 +45,6 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxGeoposition : CfxStructure {
 
-        static CfxGeoposition () {
-            CfxApiLoader.LoadCfxGeopositionApi();
-        }
-
         internal static CfxGeoposition Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxGeoposition(nativePtr);
@@ -56,10 +52,10 @@ namespace Chromium {
 
         internal static CfxGeoposition WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxGeoposition(nativePtr, CfxApi.cfx_geoposition_dtor);
+            return new CfxGeoposition(nativePtr, CfxApi.Geoposition.cfx_geoposition_dtor);
         }
 
-        public CfxGeoposition() : base(CfxApi.cfx_geoposition_ctor, CfxApi.cfx_geoposition_dtor) {}
+        public CfxGeoposition() : base(CfxApi.Geoposition.cfx_geoposition_ctor, CfxApi.Geoposition.cfx_geoposition_dtor) {}
         internal CfxGeoposition(IntPtr nativePtr) : base(nativePtr) {}
         internal CfxGeoposition(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
@@ -73,11 +69,11 @@ namespace Chromium {
         public double Latitude {
             get {
                 double value;
-                CfxApi.cfx_geoposition_get_latitude(nativePtrUnchecked, out value);
+                CfxApi.Geoposition.cfx_geoposition_get_latitude(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_geoposition_set_latitude(nativePtrUnchecked, value);
+                CfxApi.Geoposition.cfx_geoposition_set_latitude(nativePtrUnchecked, value);
             }
         }
 
@@ -91,11 +87,11 @@ namespace Chromium {
         public double Longitude {
             get {
                 double value;
-                CfxApi.cfx_geoposition_get_longitude(nativePtrUnchecked, out value);
+                CfxApi.Geoposition.cfx_geoposition_get_longitude(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_geoposition_set_longitude(nativePtrUnchecked, value);
+                CfxApi.Geoposition.cfx_geoposition_set_longitude(nativePtrUnchecked, value);
             }
         }
 
@@ -109,11 +105,11 @@ namespace Chromium {
         public double Altitude {
             get {
                 double value;
-                CfxApi.cfx_geoposition_get_altitude(nativePtrUnchecked, out value);
+                CfxApi.Geoposition.cfx_geoposition_get_altitude(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_geoposition_set_altitude(nativePtrUnchecked, value);
+                CfxApi.Geoposition.cfx_geoposition_set_altitude(nativePtrUnchecked, value);
             }
         }
 
@@ -127,11 +123,11 @@ namespace Chromium {
         public double Accuracy {
             get {
                 double value;
-                CfxApi.cfx_geoposition_get_accuracy(nativePtrUnchecked, out value);
+                CfxApi.Geoposition.cfx_geoposition_get_accuracy(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_geoposition_set_accuracy(nativePtrUnchecked, value);
+                CfxApi.Geoposition.cfx_geoposition_set_accuracy(nativePtrUnchecked, value);
             }
         }
 
@@ -145,11 +141,11 @@ namespace Chromium {
         public double AltitudeAccuracy {
             get {
                 double value;
-                CfxApi.cfx_geoposition_get_altitude_accuracy(nativePtrUnchecked, out value);
+                CfxApi.Geoposition.cfx_geoposition_get_altitude_accuracy(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_geoposition_set_altitude_accuracy(nativePtrUnchecked, value);
+                CfxApi.Geoposition.cfx_geoposition_set_altitude_accuracy(nativePtrUnchecked, value);
             }
         }
 
@@ -163,11 +159,11 @@ namespace Chromium {
         public double Heading {
             get {
                 double value;
-                CfxApi.cfx_geoposition_get_heading(nativePtrUnchecked, out value);
+                CfxApi.Geoposition.cfx_geoposition_get_heading(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_geoposition_set_heading(nativePtrUnchecked, value);
+                CfxApi.Geoposition.cfx_geoposition_set_heading(nativePtrUnchecked, value);
             }
         }
 
@@ -181,11 +177,11 @@ namespace Chromium {
         public double Speed {
             get {
                 double value;
-                CfxApi.cfx_geoposition_get_speed(nativePtrUnchecked, out value);
+                CfxApi.Geoposition.cfx_geoposition_get_speed(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_geoposition_set_speed(nativePtrUnchecked, value);
+                CfxApi.Geoposition.cfx_geoposition_set_speed(nativePtrUnchecked, value);
             }
         }
 
@@ -200,11 +196,11 @@ namespace Chromium {
         public CfxTime Timestamp {
             get {
                 IntPtr value;
-                CfxApi.cfx_geoposition_get_timestamp(nativePtrUnchecked, out value);
+                CfxApi.Geoposition.cfx_geoposition_get_timestamp(nativePtrUnchecked, out value);
                 return CfxTime.Wrap(value);
             }
             set {
-                CfxApi.cfx_geoposition_set_timestamp(nativePtrUnchecked, CfxTime.Unwrap(value));
+                CfxApi.Geoposition.cfx_geoposition_set_timestamp(nativePtrUnchecked, CfxTime.Unwrap(value));
             }
         }
 
@@ -218,11 +214,11 @@ namespace Chromium {
         public CfxGeopositionErrorCode ErrorCode {
             get {
                 int value;
-                CfxApi.cfx_geoposition_get_error_code(nativePtrUnchecked, out value);
+                CfxApi.Geoposition.cfx_geoposition_get_error_code(nativePtrUnchecked, out value);
                 return (CfxGeopositionErrorCode)value;
             }
             set {
-                CfxApi.cfx_geoposition_set_error_code(nativePtrUnchecked, (int)value);
+                CfxApi.Geoposition.cfx_geoposition_set_error_code(nativePtrUnchecked, (int)value);
             }
         }
 
@@ -237,12 +233,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_geoposition_get_error_message(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.Geoposition.cfx_geoposition_get_error_message(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_geoposition_set_error_message(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.Geoposition.cfx_geoposition_set_error_message(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }

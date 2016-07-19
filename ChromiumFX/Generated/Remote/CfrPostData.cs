@@ -85,7 +85,7 @@ namespace Chromium.Remote {
         public bool IsReadOnly {
             get {
                 var call = new CfxPostDataIsReadOnlyRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -104,7 +104,7 @@ namespace Chromium.Remote {
         public bool HasExcludedElements {
             get {
                 var call = new CfxPostDataHasExcludedElementsRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -120,7 +120,7 @@ namespace Chromium.Remote {
         public int ElementCount {
             get {
                 var call = new CfxPostDataGetElementCountRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -136,7 +136,7 @@ namespace Chromium.Remote {
         public CfrPostDataElement[] Elements {
             get {
                 var call = new CfxPostDataGetElementsRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 if(call.__retval == null) return null;
                 var retval = new CfrPostDataElement[call.__retval.Length];
@@ -157,7 +157,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool RemoveElement(CfrPostDataElement element) {
             var call = new CfxPostDataRemoveElementRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.element = CfrObject.Unwrap(element);
             call.RequestExecution(this);
             return call.__retval;
@@ -172,7 +172,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool AddElement(CfrPostDataElement element) {
             var call = new CfxPostDataAddElementRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.element = CfrObject.Unwrap(element);
             call.RequestExecution(this);
             return call.__retval;
@@ -187,7 +187,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public void RemoveElements() {
             var call = new CfxPostDataRemoveElementsRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.RequestExecution(this);
         }
 

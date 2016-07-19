@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxDownloadItem : CfxBase {
 
-        static CfxDownloadItem () {
-            CfxApiLoader.LoadCfxDownloadItemApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxDownloadItem Wrap(IntPtr nativePtr) {
@@ -76,7 +72,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsValid {
             get {
-                return 0 != CfxApi.cfx_download_item_is_valid(NativePtr);
+                return 0 != CfxApi.DownloadItem.cfx_download_item_is_valid(NativePtr);
             }
         }
 
@@ -89,7 +85,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsInProgress {
             get {
-                return 0 != CfxApi.cfx_download_item_is_in_progress(NativePtr);
+                return 0 != CfxApi.DownloadItem.cfx_download_item_is_in_progress(NativePtr);
             }
         }
 
@@ -102,7 +98,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsComplete {
             get {
-                return 0 != CfxApi.cfx_download_item_is_complete(NativePtr);
+                return 0 != CfxApi.DownloadItem.cfx_download_item_is_complete(NativePtr);
             }
         }
 
@@ -115,7 +111,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsCanceled {
             get {
-                return 0 != CfxApi.cfx_download_item_is_canceled(NativePtr);
+                return 0 != CfxApi.DownloadItem.cfx_download_item_is_canceled(NativePtr);
             }
         }
 
@@ -128,7 +124,7 @@ namespace Chromium {
         /// </remarks>
         public long CurrentSpeed {
             get {
-                return CfxApi.cfx_download_item_get_current_speed(NativePtr);
+                return CfxApi.DownloadItem.cfx_download_item_get_current_speed(NativePtr);
             }
         }
 
@@ -142,7 +138,7 @@ namespace Chromium {
         /// </remarks>
         public int PercentComplete {
             get {
-                return CfxApi.cfx_download_item_get_percent_complete(NativePtr);
+                return CfxApi.DownloadItem.cfx_download_item_get_percent_complete(NativePtr);
             }
         }
 
@@ -155,7 +151,7 @@ namespace Chromium {
         /// </remarks>
         public long TotalBytes {
             get {
-                return CfxApi.cfx_download_item_get_total_bytes(NativePtr);
+                return CfxApi.DownloadItem.cfx_download_item_get_total_bytes(NativePtr);
             }
         }
 
@@ -168,7 +164,7 @@ namespace Chromium {
         /// </remarks>
         public long ReceivedBytes {
             get {
-                return CfxApi.cfx_download_item_get_received_bytes(NativePtr);
+                return CfxApi.DownloadItem.cfx_download_item_get_received_bytes(NativePtr);
             }
         }
 
@@ -181,7 +177,7 @@ namespace Chromium {
         /// </remarks>
         public CfxTime StartTime {
             get {
-                return CfxTime.WrapOwned(CfxApi.cfx_download_item_get_start_time(NativePtr));
+                return CfxTime.WrapOwned(CfxApi.DownloadItem.cfx_download_item_get_start_time(NativePtr));
             }
         }
 
@@ -194,7 +190,7 @@ namespace Chromium {
         /// </remarks>
         public CfxTime EndTime {
             get {
-                return CfxTime.WrapOwned(CfxApi.cfx_download_item_get_end_time(NativePtr));
+                return CfxTime.WrapOwned(CfxApi.DownloadItem.cfx_download_item_get_end_time(NativePtr));
             }
         }
 
@@ -207,7 +203,7 @@ namespace Chromium {
         /// </remarks>
         public string FullPath {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_download_item_get_full_path(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.DownloadItem.cfx_download_item_get_full_path(NativePtr));
             }
         }
 
@@ -220,7 +216,7 @@ namespace Chromium {
         /// </remarks>
         public uint Id {
             get {
-                return CfxApi.cfx_download_item_get_id(NativePtr);
+                return CfxApi.DownloadItem.cfx_download_item_get_id(NativePtr);
             }
         }
 
@@ -233,7 +229,7 @@ namespace Chromium {
         /// </remarks>
         public string Url {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_download_item_get_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.DownloadItem.cfx_download_item_get_url(NativePtr));
             }
         }
 
@@ -246,7 +242,7 @@ namespace Chromium {
         /// </remarks>
         public string OriginalUrl {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_download_item_get_original_url(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.DownloadItem.cfx_download_item_get_original_url(NativePtr));
             }
         }
 
@@ -259,7 +255,7 @@ namespace Chromium {
         /// </remarks>
         public string SuggestedFileName {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_download_item_get_suggested_file_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.DownloadItem.cfx_download_item_get_suggested_file_name(NativePtr));
             }
         }
 
@@ -272,7 +268,7 @@ namespace Chromium {
         /// </remarks>
         public string ContentDisposition {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_download_item_get_content_disposition(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.DownloadItem.cfx_download_item_get_content_disposition(NativePtr));
             }
         }
 
@@ -285,7 +281,7 @@ namespace Chromium {
         /// </remarks>
         public string MimeType {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.cfx_download_item_get_mime_type(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.DownloadItem.cfx_download_item_get_mime_type(NativePtr));
             }
         }
 

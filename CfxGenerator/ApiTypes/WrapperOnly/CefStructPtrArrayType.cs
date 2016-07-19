@@ -148,15 +148,8 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
     }
 
     public override void EmitPreProxyCallStatements(CodeBuilder b, string var) {
-        b.AppendLine("{0}[] {1}_unwrapped;", Struct.ClassName, var);
-        b.BeginIf("{0} != null", var);
-        b.AppendLine("{0}_unwrapped = new {1}[{0}.Length];", var, Struct.ClassName);
-        b.BeginBlock("for(int i = 0; i < {0}.Length; ++i)", var);
-        b.AppendLine("{0}_unwrapped[i] = {1};", var, StructPtr.ProxyUnwrapExpression(var + "[i]"));
-        b.EndBlock();
-        b.BeginElse();
-        b.AppendLine("{0}_unwrapped = null;", var);
-        b.EndBlock();
+        b.AppendLine("PinnedObject {0}_pinned = new PinnedObject({0});", var);
+        b.AppendLine("var {0}_length = {0} == null ? 0 : {0}.Length;", var);
     }
 
     public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {

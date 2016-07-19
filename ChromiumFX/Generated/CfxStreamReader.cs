@@ -44,10 +44,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxStreamReader : CfxBase {
 
-        static CfxStreamReader () {
-            CfxApiLoader.LoadCfxStreamReaderApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxStreamReader Wrap(IntPtr nativePtr) {
@@ -76,7 +72,7 @@ namespace Chromium {
         /// </remarks>
         public static CfxStreamReader CreateForFile(string fileName) {
             var fileName_pinned = new PinnedString(fileName);
-            var __retval = CfxApi.cfx_stream_reader_create_for_file(fileName_pinned.Obj.PinnedPtr, fileName_pinned.Length);
+            var __retval = CfxApi.StreamReader.cfx_stream_reader_create_for_file(fileName_pinned.Obj.PinnedPtr, fileName_pinned.Length);
             fileName_pinned.Obj.Free();
             return CfxStreamReader.Wrap(__retval);
         }
@@ -89,7 +85,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
         /// </remarks>
         public static CfxStreamReader CreateForData(IntPtr data, int size) {
-            return CfxStreamReader.Wrap(CfxApi.cfx_stream_reader_create_for_data(data, size));
+            return CfxStreamReader.Wrap(CfxApi.StreamReader.cfx_stream_reader_create_for_data(data, size));
         }
 
         /// <summary>
@@ -100,7 +96,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
         /// </remarks>
         public static CfxStreamReader CreateForHandler(CfxReadHandler handler) {
-            return CfxStreamReader.Wrap(CfxApi.cfx_stream_reader_create_for_handler(CfxReadHandler.Unwrap(handler)));
+            return CfxStreamReader.Wrap(CfxApi.StreamReader.cfx_stream_reader_create_for_handler(CfxReadHandler.Unwrap(handler)));
         }
 
         /// <summary>
@@ -111,7 +107,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
         /// </remarks>
         public int Read(IntPtr ptr, int size, int n) {
-            return CfxApi.cfx_stream_reader_read(NativePtr, ptr, size, n);
+            return CfxApi.StreamReader.cfx_stream_reader_read(NativePtr, ptr, size, n);
         }
 
         /// <summary>
@@ -123,7 +119,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
         /// </remarks>
         public int Seek(long offset, int whence) {
-            return CfxApi.cfx_stream_reader_seek(NativePtr, offset, whence);
+            return CfxApi.StreamReader.cfx_stream_reader_seek(NativePtr, offset, whence);
         }
 
         /// <summary>
@@ -134,7 +130,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
         /// </remarks>
         public long Tell() {
-            return CfxApi.cfx_stream_reader_tell(NativePtr);
+            return CfxApi.StreamReader.cfx_stream_reader_tell(NativePtr);
         }
 
         /// <summary>
@@ -145,7 +141,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
         /// </remarks>
         public int Eof() {
-            return CfxApi.cfx_stream_reader_eof(NativePtr);
+            return CfxApi.StreamReader.cfx_stream_reader_eof(NativePtr);
         }
 
         /// <summary>
@@ -158,7 +154,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
         /// </remarks>
         public bool MayBlock() {
-            return 0 != CfxApi.cfx_stream_reader_may_block(NativePtr);
+            return 0 != CfxApi.StreamReader.cfx_stream_reader_may_block(NativePtr);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

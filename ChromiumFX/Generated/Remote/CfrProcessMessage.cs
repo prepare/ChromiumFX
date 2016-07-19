@@ -86,7 +86,7 @@ namespace Chromium.Remote {
         public bool IsValid {
             get {
                 var call = new CfxProcessMessageIsValidRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -103,7 +103,7 @@ namespace Chromium.Remote {
         public bool IsReadOnly {
             get {
                 var call = new CfxProcessMessageIsReadOnlyRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -119,7 +119,7 @@ namespace Chromium.Remote {
         public string Name {
             get {
                 var call = new CfxProcessMessageGetNameRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return call.__retval;
             }
@@ -135,7 +135,7 @@ namespace Chromium.Remote {
         public CfrListValue ArgumentList {
             get {
                 var call = new CfxProcessMessageGetArgumentListRenderProcessCall();
-                call.self = CfrObject.Unwrap(this);
+                call.@this = proxyId;
                 call.RequestExecution(this);
                 return CfrListValue.Wrap(call.__retval);
             }
@@ -150,7 +150,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrProcessMessage Copy() {
             var call = new CfxProcessMessageCopyRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.RequestExecution(this);
             return CfrProcessMessage.Wrap(call.__retval);
         }

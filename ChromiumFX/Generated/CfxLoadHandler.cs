@@ -47,13 +47,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxLoadHandler : CfxBase {
 
-        static CfxLoadHandler () {
-            CfxApiLoader.LoadCfxLoadHandlerApi();
-        }
-
         internal static CfxLoadHandler Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_load_handler_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.LoadHandler.cfx_load_handler_get_gc_handle(nativePtr);
             return (CfxLoadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -136,7 +132,7 @@ namespace Chromium {
         }
 
         internal CfxLoadHandler(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxLoadHandler() : base(CfxApi.cfx_load_handler_ctor) {}
+        public CfxLoadHandler() : base(CfxApi.LoadHandler.cfx_load_handler_ctor) {}
 
         /// <summary>
         /// Called when the loading state has changed. This callback will be executed
@@ -157,7 +153,7 @@ namespace Chromium {
                             cfx_load_handler_on_loading_state_change = on_loading_state_change;
                             cfx_load_handler_on_loading_state_change_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_load_handler_on_loading_state_change);
                         }
-                        CfxApi.cfx_load_handler_set_managed_callback(NativePtr, 0, cfx_load_handler_on_loading_state_change_ptr);
+                        CfxApi.LoadHandler.cfx_load_handler_set_managed_callback(NativePtr, 0, cfx_load_handler_on_loading_state_change_ptr);
                     }
                     m_OnLoadingStateChange += value;
                 }
@@ -166,7 +162,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnLoadingStateChange -= value;
                     if(m_OnLoadingStateChange == null) {
-                        CfxApi.cfx_load_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.LoadHandler.cfx_load_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -195,7 +191,7 @@ namespace Chromium {
                             cfx_load_handler_on_load_start = on_load_start;
                             cfx_load_handler_on_load_start_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_load_handler_on_load_start);
                         }
-                        CfxApi.cfx_load_handler_set_managed_callback(NativePtr, 1, cfx_load_handler_on_load_start_ptr);
+                        CfxApi.LoadHandler.cfx_load_handler_set_managed_callback(NativePtr, 1, cfx_load_handler_on_load_start_ptr);
                     }
                     m_OnLoadStart += value;
                 }
@@ -204,7 +200,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnLoadStart -= value;
                     if(m_OnLoadStart == null) {
-                        CfxApi.cfx_load_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.LoadHandler.cfx_load_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
                     }
                 }
             }
@@ -233,7 +229,7 @@ namespace Chromium {
                             cfx_load_handler_on_load_end = on_load_end;
                             cfx_load_handler_on_load_end_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_load_handler_on_load_end);
                         }
-                        CfxApi.cfx_load_handler_set_managed_callback(NativePtr, 2, cfx_load_handler_on_load_end_ptr);
+                        CfxApi.LoadHandler.cfx_load_handler_set_managed_callback(NativePtr, 2, cfx_load_handler_on_load_end_ptr);
                     }
                     m_OnLoadEnd += value;
                 }
@@ -242,7 +238,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnLoadEnd -= value;
                     if(m_OnLoadEnd == null) {
-                        CfxApi.cfx_load_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                        CfxApi.LoadHandler.cfx_load_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
                     }
                 }
             }
@@ -268,7 +264,7 @@ namespace Chromium {
                             cfx_load_handler_on_load_error = on_load_error;
                             cfx_load_handler_on_load_error_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_load_handler_on_load_error);
                         }
-                        CfxApi.cfx_load_handler_set_managed_callback(NativePtr, 3, cfx_load_handler_on_load_error_ptr);
+                        CfxApi.LoadHandler.cfx_load_handler_set_managed_callback(NativePtr, 3, cfx_load_handler_on_load_error_ptr);
                     }
                     m_OnLoadError += value;
                 }
@@ -277,7 +273,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnLoadError -= value;
                     if(m_OnLoadError == null) {
-                        CfxApi.cfx_load_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                        CfxApi.LoadHandler.cfx_load_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
                     }
                 }
             }
@@ -288,19 +284,19 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnLoadingStateChange != null) {
                 m_OnLoadingStateChange = null;
-                CfxApi.cfx_load_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.LoadHandler.cfx_load_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_OnLoadStart != null) {
                 m_OnLoadStart = null;
-                CfxApi.cfx_load_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.LoadHandler.cfx_load_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
             }
             if(m_OnLoadEnd != null) {
                 m_OnLoadEnd = null;
-                CfxApi.cfx_load_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                CfxApi.LoadHandler.cfx_load_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
             }
             if(m_OnLoadError != null) {
                 m_OnLoadError = null;
-                CfxApi.cfx_load_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                CfxApi.LoadHandler.cfx_load_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

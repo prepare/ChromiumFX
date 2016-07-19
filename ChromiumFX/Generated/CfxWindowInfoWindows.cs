@@ -43,12 +43,6 @@ namespace Chromium {
     /// </remarks>
     internal sealed class CfxWindowInfoWindows : CfxStructure {
 
-        static CfxWindowInfoWindows () {
-            if(CfxApi.PlatformOS == CfxPlatformOS.Windows) {
-                CfxApiLoader.LoadCfxWindowInfoWindowsApi();
-            }
-        }
-
         internal static CfxWindowInfoWindows Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxWindowInfoWindows(nativePtr);
@@ -56,10 +50,10 @@ namespace Chromium {
 
         internal static CfxWindowInfoWindows WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxWindowInfoWindows(nativePtr, CfxApi.cfx_window_info_windows_dtor);
+            return new CfxWindowInfoWindows(nativePtr, CfxApi.WindowInfoWindows.cfx_window_info_windows_dtor);
         }
 
-        public CfxWindowInfoWindows() : base(CfxApi.cfx_window_info_windows_ctor, CfxApi.cfx_window_info_windows_dtor) { CfxApi.CheckPlatformOS(CfxPlatformOS.Windows); }
+        public CfxWindowInfoWindows() : base(CfxApi.WindowInfoWindows.cfx_window_info_windows_ctor, CfxApi.WindowInfoWindows.cfx_window_info_windows_dtor) { CfxApi.CheckPlatformOS(CfxPlatformOS.Windows); }
         internal CfxWindowInfoWindows(IntPtr nativePtr) : base(nativePtr) {}
         internal CfxWindowInfoWindows(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
@@ -73,11 +67,11 @@ namespace Chromium {
         public int ExStyle {
             get {
                 int value;
-                CfxApi.cfx_window_info_windows_get_ex_style(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_get_ex_style(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_window_info_windows_set_ex_style(nativePtrUnchecked, value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_set_ex_style(nativePtrUnchecked, value);
             }
         }
 
@@ -85,12 +79,12 @@ namespace Chromium {
             get {
                 IntPtr value_str;
                 int value_length;
-                CfxApi.cfx_window_info_windows_get_window_name(nativePtrUnchecked, out value_str, out value_length);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_get_window_name(nativePtrUnchecked, out value_str, out value_length);
                 return StringFunctions.PtrToStringUni(value_str, value_length);
             }
             set {
                 var value_pinned = new PinnedString(value);
-                CfxApi.cfx_window_info_windows_set_window_name(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_set_window_name(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
@@ -98,77 +92,77 @@ namespace Chromium {
         public int Style {
             get {
                 int value;
-                CfxApi.cfx_window_info_windows_get_style(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_get_style(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_window_info_windows_set_style(nativePtrUnchecked, value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_set_style(nativePtrUnchecked, value);
             }
         }
 
         public int X {
             get {
                 int value;
-                CfxApi.cfx_window_info_windows_get_x(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_get_x(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_window_info_windows_set_x(nativePtrUnchecked, value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_set_x(nativePtrUnchecked, value);
             }
         }
 
         public int Y {
             get {
                 int value;
-                CfxApi.cfx_window_info_windows_get_y(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_get_y(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_window_info_windows_set_y(nativePtrUnchecked, value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_set_y(nativePtrUnchecked, value);
             }
         }
 
         public int Width {
             get {
                 int value;
-                CfxApi.cfx_window_info_windows_get_width(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_get_width(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_window_info_windows_set_width(nativePtrUnchecked, value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_set_width(nativePtrUnchecked, value);
             }
         }
 
         public int Height {
             get {
                 int value;
-                CfxApi.cfx_window_info_windows_get_height(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_get_height(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_window_info_windows_set_height(nativePtrUnchecked, value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_set_height(nativePtrUnchecked, value);
             }
         }
 
         public IntPtr ParentWindow {
             get {
                 IntPtr value;
-                CfxApi.cfx_window_info_windows_get_parent_window(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_get_parent_window(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_window_info_windows_set_parent_window(nativePtrUnchecked, value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_set_parent_window(nativePtrUnchecked, value);
             }
         }
 
         public IntPtr Menu {
             get {
                 IntPtr value;
-                CfxApi.cfx_window_info_windows_get_menu(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_get_menu(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_window_info_windows_set_menu(nativePtrUnchecked, value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_set_menu(nativePtrUnchecked, value);
             }
         }
 
@@ -189,11 +183,11 @@ namespace Chromium {
         public bool WindowlessRenderingEnabled {
             get {
                 int value;
-                CfxApi.cfx_window_info_windows_get_windowless_rendering_enabled(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_get_windowless_rendering_enabled(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_window_info_windows_set_windowless_rendering_enabled(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_set_windowless_rendering_enabled(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -210,11 +204,11 @@ namespace Chromium {
         public bool TransparentPaintingEnabled {
             get {
                 int value;
-                CfxApi.cfx_window_info_windows_get_transparent_painting_enabled(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_get_transparent_painting_enabled(nativePtrUnchecked, out value);
                 return 0 != value;
             }
             set {
-                CfxApi.cfx_window_info_windows_set_transparent_painting_enabled(nativePtrUnchecked, value ? 1 : 0);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_set_transparent_painting_enabled(nativePtrUnchecked, value ? 1 : 0);
             }
         }
 
@@ -228,11 +222,11 @@ namespace Chromium {
         public IntPtr Window {
             get {
                 IntPtr value;
-                CfxApi.cfx_window_info_windows_get_window(nativePtrUnchecked, out value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_get_window(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_window_info_windows_set_window(nativePtrUnchecked, value);
+                CfxApi.WindowInfoWindows.cfx_window_info_windows_set_window(nativePtrUnchecked, value);
             }
         }
 

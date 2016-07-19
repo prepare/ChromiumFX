@@ -45,10 +45,6 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxCursorInfo : CfxStructure {
 
-        static CfxCursorInfo () {
-            CfxApiLoader.LoadCfxCursorInfoApi();
-        }
-
         internal static CfxCursorInfo Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxCursorInfo(nativePtr);
@@ -56,43 +52,43 @@ namespace Chromium {
 
         internal static CfxCursorInfo WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxCursorInfo(nativePtr, CfxApi.cfx_cursor_info_dtor);
+            return new CfxCursorInfo(nativePtr, CfxApi.CursorInfo.cfx_cursor_info_dtor);
         }
 
-        public CfxCursorInfo() : base(CfxApi.cfx_cursor_info_ctor, CfxApi.cfx_cursor_info_dtor) {}
+        public CfxCursorInfo() : base(CfxApi.CursorInfo.cfx_cursor_info_ctor, CfxApi.CursorInfo.cfx_cursor_info_dtor) {}
         internal CfxCursorInfo(IntPtr nativePtr) : base(nativePtr) {}
         internal CfxCursorInfo(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         public CfxPoint Hotspot {
             get {
                 IntPtr value;
-                CfxApi.cfx_cursor_info_get_hotspot(nativePtrUnchecked, out value);
+                CfxApi.CursorInfo.cfx_cursor_info_get_hotspot(nativePtrUnchecked, out value);
                 return CfxPoint.Wrap(value);
             }
             set {
-                CfxApi.cfx_cursor_info_set_hotspot(nativePtrUnchecked, CfxPoint.Unwrap(value));
+                CfxApi.CursorInfo.cfx_cursor_info_set_hotspot(nativePtrUnchecked, CfxPoint.Unwrap(value));
             }
         }
 
         public float ImageScaleFactor {
             get {
                 float value;
-                CfxApi.cfx_cursor_info_get_image_scale_factor(nativePtrUnchecked, out value);
+                CfxApi.CursorInfo.cfx_cursor_info_get_image_scale_factor(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_cursor_info_set_image_scale_factor(nativePtrUnchecked, value);
+                CfxApi.CursorInfo.cfx_cursor_info_set_image_scale_factor(nativePtrUnchecked, value);
             }
         }
 
         public IntPtr Buffer {
             get {
                 IntPtr value;
-                CfxApi.cfx_cursor_info_get_buffer(nativePtrUnchecked, out value);
+                CfxApi.CursorInfo.cfx_cursor_info_get_buffer(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_cursor_info_set_buffer(nativePtrUnchecked, value);
+                CfxApi.CursorInfo.cfx_cursor_info_set_buffer(nativePtrUnchecked, value);
             }
         }
 

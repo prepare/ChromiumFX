@@ -49,18 +49,27 @@ namespace Chromium.Remote {
             return o.nativePtrUnchecked;
         }
 
-        internal static CfxObject Unwrap(IntPtr proxyId) {
+        internal static CfxObject Unwrap(IntPtr proxyId, Func<IntPtr, CfxObject> ctor) {
+
+            if(proxyId == IntPtr.Zero)
+                return null;
+
             lock(objects) {
                 CfxObject o;
-                objects.TryGetValue(proxyId, out o);
-                Debug.Assert(proxyId == IntPtr.Zero || proxyId == o.nativePtrUnchecked);
+                if(!objects.TryGetValue(proxyId, out o)) {
+                    o = ctor(proxyId);
+                    objects.Add(proxyId, o);
+                }
                 return o;
             }
         }
 
         internal static void Release(IntPtr proxyId) {
             lock(objects) {
-                objects.Remove(proxyId);
+                if(!objects.Remove(proxyId)) {
+                    //was not wrapped locally, release manually
+                    CfxApi.cfx_release(proxyId);
+                }
             }
         }
     }

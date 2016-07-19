@@ -48,11 +48,11 @@ public class GetPageRangesSignature : SignatureWithStructArray {
     }
 
     public override void EmitPublicCall(CodeBuilder b) {
-        b.AppendLine("int rangesCount = CfxApi.cfx_print_settings_get_page_ranges_count(NativePtr);");
+        b.AppendLine("int rangesCount = CfxApi.PrintSettings.cfx_print_settings_get_page_ranges_count(NativePtr);");
         b.AppendLine("IntPtr[] pp = new IntPtr[rangesCount];");
         b.AppendLine("PinnedObject pp_pinned = new PinnedObject(pp);");
         b.AppendLine("int ranges_nomem;");
-        b.AppendLine("CfxApi.cfx_print_settings_get_page_ranges(NativePtr, ref rangesCount, pp_pinned.PinnedPtr, out ranges_nomem);");
+        b.AppendLine("CfxApi.PrintSettings.cfx_print_settings_get_page_ranges(NativePtr, ref rangesCount, pp_pinned.PinnedPtr, out ranges_nomem);");
         b.AppendLine("pp_pinned.Free();");
         b.BeginBlock("if(ranges_nomem != 0)");
         b.AppendLine("throw new OutOfMemoryException();");

@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxPoint : CfxStructure {
 
-        static CfxPoint () {
-            CfxApiLoader.LoadCfxPointApi();
-        }
-
         internal static CfxPoint Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             return new CfxPoint(nativePtr);
@@ -54,32 +50,32 @@ namespace Chromium {
 
         internal static CfxPoint WrapOwned(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            return new CfxPoint(nativePtr, CfxApi.cfx_point_dtor);
+            return new CfxPoint(nativePtr, CfxApi.Point.cfx_point_dtor);
         }
 
-        public CfxPoint() : base(CfxApi.cfx_point_ctor, CfxApi.cfx_point_dtor) {}
+        public CfxPoint() : base(CfxApi.Point.cfx_point_ctor, CfxApi.Point.cfx_point_dtor) {}
         internal CfxPoint(IntPtr nativePtr) : base(nativePtr) {}
         internal CfxPoint(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         public int X {
             get {
                 int value;
-                CfxApi.cfx_point_get_x(nativePtrUnchecked, out value);
+                CfxApi.Point.cfx_point_get_x(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_point_set_x(nativePtrUnchecked, value);
+                CfxApi.Point.cfx_point_set_x(nativePtrUnchecked, value);
             }
         }
 
         public int Y {
             get {
                 int value;
-                CfxApi.cfx_point_get_y(nativePtrUnchecked, out value);
+                CfxApi.Point.cfx_point_get_y(nativePtrUnchecked, out value);
                 return value;
             }
             set {
-                CfxApi.cfx_point_set_y(nativePtrUnchecked, value);
+                CfxApi.Point.cfx_point_set_y(nativePtrUnchecked, value);
             }
         }
 

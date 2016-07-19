@@ -44,10 +44,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxStreamWriter : CfxBase {
 
-        static CfxStreamWriter () {
-            CfxApiLoader.LoadCfxStreamWriterApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxStreamWriter Wrap(IntPtr nativePtr) {
@@ -76,7 +72,7 @@ namespace Chromium {
         /// </remarks>
         public static CfxStreamWriter CreateForFile(string fileName) {
             var fileName_pinned = new PinnedString(fileName);
-            var __retval = CfxApi.cfx_stream_writer_create_for_file(fileName_pinned.Obj.PinnedPtr, fileName_pinned.Length);
+            var __retval = CfxApi.StreamWriter.cfx_stream_writer_create_for_file(fileName_pinned.Obj.PinnedPtr, fileName_pinned.Length);
             fileName_pinned.Obj.Free();
             return CfxStreamWriter.Wrap(__retval);
         }
@@ -89,7 +85,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
         /// </remarks>
         public static CfxStreamWriter CreateForHandler(CfxWriteHandler handler) {
-            return CfxStreamWriter.Wrap(CfxApi.cfx_stream_writer_create_for_handler(CfxWriteHandler.Unwrap(handler)));
+            return CfxStreamWriter.Wrap(CfxApi.StreamWriter.cfx_stream_writer_create_for_handler(CfxWriteHandler.Unwrap(handler)));
         }
 
         /// <summary>
@@ -100,7 +96,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
         /// </remarks>
         public int Write(IntPtr ptr, int size, int n) {
-            return CfxApi.cfx_stream_writer_write(NativePtr, ptr, size, n);
+            return CfxApi.StreamWriter.cfx_stream_writer_write(NativePtr, ptr, size, n);
         }
 
         /// <summary>
@@ -112,7 +108,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
         /// </remarks>
         public int Seek(long offset, int whence) {
-            return CfxApi.cfx_stream_writer_seek(NativePtr, offset, whence);
+            return CfxApi.StreamWriter.cfx_stream_writer_seek(NativePtr, offset, whence);
         }
 
         /// <summary>
@@ -123,7 +119,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
         /// </remarks>
         public long Tell() {
-            return CfxApi.cfx_stream_writer_tell(NativePtr);
+            return CfxApi.StreamWriter.cfx_stream_writer_tell(NativePtr);
         }
 
         /// <summary>
@@ -134,7 +130,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
         /// </remarks>
         public int Flush() {
-            return CfxApi.cfx_stream_writer_flush(NativePtr);
+            return CfxApi.StreamWriter.cfx_stream_writer_flush(NativePtr);
         }
 
         /// <summary>
@@ -147,7 +143,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
         /// </remarks>
         public bool MayBlock() {
-            return 0 != CfxApi.cfx_stream_writer_may_block(NativePtr);
+            return 0 != CfxApi.StreamWriter.cfx_stream_writer_may_block(NativePtr);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

@@ -107,7 +107,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool AddCustomScheme(string schemeName, bool isStandard, bool isLocal, bool isDisplayIsolated) {
             var call = new CfxSchemeRegistrarAddCustomSchemeRenderProcessCall();
-            call.self = CfrObject.Unwrap(this);
+            call.@this = proxyId;
             call.schemeName = schemeName;
             call.isStandard = isStandard;
             call.isLocal = isLocal;

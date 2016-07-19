@@ -47,10 +47,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxV8StackTrace : CfxBase {
 
-        static CfxV8StackTrace () {
-            CfxApiLoader.LoadCfxV8StackTraceApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxV8StackTrace Wrap(IntPtr nativePtr) {
@@ -79,7 +75,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public static CfxV8StackTrace GetCurrent(int frameLimit) {
-            return CfxV8StackTrace.Wrap(CfxApi.cfx_v8stack_trace_get_current(frameLimit));
+            return CfxV8StackTrace.Wrap(CfxApi.V8StackTrace.cfx_v8stack_trace_get_current(frameLimit));
         }
 
         /// <summary>
@@ -93,7 +89,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsValid {
             get {
-                return 0 != CfxApi.cfx_v8stack_trace_is_valid(NativePtr);
+                return 0 != CfxApi.V8StackTrace.cfx_v8stack_trace_is_valid(NativePtr);
             }
         }
 
@@ -106,7 +102,7 @@ namespace Chromium {
         /// </remarks>
         public int FrameCount {
             get {
-                return CfxApi.cfx_v8stack_trace_get_frame_count(NativePtr);
+                return CfxApi.V8StackTrace.cfx_v8stack_trace_get_frame_count(NativePtr);
             }
         }
 
@@ -118,7 +114,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public CfxV8StackFrame GetFrame(int index) {
-            return CfxV8StackFrame.Wrap(CfxApi.cfx_v8stack_trace_get_frame(NativePtr, index));
+            return CfxV8StackFrame.Wrap(CfxApi.V8StackTrace.cfx_v8stack_trace_get_frame(NativePtr, index));
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

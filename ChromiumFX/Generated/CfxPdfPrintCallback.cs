@@ -46,13 +46,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxPdfPrintCallback : CfxBase {
 
-        static CfxPdfPrintCallback () {
-            CfxApiLoader.LoadCfxPdfPrintCallbackApi();
-        }
-
         internal static CfxPdfPrintCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_pdf_print_callback_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.PdfPrintCallback.cfx_pdf_print_callback_get_gc_handle(nativePtr);
             return (CfxPdfPrintCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -77,7 +73,7 @@ namespace Chromium {
         }
 
         internal CfxPdfPrintCallback(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxPdfPrintCallback() : base(CfxApi.cfx_pdf_print_callback_ctor) {}
+        public CfxPdfPrintCallback() : base(CfxApi.PdfPrintCallback.cfx_pdf_print_callback_ctor) {}
 
         /// <summary>
         /// Method that will be executed when the PDF printing has completed. |Path| is
@@ -96,7 +92,7 @@ namespace Chromium {
                             cfx_pdf_print_callback_on_pdf_print_finished = on_pdf_print_finished;
                             cfx_pdf_print_callback_on_pdf_print_finished_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_pdf_print_callback_on_pdf_print_finished);
                         }
-                        CfxApi.cfx_pdf_print_callback_set_managed_callback(NativePtr, 0, cfx_pdf_print_callback_on_pdf_print_finished_ptr);
+                        CfxApi.PdfPrintCallback.cfx_pdf_print_callback_set_managed_callback(NativePtr, 0, cfx_pdf_print_callback_on_pdf_print_finished_ptr);
                     }
                     m_OnPdfPrintFinished += value;
                 }
@@ -105,7 +101,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnPdfPrintFinished -= value;
                     if(m_OnPdfPrintFinished == null) {
-                        CfxApi.cfx_pdf_print_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.PdfPrintCallback.cfx_pdf_print_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -116,7 +112,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnPdfPrintFinished != null) {
                 m_OnPdfPrintFinished = null;
-                CfxApi.cfx_pdf_print_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.PdfPrintCallback.cfx_pdf_print_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

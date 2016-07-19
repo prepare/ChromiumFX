@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxSslInfo : CfxBase {
 
-        static CfxSslInfo () {
-            CfxApiLoader.LoadCfxSslInfoApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxSslInfo Wrap(IntPtr nativePtr) {
@@ -76,7 +72,7 @@ namespace Chromium {
         /// </remarks>
         public CfxCertStatus CertStatus {
             get {
-                return (CfxCertStatus)CfxApi.cfx_sslinfo_get_cert_status(NativePtr);
+                return (CfxCertStatus)CfxApi.SslInfo.cfx_sslinfo_get_cert_status(NativePtr);
             }
         }
 
@@ -89,7 +85,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsCertStatusError {
             get {
-                return 0 != CfxApi.cfx_sslinfo_is_cert_status_error(NativePtr);
+                return 0 != CfxApi.SslInfo.cfx_sslinfo_is_cert_status_error(NativePtr);
             }
         }
 
@@ -103,7 +99,7 @@ namespace Chromium {
         /// </remarks>
         public bool IsCertStatusMinorError {
             get {
-                return 0 != CfxApi.cfx_sslinfo_is_cert_status_minor_error(NativePtr);
+                return 0 != CfxApi.SslInfo.cfx_sslinfo_is_cert_status_minor_error(NativePtr);
             }
         }
 
@@ -118,7 +114,7 @@ namespace Chromium {
         /// </remarks>
         public CfxSslCertPrincipal Subject {
             get {
-                return CfxSslCertPrincipal.Wrap(CfxApi.cfx_sslinfo_get_subject(NativePtr));
+                return CfxSslCertPrincipal.Wrap(CfxApi.SslInfo.cfx_sslinfo_get_subject(NativePtr));
             }
         }
 
@@ -131,7 +127,7 @@ namespace Chromium {
         /// </remarks>
         public CfxSslCertPrincipal Issuer {
             get {
-                return CfxSslCertPrincipal.Wrap(CfxApi.cfx_sslinfo_get_issuer(NativePtr));
+                return CfxSslCertPrincipal.Wrap(CfxApi.SslInfo.cfx_sslinfo_get_issuer(NativePtr));
             }
         }
 
@@ -145,7 +141,7 @@ namespace Chromium {
         /// </remarks>
         public CfxBinaryValue SerialNumber {
             get {
-                return CfxBinaryValue.Wrap(CfxApi.cfx_sslinfo_get_serial_number(NativePtr));
+                return CfxBinaryValue.Wrap(CfxApi.SslInfo.cfx_sslinfo_get_serial_number(NativePtr));
             }
         }
 
@@ -159,7 +155,7 @@ namespace Chromium {
         /// </remarks>
         public CfxTime ValidStart {
             get {
-                return CfxTime.WrapOwned(CfxApi.cfx_sslinfo_get_valid_start(NativePtr));
+                return CfxTime.WrapOwned(CfxApi.SslInfo.cfx_sslinfo_get_valid_start(NativePtr));
             }
         }
 
@@ -173,7 +169,7 @@ namespace Chromium {
         /// </remarks>
         public CfxTime ValidExpiry {
             get {
-                return CfxTime.WrapOwned(CfxApi.cfx_sslinfo_get_valid_expiry(NativePtr));
+                return CfxTime.WrapOwned(CfxApi.SslInfo.cfx_sslinfo_get_valid_expiry(NativePtr));
             }
         }
 
@@ -186,7 +182,7 @@ namespace Chromium {
         /// </remarks>
         public CfxBinaryValue DerEncoded {
             get {
-                return CfxBinaryValue.Wrap(CfxApi.cfx_sslinfo_get_derencoded(NativePtr));
+                return CfxBinaryValue.Wrap(CfxApi.SslInfo.cfx_sslinfo_get_derencoded(NativePtr));
             }
         }
 
@@ -199,7 +195,7 @@ namespace Chromium {
         /// </remarks>
         public CfxBinaryValue PemEncoded {
             get {
-                return CfxBinaryValue.Wrap(CfxApi.cfx_sslinfo_get_pemencoded(NativePtr));
+                return CfxBinaryValue.Wrap(CfxApi.SslInfo.cfx_sslinfo_get_pemencoded(NativePtr));
             }
         }
 
@@ -213,7 +209,7 @@ namespace Chromium {
         /// </remarks>
         public int IssuerChainSize {
             get {
-                return CfxApi.cfx_sslinfo_get_issuer_chain_size(NativePtr);
+                return CfxApi.SslInfo.cfx_sslinfo_get_issuer_chain_size(NativePtr);
             }
         }
 
@@ -232,7 +228,7 @@ namespace Chromium {
                 if(count == 0) return new CfxBinaryValue[0];
                 IntPtr[] ptrs = new IntPtr[count];
                 var ptrs_p = new PinnedObject(ptrs);
-                CfxApi.cfx_sslinfo_get_derencoded_issuer_chain(NativePtr, count, ptrs_p.PinnedPtr);
+                CfxApi.SslInfo.cfx_sslinfo_get_derencoded_issuer_chain(NativePtr, count, ptrs_p.PinnedPtr);
                 ptrs_p.Free();
                 CfxBinaryValue[] retval = new CfxBinaryValue[count];
                 for(int i = 0; i < count; ++i) {
@@ -257,7 +253,7 @@ namespace Chromium {
                 if(count == 0) return new CfxBinaryValue[0];
                 IntPtr[] ptrs = new IntPtr[count];
                 var ptrs_p = new PinnedObject(ptrs);
-                CfxApi.cfx_sslinfo_get_pemencoded_issuer_chain(NativePtr, count, ptrs_p.PinnedPtr);
+                CfxApi.SslInfo.cfx_sslinfo_get_pemencoded_issuer_chain(NativePtr, count, ptrs_p.PinnedPtr);
                 ptrs_p.Free();
                 CfxBinaryValue[] retval = new CfxBinaryValue[count];
                 for(int i = 0; i < count; ++i) {

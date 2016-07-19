@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxPrintDialogCallback : CfxBase {
 
-        static CfxPrintDialogCallback () {
-            CfxApiLoader.LoadCfxPrintDialogCallbackApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxPrintDialogCallback Wrap(IntPtr nativePtr) {
@@ -74,7 +70,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
         /// </remarks>
         public void Continue(CfxPrintSettings settings) {
-            CfxApi.cfx_print_dialog_callback_cont(NativePtr, CfxPrintSettings.Unwrap(settings));
+            CfxApi.PrintDialogCallback.cfx_print_dialog_callback_cont(NativePtr, CfxPrintSettings.Unwrap(settings));
         }
 
         /// <summary>
@@ -85,7 +81,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_handler_capi.h">cef/include/capi/cef_print_handler_capi.h</see>.
         /// </remarks>
         public void Cancel() {
-            CfxApi.cfx_print_dialog_callback_cancel(NativePtr);
+            CfxApi.PrintDialogCallback.cfx_print_dialog_callback_cancel(NativePtr);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

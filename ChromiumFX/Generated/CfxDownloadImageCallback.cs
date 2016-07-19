@@ -46,13 +46,9 @@ namespace Chromium {
     /// </remarks>
     public class CfxDownloadImageCallback : CfxBase {
 
-        static CfxDownloadImageCallback () {
-            CfxApiLoader.LoadCfxDownloadImageCallbackApi();
-        }
-
         internal static CfxDownloadImageCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.cfx_download_image_callback_get_gc_handle(nativePtr);
+            var handlePtr = CfxApi.DownloadImageCallback.cfx_download_image_callback_get_gc_handle(nativePtr);
             return (CfxDownloadImageCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
         }
 
@@ -78,7 +74,7 @@ namespace Chromium {
         }
 
         internal CfxDownloadImageCallback(IntPtr nativePtr) : base(nativePtr) {}
-        public CfxDownloadImageCallback() : base(CfxApi.cfx_download_image_callback_ctor) {}
+        public CfxDownloadImageCallback() : base(CfxApi.DownloadImageCallback.cfx_download_image_callback_ctor) {}
 
         /// <summary>
         /// Method that will be executed when the image download has completed.
@@ -98,7 +94,7 @@ namespace Chromium {
                             cfx_download_image_callback_on_download_image_finished = on_download_image_finished;
                             cfx_download_image_callback_on_download_image_finished_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_download_image_callback_on_download_image_finished);
                         }
-                        CfxApi.cfx_download_image_callback_set_managed_callback(NativePtr, 0, cfx_download_image_callback_on_download_image_finished_ptr);
+                        CfxApi.DownloadImageCallback.cfx_download_image_callback_set_managed_callback(NativePtr, 0, cfx_download_image_callback_on_download_image_finished_ptr);
                     }
                     m_OnDownloadImageFinished += value;
                 }
@@ -107,7 +103,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnDownloadImageFinished -= value;
                     if(m_OnDownloadImageFinished == null) {
-                        CfxApi.cfx_download_image_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.DownloadImageCallback.cfx_download_image_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -118,7 +114,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnDownloadImageFinished != null) {
                 m_OnDownloadImageFinished = null;
-                CfxApi.cfx_download_image_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.DownloadImageCallback.cfx_download_image_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

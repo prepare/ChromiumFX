@@ -43,10 +43,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxRunContextMenuCallback : CfxBase {
 
-        static CfxRunContextMenuCallback () {
-            CfxApiLoader.LoadCfxRunContextMenuCallbackApi();
-        }
-
         private static readonly WeakCache weakCache = new WeakCache();
 
         internal static CfxRunContextMenuCallback Wrap(IntPtr nativePtr) {
@@ -75,7 +71,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
         /// </remarks>
         public void Continue(int commandId, CfxEventFlags eventFlags) {
-            CfxApi.cfx_run_context_menu_callback_cont(NativePtr, commandId, (int)eventFlags);
+            CfxApi.RunContextMenuCallback.cfx_run_context_menu_callback_cont(NativePtr, commandId, (int)eventFlags);
         }
 
         /// <summary>
@@ -86,7 +82,7 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
         /// </remarks>
         public void Cancel() {
-            CfxApi.cfx_run_context_menu_callback_cancel(NativePtr);
+            CfxApi.RunContextMenuCallback.cfx_run_context_menu_callback_cancel(NativePtr);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

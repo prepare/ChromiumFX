@@ -67,6 +67,10 @@ public class CefStructOutType : CefStructPtrPtrType {
         return "out " + StructPtr.ProxyCallParameter(var);
     }
 
+    public override string ProxyCallArgument(string var) {
+        return "out " + var;
+    }
+
     public override string RemoteCallParameter(string var) {
         return "out " + StructPtr.RemoteCallParameter(var);
     }
@@ -124,10 +128,8 @@ public class CefStructOutType : CefStructPtrPtrType {
     }
 
     public override void EmitPreProxyCallStatements(CodeBuilder b, string var) {
-        b.AppendLine("{0} {1}_local;", Struct.ClassName, var);
     }
 
     public override void EmitPostProxyCallStatements(CodeBuilder b, string var) {
-        b.AppendLine("{0} = {1};", var, StructPtr.ProxyWrapExpression(var + "_local"));
     }
 }
