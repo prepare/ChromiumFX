@@ -304,7 +304,7 @@ static cef_v8handler_t* cfx_v8value_get_function_handler(cef_v8value_t* self) {
 static cef_v8value_t* cfx_v8value_execute_function(cef_v8value_t* self, cef_v8value_t* object, size_t argumentsCount, cef_v8value_t* const* arguments) {
     if(object) ((cef_base_t*)object)->add_ref((cef_base_t*)object);
     if(argumentsCount) {
-        for(int i = 0; i < argumentsCount; ++i) {
+        for(size_t i = 0; i < argumentsCount; ++i) {
             if(arguments[i]) ((cef_base_t*)arguments[i])->add_ref((cef_base_t*)arguments[i]);
         }
     }
@@ -316,7 +316,7 @@ static cef_v8value_t* cfx_v8value_execute_function_with_context(cef_v8value_t* s
     if(context) ((cef_base_t*)context)->add_ref((cef_base_t*)context);
     if(object) ((cef_base_t*)object)->add_ref((cef_base_t*)object);
     if(argumentsCount) {
-        for(int i = 0; i < argumentsCount; ++i) {
+        for(size_t i = 0; i < argumentsCount; ++i) {
             if(arguments[i]) ((cef_base_t*)arguments[i])->add_ref((cef_base_t*)arguments[i]);
         }
     }

@@ -92,7 +92,7 @@ static int cfx_print_settings_get_dpi(cef_print_settings_t* self) {
 static void cfx_print_settings_set_page_ranges(cef_print_settings_t* self, size_t rangesCount, cef_range_t const** ranges, int* ranges_nomem) {
     cef_range_t *ranges_tmp = (cef_range_t*)malloc(rangesCount * sizeof(cef_range_t));
     if(ranges_tmp) {
-        for(int i = 0; i < rangesCount; ++i) {
+        for(size_t i = 0; i < rangesCount; ++i) {
             ranges_tmp[i] = *ranges[i];
         }
         *ranges_nomem = 0;

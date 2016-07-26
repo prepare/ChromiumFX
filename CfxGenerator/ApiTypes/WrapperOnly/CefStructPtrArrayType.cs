@@ -91,7 +91,7 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
 
     public override void EmitPreNativeCallStatements(CodeBuilder b, string var) {
         b.BeginIf("{0}", CountArg.VarName);
-        b.BeginFor(CountArg.VarName);
+        b.BeginBlock("for(size_t i = 0; i < {0}; ++i)", CountArg.VarName);
         b.AppendLine("if({0}[i]) ((cef_base_t*){0}[i])->add_ref((cef_base_t*){0}[i]);", StructArg.VarName);
         b.EndBlock();
         b.EndBlock();

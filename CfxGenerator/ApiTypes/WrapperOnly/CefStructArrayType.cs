@@ -110,7 +110,7 @@ public class CefStructArrayType : CefStructPtrArrayType {
     public override void EmitPreNativeCallStatements(CodeBuilder b, string var) {
         b.AppendLine("{0} *{1}_tmp = ({0}*)malloc({2} * sizeof({0}));", Struct.OriginalSymbol, var, CountArg.VarName);
         b.BeginBlock("if({0}_tmp)", var);
-        b.BeginFor(CountArg.VarName);
+        b.BeginBlock("for(size_t i = 0; i < {0}; ++i)", CountArg.VarName);
         b.AppendLine("{0}_tmp[i] = *{0}[i];", var);
         b.EndBlock();
         b.AppendLine("*{0}_nomem = 0;", var);
