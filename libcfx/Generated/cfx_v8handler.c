@@ -73,12 +73,12 @@ static gc_handle_t cfx_v8handler_get_gc_handle(cfx_v8handler_t* self) {
 
 // execute
 
-void (CEF_CALLBACK *cfx_v8handler_execute_callback)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, int argumentsCount, cef_v8value_t* const* arguments, cef_v8value_t** retval, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle);
+void (CEF_CALLBACK *cfx_v8handler_execute_callback)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, size_t argumentsCount, cef_v8value_t* const* arguments, cef_v8value_t** retval, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle);
 
 int CEF_CALLBACK cfx_v8handler_execute(cef_v8handler_t* self, const cef_string_t* name, cef_v8value_t* object, size_t argumentsCount, cef_v8value_t* const* arguments, cef_v8value_t** retval, cef_string_t* exception) {
     int __retval;
     char16* exception_tmp_str = 0; int exception_tmp_length = 0; gc_handle_t exception_gc_handle = 0;
-    cfx_v8handler_execute_callback(((cfx_v8handler_t*)self)->gc_handle, &__retval, name ? name->str : 0, name ? (int)name->length : 0, object, (int)(argumentsCount), arguments, retval, &exception_tmp_str, &exception_tmp_length, &exception_gc_handle);
+    cfx_v8handler_execute_callback(((cfx_v8handler_t*)self)->gc_handle, &__retval, name ? name->str : 0, name ? (int)name->length : 0, object, argumentsCount, arguments, retval, &exception_tmp_str, &exception_tmp_length, &exception_gc_handle);
     if(*retval)((cef_base_t*)*retval)->add_ref((cef_base_t*)*retval);
     if(exception_tmp_length > 0) {
         cef_string_set(exception_tmp_str, exception_tmp_length, exception, 1);
@@ -92,7 +92,7 @@ static void cfx_v8handler_set_managed_callback(cef_v8handler_t* self, int index,
     switch(index) {
     case 0:
         if(callback && !cfx_v8handler_execute_callback)
-            cfx_v8handler_execute_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, int argumentsCount, cef_v8value_t* const* arguments, cef_v8value_t** retval, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle)) callback;
+            cfx_v8handler_execute_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, size_t argumentsCount, cef_v8value_t* const* arguments, cef_v8value_t** retval, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle)) callback;
         self->execute = callback ? cfx_v8handler_execute : 0;
         break;
     }

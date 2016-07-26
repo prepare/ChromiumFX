@@ -84,11 +84,11 @@ int CEF_CALLBACK cfx_response_filter_init_filter(cef_response_filter_t* self) {
 
 // filter
 
-void (CEF_CALLBACK *cfx_response_filter_filter_callback)(gc_handle_t self, cef_response_filter_status_t* __retval, void* data_in, int data_in_size, size_t* data_in_read, void* data_out, int data_out_size, size_t* data_out_written);
+void (CEF_CALLBACK *cfx_response_filter_filter_callback)(gc_handle_t self, cef_response_filter_status_t* __retval, void* data_in, size_t data_in_size, size_t* data_in_read, void* data_out, size_t data_out_size, size_t* data_out_written);
 
 cef_response_filter_status_t CEF_CALLBACK cfx_response_filter_filter(cef_response_filter_t* self, void* data_in, size_t data_in_size, size_t* data_in_read, void* data_out, size_t data_out_size, size_t* data_out_written) {
     cef_response_filter_status_t __retval;
-    cfx_response_filter_filter_callback(((cfx_response_filter_t*)self)->gc_handle, &__retval, data_in, (int)(data_in_size), data_in_read, data_out, (int)(data_out_size), data_out_written);
+    cfx_response_filter_filter_callback(((cfx_response_filter_t*)self)->gc_handle, &__retval, data_in, data_in_size, data_in_read, data_out, data_out_size, data_out_written);
     return __retval;
 }
 
@@ -102,7 +102,7 @@ static void cfx_response_filter_set_managed_callback(cef_response_filter_t* self
         break;
     case 1:
         if(callback && !cfx_response_filter_filter_callback)
-            cfx_response_filter_filter_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_response_filter_status_t* __retval, void* data_in, int data_in_size, size_t* data_in_read, void* data_out, int data_out_size, size_t* data_out_written)) callback;
+            cfx_response_filter_filter_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_response_filter_status_t* __retval, void* data_in, size_t data_in_size, size_t* data_in_read, void* data_out, size_t data_out_size, size_t* data_out_written)) callback;
         self->filter = callback ? cfx_response_filter_filter : 0;
         break;
     }

@@ -78,11 +78,11 @@ namespace Chromium {
 
         // on_draggable_regions_changed
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_drag_handler_on_draggable_regions_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, int regionsCount, IntPtr regions, int regions_structsize);
+        private delegate void cfx_drag_handler_on_draggable_regions_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, UIntPtr regionsCount, IntPtr regions, int regions_structsize);
         private static cfx_drag_handler_on_draggable_regions_changed_delegate cfx_drag_handler_on_draggable_regions_changed;
         private static IntPtr cfx_drag_handler_on_draggable_regions_changed_ptr;
 
-        internal static void on_draggable_regions_changed(IntPtr gcHandlePtr, IntPtr browser, int regionsCount, IntPtr regions, int regions_structsize) {
+        internal static void on_draggable_regions_changed(IntPtr gcHandlePtr, IntPtr browser, UIntPtr regionsCount, IntPtr regions, int regions_structsize) {
             var self = (CfxDragHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 return;
@@ -305,10 +305,10 @@ namespace Chromium {
             internal CfxBrowser m_browser_wrapped;
             IntPtr m_regions;
             int m_regions_structsize;
-            int m_regionsCount;
+            UIntPtr m_regionsCount;
             internal CfxDraggableRegion[] m_regions_managed;
 
-            internal CfxOnDraggableRegionsChangedEventArgs(IntPtr browser, IntPtr regions, int regionsCount, int regions_structsize) {
+            internal CfxOnDraggableRegionsChangedEventArgs(IntPtr browser, IntPtr regions, UIntPtr regionsCount, int regions_structsize) {
                 m_browser = browser;
                 m_regions = regions;
                 m_regions_structsize = regions_structsize;
@@ -333,9 +333,11 @@ namespace Chromium {
                 get {
                     CheckAccess();
                     if(m_regions_managed == null) {
-                        m_regions_managed = new CfxDraggableRegion[m_regionsCount];
-                        for(int i = 0; i < m_regionsCount; ++i) {
-                            m_regions_managed[i] = CfxDraggableRegion.Wrap(m_regions + (i * m_regions_structsize));
+                        m_regions_managed = new CfxDraggableRegion[(ulong)m_regionsCount];
+                        var currentPtr = m_regions;
+                        for(ulong i = 0; i < (ulong)m_regionsCount; ++i) {
+                            m_regions_managed[i] = CfxDraggableRegion.Wrap(currentPtr);
+                            currentPtr += m_regions_structsize;
                         }
                     }
                     return m_regions_managed;

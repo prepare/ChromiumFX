@@ -34,8 +34,8 @@
 // cef_binary_value
 
 // CEF_EXPORT cef_binary_value_t* cef_binary_value_create(const void* data, size_t data_size);
-static cef_binary_value_t* cfx_binary_value_create(const void* data, int data_size) {
-    return cef_binary_value_create(data, (size_t)(data_size));
+static cef_binary_value_t* cfx_binary_value_create(const void* data, size_t data_size) {
+    return cef_binary_value_create(data, data_size);
 }
 // is_valid
 static int cfx_binary_value_is_valid(cef_binary_value_t* self) {
@@ -65,13 +65,13 @@ static cef_binary_value_t* cfx_binary_value_copy(cef_binary_value_t* self) {
 }
 
 // get_size
-static int cfx_binary_value_get_size(cef_binary_value_t* self) {
-    return (int)(self->get_size(self));
+static size_t cfx_binary_value_get_size(cef_binary_value_t* self) {
+    return self->get_size(self);
 }
 
 // get_data
-static int cfx_binary_value_get_data(cef_binary_value_t* self, void* buffer, int buffer_size, int data_offset) {
-    return (int)(self->get_data(self, buffer, (size_t)(buffer_size), (size_t)(data_offset)));
+static size_t cfx_binary_value_get_data(cef_binary_value_t* self, void* buffer, size_t buffer_size, size_t data_offset) {
+    return self->get_data(self, buffer, buffer_size, data_offset);
 }
 
 

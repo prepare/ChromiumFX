@@ -241,7 +241,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxListValueSetSizeRenderProcessCall) {}
 
         internal IntPtr @this;
-        internal int size;
+        internal ulong size;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -263,7 +263,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = 0 != CfxApi.ListValue.cfx_list_value_set_size(@this, size);
+            __retval = 0 != CfxApi.ListValue.cfx_list_value_set_size(@this, (UIntPtr)size);
         }
     }
 
@@ -273,7 +273,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxListValueGetSizeRenderProcessCall) {}
 
         internal IntPtr @this;
-        internal int __retval;
+        internal ulong __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(@this);
@@ -292,7 +292,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.ListValue.cfx_list_value_get_size(@this);
+            __retval = (ulong)CfxApi.ListValue.cfx_list_value_get_size(@this);
         }
     }
 

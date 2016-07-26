@@ -357,7 +357,7 @@ namespace Chromium {
 
             // CEF_EXPORT cef_binary_value_t* cef_binary_value_create(const void* data, size_t data_size);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate IntPtr cfx_binary_value_create_delegate(IntPtr data, int data_size);
+            public delegate IntPtr cfx_binary_value_create_delegate(IntPtr data, UIntPtr data_size);
             public static cfx_binary_value_create_delegate cfx_binary_value_create;
 
             // static int cfx_binary_value_is_valid(cef_binary_value_t* self)
@@ -385,14 +385,14 @@ namespace Chromium {
             public delegate IntPtr cfx_binary_value_copy_delegate(IntPtr self);
             public static cfx_binary_value_copy_delegate cfx_binary_value_copy;
 
-            // static int cfx_binary_value_get_size(cef_binary_value_t* self)
+            // static size_t cfx_binary_value_get_size(cef_binary_value_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_binary_value_get_size_delegate(IntPtr self);
+            public delegate UIntPtr cfx_binary_value_get_size_delegate(IntPtr self);
             public static cfx_binary_value_get_size_delegate cfx_binary_value_get_size;
 
-            // static int cfx_binary_value_get_data(cef_binary_value_t* self, void* buffer, int buffer_size, int data_offset)
+            // static size_t cfx_binary_value_get_data(cef_binary_value_t* self, void* buffer, size_t buffer_size, size_t data_offset)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_binary_value_get_data_delegate(IntPtr self, IntPtr buffer, int buffer_size, int data_offset);
+            public delegate UIntPtr cfx_binary_value_get_data_delegate(IntPtr self, IntPtr buffer, UIntPtr buffer_size, UIntPtr data_offset);
             public static cfx_binary_value_get_data_delegate cfx_binary_value_get_data;
 
         }
@@ -582,14 +582,14 @@ namespace Chromium {
             public delegate IntPtr cfx_browser_get_frame_delegate(IntPtr self, IntPtr name_str, int name_length);
             public static cfx_browser_get_frame_delegate cfx_browser_get_frame;
 
-            // static int cfx_browser_get_frame_count(cef_browser_t* self)
+            // static size_t cfx_browser_get_frame_count(cef_browser_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_browser_get_frame_count_delegate(IntPtr self);
+            public delegate UIntPtr cfx_browser_get_frame_count_delegate(IntPtr self);
             public static cfx_browser_get_frame_count_delegate cfx_browser_get_frame_count;
 
-            // static void cfx_browser_get_frame_identifiers(cef_browser_t* self, int identifiersCount, int64* identifiers)
+            // static void cfx_browser_get_frame_identifiers(cef_browser_t* self, size_t identifiersCount, int64* identifiers)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_browser_get_frame_identifiers_delegate(IntPtr self, int identifiersCount, IntPtr identifiers);
+            public delegate void cfx_browser_get_frame_identifiers_delegate(IntPtr self, UIntPtr identifiersCount, IntPtr identifiers);
             public static cfx_browser_get_frame_identifiers_delegate cfx_browser_get_frame_identifiers;
 
             // static void cfx_browser_get_frame_names(cef_browser_t* self, cef_string_list_t names)
@@ -1739,9 +1739,9 @@ namespace Chromium {
             public delegate IntPtr cfx_dictionary_value_copy_delegate(IntPtr self, int exclude_empty_children);
             public static cfx_dictionary_value_copy_delegate cfx_dictionary_value_copy;
 
-            // static int cfx_dictionary_value_get_size(cef_dictionary_value_t* self)
+            // static size_t cfx_dictionary_value_get_size(cef_dictionary_value_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_dictionary_value_get_size_delegate(IntPtr self);
+            public delegate UIntPtr cfx_dictionary_value_get_size_delegate(IntPtr self);
             public static cfx_dictionary_value_get_size_delegate cfx_dictionary_value_get_size;
 
             // static int cfx_dictionary_value_clear(cef_dictionary_value_t* self)
@@ -2302,9 +2302,9 @@ namespace Chromium {
             public delegate IntPtr cfx_drag_data_get_file_name_delegate(IntPtr self);
             public static cfx_drag_data_get_file_name_delegate cfx_drag_data_get_file_name;
 
-            // static int cfx_drag_data_get_file_contents(cef_drag_data_t* self, cef_stream_writer_t* writer)
+            // static size_t cfx_drag_data_get_file_contents(cef_drag_data_t* self, cef_stream_writer_t* writer)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_drag_data_get_file_contents_delegate(IntPtr self, IntPtr writer);
+            public delegate UIntPtr cfx_drag_data_get_file_contents_delegate(IntPtr self, IntPtr writer);
             public static cfx_drag_data_get_file_contents_delegate cfx_drag_data_get_file_contents;
 
             // static int cfx_drag_data_get_file_names(cef_drag_data_t* self, cef_string_list_t names)
@@ -2740,29 +2740,29 @@ namespace Chromium {
             public delegate int cfx_image_is_same_delegate(IntPtr self, IntPtr that);
             public static cfx_image_is_same_delegate cfx_image_is_same;
 
-            // static int cfx_image_add_bitmap(cef_image_t* self, float scale_factor, int pixel_width, int pixel_height, cef_color_type_t color_type, cef_alpha_type_t alpha_type, const void* pixel_data, int pixel_data_size)
+            // static int cfx_image_add_bitmap(cef_image_t* self, float scale_factor, int pixel_width, int pixel_height, cef_color_type_t color_type, cef_alpha_type_t alpha_type, const void* pixel_data, size_t pixel_data_size)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_image_add_bitmap_delegate(IntPtr self, float scale_factor, int pixel_width, int pixel_height, int color_type, int alpha_type, IntPtr pixel_data, int pixel_data_size);
+            public delegate int cfx_image_add_bitmap_delegate(IntPtr self, float scale_factor, int pixel_width, int pixel_height, int color_type, int alpha_type, IntPtr pixel_data, UIntPtr pixel_data_size);
             public static cfx_image_add_bitmap_delegate cfx_image_add_bitmap;
 
-            // static int cfx_image_add_png(cef_image_t* self, float scale_factor, const void* png_data, int png_data_size)
+            // static int cfx_image_add_png(cef_image_t* self, float scale_factor, const void* png_data, size_t png_data_size)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_image_add_png_delegate(IntPtr self, float scale_factor, IntPtr png_data, int png_data_size);
+            public delegate int cfx_image_add_png_delegate(IntPtr self, float scale_factor, IntPtr png_data, UIntPtr png_data_size);
             public static cfx_image_add_png_delegate cfx_image_add_png;
 
-            // static int cfx_image_add_jpeg(cef_image_t* self, float scale_factor, const void* jpeg_data, int jpeg_data_size)
+            // static int cfx_image_add_jpeg(cef_image_t* self, float scale_factor, const void* jpeg_data, size_t jpeg_data_size)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_image_add_jpeg_delegate(IntPtr self, float scale_factor, IntPtr jpeg_data, int jpeg_data_size);
+            public delegate int cfx_image_add_jpeg_delegate(IntPtr self, float scale_factor, IntPtr jpeg_data, UIntPtr jpeg_data_size);
             public static cfx_image_add_jpeg_delegate cfx_image_add_jpeg;
 
-            // static int cfx_image_get_width(cef_image_t* self)
+            // static size_t cfx_image_get_width(cef_image_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_image_get_width_delegate(IntPtr self);
+            public delegate UIntPtr cfx_image_get_width_delegate(IntPtr self);
             public static cfx_image_get_width_delegate cfx_image_get_width;
 
-            // static int cfx_image_get_height(cef_image_t* self)
+            // static size_t cfx_image_get_height(cef_image_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_image_get_height_delegate(IntPtr self);
+            public delegate UIntPtr cfx_image_get_height_delegate(IntPtr self);
             public static cfx_image_get_height_delegate cfx_image_get_height;
 
             // static int cfx_image_has_representation(cef_image_t* self, float scale_factor)
@@ -3021,14 +3021,14 @@ namespace Chromium {
             public delegate IntPtr cfx_list_value_copy_delegate(IntPtr self);
             public static cfx_list_value_copy_delegate cfx_list_value_copy;
 
-            // static int cfx_list_value_set_size(cef_list_value_t* self, int size)
+            // static int cfx_list_value_set_size(cef_list_value_t* self, size_t size)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_list_value_set_size_delegate(IntPtr self, int size);
+            public delegate int cfx_list_value_set_size_delegate(IntPtr self, UIntPtr size);
             public static cfx_list_value_set_size_delegate cfx_list_value_set_size;
 
-            // static int cfx_list_value_get_size(cef_list_value_t* self)
+            // static size_t cfx_list_value_get_size(cef_list_value_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_list_value_get_size_delegate(IntPtr self);
+            public delegate UIntPtr cfx_list_value_get_size_delegate(IntPtr self);
             public static cfx_list_value_get_size_delegate cfx_list_value_get_size;
 
             // static int cfx_list_value_clear(cef_list_value_t* self)
@@ -3933,14 +3933,14 @@ namespace Chromium {
             public delegate int cfx_post_data_has_excluded_elements_delegate(IntPtr self);
             public static cfx_post_data_has_excluded_elements_delegate cfx_post_data_has_excluded_elements;
 
-            // static int cfx_post_data_get_element_count(cef_post_data_t* self)
+            // static size_t cfx_post_data_get_element_count(cef_post_data_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_post_data_get_element_count_delegate(IntPtr self);
+            public delegate UIntPtr cfx_post_data_get_element_count_delegate(IntPtr self);
             public static cfx_post_data_get_element_count_delegate cfx_post_data_get_element_count;
 
-            // static void cfx_post_data_get_elements(cef_post_data_t* self, int elementsCount, cef_post_data_element_t** elements)
+            // static void cfx_post_data_get_elements(cef_post_data_t* self, size_t elementsCount, cef_post_data_element_t** elements)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_post_data_get_elements_delegate(IntPtr self, int elementsCount, IntPtr elements);
+            public delegate void cfx_post_data_get_elements_delegate(IntPtr self, UIntPtr elementsCount, IntPtr elements);
             public static cfx_post_data_get_elements_delegate cfx_post_data_get_elements;
 
             // static int cfx_post_data_remove_element(cef_post_data_t* self, cef_post_data_element_t* element)
@@ -3986,9 +3986,9 @@ namespace Chromium {
             public delegate void cfx_post_data_element_set_to_file_delegate(IntPtr self, IntPtr fileName_str, int fileName_length);
             public static cfx_post_data_element_set_to_file_delegate cfx_post_data_element_set_to_file;
 
-            // static void cfx_post_data_element_set_to_bytes(cef_post_data_element_t* self, int size, const void* bytes)
+            // static void cfx_post_data_element_set_to_bytes(cef_post_data_element_t* self, size_t size, const void* bytes)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_post_data_element_set_to_bytes_delegate(IntPtr self, int size, IntPtr bytes);
+            public delegate void cfx_post_data_element_set_to_bytes_delegate(IntPtr self, UIntPtr size, IntPtr bytes);
             public static cfx_post_data_element_set_to_bytes_delegate cfx_post_data_element_set_to_bytes;
 
             // static cef_postdataelement_type_t cfx_post_data_element_get_type(cef_post_data_element_t* self)
@@ -4001,14 +4001,14 @@ namespace Chromium {
             public delegate IntPtr cfx_post_data_element_get_file_delegate(IntPtr self);
             public static cfx_post_data_element_get_file_delegate cfx_post_data_element_get_file;
 
-            // static int cfx_post_data_element_get_bytes_count(cef_post_data_element_t* self)
+            // static size_t cfx_post_data_element_get_bytes_count(cef_post_data_element_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_post_data_element_get_bytes_count_delegate(IntPtr self);
+            public delegate UIntPtr cfx_post_data_element_get_bytes_count_delegate(IntPtr self);
             public static cfx_post_data_element_get_bytes_count_delegate cfx_post_data_element_get_bytes_count;
 
-            // static int cfx_post_data_element_get_bytes(cef_post_data_element_t* self, int size, void* bytes)
+            // static size_t cfx_post_data_element_get_bytes(cef_post_data_element_t* self, size_t size, void* bytes)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_post_data_element_get_bytes_delegate(IntPtr self, int size, IntPtr bytes);
+            public delegate UIntPtr cfx_post_data_element_get_bytes_delegate(IntPtr self, UIntPtr size, IntPtr bytes);
             public static cfx_post_data_element_get_bytes_delegate cfx_post_data_element_get_bytes;
 
         }
@@ -4117,19 +4117,19 @@ namespace Chromium {
             public delegate int cfx_print_settings_get_dpi_delegate(IntPtr self);
             public static cfx_print_settings_get_dpi_delegate cfx_print_settings_get_dpi;
 
-            // static void cfx_print_settings_set_page_ranges(cef_print_settings_t* self, int rangesCount, cef_range_t const** ranges, int* ranges_nomem)
+            // static void cfx_print_settings_set_page_ranges(cef_print_settings_t* self, size_t rangesCount, cef_range_t const** ranges, int* ranges_nomem)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_print_settings_set_page_ranges_delegate(IntPtr self, int rangesCount, IntPtr ranges, out int ranges_nomem);
+            public delegate void cfx_print_settings_set_page_ranges_delegate(IntPtr self, UIntPtr rangesCount, IntPtr ranges, out int ranges_nomem);
             public static cfx_print_settings_set_page_ranges_delegate cfx_print_settings_set_page_ranges;
 
-            // static int cfx_print_settings_get_page_ranges_count(cef_print_settings_t* self)
+            // static size_t cfx_print_settings_get_page_ranges_count(cef_print_settings_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_print_settings_get_page_ranges_count_delegate(IntPtr self);
+            public delegate UIntPtr cfx_print_settings_get_page_ranges_count_delegate(IntPtr self);
             public static cfx_print_settings_get_page_ranges_count_delegate cfx_print_settings_get_page_ranges_count;
 
             // static void cfx_print_settings_get_page_ranges(cef_print_settings_t* self, size_t* rangesCount, cef_range_t** ranges, int* ranges_nomem)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_print_settings_get_page_ranges_delegate(IntPtr self, ref int rangesCount, IntPtr ranges, out int ranges_nomem);
+            public delegate void cfx_print_settings_get_page_ranges_delegate(IntPtr self, ref UIntPtr rangesCount, IntPtr ranges, out int ranges_nomem);
             public static cfx_print_settings_get_page_ranges_delegate cfx_print_settings_get_page_ranges;
 
             // static void cfx_print_settings_set_selection_only(cef_print_settings_t* self, int selection_only)
@@ -4688,12 +4688,12 @@ namespace Chromium {
 
             // static int cfx_resource_bundle_get_data_resource(cef_resource_bundle_t* self, int resource_id, void** data, size_t* data_size)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_resource_bundle_get_data_resource_delegate(IntPtr self, int resource_id, out IntPtr data, out int data_size);
+            public delegate int cfx_resource_bundle_get_data_resource_delegate(IntPtr self, int resource_id, out IntPtr data, out UIntPtr data_size);
             public static cfx_resource_bundle_get_data_resource_delegate cfx_resource_bundle_get_data_resource;
 
             // static int cfx_resource_bundle_get_data_resource_for_scale(cef_resource_bundle_t* self, int resource_id, cef_scale_factor_t scale_factor, void** data, size_t* data_size)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_resource_bundle_get_data_resource_for_scale_delegate(IntPtr self, int resource_id, int scale_factor, out IntPtr data, out int data_size);
+            public delegate int cfx_resource_bundle_get_data_resource_for_scale_delegate(IntPtr self, int resource_id, int scale_factor, out IntPtr data, out UIntPtr data_size);
             public static cfx_resource_bundle_get_data_resource_for_scale_delegate cfx_resource_bundle_get_data_resource_for_scale;
 
         }
@@ -5319,19 +5319,19 @@ namespace Chromium {
             public delegate IntPtr cfx_sslinfo_get_pemencoded_delegate(IntPtr self);
             public static cfx_sslinfo_get_pemencoded_delegate cfx_sslinfo_get_pemencoded;
 
-            // static int cfx_sslinfo_get_issuer_chain_size(cef_sslinfo_t* self)
+            // static size_t cfx_sslinfo_get_issuer_chain_size(cef_sslinfo_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_sslinfo_get_issuer_chain_size_delegate(IntPtr self);
+            public delegate UIntPtr cfx_sslinfo_get_issuer_chain_size_delegate(IntPtr self);
             public static cfx_sslinfo_get_issuer_chain_size_delegate cfx_sslinfo_get_issuer_chain_size;
 
-            // static void cfx_sslinfo_get_derencoded_issuer_chain(cef_sslinfo_t* self, int chainCount, cef_binary_value_t** chain)
+            // static void cfx_sslinfo_get_derencoded_issuer_chain(cef_sslinfo_t* self, size_t chainCount, cef_binary_value_t** chain)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_sslinfo_get_derencoded_issuer_chain_delegate(IntPtr self, int chainCount, IntPtr chain);
+            public delegate void cfx_sslinfo_get_derencoded_issuer_chain_delegate(IntPtr self, UIntPtr chainCount, IntPtr chain);
             public static cfx_sslinfo_get_derencoded_issuer_chain_delegate cfx_sslinfo_get_derencoded_issuer_chain;
 
-            // static void cfx_sslinfo_get_pemencoded_issuer_chain(cef_sslinfo_t* self, int chainCount, cef_binary_value_t** chain)
+            // static void cfx_sslinfo_get_pemencoded_issuer_chain(cef_sslinfo_t* self, size_t chainCount, cef_binary_value_t** chain)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_sslinfo_get_pemencoded_issuer_chain_delegate(IntPtr self, int chainCount, IntPtr chain);
+            public delegate void cfx_sslinfo_get_pemencoded_issuer_chain_delegate(IntPtr self, UIntPtr chainCount, IntPtr chain);
             public static cfx_sslinfo_get_pemencoded_issuer_chain_delegate cfx_sslinfo_get_pemencoded_issuer_chain;
 
         }
@@ -5348,16 +5348,16 @@ namespace Chromium {
             public static cfx_stream_reader_create_for_file_delegate cfx_stream_reader_create_for_file;
             // CEF_EXPORT cef_stream_reader_t* cef_stream_reader_create_for_data(void* data, size_t size);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate IntPtr cfx_stream_reader_create_for_data_delegate(IntPtr data, int size);
+            public delegate IntPtr cfx_stream_reader_create_for_data_delegate(IntPtr data, UIntPtr size);
             public static cfx_stream_reader_create_for_data_delegate cfx_stream_reader_create_for_data;
             // CEF_EXPORT cef_stream_reader_t* cef_stream_reader_create_for_handler(cef_read_handler_t* handler);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate IntPtr cfx_stream_reader_create_for_handler_delegate(IntPtr handler);
             public static cfx_stream_reader_create_for_handler_delegate cfx_stream_reader_create_for_handler;
 
-            // static int cfx_stream_reader_read(cef_stream_reader_t* self, void* ptr, int size, int n)
+            // static size_t cfx_stream_reader_read(cef_stream_reader_t* self, void* ptr, size_t size, size_t n)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_stream_reader_read_delegate(IntPtr self, IntPtr ptr, int size, int n);
+            public delegate UIntPtr cfx_stream_reader_read_delegate(IntPtr self, IntPtr ptr, UIntPtr size, UIntPtr n);
             public static cfx_stream_reader_read_delegate cfx_stream_reader_read;
 
             // static int cfx_stream_reader_seek(cef_stream_reader_t* self, int64 offset, int whence)
@@ -5397,9 +5397,9 @@ namespace Chromium {
             public delegate IntPtr cfx_stream_writer_create_for_handler_delegate(IntPtr handler);
             public static cfx_stream_writer_create_for_handler_delegate cfx_stream_writer_create_for_handler;
 
-            // static int cfx_stream_writer_write(cef_stream_writer_t* self, const void* ptr, int size, int n)
+            // static size_t cfx_stream_writer_write(cef_stream_writer_t* self, const void* ptr, size_t size, size_t n)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_stream_writer_write_delegate(IntPtr self, IntPtr ptr, int size, int n);
+            public delegate UIntPtr cfx_stream_writer_write_delegate(IntPtr self, IntPtr ptr, UIntPtr size, UIntPtr n);
             public static cfx_stream_writer_write_delegate cfx_stream_writer_write;
 
             // static int cfx_stream_writer_seek(cef_stream_writer_t* self, int64 offset, int whence)
@@ -6199,14 +6199,14 @@ namespace Chromium {
             public delegate IntPtr cfx_v8value_get_function_handler_delegate(IntPtr self);
             public static cfx_v8value_get_function_handler_delegate cfx_v8value_get_function_handler;
 
-            // static cef_v8value_t* cfx_v8value_execute_function(cef_v8value_t* self, cef_v8value_t* object, int argumentsCount, cef_v8value_t* const* arguments)
+            // static cef_v8value_t* cfx_v8value_execute_function(cef_v8value_t* self, cef_v8value_t* object, size_t argumentsCount, cef_v8value_t* const* arguments)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate IntPtr cfx_v8value_execute_function_delegate(IntPtr self, IntPtr @object, int argumentsCount, IntPtr arguments);
+            public delegate IntPtr cfx_v8value_execute_function_delegate(IntPtr self, IntPtr @object, UIntPtr argumentsCount, IntPtr arguments);
             public static cfx_v8value_execute_function_delegate cfx_v8value_execute_function;
 
-            // static cef_v8value_t* cfx_v8value_execute_function_with_context(cef_v8value_t* self, cef_v8context_t* context, cef_v8value_t* object, int argumentsCount, cef_v8value_t* const* arguments)
+            // static cef_v8value_t* cfx_v8value_execute_function_with_context(cef_v8value_t* self, cef_v8context_t* context, cef_v8value_t* object, size_t argumentsCount, cef_v8value_t* const* arguments)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate IntPtr cfx_v8value_execute_function_with_context_delegate(IntPtr self, IntPtr context, IntPtr @object, int argumentsCount, IntPtr arguments);
+            public delegate IntPtr cfx_v8value_execute_function_with_context_delegate(IntPtr self, IntPtr context, IntPtr @object, UIntPtr argumentsCount, IntPtr arguments);
             public static cfx_v8value_execute_function_with_context_delegate cfx_v8value_execute_function_with_context;
 
         }
@@ -6695,9 +6695,9 @@ namespace Chromium {
             public delegate int cfx_xml_reader_has_attributes_delegate(IntPtr self);
             public static cfx_xml_reader_has_attributes_delegate cfx_xml_reader_has_attributes;
 
-            // static int cfx_xml_reader_get_attribute_count(cef_xml_reader_t* self)
+            // static size_t cfx_xml_reader_get_attribute_count(cef_xml_reader_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_xml_reader_get_attribute_count_delegate(IntPtr self);
+            public delegate UIntPtr cfx_xml_reader_get_attribute_count_delegate(IntPtr self);
             public static cfx_xml_reader_get_attribute_count_delegate cfx_xml_reader_get_attribute_count;
 
             // static cef_string_userfree_t cfx_xml_reader_get_attribute_byindex(cef_xml_reader_t* self, int index)
@@ -6818,9 +6818,9 @@ namespace Chromium {
             public delegate int cfx_zip_reader_close_file_delegate(IntPtr self);
             public static cfx_zip_reader_close_file_delegate cfx_zip_reader_close_file;
 
-            // static int cfx_zip_reader_read_file(cef_zip_reader_t* self, void* buffer, int bufferSize)
+            // static int cfx_zip_reader_read_file(cef_zip_reader_t* self, void* buffer, size_t bufferSize)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_zip_reader_read_file_delegate(IntPtr self, IntPtr buffer, int bufferSize);
+            public delegate int cfx_zip_reader_read_file_delegate(IntPtr self, IntPtr buffer, UIntPtr bufferSize);
             public static cfx_zip_reader_read_file_delegate cfx_zip_reader_read_file;
 
             // static int64 cfx_zip_reader_tell(cef_zip_reader_t* self)

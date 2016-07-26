@@ -124,9 +124,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public int Size {
+        public ulong Size {
             get {
-                return CfxApi.DictionaryValue.cfx_dictionary_value_get_size(NativePtr);
+                return (ulong)CfxApi.DictionaryValue.cfx_dictionary_value_get_size(NativePtr);
             }
         }
 

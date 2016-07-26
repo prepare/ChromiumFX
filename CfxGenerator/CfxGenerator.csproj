@@ -75,6 +75,7 @@
     <Compile Include="ApiTypes\NumericType.cs" />
     <Compile Include="ApiTypes\OpaquePtrType.cs" />
     <Compile Include="ApiTypes\SizeType.cs" />
+    <Compile Include="ApiTypes\SizeTypeOut.cs" />
     <Compile Include="ApiTypes\SpecialType.cs" />
     <Compile Include="ApiTypes\StringCollectionType.cs" />
     <Compile Include="ApiTypes\VoidPtrPtrType.cs" />

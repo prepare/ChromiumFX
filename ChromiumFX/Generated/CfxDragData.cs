@@ -281,8 +281,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_drag_data_capi.h">cef/include/capi/cef_drag_data_capi.h</see>.
         /// </remarks>
-        public int GetFileContents(CfxStreamWriter writer) {
-            return CfxApi.DragData.cfx_drag_data_get_file_contents(NativePtr, CfxStreamWriter.Unwrap(writer));
+        public ulong GetFileContents(CfxStreamWriter writer) {
+            return (ulong)CfxApi.DragData.cfx_drag_data_get_file_contents(NativePtr, CfxStreamWriter.Unwrap(writer));
         }
 
         /// <summary>

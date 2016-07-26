@@ -98,9 +98,9 @@ static cef_string_userfree_t cfx_drag_data_get_file_name(cef_drag_data_t* self) 
 }
 
 // get_file_contents
-static int cfx_drag_data_get_file_contents(cef_drag_data_t* self, cef_stream_writer_t* writer) {
+static size_t cfx_drag_data_get_file_contents(cef_drag_data_t* self, cef_stream_writer_t* writer) {
     if(writer) ((cef_base_t*)writer)->add_ref((cef_base_t*)writer);
-    return (int)(self->get_file_contents(self, writer));
+    return self->get_file_contents(self, writer);
 }
 
 // get_file_names

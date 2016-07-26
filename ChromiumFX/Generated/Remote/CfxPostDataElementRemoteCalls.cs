@@ -135,7 +135,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxPostDataElementSetToBytesRenderProcessCall) {}
 
         internal IntPtr @this;
-        internal int size;
+        internal ulong size;
         internal IntPtr bytes;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -151,7 +151,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            CfxApi.PostDataElement.cfx_post_data_element_set_to_bytes(@this, size, bytes);
+            CfxApi.PostDataElement.cfx_post_data_element_set_to_bytes(@this, (UIntPtr)size, bytes);
         }
     }
 
@@ -219,7 +219,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxPostDataElementGetBytesCountRenderProcessCall) {}
 
         internal IntPtr @this;
-        internal int __retval;
+        internal ulong __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(@this);
@@ -238,7 +238,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.PostDataElement.cfx_post_data_element_get_bytes_count(@this);
+            __retval = (ulong)CfxApi.PostDataElement.cfx_post_data_element_get_bytes_count(@this);
         }
     }
 
@@ -248,9 +248,9 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxPostDataElementGetBytesRenderProcessCall) {}
 
         internal IntPtr @this;
-        internal int size;
+        internal ulong size;
         internal IntPtr bytes;
-        internal int __retval;
+        internal ulong __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(@this);
@@ -273,7 +273,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.PostDataElement.cfx_post_data_element_get_bytes(@this, size, bytes);
+            __retval = (ulong)CfxApi.PostDataElement.cfx_post_data_element_get_bytes(@this, (UIntPtr)size, bytes);
         }
     }
 

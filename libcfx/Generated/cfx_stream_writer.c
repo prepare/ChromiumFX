@@ -44,8 +44,8 @@ static cef_stream_writer_t* cfx_stream_writer_create_for_handler(cef_write_handl
     return cef_stream_writer_create_for_handler(handler);
 }
 // write
-static int cfx_stream_writer_write(cef_stream_writer_t* self, const void* ptr, int size, int n) {
-    return (int)(self->write(self, ptr, (size_t)(size), (size_t)(n)));
+static size_t cfx_stream_writer_write(cef_stream_writer_t* self, const void* ptr, size_t size, size_t n) {
+    return self->write(self, ptr, size, n);
 }
 
 // seek

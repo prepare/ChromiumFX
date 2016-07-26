@@ -130,7 +130,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
-        public int BytesCount {
+        public ulong BytesCount {
             get {
                 var call = new CfxPostDataElementGetBytesCountRenderProcessCall();
                 call.@this = proxyId;
@@ -174,7 +174,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
-        public void SetToBytes(int size, RemotePtr bytes) {
+        public void SetToBytes(ulong size, RemotePtr bytes) {
             var call = new CfxPostDataElementSetToBytesRenderProcessCall();
             call.@this = proxyId;
             call.size = size;
@@ -190,7 +190,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
-        public int GetBytes(int size, RemotePtr bytes) {
+        public ulong GetBytes(ulong size, RemotePtr bytes) {
             var call = new CfxPostDataElementGetBytesRenderProcessCall();
             call.@this = proxyId;
             call.size = size;

@@ -41,7 +41,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxBinaryValueCreateRenderProcessCall) {}
 
         internal IntPtr data;
-        internal int dataSize;
+        internal ulong dataSize;
         internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -63,7 +63,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.BinaryValue.cfx_binary_value_create(data, dataSize);
+            __retval = CfxApi.BinaryValue.cfx_binary_value_create(data, (UIntPtr)dataSize);
         }
     }
 
@@ -224,7 +224,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxBinaryValueGetSizeRenderProcessCall) {}
 
         internal IntPtr @this;
-        internal int __retval;
+        internal ulong __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(@this);
@@ -243,7 +243,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.BinaryValue.cfx_binary_value_get_size(@this);
+            __retval = (ulong)CfxApi.BinaryValue.cfx_binary_value_get_size(@this);
         }
     }
 
@@ -254,9 +254,9 @@ namespace Chromium.Remote {
 
         internal IntPtr @this;
         internal IntPtr buffer;
-        internal int bufferSize;
-        internal int dataOffset;
-        internal int __retval;
+        internal ulong bufferSize;
+        internal ulong dataOffset;
+        internal ulong __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(@this);
@@ -281,7 +281,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.BinaryValue.cfx_binary_value_get_data(@this, buffer, bufferSize, dataOffset);
+            __retval = (ulong)CfxApi.BinaryValue.cfx_binary_value_get_data(@this, buffer, (UIntPtr)bufferSize, (UIntPtr)dataOffset);
         }
     }
 

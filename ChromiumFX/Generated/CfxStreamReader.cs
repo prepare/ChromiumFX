@@ -84,8 +84,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
         /// </remarks>
-        public static CfxStreamReader CreateForData(IntPtr data, int size) {
-            return CfxStreamReader.Wrap(CfxApi.StreamReader.cfx_stream_reader_create_for_data(data, size));
+        public static CfxStreamReader CreateForData(IntPtr data, ulong size) {
+            return CfxStreamReader.Wrap(CfxApi.StreamReader.cfx_stream_reader_create_for_data(data, (UIntPtr)size));
         }
 
         /// <summary>
@@ -106,8 +106,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
         /// </remarks>
-        public int Read(IntPtr ptr, int size, int n) {
-            return CfxApi.StreamReader.cfx_stream_reader_read(NativePtr, ptr, size, n);
+        public ulong Read(IntPtr ptr, ulong size, ulong n) {
+            return (ulong)CfxApi.StreamReader.cfx_stream_reader_read(NativePtr, ptr, (UIntPtr)size, (UIntPtr)n);
         }
 
         /// <summary>

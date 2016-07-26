@@ -361,7 +361,7 @@ namespace Chromium.Remote {
             /// <summary>
             /// Set the DataSize out parameter for the <see cref="CfrResourceBundleHandler.GetDataResource"/> render process callback.
             /// </summary>
-            public int DataSize {
+            public UIntPtr DataSize {
                 set {
                     CheckAccess();
                     var call = new CfxGetDataResourceSetDataSizeRenderProcessCall();
@@ -474,7 +474,7 @@ namespace Chromium.Remote {
             /// <summary>
             /// Set the DataSize out parameter for the <see cref="CfrResourceBundleHandler.GetDataResourceForScale"/> render process callback.
             /// </summary>
-            public int DataSize {
+            public UIntPtr DataSize {
                 set {
                     CheckAccess();
                     var call = new CfxGetDataResourceForScaleSetDataSizeRenderProcessCall();

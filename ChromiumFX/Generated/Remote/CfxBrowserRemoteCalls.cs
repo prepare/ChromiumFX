@@ -471,7 +471,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxBrowserGetFrameCountRenderProcessCall) {}
 
         internal IntPtr @this;
-        internal int __retval;
+        internal ulong __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(@this);
@@ -490,7 +490,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.Browser.cfx_browser_get_frame_count(@this);
+            __retval = (ulong)CfxApi.Browser.cfx_browser_get_frame_count(@this);
         }
     }
 
@@ -519,9 +519,9 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            int identifiersCount = CfxApi.Browser.cfx_browser_get_frame_count(@this);
-            __retval = new long[identifiersCount];
-            if(identifiersCount == 0) return;
+            var identifiersCount = CfxApi.Browser.cfx_browser_get_frame_count(@this);
+            __retval = new long[(ulong)identifiersCount];
+            if(identifiersCount == UIntPtr.Zero) return;
             var retval_p = new PinnedObject(__retval);
             CfxApi.Browser.cfx_browser_get_frame_identifiers(@this, identifiersCount, retval_p.PinnedPtr);
             retval_p.Free();

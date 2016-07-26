@@ -95,8 +95,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
         /// </remarks>
-        public int Write(IntPtr ptr, int size, int n) {
-            return CfxApi.StreamWriter.cfx_stream_writer_write(NativePtr, ptr, size, n);
+        public ulong Write(IntPtr ptr, ulong size, ulong n) {
+            return (ulong)CfxApi.StreamWriter.cfx_stream_writer_write(NativePtr, ptr, (UIntPtr)size, (UIntPtr)n);
         }
 
         /// <summary>

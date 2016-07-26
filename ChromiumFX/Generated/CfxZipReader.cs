@@ -202,8 +202,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_zip_reader_capi.h">cef/include/capi/cef_zip_reader_capi.h</see>.
         /// </remarks>
-        public int ReadFile(IntPtr buffer, int bufferSize) {
-            return CfxApi.ZipReader.cfx_zip_reader_read_file(NativePtr, buffer, bufferSize);
+        public int ReadFile(IntPtr buffer, ulong bufferSize) {
+            return CfxApi.ZipReader.cfx_zip_reader_read_file(NativePtr, buffer, (UIntPtr)bufferSize);
         }
 
         /// <summary>

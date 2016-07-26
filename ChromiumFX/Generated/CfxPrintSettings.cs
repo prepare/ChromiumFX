@@ -155,9 +155,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
         /// </remarks>
-        public int PageRangesCount {
+        public ulong PageRangesCount {
             get {
-                return CfxApi.PrintSettings.cfx_print_settings_get_page_ranges_count(NativePtr);
+                return (ulong)CfxApi.PrintSettings.cfx_print_settings_get_page_ranges_count(NativePtr);
             }
         }
 
@@ -265,16 +265,16 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
         /// </remarks>
         public void SetPageRanges(CfxRange[] ranges) {
-            int ranges_length;
+            UIntPtr ranges_length;
             IntPtr[] ranges_ptrs;
             if(ranges != null) {
-                ranges_length = ranges.Length;
-                ranges_ptrs = new IntPtr[ranges_length];
-                for(int i = 0; i < ranges_length; ++i) {
+                ranges_length = (UIntPtr)ranges.Length;
+                ranges_ptrs = new IntPtr[ranges.Length];
+                for(int i = 0; i < ranges.Length; ++i) {
                     ranges_ptrs[i] = CfxRange.Unwrap(ranges[i]);
                 }
             } else {
-                ranges_length = 0;
+                ranges_length = UIntPtr.Zero;
                 ranges_ptrs = null;
             }
             PinnedObject ranges_pinned = new PinnedObject(ranges_ptrs);
@@ -294,8 +294,8 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
         /// </remarks>
         public CfxRange[] GetPageRanges() {
-            int rangesCount = CfxApi.PrintSettings.cfx_print_settings_get_page_ranges_count(NativePtr);
-            IntPtr[] pp = new IntPtr[rangesCount];
+            var rangesCount = CfxApi.PrintSettings.cfx_print_settings_get_page_ranges_count(NativePtr);
+            IntPtr[] pp = new IntPtr[(ulong)rangesCount];
             PinnedObject pp_pinned = new PinnedObject(pp);
             int ranges_nomem;
             CfxApi.PrintSettings.cfx_print_settings_get_page_ranges(NativePtr, ref rangesCount, pp_pinned.PinnedPtr, out ranges_nomem);
@@ -303,8 +303,8 @@ namespace Chromium {
             if(ranges_nomem != 0) {
                 throw new OutOfMemoryException();
             }
-            var retval = new CfxRange[rangesCount];
-            for(int i = 0; i < rangesCount; ++i) {
+            var retval = new CfxRange[(ulong)rangesCount];
+            for(ulong i = 0; i < (ulong)rangesCount; ++i) {
                 retval[i] = CfxRange.WrapOwned(pp[i]);
             }
             return retval;

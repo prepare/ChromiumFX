@@ -89,7 +89,7 @@ static int cfx_print_settings_get_dpi(cef_print_settings_t* self) {
 }
 
 // set_page_ranges
-static void cfx_print_settings_set_page_ranges(cef_print_settings_t* self, int rangesCount, cef_range_t const** ranges, int* ranges_nomem) {
+static void cfx_print_settings_set_page_ranges(cef_print_settings_t* self, size_t rangesCount, cef_range_t const** ranges, int* ranges_nomem) {
     cef_range_t *ranges_tmp = (cef_range_t*)malloc(rangesCount * sizeof(cef_range_t));
     if(ranges_tmp) {
         for(int i = 0; i < rangesCount; ++i) {
@@ -100,13 +100,13 @@ static void cfx_print_settings_set_page_ranges(cef_print_settings_t* self, int r
         rangesCount = 0;
         *ranges_nomem = 1;
     }
-    self->set_page_ranges(self, (size_t)(rangesCount), ranges_tmp);
+    self->set_page_ranges(self, rangesCount, ranges_tmp);
     if(ranges_tmp) free(ranges_tmp);
 }
 
 // get_page_ranges_count
-static int cfx_print_settings_get_page_ranges_count(cef_print_settings_t* self) {
-    return (int)(self->get_page_ranges_count(self));
+static size_t cfx_print_settings_get_page_ranges_count(cef_print_settings_t* self) {
+    return self->get_page_ranges_count(self);
 }
 
 // get_page_ranges

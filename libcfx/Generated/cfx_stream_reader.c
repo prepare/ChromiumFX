@@ -39,8 +39,8 @@ static cef_stream_reader_t* cfx_stream_reader_create_for_file(char16 *fileName_s
     return cef_stream_reader_create_for_file(&fileName);
 }
 // CEF_EXPORT cef_stream_reader_t* cef_stream_reader_create_for_data(void* data, size_t size);
-static cef_stream_reader_t* cfx_stream_reader_create_for_data(void* data, int size) {
-    return cef_stream_reader_create_for_data(data, (size_t)(size));
+static cef_stream_reader_t* cfx_stream_reader_create_for_data(void* data, size_t size) {
+    return cef_stream_reader_create_for_data(data, size);
 }
 // CEF_EXPORT cef_stream_reader_t* cef_stream_reader_create_for_handler(cef_read_handler_t* handler);
 static cef_stream_reader_t* cfx_stream_reader_create_for_handler(cef_read_handler_t* handler) {
@@ -48,8 +48,8 @@ static cef_stream_reader_t* cfx_stream_reader_create_for_handler(cef_read_handle
     return cef_stream_reader_create_for_handler(handler);
 }
 // read
-static int cfx_stream_reader_read(cef_stream_reader_t* self, void* ptr, int size, int n) {
-    return (int)(self->read(self, ptr, (size_t)(size), (size_t)(n)));
+static size_t cfx_stream_reader_read(cef_stream_reader_t* self, void* ptr, size_t size, size_t n) {
+    return self->read(self, ptr, size, n);
 }
 
 // seek

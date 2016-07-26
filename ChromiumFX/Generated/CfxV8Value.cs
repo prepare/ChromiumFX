@@ -810,16 +810,16 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public CfxV8Value ExecuteFunction(CfxV8Value @object, CfxV8Value[] arguments) {
-            int arguments_length;
+            UIntPtr arguments_length;
             IntPtr[] arguments_ptrs;
             if(arguments != null) {
-                arguments_length = arguments.Length;
-                arguments_ptrs = new IntPtr[arguments_length];
-                for(int i = 0; i < arguments_length; ++i) {
+                arguments_length = (UIntPtr)arguments.Length;
+                arguments_ptrs = new IntPtr[arguments.Length];
+                for(int i = 0; i < arguments.Length; ++i) {
                     arguments_ptrs[i] = CfxV8Value.Unwrap(arguments[i]);
                 }
             } else {
-                arguments_length = 0;
+                arguments_length = UIntPtr.Zero;
                 arguments_ptrs = null;
             }
             PinnedObject arguments_pinned = new PinnedObject(arguments_ptrs);
@@ -841,16 +841,16 @@ namespace Chromium {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public CfxV8Value ExecuteFunctionWithContext(CfxV8Context context, CfxV8Value @object, CfxV8Value[] arguments) {
-            int arguments_length;
+            UIntPtr arguments_length;
             IntPtr[] arguments_ptrs;
             if(arguments != null) {
-                arguments_length = arguments.Length;
-                arguments_ptrs = new IntPtr[arguments_length];
-                for(int i = 0; i < arguments_length; ++i) {
+                arguments_length = (UIntPtr)arguments.Length;
+                arguments_ptrs = new IntPtr[arguments.Length];
+                for(int i = 0; i < arguments.Length; ++i) {
                     arguments_ptrs[i] = CfxV8Value.Unwrap(arguments[i]);
                 }
             } else {
-                arguments_length = 0;
+                arguments_length = UIntPtr.Zero;
                 arguments_ptrs = null;
             }
             PinnedObject arguments_pinned = new PinnedObject(arguments_ptrs);

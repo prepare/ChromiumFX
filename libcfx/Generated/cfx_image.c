@@ -49,28 +49,28 @@ static int cfx_image_is_same(cef_image_t* self, cef_image_t* that) {
 }
 
 // add_bitmap
-static int cfx_image_add_bitmap(cef_image_t* self, float scale_factor, int pixel_width, int pixel_height, cef_color_type_t color_type, cef_alpha_type_t alpha_type, const void* pixel_data, int pixel_data_size) {
-    return self->add_bitmap(self, scale_factor, pixel_width, pixel_height, color_type, alpha_type, pixel_data, (size_t)(pixel_data_size));
+static int cfx_image_add_bitmap(cef_image_t* self, float scale_factor, int pixel_width, int pixel_height, cef_color_type_t color_type, cef_alpha_type_t alpha_type, const void* pixel_data, size_t pixel_data_size) {
+    return self->add_bitmap(self, scale_factor, pixel_width, pixel_height, color_type, alpha_type, pixel_data, pixel_data_size);
 }
 
 // add_png
-static int cfx_image_add_png(cef_image_t* self, float scale_factor, const void* png_data, int png_data_size) {
-    return self->add_png(self, scale_factor, png_data, (size_t)(png_data_size));
+static int cfx_image_add_png(cef_image_t* self, float scale_factor, const void* png_data, size_t png_data_size) {
+    return self->add_png(self, scale_factor, png_data, png_data_size);
 }
 
 // add_jpeg
-static int cfx_image_add_jpeg(cef_image_t* self, float scale_factor, const void* jpeg_data, int jpeg_data_size) {
-    return self->add_jpeg(self, scale_factor, jpeg_data, (size_t)(jpeg_data_size));
+static int cfx_image_add_jpeg(cef_image_t* self, float scale_factor, const void* jpeg_data, size_t jpeg_data_size) {
+    return self->add_jpeg(self, scale_factor, jpeg_data, jpeg_data_size);
 }
 
 // get_width
-static int cfx_image_get_width(cef_image_t* self) {
-    return (int)(self->get_width(self));
+static size_t cfx_image_get_width(cef_image_t* self) {
+    return self->get_width(self);
 }
 
 // get_height
-static int cfx_image_get_height(cef_image_t* self) {
-    return (int)(self->get_height(self));
+static size_t cfx_image_get_height(cef_image_t* self) {
+    return self->get_height(self);
 }
 
 // has_representation

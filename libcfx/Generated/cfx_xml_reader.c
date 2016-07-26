@@ -120,8 +120,8 @@ static int cfx_xml_reader_has_attributes(cef_xml_reader_t* self) {
 }
 
 // get_attribute_count
-static int cfx_xml_reader_get_attribute_count(cef_xml_reader_t* self) {
-    return (int)(self->get_attribute_count(self));
+static size_t cfx_xml_reader_get_attribute_count(cef_xml_reader_t* self) {
+    return self->get_attribute_count(self);
 }
 
 // get_attribute_byindex

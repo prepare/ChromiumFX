@@ -1667,7 +1667,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             PinnedObject arguments_pinned = new PinnedObject(arguments);
-            var arguments_length = arguments == null ? 0 : arguments.Length;
+            var arguments_length = arguments == null ? UIntPtr.Zero : (UIntPtr)arguments.LongLength;
             __retval = CfxApi.V8Value.cfx_v8value_execute_function(@this, @object, arguments_length, arguments_pinned.PinnedPtr);
             arguments_pinned.Free();
         }
@@ -1708,7 +1708,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             PinnedObject arguments_pinned = new PinnedObject(arguments);
-            var arguments_length = arguments == null ? 0 : arguments.Length;
+            var arguments_length = arguments == null ? UIntPtr.Zero : (UIntPtr)arguments.LongLength;
             __retval = CfxApi.V8Value.cfx_v8value_execute_function_with_context(@this, context, @object, arguments_length, arguments_pinned.PinnedPtr);
             arguments_pinned.Free();
         }

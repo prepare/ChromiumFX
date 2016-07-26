@@ -73,12 +73,12 @@ static gc_handle_t cfx_read_handler_get_gc_handle(cfx_read_handler_t* self) {
 
 // read
 
-void (CEF_CALLBACK *cfx_read_handler_read_callback)(gc_handle_t self, int* __retval, void* ptr, int size, int n);
+void (CEF_CALLBACK *cfx_read_handler_read_callback)(gc_handle_t self, size_t* __retval, void* ptr, size_t size, size_t n);
 
 size_t CEF_CALLBACK cfx_read_handler_read(cef_read_handler_t* self, void* ptr, size_t size, size_t n) {
-    int __retval;
-    cfx_read_handler_read_callback(((cfx_read_handler_t*)self)->gc_handle, &__retval, ptr, (int)(size), (int)(n));
-    return (size_t)(__retval);
+    size_t __retval;
+    cfx_read_handler_read_callback(((cfx_read_handler_t*)self)->gc_handle, &__retval, ptr, size, n);
+    return __retval;
 }
 
 
@@ -130,7 +130,7 @@ static void cfx_read_handler_set_managed_callback(cef_read_handler_t* self, int 
     switch(index) {
     case 0:
         if(callback && !cfx_read_handler_read_callback)
-            cfx_read_handler_read_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, void* ptr, int size, int n)) callback;
+            cfx_read_handler_read_callback = (void (CEF_CALLBACK *)(gc_handle_t self, size_t* __retval, void* ptr, size_t size, size_t n)) callback;
         self->read = callback ? cfx_read_handler_read : 0;
         break;
     case 1:

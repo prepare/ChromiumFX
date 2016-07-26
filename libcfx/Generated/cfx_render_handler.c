@@ -135,10 +135,10 @@ void CEF_CALLBACK cfx_render_handler_on_popup_size(cef_render_handler_t* self, c
 
 // on_paint
 
-void (CEF_CALLBACK *cfx_render_handler_on_paint_callback)(gc_handle_t self, cef_browser_t* browser, cef_paint_element_type_t type, int dirtyRectsCount, cef_rect_t const* dirtyRects, int dirtyRects_structsize, const void* buffer, int width, int height);
+void (CEF_CALLBACK *cfx_render_handler_on_paint_callback)(gc_handle_t self, cef_browser_t* browser, cef_paint_element_type_t type, size_t dirtyRectsCount, cef_rect_t const* dirtyRects, int dirtyRects_structsize, const void* buffer, int width, int height);
 
 void CEF_CALLBACK cfx_render_handler_on_paint(cef_render_handler_t* self, cef_browser_t* browser, cef_paint_element_type_t type, size_t dirtyRectsCount, cef_rect_t const* dirtyRects, const void* buffer, int width, int height) {
-    cfx_render_handler_on_paint_callback(((cfx_render_handler_t*)self)->gc_handle, browser, type, (int)(dirtyRectsCount), dirtyRects, (int)sizeof(cef_rect_t), buffer, width, height);
+    cfx_render_handler_on_paint_callback(((cfx_render_handler_t*)self)->gc_handle, browser, type, dirtyRectsCount, dirtyRects, (int)sizeof(cef_rect_t), buffer, width, height);
 }
 
 
@@ -214,7 +214,7 @@ static void cfx_render_handler_set_managed_callback(cef_render_handler_t* self, 
         break;
     case 6:
         if(callback && !cfx_render_handler_on_paint_callback)
-            cfx_render_handler_on_paint_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_paint_element_type_t type, int dirtyRectsCount, cef_rect_t const* dirtyRects, int dirtyRects_structsize, const void* buffer, int width, int height)) callback;
+            cfx_render_handler_on_paint_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_paint_element_type_t type, size_t dirtyRectsCount, cef_rect_t const* dirtyRects, int dirtyRects_structsize, const void* buffer, int width, int height)) callback;
         self->on_paint = callback ? cfx_render_handler_on_paint : 0;
         break;
     case 7:

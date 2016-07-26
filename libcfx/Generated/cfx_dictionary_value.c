@@ -70,8 +70,8 @@ static cef_dictionary_value_t* cfx_dictionary_value_copy(cef_dictionary_value_t*
 }
 
 // get_size
-static int cfx_dictionary_value_get_size(cef_dictionary_value_t* self) {
-    return (int)(self->get_size(self));
+static size_t cfx_dictionary_value_get_size(cef_dictionary_value_t* self) {
+    return self->get_size(self);
 }
 
 // clear

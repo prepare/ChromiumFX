@@ -121,14 +121,13 @@ static cef_frame_t* cfx_browser_get_frame(cef_browser_t* self, char16 *name_str,
 }
 
 // get_frame_count
-static int cfx_browser_get_frame_count(cef_browser_t* self) {
-    return (int)(self->get_frame_count(self));
+static size_t cfx_browser_get_frame_count(cef_browser_t* self) {
+    return self->get_frame_count(self);
 }
 
 // get_frame_identifiers
-static void cfx_browser_get_frame_identifiers(cef_browser_t* self, int identifiersCount, int64* identifiers) {
-    size_t tmp_identifiersCount = (size_t)identifiersCount;
-    self->get_frame_identifiers(self, &tmp_identifiersCount, identifiers);
+static void cfx_browser_get_frame_identifiers(cef_browser_t* self, size_t identifiersCount, int64* identifiers) {
+    self->get_frame_identifiers(self, &identifiersCount, identifiers);
 }
 
 // get_frame_names

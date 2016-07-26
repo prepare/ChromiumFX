@@ -110,9 +110,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
-        public int ElementCount {
+        public ulong ElementCount {
             get {
-                return CfxApi.PostData.cfx_post_data_get_element_count(NativePtr);
+                return (ulong)CfxApi.PostData.cfx_post_data_get_element_count(NativePtr);
             }
         }
 
@@ -125,14 +125,14 @@ namespace Chromium {
         /// </remarks>
         public CfxPostDataElement[] Elements {
             get {
-                int count = ElementCount;
+                var count = ElementCount;
                 if(count == 0) return new CfxPostDataElement[0];
                 IntPtr[] ptrs = new IntPtr[count];
                 var ptrs_p = new PinnedObject(ptrs);
-                CfxApi.PostData.cfx_post_data_get_elements(NativePtr, count, ptrs_p.PinnedPtr);
+                CfxApi.PostData.cfx_post_data_get_elements(NativePtr, (UIntPtr)count, ptrs_p.PinnedPtr);
                 ptrs_p.Free();
                 CfxPostDataElement[] retval = new CfxPostDataElement[count];
-                for(int i = 0; i < count; ++i) {
+                for(ulong i = 0; i < count; ++i) {
                     retval[i] = CfxPostDataElement.Wrap(ptrs[i]);
                 }
                 return retval;

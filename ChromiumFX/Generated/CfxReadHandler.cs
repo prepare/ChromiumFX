@@ -57,21 +57,21 @@ namespace Chromium {
 
         // read
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_read_handler_read_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr ptr, int size, int n);
+        private delegate void cfx_read_handler_read_delegate(IntPtr gcHandlePtr, out UIntPtr __retval, IntPtr ptr, UIntPtr size, UIntPtr n);
         private static cfx_read_handler_read_delegate cfx_read_handler_read;
         private static IntPtr cfx_read_handler_read_ptr;
 
-        internal static void read(IntPtr gcHandlePtr, out int __retval, IntPtr ptr, int size, int n) {
+        internal static void read(IntPtr gcHandlePtr, out UIntPtr __retval, IntPtr ptr, UIntPtr size, UIntPtr n) {
             var self = (CfxReadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
-                __retval = default(int);
+                __retval = default(UIntPtr);
                 return;
             }
             var e = new CfxReadEventArgs(ptr, size, n);
             var eventHandler = self.m_Read;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
-            __retval = e.m_returnValue;
+            __retval = (UIntPtr)e.m_returnValue;
         }
 
         // seek
@@ -363,13 +363,13 @@ namespace Chromium {
         public class CfxReadEventArgs : CfxEventArgs {
 
             internal IntPtr m_ptr;
-            internal int m_size;
-            internal int m_n;
+            internal UIntPtr m_size;
+            internal UIntPtr m_n;
 
-            internal int m_returnValue;
+            internal ulong m_returnValue;
             private bool returnValueSet;
 
-            internal CfxReadEventArgs(IntPtr ptr, int size, int n) {
+            internal CfxReadEventArgs(IntPtr ptr, UIntPtr size, UIntPtr n) {
                 m_ptr = ptr;
                 m_size = size;
                 m_n = n;
@@ -387,26 +387,26 @@ namespace Chromium {
             /// <summary>
             /// Get the Size parameter for the <see cref="CfxReadHandler.Read"/> callback.
             /// </summary>
-            public int Size {
+            public ulong Size {
                 get {
                     CheckAccess();
-                    return m_size;
+                    return (ulong)m_size;
                 }
             }
             /// <summary>
             /// Get the N parameter for the <see cref="CfxReadHandler.Read"/> callback.
             /// </summary>
-            public int N {
+            public ulong N {
                 get {
                     CheckAccess();
-                    return m_n;
+                    return (ulong)m_n;
                 }
             }
             /// <summary>
             /// Set the return value for the <see cref="CfxReadHandler.Read"/> callback.
             /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
             /// </summary>
-            public void SetReturnValue(int returnValue) {
+            public void SetReturnValue(ulong returnValue) {
                 CheckAccess();
                 if(returnValueSet) {
                     throw new CfxException("The return value has already been set");

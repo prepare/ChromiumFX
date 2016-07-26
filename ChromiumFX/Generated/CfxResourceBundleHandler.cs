@@ -82,16 +82,16 @@ namespace Chromium {
 
         // get_data_resource
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_resource_bundle_handler_get_data_resource_delegate(IntPtr gcHandlePtr, out int __retval, int resource_id, out IntPtr data, out int data_size);
+        private delegate void cfx_resource_bundle_handler_get_data_resource_delegate(IntPtr gcHandlePtr, out int __retval, int resource_id, out IntPtr data, out UIntPtr data_size);
         private static cfx_resource_bundle_handler_get_data_resource_delegate cfx_resource_bundle_handler_get_data_resource;
         private static IntPtr cfx_resource_bundle_handler_get_data_resource_ptr;
 
-        internal static void get_data_resource(IntPtr gcHandlePtr, out int __retval, int resource_id, out IntPtr data, out int data_size) {
+        internal static void get_data_resource(IntPtr gcHandlePtr, out int __retval, int resource_id, out IntPtr data, out UIntPtr data_size) {
             var self = (CfxResourceBundleHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
                 data = default(IntPtr);
-                data_size = default(int);
+                data_size = default(UIntPtr);
                 return;
             }
             var e = new CfxGetDataResourceEventArgs(resource_id);
@@ -105,16 +105,16 @@ namespace Chromium {
 
         // get_data_resource_for_scale
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_resource_bundle_handler_get_data_resource_for_scale_delegate(IntPtr gcHandlePtr, out int __retval, int resource_id, int scale_factor, out IntPtr data, out int data_size);
+        private delegate void cfx_resource_bundle_handler_get_data_resource_for_scale_delegate(IntPtr gcHandlePtr, out int __retval, int resource_id, int scale_factor, out IntPtr data, out UIntPtr data_size);
         private static cfx_resource_bundle_handler_get_data_resource_for_scale_delegate cfx_resource_bundle_handler_get_data_resource_for_scale;
         private static IntPtr cfx_resource_bundle_handler_get_data_resource_for_scale_ptr;
 
-        internal static void get_data_resource_for_scale(IntPtr gcHandlePtr, out int __retval, int resource_id, int scale_factor, out IntPtr data, out int data_size) {
+        internal static void get_data_resource_for_scale(IntPtr gcHandlePtr, out int __retval, int resource_id, int scale_factor, out IntPtr data, out UIntPtr data_size) {
             var self = (CfxResourceBundleHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
                 data = default(IntPtr);
-                data_size = default(int);
+                data_size = default(UIntPtr);
                 return;
             }
             var e = new CfxGetDataResourceForScaleEventArgs(resource_id, scale_factor);
@@ -371,7 +371,7 @@ namespace Chromium {
 
             internal int m_resource_id;
             internal IntPtr m_data;
-            internal int m_data_size;
+            internal UIntPtr m_data_size;
 
             internal bool m_returnValue;
             private bool returnValueSet;
@@ -401,7 +401,7 @@ namespace Chromium {
             /// <summary>
             /// Set the DataSize out parameter for the <see cref="CfxResourceBundleHandler.GetDataResource"/> callback.
             /// </summary>
-            public int DataSize {
+            public UIntPtr DataSize {
                 set {
                     CheckAccess();
                     m_data_size = value;
@@ -456,7 +456,7 @@ namespace Chromium {
             internal int m_resource_id;
             internal int m_scale_factor;
             internal IntPtr m_data;
-            internal int m_data_size;
+            internal UIntPtr m_data_size;
 
             internal bool m_returnValue;
             private bool returnValueSet;
@@ -496,7 +496,7 @@ namespace Chromium {
             /// <summary>
             /// Set the DataSize out parameter for the <see cref="CfxResourceBundleHandler.GetDataResourceForScale"/> callback.
             /// </summary>
-            public int DataSize {
+            public UIntPtr DataSize {
                 set {
                     CheckAccess();
                     m_data_size = value;

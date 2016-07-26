@@ -70,13 +70,13 @@ static cef_list_value_t* cfx_list_value_copy(cef_list_value_t* self) {
 }
 
 // set_size
-static int cfx_list_value_set_size(cef_list_value_t* self, int size) {
-    return self->set_size(self, (size_t)(size));
+static int cfx_list_value_set_size(cef_list_value_t* self, size_t size) {
+    return self->set_size(self, size);
 }
 
 // get_size
-static int cfx_list_value_get_size(cef_list_value_t* self) {
-    return (int)(self->get_size(self));
+static size_t cfx_list_value_get_size(cef_list_value_t* self) {
+    return self->get_size(self);
 }
 
 // clear

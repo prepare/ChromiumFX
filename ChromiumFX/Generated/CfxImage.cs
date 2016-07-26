@@ -99,9 +99,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_image_capi.h">cef/include/capi/cef_image_capi.h</see>.
         /// </remarks>
-        public int Width {
+        public ulong Width {
             get {
-                return CfxApi.Image.cfx_image_get_width(NativePtr);
+                return (ulong)CfxApi.Image.cfx_image_get_width(NativePtr);
             }
         }
 
@@ -112,9 +112,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_image_capi.h">cef/include/capi/cef_image_capi.h</see>.
         /// </remarks>
-        public int Height {
+        public ulong Height {
             get {
-                return CfxApi.Image.cfx_image_get_height(NativePtr);
+                return (ulong)CfxApi.Image.cfx_image_get_height(NativePtr);
             }
         }
 
@@ -141,8 +141,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_image_capi.h">cef/include/capi/cef_image_capi.h</see>.
         /// </remarks>
-        public bool AddBitmap(float scaleFactor, int pixelWidth, int pixelHeight, CfxColorType colorType, CfxAlphaType alphaType, IntPtr pixelData, int pixelDataSize) {
-            return 0 != CfxApi.Image.cfx_image_add_bitmap(NativePtr, scaleFactor, pixelWidth, pixelHeight, (int)colorType, (int)alphaType, pixelData, pixelDataSize);
+        public bool AddBitmap(float scaleFactor, int pixelWidth, int pixelHeight, CfxColorType colorType, CfxAlphaType alphaType, IntPtr pixelData, ulong pixelDataSize) {
+            return 0 != CfxApi.Image.cfx_image_add_bitmap(NativePtr, scaleFactor, pixelWidth, pixelHeight, (int)colorType, (int)alphaType, pixelData, (UIntPtr)pixelDataSize);
         }
 
         /// <summary>
@@ -154,8 +154,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_image_capi.h">cef/include/capi/cef_image_capi.h</see>.
         /// </remarks>
-        public bool AddPng(float scaleFactor, IntPtr pngData, int pngDataSize) {
-            return 0 != CfxApi.Image.cfx_image_add_png(NativePtr, scaleFactor, pngData, pngDataSize);
+        public bool AddPng(float scaleFactor, IntPtr pngData, ulong pngDataSize) {
+            return 0 != CfxApi.Image.cfx_image_add_png(NativePtr, scaleFactor, pngData, (UIntPtr)pngDataSize);
         }
 
         /// <summary>
@@ -167,8 +167,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_image_capi.h">cef/include/capi/cef_image_capi.h</see>.
         /// </remarks>
-        public bool AddJpeg(float scaleFactor, IntPtr jpegData, int jpegDataSize) {
-            return 0 != CfxApi.Image.cfx_image_add_jpeg(NativePtr, scaleFactor, jpegData, jpegDataSize);
+        public bool AddJpeg(float scaleFactor, IntPtr jpegData, ulong jpegDataSize) {
+            return 0 != CfxApi.Image.cfx_image_add_jpeg(NativePtr, scaleFactor, jpegData, (UIntPtr)jpegDataSize);
         }
 
         /// <summary>

@@ -100,10 +100,10 @@ void CEF_CALLBACK cfx_urlrequest_client_on_download_progress(cef_urlrequest_clie
 
 // on_download_data
 
-void (CEF_CALLBACK *cfx_urlrequest_client_on_download_data_callback)(gc_handle_t self, cef_urlrequest_t* request, const void* data, int data_length);
+void (CEF_CALLBACK *cfx_urlrequest_client_on_download_data_callback)(gc_handle_t self, cef_urlrequest_t* request, const void* data, size_t data_length);
 
 void CEF_CALLBACK cfx_urlrequest_client_on_download_data(cef_urlrequest_client_t* self, cef_urlrequest_t* request, const void* data, size_t data_length) {
-    cfx_urlrequest_client_on_download_data_callback(((cfx_urlrequest_client_t*)self)->gc_handle, request, data, (int)(data_length));
+    cfx_urlrequest_client_on_download_data_callback(((cfx_urlrequest_client_t*)self)->gc_handle, request, data, data_length);
 }
 
 
@@ -137,7 +137,7 @@ static void cfx_urlrequest_client_set_managed_callback(cef_urlrequest_client_t* 
         break;
     case 3:
         if(callback && !cfx_urlrequest_client_on_download_data_callback)
-            cfx_urlrequest_client_on_download_data_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_urlrequest_t* request, const void* data, int data_length)) callback;
+            cfx_urlrequest_client_on_download_data_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_urlrequest_t* request, const void* data, size_t data_length)) callback;
         self->on_download_data = callback ? cfx_urlrequest_client_on_download_data : 0;
         break;
     case 4:

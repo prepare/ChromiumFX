@@ -305,7 +305,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxGetDataResourceSetDataSizeRenderProcessCall) {}
 
         internal ulong eventArgsId;
-        internal int value;
+        internal UIntPtr value;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(eventArgsId);
@@ -477,7 +477,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxGetDataResourceForScaleSetDataSizeRenderProcessCall) {}
 
         internal ulong eventArgsId;
-        internal int value;
+        internal UIntPtr value;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(eventArgsId);

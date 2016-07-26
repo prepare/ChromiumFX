@@ -76,16 +76,16 @@ namespace Chromium {
 
         // filter
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_response_filter_filter_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr data_in, int data_in_size, out int data_in_read, IntPtr data_out, int data_out_size, out int data_out_written);
+        private delegate void cfx_response_filter_filter_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr data_in, UIntPtr data_in_size, out UIntPtr data_in_read, IntPtr data_out, UIntPtr data_out_size, out UIntPtr data_out_written);
         private static cfx_response_filter_filter_delegate cfx_response_filter_filter;
         private static IntPtr cfx_response_filter_filter_ptr;
 
-        internal static void filter(IntPtr gcHandlePtr, out int __retval, IntPtr data_in, int data_in_size, out int data_in_read, IntPtr data_out, int data_out_size, out int data_out_written) {
+        internal static void filter(IntPtr gcHandlePtr, out int __retval, IntPtr data_in, UIntPtr data_in_size, out UIntPtr data_in_read, IntPtr data_out, UIntPtr data_out_size, out UIntPtr data_out_written) {
             var self = (CfxResponseFilter)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 __retval = default(int);
-                data_in_read = default(int);
-                data_out_written = default(int);
+                data_in_read = default(UIntPtr);
+                data_out_written = default(UIntPtr);
                 return;
             }
             var e = new CfxFilterEventArgs(data_in, data_in_size, data_out, data_out_size);
@@ -286,16 +286,16 @@ namespace Chromium {
         public class CfxFilterEventArgs : CfxEventArgs {
 
             internal IntPtr m_data_in;
-            internal int m_data_in_size;
-            internal int m_data_in_read;
+            internal UIntPtr m_data_in_size;
+            internal UIntPtr m_data_in_read;
             internal IntPtr m_data_out;
-            internal int m_data_out_size;
-            internal int m_data_out_written;
+            internal UIntPtr m_data_out_size;
+            internal UIntPtr m_data_out_written;
 
             internal CfxResponseFilterStatus m_returnValue;
             private bool returnValueSet;
 
-            internal CfxFilterEventArgs(IntPtr data_in, int data_in_size, IntPtr data_out, int data_out_size) {
+            internal CfxFilterEventArgs(IntPtr data_in, UIntPtr data_in_size, IntPtr data_out, UIntPtr data_out_size) {
                 m_data_in = data_in;
                 m_data_in_size = data_in_size;
                 m_data_out = data_out;
@@ -314,16 +314,16 @@ namespace Chromium {
             /// <summary>
             /// Get the DataInSize parameter for the <see cref="CfxResponseFilter.Filter"/> callback.
             /// </summary>
-            public int DataInSize {
+            public ulong DataInSize {
                 get {
                     CheckAccess();
-                    return m_data_in_size;
+                    return (ulong)m_data_in_size;
                 }
             }
             /// <summary>
             /// Set the DataInRead out parameter for the <see cref="CfxResponseFilter.Filter"/> callback.
             /// </summary>
-            public int DataInRead {
+            public UIntPtr DataInRead {
                 set {
                     CheckAccess();
                     m_data_in_read = value;
@@ -341,16 +341,16 @@ namespace Chromium {
             /// <summary>
             /// Get the DataOutSize parameter for the <see cref="CfxResponseFilter.Filter"/> callback.
             /// </summary>
-            public int DataOutSize {
+            public ulong DataOutSize {
                 get {
                     CheckAccess();
-                    return m_data_out_size;
+                    return (ulong)m_data_out_size;
                 }
             }
             /// <summary>
             /// Set the DataOutWritten out parameter for the <see cref="CfxResponseFilter.Filter"/> callback.
             /// </summary>
-            public int DataOutWritten {
+            public UIntPtr DataOutWritten {
                 set {
                     CheckAccess();
                     m_data_out_written = value;

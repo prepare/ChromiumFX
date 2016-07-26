@@ -119,7 +119,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxPostDataGetElementCountRenderProcessCall) {}
 
         internal IntPtr @this;
-        internal int __retval;
+        internal ulong __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(@this);
@@ -138,7 +138,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.PostData.cfx_post_data_get_element_count(@this);
+            __retval = (ulong)CfxApi.PostData.cfx_post_data_get_element_count(@this);
         }
     }
 
@@ -167,9 +167,9 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            int count = CfxApi.PostData.cfx_post_data_get_element_count(@this);
-            __retval = new IntPtr[count];
-            if(count == 0) return;
+            var count = CfxApi.PostData.cfx_post_data_get_element_count(@this);
+            __retval = new IntPtr[(ulong)count];
+            if(__retval.Length == 0) return;
             var ptrs_p = new PinnedObject(__retval);
             CfxApi.PostData.cfx_post_data_get_elements(@this, count, ptrs_p.PinnedPtr);
             ptrs_p.Free();

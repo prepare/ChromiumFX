@@ -73,12 +73,12 @@ static gc_handle_t cfx_write_handler_get_gc_handle(cfx_write_handler_t* self) {
 
 // write
 
-void (CEF_CALLBACK *cfx_write_handler_write_callback)(gc_handle_t self, int* __retval, const void* ptr, int size, int n);
+void (CEF_CALLBACK *cfx_write_handler_write_callback)(gc_handle_t self, size_t* __retval, const void* ptr, size_t size, size_t n);
 
 size_t CEF_CALLBACK cfx_write_handler_write(cef_write_handler_t* self, const void* ptr, size_t size, size_t n) {
-    int __retval;
-    cfx_write_handler_write_callback(((cfx_write_handler_t*)self)->gc_handle, &__retval, ptr, (int)(size), (int)(n));
-    return (size_t)(__retval);
+    size_t __retval;
+    cfx_write_handler_write_callback(((cfx_write_handler_t*)self)->gc_handle, &__retval, ptr, size, n);
+    return __retval;
 }
 
 
@@ -130,7 +130,7 @@ static void cfx_write_handler_set_managed_callback(cef_write_handler_t* self, in
     switch(index) {
     case 0:
         if(callback && !cfx_write_handler_write_callback)
-            cfx_write_handler_write_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, const void* ptr, int size, int n)) callback;
+            cfx_write_handler_write_callback = (void (CEF_CALLBACK *)(gc_handle_t self, size_t* __retval, const void* ptr, size_t size, size_t n)) callback;
         self->write = callback ? cfx_write_handler_write : 0;
         break;
     case 1:

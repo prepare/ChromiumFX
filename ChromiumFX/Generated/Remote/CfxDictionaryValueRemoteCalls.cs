@@ -244,7 +244,7 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxDictionaryValueGetSizeRenderProcessCall) {}
 
         internal IntPtr @this;
-        internal int __retval;
+        internal ulong __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(@this);
@@ -263,7 +263,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.DictionaryValue.cfx_dictionary_value_get_size(@this);
+            __retval = (ulong)CfxApi.DictionaryValue.cfx_dictionary_value_get_size(@this);
         }
     }
 

@@ -54,8 +54,8 @@ static void cfx_post_data_element_set_to_file(cef_post_data_element_t* self, cha
 }
 
 // set_to_bytes
-static void cfx_post_data_element_set_to_bytes(cef_post_data_element_t* self, int size, const void* bytes) {
-    self->set_to_bytes(self, (size_t)(size), bytes);
+static void cfx_post_data_element_set_to_bytes(cef_post_data_element_t* self, size_t size, const void* bytes) {
+    self->set_to_bytes(self, size, bytes);
 }
 
 // get_type
@@ -69,13 +69,13 @@ static cef_string_userfree_t cfx_post_data_element_get_file(cef_post_data_elemen
 }
 
 // get_bytes_count
-static int cfx_post_data_element_get_bytes_count(cef_post_data_element_t* self) {
-    return (int)(self->get_bytes_count(self));
+static size_t cfx_post_data_element_get_bytes_count(cef_post_data_element_t* self) {
+    return self->get_bytes_count(self);
 }
 
 // get_bytes
-static int cfx_post_data_element_get_bytes(cef_post_data_element_t* self, int size, void* bytes) {
-    return (int)(self->get_bytes(self, (size_t)(size), bytes));
+static size_t cfx_post_data_element_get_bytes(cef_post_data_element_t* self, size_t size, void* bytes) {
+    return self->get_bytes(self, size, bytes);
 }
 
 

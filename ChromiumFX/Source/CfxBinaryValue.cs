@@ -44,7 +44,7 @@ namespace Chromium {
                 throw new ArgumentException("Data is null or zero length", "data");
             }
             var po = new PinnedObject(data);
-            var retval = CfxBinaryValue.Create(po.PinnedPtr, data.Length);
+            var retval = CfxBinaryValue.Create(po.PinnedPtr, (ulong)data.LongLength);
             po.Free();
             return retval;
         }
@@ -56,7 +56,7 @@ namespace Chromium {
         /// Returns the number of bytes read.
         /// </summary>
         public int GetData(byte[] buffer, int bufferOffset, int dataOffset) {
-
+            
             if(buffer == null || buffer.Length == 0) {
                 throw new ArgumentException("Buffer is null or zero length.", "buffer");
             }
@@ -67,9 +67,9 @@ namespace Chromium {
 
             var po = new PinnedObject(buffer);
 
-            var retval = CfxApi.BinaryValue.cfx_binary_value_get_data(NativePtr, po.PinnedPtr + bufferOffset, maxBytes, dataOffset);
+            var retval = CfxApi.BinaryValue.cfx_binary_value_get_data(NativePtr, po.PinnedPtr + bufferOffset, (UIntPtr)maxBytes, (UIntPtr)dataOffset);
             po.Free();
-            return retval;
+            return (int)retval;
         }
 
     }

@@ -70,8 +70,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public static CfxBinaryValue Create(IntPtr data, int dataSize) {
-            return CfxBinaryValue.Wrap(CfxApi.BinaryValue.cfx_binary_value_create(data, dataSize));
+        public static CfxBinaryValue Create(IntPtr data, ulong dataSize) {
+            return CfxBinaryValue.Wrap(CfxApi.BinaryValue.cfx_binary_value_create(data, (UIntPtr)dataSize));
         }
 
         /// <summary>
@@ -110,9 +110,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public int Size {
+        public ulong Size {
             get {
-                return CfxApi.BinaryValue.cfx_binary_value_get_size(NativePtr);
+                return (ulong)CfxApi.BinaryValue.cfx_binary_value_get_size(NativePtr);
             }
         }
 
@@ -159,8 +159,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public int GetData(IntPtr buffer, int bufferSize, int dataOffset) {
-            return CfxApi.BinaryValue.cfx_binary_value_get_data(NativePtr, buffer, bufferSize, dataOffset);
+        public ulong GetData(IntPtr buffer, ulong bufferSize, ulong dataOffset) {
+            return (ulong)CfxApi.BinaryValue.cfx_binary_value_get_data(NativePtr, buffer, (UIntPtr)bufferSize, (UIntPtr)dataOffset);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

@@ -133,7 +133,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public int Size {
+        public ulong Size {
             get {
                 var call = new CfxListValueGetSizeRenderProcessCall();
                 call.@this = proxyId;
@@ -197,7 +197,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public bool SetSize(int size) {
+        public bool SetSize(ulong size) {
             var call = new CfxListValueSetSizeRenderProcessCall();
             call.@this = proxyId;
             call.size = size;

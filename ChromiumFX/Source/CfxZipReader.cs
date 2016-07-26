@@ -42,7 +42,7 @@ namespace Chromium {
             if(buffer == null || buffer.Length == 0)
                 throw new ArgumentException("Buffer can't be null or zero length.", "buffer");
             var pb = new PinnedObject(buffer);
-            var retval = CfxApi.ZipReader.cfx_zip_reader_read_file(NativePtr, pb.PinnedPtr, buffer.Length);
+            var retval = CfxApi.ZipReader.cfx_zip_reader_read_file(NativePtr, pb.PinnedPtr, (UIntPtr)buffer.LongLength);
             pb.Free();
             if(retval < 0)
                 throw new CfxException("Failed to read from zip file");

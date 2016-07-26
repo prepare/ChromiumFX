@@ -50,12 +50,11 @@ public class NumericType : ApiType {
 	};
 
     public static void CreateAll(ApiTypeBuilder b) {
-        NumericType t = new SizeType();
-        b.AddType(t);
-        b.AddType(new NumericOutType(t));
+        b.AddType(new SizeType());
+        b.AddType(new SizeTypeOut());
         foreach(var spec in typeSpecs) {
             var names = spec.Split('|');
-            t = new NumericType(names[0], names[1]);
+            var t = new NumericType(names[0], names[1]);
             b.AddType(t);
             b.AddType(new NumericOutType(t));
         }

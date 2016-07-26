@@ -190,9 +190,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public int FrameCount {
+        public ulong FrameCount {
             get {
-                return CfxApi.Browser.cfx_browser_get_frame_count(NativePtr);
+                return (ulong)CfxApi.Browser.cfx_browser_get_frame_count(NativePtr);
             }
         }
 
@@ -205,11 +205,11 @@ namespace Chromium {
         /// </remarks>
         public long[] FrameIdentifiers {
             get {
-                int identifiersCount = FrameCount;
+                var identifiersCount = FrameCount;
                 if(identifiersCount == 0) return new long[0];
                 long[] retval = new long[identifiersCount];
                 var retval_p = new PinnedObject(retval);
-                CfxApi.Browser.cfx_browser_get_frame_identifiers(NativePtr, identifiersCount, retval_p.PinnedPtr);
+                CfxApi.Browser.cfx_browser_get_frame_identifiers(NativePtr, (UIntPtr)identifiersCount, retval_p.PinnedPtr);
                 retval_p.Free();
                 return retval;
             }

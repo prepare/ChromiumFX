@@ -120,9 +120,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
-        public int BytesCount {
+        public ulong BytesCount {
             get {
-                return CfxApi.PostDataElement.cfx_post_data_element_get_bytes_count(NativePtr);
+                return (ulong)CfxApi.PostDataElement.cfx_post_data_element_get_bytes_count(NativePtr);
             }
         }
 
@@ -158,8 +158,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
-        public void SetToBytes(int size, IntPtr bytes) {
-            CfxApi.PostDataElement.cfx_post_data_element_set_to_bytes(NativePtr, size, bytes);
+        public void SetToBytes(ulong size, IntPtr bytes) {
+            CfxApi.PostDataElement.cfx_post_data_element_set_to_bytes(NativePtr, (UIntPtr)size, bytes);
         }
 
         /// <summary>
@@ -170,8 +170,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
-        public int GetBytes(int size, IntPtr bytes) {
-            return CfxApi.PostDataElement.cfx_post_data_element_get_bytes(NativePtr, size, bytes);
+        public ulong GetBytes(ulong size, IntPtr bytes) {
+            return (ulong)CfxApi.PostDataElement.cfx_post_data_element_get_bytes(NativePtr, (UIntPtr)size, bytes);
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

@@ -207,9 +207,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
         /// </remarks>
-        public int IssuerChainSize {
+        public ulong IssuerChainSize {
             get {
-                return CfxApi.SslInfo.cfx_sslinfo_get_issuer_chain_size(NativePtr);
+                return (ulong)CfxApi.SslInfo.cfx_sslinfo_get_issuer_chain_size(NativePtr);
             }
         }
 
@@ -224,14 +224,14 @@ namespace Chromium {
         /// </remarks>
         public CfxBinaryValue[] DerEncodedIssuerChain {
             get {
-                int count = IssuerChainSize;
+                var count = IssuerChainSize;
                 if(count == 0) return new CfxBinaryValue[0];
                 IntPtr[] ptrs = new IntPtr[count];
                 var ptrs_p = new PinnedObject(ptrs);
-                CfxApi.SslInfo.cfx_sslinfo_get_derencoded_issuer_chain(NativePtr, count, ptrs_p.PinnedPtr);
+                CfxApi.SslInfo.cfx_sslinfo_get_derencoded_issuer_chain(NativePtr, (UIntPtr)count, ptrs_p.PinnedPtr);
                 ptrs_p.Free();
                 CfxBinaryValue[] retval = new CfxBinaryValue[count];
-                for(int i = 0; i < count; ++i) {
+                for(ulong i = 0; i < count; ++i) {
                     retval[i] = CfxBinaryValue.Wrap(ptrs[i]);
                 }
                 return retval;
@@ -249,14 +249,14 @@ namespace Chromium {
         /// </remarks>
         public CfxBinaryValue[] PemEncodedIssuerChain {
             get {
-                int count = IssuerChainSize;
+                var count = IssuerChainSize;
                 if(count == 0) return new CfxBinaryValue[0];
                 IntPtr[] ptrs = new IntPtr[count];
                 var ptrs_p = new PinnedObject(ptrs);
-                CfxApi.SslInfo.cfx_sslinfo_get_pemencoded_issuer_chain(NativePtr, count, ptrs_p.PinnedPtr);
+                CfxApi.SslInfo.cfx_sslinfo_get_pemencoded_issuer_chain(NativePtr, (UIntPtr)count, ptrs_p.PinnedPtr);
                 ptrs_p.Free();
                 CfxBinaryValue[] retval = new CfxBinaryValue[count];
-                for(int i = 0; i < count; ++i) {
+                for(ulong i = 0; i < count; ++i) {
                     retval[i] = CfxBinaryValue.Wrap(ptrs[i]);
                 }
                 return retval;

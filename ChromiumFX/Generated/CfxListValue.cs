@@ -123,9 +123,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public int Size {
+        public ulong Size {
             get {
-                return CfxApi.ListValue.cfx_list_value_get_size(NativePtr);
+                return (ulong)CfxApi.ListValue.cfx_list_value_get_size(NativePtr);
             }
         }
 
@@ -173,8 +173,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public bool SetSize(int size) {
-            return 0 != CfxApi.ListValue.cfx_list_value_set_size(NativePtr, size);
+        public bool SetSize(ulong size) {
+            return 0 != CfxApi.ListValue.cfx_list_value_set_size(NativePtr, (UIntPtr)size);
         }
 
         /// <summary>

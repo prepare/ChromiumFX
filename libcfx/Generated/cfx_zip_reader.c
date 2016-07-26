@@ -87,8 +87,8 @@ static int cfx_zip_reader_close_file(cef_zip_reader_t* self) {
 }
 
 // read_file
-static int cfx_zip_reader_read_file(cef_zip_reader_t* self, void* buffer, int bufferSize) {
-    return self->read_file(self, buffer, (size_t)(bufferSize));
+static int cfx_zip_reader_read_file(cef_zip_reader_t* self, void* buffer, size_t bufferSize) {
+    return self->read_file(self, buffer, bufferSize);
 }
 
 // tell

@@ -186,6 +186,24 @@ internal class StreamHandler {
     }
 
 
+    public void Write(UIntPtr value) {
+        if(UIntPtr.Size == 4)
+            writer.Write(value.ToUInt32());
+        else
+            writer.Write(value.ToUInt64());
+    }
+
+    public UIntPtr ReadUIntPtr() {
+        if(UIntPtr.Size == 4)
+            return new UIntPtr(reader.ReadUInt32());
+        else
+            return new UIntPtr(reader.ReadUInt64());
+    }
+
+    public void Read(out UIntPtr value) {
+        value = ReadUIntPtr();
+    }
+
 
     public void Write(string value) {
         if(string.IsNullOrEmpty(value)) {

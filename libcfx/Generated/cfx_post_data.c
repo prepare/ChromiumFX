@@ -48,14 +48,13 @@ static int cfx_post_data_has_excluded_elements(cef_post_data_t* self) {
 }
 
 // get_element_count
-static int cfx_post_data_get_element_count(cef_post_data_t* self) {
-    return (int)(self->get_element_count(self));
+static size_t cfx_post_data_get_element_count(cef_post_data_t* self) {
+    return self->get_element_count(self);
 }
 
 // get_elements
-static void cfx_post_data_get_elements(cef_post_data_t* self, int elementsCount, cef_post_data_element_t** elements) {
-    size_t tmp_elementsCount = (size_t)elementsCount;
-    self->get_elements(self, &tmp_elementsCount, elements);
+static void cfx_post_data_get_elements(cef_post_data_t* self, size_t elementsCount, cef_post_data_element_t** elements) {
+    self->get_elements(self, &elementsCount, elements);
 }
 
 // remove_element

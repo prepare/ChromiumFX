@@ -32,18 +32,20 @@
 public class SizeType : NumericType {
 
     public SizeType()
-        : base("size_t", "int") {
+        : base("size_t", "UIntPtr") {
     }
 
-    public override string NativeSymbol {
-        get { return "int"; }
+    public override string PublicSymbol {
+        get {
+            return "ulong";
+        }
     }
 
-    public override string NativeWrapExpression(string var) {
-        return string.Format("(int)({0})", var);
+    public override string PublicWrapExpression(string var) {
+        return string.Format("(ulong){0}", CSharp.Escape(var));
     }
 
-    public override string NativeUnwrapExpression(string var) {
-        return string.Format("(size_t)({0})", var);
+    public override string PublicUnwrapExpression(string var) {
+        return string.Format("(UIntPtr){0}", CSharp.Escape(var));
     }
 }

@@ -264,9 +264,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
         /// </remarks>
-        public int AttributeCount {
+        public ulong AttributeCount {
             get {
-                return CfxApi.XmlReader.cfx_xml_reader_get_attribute_count(NativePtr);
+                return (ulong)CfxApi.XmlReader.cfx_xml_reader_get_attribute_count(NativePtr);
             }
         }
 

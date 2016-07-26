@@ -66,7 +66,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public static CfrBinaryValue Create(RemotePtr data, int dataSize) {
+        public static CfrBinaryValue Create(RemotePtr data, ulong dataSize) {
             var call = new CfxBinaryValueCreateRenderProcessCall();
             call.data = data.ptr;
             call.dataSize = dataSize;
@@ -119,7 +119,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public int Size {
+        public ulong Size {
             get {
                 var call = new CfxBinaryValueGetSizeRenderProcessCall();
                 call.@this = proxyId;
@@ -182,7 +182,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public int GetData(RemotePtr buffer, int bufferSize, int dataOffset) {
+        public ulong GetData(RemotePtr buffer, ulong bufferSize, ulong dataOffset) {
             var call = new CfxBinaryValueGetDataRenderProcessCall();
             call.@this = proxyId;
             call.buffer = buffer.ptr;

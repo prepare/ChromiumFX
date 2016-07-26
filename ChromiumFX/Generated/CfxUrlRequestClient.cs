@@ -112,11 +112,11 @@ namespace Chromium {
 
         // on_download_data
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_urlrequest_client_on_download_data_delegate(IntPtr gcHandlePtr, IntPtr request, IntPtr data, int data_length);
+        private delegate void cfx_urlrequest_client_on_download_data_delegate(IntPtr gcHandlePtr, IntPtr request, IntPtr data, UIntPtr data_length);
         private static cfx_urlrequest_client_on_download_data_delegate cfx_urlrequest_client_on_download_data;
         private static IntPtr cfx_urlrequest_client_on_download_data_ptr;
 
-        internal static void on_download_data(IntPtr gcHandlePtr, IntPtr request, IntPtr data, int data_length) {
+        internal static void on_download_data(IntPtr gcHandlePtr, IntPtr request, IntPtr data, UIntPtr data_length) {
             var self = (CfxUrlRequestClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 return;
@@ -560,9 +560,9 @@ namespace Chromium {
             internal IntPtr m_request;
             internal CfxUrlRequest m_request_wrapped;
             internal IntPtr m_data;
-            internal int m_data_length;
+            internal UIntPtr m_data_length;
 
-            internal CfxOnDownloadDataEventArgs(IntPtr request, IntPtr data, int data_length) {
+            internal CfxOnDownloadDataEventArgs(IntPtr request, IntPtr data, UIntPtr data_length) {
                 m_request = request;
                 m_data = data;
                 m_data_length = data_length;
@@ -590,10 +590,10 @@ namespace Chromium {
             /// <summary>
             /// Get the DataLength parameter for the <see cref="CfxUrlRequestClient.OnDownloadData"/> callback.
             /// </summary>
-            public int DataLength {
+            public ulong DataLength {
                 get {
                     CheckAccess();
-                    return m_data_length;
+                    return (ulong)m_data_length;
                 }
             }
 
