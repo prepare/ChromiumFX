@@ -76,16 +76,16 @@ namespace Chromium {
 
         // on_load_start
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_load_handler_on_load_start_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame);
+        private delegate void cfx_load_handler_on_load_start_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, int transition_type);
         private static cfx_load_handler_on_load_start_delegate cfx_load_handler_on_load_start;
         private static IntPtr cfx_load_handler_on_load_start_ptr;
 
-        internal static void on_load_start(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame) {
+        internal static void on_load_start(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, int transition_type) {
             var self = (CfxLoadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null) {
                 return;
             }
-            var e = new CfxOnLoadStartEventArgs(browser, frame);
+            var e = new CfxOnLoadStartEventArgs(browser, frame, transition_type);
             var eventHandler = self.m_OnLoadStart;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
@@ -173,11 +173,13 @@ namespace Chromium {
         /// <summary>
         /// Called when the browser begins loading a frame. The |Frame| value will
         /// never be NULL -- call the is_main() function to check if this frame is the
-        /// main frame. Multiple frames may be loading at the same time. Sub-frames may
-        /// start or continue loading after the main frame load has ended. This
-        /// function will always be called for all frames irrespective of whether the
-        /// request completes successfully. For notification of overall browser load
-        /// status use OnLoadingStateChange instead.
+        /// main frame. |TransitionType| provides information about the source of the
+        /// navigation and an accurate value is only available in the browser process.
+        /// Multiple frames may be loading at the same time. Sub-frames may start or
+        /// continue loading after the main frame load has ended. This function will
+        /// always be called for all frames irrespective of whether the request
+        /// completes successfully. For notification of overall browser load status use
+        /// OnLoadingStateChange instead.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -390,11 +392,13 @@ namespace Chromium {
         /// <summary>
         /// Called when the browser begins loading a frame. The |Frame| value will
         /// never be NULL -- call the is_main() function to check if this frame is the
-        /// main frame. Multiple frames may be loading at the same time. Sub-frames may
-        /// start or continue loading after the main frame load has ended. This
-        /// function will always be called for all frames irrespective of whether the
-        /// request completes successfully. For notification of overall browser load
-        /// status use OnLoadingStateChange instead.
+        /// main frame. |TransitionType| provides information about the source of the
+        /// navigation and an accurate value is only available in the browser process.
+        /// Multiple frames may be loading at the same time. Sub-frames may start or
+        /// continue loading after the main frame load has ended. This function will
+        /// always be called for all frames irrespective of whether the request
+        /// completes successfully. For notification of overall browser load status use
+        /// OnLoadingStateChange instead.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -405,11 +409,13 @@ namespace Chromium {
         /// <summary>
         /// Called when the browser begins loading a frame. The |Frame| value will
         /// never be NULL -- call the is_main() function to check if this frame is the
-        /// main frame. Multiple frames may be loading at the same time. Sub-frames may
-        /// start or continue loading after the main frame load has ended. This
-        /// function will always be called for all frames irrespective of whether the
-        /// request completes successfully. For notification of overall browser load
-        /// status use OnLoadingStateChange instead.
+        /// main frame. |TransitionType| provides information about the source of the
+        /// navigation and an accurate value is only available in the browser process.
+        /// Multiple frames may be loading at the same time. Sub-frames may start or
+        /// continue loading after the main frame load has ended. This function will
+        /// always be called for all frames irrespective of whether the request
+        /// completes successfully. For notification of overall browser load status use
+        /// OnLoadingStateChange instead.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -421,10 +427,12 @@ namespace Chromium {
             internal CfxBrowser m_browser_wrapped;
             internal IntPtr m_frame;
             internal CfxFrame m_frame_wrapped;
+            internal int m_transition_type;
 
-            internal CfxOnLoadStartEventArgs(IntPtr browser, IntPtr frame) {
+            internal CfxOnLoadStartEventArgs(IntPtr browser, IntPtr frame, int transition_type) {
                 m_browser = browser;
                 m_frame = frame;
+                m_transition_type = transition_type;
             }
 
             /// <summary>
@@ -447,9 +455,18 @@ namespace Chromium {
                     return m_frame_wrapped;
                 }
             }
+            /// <summary>
+            /// Get the TransitionType parameter for the <see cref="CfxLoadHandler.OnLoadStart"/> callback.
+            /// </summary>
+            public CfxTransitionType TransitionType {
+                get {
+                    CheckAccess();
+                    return (CfxTransitionType)m_transition_type;
+                }
+            }
 
             public override string ToString() {
-                return String.Format("Browser={{{0}}}, Frame={{{1}}}", Browser, Frame);
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, TransitionType={{{2}}}", Browser, Frame, TransitionType);
             }
         }
 

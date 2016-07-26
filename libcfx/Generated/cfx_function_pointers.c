@@ -31,7 +31,7 @@
 // Generated file. Do not edit.
 
 
-static void* cfx_function_pointers[1347] =  {
+static void* cfx_function_pointers[1349] =  {
     (void*)cfx_add_cross_origin_whitelist_entry,
     (void*)cfx_api_hash,
     (void*)cfx_begin_tracing,
@@ -993,6 +993,8 @@ static void* cfx_function_pointers[1347] =  {
     (void*)cfx_settings_get_browser_subprocess_path,
     (void*)cfx_settings_set_multi_threaded_message_loop,
     (void*)cfx_settings_get_multi_threaded_message_loop,
+    (void*)cfx_settings_set_external_message_pump,
+    (void*)cfx_settings_get_external_message_pump,
     (void*)cfx_settings_set_windowless_rendering_enabled,
     (void*)cfx_settings_get_windowless_rendering_enabled,
     (void*)cfx_settings_set_command_line_args_disabled,

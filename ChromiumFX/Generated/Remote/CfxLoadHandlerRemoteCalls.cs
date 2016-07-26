@@ -311,6 +311,33 @@ namespace Chromium.Remote {
         }
     }
 
+    internal class CfxOnLoadStartGetTransitionTypeRenderProcessCall : RenderProcessCall {
+
+        internal CfxOnLoadStartGetTransitionTypeRenderProcessCall()
+            : base(RemoteCallId.CfxOnLoadStartGetTransitionTypeRenderProcessCall) {}
+
+        internal ulong eventArgsId;
+        internal int value;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(eventArgsId);
+        }
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out eventArgsId);
+        }
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(value);
+        }
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out value);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var e = (CfxOnLoadStartEventArgs)BrowserProcessCall.GetEventArgs(eventArgsId);
+            value = (int)e.TransitionType;
+        }
+    }
+
     internal class CfxOnLoadEndBrowserProcessCall : BrowserProcessCall {
 
         internal CfxOnLoadEndBrowserProcessCall()

@@ -4988,6 +4988,15 @@ namespace Chromium {
             public delegate void cfx_settings_get_multi_threaded_message_loop_delegate(IntPtr self, out int multi_threaded_message_loop);
             public static cfx_settings_get_multi_threaded_message_loop_delegate cfx_settings_get_multi_threaded_message_loop;
 
+            // static void cfx_settings_set_external_message_pump(cef_settings_t *self, int external_message_pump)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_settings_set_external_message_pump_delegate(IntPtr self, int external_message_pump);
+            public static cfx_settings_set_external_message_pump_delegate cfx_settings_set_external_message_pump;
+            // static void cfx_settings_get_external_message_pump(cef_settings_t *self, int* external_message_pump)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_settings_get_external_message_pump_delegate(IntPtr self, out int external_message_pump);
+            public static cfx_settings_get_external_message_pump_delegate cfx_settings_get_external_message_pump;
+
             // static void cfx_settings_set_windowless_rendering_enabled(cef_settings_t *self, int windowless_rendering_enabled)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_settings_set_windowless_rendering_enabled_delegate(IntPtr self, int windowless_rendering_enabled);

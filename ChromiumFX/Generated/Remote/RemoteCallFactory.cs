@@ -249,6 +249,7 @@ namespace Chromium.Remote {
             () => { return new CfxOnLoadStartDeactivateRenderProcessCall(); },
             () => { return new CfxOnLoadStartGetBrowserRenderProcessCall(); },
             () => { return new CfxOnLoadStartGetFrameRenderProcessCall(); },
+            () => { return new CfxOnLoadStartGetTransitionTypeRenderProcessCall(); },
             () => { return new CfxOnLoadEndBrowserProcessCall(); },
             () => { return new CfxOnLoadEndActivateRenderProcessCall(); },
             () => { return new CfxOnLoadEndDeactivateRenderProcessCall(); },

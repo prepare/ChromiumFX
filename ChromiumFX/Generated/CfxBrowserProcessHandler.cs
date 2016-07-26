@@ -128,6 +128,23 @@ namespace Chromium {
             __retval = CfxPrintHandler.Unwrap(e.m_returnValue);
         }
 
+        // on_schedule_message_pump_work
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void cfx_browser_process_handler_on_schedule_message_pump_work_delegate(IntPtr gcHandlePtr, long delay_ms);
+        private static cfx_browser_process_handler_on_schedule_message_pump_work_delegate cfx_browser_process_handler_on_schedule_message_pump_work;
+        private static IntPtr cfx_browser_process_handler_on_schedule_message_pump_work_ptr;
+
+        internal static void on_schedule_message_pump_work(IntPtr gcHandlePtr, long delay_ms) {
+            var self = (CfxBrowserProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null) {
+                return;
+            }
+            var e = new CfxOnScheduleMessagePumpWorkEventArgs(delay_ms);
+            var eventHandler = self.m_OnScheduleMessagePumpWork;
+            if(eventHandler != null) eventHandler(self, e);
+            e.m_isInvalid = true;
+        }
+
         internal CfxBrowserProcessHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxBrowserProcessHandler() : base(CfxApi.BrowserProcessHandler.cfx_browser_process_handler_ctor) {}
 
@@ -269,6 +286,48 @@ namespace Chromium {
 
         private CfxGetPrintHandlerEventHandler m_GetPrintHandler;
 
+        /// <summary>
+        /// Called from any thread when work has been scheduled for the browser process
+        /// main (UI) thread. This callback is used in combination with CfxSettings.
+        /// external_message_pump and cef_do_message_loop_work() in cases where the CEF
+        /// message loop must be integrated into an existing application message loop
+        /// (see additional comments and warnings on CfxDoMessageLoopWork). This
+        /// callback should schedule a cef_do_message_loop_work() call to happen on the
+        /// main (UI) thread. |DelayMs| is the requested delay in milliseconds. If
+        /// |DelayMs| is &lt;= 0 then the call should happen reasonably soon. If
+        /// |DelayMs| is > 0 then the call should be scheduled to happen after the
+        /// specified delay and any currently pending scheduled call should be
+        /// cancelled.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_process_handler_capi.h">cef/include/capi/cef_browser_process_handler_capi.h</see>.
+        /// </remarks>
+        public event CfxOnScheduleMessagePumpWorkEventHandler OnScheduleMessagePumpWork {
+            add {
+                lock(eventLock) {
+                    if(m_OnScheduleMessagePumpWork == null) {
+                        if(cfx_browser_process_handler_on_schedule_message_pump_work == null) {
+                            cfx_browser_process_handler_on_schedule_message_pump_work = on_schedule_message_pump_work;
+                            cfx_browser_process_handler_on_schedule_message_pump_work_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_browser_process_handler_on_schedule_message_pump_work);
+                        }
+                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_managed_callback(NativePtr, 4, cfx_browser_process_handler_on_schedule_message_pump_work_ptr);
+                    }
+                    m_OnScheduleMessagePumpWork += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_OnScheduleMessagePumpWork -= value;
+                    if(m_OnScheduleMessagePumpWork == null) {
+                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
+                    }
+                }
+            }
+        }
+
+        private CfxOnScheduleMessagePumpWorkEventHandler m_OnScheduleMessagePumpWork;
+
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnContextInitialized != null) {
                 m_OnContextInitialized = null;
@@ -285,6 +344,10 @@ namespace Chromium {
             if(m_GetPrintHandler != null) {
                 m_GetPrintHandler = null;
                 CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+            }
+            if(m_OnScheduleMessagePumpWork != null) {
+                m_OnScheduleMessagePumpWork = null;
+                CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -430,6 +493,65 @@ namespace Chromium {
                 }
                 returnValueSet = true;
                 this.m_returnValue = returnValue;
+            }
+        }
+
+        /// <summary>
+        /// Called from any thread when work has been scheduled for the browser process
+        /// main (UI) thread. This callback is used in combination with CfxSettings.
+        /// external_message_pump and cef_do_message_loop_work() in cases where the CEF
+        /// message loop must be integrated into an existing application message loop
+        /// (see additional comments and warnings on CfxDoMessageLoopWork). This
+        /// callback should schedule a cef_do_message_loop_work() call to happen on the
+        /// main (UI) thread. |DelayMs| is the requested delay in milliseconds. If
+        /// |DelayMs| is &lt;= 0 then the call should happen reasonably soon. If
+        /// |DelayMs| is > 0 then the call should be scheduled to happen after the
+        /// specified delay and any currently pending scheduled call should be
+        /// cancelled.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_process_handler_capi.h">cef/include/capi/cef_browser_process_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxOnScheduleMessagePumpWorkEventHandler(object sender, CfxOnScheduleMessagePumpWorkEventArgs e);
+
+        /// <summary>
+        /// Called from any thread when work has been scheduled for the browser process
+        /// main (UI) thread. This callback is used in combination with CfxSettings.
+        /// external_message_pump and cef_do_message_loop_work() in cases where the CEF
+        /// message loop must be integrated into an existing application message loop
+        /// (see additional comments and warnings on CfxDoMessageLoopWork). This
+        /// callback should schedule a cef_do_message_loop_work() call to happen on the
+        /// main (UI) thread. |DelayMs| is the requested delay in milliseconds. If
+        /// |DelayMs| is &lt;= 0 then the call should happen reasonably soon. If
+        /// |DelayMs| is > 0 then the call should be scheduled to happen after the
+        /// specified delay and any currently pending scheduled call should be
+        /// cancelled.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_process_handler_capi.h">cef/include/capi/cef_browser_process_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxOnScheduleMessagePumpWorkEventArgs : CfxEventArgs {
+
+            internal long m_delay_ms;
+
+            internal CfxOnScheduleMessagePumpWorkEventArgs(long delay_ms) {
+                m_delay_ms = delay_ms;
+            }
+
+            /// <summary>
+            /// Get the DelayMs parameter for the <see cref="CfxBrowserProcessHandler.OnScheduleMessagePumpWork"/> callback.
+            /// </summary>
+            public long DelayMs {
+                get {
+                    CheckAccess();
+                    return m_delay_ms;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("DelayMs={{{0}}}", DelayMs);
             }
         }
 

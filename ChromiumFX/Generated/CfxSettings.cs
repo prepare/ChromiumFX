@@ -134,6 +134,31 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Set to true (1) to control browser process main (UI) thread message pump
+        /// scheduling via the CfxBrowserProcessHandler.OnScheduleMessagePumpWork()
+        /// callback. This option is recommended for use in combination with the
+        /// CfxDoMessageLoopWork() function in cases where the CEF message loop must be
+        /// integrated into an existing application message loop (see additional
+        /// comments and warnings on CfxDoMessageLoopWork). Enabling this option is not
+        /// recommended for most users; leave this option disabled and use either the
+        /// CfxRunMessageLoop() function or multi_threaded_message_loop if possible.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
+        public bool ExternalMessagePump {
+            get {
+                int value;
+                CfxApi.Settings.cfx_settings_get_external_message_pump(nativePtrUnchecked, out value);
+                return 0 != value;
+            }
+            set {
+                CfxApi.Settings.cfx_settings_set_external_message_pump(nativePtrUnchecked, value ? 1 : 0);
+            }
+        }
+
+        /// <summary>
         /// Set to true (1) to enable windowless (off-screen) rendering support. Do not
         /// enable this value if the application does not use windowless rendering as
         /// it may reduce rendering performance on some systems.

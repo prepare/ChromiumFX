@@ -82,10 +82,10 @@ void CEF_CALLBACK cfx_load_handler_on_loading_state_change(cef_load_handler_t* s
 
 // on_load_start
 
-void (CEF_CALLBACK *cfx_load_handler_on_load_start_callback)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame);
+void (CEF_CALLBACK *cfx_load_handler_on_load_start_callback)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_transition_type_t transition_type);
 
-void CEF_CALLBACK cfx_load_handler_on_load_start(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame) {
-    cfx_load_handler_on_load_start_callback(((cfx_load_handler_t*)self)->gc_handle, browser, frame);
+void CEF_CALLBACK cfx_load_handler_on_load_start(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_transition_type_t transition_type) {
+    cfx_load_handler_on_load_start_callback(((cfx_load_handler_t*)self)->gc_handle, browser, frame, transition_type);
 }
 
 
@@ -116,7 +116,7 @@ static void cfx_load_handler_set_managed_callback(cef_load_handler_t* self, int 
         break;
     case 1:
         if(callback && !cfx_load_handler_on_load_start_callback)
-            cfx_load_handler_on_load_start_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame)) callback;
+            cfx_load_handler_on_load_start_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_transition_type_t transition_type)) callback;
         self->on_load_start = callback ? cfx_load_handler_on_load_start : 0;
         break;
     case 2:

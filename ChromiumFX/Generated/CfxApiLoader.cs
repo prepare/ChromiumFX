@@ -997,6 +997,8 @@ namespace Chromium {
             cfx_settings_get_browser_subprocess_path,
             cfx_settings_set_multi_threaded_message_loop,
             cfx_settings_get_multi_threaded_message_loop,
+            cfx_settings_set_external_message_pump,
+            cfx_settings_get_external_message_pump,
             cfx_settings_set_windowless_rendering_enabled,
             cfx_settings_get_windowless_rendering_enabled,
             cfx_settings_set_command_line_args_disabled,
@@ -3028,6 +3030,8 @@ namespace Chromium {
             CfxApi.Settings.cfx_settings_get_browser_subprocess_path = (CfxApi.Settings.cfx_settings_get_browser_subprocess_path_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_get_browser_subprocess_path, typeof(CfxApi.Settings.cfx_settings_get_browser_subprocess_path_delegate));
             CfxApi.Settings.cfx_settings_set_multi_threaded_message_loop = (CfxApi.Settings.cfx_settings_set_multi_threaded_message_loop_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_set_multi_threaded_message_loop, typeof(CfxApi.Settings.cfx_settings_set_multi_threaded_message_loop_delegate));
             CfxApi.Settings.cfx_settings_get_multi_threaded_message_loop = (CfxApi.Settings.cfx_settings_get_multi_threaded_message_loop_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_get_multi_threaded_message_loop, typeof(CfxApi.Settings.cfx_settings_get_multi_threaded_message_loop_delegate));
+            CfxApi.Settings.cfx_settings_set_external_message_pump = (CfxApi.Settings.cfx_settings_set_external_message_pump_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_set_external_message_pump, typeof(CfxApi.Settings.cfx_settings_set_external_message_pump_delegate));
+            CfxApi.Settings.cfx_settings_get_external_message_pump = (CfxApi.Settings.cfx_settings_get_external_message_pump_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_get_external_message_pump, typeof(CfxApi.Settings.cfx_settings_get_external_message_pump_delegate));
             CfxApi.Settings.cfx_settings_set_windowless_rendering_enabled = (CfxApi.Settings.cfx_settings_set_windowless_rendering_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_set_windowless_rendering_enabled, typeof(CfxApi.Settings.cfx_settings_set_windowless_rendering_enabled_delegate));
             CfxApi.Settings.cfx_settings_get_windowless_rendering_enabled = (CfxApi.Settings.cfx_settings_get_windowless_rendering_enabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_get_windowless_rendering_enabled, typeof(CfxApi.Settings.cfx_settings_get_windowless_rendering_enabled_delegate));
             CfxApi.Settings.cfx_settings_set_command_line_args_disabled = (CfxApi.Settings.cfx_settings_set_command_line_args_disabled_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_set_command_line_args_disabled, typeof(CfxApi.Settings.cfx_settings_set_command_line_args_disabled_delegate));

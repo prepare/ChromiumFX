@@ -247,6 +247,7 @@ namespace Chromium.Remote {
         CfxOnLoadStartDeactivateRenderProcessCall,
         CfxOnLoadStartGetBrowserRenderProcessCall,
         CfxOnLoadStartGetFrameRenderProcessCall,
+        CfxOnLoadStartGetTransitionTypeRenderProcessCall,
         CfxOnLoadEndBrowserProcessCall,
         CfxOnLoadEndActivateRenderProcessCall,
         CfxOnLoadEndDeactivateRenderProcessCall,

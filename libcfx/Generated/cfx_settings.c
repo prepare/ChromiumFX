@@ -88,6 +88,14 @@ static void cfx_settings_get_multi_threaded_message_loop(cef_settings_t *self, i
     *multi_threaded_message_loop = self->multi_threaded_message_loop;
 }
 
+// cef_settings_t->external_message_pump
+static void cfx_settings_set_external_message_pump(cef_settings_t *self, int external_message_pump) {
+    self->external_message_pump = external_message_pump;
+}
+static void cfx_settings_get_external_message_pump(cef_settings_t *self, int* external_message_pump) {
+    *external_message_pump = self->external_message_pump;
+}
+
 // cef_settings_t->windowless_rendering_enabled
 static void cfx_settings_set_windowless_rendering_enabled(cef_settings_t *self, int windowless_rendering_enabled) {
     self->windowless_rendering_enabled = windowless_rendering_enabled;

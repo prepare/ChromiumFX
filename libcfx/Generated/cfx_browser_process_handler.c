@@ -112,6 +112,15 @@ cef_print_handler_t* CEF_CALLBACK cfx_browser_process_handler_get_print_handler(
 }
 
 
+// on_schedule_message_pump_work
+
+void (CEF_CALLBACK *cfx_browser_process_handler_on_schedule_message_pump_work_callback)(gc_handle_t self, int64 delay_ms);
+
+void CEF_CALLBACK cfx_browser_process_handler_on_schedule_message_pump_work(cef_browser_process_handler_t* self, int64 delay_ms) {
+    cfx_browser_process_handler_on_schedule_message_pump_work_callback(((cfx_browser_process_handler_t*)self)->gc_handle, delay_ms);
+}
+
+
 static void cfx_browser_process_handler_set_managed_callback(cef_browser_process_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
@@ -133,6 +142,11 @@ static void cfx_browser_process_handler_set_managed_callback(cef_browser_process
         if(callback && !cfx_browser_process_handler_get_print_handler_callback)
             cfx_browser_process_handler_get_print_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_print_handler_t** __retval)) callback;
         self->get_print_handler = callback ? cfx_browser_process_handler_get_print_handler : 0;
+        break;
+    case 4:
+        if(callback && !cfx_browser_process_handler_on_schedule_message_pump_work_callback)
+            cfx_browser_process_handler_on_schedule_message_pump_work_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int64 delay_ms)) callback;
+        self->on_schedule_message_pump_work = callback ? cfx_browser_process_handler_on_schedule_message_pump_work : 0;
         break;
     }
 }
