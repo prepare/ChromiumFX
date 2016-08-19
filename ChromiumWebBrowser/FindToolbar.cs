@@ -140,7 +140,7 @@ namespace Chromium.WebBrowser {
             downButton.SetBounds(upButton.Left + upButton.Width - 1, textBox.Top, textBox.Height, textBox.Height);
             SetButtonStyle(downButton);
             downButton.Image = Images.ArrowDown.Create();
-            upButton.TextAlign = ContentAlignment.MiddleCenter;
+            downButton.TextAlign = ContentAlignment.MiddleCenter;
 
             downButton.Click += (s, e) => {
                 Find(true);
