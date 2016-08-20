@@ -545,5 +545,10 @@ namespace CfxTestApplication {
         private void listKeysInDocumentObjectToolStripMenuItem_Click(object sender, EventArgs e) {
             WebBrowser.ExecuteJavascript("ListKeysInDocumentObject(document)");
         }
+
+        private void setBrowserInvisibleToolStripMenuItem_Click(object sender, EventArgs e) {
+            setBrowserInvisibleToolStripMenuItem.Checked = !setBrowserInvisibleToolStripMenuItem.Checked;
+            WebBrowser.Visible = !setBrowserInvisibleToolStripMenuItem.Checked;
+        }
     }
 }
