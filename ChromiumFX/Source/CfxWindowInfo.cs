@@ -124,7 +124,7 @@ namespace Chromium {
             if(CfxApi.PlatformOS != CfxPlatformOS.Windows)
                 throw new CfxException("Unsupported platform.");
 
-            Style = WindowStyle.WS_OVERLAPPEDWINDOW | WindowStyle.WS_CLIPCHILDREN | WindowStyle.WS_CLIPSIBLINGS;// | WindowStyle.WS_VISIBLE;
+            Style = WindowStyle.WS_OVERLAPPEDWINDOW | WindowStyle.WS_CLIPCHILDREN | WindowStyle.WS_CLIPSIBLINGS | WindowStyle.WS_VISIBLE;
             ParentWindow = parentWindow;
             X = CfxApi.CW_USEDEFAULT;
             Y = CfxApi.CW_USEDEFAULT;
