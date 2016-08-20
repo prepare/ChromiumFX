@@ -33,6 +33,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using Chromium;
@@ -339,7 +340,9 @@ namespace Chromium.WebBrowser {
             }
 
             var windowInfo = new CfxWindowInfo();
-            windowInfo.SetAsChild(Handle, 0, 0, Height > 0 ? Height : 500, Width > 0 ? Width : 500);
+            // in order to avoid focus issues when creating browsers offscreen,
+            // the browser must be created with a disabled child window.
+            windowInfo.SetAsDisabledChild(Handle);
             if(!CfxBrowserHost.CreateBrowser(windowInfo, client, initialUrl, DefaultBrowserSettings, requestContext))
                 throw new ChromiumWebBrowserException("Failed to create browser instance.");
         }
@@ -1098,7 +1101,12 @@ namespace Chromium.WebBrowser {
         //    System.Diagnostics.Debug.Print(m.ToString());
         //}   
 
-
+        protected override void OnVisibleChanged(EventArgs e) {
+            base.OnVisibleChanged(e);
+            ResizeBrowserWindow();
+            if(Visible)
+                Refresh();
+        }
 
         protected override void OnGotFocus(System.EventArgs e) {
             base.OnGotFocus(e);
@@ -1111,28 +1119,38 @@ namespace Chromium.WebBrowser {
         }
 
         internal void ResizeBrowserWindow() {
-            if(browserWindowHandle != IntPtr.Zero && this.Height > 0 && this.Width > 0) {
-                int h;
-                if(m_findToolbar == null || !m_findToolbar.Visible) {
-                    h = Height;
-                } else {
-                    if(InvokeRequired) {
-                        Invoke((MethodInvoker)(() => {
+            if(Visible) {
+                if(browserWindowHandle != IntPtr.Zero && this.Height > 0 && this.Width > 0) {
+                    int h;
+                    if(m_findToolbar == null || !m_findToolbar.Visible) {
+                        h = Height;
+                    } else {
+                        if(InvokeRequired) {
+                            Invoke((MethodInvoker)(() => {
+                                m_findToolbar.Width = Width;
+                                m_findToolbar.Top = Height - m_findToolbar.Height;
+                            }));
+                        } else {
                             m_findToolbar.Width = Width;
                             m_findToolbar.Top = Height - m_findToolbar.Height;
-                        }));
-                    } else {
-                        m_findToolbar.Width = Width;
-                        m_findToolbar.Top = Height - m_findToolbar.Height;
+                        }
+                        h = m_findToolbar.Top;
                     }
-                    h = m_findToolbar.Top;
+                    SetWindowLong(browserWindowHandle, -16, (int)(WindowStyle.WS_CHILD | WindowStyle.WS_CLIPCHILDREN | WindowStyle.WS_CLIPSIBLINGS | WindowStyle.WS_TABSTOP | WindowStyle.WS_VISIBLE));
+                    SetWindowPos(browserWindowHandle, IntPtr.Zero, 0, 0, Width, h, SWP_NOMOVE | SWP_NOZORDER);
                 }
-                SetWindowPos(browserWindowHandle, IntPtr.Zero, 0, 0, Width, h, SWP_NOMOVE | SWP_NOZORDER);
+            } else {
+                if(browserWindowHandle != IntPtr.Zero)
+                    SetWindowLong(browserWindowHandle, -16, (int)(WindowStyle.WS_CHILD | WindowStyle.WS_CLIPCHILDREN | WindowStyle.WS_CLIPSIBLINGS | WindowStyle.WS_TABSTOP | WindowStyle.WS_DISABLED));
             }
         }
 
-        [System.Runtime.InteropServices.DllImport("user32.dll", SetLastError = false)]
-        [return: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Bool)]
+
+        [DllImport("user32", SetLastError = false)]
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+        [DllImport("user32", SetLastError = false)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
         private const uint SWP_NOMOVE = 0x2;
         private const uint SWP_NOZORDER = 0x4;

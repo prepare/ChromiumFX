@@ -105,13 +105,26 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Create the browser as a disabled child window.
+        /// </summary>
+        public void SetAsDisabledChild(IntPtr parentWindow) {
+            if(CfxApi.PlatformOS == CfxPlatformOS.Windows)
+                Style = WindowStyle.WS_CHILD | WindowStyle.WS_CLIPCHILDREN | WindowStyle.WS_CLIPSIBLINGS | WindowStyle.WS_TABSTOP | WindowStyle.WS_DISABLED;
+            ParentWindow = parentWindow;
+            X = CfxApi.CW_USEDEFAULT;
+            Y = CfxApi.CW_USEDEFAULT;
+            Width = CfxApi.CW_USEDEFAULT;
+            Height = CfxApi.CW_USEDEFAULT;
+        }
+
+        /// <summary>
         /// Create the browser as a popup window.
         /// </summary>
         public void SetAsPopup(IntPtr parentWindow, string windowName) {
             if(CfxApi.PlatformOS != CfxPlatformOS.Windows)
                 throw new CfxException("Unsupported platform.");
 
-            Style = WindowStyle.WS_OVERLAPPEDWINDOW | WindowStyle.WS_CLIPCHILDREN | WindowStyle.WS_CLIPSIBLINGS | WindowStyle.WS_VISIBLE;
+            Style = WindowStyle.WS_OVERLAPPEDWINDOW | WindowStyle.WS_CLIPCHILDREN | WindowStyle.WS_CLIPSIBLINGS;// | WindowStyle.WS_VISIBLE;
             ParentWindow = parentWindow;
             X = CfxApi.CW_USEDEFAULT;
             Y = CfxApi.CW_USEDEFAULT;
