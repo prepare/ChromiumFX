@@ -48,13 +48,6 @@ namespace Chromium.WebBrowser {
             this.OnBrowserCreated += RenderProcessHandler_OnBrowserCreated;
         }
 
-        void RenderProcessHandler_OnUncaughtException(object sender, CfrOnUncaughtExceptionEventArgs e) {
-            var wb = ChromiumWebBrowser.GetBrowser(e.Browser.Identifier);
-            if(wb != null) {
-                
-            }
-        }
-
         void RenderProcessHandler_OnBrowserCreated(object sender, CfrOnBrowserCreatedEventArgs e) {
             var id = e.Browser.Identifier;
             var wb = ChromiumWebBrowser.GetBrowser(id);
