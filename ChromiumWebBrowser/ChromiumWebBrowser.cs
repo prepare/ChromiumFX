@@ -36,7 +36,6 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-using Chromium;
 using Chromium.Event;
 using Chromium.Remote;
 using Chromium.Remote.Event;
@@ -162,11 +161,29 @@ namespace Chromium.WebBrowser {
             }
         }
 
-        private static readonly Dictionary<int, ChromiumWebBrowser> browsers = new Dictionary<int, ChromiumWebBrowser>();
+        private static readonly Dictionary<int, WeakReference> browsers = new Dictionary<int, WeakReference>();
+
         internal static ChromiumWebBrowser GetBrowser(int id) {
-            ChromiumWebBrowser wb;
-            ChromiumWebBrowser.browsers.TryGetValue(id, out wb);
-            return wb;
+            lock(browsers) {
+                WeakReference r;
+                if(browsers.TryGetValue(id, out r)) {
+                    return (ChromiumWebBrowser)r.Target;
+                }
+                return null;
+            }
+        }
+
+        private static void AddToBrowserCache(ChromiumWebBrowser wb) {
+            lock(browsers) {
+                var deadRefs = new List<int>(browsers.Count);
+                foreach(var b in browsers) {
+                    if(!b.Value.IsAlive) deadRefs.Add(b.Key);
+                }
+                foreach(var r in deadRefs) {
+                    browsers.Remove(r);
+                }
+                browsers[wb.Browser.Identifier] = new WeakReference(wb);
+            }
         }
 
         private BrowserClient client;
@@ -209,8 +226,7 @@ namespace Chromium.WebBrowser {
 
         private readonly object browserSyncRoot = new object();
         private IntPtr browserWindowHandle;
-        private int browserId;
-
+        
         internal readonly Dictionary<string, JSObject> frameGlobalObjects = new Dictionary<string, JSObject>();
         internal readonly Dictionary<string, WebResource> webResources = new Dictionary<string, WebResource>();
 
@@ -343,6 +359,7 @@ namespace Chromium.WebBrowser {
             // in order to avoid focus issues when creating browsers offscreen,
             // the browser must be created with a disabled child window.
             windowInfo.SetAsDisabledChild(Handle);
+
             if(!CfxBrowserHost.CreateBrowser(windowInfo, client, initialUrl, DefaultBrowserSettings, requestContext))
                 throw new ChromiumWebBrowserException("Failed to create browser instance.");
         }
@@ -1048,8 +1065,7 @@ namespace Chromium.WebBrowser {
             Browser = e.Browser;
             BrowserHost = Browser.Host;
             browserWindowHandle = BrowserHost.WindowHandle;
-            browserId = Browser.Identifier;
-            browsers.Add(browserId, this);
+            AddToBrowserCache(this);
             ResizeBrowserWindow();
 
             var handler = BrowserCreated;
