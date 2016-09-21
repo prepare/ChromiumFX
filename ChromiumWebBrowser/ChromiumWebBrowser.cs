@@ -483,7 +483,7 @@ namespace Chromium.WebBrowser {
             if(Browser != null)
                 Browser.MainFrame.LoadUrl(url);
             else {
-                lock (browserSyncRoot) {
+                lock(browserSyncRoot) {
                     if(Browser != null) {
                         Browser.MainFrame.LoadUrl(url);
                     } else {
@@ -502,7 +502,7 @@ namespace Chromium.WebBrowser {
             if(Browser != null) {
                 Browser.MainFrame.LoadString(stringVal, url);
             } else {
-                lock (browserSyncRoot) {
+                lock(browserSyncRoot) {
                     if(Browser != null) {
                         Browser.MainFrame.LoadString(stringVal, url);
                     } else {
@@ -621,14 +621,14 @@ namespace Chromium.WebBrowser {
             // We want exceptions to be thrown in place.
 
             var waitLock = new object();
-            lock (waitLock) {
+            lock(waitLock) {
                 BeginInvoke((MethodInvoker)(() => {
                     context.Enter();
                     try {
                         retval = method.DynamicInvoke(args);
                     } finally {
                         context.Exit();
-                        lock (waitLock) {
+                        lock(waitLock) {
                             Monitor.PulseAll(waitLock);
                         }
                     }
@@ -665,14 +665,14 @@ namespace Chromium.WebBrowser {
             // We want exceptions to be thrown in place.
 
             var waitLock = new object();
-            lock (waitLock) {
+            lock(waitLock) {
                 BeginInvoke((MethodInvoker)(() => {
                     context.Enter();
                     try {
                         method.Invoke();
                     } finally {
                         context.Exit();
-                        lock (waitLock) {
+                        lock(waitLock) {
                             Monitor.PulseAll(waitLock);
                         }
                     }
@@ -771,7 +771,7 @@ namespace Chromium.WebBrowser {
                         wb.RenderThreadInvoke(() => Task_Execute(e));
                     else
                         Task_Execute(e);
-                    lock (tasks) tasks.Remove(this);
+                    lock(tasks) tasks.Remove(this);
                 };
             }
 
@@ -963,12 +963,12 @@ namespace Chromium.WebBrowser {
             // We want exceptions to be thrown in place.
 
             var waitLock = new object();
-            lock (waitLock) {
+            lock(waitLock) {
                 BeginInvoke((MethodInvoker)(() => {
                     try {
                         method.Invoke();
                     } finally {
-                        lock (waitLock) {
+                        lock(waitLock) {
                             Monitor.PulseAll(waitLock);
                         }
                     }
@@ -980,14 +980,14 @@ namespace Chromium.WebBrowser {
         [Obsolete("OnLoadingStateChange is deprecated. Please use LoadHandler.OnLoadingStateChange and check for invalid cross-thread operations.")]
         public event CfxOnLoadingStateChangeEventHandler OnLoadingStateChange {
             add {
-                lock (browserSyncRoot) {
+                lock(browserSyncRoot) {
                     if(m_OnLoadingStateChange == null)
                         client.LoadHandler.OnLoadingStateChange += RaiseOnLoadingStateChange;
                     m_OnLoadingStateChange += value;
                 }
             }
             remove {
-                lock (browserSyncRoot) {
+                lock(browserSyncRoot) {
                     m_OnLoadingStateChange -= value;
                     if(m_OnLoadingStateChange == null)
                         client.LoadHandler.OnLoadingStateChange -= RaiseOnLoadingStateChange;
@@ -1007,14 +1007,14 @@ namespace Chromium.WebBrowser {
         [Obsolete("OnBeforeContextMenu is deprecated. Please use ContextMenuHandler.OnBeforeContextMenu and check for invalid cross-thread operations.")]
         public event CfxOnBeforeContextMenuEventHandler OnBeforeContextMenu {
             add {
-                lock (browserSyncRoot) {
+                lock(browserSyncRoot) {
                     if(m_OnBeforeContextMenu == null)
                         client.ContextMenuHandler.OnBeforeContextMenu += RaiseOnBeforeContextMenu;
                     m_OnBeforeContextMenu += value;
                 }
             }
             remove {
-                lock (browserSyncRoot) {
+                lock(browserSyncRoot) {
                     m_OnBeforeContextMenu -= value;
                     if(m_OnBeforeContextMenu == null)
                         client.ContextMenuHandler.OnBeforeContextMenu -= RaiseOnBeforeContextMenu;
@@ -1034,14 +1034,14 @@ namespace Chromium.WebBrowser {
         [Obsolete("OnContextMenuCommand is deprecated. Please use ContextMenuHandler.OnContextMenuCommand and check for invalid cross-thread operations.")]
         public event CfxOnContextMenuCommandEventHandler OnContextMenuCommand {
             add {
-                lock (browserSyncRoot) {
+                lock(browserSyncRoot) {
                     if(m_OnContextMenuCommand == null)
                         client.ContextMenuHandler.OnContextMenuCommand += RaiseOnContextMenuCommand;
                     m_OnContextMenuCommand += value;
                 }
             }
             remove {
-                lock (browserSyncRoot) {
+                lock(browserSyncRoot) {
                     m_OnContextMenuCommand -= value;
                     if(m_OnContextMenuCommand == null)
                         client.ContextMenuHandler.OnContextMenuCommand -= RaiseOnContextMenuCommand;
@@ -1062,6 +1062,7 @@ namespace Chromium.WebBrowser {
         private string m_loadStringDeferred;
 
         internal void OnBrowserCreated(CfxOnAfterCreatedEventArgs e) {
+
             Browser = e.Browser;
             BrowserHost = Browser.Host;
             browserWindowHandle = BrowserHost.WindowHandle;
@@ -1078,7 +1079,7 @@ namespace Chromium.WebBrowser {
         }
 
         private void AfterSetBrowserTasks(object state) {
-            lock (browserSyncRoot) {
+            lock(browserSyncRoot) {
                 if(m_loadUrlDeferred != null) {
                     if(m_loadStringDeferred != null) {
                         Browser.MainFrame.LoadString(m_loadStringDeferred, m_loadUrlDeferred);
