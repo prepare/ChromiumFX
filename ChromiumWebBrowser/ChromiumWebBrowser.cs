@@ -1093,7 +1093,7 @@ namespace Chromium.WebBrowser {
         internal void SetRemoteBrowser(CfrBrowser remoteBrowser, RenderProcess remoteProcess) {
             this.remoteBrowser = remoteBrowser;
             this.remoteProcess = remoteProcess;
-            remoteProcess.OnExit += new Action<RenderProcess>(remoteProcess_OnExit);
+            remoteProcess.OnExit += remoteProcess_OnExit;
             var h = RemoteBrowserCreated;
             if(h != null) {
                 var e = new RemoteBrowserCreatedEventArgs(remoteBrowser);
@@ -1106,6 +1106,7 @@ namespace Chromium.WebBrowser {
         }
 
         void remoteProcess_OnExit(RenderProcess process) {
+            process.OnExit -= remoteProcess_OnExit;
             if(process == this.remoteProcess) {
                 this.remoteBrowser = null;
                 this.remoteProcess = null;
