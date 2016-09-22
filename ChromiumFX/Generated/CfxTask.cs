@@ -48,7 +48,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
     /// </remarks>
-    public class CfxTask : CfxBase {
+    public class CfxTask : CfxClientBase {
 
         internal static CfxTask Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;

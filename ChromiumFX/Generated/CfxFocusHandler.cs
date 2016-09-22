@@ -44,7 +44,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_focus_handler_capi.h">cef/include/capi/cef_focus_handler_capi.h</see>.
     /// </remarks>
-    public class CfxFocusHandler : CfxBase {
+    public class CfxFocusHandler : CfxClientBase {
 
         internal static CfxFocusHandler Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;

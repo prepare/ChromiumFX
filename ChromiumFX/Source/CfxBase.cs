@@ -50,10 +50,8 @@ namespace Chromium {
         }
 
 
+        internal CfxBase() {}
         internal CfxBase(IntPtr nativePtr) : base(nativePtr) {}
-        internal CfxBase(CfxApi.cfx_ctor_with_gc_handle_delegate cfx_ctor) {
-            CreateNative(cfx_ctor);
-        }
 
         /// <summary>
         /// Provides access to the underlying native cef struct.

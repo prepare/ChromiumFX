@@ -45,7 +45,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_delegate_capi.h">cef/include/capi/cef_menu_model_delegate_capi.h</see>.
     /// </remarks>
-    public class CfxMenuModelDelegate : CfxBase {
+    public class CfxMenuModelDelegate : CfxClientBase {
 
         internal static CfxMenuModelDelegate Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;

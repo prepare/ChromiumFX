@@ -580,7 +580,7 @@ public class CfxClassBuilder {
 
         b.AppendSummaryAndRemarks(comments, false, true);
 
-        b.BeginClass(ClassName + " : CfxBase", GeneratorConfig.ClassModifiers(ClassName));
+        b.BeginClass(ClassName + " : CfxClientBase", GeneratorConfig.ClassModifiers(ClassName));
         b.AppendLine();
 
         b.BeginFunction("Wrap", ClassName, "IntPtr nativePtr", "internal static");

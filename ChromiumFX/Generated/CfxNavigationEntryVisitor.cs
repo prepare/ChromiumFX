@@ -44,7 +44,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
     /// </remarks>
-    public class CfxNavigationEntryVisitor : CfxBase {
+    public class CfxNavigationEntryVisitor : CfxClientBase {
 
         internal static CfxNavigationEntryVisitor Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;

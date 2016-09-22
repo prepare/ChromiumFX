@@ -43,7 +43,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_callback_capi.h">cef/include/capi/cef_callback_capi.h</see>.
     /// </remarks>
-    public class CfxCompletionCallback : CfxBase {
+    public class CfxCompletionCallback : CfxClientBase {
 
         internal static CfxCompletionCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;

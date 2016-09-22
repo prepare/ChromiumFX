@@ -45,7 +45,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_urlrequest_capi.h">cef/include/capi/cef_urlrequest_capi.h</see>.
     /// </remarks>
-    public class CfxUrlRequestClient : CfxBase {
+    public class CfxUrlRequestClient : CfxClientBase {
 
         internal static CfxUrlRequestClient Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;

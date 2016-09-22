@@ -44,7 +44,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
     /// </remarks>
-    public class CfxWriteHandler : CfxBase {
+    public class CfxWriteHandler : CfxClientBase {
 
         internal static CfxWriteHandler Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;

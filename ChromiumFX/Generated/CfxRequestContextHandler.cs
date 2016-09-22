@@ -45,7 +45,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_handler_capi.h">cef/include/capi/cef_request_context_handler_capi.h</see>.
     /// </remarks>
-    public class CfxRequestContextHandler : CfxBase {
+    public class CfxRequestContextHandler : CfxClientBase {
 
         internal static CfxRequestContextHandler Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;

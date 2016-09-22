@@ -45,7 +45,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_handler_capi.h">cef/include/capi/cef_resource_bundle_handler_capi.h</see>.
     /// </remarks>
-    public class CfxResourceBundleHandler : CfxBase {
+    public class CfxResourceBundleHandler : CfxClientBase {
 
         internal static CfxResourceBundleHandler Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;

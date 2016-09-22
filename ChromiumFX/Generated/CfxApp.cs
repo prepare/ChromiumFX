@@ -44,7 +44,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
     /// </remarks>
-    public partial class CfxApp : CfxBase {
+    public partial class CfxApp : CfxClientBase {
 
         internal static CfxApp Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;

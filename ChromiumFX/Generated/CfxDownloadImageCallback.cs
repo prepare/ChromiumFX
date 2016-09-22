@@ -44,7 +44,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
     /// </remarks>
-    public class CfxDownloadImageCallback : CfxBase {
+    public class CfxDownloadImageCallback : CfxClientBase {
 
         internal static CfxDownloadImageCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;

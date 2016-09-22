@@ -45,7 +45,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_life_span_handler_capi.h">cef/include/capi/cef_life_span_handler_capi.h</see>.
     /// </remarks>
-    public class CfxLifeSpanHandler : CfxBase {
+    public class CfxLifeSpanHandler : CfxClientBase {
 
         internal static CfxLifeSpanHandler Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
