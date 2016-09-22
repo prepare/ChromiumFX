@@ -35,7 +35,7 @@ using Chromium;
 using Chromium.Event;
 
 namespace Chromium.WebBrowser {
-    internal class BrowserProcess {
+    internal static class BrowserProcess {
 
         internal static CfxApp app;
         internal static CfxBrowserProcessHandler processHandler;
