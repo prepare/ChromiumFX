@@ -15,5 +15,10 @@ namespace Chromium {
         internal CfxClientBase(CfxApi.cfx_ctor_with_gc_handle_delegate cfx_ctor) {
             CreateNative(cfx_ctor);
         }
+
+        /// <summary>
+        /// Disables all CEF callback events in this class. CEF callbacks with arguments will return with all parameters set to default.
+        /// </summary>
+        public bool DisableCallbacks { get; set; }
     }
 }

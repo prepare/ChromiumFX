@@ -64,7 +64,7 @@ namespace Chromium {
 
         internal static void on_request_complete(IntPtr gcHandlePtr, IntPtr request) {
             var self = (CfxUrlRequestClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxOnRequestCompleteEventArgs(request);
@@ -82,7 +82,7 @@ namespace Chromium {
 
         internal static void on_upload_progress(IntPtr gcHandlePtr, IntPtr request, long current, long total) {
             var self = (CfxUrlRequestClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxOnUploadProgressEventArgs(request, current, total);
@@ -100,7 +100,7 @@ namespace Chromium {
 
         internal static void on_download_progress(IntPtr gcHandlePtr, IntPtr request, long current, long total) {
             var self = (CfxUrlRequestClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxOnDownloadProgressEventArgs(request, current, total);
@@ -118,7 +118,7 @@ namespace Chromium {
 
         internal static void on_download_data(IntPtr gcHandlePtr, IntPtr request, IntPtr data, UIntPtr data_length) {
             var self = (CfxUrlRequestClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxOnDownloadDataEventArgs(request, data, data_length);
@@ -136,7 +136,7 @@ namespace Chromium {
 
         internal static void get_auth_credentials(IntPtr gcHandlePtr, out int __retval, int isProxy, IntPtr host_str, int host_length, int port, IntPtr realm_str, int realm_length, IntPtr scheme_str, int scheme_length, IntPtr callback) {
             var self = (CfxUrlRequestClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(int);
                 return;
             }

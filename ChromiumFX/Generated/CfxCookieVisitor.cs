@@ -63,7 +63,7 @@ namespace Chromium {
 
         internal static void visit(IntPtr gcHandlePtr, out int __retval, IntPtr cookie, int count, int total, out int deleteCookie) {
             var self = (CfxCookieVisitor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(int);
                 deleteCookie = default(int);
                 return;

@@ -63,7 +63,7 @@ namespace Chromium {
 
         internal static void on_jsdialog(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr origin_url_str, int origin_url_length, int dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback, out int suppress_message) {
             var self = (CfxJsDialogHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(int);
                 suppress_message = default(int);
                 return;
@@ -86,7 +86,7 @@ namespace Chromium {
 
         internal static void on_before_unload_dialog(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr message_text_str, int message_text_length, int is_reload, IntPtr callback) {
             var self = (CfxJsDialogHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(int);
                 return;
             }
@@ -107,7 +107,7 @@ namespace Chromium {
 
         internal static void on_reset_dialog_state(IntPtr gcHandlePtr, IntPtr browser) {
             var self = (CfxJsDialogHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxOnResetDialogStateEventArgs(browser);
@@ -125,7 +125,7 @@ namespace Chromium {
 
         internal static void on_dialog_closed(IntPtr gcHandlePtr, IntPtr browser) {
             var self = (CfxJsDialogHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxOnDialogClosedEventArgs(browser);

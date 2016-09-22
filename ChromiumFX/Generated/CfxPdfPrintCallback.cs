@@ -63,7 +63,7 @@ namespace Chromium {
 
         internal static void on_pdf_print_finished(IntPtr gcHandlePtr, IntPtr path_str, int path_length, int ok) {
             var self = (CfxPdfPrintCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxPdfPrintCallbackOnPdfPrintFinishedEventArgs(path_str, path_length, ok);

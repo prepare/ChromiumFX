@@ -63,7 +63,7 @@ namespace Chromium {
 
         internal static void write(IntPtr gcHandlePtr, out UIntPtr __retval, IntPtr ptr, UIntPtr size, UIntPtr n) {
             var self = (CfxWriteHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(UIntPtr);
                 return;
             }
@@ -82,7 +82,7 @@ namespace Chromium {
 
         internal static void seek(IntPtr gcHandlePtr, out int __retval, long offset, int whence) {
             var self = (CfxWriteHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(int);
                 return;
             }
@@ -101,7 +101,7 @@ namespace Chromium {
 
         internal static void tell(IntPtr gcHandlePtr, out long __retval) {
             var self = (CfxWriteHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(long);
                 return;
             }
@@ -120,7 +120,7 @@ namespace Chromium {
 
         internal static void flush(IntPtr gcHandlePtr, out int __retval) {
             var self = (CfxWriteHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(int);
                 return;
             }
@@ -139,7 +139,7 @@ namespace Chromium {
 
         internal static void may_block(IntPtr gcHandlePtr, out int __retval) {
             var self = (CfxWriteHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(int);
                 return;
             }

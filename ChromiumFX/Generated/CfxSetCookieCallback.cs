@@ -63,7 +63,7 @@ namespace Chromium {
 
         internal static void on_complete(IntPtr gcHandlePtr, int success) {
             var self = (CfxSetCookieCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxSetCookieCallbackOnCompleteEventArgs(success);

@@ -62,7 +62,7 @@ namespace Chromium {
 
         internal static void on_complete(IntPtr gcHandlePtr) {
             var self = (CfxCompletionCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxEventArgs();

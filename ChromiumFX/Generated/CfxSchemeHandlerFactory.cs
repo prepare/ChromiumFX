@@ -64,7 +64,7 @@ namespace Chromium {
 
         internal static void create(IntPtr gcHandlePtr, out IntPtr __retval, IntPtr browser, IntPtr frame, IntPtr scheme_name_str, int scheme_name_length, IntPtr request) {
             var self = (CfxSchemeHandlerFactory)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(IntPtr);
                 return;
             }

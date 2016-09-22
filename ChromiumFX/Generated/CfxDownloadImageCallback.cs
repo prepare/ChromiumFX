@@ -63,7 +63,7 @@ namespace Chromium {
 
         internal static void on_download_image_finished(IntPtr gcHandlePtr, IntPtr image_url_str, int image_url_length, int http_status_code, IntPtr image) {
             var self = (CfxDownloadImageCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxDownloadImageCallbackOnDownloadImageFinishedEventArgs(image_url_str, image_url_length, http_status_code, image);

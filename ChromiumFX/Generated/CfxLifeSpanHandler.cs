@@ -64,7 +64,7 @@ namespace Chromium {
 
         internal static void on_before_popup(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, int target_disposition, int user_gesture, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(int);
                 client = default(IntPtr);
                 no_javascript_access = default(int);
@@ -89,7 +89,7 @@ namespace Chromium {
 
         internal static void on_after_created(IntPtr gcHandlePtr, IntPtr browser) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxOnAfterCreatedEventArgs(browser);
@@ -107,7 +107,7 @@ namespace Chromium {
 
         internal static void do_close(IntPtr gcHandlePtr, out int __retval, IntPtr browser) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(int);
                 return;
             }
@@ -127,7 +127,7 @@ namespace Chromium {
 
         internal static void on_before_close(IntPtr gcHandlePtr, IntPtr browser) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxOnBeforeCloseEventArgs(browser);

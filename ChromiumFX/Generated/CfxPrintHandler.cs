@@ -63,7 +63,7 @@ namespace Chromium {
 
         internal static void on_print_start(IntPtr gcHandlePtr, IntPtr browser) {
             var self = (CfxPrintHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxOnPrintStartEventArgs(browser);
@@ -81,7 +81,7 @@ namespace Chromium {
 
         internal static void on_print_settings(IntPtr gcHandlePtr, IntPtr settings, int get_defaults) {
             var self = (CfxPrintHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxOnPrintSettingsEventArgs(settings, get_defaults);
@@ -99,7 +99,7 @@ namespace Chromium {
 
         internal static void on_print_dialog(IntPtr gcHandlePtr, out int __retval, int has_selection, IntPtr callback) {
             var self = (CfxPrintHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(int);
                 return;
             }
@@ -119,7 +119,7 @@ namespace Chromium {
 
         internal static void on_print_job(IntPtr gcHandlePtr, out int __retval, IntPtr document_name_str, int document_name_length, IntPtr pdf_file_path_str, int pdf_file_path_length, IntPtr callback) {
             var self = (CfxPrintHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(int);
                 return;
             }
@@ -139,7 +139,7 @@ namespace Chromium {
 
         internal static void on_print_reset(IntPtr gcHandlePtr) {
             var self = (CfxPrintHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxEventArgs();
@@ -156,7 +156,7 @@ namespace Chromium {
 
         internal static void get_pdf_paper_size(IntPtr gcHandlePtr, out IntPtr __retval, int device_units_per_inch) {
             var self = (CfxPrintHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(IntPtr);
                 return;
             }

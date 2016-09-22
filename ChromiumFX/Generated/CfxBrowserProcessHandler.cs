@@ -64,7 +64,7 @@ namespace Chromium {
 
         internal static void on_context_initialized(IntPtr gcHandlePtr) {
             var self = (CfxBrowserProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxEventArgs();
@@ -81,7 +81,7 @@ namespace Chromium {
 
         internal static void on_before_child_process_launch(IntPtr gcHandlePtr, IntPtr command_line) {
             var self = (CfxBrowserProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxOnBeforeChildProcessLaunchEventArgs(command_line);
@@ -99,7 +99,7 @@ namespace Chromium {
 
         internal static void on_render_process_thread_created(IntPtr gcHandlePtr, IntPtr extra_info) {
             var self = (CfxBrowserProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxOnRenderProcessThreadCreatedEventArgs(extra_info);
@@ -117,7 +117,7 @@ namespace Chromium {
 
         internal static void get_print_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxBrowserProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -136,7 +136,7 @@ namespace Chromium {
 
         internal static void on_schedule_message_pump_work(IntPtr gcHandlePtr, long delay_ms) {
             var self = (CfxBrowserProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxOnScheduleMessagePumpWorkEventArgs(delay_ms);

@@ -62,7 +62,7 @@ namespace Chromium {
 
         internal static void on_resolve_completed(IntPtr gcHandlePtr, int result, IntPtr resolved_ips) {
             var self = (CfxResolveCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxResolveCallbackOnResolveCompletedEventArgs(result, resolved_ips);

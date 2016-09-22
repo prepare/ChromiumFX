@@ -65,7 +65,7 @@ namespace Chromium {
 
         internal static void get(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out IntPtr retval, ref IntPtr exception_str, ref int exception_length) {
             var self = (CfxV8Accessor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(int);
                 retval = default(IntPtr);
                 return;
@@ -92,7 +92,7 @@ namespace Chromium {
 
         internal static void set(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, IntPtr value, ref IntPtr exception_str, ref int exception_length) {
             var self = (CfxV8Accessor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(int);
                 return;
             }

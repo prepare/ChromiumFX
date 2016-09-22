@@ -62,7 +62,7 @@ namespace Chromium {
 
         internal static void get_context_menu_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -81,7 +81,7 @@ namespace Chromium {
 
         internal static void get_dialog_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -100,7 +100,7 @@ namespace Chromium {
 
         internal static void get_display_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -119,7 +119,7 @@ namespace Chromium {
 
         internal static void get_download_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -138,7 +138,7 @@ namespace Chromium {
 
         internal static void get_drag_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -157,7 +157,7 @@ namespace Chromium {
 
         internal static void get_find_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -176,7 +176,7 @@ namespace Chromium {
 
         internal static void get_focus_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -195,7 +195,7 @@ namespace Chromium {
 
         internal static void get_geolocation_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -214,7 +214,7 @@ namespace Chromium {
 
         internal static void get_jsdialog_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -233,7 +233,7 @@ namespace Chromium {
 
         internal static void get_keyboard_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -252,7 +252,7 @@ namespace Chromium {
 
         internal static void get_life_span_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -271,7 +271,7 @@ namespace Chromium {
 
         internal static void get_load_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -290,7 +290,7 @@ namespace Chromium {
 
         internal static void get_render_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -309,7 +309,7 @@ namespace Chromium {
 
         internal static void get_request_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -328,7 +328,7 @@ namespace Chromium {
 
         internal static void on_process_message_received(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int source_process, IntPtr message) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(int);
                 return;
             }

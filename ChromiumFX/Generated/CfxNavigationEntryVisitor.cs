@@ -63,7 +63,7 @@ namespace Chromium {
 
         internal static void visit(IntPtr gcHandlePtr, out int __retval, IntPtr entry, int current, int index, int total) {
             var self = (CfxNavigationEntryVisitor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(int);
                 return;
             }

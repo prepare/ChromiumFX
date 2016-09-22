@@ -63,7 +63,7 @@ namespace Chromium {
 
         internal static void on_find_result(IntPtr gcHandlePtr, IntPtr browser, int identifier, int count, IntPtr selectionRect, int activeMatchOrdinal, int finalUpdate) {
             var self = (CfxFindHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxFindHandlerOnFindResultEventArgs(browser, identifier, count, selectionRect, activeMatchOrdinal, finalUpdate);

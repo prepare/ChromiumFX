@@ -63,7 +63,7 @@ namespace Chromium {
 
         internal static void on_drag_enter(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr dragData, int mask) {
             var self = (CfxDragHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(int);
                 return;
             }
@@ -84,7 +84,7 @@ namespace Chromium {
 
         internal static void on_draggable_regions_changed(IntPtr gcHandlePtr, IntPtr browser, UIntPtr regionsCount, IntPtr regions, int regions_structsize) {
             var self = (CfxDragHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 return;
             }
             var e = new CfxOnDraggableRegionsChangedEventArgs(browser, regions, regionsCount, regions_structsize);

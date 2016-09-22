@@ -63,7 +63,7 @@ namespace Chromium {
 
         internal static void init_filter(IntPtr gcHandlePtr, out int __retval) {
             var self = (CfxResponseFilter)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(int);
                 return;
             }
@@ -82,7 +82,7 @@ namespace Chromium {
 
         internal static void filter(IntPtr gcHandlePtr, out int __retval, IntPtr data_in, UIntPtr data_in_size, out UIntPtr data_in_read, IntPtr data_out, UIntPtr data_out_size, out UIntPtr data_out_written) {
             var self = (CfxResponseFilter)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null) {
+            if(self == null || self.DisableCallbacks) {
                 __retval = default(int);
                 data_in_read = default(UIntPtr);
                 data_out_written = default(UIntPtr);

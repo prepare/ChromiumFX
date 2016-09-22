@@ -607,7 +607,7 @@ public class CfxClassBuilder {
             b.BeginFunction(sm.Name, "void", sig.PInvokeParameterList, "internal static");
             //b.AppendLine("var handle = System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr);")
             b.AppendLine("var self = ({0})System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;", ClassName);
-            b.BeginIf("self == null");
+            b.BeginIf("self == null || self.DisableCallbacks");
             if(!sig.ReturnType.IsVoid) {
                 b.AppendLine("__retval = default({0});", sig.ReturnType.PInvokeSymbol);
             }
