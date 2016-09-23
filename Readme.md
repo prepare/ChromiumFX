@@ -54,6 +54,11 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2785.0 ###
+- Update to CEF 3.2785.1481 without API changes.
+- CfxWindowInfo can now be created as disabled child window (see CfxWindowInfo.SetAsDisabledChild). This helps preventing CEF from taking the focus for a webpage when a browser is created offscreen.
+- A cache was preventing ChromiumWebBrowser objects from being collected. This has been fixed with a weak reference cache. Embedders can now let browser objects go out of scope and the associated cef resources and render process will be released automatically.
+
 ### Version 3.2743.0 ###
 - The remote layer now calls directly into the pinvoke api in the render process, removing one layer of bookkeeping. This applies to library calls, client callback still relay on the managed layer in the render process.
 - Parameters of type size_t are now correctly marshaled as UIntPtr in the pinvoke layer and then translated into ulong in the public layer.
