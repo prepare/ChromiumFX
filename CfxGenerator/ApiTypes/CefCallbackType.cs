@@ -30,6 +30,7 @@
 
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 public class CefCallbackType : ApiType, ISignatureOwner {
@@ -471,6 +472,26 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         b.EndBlock();
         b.EndBlock();
         b.AppendLine();
+
+        if(Signature.ManagedArguments.Length == 1
+            && Signature.ReturnType.IsCefStructPtrType) {
+            b.AppendLine("/// <summary>");
+            b.AppendLine("/// Retrieves the {0} provided by the event handler attached to the {1} event, if any.", Signature.ReturnType.PublicSymbol, CSharp.Escape(PublicName));
+            b.AppendLine("/// Returns null if no event handler is attached.");
+            b.AppendLine("/// </summary>");
+            b.BeginBlock("public {0} Retrieve{1}()", Signature.ReturnType.PublicSymbol, Signature.ReturnType.PublicSymbol.Substring(3));
+            b.AppendLine("var h = m_{0};", PublicName);
+            b.BeginIf("h != null");
+            b.AppendLine("var e = new {0}();", PublicEventArgsClassName);
+            b.AppendLine("h(this, e);");
+            b.AppendLine("return e.m_returnValue;");
+            b.BeginElse();
+            b.AppendLine("return null;");
+            b.EndBlock();
+            b.EndBlock();
+            b.AppendLine();
+        }
+
         b.AppendLine("private {0} m_{1};", EventHandlerName, PublicName);
     }
 

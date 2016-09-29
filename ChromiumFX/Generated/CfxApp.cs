@@ -44,7 +44,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
     /// </remarks>
-    public partial class CfxApp : CfxClientBase {
+    public class CfxApp : CfxClientBase {
 
         internal static CfxApp Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
@@ -259,6 +259,21 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Retrieves the CfxResourceBundleHandler provided by the event handler attached to the GetResourceBundleHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxResourceBundleHandler RetrieveResourceBundleHandler() {
+            var h = m_GetResourceBundleHandler;
+            if(h != null) {
+                var e = new CfxGetResourceBundleHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
+            }
+        }
+
         private CfxGetResourceBundleHandlerEventHandler m_GetResourceBundleHandler;
 
         /// <summary>
@@ -292,6 +307,21 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Retrieves the CfxBrowserProcessHandler provided by the event handler attached to the GetBrowserProcessHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxBrowserProcessHandler RetrieveBrowserProcessHandler() {
+            var h = m_GetBrowserProcessHandler;
+            if(h != null) {
+                var e = new CfxGetBrowserProcessHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
+            }
+        }
+
         private CfxGetBrowserProcessHandlerEventHandler m_GetBrowserProcessHandler;
 
         /// <summary>
@@ -322,6 +352,21 @@ namespace Chromium {
                         CfxApi.App.cfx_app_set_managed_callback(NativePtr, 4, IntPtr.Zero);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the CfxRenderProcessHandler provided by the event handler attached to the GetRenderProcessHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxRenderProcessHandler RetrieveRenderProcessHandler() {
+            var h = m_GetRenderProcessHandler;
+            if(h != null) {
+                var e = new CfxGetRenderProcessHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
             }
         }
 

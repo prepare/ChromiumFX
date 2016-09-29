@@ -437,6 +437,21 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Retrieves the CfxLoadHandler provided by the event handler attached to the GetLoadHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxLoadHandler RetrieveLoadHandler() {
+            var h = m_GetLoadHandler;
+            if(h != null) {
+                var e = new CfxGetLoadHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
+            }
+        }
+
         private CfxGetLoadHandlerEventHandler m_GetLoadHandler;
 
         /// <summary>

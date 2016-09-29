@@ -131,6 +131,21 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Retrieves the CfxCookieManager provided by the event handler attached to the GetCookieManager event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxCookieManager RetrieveCookieManager() {
+            var h = m_GetCookieManager;
+            if(h != null) {
+                var e = new CfxGetCookieManagerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
+            }
+        }
+
         private CfxGetCookieManagerEventHandler m_GetCookieManager;
 
         /// <summary>

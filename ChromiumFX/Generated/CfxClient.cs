@@ -375,6 +375,21 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Retrieves the CfxContextMenuHandler provided by the event handler attached to the GetContextMenuHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxContextMenuHandler RetrieveContextMenuHandler() {
+            var h = m_GetContextMenuHandler;
+            if(h != null) {
+                var e = new CfxGetContextMenuHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
+            }
+        }
+
         private CfxGetContextMenuHandlerEventHandler m_GetContextMenuHandler;
 
         /// <summary>
@@ -408,6 +423,21 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Retrieves the CfxDialogHandler provided by the event handler attached to the GetDialogHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxDialogHandler RetrieveDialogHandler() {
+            var h = m_GetDialogHandler;
+            if(h != null) {
+                var e = new CfxGetDialogHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
+            }
+        }
+
         private CfxGetDialogHandlerEventHandler m_GetDialogHandler;
 
         /// <summary>
@@ -437,6 +467,21 @@ namespace Chromium {
                         CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 2, IntPtr.Zero);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the CfxDisplayHandler provided by the event handler attached to the GetDisplayHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxDisplayHandler RetrieveDisplayHandler() {
+            var h = m_GetDisplayHandler;
+            if(h != null) {
+                var e = new CfxGetDisplayHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
             }
         }
 
@@ -473,6 +518,21 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Retrieves the CfxDownloadHandler provided by the event handler attached to the GetDownloadHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxDownloadHandler RetrieveDownloadHandler() {
+            var h = m_GetDownloadHandler;
+            if(h != null) {
+                var e = new CfxGetDownloadHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
+            }
+        }
+
         private CfxGetDownloadHandlerEventHandler m_GetDownloadHandler;
 
         /// <summary>
@@ -502,6 +562,21 @@ namespace Chromium {
                         CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 4, IntPtr.Zero);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the CfxDragHandler provided by the event handler attached to the GetDragHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxDragHandler RetrieveDragHandler() {
+            var h = m_GetDragHandler;
+            if(h != null) {
+                var e = new CfxGetDragHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
             }
         }
 
@@ -537,6 +612,21 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Retrieves the CfxFindHandler provided by the event handler attached to the GetFindHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxFindHandler RetrieveFindHandler() {
+            var h = m_GetFindHandler;
+            if(h != null) {
+                var e = new CfxGetFindHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
+            }
+        }
+
         private CfxGetFindHandlerEventHandler m_GetFindHandler;
 
         /// <summary>
@@ -566,6 +656,21 @@ namespace Chromium {
                         CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 6, IntPtr.Zero);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the CfxFocusHandler provided by the event handler attached to the GetFocusHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxFocusHandler RetrieveFocusHandler() {
+            var h = m_GetFocusHandler;
+            if(h != null) {
+                var e = new CfxGetFocusHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
             }
         }
 
@@ -602,6 +707,21 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Retrieves the CfxGeolocationHandler provided by the event handler attached to the GetGeolocationHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxGeolocationHandler RetrieveGeolocationHandler() {
+            var h = m_GetGeolocationHandler;
+            if(h != null) {
+                var e = new CfxGetGeolocationHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
+            }
+        }
+
         private CfxGetGeolocationHandlerEventHandler m_GetGeolocationHandler;
 
         /// <summary>
@@ -632,6 +752,21 @@ namespace Chromium {
                         CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 8, IntPtr.Zero);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the CfxJsDialogHandler provided by the event handler attached to the GetJsDialogHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxJsDialogHandler RetrieveJsDialogHandler() {
+            var h = m_GetJsDialogHandler;
+            if(h != null) {
+                var e = new CfxGetJsDialogHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
             }
         }
 
@@ -667,6 +802,21 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Retrieves the CfxKeyboardHandler provided by the event handler attached to the GetKeyboardHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxKeyboardHandler RetrieveKeyboardHandler() {
+            var h = m_GetKeyboardHandler;
+            if(h != null) {
+                var e = new CfxGetKeyboardHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
+            }
+        }
+
         private CfxGetKeyboardHandlerEventHandler m_GetKeyboardHandler;
 
         /// <summary>
@@ -696,6 +846,21 @@ namespace Chromium {
                         CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 10, IntPtr.Zero);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the CfxLifeSpanHandler provided by the event handler attached to the GetLifeSpanHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxLifeSpanHandler RetrieveLifeSpanHandler() {
+            var h = m_GetLifeSpanHandler;
+            if(h != null) {
+                var e = new CfxGetLifeSpanHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
             }
         }
 
@@ -731,6 +896,21 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Retrieves the CfxLoadHandler provided by the event handler attached to the GetLoadHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxLoadHandler RetrieveLoadHandler() {
+            var h = m_GetLoadHandler;
+            if(h != null) {
+                var e = new CfxGetLoadHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
+            }
+        }
+
         private CfxGetLoadHandlerEventHandler m_GetLoadHandler;
 
         /// <summary>
@@ -763,6 +943,21 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Retrieves the CfxRenderHandler provided by the event handler attached to the GetRenderHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxRenderHandler RetrieveRenderHandler() {
+            var h = m_GetRenderHandler;
+            if(h != null) {
+                var e = new CfxGetRenderHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
+            }
+        }
+
         private CfxGetRenderHandlerEventHandler m_GetRenderHandler;
 
         /// <summary>
@@ -792,6 +987,21 @@ namespace Chromium {
                         CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 13, IntPtr.Zero);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the CfxRequestHandler provided by the event handler attached to the GetRequestHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxRequestHandler RetrieveRequestHandler() {
+            var h = m_GetRequestHandler;
+            if(h != null) {
+                var e = new CfxGetRequestHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
             }
         }
 

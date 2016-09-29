@@ -284,6 +284,21 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Retrieves the CfxPrintHandler provided by the event handler attached to the GetPrintHandler event, if any.
+        /// Returns null if no event handler is attached.
+        /// </summary>
+        public CfxPrintHandler RetrievePrintHandler() {
+            var h = m_GetPrintHandler;
+            if(h != null) {
+                var e = new CfxGetPrintHandlerEventArgs();
+                h(this, e);
+                return e.m_returnValue;
+            } else {
+                return null;
+            }
+        }
+
         private CfxGetPrintHandlerEventHandler m_GetPrintHandler;
 
         /// <summary>
