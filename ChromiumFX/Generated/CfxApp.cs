@@ -239,13 +239,14 @@ namespace Chromium {
         public event CfxGetResourceBundleHandlerEventHandler GetResourceBundleHandler {
             add {
                 lock(eventLock) {
-                    if(m_GetResourceBundleHandler == null) {
-                        if(cfx_app_get_resource_bundle_handler == null) {
-                            cfx_app_get_resource_bundle_handler = get_resource_bundle_handler;
-                            cfx_app_get_resource_bundle_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_app_get_resource_bundle_handler);
-                        }
-                        CfxApi.App.cfx_app_set_managed_callback(NativePtr, 2, cfx_app_get_resource_bundle_handler_ptr);
+                    if(m_GetResourceBundleHandler != null) {
+                        throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
+                    if(cfx_app_get_resource_bundle_handler == null) {
+                        cfx_app_get_resource_bundle_handler = get_resource_bundle_handler;
+                        cfx_app_get_resource_bundle_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_app_get_resource_bundle_handler);
+                    }
+                    CfxApi.App.cfx_app_set_managed_callback(NativePtr, 2, cfx_app_get_resource_bundle_handler_ptr);
                     m_GetResourceBundleHandler += value;
                 }
             }
@@ -287,13 +288,14 @@ namespace Chromium {
         public event CfxGetBrowserProcessHandlerEventHandler GetBrowserProcessHandler {
             add {
                 lock(eventLock) {
-                    if(m_GetBrowserProcessHandler == null) {
-                        if(cfx_app_get_browser_process_handler == null) {
-                            cfx_app_get_browser_process_handler = get_browser_process_handler;
-                            cfx_app_get_browser_process_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_app_get_browser_process_handler);
-                        }
-                        CfxApi.App.cfx_app_set_managed_callback(NativePtr, 3, cfx_app_get_browser_process_handler_ptr);
+                    if(m_GetBrowserProcessHandler != null) {
+                        throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
+                    if(cfx_app_get_browser_process_handler == null) {
+                        cfx_app_get_browser_process_handler = get_browser_process_handler;
+                        cfx_app_get_browser_process_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_app_get_browser_process_handler);
+                    }
+                    CfxApi.App.cfx_app_set_managed_callback(NativePtr, 3, cfx_app_get_browser_process_handler_ptr);
                     m_GetBrowserProcessHandler += value;
                 }
             }
@@ -335,13 +337,14 @@ namespace Chromium {
         public event CfxGetRenderProcessHandlerEventHandler GetRenderProcessHandler {
             add {
                 lock(eventLock) {
-                    if(m_GetRenderProcessHandler == null) {
-                        if(cfx_app_get_render_process_handler == null) {
-                            cfx_app_get_render_process_handler = get_render_process_handler;
-                            cfx_app_get_render_process_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_app_get_render_process_handler);
-                        }
-                        CfxApi.App.cfx_app_set_managed_callback(NativePtr, 4, cfx_app_get_render_process_handler_ptr);
+                    if(m_GetRenderProcessHandler != null) {
+                        throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
+                    if(cfx_app_get_render_process_handler == null) {
+                        cfx_app_get_render_process_handler = get_render_process_handler;
+                        cfx_app_get_render_process_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_app_get_render_process_handler);
+                    }
+                    CfxApi.App.cfx_app_set_managed_callback(NativePtr, 4, cfx_app_get_render_process_handler_ptr);
                     m_GetRenderProcessHandler += value;
                 }
             }

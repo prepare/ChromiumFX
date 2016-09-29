@@ -264,13 +264,14 @@ namespace Chromium {
         public event CfxGetPrintHandlerEventHandler GetPrintHandler {
             add {
                 lock(eventLock) {
-                    if(m_GetPrintHandler == null) {
-                        if(cfx_browser_process_handler_get_print_handler == null) {
-                            cfx_browser_process_handler_get_print_handler = get_print_handler;
-                            cfx_browser_process_handler_get_print_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_browser_process_handler_get_print_handler);
-                        }
-                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_managed_callback(NativePtr, 3, cfx_browser_process_handler_get_print_handler_ptr);
+                    if(m_GetPrintHandler != null) {
+                        throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
+                    if(cfx_browser_process_handler_get_print_handler == null) {
+                        cfx_browser_process_handler_get_print_handler = get_print_handler;
+                        cfx_browser_process_handler_get_print_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_browser_process_handler_get_print_handler);
+                    }
+                    CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_managed_callback(NativePtr, 3, cfx_browser_process_handler_get_print_handler_ptr);
                     m_GetPrintHandler += value;
                 }
             }

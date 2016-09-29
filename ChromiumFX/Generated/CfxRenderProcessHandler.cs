@@ -417,13 +417,14 @@ namespace Chromium {
         public event CfxGetLoadHandlerEventHandler GetLoadHandler {
             add {
                 lock(eventLock) {
-                    if(m_GetLoadHandler == null) {
-                        if(cfx_render_process_handler_get_load_handler == null) {
-                            cfx_render_process_handler_get_load_handler = get_load_handler;
-                            cfx_render_process_handler_get_load_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_render_process_handler_get_load_handler);
-                        }
-                        CfxApi.RenderProcessHandler.cfx_render_process_handler_set_managed_callback(NativePtr, 4, cfx_render_process_handler_get_load_handler_ptr);
+                    if(m_GetLoadHandler != null) {
+                        throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
+                    if(cfx_render_process_handler_get_load_handler == null) {
+                        cfx_render_process_handler_get_load_handler = get_load_handler;
+                        cfx_render_process_handler_get_load_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_render_process_handler_get_load_handler);
+                    }
+                    CfxApi.RenderProcessHandler.cfx_render_process_handler_set_managed_callback(NativePtr, 4, cfx_render_process_handler_get_load_handler_ptr);
                     m_GetLoadHandler += value;
                 }
             }

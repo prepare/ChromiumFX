@@ -235,7 +235,6 @@
     <Compile Include="Generated\Remote\RemoteCallFactory.cs" />
     <Compile Include="Generated\Remote\RemoteCallId.cs" />
     <Compile Include="Source\CfxApi.cs" />
-    <Compile Include="Source\CfxApp.cs" />
     <Compile Include="Source\CfxArray.cs" />
     <Compile Include="Source\CfxBase.cs" />
     <Compile Include="Source\CfxBinaryValue.cs" />

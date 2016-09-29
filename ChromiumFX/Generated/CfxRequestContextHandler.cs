@@ -111,13 +111,14 @@ namespace Chromium {
         public event CfxGetCookieManagerEventHandler GetCookieManager {
             add {
                 lock(eventLock) {
-                    if(m_GetCookieManager == null) {
-                        if(cfx_request_context_handler_get_cookie_manager == null) {
-                            cfx_request_context_handler_get_cookie_manager = get_cookie_manager;
-                            cfx_request_context_handler_get_cookie_manager_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_context_handler_get_cookie_manager);
-                        }
-                        CfxApi.RequestContextHandler.cfx_request_context_handler_set_managed_callback(NativePtr, 0, cfx_request_context_handler_get_cookie_manager_ptr);
+                    if(m_GetCookieManager != null) {
+                        throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
+                    if(cfx_request_context_handler_get_cookie_manager == null) {
+                        cfx_request_context_handler_get_cookie_manager = get_cookie_manager;
+                        cfx_request_context_handler_get_cookie_manager_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_request_context_handler_get_cookie_manager);
+                    }
+                    CfxApi.RequestContextHandler.cfx_request_context_handler_set_managed_callback(NativePtr, 0, cfx_request_context_handler_get_cookie_manager_ptr);
                     m_GetCookieManager += value;
                 }
             }

@@ -448,17 +448,27 @@ public class CefCallbackType : ApiType, ISignatureOwner {
     }
 
     public void EmitPublicEvent(CodeBuilder b, int cbIndex, CommentData comments) {
+
+        var isSimpleGetterEvent = Signature.ManagedArguments.Length == 1
+            && Signature.ReturnType.IsCefStructPtrType;
+
         b.AppendSummaryAndRemarks(comments, false, true);
         b.BeginBlock("public event {0} {1}", EventHandlerName, CSharp.Escape(PublicName));
         b.BeginBlock("add");
         b.BeginBlock("lock(eventLock)");
-        b.BeginBlock("if(m_{0} == null)", PublicName);
+        if(isSimpleGetterEvent) {
+            b.BeginBlock("if(m_{0} != null)", PublicName);
+            b.AppendLine("throw new CfxException(\"Can't add more than one event handler to this type of event.\");");
+            b.EndBlock();
+        } else {
+            b.BeginBlock("if(m_{0} == null)", PublicName);
+        }
         b.BeginBlock("if({0}_{1} == null)", Parent.CfxName, Name);
         b.AppendLine("{0}_{1} = {1};", Parent.CfxName, Name);
         b.AppendLine("{0}_{1}_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate({0}_{1});", Parent.CfxName, Name);
         b.EndBlock();
         b.AppendLine("CfxApi.{3}.{0}_set_managed_callback(NativePtr, {1}, {0}_{2}_ptr);", Parent.CfxName, cbIndex, Name, Parent.ClassName.Substring(3));
-        b.EndBlock();
+        if(!isSimpleGetterEvent) b.EndBlock();
         b.AppendLine("m_{0} += value;", PublicName);
         b.EndBlock();
         b.EndBlock();
@@ -473,8 +483,7 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         b.EndBlock();
         b.AppendLine();
 
-        if(Signature.ManagedArguments.Length == 1
-            && Signature.ReturnType.IsCefStructPtrType) {
+        if(isSimpleGetterEvent) {
             b.AppendLine("/// <summary>");
             b.AppendLine("/// Retrieves the {0} provided by the event handler attached to the {1} event, if any.", Signature.ReturnType.PublicSymbol, CSharp.Escape(PublicName));
             b.AppendLine("/// Returns null if no event handler is attached.");
