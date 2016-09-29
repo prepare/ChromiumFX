@@ -148,6 +148,9 @@ namespace Chromium {
             var m = ex.Match(cmd);
 
             if(m.Success) {
+                if(application != null) {
+                    throw new Exception("Can't handle user provided CfxApp object when the remote layer IPC bridge is in use.");
+                }
                 return Chromium.Remote.RemoteClient.ExecuteProcess(m.Groups[1].Value);
             } else {
                 return ExecuteProcessInternal(application);
