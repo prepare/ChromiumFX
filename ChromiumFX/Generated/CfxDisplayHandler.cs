@@ -63,7 +63,7 @@ namespace Chromium {
 
         internal static void on_address_change(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr url_str, int url_length) {
             var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnAddressChangeEventArgs(browser, frame, url_str, url_length);
@@ -82,7 +82,7 @@ namespace Chromium {
 
         internal static void on_title_change(IntPtr gcHandlePtr, IntPtr browser, IntPtr title_str, int title_length) {
             var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnTitleChangeEventArgs(browser, title_str, title_length);
@@ -100,7 +100,7 @@ namespace Chromium {
 
         internal static void on_favicon_urlchange(IntPtr gcHandlePtr, IntPtr browser, IntPtr icon_urls) {
             var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnFaviconUrlchangeEventArgs(browser, icon_urls);
@@ -118,7 +118,7 @@ namespace Chromium {
 
         internal static void on_fullscreen_mode_change(IntPtr gcHandlePtr, IntPtr browser, int fullscreen) {
             var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnFullscreenModeChangeEventArgs(browser, fullscreen);
@@ -136,7 +136,7 @@ namespace Chromium {
 
         internal static void on_tooltip(IntPtr gcHandlePtr, out int __retval, IntPtr browser, ref IntPtr text_str, ref int text_length) {
             var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
                 return;
             }
@@ -161,7 +161,7 @@ namespace Chromium {
 
         internal static void on_status_message(IntPtr gcHandlePtr, IntPtr browser, IntPtr value_str, int value_length) {
             var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnStatusMessageEventArgs(browser, value_str, value_length);
@@ -179,7 +179,7 @@ namespace Chromium {
 
         internal static void on_console_message(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr message_str, int message_length, IntPtr source_str, int source_length, int line) {
             var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
                 return;
             }

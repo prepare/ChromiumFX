@@ -63,7 +63,7 @@ namespace Chromium {
 
         internal static void on_take_focus(IntPtr gcHandlePtr, IntPtr browser, int next) {
             var self = (CfxFocusHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnTakeFocusEventArgs(browser, next);
@@ -81,7 +81,7 @@ namespace Chromium {
 
         internal static void on_set_focus(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int source) {
             var self = (CfxFocusHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
                 return;
             }
@@ -101,7 +101,7 @@ namespace Chromium {
 
         internal static void on_got_focus(IntPtr gcHandlePtr, IntPtr browser) {
             var self = (CfxFocusHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnGotFocusEventArgs(browser);

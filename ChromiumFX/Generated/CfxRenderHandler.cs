@@ -63,7 +63,7 @@ namespace Chromium {
 
         internal static void get_root_screen_rect(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr rect) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
                 return;
             }
@@ -83,7 +83,7 @@ namespace Chromium {
 
         internal static void get_view_rect(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr rect) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
                 return;
             }
@@ -103,7 +103,7 @@ namespace Chromium {
 
         internal static void get_screen_point(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int viewX, int viewY, out int screenX, out int screenY) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
                 screenX = default(int);
                 screenY = default(int);
@@ -127,7 +127,7 @@ namespace Chromium {
 
         internal static void get_screen_info(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr screen_info) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
                 return;
             }
@@ -147,7 +147,7 @@ namespace Chromium {
 
         internal static void on_popup_show(IntPtr gcHandlePtr, IntPtr browser, int show) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnPopupShowEventArgs(browser, show);
@@ -165,7 +165,7 @@ namespace Chromium {
 
         internal static void on_popup_size(IntPtr gcHandlePtr, IntPtr browser, IntPtr rect) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnPopupSizeEventArgs(browser, rect);
@@ -183,7 +183,7 @@ namespace Chromium {
 
         internal static void on_paint(IntPtr gcHandlePtr, IntPtr browser, int type, UIntPtr dirtyRectsCount, IntPtr dirtyRects, int dirtyRects_structsize, IntPtr buffer, int width, int height) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnPaintEventArgs(browser, type, dirtyRects, dirtyRectsCount, dirtyRects_structsize, buffer, width, height);
@@ -206,7 +206,7 @@ namespace Chromium {
 
         internal static void on_cursor_change(IntPtr gcHandlePtr, IntPtr browser, IntPtr cursor, int type, IntPtr custom_cursor_info) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnCursorChangeEventArgs(browser, cursor, type, custom_cursor_info);
@@ -224,7 +224,7 @@ namespace Chromium {
 
         internal static void start_dragging(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr drag_data, int allowed_ops, int x, int y) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
                 return;
             }
@@ -245,7 +245,7 @@ namespace Chromium {
 
         internal static void update_drag_cursor(IntPtr gcHandlePtr, IntPtr browser, int operation) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxUpdateDragCursorEventArgs(browser, operation);
@@ -263,7 +263,7 @@ namespace Chromium {
 
         internal static void on_scroll_offset_changed(IntPtr gcHandlePtr, IntPtr browser, double x, double y) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnScrollOffsetChangedEventArgs(browser, x, y);

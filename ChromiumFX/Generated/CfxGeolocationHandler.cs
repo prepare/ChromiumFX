@@ -64,7 +64,7 @@ namespace Chromium {
 
         internal static void on_request_geolocation_permission(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id, IntPtr callback) {
             var self = (CfxGeolocationHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
                 return;
             }
@@ -85,7 +85,7 @@ namespace Chromium {
 
         internal static void on_cancel_geolocation_permission(IntPtr gcHandlePtr, IntPtr browser, int request_id) {
             var self = (CfxGeolocationHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnCancelGeolocationPermissionEventArgs(browser, request_id);

@@ -63,7 +63,7 @@ namespace Chromium {
 
         internal static void on_before_command_line_processing(IntPtr gcHandlePtr, IntPtr process_type_str, int process_type_length, IntPtr command_line) {
             var self = (CfxApp)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnBeforeCommandLineProcessingEventArgs(process_type_str, process_type_length, command_line);
@@ -81,7 +81,7 @@ namespace Chromium {
 
         internal static void on_register_custom_schemes(IntPtr gcHandlePtr, IntPtr registrar) {
             var self = (CfxApp)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnRegisterCustomSchemesEventArgs(registrar);
@@ -99,7 +99,7 @@ namespace Chromium {
 
         internal static void get_resource_bundle_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxApp)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -118,7 +118,7 @@ namespace Chromium {
 
         internal static void get_browser_process_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxApp)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -137,7 +137,7 @@ namespace Chromium {
 
         internal static void get_render_process_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxApp)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 __retval = default(IntPtr);
                 return;
             }

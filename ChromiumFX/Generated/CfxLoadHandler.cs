@@ -64,7 +64,7 @@ namespace Chromium {
 
         internal static void on_loading_state_change(IntPtr gcHandlePtr, IntPtr browser, int isLoading, int canGoBack, int canGoForward) {
             var self = (CfxLoadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnLoadingStateChangeEventArgs(browser, isLoading, canGoBack, canGoForward);
@@ -82,7 +82,7 @@ namespace Chromium {
 
         internal static void on_load_start(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, int transition_type) {
             var self = (CfxLoadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnLoadStartEventArgs(browser, frame, transition_type);
@@ -101,7 +101,7 @@ namespace Chromium {
 
         internal static void on_load_end(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, int httpStatusCode) {
             var self = (CfxLoadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnLoadEndEventArgs(browser, frame, httpStatusCode);
@@ -120,7 +120,7 @@ namespace Chromium {
 
         internal static void on_load_error(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, int errorCode, IntPtr errorText_str, int errorText_length, IntPtr failedUrl_str, int failedUrl_length) {
             var self = (CfxLoadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnLoadErrorEventArgs(browser, frame, errorCode, errorText_str, errorText_length, failedUrl_str, failedUrl_length);

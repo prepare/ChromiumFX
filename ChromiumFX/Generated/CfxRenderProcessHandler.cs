@@ -64,7 +64,7 @@ namespace Chromium {
 
         internal static void on_render_thread_created(IntPtr gcHandlePtr, IntPtr extra_info) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnRenderThreadCreatedEventArgs(extra_info);
@@ -82,7 +82,7 @@ namespace Chromium {
 
         internal static void on_web_kit_initialized(IntPtr gcHandlePtr) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxEventArgs();
@@ -99,7 +99,7 @@ namespace Chromium {
 
         internal static void on_browser_created(IntPtr gcHandlePtr, IntPtr browser) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnBrowserCreatedEventArgs(browser);
@@ -117,7 +117,7 @@ namespace Chromium {
 
         internal static void on_browser_destroyed(IntPtr gcHandlePtr, IntPtr browser) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnBrowserDestroyedEventArgs(browser);
@@ -135,7 +135,7 @@ namespace Chromium {
 
         internal static void get_load_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -154,7 +154,7 @@ namespace Chromium {
 
         internal static void on_before_navigation(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr request, int navigation_type, int is_redirect) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
                 return;
             }
@@ -176,7 +176,7 @@ namespace Chromium {
 
         internal static void on_context_created(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr context) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnContextCreatedEventArgs(browser, frame, context);
@@ -196,7 +196,7 @@ namespace Chromium {
 
         internal static void on_context_released(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr context) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnContextReleasedEventArgs(browser, frame, context);
@@ -216,7 +216,7 @@ namespace Chromium {
 
         internal static void on_uncaught_exception(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr context, IntPtr exception, IntPtr stackTrace) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnUncaughtExceptionEventArgs(browser, frame, context, exception, stackTrace);
@@ -238,7 +238,7 @@ namespace Chromium {
 
         internal static void on_focused_node_changed(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr node) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnFocusedNodeChangedEventArgs(browser, frame, node);
@@ -258,7 +258,7 @@ namespace Chromium {
 
         internal static void on_process_message_received(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int source_process, IntPtr message) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
                 return;
             }

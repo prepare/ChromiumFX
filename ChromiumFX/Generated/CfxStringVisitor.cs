@@ -62,7 +62,7 @@ namespace Chromium {
 
         internal static void visit(IntPtr gcHandlePtr, IntPtr string_str, int string_length) {
             var self = (CfxStringVisitor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxStringVisitorVisitEventArgs(string_str, string_length);

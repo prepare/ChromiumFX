@@ -64,7 +64,7 @@ namespace Chromium {
 
         internal static void execute_command(IntPtr gcHandlePtr, IntPtr menu_model, int command_id, int event_flags) {
             var self = (CfxMenuModelDelegate)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxExecuteCommandEventArgs(menu_model, command_id, event_flags);
@@ -82,7 +82,7 @@ namespace Chromium {
 
         internal static void menu_will_show(IntPtr gcHandlePtr, IntPtr menu_model) {
             var self = (CfxMenuModelDelegate)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxMenuWillShowEventArgs(menu_model);

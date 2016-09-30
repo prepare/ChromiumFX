@@ -17,8 +17,8 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Disables all CEF callback events in this class. CEF callbacks with arguments will return with all parameters set to default.
+        /// When true, all CEF callback events are disabled for this handler. Incoming callbacks will return default values to CEF.
         /// </summary>
-        public bool DisableCallbacks { get; set; }
+        public bool CallbacksDisabled { get; set; }
     }
 }

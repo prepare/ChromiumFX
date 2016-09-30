@@ -63,7 +63,7 @@ namespace Chromium {
 
         internal static void on_before_download(IntPtr gcHandlePtr, IntPtr browser, IntPtr download_item, IntPtr suggested_name_str, int suggested_name_length, IntPtr callback) {
             var self = (CfxDownloadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnBeforeDownloadEventArgs(browser, download_item, suggested_name_str, suggested_name_length, callback);
@@ -83,7 +83,7 @@ namespace Chromium {
 
         internal static void on_download_updated(IntPtr gcHandlePtr, IntPtr browser, IntPtr download_item, IntPtr callback) {
             var self = (CfxDownloadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxOnDownloadUpdatedEventArgs(browser, download_item, callback);

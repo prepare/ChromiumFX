@@ -63,7 +63,7 @@ namespace Chromium {
 
         internal static void on_file_dialog_dismissed(IntPtr gcHandlePtr, int selected_accept_filter, IntPtr file_paths) {
             var self = (CfxRunFileDialogCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxRunFileDialogCallbackOnFileDialogDismissedEventArgs(selected_accept_filter, file_paths);

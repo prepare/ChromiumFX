@@ -63,7 +63,7 @@ namespace Chromium {
 
         internal static void is_unstable(IntPtr gcHandlePtr, IntPtr path_str, int path_length, int unstable) {
             var self = (CfxWebPluginUnstableCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 return;
             }
             var e = new CfxWebPluginUnstableCallbackIsUnstableEventArgs(path_str, path_length, unstable);

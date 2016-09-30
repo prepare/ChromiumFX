@@ -64,7 +64,7 @@ namespace Chromium {
 
         internal static void get_cookie_manager(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxRequestContextHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 __retval = default(IntPtr);
                 return;
             }
@@ -83,7 +83,7 @@ namespace Chromium {
 
         internal static void on_before_plugin_load(IntPtr gcHandlePtr, out int __retval, IntPtr mime_type_str, int mime_type_length, IntPtr plugin_url_str, int plugin_url_length, IntPtr top_origin_url_str, int top_origin_url_length, IntPtr plugin_info, ref int plugin_policy) {
             var self = (CfxRequestContextHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
-            if(self == null || self.DisableCallbacks) {
+            if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
                 return;
             }
