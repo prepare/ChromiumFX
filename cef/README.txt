@@ -1,15 +1,15 @@
 Chromium Embedded Framework (CEF) Minimal Binary Distribution for Windows
 -------------------------------------------------------------------------------
 
-Date:             September 20, 2016
+Date:             October 12, 2016
 
-CEF Version:      3.2785.1481.gc3a7e2c
+CEF Version:      3.2785.1485.g2b5c3a7
 CEF URL:          https://bitbucket.org/chromiumembedded/cef.git
-                  @c3a7e2cdece270fbccfb5e979d6d2c808456d7a5
+                  @2b5c3a71857b9d885a46091fed3d084731f8df23
 
-Chromium Verison: 53.0.2785.101
+Chromium Verison: 53.0.2785.116
 Chromium URL:     https://chromium.googlesource.com/chromium/src.git
-                  @1b15c6e77f9a1154a85327357ea29c1b57d16445
+                  @c0db0f8fba676e3a26d6804b0d23c4e887180a10
 
 This distribution contains the minimial components necessary to build and
 distribute an application using CEF on the Windows platform. Please see
@@ -111,6 +111,11 @@ run but any related functionality may become broken or disabled.
   * libGLESv2.dll
   Without these files HTML5 accelerated content like 2D canvas, 3D CSS and WebGL
   will not function.
+
+* Widevine CDM support.
+  * widevinecdmadapter.dll
+    Without this file playback of Widevine projected content will not function.
+    See the CefRegisterWidevineCdm() function in cef_web_plugin.h for usage.
 
 
 LICENSING
