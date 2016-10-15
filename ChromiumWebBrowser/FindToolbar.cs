@@ -340,6 +340,30 @@ namespace Chromium.WebBrowser {
             return textBox.Focus();
         }
 
+        /// <summary>
+        /// Gets or sets the starting point of text selected in the find box.
+        /// </summary>
+        public int FindTextSelectionStart {
+            get {
+                return textBox.SelectionStart;
+            }
+            set {
+                textBox.SelectionStart = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the number of characters selected in the find box.
+        /// </summary>
+        public int FindTextSelectionLength {
+            get {
+                return textBox.SelectionLength;
+            }
+            set {
+                textBox.SelectionLength = value;
+            }
+        }
+
         protected override void OnGotFocus(EventArgs e) {
             textBox.Focus();
         }
