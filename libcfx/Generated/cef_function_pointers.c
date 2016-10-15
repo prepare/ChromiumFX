@@ -65,6 +65,7 @@ static void (*cef_refresh_web_plugins_ptr)();
 static int (*cef_register_extension_ptr)(const cef_string_t* extension_name, const cef_string_t* javascript_code, cef_v8handler_t* handler);
 static int (*cef_register_scheme_handler_factory_ptr)(const cef_string_t* scheme_name, const cef_string_t* domain_name, cef_scheme_handler_factory_t* factory);
 static void (*cef_register_web_plugin_crash_ptr)(const cef_string_t* path);
+static void (*cef_register_widevine_cdm_ptr)(const cef_string_t* path, cef_register_cdm_callback_t* callback);
 static int (*cef_remove_cross_origin_whitelist_entry_ptr)(const cef_string_t* source_origin, const cef_string_t* target_protocol, const cef_string_t* target_domain, int allow_target_subdomains);
 static void (*cef_run_message_loop_ptr)();
 static void (*cef_set_osmodal_loop_ptr)(int osModalLoop);
@@ -181,6 +182,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_register_extension_ptr = (int (*)(const cef_string_t*, const cef_string_t*, cef_v8handler_t*))cfx_platform_get_fptr(libcef, "cef_register_extension");
     cef_register_scheme_handler_factory_ptr = (int (*)(const cef_string_t*, const cef_string_t*, cef_scheme_handler_factory_t*))cfx_platform_get_fptr(libcef, "cef_register_scheme_handler_factory");
     cef_register_web_plugin_crash_ptr = (void (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_register_web_plugin_crash");
+    cef_register_widevine_cdm_ptr = (void (*)(const cef_string_t*, cef_register_cdm_callback_t*))cfx_platform_get_fptr(libcef, "cef_register_widevine_cdm");
     cef_remove_cross_origin_whitelist_entry_ptr = (int (*)(const cef_string_t*, const cef_string_t*, const cef_string_t*, int))cfx_platform_get_fptr(libcef, "cef_remove_cross_origin_whitelist_entry");
     cef_run_message_loop_ptr = (void (*)())cfx_platform_get_fptr(libcef, "cef_run_message_loop");
     cef_set_osmodal_loop_ptr = (void (*)(int))cfx_platform_get_fptr(libcef, "cef_set_osmodal_loop");
@@ -298,6 +300,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_register_extension cef_register_extension_ptr
 #define cef_register_scheme_handler_factory cef_register_scheme_handler_factory_ptr
 #define cef_register_web_plugin_crash cef_register_web_plugin_crash_ptr
+#define cef_register_widevine_cdm cef_register_widevine_cdm_ptr
 #define cef_remove_cross_origin_whitelist_entry cef_remove_cross_origin_whitelist_entry_ptr
 #define cef_run_message_loop cef_run_message_loop_ptr
 #define cef_set_osmodal_loop cef_set_osmodal_loop_ptr

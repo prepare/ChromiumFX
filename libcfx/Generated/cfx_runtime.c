@@ -242,6 +242,13 @@ static void cfx_register_web_plugin_crash(char16 *path_str, int path_length) {
     cef_register_web_plugin_crash(&path);
 }
 
+// CEF_EXPORT void cef_register_widevine_cdm(const cef_string_t* path, cef_register_cdm_callback_t* callback);
+static void cfx_register_widevine_cdm(char16 *path_str, int path_length, cef_register_cdm_callback_t* callback) {
+    cef_string_t path = { path_str, path_length, 0 };
+    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    cef_register_widevine_cdm(&path, callback);
+}
+
 // CEF_EXPORT int cef_remove_cross_origin_whitelist_entry(const cef_string_t* source_origin, const cef_string_t* target_protocol, const cef_string_t* target_domain, int allow_target_subdomains);
 static int cfx_remove_cross_origin_whitelist_entry(char16 *source_origin_str, int source_origin_length, char16 *target_protocol_str, int target_protocol_length, char16 *target_domain_str, int target_domain_length, int allow_target_subdomains) {
     cef_string_t source_origin = { source_origin_str, source_origin_length, 0 };

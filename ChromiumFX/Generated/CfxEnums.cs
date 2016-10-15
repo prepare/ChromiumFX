@@ -69,6 +69,31 @@ namespace Chromium {
         Disabled
     }
     /// <summary>
+    /// Error codes for CDM registration. See cef_web_plugin.h for details.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxCdmRegistrationError {
+        /// <summary>
+        /// No error. Registration completed successfully.
+        /// </summary>
+        None,
+        /// <summary>
+        /// Required files or manifest contents are missing.
+        /// </summary>
+        IncorrectContents,
+        /// <summary>
+        /// The CDM is incompatible with the current Chromium version.
+        /// </summary>
+        Incompatible,
+        /// <summary>
+        /// CDM registration is not supported at this time.
+        /// </summary>
+        NotSupported
+    }
+    /// <summary>
     /// Supported certificate status code values. See net\cert\cert_status_flags.h
     /// for more information. CERT_STATUS_NONE is new in CEF because we use an
     /// enum while cert_status_flags.h uses a typedef and static const variables.

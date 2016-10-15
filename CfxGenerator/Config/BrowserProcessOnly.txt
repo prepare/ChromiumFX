@@ -47,3 +47,4 @@ cef_uriencode
 cef_version_info
 cef_visit_web_plugin_info
 cef_write_json
+cef_register_widevine_cdm

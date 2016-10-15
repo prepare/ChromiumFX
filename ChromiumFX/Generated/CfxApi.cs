@@ -167,6 +167,10 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_register_web_plugin_crash_delegate(IntPtr path_str, int path_length);
             public static cfx_register_web_plugin_crash_delegate cfx_register_web_plugin_crash;
+            // CEF_EXPORT void cef_register_widevine_cdm(const cef_string_t* path, cef_register_cdm_callback_t* callback);
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_register_widevine_cdm_delegate(IntPtr path_str, int path_length, IntPtr callback);
+            public static cfx_register_widevine_cdm_delegate cfx_register_widevine_cdm;
             // CEF_EXPORT int cef_remove_cross_origin_whitelist_entry(const cef_string_t* source_origin, const cef_string_t* target_protocol, const cef_string_t* target_domain, int allow_target_subdomains);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate int cfx_remove_cross_origin_whitelist_entry_delegate(IntPtr source_origin_str, int source_origin_length, IntPtr target_protocol_str, int target_protocol_length, IntPtr target_domain_str, int target_domain_length, int allow_target_subdomains);
@@ -4311,6 +4315,18 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_rect_get_height_delegate(IntPtr self, out int height);
             public static cfx_rect_get_height_delegate cfx_rect_get_height;
+
+        }
+
+        internal static class RegisterCdmCallback {
+
+            static RegisterCdmCallback () {
+                CfxApiLoader.LoadCfxRegisterCdmCallbackApi();
+            }
+
+            public static cfx_ctor_with_gc_handle_delegate cfx_register_cdm_callback_ctor;
+            public static cfx_get_gc_handle_delegate cfx_register_cdm_callback_get_gc_handle;
+            public static cfx_set_callback_delegate cfx_register_cdm_callback_set_managed_callback;
 
         }
 

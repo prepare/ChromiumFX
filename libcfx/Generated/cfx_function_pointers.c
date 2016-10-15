@@ -31,7 +31,7 @@
 // Generated file. Do not edit.
 
 
-static void* cfx_function_pointers[1349] =  {
+static void* cfx_function_pointers[1353] =  {
     (void*)cfx_add_cross_origin_whitelist_entry,
     (void*)cfx_api_hash,
     (void*)cfx_begin_tracing,
@@ -64,6 +64,7 @@ static void* cfx_function_pointers[1349] =  {
     (void*)cfx_register_extension,
     (void*)cfx_register_scheme_handler_factory,
     (void*)cfx_register_web_plugin_crash,
+    (void*)cfx_register_widevine_cdm,
     (void*)cfx_remove_cross_origin_whitelist_entry,
     (void*)cfx_run_message_loop,
     (void*)cfx_set_osmodal_loop,
@@ -861,6 +862,9 @@ static void* cfx_function_pointers[1349] =  {
     (void*)cfx_rect_get_width,
     (void*)cfx_rect_set_height,
     (void*)cfx_rect_get_height,
+    (void*)cfx_register_cdm_callback_ctor,
+    (void*)cfx_register_cdm_callback_get_gc_handle,
+    (void*)cfx_register_cdm_callback_set_managed_callback,
     (void*)cfx_render_handler_ctor,
     (void*)cfx_render_handler_get_gc_handle,
     (void*)cfx_render_handler_set_managed_callback,

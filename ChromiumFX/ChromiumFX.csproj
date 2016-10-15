@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -120,6 +120,7 @@
     <Compile Include="Generated\CfxRange.cs" />
     <Compile Include="Generated\CfxReadHandler.cs" />
     <Compile Include="Generated\CfxRect.cs" />
+    <Compile Include="Generated\CfxRegisterCdmCallback.cs" />
     <Compile Include="Generated\CfxRenderHandler.cs" />
     <Compile Include="Generated\CfxRenderProcessHandler.cs" />
     <Compile Include="Generated\CfxRequest.cs" />

@@ -104,6 +104,7 @@
 #include "cfx_range.c"
 #include "cfx_read_handler.c"
 #include "cfx_rect.c"
+#include "cfx_register_cdm_callback.c"
 #include "cfx_render_handler.c"
 #include "cfx_render_process_handler.c"
 #include "cfx_request.c"

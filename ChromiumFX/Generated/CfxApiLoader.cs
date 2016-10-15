@@ -68,6 +68,7 @@ namespace Chromium {
             cfx_register_extension,
             cfx_register_scheme_handler_factory,
             cfx_register_web_plugin_crash,
+            cfx_register_widevine_cdm,
             cfx_remove_cross_origin_whitelist_entry,
             cfx_run_message_loop,
             cfx_set_osmodal_loop,
@@ -865,6 +866,9 @@ namespace Chromium {
             cfx_rect_get_width,
             cfx_rect_set_height,
             cfx_rect_get_height,
+            cfx_register_cdm_callback_ctor,
+            cfx_register_cdm_callback_get_gc_handle,
+            cfx_register_cdm_callback_set_managed_callback,
             cfx_render_handler_ctor,
             cfx_render_handler_get_gc_handle,
             cfx_render_handler_set_managed_callback,
@@ -1422,6 +1426,7 @@ namespace Chromium {
             CfxApi.Runtime.cfx_register_extension = (CfxApi.Runtime.cfx_register_extension_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_register_extension, typeof(CfxApi.Runtime.cfx_register_extension_delegate));
             CfxApi.Runtime.cfx_register_scheme_handler_factory = (CfxApi.Runtime.cfx_register_scheme_handler_factory_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_register_scheme_handler_factory, typeof(CfxApi.Runtime.cfx_register_scheme_handler_factory_delegate));
             CfxApi.Runtime.cfx_register_web_plugin_crash = (CfxApi.Runtime.cfx_register_web_plugin_crash_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_register_web_plugin_crash, typeof(CfxApi.Runtime.cfx_register_web_plugin_crash_delegate));
+            CfxApi.Runtime.cfx_register_widevine_cdm = (CfxApi.Runtime.cfx_register_widevine_cdm_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_register_widevine_cdm, typeof(CfxApi.Runtime.cfx_register_widevine_cdm_delegate));
             CfxApi.Runtime.cfx_remove_cross_origin_whitelist_entry = (CfxApi.Runtime.cfx_remove_cross_origin_whitelist_entry_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_remove_cross_origin_whitelist_entry, typeof(CfxApi.Runtime.cfx_remove_cross_origin_whitelist_entry_delegate));
             CfxApi.Runtime.cfx_run_message_loop = (CfxApi.Runtime.cfx_run_message_loop_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_run_message_loop, typeof(CfxApi.Runtime.cfx_run_message_loop_delegate));
             CfxApi.Runtime.cfx_set_osmodal_loop = (CfxApi.Runtime.cfx_set_osmodal_loop_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_set_osmodal_loop, typeof(CfxApi.Runtime.cfx_set_osmodal_loop_delegate));
@@ -2751,6 +2756,16 @@ namespace Chromium {
             CfxApi.Rect.cfx_rect_get_width = (CfxApi.Rect.cfx_rect_get_width_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_rect_get_width, typeof(CfxApi.Rect.cfx_rect_get_width_delegate));
             CfxApi.Rect.cfx_rect_set_height = (CfxApi.Rect.cfx_rect_set_height_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_rect_set_height, typeof(CfxApi.Rect.cfx_rect_set_height_delegate));
             CfxApi.Rect.cfx_rect_get_height = (CfxApi.Rect.cfx_rect_get_height_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_rect_get_height, typeof(CfxApi.Rect.cfx_rect_get_height_delegate));
+        }
+
+        private static bool CfxRegisterCdmCallbackApiLoaded;
+        internal static void LoadCfxRegisterCdmCallbackApi() {
+            if(CfxRegisterCdmCallbackApiLoaded) return;
+            CfxRegisterCdmCallbackApiLoaded = true;
+            CfxApi.Probe();
+            CfxApi.RegisterCdmCallback.cfx_register_cdm_callback_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_register_cdm_callback_ctor, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
+            CfxApi.RegisterCdmCallback.cfx_register_cdm_callback_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_register_cdm_callback_get_gc_handle, typeof(CfxApi.cfx_get_gc_handle_delegate));
+            CfxApi.RegisterCdmCallback.cfx_register_cdm_callback_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_register_cdm_callback_set_managed_callback, typeof(CfxApi.cfx_set_callback_delegate));
         }
 
         private static bool CfxRenderHandlerApiLoaded;
