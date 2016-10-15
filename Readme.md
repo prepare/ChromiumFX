@@ -54,6 +54,10 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2785.1 ###
+- Update to CEF 3.2785.1485 with API changes.
+- Added some methods and validations.
+
 ### Version 3.2785.0 ###
 - Update to CEF 3.2785.1481 without API changes.
 - CfxWindowInfo can now be created as disabled child window (see CfxWindowInfo.SetAsDisabledChild). This helps preventing CEF from taking the focus for a webpage when a browser is created offscreen.
