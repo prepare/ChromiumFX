@@ -73,5 +73,9 @@ namespace Chromium {
         /// When true, all CEF callback events are disabled for this handler. Incoming callbacks will return default values to CEF.
         /// </summary>
         public bool CallbacksDisabled { get; set; }
+
+        internal override void OnDispose(IntPtr nativePtr) {
+            CfxApi.cfx_release(nativePtr);
+        }
     }
 }

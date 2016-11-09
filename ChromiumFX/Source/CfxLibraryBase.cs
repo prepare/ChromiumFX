@@ -57,5 +57,9 @@ namespace Chromium {
                 }
             }
         }
+
+        internal override void OnDispose(IntPtr nativePtr) {
+            CfxApi.cfx_release(nativePtr);
+        }
     }
 }

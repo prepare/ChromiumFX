@@ -52,9 +52,5 @@ namespace Chromium {
 
         internal CfxBase() {}
         internal CfxBase(IntPtr nativePtr) : base(nativePtr) {}
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            CfxApi.cfx_release(nativePtr);
-        }
     }
 }
