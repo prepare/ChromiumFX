@@ -43,7 +43,15 @@ namespace Chromium {
 
         internal CfxClientBase(IntPtr nativePtr) : base(nativePtr) {}
         internal CfxClientBase(CfxApi.cfx_ctor_with_gc_handle_delegate cfx_ctor) {
-            CreateNative(cfx_ctor);
+            // must be a weak handle
+            // otherwise transient callback structs never go out of scope if
+            // they are not explicitly disposed
+            System.Runtime.InteropServices.GCHandle handle =
+                System.Runtime.InteropServices.GCHandle.Alloc(this, System.Runtime.InteropServices.GCHandleType.Weak);
+            var nativePtr = cfx_ctor(System.Runtime.InteropServices.GCHandle.ToIntPtr(handle));
+            if(nativePtr == IntPtr.Zero)
+                throw new OutOfMemoryException();
+            SetNative(nativePtr);
         }
 
         /// <summary>

@@ -47,25 +47,8 @@ namespace Chromium {
             this.m_nativePtr = nativePtr;
         }
 
-        internal void CreateNative(CfxApi.cfx_ctor_delegate cfx_ctor) {
-            m_nativePtr = cfx_ctor();
-            if(m_nativePtr == IntPtr.Zero)
-                throw new OutOfMemoryException();
-        }
-
         internal void SetNative(IntPtr nativePtr) {
-            this.m_nativePtr = nativePtr;
-        }
-
-        internal void CreateNative(CfxApi.cfx_ctor_with_gc_handle_delegate cfx_ctor) {
-            // must be a weak handle
-            // otherwise transient callback structs never go out of scope if
-            // they are not explicitly disposed
-            System.Runtime.InteropServices.GCHandle handle =
-                System.Runtime.InteropServices.GCHandle.Alloc(this, System.Runtime.InteropServices.GCHandleType.Weak);
-            m_nativePtr = cfx_ctor(System.Runtime.InteropServices.GCHandle.ToIntPtr(handle));
-            if(m_nativePtr == IntPtr.Zero)
-                throw new OutOfMemoryException();
+            m_nativePtr = nativePtr;
         }
 
         internal IntPtr nativePtrUnchecked {

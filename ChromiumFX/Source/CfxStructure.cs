@@ -53,7 +53,10 @@ namespace Chromium {
             //on the wrong platform.
             if(cfx_ctor == null)
                 return;
-            CreateNative(cfx_ctor);
+            var nativePtr = cfx_ctor();
+            if(nativePtr == IntPtr.Zero)
+                throw new OutOfMemoryException();
+            SetNative(nativePtr);
         }
 
         // Case 2) struct pointer passed in from framework in callback function
