@@ -506,7 +506,7 @@ public class CfxClassBuilder {
     public void EmitPublicCallClass(CodeBuilder b) {
         b.AppendSummaryAndRemarks(comments);
 
-        b.BeginClass(ClassName + " : CfxBase", GeneratorConfig.ClassModifiers(ClassName));
+        b.BeginClass(ClassName + " : CfxLibraryBase", GeneratorConfig.ClassModifiers(ClassName));
         b.AppendLine();
 
         b.AppendLine("private static readonly WeakCache weakCache = new WeakCache();");

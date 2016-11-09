@@ -41,7 +41,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
     /// </remarks>
-    public partial class CfxBinaryValue : CfxBase {
+    public partial class CfxBinaryValue : CfxLibraryBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
 
