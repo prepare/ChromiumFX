@@ -55,6 +55,21 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Provides access to the underlying native cef struct.
+        /// This is a refcounted client struct derived from cef_base_t.
+        /// Add a ref in order to keep it alive when this managed object go out of scope.
+        /// </summary>
+        public sealed override IntPtr NativePtr {
+            get {
+                if(nativePtrUnchecked == IntPtr.Zero) {
+                    throw new ObjectDisposedException(this.GetType().Name);
+                } else {
+                    return nativePtrUnchecked;
+                }
+            }
+        }
+
+        /// <summary>
         /// When true, all CEF callback events are disabled for this handler. Incoming callbacks will return default values to CEF.
         /// </summary>
         public bool CallbacksDisabled { get; set; }

@@ -53,21 +53,6 @@ namespace Chromium {
         internal CfxBase() {}
         internal CfxBase(IntPtr nativePtr) : base(nativePtr) {}
 
-        /// <summary>
-        /// Provides access to the underlying native cef struct.
-        /// This is a refcounted struct derived from cef_base_t.
-        /// Add a ref before you let this managed object go out of scope.
-        /// </summary>
-        public sealed override IntPtr NativePtr {
-            get {
-                if(nativePtrUnchecked == IntPtr.Zero) {
-                    throw new ObjectDisposedException(this.GetType().Name);
-                } else {
-                    return nativePtrUnchecked;
-                }
-            }
-        }
-
         internal override void OnDispose(IntPtr nativePtr) {
             CfxApi.cfx_release(nativePtr);
         }
