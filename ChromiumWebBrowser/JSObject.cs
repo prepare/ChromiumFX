@@ -246,7 +246,7 @@ namespace Chromium.WebBrowser {
             v8Accessor = new CfrV8Accessor();
             v8Accessor.Get += v8Accessor_Get;
             v8Accessor.Set += v8Accessor_Set;
-            var o = CfrV8Value.CreateObject(v8Accessor, null);
+            var o = CfrV8Value.CreateObject(v8Accessor);
             foreach(var p in jsProperties) {
                 if(p.Value.PropertyType == JSPropertyType.Dynamic) {
                     o.SetValue(p.Key, CfxV8AccessControl.Default, CfxV8PropertyAttribute.DontDelete);
