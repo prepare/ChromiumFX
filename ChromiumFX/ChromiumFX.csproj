@@ -146,7 +146,7 @@
     <Compile Include="Generated\CfxSettings.cs" />
     <Compile Include="Generated\CfxSize.cs" />
     <Compile Include="Generated\CfxSslInfo.cs" />
-    <Compile Include="Generated\CfxSslstatus.cs" />
+    <Compile Include="Generated\CfxSslStatus.cs" />
     <Compile Include="Generated\CfxStreamReader.cs" />
     <Compile Include="Generated\CfxStreamWriter.cs" />
     <Compile Include="Generated\CfxStringVisitor.cs" />
@@ -160,7 +160,7 @@
     <Compile Include="Generated\CfxV8Context.cs" />
     <Compile Include="Generated\CfxV8Exception.cs" />
     <Compile Include="Generated\CfxV8Handler.cs" />
-    <Compile Include="Generated\CfxV8interceptor.cs" />
+    <Compile Include="Generated\CfxV8Interceptor.cs" />
     <Compile Include="Generated\CfxV8StackFrame.cs" />
     <Compile Include="Generated\CfxV8StackTrace.cs" />
     <Compile Include="Generated\CfxV8Value.cs" />
@@ -171,8 +171,8 @@
     <Compile Include="Generated\CfxWindowInfoLinux.cs" />
     <Compile Include="Generated\CfxWindowInfoWindows.cs" />
     <Compile Include="Generated\CfxWriteHandler.cs" />
-    <Compile Include="Generated\CfxX509certificate.cs" />
-    <Compile Include="Generated\CfxX509certPrincipal.cs" />
+    <Compile Include="Generated\CfxX509Certificate.cs" />
+    <Compile Include="Generated\CfxX509CertPrincipal.cs" />
     <Compile Include="Generated\CfxXmlReader.cs" />
     <Compile Include="Generated\CfxZipReader.cs" />
     <Compile Include="Generated\Remote\CfrApp.cs" />
@@ -203,7 +203,7 @@
     <Compile Include="Generated\Remote\CfrV8Context.cs" />
     <Compile Include="Generated\Remote\CfrV8Exception.cs" />
     <Compile Include="Generated\Remote\CfrV8Handler.cs" />
-    <Compile Include="Generated\Remote\CfrV8interceptor.cs" />
+    <Compile Include="Generated\Remote\CfrV8Interceptor.cs" />
     <Compile Include="Generated\Remote\CfrV8StackFrame.cs" />
     <Compile Include="Generated\Remote\CfrV8StackTrace.cs" />
     <Compile Include="Generated\Remote\CfrV8Value.cs" />
@@ -236,7 +236,7 @@
     <Compile Include="Generated\Remote\CfxV8ContextRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8ExceptionRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8HandlerRemoteCalls.cs" />
-    <Compile Include="Generated\Remote\CfxV8interceptorRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxV8InterceptorRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8StackFrameRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8StackTraceRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8ValueRemoteCalls.cs" />

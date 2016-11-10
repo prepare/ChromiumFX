@@ -5320,10 +5320,10 @@ namespace Chromium {
 
         }
 
-        internal static class Sslstatus {
+        internal static class SslStatus {
 
-            static Sslstatus () {
-                CfxApiLoader.LoadCfxSslstatusApi();
+            static SslStatus () {
+                CfxApiLoader.LoadCfxSslStatusApi();
             }
 
             // static int cfx_sslstatus_is_secure_connection(cef_sslstatus_t* self)
@@ -5879,10 +5879,10 @@ namespace Chromium {
 
         }
 
-        internal static class V8interceptor {
+        internal static class V8Interceptor {
 
-            static V8interceptor () {
-                CfxApiLoader.LoadCfxV8interceptorApi();
+            static V8Interceptor () {
+                CfxApiLoader.LoadCfxV8InterceptorApi();
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_v8interceptor_ctor;
@@ -6633,10 +6633,10 @@ namespace Chromium {
 
         }
 
-        internal static class X509certPrincipal {
+        internal static class X509CertPrincipal {
 
-            static X509certPrincipal () {
-                CfxApiLoader.LoadCfxX509certPrincipalApi();
+            static X509CertPrincipal () {
+                CfxApiLoader.LoadCfxX509CertPrincipalApi();
             }
 
             // static cef_string_userfree_t cfx_x509cert_principal_get_display_name(cef_x509cert_principal_t* self)
@@ -6686,10 +6686,10 @@ namespace Chromium {
 
         }
 
-        internal static class X509certificate {
+        internal static class X509Certificate {
 
-            static X509certificate () {
-                CfxApiLoader.LoadCfxX509certificateApi();
+            static X509Certificate () {
+                CfxApiLoader.LoadCfxX509CertificateApi();
             }
 
             // static cef_x509cert_principal_t* cfx_x509certificate_get_subject(cef_x509certificate_t* self)

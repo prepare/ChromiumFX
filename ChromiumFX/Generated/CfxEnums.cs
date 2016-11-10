@@ -1216,6 +1216,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
     /// </remarks>
+    [Flags()]
     public enum CfxSslContentStatus {
         NormalContent = unchecked((int)0),
         DisplayedInsecureContent = unchecked((int)1 << 0),

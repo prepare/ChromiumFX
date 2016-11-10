@@ -184,6 +184,10 @@ public class CSharp {
         name = name.Replace("allowed", "Allowed");
         name = name.Replace("menu", "Menu");
         name = name.Replace("south", "South");
+        name = name.Replace("status", "Status");
+        name = name.Replace("certificate", "Certificate");
+        name = name.Replace("interceptor", "Interceptor");
+        name = name.Replace("certPrincipal", "CertPrincipal");
         name = name.Replace("astwest", "astWest");
         name = name.Replace("oomout", "oomOut");
         name = name.Replace("oomin", "oomIn");
@@ -197,7 +201,7 @@ public class CSharp {
         name = name.Replace("Highdpi", "HighDpi");
         name = name.Replace("prompt", "Prompt");
         name = name.Replace("Hideread", "HideRead");
-
+        
         name = name.Replace("ConText", "Context");
         name = name.Replace("DisAllowed", "Disallowed");
         name = name.Replace("ubMenu", "ubmenu");

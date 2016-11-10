@@ -83,9 +83,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
         /// </remarks>
-        public CfxX509certificate X509certificate {
+        public CfxX509Certificate X509Certificate {
             get {
-                return CfxX509certificate.Wrap(CfxApi.SslInfo.cfx_sslinfo_get_x509certificate(NativePtr));
+                return CfxX509Certificate.Wrap(CfxApi.SslInfo.cfx_sslinfo_get_x509certificate(NativePtr));
             }
         }
 

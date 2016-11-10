@@ -171,8 +171,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public static CfxV8Value CreateObject(CfxV8Accessor accessor, CfxV8interceptor interceptor) {
-            return CfxV8Value.Wrap(CfxApi.V8Value.cfx_v8value_create_object(CfxV8Accessor.Unwrap(accessor), CfxV8interceptor.Unwrap(interceptor)));
+        public static CfxV8Value CreateObject(CfxV8Accessor accessor, CfxV8Interceptor interceptor) {
+            return CfxV8Value.Wrap(CfxApi.V8Value.cfx_v8value_create_object(CfxV8Accessor.Unwrap(accessor), CfxV8Interceptor.Unwrap(interceptor)));
         }
 
         /// <summary>

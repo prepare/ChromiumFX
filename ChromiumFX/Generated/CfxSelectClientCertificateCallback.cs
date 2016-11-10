@@ -70,8 +70,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
         /// </remarks>
-        public void Select(CfxX509certificate cert) {
-            CfxApi.SelectClientCertificateCallback.cfx_select_client_certificate_callback_select(NativePtr, CfxX509certificate.Unwrap(cert));
+        public void Select(CfxX509Certificate cert) {
+            CfxApi.SelectClientCertificateCallback.cfx_select_client_certificate_callback_select(NativePtr, CfxX509Certificate.Unwrap(cert));
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

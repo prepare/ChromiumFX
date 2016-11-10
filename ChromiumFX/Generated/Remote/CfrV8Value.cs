@@ -186,7 +186,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public static CfrV8Value CreateObject(CfrV8Accessor accessor, CfrV8interceptor interceptor) {
+        public static CfrV8Value CreateObject(CfrV8Accessor accessor, CfrV8Interceptor interceptor) {
             var call = new CfxV8ValueCreateObjectRenderProcessCall();
             call.accessor = CfrObject.Unwrap(accessor);
             call.interceptor = CfrObject.Unwrap(interceptor);

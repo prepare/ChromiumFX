@@ -32,6 +32,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 public class CefEnumType : ApiType {
 
@@ -130,7 +131,7 @@ public class CefEnumType : ApiType {
         return string.Format("({0}){1}", PublicSymbol, var);
     }
 
-    private static string[] additionalFlags = { "CfxV8PropertyAttribute", "CfxDragOperationsMask", "CfxFileDialogMode", "CfxJsonWriterOptions", "CfxTransitionType", "CfxV8AccessControl" };
+    private static string[] additionalFlags = { "CfxSslContentStatus", "CfxV8PropertyAttribute", "CfxDragOperationsMask", "CfxFileDialogMode", "CfxJsonWriterOptions", "CfxTransitionType", "CfxV8AccessControl" };
 
     public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
         b.AppendLine("call.{0} = (int){0};", CSharp.Escape(var));

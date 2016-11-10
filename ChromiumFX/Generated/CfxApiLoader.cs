@@ -2935,13 +2935,13 @@ namespace Chromium {
             CfxApi.SslInfo.cfx_sslinfo_get_x509certificate = (CfxApi.SslInfo.cfx_sslinfo_get_x509certificate_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslinfo_get_x509certificate, typeof(CfxApi.SslInfo.cfx_sslinfo_get_x509certificate_delegate));
         }
 
-        internal static void LoadCfxSslstatusApi() {
+        internal static void LoadCfxSslStatusApi() {
             CfxApi.Probe();
-            CfxApi.Sslstatus.cfx_sslstatus_is_secure_connection = (CfxApi.Sslstatus.cfx_sslstatus_is_secure_connection_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslstatus_is_secure_connection, typeof(CfxApi.Sslstatus.cfx_sslstatus_is_secure_connection_delegate));
-            CfxApi.Sslstatus.cfx_sslstatus_get_cert_status = (CfxApi.Sslstatus.cfx_sslstatus_get_cert_status_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslstatus_get_cert_status, typeof(CfxApi.Sslstatus.cfx_sslstatus_get_cert_status_delegate));
-            CfxApi.Sslstatus.cfx_sslstatus_get_sslversion = (CfxApi.Sslstatus.cfx_sslstatus_get_sslversion_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslstatus_get_sslversion, typeof(CfxApi.Sslstatus.cfx_sslstatus_get_sslversion_delegate));
-            CfxApi.Sslstatus.cfx_sslstatus_get_content_status = (CfxApi.Sslstatus.cfx_sslstatus_get_content_status_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslstatus_get_content_status, typeof(CfxApi.Sslstatus.cfx_sslstatus_get_content_status_delegate));
-            CfxApi.Sslstatus.cfx_sslstatus_get_x509certificate = (CfxApi.Sslstatus.cfx_sslstatus_get_x509certificate_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslstatus_get_x509certificate, typeof(CfxApi.Sslstatus.cfx_sslstatus_get_x509certificate_delegate));
+            CfxApi.SslStatus.cfx_sslstatus_is_secure_connection = (CfxApi.SslStatus.cfx_sslstatus_is_secure_connection_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslstatus_is_secure_connection, typeof(CfxApi.SslStatus.cfx_sslstatus_is_secure_connection_delegate));
+            CfxApi.SslStatus.cfx_sslstatus_get_cert_status = (CfxApi.SslStatus.cfx_sslstatus_get_cert_status_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslstatus_get_cert_status, typeof(CfxApi.SslStatus.cfx_sslstatus_get_cert_status_delegate));
+            CfxApi.SslStatus.cfx_sslstatus_get_sslversion = (CfxApi.SslStatus.cfx_sslstatus_get_sslversion_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslstatus_get_sslversion, typeof(CfxApi.SslStatus.cfx_sslstatus_get_sslversion_delegate));
+            CfxApi.SslStatus.cfx_sslstatus_get_content_status = (CfxApi.SslStatus.cfx_sslstatus_get_content_status_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslstatus_get_content_status, typeof(CfxApi.SslStatus.cfx_sslstatus_get_content_status_delegate));
+            CfxApi.SslStatus.cfx_sslstatus_get_x509certificate = (CfxApi.SslStatus.cfx_sslstatus_get_x509certificate_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_sslstatus_get_x509certificate, typeof(CfxApi.SslStatus.cfx_sslstatus_get_x509certificate_delegate));
         }
 
         internal static void LoadCfxStreamReaderApi() {
@@ -3103,12 +3103,12 @@ namespace Chromium {
             CfxV8Handler.SetNativeCallbacks();
         }
 
-        internal static void LoadCfxV8interceptorApi() {
+        internal static void LoadCfxV8InterceptorApi() {
             CfxApi.Probe();
-            CfxApi.V8interceptor.cfx_v8interceptor_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_v8interceptor_ctor, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
-            CfxApi.V8interceptor.cfx_v8interceptor_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_v8interceptor_get_gc_handle, typeof(CfxApi.cfx_get_gc_handle_delegate));
-            CfxApi.V8interceptor.cfx_v8interceptor_activate_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_v8interceptor_activate_callback, typeof(CfxApi.cfx_set_callback_delegate));
-            CfxV8interceptor.SetNativeCallbacks();
+            CfxApi.V8Interceptor.cfx_v8interceptor_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_v8interceptor_ctor, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));
+            CfxApi.V8Interceptor.cfx_v8interceptor_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_v8interceptor_get_gc_handle, typeof(CfxApi.cfx_get_gc_handle_delegate));
+            CfxApi.V8Interceptor.cfx_v8interceptor_activate_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_v8interceptor_activate_callback, typeof(CfxApi.cfx_set_callback_delegate));
+            CfxV8Interceptor.SetNativeCallbacks();
         }
 
         internal static void LoadCfxV8StackFrameApi() {
@@ -3301,31 +3301,31 @@ namespace Chromium {
             CfxWriteHandler.SetNativeCallbacks();
         }
 
-        internal static void LoadCfxX509certPrincipalApi() {
+        internal static void LoadCfxX509CertPrincipalApi() {
             CfxApi.Probe();
-            CfxApi.X509certPrincipal.cfx_x509cert_principal_get_display_name = (CfxApi.X509certPrincipal.cfx_x509cert_principal_get_display_name_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509cert_principal_get_display_name, typeof(CfxApi.X509certPrincipal.cfx_x509cert_principal_get_display_name_delegate));
-            CfxApi.X509certPrincipal.cfx_x509cert_principal_get_common_name = (CfxApi.X509certPrincipal.cfx_x509cert_principal_get_common_name_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509cert_principal_get_common_name, typeof(CfxApi.X509certPrincipal.cfx_x509cert_principal_get_common_name_delegate));
-            CfxApi.X509certPrincipal.cfx_x509cert_principal_get_locality_name = (CfxApi.X509certPrincipal.cfx_x509cert_principal_get_locality_name_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509cert_principal_get_locality_name, typeof(CfxApi.X509certPrincipal.cfx_x509cert_principal_get_locality_name_delegate));
-            CfxApi.X509certPrincipal.cfx_x509cert_principal_get_state_or_province_name = (CfxApi.X509certPrincipal.cfx_x509cert_principal_get_state_or_province_name_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509cert_principal_get_state_or_province_name, typeof(CfxApi.X509certPrincipal.cfx_x509cert_principal_get_state_or_province_name_delegate));
-            CfxApi.X509certPrincipal.cfx_x509cert_principal_get_country_name = (CfxApi.X509certPrincipal.cfx_x509cert_principal_get_country_name_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509cert_principal_get_country_name, typeof(CfxApi.X509certPrincipal.cfx_x509cert_principal_get_country_name_delegate));
-            CfxApi.X509certPrincipal.cfx_x509cert_principal_get_street_addresses = (CfxApi.X509certPrincipal.cfx_x509cert_principal_get_street_addresses_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509cert_principal_get_street_addresses, typeof(CfxApi.X509certPrincipal.cfx_x509cert_principal_get_street_addresses_delegate));
-            CfxApi.X509certPrincipal.cfx_x509cert_principal_get_organization_names = (CfxApi.X509certPrincipal.cfx_x509cert_principal_get_organization_names_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509cert_principal_get_organization_names, typeof(CfxApi.X509certPrincipal.cfx_x509cert_principal_get_organization_names_delegate));
-            CfxApi.X509certPrincipal.cfx_x509cert_principal_get_organization_unit_names = (CfxApi.X509certPrincipal.cfx_x509cert_principal_get_organization_unit_names_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509cert_principal_get_organization_unit_names, typeof(CfxApi.X509certPrincipal.cfx_x509cert_principal_get_organization_unit_names_delegate));
-            CfxApi.X509certPrincipal.cfx_x509cert_principal_get_domain_components = (CfxApi.X509certPrincipal.cfx_x509cert_principal_get_domain_components_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509cert_principal_get_domain_components, typeof(CfxApi.X509certPrincipal.cfx_x509cert_principal_get_domain_components_delegate));
+            CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_display_name = (CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_display_name_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509cert_principal_get_display_name, typeof(CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_display_name_delegate));
+            CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_common_name = (CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_common_name_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509cert_principal_get_common_name, typeof(CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_common_name_delegate));
+            CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_locality_name = (CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_locality_name_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509cert_principal_get_locality_name, typeof(CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_locality_name_delegate));
+            CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_state_or_province_name = (CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_state_or_province_name_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509cert_principal_get_state_or_province_name, typeof(CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_state_or_province_name_delegate));
+            CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_country_name = (CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_country_name_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509cert_principal_get_country_name, typeof(CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_country_name_delegate));
+            CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_street_addresses = (CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_street_addresses_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509cert_principal_get_street_addresses, typeof(CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_street_addresses_delegate));
+            CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_organization_names = (CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_organization_names_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509cert_principal_get_organization_names, typeof(CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_organization_names_delegate));
+            CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_organization_unit_names = (CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_organization_unit_names_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509cert_principal_get_organization_unit_names, typeof(CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_organization_unit_names_delegate));
+            CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_domain_components = (CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_domain_components_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509cert_principal_get_domain_components, typeof(CfxApi.X509CertPrincipal.cfx_x509cert_principal_get_domain_components_delegate));
         }
 
-        internal static void LoadCfxX509certificateApi() {
+        internal static void LoadCfxX509CertificateApi() {
             CfxApi.Probe();
-            CfxApi.X509certificate.cfx_x509certificate_get_subject = (CfxApi.X509certificate.cfx_x509certificate_get_subject_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_subject, typeof(CfxApi.X509certificate.cfx_x509certificate_get_subject_delegate));
-            CfxApi.X509certificate.cfx_x509certificate_get_issuer = (CfxApi.X509certificate.cfx_x509certificate_get_issuer_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_issuer, typeof(CfxApi.X509certificate.cfx_x509certificate_get_issuer_delegate));
-            CfxApi.X509certificate.cfx_x509certificate_get_serial_number = (CfxApi.X509certificate.cfx_x509certificate_get_serial_number_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_serial_number, typeof(CfxApi.X509certificate.cfx_x509certificate_get_serial_number_delegate));
-            CfxApi.X509certificate.cfx_x509certificate_get_valid_start = (CfxApi.X509certificate.cfx_x509certificate_get_valid_start_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_valid_start, typeof(CfxApi.X509certificate.cfx_x509certificate_get_valid_start_delegate));
-            CfxApi.X509certificate.cfx_x509certificate_get_valid_expiry = (CfxApi.X509certificate.cfx_x509certificate_get_valid_expiry_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_valid_expiry, typeof(CfxApi.X509certificate.cfx_x509certificate_get_valid_expiry_delegate));
-            CfxApi.X509certificate.cfx_x509certificate_get_derencoded = (CfxApi.X509certificate.cfx_x509certificate_get_derencoded_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_derencoded, typeof(CfxApi.X509certificate.cfx_x509certificate_get_derencoded_delegate));
-            CfxApi.X509certificate.cfx_x509certificate_get_pemencoded = (CfxApi.X509certificate.cfx_x509certificate_get_pemencoded_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_pemencoded, typeof(CfxApi.X509certificate.cfx_x509certificate_get_pemencoded_delegate));
-            CfxApi.X509certificate.cfx_x509certificate_get_issuer_chain_size = (CfxApi.X509certificate.cfx_x509certificate_get_issuer_chain_size_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_issuer_chain_size, typeof(CfxApi.X509certificate.cfx_x509certificate_get_issuer_chain_size_delegate));
-            CfxApi.X509certificate.cfx_x509certificate_get_derencoded_issuer_chain = (CfxApi.X509certificate.cfx_x509certificate_get_derencoded_issuer_chain_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_derencoded_issuer_chain, typeof(CfxApi.X509certificate.cfx_x509certificate_get_derencoded_issuer_chain_delegate));
-            CfxApi.X509certificate.cfx_x509certificate_get_pemencoded_issuer_chain = (CfxApi.X509certificate.cfx_x509certificate_get_pemencoded_issuer_chain_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_pemencoded_issuer_chain, typeof(CfxApi.X509certificate.cfx_x509certificate_get_pemencoded_issuer_chain_delegate));
+            CfxApi.X509Certificate.cfx_x509certificate_get_subject = (CfxApi.X509Certificate.cfx_x509certificate_get_subject_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_subject, typeof(CfxApi.X509Certificate.cfx_x509certificate_get_subject_delegate));
+            CfxApi.X509Certificate.cfx_x509certificate_get_issuer = (CfxApi.X509Certificate.cfx_x509certificate_get_issuer_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_issuer, typeof(CfxApi.X509Certificate.cfx_x509certificate_get_issuer_delegate));
+            CfxApi.X509Certificate.cfx_x509certificate_get_serial_number = (CfxApi.X509Certificate.cfx_x509certificate_get_serial_number_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_serial_number, typeof(CfxApi.X509Certificate.cfx_x509certificate_get_serial_number_delegate));
+            CfxApi.X509Certificate.cfx_x509certificate_get_valid_start = (CfxApi.X509Certificate.cfx_x509certificate_get_valid_start_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_valid_start, typeof(CfxApi.X509Certificate.cfx_x509certificate_get_valid_start_delegate));
+            CfxApi.X509Certificate.cfx_x509certificate_get_valid_expiry = (CfxApi.X509Certificate.cfx_x509certificate_get_valid_expiry_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_valid_expiry, typeof(CfxApi.X509Certificate.cfx_x509certificate_get_valid_expiry_delegate));
+            CfxApi.X509Certificate.cfx_x509certificate_get_derencoded = (CfxApi.X509Certificate.cfx_x509certificate_get_derencoded_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_derencoded, typeof(CfxApi.X509Certificate.cfx_x509certificate_get_derencoded_delegate));
+            CfxApi.X509Certificate.cfx_x509certificate_get_pemencoded = (CfxApi.X509Certificate.cfx_x509certificate_get_pemencoded_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_pemencoded, typeof(CfxApi.X509Certificate.cfx_x509certificate_get_pemencoded_delegate));
+            CfxApi.X509Certificate.cfx_x509certificate_get_issuer_chain_size = (CfxApi.X509Certificate.cfx_x509certificate_get_issuer_chain_size_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_issuer_chain_size, typeof(CfxApi.X509Certificate.cfx_x509certificate_get_issuer_chain_size_delegate));
+            CfxApi.X509Certificate.cfx_x509certificate_get_derencoded_issuer_chain = (CfxApi.X509Certificate.cfx_x509certificate_get_derencoded_issuer_chain_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_derencoded_issuer_chain, typeof(CfxApi.X509Certificate.cfx_x509certificate_get_derencoded_issuer_chain_delegate));
+            CfxApi.X509Certificate.cfx_x509certificate_get_pemencoded_issuer_chain = (CfxApi.X509Certificate.cfx_x509certificate_get_pemencoded_issuer_chain_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_x509certificate_get_pemencoded_issuer_chain, typeof(CfxApi.X509Certificate.cfx_x509certificate_get_pemencoded_issuer_chain_delegate));
         }
 
         internal static void LoadCfxXmlReaderApi() {

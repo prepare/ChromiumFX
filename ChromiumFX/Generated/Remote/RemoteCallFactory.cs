@@ -487,7 +487,7 @@ namespace Chromium.Remote {
             () => { return new CfxV8HandlerExecuteGetArgumentsRenderProcessCall(); },
             () => { return new CfxV8HandlerExecuteSetExceptionRenderProcessCall(); },
             () => { return new CfxV8HandlerExecuteSetReturnValueRenderProcessCall(); },
-            () => { return new CfxV8interceptorCtorRenderProcessCall(); },
+            () => { return new CfxV8InterceptorCtorRenderProcessCall(); },
             () => { return new CfxGetByNameBrowserProcessCall(); },
             () => { return new CfxGetByNameActivateRenderProcessCall(); },
             () => { return new CfxGetByNameDeactivateRenderProcessCall(); },
