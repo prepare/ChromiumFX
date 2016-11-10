@@ -55,11 +55,20 @@ namespace Chromium {
 
         private static object eventLock = new object();
 
+        internal static void SetNativeCallbacks() {
+            on_pre_key_event_native = on_pre_key_event;
+            on_key_event_native = on_key_event;
+            var setCallbacks = (CfxApi.cfx_set_ptr_2_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_keyboard_handler_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_2_delegate));
+            setCallbacks(
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_pre_key_event_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_key_event_native)
+            );
+        }
+
         // on_pre_key_event
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_keyboard_handler_on_pre_key_event_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr @event, IntPtr os_event, out int is_keyboard_shortcut);
-        private static cfx_keyboard_handler_on_pre_key_event_delegate cfx_keyboard_handler_on_pre_key_event;
-        private static IntPtr cfx_keyboard_handler_on_pre_key_event_ptr;
+        private delegate void on_pre_key_event_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr @event, IntPtr os_event, out int is_keyboard_shortcut);
+        private static on_pre_key_event_delegate on_pre_key_event_native;
 
         internal static void on_pre_key_event(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr @event, IntPtr os_event, out int is_keyboard_shortcut) {
             var self = (CfxKeyboardHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -79,9 +88,8 @@ namespace Chromium {
 
         // on_key_event
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_keyboard_handler_on_key_event_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr @event, IntPtr os_event);
-        private static cfx_keyboard_handler_on_key_event_delegate cfx_keyboard_handler_on_key_event;
-        private static IntPtr cfx_keyboard_handler_on_key_event_ptr;
+        private delegate void on_key_event_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr @event, IntPtr os_event);
+        private static on_key_event_delegate on_key_event_native;
 
         internal static void on_key_event(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr @event, IntPtr os_event) {
             var self = (CfxKeyboardHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -115,11 +123,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnPreKeyEvent == null) {
-                        if(cfx_keyboard_handler_on_pre_key_event == null) {
-                            cfx_keyboard_handler_on_pre_key_event = on_pre_key_event;
-                            cfx_keyboard_handler_on_pre_key_event_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_keyboard_handler_on_pre_key_event);
-                        }
-                        CfxApi.KeyboardHandler.cfx_keyboard_handler_set_managed_callback(NativePtr, 0, cfx_keyboard_handler_on_pre_key_event_ptr);
+                        CfxApi.KeyboardHandler.cfx_keyboard_handler_activate_callback(NativePtr, 0, 1);
                     }
                     m_OnPreKeyEvent += value;
                 }
@@ -128,7 +132,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnPreKeyEvent -= value;
                     if(m_OnPreKeyEvent == null) {
-                        CfxApi.KeyboardHandler.cfx_keyboard_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.KeyboardHandler.cfx_keyboard_handler_activate_callback(NativePtr, 0, 0);
                     }
                 }
             }
@@ -150,11 +154,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnKeyEvent == null) {
-                        if(cfx_keyboard_handler_on_key_event == null) {
-                            cfx_keyboard_handler_on_key_event = on_key_event;
-                            cfx_keyboard_handler_on_key_event_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_keyboard_handler_on_key_event);
-                        }
-                        CfxApi.KeyboardHandler.cfx_keyboard_handler_set_managed_callback(NativePtr, 1, cfx_keyboard_handler_on_key_event_ptr);
+                        CfxApi.KeyboardHandler.cfx_keyboard_handler_activate_callback(NativePtr, 1, 1);
                     }
                     m_OnKeyEvent += value;
                 }
@@ -163,7 +163,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnKeyEvent -= value;
                     if(m_OnKeyEvent == null) {
-                        CfxApi.KeyboardHandler.cfx_keyboard_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.KeyboardHandler.cfx_keyboard_handler_activate_callback(NativePtr, 1, 0);
                     }
                 }
             }
@@ -174,11 +174,11 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnPreKeyEvent != null) {
                 m_OnPreKeyEvent = null;
-                CfxApi.KeyboardHandler.cfx_keyboard_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.KeyboardHandler.cfx_keyboard_handler_activate_callback(NativePtr, 0, 0);
             }
             if(m_OnKeyEvent != null) {
                 m_OnKeyEvent = null;
-                CfxApi.KeyboardHandler.cfx_keyboard_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.KeyboardHandler.cfx_keyboard_handler_activate_callback(NativePtr, 1, 0);
             }
             base.OnDispose(nativePtr);
         }

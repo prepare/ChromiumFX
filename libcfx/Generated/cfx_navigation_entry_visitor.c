@@ -71,9 +71,14 @@ static gc_handle_t cfx_navigation_entry_visitor_get_gc_handle(cfx_navigation_ent
     return self->gc_handle;
 }
 
-// visit
-
+// managed callbacks
 void (CEF_CALLBACK *cfx_navigation_entry_visitor_visit_callback)(gc_handle_t self, int* __retval, cef_navigation_entry_t* entry, int current, int index, int total);
+
+static void cfx_navigation_entry_visitor_set_managed_callbacks(void *visit) {
+    cfx_navigation_entry_visitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_navigation_entry_t* entry, int current, int index, int total)) visit;
+}
+
+// visit
 
 int CEF_CALLBACK cfx_navigation_entry_visitor_visit(cef_navigation_entry_visitor_t* self, cef_navigation_entry_t* entry, int current, int index, int total) {
     int __retval;
@@ -82,12 +87,10 @@ int CEF_CALLBACK cfx_navigation_entry_visitor_visit(cef_navigation_entry_visitor
 }
 
 
-static void cfx_navigation_entry_visitor_set_managed_callback(cef_navigation_entry_visitor_t* self, int index, void* callback) {
+static void cfx_navigation_entry_visitor_activate_callback(cef_navigation_entry_visitor_t* self, int index, int active) {
     switch(index) {
     case 0:
-        if(callback && !cfx_navigation_entry_visitor_visit_callback)
-            cfx_navigation_entry_visitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_navigation_entry_t* entry, int current, int index, int total)) callback;
-        self->visit = callback ? cfx_navigation_entry_visitor_visit : 0;
+        self->visit = active ? cfx_navigation_entry_visitor_visit : 0;
         break;
     }
 }

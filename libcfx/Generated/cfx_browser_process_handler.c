@@ -71,9 +71,22 @@ static gc_handle_t cfx_browser_process_handler_get_gc_handle(cfx_browser_process
     return self->gc_handle;
 }
 
-// on_context_initialized
-
+// managed callbacks
 void (CEF_CALLBACK *cfx_browser_process_handler_on_context_initialized_callback)(gc_handle_t self);
+void (CEF_CALLBACK *cfx_browser_process_handler_on_before_child_process_launch_callback)(gc_handle_t self, cef_command_line_t* command_line);
+void (CEF_CALLBACK *cfx_browser_process_handler_on_render_process_thread_created_callback)(gc_handle_t self, cef_list_value_t* extra_info);
+void (CEF_CALLBACK *cfx_browser_process_handler_get_print_handler_callback)(gc_handle_t self, cef_print_handler_t** __retval);
+void (CEF_CALLBACK *cfx_browser_process_handler_on_schedule_message_pump_work_callback)(gc_handle_t self, int64 delay_ms);
+
+static void cfx_browser_process_handler_set_managed_callbacks(void *on_context_initialized, void *on_before_child_process_launch, void *on_render_process_thread_created, void *get_print_handler, void *on_schedule_message_pump_work) {
+    cfx_browser_process_handler_on_context_initialized_callback = (void (CEF_CALLBACK *)(gc_handle_t self)) on_context_initialized;
+    cfx_browser_process_handler_on_before_child_process_launch_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_command_line_t* command_line)) on_before_child_process_launch;
+    cfx_browser_process_handler_on_render_process_thread_created_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_list_value_t* extra_info)) on_render_process_thread_created;
+    cfx_browser_process_handler_get_print_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_print_handler_t** __retval)) get_print_handler;
+    cfx_browser_process_handler_on_schedule_message_pump_work_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int64 delay_ms)) on_schedule_message_pump_work;
+}
+
+// on_context_initialized
 
 void CEF_CALLBACK cfx_browser_process_handler_on_context_initialized(cef_browser_process_handler_t* self) {
     cfx_browser_process_handler_on_context_initialized_callback(((cfx_browser_process_handler_t*)self)->gc_handle);
@@ -82,8 +95,6 @@ void CEF_CALLBACK cfx_browser_process_handler_on_context_initialized(cef_browser
 
 // on_before_child_process_launch
 
-void (CEF_CALLBACK *cfx_browser_process_handler_on_before_child_process_launch_callback)(gc_handle_t self, cef_command_line_t* command_line);
-
 void CEF_CALLBACK cfx_browser_process_handler_on_before_child_process_launch(cef_browser_process_handler_t* self, cef_command_line_t* command_line) {
     cfx_browser_process_handler_on_before_child_process_launch_callback(((cfx_browser_process_handler_t*)self)->gc_handle, command_line);
 }
@@ -91,16 +102,12 @@ void CEF_CALLBACK cfx_browser_process_handler_on_before_child_process_launch(cef
 
 // on_render_process_thread_created
 
-void (CEF_CALLBACK *cfx_browser_process_handler_on_render_process_thread_created_callback)(gc_handle_t self, cef_list_value_t* extra_info);
-
 void CEF_CALLBACK cfx_browser_process_handler_on_render_process_thread_created(cef_browser_process_handler_t* self, cef_list_value_t* extra_info) {
     cfx_browser_process_handler_on_render_process_thread_created_callback(((cfx_browser_process_handler_t*)self)->gc_handle, extra_info);
 }
 
 
 // get_print_handler
-
-void (CEF_CALLBACK *cfx_browser_process_handler_get_print_handler_callback)(gc_handle_t self, cef_print_handler_t** __retval);
 
 cef_print_handler_t* CEF_CALLBACK cfx_browser_process_handler_get_print_handler(cef_browser_process_handler_t* self) {
     cef_print_handler_t* __retval;
@@ -114,39 +121,27 @@ cef_print_handler_t* CEF_CALLBACK cfx_browser_process_handler_get_print_handler(
 
 // on_schedule_message_pump_work
 
-void (CEF_CALLBACK *cfx_browser_process_handler_on_schedule_message_pump_work_callback)(gc_handle_t self, int64 delay_ms);
-
 void CEF_CALLBACK cfx_browser_process_handler_on_schedule_message_pump_work(cef_browser_process_handler_t* self, int64 delay_ms) {
     cfx_browser_process_handler_on_schedule_message_pump_work_callback(((cfx_browser_process_handler_t*)self)->gc_handle, delay_ms);
 }
 
 
-static void cfx_browser_process_handler_set_managed_callback(cef_browser_process_handler_t* self, int index, void* callback) {
+static void cfx_browser_process_handler_activate_callback(cef_browser_process_handler_t* self, int index, int active) {
     switch(index) {
     case 0:
-        if(callback && !cfx_browser_process_handler_on_context_initialized_callback)
-            cfx_browser_process_handler_on_context_initialized_callback = (void (CEF_CALLBACK *)(gc_handle_t self)) callback;
-        self->on_context_initialized = callback ? cfx_browser_process_handler_on_context_initialized : 0;
+        self->on_context_initialized = active ? cfx_browser_process_handler_on_context_initialized : 0;
         break;
     case 1:
-        if(callback && !cfx_browser_process_handler_on_before_child_process_launch_callback)
-            cfx_browser_process_handler_on_before_child_process_launch_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_command_line_t* command_line)) callback;
-        self->on_before_child_process_launch = callback ? cfx_browser_process_handler_on_before_child_process_launch : 0;
+        self->on_before_child_process_launch = active ? cfx_browser_process_handler_on_before_child_process_launch : 0;
         break;
     case 2:
-        if(callback && !cfx_browser_process_handler_on_render_process_thread_created_callback)
-            cfx_browser_process_handler_on_render_process_thread_created_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_list_value_t* extra_info)) callback;
-        self->on_render_process_thread_created = callback ? cfx_browser_process_handler_on_render_process_thread_created : 0;
+        self->on_render_process_thread_created = active ? cfx_browser_process_handler_on_render_process_thread_created : 0;
         break;
     case 3:
-        if(callback && !cfx_browser_process_handler_get_print_handler_callback)
-            cfx_browser_process_handler_get_print_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_print_handler_t** __retval)) callback;
-        self->get_print_handler = callback ? cfx_browser_process_handler_get_print_handler : 0;
+        self->get_print_handler = active ? cfx_browser_process_handler_get_print_handler : 0;
         break;
     case 4:
-        if(callback && !cfx_browser_process_handler_on_schedule_message_pump_work_callback)
-            cfx_browser_process_handler_on_schedule_message_pump_work_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int64 delay_ms)) callback;
-        self->on_schedule_message_pump_work = callback ? cfx_browser_process_handler_on_schedule_message_pump_work : 0;
+        self->on_schedule_message_pump_work = active ? cfx_browser_process_handler_on_schedule_message_pump_work : 0;
         break;
     }
 }

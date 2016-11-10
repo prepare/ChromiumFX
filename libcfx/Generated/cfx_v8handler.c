@@ -71,9 +71,14 @@ static gc_handle_t cfx_v8handler_get_gc_handle(cfx_v8handler_t* self) {
     return self->gc_handle;
 }
 
-// execute
-
+// managed callbacks
 void (CEF_CALLBACK *cfx_v8handler_execute_callback)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, size_t argumentsCount, cef_v8value_t* const* arguments, cef_v8value_t** retval, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle);
+
+static void cfx_v8handler_set_managed_callbacks(void *execute) {
+    cfx_v8handler_execute_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, size_t argumentsCount, cef_v8value_t* const* arguments, cef_v8value_t** retval, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle)) execute;
+}
+
+// execute
 
 int CEF_CALLBACK cfx_v8handler_execute(cef_v8handler_t* self, const cef_string_t* name, cef_v8value_t* object, size_t argumentsCount, cef_v8value_t* const* arguments, cef_v8value_t** retval, cef_string_t* exception) {
     int __retval;
@@ -88,12 +93,10 @@ int CEF_CALLBACK cfx_v8handler_execute(cef_v8handler_t* self, const cef_string_t
 }
 
 
-static void cfx_v8handler_set_managed_callback(cef_v8handler_t* self, int index, void* callback) {
+static void cfx_v8handler_activate_callback(cef_v8handler_t* self, int index, int active) {
     switch(index) {
     case 0:
-        if(callback && !cfx_v8handler_execute_callback)
-            cfx_v8handler_execute_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, size_t argumentsCount, cef_v8value_t* const* arguments, cef_v8value_t** retval, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle)) callback;
-        self->execute = callback ? cfx_v8handler_execute : 0;
+        self->execute = active ? cfx_v8handler_execute : 0;
         break;
     }
 }

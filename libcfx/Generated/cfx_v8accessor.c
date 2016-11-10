@@ -71,9 +71,16 @@ static gc_handle_t cfx_v8accessor_get_gc_handle(cfx_v8accessor_t* self) {
     return self->gc_handle;
 }
 
-// get
-
+// managed callbacks
 void (CEF_CALLBACK *cfx_v8accessor_get_callback)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, cef_v8value_t** retval, char16 **exception_str, int *exception_length);
+void (CEF_CALLBACK *cfx_v8accessor_set_callback)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, cef_v8value_t* value, char16 **exception_str, int *exception_length);
+
+static void cfx_v8accessor_set_managed_callbacks(void *get, void *set) {
+    cfx_v8accessor_get_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, cef_v8value_t** retval, char16 **exception_str, int *exception_length)) get;
+    cfx_v8accessor_set_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, cef_v8value_t* value, char16 **exception_str, int *exception_length)) set;
+}
+
+// get
 
 int CEF_CALLBACK cfx_v8accessor_get(cef_v8accessor_t* self, const cef_string_t* name, cef_v8value_t* object, cef_v8value_t** retval, cef_string_t* exception) {
     int __retval;
@@ -91,8 +98,6 @@ int CEF_CALLBACK cfx_v8accessor_get(cef_v8accessor_t* self, const cef_string_t* 
 
 // set
 
-void (CEF_CALLBACK *cfx_v8accessor_set_callback)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, cef_v8value_t* value, char16 **exception_str, int *exception_length);
-
 int CEF_CALLBACK cfx_v8accessor_set(cef_v8accessor_t* self, const cef_string_t* name, cef_v8value_t* object, cef_v8value_t* value, cef_string_t* exception) {
     int __retval;
     char16* exception_tmp_str = exception->str; int exception_tmp_length = (int)exception->length;
@@ -106,17 +111,13 @@ int CEF_CALLBACK cfx_v8accessor_set(cef_v8accessor_t* self, const cef_string_t* 
 }
 
 
-static void cfx_v8accessor_set_managed_callback(cef_v8accessor_t* self, int index, void* callback) {
+static void cfx_v8accessor_activate_callback(cef_v8accessor_t* self, int index, int active) {
     switch(index) {
     case 0:
-        if(callback && !cfx_v8accessor_get_callback)
-            cfx_v8accessor_get_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, cef_v8value_t** retval, char16 **exception_str, int *exception_length)) callback;
-        self->get = callback ? cfx_v8accessor_get : 0;
+        self->get = active ? cfx_v8accessor_get : 0;
         break;
     case 1:
-        if(callback && !cfx_v8accessor_set_callback)
-            cfx_v8accessor_set_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, cef_v8value_t* value, char16 **exception_str, int *exception_length)) callback;
-        self->set = callback ? cfx_v8accessor_set : 0;
+        self->set = active ? cfx_v8accessor_set : 0;
         break;
     }
 }

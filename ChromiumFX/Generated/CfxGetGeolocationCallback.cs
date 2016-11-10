@@ -55,11 +55,18 @@ namespace Chromium {
 
         private static object eventLock = new object();
 
+        internal static void SetNativeCallbacks() {
+            on_location_update_native = on_location_update;
+            var setCallbacks = (CfxApi.cfx_set_ptr_1_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_get_geolocation_callback_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_1_delegate));
+            setCallbacks(
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_location_update_native)
+            );
+        }
+
         // on_location_update
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_get_geolocation_callback_on_location_update_delegate(IntPtr gcHandlePtr, IntPtr position);
-        private static cfx_get_geolocation_callback_on_location_update_delegate cfx_get_geolocation_callback_on_location_update;
-        private static IntPtr cfx_get_geolocation_callback_on_location_update_ptr;
+        private delegate void on_location_update_delegate(IntPtr gcHandlePtr, IntPtr position);
+        private static on_location_update_delegate on_location_update_native;
 
         internal static void on_location_update(IntPtr gcHandlePtr, IntPtr position) {
             var self = (CfxGetGeolocationCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -87,11 +94,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnLocationUpdate == null) {
-                        if(cfx_get_geolocation_callback_on_location_update == null) {
-                            cfx_get_geolocation_callback_on_location_update = on_location_update;
-                            cfx_get_geolocation_callback_on_location_update_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_get_geolocation_callback_on_location_update);
-                        }
-                        CfxApi.GetGeolocationCallback.cfx_get_geolocation_callback_set_managed_callback(NativePtr, 0, cfx_get_geolocation_callback_on_location_update_ptr);
+                        CfxApi.GetGeolocationCallback.cfx_get_geolocation_callback_activate_callback(NativePtr, 0, 1);
                     }
                     m_OnLocationUpdate += value;
                 }
@@ -100,7 +103,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnLocationUpdate -= value;
                     if(m_OnLocationUpdate == null) {
-                        CfxApi.GetGeolocationCallback.cfx_get_geolocation_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.GetGeolocationCallback.cfx_get_geolocation_callback_activate_callback(NativePtr, 0, 0);
                     }
                 }
             }
@@ -111,7 +114,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnLocationUpdate != null) {
                 m_OnLocationUpdate = null;
-                CfxApi.GetGeolocationCallback.cfx_get_geolocation_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.GetGeolocationCallback.cfx_get_geolocation_callback_activate_callback(NativePtr, 0, 0);
             }
             base.OnDispose(nativePtr);
         }

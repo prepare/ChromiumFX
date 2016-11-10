@@ -54,11 +54,46 @@ namespace Chromium {
 
         private static object eventLock = new object();
 
+        internal static void SetNativeCallbacks() {
+            get_context_menu_handler_native = get_context_menu_handler;
+            get_dialog_handler_native = get_dialog_handler;
+            get_display_handler_native = get_display_handler;
+            get_download_handler_native = get_download_handler;
+            get_drag_handler_native = get_drag_handler;
+            get_find_handler_native = get_find_handler;
+            get_focus_handler_native = get_focus_handler;
+            get_geolocation_handler_native = get_geolocation_handler;
+            get_jsdialog_handler_native = get_jsdialog_handler;
+            get_keyboard_handler_native = get_keyboard_handler;
+            get_life_span_handler_native = get_life_span_handler;
+            get_load_handler_native = get_load_handler;
+            get_render_handler_native = get_render_handler;
+            get_request_handler_native = get_request_handler;
+            on_process_message_received_native = on_process_message_received;
+            var setCallbacks = (CfxApi.cfx_set_ptr_15_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_client_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_15_delegate));
+            setCallbacks(
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_context_menu_handler_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_dialog_handler_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_display_handler_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_download_handler_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_drag_handler_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_find_handler_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_focus_handler_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_geolocation_handler_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_jsdialog_handler_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_keyboard_handler_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_life_span_handler_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_load_handler_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_render_handler_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_request_handler_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_process_message_received_native)
+            );
+        }
+
         // get_context_menu_handler
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_client_get_context_menu_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        private static cfx_client_get_context_menu_handler_delegate cfx_client_get_context_menu_handler;
-        private static IntPtr cfx_client_get_context_menu_handler_ptr;
+        private delegate void get_context_menu_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
+        private static get_context_menu_handler_delegate get_context_menu_handler_native;
 
         internal static void get_context_menu_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -75,9 +110,8 @@ namespace Chromium {
 
         // get_dialog_handler
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_client_get_dialog_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        private static cfx_client_get_dialog_handler_delegate cfx_client_get_dialog_handler;
-        private static IntPtr cfx_client_get_dialog_handler_ptr;
+        private delegate void get_dialog_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
+        private static get_dialog_handler_delegate get_dialog_handler_native;
 
         internal static void get_dialog_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -94,9 +128,8 @@ namespace Chromium {
 
         // get_display_handler
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_client_get_display_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        private static cfx_client_get_display_handler_delegate cfx_client_get_display_handler;
-        private static IntPtr cfx_client_get_display_handler_ptr;
+        private delegate void get_display_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
+        private static get_display_handler_delegate get_display_handler_native;
 
         internal static void get_display_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -113,9 +146,8 @@ namespace Chromium {
 
         // get_download_handler
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_client_get_download_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        private static cfx_client_get_download_handler_delegate cfx_client_get_download_handler;
-        private static IntPtr cfx_client_get_download_handler_ptr;
+        private delegate void get_download_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
+        private static get_download_handler_delegate get_download_handler_native;
 
         internal static void get_download_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -132,9 +164,8 @@ namespace Chromium {
 
         // get_drag_handler
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_client_get_drag_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        private static cfx_client_get_drag_handler_delegate cfx_client_get_drag_handler;
-        private static IntPtr cfx_client_get_drag_handler_ptr;
+        private delegate void get_drag_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
+        private static get_drag_handler_delegate get_drag_handler_native;
 
         internal static void get_drag_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -151,9 +182,8 @@ namespace Chromium {
 
         // get_find_handler
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_client_get_find_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        private static cfx_client_get_find_handler_delegate cfx_client_get_find_handler;
-        private static IntPtr cfx_client_get_find_handler_ptr;
+        private delegate void get_find_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
+        private static get_find_handler_delegate get_find_handler_native;
 
         internal static void get_find_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -170,9 +200,8 @@ namespace Chromium {
 
         // get_focus_handler
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_client_get_focus_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        private static cfx_client_get_focus_handler_delegate cfx_client_get_focus_handler;
-        private static IntPtr cfx_client_get_focus_handler_ptr;
+        private delegate void get_focus_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
+        private static get_focus_handler_delegate get_focus_handler_native;
 
         internal static void get_focus_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -189,9 +218,8 @@ namespace Chromium {
 
         // get_geolocation_handler
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_client_get_geolocation_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        private static cfx_client_get_geolocation_handler_delegate cfx_client_get_geolocation_handler;
-        private static IntPtr cfx_client_get_geolocation_handler_ptr;
+        private delegate void get_geolocation_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
+        private static get_geolocation_handler_delegate get_geolocation_handler_native;
 
         internal static void get_geolocation_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -208,9 +236,8 @@ namespace Chromium {
 
         // get_jsdialog_handler
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_client_get_jsdialog_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        private static cfx_client_get_jsdialog_handler_delegate cfx_client_get_jsdialog_handler;
-        private static IntPtr cfx_client_get_jsdialog_handler_ptr;
+        private delegate void get_jsdialog_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
+        private static get_jsdialog_handler_delegate get_jsdialog_handler_native;
 
         internal static void get_jsdialog_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -227,9 +254,8 @@ namespace Chromium {
 
         // get_keyboard_handler
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_client_get_keyboard_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        private static cfx_client_get_keyboard_handler_delegate cfx_client_get_keyboard_handler;
-        private static IntPtr cfx_client_get_keyboard_handler_ptr;
+        private delegate void get_keyboard_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
+        private static get_keyboard_handler_delegate get_keyboard_handler_native;
 
         internal static void get_keyboard_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -246,9 +272,8 @@ namespace Chromium {
 
         // get_life_span_handler
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_client_get_life_span_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        private static cfx_client_get_life_span_handler_delegate cfx_client_get_life_span_handler;
-        private static IntPtr cfx_client_get_life_span_handler_ptr;
+        private delegate void get_life_span_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
+        private static get_life_span_handler_delegate get_life_span_handler_native;
 
         internal static void get_life_span_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -265,9 +290,8 @@ namespace Chromium {
 
         // get_load_handler
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_client_get_load_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        private static cfx_client_get_load_handler_delegate cfx_client_get_load_handler;
-        private static IntPtr cfx_client_get_load_handler_ptr;
+        private delegate void get_load_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
+        private static get_load_handler_delegate get_load_handler_native;
 
         internal static void get_load_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -284,9 +308,8 @@ namespace Chromium {
 
         // get_render_handler
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_client_get_render_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        private static cfx_client_get_render_handler_delegate cfx_client_get_render_handler;
-        private static IntPtr cfx_client_get_render_handler_ptr;
+        private delegate void get_render_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
+        private static get_render_handler_delegate get_render_handler_native;
 
         internal static void get_render_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -303,9 +326,8 @@ namespace Chromium {
 
         // get_request_handler
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_client_get_request_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
-        private static cfx_client_get_request_handler_delegate cfx_client_get_request_handler;
-        private static IntPtr cfx_client_get_request_handler_ptr;
+        private delegate void get_request_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
+        private static get_request_handler_delegate get_request_handler_native;
 
         internal static void get_request_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -322,9 +344,8 @@ namespace Chromium {
 
         // on_process_message_received
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_client_on_process_message_received_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int source_process, IntPtr message);
-        private static cfx_client_on_process_message_received_delegate cfx_client_on_process_message_received;
-        private static IntPtr cfx_client_on_process_message_received_ptr;
+        private delegate void on_process_message_received_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int source_process, IntPtr message);
+        private static on_process_message_received_delegate on_process_message_received_native;
 
         internal static void on_process_message_received(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int source_process, IntPtr message) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -358,11 +379,7 @@ namespace Chromium {
                     if(m_GetContextMenuHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    if(cfx_client_get_context_menu_handler == null) {
-                        cfx_client_get_context_menu_handler = get_context_menu_handler;
-                        cfx_client_get_context_menu_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_client_get_context_menu_handler);
-                    }
-                    CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 0, cfx_client_get_context_menu_handler_ptr);
+                    CfxApi.Client.cfx_client_activate_callback(NativePtr, 0, 1);
                     m_GetContextMenuHandler += value;
                 }
             }
@@ -370,7 +387,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetContextMenuHandler -= value;
                     if(m_GetContextMenuHandler == null) {
-                        CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_activate_callback(NativePtr, 0, 0);
                     }
                 }
             }
@@ -407,11 +424,7 @@ namespace Chromium {
                     if(m_GetDialogHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    if(cfx_client_get_dialog_handler == null) {
-                        cfx_client_get_dialog_handler = get_dialog_handler;
-                        cfx_client_get_dialog_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_client_get_dialog_handler);
-                    }
-                    CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 1, cfx_client_get_dialog_handler_ptr);
+                    CfxApi.Client.cfx_client_activate_callback(NativePtr, 1, 1);
                     m_GetDialogHandler += value;
                 }
             }
@@ -419,7 +432,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetDialogHandler -= value;
                     if(m_GetDialogHandler == null) {
-                        CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_activate_callback(NativePtr, 1, 0);
                     }
                 }
             }
@@ -455,11 +468,7 @@ namespace Chromium {
                     if(m_GetDisplayHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    if(cfx_client_get_display_handler == null) {
-                        cfx_client_get_display_handler = get_display_handler;
-                        cfx_client_get_display_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_client_get_display_handler);
-                    }
-                    CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 2, cfx_client_get_display_handler_ptr);
+                    CfxApi.Client.cfx_client_activate_callback(NativePtr, 2, 1);
                     m_GetDisplayHandler += value;
                 }
             }
@@ -467,7 +476,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetDisplayHandler -= value;
                     if(m_GetDisplayHandler == null) {
-                        CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_activate_callback(NativePtr, 2, 0);
                     }
                 }
             }
@@ -504,11 +513,7 @@ namespace Chromium {
                     if(m_GetDownloadHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    if(cfx_client_get_download_handler == null) {
-                        cfx_client_get_download_handler = get_download_handler;
-                        cfx_client_get_download_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_client_get_download_handler);
-                    }
-                    CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 3, cfx_client_get_download_handler_ptr);
+                    CfxApi.Client.cfx_client_activate_callback(NativePtr, 3, 1);
                     m_GetDownloadHandler += value;
                 }
             }
@@ -516,7 +521,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetDownloadHandler -= value;
                     if(m_GetDownloadHandler == null) {
-                        CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_activate_callback(NativePtr, 3, 0);
                     }
                 }
             }
@@ -552,11 +557,7 @@ namespace Chromium {
                     if(m_GetDragHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    if(cfx_client_get_drag_handler == null) {
-                        cfx_client_get_drag_handler = get_drag_handler;
-                        cfx_client_get_drag_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_client_get_drag_handler);
-                    }
-                    CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 4, cfx_client_get_drag_handler_ptr);
+                    CfxApi.Client.cfx_client_activate_callback(NativePtr, 4, 1);
                     m_GetDragHandler += value;
                 }
             }
@@ -564,7 +565,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetDragHandler -= value;
                     if(m_GetDragHandler == null) {
-                        CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 4, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_activate_callback(NativePtr, 4, 0);
                     }
                 }
             }
@@ -600,11 +601,7 @@ namespace Chromium {
                     if(m_GetFindHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    if(cfx_client_get_find_handler == null) {
-                        cfx_client_get_find_handler = get_find_handler;
-                        cfx_client_get_find_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_client_get_find_handler);
-                    }
-                    CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 5, cfx_client_get_find_handler_ptr);
+                    CfxApi.Client.cfx_client_activate_callback(NativePtr, 5, 1);
                     m_GetFindHandler += value;
                 }
             }
@@ -612,7 +609,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetFindHandler -= value;
                     if(m_GetFindHandler == null) {
-                        CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 5, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_activate_callback(NativePtr, 5, 0);
                     }
                 }
             }
@@ -648,11 +645,7 @@ namespace Chromium {
                     if(m_GetFocusHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    if(cfx_client_get_focus_handler == null) {
-                        cfx_client_get_focus_handler = get_focus_handler;
-                        cfx_client_get_focus_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_client_get_focus_handler);
-                    }
-                    CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 6, cfx_client_get_focus_handler_ptr);
+                    CfxApi.Client.cfx_client_activate_callback(NativePtr, 6, 1);
                     m_GetFocusHandler += value;
                 }
             }
@@ -660,7 +653,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetFocusHandler -= value;
                     if(m_GetFocusHandler == null) {
-                        CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 6, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_activate_callback(NativePtr, 6, 0);
                     }
                 }
             }
@@ -697,11 +690,7 @@ namespace Chromium {
                     if(m_GetGeolocationHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    if(cfx_client_get_geolocation_handler == null) {
-                        cfx_client_get_geolocation_handler = get_geolocation_handler;
-                        cfx_client_get_geolocation_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_client_get_geolocation_handler);
-                    }
-                    CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 7, cfx_client_get_geolocation_handler_ptr);
+                    CfxApi.Client.cfx_client_activate_callback(NativePtr, 7, 1);
                     m_GetGeolocationHandler += value;
                 }
             }
@@ -709,7 +698,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetGeolocationHandler -= value;
                     if(m_GetGeolocationHandler == null) {
-                        CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 7, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_activate_callback(NativePtr, 7, 0);
                     }
                 }
             }
@@ -746,11 +735,7 @@ namespace Chromium {
                     if(m_GetJsDialogHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    if(cfx_client_get_jsdialog_handler == null) {
-                        cfx_client_get_jsdialog_handler = get_jsdialog_handler;
-                        cfx_client_get_jsdialog_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_client_get_jsdialog_handler);
-                    }
-                    CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 8, cfx_client_get_jsdialog_handler_ptr);
+                    CfxApi.Client.cfx_client_activate_callback(NativePtr, 8, 1);
                     m_GetJsDialogHandler += value;
                 }
             }
@@ -758,7 +743,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetJsDialogHandler -= value;
                     if(m_GetJsDialogHandler == null) {
-                        CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 8, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_activate_callback(NativePtr, 8, 0);
                     }
                 }
             }
@@ -794,11 +779,7 @@ namespace Chromium {
                     if(m_GetKeyboardHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    if(cfx_client_get_keyboard_handler == null) {
-                        cfx_client_get_keyboard_handler = get_keyboard_handler;
-                        cfx_client_get_keyboard_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_client_get_keyboard_handler);
-                    }
-                    CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 9, cfx_client_get_keyboard_handler_ptr);
+                    CfxApi.Client.cfx_client_activate_callback(NativePtr, 9, 1);
                     m_GetKeyboardHandler += value;
                 }
             }
@@ -806,7 +787,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetKeyboardHandler -= value;
                     if(m_GetKeyboardHandler == null) {
-                        CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 9, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_activate_callback(NativePtr, 9, 0);
                     }
                 }
             }
@@ -842,11 +823,7 @@ namespace Chromium {
                     if(m_GetLifeSpanHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    if(cfx_client_get_life_span_handler == null) {
-                        cfx_client_get_life_span_handler = get_life_span_handler;
-                        cfx_client_get_life_span_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_client_get_life_span_handler);
-                    }
-                    CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 10, cfx_client_get_life_span_handler_ptr);
+                    CfxApi.Client.cfx_client_activate_callback(NativePtr, 10, 1);
                     m_GetLifeSpanHandler += value;
                 }
             }
@@ -854,7 +831,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetLifeSpanHandler -= value;
                     if(m_GetLifeSpanHandler == null) {
-                        CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 10, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_activate_callback(NativePtr, 10, 0);
                     }
                 }
             }
@@ -890,11 +867,7 @@ namespace Chromium {
                     if(m_GetLoadHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    if(cfx_client_get_load_handler == null) {
-                        cfx_client_get_load_handler = get_load_handler;
-                        cfx_client_get_load_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_client_get_load_handler);
-                    }
-                    CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 11, cfx_client_get_load_handler_ptr);
+                    CfxApi.Client.cfx_client_activate_callback(NativePtr, 11, 1);
                     m_GetLoadHandler += value;
                 }
             }
@@ -902,7 +875,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetLoadHandler -= value;
                     if(m_GetLoadHandler == null) {
-                        CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 11, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_activate_callback(NativePtr, 11, 0);
                     }
                 }
             }
@@ -938,11 +911,7 @@ namespace Chromium {
                     if(m_GetRenderHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    if(cfx_client_get_render_handler == null) {
-                        cfx_client_get_render_handler = get_render_handler;
-                        cfx_client_get_render_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_client_get_render_handler);
-                    }
-                    CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 12, cfx_client_get_render_handler_ptr);
+                    CfxApi.Client.cfx_client_activate_callback(NativePtr, 12, 1);
                     m_GetRenderHandler += value;
                 }
             }
@@ -950,7 +919,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetRenderHandler -= value;
                     if(m_GetRenderHandler == null) {
-                        CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 12, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_activate_callback(NativePtr, 12, 0);
                     }
                 }
             }
@@ -986,11 +955,7 @@ namespace Chromium {
                     if(m_GetRequestHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    if(cfx_client_get_request_handler == null) {
-                        cfx_client_get_request_handler = get_request_handler;
-                        cfx_client_get_request_handler_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_client_get_request_handler);
-                    }
-                    CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 13, cfx_client_get_request_handler_ptr);
+                    CfxApi.Client.cfx_client_activate_callback(NativePtr, 13, 1);
                     m_GetRequestHandler += value;
                 }
             }
@@ -998,7 +963,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetRequestHandler -= value;
                     if(m_GetRequestHandler == null) {
-                        CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 13, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_activate_callback(NativePtr, 13, 0);
                     }
                 }
             }
@@ -1034,11 +999,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnProcessMessageReceived == null) {
-                        if(cfx_client_on_process_message_received == null) {
-                            cfx_client_on_process_message_received = on_process_message_received;
-                            cfx_client_on_process_message_received_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_client_on_process_message_received);
-                        }
-                        CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 14, cfx_client_on_process_message_received_ptr);
+                        CfxApi.Client.cfx_client_activate_callback(NativePtr, 14, 1);
                     }
                     m_OnProcessMessageReceived += value;
                 }
@@ -1047,7 +1008,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnProcessMessageReceived -= value;
                     if(m_OnProcessMessageReceived == null) {
-                        CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 14, IntPtr.Zero);
+                        CfxApi.Client.cfx_client_activate_callback(NativePtr, 14, 0);
                     }
                 }
             }
@@ -1058,63 +1019,63 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_GetContextMenuHandler != null) {
                 m_GetContextMenuHandler = null;
-                CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.Client.cfx_client_activate_callback(NativePtr, 0, 0);
             }
             if(m_GetDialogHandler != null) {
                 m_GetDialogHandler = null;
-                CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.Client.cfx_client_activate_callback(NativePtr, 1, 0);
             }
             if(m_GetDisplayHandler != null) {
                 m_GetDisplayHandler = null;
-                CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                CfxApi.Client.cfx_client_activate_callback(NativePtr, 2, 0);
             }
             if(m_GetDownloadHandler != null) {
                 m_GetDownloadHandler = null;
-                CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                CfxApi.Client.cfx_client_activate_callback(NativePtr, 3, 0);
             }
             if(m_GetDragHandler != null) {
                 m_GetDragHandler = null;
-                CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 4, IntPtr.Zero);
+                CfxApi.Client.cfx_client_activate_callback(NativePtr, 4, 0);
             }
             if(m_GetFindHandler != null) {
                 m_GetFindHandler = null;
-                CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 5, IntPtr.Zero);
+                CfxApi.Client.cfx_client_activate_callback(NativePtr, 5, 0);
             }
             if(m_GetFocusHandler != null) {
                 m_GetFocusHandler = null;
-                CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 6, IntPtr.Zero);
+                CfxApi.Client.cfx_client_activate_callback(NativePtr, 6, 0);
             }
             if(m_GetGeolocationHandler != null) {
                 m_GetGeolocationHandler = null;
-                CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 7, IntPtr.Zero);
+                CfxApi.Client.cfx_client_activate_callback(NativePtr, 7, 0);
             }
             if(m_GetJsDialogHandler != null) {
                 m_GetJsDialogHandler = null;
-                CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 8, IntPtr.Zero);
+                CfxApi.Client.cfx_client_activate_callback(NativePtr, 8, 0);
             }
             if(m_GetKeyboardHandler != null) {
                 m_GetKeyboardHandler = null;
-                CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 9, IntPtr.Zero);
+                CfxApi.Client.cfx_client_activate_callback(NativePtr, 9, 0);
             }
             if(m_GetLifeSpanHandler != null) {
                 m_GetLifeSpanHandler = null;
-                CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 10, IntPtr.Zero);
+                CfxApi.Client.cfx_client_activate_callback(NativePtr, 10, 0);
             }
             if(m_GetLoadHandler != null) {
                 m_GetLoadHandler = null;
-                CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 11, IntPtr.Zero);
+                CfxApi.Client.cfx_client_activate_callback(NativePtr, 11, 0);
             }
             if(m_GetRenderHandler != null) {
                 m_GetRenderHandler = null;
-                CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 12, IntPtr.Zero);
+                CfxApi.Client.cfx_client_activate_callback(NativePtr, 12, 0);
             }
             if(m_GetRequestHandler != null) {
                 m_GetRequestHandler = null;
-                CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 13, IntPtr.Zero);
+                CfxApi.Client.cfx_client_activate_callback(NativePtr, 13, 0);
             }
             if(m_OnProcessMessageReceived != null) {
                 m_OnProcessMessageReceived = null;
-                CfxApi.Client.cfx_client_set_managed_callback(NativePtr, 14, IntPtr.Zero);
+                CfxApi.Client.cfx_client_activate_callback(NativePtr, 14, 0);
             }
             base.OnDispose(nativePtr);
         }

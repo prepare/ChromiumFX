@@ -55,11 +55,24 @@ namespace Chromium {
 
         private static object eventLock = new object();
 
+        internal static void SetNativeCallbacks() {
+            on_jsdialog_native = on_jsdialog;
+            on_before_unload_dialog_native = on_before_unload_dialog;
+            on_reset_dialog_state_native = on_reset_dialog_state;
+            on_dialog_closed_native = on_dialog_closed;
+            var setCallbacks = (CfxApi.cfx_set_ptr_4_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_jsdialog_handler_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_4_delegate));
+            setCallbacks(
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_jsdialog_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_before_unload_dialog_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_reset_dialog_state_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_dialog_closed_native)
+            );
+        }
+
         // on_jsdialog
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_jsdialog_handler_on_jsdialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr origin_url_str, int origin_url_length, int dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback, out int suppress_message);
-        private static cfx_jsdialog_handler_on_jsdialog_delegate cfx_jsdialog_handler_on_jsdialog;
-        private static IntPtr cfx_jsdialog_handler_on_jsdialog_ptr;
+        private delegate void on_jsdialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr origin_url_str, int origin_url_length, int dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback, out int suppress_message);
+        private static on_jsdialog_delegate on_jsdialog_native;
 
         internal static void on_jsdialog(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr origin_url_str, int origin_url_length, int dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback, out int suppress_message) {
             var self = (CfxJsDialogHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -80,9 +93,8 @@ namespace Chromium {
 
         // on_before_unload_dialog
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_jsdialog_handler_on_before_unload_dialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr message_text_str, int message_text_length, int is_reload, IntPtr callback);
-        private static cfx_jsdialog_handler_on_before_unload_dialog_delegate cfx_jsdialog_handler_on_before_unload_dialog;
-        private static IntPtr cfx_jsdialog_handler_on_before_unload_dialog_ptr;
+        private delegate void on_before_unload_dialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr message_text_str, int message_text_length, int is_reload, IntPtr callback);
+        private static on_before_unload_dialog_delegate on_before_unload_dialog_native;
 
         internal static void on_before_unload_dialog(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr message_text_str, int message_text_length, int is_reload, IntPtr callback) {
             var self = (CfxJsDialogHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -101,9 +113,8 @@ namespace Chromium {
 
         // on_reset_dialog_state
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_jsdialog_handler_on_reset_dialog_state_delegate(IntPtr gcHandlePtr, IntPtr browser);
-        private static cfx_jsdialog_handler_on_reset_dialog_state_delegate cfx_jsdialog_handler_on_reset_dialog_state;
-        private static IntPtr cfx_jsdialog_handler_on_reset_dialog_state_ptr;
+        private delegate void on_reset_dialog_state_delegate(IntPtr gcHandlePtr, IntPtr browser);
+        private static on_reset_dialog_state_delegate on_reset_dialog_state_native;
 
         internal static void on_reset_dialog_state(IntPtr gcHandlePtr, IntPtr browser) {
             var self = (CfxJsDialogHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -119,9 +130,8 @@ namespace Chromium {
 
         // on_dialog_closed
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_jsdialog_handler_on_dialog_closed_delegate(IntPtr gcHandlePtr, IntPtr browser);
-        private static cfx_jsdialog_handler_on_dialog_closed_delegate cfx_jsdialog_handler_on_dialog_closed;
-        private static IntPtr cfx_jsdialog_handler_on_dialog_closed_ptr;
+        private delegate void on_dialog_closed_delegate(IntPtr gcHandlePtr, IntPtr browser);
+        private static on_dialog_closed_delegate on_dialog_closed_native;
 
         internal static void on_dialog_closed(IntPtr gcHandlePtr, IntPtr browser) {
             var self = (CfxJsDialogHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -163,11 +173,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnJsDialog == null) {
-                        if(cfx_jsdialog_handler_on_jsdialog == null) {
-                            cfx_jsdialog_handler_on_jsdialog = on_jsdialog;
-                            cfx_jsdialog_handler_on_jsdialog_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_jsdialog_handler_on_jsdialog);
-                        }
-                        CfxApi.JsDialogHandler.cfx_jsdialog_handler_set_managed_callback(NativePtr, 0, cfx_jsdialog_handler_on_jsdialog_ptr);
+                        CfxApi.JsDialogHandler.cfx_jsdialog_handler_activate_callback(NativePtr, 0, 1);
                     }
                     m_OnJsDialog += value;
                 }
@@ -176,7 +182,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnJsDialog -= value;
                     if(m_OnJsDialog == null) {
-                        CfxApi.JsDialogHandler.cfx_jsdialog_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.JsDialogHandler.cfx_jsdialog_handler_activate_callback(NativePtr, 0, 0);
                     }
                 }
             }
@@ -200,11 +206,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnBeforeUnloadDialog == null) {
-                        if(cfx_jsdialog_handler_on_before_unload_dialog == null) {
-                            cfx_jsdialog_handler_on_before_unload_dialog = on_before_unload_dialog;
-                            cfx_jsdialog_handler_on_before_unload_dialog_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_jsdialog_handler_on_before_unload_dialog);
-                        }
-                        CfxApi.JsDialogHandler.cfx_jsdialog_handler_set_managed_callback(NativePtr, 1, cfx_jsdialog_handler_on_before_unload_dialog_ptr);
+                        CfxApi.JsDialogHandler.cfx_jsdialog_handler_activate_callback(NativePtr, 1, 1);
                     }
                     m_OnBeforeUnloadDialog += value;
                 }
@@ -213,7 +215,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnBeforeUnloadDialog -= value;
                     if(m_OnBeforeUnloadDialog == null) {
-                        CfxApi.JsDialogHandler.cfx_jsdialog_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.JsDialogHandler.cfx_jsdialog_handler_activate_callback(NativePtr, 1, 0);
                     }
                 }
             }
@@ -234,11 +236,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnResetDialogState == null) {
-                        if(cfx_jsdialog_handler_on_reset_dialog_state == null) {
-                            cfx_jsdialog_handler_on_reset_dialog_state = on_reset_dialog_state;
-                            cfx_jsdialog_handler_on_reset_dialog_state_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_jsdialog_handler_on_reset_dialog_state);
-                        }
-                        CfxApi.JsDialogHandler.cfx_jsdialog_handler_set_managed_callback(NativePtr, 2, cfx_jsdialog_handler_on_reset_dialog_state_ptr);
+                        CfxApi.JsDialogHandler.cfx_jsdialog_handler_activate_callback(NativePtr, 2, 1);
                     }
                     m_OnResetDialogState += value;
                 }
@@ -247,7 +245,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnResetDialogState -= value;
                     if(m_OnResetDialogState == null) {
-                        CfxApi.JsDialogHandler.cfx_jsdialog_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                        CfxApi.JsDialogHandler.cfx_jsdialog_handler_activate_callback(NativePtr, 2, 0);
                     }
                 }
             }
@@ -266,11 +264,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnDialogClosed == null) {
-                        if(cfx_jsdialog_handler_on_dialog_closed == null) {
-                            cfx_jsdialog_handler_on_dialog_closed = on_dialog_closed;
-                            cfx_jsdialog_handler_on_dialog_closed_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_jsdialog_handler_on_dialog_closed);
-                        }
-                        CfxApi.JsDialogHandler.cfx_jsdialog_handler_set_managed_callback(NativePtr, 3, cfx_jsdialog_handler_on_dialog_closed_ptr);
+                        CfxApi.JsDialogHandler.cfx_jsdialog_handler_activate_callback(NativePtr, 3, 1);
                     }
                     m_OnDialogClosed += value;
                 }
@@ -279,7 +273,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnDialogClosed -= value;
                     if(m_OnDialogClosed == null) {
-                        CfxApi.JsDialogHandler.cfx_jsdialog_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                        CfxApi.JsDialogHandler.cfx_jsdialog_handler_activate_callback(NativePtr, 3, 0);
                     }
                 }
             }
@@ -290,19 +284,19 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnJsDialog != null) {
                 m_OnJsDialog = null;
-                CfxApi.JsDialogHandler.cfx_jsdialog_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.JsDialogHandler.cfx_jsdialog_handler_activate_callback(NativePtr, 0, 0);
             }
             if(m_OnBeforeUnloadDialog != null) {
                 m_OnBeforeUnloadDialog = null;
-                CfxApi.JsDialogHandler.cfx_jsdialog_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.JsDialogHandler.cfx_jsdialog_handler_activate_callback(NativePtr, 1, 0);
             }
             if(m_OnResetDialogState != null) {
                 m_OnResetDialogState = null;
-                CfxApi.JsDialogHandler.cfx_jsdialog_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                CfxApi.JsDialogHandler.cfx_jsdialog_handler_activate_callback(NativePtr, 2, 0);
             }
             if(m_OnDialogClosed != null) {
                 m_OnDialogClosed = null;
-                CfxApi.JsDialogHandler.cfx_jsdialog_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                CfxApi.JsDialogHandler.cfx_jsdialog_handler_activate_callback(NativePtr, 3, 0);
             }
             base.OnDispose(nativePtr);
         }

@@ -71,21 +71,24 @@ static gc_handle_t cfx_run_file_dialog_callback_get_gc_handle(cfx_run_file_dialo
     return self->gc_handle;
 }
 
-// on_file_dialog_dismissed
-
+// managed callbacks
 void (CEF_CALLBACK *cfx_run_file_dialog_callback_on_file_dialog_dismissed_callback)(gc_handle_t self, int selected_accept_filter, cef_string_list_t file_paths);
+
+static void cfx_run_file_dialog_callback_set_managed_callbacks(void *on_file_dialog_dismissed) {
+    cfx_run_file_dialog_callback_on_file_dialog_dismissed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int selected_accept_filter, cef_string_list_t file_paths)) on_file_dialog_dismissed;
+}
+
+// on_file_dialog_dismissed
 
 void CEF_CALLBACK cfx_run_file_dialog_callback_on_file_dialog_dismissed(cef_run_file_dialog_callback_t* self, int selected_accept_filter, cef_string_list_t file_paths) {
     cfx_run_file_dialog_callback_on_file_dialog_dismissed_callback(((cfx_run_file_dialog_callback_t*)self)->gc_handle, selected_accept_filter, file_paths);
 }
 
 
-static void cfx_run_file_dialog_callback_set_managed_callback(cef_run_file_dialog_callback_t* self, int index, void* callback) {
+static void cfx_run_file_dialog_callback_activate_callback(cef_run_file_dialog_callback_t* self, int index, int active) {
     switch(index) {
     case 0:
-        if(callback && !cfx_run_file_dialog_callback_on_file_dialog_dismissed_callback)
-            cfx_run_file_dialog_callback_on_file_dialog_dismissed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int selected_accept_filter, cef_string_list_t file_paths)) callback;
-        self->on_file_dialog_dismissed = callback ? cfx_run_file_dialog_callback_on_file_dialog_dismissed : 0;
+        self->on_file_dialog_dismissed = active ? cfx_run_file_dialog_callback_on_file_dialog_dismissed : 0;
         break;
     }
 }

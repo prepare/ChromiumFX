@@ -71,9 +71,14 @@ static gc_handle_t cfx_web_plugin_info_visitor_get_gc_handle(cfx_web_plugin_info
     return self->gc_handle;
 }
 
-// visit
-
+// managed callbacks
 void (CEF_CALLBACK *cfx_web_plugin_info_visitor_visit_callback)(gc_handle_t self, int* __retval, cef_web_plugin_info_t* info, int count, int total);
+
+static void cfx_web_plugin_info_visitor_set_managed_callbacks(void *visit) {
+    cfx_web_plugin_info_visitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_web_plugin_info_t* info, int count, int total)) visit;
+}
+
+// visit
 
 int CEF_CALLBACK cfx_web_plugin_info_visitor_visit(cef_web_plugin_info_visitor_t* self, cef_web_plugin_info_t* info, int count, int total) {
     int __retval;
@@ -82,12 +87,10 @@ int CEF_CALLBACK cfx_web_plugin_info_visitor_visit(cef_web_plugin_info_visitor_t
 }
 
 
-static void cfx_web_plugin_info_visitor_set_managed_callback(cef_web_plugin_info_visitor_t* self, int index, void* callback) {
+static void cfx_web_plugin_info_visitor_activate_callback(cef_web_plugin_info_visitor_t* self, int index, int active) {
     switch(index) {
     case 0:
-        if(callback && !cfx_web_plugin_info_visitor_visit_callback)
-            cfx_web_plugin_info_visitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_web_plugin_info_t* info, int count, int total)) callback;
-        self->visit = callback ? cfx_web_plugin_info_visitor_visit : 0;
+        self->visit = active ? cfx_web_plugin_info_visitor_visit : 0;
         break;
     }
 }

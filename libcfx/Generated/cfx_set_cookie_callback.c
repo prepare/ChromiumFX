@@ -71,21 +71,24 @@ static gc_handle_t cfx_set_cookie_callback_get_gc_handle(cfx_set_cookie_callback
     return self->gc_handle;
 }
 
-// on_complete
-
+// managed callbacks
 void (CEF_CALLBACK *cfx_set_cookie_callback_on_complete_callback)(gc_handle_t self, int success);
+
+static void cfx_set_cookie_callback_set_managed_callbacks(void *on_complete) {
+    cfx_set_cookie_callback_on_complete_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int success)) on_complete;
+}
+
+// on_complete
 
 void CEF_CALLBACK cfx_set_cookie_callback_on_complete(cef_set_cookie_callback_t* self, int success) {
     cfx_set_cookie_callback_on_complete_callback(((cfx_set_cookie_callback_t*)self)->gc_handle, success);
 }
 
 
-static void cfx_set_cookie_callback_set_managed_callback(cef_set_cookie_callback_t* self, int index, void* callback) {
+static void cfx_set_cookie_callback_activate_callback(cef_set_cookie_callback_t* self, int index, int active) {
     switch(index) {
     case 0:
-        if(callback && !cfx_set_cookie_callback_on_complete_callback)
-            cfx_set_cookie_callback_on_complete_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int success)) callback;
-        self->on_complete = callback ? cfx_set_cookie_callback_on_complete : 0;
+        self->on_complete = active ? cfx_set_cookie_callback_on_complete : 0;
         break;
     }
 }

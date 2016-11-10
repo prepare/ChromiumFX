@@ -71,21 +71,24 @@ static gc_handle_t cfx_resolve_callback_get_gc_handle(cfx_resolve_callback_t* se
     return self->gc_handle;
 }
 
-// on_resolve_completed
-
+// managed callbacks
 void (CEF_CALLBACK *cfx_resolve_callback_on_resolve_completed_callback)(gc_handle_t self, cef_errorcode_t result, cef_string_list_t resolved_ips);
+
+static void cfx_resolve_callback_set_managed_callbacks(void *on_resolve_completed) {
+    cfx_resolve_callback_on_resolve_completed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_errorcode_t result, cef_string_list_t resolved_ips)) on_resolve_completed;
+}
+
+// on_resolve_completed
 
 void CEF_CALLBACK cfx_resolve_callback_on_resolve_completed(cef_resolve_callback_t* self, cef_errorcode_t result, cef_string_list_t resolved_ips) {
     cfx_resolve_callback_on_resolve_completed_callback(((cfx_resolve_callback_t*)self)->gc_handle, result, resolved_ips);
 }
 
 
-static void cfx_resolve_callback_set_managed_callback(cef_resolve_callback_t* self, int index, void* callback) {
+static void cfx_resolve_callback_activate_callback(cef_resolve_callback_t* self, int index, int active) {
     switch(index) {
     case 0:
-        if(callback && !cfx_resolve_callback_on_resolve_completed_callback)
-            cfx_resolve_callback_on_resolve_completed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_errorcode_t result, cef_string_list_t resolved_ips)) callback;
-        self->on_resolve_completed = callback ? cfx_resolve_callback_on_resolve_completed : 0;
+        self->on_resolve_completed = active ? cfx_resolve_callback_on_resolve_completed : 0;
         break;
     }
 }

@@ -56,11 +56,20 @@ namespace Chromium {
 
         private static object eventLock = new object();
 
+        internal static void SetNativeCallbacks() {
+            execute_command_native = execute_command;
+            menu_will_show_native = menu_will_show;
+            var setCallbacks = (CfxApi.cfx_set_ptr_2_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_menu_model_delegate_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_2_delegate));
+            setCallbacks(
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(execute_command_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(menu_will_show_native)
+            );
+        }
+
         // execute_command
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_menu_model_delegate_execute_command_delegate(IntPtr gcHandlePtr, IntPtr menu_model, int command_id, int event_flags);
-        private static cfx_menu_model_delegate_execute_command_delegate cfx_menu_model_delegate_execute_command;
-        private static IntPtr cfx_menu_model_delegate_execute_command_ptr;
+        private delegate void execute_command_delegate(IntPtr gcHandlePtr, IntPtr menu_model, int command_id, int event_flags);
+        private static execute_command_delegate execute_command_native;
 
         internal static void execute_command(IntPtr gcHandlePtr, IntPtr menu_model, int command_id, int event_flags) {
             var self = (CfxMenuModelDelegate)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -76,9 +85,8 @@ namespace Chromium {
 
         // menu_will_show
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_menu_model_delegate_menu_will_show_delegate(IntPtr gcHandlePtr, IntPtr menu_model);
-        private static cfx_menu_model_delegate_menu_will_show_delegate cfx_menu_model_delegate_menu_will_show;
-        private static IntPtr cfx_menu_model_delegate_menu_will_show_ptr;
+        private delegate void menu_will_show_delegate(IntPtr gcHandlePtr, IntPtr menu_model);
+        private static menu_will_show_delegate menu_will_show_native;
 
         internal static void menu_will_show(IntPtr gcHandlePtr, IntPtr menu_model) {
             var self = (CfxMenuModelDelegate)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -107,11 +115,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_ExecuteCommand == null) {
-                        if(cfx_menu_model_delegate_execute_command == null) {
-                            cfx_menu_model_delegate_execute_command = execute_command;
-                            cfx_menu_model_delegate_execute_command_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_menu_model_delegate_execute_command);
-                        }
-                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_managed_callback(NativePtr, 0, cfx_menu_model_delegate_execute_command_ptr);
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_activate_callback(NativePtr, 0, 1);
                     }
                     m_ExecuteCommand += value;
                 }
@@ -120,7 +124,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_ExecuteCommand -= value;
                     if(m_ExecuteCommand == null) {
-                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_activate_callback(NativePtr, 0, 0);
                     }
                 }
             }
@@ -139,11 +143,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_MenuWillShow == null) {
-                        if(cfx_menu_model_delegate_menu_will_show == null) {
-                            cfx_menu_model_delegate_menu_will_show = menu_will_show;
-                            cfx_menu_model_delegate_menu_will_show_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_menu_model_delegate_menu_will_show);
-                        }
-                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_managed_callback(NativePtr, 1, cfx_menu_model_delegate_menu_will_show_ptr);
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_activate_callback(NativePtr, 1, 1);
                     }
                     m_MenuWillShow += value;
                 }
@@ -152,7 +152,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_MenuWillShow -= value;
                     if(m_MenuWillShow == null) {
-                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_activate_callback(NativePtr, 1, 0);
                     }
                 }
             }
@@ -163,11 +163,11 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_ExecuteCommand != null) {
                 m_ExecuteCommand = null;
-                CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.MenuModelDelegate.cfx_menu_model_delegate_activate_callback(NativePtr, 0, 0);
             }
             if(m_MenuWillShow != null) {
                 m_MenuWillShow = null;
-                CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.MenuModelDelegate.cfx_menu_model_delegate_activate_callback(NativePtr, 1, 0);
             }
             base.OnDispose(nativePtr);
         }

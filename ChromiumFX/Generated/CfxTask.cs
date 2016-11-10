@@ -59,11 +59,18 @@ namespace Chromium {
 
         private static object eventLock = new object();
 
+        internal static void SetNativeCallbacks() {
+            execute_native = execute;
+            var setCallbacks = (CfxApi.cfx_set_ptr_1_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_task_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_1_delegate));
+            setCallbacks(
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(execute_native)
+            );
+        }
+
         // execute
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_task_execute_delegate(IntPtr gcHandlePtr);
-        private static cfx_task_execute_delegate cfx_task_execute;
-        private static IntPtr cfx_task_execute_ptr;
+        private delegate void execute_delegate(IntPtr gcHandlePtr);
+        private static execute_delegate execute_native;
 
         internal static void execute(IntPtr gcHandlePtr) {
             var self = (CfxTask)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -90,11 +97,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_Execute == null) {
-                        if(cfx_task_execute == null) {
-                            cfx_task_execute = execute;
-                            cfx_task_execute_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_task_execute);
-                        }
-                        CfxApi.Task.cfx_task_set_managed_callback(NativePtr, 0, cfx_task_execute_ptr);
+                        CfxApi.Task.cfx_task_activate_callback(NativePtr, 0, 1);
                     }
                     m_Execute += value;
                 }
@@ -103,7 +106,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Execute -= value;
                     if(m_Execute == null) {
-                        CfxApi.Task.cfx_task_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.Task.cfx_task_activate_callback(NativePtr, 0, 0);
                     }
                 }
             }
@@ -114,7 +117,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_Execute != null) {
                 m_Execute = null;
-                CfxApi.Task.cfx_task_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.Task.cfx_task_activate_callback(NativePtr, 0, 0);
             }
             base.OnDispose(nativePtr);
         }

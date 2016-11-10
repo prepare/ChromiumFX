@@ -31,6 +31,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 public class StructMember {
     public readonly ApiType MemberType;
@@ -306,6 +307,27 @@ public class CfxClassBuilder {
         b.EndBlock();
         b.AppendLine();
 
+        b.AppendLine("// managed callbacks");
+
+        foreach(var sm in StructCallbacks) {
+            var cb = sm.MemberType.AsCefCallbackType;
+            b.AppendLine("void (CEF_CALLBACK *{0}_callback)({1});", cb.NativeCallbackName, cb.Signature.NativeParameterList);
+        }
+        b.AppendLine();
+
+        var callbackArgs = new StringBuilder();
+        callbackArgs.Append("void *" + StructCallbacks[0].Name);
+        for(int i = 1; i < StructCallbacks.Length; ++i) {
+            callbackArgs.Append(", void *" + StructCallbacks[i].Name);
+        }
+
+        b.BeginBlock("static void {0}_set_managed_callbacks({1})", CfxName, callbackArgs);
+        foreach(var cb in StructCallbacks) {
+            b.AppendLine("{0}_callback = (void (CEF_CALLBACK *)({1})) {2};", cb.MemberType.AsCefCallbackType.NativeCallbackName, cb.MemberType.AsCefCallbackType.Signature.NativeParameterList, cb.Name);
+        }
+        b.EndBlock();
+        b.AppendLine();
+
         foreach(var sm in StructMembers) {
             if(sm.MemberType.IsCefCallbackType) {
                 b.AppendLine("// {0}", sm);
@@ -313,8 +335,6 @@ public class CfxClassBuilder {
 
                 var cb = sm.MemberType.AsCefCallbackType;
 
-                b.AppendLine("void (CEF_CALLBACK *{0}_callback)({1});", cb.NativeCallbackName, cb.Signature.NativeParameterList);
-                b.AppendLine();
                 b.BeginBlock("{0} CEF_CALLBACK {1}({2})", cb.NativeReturnType.OriginalSymbol, cb.NativeCallbackName, cb.Signature.OriginalParameterList);
                 if(!cb.NativeReturnType.IsVoid) {
                     b.AppendLine("{0} __retval;", cb.NativeReturnType.NativeSymbol);
@@ -338,7 +358,7 @@ public class CfxClassBuilder {
             }
         }
 
-        b.BeginBlock("static void {0}_set_managed_callback({1}* self, int index, void* callback)", CfxName, OriginalSymbol);
+        b.BeginBlock("static void {0}_activate_callback({1}* self, int index, int active)", CfxName, OriginalSymbol);
         b.BeginBlock("switch(index)");
         var index = 0;
         foreach(var sm in StructMembers) {
@@ -346,11 +366,7 @@ public class CfxClassBuilder {
                 b.DecreaseIndent();
                 b.AppendLine("case {0}:", index);
                 b.IncreaseIndent();
-                b.AppendLine("if(callback && !{0}_callback)", sm.MemberType.AsCefCallbackType.NativeCallbackName);
-                b.IncreaseIndent();
-                b.AppendLine("{0}_callback = (void (CEF_CALLBACK *)({1})) callback;", sm.MemberType.AsCefCallbackType.NativeCallbackName, sm.MemberType.AsCefCallbackType.Signature.NativeParameterList, index);
-                b.DecreaseIndent();
-                b.AppendLine("self->{0} = callback ? {1} : 0;", sm.Name, sm.MemberType.AsCefCallbackType.NativeCallbackName);
+                b.AppendLine("self->{0} = active ? {1} : 0;", sm.Name, sm.MemberType.AsCefCallbackType.NativeCallbackName);
                 b.AppendLine("break;");
 
                 index += 1;
@@ -477,7 +493,7 @@ public class CfxClassBuilder {
                 if(Category == StructCategory.ApiCallbacks) {
                     b.AppendLine("public static cfx_ctor_with_gc_handle_delegate {0}_ctor;", CfxName);
                     b.AppendLine("public static cfx_get_gc_handle_delegate {0}_get_gc_handle;", CfxName);
-                    b.AppendLine("public static cfx_set_callback_delegate {0}_set_managed_callback;", CfxName);
+                    b.AppendLine("public static cfx_set_callback_delegate {0}_activate_callback;", CfxName);
                     b.AppendLine();
                 }
 
@@ -594,14 +610,32 @@ public class CfxClassBuilder {
         b.AppendLine("private static object eventLock = new object();");
         b.AppendLine();
 
+        b.BeginBlock("internal static void SetNativeCallbacks()");
+
+        foreach(var sm in StructCallbacks) {
+            b.AppendLine("{1}_native = {1};", CfxName, sm.Name);
+        }
+
+        b.AppendLine("var setCallbacks = (CfxApi.cfx_set_ptr_{0}_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.{1}_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_{0}_delegate));", StructCallbacks.Length, CfxName);
+        b.AppendLine("setCallbacks(");
+        b.IncreaseIndent();
+        for(int i = 0; i < StructCallbacks.Length - 1; ++i) {
+            b.AppendLine("System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate({0}_native),", StructCallbacks[i].Name);
+        }
+        b.AppendLine("System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate({0}_native)", StructCallbacks[StructCallbacks.Length - 1].Name);
+        b.DecreaseIndent();
+        b.AppendLine(");");
+
+        b.EndBlock();
+        b.AppendLine();
+
         foreach(var sm in StructCallbacks) {
             var cb = sm.Callback;
             var sig = cb.Signature;
 
             b.AppendComment(cb.ToString());
-            CodeSnippets.EmitPInvokeCallbackDelegate(b, CfxName + "_" + sm.Name, cb.Signature);
-            b.AppendLine("private static {0}_{1}_delegate {0}_{1};", CfxName, sm.Name);
-            b.AppendLine("private static IntPtr {0}_{1}_ptr;", CfxName, sm.Name);
+            CodeSnippets.EmitPInvokeCallbackDelegate(b, sm.Name, cb.Signature);
+            b.AppendLine("private static {0}_delegate {0}_native;", sm.Name);
             b.AppendLine();
 
             b.BeginFunction(sm.Name, "void", sig.PInvokeParameterList, "internal static");
@@ -645,7 +679,7 @@ public class CfxClassBuilder {
         foreach(var sm in StructCallbacks) {
             b.BeginIf("m_{0} != null", sm.PublicName);
             b.AppendLine("m_{0} = null;", sm.PublicName);
-            b.AppendLine("CfxApi.{0}.{1}_set_managed_callback(NativePtr, {2}, IntPtr.Zero);", ApiClassName, CfxName, cbIndex);
+            b.AppendLine("CfxApi.{0}.{1}_activate_callback(NativePtr, {2}, 0);", ApiClassName, CfxName, cbIndex);
             b.EndBlock();
             cbIndex += 1;
         }

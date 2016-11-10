@@ -71,9 +71,16 @@ static gc_handle_t cfx_menu_model_delegate_get_gc_handle(cfx_menu_model_delegate
     return self->gc_handle;
 }
 
-// execute_command
-
+// managed callbacks
 void (CEF_CALLBACK *cfx_menu_model_delegate_execute_command_callback)(gc_handle_t self, cef_menu_model_t* menu_model, int command_id, cef_event_flags_t event_flags);
+void (CEF_CALLBACK *cfx_menu_model_delegate_menu_will_show_callback)(gc_handle_t self, cef_menu_model_t* menu_model);
+
+static void cfx_menu_model_delegate_set_managed_callbacks(void *execute_command, void *menu_will_show) {
+    cfx_menu_model_delegate_execute_command_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_menu_model_t* menu_model, int command_id, cef_event_flags_t event_flags)) execute_command;
+    cfx_menu_model_delegate_menu_will_show_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_menu_model_t* menu_model)) menu_will_show;
+}
+
+// execute_command
 
 void CEF_CALLBACK cfx_menu_model_delegate_execute_command(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, int command_id, cef_event_flags_t event_flags) {
     cfx_menu_model_delegate_execute_command_callback(((cfx_menu_model_delegate_t*)self)->gc_handle, menu_model, command_id, event_flags);
@@ -82,24 +89,18 @@ void CEF_CALLBACK cfx_menu_model_delegate_execute_command(cef_menu_model_delegat
 
 // menu_will_show
 
-void (CEF_CALLBACK *cfx_menu_model_delegate_menu_will_show_callback)(gc_handle_t self, cef_menu_model_t* menu_model);
-
 void CEF_CALLBACK cfx_menu_model_delegate_menu_will_show(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model) {
     cfx_menu_model_delegate_menu_will_show_callback(((cfx_menu_model_delegate_t*)self)->gc_handle, menu_model);
 }
 
 
-static void cfx_menu_model_delegate_set_managed_callback(cef_menu_model_delegate_t* self, int index, void* callback) {
+static void cfx_menu_model_delegate_activate_callback(cef_menu_model_delegate_t* self, int index, int active) {
     switch(index) {
     case 0:
-        if(callback && !cfx_menu_model_delegate_execute_command_callback)
-            cfx_menu_model_delegate_execute_command_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_menu_model_t* menu_model, int command_id, cef_event_flags_t event_flags)) callback;
-        self->execute_command = callback ? cfx_menu_model_delegate_execute_command : 0;
+        self->execute_command = active ? cfx_menu_model_delegate_execute_command : 0;
         break;
     case 1:
-        if(callback && !cfx_menu_model_delegate_menu_will_show_callback)
-            cfx_menu_model_delegate_menu_will_show_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_menu_model_t* menu_model)) callback;
-        self->menu_will_show = callback ? cfx_menu_model_delegate_menu_will_show : 0;
+        self->menu_will_show = active ? cfx_menu_model_delegate_menu_will_show : 0;
         break;
     }
 }

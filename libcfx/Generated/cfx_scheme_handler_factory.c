@@ -71,9 +71,14 @@ static gc_handle_t cfx_scheme_handler_factory_get_gc_handle(cfx_scheme_handler_f
     return self->gc_handle;
 }
 
-// create
-
+// managed callbacks
 void (CEF_CALLBACK *cfx_scheme_handler_factory_create_callback)(gc_handle_t self, cef_resource_handler_t** __retval, cef_browser_t* browser, cef_frame_t* frame, char16 *scheme_name_str, int scheme_name_length, cef_request_t* request);
+
+static void cfx_scheme_handler_factory_set_managed_callbacks(void *create) {
+    cfx_scheme_handler_factory_create_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_resource_handler_t** __retval, cef_browser_t* browser, cef_frame_t* frame, char16 *scheme_name_str, int scheme_name_length, cef_request_t* request)) create;
+}
+
+// create
 
 cef_resource_handler_t* CEF_CALLBACK cfx_scheme_handler_factory_create(cef_scheme_handler_factory_t* self, cef_browser_t* browser, cef_frame_t* frame, const cef_string_t* scheme_name, cef_request_t* request) {
     cef_resource_handler_t* __retval;
@@ -85,12 +90,10 @@ cef_resource_handler_t* CEF_CALLBACK cfx_scheme_handler_factory_create(cef_schem
 }
 
 
-static void cfx_scheme_handler_factory_set_managed_callback(cef_scheme_handler_factory_t* self, int index, void* callback) {
+static void cfx_scheme_handler_factory_activate_callback(cef_scheme_handler_factory_t* self, int index, int active) {
     switch(index) {
     case 0:
-        if(callback && !cfx_scheme_handler_factory_create_callback)
-            cfx_scheme_handler_factory_create_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_resource_handler_t** __retval, cef_browser_t* browser, cef_frame_t* frame, char16 *scheme_name_str, int scheme_name_length, cef_request_t* request)) callback;
-        self->create = callback ? cfx_scheme_handler_factory_create : 0;
+        self->create = active ? cfx_scheme_handler_factory_create : 0;
         break;
     }
 }

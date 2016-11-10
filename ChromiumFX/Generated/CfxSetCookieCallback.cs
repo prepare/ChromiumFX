@@ -55,11 +55,18 @@ namespace Chromium {
 
         private static object eventLock = new object();
 
+        internal static void SetNativeCallbacks() {
+            on_complete_native = on_complete;
+            var setCallbacks = (CfxApi.cfx_set_ptr_1_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_set_cookie_callback_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_1_delegate));
+            setCallbacks(
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_complete_native)
+            );
+        }
+
         // on_complete
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_set_cookie_callback_on_complete_delegate(IntPtr gcHandlePtr, int success);
-        private static cfx_set_cookie_callback_on_complete_delegate cfx_set_cookie_callback_on_complete;
-        private static IntPtr cfx_set_cookie_callback_on_complete_ptr;
+        private delegate void on_complete_delegate(IntPtr gcHandlePtr, int success);
+        private static on_complete_delegate on_complete_native;
 
         internal static void on_complete(IntPtr gcHandlePtr, int success) {
             var self = (CfxSetCookieCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -87,11 +94,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnComplete == null) {
-                        if(cfx_set_cookie_callback_on_complete == null) {
-                            cfx_set_cookie_callback_on_complete = on_complete;
-                            cfx_set_cookie_callback_on_complete_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_set_cookie_callback_on_complete);
-                        }
-                        CfxApi.SetCookieCallback.cfx_set_cookie_callback_set_managed_callback(NativePtr, 0, cfx_set_cookie_callback_on_complete_ptr);
+                        CfxApi.SetCookieCallback.cfx_set_cookie_callback_activate_callback(NativePtr, 0, 1);
                     }
                     m_OnComplete += value;
                 }
@@ -100,7 +103,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnComplete -= value;
                     if(m_OnComplete == null) {
-                        CfxApi.SetCookieCallback.cfx_set_cookie_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.SetCookieCallback.cfx_set_cookie_callback_activate_callback(NativePtr, 0, 0);
                     }
                 }
             }
@@ -111,7 +114,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnComplete != null) {
                 m_OnComplete = null;
-                CfxApi.SetCookieCallback.cfx_set_cookie_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.SetCookieCallback.cfx_set_cookie_callback_activate_callback(NativePtr, 0, 0);
             }
             base.OnDispose(nativePtr);
         }

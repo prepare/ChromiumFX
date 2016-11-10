@@ -56,11 +56,18 @@ namespace Chromium {
 
         private static object eventLock = new object();
 
+        internal static void SetNativeCallbacks() {
+            create_native = create;
+            var setCallbacks = (CfxApi.cfx_set_ptr_1_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_scheme_handler_factory_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_1_delegate));
+            setCallbacks(
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(create_native)
+            );
+        }
+
         // create
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_scheme_handler_factory_create_delegate(IntPtr gcHandlePtr, out IntPtr __retval, IntPtr browser, IntPtr frame, IntPtr scheme_name_str, int scheme_name_length, IntPtr request);
-        private static cfx_scheme_handler_factory_create_delegate cfx_scheme_handler_factory_create;
-        private static IntPtr cfx_scheme_handler_factory_create_ptr;
+        private delegate void create_delegate(IntPtr gcHandlePtr, out IntPtr __retval, IntPtr browser, IntPtr frame, IntPtr scheme_name_str, int scheme_name_length, IntPtr request);
+        private static create_delegate create_native;
 
         internal static void create(IntPtr gcHandlePtr, out IntPtr __retval, IntPtr browser, IntPtr frame, IntPtr scheme_name_str, int scheme_name_length, IntPtr request) {
             var self = (CfxSchemeHandlerFactory)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -97,11 +104,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_Create == null) {
-                        if(cfx_scheme_handler_factory_create == null) {
-                            cfx_scheme_handler_factory_create = create;
-                            cfx_scheme_handler_factory_create_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_scheme_handler_factory_create);
-                        }
-                        CfxApi.SchemeHandlerFactory.cfx_scheme_handler_factory_set_managed_callback(NativePtr, 0, cfx_scheme_handler_factory_create_ptr);
+                        CfxApi.SchemeHandlerFactory.cfx_scheme_handler_factory_activate_callback(NativePtr, 0, 1);
                     }
                     m_Create += value;
                 }
@@ -110,7 +113,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Create -= value;
                     if(m_Create == null) {
-                        CfxApi.SchemeHandlerFactory.cfx_scheme_handler_factory_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.SchemeHandlerFactory.cfx_scheme_handler_factory_activate_callback(NativePtr, 0, 0);
                     }
                 }
             }
@@ -121,7 +124,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_Create != null) {
                 m_Create = null;
-                CfxApi.SchemeHandlerFactory.cfx_scheme_handler_factory_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.SchemeHandlerFactory.cfx_scheme_handler_factory_activate_callback(NativePtr, 0, 0);
             }
             base.OnDispose(nativePtr);
         }

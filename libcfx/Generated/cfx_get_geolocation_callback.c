@@ -71,21 +71,24 @@ static gc_handle_t cfx_get_geolocation_callback_get_gc_handle(cfx_get_geolocatio
     return self->gc_handle;
 }
 
-// on_location_update
-
+// managed callbacks
 void (CEF_CALLBACK *cfx_get_geolocation_callback_on_location_update_callback)(gc_handle_t self, const cef_geoposition_t* position);
+
+static void cfx_get_geolocation_callback_set_managed_callbacks(void *on_location_update) {
+    cfx_get_geolocation_callback_on_location_update_callback = (void (CEF_CALLBACK *)(gc_handle_t self, const cef_geoposition_t* position)) on_location_update;
+}
+
+// on_location_update
 
 void CEF_CALLBACK cfx_get_geolocation_callback_on_location_update(cef_get_geolocation_callback_t* self, const cef_geoposition_t* position) {
     cfx_get_geolocation_callback_on_location_update_callback(((cfx_get_geolocation_callback_t*)self)->gc_handle, position);
 }
 
 
-static void cfx_get_geolocation_callback_set_managed_callback(cef_get_geolocation_callback_t* self, int index, void* callback) {
+static void cfx_get_geolocation_callback_activate_callback(cef_get_geolocation_callback_t* self, int index, int active) {
     switch(index) {
     case 0:
-        if(callback && !cfx_get_geolocation_callback_on_location_update_callback)
-            cfx_get_geolocation_callback_on_location_update_callback = (void (CEF_CALLBACK *)(gc_handle_t self, const cef_geoposition_t* position)) callback;
-        self->on_location_update = callback ? cfx_get_geolocation_callback_on_location_update : 0;
+        self->on_location_update = active ? cfx_get_geolocation_callback_on_location_update : 0;
         break;
     }
 }

@@ -71,21 +71,24 @@ static gc_handle_t cfx_download_image_callback_get_gc_handle(cfx_download_image_
     return self->gc_handle;
 }
 
-// on_download_image_finished
-
+// managed callbacks
 void (CEF_CALLBACK *cfx_download_image_callback_on_download_image_finished_callback)(gc_handle_t self, char16 *image_url_str, int image_url_length, int http_status_code, cef_image_t* image);
+
+static void cfx_download_image_callback_set_managed_callbacks(void *on_download_image_finished) {
+    cfx_download_image_callback_on_download_image_finished_callback = (void (CEF_CALLBACK *)(gc_handle_t self, char16 *image_url_str, int image_url_length, int http_status_code, cef_image_t* image)) on_download_image_finished;
+}
+
+// on_download_image_finished
 
 void CEF_CALLBACK cfx_download_image_callback_on_download_image_finished(cef_download_image_callback_t* self, const cef_string_t* image_url, int http_status_code, cef_image_t* image) {
     cfx_download_image_callback_on_download_image_finished_callback(((cfx_download_image_callback_t*)self)->gc_handle, image_url ? image_url->str : 0, image_url ? (int)image_url->length : 0, http_status_code, image);
 }
 
 
-static void cfx_download_image_callback_set_managed_callback(cef_download_image_callback_t* self, int index, void* callback) {
+static void cfx_download_image_callback_activate_callback(cef_download_image_callback_t* self, int index, int active) {
     switch(index) {
     case 0:
-        if(callback && !cfx_download_image_callback_on_download_image_finished_callback)
-            cfx_download_image_callback_on_download_image_finished_callback = (void (CEF_CALLBACK *)(gc_handle_t self, char16 *image_url_str, int image_url_length, int http_status_code, cef_image_t* image)) callback;
-        self->on_download_image_finished = callback ? cfx_download_image_callback_on_download_image_finished : 0;
+        self->on_download_image_finished = active ? cfx_download_image_callback_on_download_image_finished : 0;
         break;
     }
 }

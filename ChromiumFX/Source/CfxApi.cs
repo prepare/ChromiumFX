@@ -58,11 +58,10 @@ namespace Chromium {
 
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate void cfx_set_callback_delegate(IntPtr nativePtr, int index, IntPtr callback);
+        public delegate void cfx_set_callback_delegate(IntPtr nativePtr, int index, int active);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate IntPtr cfx_get_gc_handle_delegate(IntPtr nativePtr);
-
 
         //CFX_EXPORT int cfx_api_initialize(void *libcef, void *gc_handle_free, int *platform, int *cw_usedefault, void **release, void **string_get_ptr, void **string_destroy, void **get_function_pointer)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]

@@ -71,9 +71,14 @@ static gc_handle_t cfx_cookie_visitor_get_gc_handle(cfx_cookie_visitor_t* self) 
     return self->gc_handle;
 }
 
-// visit
-
+// managed callbacks
 void (CEF_CALLBACK *cfx_cookie_visitor_visit_callback)(gc_handle_t self, int* __retval, const cef_cookie_t* cookie, int count, int total, int* deleteCookie);
+
+static void cfx_cookie_visitor_set_managed_callbacks(void *visit) {
+    cfx_cookie_visitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, const cef_cookie_t* cookie, int count, int total, int* deleteCookie)) visit;
+}
+
+// visit
 
 int CEF_CALLBACK cfx_cookie_visitor_visit(cef_cookie_visitor_t* self, const cef_cookie_t* cookie, int count, int total, int* deleteCookie) {
     int __retval;
@@ -82,12 +87,10 @@ int CEF_CALLBACK cfx_cookie_visitor_visit(cef_cookie_visitor_t* self, const cef_
 }
 
 
-static void cfx_cookie_visitor_set_managed_callback(cef_cookie_visitor_t* self, int index, void* callback) {
+static void cfx_cookie_visitor_activate_callback(cef_cookie_visitor_t* self, int index, int active) {
     switch(index) {
     case 0:
-        if(callback && !cfx_cookie_visitor_visit_callback)
-            cfx_cookie_visitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, const cef_cookie_t* cookie, int count, int total, int* deleteCookie)) callback;
-        self->visit = callback ? cfx_cookie_visitor_visit : 0;
+        self->visit = active ? cfx_cookie_visitor_visit : 0;
         break;
     }
 }

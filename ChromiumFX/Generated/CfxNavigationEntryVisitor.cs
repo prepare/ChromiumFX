@@ -55,11 +55,18 @@ namespace Chromium {
 
         private static object eventLock = new object();
 
+        internal static void SetNativeCallbacks() {
+            visit_native = visit;
+            var setCallbacks = (CfxApi.cfx_set_ptr_1_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_navigation_entry_visitor_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_1_delegate));
+            setCallbacks(
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(visit_native)
+            );
+        }
+
         // visit
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_navigation_entry_visitor_visit_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr entry, int current, int index, int total);
-        private static cfx_navigation_entry_visitor_visit_delegate cfx_navigation_entry_visitor_visit;
-        private static IntPtr cfx_navigation_entry_visitor_visit_ptr;
+        private delegate void visit_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr entry, int current, int index, int total);
+        private static visit_delegate visit_native;
 
         internal static void visit(IntPtr gcHandlePtr, out int __retval, IntPtr entry, int current, int index, int total) {
             var self = (CfxNavigationEntryVisitor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -93,11 +100,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_Visit == null) {
-                        if(cfx_navigation_entry_visitor_visit == null) {
-                            cfx_navigation_entry_visitor_visit = visit;
-                            cfx_navigation_entry_visitor_visit_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_navigation_entry_visitor_visit);
-                        }
-                        CfxApi.NavigationEntryVisitor.cfx_navigation_entry_visitor_set_managed_callback(NativePtr, 0, cfx_navigation_entry_visitor_visit_ptr);
+                        CfxApi.NavigationEntryVisitor.cfx_navigation_entry_visitor_activate_callback(NativePtr, 0, 1);
                     }
                     m_Visit += value;
                 }
@@ -106,7 +109,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Visit -= value;
                     if(m_Visit == null) {
-                        CfxApi.NavigationEntryVisitor.cfx_navigation_entry_visitor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.NavigationEntryVisitor.cfx_navigation_entry_visitor_activate_callback(NativePtr, 0, 0);
                     }
                 }
             }
@@ -117,7 +120,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_Visit != null) {
                 m_Visit = null;
-                CfxApi.NavigationEntryVisitor.cfx_navigation_entry_visitor_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.NavigationEntryVisitor.cfx_navigation_entry_visitor_activate_callback(NativePtr, 0, 0);
             }
             base.OnDispose(nativePtr);
         }

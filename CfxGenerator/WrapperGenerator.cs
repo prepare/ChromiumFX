@@ -30,6 +30,7 @@
 
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -74,7 +75,7 @@ public class WrapperGenerator {
 
         generatedCSFiles = new List<string>();
 
-		fileManager = new GeneratedFileManager(System.IO.Path.Combine("ChromiumFX", "Generated"));
+        fileManager = new GeneratedFileManager(System.IO.Path.Combine("ChromiumFX", "Generated"));
         BuildPInvokeApi(fileManager);
         BuildEnums(fileManager);
         BuildCfxRuntime(fileManager);
@@ -84,7 +85,7 @@ public class WrapperGenerator {
         fileManager.DeleteObsoleteFiles();
         generatedCSFiles.AddRange(fileManager.GetNewFiles());
 
-		fileManager = new GeneratedFileManager(System.IO.Path.Combine("ChromiumFX", "Generated", "Remote"));
+        fileManager = new GeneratedFileManager(System.IO.Path.Combine("ChromiumFX", "Generated", "Remote"));
         BuildRemoteCalls(fileManager);
         BuildCfrRuntime(fileManager);
         BuildRemoteClasses(fileManager);
@@ -132,7 +133,7 @@ public class WrapperGenerator {
 
     private void BuildHeaders(GeneratedFileManager fileManager) {
         var b = new CodeBuilder();
-		var files = Directory.GetFiles(System.IO.Path.Combine("cef", "include", "capi"));
+        var files = Directory.GetFiles(System.IO.Path.Combine("cef", "include", "capi"));
         foreach(var f in files) {
             var f1 = f.Replace("\\", "/");
             b.AppendLine("#include \"{0}\"", f1.Substring(4));
@@ -295,6 +296,15 @@ public class WrapperGenerator {
 
         b.AppendLine();
 
+        var ptrArgs = new CodeBuilder();
+        ptrArgs.Append("IntPtr p0");
+        for(int i = 0; i < 15; ++i) {
+            b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]");
+            b.AppendLine("public delegate void cfx_set_ptr_{0}_delegate({1});", i + 1, ptrArgs);
+            ptrArgs.Append(", IntPtr p" + (i + 1));
+        }
+        b.AppendLine();
+
         b.BeginClass("Runtime", "internal static");
 
         foreach(var f in decls.ExportFunctions) {
@@ -353,10 +363,7 @@ public class WrapperGenerator {
         b.AppendLine();
 
         foreach(var cefStruct in decls.CefStructTypes) {
-            b.AppendLine("private static bool {0}ApiLoaded;", cefStruct.ClassName);
             b.BeginBlock("internal static void Load{0}Api()", cefStruct.ClassName);
-            b.AppendLine("if({0}ApiLoaded) return;", cefStruct.ClassName);
-            b.AppendLine("{0}ApiLoaded = true;", cefStruct.ClassName);
             b.AppendLine("CfxApi.Probe();");
 
             var apiClassName = cefStruct.ClassName.Substring(3);
@@ -379,10 +386,9 @@ public class WrapperGenerator {
                 case StructCategory.ApiCallbacks:
                     b.AppendLine("CfxApi.{0}.{1}_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_ctor, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));", apiClassName, cefStruct.CfxName);
                     b.AppendLine("CfxApi.{0}.{1}_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_get_gc_handle, typeof(CfxApi.cfx_get_gc_handle_delegate));", apiClassName, cefStruct.CfxName);
-                    b.AppendLine("CfxApi.{0}.{1}_set_managed_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_set_managed_callback, typeof(CfxApi.cfx_set_callback_delegate));", apiClassName, cefStruct.CfxName);
-                    if(cefStruct.ClassBuilder.ExportFunctions.Count() > 0) {
-                        System.Diagnostics.Debugger.Break();
-                    }
+                    b.AppendLine("CfxApi.{0}.{1}_activate_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_activate_callback, typeof(CfxApi.cfx_set_callback_delegate));", apiClassName, cefStruct.CfxName);
+                    b.AppendLine("{0}.SetNativeCallbacks();", cefStruct.ClassName);
+                    Debug.Assert(cefStruct.ClassBuilder.ExportFunctions.Length == 0);
                     break;
 
                 case StructCategory.Values:

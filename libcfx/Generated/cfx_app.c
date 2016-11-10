@@ -71,9 +71,22 @@ static gc_handle_t cfx_app_get_gc_handle(cfx_app_t* self) {
     return self->gc_handle;
 }
 
-// on_before_command_line_processing
-
+// managed callbacks
 void (CEF_CALLBACK *cfx_app_on_before_command_line_processing_callback)(gc_handle_t self, char16 *process_type_str, int process_type_length, cef_command_line_t* command_line);
+void (CEF_CALLBACK *cfx_app_on_register_custom_schemes_callback)(gc_handle_t self, cef_scheme_registrar_t* registrar);
+void (CEF_CALLBACK *cfx_app_get_resource_bundle_handler_callback)(gc_handle_t self, cef_resource_bundle_handler_t** __retval);
+void (CEF_CALLBACK *cfx_app_get_browser_process_handler_callback)(gc_handle_t self, cef_browser_process_handler_t** __retval);
+void (CEF_CALLBACK *cfx_app_get_render_process_handler_callback)(gc_handle_t self, cef_render_process_handler_t** __retval);
+
+static void cfx_app_set_managed_callbacks(void *on_before_command_line_processing, void *on_register_custom_schemes, void *get_resource_bundle_handler, void *get_browser_process_handler, void *get_render_process_handler) {
+    cfx_app_on_before_command_line_processing_callback = (void (CEF_CALLBACK *)(gc_handle_t self, char16 *process_type_str, int process_type_length, cef_command_line_t* command_line)) on_before_command_line_processing;
+    cfx_app_on_register_custom_schemes_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_scheme_registrar_t* registrar)) on_register_custom_schemes;
+    cfx_app_get_resource_bundle_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_resource_bundle_handler_t** __retval)) get_resource_bundle_handler;
+    cfx_app_get_browser_process_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_process_handler_t** __retval)) get_browser_process_handler;
+    cfx_app_get_render_process_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_render_process_handler_t** __retval)) get_render_process_handler;
+}
+
+// on_before_command_line_processing
 
 void CEF_CALLBACK cfx_app_on_before_command_line_processing(cef_app_t* self, const cef_string_t* process_type, cef_command_line_t* command_line) {
     cfx_app_on_before_command_line_processing_callback(((cfx_app_t*)self)->gc_handle, process_type ? process_type->str : 0, process_type ? (int)process_type->length : 0, command_line);
@@ -82,16 +95,12 @@ void CEF_CALLBACK cfx_app_on_before_command_line_processing(cef_app_t* self, con
 
 // on_register_custom_schemes
 
-void (CEF_CALLBACK *cfx_app_on_register_custom_schemes_callback)(gc_handle_t self, cef_scheme_registrar_t* registrar);
-
 void CEF_CALLBACK cfx_app_on_register_custom_schemes(cef_app_t* self, cef_scheme_registrar_t* registrar) {
     cfx_app_on_register_custom_schemes_callback(((cfx_app_t*)self)->gc_handle, registrar);
 }
 
 
 // get_resource_bundle_handler
-
-void (CEF_CALLBACK *cfx_app_get_resource_bundle_handler_callback)(gc_handle_t self, cef_resource_bundle_handler_t** __retval);
 
 cef_resource_bundle_handler_t* CEF_CALLBACK cfx_app_get_resource_bundle_handler(cef_app_t* self) {
     cef_resource_bundle_handler_t* __retval;
@@ -105,8 +114,6 @@ cef_resource_bundle_handler_t* CEF_CALLBACK cfx_app_get_resource_bundle_handler(
 
 // get_browser_process_handler
 
-void (CEF_CALLBACK *cfx_app_get_browser_process_handler_callback)(gc_handle_t self, cef_browser_process_handler_t** __retval);
-
 cef_browser_process_handler_t* CEF_CALLBACK cfx_app_get_browser_process_handler(cef_app_t* self) {
     cef_browser_process_handler_t* __retval;
     cfx_app_get_browser_process_handler_callback(((cfx_app_t*)self)->gc_handle, &__retval);
@@ -119,8 +126,6 @@ cef_browser_process_handler_t* CEF_CALLBACK cfx_app_get_browser_process_handler(
 
 // get_render_process_handler
 
-void (CEF_CALLBACK *cfx_app_get_render_process_handler_callback)(gc_handle_t self, cef_render_process_handler_t** __retval);
-
 cef_render_process_handler_t* CEF_CALLBACK cfx_app_get_render_process_handler(cef_app_t* self) {
     cef_render_process_handler_t* __retval;
     cfx_app_get_render_process_handler_callback(((cfx_app_t*)self)->gc_handle, &__retval);
@@ -131,32 +136,22 @@ cef_render_process_handler_t* CEF_CALLBACK cfx_app_get_render_process_handler(ce
 }
 
 
-static void cfx_app_set_managed_callback(cef_app_t* self, int index, void* callback) {
+static void cfx_app_activate_callback(cef_app_t* self, int index, int active) {
     switch(index) {
     case 0:
-        if(callback && !cfx_app_on_before_command_line_processing_callback)
-            cfx_app_on_before_command_line_processing_callback = (void (CEF_CALLBACK *)(gc_handle_t self, char16 *process_type_str, int process_type_length, cef_command_line_t* command_line)) callback;
-        self->on_before_command_line_processing = callback ? cfx_app_on_before_command_line_processing : 0;
+        self->on_before_command_line_processing = active ? cfx_app_on_before_command_line_processing : 0;
         break;
     case 1:
-        if(callback && !cfx_app_on_register_custom_schemes_callback)
-            cfx_app_on_register_custom_schemes_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_scheme_registrar_t* registrar)) callback;
-        self->on_register_custom_schemes = callback ? cfx_app_on_register_custom_schemes : 0;
+        self->on_register_custom_schemes = active ? cfx_app_on_register_custom_schemes : 0;
         break;
     case 2:
-        if(callback && !cfx_app_get_resource_bundle_handler_callback)
-            cfx_app_get_resource_bundle_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_resource_bundle_handler_t** __retval)) callback;
-        self->get_resource_bundle_handler = callback ? cfx_app_get_resource_bundle_handler : 0;
+        self->get_resource_bundle_handler = active ? cfx_app_get_resource_bundle_handler : 0;
         break;
     case 3:
-        if(callback && !cfx_app_get_browser_process_handler_callback)
-            cfx_app_get_browser_process_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_process_handler_t** __retval)) callback;
-        self->get_browser_process_handler = callback ? cfx_app_get_browser_process_handler : 0;
+        self->get_browser_process_handler = active ? cfx_app_get_browser_process_handler : 0;
         break;
     case 4:
-        if(callback && !cfx_app_get_render_process_handler_callback)
-            cfx_app_get_render_process_handler_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_render_process_handler_t** __retval)) callback;
-        self->get_render_process_handler = callback ? cfx_app_get_render_process_handler : 0;
+        self->get_render_process_handler = active ? cfx_app_get_render_process_handler : 0;
         break;
     }
 }

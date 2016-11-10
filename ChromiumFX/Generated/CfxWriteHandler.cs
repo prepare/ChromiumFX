@@ -55,11 +55,26 @@ namespace Chromium {
 
         private static object eventLock = new object();
 
+        internal static void SetNativeCallbacks() {
+            write_native = write;
+            seek_native = seek;
+            tell_native = tell;
+            flush_native = flush;
+            may_block_native = may_block;
+            var setCallbacks = (CfxApi.cfx_set_ptr_5_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_write_handler_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_5_delegate));
+            setCallbacks(
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(write_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(seek_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(tell_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(flush_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(may_block_native)
+            );
+        }
+
         // write
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_write_handler_write_delegate(IntPtr gcHandlePtr, out UIntPtr __retval, IntPtr ptr, UIntPtr size, UIntPtr n);
-        private static cfx_write_handler_write_delegate cfx_write_handler_write;
-        private static IntPtr cfx_write_handler_write_ptr;
+        private delegate void write_delegate(IntPtr gcHandlePtr, out UIntPtr __retval, IntPtr ptr, UIntPtr size, UIntPtr n);
+        private static write_delegate write_native;
 
         internal static void write(IntPtr gcHandlePtr, out UIntPtr __retval, IntPtr ptr, UIntPtr size, UIntPtr n) {
             var self = (CfxWriteHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -76,9 +91,8 @@ namespace Chromium {
 
         // seek
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_write_handler_seek_delegate(IntPtr gcHandlePtr, out int __retval, long offset, int whence);
-        private static cfx_write_handler_seek_delegate cfx_write_handler_seek;
-        private static IntPtr cfx_write_handler_seek_ptr;
+        private delegate void seek_delegate(IntPtr gcHandlePtr, out int __retval, long offset, int whence);
+        private static seek_delegate seek_native;
 
         internal static void seek(IntPtr gcHandlePtr, out int __retval, long offset, int whence) {
             var self = (CfxWriteHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -95,9 +109,8 @@ namespace Chromium {
 
         // tell
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_write_handler_tell_delegate(IntPtr gcHandlePtr, out long __retval);
-        private static cfx_write_handler_tell_delegate cfx_write_handler_tell;
-        private static IntPtr cfx_write_handler_tell_ptr;
+        private delegate void tell_delegate(IntPtr gcHandlePtr, out long __retval);
+        private static tell_delegate tell_native;
 
         internal static void tell(IntPtr gcHandlePtr, out long __retval) {
             var self = (CfxWriteHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -114,9 +127,8 @@ namespace Chromium {
 
         // flush
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_write_handler_flush_delegate(IntPtr gcHandlePtr, out int __retval);
-        private static cfx_write_handler_flush_delegate cfx_write_handler_flush;
-        private static IntPtr cfx_write_handler_flush_ptr;
+        private delegate void flush_delegate(IntPtr gcHandlePtr, out int __retval);
+        private static flush_delegate flush_native;
 
         internal static void flush(IntPtr gcHandlePtr, out int __retval) {
             var self = (CfxWriteHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -133,9 +145,8 @@ namespace Chromium {
 
         // may_block
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_write_handler_may_block_delegate(IntPtr gcHandlePtr, out int __retval);
-        private static cfx_write_handler_may_block_delegate cfx_write_handler_may_block;
-        private static IntPtr cfx_write_handler_may_block_ptr;
+        private delegate void may_block_delegate(IntPtr gcHandlePtr, out int __retval);
+        private static may_block_delegate may_block_native;
 
         internal static void may_block(IntPtr gcHandlePtr, out int __retval) {
             var self = (CfxWriteHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -164,11 +175,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_Write == null) {
-                        if(cfx_write_handler_write == null) {
-                            cfx_write_handler_write = write;
-                            cfx_write_handler_write_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_write_handler_write);
-                        }
-                        CfxApi.WriteHandler.cfx_write_handler_set_managed_callback(NativePtr, 0, cfx_write_handler_write_ptr);
+                        CfxApi.WriteHandler.cfx_write_handler_activate_callback(NativePtr, 0, 1);
                     }
                     m_Write += value;
                 }
@@ -177,7 +184,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Write -= value;
                     if(m_Write == null) {
-                        CfxApi.WriteHandler.cfx_write_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.WriteHandler.cfx_write_handler_activate_callback(NativePtr, 0, 0);
                     }
                 }
             }
@@ -197,11 +204,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_Seek == null) {
-                        if(cfx_write_handler_seek == null) {
-                            cfx_write_handler_seek = seek;
-                            cfx_write_handler_seek_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_write_handler_seek);
-                        }
-                        CfxApi.WriteHandler.cfx_write_handler_set_managed_callback(NativePtr, 1, cfx_write_handler_seek_ptr);
+                        CfxApi.WriteHandler.cfx_write_handler_activate_callback(NativePtr, 1, 1);
                     }
                     m_Seek += value;
                 }
@@ -210,7 +213,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Seek -= value;
                     if(m_Seek == null) {
-                        CfxApi.WriteHandler.cfx_write_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.WriteHandler.cfx_write_handler_activate_callback(NativePtr, 1, 0);
                     }
                 }
             }
@@ -229,11 +232,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_Tell == null) {
-                        if(cfx_write_handler_tell == null) {
-                            cfx_write_handler_tell = tell;
-                            cfx_write_handler_tell_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_write_handler_tell);
-                        }
-                        CfxApi.WriteHandler.cfx_write_handler_set_managed_callback(NativePtr, 2, cfx_write_handler_tell_ptr);
+                        CfxApi.WriteHandler.cfx_write_handler_activate_callback(NativePtr, 2, 1);
                     }
                     m_Tell += value;
                 }
@@ -242,7 +241,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Tell -= value;
                     if(m_Tell == null) {
-                        CfxApi.WriteHandler.cfx_write_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                        CfxApi.WriteHandler.cfx_write_handler_activate_callback(NativePtr, 2, 0);
                     }
                 }
             }
@@ -261,11 +260,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_Flush == null) {
-                        if(cfx_write_handler_flush == null) {
-                            cfx_write_handler_flush = flush;
-                            cfx_write_handler_flush_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_write_handler_flush);
-                        }
-                        CfxApi.WriteHandler.cfx_write_handler_set_managed_callback(NativePtr, 3, cfx_write_handler_flush_ptr);
+                        CfxApi.WriteHandler.cfx_write_handler_activate_callback(NativePtr, 3, 1);
                     }
                     m_Flush += value;
                 }
@@ -274,7 +269,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Flush -= value;
                     if(m_Flush == null) {
-                        CfxApi.WriteHandler.cfx_write_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                        CfxApi.WriteHandler.cfx_write_handler_activate_callback(NativePtr, 3, 0);
                     }
                 }
             }
@@ -295,11 +290,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_MayBlock == null) {
-                        if(cfx_write_handler_may_block == null) {
-                            cfx_write_handler_may_block = may_block;
-                            cfx_write_handler_may_block_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_write_handler_may_block);
-                        }
-                        CfxApi.WriteHandler.cfx_write_handler_set_managed_callback(NativePtr, 4, cfx_write_handler_may_block_ptr);
+                        CfxApi.WriteHandler.cfx_write_handler_activate_callback(NativePtr, 4, 1);
                     }
                     m_MayBlock += value;
                 }
@@ -308,7 +299,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_MayBlock -= value;
                     if(m_MayBlock == null) {
-                        CfxApi.WriteHandler.cfx_write_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
+                        CfxApi.WriteHandler.cfx_write_handler_activate_callback(NativePtr, 4, 0);
                     }
                 }
             }
@@ -319,23 +310,23 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_Write != null) {
                 m_Write = null;
-                CfxApi.WriteHandler.cfx_write_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.WriteHandler.cfx_write_handler_activate_callback(NativePtr, 0, 0);
             }
             if(m_Seek != null) {
                 m_Seek = null;
-                CfxApi.WriteHandler.cfx_write_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.WriteHandler.cfx_write_handler_activate_callback(NativePtr, 1, 0);
             }
             if(m_Tell != null) {
                 m_Tell = null;
-                CfxApi.WriteHandler.cfx_write_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                CfxApi.WriteHandler.cfx_write_handler_activate_callback(NativePtr, 2, 0);
             }
             if(m_Flush != null) {
                 m_Flush = null;
-                CfxApi.WriteHandler.cfx_write_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                CfxApi.WriteHandler.cfx_write_handler_activate_callback(NativePtr, 3, 0);
             }
             if(m_MayBlock != null) {
                 m_MayBlock = null;
-                CfxApi.WriteHandler.cfx_write_handler_set_managed_callback(NativePtr, 4, IntPtr.Zero);
+                CfxApi.WriteHandler.cfx_write_handler_activate_callback(NativePtr, 4, 0);
             }
             base.OnDispose(nativePtr);
         }

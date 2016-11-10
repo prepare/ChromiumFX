@@ -71,21 +71,24 @@ static gc_handle_t cfx_task_get_gc_handle(cfx_task_t* self) {
     return self->gc_handle;
 }
 
-// execute
-
+// managed callbacks
 void (CEF_CALLBACK *cfx_task_execute_callback)(gc_handle_t self);
+
+static void cfx_task_set_managed_callbacks(void *execute) {
+    cfx_task_execute_callback = (void (CEF_CALLBACK *)(gc_handle_t self)) execute;
+}
+
+// execute
 
 void CEF_CALLBACK cfx_task_execute(cef_task_t* self) {
     cfx_task_execute_callback(((cfx_task_t*)self)->gc_handle);
 }
 
 
-static void cfx_task_set_managed_callback(cef_task_t* self, int index, void* callback) {
+static void cfx_task_activate_callback(cef_task_t* self, int index, int active) {
     switch(index) {
     case 0:
-        if(callback && !cfx_task_execute_callback)
-            cfx_task_execute_callback = (void (CEF_CALLBACK *)(gc_handle_t self)) callback;
-        self->execute = callback ? cfx_task_execute : 0;
+        self->execute = active ? cfx_task_execute : 0;
         break;
     }
 }

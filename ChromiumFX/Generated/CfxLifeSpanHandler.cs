@@ -56,11 +56,24 @@ namespace Chromium {
 
         private static object eventLock = new object();
 
+        internal static void SetNativeCallbacks() {
+            on_before_popup_native = on_before_popup;
+            on_after_created_native = on_after_created;
+            do_close_native = do_close;
+            on_before_close_native = on_before_close;
+            var setCallbacks = (CfxApi.cfx_set_ptr_4_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_life_span_handler_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_4_delegate));
+            setCallbacks(
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_before_popup_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_after_created_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(do_close_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_before_close_native)
+            );
+        }
+
         // on_before_popup
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_life_span_handler_on_before_popup_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, int target_disposition, int user_gesture, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access);
-        private static cfx_life_span_handler_on_before_popup_delegate cfx_life_span_handler_on_before_popup;
-        private static IntPtr cfx_life_span_handler_on_before_popup_ptr;
+        private delegate void on_before_popup_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, int target_disposition, int user_gesture, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access);
+        private static on_before_popup_delegate on_before_popup_native;
 
         internal static void on_before_popup(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, int target_disposition, int user_gesture, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -83,9 +96,8 @@ namespace Chromium {
 
         // on_after_created
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_life_span_handler_on_after_created_delegate(IntPtr gcHandlePtr, IntPtr browser);
-        private static cfx_life_span_handler_on_after_created_delegate cfx_life_span_handler_on_after_created;
-        private static IntPtr cfx_life_span_handler_on_after_created_ptr;
+        private delegate void on_after_created_delegate(IntPtr gcHandlePtr, IntPtr browser);
+        private static on_after_created_delegate on_after_created_native;
 
         internal static void on_after_created(IntPtr gcHandlePtr, IntPtr browser) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -101,9 +113,8 @@ namespace Chromium {
 
         // do_close
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_life_span_handler_do_close_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser);
-        private static cfx_life_span_handler_do_close_delegate cfx_life_span_handler_do_close;
-        private static IntPtr cfx_life_span_handler_do_close_ptr;
+        private delegate void do_close_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser);
+        private static do_close_delegate do_close_native;
 
         internal static void do_close(IntPtr gcHandlePtr, out int __retval, IntPtr browser) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -121,9 +132,8 @@ namespace Chromium {
 
         // on_before_close
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_life_span_handler_on_before_close_delegate(IntPtr gcHandlePtr, IntPtr browser);
-        private static cfx_life_span_handler_on_before_close_delegate cfx_life_span_handler_on_before_close;
-        private static IntPtr cfx_life_span_handler_on_before_close_ptr;
+        private delegate void on_before_close_delegate(IntPtr gcHandlePtr, IntPtr browser);
+        private static on_before_close_delegate on_before_close_native;
 
         internal static void on_before_close(IntPtr gcHandlePtr, IntPtr browser) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -168,11 +178,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnBeforePopup == null) {
-                        if(cfx_life_span_handler_on_before_popup == null) {
-                            cfx_life_span_handler_on_before_popup = on_before_popup;
-                            cfx_life_span_handler_on_before_popup_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_life_span_handler_on_before_popup);
-                        }
-                        CfxApi.LifeSpanHandler.cfx_life_span_handler_set_managed_callback(NativePtr, 0, cfx_life_span_handler_on_before_popup_ptr);
+                        CfxApi.LifeSpanHandler.cfx_life_span_handler_activate_callback(NativePtr, 0, 1);
                     }
                     m_OnBeforePopup += value;
                 }
@@ -181,7 +187,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnBeforePopup -= value;
                     if(m_OnBeforePopup == null) {
-                        CfxApi.LifeSpanHandler.cfx_life_span_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.LifeSpanHandler.cfx_life_span_handler_activate_callback(NativePtr, 0, 0);
                     }
                 }
             }
@@ -201,11 +207,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnAfterCreated == null) {
-                        if(cfx_life_span_handler_on_after_created == null) {
-                            cfx_life_span_handler_on_after_created = on_after_created;
-                            cfx_life_span_handler_on_after_created_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_life_span_handler_on_after_created);
-                        }
-                        CfxApi.LifeSpanHandler.cfx_life_span_handler_set_managed_callback(NativePtr, 1, cfx_life_span_handler_on_after_created_ptr);
+                        CfxApi.LifeSpanHandler.cfx_life_span_handler_activate_callback(NativePtr, 1, 1);
                     }
                     m_OnAfterCreated += value;
                 }
@@ -214,7 +216,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnAfterCreated -= value;
                     if(m_OnAfterCreated == null) {
-                        CfxApi.LifeSpanHandler.cfx_life_span_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.LifeSpanHandler.cfx_life_span_handler_activate_callback(NativePtr, 1, 0);
                     }
                 }
             }
@@ -311,11 +313,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_DoClose == null) {
-                        if(cfx_life_span_handler_do_close == null) {
-                            cfx_life_span_handler_do_close = do_close;
-                            cfx_life_span_handler_do_close_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_life_span_handler_do_close);
-                        }
-                        CfxApi.LifeSpanHandler.cfx_life_span_handler_set_managed_callback(NativePtr, 2, cfx_life_span_handler_do_close_ptr);
+                        CfxApi.LifeSpanHandler.cfx_life_span_handler_activate_callback(NativePtr, 2, 1);
                     }
                     m_DoClose += value;
                 }
@@ -324,7 +322,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_DoClose -= value;
                     if(m_DoClose == null) {
-                        CfxApi.LifeSpanHandler.cfx_life_span_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                        CfxApi.LifeSpanHandler.cfx_life_span_handler_activate_callback(NativePtr, 2, 0);
                     }
                 }
             }
@@ -347,11 +345,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnBeforeClose == null) {
-                        if(cfx_life_span_handler_on_before_close == null) {
-                            cfx_life_span_handler_on_before_close = on_before_close;
-                            cfx_life_span_handler_on_before_close_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_life_span_handler_on_before_close);
-                        }
-                        CfxApi.LifeSpanHandler.cfx_life_span_handler_set_managed_callback(NativePtr, 3, cfx_life_span_handler_on_before_close_ptr);
+                        CfxApi.LifeSpanHandler.cfx_life_span_handler_activate_callback(NativePtr, 3, 1);
                     }
                     m_OnBeforeClose += value;
                 }
@@ -360,7 +354,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnBeforeClose -= value;
                     if(m_OnBeforeClose == null) {
-                        CfxApi.LifeSpanHandler.cfx_life_span_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                        CfxApi.LifeSpanHandler.cfx_life_span_handler_activate_callback(NativePtr, 3, 0);
                     }
                 }
             }
@@ -371,19 +365,19 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnBeforePopup != null) {
                 m_OnBeforePopup = null;
-                CfxApi.LifeSpanHandler.cfx_life_span_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.LifeSpanHandler.cfx_life_span_handler_activate_callback(NativePtr, 0, 0);
             }
             if(m_OnAfterCreated != null) {
                 m_OnAfterCreated = null;
-                CfxApi.LifeSpanHandler.cfx_life_span_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.LifeSpanHandler.cfx_life_span_handler_activate_callback(NativePtr, 1, 0);
             }
             if(m_DoClose != null) {
                 m_DoClose = null;
-                CfxApi.LifeSpanHandler.cfx_life_span_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                CfxApi.LifeSpanHandler.cfx_life_span_handler_activate_callback(NativePtr, 2, 0);
             }
             if(m_OnBeforeClose != null) {
                 m_OnBeforeClose = null;
-                CfxApi.LifeSpanHandler.cfx_life_span_handler_set_managed_callback(NativePtr, 3, IntPtr.Zero);
+                CfxApi.LifeSpanHandler.cfx_life_span_handler_activate_callback(NativePtr, 3, 0);
             }
             base.OnDispose(nativePtr);
         }

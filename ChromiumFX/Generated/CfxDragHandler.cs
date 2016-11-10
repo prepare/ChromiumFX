@@ -55,11 +55,20 @@ namespace Chromium {
 
         private static object eventLock = new object();
 
+        internal static void SetNativeCallbacks() {
+            on_drag_enter_native = on_drag_enter;
+            on_draggable_regions_changed_native = on_draggable_regions_changed;
+            var setCallbacks = (CfxApi.cfx_set_ptr_2_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_drag_handler_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_2_delegate));
+            setCallbacks(
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_drag_enter_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_draggable_regions_changed_native)
+            );
+        }
+
         // on_drag_enter
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_drag_handler_on_drag_enter_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr dragData, int mask);
-        private static cfx_drag_handler_on_drag_enter_delegate cfx_drag_handler_on_drag_enter;
-        private static IntPtr cfx_drag_handler_on_drag_enter_ptr;
+        private delegate void on_drag_enter_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr dragData, int mask);
+        private static on_drag_enter_delegate on_drag_enter_native;
 
         internal static void on_drag_enter(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr dragData, int mask) {
             var self = (CfxDragHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -78,9 +87,8 @@ namespace Chromium {
 
         // on_draggable_regions_changed
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_drag_handler_on_draggable_regions_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, UIntPtr regionsCount, IntPtr regions, int regions_structsize);
-        private static cfx_drag_handler_on_draggable_regions_changed_delegate cfx_drag_handler_on_draggable_regions_changed;
-        private static IntPtr cfx_drag_handler_on_draggable_regions_changed_ptr;
+        private delegate void on_draggable_regions_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, UIntPtr regionsCount, IntPtr regions, int regions_structsize);
+        private static on_draggable_regions_changed_delegate on_draggable_regions_changed_native;
 
         internal static void on_draggable_regions_changed(IntPtr gcHandlePtr, IntPtr browser, UIntPtr regionsCount, IntPtr regions, int regions_structsize) {
             var self = (CfxDragHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -116,11 +124,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnDragEnter == null) {
-                        if(cfx_drag_handler_on_drag_enter == null) {
-                            cfx_drag_handler_on_drag_enter = on_drag_enter;
-                            cfx_drag_handler_on_drag_enter_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_drag_handler_on_drag_enter);
-                        }
-                        CfxApi.DragHandler.cfx_drag_handler_set_managed_callback(NativePtr, 0, cfx_drag_handler_on_drag_enter_ptr);
+                        CfxApi.DragHandler.cfx_drag_handler_activate_callback(NativePtr, 0, 1);
                     }
                     m_OnDragEnter += value;
                 }
@@ -129,7 +133,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnDragEnter -= value;
                     if(m_OnDragEnter == null) {
-                        CfxApi.DragHandler.cfx_drag_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.DragHandler.cfx_drag_handler_activate_callback(NativePtr, 0, 0);
                     }
                 }
             }
@@ -152,11 +156,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnDraggableRegionsChanged == null) {
-                        if(cfx_drag_handler_on_draggable_regions_changed == null) {
-                            cfx_drag_handler_on_draggable_regions_changed = on_draggable_regions_changed;
-                            cfx_drag_handler_on_draggable_regions_changed_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_drag_handler_on_draggable_regions_changed);
-                        }
-                        CfxApi.DragHandler.cfx_drag_handler_set_managed_callback(NativePtr, 1, cfx_drag_handler_on_draggable_regions_changed_ptr);
+                        CfxApi.DragHandler.cfx_drag_handler_activate_callback(NativePtr, 1, 1);
                     }
                     m_OnDraggableRegionsChanged += value;
                 }
@@ -165,7 +165,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnDraggableRegionsChanged -= value;
                     if(m_OnDraggableRegionsChanged == null) {
-                        CfxApi.DragHandler.cfx_drag_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.DragHandler.cfx_drag_handler_activate_callback(NativePtr, 1, 0);
                     }
                 }
             }
@@ -176,11 +176,11 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnDragEnter != null) {
                 m_OnDragEnter = null;
-                CfxApi.DragHandler.cfx_drag_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.DragHandler.cfx_drag_handler_activate_callback(NativePtr, 0, 0);
             }
             if(m_OnDraggableRegionsChanged != null) {
                 m_OnDraggableRegionsChanged = null;
-                CfxApi.DragHandler.cfx_drag_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.DragHandler.cfx_drag_handler_activate_callback(NativePtr, 1, 0);
             }
             base.OnDispose(nativePtr);
         }

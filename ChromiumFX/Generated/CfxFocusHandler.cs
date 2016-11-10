@@ -55,11 +55,22 @@ namespace Chromium {
 
         private static object eventLock = new object();
 
+        internal static void SetNativeCallbacks() {
+            on_take_focus_native = on_take_focus;
+            on_set_focus_native = on_set_focus;
+            on_got_focus_native = on_got_focus;
+            var setCallbacks = (CfxApi.cfx_set_ptr_3_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_focus_handler_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_3_delegate));
+            setCallbacks(
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_take_focus_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_set_focus_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_got_focus_native)
+            );
+        }
+
         // on_take_focus
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_focus_handler_on_take_focus_delegate(IntPtr gcHandlePtr, IntPtr browser, int next);
-        private static cfx_focus_handler_on_take_focus_delegate cfx_focus_handler_on_take_focus;
-        private static IntPtr cfx_focus_handler_on_take_focus_ptr;
+        private delegate void on_take_focus_delegate(IntPtr gcHandlePtr, IntPtr browser, int next);
+        private static on_take_focus_delegate on_take_focus_native;
 
         internal static void on_take_focus(IntPtr gcHandlePtr, IntPtr browser, int next) {
             var self = (CfxFocusHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -75,9 +86,8 @@ namespace Chromium {
 
         // on_set_focus
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_focus_handler_on_set_focus_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int source);
-        private static cfx_focus_handler_on_set_focus_delegate cfx_focus_handler_on_set_focus;
-        private static IntPtr cfx_focus_handler_on_set_focus_ptr;
+        private delegate void on_set_focus_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int source);
+        private static on_set_focus_delegate on_set_focus_native;
 
         internal static void on_set_focus(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int source) {
             var self = (CfxFocusHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -95,9 +105,8 @@ namespace Chromium {
 
         // on_got_focus
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_focus_handler_on_got_focus_delegate(IntPtr gcHandlePtr, IntPtr browser);
-        private static cfx_focus_handler_on_got_focus_delegate cfx_focus_handler_on_got_focus;
-        private static IntPtr cfx_focus_handler_on_got_focus_ptr;
+        private delegate void on_got_focus_delegate(IntPtr gcHandlePtr, IntPtr browser);
+        private static on_got_focus_delegate on_got_focus_native;
 
         internal static void on_got_focus(IntPtr gcHandlePtr, IntPtr browser) {
             var self = (CfxFocusHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -128,11 +137,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnTakeFocus == null) {
-                        if(cfx_focus_handler_on_take_focus == null) {
-                            cfx_focus_handler_on_take_focus = on_take_focus;
-                            cfx_focus_handler_on_take_focus_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_focus_handler_on_take_focus);
-                        }
-                        CfxApi.FocusHandler.cfx_focus_handler_set_managed_callback(NativePtr, 0, cfx_focus_handler_on_take_focus_ptr);
+                        CfxApi.FocusHandler.cfx_focus_handler_activate_callback(NativePtr, 0, 1);
                     }
                     m_OnTakeFocus += value;
                 }
@@ -141,7 +146,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnTakeFocus -= value;
                     if(m_OnTakeFocus == null) {
-                        CfxApi.FocusHandler.cfx_focus_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.FocusHandler.cfx_focus_handler_activate_callback(NativePtr, 0, 0);
                     }
                 }
             }
@@ -162,11 +167,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnSetFocus == null) {
-                        if(cfx_focus_handler_on_set_focus == null) {
-                            cfx_focus_handler_on_set_focus = on_set_focus;
-                            cfx_focus_handler_on_set_focus_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_focus_handler_on_set_focus);
-                        }
-                        CfxApi.FocusHandler.cfx_focus_handler_set_managed_callback(NativePtr, 1, cfx_focus_handler_on_set_focus_ptr);
+                        CfxApi.FocusHandler.cfx_focus_handler_activate_callback(NativePtr, 1, 1);
                     }
                     m_OnSetFocus += value;
                 }
@@ -175,7 +176,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnSetFocus -= value;
                     if(m_OnSetFocus == null) {
-                        CfxApi.FocusHandler.cfx_focus_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.FocusHandler.cfx_focus_handler_activate_callback(NativePtr, 1, 0);
                     }
                 }
             }
@@ -194,11 +195,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnGotFocus == null) {
-                        if(cfx_focus_handler_on_got_focus == null) {
-                            cfx_focus_handler_on_got_focus = on_got_focus;
-                            cfx_focus_handler_on_got_focus_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_focus_handler_on_got_focus);
-                        }
-                        CfxApi.FocusHandler.cfx_focus_handler_set_managed_callback(NativePtr, 2, cfx_focus_handler_on_got_focus_ptr);
+                        CfxApi.FocusHandler.cfx_focus_handler_activate_callback(NativePtr, 2, 1);
                     }
                     m_OnGotFocus += value;
                 }
@@ -207,7 +204,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnGotFocus -= value;
                     if(m_OnGotFocus == null) {
-                        CfxApi.FocusHandler.cfx_focus_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                        CfxApi.FocusHandler.cfx_focus_handler_activate_callback(NativePtr, 2, 0);
                     }
                 }
             }
@@ -218,15 +215,15 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnTakeFocus != null) {
                 m_OnTakeFocus = null;
-                CfxApi.FocusHandler.cfx_focus_handler_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.FocusHandler.cfx_focus_handler_activate_callback(NativePtr, 0, 0);
             }
             if(m_OnSetFocus != null) {
                 m_OnSetFocus = null;
-                CfxApi.FocusHandler.cfx_focus_handler_set_managed_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.FocusHandler.cfx_focus_handler_activate_callback(NativePtr, 1, 0);
             }
             if(m_OnGotFocus != null) {
                 m_OnGotFocus = null;
-                CfxApi.FocusHandler.cfx_focus_handler_set_managed_callback(NativePtr, 2, IntPtr.Zero);
+                CfxApi.FocusHandler.cfx_focus_handler_activate_callback(NativePtr, 2, 0);
             }
             base.OnDispose(nativePtr);
         }

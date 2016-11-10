@@ -71,21 +71,24 @@ static gc_handle_t cfx_domvisitor_get_gc_handle(cfx_domvisitor_t* self) {
     return self->gc_handle;
 }
 
-// visit
-
+// managed callbacks
 void (CEF_CALLBACK *cfx_domvisitor_visit_callback)(gc_handle_t self, cef_domdocument_t* document);
+
+static void cfx_domvisitor_set_managed_callbacks(void *visit) {
+    cfx_domvisitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_domdocument_t* document)) visit;
+}
+
+// visit
 
 void CEF_CALLBACK cfx_domvisitor_visit(cef_domvisitor_t* self, cef_domdocument_t* document) {
     cfx_domvisitor_visit_callback(((cfx_domvisitor_t*)self)->gc_handle, document);
 }
 
 
-static void cfx_domvisitor_set_managed_callback(cef_domvisitor_t* self, int index, void* callback) {
+static void cfx_domvisitor_activate_callback(cef_domvisitor_t* self, int index, int active) {
     switch(index) {
     case 0:
-        if(callback && !cfx_domvisitor_visit_callback)
-            cfx_domvisitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_domdocument_t* document)) callback;
-        self->visit = callback ? cfx_domvisitor_visit : 0;
+        self->visit = active ? cfx_domvisitor_visit : 0;
         break;
     }
 }

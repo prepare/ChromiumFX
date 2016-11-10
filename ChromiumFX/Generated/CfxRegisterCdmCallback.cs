@@ -56,11 +56,18 @@ namespace Chromium {
 
         private static object eventLock = new object();
 
+        internal static void SetNativeCallbacks() {
+            on_cdm_registration_complete_native = on_cdm_registration_complete;
+            var setCallbacks = (CfxApi.cfx_set_ptr_1_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_register_cdm_callback_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_1_delegate));
+            setCallbacks(
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_cdm_registration_complete_native)
+            );
+        }
+
         // on_cdm_registration_complete
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_register_cdm_callback_on_cdm_registration_complete_delegate(IntPtr gcHandlePtr, int result, IntPtr error_message_str, int error_message_length);
-        private static cfx_register_cdm_callback_on_cdm_registration_complete_delegate cfx_register_cdm_callback_on_cdm_registration_complete;
-        private static IntPtr cfx_register_cdm_callback_on_cdm_registration_complete_ptr;
+        private delegate void on_cdm_registration_complete_delegate(IntPtr gcHandlePtr, int result, IntPtr error_message_str, int error_message_length);
+        private static on_cdm_registration_complete_delegate on_cdm_registration_complete_native;
 
         internal static void on_cdm_registration_complete(IntPtr gcHandlePtr, int result, IntPtr error_message_str, int error_message_length) {
             var self = (CfxRegisterCdmCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -90,11 +97,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnCdmRegistrationComplete == null) {
-                        if(cfx_register_cdm_callback_on_cdm_registration_complete == null) {
-                            cfx_register_cdm_callback_on_cdm_registration_complete = on_cdm_registration_complete;
-                            cfx_register_cdm_callback_on_cdm_registration_complete_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cfx_register_cdm_callback_on_cdm_registration_complete);
-                        }
-                        CfxApi.RegisterCdmCallback.cfx_register_cdm_callback_set_managed_callback(NativePtr, 0, cfx_register_cdm_callback_on_cdm_registration_complete_ptr);
+                        CfxApi.RegisterCdmCallback.cfx_register_cdm_callback_activate_callback(NativePtr, 0, 1);
                     }
                     m_OnCdmRegistrationComplete += value;
                 }
@@ -103,7 +106,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnCdmRegistrationComplete -= value;
                     if(m_OnCdmRegistrationComplete == null) {
-                        CfxApi.RegisterCdmCallback.cfx_register_cdm_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                        CfxApi.RegisterCdmCallback.cfx_register_cdm_callback_activate_callback(NativePtr, 0, 0);
                     }
                 }
             }
@@ -114,7 +117,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnCdmRegistrationComplete != null) {
                 m_OnCdmRegistrationComplete = null;
-                CfxApi.RegisterCdmCallback.cfx_register_cdm_callback_set_managed_callback(NativePtr, 0, IntPtr.Zero);
+                CfxApi.RegisterCdmCallback.cfx_register_cdm_callback_activate_callback(NativePtr, 0, 0);
             }
             base.OnDispose(nativePtr);
         }

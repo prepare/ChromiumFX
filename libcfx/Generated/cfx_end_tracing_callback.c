@@ -71,21 +71,24 @@ static gc_handle_t cfx_end_tracing_callback_get_gc_handle(cfx_end_tracing_callba
     return self->gc_handle;
 }
 
-// on_end_tracing_complete
-
+// managed callbacks
 void (CEF_CALLBACK *cfx_end_tracing_callback_on_end_tracing_complete_callback)(gc_handle_t self, char16 *tracing_file_str, int tracing_file_length);
+
+static void cfx_end_tracing_callback_set_managed_callbacks(void *on_end_tracing_complete) {
+    cfx_end_tracing_callback_on_end_tracing_complete_callback = (void (CEF_CALLBACK *)(gc_handle_t self, char16 *tracing_file_str, int tracing_file_length)) on_end_tracing_complete;
+}
+
+// on_end_tracing_complete
 
 void CEF_CALLBACK cfx_end_tracing_callback_on_end_tracing_complete(cef_end_tracing_callback_t* self, const cef_string_t* tracing_file) {
     cfx_end_tracing_callback_on_end_tracing_complete_callback(((cfx_end_tracing_callback_t*)self)->gc_handle, tracing_file ? tracing_file->str : 0, tracing_file ? (int)tracing_file->length : 0);
 }
 
 
-static void cfx_end_tracing_callback_set_managed_callback(cef_end_tracing_callback_t* self, int index, void* callback) {
+static void cfx_end_tracing_callback_activate_callback(cef_end_tracing_callback_t* self, int index, int active) {
     switch(index) {
     case 0:
-        if(callback && !cfx_end_tracing_callback_on_end_tracing_complete_callback)
-            cfx_end_tracing_callback_on_end_tracing_complete_callback = (void (CEF_CALLBACK *)(gc_handle_t self, char16 *tracing_file_str, int tracing_file_length)) callback;
-        self->on_end_tracing_complete = callback ? cfx_end_tracing_callback_on_end_tracing_complete : 0;
+        self->on_end_tracing_complete = active ? cfx_end_tracing_callback_on_end_tracing_complete : 0;
         break;
     }
 }
