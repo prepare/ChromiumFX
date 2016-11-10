@@ -43,8 +43,9 @@ public class CustomSignatures {
         }
 
         if(s.Owner.CefConfig.CountFunction != null && s.Arguments.Length == 3 && s.ReturnType.IsVoid) {
-
-            //Debug.Print(owner.CefName);
+            if(s.Arguments[2].ArgumentType.IsCefStructPtrPtrType) {
+                return new StructArrayGetterSignature(s);
+            }
         }
 
         switch(s.Owner.CefName) {
@@ -60,11 +61,6 @@ public class CustomSignatures {
             case "cef_render_handler::on_paint":
                 return new SignatureWithStructArray(s, 4, 3);
 
-            case "cef_post_data::get_elements":
-            case "cef_sslinfo::get_derencoded_issuer_chain":
-            case "cef_sslinfo::get_pemencoded_issuer_chain":
-                return new StructArrayGetterSignature(s);
-
             case "cef_v8handler::execute":
                 return new CefV8HandlerExecuteSignature(s);
 
@@ -76,9 +72,8 @@ public class CustomSignatures {
 
             case "cef_drag_handler::on_draggable_regions_changed":
                 return new SignatureWithStructArray(s, 3, 2);
-
-            default:
-                return null;
         }
+
+        return null;
     }
 }

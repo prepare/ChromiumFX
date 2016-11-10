@@ -6732,14 +6732,14 @@ namespace Chromium {
             public delegate UIntPtr cfx_x509certificate_get_issuer_chain_size_delegate(IntPtr self);
             public static cfx_x509certificate_get_issuer_chain_size_delegate cfx_x509certificate_get_issuer_chain_size;
 
-            // static void cfx_x509certificate_get_derencoded_issuer_chain(cef_x509certificate_t* self, size_t* chainCount, cef_binary_value_t** chain)
+            // static void cfx_x509certificate_get_derencoded_issuer_chain(cef_x509certificate_t* self, size_t chainCount, cef_binary_value_t** chain)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_x509certificate_get_derencoded_issuer_chain_delegate(IntPtr self, out UIntPtr chainCount, out IntPtr chain);
+            public delegate void cfx_x509certificate_get_derencoded_issuer_chain_delegate(IntPtr self, UIntPtr chainCount, IntPtr chain);
             public static cfx_x509certificate_get_derencoded_issuer_chain_delegate cfx_x509certificate_get_derencoded_issuer_chain;
 
-            // static void cfx_x509certificate_get_pemencoded_issuer_chain(cef_x509certificate_t* self, size_t* chainCount, cef_binary_value_t** chain)
+            // static void cfx_x509certificate_get_pemencoded_issuer_chain(cef_x509certificate_t* self, size_t chainCount, cef_binary_value_t** chain)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_x509certificate_get_pemencoded_issuer_chain_delegate(IntPtr self, out UIntPtr chainCount, out IntPtr chain);
+            public delegate void cfx_x509certificate_get_pemencoded_issuer_chain_delegate(IntPtr self, UIntPtr chainCount, IntPtr chain);
             public static cfx_x509certificate_get_pemencoded_issuer_chain_delegate cfx_x509certificate_get_pemencoded_issuer_chain;
 
         }

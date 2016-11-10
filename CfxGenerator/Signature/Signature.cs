@@ -44,8 +44,10 @@ public class Signature {
         var s = new Signature(type, owner, sd, api);
         var cs = CustomSignatures.ForFunction(s);
         if(cs == null) {
+            s.DebugPrintUnhandledArrayArguments();
             return s;
         } else {
+            cs.DebugPrintUnhandledArrayArguments();
             return cs;
         }
     }
@@ -94,8 +96,6 @@ public class Signature {
         this.ReturnType = api.GetApiType(sd.ReturnType, false);
         this.ReturnValueIsConst = sd.ReturnValueIsConst;
         var comments = owner.Comments;
-
-        DebugPrintUnhandledArrayArguments();
     }
 
     protected Signature(Signature s) {
@@ -104,7 +104,6 @@ public class Signature {
         Arguments = s.Arguments;
         ReturnType = s.ReturnType;
         ReturnValueIsConst = s.ReturnValueIsConst;
-        DebugPrintUnhandledArrayArguments();
     }
 
     public virtual Argument[] RemoteArguments {
