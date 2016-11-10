@@ -677,8 +677,8 @@ public class CfxClassBuilder {
         b.BeginFunction("OnDispose", "void", "IntPtr nativePtr", "internal override");
         cbIndex = 0;
         foreach(var sm in StructCallbacks) {
-            b.BeginIf("m_{0} != null", sm.PublicName);
-            b.AppendLine("m_{0} = null;", sm.PublicName);
+            b.BeginIf("m_{0} != null", sm.Callback.PublicName);
+            b.AppendLine("m_{0} = null;", sm.Callback.PublicName);
             b.AppendLine("CfxApi.{0}.{1}_activate_callback(NativePtr, {2}, 0);", ApiClassName, CfxName, cbIndex);
             b.EndBlock();
             cbIndex += 1;

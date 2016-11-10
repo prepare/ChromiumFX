@@ -311,20 +311,20 @@ namespace Chromium {
         private CfxSetByIndexEventHandler m_SetByIndex;
 
         internal override void OnDispose(IntPtr nativePtr) {
-            if(m_Get != null) {
-                m_Get = null;
+            if(m_GetByName != null) {
+                m_GetByName = null;
                 CfxApi.V8Interceptor.cfx_v8interceptor_activate_callback(NativePtr, 0, 0);
             }
-            if(m_Get != null) {
-                m_Get = null;
+            if(m_GetByIndex != null) {
+                m_GetByIndex = null;
                 CfxApi.V8Interceptor.cfx_v8interceptor_activate_callback(NativePtr, 1, 0);
             }
-            if(m_Set != null) {
-                m_Set = null;
+            if(m_SetByName != null) {
+                m_SetByName = null;
                 CfxApi.V8Interceptor.cfx_v8interceptor_activate_callback(NativePtr, 2, 0);
             }
-            if(m_Set != null) {
-                m_Set = null;
+            if(m_SetByIndex != null) {
+                m_SetByIndex = null;
                 CfxApi.V8Interceptor.cfx_v8interceptor_activate_callback(NativePtr, 3, 0);
             }
             base.OnDispose(nativePtr);
