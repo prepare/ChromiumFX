@@ -35,8 +35,8 @@ public class SignatureWithStructPtrArray : Signature {
 
     private Argument[] m_publicArguments;
 
-    public SignatureWithStructPtrArray(SignatureType type, ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api, int arrayIndex, int countIndex)
-        : base(type, owner, sd, api) {
+    public SignatureWithStructPtrArray(Signature s, int arrayIndex, int countIndex)
+        : base(s) {
 
         var list = new List<Argument>();
         for(var i = 0; i <= Arguments.Length - 1; i++) {

@@ -41,11 +41,12 @@ public enum SignatureType {
 public class Signature {
 
     public static Signature Create(SignatureType type, ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api) {
-        var s = CustomSignatures.ForFunction(new Signature(type, owner, sd, api), type, owner, sd, api);
-        if(s == null) {
-            return new Signature(type, owner, sd, api);
-        } else {
+        var s = new Signature(type, owner, sd, api);
+        var cs = CustomSignatures.ForFunction(s);
+        if(cs == null) {
             return s;
+        } else {
+            return cs;
         }
     }
 
@@ -94,6 +95,15 @@ public class Signature {
         this.ReturnValueIsConst = sd.ReturnValueIsConst;
         var comments = owner.Comments;
 
+        DebugPrintUnhandledArrayArguments();
+    }
+
+    protected Signature(Signature s) {
+        Type = s.Type;
+        Owner = s.Owner;
+        Arguments = s.Arguments;
+        ReturnType = s.ReturnType;
+        ReturnValueIsConst = s.ReturnValueIsConst;
         DebugPrintUnhandledArrayArguments();
     }
 

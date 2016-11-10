@@ -34,8 +34,8 @@ using System.Collections.Generic;
 public class CefV8HandlerExecuteSignature : SignatureWithStructPtrArray {
     private Argument[] m_publicArguments;
 
-    public CefV8HandlerExecuteSignature(ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api)
-        : base(SignatureType.ClientCallback, owner, sd, api, 4, 3) {
+    public CefV8HandlerExecuteSignature(Signature s)
+        : base(s, 4, 3) {
         Arguments[6] = new Argument(Arguments[6], new CefStringOutType());
         base.ManagedArguments[5] = new Argument(base.ManagedArguments[5], new CefStringOutType());
         var list = new List<Argument>();

@@ -33,49 +33,49 @@ using System.Diagnostics;
 
 public class CustomSignatures {
 
-    public static Signature ForFunction(SignatureType type, ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api) {
-        if(owner.CefName.Contains("::get_") && sd.Arguments.Count == 2) {
-            if(sd.ReturnType.Name == "void" && string.IsNullOrEmpty(sd.ReturnType.Indirection)) {
-                if(sd.Arguments[1].ArgumentType.Name.StartsWith("cef_string_list") || sd.Arguments[1].ArgumentType.Name.StartsWith("cef_string_m")) {
-                    return new StringCollectionAsRetvalSignature(owner, sd, api);
+    public static Signature ForFunction(Signature s) {
+        if(s.Owner.CefName.Contains("::get_") && s.Arguments.Length == 2) {
+            if(s.ReturnType.IsVoid) {
+                if(s.Arguments[1].ArgumentType.Name.StartsWith("cef_string_list") || s.Arguments[1].ArgumentType.Name.StartsWith("cef_string_m")) {
+                    return new StringCollectionAsRetvalSignature(s);
                 }
             }
         }
 
-        if(owner.CefConfig.CountFunction != null && sd.Arguments.Count == 3 && sd.ReturnType.Name == "void") {
+        if(s.Owner.CefConfig.CountFunction != null && s.Arguments.Length == 3 && s.ReturnType.IsVoid) {
 
             //Debug.Print(owner.CefName);
         }
 
-        switch(owner.CefName) {
+        switch(s.Owner.CefName) {
             case "cef_browser::get_frame_identifiers":
-                return new GetFrameIdentifiersSignature(owner, sd, api);
+                return new GetFrameIdentifiersSignature(s);
 
             case "cef_v8value::execute_function_with_context":
-                return new SignatureWithStructPtrArray(SignatureType.LibraryCall, owner, sd, api, 4, 3);
+                return new SignatureWithStructPtrArray(s, 4, 3);
 
             case "cef_v8value::execute_function":
-                return new SignatureWithStructPtrArray(SignatureType.LibraryCall, owner, sd, api, 3, 2);
+                return new SignatureWithStructPtrArray(s, 3, 2);
 
             case "cef_render_handler::on_paint":
-                return new SignatureWithStructArray(SignatureType.ClientCallback, owner, sd, api, 4, 3);
+                return new SignatureWithStructArray(s, 4, 3);
 
             case "cef_post_data::get_elements":
             case "cef_sslinfo::get_derencoded_issuer_chain":
             case "cef_sslinfo::get_pemencoded_issuer_chain":
-                return new StructArrayGetterSignature(owner, sd, api);
+                return new StructArrayGetterSignature(s);
 
             case "cef_v8handler::execute":
-                return new CefV8HandlerExecuteSignature(owner, sd, api);
+                return new CefV8HandlerExecuteSignature(s);
 
             case "cef_print_settings::set_page_ranges":
-                return new SignatureWithStructArray(SignatureType.LibraryCall, owner, sd, api, 2, 1);
+                return new SignatureWithStructArray(s, 2, 1);
 
             case "cef_print_settings::get_page_ranges":
-                return new GetPageRangesSignature(owner, sd, api, 2, 1);
+                return new GetPageRangesSignature(s, 2, 1);
 
             case "cef_drag_handler::on_draggable_regions_changed":
-                return new SignatureWithStructArray(SignatureType.ClientCallback, owner, sd, api, 3, 2);
+                return new SignatureWithStructArray(s, 3, 2);
 
             default:
                 return null;

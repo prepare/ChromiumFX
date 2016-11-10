@@ -33,8 +33,9 @@ using System.Diagnostics;
 
 public class StructArrayGetterSignature : Signature {
 
-    public StructArrayGetterSignature(ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api)
-        : base(SignatureType.LibraryCall, owner, sd, api) {
+    public StructArrayGetterSignature(Signature s)
+        : base(s) {
+        Debug.Assert(SignatureType.LibraryCall == s.Type);
     }
 
     public override Argument[] ManagedArguments {

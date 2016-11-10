@@ -31,8 +31,8 @@
 
 public class GetFrameIdentifiersSignature : Signature {
 
-    public GetFrameIdentifiersSignature(ISignatureOwner parent, Parser.SignatureData sd, ApiTypeBuilder api)
-        : base(SignatureType.LibraryCall, parent, sd, api) {
+    public GetFrameIdentifiersSignature(Signature s)
+        : base(s) {
     }
 
     public override Argument[] ManagedArguments {
