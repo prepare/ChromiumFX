@@ -66,10 +66,11 @@ static cef_v8value_t* cfx_v8value_create_string(char16 *value_str, int value_len
     cef_string_t value = { value_str, value_length, 0 };
     return cef_v8value_create_string(&value);
 }
-// CEF_EXPORT cef_v8value_t* cef_v8value_create_object(cef_v8accessor_t* accessor);
-static cef_v8value_t* cfx_v8value_create_object(cef_v8accessor_t* accessor) {
+// CEF_EXPORT cef_v8value_t* cef_v8value_create_object(cef_v8accessor_t* accessor, cef_v8interceptor_t* interceptor);
+static cef_v8value_t* cfx_v8value_create_object(cef_v8accessor_t* accessor, cef_v8interceptor_t* interceptor) {
     if(accessor) ((cef_base_t*)accessor)->add_ref((cef_base_t*)accessor);
-    return cef_v8value_create_object(accessor);
+    if(interceptor) ((cef_base_t*)interceptor)->add_ref((cef_base_t*)interceptor);
+    return cef_v8value_create_object(accessor, interceptor);
 }
 // CEF_EXPORT cef_v8value_t* cef_v8value_create_array(int length);
 static cef_v8value_t* cfx_v8value_create_array(int length) {

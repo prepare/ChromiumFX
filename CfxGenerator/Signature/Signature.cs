@@ -41,7 +41,7 @@ public enum SignatureType {
 public class Signature {
 
     public static Signature Create(SignatureType type, ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api) {
-        var s = CustomSignatures.ForFunction(type, owner, sd, api);
+        var s = CustomSignatures.ForFunction(new Signature(type, owner, sd, api), type, owner, sd, api);
         if(s == null) {
             return new Signature(type, owner, sd, api);
         } else {

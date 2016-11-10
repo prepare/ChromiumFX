@@ -59,10 +59,14 @@ namespace Chromium {
         internal static void SetNativeCallbacks() {
             execute_command_native = execute_command;
             menu_will_show_native = menu_will_show;
-            var setCallbacks = (CfxApi.cfx_set_ptr_2_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_menu_model_delegate_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_2_delegate));
+            menu_closed_native = menu_closed;
+            format_label_native = format_label;
+            var setCallbacks = (CfxApi.cfx_set_ptr_4_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_menu_model_delegate_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_4_delegate));
             setCallbacks(
                 System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(execute_command_native),
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(menu_will_show_native)
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(menu_will_show_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(menu_closed_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(format_label_native)
             );
         }
 
@@ -98,6 +102,47 @@ namespace Chromium {
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
             if(e.m_menu_model_wrapped == null) CfxApi.cfx_release(e.m_menu_model);
+        }
+
+        // menu_closed
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void menu_closed_delegate(IntPtr gcHandlePtr, IntPtr menu_model);
+        private static menu_closed_delegate menu_closed_native;
+
+        internal static void menu_closed(IntPtr gcHandlePtr, IntPtr menu_model) {
+            var self = (CfxMenuModelDelegate)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                return;
+            }
+            var e = new CfxMenuClosedEventArgs(menu_model);
+            var eventHandler = self.m_MenuClosed;
+            if(eventHandler != null) eventHandler(self, e);
+            e.m_isInvalid = true;
+            if(e.m_menu_model_wrapped == null) CfxApi.cfx_release(e.m_menu_model);
+        }
+
+        // format_label
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void format_label_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr menu_model, ref IntPtr label_str, ref int label_length);
+        private static format_label_delegate format_label_native;
+
+        internal static void format_label(IntPtr gcHandlePtr, out int __retval, IntPtr menu_model, ref IntPtr label_str, ref int label_length) {
+            var self = (CfxMenuModelDelegate)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                __retval = default(int);
+                return;
+            }
+            var e = new CfxFormatLabelEventArgs(menu_model, label_str, label_length);
+            var eventHandler = self.m_FormatLabel;
+            if(eventHandler != null) eventHandler(self, e);
+            e.m_isInvalid = true;
+            if(e.m_menu_model_wrapped == null) CfxApi.cfx_release(e.m_menu_model);
+            if(e.m_label_changed) {
+                var label_pinned = new PinnedString(e.m_label_wrapped);
+                label_str = label_pinned.Obj.PinnedPtr;
+                label_length = label_pinned.Length;
+            }
+            __retval = e.m_returnValue ? 1 : 0;
         }
 
         internal CfxMenuModelDelegate(IntPtr nativePtr) : base(nativePtr) {}
@@ -160,6 +205,63 @@ namespace Chromium {
 
         private CfxMenuWillShowEventHandler m_MenuWillShow;
 
+        /// <summary>
+        /// The menu has closed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_delegate_capi.h">cef/include/capi/cef_menu_model_delegate_capi.h</see>.
+        /// </remarks>
+        public event CfxMenuClosedEventHandler MenuClosed {
+            add {
+                lock(eventLock) {
+                    if(m_MenuClosed == null) {
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_activate_callback(NativePtr, 2, 1);
+                    }
+                    m_MenuClosed += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_MenuClosed -= value;
+                    if(m_MenuClosed == null) {
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_activate_callback(NativePtr, 2, 0);
+                    }
+                }
+            }
+        }
+
+        private CfxMenuClosedEventHandler m_MenuClosed;
+
+        /// <summary>
+        /// Optionally modify a menu item label. Return true (1) if |Label| was
+        /// modified.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_delegate_capi.h">cef/include/capi/cef_menu_model_delegate_capi.h</see>.
+        /// </remarks>
+        public event CfxFormatLabelEventHandler FormatLabel {
+            add {
+                lock(eventLock) {
+                    if(m_FormatLabel == null) {
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_activate_callback(NativePtr, 3, 1);
+                    }
+                    m_FormatLabel += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_FormatLabel -= value;
+                    if(m_FormatLabel == null) {
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_activate_callback(NativePtr, 3, 0);
+                    }
+                }
+            }
+        }
+
+        private CfxFormatLabelEventHandler m_FormatLabel;
+
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_ExecuteCommand != null) {
                 m_ExecuteCommand = null;
@@ -168,6 +270,14 @@ namespace Chromium {
             if(m_MenuWillShow != null) {
                 m_MenuWillShow = null;
                 CfxApi.MenuModelDelegate.cfx_menu_model_delegate_activate_callback(NativePtr, 1, 0);
+            }
+            if(m_MenuClosed != null) {
+                m_MenuClosed = null;
+                CfxApi.MenuModelDelegate.cfx_menu_model_delegate_activate_callback(NativePtr, 2, 0);
+            }
+            if(m_FormatLabel != null) {
+                m_FormatLabel = null;
+                CfxApi.MenuModelDelegate.cfx_menu_model_delegate_activate_callback(NativePtr, 3, 0);
             }
             base.OnDispose(nativePtr);
         }
@@ -279,6 +389,128 @@ namespace Chromium {
 
             public override string ToString() {
                 return String.Format("MenuModel={{{0}}}", MenuModel);
+            }
+        }
+
+        /// <summary>
+        /// The menu has closed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_delegate_capi.h">cef/include/capi/cef_menu_model_delegate_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxMenuClosedEventHandler(object sender, CfxMenuClosedEventArgs e);
+
+        /// <summary>
+        /// The menu has closed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_delegate_capi.h">cef/include/capi/cef_menu_model_delegate_capi.h</see>.
+        /// </remarks>
+        public class CfxMenuClosedEventArgs : CfxEventArgs {
+
+            internal IntPtr m_menu_model;
+            internal CfxMenuModel m_menu_model_wrapped;
+
+            internal CfxMenuClosedEventArgs(IntPtr menu_model) {
+                m_menu_model = menu_model;
+            }
+
+            /// <summary>
+            /// Get the MenuModel parameter for the <see cref="CfxMenuModelDelegate.MenuClosed"/> callback.
+            /// </summary>
+            public CfxMenuModel MenuModel {
+                get {
+                    CheckAccess();
+                    if(m_menu_model_wrapped == null) m_menu_model_wrapped = CfxMenuModel.Wrap(m_menu_model);
+                    return m_menu_model_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("MenuModel={{{0}}}", MenuModel);
+            }
+        }
+
+        /// <summary>
+        /// Optionally modify a menu item label. Return true (1) if |Label| was
+        /// modified.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_delegate_capi.h">cef/include/capi/cef_menu_model_delegate_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxFormatLabelEventHandler(object sender, CfxFormatLabelEventArgs e);
+
+        /// <summary>
+        /// Optionally modify a menu item label. Return true (1) if |Label| was
+        /// modified.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_delegate_capi.h">cef/include/capi/cef_menu_model_delegate_capi.h</see>.
+        /// </remarks>
+        public class CfxFormatLabelEventArgs : CfxEventArgs {
+
+            internal IntPtr m_menu_model;
+            internal CfxMenuModel m_menu_model_wrapped;
+            internal IntPtr m_label_str;
+            internal int m_label_length;
+            internal string m_label_wrapped;
+            internal bool m_label_changed;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxFormatLabelEventArgs(IntPtr menu_model, IntPtr label_str, int label_length) {
+                m_menu_model = menu_model;
+                m_label_str = label_str;
+                m_label_length = label_length;
+            }
+
+            /// <summary>
+            /// Get the MenuModel parameter for the <see cref="CfxMenuModelDelegate.FormatLabel"/> callback.
+            /// </summary>
+            public CfxMenuModel MenuModel {
+                get {
+                    CheckAccess();
+                    if(m_menu_model_wrapped == null) m_menu_model_wrapped = CfxMenuModel.Wrap(m_menu_model);
+                    return m_menu_model_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get or set the Label parameter for the <see cref="CfxMenuModelDelegate.FormatLabel"/> callback.
+            /// </summary>
+            public string Label {
+                get {
+                    CheckAccess();
+                    if(!m_label_changed && m_label_wrapped == null) {
+                        m_label_wrapped = StringFunctions.PtrToStringUni(m_label_str, m_label_length);
+                    }
+                    return m_label_wrapped;
+                }
+                set {
+                    CheckAccess();
+                    m_label_wrapped = value;
+                    m_label_changed = true;
+                }
+            }
+            /// <summary>
+            /// Set the return value for the <see cref="CfxMenuModelDelegate.FormatLabel"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
+            /// </summary>
+            public void SetReturnValue(bool returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("MenuModel={{{0}}}, Label={{{1}}}", MenuModel, Label);
             }
         }
 

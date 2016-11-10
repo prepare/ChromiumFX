@@ -368,6 +368,22 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
+        /// Returns the bounds of the element.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
+        public CfrRect ElementBounds {
+            get {
+                var call = new CfxDomNodeGetElementBoundsRenderProcessCall();
+                call.@this = proxyId;
+                call.RequestExecution(this);
+                return CfrRect.Wrap(call.__retval);
+            }
+        }
+
+        /// <summary>
         /// Returns true (1) if this object is pointing to the same handle as |that|
         /// object.
         /// </summary>

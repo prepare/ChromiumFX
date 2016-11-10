@@ -73,6 +73,35 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
+        /// Returns true (1) if the certificate status has any error, major or minor.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// </remarks>
+        public static bool IsCertStatusError(CfxCertStatus status) {
+            var call = new CfxRuntimeIsCertStatusErrorRenderProcessCall();
+            call.status = (int)status;
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+            return call.__retval;
+        }
+
+        /// <summary>
+        /// Returns true (1) if the certificate status represents only minor errors (e.g.
+        /// failure to verify certificate revocation).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// </remarks>
+        public static bool IsCertStatusMinorError(CfxCertStatus status) {
+            var call = new CfxRuntimeIsCertStatusMinorErrorRenderProcessCall();
+            call.status = (int)status;
+            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+            return call.__retval;
+        }
+
+        /// <summary>
         /// Post a task for delayed execution on the specified thread. Equivalent to
         /// using CfrTaskRunner.GetForThread(threadId).PostDelayedTask(task,
         /// delay_ms).

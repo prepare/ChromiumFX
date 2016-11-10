@@ -186,6 +186,19 @@ namespace Chromium {
             }
         }
 
+        /// <summary>
+        /// Returns the SSL information for this navigation entry.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
+        /// </remarks>
+        public CfxSslstatus Sslstatus {
+            get {
+                return CfxSslstatus.Wrap(CfxApi.NavigationEntry.cfx_navigation_entry_get_sslstatus(NativePtr));
+            }
+        }
+
         internal override void OnDispose(IntPtr nativePtr) {
             weakCache.Remove(nativePtr);
             base.OnDispose(nativePtr);

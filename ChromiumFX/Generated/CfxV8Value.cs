@@ -161,18 +161,18 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Create a new CfxV8Value object of type object with optional accessor. This
-        /// function should only be called from within the scope of a
-        /// CfxRenderProcessHandler, CfxV8Handler or CfxV8Accessor callback,
-        /// or in combination with calling enter() and exit() on a stored CfxV8Context
-        /// reference.
+        /// Create a new CfxV8Value object of type object with optional accessor
+        /// and/or interceptor. This function should only be called from within the scope
+        /// of a CfxRenderProcessHandler, CfxV8Handler or CfxV8Accessor
+        /// callback, or in combination with calling enter() and exit() on a stored
+        /// CfxV8Context reference.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public static CfxV8Value CreateObject(CfxV8Accessor accessor) {
-            return CfxV8Value.Wrap(CfxApi.V8Value.cfx_v8value_create_object(CfxV8Accessor.Unwrap(accessor)));
+        public static CfxV8Value CreateObject(CfxV8Accessor accessor, CfxV8interceptor interceptor) {
+            return CfxV8Value.Wrap(CfxApi.V8Value.cfx_v8value_create_object(CfxV8Accessor.Unwrap(accessor), CfxV8interceptor.Unwrap(interceptor)));
         }
 
         /// <summary>
@@ -367,8 +367,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Return a bool value.  The underlying data will be converted to if
-        /// necessary.
+        /// Return a bool value.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -381,8 +380,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Return an int value.  The underlying data will be converted to if
-        /// necessary.
+        /// Return an int value.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -395,8 +393,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Return an unisgned int value.  The underlying data will be converted to if
-        /// necessary.
+        /// Return an unsigned int value.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -409,8 +406,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Return a double value.  The underlying data will be converted to if
-        /// necessary.
+        /// Return a double value.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -423,8 +419,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Return a Date value.  The underlying data will be converted to if
-        /// necessary.
+        /// Return a Date value.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -437,8 +432,7 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Return a string value.  The underlying data will be converted to if
-        /// necessary.
+        /// Return a string value.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

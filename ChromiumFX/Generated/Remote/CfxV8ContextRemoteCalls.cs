@@ -337,6 +337,8 @@ namespace Chromium.Remote {
 
         internal IntPtr @this;
         internal string code;
+        internal string scriptUrl;
+        internal int startLine;
         internal IntPtr retval;
         internal IntPtr exception;
         internal bool __retval;
@@ -344,11 +346,15 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) {
             h.Write(@this);
             h.Write(code);
+            h.Write(scriptUrl);
+            h.Write(startLine);
         }
 
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out @this);
             h.Read(out code);
+            h.Read(out scriptUrl);
+            h.Read(out startLine);
         }
 
         protected override void WriteReturn(StreamHandler h) {
@@ -365,8 +371,10 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var code_pinned = new PinnedString(code);
-            __retval = 0 != CfxApi.V8Context.cfx_v8context_eval(@this, code_pinned.Obj.PinnedPtr, code_pinned.Length, out retval, out exception);
+            var scriptUrl_pinned = new PinnedString(scriptUrl);
+            __retval = 0 != CfxApi.V8Context.cfx_v8context_eval(@this, code_pinned.Obj.PinnedPtr, code_pinned.Length, scriptUrl_pinned.Obj.PinnedPtr, scriptUrl_pinned.Length, startLine, out retval, out exception);
             code_pinned.Obj.Free();
+            scriptUrl_pinned.Obj.Free();
         }
     }
 

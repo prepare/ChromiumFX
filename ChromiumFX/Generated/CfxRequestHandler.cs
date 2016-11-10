@@ -68,10 +68,11 @@ namespace Chromium {
             on_quota_request_native = on_quota_request;
             on_protocol_execution_native = on_protocol_execution;
             on_certificate_error_native = on_certificate_error;
+            on_select_client_certificate_native = on_select_client_certificate;
             on_plugin_crashed_native = on_plugin_crashed;
             on_render_view_ready_native = on_render_view_ready;
             on_render_process_terminated_native = on_render_process_terminated;
-            var setCallbacks = (CfxApi.cfx_set_ptr_15_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_request_handler_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_15_delegate));
+            var setCallbacks = (CfxApi.cfx_set_ptr_16_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_request_handler_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_16_delegate));
             setCallbacks(
                 System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_before_browse_native),
                 System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_open_urlfrom_tab_native),
@@ -85,6 +86,7 @@ namespace Chromium {
                 System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_quota_request_native),
                 System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_protocol_execution_native),
                 System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_certificate_error_native),
+                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_select_client_certificate_native),
                 System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_plugin_crashed_native),
                 System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_render_view_ready_native),
                 System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_render_process_terminated_native)
@@ -177,21 +179,22 @@ namespace Chromium {
 
         // on_resource_redirect
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_resource_redirect_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr request, ref IntPtr new_url_str, ref int new_url_length);
+        private delegate void on_resource_redirect_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr request, IntPtr response, ref IntPtr new_url_str, ref int new_url_length);
         private static on_resource_redirect_delegate on_resource_redirect_native;
 
-        internal static void on_resource_redirect(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr request, ref IntPtr new_url_str, ref int new_url_length) {
+        internal static void on_resource_redirect(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr request, IntPtr response, ref IntPtr new_url_str, ref int new_url_length) {
             var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 return;
             }
-            var e = new CfxOnResourceRedirectEventArgs(browser, frame, request, new_url_str, new_url_length);
+            var e = new CfxOnResourceRedirectEventArgs(browser, frame, request, response, new_url_str, new_url_length);
             var eventHandler = self.m_OnResourceRedirect;
             if(eventHandler != null) eventHandler(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
             if(e.m_request_wrapped == null) CfxApi.cfx_release(e.m_request);
+            if(e.m_response_wrapped == null) CfxApi.cfx_release(e.m_response);
             if(e.m_new_url_changed) {
                 var new_url_pinned = new PinnedString(e.m_new_url_wrapped);
                 new_url_str = new_url_pinned.Obj.PinnedPtr;
@@ -340,6 +343,26 @@ namespace Chromium {
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_ssl_info_wrapped == null) CfxApi.cfx_release(e.m_ssl_info);
+            if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
+            __retval = e.m_returnValue ? 1 : 0;
+        }
+
+        // on_select_client_certificate
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void on_select_client_certificate_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int isProxy, IntPtr host_str, int host_length, int port, UIntPtr certificatesCount, IntPtr certificates, IntPtr callback);
+        private static on_select_client_certificate_delegate on_select_client_certificate_native;
+
+        internal static void on_select_client_certificate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, int isProxy, IntPtr host_str, int host_length, int port, UIntPtr certificatesCount, IntPtr certificates, IntPtr callback) {
+            var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                __retval = default(int);
+                return;
+            }
+            var e = new CfxOnSelectClientCertificateEventArgs(browser, isProxy, host_str, host_length, port, certificatesCount, certificates, callback);
+            var eventHandler = self.m_OnSelectClientCertificate;
+            if(eventHandler != null) eventHandler(self, e);
+            e.m_isInvalid = true;
+            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
             __retval = e.m_returnValue ? 1 : 0;
         }
@@ -540,8 +563,10 @@ namespace Chromium {
         /// <summary>
         /// Called on the IO thread when a resource load is redirected. The |Request|
         /// parameter will contain the old URL and other request-related information.
-        /// The |NewUrl| parameter will contain the new URL and can be changed if
-        /// desired. The |Request| object cannot be modified in this callback.
+        /// The |Response| parameter will contain the response that resulted in the
+        /// redirect. The |NewUrl| parameter will contain the new URL and can be
+        /// changed if desired. The |Request| object cannot be modified in this
+        /// callback.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -796,6 +821,44 @@ namespace Chromium {
         private CfxOnCertificateErrorEventHandler m_OnCertificateError;
 
         /// <summary>
+        /// Called on the UI thread when a client certificate is being requested for
+        /// authentication. Return false (0) to use the default behavior and
+        /// automatically select the first certificate available. Return true (1) and
+        /// call CfxSelectClientCertificateCallback.Select either in this
+        /// function or at a later time to select a certificate. Do not call Select or
+        /// call it with NULL to continue without using any certificate. |IsProxy|
+        /// indicates whether the host is an HTTPS proxy or the origin server. |Host|
+        /// and |Port| contains the hostname and port of the SSL server. |Certificates|
+        /// is the list of certificates to choose from; this list has already been
+        /// pruned by Chromium so that it only contains certificates from issuers that
+        /// the server trusts.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
+        public event CfxOnSelectClientCertificateEventHandler OnSelectClientCertificate {
+            add {
+                lock(eventLock) {
+                    if(m_OnSelectClientCertificate == null) {
+                        CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 12, 1);
+                    }
+                    m_OnSelectClientCertificate += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_OnSelectClientCertificate -= value;
+                    if(m_OnSelectClientCertificate == null) {
+                        CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 12, 0);
+                    }
+                }
+            }
+        }
+
+        private CfxOnSelectClientCertificateEventHandler m_OnSelectClientCertificate;
+
+        /// <summary>
         /// Called on the browser process UI thread when a plugin has crashed.
         /// |PluginPath| is the path of the plugin that crashed.
         /// </summary>
@@ -807,7 +870,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnPluginCrashed == null) {
-                        CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 12, 1);
+                        CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 13, 1);
                     }
                     m_OnPluginCrashed += value;
                 }
@@ -816,7 +879,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnPluginCrashed -= value;
                     if(m_OnPluginCrashed == null) {
-                        CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 12, 0);
+                        CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 13, 0);
                     }
                 }
             }
@@ -837,7 +900,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnRenderViewReady == null) {
-                        CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 13, 1);
+                        CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 14, 1);
                     }
                     m_OnRenderViewReady += value;
                 }
@@ -846,7 +909,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnRenderViewReady -= value;
                     if(m_OnRenderViewReady == null) {
-                        CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 13, 0);
+                        CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 14, 0);
                     }
                 }
             }
@@ -866,7 +929,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnRenderProcessTerminated == null) {
-                        CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 14, 1);
+                        CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 15, 1);
                     }
                     m_OnRenderProcessTerminated += value;
                 }
@@ -875,7 +938,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnRenderProcessTerminated -= value;
                     if(m_OnRenderProcessTerminated == null) {
-                        CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 14, 0);
+                        CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 15, 0);
                     }
                 }
             }
@@ -932,17 +995,21 @@ namespace Chromium {
                 m_OnCertificateError = null;
                 CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 11, 0);
             }
+            if(m_OnSelectClientCertificate != null) {
+                m_OnSelectClientCertificate = null;
+                CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 12, 0);
+            }
             if(m_OnPluginCrashed != null) {
                 m_OnPluginCrashed = null;
-                CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 12, 0);
+                CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 13, 0);
             }
             if(m_OnRenderViewReady != null) {
                 m_OnRenderViewReady = null;
-                CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 13, 0);
+                CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 14, 0);
             }
             if(m_OnRenderProcessTerminated != null) {
                 m_OnRenderProcessTerminated = null;
-                CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 14, 0);
+                CfxApi.RequestHandler.cfx_request_handler_activate_callback(NativePtr, 15, 0);
             }
             base.OnDispose(nativePtr);
         }
@@ -1384,8 +1451,10 @@ namespace Chromium {
         /// <summary>
         /// Called on the IO thread when a resource load is redirected. The |Request|
         /// parameter will contain the old URL and other request-related information.
-        /// The |NewUrl| parameter will contain the new URL and can be changed if
-        /// desired. The |Request| object cannot be modified in this callback.
+        /// The |Response| parameter will contain the response that resulted in the
+        /// redirect. The |NewUrl| parameter will contain the new URL and can be
+        /// changed if desired. The |Request| object cannot be modified in this
+        /// callback.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -1396,8 +1465,10 @@ namespace Chromium {
         /// <summary>
         /// Called on the IO thread when a resource load is redirected. The |Request|
         /// parameter will contain the old URL and other request-related information.
-        /// The |NewUrl| parameter will contain the new URL and can be changed if
-        /// desired. The |Request| object cannot be modified in this callback.
+        /// The |Response| parameter will contain the response that resulted in the
+        /// redirect. The |NewUrl| parameter will contain the new URL and can be
+        /// changed if desired. The |Request| object cannot be modified in this
+        /// callback.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -1411,15 +1482,18 @@ namespace Chromium {
             internal CfxFrame m_frame_wrapped;
             internal IntPtr m_request;
             internal CfxRequest m_request_wrapped;
+            internal IntPtr m_response;
+            internal CfxResponse m_response_wrapped;
             internal IntPtr m_new_url_str;
             internal int m_new_url_length;
             internal string m_new_url_wrapped;
             internal bool m_new_url_changed;
 
-            internal CfxOnResourceRedirectEventArgs(IntPtr browser, IntPtr frame, IntPtr request, IntPtr new_url_str, int new_url_length) {
+            internal CfxOnResourceRedirectEventArgs(IntPtr browser, IntPtr frame, IntPtr request, IntPtr response, IntPtr new_url_str, int new_url_length) {
                 m_browser = browser;
                 m_frame = frame;
                 m_request = request;
+                m_response = response;
                 m_new_url_str = new_url_str;
                 m_new_url_length = new_url_length;
             }
@@ -1455,6 +1529,16 @@ namespace Chromium {
                 }
             }
             /// <summary>
+            /// Get the Response parameter for the <see cref="CfxRequestHandler.OnResourceRedirect"/> callback.
+            /// </summary>
+            public CfxResponse Response {
+                get {
+                    CheckAccess();
+                    if(m_response_wrapped == null) m_response_wrapped = CfxResponse.Wrap(m_response);
+                    return m_response_wrapped;
+                }
+            }
+            /// <summary>
             /// Get or set the NewUrl parameter for the <see cref="CfxRequestHandler.OnResourceRedirect"/> callback.
             /// </summary>
             public string NewUrl {
@@ -1473,7 +1557,7 @@ namespace Chromium {
             }
 
             public override string ToString() {
-                return String.Format("Browser={{{0}}}, Frame={{{1}}}, Request={{{2}}}, NewUrl={{{3}}}", Browser, Frame, Request, NewUrl);
+                return String.Format("Browser={{{0}}}, Frame={{{1}}}, Request={{{2}}}, Response={{{3}}}, NewUrl={{{4}}}", Browser, Frame, Request, Response, NewUrl);
             }
         }
 
@@ -2246,6 +2330,154 @@ namespace Chromium {
 
             public override string ToString() {
                 return String.Format("Browser={{{0}}}, CertError={{{1}}}, RequestUrl={{{2}}}, SslInfo={{{3}}}, Callback={{{4}}}", Browser, CertError, RequestUrl, SslInfo, Callback);
+            }
+        }
+
+        /// <summary>
+        /// Called on the UI thread when a client certificate is being requested for
+        /// authentication. Return false (0) to use the default behavior and
+        /// automatically select the first certificate available. Return true (1) and
+        /// call CfxSelectClientCertificateCallback.Select either in this
+        /// function or at a later time to select a certificate. Do not call Select or
+        /// call it with NULL to continue without using any certificate. |IsProxy|
+        /// indicates whether the host is an HTTPS proxy or the origin server. |Host|
+        /// and |Port| contains the hostname and port of the SSL server. |Certificates|
+        /// is the list of certificates to choose from; this list has already been
+        /// pruned by Chromium so that it only contains certificates from issuers that
+        /// the server trusts.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxOnSelectClientCertificateEventHandler(object sender, CfxOnSelectClientCertificateEventArgs e);
+
+        /// <summary>
+        /// Called on the UI thread when a client certificate is being requested for
+        /// authentication. Return false (0) to use the default behavior and
+        /// automatically select the first certificate available. Return true (1) and
+        /// call CfxSelectClientCertificateCallback.Select either in this
+        /// function or at a later time to select a certificate. Do not call Select or
+        /// call it with NULL to continue without using any certificate. |IsProxy|
+        /// indicates whether the host is an HTTPS proxy or the origin server. |Host|
+        /// and |Port| contains the hostname and port of the SSL server. |Certificates|
+        /// is the list of certificates to choose from; this list has already been
+        /// pruned by Chromium so that it only contains certificates from issuers that
+        /// the server trusts.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxOnSelectClientCertificateEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal int m_isProxy;
+            internal IntPtr m_host_str;
+            internal int m_host_length;
+            internal string m_host;
+            internal int m_port;
+            internal UIntPtr m_certificatesCount;
+            internal IntPtr m_certificates;
+            internal IntPtr m_callback;
+            internal CfxSelectClientCertificateCallback m_callback_wrapped;
+
+            internal bool m_returnValue;
+            private bool returnValueSet;
+
+            internal CfxOnSelectClientCertificateEventArgs(IntPtr browser, int isProxy, IntPtr host_str, int host_length, int port, UIntPtr certificatesCount, IntPtr certificates, IntPtr callback) {
+                m_browser = browser;
+                m_isProxy = isProxy;
+                m_host_str = host_str;
+                m_host_length = host_length;
+                m_port = port;
+                m_certificatesCount = certificatesCount;
+                m_certificates = certificates;
+                m_callback = callback;
+            }
+
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRequestHandler.OnSelectClientCertificate"/> callback.
+            /// </summary>
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the IsProxy parameter for the <see cref="CfxRequestHandler.OnSelectClientCertificate"/> callback.
+            /// </summary>
+            public bool IsProxy {
+                get {
+                    CheckAccess();
+                    return 0 != m_isProxy;
+                }
+            }
+            /// <summary>
+            /// Get the Host parameter for the <see cref="CfxRequestHandler.OnSelectClientCertificate"/> callback.
+            /// </summary>
+            public string Host {
+                get {
+                    CheckAccess();
+                    m_host = StringFunctions.PtrToStringUni(m_host_str, m_host_length);
+                    return m_host;
+                }
+            }
+            /// <summary>
+            /// Get the Port parameter for the <see cref="CfxRequestHandler.OnSelectClientCertificate"/> callback.
+            /// </summary>
+            public int Port {
+                get {
+                    CheckAccess();
+                    return m_port;
+                }
+            }
+            /// <summary>
+            /// Get the CertificatesCount parameter for the <see cref="CfxRequestHandler.OnSelectClientCertificate"/> callback.
+            /// </summary>
+            public ulong CertificatesCount {
+                get {
+                    CheckAccess();
+                    return (ulong)m_certificatesCount;
+                }
+            }
+            /// <summary>
+            /// Get the Certificates parameter for the <see cref="CfxRequestHandler.OnSelectClientCertificate"/> callback.
+            /// </summary>
+            public IntPtr Certificates {
+                get {
+                    CheckAccess();
+                    return m_certificates;
+                }
+            }
+            /// <summary>
+            /// Get the Callback parameter for the <see cref="CfxRequestHandler.OnSelectClientCertificate"/> callback.
+            /// </summary>
+            public CfxSelectClientCertificateCallback Callback {
+                get {
+                    CheckAccess();
+                    if(m_callback_wrapped == null) m_callback_wrapped = CfxSelectClientCertificateCallback.Wrap(m_callback);
+                    return m_callback_wrapped;
+                }
+            }
+            /// <summary>
+            /// Set the return value for the <see cref="CfxRequestHandler.OnSelectClientCertificate"/> callback.
+            /// Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown.
+            /// </summary>
+            public void SetReturnValue(bool returnValue) {
+                CheckAccess();
+                if(returnValueSet) {
+                    throw new CfxException("The return value has already been set");
+                }
+                returnValueSet = true;
+                this.m_returnValue = returnValue;
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, IsProxy={{{1}}}, Host={{{2}}}, Port={{{3}}}, CertificatesCount={{{4}}}, Certificates={{{5}}}, Callback={{{6}}}", Browser, IsProxy, Host, Port, CertificatesCount, Certificates, Callback);
             }
         }
 

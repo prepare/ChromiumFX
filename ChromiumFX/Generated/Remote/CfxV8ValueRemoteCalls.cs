@@ -257,14 +257,17 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxV8ValueCreateObjectRenderProcessCall) {}
 
         internal IntPtr accessor;
+        internal IntPtr interceptor;
         internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(accessor);
+            h.Write(interceptor);
         }
 
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out accessor);
+            h.Read(out interceptor);
         }
 
         protected override void WriteReturn(StreamHandler h) {
@@ -276,7 +279,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.V8Value.cfx_v8value_create_object(accessor);
+            __retval = CfxApi.V8Value.cfx_v8value_create_object(accessor, interceptor);
         }
     }
 

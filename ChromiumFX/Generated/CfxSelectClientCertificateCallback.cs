@@ -35,22 +35,22 @@ using System;
 
 namespace Chromium {
     /// <summary>
-    /// Structure representing SSL information.
+    /// Callback structure used to select a client certificate for authentication.
     /// </summary>
     /// <remarks>
     /// See also the original CEF documentation in
-    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
     /// </remarks>
-    public class CfxSslInfo : CfxLibraryBase {
+    public class CfxSelectClientCertificateCallback : CfxLibraryBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
 
-        internal static CfxSslInfo Wrap(IntPtr nativePtr) {
+        internal static CfxSelectClientCertificateCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
-                var wrapper = (CfxSslInfo)weakCache.Get(nativePtr);
+                var wrapper = (CfxSelectClientCertificateCallback)weakCache.Get(nativePtr);
                 if(wrapper == null) {
-                    wrapper = new CfxSslInfo(nativePtr);
+                    wrapper = new CfxSelectClientCertificateCallback(nativePtr);
                     weakCache.Add(wrapper);
                 } else {
                     CfxApi.cfx_release(nativePtr);
@@ -60,33 +60,18 @@ namespace Chromium {
         }
 
 
-        internal CfxSslInfo(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxSelectClientCertificateCallback(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Returns a bitmask containing any and all problems verifying the server
-        /// certificate.
+        /// Chooses the specified certificate for client certificate authentication.
+        /// NULL value means that no client certificate should be used.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_handler_capi.h">cef/include/capi/cef_request_handler_capi.h</see>.
         /// </remarks>
-        public CfxCertStatus CertStatus {
-            get {
-                return (CfxCertStatus)CfxApi.SslInfo.cfx_sslinfo_get_cert_status(NativePtr);
-            }
-        }
-
-        /// <summary>
-        /// Returns the X.509 certificate.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
-        /// </remarks>
-        public CfxX509certificate X509certificate {
-            get {
-                return CfxX509certificate.Wrap(CfxApi.SslInfo.cfx_sslinfo_get_x509certificate(NativePtr));
-            }
+        public void Select(CfxX509certificate cert) {
+            CfxApi.SelectClientCertificateCallback.cfx_select_client_certificate_callback_select(NativePtr, CfxX509certificate.Unwrap(cert));
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

@@ -1209,6 +1209,39 @@ namespace Chromium {
         ScaleFactor300p
     }
     /// <summary>
+    /// Supported SSL content status flags. See content/public/common/ssl_status.h
+    /// for more information.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxSslContentStatus {
+        NormalContent = unchecked((int)0),
+        DisplayedInsecureContent = unchecked((int)1 << 0),
+        RanInsecureContent = unchecked((int)1 << 1)
+    }
+    /// <summary>
+    /// Supported SSL version values. See net/ssl/ssl_connection_status_flags.h
+    /// for more information.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxSslVersion {
+        Unknown = unchecked((int)0),
+        Ssl2 = unchecked((int)1),
+        Ssl3 = unchecked((int)2),
+        Tls1 = unchecked((int)3),
+        Tls11 = unchecked((int)4),
+        Tls12 = unchecked((int)5),
+        /// <summary>
+        /// Reserve 6 for TLS 1.3.
+        /// </summary>
+        Quic = unchecked((int)7)
+    }
+    /// <summary>
     /// Represents the state of a setting.
     /// </summary>
     /// <remarks>
@@ -1526,7 +1559,9 @@ namespace Chromium {
         List
     }
     /// <summary>
-    /// The manner in which a link click should be opened.
+    /// The manner in which a link click should be opened. These constants match
+    /// their equivalents in Chromium's window_open_disposition.h and should not be
+    /// renumbered.
     /// </summary>
     /// <remarks>
     /// See also the original CEF documentation in
@@ -1534,7 +1569,6 @@ namespace Chromium {
     /// </remarks>
     public enum CfxWindowOpenDisposition {
         Unknown,
-        SuppressOpen,
         CurrentTab,
         SingletonTab,
         NewForegroundTab,

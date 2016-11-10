@@ -37,5 +37,9 @@ namespace Parser {
     public class TypeData {
         public string Name;
         public string Indirection;
+
+        public override string ToString() {
+            return Name + " " + Indirection;
+        }
     }
 }

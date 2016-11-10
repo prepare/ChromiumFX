@@ -38,5 +38,9 @@ namespace Parser {
         public TypeData ArgumentType;
         public string Var;
         public bool IsConst;
+
+        public override string ToString() {
+            return string.Format("{0} {1}{2}", ArgumentType, Var, IsConst ? " (const)" : "");
+        }
     }
 }

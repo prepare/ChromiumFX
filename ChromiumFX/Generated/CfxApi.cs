@@ -146,6 +146,14 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate int cfx_initialize_delegate(IntPtr args, IntPtr settings, IntPtr application, IntPtr windows_sandbox_info);
             public static cfx_initialize_delegate cfx_initialize;
+            // CEF_EXPORT int cef_is_cert_status_error(cef_cert_status_t status);
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate int cfx_is_cert_status_error_delegate(int status);
+            public static cfx_is_cert_status_error_delegate cfx_is_cert_status_error;
+            // CEF_EXPORT int cef_is_cert_status_minor_error(cef_cert_status_t status);
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate int cfx_is_cert_status_minor_error_delegate(int status);
+            public static cfx_is_cert_status_minor_error_delegate cfx_is_cert_status_minor_error;
             // CEF_EXPORT void cef_is_web_plugin_unstable(const cef_string_t* path, cef_web_plugin_unstable_callback_t* callback);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_is_web_plugin_unstable_delegate(IntPtr path_str, int path_length, IntPtr callback);
@@ -898,6 +906,11 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_browser_host_drag_source_system_drag_ended_delegate(IntPtr self);
             public static cfx_browser_host_drag_source_system_drag_ended_delegate cfx_browser_host_drag_source_system_drag_ended;
+
+            // static cef_navigation_entry_t* cfx_browser_host_get_visible_navigation_entry(cef_browser_host_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_browser_host_get_visible_navigation_entry_delegate(IntPtr self);
+            public static cfx_browser_host_get_visible_navigation_entry_delegate cfx_browser_host_get_visible_navigation_entry;
 
         }
 
@@ -2111,6 +2124,11 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate IntPtr cfx_domnode_get_element_inner_text_delegate(IntPtr self);
             public static cfx_domnode_get_element_inner_text_delegate cfx_domnode_get_element_inner_text;
+
+            // static cef_rect_t* cfx_domnode_get_element_bounds(cef_domnode_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_domnode_get_element_bounds_delegate(IntPtr self);
+            public static cfx_domnode_get_element_bounds_delegate cfx_domnode_get_element_bounds;
 
         }
 
@@ -3594,6 +3612,11 @@ namespace Chromium {
             public delegate int cfx_navigation_entry_get_http_status_code_delegate(IntPtr self);
             public static cfx_navigation_entry_get_http_status_code_delegate cfx_navigation_entry_get_http_status_code;
 
+            // static cef_sslstatus_t* cfx_navigation_entry_get_sslstatus(cef_navigation_entry_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_navigation_entry_get_sslstatus_delegate(IntPtr self);
+            public static cfx_navigation_entry_get_sslstatus_delegate cfx_navigation_entry_get_sslstatus;
+
         }
 
         internal static class NavigationEntryVisitor {
@@ -4976,6 +4999,19 @@ namespace Chromium {
 
         }
 
+        internal static class SelectClientCertificateCallback {
+
+            static SelectClientCertificateCallback () {
+                CfxApiLoader.LoadCfxSelectClientCertificateCallbackApi();
+            }
+
+            // static void cfx_select_client_certificate_callback_select(cef_select_client_certificate_callback_t* self, cef_x509certificate_t* cert)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_select_client_certificate_callback_select_delegate(IntPtr self, IntPtr cert);
+            public static cfx_select_client_certificate_callback_select_delegate cfx_select_client_certificate_callback_select;
+
+        }
+
         internal static class SetCookieCallback {
 
             static SetCookieCallback () {
@@ -5266,59 +5302,6 @@ namespace Chromium {
 
         }
 
-        internal static class SslCertPrincipal {
-
-            static SslCertPrincipal () {
-                CfxApiLoader.LoadCfxSslCertPrincipalApi();
-            }
-
-            // static cef_string_userfree_t cfx_sslcert_principal_get_display_name(cef_sslcert_principal_t* self)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate IntPtr cfx_sslcert_principal_get_display_name_delegate(IntPtr self);
-            public static cfx_sslcert_principal_get_display_name_delegate cfx_sslcert_principal_get_display_name;
-
-            // static cef_string_userfree_t cfx_sslcert_principal_get_common_name(cef_sslcert_principal_t* self)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate IntPtr cfx_sslcert_principal_get_common_name_delegate(IntPtr self);
-            public static cfx_sslcert_principal_get_common_name_delegate cfx_sslcert_principal_get_common_name;
-
-            // static cef_string_userfree_t cfx_sslcert_principal_get_locality_name(cef_sslcert_principal_t* self)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate IntPtr cfx_sslcert_principal_get_locality_name_delegate(IntPtr self);
-            public static cfx_sslcert_principal_get_locality_name_delegate cfx_sslcert_principal_get_locality_name;
-
-            // static cef_string_userfree_t cfx_sslcert_principal_get_state_or_province_name(cef_sslcert_principal_t* self)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate IntPtr cfx_sslcert_principal_get_state_or_province_name_delegate(IntPtr self);
-            public static cfx_sslcert_principal_get_state_or_province_name_delegate cfx_sslcert_principal_get_state_or_province_name;
-
-            // static cef_string_userfree_t cfx_sslcert_principal_get_country_name(cef_sslcert_principal_t* self)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate IntPtr cfx_sslcert_principal_get_country_name_delegate(IntPtr self);
-            public static cfx_sslcert_principal_get_country_name_delegate cfx_sslcert_principal_get_country_name;
-
-            // static void cfx_sslcert_principal_get_street_addresses(cef_sslcert_principal_t* self, cef_string_list_t addresses)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_sslcert_principal_get_street_addresses_delegate(IntPtr self, IntPtr addresses);
-            public static cfx_sslcert_principal_get_street_addresses_delegate cfx_sslcert_principal_get_street_addresses;
-
-            // static void cfx_sslcert_principal_get_organization_names(cef_sslcert_principal_t* self, cef_string_list_t names)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_sslcert_principal_get_organization_names_delegate(IntPtr self, IntPtr names);
-            public static cfx_sslcert_principal_get_organization_names_delegate cfx_sslcert_principal_get_organization_names;
-
-            // static void cfx_sslcert_principal_get_organization_unit_names(cef_sslcert_principal_t* self, cef_string_list_t names)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_sslcert_principal_get_organization_unit_names_delegate(IntPtr self, IntPtr names);
-            public static cfx_sslcert_principal_get_organization_unit_names_delegate cfx_sslcert_principal_get_organization_unit_names;
-
-            // static void cfx_sslcert_principal_get_domain_components(cef_sslcert_principal_t* self, cef_string_list_t components)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_sslcert_principal_get_domain_components_delegate(IntPtr self, IntPtr components);
-            public static cfx_sslcert_principal_get_domain_components_delegate cfx_sslcert_principal_get_domain_components;
-
-        }
-
         internal static class SslInfo {
 
             static SslInfo () {
@@ -5330,65 +5313,43 @@ namespace Chromium {
             public delegate int cfx_sslinfo_get_cert_status_delegate(IntPtr self);
             public static cfx_sslinfo_get_cert_status_delegate cfx_sslinfo_get_cert_status;
 
-            // static int cfx_sslinfo_is_cert_status_error(cef_sslinfo_t* self)
+            // static cef_x509certificate_t* cfx_sslinfo_get_x509certificate(cef_sslinfo_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_sslinfo_is_cert_status_error_delegate(IntPtr self);
-            public static cfx_sslinfo_is_cert_status_error_delegate cfx_sslinfo_is_cert_status_error;
+            public delegate IntPtr cfx_sslinfo_get_x509certificate_delegate(IntPtr self);
+            public static cfx_sslinfo_get_x509certificate_delegate cfx_sslinfo_get_x509certificate;
 
-            // static int cfx_sslinfo_is_cert_status_minor_error(cef_sslinfo_t* self)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_sslinfo_is_cert_status_minor_error_delegate(IntPtr self);
-            public static cfx_sslinfo_is_cert_status_minor_error_delegate cfx_sslinfo_is_cert_status_minor_error;
+        }
 
-            // static cef_sslcert_principal_t* cfx_sslinfo_get_subject(cef_sslinfo_t* self)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate IntPtr cfx_sslinfo_get_subject_delegate(IntPtr self);
-            public static cfx_sslinfo_get_subject_delegate cfx_sslinfo_get_subject;
+        internal static class Sslstatus {
 
-            // static cef_sslcert_principal_t* cfx_sslinfo_get_issuer(cef_sslinfo_t* self)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate IntPtr cfx_sslinfo_get_issuer_delegate(IntPtr self);
-            public static cfx_sslinfo_get_issuer_delegate cfx_sslinfo_get_issuer;
+            static Sslstatus () {
+                CfxApiLoader.LoadCfxSslstatusApi();
+            }
 
-            // static cef_binary_value_t* cfx_sslinfo_get_serial_number(cef_sslinfo_t* self)
+            // static int cfx_sslstatus_is_secure_connection(cef_sslstatus_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate IntPtr cfx_sslinfo_get_serial_number_delegate(IntPtr self);
-            public static cfx_sslinfo_get_serial_number_delegate cfx_sslinfo_get_serial_number;
+            public delegate int cfx_sslstatus_is_secure_connection_delegate(IntPtr self);
+            public static cfx_sslstatus_is_secure_connection_delegate cfx_sslstatus_is_secure_connection;
 
-            // static cef_time_t* cfx_sslinfo_get_valid_start(cef_sslinfo_t* self)
+            // static cef_cert_status_t cfx_sslstatus_get_cert_status(cef_sslstatus_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate IntPtr cfx_sslinfo_get_valid_start_delegate(IntPtr self);
-            public static cfx_sslinfo_get_valid_start_delegate cfx_sslinfo_get_valid_start;
+            public delegate int cfx_sslstatus_get_cert_status_delegate(IntPtr self);
+            public static cfx_sslstatus_get_cert_status_delegate cfx_sslstatus_get_cert_status;
 
-            // static cef_time_t* cfx_sslinfo_get_valid_expiry(cef_sslinfo_t* self)
+            // static cef_ssl_version_t cfx_sslstatus_get_sslversion(cef_sslstatus_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate IntPtr cfx_sslinfo_get_valid_expiry_delegate(IntPtr self);
-            public static cfx_sslinfo_get_valid_expiry_delegate cfx_sslinfo_get_valid_expiry;
+            public delegate int cfx_sslstatus_get_sslversion_delegate(IntPtr self);
+            public static cfx_sslstatus_get_sslversion_delegate cfx_sslstatus_get_sslversion;
 
-            // static cef_binary_value_t* cfx_sslinfo_get_derencoded(cef_sslinfo_t* self)
+            // static cef_ssl_content_status_t cfx_sslstatus_get_content_status(cef_sslstatus_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate IntPtr cfx_sslinfo_get_derencoded_delegate(IntPtr self);
-            public static cfx_sslinfo_get_derencoded_delegate cfx_sslinfo_get_derencoded;
+            public delegate int cfx_sslstatus_get_content_status_delegate(IntPtr self);
+            public static cfx_sslstatus_get_content_status_delegate cfx_sslstatus_get_content_status;
 
-            // static cef_binary_value_t* cfx_sslinfo_get_pemencoded(cef_sslinfo_t* self)
+            // static cef_x509certificate_t* cfx_sslstatus_get_x509certificate(cef_sslstatus_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate IntPtr cfx_sslinfo_get_pemencoded_delegate(IntPtr self);
-            public static cfx_sslinfo_get_pemencoded_delegate cfx_sslinfo_get_pemencoded;
-
-            // static size_t cfx_sslinfo_get_issuer_chain_size(cef_sslinfo_t* self)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate UIntPtr cfx_sslinfo_get_issuer_chain_size_delegate(IntPtr self);
-            public static cfx_sslinfo_get_issuer_chain_size_delegate cfx_sslinfo_get_issuer_chain_size;
-
-            // static void cfx_sslinfo_get_derencoded_issuer_chain(cef_sslinfo_t* self, size_t chainCount, cef_binary_value_t** chain)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_sslinfo_get_derencoded_issuer_chain_delegate(IntPtr self, UIntPtr chainCount, IntPtr chain);
-            public static cfx_sslinfo_get_derencoded_issuer_chain_delegate cfx_sslinfo_get_derencoded_issuer_chain;
-
-            // static void cfx_sslinfo_get_pemencoded_issuer_chain(cef_sslinfo_t* self, size_t chainCount, cef_binary_value_t** chain)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_sslinfo_get_pemencoded_issuer_chain_delegate(IntPtr self, UIntPtr chainCount, IntPtr chain);
-            public static cfx_sslinfo_get_pemencoded_issuer_chain_delegate cfx_sslinfo_get_pemencoded_issuer_chain;
+            public delegate IntPtr cfx_sslstatus_get_x509certificate_delegate(IntPtr self);
+            public static cfx_sslstatus_get_x509certificate_delegate cfx_sslstatus_get_x509certificate;
 
         }
 
@@ -5851,9 +5812,9 @@ namespace Chromium {
             public delegate int cfx_v8context_is_same_delegate(IntPtr self, IntPtr that);
             public static cfx_v8context_is_same_delegate cfx_v8context_is_same;
 
-            // static int cfx_v8context_eval(cef_v8context_t* self, char16 *code_str, int code_length, cef_v8value_t** retval, cef_v8exception_t** exception)
+            // static int cfx_v8context_eval(cef_v8context_t* self, char16 *code_str, int code_length, char16 *script_url_str, int script_url_length, int start_line, cef_v8value_t** retval, cef_v8exception_t** exception)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_v8context_eval_delegate(IntPtr self, IntPtr code_str, int code_length, out IntPtr retval, out IntPtr exception);
+            public delegate int cfx_v8context_eval_delegate(IntPtr self, IntPtr code_str, int code_length, IntPtr script_url_str, int script_url_length, int start_line, out IntPtr retval, out IntPtr exception);
             public static cfx_v8context_eval_delegate cfx_v8context_eval;
 
         }
@@ -5915,6 +5876,18 @@ namespace Chromium {
             public static cfx_ctor_with_gc_handle_delegate cfx_v8handler_ctor;
             public static cfx_get_gc_handle_delegate cfx_v8handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_v8handler_activate_callback;
+
+        }
+
+        internal static class V8interceptor {
+
+            static V8interceptor () {
+                CfxApiLoader.LoadCfxV8interceptorApi();
+            }
+
+            public static cfx_ctor_with_gc_handle_delegate cfx_v8interceptor_ctor;
+            public static cfx_get_gc_handle_delegate cfx_v8interceptor_get_gc_handle;
+            public static cfx_set_callback_delegate cfx_v8interceptor_activate_callback;
 
         }
 
@@ -6032,9 +6005,9 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate IntPtr cfx_v8value_create_string_delegate(IntPtr value_str, int value_length);
             public static cfx_v8value_create_string_delegate cfx_v8value_create_string;
-            // CEF_EXPORT cef_v8value_t* cef_v8value_create_object(cef_v8accessor_t* accessor);
+            // CEF_EXPORT cef_v8value_t* cef_v8value_create_object(cef_v8accessor_t* accessor, cef_v8interceptor_t* interceptor);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate IntPtr cfx_v8value_create_object_delegate(IntPtr accessor);
+            public delegate IntPtr cfx_v8value_create_object_delegate(IntPtr accessor, IntPtr interceptor);
             public static cfx_v8value_create_object_delegate cfx_v8value_create_object;
             // CEF_EXPORT cef_v8value_t* cef_v8value_create_array(int length);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -6657,6 +6630,117 @@ namespace Chromium {
             public static cfx_ctor_with_gc_handle_delegate cfx_write_handler_ctor;
             public static cfx_get_gc_handle_delegate cfx_write_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_write_handler_activate_callback;
+
+        }
+
+        internal static class X509certPrincipal {
+
+            static X509certPrincipal () {
+                CfxApiLoader.LoadCfxX509certPrincipalApi();
+            }
+
+            // static cef_string_userfree_t cfx_x509cert_principal_get_display_name(cef_x509cert_principal_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_x509cert_principal_get_display_name_delegate(IntPtr self);
+            public static cfx_x509cert_principal_get_display_name_delegate cfx_x509cert_principal_get_display_name;
+
+            // static cef_string_userfree_t cfx_x509cert_principal_get_common_name(cef_x509cert_principal_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_x509cert_principal_get_common_name_delegate(IntPtr self);
+            public static cfx_x509cert_principal_get_common_name_delegate cfx_x509cert_principal_get_common_name;
+
+            // static cef_string_userfree_t cfx_x509cert_principal_get_locality_name(cef_x509cert_principal_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_x509cert_principal_get_locality_name_delegate(IntPtr self);
+            public static cfx_x509cert_principal_get_locality_name_delegate cfx_x509cert_principal_get_locality_name;
+
+            // static cef_string_userfree_t cfx_x509cert_principal_get_state_or_province_name(cef_x509cert_principal_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_x509cert_principal_get_state_or_province_name_delegate(IntPtr self);
+            public static cfx_x509cert_principal_get_state_or_province_name_delegate cfx_x509cert_principal_get_state_or_province_name;
+
+            // static cef_string_userfree_t cfx_x509cert_principal_get_country_name(cef_x509cert_principal_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_x509cert_principal_get_country_name_delegate(IntPtr self);
+            public static cfx_x509cert_principal_get_country_name_delegate cfx_x509cert_principal_get_country_name;
+
+            // static void cfx_x509cert_principal_get_street_addresses(cef_x509cert_principal_t* self, cef_string_list_t addresses)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_x509cert_principal_get_street_addresses_delegate(IntPtr self, IntPtr addresses);
+            public static cfx_x509cert_principal_get_street_addresses_delegate cfx_x509cert_principal_get_street_addresses;
+
+            // static void cfx_x509cert_principal_get_organization_names(cef_x509cert_principal_t* self, cef_string_list_t names)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_x509cert_principal_get_organization_names_delegate(IntPtr self, IntPtr names);
+            public static cfx_x509cert_principal_get_organization_names_delegate cfx_x509cert_principal_get_organization_names;
+
+            // static void cfx_x509cert_principal_get_organization_unit_names(cef_x509cert_principal_t* self, cef_string_list_t names)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_x509cert_principal_get_organization_unit_names_delegate(IntPtr self, IntPtr names);
+            public static cfx_x509cert_principal_get_organization_unit_names_delegate cfx_x509cert_principal_get_organization_unit_names;
+
+            // static void cfx_x509cert_principal_get_domain_components(cef_x509cert_principal_t* self, cef_string_list_t components)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_x509cert_principal_get_domain_components_delegate(IntPtr self, IntPtr components);
+            public static cfx_x509cert_principal_get_domain_components_delegate cfx_x509cert_principal_get_domain_components;
+
+        }
+
+        internal static class X509certificate {
+
+            static X509certificate () {
+                CfxApiLoader.LoadCfxX509certificateApi();
+            }
+
+            // static cef_x509cert_principal_t* cfx_x509certificate_get_subject(cef_x509certificate_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_x509certificate_get_subject_delegate(IntPtr self);
+            public static cfx_x509certificate_get_subject_delegate cfx_x509certificate_get_subject;
+
+            // static cef_x509cert_principal_t* cfx_x509certificate_get_issuer(cef_x509certificate_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_x509certificate_get_issuer_delegate(IntPtr self);
+            public static cfx_x509certificate_get_issuer_delegate cfx_x509certificate_get_issuer;
+
+            // static cef_binary_value_t* cfx_x509certificate_get_serial_number(cef_x509certificate_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_x509certificate_get_serial_number_delegate(IntPtr self);
+            public static cfx_x509certificate_get_serial_number_delegate cfx_x509certificate_get_serial_number;
+
+            // static cef_time_t* cfx_x509certificate_get_valid_start(cef_x509certificate_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_x509certificate_get_valid_start_delegate(IntPtr self);
+            public static cfx_x509certificate_get_valid_start_delegate cfx_x509certificate_get_valid_start;
+
+            // static cef_time_t* cfx_x509certificate_get_valid_expiry(cef_x509certificate_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_x509certificate_get_valid_expiry_delegate(IntPtr self);
+            public static cfx_x509certificate_get_valid_expiry_delegate cfx_x509certificate_get_valid_expiry;
+
+            // static cef_binary_value_t* cfx_x509certificate_get_derencoded(cef_x509certificate_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_x509certificate_get_derencoded_delegate(IntPtr self);
+            public static cfx_x509certificate_get_derencoded_delegate cfx_x509certificate_get_derencoded;
+
+            // static cef_binary_value_t* cfx_x509certificate_get_pemencoded(cef_x509certificate_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_x509certificate_get_pemencoded_delegate(IntPtr self);
+            public static cfx_x509certificate_get_pemencoded_delegate cfx_x509certificate_get_pemencoded;
+
+            // static size_t cfx_x509certificate_get_issuer_chain_size(cef_x509certificate_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate UIntPtr cfx_x509certificate_get_issuer_chain_size_delegate(IntPtr self);
+            public static cfx_x509certificate_get_issuer_chain_size_delegate cfx_x509certificate_get_issuer_chain_size;
+
+            // static void cfx_x509certificate_get_derencoded_issuer_chain(cef_x509certificate_t* self, size_t* chainCount, cef_binary_value_t** chain)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_x509certificate_get_derencoded_issuer_chain_delegate(IntPtr self, out UIntPtr chainCount, out IntPtr chain);
+            public static cfx_x509certificate_get_derencoded_issuer_chain_delegate cfx_x509certificate_get_derencoded_issuer_chain;
+
+            // static void cfx_x509certificate_get_pemencoded_issuer_chain(cef_x509certificate_t* self, size_t* chainCount, cef_binary_value_t** chain)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_x509certificate_get_pemencoded_issuer_chain_delegate(IntPtr self, out UIntPtr chainCount, out IntPtr chain);
+            public static cfx_x509certificate_get_pemencoded_issuer_chain_delegate cfx_x509certificate_get_pemencoded_issuer_chain;
 
         }
 

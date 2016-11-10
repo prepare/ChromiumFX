@@ -81,6 +81,7 @@
 #include "include/capi/cef_response_filter_capi.h"
 #include "include/capi/cef_scheme_capi.h"
 #include "include/capi/cef_ssl_info_capi.h"
+#include "include/capi/cef_ssl_status_capi.h"
 #include "include/capi/cef_stream_capi.h"
 #include "include/capi/cef_string_visitor_capi.h"
 #include "include/capi/cef_task_capi.h"
@@ -89,6 +90,7 @@
 #include "include/capi/cef_v8_capi.h"
 #include "include/capi/cef_values_capi.h"
 #include "include/capi/cef_web_plugin_capi.h"
+#include "include/capi/cef_x509_certificate_capi.h"
 #include "include/capi/cef_xml_reader_capi.h"
 #include "include/capi/cef_zip_reader_capi.h"
 

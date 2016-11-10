@@ -232,7 +232,7 @@ namespace Chromium {
         /// do_close() function will be called after the JavaScript 'onunload' event
         /// has been fired.
         /// An application should handle top-level owner window close notifications by
-        /// calling CfxBrowserHost.TrycloseBrowser() or
+        /// calling CfxBrowserHost.TryCloseBrowser() or
         /// CfxBrowserHost.CloseBrowser(false (0)) instead of allowing the window
         /// to close immediately (see the examples below). This gives CEF an
         /// opportunity to process the 'onbeforeunload' event and optionally cancel the
@@ -256,7 +256,7 @@ namespace Chromium {
         /// on_before_close() has been called for all existing browsers.
         /// The below examples describe what should happen during window close when the
         /// browser is parented to an application-provided top-level window.
-        /// Example 1: Using CfxBrowserHost.TrycloseBrowser(). This is
+        /// Example 1: Using CfxBrowserHost.TryCloseBrowser(). This is
         /// recommended for clients using standard close handling and windows created
         /// on the browser process UI thread. 1.  User clicks the window close button
         /// which sends a close notification to
@@ -649,7 +649,7 @@ namespace Chromium {
         /// do_close() function will be called after the JavaScript 'onunload' event
         /// has been fired.
         /// An application should handle top-level owner window close notifications by
-        /// calling CfxBrowserHost.TrycloseBrowser() or
+        /// calling CfxBrowserHost.TryCloseBrowser() or
         /// CfxBrowserHost.CloseBrowser(false (0)) instead of allowing the window
         /// to close immediately (see the examples below). This gives CEF an
         /// opportunity to process the 'onbeforeunload' event and optionally cancel the
@@ -673,7 +673,7 @@ namespace Chromium {
         /// on_before_close() has been called for all existing browsers.
         /// The below examples describe what should happen during window close when the
         /// browser is parented to an application-provided top-level window.
-        /// Example 1: Using CfxBrowserHost.TrycloseBrowser(). This is
+        /// Example 1: Using CfxBrowserHost.TryCloseBrowser(). This is
         /// recommended for clients using standard close handling and windows created
         /// on the browser process UI thread. 1.  User clicks the window close button
         /// which sends a close notification to
@@ -736,7 +736,7 @@ namespace Chromium {
         /// do_close() function will be called after the JavaScript 'onunload' event
         /// has been fired.
         /// An application should handle top-level owner window close notifications by
-        /// calling CfxBrowserHost.TrycloseBrowser() or
+        /// calling CfxBrowserHost.TryCloseBrowser() or
         /// CfxBrowserHost.CloseBrowser(false (0)) instead of allowing the window
         /// to close immediately (see the examples below). This gives CEF an
         /// opportunity to process the 'onbeforeunload' event and optionally cancel the
@@ -760,7 +760,7 @@ namespace Chromium {
         /// on_before_close() has been called for all existing browsers.
         /// The below examples describe what should happen during window close when the
         /// browser is parented to an application-provided top-level window.
-        /// Example 1: Using CfxBrowserHost.TrycloseBrowser(). This is
+        /// Example 1: Using CfxBrowserHost.TryCloseBrowser(). This is
         /// recommended for clients using standard close handling and windows created
         /// on the browser process UI thread. 1.  User clicks the window close button
         /// which sends a close notification to

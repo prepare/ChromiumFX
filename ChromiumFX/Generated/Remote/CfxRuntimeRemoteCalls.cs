@@ -94,6 +94,64 @@ namespace Chromium.Remote {
         }
     }
 
+    internal class CfxRuntimeIsCertStatusErrorRenderProcessCall : RenderProcessCall {
+
+        internal CfxRuntimeIsCertStatusErrorRenderProcessCall()
+            : base(RemoteCallId.CfxRuntimeIsCertStatusErrorRenderProcessCall) {}
+
+        internal int status;
+        internal bool __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(status);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out status);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            __retval = 0 != CfxApi.Runtime.cfx_is_cert_status_error((int)status);
+        }
+    }
+
+    internal class CfxRuntimeIsCertStatusMinorErrorRenderProcessCall : RenderProcessCall {
+
+        internal CfxRuntimeIsCertStatusMinorErrorRenderProcessCall()
+            : base(RemoteCallId.CfxRuntimeIsCertStatusMinorErrorRenderProcessCall) {}
+
+        internal int status;
+        internal bool __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(status);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out status);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            __retval = 0 != CfxApi.Runtime.cfx_is_cert_status_minor_error((int)status);
+        }
+    }
+
     internal class CfxRuntimePostDelayedTaskRenderProcessCall : RenderProcessCall {
 
         internal CfxRuntimePostDelayedTaskRenderProcessCall()

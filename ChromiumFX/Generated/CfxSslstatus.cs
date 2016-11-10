@@ -35,22 +35,22 @@ using System;
 
 namespace Chromium {
     /// <summary>
-    /// Structure representing SSL information.
+    /// Structure representing the SSL information for a navigation entry.
     /// </summary>
     /// <remarks>
     /// See also the original CEF documentation in
-    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_status_capi.h">cef/include/capi/cef_ssl_status_capi.h</see>.
     /// </remarks>
-    public class CfxSslInfo : CfxLibraryBase {
+    public class CfxSslstatus : CfxLibraryBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
 
-        internal static CfxSslInfo Wrap(IntPtr nativePtr) {
+        internal static CfxSslstatus Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
-                var wrapper = (CfxSslInfo)weakCache.Get(nativePtr);
+                var wrapper = (CfxSslstatus)weakCache.Get(nativePtr);
                 if(wrapper == null) {
-                    wrapper = new CfxSslInfo(nativePtr);
+                    wrapper = new CfxSslstatus(nativePtr);
                     weakCache.Add(wrapper);
                 } else {
                     CfxApi.cfx_release(nativePtr);
@@ -60,7 +60,20 @@ namespace Chromium {
         }
 
 
-        internal CfxSslInfo(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxSslstatus(IntPtr nativePtr) : base(nativePtr) {}
+
+        /// <summary>
+        /// Returns true (1) if the status is related to a secure SSL/TLS connection.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_status_capi.h">cef/include/capi/cef_ssl_status_capi.h</see>.
+        /// </remarks>
+        public bool IsSecureConnection {
+            get {
+                return 0 != CfxApi.Sslstatus.cfx_sslstatus_is_secure_connection(NativePtr);
+            }
+        }
 
         /// <summary>
         /// Returns a bitmask containing any and all problems verifying the server
@@ -68,11 +81,37 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_status_capi.h">cef/include/capi/cef_ssl_status_capi.h</see>.
         /// </remarks>
         public CfxCertStatus CertStatus {
             get {
-                return (CfxCertStatus)CfxApi.SslInfo.cfx_sslinfo_get_cert_status(NativePtr);
+                return (CfxCertStatus)CfxApi.Sslstatus.cfx_sslstatus_get_cert_status(NativePtr);
+            }
+        }
+
+        /// <summary>
+        /// Returns the SSL version used for the SSL connection.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_status_capi.h">cef/include/capi/cef_ssl_status_capi.h</see>.
+        /// </remarks>
+        public CfxSslVersion Sslversion {
+            get {
+                return (CfxSslVersion)CfxApi.Sslstatus.cfx_sslstatus_get_sslversion(NativePtr);
+            }
+        }
+
+        /// <summary>
+        /// Returns a bitmask containing the page security content status.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_status_capi.h">cef/include/capi/cef_ssl_status_capi.h</see>.
+        /// </remarks>
+        public CfxSslContentStatus ContentStatus {
+            get {
+                return (CfxSslContentStatus)CfxApi.Sslstatus.cfx_sslstatus_get_content_status(NativePtr);
             }
         }
 
@@ -81,11 +120,11 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_status_capi.h">cef/include/capi/cef_ssl_status_capi.h</see>.
         /// </remarks>
         public CfxX509certificate X509certificate {
             get {
-                return CfxX509certificate.Wrap(CfxApi.SslInfo.cfx_sslinfo_get_x509certificate(NativePtr));
+                return CfxX509certificate.Wrap(CfxApi.Sslstatus.cfx_sslstatus_get_x509certificate(NativePtr));
             }
         }
 

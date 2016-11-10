@@ -74,10 +74,14 @@ static gc_handle_t cfx_menu_model_delegate_get_gc_handle(cfx_menu_model_delegate
 // managed callbacks
 void (CEF_CALLBACK *cfx_menu_model_delegate_execute_command_callback)(gc_handle_t self, cef_menu_model_t* menu_model, int command_id, cef_event_flags_t event_flags);
 void (CEF_CALLBACK *cfx_menu_model_delegate_menu_will_show_callback)(gc_handle_t self, cef_menu_model_t* menu_model);
+void (CEF_CALLBACK *cfx_menu_model_delegate_menu_closed_callback)(gc_handle_t self, cef_menu_model_t* menu_model);
+void (CEF_CALLBACK *cfx_menu_model_delegate_format_label_callback)(gc_handle_t self, int* __retval, cef_menu_model_t* menu_model, char16 **label_str, int *label_length);
 
-static void cfx_menu_model_delegate_set_managed_callbacks(void *execute_command, void *menu_will_show) {
+static void cfx_menu_model_delegate_set_managed_callbacks(void *execute_command, void *menu_will_show, void *menu_closed, void *format_label) {
     cfx_menu_model_delegate_execute_command_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_menu_model_t* menu_model, int command_id, cef_event_flags_t event_flags)) execute_command;
     cfx_menu_model_delegate_menu_will_show_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_menu_model_t* menu_model)) menu_will_show;
+    cfx_menu_model_delegate_menu_closed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_menu_model_t* menu_model)) menu_closed;
+    cfx_menu_model_delegate_format_label_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_menu_model_t* menu_model, char16 **label_str, int *label_length)) format_label;
 }
 
 // execute_command
@@ -94,6 +98,28 @@ void CEF_CALLBACK cfx_menu_model_delegate_menu_will_show(cef_menu_model_delegate
 }
 
 
+// menu_closed
+
+void CEF_CALLBACK cfx_menu_model_delegate_menu_closed(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model) {
+    cfx_menu_model_delegate_menu_closed_callback(((cfx_menu_model_delegate_t*)self)->gc_handle, menu_model);
+}
+
+
+// format_label
+
+int CEF_CALLBACK cfx_menu_model_delegate_format_label(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, cef_string_t* label) {
+    int __retval;
+    char16* label_tmp_str = label->str; int label_tmp_length = (int)label->length;
+    cfx_menu_model_delegate_format_label_callback(((cfx_menu_model_delegate_t*)self)->gc_handle, &__retval, menu_model, &(label_tmp_str), &(label_tmp_length));
+    if(label_tmp_str != label->str) {
+        if(label->dtor) label->dtor(label->str);
+        cef_string_set(label_tmp_str, label_tmp_length, label, 1);
+        cfx_gc_handle_free((gc_handle_t)label_tmp_str);
+    }
+    return __retval;
+}
+
+
 static void cfx_menu_model_delegate_activate_callback(cef_menu_model_delegate_t* self, int index, int active) {
     switch(index) {
     case 0:
@@ -101,6 +127,12 @@ static void cfx_menu_model_delegate_activate_callback(cef_menu_model_delegate_t*
         break;
     case 1:
         self->menu_will_show = active ? cfx_menu_model_delegate_menu_will_show : 0;
+        break;
+    case 2:
+        self->menu_closed = active ? cfx_menu_model_delegate_menu_closed : 0;
+        break;
+    case 3:
+        self->format_label = active ? cfx_menu_model_delegate_format_label : 0;
         break;
     }
 }

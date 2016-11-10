@@ -176,19 +176,20 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Create a new CfrV8Value object of type object with optional accessor. This
-        /// function should only be called from within the scope of a
-        /// CfrRenderProcessHandler, CfrV8Handler or CfrV8Accessor callback,
-        /// or in combination with calling enter() and exit() on a stored CfrV8Context
-        /// reference.
+        /// Create a new CfrV8Value object of type object with optional accessor
+        /// and/or interceptor. This function should only be called from within the scope
+        /// of a CfrRenderProcessHandler, CfrV8Handler or CfrV8Accessor
+        /// callback, or in combination with calling enter() and exit() on a stored
+        /// CfrV8Context reference.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public static CfrV8Value CreateObject(CfrV8Accessor accessor) {
+        public static CfrV8Value CreateObject(CfrV8Accessor accessor, CfrV8interceptor interceptor) {
             var call = new CfxV8ValueCreateObjectRenderProcessCall();
             call.accessor = CfrObject.Unwrap(accessor);
+            call.interceptor = CfrObject.Unwrap(interceptor);
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrV8Value.Wrap(call.__retval);
         }
@@ -428,8 +429,7 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Return a bool value.  The underlying data will be converted to if
-        /// necessary.
+        /// Return a bool value.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -445,8 +445,7 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Return an int value.  The underlying data will be converted to if
-        /// necessary.
+        /// Return an int value.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -462,8 +461,7 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Return an unisgned int value.  The underlying data will be converted to if
-        /// necessary.
+        /// Return an unsigned int value.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -479,8 +477,7 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Return a double value.  The underlying data will be converted to if
-        /// necessary.
+        /// Return a double value.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -496,8 +493,7 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Return a Date value.  The underlying data will be converted to if
-        /// necessary.
+        /// Return a Date value.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -513,8 +509,7 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Return a string value.  The underlying data will be converted to if
-        /// necessary.
+        /// Return a string value.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

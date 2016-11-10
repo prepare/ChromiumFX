@@ -39,18 +39,18 @@ namespace Chromium {
     /// </summary>
     /// <remarks>
     /// See also the original CEF documentation in
-    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_x509_certificate_capi.h">cef/include/capi/cef_x509_certificate_capi.h</see>.
     /// </remarks>
-    public class CfxSslCertPrincipal : CfxLibraryBase {
+    public class CfxX509certPrincipal : CfxLibraryBase {
 
         private static readonly WeakCache weakCache = new WeakCache();
 
-        internal static CfxSslCertPrincipal Wrap(IntPtr nativePtr) {
+        internal static CfxX509certPrincipal Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
-                var wrapper = (CfxSslCertPrincipal)weakCache.Get(nativePtr);
+                var wrapper = (CfxX509certPrincipal)weakCache.Get(nativePtr);
                 if(wrapper == null) {
-                    wrapper = new CfxSslCertPrincipal(nativePtr);
+                    wrapper = new CfxX509certPrincipal(nativePtr);
                     weakCache.Add(wrapper);
                 } else {
                     CfxApi.cfx_release(nativePtr);
@@ -60,19 +60,20 @@ namespace Chromium {
         }
 
 
-        internal CfxSslCertPrincipal(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxX509certPrincipal(IntPtr nativePtr) : base(nativePtr) {}
 
         /// <summary>
-        /// Returns a name that can be used to represent the issuer.  It tries in this
-        /// order: CN, O and OU and returns the first non-NULL one found.
+        /// Returns a name that can be used to represent the issuer. It tries in this
+        /// order: Common Name (CN), Organization Name (O) and Organizational Unit Name
+        /// (OU) and returns the first non-NULL one found.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_x509_certificate_capi.h">cef/include/capi/cef_x509_certificate_capi.h</see>.
         /// </remarks>
         public string DisplayName {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.SslCertPrincipal.cfx_sslcert_principal_get_display_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.X509certPrincipal.cfx_x509cert_principal_get_display_name(NativePtr));
             }
         }
 
@@ -81,11 +82,11 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_x509_certificate_capi.h">cef/include/capi/cef_x509_certificate_capi.h</see>.
         /// </remarks>
         public string CommonName {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.SslCertPrincipal.cfx_sslcert_principal_get_common_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.X509certPrincipal.cfx_x509cert_principal_get_common_name(NativePtr));
             }
         }
 
@@ -94,11 +95,11 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_x509_certificate_capi.h">cef/include/capi/cef_x509_certificate_capi.h</see>.
         /// </remarks>
         public string LocalityName {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.SslCertPrincipal.cfx_sslcert_principal_get_locality_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.X509certPrincipal.cfx_x509cert_principal_get_locality_name(NativePtr));
             }
         }
 
@@ -107,11 +108,11 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_x509_certificate_capi.h">cef/include/capi/cef_x509_certificate_capi.h</see>.
         /// </remarks>
         public string StateOrProvinceName {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.SslCertPrincipal.cfx_sslcert_principal_get_state_or_province_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.X509certPrincipal.cfx_x509cert_principal_get_state_or_province_name(NativePtr));
             }
         }
 
@@ -120,11 +121,11 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_x509_certificate_capi.h">cef/include/capi/cef_x509_certificate_capi.h</see>.
         /// </remarks>
         public string CountryName {
             get {
-                return StringFunctions.ConvertStringUserfree(CfxApi.SslCertPrincipal.cfx_sslcert_principal_get_country_name(NativePtr));
+                return StringFunctions.ConvertStringUserfree(CfxApi.X509certPrincipal.cfx_x509cert_principal_get_country_name(NativePtr));
             }
         }
 
@@ -133,13 +134,13 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_x509_certificate_capi.h">cef/include/capi/cef_x509_certificate_capi.h</see>.
         /// </remarks>
         public System.Collections.Generic.List<string> GetStreetAddresses() {
             System.Collections.Generic.List<string> addresses = new System.Collections.Generic.List<string>();
             PinnedString[] addresses_handles;
             var addresses_unwrapped = StringFunctions.UnwrapCfxStringList(addresses, out addresses_handles);
-            CfxApi.SslCertPrincipal.cfx_sslcert_principal_get_street_addresses(NativePtr, addresses_unwrapped);
+            CfxApi.X509certPrincipal.cfx_x509cert_principal_get_street_addresses(NativePtr, addresses_unwrapped);
             StringFunctions.FreePinnedStrings(addresses_handles);
             StringFunctions.CfxStringListCopyToManaged(addresses_unwrapped, addresses);
             CfxApi.Runtime.cfx_string_list_free(addresses_unwrapped);
@@ -151,13 +152,13 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_x509_certificate_capi.h">cef/include/capi/cef_x509_certificate_capi.h</see>.
         /// </remarks>
         public System.Collections.Generic.List<string> GetOrganizationNames() {
             System.Collections.Generic.List<string> names = new System.Collections.Generic.List<string>();
             PinnedString[] names_handles;
             var names_unwrapped = StringFunctions.UnwrapCfxStringList(names, out names_handles);
-            CfxApi.SslCertPrincipal.cfx_sslcert_principal_get_organization_names(NativePtr, names_unwrapped);
+            CfxApi.X509certPrincipal.cfx_x509cert_principal_get_organization_names(NativePtr, names_unwrapped);
             StringFunctions.FreePinnedStrings(names_handles);
             StringFunctions.CfxStringListCopyToManaged(names_unwrapped, names);
             CfxApi.Runtime.cfx_string_list_free(names_unwrapped);
@@ -169,13 +170,13 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_x509_certificate_capi.h">cef/include/capi/cef_x509_certificate_capi.h</see>.
         /// </remarks>
         public System.Collections.Generic.List<string> GetOrganizationUnitNames() {
             System.Collections.Generic.List<string> names = new System.Collections.Generic.List<string>();
             PinnedString[] names_handles;
             var names_unwrapped = StringFunctions.UnwrapCfxStringList(names, out names_handles);
-            CfxApi.SslCertPrincipal.cfx_sslcert_principal_get_organization_unit_names(NativePtr, names_unwrapped);
+            CfxApi.X509certPrincipal.cfx_x509cert_principal_get_organization_unit_names(NativePtr, names_unwrapped);
             StringFunctions.FreePinnedStrings(names_handles);
             StringFunctions.CfxStringListCopyToManaged(names_unwrapped, names);
             CfxApi.Runtime.cfx_string_list_free(names_unwrapped);
@@ -187,13 +188,13 @@ namespace Chromium {
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_x509_certificate_capi.h">cef/include/capi/cef_x509_certificate_capi.h</see>.
         /// </remarks>
         public System.Collections.Generic.List<string> GetDomainComponents() {
             System.Collections.Generic.List<string> components = new System.Collections.Generic.List<string>();
             PinnedString[] components_handles;
             var components_unwrapped = StringFunctions.UnwrapCfxStringList(components, out components_handles);
-            CfxApi.SslCertPrincipal.cfx_sslcert_principal_get_domain_components(NativePtr, components_unwrapped);
+            CfxApi.X509certPrincipal.cfx_x509cert_principal_get_domain_components(NativePtr, components_unwrapped);
             StringFunctions.FreePinnedStrings(components_handles);
             StringFunctions.CfxStringListCopyToManaged(components_unwrapped, components);
             CfxApi.Runtime.cfx_string_list_free(components_unwrapped);

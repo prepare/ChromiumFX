@@ -159,6 +159,16 @@ static int cfx_initialize(const cef_main_args_t* args, const cef_settings_t* set
     return cef_initialize(args, settings, application, windows_sandbox_info);
 }
 
+// CEF_EXPORT int cef_is_cert_status_error(cef_cert_status_t status);
+static int cfx_is_cert_status_error(cef_cert_status_t status) {
+    return cef_is_cert_status_error(status);
+}
+
+// CEF_EXPORT int cef_is_cert_status_minor_error(cef_cert_status_t status);
+static int cfx_is_cert_status_minor_error(cef_cert_status_t status) {
+    return cef_is_cert_status_minor_error(status);
+}
+
 // CEF_EXPORT void cef_is_web_plugin_unstable(const cef_string_t* path, cef_web_plugin_unstable_callback_t* callback);
 static void cfx_is_web_plugin_unstable(char16 *path_str, int path_length, cef_web_plugin_unstable_callback_t* callback) {
     cef_string_t path = { path_str, path_length, 0 };

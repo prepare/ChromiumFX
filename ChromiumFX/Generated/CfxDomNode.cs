@@ -312,6 +312,19 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Returns the bounds of the element.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
+        /// </remarks>
+        public CfxRect ElementBounds {
+            get {
+                return CfxRect.WrapOwned(CfxApi.DomNode.cfx_domnode_get_element_bounds(NativePtr));
+            }
+        }
+
+        /// <summary>
         /// Returns true (1) if this object is pointing to the same handle as |that|
         /// object.
         /// </summary>

@@ -211,7 +211,9 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Evaluates the specified JavaScript code using this context's global object.
+        /// Execute a string of JavaScript code in this V8 context. The |scriptUrl|
+        /// parameter is the URL where the script in question can be found, if any. The
+        /// |startLine| parameter is the base line number to use for error reporting.
         /// On success |retval| will be set to the return value, if any, and the
         /// function will return true (1). On failure |exception| will be set to the
         /// exception, if any, and the function will return false (0).
@@ -220,12 +222,14 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool Eval(string code, out CfxV8Value retval, out CfxV8Exception exception) {
+        public bool Eval(string code, string scriptUrl, int startLine, out CfxV8Value retval, out CfxV8Exception exception) {
             var code_pinned = new PinnedString(code);
+            var scriptUrl_pinned = new PinnedString(scriptUrl);
             IntPtr retval_ptr;
             IntPtr exception_ptr;
-            var __retval = CfxApi.V8Context.cfx_v8context_eval(NativePtr, code_pinned.Obj.PinnedPtr, code_pinned.Length, out retval_ptr, out exception_ptr);
+            var __retval = CfxApi.V8Context.cfx_v8context_eval(NativePtr, code_pinned.Obj.PinnedPtr, code_pinned.Length, scriptUrl_pinned.Obj.PinnedPtr, scriptUrl_pinned.Length, startLine, out retval_ptr, out exception_ptr);
             code_pinned.Obj.Free();
+            scriptUrl_pinned.Obj.Free();
             retval = CfxV8Value.Wrap(retval_ptr);
             exception = CfxV8Exception.Wrap(exception_ptr);
             return 0 != __retval;

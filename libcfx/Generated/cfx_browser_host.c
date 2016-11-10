@@ -306,4 +306,9 @@ static void cfx_browser_host_drag_source_system_drag_ended(cef_browser_host_t* s
     self->drag_source_system_drag_ended(self);
 }
 
+// get_visible_navigation_entry
+static cef_navigation_entry_t* cfx_browser_host_get_visible_navigation_entry(cef_browser_host_t* self) {
+    return self->get_visible_navigation_entry(self);
+}
+
 

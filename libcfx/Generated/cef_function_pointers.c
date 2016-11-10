@@ -52,6 +52,8 @@ static int (*cef_get_path_ptr)(cef_path_key_t key, cef_string_t* path);
 static XDisplay* (*cef_get_xdisplay_ptr)();
 #endif
 static int (*cef_initialize_ptr)(const cef_main_args_t* args, const cef_settings_t* settings, cef_app_t* application, void* windows_sandbox_info);
+static int (*cef_is_cert_status_error_ptr)(cef_cert_status_t status);
+static int (*cef_is_cert_status_minor_error_ptr)(cef_cert_status_t status);
 static void (*cef_is_web_plugin_unstable_ptr)(const cef_string_t* path, cef_web_plugin_unstable_callback_t* callback);
 static int (*cef_launch_process_ptr)(cef_command_line_t* command_line);
 static int64 (*cef_now_from_system_trace_time_ptr)();
@@ -117,7 +119,7 @@ static cef_v8value_t* (*cef_v8value_create_uint_ptr)(uint32 value);
 static cef_v8value_t* (*cef_v8value_create_double_ptr)(double value);
 static cef_v8value_t* (*cef_v8value_create_date_ptr)(const cef_time_t* date);
 static cef_v8value_t* (*cef_v8value_create_string_ptr)(const cef_string_t* value);
-static cef_v8value_t* (*cef_v8value_create_object_ptr)(cef_v8accessor_t* accessor);
+static cef_v8value_t* (*cef_v8value_create_object_ptr)(cef_v8accessor_t* accessor, cef_v8interceptor_t* interceptor);
 static cef_v8value_t* (*cef_v8value_create_array_ptr)(int length);
 static cef_v8value_t* (*cef_v8value_create_function_ptr)(const cef_string_t* name, cef_v8handler_t* handler);
 static cef_value_t* (*cef_value_create_ptr)();
@@ -169,6 +171,8 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_get_xdisplay_ptr = (XDisplay* (*)())cfx_platform_get_fptr(libcef, "cef_get_xdisplay");
     #endif
     cef_initialize_ptr = (int (*)(const cef_main_args_t*, const cef_settings_t*, cef_app_t*, void*))cfx_platform_get_fptr(libcef, "cef_initialize");
+    cef_is_cert_status_error_ptr = (int (*)(cef_cert_status_t))cfx_platform_get_fptr(libcef, "cef_is_cert_status_error");
+    cef_is_cert_status_minor_error_ptr = (int (*)(cef_cert_status_t))cfx_platform_get_fptr(libcef, "cef_is_cert_status_minor_error");
     cef_is_web_plugin_unstable_ptr = (void (*)(const cef_string_t*, cef_web_plugin_unstable_callback_t*))cfx_platform_get_fptr(libcef, "cef_is_web_plugin_unstable");
     cef_launch_process_ptr = (int (*)(cef_command_line_t*))cfx_platform_get_fptr(libcef, "cef_launch_process");
     cef_now_from_system_trace_time_ptr = (int64 (*)())cfx_platform_get_fptr(libcef, "cef_now_from_system_trace_time");
@@ -234,7 +238,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_v8value_create_double_ptr = (cef_v8value_t* (*)(double))cfx_platform_get_fptr(libcef, "cef_v8value_create_double");
     cef_v8value_create_date_ptr = (cef_v8value_t* (*)(const cef_time_t*))cfx_platform_get_fptr(libcef, "cef_v8value_create_date");
     cef_v8value_create_string_ptr = (cef_v8value_t* (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_v8value_create_string");
-    cef_v8value_create_object_ptr = (cef_v8value_t* (*)(cef_v8accessor_t*))cfx_platform_get_fptr(libcef, "cef_v8value_create_object");
+    cef_v8value_create_object_ptr = (cef_v8value_t* (*)(cef_v8accessor_t*, cef_v8interceptor_t*))cfx_platform_get_fptr(libcef, "cef_v8value_create_object");
     cef_v8value_create_array_ptr = (cef_v8value_t* (*)(int))cfx_platform_get_fptr(libcef, "cef_v8value_create_array");
     cef_v8value_create_function_ptr = (cef_v8value_t* (*)(const cef_string_t*, cef_v8handler_t*))cfx_platform_get_fptr(libcef, "cef_v8value_create_function");
     cef_value_create_ptr = (cef_value_t* (*)())cfx_platform_get_fptr(libcef, "cef_value_create");
@@ -287,6 +291,8 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_get_xdisplay cef_get_xdisplay_ptr
 #endif
 #define cef_initialize cef_initialize_ptr
+#define cef_is_cert_status_error cef_is_cert_status_error_ptr
+#define cef_is_cert_status_minor_error cef_is_cert_status_minor_error_ptr
 #define cef_is_web_plugin_unstable cef_is_web_plugin_unstable_ptr
 #define cef_launch_process cef_launch_process_ptr
 #define cef_now_from_system_trace_time cef_now_from_system_trace_time_ptr

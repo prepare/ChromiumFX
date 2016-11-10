@@ -241,7 +241,9 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Evaluates the specified JavaScript code using this context's global object.
+        /// Execute a string of JavaScript code in this V8 context. The |scriptUrl|
+        /// parameter is the URL where the script in question can be found, if any. The
+        /// |startLine| parameter is the base line number to use for error reporting.
         /// On success |retval| will be set to the return value, if any, and the
         /// function will return true (1). On failure |exception| will be set to the
         /// exception, if any, and the function will return false (0).
@@ -250,10 +252,12 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool Eval(string code, out CfrV8Value retval, out CfrV8Exception exception) {
+        public bool Eval(string code, string scriptUrl, int startLine, out CfrV8Value retval, out CfrV8Exception exception) {
             var call = new CfxV8ContextEvalRenderProcessCall();
             call.@this = proxyId;
             call.code = code;
+            call.scriptUrl = scriptUrl;
+            call.startLine = startLine;
             call.RequestExecution(this);
             retval = CfrV8Value.Wrap(call.retval);
             exception = CfrV8Exception.Wrap(call.exception);

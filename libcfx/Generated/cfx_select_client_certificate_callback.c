@@ -31,57 +31,12 @@
 // Generated file. Do not edit.
 
 
-// cef_navigation_entry
+// cef_select_client_certificate_callback
 
-// is_valid
-static int cfx_navigation_entry_is_valid(cef_navigation_entry_t* self) {
-    return self->is_valid(self);
-}
-
-// get_url
-static cef_string_userfree_t cfx_navigation_entry_get_url(cef_navigation_entry_t* self) {
-    return self->get_url(self);
-}
-
-// get_display_url
-static cef_string_userfree_t cfx_navigation_entry_get_display_url(cef_navigation_entry_t* self) {
-    return self->get_display_url(self);
-}
-
-// get_original_url
-static cef_string_userfree_t cfx_navigation_entry_get_original_url(cef_navigation_entry_t* self) {
-    return self->get_original_url(self);
-}
-
-// get_title
-static cef_string_userfree_t cfx_navigation_entry_get_title(cef_navigation_entry_t* self) {
-    return self->get_title(self);
-}
-
-// get_transition_type
-static cef_transition_type_t cfx_navigation_entry_get_transition_type(cef_navigation_entry_t* self) {
-    return self->get_transition_type(self);
-}
-
-// has_post_data
-static int cfx_navigation_entry_has_post_data(cef_navigation_entry_t* self) {
-    return self->has_post_data(self);
-}
-
-// get_completion_time
-static cef_time_t* cfx_navigation_entry_get_completion_time(cef_navigation_entry_t* self) {
-    cef_time_t __retval_tmp = self->get_completion_time(self);
-    return (cef_time_t*)cfx_copy_structure(&__retval_tmp, sizeof(cef_time_t));
-}
-
-// get_http_status_code
-static int cfx_navigation_entry_get_http_status_code(cef_navigation_entry_t* self) {
-    return self->get_http_status_code(self);
-}
-
-// get_sslstatus
-static cef_sslstatus_t* cfx_navigation_entry_get_sslstatus(cef_navigation_entry_t* self) {
-    return self->get_sslstatus(self);
+// select
+static void cfx_select_client_certificate_callback_select(cef_select_client_certificate_callback_t* self, cef_x509certificate_t* cert) {
+    if(cert) ((cef_base_t*)cert)->add_ref((cef_base_t*)cert);
+    self->select(self, cert);
 }
 
 

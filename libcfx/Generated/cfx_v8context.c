@@ -87,9 +87,10 @@ static int cfx_v8context_is_same(cef_v8context_t* self, cef_v8context_t* that) {
 }
 
 // eval
-static int cfx_v8context_eval(cef_v8context_t* self, char16 *code_str, int code_length, cef_v8value_t** retval, cef_v8exception_t** exception) {
+static int cfx_v8context_eval(cef_v8context_t* self, char16 *code_str, int code_length, char16 *script_url_str, int script_url_length, int start_line, cef_v8value_t** retval, cef_v8exception_t** exception) {
     cef_string_t code = { code_str, code_length, 0 };
-    return self->eval(self, &code, retval, exception);
+    cef_string_t script_url = { script_url_str, script_url_length, 0 };
+    return self->eval(self, &code, &script_url, start_line, retval, exception);
 }
 
 

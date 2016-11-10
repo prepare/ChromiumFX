@@ -29,6 +29,7 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -86,6 +87,10 @@ public class CefCallbackType : ApiType, ISignatureOwner {
     public string PublicName {
         get {
             if(cppApiName != null) {
+                if(Parent.ClassBuilder.Category == StructCategory.ApiCallbacks) {
+                    // can't overload event names, so return the styled c-api name instead
+                    return CSharp.ApplyStyle(Name);
+                }
                 return cppApiName;
             } else {
                 return CSharp.ApplyStyle(Name);

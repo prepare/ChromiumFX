@@ -284,6 +284,20 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Returns the current visible navigation entry for this browser. This
+        /// function can only be called on the UI thread.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
+        public CfxNavigationEntry VisibleNavigationEntry {
+            get {
+                return CfxNavigationEntry.Wrap(CfxApi.BrowserHost.cfx_browser_host_get_visible_navigation_entry(NativePtr));
+            }
+        }
+
+        /// <summary>
         /// Request that the browser close. The JavaScript 'onbeforeunload' event will
         /// be fired. If |forceClose| is false (0) the event handler, if any, will be
         /// allowed to prompt the user and the user can optionally cancel the close. If

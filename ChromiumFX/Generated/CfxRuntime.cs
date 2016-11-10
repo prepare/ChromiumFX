@@ -387,6 +387,29 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Returns true (1) if the certificate status has any error, major or minor.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// </remarks>
+        public static bool IsCertStatusError(CfxCertStatus status) {
+            return 0 != CfxApi.Runtime.cfx_is_cert_status_error((int)status);
+        }
+
+        /// <summary>
+        /// Returns true (1) if the certificate status represents only minor errors (e.g.
+        /// failure to verify certificate revocation).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
+        /// </remarks>
+        public static bool IsCertStatusMinorError(CfxCertStatus status) {
+            return 0 != CfxApi.Runtime.cfx_is_cert_status_minor_error((int)status);
+        }
+
+        /// <summary>
         /// Query if a plugin is unstable. Can be called on any thread in the browser
         /// process.
         /// </summary>
