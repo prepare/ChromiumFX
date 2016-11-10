@@ -98,7 +98,6 @@
     <Compile Include="CustomSignatures\GetFrameIdentifiersSignature.cs" />
     <Compile Include="CustomSignatures\GetPageRangesSignature.cs" />
     <Compile Include="CustomSignatures\StructArrayGetterSignature.cs" />
-    <Compile Include="CustomSignatures\OutStringToRetvalSignature.cs" />
     <Compile Include="CustomSignatures\SignatureWithStructArray.cs" />
     <Compile Include="CustomSignatures\SignatureWithStructPtrArray.cs" />
     <Compile Include="CustomSignatures\StringCollectionAsRetvalSignature.cs" />
