@@ -188,6 +188,7 @@ public class CSharp {
         name = name.Replace("certificate", "Certificate");
         name = name.Replace("interceptor", "Interceptor");
         name = name.Replace("certPrincipal", "CertPrincipal");
+        name = name.Replace("version", "Version");
         name = name.Replace("astwest", "astWest");
         name = name.Replace("oomout", "oomOut");
         name = name.Replace("oomin", "oomIn");

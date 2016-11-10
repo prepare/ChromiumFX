@@ -96,7 +96,7 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_status_capi.h">cef/include/capi/cef_ssl_status_capi.h</see>.
         /// </remarks>
-        public CfxSslVersion Sslversion {
+        public CfxSslVersion SslVersion {
             get {
                 return (CfxSslVersion)CfxApi.SslStatus.cfx_sslstatus_get_sslversion(NativePtr);
             }
