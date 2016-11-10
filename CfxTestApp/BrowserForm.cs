@@ -218,7 +218,7 @@ namespace CfxTestApplication {
                 if(e.Frame.IsMain) {
                     CfrV8Value retval;
                     CfrV8Exception exception;
-                    if(e.Context.Eval("CfxHelloWorld()", out retval, out exception)) {
+                    if(e.Context.Eval("CfxHelloWorld()", null, 0, out retval, out exception)) {
                         LogWriteLine("OnV8ContextCreated: Eval succeeded, retval is '{0}'", retval.StringValue);
                     } else {
                         LogWriteLine("OnV8ContextCreated: Eval failed, exception is '{0}'", exception.Message);
