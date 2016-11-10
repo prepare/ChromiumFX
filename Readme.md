@@ -54,14 +54,17 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
-### Version 3.2785.1 ###
-- Update to CEF 3.2785.1485 with API changes.
-- Added some methods and validations.
+### Version 3.2840.1 ###
+- Fixed a case-folding collision in generated files.
 
 ### Version 3.2840.0 ###
 - Update to CEF 3.2840.1515 with API changes.
 - CEF now implements V8 Interceptors.
 - The signatures of CfxV8Context.Eval and CfxV8Value.CreateObject have changed and must be updated in client applications.
+
+### Version 3.2785.1 ###
+- Update to CEF 3.2785.1485 with API changes.
+- Added some methods and validations.
 
 ### Version 3.2785.0 ###
 - Update to CEF 3.2785.1481 without API changes.
