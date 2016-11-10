@@ -34,60 +34,62 @@
 // more information.
 //
 
-#ifndef CEF_INCLUDE_CAPI_CEF_MENU_MODEL_DELEGATE_CAPI_H_
-#define CEF_INCLUDE_CAPI_CEF_MENU_MODEL_DELEGATE_CAPI_H_
+#ifndef CEF_INCLUDE_CAPI_CEF_SSL_STATUS_CAPI_H_
+#define CEF_INCLUDE_CAPI_CEF_SSL_STATUS_CAPI_H_
 #pragma once
 
 #include "include/capi/cef_base_capi.h"
+#include "include/capi/cef_values_capi.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-struct _cef_menu_model_t;
+struct _cef_x509certificate_t;
 
 ///
-// Implement this structure to handle menu model events. The functions of this
-// structure will be called on the browser process UI thread unless otherwise
-// indicated.
+// Structure representing the SSL information for a navigation entry.
 ///
-typedef struct _cef_menu_model_delegate_t {
+typedef struct _cef_sslstatus_t {
   ///
   // Base structure.
   ///
   cef_base_t base;
 
   ///
-  // Perform the action associated with the specified |command_id| and optional
-  // |event_flags|.
+  // Returns true (1) if the status is related to a secure SSL/TLS connection.
   ///
-  void (CEF_CALLBACK *execute_command)(struct _cef_menu_model_delegate_t* self,
-      struct _cef_menu_model_t* menu_model, int command_id,
-      cef_event_flags_t event_flags);
+  int (CEF_CALLBACK *is_secure_connection)(struct _cef_sslstatus_t* self);
 
   ///
-  // The menu is about to show.
+  // Returns a bitmask containing any and all problems verifying the server
+  // certificate.
   ///
-  void (CEF_CALLBACK *menu_will_show)(struct _cef_menu_model_delegate_t* self,
-      struct _cef_menu_model_t* menu_model);
+  cef_cert_status_t (CEF_CALLBACK *get_cert_status)(
+      struct _cef_sslstatus_t* self);
 
   ///
-  // The menu has closed.
+  // Returns the SSL version used for the SSL connection.
   ///
-  void (CEF_CALLBACK *menu_closed)(struct _cef_menu_model_delegate_t* self,
-      struct _cef_menu_model_t* menu_model);
+  cef_ssl_version_t (CEF_CALLBACK *get_sslversion)(
+      struct _cef_sslstatus_t* self);
 
   ///
-  // Optionally modify a menu item label. Return true (1) if |label| was
-  // modified.
+  // Returns a bitmask containing the page security content status.
   ///
-  int (CEF_CALLBACK *format_label)(struct _cef_menu_model_delegate_t* self,
-      struct _cef_menu_model_t* menu_model, cef_string_t* label);
-} cef_menu_model_delegate_t;
+  cef_ssl_content_status_t (CEF_CALLBACK *get_content_status)(
+      struct _cef_sslstatus_t* self);
+
+  ///
+  // Returns the X.509 certificate.
+  ///
+  struct _cef_x509certificate_t* (CEF_CALLBACK *get_x509certificate)(
+      struct _cef_sslstatus_t* self);
+} cef_sslstatus_t;
 
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // CEF_INCLUDE_CAPI_CEF_MENU_MODEL_DELEGATE_CAPI_H_
+#endif  // CEF_INCLUDE_CAPI_CEF_SSL_STATUS_CAPI_H_

@@ -1,15 +1,15 @@
 Chromium Embedded Framework (CEF) Minimal Binary Distribution for Windows
 -------------------------------------------------------------------------------
 
-Date:             October 12, 2016
+Date:             November 05, 2016
 
-CEF Version:      3.2785.1485.g2b5c3a7
+CEF Version:      3.2840.1515.g1b7ab74
 CEF URL:          https://bitbucket.org/chromiumembedded/cef.git
-                  @2b5c3a71857b9d885a46091fed3d084731f8df23
+                  @1b7ab74bcf49ff34daf39be20bb34f4434dd5b32
 
-Chromium Verison: 53.0.2785.116
+Chromium Verison: 54.0.2840.90
 Chromium URL:     https://chromium.googlesource.com/chromium/src.git
-                  @c0db0f8fba676e3a26d6804b0d23c4e887180a10
+                  @1be256e4cbaa177b3173f152d5cb1846d0423257
 
 This distribution contains the minimial components necessary to build and
 distribute an application using CEF on the Windows platform. Please see
