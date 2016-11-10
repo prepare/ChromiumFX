@@ -298,7 +298,7 @@ public class WrapperGenerator {
 
         var ptrArgs = new CodeBuilder();
         ptrArgs.Append("IntPtr p0");
-        for(int i = 0; i < 15; ++i) {
+        for(int i = 0; i < 16; ++i) {
             b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]");
             b.AppendLine("public delegate void cfx_set_ptr_{0}_delegate({1});", i + 1, ptrArgs);
             ptrArgs.Append(", IntPtr p" + (i + 1));
