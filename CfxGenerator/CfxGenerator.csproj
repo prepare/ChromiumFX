@@ -125,7 +125,6 @@
     <Compile Include="WrapperGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Config\AdditionalCallIds.txt" />
     <EmbeddedResource Include="Config\BlittableTypes.txt" />
     <EmbeddedResource Include="Config\BrowserProcessOnly.txt" />
     <EmbeddedResource Include="Config\LicenseStub.txt" />

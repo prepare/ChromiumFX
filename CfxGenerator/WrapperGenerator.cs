@@ -419,6 +419,7 @@ public class WrapperGenerator {
         }
 
         callIds.AddRange(GeneratorConfig.AdditionalCallIds);
+        callIds.Sort();
 
         b.Clear();
         b.BeginCfxNamespace(".Remote");

@@ -30,6 +30,7 @@
 
 
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -47,14 +48,16 @@ public class GeneratorConfig {
 
     public static string[] AdditionalCallIds {
         get {
-            string[] lines = AssemblyResources.GetLines("AdditionalCallIds.txt");
-            var list = new List<string>();
-            foreach(var line in lines) {
-                if(!string.IsNullOrWhiteSpace(line)) {
-                    list.Add(line.Trim());
+            List<string> callIds = new List<string>();
+            var files = Directory.GetFiles(Path.Combine("ChromiumFX", "Source", "Remote"));
+            foreach(var f in files) {
+                var content = File.ReadAllText(f);
+                var mm = Regex.Matches(content, @"class\s+(\w+)\s*:\s*(?:Browser|Render)ProcessCall");
+                foreach(Match m in mm) {
+                    callIds.Add(m.Groups[1].Value);
                 }
             }
-            return list.ToArray();
+            return callIds.ToArray();
         }
     }
 
