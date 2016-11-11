@@ -75,8 +75,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnBeforeDownloadEventArgs(browser, download_item, suggested_name_str, suggested_name_length, callback);
-            var eventHandler = self.m_OnBeforeDownload;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnBeforeDownload?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_download_item_wrapped == null) CfxApi.cfx_release(e.m_download_item);
@@ -95,8 +94,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnDownloadUpdatedEventArgs(browser, download_item, callback);
-            var eventHandler = self.m_OnDownloadUpdated;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnDownloadUpdated?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_download_item_wrapped == null) CfxApi.cfx_release(e.m_download_item);

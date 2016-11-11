@@ -83,8 +83,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnPrintStartEventArgs(browser);
-            var eventHandler = self.m_OnPrintStart;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnPrintStart?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
@@ -101,8 +100,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnPrintSettingsEventArgs(settings, get_defaults);
-            var eventHandler = self.m_OnPrintSettings;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnPrintSettings?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_settings_wrapped == null) CfxApi.cfx_release(e.m_settings);
         }
@@ -120,8 +118,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnPrintDialogEventArgs(has_selection, callback);
-            var eventHandler = self.m_OnPrintDialog;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnPrintDialog?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
             __retval = e.m_returnValue ? 1 : 0;
@@ -140,8 +137,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnPrintJobEventArgs(document_name_str, document_name_length, pdf_file_path_str, pdf_file_path_length, callback);
-            var eventHandler = self.m_OnPrintJob;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnPrintJob?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
             __retval = e.m_returnValue ? 1 : 0;
@@ -159,8 +155,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxEventArgs();
-            var eventHandler = self.m_OnPrintReset;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnPrintReset?.Invoke(self, e);
             e.m_isInvalid = true;
         }
 
@@ -177,8 +172,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetPdfPaperSizeEventArgs(device_units_per_inch);
-            var eventHandler = self.m_GetPdfPaperSize;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetPdfPaperSize?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxSize.Unwrap(e.m_returnValue);
         }

@@ -101,8 +101,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetContextMenuHandlerEventArgs();
-            var eventHandler = self.m_GetContextMenuHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetContextMenuHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxContextMenuHandler.Unwrap(e.m_returnValue);
         }
@@ -120,8 +119,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetDialogHandlerEventArgs();
-            var eventHandler = self.m_GetDialogHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetDialogHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxDialogHandler.Unwrap(e.m_returnValue);
         }
@@ -139,8 +137,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetDisplayHandlerEventArgs();
-            var eventHandler = self.m_GetDisplayHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetDisplayHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxDisplayHandler.Unwrap(e.m_returnValue);
         }
@@ -158,8 +155,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetDownloadHandlerEventArgs();
-            var eventHandler = self.m_GetDownloadHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetDownloadHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxDownloadHandler.Unwrap(e.m_returnValue);
         }
@@ -177,8 +173,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetDragHandlerEventArgs();
-            var eventHandler = self.m_GetDragHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetDragHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxDragHandler.Unwrap(e.m_returnValue);
         }
@@ -196,8 +191,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetFindHandlerEventArgs();
-            var eventHandler = self.m_GetFindHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetFindHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxFindHandler.Unwrap(e.m_returnValue);
         }
@@ -215,8 +209,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetFocusHandlerEventArgs();
-            var eventHandler = self.m_GetFocusHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetFocusHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxFocusHandler.Unwrap(e.m_returnValue);
         }
@@ -234,8 +227,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetGeolocationHandlerEventArgs();
-            var eventHandler = self.m_GetGeolocationHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetGeolocationHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxGeolocationHandler.Unwrap(e.m_returnValue);
         }
@@ -253,8 +245,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetJsDialogHandlerEventArgs();
-            var eventHandler = self.m_GetJsDialogHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetJsDialogHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxJsDialogHandler.Unwrap(e.m_returnValue);
         }
@@ -272,8 +263,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetKeyboardHandlerEventArgs();
-            var eventHandler = self.m_GetKeyboardHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetKeyboardHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxKeyboardHandler.Unwrap(e.m_returnValue);
         }
@@ -291,8 +281,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetLifeSpanHandlerEventArgs();
-            var eventHandler = self.m_GetLifeSpanHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetLifeSpanHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxLifeSpanHandler.Unwrap(e.m_returnValue);
         }
@@ -310,8 +299,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetLoadHandlerEventArgs();
-            var eventHandler = self.m_GetLoadHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetLoadHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxLoadHandler.Unwrap(e.m_returnValue);
         }
@@ -329,8 +317,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetRenderHandlerEventArgs();
-            var eventHandler = self.m_GetRenderHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetRenderHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxRenderHandler.Unwrap(e.m_returnValue);
         }
@@ -348,8 +335,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetRequestHandlerEventArgs();
-            var eventHandler = self.m_GetRequestHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetRequestHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxRequestHandler.Unwrap(e.m_returnValue);
         }
@@ -367,8 +353,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnProcessMessageReceivedEventArgs(browser, source_process, message);
-            var eventHandler = self.m_OnProcessMessageReceived;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnProcessMessageReceived?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_message_wrapped == null) CfxApi.cfx_release(e.m_message);

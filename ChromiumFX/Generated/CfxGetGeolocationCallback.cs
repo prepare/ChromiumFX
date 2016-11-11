@@ -73,8 +73,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetGeolocationCallbackOnLocationUpdateEventArgs(position);
-            var eventHandler = self.m_OnLocationUpdate;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnLocationUpdate?.Invoke(self, e);
             e.m_isInvalid = true;
         }
 

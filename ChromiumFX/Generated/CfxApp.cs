@@ -81,8 +81,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnBeforeCommandLineProcessingEventArgs(process_type_str, process_type_length, command_line);
-            var eventHandler = self.m_OnBeforeCommandLineProcessing;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnBeforeCommandLineProcessing?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_command_line_wrapped == null) CfxApi.cfx_release(e.m_command_line);
         }
@@ -99,8 +98,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnRegisterCustomSchemesEventArgs(registrar);
-            var eventHandler = self.m_OnRegisterCustomSchemes;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnRegisterCustomSchemes?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_registrar_wrapped == null) CfxApi.cfx_release(e.m_registrar);
         }
@@ -118,8 +116,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetResourceBundleHandlerEventArgs();
-            var eventHandler = self.m_GetResourceBundleHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetResourceBundleHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxResourceBundleHandler.Unwrap(e.m_returnValue);
         }
@@ -137,8 +134,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetBrowserProcessHandlerEventArgs();
-            var eventHandler = self.m_GetBrowserProcessHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetBrowserProcessHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxBrowserProcessHandler.Unwrap(e.m_returnValue);
         }
@@ -156,8 +152,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetRenderProcessHandlerEventArgs();
-            var eventHandler = self.m_GetRenderProcessHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetRenderProcessHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxRenderProcessHandler.Unwrap(e.m_returnValue);
         }

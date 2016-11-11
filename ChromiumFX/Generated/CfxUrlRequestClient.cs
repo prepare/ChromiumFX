@@ -82,8 +82,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnRequestCompleteEventArgs(request);
-            var eventHandler = self.m_OnRequestComplete;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnRequestComplete?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_request_wrapped == null) CfxApi.cfx_release(e.m_request);
         }
@@ -100,8 +99,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnUploadProgressEventArgs(request, current, total);
-            var eventHandler = self.m_OnUploadProgress;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnUploadProgress?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_request_wrapped == null) CfxApi.cfx_release(e.m_request);
         }
@@ -118,8 +116,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnDownloadProgressEventArgs(request, current, total);
-            var eventHandler = self.m_OnDownloadProgress;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnDownloadProgress?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_request_wrapped == null) CfxApi.cfx_release(e.m_request);
         }
@@ -136,8 +133,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnDownloadDataEventArgs(request, data, data_length);
-            var eventHandler = self.m_OnDownloadData;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnDownloadData?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_request_wrapped == null) CfxApi.cfx_release(e.m_request);
         }
@@ -155,8 +151,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxUrlRequestClientGetAuthCredentialsEventArgs(isProxy, host_str, host_length, port, realm_str, realm_length, scheme_str, scheme_length, callback);
-            var eventHandler = self.m_GetAuthCredentials;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetAuthCredentials?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
             __retval = e.m_returnValue ? 1 : 0;

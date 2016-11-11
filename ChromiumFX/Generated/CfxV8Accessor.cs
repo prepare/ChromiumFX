@@ -79,8 +79,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxV8AccessorGetEventArgs(name_str, name_length, @object, exception_str, exception_length);
-            var eventHandler = self.m_Get;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_Get?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_object_wrapped == null) CfxApi.cfx_release(e.m_object);
             retval = CfxV8Value.Unwrap(e.m_retval_wrapped);
@@ -105,8 +104,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxV8AccessorSetEventArgs(name_str, name_length, @object, value, exception_str, exception_length);
-            var eventHandler = self.m_Set;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_Set?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_object_wrapped == null) CfxApi.cfx_release(e.m_object);
             if(e.m_value_wrapped == null) CfxApi.cfx_release(e.m_value);

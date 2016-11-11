@@ -77,8 +77,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetCookieManagerEventArgs();
-            var eventHandler = self.m_GetCookieManager;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetCookieManager?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxCookieManager.Unwrap(e.m_returnValue);
         }
@@ -96,8 +95,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnBeforePluginLoadEventArgs(mime_type_str, mime_type_length, plugin_url_str, plugin_url_length, top_origin_url_str, top_origin_url_length, plugin_info, plugin_policy);
-            var eventHandler = self.m_OnBeforePluginLoad;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnBeforePluginLoad?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_plugin_info_wrapped == null) CfxApi.cfx_release(e.m_plugin_info);
             plugin_policy = e.m_plugin_policy;

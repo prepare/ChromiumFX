@@ -77,8 +77,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnTakeFocusEventArgs(browser, next);
-            var eventHandler = self.m_OnTakeFocus;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnTakeFocus?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
@@ -96,8 +95,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnSetFocusEventArgs(browser, source);
-            var eventHandler = self.m_OnSetFocus;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnSetFocus?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             __retval = e.m_returnValue ? 1 : 0;
@@ -115,8 +113,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnGotFocusEventArgs(browser);
-            var eventHandler = self.m_OnGotFocus;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnGotFocus?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }

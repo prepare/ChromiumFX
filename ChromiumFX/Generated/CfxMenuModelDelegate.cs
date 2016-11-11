@@ -80,8 +80,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxExecuteCommandEventArgs(menu_model, command_id, event_flags);
-            var eventHandler = self.m_ExecuteCommand;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_ExecuteCommand?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_menu_model_wrapped == null) CfxApi.cfx_release(e.m_menu_model);
         }
@@ -98,8 +97,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxMenuWillShowEventArgs(menu_model);
-            var eventHandler = self.m_MenuWillShow;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_MenuWillShow?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_menu_model_wrapped == null) CfxApi.cfx_release(e.m_menu_model);
         }
@@ -116,8 +114,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxMenuClosedEventArgs(menu_model);
-            var eventHandler = self.m_MenuClosed;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_MenuClosed?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_menu_model_wrapped == null) CfxApi.cfx_release(e.m_menu_model);
         }
@@ -135,8 +132,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxFormatLabelEventArgs(menu_model, label_str, label_length);
-            var eventHandler = self.m_FormatLabel;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_FormatLabel?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_menu_model_wrapped == null) CfxApi.cfx_release(e.m_menu_model);
             if(e.m_label_changed) {

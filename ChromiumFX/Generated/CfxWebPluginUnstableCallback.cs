@@ -73,8 +73,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxWebPluginUnstableCallbackIsUnstableEventArgs(path_str, path_length, unstable);
-            var eventHandler = self.m_IsUnstable;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_IsUnstable?.Invoke(self, e);
             e.m_isInvalid = true;
         }
 

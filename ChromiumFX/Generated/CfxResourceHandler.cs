@@ -84,8 +84,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxProcessRequestEventArgs(request, callback);
-            var eventHandler = self.m_ProcessRequest;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_ProcessRequest?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_request_wrapped == null) CfxApi.cfx_release(e.m_request);
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
@@ -105,8 +104,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetResponseHeadersEventArgs(response, redirectUrl_str, redirectUrl_length);
-            var eventHandler = self.m_GetResponseHeaders;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetResponseHeaders?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_response_wrapped == null) CfxApi.cfx_release(e.m_response);
             response_length = e.m_response_length;
@@ -131,8 +129,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxReadResponseEventArgs(data_out, bytes_to_read, callback);
-            var eventHandler = self.m_ReadResponse;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_ReadResponse?.Invoke(self, e);
             e.m_isInvalid = true;
             bytes_read = e.m_bytes_read;
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
@@ -152,8 +149,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxCanGetCookieEventArgs(cookie);
-            var eventHandler = self.m_CanGetCookie;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_CanGetCookie?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = e.m_returnValue ? 1 : 0;
         }
@@ -171,8 +167,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxCanSetCookieEventArgs(cookie);
-            var eventHandler = self.m_CanSetCookie;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_CanSetCookie?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = e.m_returnValue ? 1 : 0;
         }
@@ -189,8 +184,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxEventArgs();
-            var eventHandler = self.m_Cancel;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_Cancel?.Invoke(self, e);
             e.m_isInvalid = true;
         }
 

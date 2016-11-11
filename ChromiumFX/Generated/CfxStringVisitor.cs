@@ -72,8 +72,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxStringVisitorVisitEventArgs(string_str, string_length);
-            var eventHandler = self.m_Visit;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_Visit?.Invoke(self, e);
             e.m_isInvalid = true;
         }
 

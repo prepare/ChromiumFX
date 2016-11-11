@@ -77,8 +77,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnRequestGeolocationPermissionEventArgs(browser, requesting_url_str, requesting_url_length, request_id, callback);
-            var eventHandler = self.m_OnRequestGeolocationPermission;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnRequestGeolocationPermission?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
@@ -97,8 +96,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnCancelGeolocationPermissionEventArgs(browser, request_id);
-            var eventHandler = self.m_OnCancelGeolocationPermission;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnCancelGeolocationPermission?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }

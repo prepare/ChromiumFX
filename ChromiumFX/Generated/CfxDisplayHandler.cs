@@ -85,8 +85,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnAddressChangeEventArgs(browser, frame, url_str, url_length);
-            var eventHandler = self.m_OnAddressChange;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnAddressChange?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -104,8 +103,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnTitleChangeEventArgs(browser, title_str, title_length);
-            var eventHandler = self.m_OnTitleChange;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnTitleChange?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
@@ -122,8 +120,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnFaviconUrlchangeEventArgs(browser, icon_urls);
-            var eventHandler = self.m_OnFaviconUrlchange;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnFaviconUrlchange?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
@@ -140,8 +137,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnFullscreenModeChangeEventArgs(browser, fullscreen);
-            var eventHandler = self.m_OnFullscreenModeChange;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnFullscreenModeChange?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
@@ -159,8 +155,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnTooltipEventArgs(browser, text_str, text_length);
-            var eventHandler = self.m_OnTooltip;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnTooltip?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_text_changed) {
@@ -183,8 +178,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnStatusMessageEventArgs(browser, value_str, value_length);
-            var eventHandler = self.m_OnStatusMessage;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnStatusMessage?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
@@ -202,8 +196,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnConsoleMessageEventArgs(browser, message_str, message_length, source_str, source_length, line);
-            var eventHandler = self.m_OnConsoleMessage;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnConsoleMessage?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             __retval = e.m_returnValue ? 1 : 0;

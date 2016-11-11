@@ -74,8 +74,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxNavigationEntryVisitorVisitEventArgs(entry, current, index, total);
-            var eventHandler = self.m_Visit;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_Visit?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_entry_wrapped == null) CfxApi.cfx_release(e.m_entry);
             __retval = e.m_returnValue ? 1 : 0;

@@ -77,8 +77,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnPreKeyEventEventArgs(browser, @event, os_event);
-            var eventHandler = self.m_OnPreKeyEvent;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnPreKeyEvent?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             is_keyboard_shortcut = e.m_is_keyboard_shortcut;
@@ -98,8 +97,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnKeyEventEventArgs(browser, @event, os_event);
-            var eventHandler = self.m_OnKeyEvent;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnKeyEvent?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             __retval = e.m_returnValue ? 1 : 0;

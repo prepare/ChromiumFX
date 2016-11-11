@@ -79,8 +79,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnBeforeContextMenuEventArgs(browser, frame, parameters, model);
-            var eventHandler = self.m_OnBeforeContextMenu;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnBeforeContextMenu?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -101,8 +100,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxRunContextMenuEventArgs(browser, frame, parameters, model, callback);
-            var eventHandler = self.m_RunContextMenu;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_RunContextMenu?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -125,8 +123,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnContextMenuCommandEventArgs(browser, frame, parameters, command_id, event_flags);
-            var eventHandler = self.m_OnContextMenuCommand;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnContextMenuCommand?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -146,8 +143,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnContextMenuDismissedEventArgs(browser, frame);
-            var eventHandler = self.m_OnContextMenuDismissed;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnContextMenuDismissed?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);

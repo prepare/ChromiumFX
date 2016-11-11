@@ -74,8 +74,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxDialogHandlerOnFileDialogEventArgs(browser, mode, title_str, title_length, default_file_path_str, default_file_path_length, accept_filters, selected_accept_filter, callback);
-            var eventHandler = self.m_OnFileDialog;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnFileDialog?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);

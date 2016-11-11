@@ -81,8 +81,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnJsDialogEventArgs(browser, origin_url_str, origin_url_length, dialog_type, message_text_str, message_text_length, default_prompt_text_str, default_prompt_text_length, callback);
-            var eventHandler = self.m_OnJsDialog;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnJsDialog?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
@@ -103,8 +102,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnBeforeUnloadDialogEventArgs(browser, message_text_str, message_text_length, is_reload, callback);
-            var eventHandler = self.m_OnBeforeUnloadDialog;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnBeforeUnloadDialog?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
@@ -123,8 +121,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnResetDialogStateEventArgs(browser);
-            var eventHandler = self.m_OnResetDialogState;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnResetDialogState?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
@@ -141,8 +138,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnDialogClosedEventArgs(browser);
-            var eventHandler = self.m_OnDialogClosed;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnDialogClosed?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }

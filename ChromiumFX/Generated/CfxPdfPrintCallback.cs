@@ -73,8 +73,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxPdfPrintCallbackOnPdfPrintFinishedEventArgs(path_str, path_length, ok);
-            var eventHandler = self.m_OnPdfPrintFinished;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnPdfPrintFinished?.Invoke(self, e);
             e.m_isInvalid = true;
         }
 

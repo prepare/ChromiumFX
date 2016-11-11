@@ -73,8 +73,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxFindHandlerOnFindResultEventArgs(browser, identifier, count, selectionRect, activeMatchOrdinal, finalUpdate);
-            var eventHandler = self.m_OnFindResult;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnFindResult?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }

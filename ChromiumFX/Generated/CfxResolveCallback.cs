@@ -72,8 +72,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxResolveCallbackOnResolveCompletedEventArgs(result, resolved_ips);
-            var eventHandler = self.m_OnResolveCompleted;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnResolveCompleted?.Invoke(self, e);
             e.m_isInvalid = true;
         }
 

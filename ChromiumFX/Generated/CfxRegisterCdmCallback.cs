@@ -74,8 +74,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxRegisterCdmCallbackOnCdmRegistrationCompleteEventArgs(result, error_message_str, error_message_length);
-            var eventHandler = self.m_OnCdmRegistrationComplete;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnCdmRegistrationComplete?.Invoke(self, e);
             e.m_isInvalid = true;
         }
 

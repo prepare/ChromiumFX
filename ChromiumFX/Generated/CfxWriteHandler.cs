@@ -82,8 +82,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxWriteEventArgs(ptr, size, n);
-            var eventHandler = self.m_Write;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_Write?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = (UIntPtr)e.m_returnValue;
         }
@@ -101,8 +100,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxSeekEventArgs(offset, whence);
-            var eventHandler = self.m_Seek;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_Seek?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = e.m_returnValue;
         }
@@ -120,8 +118,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxTellEventArgs();
-            var eventHandler = self.m_Tell;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_Tell?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = e.m_returnValue;
         }
@@ -139,8 +136,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxFlushEventArgs();
-            var eventHandler = self.m_Flush;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_Flush?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = e.m_returnValue;
         }
@@ -158,8 +154,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxMayBlockEventArgs();
-            var eventHandler = self.m_MayBlock;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_MayBlock?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = e.m_returnValue ? 1 : 0;
         }

@@ -608,8 +608,7 @@ public class CfxClassBuilder {
             b.AppendLine("return;");
             b.EndBlock();
             b.AppendLine("var e = new {0}({1});", cb.PublicEventArgsClassName, sig.PublicEventConstructorParameterList);
-            b.AppendLine("var eventHandler = self.m_{0};", cb.PublicName);
-            b.AppendLine("if(eventHandler != null) eventHandler(self, e);", cb.PublicName);
+            b.AppendLine("self.m_{0}?.Invoke(self, e);", cb.PublicName);
             b.AppendLine("e.m_isInvalid = true;");
 
             sig.EmitPostPublicEventHandlerCallStatements(b);

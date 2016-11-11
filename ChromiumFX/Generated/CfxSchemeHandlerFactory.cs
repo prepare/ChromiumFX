@@ -75,8 +75,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxSchemeHandlerFactoryCreateEventArgs(browser, frame, scheme_name_str, scheme_name_length, request);
-            var eventHandler = self.m_Create;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_Create?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);

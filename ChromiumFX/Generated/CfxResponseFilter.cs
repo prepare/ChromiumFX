@@ -76,8 +76,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxInitFilterEventArgs();
-            var eventHandler = self.m_InitFilter;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_InitFilter?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = e.m_returnValue ? 1 : 0;
         }
@@ -97,8 +96,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxFilterEventArgs(data_in, data_in_size, data_out, data_out_size);
-            var eventHandler = self.m_Filter;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_Filter?.Invoke(self, e);
             e.m_isInvalid = true;
             data_in_read = e.m_data_in_read;
             data_out_written = e.m_data_out_written;

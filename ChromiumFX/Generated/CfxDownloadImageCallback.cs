@@ -73,8 +73,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxDownloadImageCallbackOnDownloadImageFinishedEventArgs(image_url_str, image_url_length, http_status_code, image);
-            var eventHandler = self.m_OnDownloadImageFinished;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnDownloadImageFinished?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_image_wrapped == null) CfxApi.cfx_release(e.m_image);
         }

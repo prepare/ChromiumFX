@@ -104,8 +104,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnBeforeBrowseEventArgs(browser, frame, request, is_redirect);
-            var eventHandler = self.m_OnBeforeBrowse;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnBeforeBrowse?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -126,8 +125,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnOpenUrlfromTabEventArgs(browser, frame, target_url_str, target_url_length, target_disposition, user_gesture);
-            var eventHandler = self.m_OnOpenUrlfromTab;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnOpenUrlfromTab?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -147,8 +145,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnBeforeResourceLoadEventArgs(browser, frame, request, callback);
-            var eventHandler = self.m_OnBeforeResourceLoad;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnBeforeResourceLoad?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -170,8 +167,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetResourceHandlerEventArgs(browser, frame, request);
-            var eventHandler = self.m_GetResourceHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetResourceHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -191,8 +187,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnResourceRedirectEventArgs(browser, frame, request, response, new_url_str, new_url_length);
-            var eventHandler = self.m_OnResourceRedirect;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnResourceRedirect?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -218,8 +213,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnResourceResponseEventArgs(browser, frame, request, response);
-            var eventHandler = self.m_OnResourceResponse;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnResourceResponse?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -241,8 +235,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetResourceResponseFilterEventArgs(browser, frame, request, response);
-            var eventHandler = self.m_GetResourceResponseFilter;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetResourceResponseFilter?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -263,8 +256,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnResourceLoadCompleteEventArgs(browser, frame, request, response, status, received_content_length);
-            var eventHandler = self.m_OnResourceLoadComplete;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnResourceLoadComplete?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -285,8 +277,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxRequestHandlerGetAuthCredentialsEventArgs(browser, frame, isProxy, host_str, host_length, port, realm_str, realm_length, scheme_str, scheme_length, callback);
-            var eventHandler = self.m_GetAuthCredentials;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetAuthCredentials?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -307,8 +298,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnQuotaRequestEventArgs(browser, origin_url_str, origin_url_length, new_size, callback);
-            var eventHandler = self.m_OnQuotaRequest;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnQuotaRequest?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
@@ -328,8 +318,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnProtocolExecutionEventArgs(browser, url_str, url_length);
-            var eventHandler = self.m_OnProtocolExecution;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnProtocolExecution?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             allow_os_execution = e.m_allow_os_execution;
@@ -348,8 +337,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnCertificateErrorEventArgs(browser, cert_error, request_url_str, request_url_length, ssl_info, callback);
-            var eventHandler = self.m_OnCertificateError;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnCertificateError?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_ssl_info_wrapped == null) CfxApi.cfx_release(e.m_ssl_info);
@@ -370,8 +358,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnSelectClientCertificateEventArgs(browser, isProxy, host_str, host_length, port, certificatesCount, certificates, callback);
-            var eventHandler = self.m_OnSelectClientCertificate;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnSelectClientCertificate?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
@@ -390,8 +377,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnPluginCrashedEventArgs(browser, plugin_path_str, plugin_path_length);
-            var eventHandler = self.m_OnPluginCrashed;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnPluginCrashed?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
@@ -408,8 +394,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnRenderViewReadyEventArgs(browser);
-            var eventHandler = self.m_OnRenderViewReady;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnRenderViewReady?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
@@ -426,8 +411,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnRenderProcessTerminatedEventArgs(browser, status);
-            var eventHandler = self.m_OnRenderProcessTerminated;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnRenderProcessTerminated?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }

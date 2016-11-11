@@ -82,8 +82,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxEventArgs();
-            var eventHandler = self.m_OnContextInitialized;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnContextInitialized?.Invoke(self, e);
             e.m_isInvalid = true;
         }
 
@@ -99,8 +98,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnBeforeChildProcessLaunchEventArgs(command_line);
-            var eventHandler = self.m_OnBeforeChildProcessLaunch;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnBeforeChildProcessLaunch?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_command_line_wrapped == null) CfxApi.cfx_release(e.m_command_line);
         }
@@ -117,8 +115,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnRenderProcessThreadCreatedEventArgs(extra_info);
-            var eventHandler = self.m_OnRenderProcessThreadCreated;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnRenderProcessThreadCreated?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_extra_info_wrapped == null) CfxApi.cfx_release(e.m_extra_info);
         }
@@ -136,8 +133,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetPrintHandlerEventArgs();
-            var eventHandler = self.m_GetPrintHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetPrintHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxPrintHandler.Unwrap(e.m_returnValue);
         }
@@ -154,8 +150,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnScheduleMessagePumpWorkEventArgs(delay_ms);
-            var eventHandler = self.m_OnScheduleMessagePumpWork;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnScheduleMessagePumpWork?.Invoke(self, e);
             e.m_isInvalid = true;
         }
 

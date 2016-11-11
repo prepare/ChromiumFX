@@ -73,8 +73,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxSetCookieCallbackOnCompleteEventArgs(success);
-            var eventHandler = self.m_OnComplete;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnComplete?.Invoke(self, e);
             e.m_isInvalid = true;
         }
 

@@ -80,8 +80,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnLoadingStateChangeEventArgs(browser, isLoading, canGoBack, canGoForward);
-            var eventHandler = self.m_OnLoadingStateChange;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnLoadingStateChange?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
@@ -98,8 +97,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnLoadStartEventArgs(browser, frame, transition_type);
-            var eventHandler = self.m_OnLoadStart;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnLoadStart?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -117,8 +115,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnLoadEndEventArgs(browser, frame, httpStatusCode);
-            var eventHandler = self.m_OnLoadEnd;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnLoadEnd?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -136,8 +133,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnLoadErrorEventArgs(browser, frame, errorCode, errorText_str, errorText_length, failedUrl_str, failedUrl_length);
-            var eventHandler = self.m_OnLoadError;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnLoadError?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);

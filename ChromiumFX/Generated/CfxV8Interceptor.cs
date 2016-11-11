@@ -85,8 +85,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetByNameEventArgs(name_str, name_length, @object, exception_str, exception_length);
-            var eventHandler = self.m_GetByName;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetByName?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_object_wrapped == null) CfxApi.cfx_release(e.m_object);
             retval = CfxV8Value.Unwrap(e.m_retval_wrapped);
@@ -112,8 +111,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetByIndexEventArgs(index, @object, exception_str, exception_length);
-            var eventHandler = self.m_GetByIndex;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetByIndex?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_object_wrapped == null) CfxApi.cfx_release(e.m_object);
             retval = CfxV8Value.Unwrap(e.m_retval_wrapped);
@@ -138,8 +136,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxSetByNameEventArgs(name_str, name_length, @object, value, exception_str, exception_length);
-            var eventHandler = self.m_SetByName;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_SetByName?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_object_wrapped == null) CfxApi.cfx_release(e.m_object);
             if(e.m_value_wrapped == null) CfxApi.cfx_release(e.m_value);
@@ -164,8 +161,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxSetByIndexEventArgs(index, @object, value, exception_str, exception_length);
-            var eventHandler = self.m_SetByIndex;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_SetByIndex?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_object_wrapped == null) CfxApi.cfx_release(e.m_object);
             if(e.m_value_wrapped == null) CfxApi.cfx_release(e.m_value);

@@ -83,8 +83,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnBeforePopupEventArgs(browser, frame, target_url_str, target_url_length, target_frame_name_str, target_frame_name_length, target_disposition, user_gesture, popupFeatures, windowInfo, settings);
-            var eventHandler = self.m_OnBeforePopup;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnBeforePopup?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -105,8 +104,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnAfterCreatedEventArgs(browser);
-            var eventHandler = self.m_OnAfterCreated;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnAfterCreated?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
@@ -124,8 +122,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxDoCloseEventArgs(browser);
-            var eventHandler = self.m_DoClose;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_DoClose?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             __retval = e.m_returnValue ? 1 : 0;
@@ -143,8 +140,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnBeforeCloseEventArgs(browser);
-            var eventHandler = self.m_OnBeforeClose;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnBeforeClose?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }

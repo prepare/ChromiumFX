@@ -94,8 +94,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetRootScreenRectEventArgs(browser, rect);
-            var eventHandler = self.m_GetRootScreenRect;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetRootScreenRect?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             __retval = e.m_returnValue ? 1 : 0;
@@ -114,8 +113,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetViewRectEventArgs(browser, rect);
-            var eventHandler = self.m_GetViewRect;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetViewRect?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             __retval = e.m_returnValue ? 1 : 0;
@@ -136,8 +134,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetScreenPointEventArgs(browser, viewX, viewY);
-            var eventHandler = self.m_GetScreenPoint;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetScreenPoint?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             screenX = e.m_screenX;
@@ -158,8 +155,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetScreenInfoEventArgs(browser, screen_info);
-            var eventHandler = self.m_GetScreenInfo;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetScreenInfo?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             __retval = e.m_returnValue ? 1 : 0;
@@ -177,8 +173,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnPopupShowEventArgs(browser, show);
-            var eventHandler = self.m_OnPopupShow;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnPopupShow?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
@@ -195,8 +190,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnPopupSizeEventArgs(browser, rect);
-            var eventHandler = self.m_OnPopupSize;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnPopupSize?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
@@ -213,8 +207,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnPaintEventArgs(browser, type, dirtyRects, dirtyRectsCount, dirtyRects_structsize, buffer, width, height);
-            var eventHandler = self.m_OnPaint;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnPaint?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_dirtyRects_managed != null) {
@@ -236,8 +229,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnCursorChangeEventArgs(browser, cursor, type, custom_cursor_info);
-            var eventHandler = self.m_OnCursorChange;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnCursorChange?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
@@ -255,8 +247,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxStartDraggingEventArgs(browser, drag_data, allowed_ops, x, y);
-            var eventHandler = self.m_StartDragging;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_StartDragging?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_drag_data_wrapped == null) CfxApi.cfx_release(e.m_drag_data);
@@ -275,8 +266,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxUpdateDragCursorEventArgs(browser, operation);
-            var eventHandler = self.m_UpdateDragCursor;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_UpdateDragCursor?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
@@ -293,8 +283,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnScrollOffsetChangedEventArgs(browser, x, y);
-            var eventHandler = self.m_OnScrollOffsetChanged;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnScrollOffsetChanged?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }

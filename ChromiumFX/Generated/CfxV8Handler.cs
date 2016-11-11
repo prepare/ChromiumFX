@@ -79,8 +79,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxV8HandlerExecuteEventArgs(name_str, name_length, @object, arguments, argumentsCount);
-            var eventHandler = self.m_Execute;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_Execute?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_object_wrapped == null) CfxApi.cfx_release(e.m_object);
             if(e.m_arguments_managed == null) {

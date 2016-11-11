@@ -76,8 +76,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnDragEnterEventArgs(browser, dragData, mask);
-            var eventHandler = self.m_OnDragEnter;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnDragEnter?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_dragData_wrapped == null) CfxApi.cfx_release(e.m_dragData);
@@ -96,8 +95,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnDraggableRegionsChangedEventArgs(browser, regions, regionsCount, regions_structsize);
-            var eventHandler = self.m_OnDraggableRegionsChanged;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnDraggableRegionsChanged?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_regions_managed != null) {

@@ -94,8 +94,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnRenderThreadCreatedEventArgs(extra_info);
-            var eventHandler = self.m_OnRenderThreadCreated;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnRenderThreadCreated?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_extra_info_wrapped == null) CfxApi.cfx_release(e.m_extra_info);
         }
@@ -112,8 +111,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxEventArgs();
-            var eventHandler = self.m_OnWebKitInitialized;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnWebKitInitialized?.Invoke(self, e);
             e.m_isInvalid = true;
         }
 
@@ -129,8 +127,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnBrowserCreatedEventArgs(browser);
-            var eventHandler = self.m_OnBrowserCreated;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnBrowserCreated?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
@@ -147,8 +144,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnBrowserDestroyedEventArgs(browser);
-            var eventHandler = self.m_OnBrowserDestroyed;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnBrowserDestroyed?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
         }
@@ -166,8 +162,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetLoadHandlerEventArgs();
-            var eventHandler = self.m_GetLoadHandler;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetLoadHandler?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxLoadHandler.Unwrap(e.m_returnValue);
         }
@@ -185,8 +180,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnBeforeNavigationEventArgs(browser, frame, request, navigation_type, is_redirect);
-            var eventHandler = self.m_OnBeforeNavigation;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnBeforeNavigation?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -206,8 +200,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnContextCreatedEventArgs(browser, frame, context);
-            var eventHandler = self.m_OnContextCreated;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnContextCreated?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -226,8 +219,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnContextReleasedEventArgs(browser, frame, context);
-            var eventHandler = self.m_OnContextReleased;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnContextReleased?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -246,8 +238,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnUncaughtExceptionEventArgs(browser, frame, context, exception, stackTrace);
-            var eventHandler = self.m_OnUncaughtException;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnUncaughtException?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -268,8 +259,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnFocusedNodeChangedEventArgs(browser, frame, node);
-            var eventHandler = self.m_OnFocusedNodeChanged;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnFocusedNodeChanged?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
@@ -289,8 +279,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxOnProcessMessageReceivedEventArgs(browser, source_process, message);
-            var eventHandler = self.m_OnProcessMessageReceived;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnProcessMessageReceived?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
             if(e.m_message_wrapped == null) CfxApi.cfx_release(e.m_message);

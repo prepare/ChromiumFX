@@ -79,8 +79,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetLocalizedStringEventArgs(string_id, string_str, string_length);
-            var eventHandler = self.m_GetLocalizedString;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetLocalizedString?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_string_changed) {
                 var string_pinned = new PinnedString(e.m_string_wrapped);
@@ -105,8 +104,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetDataResourceEventArgs(resource_id);
-            var eventHandler = self.m_GetDataResource;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetDataResource?.Invoke(self, e);
             e.m_isInvalid = true;
             data = e.m_data;
             data_size = e.m_data_size;
@@ -128,8 +126,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxGetDataResourceForScaleEventArgs(resource_id, scale_factor);
-            var eventHandler = self.m_GetDataResourceForScale;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_GetDataResourceForScale?.Invoke(self, e);
             e.m_isInvalid = true;
             data = e.m_data;
             data_size = e.m_data_size;

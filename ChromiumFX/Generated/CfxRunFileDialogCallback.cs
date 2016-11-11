@@ -73,8 +73,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxRunFileDialogCallbackOnFileDialogDismissedEventArgs(selected_accept_filter, file_paths);
-            var eventHandler = self.m_OnFileDialogDismissed;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnFileDialogDismissed?.Invoke(self, e);
             e.m_isInvalid = true;
         }
 

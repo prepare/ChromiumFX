@@ -75,8 +75,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxCookieVisitorVisitEventArgs(cookie, count, total);
-            var eventHandler = self.m_Visit;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_Visit?.Invoke(self, e);
             e.m_isInvalid = true;
             deleteCookie = e.m_deleteCookie;
             __retval = e.m_returnValue ? 1 : 0;

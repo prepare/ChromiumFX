@@ -74,8 +74,7 @@ namespace Chromium {
                 return;
             }
             var e = new CfxEndTracingCallbackOnEndTracingCompleteEventArgs(tracing_file_str, tracing_file_length);
-            var eventHandler = self.m_OnEndTracingComplete;
-            if(eventHandler != null) eventHandler(self, e);
+            self.m_OnEndTracingComplete?.Invoke(self, e);
             e.m_isInvalid = true;
         }
 
