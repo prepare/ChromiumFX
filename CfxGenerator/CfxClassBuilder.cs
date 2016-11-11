@@ -30,6 +30,7 @@
 
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -53,24 +54,22 @@ public class StructMember {
         }
     }
 
-    public bool IsProperty;
-
     public StructMember(CefStructType parent, StructCategory structCategory, Parser.StructMemberData smd, ApiTypeBuilder api) {
+
+        Debug.Assert(structCategory == StructCategory.Values);
+        Debug.Assert(smd.MemberType != null);
+
         Name = smd.Name;
         Comments = smd.Comments;
         cefConfig = smd.CefConfig;
 
-        if(smd.MemberType != null) {
-            MemberType = api.GetApiType(smd.MemberType, false);
-            if(MemberType.Name == "int" && Comments != null) {
-                foreach(var c in Comments.Lines) {
-                    if(c.Contains("true") || c.Contains("false")) {
-                        MemberType = BooleanInteger.Convert(MemberType);
-                    }
+        MemberType = api.GetApiType(smd.MemberType, false);
+        if(MemberType.Name == "int" && Comments != null) {
+            foreach(var c in Comments.Lines) {
+                if(c.Contains("true") || c.Contains("false")) {
+                    MemberType = BooleanInteger.Convert(MemberType);
                 }
             }
-        } else {
-            MemberType = new CefCallbackType(parent, structCategory, smd.Name, smd.CefConfig, smd.CallbackSignature, api, smd.Comments);
         }
     }
 
@@ -88,20 +87,8 @@ public class StructMember {
         get { return CSharp.ApplyStyle(Name); }
     }
 
-    public Signature CallbackSignature {
-        get { return MemberType.AsCefCallbackType.Signature; }
-    }
-
-    public CefCallbackType Callback {
-        get { return MemberType.AsCefCallbackType; }
-    }
-
     public override string ToString() {
-        if(MemberType.IsCefCallbackType) {
-            return MemberType.ToString();
-        } else {
-            return string.Format("{0} {1}", MemberType, Name);
-        }
+        return string.Format("{0} {1}", MemberType, Name);
     }
 }
 
@@ -115,14 +102,15 @@ public class CfxClassBuilder {
 
     private readonly CefStructType cefStruct;
     public readonly CefExportFunction[] ExportFunctions;
+    public readonly CefCallbackFunction[] CallbackFunctions;
+
     public readonly StructMember[] StructMembers;
 
     private readonly CommentData comments;
 
-    private readonly StructMember[] StructCallbacks;
     private readonly List<StructProperty> m_structProperties = new List<StructProperty>();
 
-    private readonly List<StructMember> m_structFunctions = new List<StructMember>();
+    private readonly List<CefCallbackFunction> m_structFunctions = new List<CefCallbackFunction>();
 
     public readonly StructCategory Category;
     private readonly string OriginalSymbol;
@@ -136,6 +124,7 @@ public class CfxClassBuilder {
     private readonly bool NeedsWrapping;
 
     public CfxClassBuilder(CefStructType cefStruct, Parser.StructData sd, ApiTypeBuilder api) {
+
         this.cefStruct = cefStruct;
         this.OriginalSymbol = cefStruct.OriginalSymbol;
         this.CfxNativeSymbol = cefStruct.CfxNativeSymbol;
@@ -157,61 +146,65 @@ public class CfxClassBuilder {
                     break;
 
                 default:
-                    System.Diagnostics.Debugger.Break();
+                    Debug.Assert(false);
                     break;
             }
         } else {
+            Debug.Assert(sd.StructMembers.Count == 1 || sd.StructMembers[1].CallbackSignature == null);
             Category = StructCategory.Values;
-            if(sd.StructMembers.Count > 1 && sd.StructMembers[1].CallbackSignature != null)
-                System.Diagnostics.Debugger.Break();
         }
 
-        var smlist = new List<StructMember>();
-        foreach(var smd in sd.StructMembers) {
-            smlist.Add(new StructMember(cefStruct, Category, smd, api));
+        Debug.Assert(sd.CefFunctions.Count == 0 || Category == StructCategory.ApiCalls);
+
+        switch(Category) {
+            case StructCategory.Values:
+                var smlist = new List<StructMember>();
+                foreach(var smd in sd.StructMembers) {
+                    smlist.Add(new StructMember(cefStruct, Category, smd, api));
+                }
+                StructMembers = smlist.ToArray();
+                NeedsWrapping = GeneratorConfig.ValueStructNeedsWrapping(cefStruct.Name);
+                break;
+            case StructCategory.ApiCalls:
+                var flist = new List<CefExportFunction>();
+                foreach(var fd in sd.CefFunctions) {
+                    flist.Add(new CefExportFunction(cefStruct, fd, api));
+                }
+                ExportFunctions = flist.ToArray();
+                goto case StructCategory.ApiCallbacks;
+            case StructCategory.ApiCallbacks:
+                var cblist = new List<CefCallbackFunction>();
+                for(int i = 1; i < sd.StructMembers.Count; ++i) {
+                    var sm = sd.StructMembers[i];
+                    Debug.Assert(sm.CallbackSignature != null);
+                    cblist.Add(new CefCallbackFunction(cefStruct, Category, sm.Name, sm.CefConfig, sm.CallbackSignature, api, sm.Comments));
+                }
+                CallbackFunctions = cblist.ToArray();
+                break;
         }
-        StructMembers = smlist.ToArray();
 
-        var flist = new List<CefExportFunction>();
-        foreach(var fd in sd.CefFunctions) {
-            flist.Add(new CefExportFunction(cefStruct, fd, api));
-        }
-        ExportFunctions = flist.ToArray();
-
-        if(StructMembers.Length > 1 && StructMembers[1].MemberType.IsCefCallbackType) {
-            StructCallbacks = new StructMember[StructMembers.Length - 1];
-            for(var i = 1; i <= StructMembers.Length - 1; i++) {
-                StructCallbacks[i - 1] = StructMembers[i];
-            }
-
-            if(!(Category == StructCategory.ApiCallbacks)) {
-                Category = StructCategory.ApiCalls;
-                foreach(var sm in StructCallbacks) {
-                    var cb = sm.Callback;
-                    var isBoolean = false;
-                    if(cb.IsPropertyGetter(ref isBoolean)) {
-                        StructMember setter = null;
-                        foreach(var sm2 in StructMembers) {
-                            if(sm2.MemberType.IsCefCallbackType && sm2.MemberType.AsCefCallbackType.IsPropertySetterFor(cb)) {
-                                setter = sm2;
-                                setter.MemberType.AsCefCallbackType.Signature.ManagedArguments[1].IsPropertySetterArgument = true;
-                                break;
-                            }
+        if(Category == StructCategory.ApiCalls) {
+            Category = StructCategory.ApiCalls;
+            foreach(var cb in CallbackFunctions) {
+                var isBoolean = false;
+                if(cb.IsPropertyGetter(ref isBoolean)) {
+                    CefCallbackFunction setter = null;
+                    foreach(var cb2 in CallbackFunctions) {
+                        if(cb2.IsPropertySetterFor(cb)) {
+                            setter = cb2;
+                            setter.Signature.ManagedArguments[1].IsPropertySetterArgument = true;
+                            break;
                         }
-                        var prop = new StructProperty(sm, setter, isBoolean);
-                        m_structProperties.Add(prop);
                     }
-                }
-                foreach(var sm in StructMembers) {
-                    if(sm.MemberType.IsCefCallbackType && !sm.IsProperty) {
-                        m_structFunctions.Add(sm);
-                    }
+                    var prop = new StructProperty(cb, setter, isBoolean);
+                    m_structProperties.Add(prop);
                 }
             }
-        }
-
-        if(Category == StructCategory.Values) {
-            NeedsWrapping = GeneratorConfig.ValueStructNeedsWrapping(cefStruct.Name);
+            foreach(var sm in CallbackFunctions) {
+                if(!sm.IsProperty) {
+                    m_structFunctions.Add(sm);
+                }
+            }
         }
     }
 
@@ -248,31 +241,23 @@ public class CfxClassBuilder {
             f.EmitNativeFunction(b);
         }
 
-        foreach(var sm in StructMembers) {
-            if(sm.MemberType.Name == "cef_base_t")
-                continue;
-            b.AppendLine("// {0}", sm);
-            if(sm.MemberType.IsCefCallbackType) {
-                var cb = sm.MemberType.AsCefCallbackType;
-                b.BeginBlock(cb.Signature.NativeFunctionHeader(CfxName + "_" + sm.Name));
-                cb.Signature.EmitNativeCall(b, "self->" + sm.Name);
-                b.EndBlock();
-            }
+        foreach(var cb in CallbackFunctions) {
+            b.AppendLine("// {0}", cb);
+            b.BeginBlock(cb.Signature.NativeFunctionHeader(CfxName + "_" + cb.Name));
+            cb.Signature.EmitNativeCall(b, "self->" + cb.Name);
+            b.EndBlock();
             b.AppendLine();
         }
     }
 
     private void EmitNativeCallbackStruct(CodeBuilder b) {
-        if(ExportFunctions.Count() > 0)
-            System.Diagnostics.Debugger.Break();
-
+        
         b.BeginBlock("typedef struct _{0}", CfxNativeSymbol);
         b.AppendLine("{0} {1};", OriginalSymbol, cefStruct.Name);
         b.AppendLine("unsigned int ref_count;");
         b.AppendLine("gc_handle_t gc_handle;");
         b.AppendLine("// managed callbacks");
-        foreach(var sm in StructCallbacks) {
-            var cb = sm.MemberType.AsCefCallbackType;
+        foreach(var cb in CallbackFunctions) {
             b.AppendLine("void (CEF_CALLBACK *{0})({1});", cb.Name, cb.Signature.NativeParameterList);
         }
         b.EndBlock("{0};", CfxNativeSymbol);
@@ -312,59 +297,52 @@ public class CfxClassBuilder {
         b.EndBlock();
         b.AppendLine();
 
-        foreach(var sm in StructMembers) {
-            if(sm.MemberType.IsCefCallbackType) {
-                b.AppendLine("// {0}", sm);
-                b.AppendLine();
+        foreach(var cb in CallbackFunctions) {
 
-                var cb = sm.MemberType.AsCefCallbackType;
+            b.AppendLine("// {0}", cb);
+            b.AppendLine();
 
-                b.BeginBlock("{0} CEF_CALLBACK {1}({2})", cb.NativeReturnType.OriginalSymbol, cb.NativeCallbackName, cb.Signature.OriginalParameterList);
-                if(!cb.NativeReturnType.IsVoid) {
-                    b.AppendLine("{0} __retval;", cb.NativeReturnType.NativeSymbol);
-                }
-
-                foreach(var arg in cb.Signature.Arguments) {
-                    arg.EmitPreNativeCallbackStatements(b);
-                }
-
-                b.AppendLine("(({0}_t*)self)->{1}({2});", CfxName, cb.Name, cb.Signature.NativeArgumentList);
-
-                foreach(var arg in cb.Signature.Arguments) {
-                    arg.EmitPostNativeCallbackStatements(b);
-                }
-
-                cb.NativeReturnType.EmitNativeCallbackReturnStatements(b, "__retval");
-
-                b.EndBlock();
-                b.AppendLine();
+            b.BeginBlock("{0} CEF_CALLBACK {1}({2})", cb.NativeReturnType.OriginalSymbol, cb.NativeCallbackName, cb.Signature.OriginalParameterList);
+            if(!cb.NativeReturnType.IsVoid) {
+                b.AppendLine("{0} __retval;", cb.NativeReturnType.NativeSymbol);
             }
+
+            foreach(var arg in cb.Signature.Arguments) {
+                arg.EmitPreNativeCallbackStatements(b);
+            }
+
+            b.AppendLine("(({0}_t*)self)->{1}({2});", CfxName, cb.Name, cb.Signature.NativeArgumentList);
+
+            foreach(var arg in cb.Signature.Arguments) {
+                arg.EmitPostNativeCallbackStatements(b);
+            }
+
+            cb.NativeReturnType.EmitNativeCallbackReturnStatements(b, "__retval");
+
+            b.EndBlock();
+            b.AppendLine();
+
         }
 
         b.BeginBlock("static void {0}_set_callback({1}* self, int index, void* callback)", CfxName, OriginalSymbol);
         b.BeginBlock("switch(index)");
         var index = 0;
-        foreach(var sm in StructMembers) {
-            if(sm.MemberType.IsCefCallbackType) {
-                var cb = sm.MemberType.AsCefCallbackType;
-                b.DecreaseIndent();
-                b.AppendLine("case {0}:", index);
-                b.IncreaseIndent();
-                b.AppendLine("(({0}_t*)self)->{1} = (void (CEF_CALLBACK *)({2}))callback;", CfxName, cb.Name, cb.Signature.NativeParameterList);
-                b.AppendLine("self->{0} = callback ? {1} : 0;", sm.Name, cb.NativeCallbackName);
-                b.AppendLine("break;");
+        foreach(var cb in CallbackFunctions) {
+            b.DecreaseIndent();
+            b.AppendLine("case {0}:", index);
+            b.IncreaseIndent();
+            b.AppendLine("(({0}_t*)self)->{1} = (void (CEF_CALLBACK *)({2}))callback;", CfxName, cb.Name, cb.Signature.NativeParameterList);
+            b.AppendLine("self->{0} = callback ? {1} : 0;", cb.Name, cb.NativeCallbackName);
+            b.AppendLine("break;");
 
-                index += 1;
-            }
+            index += 1;
         }
         b.EndBlock();
         b.EndBlock();
     }
 
     public void EmitNativeValueStruct(CodeBuilder b) {
-        if(ExportFunctions.Count() > 0)
-            System.Diagnostics.Debugger.Break();
-
+        
         if(cefStruct.IsCefPlatformStructType) {
             b.AppendLine("#ifdef CFX_" + cefStruct.AsCefPlatformStructType.Platform.ToString().ToUpper());
             b.AppendLine();
@@ -428,13 +406,6 @@ public class CfxClassBuilder {
         b.EndBlock();
         b.AppendLine();
 
-        if(ExportFunctions.Count() > 0) {
-            foreach(var f in this.ExportFunctions) {
-                f.EmitPInvokeDeclaration(b);
-            }
-            b.AppendLine();
-        }
-
         switch(Category) {
             case StructCategory.Values:
 
@@ -462,13 +433,17 @@ public class CfxClassBuilder {
 
             case StructCategory.ApiCalls:
 
-                foreach(var sm in StructMembers) {
-                    if(sm.MemberType.IsCefCallbackType) {
-                        var cb = sm.MemberType.AsCefCallbackType;
-                        b.AppendComment(cb.Signature.NativeFunctionHeader(CfxName + "_" + sm.Name));
-                        CodeSnippets.EmitPInvokeDelegate(b, CfxName + "_" + sm.Name, cb.Signature);
-                        b.AppendLine();
+                if(ExportFunctions.Length > 0) {
+                    foreach(var f in this.ExportFunctions) {
+                        f.EmitPInvokeDeclaration(b);
                     }
+                    b.AppendLine();
+                }
+
+                foreach(var cb in CallbackFunctions) {
+                    b.AppendComment(cb.Signature.NativeFunctionHeader(CfxName + "_" + cb.Name));
+                    CodeSnippets.EmitPInvokeDelegate(b, CfxName + "_" + cb.Name, cb.Signature);
+                    b.AppendLine();
                 }
 
                 break;
@@ -557,13 +532,13 @@ public class CfxClassBuilder {
             } else {
                 b.AppendSummaryAndRemarks(p.Getter.Comments);
             }
-            p.Getter.MemberType.AsCefCallbackType.EmitPublicProperty(b, p.Setter == null ? null : p.Setter.MemberType.AsCefCallbackType);
+            p.Getter.EmitPublicProperty(b, p.Setter == null ? null : p.Setter);
             b.AppendLine();
         }
 
-        foreach(var sm in m_structFunctions) {
-            b.AppendSummaryAndRemarks(sm.Comments);
-            sm.MemberType.AsCefCallbackType.EmitPublicFunction(b);
+        foreach(var sf in m_structFunctions) {
+            b.AppendSummaryAndRemarks(sf.Comments);
+            sf.EmitPublicFunction(b);
             b.AppendLine();
         }
 
@@ -597,28 +572,28 @@ public class CfxClassBuilder {
 
         b.BeginBlock("internal static void SetNativeCallbacks()");
 
-        foreach(var sm in StructCallbacks) {
+        foreach(var sm in CallbackFunctions) {
             b.AppendLine("{0}_native = {0};", sm.Name);
         }
         b.AppendLine();
-        foreach(var sm in StructCallbacks) {
+        foreach(var sm in CallbackFunctions) {
             b.AppendLine("{0}_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate({0}_native);", sm.Name);
         }
 
         b.EndBlock();
         b.AppendLine();
 
-        foreach(var sm in StructCallbacks) {
-            var cb = sm.Callback;
+        foreach(var cb in CallbackFunctions) {
+
             var sig = cb.Signature;
 
             b.AppendComment(cb.ToString());
-            CodeSnippets.EmitPInvokeCallbackDelegate(b, sm.Name, cb.Signature);
-            b.AppendLine("private static {0}_delegate {0}_native;", sm.Name);
-            b.AppendLine("private static IntPtr {0}_native_ptr;", sm.Name);
+            CodeSnippets.EmitPInvokeCallbackDelegate(b, cb.Name, cb.Signature);
+            b.AppendLine("private static {0}_delegate {0}_native;", cb.Name);
+            b.AppendLine("private static IntPtr {0}_native_ptr;", cb.Name);
             b.AppendLine();
 
-            b.BeginFunction(sm.Name, "void", sig.PInvokeParameterList, "internal static");
+            b.BeginFunction(cb.Name, "void", sig.PInvokeParameterList, "internal static");
             //b.AppendLine("var handle = System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr);")
             b.AppendLine("var self = ({0})System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;", ClassName);
             b.BeginIf("self == null || self.CallbacksDisabled");
@@ -648,17 +623,17 @@ public class CfxClassBuilder {
         b.AppendLine();
 
         var cbIndex = 0;
-        foreach(var sm in StructCallbacks) {
-            sm.Callback.EmitPublicEvent(b, cbIndex, sm.Comments);
+        foreach(var cb in CallbackFunctions) {
+            cb.EmitPublicEvent(b, cbIndex, cb.Comments);
             b.AppendLine();
             cbIndex += 1;
         }
 
         b.BeginFunction("OnDispose", "void", "IntPtr nativePtr", "internal override");
         cbIndex = 0;
-        foreach(var sm in StructCallbacks) {
-            b.BeginIf("m_{0} != null", sm.Callback.PublicName);
-            b.AppendLine("m_{0} = null;", sm.Callback.PublicName);
+        foreach(var cb in CallbackFunctions) {
+            b.BeginIf("m_{0} != null", cb.PublicName);
+            b.AppendLine("m_{0} = null;", cb.PublicName);
             b.AppendLine("CfxApi.{0}.{1}_set_callback(NativePtr, {2}, IntPtr.Zero);", ApiClassName, CfxName, cbIndex);
             b.EndBlock();
             cbIndex += 1;
@@ -789,11 +764,10 @@ public class CfxClassBuilder {
                 b.EndBlock();
             }
         } else if(Category == StructCategory.ApiCallbacks) {
-            for(var i = 1; i <= StructMembers.Length - 1; i++) {
-                var sm = StructMembers[i];
+            foreach(var cb in CallbackFunctions) {
 
-                if(!GeneratorConfig.IsBrowserProcessOnly(cefStruct.Name + "::" + sm.Name)) {
-                    var cb = sm.Callback;
+                if(!GeneratorConfig.IsBrowserProcessOnly(cefStruct.Name + "::" + cb.Name)) {
+
                     var sig = cb.Signature;
 
                     b.BeginRemoteCallClass(cb.EventName, true, callIds);
@@ -823,7 +797,7 @@ public class CfxClassBuilder {
                     b.AppendLine();
                     b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
                     b.AppendLine("var sender = ({0})RemoteProxy.Unwrap(this.sender, null);", ClassName);
-                    b.AppendLine("sender.{0} += {1}BrowserProcessCall.EventCall;", cb.PublicName, StructMembers[i].Callback.EventName);
+                    b.AppendLine("sender.{0} += {1}BrowserProcessCall.EventCall;", cb.PublicName, cb.EventName);
                     b.EndBlock();
                     b.EndBlock();
                     b.AppendLine();
@@ -945,10 +919,10 @@ public class CfxClassBuilder {
                 }
             }
 
-            for(var i = 1; i <= StructMembers.Length - 1; i++) {
-                if(!GeneratorConfig.IsBrowserProcessOnly(cefStruct.Name + "::" + StructMembers[i].Name)) {
-                    b.BeginRemoteCallClass(ClassName + StructMembers[i].RemoteCallClassName, false, callIds);
-                    StructMembers[i].CallbackSignature.EmitRemoteCallClassBody(b);
+            foreach(var cb in CallbackFunctions) {
+                if(!GeneratorConfig.IsBrowserProcessOnly(cefStruct.Name + "::" + cb.Name)) {
+                    b.BeginRemoteCallClass(ClassName + cb.RemoteCallClassName, false, callIds);
+                    cb.Signature.EmitRemoteCallClassBody(b);
                     b.EndBlock();
                     b.AppendLine();
                 }
@@ -994,19 +968,21 @@ public class CfxClassBuilder {
             b.EndBlock();
         }
 
-        foreach(var f in ExportFunctions) {
-            if(!GeneratorConfig.IsBrowserProcessOnly(f.Name) && !f.PrivateWrapper) {
-                f.EmitRemoteFunction(b);
-                b.AppendLine();
+        if(Category ==  StructCategory.ApiCalls) {
+            foreach(var f in ExportFunctions) {
+                if(!GeneratorConfig.IsBrowserProcessOnly(f.Name) && !f.PrivateWrapper) {
+                    f.EmitRemoteFunction(b);
+                    b.AppendLine();
+                }
             }
         }
 
         if(Category == StructCategory.ApiCallbacks) {
             b.AppendLine();
 
-            foreach(var sm in StructMembers) {
-                if(sm.MemberType.IsCefCallbackType && !GeneratorConfig.IsBrowserProcessOnly(cefStruct.Name + "::" + sm.Name)) {
-                    sm.MemberType.AsCefCallbackType.EmitRemoteRaiseEventFunction(b, sm.Comments);
+            foreach(var cb in CallbackFunctions) {
+                if(!GeneratorConfig.IsBrowserProcessOnly(cefStruct.Name + "::" + cb.Name)) {
+                    cb.EmitRemoteRaiseEventFunction(b, cb.Comments);
                 }
             }
         }
@@ -1026,9 +1002,9 @@ public class CfxClassBuilder {
         switch(Category) {
             case StructCategory.ApiCallbacks:
 
-                foreach(var sm in StructMembers) {
-                    if(sm.MemberType.IsCefCallbackType && !GeneratorConfig.IsBrowserProcessOnly(cefStruct.Name + "::" + sm.Name)) {
-                        sm.MemberType.AsCefCallbackType.EmitRemoteEvent(b, sm.Comments);
+                foreach(var cb in CallbackFunctions) {
+                    if(!GeneratorConfig.IsBrowserProcessOnly(cefStruct.Name + "::" + cb.Name)) {
+                        cb.EmitRemoteEvent(b, cb.Comments);
                         b.AppendLine();
                     }
                 }
@@ -1039,7 +1015,7 @@ public class CfxClassBuilder {
 
                 foreach(var p in m_structProperties) {
                     if(GeneratorConfig.CreateRemoteProxy(cefStruct.Name + "::" + p.Getter.Name)) {
-                        var cb = p.Getter.MemberType.AsCefCallbackType;
+                        var cb = p.Getter;
 
                         if(p.Setter != null && p.Setter.Comments != null) {
                             List<string> summaryLines = new List<string>();
@@ -1057,11 +1033,11 @@ public class CfxClassBuilder {
 
                         b.BeginBlock("public {0} {1}", cb.RemoteReturnType.RemoteSymbol, p.PropertyName);
                         b.BeginBlock("get");
-                        p.Getter.CallbackSignature.EmitRemoteCall(b);
+                        p.Getter.Signature.EmitRemoteCall(b);
                         b.EndBlock();
                         if(p.Setter != null) {
                             b.BeginBlock("set");
-                            p.Setter.CallbackSignature.EmitRemoteCall(b);
+                            p.Setter.Signature.EmitRemoteCall(b);
                             b.EndBlock();
                         }
                         b.EndBlock();
@@ -1069,11 +1045,10 @@ public class CfxClassBuilder {
                     }
                 }
 
-                foreach(var sm in m_structFunctions) {
-                    if(GeneratorConfig.CreateRemoteProxy(cefStruct.Name + "::" + sm.Name)) {
-                        var cb = sm.MemberType.AsCefCallbackType;
-                        b.AppendSummaryAndRemarks(sm.Comments, true);
-                        b.BeginFunction(sm.PublicName, cb.RemoteReturnType.RemoteSymbol, cb.Signature.RemoteParameterList);
+                foreach(var cb in m_structFunctions) {
+                    if(GeneratorConfig.CreateRemoteProxy(cefStruct.Name + "::" + cb.Name)) {
+                        b.AppendSummaryAndRemarks(cb.Comments, true);
+                        b.BeginFunction(cb.PublicName, cb.RemoteReturnType.RemoteSymbol, cb.Signature.RemoteParameterList);
                         cb.Signature.EmitRemoteCall(b);
                         b.EndBlock();
                         b.AppendLine();
@@ -1137,20 +1112,18 @@ public class CfxClassBuilder {
         b.BeginBlock("namespace Event");
         b.AppendLine();
 
-        foreach(var sm in StructMembers) {
-            if(sm.MemberType.IsCefCallbackType) {
-                sm.MemberType.AsCefCallbackType.EmitPublicEventArgsAndHandler(b, sm.Comments);
-                b.AppendLine();
-            }
+        foreach(var cb in CallbackFunctions) {
+            cb.EmitPublicEventArgsAndHandler(b, cb.Comments);
+            b.AppendLine();
         }
 
         b.EndBlock();
     }
 
     public void EmitRemoteEventArgs(CodeBuilder b) {
-        foreach(var sm in StructMembers) {
-            if(sm.MemberType.IsCefCallbackType && !GeneratorConfig.IsBrowserProcessOnly(cefStruct.Name + "::" + sm.Name)) {
-                sm.MemberType.AsCefCallbackType.EmitRemoteEventArgsAndHandler(b, sm.Comments);
+        foreach(var cb in CallbackFunctions) {
+            if(!GeneratorConfig.IsBrowserProcessOnly(cefStruct.Name + "::" + cb.Name)) {
+                cb.EmitRemoteEventArgsAndHandler(b, cb.Comments);
                 b.AppendLine();
             }
         }

@@ -52,7 +52,7 @@
     <Compile Include="ApiTypes\BooleanInteger.cs" />
     <Compile Include="ApiTypes\CefBasePtrType.cs" />
     <Compile Include="ApiTypes\CefBaseType.cs" />
-    <Compile Include="ApiTypes\CefCallbackType.cs" />
+    <Compile Include="CefCallbackFunction.cs" />
     <Compile Include="ApiTypes\CefColorType.cs" />
     <Compile Include="ApiTypes\CefEnumPtrType.cs" />
     <Compile Include="ApiTypes\CefEnumType.cs" />

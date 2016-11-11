@@ -41,28 +41,9 @@ public class WrapperGenerator {
 
     private readonly CefApiDeclarations remoteDecls;
 
-    private readonly int maxCallbackCount;
-
     public WrapperGenerator(CefApiDeclarations decls) {
         this.decls = decls;
         this.remoteDecls = decls.GetRemoteDeclarations();
-
-        //For Each f In decls.ExportFunctions
-        //    f.Signature.FindArrayArguments()
-        //Next
-
-        foreach(var t in decls.CefStructTypes) {
-            if(t.ClassBuilder.Category == StructCategory.ApiCallbacks) {
-                if(maxCallbackCount < t.ClassBuilder.StructMembers.Count() - 1) {
-                    maxCallbackCount = t.ClassBuilder.StructMembers.Count() - 1;
-                }
-            }
-            //For Each sm In t.StructMembers
-            //    If sm.MemberType.IsCefCallbackType Then
-            //        sm.MemberType.AsCefCallbackType.Signature.FindArrayArguments()
-            //    End If
-            //Next
-        }
     }
 
     public void Run() {
@@ -361,15 +342,11 @@ public class WrapperGenerator {
 
             switch(cefStruct.ClassBuilder.Category) {
                 case StructCategory.ApiCalls:
-                    if(cefStruct.ClassBuilder.ExportFunctions.Count() > 0) {
-                        foreach(var f in cefStruct.ClassBuilder.ExportFunctions) {
-                            CodeSnippets.EmitPInvokeDelegateInitialization(b, f);
-                        }
+                    foreach(var f in cefStruct.ClassBuilder.ExportFunctions) {
+                        CodeSnippets.EmitPInvokeDelegateInitialization(b, f);
                     }
-                    foreach(var sm in cefStruct.ClassBuilder.StructMembers) {
-                        if(sm.MemberType.IsCefCallbackType) {
-                            CodeSnippets.EmitPInvokeDelegateInitialization(b, sm.MemberType.AsCefCallbackType);
-                        }
+                    foreach(var cb in cefStruct.ClassBuilder.CallbackFunctions) {
+                        CodeSnippets.EmitPInvokeDelegateInitialization(b, cb);
                     }
 
                     break;
@@ -379,7 +356,6 @@ public class WrapperGenerator {
                     b.AppendLine("CfxApi.{0}.{1}_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_get_gc_handle, typeof(CfxApi.cfx_get_gc_handle_delegate));", apiClassName, cefStruct.CfxName);
                     b.AppendLine("CfxApi.{0}.{1}_set_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_set_callback, typeof(CfxApi.cfx_set_callback_delegate));", apiClassName, cefStruct.CfxName);
                     b.AppendLine("{0}.SetNativeCallbacks();", cefStruct.ClassName);
-                    Debug.Assert(cefStruct.ClassBuilder.ExportFunctions.Length == 0);
                     break;
 
                 case StructCategory.Values:
@@ -391,10 +367,6 @@ public class WrapperGenerator {
                             CodeSnippets.EmitPInvokeDelegateInitialization(b, apiClassName, cefStruct.CfxName + "_set_" + sm.Name);
                             CodeSnippets.EmitPInvokeDelegateInitialization(b, apiClassName, cefStruct.CfxName + "_get_" + sm.Name);
                         }
-                    }
-
-                    if(cefStruct.ClassBuilder.ExportFunctions.Count() > 0) {
-                        System.Diagnostics.Debugger.Break();
                     }
 
                     break;

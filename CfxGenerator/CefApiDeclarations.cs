@@ -61,17 +61,17 @@ public class CefApiDeclarations {
                 list.Add(f.CfxName);
             }
             foreach(var st in CefStructTypes) {
-                foreach(var f in st.ClassBuilder.ExportFunctions) {
-                    f.ApiIndex = list.Count;
-                    list.Add(f.CfxName);
+                if(st.ClassBuilder.ExportFunctions != null) {
+                    foreach(var f in st.ClassBuilder.ExportFunctions) {
+                        f.ApiIndex = list.Count;
+                        list.Add(f.CfxName);
+                    }
                 }
                 switch(st.ClassBuilder.Category) {
                     case StructCategory.ApiCalls:
-                        foreach(var sm in st.ClassBuilder.StructMembers) {
-                            if(sm.MemberType.IsCefCallbackType) {
-                                sm.ApiIndex = list.Count;
-                                list.Add(sm.Callback.CfxApiFunctionName);
-                            }
+                        foreach(var cb in st.ClassBuilder.CallbackFunctions) {
+                            cb.ApiIndex = list.Count;
+                            list.Add(cb.CfxApiFunctionName);
                         }
 
                         break;
@@ -150,22 +150,32 @@ public class CefApiDeclarations {
             return;
         remoteStructs.Add(s.Name, s);
 
-        foreach(var f in s.ClassBuilder.ExportFunctions) {
-            if(!GeneratorConfig.IsBrowserProcessOnly(f.Name)) {
-                AnalyzeSignature(f.Signature);
-            }
-        }
-
-        foreach(var sm in s.ClassBuilder.StructMembers) {
-            if(!GeneratorConfig.IsBrowserProcessOnly(s.Name + "::" + sm.Name)) {
-                if(sm.MemberType.IsCefStructType) {
-                    AddRemoteStruct(sm.MemberType.AsCefStructType);
-                } else if(sm.MemberType.IsCefStructPtrType) {
-                    AddRemoteStruct(sm.MemberType.AsCefStructPtrType.Struct);
-                } else if(sm.MemberType.IsCefCallbackType) {
-                    AnalyzeSignature(sm.MemberType.AsCefCallbackType.Signature);
+        switch(s.ClassBuilder.Category) {
+            case StructCategory.Values:
+                foreach(var sm in s.ClassBuilder.StructMembers) {
+                    if(!GeneratorConfig.IsBrowserProcessOnly(s.Name + "::" + sm.Name)) {
+                        if(sm.MemberType.IsCefStructType) {
+                            AddRemoteStruct(sm.MemberType.AsCefStructType);
+                        } else if(sm.MemberType.IsCefStructPtrType) {
+                            AddRemoteStruct(sm.MemberType.AsCefStructPtrType.Struct);
+                        }
+                    }
                 }
-            }
+                break;
+            case StructCategory.ApiCalls:
+                foreach(var f in s.ClassBuilder.ExportFunctions) {
+                    if(!GeneratorConfig.IsBrowserProcessOnly(f.Name)) {
+                        AnalyzeSignature(f.Signature);
+                    }
+                }
+                goto case StructCategory.ApiCallbacks;
+            case StructCategory.ApiCallbacks:
+                foreach(var cb in s.ClassBuilder.CallbackFunctions) {
+                    if(!GeneratorConfig.IsBrowserProcessOnly(s.Name + "::" + cb.Name)) {
+                        AnalyzeSignature(cb.Signature);
+                    }
+                }
+                break;
         }
     }
 
@@ -175,7 +185,8 @@ public class CefApiDeclarations {
         if(funcs == null) {
             var ff = new List<CefExportFunction>(ExportFunctions);
             foreach(var t in CefStructTypes) {
-                ff.AddRange(t.ClassBuilder.ExportFunctions);
+                if(t.ClassBuilder.ExportFunctions != null)
+                    ff.AddRange(t.ClassBuilder.ExportFunctions);
             }
             funcs = ff.ToArray();
         }

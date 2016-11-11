@@ -34,7 +34,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-public class CefCallbackType : ApiType, ISignatureOwner {
+public class CefCallbackFunction : ISignatureOwner {
+
+    public string Name { get; private set; }
+
     public readonly Signature Signature;
     public readonly CefStructType Parent;
 
@@ -42,6 +45,10 @@ public class CefCallbackType : ApiType, ISignatureOwner {
 
     private CfxCallMode m_callMode;
     public CefConfigData CefConfig { get; private set; }
+
+    public bool IsProperty;
+
+    public int ApiIndex;
 
     private string cppApiName {
         get {
@@ -53,8 +60,8 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         }
     }
 
-    public CefCallbackType(CefStructType parent, StructCategory category, string name, CefConfigData cefConfig, Parser.SignatureData sd, ApiTypeBuilder api, CommentData comments)
-        : base(name) {
+    public CefCallbackFunction(CefStructType parent, StructCategory category, string name, CefConfigData cefConfig, Parser.SignatureData sd, ApiTypeBuilder api, CommentData comments) {
+        Name = name;
         this.Parent = parent;
         this.Comments = comments;
         if(cefConfig == null)
@@ -134,14 +141,14 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         return false;
     }
 
-    public bool IsPropertySetterFor(CefCallbackType getter) {
+    public bool IsPropertySetterFor(CefCallbackFunction getter) {
         var retval = IsPropertySetterForPrivate(getter);
         if(retval)
             m_callMode = CfxCallMode.PropertySetter;
         return retval;
     }
 
-    public bool IsPropertySetterForPrivate(CefCallbackType getter) {
+    public bool IsPropertySetterForPrivate(CefCallbackFunction getter) {
         if(!Signature.PublicReturnType.IsVoid)
             return false;
         if(!(Signature.ManagedArguments.Count() == 2))
@@ -165,7 +172,7 @@ public class CefCallbackType : ApiType, ISignatureOwner {
 
     public string EventName {
         get {
-            if(Parent.ClassBuilder.StructMembers.Length == 2) {
+            if(Parent.ClassBuilder.CallbackFunctions.Length == 1) {
                 return Parent.ClassName + PublicName;
             } else if(PublicName == "GetAuthCredentials") {
                 return Parent.ClassName + PublicName;
@@ -219,7 +226,7 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         b.EndBlock();
     }
 
-    public void EmitPublicProperty(CodeBuilder b, CefCallbackType setter) {
+    public void EmitPublicProperty(CodeBuilder b, CefCallbackFunction setter) {
         var propertyName = this.PublicName;
         if(Name.StartsWith("get_")) {
             propertyName = propertyName.Substring(3);
@@ -540,22 +547,6 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         b.AppendLine();
     }
 
-    public override string NativeSymbol {
-        get { return string.Format("{1} (CEF_CALLBACK *{0})({2})", Name, PublicReturnType, Signature); }
-    }
-
-    public override string[] ParserMatches {
-        get { return new string[-1 + 1]; }
-    }
-
-    public override bool IsCefCallbackType {
-        get { return true; }
-    }
-
-    public override CefCallbackType AsCefCallbackType {
-        get { return this; }
-    }
-
     public CfxCallMode CallMode {
         get { return this.m_callMode; }
     }
@@ -590,5 +581,9 @@ public class CefCallbackType : ApiType, ISignatureOwner {
 
     public string PublicClassName {
         get { return Parent.ClassName; }
+    }
+
+    public override string ToString() {
+        return Name;
     }
 }

@@ -30,19 +30,19 @@
 
 
 public class StructProperty {
-    public readonly StructMember Getter;
-    public readonly StructMember Setter;
+    public readonly CefCallbackFunction Getter;
+    public readonly CefCallbackFunction Setter;
     public readonly bool IsBoolean;
 
-    public StructProperty(StructMember getter, StructMember setter, bool isBoolean) {
+    public StructProperty(CefCallbackFunction getter, CefCallbackFunction setter, bool isBoolean) {
         this.Getter = getter;
         this.Setter = setter;
         this.IsBoolean = isBoolean;
         getter.IsProperty = true;
-        getter.Callback.PublicPropertyName = PropertyName;
+        getter.PublicPropertyName = PropertyName;
         if(setter != null) {
             setter.IsProperty = true;
-            setter.Callback.PublicPropertyName = PropertyName;
+            setter.PublicPropertyName = PropertyName;
         }
     }
 

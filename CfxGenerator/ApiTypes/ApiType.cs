@@ -445,17 +445,6 @@ public class ApiType {
         }
     }
 
-    public virtual bool IsCefCallbackType {
-        get { return false; }
-    }
-
-    public virtual CefCallbackType AsCefCallbackType {
-        get {
-            Debug.Assert(false);
-            return null;
-        }
-    }
-
     public virtual bool IsBlittableType {
         get { return false; }
     }
