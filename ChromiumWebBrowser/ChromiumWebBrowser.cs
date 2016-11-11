@@ -594,6 +594,23 @@ namespace Chromium.WebBrowser {
             }
         }
 
+        /// <summary>
+        /// Execute a string of javascript code in the browser's main frame. The |scriptUrl|
+        /// parameter is the URL where the script in question can be found, if any. The
+        /// renderer may request this URL to show the developer the source of the
+        /// error.  The |startLine| parameter is the base line number to use for error
+        /// reporting.
+        /// Execution is asynchronous, this function returns immediately.
+        /// Returns false if the browser has not yet been created.
+        /// </summary>
+        public bool ExecuteJavascript(string code, string scriptUrl, int startLine) {
+            if(Browser != null) {
+                Browser.MainFrame.ExecuteJavaScript(code, scriptUrl, startLine);
+                return true;
+            } else {
+                return false;
+            }
+        }
 
         /// <summary>
         /// Special Invoke for framework callbacks from the render process.
