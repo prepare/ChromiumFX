@@ -292,7 +292,7 @@ public class WrapperGenerator {
         b.AppendLine();
 
         foreach(var t in decls.CefStructTypes) {
-            t.ClassBuilder.EmitApiDeclarations(b);
+            t.ClassBuilder.EmitApiClass(b);
             b.AppendLine();
         }
 

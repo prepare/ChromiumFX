@@ -537,16 +537,6 @@ public class CefCallbackFunction : ISignatureOwner {
         b.AppendLine();
     }
 
-    public void EmitRemoteRaiseEventFunction(CodeBuilder b, CommentData comments) {
-        b.BeginBlock("internal void raise_{0}(object sender, {1} e)", PublicName, RemoteEventArgsClassName);
-        b.AppendLine("var handler = m_{0};", PublicName);
-        b.AppendLine("if(handler == null) return;");
-        b.AppendLine("handler(this, e);");
-        b.AppendLine("e.m_isInvalid = true;");
-        b.EndBlock();
-        b.AppendLine();
-    }
-
     public CfxCallMode CallMode {
         get { return this.m_callMode; }
     }

@@ -82,6 +82,9 @@
     <Compile Include="ApiTypes\WrapperOnly\CefStructArrayType.cs" />
     <Compile Include="ApiTypes\WrapperOnly\CefStructPtrArrayType.cs" />
     <Compile Include="ApiTypes\WrapperOnly\WrapperArrayType.cs" />
+    <Compile Include="CfxClass\CfxValueClass.cs" />
+    <Compile Include="CfxClass\CfxLibraryClass.cs" />
+    <Compile Include="CfxClass\CfxClientClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AssemblyResources.cs" />
     <Compile Include="CefApiDeclarations.cs" />
@@ -89,7 +92,7 @@
     <Compile Include="CefExportFunction.cs" />
     <Compile Include="CefPlatform.cs" />
     <Compile Include="CfxCallMode.cs" />
-    <Compile Include="CfxClassBuilder.cs" />
+    <Compile Include="CfxClass\CfxClass.cs" />
     <Compile Include="CodeBuilder.cs" />
     <Compile Include="CodeSnippets.cs" />
     <Compile Include="CSharp.cs" />

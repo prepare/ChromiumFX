@@ -32,17 +32,17 @@
 public class CefStructType : CefType {
     public int ApiIndex;
 
-    private CfxClassBuilder m_classBuilder;
+    private CfxClass m_classBuilder;
 
     public CefStructType(string name, CommentData comments)
         : base(name) {
     }
 
     public void SetMembers(Parser.StructData sd, ApiTypeBuilder api) {
-        m_classBuilder = new CfxClassBuilder(this, sd, api);
+        m_classBuilder = CfxClass.Create(this, sd, api);
     }
 
-    public CfxClassBuilder ClassBuilder {
+    public CfxClass ClassBuilder {
         get { return m_classBuilder; }
     }
 
