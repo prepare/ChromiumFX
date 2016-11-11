@@ -33,9 +33,12 @@ using System.Diagnostics;
 
 public class StructArrayGetterSignature : Signature {
 
-    public StructArrayGetterSignature(Signature s)
+    private string countFunction;
+
+    public StructArrayGetterSignature(Signature s, string countFunction)
         : base(s) {
         Debug.Assert(SignatureType.LibraryCall == s.Type);
+        this.countFunction = countFunction;
     }
 
     public override Argument[] ManagedArguments {
@@ -62,8 +65,8 @@ public class StructArrayGetterSignature : Signature {
                         functionName, Arguments[1].VarName, Arguments[2].VarName);
     }
 
-    public override void EmitPublicCall(CodeBuilder b) {
-        var countFunc = Owner.CefConfig.CountFunction.Substring(Owner.CefConfig.CountFunction.IndexOf(":") + 1);
+    public override void EmitPublicCall(CodeBuilder b, string apiClassName, string apiFunctionName) {
+        var countFunc = countFunction.Substring(countFunction.IndexOf(":") + 1);
         // it's translated into a property
         Debug.Assert(countFunc.StartsWith("Get"));
         countFunc = countFunc.Substring(3);
@@ -81,12 +84,12 @@ for(ulong i = 0; i < count; ++i) {{
 return retval;";
 
         b.AppendMultiline(code,
-                Owner.CfxApiFunctionName,
+                apiFunctionName,
                 Arguments[2].ArgumentType.PublicSymbol,
-                Owner.PublicClassName.Substring(3));
+                apiClassName);
     }
 
-    protected override void EmitExecuteInTargetProcess(CodeBuilder b) {
+    protected override void EmitExecuteInTargetProcess(CodeBuilder b, string apiClassName, string apiFunctionName) {
         Debug.Assert(Arguments[2].ArgumentType.PublicSymbol == "CfxPostDataElement");
         var code =
 @"var count = CfxApi.PostData.cfx_post_data_get_element_count(@this);
@@ -98,12 +101,12 @@ ptrs_p.Free();
 ";
 
         b.AppendMultiline(code,
-                Owner.CfxApiFunctionName,
+                apiFunctionName,
                 Arguments[2].ArgumentType.PublicSymbol);
         
     }
 
-    public override void EmitRemoteCall(CodeBuilder b) {
+    public override void EmitRemoteCall(CodeBuilder b, string remoteCallId, bool isStatic) {
         Debug.Assert(Arguments[2].ArgumentType.PublicSymbol == "CfxPostDataElement");
         b.AppendLine("var call = new CfxPostDataGetElementsRenderProcessCall();");
         b.AppendLine("call.@this = proxyId;");
@@ -116,6 +119,6 @@ ptrs_p.Free();
         b.AppendLine("return retval;");
     }
 
-    public override void DebugPrintUnhandledArrayArguments() {
+    public override void DebugPrintUnhandledArrayArguments(string cefName, CefConfigData cefConfig, CfxCallMode callMode) {
     }
 }

@@ -63,10 +63,6 @@ public class CodeSnippets {
         }
     }
 
-    public static void EmitPInvokeDelegateInitialization(CodeBuilder b, ISignatureOwner owner) {
-        EmitPInvokeDelegateInitialization(b, owner.PublicClassName.Substring(3), owner.CfxApiFunctionName);
-    }
-
     public static void EmitPInvokeDelegateInitialization(CodeBuilder b, string apiClassName, string apiFuncName) {
         b.AppendLine("CfxApi.{0}.{1} = (CfxApi.{0}.{1}_delegate)CfxApi.GetDelegate(FunctionIndex.{1}, typeof(CfxApi.{0}.{1}_delegate));", apiClassName, apiFuncName);
     }

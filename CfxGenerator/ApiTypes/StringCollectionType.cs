@@ -66,7 +66,9 @@ public class StringCollectionType : CefType {
     }
 
     public override void EmitPostRemoteCallStatements(CodeBuilder b, string var) {
-        b.AppendLine("StringFunctions.Copy{0}(call.{1}, {1});", ClassName, var);
+        // TODO
+        if(ClassName == "CfxStringList")
+            b.AppendLine("StringFunctions.Copy{0}(call.{1}, {1});", ClassName, var);
     }
 
     public override bool IsStringCollectionType {

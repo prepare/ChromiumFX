@@ -282,7 +282,8 @@ public class ApiType {
     }
 
     public virtual void EmitPostRemoteCallStatements(CodeBuilder b, string var) {
-        b.AppendLine("{0} = {1};", var, RemoteWrapExpression("call." + (var == "this" ? "self" : CSharp.Escape(var))));
+        if(IsOut)
+            b.AppendLine("{0} = {1};", var, RemoteWrapExpression("call." + (var == "this" ? "self" : CSharp.Escape(var))));
     }
 
     /// <summary>

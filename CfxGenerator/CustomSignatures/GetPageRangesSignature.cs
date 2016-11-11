@@ -47,7 +47,7 @@ public class GetPageRangesSignature : SignatureWithStructArray {
         return "void cfx_print_settings_get_page_ranges_delegate(IntPtr self, ref UIntPtr rangesCount, IntPtr ranges, out int ranges_nomem)";
     }
 
-    public override void EmitPublicCall(CodeBuilder b) {
+    public override void EmitPublicCall(CodeBuilder b, string apiClassName, string apiFunctionName) {
         b.AppendLine("var rangesCount = CfxApi.PrintSettings.cfx_print_settings_get_page_ranges_count(NativePtr);");
         b.AppendLine("IntPtr[] pp = new IntPtr[(ulong)rangesCount];");
         b.AppendLine("PinnedObject pp_pinned = new PinnedObject(pp);");

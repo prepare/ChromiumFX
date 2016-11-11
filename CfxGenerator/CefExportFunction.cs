@@ -31,7 +31,7 @@
 
 using System.Collections.Generic;
 
-public class CefExportFunction : ISignatureOwner {
+public class CefExportFunction {
 
     public class Comparer : IComparer<CefExportFunction> {
 
@@ -55,7 +55,7 @@ public class CefExportFunction : ISignatureOwner {
     public CefExportFunction(CefType parent, Parser.FunctionData fd, ApiTypeBuilder api, CefPlatform platform) {
         this.Name = fd.Name;
         this.Comments = fd.Comments;
-        this.Signature = Signature.Create(SignatureType.LibraryCall, this, fd.Signature, api);
+        this.Signature = Signature.Create(SignatureType.LibraryCall, CefName, CefConfig, CallMode, fd.Signature, api);
         this.PrivateWrapper = GeneratorConfig.HasPrivateWrapper(this.Name);
         this.Parent = parent;
         this.Platform = platform;
@@ -101,7 +101,7 @@ public class CefExportFunction : ISignatureOwner {
         }
     }
 
-    public void EmitPublicFunction(CodeBuilder b) {
+    public void EmitPublicFunction(CodeBuilder b, string apiClassName) {
         b.AppendSummaryAndRemarks(Comments);
 
         var modifiers = PrivateWrapper ? "private" : "public";
@@ -115,7 +115,7 @@ public class CefExportFunction : ISignatureOwner {
             b.AppendLine("CfxApi.CheckPlatformOS(CfxPlatformOS.{0});", Platform.ToString());
         }
 
-        Signature.EmitPublicCall(b);
+        Signature.EmitPublicCall(b, apiClassName, CfxApiFunctionName);
         b.EndBlock();
     }
 
@@ -124,7 +124,7 @@ public class CefExportFunction : ISignatureOwner {
 
         if(Parent == null) {
             b.BeginFunction(PublicFunctionName, ReturnType.RemoteSymbol, Signature.RemoteParameterList, "public static");
-            Signature.EmitRemoteCall(b);
+            Signature.EmitRemoteCall(b, RemoteCallId, true);
         } else {
             var sig = Signature.RemoteParameterList;
             if(string.IsNullOrWhiteSpace(sig)) {
@@ -133,7 +133,7 @@ public class CefExportFunction : ISignatureOwner {
                 sig = "CfrRuntime remoteRuntime, " + sig;
             }
             b.BeginFunction(PublicFunctionName, ReturnType.RemoteSymbol, Signature.RemoteParameterList, "public static");
-            Signature.EmitRemoteCall(b);
+            Signature.EmitRemoteCall(b, RemoteCallId, true);
         }
         b.EndBlock();
     }

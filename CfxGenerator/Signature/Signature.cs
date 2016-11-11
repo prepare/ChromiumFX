@@ -40,14 +40,14 @@ public enum SignatureType {
 
 public class Signature {
 
-    public static Signature Create(SignatureType type, ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api) {
-        var s = new Signature(type, owner, sd, api);
-        var cs = CustomSignatures.ForFunction(s);
+    public static Signature Create(SignatureType type, string cefName, CefConfigData cefConfig, CfxCallMode callMode, Parser.SignatureData sd, ApiTypeBuilder api) {
+        var s = new Signature(type, sd, api);
+        var cs = CustomSignatures.ForFunction(s, cefName, cefConfig);
         if(cs == null) {
-            s.DebugPrintUnhandledArrayArguments();
+            s.DebugPrintUnhandledArrayArguments(cefName, cefConfig, callMode);
             return s;
         } else {
-            cs.DebugPrintUnhandledArrayArguments();
+            cs.DebugPrintUnhandledArrayArguments(cefName, cefConfig, callMode);
             return cs;
         }
     }
@@ -72,7 +72,6 @@ public class Signature {
 
     public SignatureType Type { get; private set; }
 
-    public readonly ISignatureOwner Owner;
     public readonly Argument[] Arguments;
     public readonly ApiType ReturnType;
 
@@ -80,9 +79,8 @@ public class Signature {
 
     protected ArgList args = new ArgList();
 
-    protected Signature(SignatureType type, ISignatureOwner owner, Parser.SignatureData sd, ApiTypeBuilder api) {
+    protected Signature(SignatureType type, Parser.SignatureData sd, ApiTypeBuilder api) {
         Type = type;
-        Owner = owner;
         var args = new List<Argument>();
         var index = 0;
 
@@ -95,12 +93,10 @@ public class Signature {
 
         this.ReturnType = api.GetApiType(sd.ReturnType, false);
         this.ReturnValueIsConst = sd.ReturnValueIsConst;
-        var comments = owner.Comments;
     }
 
     protected Signature(Signature s) {
         Type = s.Type;
-        Owner = s.Owner;
         Arguments = s.Arguments;
         ReturnType = s.ReturnType;
         ReturnValueIsConst = s.ReturnValueIsConst;
@@ -294,9 +290,9 @@ public class Signature {
         }
     }
 
-    public virtual void EmitPublicCall(CodeBuilder b) {
+    public virtual void EmitPublicCall(CodeBuilder b, string apiClassName, string apiFunctionName) {
 
-        var apiCall = string.Format("CfxApi.{2}.{0}({1})", Owner.CfxApiFunctionName, PublicArgumentList, Owner.PublicClassName.Substring(3));
+        var apiCall = string.Format("CfxApi.{2}.{0}({1})", apiFunctionName, PublicArgumentList, apiClassName);
 
         for(var i = 0; i <= ManagedArguments.Length - 1; i++) {
             ManagedArguments[i].EmitPrePublicCallStatements(b);
@@ -321,13 +317,13 @@ public class Signature {
         }
     }
 
-    protected virtual void EmitExecuteInTargetProcess(CodeBuilder b) {
+    protected virtual void EmitExecuteInTargetProcess(CodeBuilder b, string apiClassName, string apiFunctionName) {
 
         for(var i = 0; i <= ManagedArguments.Length - 1; i++) {
             ManagedArguments[i].EmitPreProxyCallStatements(b);
         }
 
-        var apiCall = string.Format("CfxApi.{2}.{0}({1})", Owner.CfxApiFunctionName, ProxyArgumentList, Owner.PublicClassName.Substring(3));
+        var apiCall = string.Format("CfxApi.{2}.{0}({1})", apiFunctionName, ProxyArgumentList, apiClassName);
         if(PublicReturnType.IsVoid) {
             b.AppendLine(apiCall + ";");
         } else {
@@ -364,8 +360,9 @@ public class Signature {
         }
     }
 
-    public virtual void EmitRemoteCall(CodeBuilder b) {
-        b.AppendLine("var call = new {0}();", Owner.RemoteCallId);
+    public virtual void EmitRemoteCall(CodeBuilder b, string remoteCallId, bool isStatic) {
+
+        b.AppendLine("var call = new {0}();", remoteCallId);
 
         foreach(var arg in ManagedArguments) {
             if(arg.ArgumentType.IsIn) {
@@ -373,17 +370,13 @@ public class Signature {
             }
         }
 
-        if(Owner is CefExportFunction)
+        if(isStatic)
             b.AppendLine("call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);");
         else
             b.AppendLine("call.RequestExecution(this);");
 
         foreach(var arg in ManagedArguments) {
-            if(arg.ArgumentType.IsOut) {
-                arg.EmitPostRemoteCallStatements(b);
-            } else if(arg.ArgumentType.IsStringCollectionType && Owner.CefName.Contains("::get_")) {
-                arg.EmitPostRemoteCallStatements(b);
-            }
+            arg.EmitPostRemoteCallStatements(b);
         }
 
         if(!PublicReturnType.IsVoid) {
@@ -391,7 +384,7 @@ public class Signature {
         }
     }
 
-    public void EmitRemoteCallClassBody(CodeBuilder b) {
+    public void EmitRemoteCallClassBody(CodeBuilder b, string apiClassName, string apiFunctionName) {
         b.AppendLine();
 
         foreach(var arg in ManagedArguments) {
@@ -427,7 +420,7 @@ public class Signature {
         foreach(var arg in ManagedArguments) {
             if(arg.ArgumentType.IsOut) {
                 outArgs.Add(arg);
-            } else if(arg.ArgumentType.IsStringCollectionType && Owner.CefName.Contains("::get_")) {
+            } else if(arg.ArgumentType.IsStringCollectionType && arg.ArgumentType.AsStringCollectionType.ClassName == "CfxStringList") {
                 outArgs.Add(arg);
             }
         }
@@ -456,7 +449,7 @@ public class Signature {
         }
 
         b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-        EmitExecuteInTargetProcess(b);
+        EmitExecuteInTargetProcess(b, apiClassName, apiFunctionName);
         b.EndBlock();
     }
 
@@ -471,28 +464,28 @@ public class Signature {
         ReturnType.EmitNativeReturnStatements(b, functionCall, b1);
     }
 
-    public virtual void DebugPrintUnhandledArrayArguments() {
-        if(Owner.CefName == "cef_binary_value_create")
+    public virtual void DebugPrintUnhandledArrayArguments(string cefName, CefConfigData cefConfig, CfxCallMode callMode) {
+        if(cefName == "cef_binary_value_create")
             return;
-        if(Owner.CefName == "cef_binary_value::get_data")
+        if(cefName == "cef_binary_value::get_data")
             return;
-        if(Owner.CefName == "cef_resource_handler::get_response_headers")
+        if(cefName == "cef_resource_handler::get_response_headers")
             return;
-        if(Owner.CefName == "cef_resource_bundle_handler::get_data_resource")
+        if(cefName == "cef_resource_bundle_handler::get_data_resource")
             return;
-        if(Owner.CefName == "cef_resource_bundle_handler::get_data_resource_for_scale")
+        if(cefName == "cef_resource_bundle_handler::get_data_resource_for_scale")
             return;
-        if(Owner.CefName == "cef_urlrequest_client::on_download_data")
+        if(cefName == "cef_urlrequest_client::on_download_data")
             return;
-        if(Owner.CefName == "cef_zip_reader::read_file")
+        if(cefName == "cef_zip_reader::read_file")
             return;
-        if(Owner.CefName == "cef_resource_bundle::get_data_resource")
+        if(cefName == "cef_resource_bundle::get_data_resource")
             return;
-        if(Owner.CefName == "cef_resource_bundle::get_data_resource_for_scale")
+        if(cefName == "cef_resource_bundle::get_data_resource_for_scale")
             return;
-        if(Owner.CefName == "cef_response_filter::filter")
+        if(cefName == "cef_response_filter::filter")
             return;
-        if(Owner.CefName.StartsWith("cef_image::add_"))
+        if(cefName.StartsWith("cef_image::add_"))
             return;
 
 
@@ -501,9 +494,9 @@ public class Signature {
             if(suffixLength > 0) {
                 var arrName = Arguments[i].VarName.Substring(0, Arguments[i].VarName.Length - suffixLength);
                 if(i > 0 && Arguments[i - 1].VarName.StartsWith(arrName)) {
-                    Debug.Print("UnhandledArrayArgument {0} {1} {2} {3}", Owner.CallMode, Owner.CefName, Arguments[i - 1], Arguments[i]);
+                    Debug.Print("UnhandledArrayArgument {0} {1} {2} {3}", callMode, cefName, Arguments[i - 1], Arguments[i]);
                 } else if(i < Arguments.Length - 1 && Arguments[i + 1].VarName.StartsWith(arrName)) {
-                    Debug.Print("UnhandledArrayArgument {0} {1} {2} {3}", Owner.CallMode, Owner.CefName, Arguments[i], Arguments[i + 1]);
+                    Debug.Print("UnhandledArrayArgument {0} {1} {2} {3}", callMode, cefName, Arguments[i], Arguments[i + 1]);
                 } else {
                 }
             }

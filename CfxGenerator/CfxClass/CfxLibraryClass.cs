@@ -136,7 +136,7 @@ public class CfxLibraryClass : CfxClass {
         b.AppendLine();
 
         foreach(var f in ExportFunctions) {
-            f.EmitPublicFunction(b);
+            f.EmitPublicFunction(b, ApiClassName);
             b.AppendLine();
         }
 
@@ -159,13 +159,19 @@ public class CfxLibraryClass : CfxClass {
             } else {
                 b.AppendSummaryAndRemarks(p.Getter.Comments);
             }
-            p.Getter.EmitPublicProperty(b, p.Setter == null ? null : p.Setter);
+            EmitPublicProperty(b, p);
             b.AppendLine();
         }
 
         foreach(var sf in m_structFunctions) {
             b.AppendSummaryAndRemarks(sf.Comments);
-            sf.EmitPublicFunction(b);
+            if(GeneratorConfig.HasPrivateWrapper(sf.Parent.Name + "::" + sf.Name)) {
+                b.BeginFunction(sf.Signature.PublicFunctionHeader(sf.PublicName), "private");
+            } else {
+                b.BeginFunction(sf.Signature.PublicFunctionHeader(sf.PublicName));
+            }
+            sf.Signature.EmitPublicCall(b, ApiClassName, sf.CfxApiFunctionName);
+            b.EndBlock();
             b.AppendLine();
         }
 
@@ -177,6 +183,28 @@ public class CfxLibraryClass : CfxClass {
         b.EndBlock();
     }
 
+    private void EmitPublicProperty(CodeBuilder b, StructProperty p) {
+
+        var propertyName = p.Getter.PublicName;
+        if(p.Getter.Name.StartsWith("get_")) {
+            propertyName = propertyName.Substring(3);
+        }
+
+        propertyName = CSharp.Escape(propertyName);
+
+        b.BeginBlock("public {0} {1}", p.Getter.PublicReturnType.PublicSymbol, propertyName);
+
+        b.BeginBlock("get");
+        p.Getter.Signature.EmitPublicCall(b, ApiClassName, p.Getter.CfxApiFunctionName);
+        b.EndBlock();
+        if(p.Setter != null) {
+            b.BeginBlock("set", p.Getter.PublicReturnType.PublicSymbol);
+            p.Setter.Signature.EmitPublicCall(b, ApiClassName, p.Setter.CfxApiFunctionName);
+            b.EndBlock();
+        }
+        b.EndBlock();
+    }
+
     public override void EmitRemoteCalls(CodeBuilder b, List<string> callIds) {
 
         b.AppendLine();
@@ -185,7 +213,7 @@ public class CfxLibraryClass : CfxClass {
             if(!GeneratorConfig.IsBrowserProcessOnly(f.Name)) {
                 if(!f.PrivateWrapper) {
                     b.BeginRemoteCallClass(ClassName + f.PublicName, false, callIds);
-                    f.Signature.EmitRemoteCallClassBody(b);
+                    f.Signature.EmitRemoteCallClassBody(b, ApiClassName, f.CfxApiFunctionName);
                     b.EndBlock();
                     b.AppendLine();
                 }
@@ -195,7 +223,7 @@ public class CfxLibraryClass : CfxClass {
         foreach(var cb in CallbackFunctions) {
             if(!GeneratorConfig.IsBrowserProcessOnly(CefStruct.Name + "::" + cb.Name)) {
                 b.BeginRemoteCallClass(ClassName + cb.RemoteCallClassName, false, callIds);
-                cb.Signature.EmitRemoteCallClassBody(b);
+                cb.Signature.EmitRemoteCallClassBody(b, ApiClassName, cb.CfxApiFunctionName);
                 b.EndBlock();
                 b.AppendLine();
             }
@@ -246,11 +274,11 @@ public class CfxLibraryClass : CfxClass {
 
                 b.BeginBlock("public {0} {1}", cb.RemoteReturnType.RemoteSymbol, p.PropertyName);
                 b.BeginBlock("get");
-                p.Getter.Signature.EmitRemoteCall(b);
+                p.Getter.Signature.EmitRemoteCall(b, p.Getter.RemoteCallId, false);
                 b.EndBlock();
                 if(p.Setter != null) {
                     b.BeginBlock("set");
-                    p.Setter.Signature.EmitRemoteCall(b);
+                    p.Setter.Signature.EmitRemoteCall(b, p.Setter.RemoteCallId, false);
                     b.EndBlock();
                 }
                 b.EndBlock();
@@ -262,7 +290,7 @@ public class CfxLibraryClass : CfxClass {
             if(GeneratorConfig.CreateRemoteProxy(CefStruct.Name + "::" + cb.Name)) {
                 b.AppendSummaryAndRemarks(cb.Comments, true);
                 b.BeginFunction(cb.PublicName, cb.RemoteReturnType.RemoteSymbol, cb.Signature.RemoteParameterList);
-                cb.Signature.EmitRemoteCall(b);
+                cb.Signature.EmitRemoteCall(b, cb.RemoteCallId, false);
                 b.EndBlock();
                 b.AppendLine();
             }

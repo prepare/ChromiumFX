@@ -33,8 +33,8 @@ using System.Diagnostics;
 
 public class CustomSignatures {
 
-    public static Signature ForFunction(Signature s) {
-        if(s.Owner.CefName.Contains("::get_") && s.Arguments.Length == 2) {
+    public static Signature ForFunction(Signature s, string cefName, CefConfigData cefConfig) {
+        if(cefName.Contains("::get_") && s.Arguments.Length == 2) {
             if(s.ReturnType.IsVoid) {
                 if(s.Arguments[1].ArgumentType.Name.StartsWith("cef_string_list") || s.Arguments[1].ArgumentType.Name.StartsWith("cef_string_m")) {
                     return new StringCollectionAsRetvalSignature(s);
@@ -42,13 +42,13 @@ public class CustomSignatures {
             }
         }
 
-        if(s.Owner.CefConfig.CountFunction != null && s.Arguments.Length == 3 && s.ReturnType.IsVoid) {
+        if(cefConfig.CountFunction != null && s.Arguments.Length == 3 && s.ReturnType.IsVoid) {
             if(s.Arguments[2].ArgumentType.IsCefStructPtrPtrType) {
-                return new StructArrayGetterSignature(s);
+                return new StructArrayGetterSignature(s, cefConfig.CountFunction);
             }
         }
 
-        switch(s.Owner.CefName) {
+        switch(cefName) {
             case "cef_browser::get_frame_identifiers":
                 return new GetFrameIdentifiersSignature(s);
 

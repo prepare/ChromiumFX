@@ -231,7 +231,7 @@ public class WrapperGenerator {
         var lxFuncs = new List<CefExportFunction>();
         foreach(var f in decls.ExportFunctions) {
             if(f.Platform == CefPlatform.Independent) {
-                f.EmitPublicFunction(b);
+                f.EmitPublicFunction(b, "Runtime");
                 b.AppendLine();
             } else {
                 lxFuncs.Add(f);
@@ -240,7 +240,7 @@ public class WrapperGenerator {
         b.BeginClass("Linux", "public");
         b.AppendLine();
         foreach(var f in lxFuncs) {
-            f.EmitPublicFunction(b);
+            f.EmitPublicFunction(b, "Runtime");
             b.AppendLine();
         }
         b.EndBlock();
@@ -318,7 +318,7 @@ public class WrapperGenerator {
             if(f.Platform != CefPlatform.Independent) {
                 b.BeginIf("CfxApi.PlatformOS == CfxPlatformOS.{0}", f.Platform.ToString());
             }
-            CodeSnippets.EmitPInvokeDelegateInitialization(b, f);
+            CodeSnippets.EmitPInvokeDelegateInitialization(b, "Runtime", f.CfxApiFunctionName);
             if(f.Platform != CefPlatform.Independent) {
                 b.EndBlock();
             }
@@ -329,7 +329,7 @@ public class WrapperGenerator {
         b.BeginFunction("void LoadStringCollectionApi()", "internal static");
         b.AppendLine("CfxApi.Probe();");
         foreach(var f in decls.StringCollectionFunctions) {
-            CodeSnippets.EmitPInvokeDelegateInitialization(b, f);
+            CodeSnippets.EmitPInvokeDelegateInitialization(b, "Runtime", f.CfxApiFunctionName);
         }
         b.EndBlock();
         b.AppendLine();
@@ -343,10 +343,10 @@ public class WrapperGenerator {
             switch(cefStruct.ClassBuilder.Category) {
                 case StructCategory.ApiCalls:
                     foreach(var f in cefStruct.ClassBuilder.ExportFunctions) {
-                        CodeSnippets.EmitPInvokeDelegateInitialization(b, f);
+                        CodeSnippets.EmitPInvokeDelegateInitialization(b, f.PublicClassName.Substring(3), f.CfxApiFunctionName);
                     }
                     foreach(var cb in cefStruct.ClassBuilder.CallbackFunctions) {
-                        CodeSnippets.EmitPInvokeDelegateInitialization(b, cb);
+                        CodeSnippets.EmitPInvokeDelegateInitialization(b, cb.PublicClassName.Substring(3), cb.CfxApiFunctionName);
                     }
 
                     break;
@@ -402,7 +402,7 @@ public class WrapperGenerator {
         foreach(var f in remoteDecls.ExportFunctions) {
             if(!f.PrivateWrapper) {
                 b.BeginRemoteCallClass("CfxRuntime" + f.PublicName, false, callIds);
-                f.Signature.EmitRemoteCallClassBody(b);
+                f.Signature.EmitRemoteCallClassBody(b, "Runtime", f.CfxApiFunctionName);
                 b.EndBlock();
                 b.AppendLine();
             }

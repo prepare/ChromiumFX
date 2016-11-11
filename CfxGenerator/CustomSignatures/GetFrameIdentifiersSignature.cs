@@ -59,7 +59,7 @@ public class GetFrameIdentifiersSignature : Signature {
         b.AppendLine("self->get_frame_identifiers(self, &identifiersCount, identifiers);");
     }
 
-    public override void EmitPublicCall(CodeBuilder b) {
+    public override void EmitPublicCall(CodeBuilder b, string apiClassName, string apiFunctionName) {
         b.AppendLine("var identifiersCount = FrameCount;");
         b.AppendLine("if(identifiersCount == 0) return new long[0];");
         b.AppendLine("long[] retval = new long[identifiersCount];");
@@ -69,7 +69,7 @@ public class GetFrameIdentifiersSignature : Signature {
         b.AppendLine("return retval;");
     }
 
-    protected override void EmitExecuteInTargetProcess(CodeBuilder b) {
+    protected override void EmitExecuteInTargetProcess(CodeBuilder b, string apiClassName, string apiFunctionName) {
         b.AppendLine("var identifiersCount = CfxApi.Browser.cfx_browser_get_frame_count(@this);");
         b.AppendLine("__retval = new long[(ulong)identifiersCount];");
         b.AppendLine("if(identifiersCount == UIntPtr.Zero) return;");
@@ -78,6 +78,6 @@ public class GetFrameIdentifiersSignature : Signature {
         b.AppendLine("retval_p.Free();");
     }
 
-    public override void DebugPrintUnhandledArrayArguments() {
+    public override void DebugPrintUnhandledArrayArguments(string cefName, CefConfigData cefConfig, CfxCallMode callMode) {
     }
 }

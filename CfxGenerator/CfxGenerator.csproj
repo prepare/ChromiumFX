@@ -106,7 +106,6 @@
     <Compile Include="CustomSignatures\StringCollectionAsRetvalSignature.cs" />
     <Compile Include="GeneratedFileManager.cs" />
     <Compile Include="GeneratorConfig.cs" />
-    <Compile Include="ISignatureOwner.cs" />
     <Compile Include="Parser\ApiParser.cs" />
     <Compile Include="Parser\ArgumentData.cs" />
     <Compile Include="Parser\CefApiData.cs" />

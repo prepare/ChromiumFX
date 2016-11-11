@@ -228,7 +228,7 @@ public class CfxClientClass : CfxClass {
 
         var cbIndex = 0;
         foreach(var cb in CallbackFunctions) {
-            cb.EmitPublicEvent(b, cbIndex, cb.Comments);
+            EmitPublicEvent(b, cbIndex, cb);
             b.AppendLine();
             cbIndex += 1;
         }
@@ -254,10 +254,181 @@ public class CfxClientClass : CfxClass {
         b.AppendLine();
 
         foreach(var cb in CallbackFunctions) {
-            cb.EmitPublicEventArgsAndHandler(b, cb.Comments);
+            EmitPublicEventArgsAndHandler(b, cb);
             b.AppendLine();
         }
 
+        b.EndBlock();
+    }
+
+    private void EmitPublicEvent(CodeBuilder b, int cbIndex, CefCallbackFunction cb) {
+
+        var isSimpleGetterEvent = cb.Signature.ManagedArguments.Length == 1
+            && cb.Signature.ReturnType.IsCefStructPtrType;
+
+        b.AppendSummaryAndRemarks(cb.Comments, false, true);
+        b.BeginBlock("public event {0} {1}", cb.EventHandlerName, CSharp.Escape(cb.PublicName));
+        b.BeginBlock("add");
+        b.BeginBlock("lock(eventLock)");
+        if(isSimpleGetterEvent) {
+            b.BeginBlock("if(m_{0} != null)", cb.PublicName);
+            b.AppendLine("throw new CfxException(\"Can't add more than one event handler to this type of event.\");");
+            b.EndBlock();
+        } else {
+            b.BeginBlock("if(m_{0} == null)", cb.PublicName);
+        }
+        b.AppendLine("CfxApi.{3}.{0}_set_callback(NativePtr, {1}, {2}_native_ptr);", CefStruct.CfxName, cbIndex, cb.Name, CefStruct.ClassName.Substring(3));
+        if(!isSimpleGetterEvent) b.EndBlock();
+        b.AppendLine("m_{0} += value;", cb.PublicName);
+        b.EndBlock();
+        b.EndBlock();
+        b.BeginBlock("remove");
+        b.BeginBlock("lock(eventLock)");
+        b.AppendLine("m_{0} -= value;", cb.PublicName);
+        b.BeginBlock("if(m_{0} == null)", cb.PublicName);
+        b.AppendLine("CfxApi.{2}.{0}_set_callback(NativePtr, {1}, IntPtr.Zero);", CefStruct.CfxName, cbIndex, CefStruct.ClassName.Substring(3));
+        b.EndBlock();
+        b.EndBlock();
+        b.EndBlock();
+        b.EndBlock();
+        b.AppendLine();
+
+        if(isSimpleGetterEvent) {
+            b.AppendLine("/// <summary>");
+            b.AppendLine("/// Retrieves the {0} provided by the event handler attached to the {1} event, if any.", cb.Signature.ReturnType.PublicSymbol, CSharp.Escape(cb.PublicName));
+            b.AppendLine("/// Returns null if no event handler is attached.");
+            b.AppendLine("/// </summary>");
+            b.BeginBlock("public {0} Retrieve{1}()", cb.Signature.ReturnType.PublicSymbol, cb.Signature.ReturnType.PublicSymbol.Substring(3));
+            b.AppendLine("var h = m_{0};", cb.PublicName);
+            b.BeginIf("h != null");
+            b.AppendLine("var e = new {0}();", cb.PublicEventArgsClassName);
+            b.AppendLine("h(this, e);");
+            b.AppendLine("return e.m_returnValue;");
+            b.BeginElse();
+            b.AppendLine("return null;");
+            b.EndBlock();
+            b.EndBlock();
+            b.AppendLine();
+        }
+
+        b.AppendLine("private {0} m_{1};", cb.EventHandlerName, cb.PublicName);
+    }
+
+    private static Dictionary<string, CommentData> emittedHandlers = new Dictionary<string, CommentData>();
+
+    private void EmitPublicEventArgsAndHandler(CodeBuilder b, CefCallbackFunction cb) {
+        if(emittedHandlers.ContainsKey(cb.EventName)) {
+            var c0 = emittedHandlers[cb.EventName];
+            if(c0 != null) {
+                if(c0.Lines.Length != cb.Comments.Lines.Length) {
+                    System.Diagnostics.Debugger.Break();
+                }
+                for(var i = 0; i <= c0.Lines.Length - 1; i++) {
+                    if(c0.Lines[i] != cb.Comments.Lines[i]) {
+                        // two handlers use same event but with different cb.Comments
+                        System.Diagnostics.Debugger.Break();
+                    }
+                }
+            }
+            return;
+        }
+        emittedHandlers.Add(cb.EventName, cb.Comments);
+
+        if(cb.IsBasicEvent)
+            return;
+
+        b.AppendSummaryAndRemarks(cb.Comments, false, true);
+        b.AppendLine("public delegate void {0}(object sender, {1} e);", cb.EventHandlerName, cb.PublicEventArgsClassName);
+        b.AppendLine();
+
+        b.AppendSummaryAndRemarks(cb.Comments, false, true);
+        b.BeginClass(cb.PublicEventArgsClassName + " : CfxEventArgs", GeneratorConfig.ClassModifiers(cb.PublicEventArgsClassName));
+        b.AppendLine();
+
+        for(var i = 1; i <= cb.Signature.ManagedArguments.Count() - 1; i++) {
+            cb.Signature.ManagedArguments[i].EmitPublicEventArgFields(b);
+        }
+        b.AppendLine();
+
+        if(!cb.Signature.PublicReturnType.IsVoid) {
+            b.AppendLine("internal {0} m_returnValue;", cb.Signature.PublicReturnType.PublicSymbol);
+            b.AppendLine("private bool returnValueSet;");
+            b.AppendLine();
+        }
+
+        b.BeginBlock("internal {0}({1})", cb.PublicEventArgsClassName, cb.Signature.PublicEventConstructorArgumentList);
+        cb.Signature.EmitPublicEventCtorStatements(b);
+        b.EndBlock();
+        b.AppendLine();
+
+        for(var i = 1; i <= cb.Signature.ManagedArguments.Count() - 1; i++) {
+            var arg = cb.Signature.ManagedArguments[i];
+            var cd = new CommentData();
+            if(arg.ArgumentType.IsIn && arg.ArgumentType.IsOut) {
+                cd.Lines = new string[] { string.Format("Get or set the {0} parameter for the <see cref=\"{1}.{2}\"/> callback.", arg.PublicPropertyName, ClassName, cb.PublicName) };
+            } else if(arg.ArgumentType.IsIn) {
+                cd.Lines = new string[] { string.Format("Get the {0} parameter for the <see cref=\"{1}.{2}\"/> callback.", arg.PublicPropertyName, ClassName, cb.PublicName) };
+            } else {
+                cd.Lines = new string[] { string.Format("Set the {0} out parameter for the <see cref=\"{1}.{2}\"/> callback.", arg.PublicPropertyName, ClassName, cb.PublicName) };
+            }
+            if(arg.ArgumentType is CefStructArrayType && arg.ArgumentType.IsIn) {
+                cd.Lines = cd.Lines.Concat(new string[] { "Do not keep a reference to the elements of this array outside of this function." }).ToArray();
+            }
+            b.AppendSummary(cd);
+            b.BeginBlock("public {0} {1}", arg.ArgumentType.PublicSymbol, arg.PublicPropertyName);
+            if(arg.ArgumentType.IsIn) {
+                b.BeginBlock("get");
+                b.AppendLine("CheckAccess();");
+                arg.EmitPublicEventArgGetterStatements(b);
+                b.EndBlock();
+            }
+            if(arg.ArgumentType.IsOut) {
+                b.BeginBlock("set");
+                b.AppendLine("CheckAccess();");
+                arg.EmitPublicEventArgSetterStatements(b);
+                b.EndBlock();
+            }
+            b.EndBlock();
+        }
+
+        if(!cb.Signature.PublicReturnType.IsVoid) {
+            var cd = new CommentData();
+            cd.Lines = new string[] {
+                string.Format("Set the return value for the <see cref=\"{0}.{1}\"/> callback.", ClassName, cb.PublicFunctionName),
+                "Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown."
+            };
+            b.AppendSummary(cd);
+            b.BeginBlock("public void SetReturnValue({0} returnValue)", cb.Signature.PublicReturnType.PublicSymbol);
+            b.AppendLine("CheckAccess();");
+            b.BeginIf("returnValueSet");
+            b.AppendLine("throw new CfxException(\"The return value has already been set\");");
+            b.EndBlock();
+            b.AppendLine("returnValueSet = true;");
+            b.AppendLine("this.m_returnValue = returnValue;");
+            b.EndBlock();
+        }
+
+        if(cb.Signature.ManagedArguments.Count() > 1) {
+            b.AppendLine();
+            EmitEventToString(b, cb);
+        }
+        b.EndBlock();
+    }
+
+    private void EmitEventToString(CodeBuilder b, CefCallbackFunction cb) {
+        b.BeginBlock("public override string ToString()");
+        var format = new List<string>();
+        var vars = new List<string>();
+        var formatIndex = 0;
+        for(var i = 1; i <= cb.Signature.ManagedArguments.Count() - 1; i++) {
+            var arg = cb.Signature.ManagedArguments[i];
+            if(arg.ArgumentType.IsIn) {
+                format.Add(string.Format("{0}={{{{{{{1}}}}}}}", arg.PublicPropertyName, formatIndex));
+                vars.Add(arg.PublicPropertyName);
+                formatIndex += 1;
+            }
+        }
+        b.AppendLine("return String.Format(\"{0}\", {1});", string.Join(", ", format.ToArray()), string.Join(", ", vars.ToArray()));
         b.EndBlock();
     }
 
@@ -417,7 +588,6 @@ public class CfxClientClass : CfxClass {
         }
     }
 
-
     public override void EmitRemoteClass(CodeBuilder b) {
 
         b.AppendLine("using Event;");
@@ -466,7 +636,28 @@ public class CfxClientClass : CfxClass {
 
         foreach(var cb in CallbackFunctions) {
             if(!GeneratorConfig.IsBrowserProcessOnly(CefStruct.Name + "::" + cb.Name)) {
-                cb.EmitRemoteEvent(b, cb.Comments);
+                b.AppendSummaryAndRemarks(cb.Comments, true, true);
+                b.BeginBlock("public event {0} {1}", cb.RemoteEventHandlerName, CSharp.Escape(cb.PublicName));
+                b.BeginBlock("add");
+                b.BeginBlock("if(m_{0} == null)", cb.PublicName);
+                b.AppendLine("var call = new {0}ActivateRenderProcessCall();", cb.EventName);
+                b.AppendLine("call.sender = proxyId;");
+                b.AppendLine("call.RequestExecution(this);");
+                b.EndBlock();
+                b.AppendLine("m_{0} += value;", cb.PublicName);
+                b.EndBlock();
+                b.BeginBlock("remove");
+                b.AppendLine("m_{0} -= value;", cb.PublicName);
+                b.BeginBlock("if(m_{0} == null)", cb.PublicName);
+                b.AppendLine("var call = new {0}DeactivateRenderProcessCall();", cb.EventName);
+                b.AppendLine("call.sender = proxyId;");
+                b.AppendLine("call.RequestExecution(this);");
+                b.EndBlock();
+                b.EndBlock();
+                b.EndBlock();
+                b.AppendLine();
+                b.AppendLine("{0} m_{1};", cb.RemoteEventHandlerName, cb.PublicName);
+                b.AppendLine();
                 b.AppendLine();
             }
         }
@@ -485,11 +676,107 @@ public class CfxClientClass : CfxClass {
 
         foreach(var cb in CallbackFunctions) {
             if(!GeneratorConfig.IsBrowserProcessOnly(CefStruct.Name + "::" + cb.Name)) {
-                cb.EmitRemoteEventArgsAndHandler(b, cb.Comments);
+                EmitRemoteEventArgsAndHandler(b, cb);
                 b.AppendLine();
             }
         }
 
+        b.EndBlock();
+    }
+
+
+    public void EmitRemoteEventArgsAndHandler(CodeBuilder b, CefCallbackFunction cb) {
+
+        if(cb.IsBasicEvent)
+            return;
+
+        b.AppendSummaryAndRemarks(cb.Comments, true, true);
+        b.AppendLine("public delegate void {0}(object sender, {1} e);", cb.RemoteEventHandlerName, cb.RemoteEventArgsClassName);
+        b.AppendLine();
+
+        b.AppendSummaryAndRemarks(cb.Comments, true, true);
+        b.BeginClass(cb.RemoteEventArgsClassName + " : CfrEventArgs", GeneratorConfig.ClassModifiers(cb.RemoteEventArgsClassName));
+        b.AppendLine();
+
+        for(var i = 1; i <= cb.Signature.ManagedArguments.Count() - 1; i++) {
+            if(cb.Signature.ManagedArguments[i].ArgumentType.IsIn) {
+                b.AppendLine("bool {0}Fetched;", cb.Signature.ManagedArguments[i].PublicPropertyName);
+                b.AppendLine("{0} m_{1};", cb.Signature.ManagedArguments[i].ArgumentType.RemoteSymbol, cb.Signature.ManagedArguments[i].PublicPropertyName);
+            }
+        }
+        b.AppendLine();
+
+        if(!cb.Signature.PublicReturnType.IsVoid) {
+            b.AppendLine("private bool returnValueSet;");
+            b.AppendLine();
+        }
+
+        b.AppendLine("internal {0}(ulong eventArgsId) : base(eventArgsId) {{}}", cb.RemoteEventArgsClassName);
+        b.AppendLine();
+
+        for(var i = 1; i <= cb.Signature.ManagedArguments.Count() - 1; i++) {
+            var arg = cb.Signature.ManagedArguments[i];
+            var cd = new CommentData();
+            if(arg.ArgumentType.IsIn && arg.ArgumentType.IsOut) {
+                cd.Lines = new string[] { string.Format("Get or set the {0} parameter for the <see cref=\"{1}.{2}\"/> render process callback.", arg.PublicPropertyName, CefStruct.RemoteSymbol, cb.PublicFunctionName) };
+            } else if(arg.ArgumentType.IsIn) {
+                cd.Lines = new string[] { string.Format("Get the {0} parameter for the <see cref=\"{1}.{2}\"/> render process callback.", arg.PublicPropertyName, CefStruct.RemoteSymbol, cb.PublicFunctionName) };
+            } else {
+                cd.Lines = new string[] { string.Format("Set the {0} out parameter for the <see cref=\"{1}.{2}\"/> render process callback.", arg.PublicPropertyName, CefStruct.RemoteSymbol, cb.PublicFunctionName) };
+            }
+            b.AppendSummary(cd);
+            b.BeginBlock("public {0} {1}", arg.ArgumentType.RemoteSymbol, arg.PublicPropertyName);
+            if(arg.ArgumentType.IsIn) {
+                b.BeginBlock("get");
+                b.AppendLine("CheckAccess();");
+                b.BeginBlock("if(!{0}Fetched)", arg.PublicPropertyName);
+                b.AppendLine("{0}Fetched = true;", arg.PublicPropertyName);
+                b.AppendLine("var call = new {0}Get{1}RenderProcessCall();", cb.EventName, arg.PublicPropertyName);
+                b.AppendLine("call.eventArgsId = eventArgsId;");
+                b.AppendLine("call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);");
+                b.AppendLine("m_{0} = {1};", arg.PublicPropertyName, arg.ArgumentType.RemoteWrapExpression("call.value"));
+                b.EndBlock();
+                b.AppendLine("return m_{0};", arg.PublicPropertyName);
+                b.EndBlock();
+            }
+            if(arg.ArgumentType.IsOut) {
+                b.BeginBlock("set");
+                b.AppendLine("CheckAccess();");
+                if(arg.ArgumentType.IsIn) {
+                    b.AppendLine("m_{0} = value;", arg.PublicPropertyName);
+                    b.AppendLine("{0}Fetched = true;", arg.PublicPropertyName);
+                }
+                b.AppendLine("var call = new {0}Set{1}RenderProcessCall();", cb.EventName, arg.PublicPropertyName);
+                b.AppendLine("call.eventArgsId = eventArgsId;");
+                b.AppendLine("call.value = {0};", arg.ArgumentType.RemoteUnwrapExpression("value"));
+                b.AppendLine("call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);");
+                b.EndBlock();
+            }
+            b.EndBlock();
+        }
+        if(!cb.Signature.PublicReturnType.IsVoid) {
+            var cd = new CommentData();
+            cd.Lines = new string[] {
+                string.Format("Set the return value for the <see cref=\"{0}.{1}\"/> render process callback.", CefStruct.RemoteClassName, cb.PublicFunctionName),
+                "Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown."
+            };
+            b.AppendSummary(cd);
+            b.BeginBlock("public void SetReturnValue({0} returnValue)", cb.Signature.PublicReturnType.RemoteSymbol);
+            b.BeginIf("returnValueSet");
+            b.AppendLine("throw new CfxException(\"The return value has already been set\");");
+            b.EndBlock();
+            b.AppendLine("var call = new {0}SetReturnValueRenderProcessCall();", cb.EventName);
+            b.AppendLine("call.eventArgsId = eventArgsId;");
+            b.AppendLine("call.value = {0};", cb.Signature.PublicReturnType.RemoteUnwrapExpression("returnValue"));
+            b.AppendLine("call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);");
+            b.AppendLine("returnValueSet = true;");
+            b.EndBlock();
+        }
+
+        if(cb.Signature.ManagedArguments.Count() > 1) {
+            b.AppendLine();
+            EmitEventToString(b, cb);
+        }
         b.EndBlock();
     }
 }
