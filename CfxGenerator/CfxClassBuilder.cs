@@ -264,11 +264,16 @@ public class CfxClassBuilder {
         b.AppendLine();
 
         b.BeginBlock("void CEF_CALLBACK _{0}_add_ref(struct _cef_base_t* base)", CfxName);
-        b.AppendLine("InterlockedIncrement(&(({0}*)base)->ref_count);", CfxNativeSymbol);
+        b.AppendLine("int count = InterlockedIncrement(&(({0}*)base)->ref_count);", CfxNativeSymbol);
+        b.BeginIf("count == 2");
+        b.AppendLine("(({0}*)base)->gc_handle = cfx_gc_handle_switch((({0}*)base)->gc_handle, count);", CfxNativeSymbol);
+        b.EndBlock();
         b.EndBlock();
         b.BeginBlock("int CEF_CALLBACK _{0}_release(struct _cef_base_t* base)", CfxName);
         b.AppendLine("int count = InterlockedDecrement(&(({0}*)base)->ref_count);", CfxNativeSymbol);
-        b.BeginBlock("if(!count)");
+        b.BeginIf("count == 1");
+        b.AppendLine("(({0}*)base)->gc_handle = cfx_gc_handle_switch((({0}*)base)->gc_handle, count);", CfxNativeSymbol);
+        b.BeginElseIf("!count");
         b.AppendLine("cfx_gc_handle_free((({0}*)base)->gc_handle);", CfxNativeSymbol);
         b.AppendLine("free(base);");
         b.AppendLine("return 1;");

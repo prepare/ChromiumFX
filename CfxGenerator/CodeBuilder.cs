@@ -231,6 +231,11 @@ public class CodeBuilder {
         IncreaseIndent();
     }
 
+    public void BeginElseIf(string condition, params object[] pm) {
+        EndBlock("else if({0}) {{", string.Format(condition, pm));
+        IncreaseIndent();
+    }
+
     public void BeginCatch() {
         EndBlock("catch {");
         IncreaseIndent();

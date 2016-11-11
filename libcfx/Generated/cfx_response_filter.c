@@ -43,11 +43,16 @@ typedef struct _cfx_response_filter_t {
 } cfx_response_filter_t;
 
 void CEF_CALLBACK _cfx_response_filter_add_ref(struct _cef_base_t* base) {
-    InterlockedIncrement(&((cfx_response_filter_t*)base)->ref_count);
+    int count = InterlockedIncrement(&((cfx_response_filter_t*)base)->ref_count);
+    if(count == 2) {
+        ((cfx_response_filter_t*)base)->gc_handle = cfx_gc_handle_switch(((cfx_response_filter_t*)base)->gc_handle, count);
+    }
 }
 int CEF_CALLBACK _cfx_response_filter_release(struct _cef_base_t* base) {
     int count = InterlockedDecrement(&((cfx_response_filter_t*)base)->ref_count);
-    if(!count) {
+    if(count == 1) {
+        ((cfx_response_filter_t*)base)->gc_handle = cfx_gc_handle_switch(((cfx_response_filter_t*)base)->gc_handle, count);
+    } else if(!count) {
         cfx_gc_handle_free(((cfx_response_filter_t*)base)->gc_handle);
         free(base);
         return 1;

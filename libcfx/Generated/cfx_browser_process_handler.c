@@ -46,11 +46,16 @@ typedef struct _cfx_browser_process_handler_t {
 } cfx_browser_process_handler_t;
 
 void CEF_CALLBACK _cfx_browser_process_handler_add_ref(struct _cef_base_t* base) {
-    InterlockedIncrement(&((cfx_browser_process_handler_t*)base)->ref_count);
+    int count = InterlockedIncrement(&((cfx_browser_process_handler_t*)base)->ref_count);
+    if(count == 2) {
+        ((cfx_browser_process_handler_t*)base)->gc_handle = cfx_gc_handle_switch(((cfx_browser_process_handler_t*)base)->gc_handle, count);
+    }
 }
 int CEF_CALLBACK _cfx_browser_process_handler_release(struct _cef_base_t* base) {
     int count = InterlockedDecrement(&((cfx_browser_process_handler_t*)base)->ref_count);
-    if(!count) {
+    if(count == 1) {
+        ((cfx_browser_process_handler_t*)base)->gc_handle = cfx_gc_handle_switch(((cfx_browser_process_handler_t*)base)->gc_handle, count);
+    } else if(!count) {
         cfx_gc_handle_free(((cfx_browser_process_handler_t*)base)->gc_handle);
         free(base);
         return 1;
