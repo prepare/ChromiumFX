@@ -37,10 +37,18 @@ namespace Chromium.Remote {
     /// Represents an IntPtr in the remote process.
     /// </summary>
     public struct RemotePtr {
-        internal IntPtr ptr;
+        public static bool operator ==(RemotePtr p1, RemotePtr p2) { return p1.ptr == p2.ptr; }
+        public static bool operator !=(RemotePtr p1, RemotePtr p2) { return p1.ptr != p2.ptr; }
         public static readonly RemotePtr Zero;
+        internal IntPtr ptr;
         public RemotePtr(IntPtr ptr) {
             this.ptr = ptr;
+        }
+        public override bool Equals(object obj) {
+            return ptr.Equals(((RemotePtr)obj).ptr);
+        }
+        public override int GetHashCode() {
+            return ptr.GetHashCode();
         }
     }
 }
