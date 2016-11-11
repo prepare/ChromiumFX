@@ -209,7 +209,7 @@ public class ApiType {
 
     public virtual string RemoteWrapExpression(string var) {
         if(RemoteSymbol == "RemotePtr") {
-            return string.Format("new RemotePtr({0})", CSharp.Escape(var));
+            return string.Format("new RemotePtr(connection, {0})", CSharp.Escape(var));
         } else {
             return CSharp.Escape(var);
         }

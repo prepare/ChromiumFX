@@ -78,7 +78,7 @@ namespace Chromium.Remote {
         /// </summary>
         public RemotePtr RemotePtr {
             get {
-                return new RemotePtr(proxyId);
+                return new RemotePtr(connection, proxyId);
             }
         }
 

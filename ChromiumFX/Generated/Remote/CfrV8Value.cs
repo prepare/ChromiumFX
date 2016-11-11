@@ -589,7 +589,7 @@ namespace Chromium.Remote {
                 var call = new CfxV8ValueGetUserDataRenderProcessCall();
                 call.@this = proxyId;
                 call.RequestExecution(this);
-                return new RemotePtr(call.__retval);
+                return new RemotePtr(connection, call.__retval);
             }
         }
 
