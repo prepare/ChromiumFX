@@ -37,6 +37,8 @@ typedef struct _cfx_get_geolocation_callback_t {
     cef_get_geolocation_callback_t cef_get_geolocation_callback;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    // managed callbacks
+    void (CEF_CALLBACK *on_location_update)(gc_handle_t self, const cef_geoposition_t* position);
 } cfx_get_geolocation_callback_t;
 
 void CEF_CALLBACK _cfx_get_geolocation_callback_add_ref(struct _cef_base_t* base) {
@@ -71,24 +73,17 @@ static gc_handle_t cfx_get_geolocation_callback_get_gc_handle(cfx_get_geolocatio
     return self->gc_handle;
 }
 
-// managed callbacks
-void (CEF_CALLBACK *cfx_get_geolocation_callback_on_location_update_callback)(gc_handle_t self, const cef_geoposition_t* position);
-
-static void cfx_get_geolocation_callback_set_managed_callbacks(void *on_location_update) {
-    cfx_get_geolocation_callback_on_location_update_callback = (void (CEF_CALLBACK *)(gc_handle_t self, const cef_geoposition_t* position)) on_location_update;
-}
-
 // on_location_update
 
 void CEF_CALLBACK cfx_get_geolocation_callback_on_location_update(cef_get_geolocation_callback_t* self, const cef_geoposition_t* position) {
-    cfx_get_geolocation_callback_on_location_update_callback(((cfx_get_geolocation_callback_t*)self)->gc_handle, position);
+    ((cfx_get_geolocation_callback_t*)self)->on_location_update(((cfx_get_geolocation_callback_t*)self)->gc_handle, position);
 }
 
-
-static void cfx_get_geolocation_callback_activate_callback(cef_get_geolocation_callback_t* self, int index, int active) {
+static void cfx_get_geolocation_callback_set_callback(cef_get_geolocation_callback_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_location_update = active ? cfx_get_geolocation_callback_on_location_update : 0;
+        ((cfx_get_geolocation_callback_t*)self)->on_location_update = (void (CEF_CALLBACK *)(gc_handle_t self, const cef_geoposition_t* position))callback;
+        self->on_location_update = callback ? cfx_get_geolocation_callback_on_location_update : 0;
         break;
     }
 }

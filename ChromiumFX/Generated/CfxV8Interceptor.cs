@@ -64,19 +64,18 @@ namespace Chromium {
             get_byindex_native = get_byindex;
             set_byname_native = set_byname;
             set_byindex_native = set_byindex;
-            var setCallbacks = (CfxApi.cfx_set_ptr_4_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_v8interceptor_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_4_delegate));
-            setCallbacks(
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_byname_native),
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_byindex_native),
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(set_byname_native),
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(set_byindex_native)
-            );
+
+            get_byname_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_byname_native);
+            get_byindex_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_byindex_native);
+            set_byname_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(set_byname_native);
+            set_byindex_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(set_byindex_native);
         }
 
         // get_byname
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void get_byname_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out IntPtr retval, ref IntPtr exception_str, ref int exception_length);
         private static get_byname_delegate get_byname_native;
+        private static IntPtr get_byname_native_ptr;
 
         internal static void get_byname(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out IntPtr retval, ref IntPtr exception_str, ref int exception_length) {
             var self = (CfxV8Interceptor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -103,6 +102,7 @@ namespace Chromium {
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void get_byindex_delegate(IntPtr gcHandlePtr, out int __retval, int index, IntPtr @object, out IntPtr retval, ref IntPtr exception_str, ref int exception_length);
         private static get_byindex_delegate get_byindex_native;
+        private static IntPtr get_byindex_native_ptr;
 
         internal static void get_byindex(IntPtr gcHandlePtr, out int __retval, int index, IntPtr @object, out IntPtr retval, ref IntPtr exception_str, ref int exception_length) {
             var self = (CfxV8Interceptor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -129,6 +129,7 @@ namespace Chromium {
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void set_byname_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, IntPtr value, ref IntPtr exception_str, ref int exception_length);
         private static set_byname_delegate set_byname_native;
+        private static IntPtr set_byname_native_ptr;
 
         internal static void set_byname(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, IntPtr value, ref IntPtr exception_str, ref int exception_length) {
             var self = (CfxV8Interceptor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -154,6 +155,7 @@ namespace Chromium {
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void set_byindex_delegate(IntPtr gcHandlePtr, out int __retval, int index, IntPtr @object, IntPtr value, ref IntPtr exception_str, ref int exception_length);
         private static set_byindex_delegate set_byindex_native;
+        private static IntPtr set_byindex_native_ptr;
 
         internal static void set_byindex(IntPtr gcHandlePtr, out int __retval, int index, IntPtr @object, IntPtr value, ref IntPtr exception_str, ref int exception_length) {
             var self = (CfxV8Interceptor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -195,7 +197,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_GetByName == null) {
-                        CfxApi.V8Interceptor.cfx_v8interceptor_activate_callback(NativePtr, 0, 1);
+                        CfxApi.V8Interceptor.cfx_v8interceptor_set_callback(NativePtr, 0, get_byname_native_ptr);
                     }
                     m_GetByName += value;
                 }
@@ -204,7 +206,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetByName -= value;
                     if(m_GetByName == null) {
-                        CfxApi.V8Interceptor.cfx_v8interceptor_activate_callback(NativePtr, 0, 0);
+                        CfxApi.V8Interceptor.cfx_v8interceptor_set_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -228,7 +230,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_GetByIndex == null) {
-                        CfxApi.V8Interceptor.cfx_v8interceptor_activate_callback(NativePtr, 1, 1);
+                        CfxApi.V8Interceptor.cfx_v8interceptor_set_callback(NativePtr, 1, get_byindex_native_ptr);
                     }
                     m_GetByIndex += value;
                 }
@@ -237,7 +239,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetByIndex -= value;
                     if(m_GetByIndex == null) {
-                        CfxApi.V8Interceptor.cfx_v8interceptor_activate_callback(NativePtr, 1, 0);
+                        CfxApi.V8Interceptor.cfx_v8interceptor_set_callback(NativePtr, 1, IntPtr.Zero);
                     }
                 }
             }
@@ -261,7 +263,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_SetByName == null) {
-                        CfxApi.V8Interceptor.cfx_v8interceptor_activate_callback(NativePtr, 2, 1);
+                        CfxApi.V8Interceptor.cfx_v8interceptor_set_callback(NativePtr, 2, set_byname_native_ptr);
                     }
                     m_SetByName += value;
                 }
@@ -270,7 +272,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_SetByName -= value;
                     if(m_SetByName == null) {
-                        CfxApi.V8Interceptor.cfx_v8interceptor_activate_callback(NativePtr, 2, 0);
+                        CfxApi.V8Interceptor.cfx_v8interceptor_set_callback(NativePtr, 2, IntPtr.Zero);
                     }
                 }
             }
@@ -293,7 +295,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_SetByIndex == null) {
-                        CfxApi.V8Interceptor.cfx_v8interceptor_activate_callback(NativePtr, 3, 1);
+                        CfxApi.V8Interceptor.cfx_v8interceptor_set_callback(NativePtr, 3, set_byindex_native_ptr);
                     }
                     m_SetByIndex += value;
                 }
@@ -302,7 +304,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_SetByIndex -= value;
                     if(m_SetByIndex == null) {
-                        CfxApi.V8Interceptor.cfx_v8interceptor_activate_callback(NativePtr, 3, 0);
+                        CfxApi.V8Interceptor.cfx_v8interceptor_set_callback(NativePtr, 3, IntPtr.Zero);
                     }
                 }
             }
@@ -313,19 +315,19 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_GetByName != null) {
                 m_GetByName = null;
-                CfxApi.V8Interceptor.cfx_v8interceptor_activate_callback(NativePtr, 0, 0);
+                CfxApi.V8Interceptor.cfx_v8interceptor_set_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_GetByIndex != null) {
                 m_GetByIndex = null;
-                CfxApi.V8Interceptor.cfx_v8interceptor_activate_callback(NativePtr, 1, 0);
+                CfxApi.V8Interceptor.cfx_v8interceptor_set_callback(NativePtr, 1, IntPtr.Zero);
             }
             if(m_SetByName != null) {
                 m_SetByName = null;
-                CfxApi.V8Interceptor.cfx_v8interceptor_activate_callback(NativePtr, 2, 0);
+                CfxApi.V8Interceptor.cfx_v8interceptor_set_callback(NativePtr, 2, IntPtr.Zero);
             }
             if(m_SetByIndex != null) {
                 m_SetByIndex = null;
-                CfxApi.V8Interceptor.cfx_v8interceptor_activate_callback(NativePtr, 3, 0);
+                CfxApi.V8Interceptor.cfx_v8interceptor_set_callback(NativePtr, 3, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

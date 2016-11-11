@@ -62,21 +62,20 @@ namespace Chromium {
             can_get_cookie_native = can_get_cookie;
             can_set_cookie_native = can_set_cookie;
             cancel_native = cancel;
-            var setCallbacks = (CfxApi.cfx_set_ptr_6_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_resource_handler_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_6_delegate));
-            setCallbacks(
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(process_request_native),
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_response_headers_native),
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(read_response_native),
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(can_get_cookie_native),
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(can_set_cookie_native),
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cancel_native)
-            );
+
+            process_request_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(process_request_native);
+            get_response_headers_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_response_headers_native);
+            read_response_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(read_response_native);
+            can_get_cookie_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(can_get_cookie_native);
+            can_set_cookie_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(can_set_cookie_native);
+            cancel_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(cancel_native);
         }
 
         // process_request
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void process_request_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr request, IntPtr callback);
         private static process_request_delegate process_request_native;
+        private static IntPtr process_request_native_ptr;
 
         internal static void process_request(IntPtr gcHandlePtr, out int __retval, IntPtr request, IntPtr callback) {
             var self = (CfxResourceHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -97,6 +96,7 @@ namespace Chromium {
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void get_response_headers_delegate(IntPtr gcHandlePtr, IntPtr response, out long response_length, ref IntPtr redirectUrl_str, ref int redirectUrl_length);
         private static get_response_headers_delegate get_response_headers_native;
+        private static IntPtr get_response_headers_native_ptr;
 
         internal static void get_response_headers(IntPtr gcHandlePtr, IntPtr response, out long response_length, ref IntPtr redirectUrl_str, ref int redirectUrl_length) {
             var self = (CfxResourceHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -121,6 +121,7 @@ namespace Chromium {
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void read_response_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr data_out, int bytes_to_read, out int bytes_read, IntPtr callback);
         private static read_response_delegate read_response_native;
+        private static IntPtr read_response_native_ptr;
 
         internal static void read_response(IntPtr gcHandlePtr, out int __retval, IntPtr data_out, int bytes_to_read, out int bytes_read, IntPtr callback) {
             var self = (CfxResourceHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -142,6 +143,7 @@ namespace Chromium {
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void can_get_cookie_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr cookie);
         private static can_get_cookie_delegate can_get_cookie_native;
+        private static IntPtr can_get_cookie_native_ptr;
 
         internal static void can_get_cookie(IntPtr gcHandlePtr, out int __retval, IntPtr cookie) {
             var self = (CfxResourceHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -160,6 +162,7 @@ namespace Chromium {
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void can_set_cookie_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr cookie);
         private static can_set_cookie_delegate can_set_cookie_native;
+        private static IntPtr can_set_cookie_native_ptr;
 
         internal static void can_set_cookie(IntPtr gcHandlePtr, out int __retval, IntPtr cookie) {
             var self = (CfxResourceHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -178,6 +181,7 @@ namespace Chromium {
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void cancel_delegate(IntPtr gcHandlePtr);
         private static cancel_delegate cancel_native;
+        private static IntPtr cancel_native_ptr;
 
         internal static void cancel(IntPtr gcHandlePtr) {
             var self = (CfxResourceHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -208,7 +212,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_ProcessRequest == null) {
-                        CfxApi.ResourceHandler.cfx_resource_handler_activate_callback(NativePtr, 0, 1);
+                        CfxApi.ResourceHandler.cfx_resource_handler_set_callback(NativePtr, 0, process_request_native_ptr);
                     }
                     m_ProcessRequest += value;
                 }
@@ -217,7 +221,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_ProcessRequest -= value;
                     if(m_ProcessRequest == null) {
-                        CfxApi.ResourceHandler.cfx_resource_handler_activate_callback(NativePtr, 0, 0);
+                        CfxApi.ResourceHandler.cfx_resource_handler_set_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -244,7 +248,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_GetResponseHeaders == null) {
-                        CfxApi.ResourceHandler.cfx_resource_handler_activate_callback(NativePtr, 1, 1);
+                        CfxApi.ResourceHandler.cfx_resource_handler_set_callback(NativePtr, 1, get_response_headers_native_ptr);
                     }
                     m_GetResponseHeaders += value;
                 }
@@ -253,7 +257,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetResponseHeaders -= value;
                     if(m_GetResponseHeaders == null) {
-                        CfxApi.ResourceHandler.cfx_resource_handler_activate_callback(NativePtr, 1, 0);
+                        CfxApi.ResourceHandler.cfx_resource_handler_set_callback(NativePtr, 1, IntPtr.Zero);
                     }
                 }
             }
@@ -276,7 +280,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_ReadResponse == null) {
-                        CfxApi.ResourceHandler.cfx_resource_handler_activate_callback(NativePtr, 2, 1);
+                        CfxApi.ResourceHandler.cfx_resource_handler_set_callback(NativePtr, 2, read_response_native_ptr);
                     }
                     m_ReadResponse += value;
                 }
@@ -285,7 +289,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_ReadResponse -= value;
                     if(m_ReadResponse == null) {
-                        CfxApi.ResourceHandler.cfx_resource_handler_activate_callback(NativePtr, 2, 0);
+                        CfxApi.ResourceHandler.cfx_resource_handler_set_callback(NativePtr, 2, IntPtr.Zero);
                     }
                 }
             }
@@ -306,7 +310,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_CanGetCookie == null) {
-                        CfxApi.ResourceHandler.cfx_resource_handler_activate_callback(NativePtr, 3, 1);
+                        CfxApi.ResourceHandler.cfx_resource_handler_set_callback(NativePtr, 3, can_get_cookie_native_ptr);
                     }
                     m_CanGetCookie += value;
                 }
@@ -315,7 +319,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_CanGetCookie -= value;
                     if(m_CanGetCookie == null) {
-                        CfxApi.ResourceHandler.cfx_resource_handler_activate_callback(NativePtr, 3, 0);
+                        CfxApi.ResourceHandler.cfx_resource_handler_set_callback(NativePtr, 3, IntPtr.Zero);
                     }
                 }
             }
@@ -335,7 +339,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_CanSetCookie == null) {
-                        CfxApi.ResourceHandler.cfx_resource_handler_activate_callback(NativePtr, 4, 1);
+                        CfxApi.ResourceHandler.cfx_resource_handler_set_callback(NativePtr, 4, can_set_cookie_native_ptr);
                     }
                     m_CanSetCookie += value;
                 }
@@ -344,7 +348,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_CanSetCookie -= value;
                     if(m_CanSetCookie == null) {
-                        CfxApi.ResourceHandler.cfx_resource_handler_activate_callback(NativePtr, 4, 0);
+                        CfxApi.ResourceHandler.cfx_resource_handler_set_callback(NativePtr, 4, IntPtr.Zero);
                     }
                 }
             }
@@ -363,7 +367,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_Cancel == null) {
-                        CfxApi.ResourceHandler.cfx_resource_handler_activate_callback(NativePtr, 5, 1);
+                        CfxApi.ResourceHandler.cfx_resource_handler_set_callback(NativePtr, 5, cancel_native_ptr);
                     }
                     m_Cancel += value;
                 }
@@ -372,7 +376,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Cancel -= value;
                     if(m_Cancel == null) {
-                        CfxApi.ResourceHandler.cfx_resource_handler_activate_callback(NativePtr, 5, 0);
+                        CfxApi.ResourceHandler.cfx_resource_handler_set_callback(NativePtr, 5, IntPtr.Zero);
                     }
                 }
             }
@@ -383,27 +387,27 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_ProcessRequest != null) {
                 m_ProcessRequest = null;
-                CfxApi.ResourceHandler.cfx_resource_handler_activate_callback(NativePtr, 0, 0);
+                CfxApi.ResourceHandler.cfx_resource_handler_set_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_GetResponseHeaders != null) {
                 m_GetResponseHeaders = null;
-                CfxApi.ResourceHandler.cfx_resource_handler_activate_callback(NativePtr, 1, 0);
+                CfxApi.ResourceHandler.cfx_resource_handler_set_callback(NativePtr, 1, IntPtr.Zero);
             }
             if(m_ReadResponse != null) {
                 m_ReadResponse = null;
-                CfxApi.ResourceHandler.cfx_resource_handler_activate_callback(NativePtr, 2, 0);
+                CfxApi.ResourceHandler.cfx_resource_handler_set_callback(NativePtr, 2, IntPtr.Zero);
             }
             if(m_CanGetCookie != null) {
                 m_CanGetCookie = null;
-                CfxApi.ResourceHandler.cfx_resource_handler_activate_callback(NativePtr, 3, 0);
+                CfxApi.ResourceHandler.cfx_resource_handler_set_callback(NativePtr, 3, IntPtr.Zero);
             }
             if(m_CanSetCookie != null) {
                 m_CanSetCookie = null;
-                CfxApi.ResourceHandler.cfx_resource_handler_activate_callback(NativePtr, 4, 0);
+                CfxApi.ResourceHandler.cfx_resource_handler_set_callback(NativePtr, 4, IntPtr.Zero);
             }
             if(m_Cancel != null) {
                 m_Cancel = null;
-                CfxApi.ResourceHandler.cfx_resource_handler_activate_callback(NativePtr, 5, 0);
+                CfxApi.ResourceHandler.cfx_resource_handler_set_callback(NativePtr, 5, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

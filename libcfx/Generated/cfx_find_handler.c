@@ -37,6 +37,8 @@ typedef struct _cfx_find_handler_t {
     cef_find_handler_t cef_find_handler;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    // managed callbacks
+    void (CEF_CALLBACK *on_find_result)(gc_handle_t self, cef_browser_t* browser, int identifier, int count, const cef_rect_t* selectionRect, int activeMatchOrdinal, int finalUpdate);
 } cfx_find_handler_t;
 
 void CEF_CALLBACK _cfx_find_handler_add_ref(struct _cef_base_t* base) {
@@ -71,24 +73,17 @@ static gc_handle_t cfx_find_handler_get_gc_handle(cfx_find_handler_t* self) {
     return self->gc_handle;
 }
 
-// managed callbacks
-void (CEF_CALLBACK *cfx_find_handler_on_find_result_callback)(gc_handle_t self, cef_browser_t* browser, int identifier, int count, const cef_rect_t* selectionRect, int activeMatchOrdinal, int finalUpdate);
-
-static void cfx_find_handler_set_managed_callbacks(void *on_find_result) {
-    cfx_find_handler_on_find_result_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int identifier, int count, const cef_rect_t* selectionRect, int activeMatchOrdinal, int finalUpdate)) on_find_result;
-}
-
 // on_find_result
 
 void CEF_CALLBACK cfx_find_handler_on_find_result(cef_find_handler_t* self, cef_browser_t* browser, int identifier, int count, const cef_rect_t* selectionRect, int activeMatchOrdinal, int finalUpdate) {
-    cfx_find_handler_on_find_result_callback(((cfx_find_handler_t*)self)->gc_handle, browser, identifier, count, selectionRect, activeMatchOrdinal, finalUpdate);
+    ((cfx_find_handler_t*)self)->on_find_result(((cfx_find_handler_t*)self)->gc_handle, browser, identifier, count, selectionRect, activeMatchOrdinal, finalUpdate);
 }
 
-
-static void cfx_find_handler_activate_callback(cef_find_handler_t* self, int index, int active) {
+static void cfx_find_handler_set_callback(cef_find_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_find_result = active ? cfx_find_handler_on_find_result : 0;
+        ((cfx_find_handler_t*)self)->on_find_result = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int identifier, int count, const cef_rect_t* selectionRect, int activeMatchOrdinal, int finalUpdate))callback;
+        self->on_find_result = callback ? cfx_find_handler_on_find_result : 0;
         break;
     }
 }

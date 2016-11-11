@@ -80,8 +80,7 @@ public class CefApiDeclarations {
                         st.ApiIndex = list.Count;
                         list.Add(st.CfxName + "_ctor");
                         list.Add(st.CfxName + "_get_gc_handle");
-                        list.Add(st.CfxName + "_set_managed_callbacks");
-                        list.Add(st.CfxName + "_activate_callback");
+                        list.Add(st.CfxName + "_set_callback");
                         break;
 
                     case StructCategory.Values:

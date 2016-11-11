@@ -62,20 +62,19 @@ namespace Chromium {
             on_render_process_thread_created_native = on_render_process_thread_created;
             get_print_handler_native = get_print_handler;
             on_schedule_message_pump_work_native = on_schedule_message_pump_work;
-            var setCallbacks = (CfxApi.cfx_set_ptr_5_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_browser_process_handler_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_5_delegate));
-            setCallbacks(
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_context_initialized_native),
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_before_child_process_launch_native),
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_render_process_thread_created_native),
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_print_handler_native),
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_schedule_message_pump_work_native)
-            );
+
+            on_context_initialized_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_context_initialized_native);
+            on_before_child_process_launch_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_before_child_process_launch_native);
+            on_render_process_thread_created_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_render_process_thread_created_native);
+            get_print_handler_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_print_handler_native);
+            on_schedule_message_pump_work_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_schedule_message_pump_work_native);
         }
 
         // on_context_initialized
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void on_context_initialized_delegate(IntPtr gcHandlePtr);
         private static on_context_initialized_delegate on_context_initialized_native;
+        private static IntPtr on_context_initialized_native_ptr;
 
         internal static void on_context_initialized(IntPtr gcHandlePtr) {
             var self = (CfxBrowserProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -92,6 +91,7 @@ namespace Chromium {
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void on_before_child_process_launch_delegate(IntPtr gcHandlePtr, IntPtr command_line);
         private static on_before_child_process_launch_delegate on_before_child_process_launch_native;
+        private static IntPtr on_before_child_process_launch_native_ptr;
 
         internal static void on_before_child_process_launch(IntPtr gcHandlePtr, IntPtr command_line) {
             var self = (CfxBrowserProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -109,6 +109,7 @@ namespace Chromium {
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void on_render_process_thread_created_delegate(IntPtr gcHandlePtr, IntPtr extra_info);
         private static on_render_process_thread_created_delegate on_render_process_thread_created_native;
+        private static IntPtr on_render_process_thread_created_native_ptr;
 
         internal static void on_render_process_thread_created(IntPtr gcHandlePtr, IntPtr extra_info) {
             var self = (CfxBrowserProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -126,6 +127,7 @@ namespace Chromium {
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void get_print_handler_delegate(IntPtr gcHandlePtr, out IntPtr __retval);
         private static get_print_handler_delegate get_print_handler_native;
+        private static IntPtr get_print_handler_native_ptr;
 
         internal static void get_print_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
             var self = (CfxBrowserProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -144,6 +146,7 @@ namespace Chromium {
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void on_schedule_message_pump_work_delegate(IntPtr gcHandlePtr, long delay_ms);
         private static on_schedule_message_pump_work_delegate on_schedule_message_pump_work_native;
+        private static IntPtr on_schedule_message_pump_work_native_ptr;
 
         internal static void on_schedule_message_pump_work(IntPtr gcHandlePtr, long delay_ms) {
             var self = (CfxBrowserProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -171,7 +174,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnContextInitialized == null) {
-                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_activate_callback(NativePtr, 0, 1);
+                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_callback(NativePtr, 0, on_context_initialized_native_ptr);
                     }
                     m_OnContextInitialized += value;
                 }
@@ -180,7 +183,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnContextInitialized -= value;
                     if(m_OnContextInitialized == null) {
-                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_activate_callback(NativePtr, 0, 0);
+                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -203,7 +206,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnBeforeChildProcessLaunch == null) {
-                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_activate_callback(NativePtr, 1, 1);
+                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_callback(NativePtr, 1, on_before_child_process_launch_native_ptr);
                     }
                     m_OnBeforeChildProcessLaunch += value;
                 }
@@ -212,7 +215,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnBeforeChildProcessLaunch -= value;
                     if(m_OnBeforeChildProcessLaunch == null) {
-                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_activate_callback(NativePtr, 1, 0);
+                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_callback(NativePtr, 1, IntPtr.Zero);
                     }
                 }
             }
@@ -235,7 +238,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnRenderProcessThreadCreated == null) {
-                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_activate_callback(NativePtr, 2, 1);
+                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_callback(NativePtr, 2, on_render_process_thread_created_native_ptr);
                     }
                     m_OnRenderProcessThreadCreated += value;
                 }
@@ -244,7 +247,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnRenderProcessThreadCreated -= value;
                     if(m_OnRenderProcessThreadCreated == null) {
-                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_activate_callback(NativePtr, 2, 0);
+                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_callback(NativePtr, 2, IntPtr.Zero);
                     }
                 }
             }
@@ -266,7 +269,7 @@ namespace Chromium {
                     if(m_GetPrintHandler != null) {
                         throw new CfxException("Can't add more than one event handler to this type of event.");
                     }
-                    CfxApi.BrowserProcessHandler.cfx_browser_process_handler_activate_callback(NativePtr, 3, 1);
+                    CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_callback(NativePtr, 3, get_print_handler_native_ptr);
                     m_GetPrintHandler += value;
                 }
             }
@@ -274,7 +277,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetPrintHandler -= value;
                     if(m_GetPrintHandler == null) {
-                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_activate_callback(NativePtr, 3, 0);
+                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_callback(NativePtr, 3, IntPtr.Zero);
                     }
                 }
             }
@@ -318,7 +321,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnScheduleMessagePumpWork == null) {
-                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_activate_callback(NativePtr, 4, 1);
+                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_callback(NativePtr, 4, on_schedule_message_pump_work_native_ptr);
                     }
                     m_OnScheduleMessagePumpWork += value;
                 }
@@ -327,7 +330,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnScheduleMessagePumpWork -= value;
                     if(m_OnScheduleMessagePumpWork == null) {
-                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_activate_callback(NativePtr, 4, 0);
+                        CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_callback(NativePtr, 4, IntPtr.Zero);
                     }
                 }
             }
@@ -338,23 +341,23 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnContextInitialized != null) {
                 m_OnContextInitialized = null;
-                CfxApi.BrowserProcessHandler.cfx_browser_process_handler_activate_callback(NativePtr, 0, 0);
+                CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_OnBeforeChildProcessLaunch != null) {
                 m_OnBeforeChildProcessLaunch = null;
-                CfxApi.BrowserProcessHandler.cfx_browser_process_handler_activate_callback(NativePtr, 1, 0);
+                CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_callback(NativePtr, 1, IntPtr.Zero);
             }
             if(m_OnRenderProcessThreadCreated != null) {
                 m_OnRenderProcessThreadCreated = null;
-                CfxApi.BrowserProcessHandler.cfx_browser_process_handler_activate_callback(NativePtr, 2, 0);
+                CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_callback(NativePtr, 2, IntPtr.Zero);
             }
             if(m_GetPrintHandler != null) {
                 m_GetPrintHandler = null;
-                CfxApi.BrowserProcessHandler.cfx_browser_process_handler_activate_callback(NativePtr, 3, 0);
+                CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_callback(NativePtr, 3, IntPtr.Zero);
             }
             if(m_OnScheduleMessagePumpWork != null) {
                 m_OnScheduleMessagePumpWork = null;
-                CfxApi.BrowserProcessHandler.cfx_browser_process_handler_activate_callback(NativePtr, 4, 0);
+                CfxApi.BrowserProcessHandler.cfx_browser_process_handler_set_callback(NativePtr, 4, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

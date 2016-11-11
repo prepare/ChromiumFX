@@ -37,6 +37,10 @@ typedef struct _cfx_focus_handler_t {
     cef_focus_handler_t cef_focus_handler;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    // managed callbacks
+    void (CEF_CALLBACK *on_take_focus)(gc_handle_t self, cef_browser_t* browser, int next);
+    void (CEF_CALLBACK *on_set_focus)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_focus_source_t source);
+    void (CEF_CALLBACK *on_got_focus)(gc_handle_t self, cef_browser_t* browser);
 } cfx_focus_handler_t;
 
 void CEF_CALLBACK _cfx_focus_handler_add_ref(struct _cef_base_t* base) {
@@ -71,50 +75,39 @@ static gc_handle_t cfx_focus_handler_get_gc_handle(cfx_focus_handler_t* self) {
     return self->gc_handle;
 }
 
-// managed callbacks
-void (CEF_CALLBACK *cfx_focus_handler_on_take_focus_callback)(gc_handle_t self, cef_browser_t* browser, int next);
-void (CEF_CALLBACK *cfx_focus_handler_on_set_focus_callback)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_focus_source_t source);
-void (CEF_CALLBACK *cfx_focus_handler_on_got_focus_callback)(gc_handle_t self, cef_browser_t* browser);
-
-static void cfx_focus_handler_set_managed_callbacks(void *on_take_focus, void *on_set_focus, void *on_got_focus) {
-    cfx_focus_handler_on_take_focus_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int next)) on_take_focus;
-    cfx_focus_handler_on_set_focus_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_focus_source_t source)) on_set_focus;
-    cfx_focus_handler_on_got_focus_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) on_got_focus;
-}
-
 // on_take_focus
 
 void CEF_CALLBACK cfx_focus_handler_on_take_focus(cef_focus_handler_t* self, cef_browser_t* browser, int next) {
-    cfx_focus_handler_on_take_focus_callback(((cfx_focus_handler_t*)self)->gc_handle, browser, next);
+    ((cfx_focus_handler_t*)self)->on_take_focus(((cfx_focus_handler_t*)self)->gc_handle, browser, next);
 }
-
 
 // on_set_focus
 
 int CEF_CALLBACK cfx_focus_handler_on_set_focus(cef_focus_handler_t* self, cef_browser_t* browser, cef_focus_source_t source) {
     int __retval;
-    cfx_focus_handler_on_set_focus_callback(((cfx_focus_handler_t*)self)->gc_handle, &__retval, browser, source);
+    ((cfx_focus_handler_t*)self)->on_set_focus(((cfx_focus_handler_t*)self)->gc_handle, &__retval, browser, source);
     return __retval;
 }
-
 
 // on_got_focus
 
 void CEF_CALLBACK cfx_focus_handler_on_got_focus(cef_focus_handler_t* self, cef_browser_t* browser) {
-    cfx_focus_handler_on_got_focus_callback(((cfx_focus_handler_t*)self)->gc_handle, browser);
+    ((cfx_focus_handler_t*)self)->on_got_focus(((cfx_focus_handler_t*)self)->gc_handle, browser);
 }
 
-
-static void cfx_focus_handler_activate_callback(cef_focus_handler_t* self, int index, int active) {
+static void cfx_focus_handler_set_callback(cef_focus_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_take_focus = active ? cfx_focus_handler_on_take_focus : 0;
+        ((cfx_focus_handler_t*)self)->on_take_focus = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int next))callback;
+        self->on_take_focus = callback ? cfx_focus_handler_on_take_focus : 0;
         break;
     case 1:
-        self->on_set_focus = active ? cfx_focus_handler_on_set_focus : 0;
+        ((cfx_focus_handler_t*)self)->on_set_focus = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_focus_source_t source))callback;
+        self->on_set_focus = callback ? cfx_focus_handler_on_set_focus : 0;
         break;
     case 2:
-        self->on_got_focus = active ? cfx_focus_handler_on_got_focus : 0;
+        ((cfx_focus_handler_t*)self)->on_got_focus = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser))callback;
+        self->on_got_focus = callback ? cfx_focus_handler_on_got_focus : 0;
         break;
     }
 }

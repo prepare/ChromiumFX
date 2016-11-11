@@ -37,6 +37,8 @@ typedef struct _cfx_cookie_visitor_t {
     cef_cookie_visitor_t cef_cookie_visitor;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    // managed callbacks
+    void (CEF_CALLBACK *visit)(gc_handle_t self, int* __retval, const cef_cookie_t* cookie, int count, int total, int* deleteCookie);
 } cfx_cookie_visitor_t;
 
 void CEF_CALLBACK _cfx_cookie_visitor_add_ref(struct _cef_base_t* base) {
@@ -71,26 +73,19 @@ static gc_handle_t cfx_cookie_visitor_get_gc_handle(cfx_cookie_visitor_t* self) 
     return self->gc_handle;
 }
 
-// managed callbacks
-void (CEF_CALLBACK *cfx_cookie_visitor_visit_callback)(gc_handle_t self, int* __retval, const cef_cookie_t* cookie, int count, int total, int* deleteCookie);
-
-static void cfx_cookie_visitor_set_managed_callbacks(void *visit) {
-    cfx_cookie_visitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, const cef_cookie_t* cookie, int count, int total, int* deleteCookie)) visit;
-}
-
 // visit
 
 int CEF_CALLBACK cfx_cookie_visitor_visit(cef_cookie_visitor_t* self, const cef_cookie_t* cookie, int count, int total, int* deleteCookie) {
     int __retval;
-    cfx_cookie_visitor_visit_callback(((cfx_cookie_visitor_t*)self)->gc_handle, &__retval, cookie, count, total, deleteCookie);
+    ((cfx_cookie_visitor_t*)self)->visit(((cfx_cookie_visitor_t*)self)->gc_handle, &__retval, cookie, count, total, deleteCookie);
     return __retval;
 }
 
-
-static void cfx_cookie_visitor_activate_callback(cef_cookie_visitor_t* self, int index, int active) {
+static void cfx_cookie_visitor_set_callback(cef_cookie_visitor_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->visit = active ? cfx_cookie_visitor_visit : 0;
+        ((cfx_cookie_visitor_t*)self)->visit = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, const cef_cookie_t* cookie, int count, int total, int* deleteCookie))callback;
+        self->visit = callback ? cfx_cookie_visitor_visit : 0;
         break;
     }
 }

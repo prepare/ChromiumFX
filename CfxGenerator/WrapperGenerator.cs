@@ -296,15 +296,6 @@ public class WrapperGenerator {
 
         b.AppendLine();
 
-        var ptrArgs = new CodeBuilder();
-        ptrArgs.Append("IntPtr p0");
-        for(int i = 0; i < 16; ++i) {
-            b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]");
-            b.AppendLine("public delegate void cfx_set_ptr_{0}_delegate({1});", i + 1, ptrArgs);
-            ptrArgs.Append(", IntPtr p" + (i + 1));
-        }
-        b.AppendLine();
-
         b.BeginClass("Runtime", "internal static");
 
         foreach(var f in decls.ExportFunctions) {
@@ -386,7 +377,7 @@ public class WrapperGenerator {
                 case StructCategory.ApiCallbacks:
                     b.AppendLine("CfxApi.{0}.{1}_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_ctor, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));", apiClassName, cefStruct.CfxName);
                     b.AppendLine("CfxApi.{0}.{1}_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_get_gc_handle, typeof(CfxApi.cfx_get_gc_handle_delegate));", apiClassName, cefStruct.CfxName);
-                    b.AppendLine("CfxApi.{0}.{1}_activate_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_activate_callback, typeof(CfxApi.cfx_set_callback_delegate));", apiClassName, cefStruct.CfxName);
+                    b.AppendLine("CfxApi.{0}.{1}_set_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_set_callback, typeof(CfxApi.cfx_set_callback_delegate));", apiClassName, cefStruct.CfxName);
                     b.AppendLine("{0}.SetNativeCallbacks();", cefStruct.ClassName);
                     Debug.Assert(cefStruct.ClassBuilder.ExportFunctions.Length == 0);
                     break;

@@ -57,16 +57,15 @@ namespace Chromium {
 
         internal static void SetNativeCallbacks() {
             on_download_image_finished_native = on_download_image_finished;
-            var setCallbacks = (CfxApi.cfx_set_ptr_1_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_download_image_callback_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_1_delegate));
-            setCallbacks(
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_download_image_finished_native)
-            );
+
+            on_download_image_finished_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_download_image_finished_native);
         }
 
         // on_download_image_finished
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void on_download_image_finished_delegate(IntPtr gcHandlePtr, IntPtr image_url_str, int image_url_length, int http_status_code, IntPtr image);
         private static on_download_image_finished_delegate on_download_image_finished_native;
+        private static IntPtr on_download_image_finished_native_ptr;
 
         internal static void on_download_image_finished(IntPtr gcHandlePtr, IntPtr image_url_str, int image_url_length, int http_status_code, IntPtr image) {
             var self = (CfxDownloadImageCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -97,7 +96,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnDownloadImageFinished == null) {
-                        CfxApi.DownloadImageCallback.cfx_download_image_callback_activate_callback(NativePtr, 0, 1);
+                        CfxApi.DownloadImageCallback.cfx_download_image_callback_set_callback(NativePtr, 0, on_download_image_finished_native_ptr);
                     }
                     m_OnDownloadImageFinished += value;
                 }
@@ -106,7 +105,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnDownloadImageFinished -= value;
                     if(m_OnDownloadImageFinished == null) {
-                        CfxApi.DownloadImageCallback.cfx_download_image_callback_activate_callback(NativePtr, 0, 0);
+                        CfxApi.DownloadImageCallback.cfx_download_image_callback_set_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -117,7 +116,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnDownloadImageFinished != null) {
                 m_OnDownloadImageFinished = null;
-                CfxApi.DownloadImageCallback.cfx_download_image_callback_activate_callback(NativePtr, 0, 0);
+                CfxApi.DownloadImageCallback.cfx_download_image_callback_set_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

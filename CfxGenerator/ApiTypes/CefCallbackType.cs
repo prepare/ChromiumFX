@@ -468,7 +468,7 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         } else {
             b.BeginBlock("if(m_{0} == null)", PublicName);
         }
-        b.AppendLine("CfxApi.{3}.{0}_activate_callback(NativePtr, {1}, 1);", Parent.CfxName, cbIndex, Name, Parent.ClassName.Substring(3));
+        b.AppendLine("CfxApi.{3}.{0}_set_callback(NativePtr, {1}, {2}_native_ptr);", Parent.CfxName, cbIndex, Name, Parent.ClassName.Substring(3));
         if(!isSimpleGetterEvent) b.EndBlock();
         b.AppendLine("m_{0} += value;", PublicName);
         b.EndBlock();
@@ -477,7 +477,7 @@ public class CefCallbackType : ApiType, ISignatureOwner {
         b.BeginBlock("lock(eventLock)");
         b.AppendLine("m_{0} -= value;", PublicName);
         b.BeginBlock("if(m_{0} == null)", PublicName);
-        b.AppendLine("CfxApi.{2}.{0}_activate_callback(NativePtr, {1}, 0);", Parent.CfxName, cbIndex, Parent.ClassName.Substring(3));
+        b.AppendLine("CfxApi.{2}.{0}_set_callback(NativePtr, {1}, IntPtr.Zero);", Parent.CfxName, cbIndex, Parent.ClassName.Substring(3));
         b.EndBlock();
         b.EndBlock();
         b.EndBlock();

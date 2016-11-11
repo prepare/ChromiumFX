@@ -37,6 +37,8 @@ typedef struct _cfx_web_plugin_unstable_callback_t {
     cef_web_plugin_unstable_callback_t cef_web_plugin_unstable_callback;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    // managed callbacks
+    void (CEF_CALLBACK *is_unstable)(gc_handle_t self, char16 *path_str, int path_length, int unstable);
 } cfx_web_plugin_unstable_callback_t;
 
 void CEF_CALLBACK _cfx_web_plugin_unstable_callback_add_ref(struct _cef_base_t* base) {
@@ -71,24 +73,17 @@ static gc_handle_t cfx_web_plugin_unstable_callback_get_gc_handle(cfx_web_plugin
     return self->gc_handle;
 }
 
-// managed callbacks
-void (CEF_CALLBACK *cfx_web_plugin_unstable_callback_is_unstable_callback)(gc_handle_t self, char16 *path_str, int path_length, int unstable);
-
-static void cfx_web_plugin_unstable_callback_set_managed_callbacks(void *is_unstable) {
-    cfx_web_plugin_unstable_callback_is_unstable_callback = (void (CEF_CALLBACK *)(gc_handle_t self, char16 *path_str, int path_length, int unstable)) is_unstable;
-}
-
 // is_unstable
 
 void CEF_CALLBACK cfx_web_plugin_unstable_callback_is_unstable(cef_web_plugin_unstable_callback_t* self, const cef_string_t* path, int unstable) {
-    cfx_web_plugin_unstable_callback_is_unstable_callback(((cfx_web_plugin_unstable_callback_t*)self)->gc_handle, path ? path->str : 0, path ? (int)path->length : 0, unstable);
+    ((cfx_web_plugin_unstable_callback_t*)self)->is_unstable(((cfx_web_plugin_unstable_callback_t*)self)->gc_handle, path ? path->str : 0, path ? (int)path->length : 0, unstable);
 }
 
-
-static void cfx_web_plugin_unstable_callback_activate_callback(cef_web_plugin_unstable_callback_t* self, int index, int active) {
+static void cfx_web_plugin_unstable_callback_set_callback(cef_web_plugin_unstable_callback_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->is_unstable = active ? cfx_web_plugin_unstable_callback_is_unstable : 0;
+        ((cfx_web_plugin_unstable_callback_t*)self)->is_unstable = (void (CEF_CALLBACK *)(gc_handle_t self, char16 *path_str, int path_length, int unstable))callback;
+        self->is_unstable = callback ? cfx_web_plugin_unstable_callback_is_unstable : 0;
         break;
     }
 }

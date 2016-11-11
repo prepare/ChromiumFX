@@ -37,6 +37,9 @@ typedef struct _cfx_response_filter_t {
     cef_response_filter_t cef_response_filter;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    // managed callbacks
+    void (CEF_CALLBACK *init_filter)(gc_handle_t self, int* __retval);
+    void (CEF_CALLBACK *filter)(gc_handle_t self, cef_response_filter_status_t* __retval, void* data_in, size_t data_in_size, size_t* data_in_read, void* data_out, size_t data_out_size, size_t* data_out_written);
 } cfx_response_filter_t;
 
 void CEF_CALLBACK _cfx_response_filter_add_ref(struct _cef_base_t* base) {
@@ -71,40 +74,31 @@ static gc_handle_t cfx_response_filter_get_gc_handle(cfx_response_filter_t* self
     return self->gc_handle;
 }
 
-// managed callbacks
-void (CEF_CALLBACK *cfx_response_filter_init_filter_callback)(gc_handle_t self, int* __retval);
-void (CEF_CALLBACK *cfx_response_filter_filter_callback)(gc_handle_t self, cef_response_filter_status_t* __retval, void* data_in, size_t data_in_size, size_t* data_in_read, void* data_out, size_t data_out_size, size_t* data_out_written);
-
-static void cfx_response_filter_set_managed_callbacks(void *init_filter, void *filter) {
-    cfx_response_filter_init_filter_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval)) init_filter;
-    cfx_response_filter_filter_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_response_filter_status_t* __retval, void* data_in, size_t data_in_size, size_t* data_in_read, void* data_out, size_t data_out_size, size_t* data_out_written)) filter;
-}
-
 // init_filter
 
 int CEF_CALLBACK cfx_response_filter_init_filter(cef_response_filter_t* self) {
     int __retval;
-    cfx_response_filter_init_filter_callback(((cfx_response_filter_t*)self)->gc_handle, &__retval);
+    ((cfx_response_filter_t*)self)->init_filter(((cfx_response_filter_t*)self)->gc_handle, &__retval);
     return __retval;
 }
-
 
 // filter
 
 cef_response_filter_status_t CEF_CALLBACK cfx_response_filter_filter(cef_response_filter_t* self, void* data_in, size_t data_in_size, size_t* data_in_read, void* data_out, size_t data_out_size, size_t* data_out_written) {
     cef_response_filter_status_t __retval;
-    cfx_response_filter_filter_callback(((cfx_response_filter_t*)self)->gc_handle, &__retval, data_in, data_in_size, data_in_read, data_out, data_out_size, data_out_written);
+    ((cfx_response_filter_t*)self)->filter(((cfx_response_filter_t*)self)->gc_handle, &__retval, data_in, data_in_size, data_in_read, data_out, data_out_size, data_out_written);
     return __retval;
 }
 
-
-static void cfx_response_filter_activate_callback(cef_response_filter_t* self, int index, int active) {
+static void cfx_response_filter_set_callback(cef_response_filter_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->init_filter = active ? cfx_response_filter_init_filter : 0;
+        ((cfx_response_filter_t*)self)->init_filter = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval))callback;
+        self->init_filter = callback ? cfx_response_filter_init_filter : 0;
         break;
     case 1:
-        self->filter = active ? cfx_response_filter_filter : 0;
+        ((cfx_response_filter_t*)self)->filter = (void (CEF_CALLBACK *)(gc_handle_t self, cef_response_filter_status_t* __retval, void* data_in, size_t data_in_size, size_t* data_in_read, void* data_out, size_t data_out_size, size_t* data_out_written))callback;
+        self->filter = callback ? cfx_response_filter_filter : 0;
         break;
     }
 }

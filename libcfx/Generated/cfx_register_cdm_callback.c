@@ -37,6 +37,8 @@ typedef struct _cfx_register_cdm_callback_t {
     cef_register_cdm_callback_t cef_register_cdm_callback;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    // managed callbacks
+    void (CEF_CALLBACK *on_cdm_registration_complete)(gc_handle_t self, cef_cdm_registration_error_t result, char16 *error_message_str, int error_message_length);
 } cfx_register_cdm_callback_t;
 
 void CEF_CALLBACK _cfx_register_cdm_callback_add_ref(struct _cef_base_t* base) {
@@ -71,24 +73,17 @@ static gc_handle_t cfx_register_cdm_callback_get_gc_handle(cfx_register_cdm_call
     return self->gc_handle;
 }
 
-// managed callbacks
-void (CEF_CALLBACK *cfx_register_cdm_callback_on_cdm_registration_complete_callback)(gc_handle_t self, cef_cdm_registration_error_t result, char16 *error_message_str, int error_message_length);
-
-static void cfx_register_cdm_callback_set_managed_callbacks(void *on_cdm_registration_complete) {
-    cfx_register_cdm_callback_on_cdm_registration_complete_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_cdm_registration_error_t result, char16 *error_message_str, int error_message_length)) on_cdm_registration_complete;
-}
-
 // on_cdm_registration_complete
 
 void CEF_CALLBACK cfx_register_cdm_callback_on_cdm_registration_complete(cef_register_cdm_callback_t* self, cef_cdm_registration_error_t result, const cef_string_t* error_message) {
-    cfx_register_cdm_callback_on_cdm_registration_complete_callback(((cfx_register_cdm_callback_t*)self)->gc_handle, result, error_message ? error_message->str : 0, error_message ? (int)error_message->length : 0);
+    ((cfx_register_cdm_callback_t*)self)->on_cdm_registration_complete(((cfx_register_cdm_callback_t*)self)->gc_handle, result, error_message ? error_message->str : 0, error_message ? (int)error_message->length : 0);
 }
 
-
-static void cfx_register_cdm_callback_activate_callback(cef_register_cdm_callback_t* self, int index, int active) {
+static void cfx_register_cdm_callback_set_callback(cef_register_cdm_callback_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_cdm_registration_complete = active ? cfx_register_cdm_callback_on_cdm_registration_complete : 0;
+        ((cfx_register_cdm_callback_t*)self)->on_cdm_registration_complete = (void (CEF_CALLBACK *)(gc_handle_t self, cef_cdm_registration_error_t result, char16 *error_message_str, int error_message_length))callback;
+        self->on_cdm_registration_complete = callback ? cfx_register_cdm_callback_on_cdm_registration_complete : 0;
         break;
     }
 }

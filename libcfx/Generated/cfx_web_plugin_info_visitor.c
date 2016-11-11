@@ -37,6 +37,8 @@ typedef struct _cfx_web_plugin_info_visitor_t {
     cef_web_plugin_info_visitor_t cef_web_plugin_info_visitor;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    // managed callbacks
+    void (CEF_CALLBACK *visit)(gc_handle_t self, int* __retval, cef_web_plugin_info_t* info, int count, int total);
 } cfx_web_plugin_info_visitor_t;
 
 void CEF_CALLBACK _cfx_web_plugin_info_visitor_add_ref(struct _cef_base_t* base) {
@@ -71,26 +73,19 @@ static gc_handle_t cfx_web_plugin_info_visitor_get_gc_handle(cfx_web_plugin_info
     return self->gc_handle;
 }
 
-// managed callbacks
-void (CEF_CALLBACK *cfx_web_plugin_info_visitor_visit_callback)(gc_handle_t self, int* __retval, cef_web_plugin_info_t* info, int count, int total);
-
-static void cfx_web_plugin_info_visitor_set_managed_callbacks(void *visit) {
-    cfx_web_plugin_info_visitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_web_plugin_info_t* info, int count, int total)) visit;
-}
-
 // visit
 
 int CEF_CALLBACK cfx_web_plugin_info_visitor_visit(cef_web_plugin_info_visitor_t* self, cef_web_plugin_info_t* info, int count, int total) {
     int __retval;
-    cfx_web_plugin_info_visitor_visit_callback(((cfx_web_plugin_info_visitor_t*)self)->gc_handle, &__retval, info, count, total);
+    ((cfx_web_plugin_info_visitor_t*)self)->visit(((cfx_web_plugin_info_visitor_t*)self)->gc_handle, &__retval, info, count, total);
     return __retval;
 }
 
-
-static void cfx_web_plugin_info_visitor_activate_callback(cef_web_plugin_info_visitor_t* self, int index, int active) {
+static void cfx_web_plugin_info_visitor_set_callback(cef_web_plugin_info_visitor_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->visit = active ? cfx_web_plugin_info_visitor_visit : 0;
+        ((cfx_web_plugin_info_visitor_t*)self)->visit = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_web_plugin_info_t* info, int count, int total))callback;
+        self->visit = callback ? cfx_web_plugin_info_visitor_visit : 0;
         break;
     }
 }

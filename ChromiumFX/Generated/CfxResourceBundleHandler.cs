@@ -60,18 +60,17 @@ namespace Chromium {
             get_localized_string_native = get_localized_string;
             get_data_resource_native = get_data_resource;
             get_data_resource_for_scale_native = get_data_resource_for_scale;
-            var setCallbacks = (CfxApi.cfx_set_ptr_3_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_resource_bundle_handler_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_3_delegate));
-            setCallbacks(
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_localized_string_native),
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_data_resource_native),
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_data_resource_for_scale_native)
-            );
+
+            get_localized_string_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_localized_string_native);
+            get_data_resource_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_data_resource_native);
+            get_data_resource_for_scale_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_data_resource_for_scale_native);
         }
 
         // get_localized_string
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void get_localized_string_delegate(IntPtr gcHandlePtr, out int __retval, int string_id, ref IntPtr string_str, ref int string_length);
         private static get_localized_string_delegate get_localized_string_native;
+        private static IntPtr get_localized_string_native_ptr;
 
         internal static void get_localized_string(IntPtr gcHandlePtr, out int __retval, int string_id, ref IntPtr string_str, ref int string_length) {
             var self = (CfxResourceBundleHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -95,6 +94,7 @@ namespace Chromium {
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void get_data_resource_delegate(IntPtr gcHandlePtr, out int __retval, int resource_id, out IntPtr data, out UIntPtr data_size);
         private static get_data_resource_delegate get_data_resource_native;
+        private static IntPtr get_data_resource_native_ptr;
 
         internal static void get_data_resource(IntPtr gcHandlePtr, out int __retval, int resource_id, out IntPtr data, out UIntPtr data_size) {
             var self = (CfxResourceBundleHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -117,6 +117,7 @@ namespace Chromium {
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void get_data_resource_for_scale_delegate(IntPtr gcHandlePtr, out int __retval, int resource_id, int scale_factor, out IntPtr data, out UIntPtr data_size);
         private static get_data_resource_for_scale_delegate get_data_resource_for_scale_native;
+        private static IntPtr get_data_resource_for_scale_native_ptr;
 
         internal static void get_data_resource_for_scale(IntPtr gcHandlePtr, out int __retval, int resource_id, int scale_factor, out IntPtr data, out UIntPtr data_size) {
             var self = (CfxResourceBundleHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -152,7 +153,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_GetLocalizedString == null) {
-                        CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_activate_callback(NativePtr, 0, 1);
+                        CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_set_callback(NativePtr, 0, get_localized_string_native_ptr);
                     }
                     m_GetLocalizedString += value;
                 }
@@ -161,7 +162,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetLocalizedString -= value;
                     if(m_GetLocalizedString == null) {
-                        CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_activate_callback(NativePtr, 0, 0);
+                        CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_set_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -185,7 +186,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_GetDataResource == null) {
-                        CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_activate_callback(NativePtr, 1, 1);
+                        CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_set_callback(NativePtr, 1, get_data_resource_native_ptr);
                     }
                     m_GetDataResource += value;
                 }
@@ -194,7 +195,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetDataResource -= value;
                     if(m_GetDataResource == null) {
-                        CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_activate_callback(NativePtr, 1, 0);
+                        CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_set_callback(NativePtr, 1, IntPtr.Zero);
                     }
                 }
             }
@@ -218,7 +219,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_GetDataResourceForScale == null) {
-                        CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_activate_callback(NativePtr, 2, 1);
+                        CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_set_callback(NativePtr, 2, get_data_resource_for_scale_native_ptr);
                     }
                     m_GetDataResourceForScale += value;
                 }
@@ -227,7 +228,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_GetDataResourceForScale -= value;
                     if(m_GetDataResourceForScale == null) {
-                        CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_activate_callback(NativePtr, 2, 0);
+                        CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_set_callback(NativePtr, 2, IntPtr.Zero);
                     }
                 }
             }
@@ -238,15 +239,15 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_GetLocalizedString != null) {
                 m_GetLocalizedString = null;
-                CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_activate_callback(NativePtr, 0, 0);
+                CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_set_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_GetDataResource != null) {
                 m_GetDataResource = null;
-                CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_activate_callback(NativePtr, 1, 0);
+                CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_set_callback(NativePtr, 1, IntPtr.Zero);
             }
             if(m_GetDataResourceForScale != null) {
                 m_GetDataResourceForScale = null;
-                CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_activate_callback(NativePtr, 2, 0);
+                CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_set_callback(NativePtr, 2, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

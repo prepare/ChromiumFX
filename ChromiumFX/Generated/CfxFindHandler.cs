@@ -57,16 +57,15 @@ namespace Chromium {
 
         internal static void SetNativeCallbacks() {
             on_find_result_native = on_find_result;
-            var setCallbacks = (CfxApi.cfx_set_ptr_1_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_find_handler_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_1_delegate));
-            setCallbacks(
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_find_result_native)
-            );
+
+            on_find_result_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_find_result_native);
         }
 
         // on_find_result
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void on_find_result_delegate(IntPtr gcHandlePtr, IntPtr browser, int identifier, int count, IntPtr selectionRect, int activeMatchOrdinal, int finalUpdate);
         private static on_find_result_delegate on_find_result_native;
+        private static IntPtr on_find_result_native_ptr;
 
         internal static void on_find_result(IntPtr gcHandlePtr, IntPtr browser, int identifier, int count, IntPtr selectionRect, int activeMatchOrdinal, int finalUpdate) {
             var self = (CfxFindHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -99,7 +98,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnFindResult == null) {
-                        CfxApi.FindHandler.cfx_find_handler_activate_callback(NativePtr, 0, 1);
+                        CfxApi.FindHandler.cfx_find_handler_set_callback(NativePtr, 0, on_find_result_native_ptr);
                     }
                     m_OnFindResult += value;
                 }
@@ -108,7 +107,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnFindResult -= value;
                     if(m_OnFindResult == null) {
-                        CfxApi.FindHandler.cfx_find_handler_activate_callback(NativePtr, 0, 0);
+                        CfxApi.FindHandler.cfx_find_handler_set_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -119,7 +118,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnFindResult != null) {
                 m_OnFindResult = null;
-                CfxApi.FindHandler.cfx_find_handler_activate_callback(NativePtr, 0, 0);
+                CfxApi.FindHandler.cfx_find_handler_set_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

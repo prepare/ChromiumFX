@@ -37,6 +37,11 @@ typedef struct _cfx_jsdialog_handler_t {
     cef_jsdialog_handler_t cef_jsdialog_handler;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    // managed callbacks
+    void (CEF_CALLBACK *on_jsdialog)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *origin_url_str, int origin_url_length, cef_jsdialog_type_t dialog_type, char16 *message_text_str, int message_text_length, char16 *default_prompt_text_str, int default_prompt_text_length, cef_jsdialog_callback_t* callback, int* suppress_message);
+    void (CEF_CALLBACK *on_before_unload_dialog)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *message_text_str, int message_text_length, int is_reload, cef_jsdialog_callback_t* callback);
+    void (CEF_CALLBACK *on_reset_dialog_state)(gc_handle_t self, cef_browser_t* browser);
+    void (CEF_CALLBACK *on_dialog_closed)(gc_handle_t self, cef_browser_t* browser);
 } cfx_jsdialog_handler_t;
 
 void CEF_CALLBACK _cfx_jsdialog_handler_add_ref(struct _cef_base_t* base) {
@@ -71,64 +76,51 @@ static gc_handle_t cfx_jsdialog_handler_get_gc_handle(cfx_jsdialog_handler_t* se
     return self->gc_handle;
 }
 
-// managed callbacks
-void (CEF_CALLBACK *cfx_jsdialog_handler_on_jsdialog_callback)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *origin_url_str, int origin_url_length, cef_jsdialog_type_t dialog_type, char16 *message_text_str, int message_text_length, char16 *default_prompt_text_str, int default_prompt_text_length, cef_jsdialog_callback_t* callback, int* suppress_message);
-void (CEF_CALLBACK *cfx_jsdialog_handler_on_before_unload_dialog_callback)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *message_text_str, int message_text_length, int is_reload, cef_jsdialog_callback_t* callback);
-void (CEF_CALLBACK *cfx_jsdialog_handler_on_reset_dialog_state_callback)(gc_handle_t self, cef_browser_t* browser);
-void (CEF_CALLBACK *cfx_jsdialog_handler_on_dialog_closed_callback)(gc_handle_t self, cef_browser_t* browser);
-
-static void cfx_jsdialog_handler_set_managed_callbacks(void *on_jsdialog, void *on_before_unload_dialog, void *on_reset_dialog_state, void *on_dialog_closed) {
-    cfx_jsdialog_handler_on_jsdialog_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *origin_url_str, int origin_url_length, cef_jsdialog_type_t dialog_type, char16 *message_text_str, int message_text_length, char16 *default_prompt_text_str, int default_prompt_text_length, cef_jsdialog_callback_t* callback, int* suppress_message)) on_jsdialog;
-    cfx_jsdialog_handler_on_before_unload_dialog_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *message_text_str, int message_text_length, int is_reload, cef_jsdialog_callback_t* callback)) on_before_unload_dialog;
-    cfx_jsdialog_handler_on_reset_dialog_state_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) on_reset_dialog_state;
-    cfx_jsdialog_handler_on_dialog_closed_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser)) on_dialog_closed;
-}
-
 // on_jsdialog
 
 int CEF_CALLBACK cfx_jsdialog_handler_on_jsdialog(cef_jsdialog_handler_t* self, cef_browser_t* browser, const cef_string_t* origin_url, cef_jsdialog_type_t dialog_type, const cef_string_t* message_text, const cef_string_t* default_prompt_text, cef_jsdialog_callback_t* callback, int* suppress_message) {
     int __retval;
-    cfx_jsdialog_handler_on_jsdialog_callback(((cfx_jsdialog_handler_t*)self)->gc_handle, &__retval, browser, origin_url ? origin_url->str : 0, origin_url ? (int)origin_url->length : 0, dialog_type, message_text ? message_text->str : 0, message_text ? (int)message_text->length : 0, default_prompt_text ? default_prompt_text->str : 0, default_prompt_text ? (int)default_prompt_text->length : 0, callback, suppress_message);
+    ((cfx_jsdialog_handler_t*)self)->on_jsdialog(((cfx_jsdialog_handler_t*)self)->gc_handle, &__retval, browser, origin_url ? origin_url->str : 0, origin_url ? (int)origin_url->length : 0, dialog_type, message_text ? message_text->str : 0, message_text ? (int)message_text->length : 0, default_prompt_text ? default_prompt_text->str : 0, default_prompt_text ? (int)default_prompt_text->length : 0, callback, suppress_message);
     return __retval;
 }
-
 
 // on_before_unload_dialog
 
 int CEF_CALLBACK cfx_jsdialog_handler_on_before_unload_dialog(cef_jsdialog_handler_t* self, cef_browser_t* browser, const cef_string_t* message_text, int is_reload, cef_jsdialog_callback_t* callback) {
     int __retval;
-    cfx_jsdialog_handler_on_before_unload_dialog_callback(((cfx_jsdialog_handler_t*)self)->gc_handle, &__retval, browser, message_text ? message_text->str : 0, message_text ? (int)message_text->length : 0, is_reload, callback);
+    ((cfx_jsdialog_handler_t*)self)->on_before_unload_dialog(((cfx_jsdialog_handler_t*)self)->gc_handle, &__retval, browser, message_text ? message_text->str : 0, message_text ? (int)message_text->length : 0, is_reload, callback);
     return __retval;
 }
-
 
 // on_reset_dialog_state
 
 void CEF_CALLBACK cfx_jsdialog_handler_on_reset_dialog_state(cef_jsdialog_handler_t* self, cef_browser_t* browser) {
-    cfx_jsdialog_handler_on_reset_dialog_state_callback(((cfx_jsdialog_handler_t*)self)->gc_handle, browser);
+    ((cfx_jsdialog_handler_t*)self)->on_reset_dialog_state(((cfx_jsdialog_handler_t*)self)->gc_handle, browser);
 }
-
 
 // on_dialog_closed
 
 void CEF_CALLBACK cfx_jsdialog_handler_on_dialog_closed(cef_jsdialog_handler_t* self, cef_browser_t* browser) {
-    cfx_jsdialog_handler_on_dialog_closed_callback(((cfx_jsdialog_handler_t*)self)->gc_handle, browser);
+    ((cfx_jsdialog_handler_t*)self)->on_dialog_closed(((cfx_jsdialog_handler_t*)self)->gc_handle, browser);
 }
 
-
-static void cfx_jsdialog_handler_activate_callback(cef_jsdialog_handler_t* self, int index, int active) {
+static void cfx_jsdialog_handler_set_callback(cef_jsdialog_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_jsdialog = active ? cfx_jsdialog_handler_on_jsdialog : 0;
+        ((cfx_jsdialog_handler_t*)self)->on_jsdialog = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *origin_url_str, int origin_url_length, cef_jsdialog_type_t dialog_type, char16 *message_text_str, int message_text_length, char16 *default_prompt_text_str, int default_prompt_text_length, cef_jsdialog_callback_t* callback, int* suppress_message))callback;
+        self->on_jsdialog = callback ? cfx_jsdialog_handler_on_jsdialog : 0;
         break;
     case 1:
-        self->on_before_unload_dialog = active ? cfx_jsdialog_handler_on_before_unload_dialog : 0;
+        ((cfx_jsdialog_handler_t*)self)->on_before_unload_dialog = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *message_text_str, int message_text_length, int is_reload, cef_jsdialog_callback_t* callback))callback;
+        self->on_before_unload_dialog = callback ? cfx_jsdialog_handler_on_before_unload_dialog : 0;
         break;
     case 2:
-        self->on_reset_dialog_state = active ? cfx_jsdialog_handler_on_reset_dialog_state : 0;
+        ((cfx_jsdialog_handler_t*)self)->on_reset_dialog_state = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser))callback;
+        self->on_reset_dialog_state = callback ? cfx_jsdialog_handler_on_reset_dialog_state : 0;
         break;
     case 3:
-        self->on_dialog_closed = active ? cfx_jsdialog_handler_on_dialog_closed : 0;
+        ((cfx_jsdialog_handler_t*)self)->on_dialog_closed = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser))callback;
+        self->on_dialog_closed = callback ? cfx_jsdialog_handler_on_dialog_closed : 0;
         break;
     }
 }

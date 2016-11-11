@@ -37,6 +37,8 @@ typedef struct _cfx_task_t {
     cef_task_t cef_task;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    // managed callbacks
+    void (CEF_CALLBACK *execute)(gc_handle_t self);
 } cfx_task_t;
 
 void CEF_CALLBACK _cfx_task_add_ref(struct _cef_base_t* base) {
@@ -71,24 +73,17 @@ static gc_handle_t cfx_task_get_gc_handle(cfx_task_t* self) {
     return self->gc_handle;
 }
 
-// managed callbacks
-void (CEF_CALLBACK *cfx_task_execute_callback)(gc_handle_t self);
-
-static void cfx_task_set_managed_callbacks(void *execute) {
-    cfx_task_execute_callback = (void (CEF_CALLBACK *)(gc_handle_t self)) execute;
-}
-
 // execute
 
 void CEF_CALLBACK cfx_task_execute(cef_task_t* self) {
-    cfx_task_execute_callback(((cfx_task_t*)self)->gc_handle);
+    ((cfx_task_t*)self)->execute(((cfx_task_t*)self)->gc_handle);
 }
 
-
-static void cfx_task_activate_callback(cef_task_t* self, int index, int active) {
+static void cfx_task_set_callback(cef_task_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->execute = active ? cfx_task_execute : 0;
+        ((cfx_task_t*)self)->execute = (void (CEF_CALLBACK *)(gc_handle_t self))callback;
+        self->execute = callback ? cfx_task_execute : 0;
         break;
     }
 }

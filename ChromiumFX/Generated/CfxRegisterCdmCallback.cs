@@ -58,16 +58,15 @@ namespace Chromium {
 
         internal static void SetNativeCallbacks() {
             on_cdm_registration_complete_native = on_cdm_registration_complete;
-            var setCallbacks = (CfxApi.cfx_set_ptr_1_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_register_cdm_callback_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_1_delegate));
-            setCallbacks(
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_cdm_registration_complete_native)
-            );
+
+            on_cdm_registration_complete_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_cdm_registration_complete_native);
         }
 
         // on_cdm_registration_complete
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void on_cdm_registration_complete_delegate(IntPtr gcHandlePtr, int result, IntPtr error_message_str, int error_message_length);
         private static on_cdm_registration_complete_delegate on_cdm_registration_complete_native;
+        private static IntPtr on_cdm_registration_complete_native_ptr;
 
         internal static void on_cdm_registration_complete(IntPtr gcHandlePtr, int result, IntPtr error_message_str, int error_message_length) {
             var self = (CfxRegisterCdmCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -97,7 +96,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_OnCdmRegistrationComplete == null) {
-                        CfxApi.RegisterCdmCallback.cfx_register_cdm_callback_activate_callback(NativePtr, 0, 1);
+                        CfxApi.RegisterCdmCallback.cfx_register_cdm_callback_set_callback(NativePtr, 0, on_cdm_registration_complete_native_ptr);
                     }
                     m_OnCdmRegistrationComplete += value;
                 }
@@ -106,7 +105,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_OnCdmRegistrationComplete -= value;
                     if(m_OnCdmRegistrationComplete == null) {
-                        CfxApi.RegisterCdmCallback.cfx_register_cdm_callback_activate_callback(NativePtr, 0, 0);
+                        CfxApi.RegisterCdmCallback.cfx_register_cdm_callback_set_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -117,7 +116,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_OnCdmRegistrationComplete != null) {
                 m_OnCdmRegistrationComplete = null;
-                CfxApi.RegisterCdmCallback.cfx_register_cdm_callback_activate_callback(NativePtr, 0, 0);
+                CfxApi.RegisterCdmCallback.cfx_register_cdm_callback_set_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

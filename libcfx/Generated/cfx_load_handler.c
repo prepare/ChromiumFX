@@ -37,6 +37,11 @@ typedef struct _cfx_load_handler_t {
     cef_load_handler_t cef_load_handler;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    // managed callbacks
+    void (CEF_CALLBACK *on_loading_state_change)(gc_handle_t self, cef_browser_t* browser, int isLoading, int canGoBack, int canGoForward);
+    void (CEF_CALLBACK *on_load_start)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_transition_type_t transition_type);
+    void (CEF_CALLBACK *on_load_end)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, int httpStatusCode);
+    void (CEF_CALLBACK *on_load_error)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_errorcode_t errorCode, char16 *errorText_str, int errorText_length, char16 *failedUrl_str, int failedUrl_length);
 } cfx_load_handler_t;
 
 void CEF_CALLBACK _cfx_load_handler_add_ref(struct _cef_base_t* base) {
@@ -71,60 +76,47 @@ static gc_handle_t cfx_load_handler_get_gc_handle(cfx_load_handler_t* self) {
     return self->gc_handle;
 }
 
-// managed callbacks
-void (CEF_CALLBACK *cfx_load_handler_on_loading_state_change_callback)(gc_handle_t self, cef_browser_t* browser, int isLoading, int canGoBack, int canGoForward);
-void (CEF_CALLBACK *cfx_load_handler_on_load_start_callback)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_transition_type_t transition_type);
-void (CEF_CALLBACK *cfx_load_handler_on_load_end_callback)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, int httpStatusCode);
-void (CEF_CALLBACK *cfx_load_handler_on_load_error_callback)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_errorcode_t errorCode, char16 *errorText_str, int errorText_length, char16 *failedUrl_str, int failedUrl_length);
-
-static void cfx_load_handler_set_managed_callbacks(void *on_loading_state_change, void *on_load_start, void *on_load_end, void *on_load_error) {
-    cfx_load_handler_on_loading_state_change_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int isLoading, int canGoBack, int canGoForward)) on_loading_state_change;
-    cfx_load_handler_on_load_start_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_transition_type_t transition_type)) on_load_start;
-    cfx_load_handler_on_load_end_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, int httpStatusCode)) on_load_end;
-    cfx_load_handler_on_load_error_callback = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_errorcode_t errorCode, char16 *errorText_str, int errorText_length, char16 *failedUrl_str, int failedUrl_length)) on_load_error;
-}
-
 // on_loading_state_change
 
 void CEF_CALLBACK cfx_load_handler_on_loading_state_change(cef_load_handler_t* self, cef_browser_t* browser, int isLoading, int canGoBack, int canGoForward) {
-    cfx_load_handler_on_loading_state_change_callback(((cfx_load_handler_t*)self)->gc_handle, browser, isLoading, canGoBack, canGoForward);
+    ((cfx_load_handler_t*)self)->on_loading_state_change(((cfx_load_handler_t*)self)->gc_handle, browser, isLoading, canGoBack, canGoForward);
 }
-
 
 // on_load_start
 
 void CEF_CALLBACK cfx_load_handler_on_load_start(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_transition_type_t transition_type) {
-    cfx_load_handler_on_load_start_callback(((cfx_load_handler_t*)self)->gc_handle, browser, frame, transition_type);
+    ((cfx_load_handler_t*)self)->on_load_start(((cfx_load_handler_t*)self)->gc_handle, browser, frame, transition_type);
 }
-
 
 // on_load_end
 
 void CEF_CALLBACK cfx_load_handler_on_load_end(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, int httpStatusCode) {
-    cfx_load_handler_on_load_end_callback(((cfx_load_handler_t*)self)->gc_handle, browser, frame, httpStatusCode);
+    ((cfx_load_handler_t*)self)->on_load_end(((cfx_load_handler_t*)self)->gc_handle, browser, frame, httpStatusCode);
 }
-
 
 // on_load_error
 
 void CEF_CALLBACK cfx_load_handler_on_load_error(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_errorcode_t errorCode, const cef_string_t* errorText, const cef_string_t* failedUrl) {
-    cfx_load_handler_on_load_error_callback(((cfx_load_handler_t*)self)->gc_handle, browser, frame, errorCode, errorText ? errorText->str : 0, errorText ? (int)errorText->length : 0, failedUrl ? failedUrl->str : 0, failedUrl ? (int)failedUrl->length : 0);
+    ((cfx_load_handler_t*)self)->on_load_error(((cfx_load_handler_t*)self)->gc_handle, browser, frame, errorCode, errorText ? errorText->str : 0, errorText ? (int)errorText->length : 0, failedUrl ? failedUrl->str : 0, failedUrl ? (int)failedUrl->length : 0);
 }
 
-
-static void cfx_load_handler_activate_callback(cef_load_handler_t* self, int index, int active) {
+static void cfx_load_handler_set_callback(cef_load_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_loading_state_change = active ? cfx_load_handler_on_loading_state_change : 0;
+        ((cfx_load_handler_t*)self)->on_loading_state_change = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int isLoading, int canGoBack, int canGoForward))callback;
+        self->on_loading_state_change = callback ? cfx_load_handler_on_loading_state_change : 0;
         break;
     case 1:
-        self->on_load_start = active ? cfx_load_handler_on_load_start : 0;
+        ((cfx_load_handler_t*)self)->on_load_start = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_transition_type_t transition_type))callback;
+        self->on_load_start = callback ? cfx_load_handler_on_load_start : 0;
         break;
     case 2:
-        self->on_load_end = active ? cfx_load_handler_on_load_end : 0;
+        ((cfx_load_handler_t*)self)->on_load_end = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, int httpStatusCode))callback;
+        self->on_load_end = callback ? cfx_load_handler_on_load_end : 0;
         break;
     case 3:
-        self->on_load_error = active ? cfx_load_handler_on_load_error : 0;
+        ((cfx_load_handler_t*)self)->on_load_error = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_errorcode_t errorCode, char16 *errorText_str, int errorText_length, char16 *failedUrl_str, int failedUrl_length))callback;
+        self->on_load_error = callback ? cfx_load_handler_on_load_error : 0;
         break;
     }
 }

@@ -37,6 +37,8 @@ typedef struct _cfx_navigation_entry_visitor_t {
     cef_navigation_entry_visitor_t cef_navigation_entry_visitor;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    // managed callbacks
+    void (CEF_CALLBACK *visit)(gc_handle_t self, int* __retval, cef_navigation_entry_t* entry, int current, int index, int total);
 } cfx_navigation_entry_visitor_t;
 
 void CEF_CALLBACK _cfx_navigation_entry_visitor_add_ref(struct _cef_base_t* base) {
@@ -71,26 +73,19 @@ static gc_handle_t cfx_navigation_entry_visitor_get_gc_handle(cfx_navigation_ent
     return self->gc_handle;
 }
 
-// managed callbacks
-void (CEF_CALLBACK *cfx_navigation_entry_visitor_visit_callback)(gc_handle_t self, int* __retval, cef_navigation_entry_t* entry, int current, int index, int total);
-
-static void cfx_navigation_entry_visitor_set_managed_callbacks(void *visit) {
-    cfx_navigation_entry_visitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_navigation_entry_t* entry, int current, int index, int total)) visit;
-}
-
 // visit
 
 int CEF_CALLBACK cfx_navigation_entry_visitor_visit(cef_navigation_entry_visitor_t* self, cef_navigation_entry_t* entry, int current, int index, int total) {
     int __retval;
-    cfx_navigation_entry_visitor_visit_callback(((cfx_navigation_entry_visitor_t*)self)->gc_handle, &__retval, entry, current, index, total);
+    ((cfx_navigation_entry_visitor_t*)self)->visit(((cfx_navigation_entry_visitor_t*)self)->gc_handle, &__retval, entry, current, index, total);
     return __retval;
 }
 
-
-static void cfx_navigation_entry_visitor_activate_callback(cef_navigation_entry_visitor_t* self, int index, int active) {
+static void cfx_navigation_entry_visitor_set_callback(cef_navigation_entry_visitor_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->visit = active ? cfx_navigation_entry_visitor_visit : 0;
+        ((cfx_navigation_entry_visitor_t*)self)->visit = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_navigation_entry_t* entry, int current, int index, int total))callback;
+        self->visit = callback ? cfx_navigation_entry_visitor_visit : 0;
         break;
     }
 }

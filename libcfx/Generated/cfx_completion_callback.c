@@ -37,6 +37,8 @@ typedef struct _cfx_completion_callback_t {
     cef_completion_callback_t cef_completion_callback;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    // managed callbacks
+    void (CEF_CALLBACK *on_complete)(gc_handle_t self);
 } cfx_completion_callback_t;
 
 void CEF_CALLBACK _cfx_completion_callback_add_ref(struct _cef_base_t* base) {
@@ -71,24 +73,17 @@ static gc_handle_t cfx_completion_callback_get_gc_handle(cfx_completion_callback
     return self->gc_handle;
 }
 
-// managed callbacks
-void (CEF_CALLBACK *cfx_completion_callback_on_complete_callback)(gc_handle_t self);
-
-static void cfx_completion_callback_set_managed_callbacks(void *on_complete) {
-    cfx_completion_callback_on_complete_callback = (void (CEF_CALLBACK *)(gc_handle_t self)) on_complete;
-}
-
 // on_complete
 
 void CEF_CALLBACK cfx_completion_callback_on_complete(cef_completion_callback_t* self) {
-    cfx_completion_callback_on_complete_callback(((cfx_completion_callback_t*)self)->gc_handle);
+    ((cfx_completion_callback_t*)self)->on_complete(((cfx_completion_callback_t*)self)->gc_handle);
 }
 
-
-static void cfx_completion_callback_activate_callback(cef_completion_callback_t* self, int index, int active) {
+static void cfx_completion_callback_set_callback(cef_completion_callback_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_complete = active ? cfx_completion_callback_on_complete : 0;
+        ((cfx_completion_callback_t*)self)->on_complete = (void (CEF_CALLBACK *)(gc_handle_t self))callback;
+        self->on_complete = callback ? cfx_completion_callback_on_complete : 0;
         break;
     }
 }

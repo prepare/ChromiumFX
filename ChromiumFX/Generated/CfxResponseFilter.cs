@@ -58,17 +58,16 @@ namespace Chromium {
         internal static void SetNativeCallbacks() {
             init_filter_native = init_filter;
             filter_native = filter;
-            var setCallbacks = (CfxApi.cfx_set_ptr_2_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_response_filter_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_2_delegate));
-            setCallbacks(
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(init_filter_native),
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(filter_native)
-            );
+
+            init_filter_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(init_filter_native);
+            filter_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(filter_native);
         }
 
         // init_filter
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void init_filter_delegate(IntPtr gcHandlePtr, out int __retval);
         private static init_filter_delegate init_filter_native;
+        private static IntPtr init_filter_native_ptr;
 
         internal static void init_filter(IntPtr gcHandlePtr, out int __retval) {
             var self = (CfxResponseFilter)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -87,6 +86,7 @@ namespace Chromium {
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void filter_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr data_in, UIntPtr data_in_size, out UIntPtr data_in_read, IntPtr data_out, UIntPtr data_out_size, out UIntPtr data_out_written);
         private static filter_delegate filter_native;
+        private static IntPtr filter_native_ptr;
 
         internal static void filter(IntPtr gcHandlePtr, out int __retval, IntPtr data_in, UIntPtr data_in_size, out UIntPtr data_in_read, IntPtr data_out, UIntPtr data_out_size, out UIntPtr data_out_written) {
             var self = (CfxResponseFilter)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -120,7 +120,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_InitFilter == null) {
-                        CfxApi.ResponseFilter.cfx_response_filter_activate_callback(NativePtr, 0, 1);
+                        CfxApi.ResponseFilter.cfx_response_filter_set_callback(NativePtr, 0, init_filter_native_ptr);
                     }
                     m_InitFilter += value;
                 }
@@ -129,7 +129,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_InitFilter -= value;
                     if(m_InitFilter == null) {
-                        CfxApi.ResponseFilter.cfx_response_filter_activate_callback(NativePtr, 0, 0);
+                        CfxApi.ResponseFilter.cfx_response_filter_set_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -163,7 +163,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_Filter == null) {
-                        CfxApi.ResponseFilter.cfx_response_filter_activate_callback(NativePtr, 1, 1);
+                        CfxApi.ResponseFilter.cfx_response_filter_set_callback(NativePtr, 1, filter_native_ptr);
                     }
                     m_Filter += value;
                 }
@@ -172,7 +172,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Filter -= value;
                     if(m_Filter == null) {
-                        CfxApi.ResponseFilter.cfx_response_filter_activate_callback(NativePtr, 1, 0);
+                        CfxApi.ResponseFilter.cfx_response_filter_set_callback(NativePtr, 1, IntPtr.Zero);
                     }
                 }
             }
@@ -183,11 +183,11 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_InitFilter != null) {
                 m_InitFilter = null;
-                CfxApi.ResponseFilter.cfx_response_filter_activate_callback(NativePtr, 0, 0);
+                CfxApi.ResponseFilter.cfx_response_filter_set_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_Filter != null) {
                 m_Filter = null;
-                CfxApi.ResponseFilter.cfx_response_filter_activate_callback(NativePtr, 1, 0);
+                CfxApi.ResponseFilter.cfx_response_filter_set_callback(NativePtr, 1, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

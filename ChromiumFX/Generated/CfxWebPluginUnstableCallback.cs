@@ -57,16 +57,15 @@ namespace Chromium {
 
         internal static void SetNativeCallbacks() {
             is_unstable_native = is_unstable;
-            var setCallbacks = (CfxApi.cfx_set_ptr_1_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_web_plugin_unstable_callback_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_1_delegate));
-            setCallbacks(
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(is_unstable_native)
-            );
+
+            is_unstable_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(is_unstable_native);
         }
 
         // is_unstable
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void is_unstable_delegate(IntPtr gcHandlePtr, IntPtr path_str, int path_length, int unstable);
         private static is_unstable_delegate is_unstable_native;
+        private static IntPtr is_unstable_native_ptr;
 
         internal static void is_unstable(IntPtr gcHandlePtr, IntPtr path_str, int path_length, int unstable) {
             var self = (CfxWebPluginUnstableCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -95,7 +94,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_IsUnstable == null) {
-                        CfxApi.WebPluginUnstableCallback.cfx_web_plugin_unstable_callback_activate_callback(NativePtr, 0, 1);
+                        CfxApi.WebPluginUnstableCallback.cfx_web_plugin_unstable_callback_set_callback(NativePtr, 0, is_unstable_native_ptr);
                     }
                     m_IsUnstable += value;
                 }
@@ -104,7 +103,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_IsUnstable -= value;
                     if(m_IsUnstable == null) {
-                        CfxApi.WebPluginUnstableCallback.cfx_web_plugin_unstable_callback_activate_callback(NativePtr, 0, 0);
+                        CfxApi.WebPluginUnstableCallback.cfx_web_plugin_unstable_callback_set_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -115,7 +114,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_IsUnstable != null) {
                 m_IsUnstable = null;
-                CfxApi.WebPluginUnstableCallback.cfx_web_plugin_unstable_callback_activate_callback(NativePtr, 0, 0);
+                CfxApi.WebPluginUnstableCallback.cfx_web_plugin_unstable_callback_set_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

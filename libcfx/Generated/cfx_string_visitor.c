@@ -37,6 +37,8 @@ typedef struct _cfx_string_visitor_t {
     cef_string_visitor_t cef_string_visitor;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    // managed callbacks
+    void (CEF_CALLBACK *visit)(gc_handle_t self, char16 *string_str, int string_length);
 } cfx_string_visitor_t;
 
 void CEF_CALLBACK _cfx_string_visitor_add_ref(struct _cef_base_t* base) {
@@ -71,24 +73,17 @@ static gc_handle_t cfx_string_visitor_get_gc_handle(cfx_string_visitor_t* self) 
     return self->gc_handle;
 }
 
-// managed callbacks
-void (CEF_CALLBACK *cfx_string_visitor_visit_callback)(gc_handle_t self, char16 *string_str, int string_length);
-
-static void cfx_string_visitor_set_managed_callbacks(void *visit) {
-    cfx_string_visitor_visit_callback = (void (CEF_CALLBACK *)(gc_handle_t self, char16 *string_str, int string_length)) visit;
-}
-
 // visit
 
 void CEF_CALLBACK cfx_string_visitor_visit(cef_string_visitor_t* self, const cef_string_t* string) {
-    cfx_string_visitor_visit_callback(((cfx_string_visitor_t*)self)->gc_handle, string ? string->str : 0, string ? (int)string->length : 0);
+    ((cfx_string_visitor_t*)self)->visit(((cfx_string_visitor_t*)self)->gc_handle, string ? string->str : 0, string ? (int)string->length : 0);
 }
 
-
-static void cfx_string_visitor_activate_callback(cef_string_visitor_t* self, int index, int active) {
+static void cfx_string_visitor_set_callback(cef_string_visitor_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->visit = active ? cfx_string_visitor_visit : 0;
+        ((cfx_string_visitor_t*)self)->visit = (void (CEF_CALLBACK *)(gc_handle_t self, char16 *string_str, int string_length))callback;
+        self->visit = callback ? cfx_string_visitor_visit : 0;
         break;
     }
 }

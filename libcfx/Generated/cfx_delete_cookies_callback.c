@@ -37,6 +37,8 @@ typedef struct _cfx_delete_cookies_callback_t {
     cef_delete_cookies_callback_t cef_delete_cookies_callback;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    // managed callbacks
+    void (CEF_CALLBACK *on_complete)(gc_handle_t self, int num_deleted);
 } cfx_delete_cookies_callback_t;
 
 void CEF_CALLBACK _cfx_delete_cookies_callback_add_ref(struct _cef_base_t* base) {
@@ -71,24 +73,17 @@ static gc_handle_t cfx_delete_cookies_callback_get_gc_handle(cfx_delete_cookies_
     return self->gc_handle;
 }
 
-// managed callbacks
-void (CEF_CALLBACK *cfx_delete_cookies_callback_on_complete_callback)(gc_handle_t self, int num_deleted);
-
-static void cfx_delete_cookies_callback_set_managed_callbacks(void *on_complete) {
-    cfx_delete_cookies_callback_on_complete_callback = (void (CEF_CALLBACK *)(gc_handle_t self, int num_deleted)) on_complete;
-}
-
 // on_complete
 
 void CEF_CALLBACK cfx_delete_cookies_callback_on_complete(cef_delete_cookies_callback_t* self, int num_deleted) {
-    cfx_delete_cookies_callback_on_complete_callback(((cfx_delete_cookies_callback_t*)self)->gc_handle, num_deleted);
+    ((cfx_delete_cookies_callback_t*)self)->on_complete(((cfx_delete_cookies_callback_t*)self)->gc_handle, num_deleted);
 }
 
-
-static void cfx_delete_cookies_callback_activate_callback(cef_delete_cookies_callback_t* self, int index, int active) {
+static void cfx_delete_cookies_callback_set_callback(cef_delete_cookies_callback_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_complete = active ? cfx_delete_cookies_callback_on_complete : 0;
+        ((cfx_delete_cookies_callback_t*)self)->on_complete = (void (CEF_CALLBACK *)(gc_handle_t self, int num_deleted))callback;
+        self->on_complete = callback ? cfx_delete_cookies_callback_on_complete : 0;
         break;
     }
 }

@@ -57,16 +57,15 @@ namespace Chromium {
 
         internal static void SetNativeCallbacks() {
             visit_native = visit;
-            var setCallbacks = (CfxApi.cfx_set_ptr_1_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_navigation_entry_visitor_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_1_delegate));
-            setCallbacks(
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(visit_native)
-            );
+
+            visit_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(visit_native);
         }
 
         // visit
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void visit_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr entry, int current, int index, int total);
         private static visit_delegate visit_native;
+        private static IntPtr visit_native_ptr;
 
         internal static void visit(IntPtr gcHandlePtr, out int __retval, IntPtr entry, int current, int index, int total) {
             var self = (CfxNavigationEntryVisitor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -100,7 +99,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_Visit == null) {
-                        CfxApi.NavigationEntryVisitor.cfx_navigation_entry_visitor_activate_callback(NativePtr, 0, 1);
+                        CfxApi.NavigationEntryVisitor.cfx_navigation_entry_visitor_set_callback(NativePtr, 0, visit_native_ptr);
                     }
                     m_Visit += value;
                 }
@@ -109,7 +108,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Visit -= value;
                     if(m_Visit == null) {
-                        CfxApi.NavigationEntryVisitor.cfx_navigation_entry_visitor_activate_callback(NativePtr, 0, 0);
+                        CfxApi.NavigationEntryVisitor.cfx_navigation_entry_visitor_set_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -120,7 +119,7 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_Visit != null) {
                 m_Visit = null;
-                CfxApi.NavigationEntryVisitor.cfx_navigation_entry_visitor_activate_callback(NativePtr, 0, 0);
+                CfxApi.NavigationEntryVisitor.cfx_navigation_entry_visitor_set_callback(NativePtr, 0, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

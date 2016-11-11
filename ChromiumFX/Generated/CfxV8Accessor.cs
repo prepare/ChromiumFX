@@ -60,17 +60,16 @@ namespace Chromium {
         internal static void SetNativeCallbacks() {
             get_native = get;
             set_native = set;
-            var setCallbacks = (CfxApi.cfx_set_ptr_2_delegate)CfxApi.GetDelegate(CfxApiLoader.FunctionIndex.cfx_v8accessor_set_managed_callbacks, typeof(CfxApi.cfx_set_ptr_2_delegate));
-            setCallbacks(
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_native),
-                System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(set_native)
-            );
+
+            get_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_native);
+            set_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(set_native);
         }
 
         // get
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void get_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out IntPtr retval, ref IntPtr exception_str, ref int exception_length);
         private static get_delegate get_native;
+        private static IntPtr get_native_ptr;
 
         internal static void get(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out IntPtr retval, ref IntPtr exception_str, ref int exception_length) {
             var self = (CfxV8Accessor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -97,6 +96,7 @@ namespace Chromium {
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
         private delegate void set_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, IntPtr value, ref IntPtr exception_str, ref int exception_length);
         private static set_delegate set_native;
+        private static IntPtr set_native_ptr;
 
         internal static void set(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, IntPtr value, ref IntPtr exception_str, ref int exception_length) {
             var self = (CfxV8Accessor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
@@ -136,7 +136,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_Get == null) {
-                        CfxApi.V8Accessor.cfx_v8accessor_activate_callback(NativePtr, 0, 1);
+                        CfxApi.V8Accessor.cfx_v8accessor_set_callback(NativePtr, 0, get_native_ptr);
                     }
                     m_Get += value;
                 }
@@ -145,7 +145,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Get -= value;
                     if(m_Get == null) {
-                        CfxApi.V8Accessor.cfx_v8accessor_activate_callback(NativePtr, 0, 0);
+                        CfxApi.V8Accessor.cfx_v8accessor_set_callback(NativePtr, 0, IntPtr.Zero);
                     }
                 }
             }
@@ -168,7 +168,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_Set == null) {
-                        CfxApi.V8Accessor.cfx_v8accessor_activate_callback(NativePtr, 1, 1);
+                        CfxApi.V8Accessor.cfx_v8accessor_set_callback(NativePtr, 1, set_native_ptr);
                     }
                     m_Set += value;
                 }
@@ -177,7 +177,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_Set -= value;
                     if(m_Set == null) {
-                        CfxApi.V8Accessor.cfx_v8accessor_activate_callback(NativePtr, 1, 0);
+                        CfxApi.V8Accessor.cfx_v8accessor_set_callback(NativePtr, 1, IntPtr.Zero);
                     }
                 }
             }
@@ -188,11 +188,11 @@ namespace Chromium {
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_Get != null) {
                 m_Get = null;
-                CfxApi.V8Accessor.cfx_v8accessor_activate_callback(NativePtr, 0, 0);
+                CfxApi.V8Accessor.cfx_v8accessor_set_callback(NativePtr, 0, IntPtr.Zero);
             }
             if(m_Set != null) {
                 m_Set = null;
-                CfxApi.V8Accessor.cfx_v8accessor_activate_callback(NativePtr, 1, 0);
+                CfxApi.V8Accessor.cfx_v8accessor_set_callback(NativePtr, 1, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }

@@ -37,6 +37,8 @@ typedef struct _cfx_pdf_print_callback_t {
     cef_pdf_print_callback_t cef_pdf_print_callback;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    // managed callbacks
+    void (CEF_CALLBACK *on_pdf_print_finished)(gc_handle_t self, char16 *path_str, int path_length, int ok);
 } cfx_pdf_print_callback_t;
 
 void CEF_CALLBACK _cfx_pdf_print_callback_add_ref(struct _cef_base_t* base) {
@@ -71,24 +73,17 @@ static gc_handle_t cfx_pdf_print_callback_get_gc_handle(cfx_pdf_print_callback_t
     return self->gc_handle;
 }
 
-// managed callbacks
-void (CEF_CALLBACK *cfx_pdf_print_callback_on_pdf_print_finished_callback)(gc_handle_t self, char16 *path_str, int path_length, int ok);
-
-static void cfx_pdf_print_callback_set_managed_callbacks(void *on_pdf_print_finished) {
-    cfx_pdf_print_callback_on_pdf_print_finished_callback = (void (CEF_CALLBACK *)(gc_handle_t self, char16 *path_str, int path_length, int ok)) on_pdf_print_finished;
-}
-
 // on_pdf_print_finished
 
 void CEF_CALLBACK cfx_pdf_print_callback_on_pdf_print_finished(cef_pdf_print_callback_t* self, const cef_string_t* path, int ok) {
-    cfx_pdf_print_callback_on_pdf_print_finished_callback(((cfx_pdf_print_callback_t*)self)->gc_handle, path ? path->str : 0, path ? (int)path->length : 0, ok);
+    ((cfx_pdf_print_callback_t*)self)->on_pdf_print_finished(((cfx_pdf_print_callback_t*)self)->gc_handle, path ? path->str : 0, path ? (int)path->length : 0, ok);
 }
 
-
-static void cfx_pdf_print_callback_activate_callback(cef_pdf_print_callback_t* self, int index, int active) {
+static void cfx_pdf_print_callback_set_callback(cef_pdf_print_callback_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        self->on_pdf_print_finished = active ? cfx_pdf_print_callback_on_pdf_print_finished : 0;
+        ((cfx_pdf_print_callback_t*)self)->on_pdf_print_finished = (void (CEF_CALLBACK *)(gc_handle_t self, char16 *path_str, int path_length, int ok))callback;
+        self->on_pdf_print_finished = callback ? cfx_pdf_print_callback_on_pdf_print_finished : 0;
         break;
     }
 }
