@@ -75,6 +75,7 @@ namespace Chromium {
         public bool CallbacksDisabled { get; set; }
 
         internal override void OnDispose(IntPtr nativePtr) {
+            CallbacksDisabled = true;
             CfxApi.cfx_release(nativePtr);
         }
     }
