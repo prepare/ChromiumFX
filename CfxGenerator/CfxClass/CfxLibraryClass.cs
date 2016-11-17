@@ -212,7 +212,7 @@ public class CfxLibraryClass : CfxClass {
         foreach(var f in ExportFunctions) {
             if(!GeneratorConfig.IsBrowserProcessOnly(f.Name)) {
                 if(!f.PrivateWrapper) {
-                    b.BeginRemoteCallClass(ClassName + f.PublicName, false, callIds);
+                    b.BeginRemoteCallClass(ClassName + f.PublicName, callIds);
                     f.Signature.EmitRemoteCallClassBody(b, ApiClassName, f.CfxApiFunctionName);
                     b.EndBlock();
                     b.AppendLine();
@@ -222,7 +222,7 @@ public class CfxLibraryClass : CfxClass {
 
         foreach(var cb in CallbackFunctions) {
             if(!GeneratorConfig.IsBrowserProcessOnly(CefStruct.Name + "::" + cb.Name)) {
-                b.BeginRemoteCallClass(ClassName + cb.RemoteCallClassName, false, callIds);
+                b.BeginRemoteCallClass(ClassName + cb.RemoteCallClassName, callIds);
                 cb.Signature.EmitRemoteCallClassBody(b, ApiClassName, cb.CfxApiFunctionName);
                 b.EndBlock();
                 b.AppendLine();

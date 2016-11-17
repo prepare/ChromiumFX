@@ -35,14 +35,10 @@ using System;
 
 namespace Chromium.Remote {
 
-    internal class CfxRectCtorRemoteCall : RemoteCall {
+    internal class CfxRectCtorRemoteCall : CtorRemoteCall {
 
         internal CfxRectCtorRemoteCall()
             : base(RemoteCallId.CfxRectCtorRemoteCall) {}
-
-        internal IntPtr __retval;
-        protected override void WriteReturn(StreamHandler h) { h.Write(__retval); }
-        protected override void ReadReturn(StreamHandler h) { h.Read(out __retval); }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             __retval = RemoteProxy.Wrap(new CfxRect());

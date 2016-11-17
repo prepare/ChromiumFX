@@ -182,24 +182,14 @@ public class CodeBuilder {
         BeginBlock("{0} class {1}", modifiers, name);
     }
 
-    public void BeginRemoteCallClass(string name, bool eventCall, List<string> callIds) {
-        if(!eventCall) {
-            BeginClass(name + "RemoteCall : RemoteCall", "internal");
-            callIds.Add(name + "RemoteCall");
+    public void BeginRemoteCallClass(string name, List<string> callIds, string baseClass = "RemoteCall") {
+            BeginBlock("internal class {0}{1} : {1}", name, baseClass);
+            callIds.Add(name + baseClass);
             AppendLine();
-            AppendLine("internal {0}RemoteCall()", name);
+            AppendLine("internal {0}{1}()", name, baseClass);
             IncreaseIndent();
-            AppendLine(": base(RemoteCallId.{0}RemoteCall) {{}}", name);
+            AppendLine(": base(RemoteCallId.{0}{1}) {{}}", name, baseClass);
             DecreaseIndent();
-        } else {
-            BeginClass(name + "RemoteClientCall : RemoteClientCall", "internal");
-            callIds.Add(name + "RemoteClientCall");
-            AppendLine();
-            AppendLine("internal {0}RemoteClientCall()", name);
-            IncreaseIndent();
-            AppendLine(": base(RemoteCallId.{0}RemoteClientCall) {{}}", name);
-            DecreaseIndent();
-        }
     }
 
     public void BeginFunction(string functionSignature, string modifiers = "public") {

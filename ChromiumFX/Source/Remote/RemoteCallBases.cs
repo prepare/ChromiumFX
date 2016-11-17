@@ -68,7 +68,7 @@ namespace Chromium.Remote {
         internal IntPtr sender;
         internal ulong eventArgsId;
 
-        internal RemoteClientCall(RemoteCallId callId) : base(callId) {}
+        internal RemoteClientCall(RemoteCallId callId) : base(callId) { }
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(sender);
@@ -79,6 +79,16 @@ namespace Chromium.Remote {
             h.Read(out sender);
             h.Read(out eventArgsId);
         }
+
+    }
+
+    internal abstract class CtorRemoteCall : RemoteCall {
+
+        internal CtorRemoteCall(RemoteCallId callId) : base(callId) { }
+
+        internal IntPtr __retval;
+        protected override void WriteReturn(StreamHandler h) { h.Write(__retval); }
+        protected override void ReadReturn(StreamHandler h) { h.Read(out __retval); }
 
     }
 }

@@ -401,7 +401,7 @@ public class WrapperGenerator {
         b.BeginCfxNamespace(".Remote");
         foreach(var f in remoteDecls.ExportFunctions) {
             if(!f.PrivateWrapper) {
-                b.BeginRemoteCallClass("CfxRuntime" + f.PublicName, false, callIds);
+                b.BeginRemoteCallClass("CfxRuntime" + f.PublicName, callIds);
                 f.Signature.EmitRemoteCallClassBody(b, "Runtime", f.CfxApiFunctionName);
                 b.EndBlock();
                 b.AppendLine();

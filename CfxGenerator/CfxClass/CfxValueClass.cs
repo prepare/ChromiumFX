@@ -206,7 +206,7 @@ public class CfxValueClass : CfxClass {
         EmitRemoteConstructorCalls(b, callIds);
 
         foreach(var sm in StructMembers) {
-            b.BeginRemoteCallClass(ClassName + "Get" + sm.PublicName, false, callIds);
+            b.BeginRemoteCallClass(ClassName + "Get" + sm.PublicName, callIds);
             b.AppendLine("internal IntPtr sender;");
             b.AppendLine("internal {0} value;", sm.MemberType.ProxySymbol);
             b.AppendLine("protected override void WriteArgs(StreamHandler h) { h.Write(sender); }");
@@ -218,7 +218,7 @@ public class CfxValueClass : CfxClass {
             b.AppendLine("value = {0};", sm.MemberType.ProxyWrapExpression("sender." + sm.PublicName));
             b.EndBlock();
             b.EndBlock();
-            b.BeginRemoteCallClass(ClassName + "Set" + sm.PublicName, false, callIds);
+            b.BeginRemoteCallClass(ClassName + "Set" + sm.PublicName, callIds);
             b.AppendLine("internal IntPtr sender;");
             b.AppendLine("internal {0} value;", sm.MemberType.ProxySymbol);
             b.AppendLine("protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }");

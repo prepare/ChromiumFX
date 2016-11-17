@@ -37,14 +37,10 @@ namespace Chromium.Remote {
     using Event;
     using Chromium.Event;
 
-    internal class CfxV8AccessorCtorRemoteCall : RemoteCall {
+    internal class CfxV8AccessorCtorRemoteCall : CtorRemoteCall {
 
         internal CfxV8AccessorCtorRemoteCall()
             : base(RemoteCallId.CfxV8AccessorCtorRemoteCall) {}
-
-        internal IntPtr __retval;
-        protected override void WriteReturn(StreamHandler h) { h.Write(__retval); }
-        protected override void ReadReturn(StreamHandler h) { h.Read(out __retval); }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             __retval = RemoteProxy.Wrap(new CfxV8Accessor());

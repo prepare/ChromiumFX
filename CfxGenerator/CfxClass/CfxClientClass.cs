@@ -449,7 +449,7 @@ public class CfxClientClass : CfxClass {
 
                 var sig = cb.Signature;
 
-                b.BeginRemoteCallClass(cb.EventName, true, callIds);
+                b.BeginRemoteCallClass(cb.EventName, callIds, "RemoteClientCall");
                 b.AppendLine();
 
                 b.BeginBlock("internal static void EventCall(object sender, {0} e)", cb.PublicEventArgsClassName);
@@ -468,7 +468,7 @@ public class CfxClientClass : CfxClass {
                 b.EndBlock();
                 b.AppendLine();
 
-                b.BeginRemoteCallClass(cb.EventName + "Activate", false, callIds);
+                b.BeginRemoteCallClass(cb.EventName + "Activate", callIds);
                 b.AppendLine();
                 b.AppendLine("internal IntPtr sender;");
                 b.AppendLine("protected override void WriteArgs(StreamHandler h) { h.Write(sender); }");
@@ -481,7 +481,7 @@ public class CfxClientClass : CfxClass {
                 b.EndBlock();
                 b.AppendLine();
 
-                b.BeginRemoteCallClass(cb.EventName + "Deactivate", false, callIds);
+                b.BeginRemoteCallClass(cb.EventName + "Deactivate", callIds);
                 b.AppendLine();
                 b.AppendLine("internal IntPtr sender;");
                 b.AppendLine("protected override void WriteArgs(StreamHandler h) { h.Write(sender); }");
@@ -497,7 +497,7 @@ public class CfxClientClass : CfxClass {
                 for(var ii = 1; ii <= sig.ManagedArguments.Length - 1; ii++) {
                     var arg = sig.ManagedArguments[ii];
                     if(arg.ArgumentType.IsOut) {
-                        b.BeginRemoteCallClass(cb.EventName + "Set" + arg.PublicPropertyName, false, callIds);
+                        b.BeginRemoteCallClass(cb.EventName + "Set" + arg.PublicPropertyName, callIds);
                         b.AppendLine();
                         b.AppendLine("internal ulong eventArgsId;");
                         arg.ArgumentType.EmitRemoteCallFields(b, "value");
@@ -523,7 +523,7 @@ public class CfxClientClass : CfxClass {
                         b.AppendLine();
                     }
                     if(arg.ArgumentType.IsIn) {
-                        b.BeginRemoteCallClass(cb.EventName + "Get" + arg.PublicPropertyName, false, callIds);
+                        b.BeginRemoteCallClass(cb.EventName + "Get" + arg.PublicPropertyName, callIds);
                         b.AppendLine();
 
                         b.AppendLine("internal ulong eventArgsId;");
@@ -559,7 +559,7 @@ public class CfxClientClass : CfxClass {
                 }
 
                 if(!sig.PublicReturnType.IsVoid) {
-                    b.BeginRemoteCallClass(cb.EventName + "SetReturnValue", false, callIds);
+                    b.BeginRemoteCallClass(cb.EventName + "SetReturnValue", callIds);
                     b.AppendLine();
                     b.AppendLine("internal ulong eventArgsId;");
                     sig.PublicReturnType.EmitRemoteCallFields(b, "value");

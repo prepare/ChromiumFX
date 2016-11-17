@@ -212,11 +212,7 @@ public abstract class CfxClass {
     public abstract void EmitRemoteCalls(CodeBuilder b, List<string> callIds);
 
     protected void EmitRemoteConstructorCalls(CodeBuilder b, List<string> callIds) {
-        b.BeginRemoteCallClass(ClassName + "Ctor", false, callIds);
-        b.AppendLine();
-        b.AppendLine("internal IntPtr __retval;");
-        b.AppendLine("protected override void WriteReturn(StreamHandler h) { h.Write(__retval); }");
-        b.AppendLine("protected override void ReadReturn(StreamHandler h) { h.Read(out __retval); }");
+        b.BeginRemoteCallClass(ClassName, callIds, "CtorRemoteCall");
         b.AppendLine();
         b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
         b.AppendLine("__retval = RemoteProxy.Wrap(new {0}());", ClassName);

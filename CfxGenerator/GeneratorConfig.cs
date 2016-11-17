@@ -51,11 +51,12 @@ public class GeneratorConfig {
             List<string> callIds = new List<string>();
             var files = Directory.GetFiles(Path.Combine("ChromiumFX", "Source", "Remote"));
             foreach(var f in files) {
+                if(f.EndsWith("RemoteCallBases.cs"))
+                    continue;
                 var content = File.ReadAllText(f);
                 var mm = Regex.Matches(content, @"class\s+(\w+)\s*:\s*(?:RemoteClientCall|RemoteCall)");
                 foreach(Match m in mm) {
-                    if(m.Groups[1].Value != "RemoteClientCall")
-                        callIds.Add(m.Groups[1].Value);
+                    callIds.Add(m.Groups[1].Value);
                 }
             }
             return callIds.ToArray();
