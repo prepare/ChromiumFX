@@ -47,14 +47,14 @@ namespace Chromium.Remote {
     /// </remarks>
     public class CfrBrowser : CfrBase {
 
-        internal static CfrBrowser Wrap(IntPtr proxyId) {
-            if(proxyId == IntPtr.Zero) return null;
+        internal static CfrBrowser Wrap(RemotePtr remotePtr) {
+            if(remotePtr == RemotePtr.Zero) return null;
             var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
             lock(weakCache) {
-                var cfrObj = (CfrBrowser)weakCache.Get(proxyId);
+                var cfrObj = (CfrBrowser)weakCache.Get(remotePtr.ptr);
                 if(cfrObj == null) {
-                    cfrObj = new CfrBrowser(proxyId);
-                    weakCache.Add(proxyId, cfrObj);
+                    cfrObj = new CfrBrowser(remotePtr);
+                    weakCache.Add(remotePtr.ptr, cfrObj);
                 }
                 return cfrObj;
             }
@@ -62,7 +62,7 @@ namespace Chromium.Remote {
 
 
 
-        private CfrBrowser(IntPtr proxyId) : base(proxyId) {}
+        private CfrBrowser(RemotePtr remotePtr) : base(remotePtr) {}
 
         /// <summary>
         /// Returns true (1) if the browser can navigate backwards.
@@ -74,8 +74,8 @@ namespace Chromium.Remote {
         public bool CanGoBack {
             get {
                 var call = new CfxBrowserCanGoBackRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -90,8 +90,8 @@ namespace Chromium.Remote {
         public bool CanGoForward {
             get {
                 var call = new CfxBrowserCanGoForwardRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -106,8 +106,8 @@ namespace Chromium.Remote {
         public bool IsLoading {
             get {
                 var call = new CfxBrowserIsLoadingRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -122,8 +122,8 @@ namespace Chromium.Remote {
         public int Identifier {
             get {
                 var call = new CfxBrowserGetIdentifierRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -138,8 +138,8 @@ namespace Chromium.Remote {
         public bool IsPopup {
             get {
                 var call = new CfxBrowserIsPopupRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -154,8 +154,8 @@ namespace Chromium.Remote {
         public bool HasDocument {
             get {
                 var call = new CfxBrowserHasDocumentRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -170,9 +170,9 @@ namespace Chromium.Remote {
         public CfrFrame MainFrame {
             get {
                 var call = new CfxBrowserGetMainFrameRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
-                return CfrFrame.Wrap(call.__retval);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
+                return CfrFrame.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
             }
         }
 
@@ -186,9 +186,9 @@ namespace Chromium.Remote {
         public CfrFrame FocusedFrame {
             get {
                 var call = new CfxBrowserGetFocusedFrameRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
-                return CfrFrame.Wrap(call.__retval);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
+                return CfrFrame.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
             }
         }
 
@@ -202,8 +202,8 @@ namespace Chromium.Remote {
         public ulong FrameCount {
             get {
                 var call = new CfxBrowserGetFrameCountRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -218,8 +218,8 @@ namespace Chromium.Remote {
         public long[] FrameIdentifiers {
             get {
                 var call = new CfxBrowserGetFrameIdentifiersRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -233,8 +233,8 @@ namespace Chromium.Remote {
         /// </remarks>
         public void GoBack() {
             var call = new CfxBrowserGoBackRenderProcessCall();
-            call.@this = proxyId;
-            call.RequestExecution(this);
+            call.@this = RemotePtr.ptr;
+            call.RequestExecution(RemotePtr.connection);
         }
 
         /// <summary>
@@ -246,8 +246,8 @@ namespace Chromium.Remote {
         /// </remarks>
         public void GoForward() {
             var call = new CfxBrowserGoForwardRenderProcessCall();
-            call.@this = proxyId;
-            call.RequestExecution(this);
+            call.@this = RemotePtr.ptr;
+            call.RequestExecution(RemotePtr.connection);
         }
 
         /// <summary>
@@ -259,8 +259,8 @@ namespace Chromium.Remote {
         /// </remarks>
         public void Reload() {
             var call = new CfxBrowserReloadRenderProcessCall();
-            call.@this = proxyId;
-            call.RequestExecution(this);
+            call.@this = RemotePtr.ptr;
+            call.RequestExecution(RemotePtr.connection);
         }
 
         /// <summary>
@@ -272,8 +272,8 @@ namespace Chromium.Remote {
         /// </remarks>
         public void ReloadIgnoreCache() {
             var call = new CfxBrowserReloadIgnoreCacheRenderProcessCall();
-            call.@this = proxyId;
-            call.RequestExecution(this);
+            call.@this = RemotePtr.ptr;
+            call.RequestExecution(RemotePtr.connection);
         }
 
         /// <summary>
@@ -285,8 +285,8 @@ namespace Chromium.Remote {
         /// </remarks>
         public void StopLoad() {
             var call = new CfxBrowserStopLoadRenderProcessCall();
-            call.@this = proxyId;
-            call.RequestExecution(this);
+            call.@this = RemotePtr.ptr;
+            call.RequestExecution(RemotePtr.connection);
         }
 
         /// <summary>
@@ -299,9 +299,9 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsSame(CfrBrowser that) {
             var call = new CfxBrowserIsSameRenderProcessCall();
-            call.@this = proxyId;
-            call.that = CfrObject.Unwrap(that);
-            call.RequestExecution(this);
+            call.@this = RemotePtr.ptr;
+            call.that = CfrObject.Unwrap(that).ptr;
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
@@ -314,10 +314,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrFrame GetFrame(long identifier) {
             var call = new CfxBrowserGetFrameByIdentifierRenderProcessCall();
-            call.@this = proxyId;
+            call.@this = RemotePtr.ptr;
             call.identifier = identifier;
-            call.RequestExecution(this);
-            return CfrFrame.Wrap(call.__retval);
+            call.RequestExecution(RemotePtr.connection);
+            return CfrFrame.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
 
         /// <summary>
@@ -329,10 +329,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrFrame GetFrame(string name) {
             var call = new CfxBrowserGetFrameRenderProcessCall();
-            call.@this = proxyId;
+            call.@this = RemotePtr.ptr;
             call.name = name;
-            call.RequestExecution(this);
-            return CfrFrame.Wrap(call.__retval);
+            call.RequestExecution(RemotePtr.connection);
+            return CfrFrame.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
 
         /// <summary>
@@ -344,8 +344,8 @@ namespace Chromium.Remote {
         /// </remarks>
         public System.Collections.Generic.List<string> GetFrameNames() {
             var call = new CfxBrowserGetFrameNamesRenderProcessCall();
-            call.@this = proxyId;
-            call.RequestExecution(this);
+            call.@this = RemotePtr.ptr;
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
@@ -359,15 +359,15 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool SendProcessMessage(CfxProcessId targetProcess, CfrProcessMessage message) {
             var call = new CfxBrowserSendProcessMessageRenderProcessCall();
-            call.@this = proxyId;
+            call.@this = RemotePtr.ptr;
             call.targetProcess = (int)targetProcess;
-            call.message = CfrObject.Unwrap(message);
-            call.RequestExecution(this);
+            call.message = CfrObject.Unwrap(message).ptr;
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
-        internal override void OnDispose(IntPtr proxyId) {
-            connection.weakCache.Remove(proxyId);
+        internal override void OnDispose(RemotePtr remotePtr) {
+            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
         }
     }
 }

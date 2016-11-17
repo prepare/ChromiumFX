@@ -44,14 +44,14 @@ namespace Chromium.Remote {
     /// </remarks>
     public class CfrSchemeRegistrar : CfrBase {
 
-        internal static CfrSchemeRegistrar Wrap(IntPtr proxyId) {
-            if(proxyId == IntPtr.Zero) return null;
+        internal static CfrSchemeRegistrar Wrap(RemotePtr remotePtr) {
+            if(remotePtr == RemotePtr.Zero) return null;
             var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
             lock(weakCache) {
-                var cfrObj = (CfrSchemeRegistrar)weakCache.Get(proxyId);
+                var cfrObj = (CfrSchemeRegistrar)weakCache.Get(remotePtr.ptr);
                 if(cfrObj == null) {
-                    cfrObj = new CfrSchemeRegistrar(proxyId);
-                    weakCache.Add(proxyId, cfrObj);
+                    cfrObj = new CfrSchemeRegistrar(remotePtr);
+                    weakCache.Add(remotePtr.ptr, cfrObj);
                 }
                 return cfrObj;
             }
@@ -59,7 +59,7 @@ namespace Chromium.Remote {
 
 
 
-        private CfrSchemeRegistrar(IntPtr proxyId) : base(proxyId) {}
+        private CfrSchemeRegistrar(RemotePtr remotePtr) : base(remotePtr) {}
 
         /// <summary>
         /// Register a custom scheme. This function should not be called for the built-
@@ -107,17 +107,17 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool AddCustomScheme(string schemeName, bool isStandard, bool isLocal, bool isDisplayIsolated) {
             var call = new CfxSchemeRegistrarAddCustomSchemeRenderProcessCall();
-            call.@this = proxyId;
+            call.@this = RemotePtr.ptr;
             call.schemeName = schemeName;
             call.isStandard = isStandard;
             call.isLocal = isLocal;
             call.isDisplayIsolated = isDisplayIsolated;
-            call.RequestExecution(this);
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
-        internal override void OnDispose(IntPtr proxyId) {
-            connection.weakCache.Remove(proxyId);
+        internal override void OnDispose(RemotePtr remotePtr) {
+            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
         }
     }
 }

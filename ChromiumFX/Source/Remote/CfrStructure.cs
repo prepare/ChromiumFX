@@ -37,6 +37,6 @@ namespace Chromium.Remote {
     /// Base class for all remote wrapper classes for CEF structs without refcount.
     /// </summary>
     public abstract class CfrStructure : CfrObject {
-        internal CfrStructure(IntPtr proxyId) : base(proxyId) { }
+        internal CfrStructure(RemotePtr remotePtr) : base(remotePtr) { }
     }
 }

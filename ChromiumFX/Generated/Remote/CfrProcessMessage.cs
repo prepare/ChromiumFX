@@ -44,14 +44,14 @@ namespace Chromium.Remote {
     /// </remarks>
     public class CfrProcessMessage : CfrBase {
 
-        internal static CfrProcessMessage Wrap(IntPtr proxyId) {
-            if(proxyId == IntPtr.Zero) return null;
+        internal static CfrProcessMessage Wrap(RemotePtr remotePtr) {
+            if(remotePtr == RemotePtr.Zero) return null;
             var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
             lock(weakCache) {
-                var cfrObj = (CfrProcessMessage)weakCache.Get(proxyId);
+                var cfrObj = (CfrProcessMessage)weakCache.Get(remotePtr.ptr);
                 if(cfrObj == null) {
-                    cfrObj = new CfrProcessMessage(proxyId);
-                    weakCache.Add(proxyId, cfrObj);
+                    cfrObj = new CfrProcessMessage(remotePtr);
+                    weakCache.Add(remotePtr.ptr, cfrObj);
                 }
                 return cfrObj;
             }
@@ -69,11 +69,11 @@ namespace Chromium.Remote {
             var call = new CfxProcessMessageCreateRenderProcessCall();
             call.name = name;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrProcessMessage.Wrap(call.__retval);
+            return CfrProcessMessage.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
 
 
-        private CfrProcessMessage(IntPtr proxyId) : base(proxyId) {}
+        private CfrProcessMessage(RemotePtr remotePtr) : base(remotePtr) {}
 
         /// <summary>
         /// Returns true (1) if this object is valid. Do not call any other functions
@@ -86,8 +86,8 @@ namespace Chromium.Remote {
         public bool IsValid {
             get {
                 var call = new CfxProcessMessageIsValidRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -103,8 +103,8 @@ namespace Chromium.Remote {
         public bool IsReadOnly {
             get {
                 var call = new CfxProcessMessageIsReadOnlyRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -119,8 +119,8 @@ namespace Chromium.Remote {
         public string Name {
             get {
                 var call = new CfxProcessMessageGetNameRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -135,9 +135,9 @@ namespace Chromium.Remote {
         public CfrListValue ArgumentList {
             get {
                 var call = new CfxProcessMessageGetArgumentListRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
-                return CfrListValue.Wrap(call.__retval);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
+                return CfrListValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
             }
         }
 
@@ -150,13 +150,13 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrProcessMessage Copy() {
             var call = new CfxProcessMessageCopyRenderProcessCall();
-            call.@this = proxyId;
-            call.RequestExecution(this);
-            return CfrProcessMessage.Wrap(call.__retval);
+            call.@this = RemotePtr.ptr;
+            call.RequestExecution(RemotePtr.connection);
+            return CfrProcessMessage.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
 
-        internal override void OnDispose(IntPtr proxyId) {
-            connection.weakCache.Remove(proxyId);
+        internal override void OnDispose(RemotePtr remotePtr) {
+            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
         }
     }
 }

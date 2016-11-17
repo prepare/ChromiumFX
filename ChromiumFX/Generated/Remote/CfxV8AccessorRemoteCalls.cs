@@ -64,7 +64,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrV8Accessor.Wrap(this.sender);
+            var sender = CfrV8Accessor.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrV8AccessorGetEventArgs(eventArgsId);
             sender.raise_Get(sender, e);
         }
@@ -263,7 +263,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrV8Accessor.Wrap(this.sender);
+            var sender = CfrV8Accessor.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrV8AccessorSetEventArgs(eventArgsId);
             sender.raise_Set(sender, e);
         }

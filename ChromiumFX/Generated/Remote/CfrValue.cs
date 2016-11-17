@@ -46,14 +46,14 @@ namespace Chromium.Remote {
     /// </remarks>
     public class CfrValue : CfrBase {
 
-        internal static CfrValue Wrap(IntPtr proxyId) {
-            if(proxyId == IntPtr.Zero) return null;
+        internal static CfrValue Wrap(RemotePtr remotePtr) {
+            if(remotePtr == RemotePtr.Zero) return null;
             var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
             lock(weakCache) {
-                var cfrObj = (CfrValue)weakCache.Get(proxyId);
+                var cfrObj = (CfrValue)weakCache.Get(remotePtr.ptr);
                 if(cfrObj == null) {
-                    cfrObj = new CfrValue(proxyId);
-                    weakCache.Add(proxyId, cfrObj);
+                    cfrObj = new CfrValue(remotePtr);
+                    weakCache.Add(remotePtr.ptr, cfrObj);
                 }
                 return cfrObj;
             }
@@ -70,11 +70,11 @@ namespace Chromium.Remote {
         public static CfrValue Create() {
             var call = new CfxValueCreateRenderProcessCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrValue.Wrap(call.__retval);
+            return CfrValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
 
 
-        private CfrValue(IntPtr proxyId) : base(proxyId) {}
+        private CfrValue(RemotePtr remotePtr) : base(remotePtr) {}
 
         /// <summary>
         /// Returns true (1) if the underlying data is valid. This will always be true
@@ -91,8 +91,8 @@ namespace Chromium.Remote {
         public bool IsValid {
             get {
                 var call = new CfxValueIsValidRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -107,8 +107,8 @@ namespace Chromium.Remote {
         public bool IsOwned {
             get {
                 var call = new CfxValueIsOwnedRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -124,8 +124,8 @@ namespace Chromium.Remote {
         public bool IsReadOnly {
             get {
                 var call = new CfxValueIsReadOnlyRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -140,8 +140,8 @@ namespace Chromium.Remote {
         public CfxValueType Type {
             get {
                 var call = new CfxValueGetTypeRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return (CfxValueType)call.__retval;
             }
         }
@@ -156,8 +156,8 @@ namespace Chromium.Remote {
         public bool Bool {
             get {
                 var call = new CfxValueGetBoolRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -172,8 +172,8 @@ namespace Chromium.Remote {
         public int Int {
             get {
                 var call = new CfxValueGetIntRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -188,8 +188,8 @@ namespace Chromium.Remote {
         public double Double {
             get {
                 var call = new CfxValueGetDoubleRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -204,8 +204,8 @@ namespace Chromium.Remote {
         public string String {
             get {
                 var call = new CfxValueGetStringRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -225,9 +225,9 @@ namespace Chromium.Remote {
         public CfrBinaryValue Binary {
             get {
                 var call = new CfxValueGetBinaryRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
-                return CfrBinaryValue.Wrap(call.__retval);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
+                return CfrBinaryValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
             }
         }
 
@@ -246,9 +246,9 @@ namespace Chromium.Remote {
         public CfrDictionaryValue Dictionary {
             get {
                 var call = new CfxValueGetDictionaryRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
-                return CfrDictionaryValue.Wrap(call.__retval);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
+                return CfrDictionaryValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
             }
         }
 
@@ -267,9 +267,9 @@ namespace Chromium.Remote {
         public CfrListValue List {
             get {
                 var call = new CfxValueGetListRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
-                return CfrListValue.Wrap(call.__retval);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
+                return CfrListValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
             }
         }
 
@@ -284,9 +284,9 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsSame(CfrValue that) {
             var call = new CfxValueIsSameRenderProcessCall();
-            call.@this = proxyId;
-            call.that = CfrObject.Unwrap(that);
-            call.RequestExecution(this);
+            call.@this = RemotePtr.ptr;
+            call.that = CfrObject.Unwrap(that).ptr;
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
@@ -300,9 +300,9 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsEqual(CfrValue that) {
             var call = new CfxValueIsEqualRenderProcessCall();
-            call.@this = proxyId;
-            call.that = CfrObject.Unwrap(that);
-            call.RequestExecution(this);
+            call.@this = RemotePtr.ptr;
+            call.that = CfrObject.Unwrap(that).ptr;
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
@@ -315,9 +315,9 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrValue Copy() {
             var call = new CfxValueCopyRenderProcessCall();
-            call.@this = proxyId;
-            call.RequestExecution(this);
-            return CfrValue.Wrap(call.__retval);
+            call.@this = RemotePtr.ptr;
+            call.RequestExecution(RemotePtr.connection);
+            return CfrValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
 
         /// <summary>
@@ -330,8 +330,8 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool SetNull() {
             var call = new CfxValueSetNullRenderProcessCall();
-            call.@this = proxyId;
-            call.RequestExecution(this);
+            call.@this = RemotePtr.ptr;
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
@@ -345,9 +345,9 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool SetBool(bool value) {
             var call = new CfxValueSetBoolRenderProcessCall();
-            call.@this = proxyId;
+            call.@this = RemotePtr.ptr;
             call.value = value;
-            call.RequestExecution(this);
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
@@ -361,9 +361,9 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool SetInt(int value) {
             var call = new CfxValueSetIntRenderProcessCall();
-            call.@this = proxyId;
+            call.@this = RemotePtr.ptr;
             call.value = value;
-            call.RequestExecution(this);
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
@@ -377,9 +377,9 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool SetDouble(double value) {
             var call = new CfxValueSetDoubleRenderProcessCall();
-            call.@this = proxyId;
+            call.@this = RemotePtr.ptr;
             call.value = value;
-            call.RequestExecution(this);
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
@@ -393,9 +393,9 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool SetString(string value) {
             var call = new CfxValueSetStringRenderProcessCall();
-            call.@this = proxyId;
+            call.@this = RemotePtr.ptr;
             call.value = value;
-            call.RequestExecution(this);
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
@@ -410,9 +410,9 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool SetBinary(CfrBinaryValue value) {
             var call = new CfxValueSetBinaryRenderProcessCall();
-            call.@this = proxyId;
-            call.value = CfrObject.Unwrap(value);
-            call.RequestExecution(this);
+            call.@this = RemotePtr.ptr;
+            call.value = CfrObject.Unwrap(value).ptr;
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
@@ -427,9 +427,9 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool SetDictionary(CfrDictionaryValue value) {
             var call = new CfxValueSetDictionaryRenderProcessCall();
-            call.@this = proxyId;
-            call.value = CfrObject.Unwrap(value);
-            call.RequestExecution(this);
+            call.@this = RemotePtr.ptr;
+            call.value = CfrObject.Unwrap(value).ptr;
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
@@ -444,14 +444,14 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool SetList(CfrListValue value) {
             var call = new CfxValueSetListRenderProcessCall();
-            call.@this = proxyId;
-            call.value = CfrObject.Unwrap(value);
-            call.RequestExecution(this);
+            call.@this = RemotePtr.ptr;
+            call.value = CfrObject.Unwrap(value).ptr;
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
-        internal override void OnDispose(IntPtr proxyId) {
-            connection.weakCache.Remove(proxyId);
+        internal override void OnDispose(RemotePtr remotePtr) {
+            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
         }
     }
 }

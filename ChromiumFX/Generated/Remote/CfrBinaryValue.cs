@@ -44,14 +44,14 @@ namespace Chromium.Remote {
     /// </remarks>
     public partial class CfrBinaryValue : CfrBase {
 
-        internal static CfrBinaryValue Wrap(IntPtr proxyId) {
-            if(proxyId == IntPtr.Zero) return null;
+        internal static CfrBinaryValue Wrap(RemotePtr remotePtr) {
+            if(remotePtr == RemotePtr.Zero) return null;
             var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
             lock(weakCache) {
-                var cfrObj = (CfrBinaryValue)weakCache.Get(proxyId);
+                var cfrObj = (CfrBinaryValue)weakCache.Get(remotePtr.ptr);
                 if(cfrObj == null) {
-                    cfrObj = new CfrBinaryValue(proxyId);
-                    weakCache.Add(proxyId, cfrObj);
+                    cfrObj = new CfrBinaryValue(remotePtr);
+                    weakCache.Add(remotePtr.ptr, cfrObj);
                 }
                 return cfrObj;
             }
@@ -71,11 +71,11 @@ namespace Chromium.Remote {
             call.data = data.ptr;
             call.dataSize = dataSize;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrBinaryValue.Wrap(call.__retval);
+            return CfrBinaryValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
 
 
-        private CfrBinaryValue(IntPtr proxyId) : base(proxyId) {}
+        private CfrBinaryValue(RemotePtr remotePtr) : base(remotePtr) {}
 
         /// <summary>
         /// Returns true (1) if this object is valid. This object may become invalid if
@@ -90,8 +90,8 @@ namespace Chromium.Remote {
         public bool IsValid {
             get {
                 var call = new CfxBinaryValueIsValidRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -106,8 +106,8 @@ namespace Chromium.Remote {
         public bool IsOwned {
             get {
                 var call = new CfxBinaryValueIsOwnedRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -122,8 +122,8 @@ namespace Chromium.Remote {
         public ulong Size {
             get {
                 var call = new CfxBinaryValueGetSizeRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -138,9 +138,9 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsSame(CfrBinaryValue that) {
             var call = new CfxBinaryValueIsSameRenderProcessCall();
-            call.@this = proxyId;
-            call.that = CfrObject.Unwrap(that);
-            call.RequestExecution(this);
+            call.@this = RemotePtr.ptr;
+            call.that = CfrObject.Unwrap(that).ptr;
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
@@ -154,9 +154,9 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsEqual(CfrBinaryValue that) {
             var call = new CfxBinaryValueIsEqualRenderProcessCall();
-            call.@this = proxyId;
-            call.that = CfrObject.Unwrap(that);
-            call.RequestExecution(this);
+            call.@this = RemotePtr.ptr;
+            call.that = CfrObject.Unwrap(that).ptr;
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
@@ -169,9 +169,9 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrBinaryValue Copy() {
             var call = new CfxBinaryValueCopyRenderProcessCall();
-            call.@this = proxyId;
-            call.RequestExecution(this);
-            return CfrBinaryValue.Wrap(call.__retval);
+            call.@this = RemotePtr.ptr;
+            call.RequestExecution(RemotePtr.connection);
+            return CfrBinaryValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
 
         /// <summary>
@@ -184,16 +184,16 @@ namespace Chromium.Remote {
         /// </remarks>
         public ulong GetData(RemotePtr buffer, ulong bufferSize, ulong dataOffset) {
             var call = new CfxBinaryValueGetDataRenderProcessCall();
-            call.@this = proxyId;
+            call.@this = RemotePtr.ptr;
             call.buffer = buffer.ptr;
             call.bufferSize = bufferSize;
             call.dataOffset = dataOffset;
-            call.RequestExecution(this);
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
-        internal override void OnDispose(IntPtr proxyId) {
-            connection.weakCache.Remove(proxyId);
+        internal override void OnDispose(RemotePtr remotePtr) {
+            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
         }
     }
 }

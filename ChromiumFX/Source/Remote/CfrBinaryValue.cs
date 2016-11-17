@@ -43,7 +43,7 @@ namespace Chromium.Remote {
             var call = new CfxBinaryValueCreateFromArrayRenderProcessCall();
             call.data = data;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrBinaryValue.Wrap(call.__retval);
+            return CfrBinaryValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
     }
 

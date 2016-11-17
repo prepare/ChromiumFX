@@ -461,7 +461,7 @@ public class CfxClientClass : CfxClass {
                 b.EndBlock();
 
                 b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-                b.AppendLine("var sender = {0}.Wrap(this.sender);", RemoteClassName);
+                b.AppendLine("var sender = {0}.Wrap(new RemotePtr(connection, this.sender));", RemoteClassName);
                 b.AppendLine("var e = new {0}(eventArgsId);", cb.RemoteEventArgsClassName);
                 b.AppendLine("sender.raise_{0}(sender, e);", cb.PublicName);
                 b.EndBlock();
@@ -599,10 +599,10 @@ public class CfxClientClass : CfxClass {
         b.AppendLine();
         EmitRemoteClassWrapperFunction(b);
 
-        b.BeginFunction("CreateRemote", "IntPtr", "", "internal static");
+        b.BeginFunction("CreateRemote", "RemotePtr", "", "internal static");
         b.AppendLine("var call = new {0}CtorRenderProcessCall();", ClassName);
         b.AppendLine("call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);");
-        b.AppendLine("return call.__retval;");
+        b.AppendLine("return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);");
         b.EndBlock();
 
 
@@ -623,11 +623,11 @@ public class CfxClientClass : CfxClass {
 
         b.AppendLine();
 
-        b.AppendLine("private {0}(IntPtr proxyId) : base(proxyId) {{}}", RemoteClassName);
+        b.AppendLine("private {0}(RemotePtr remotePtr) : base(remotePtr) {{}}", RemoteClassName);
 
 
         b.BeginBlock("public {0}() : base(CreateRemote())", RemoteClassName);
-        b.AppendLine("connection.weakCache.Add(proxyId, this);");
+        b.AppendLine("RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);");
         b.EndBlock();
 
         b.AppendLine();
@@ -641,8 +641,8 @@ public class CfxClientClass : CfxClass {
                 b.BeginBlock("add");
                 b.BeginBlock("if(m_{0} == null)", cb.PublicName);
                 b.AppendLine("var call = new {0}ActivateRenderProcessCall();", cb.EventName);
-                b.AppendLine("call.sender = proxyId;");
-                b.AppendLine("call.RequestExecution(this);");
+                b.AppendLine("call.sender = RemotePtr.ptr;");
+                b.AppendLine("call.RequestExecution(RemotePtr.connection);");
                 b.EndBlock();
                 b.AppendLine("m_{0} += value;", cb.PublicName);
                 b.EndBlock();
@@ -650,8 +650,8 @@ public class CfxClientClass : CfxClass {
                 b.AppendLine("m_{0} -= value;", cb.PublicName);
                 b.BeginBlock("if(m_{0} == null)", cb.PublicName);
                 b.AppendLine("var call = new {0}DeactivateRenderProcessCall();", cb.EventName);
-                b.AppendLine("call.sender = proxyId;");
-                b.AppendLine("call.RequestExecution(this);");
+                b.AppendLine("call.sender = RemotePtr.ptr;");
+                b.AppendLine("call.RequestExecution(RemotePtr.connection);");
                 b.EndBlock();
                 b.EndBlock();
                 b.EndBlock();
@@ -664,8 +664,8 @@ public class CfxClientClass : CfxClass {
 
 
 
-        b.BeginFunction("OnDispose", "void", "IntPtr proxyId", "internal override");
-        b.AppendLine("connection.weakCache.Remove(proxyId);");
+        b.BeginFunction("OnDispose", "void", "RemotePtr remotePtr", "internal override");
+        b.AppendLine("RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);");
         b.EndBlock();
 
         b.EndBlock();

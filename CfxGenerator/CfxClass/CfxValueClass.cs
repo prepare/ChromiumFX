@@ -242,18 +242,18 @@ public class CfxValueClass : CfxClass {
 
         EmitRemoteClassWrapperFunction(b);
 
-        b.BeginFunction("CreateRemote", "IntPtr", "", "internal static");
+        b.BeginFunction("CreateRemote", "RemotePtr", "", "internal static");
         b.AppendLine("var call = new {0}CtorRenderProcessCall();", ClassName);
         b.AppendLine("call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);");
-        b.AppendLine("return call.__retval;");
+        b.AppendLine("return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);");
         b.EndBlock();
 
         b.AppendLine();
 
-        b.AppendLine("private {0}(IntPtr proxyId) : base(proxyId) {{}}", RemoteClassName);
+        b.AppendLine("private {0}(RemotePtr remotePtr) : base(remotePtr) {{}}", RemoteClassName);
 
         b.BeginBlock("public {0}() : base(CreateRemote())", RemoteClassName);
-        b.AppendLine("connection.weakCache.Add(proxyId, this);");
+        b.AppendLine("RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);");
         b.EndBlock();
 
         b.AppendLine();
@@ -270,8 +270,8 @@ public class CfxValueClass : CfxClass {
                 b.BeginBlock("get");
                 b.BeginIf("!m_{0}_fetched", sm.PublicName);
                 b.AppendLine("var call = new {0}Get{1}RenderProcessCall();", ClassName, sm.PublicName);
-                b.AppendLine("call.sender = this.proxyId;");
-                b.AppendLine("call.RequestExecution(this);");
+                b.AppendLine("call.sender = RemotePtr.ptr;");
+                b.AppendLine("call.RequestExecution(RemotePtr.connection);");
                 b.AppendLine("m_{0} = {1};", sm.PublicName, sm.MemberType.RemoteWrapExpression("call.value"));
                 b.AppendLine("m_{0}_fetched = true;", sm.PublicName);
                 b.EndBlock();
@@ -279,9 +279,9 @@ public class CfxValueClass : CfxClass {
                 b.EndBlock();
                 b.BeginBlock("set");
                 b.AppendLine("var call = new {0}Set{1}RenderProcessCall();", ClassName, sm.PublicName);
-                b.AppendLine("call.sender = this.proxyId;");
+                b.AppendLine("call.sender = RemotePtr.ptr;");
                 b.AppendLine("call.value = {0};", sm.MemberType.RemoteUnwrapExpression("value"));
-                b.AppendLine("call.RequestExecution(this);");
+                b.AppendLine("call.RequestExecution(RemotePtr.connection);");
                 b.AppendLine("m_{0} = value;", sm.PublicName);
                 b.AppendLine("m_{0}_fetched = true;", sm.PublicName);
                 b.EndBlock();
@@ -291,8 +291,8 @@ public class CfxValueClass : CfxClass {
         }
 
 
-        b.BeginFunction("OnDispose", "void", "IntPtr proxyId", "internal override");
-        b.AppendLine("connection.weakCache.Remove(proxyId);");
+        b.BeginFunction("OnDispose", "void", "RemotePtr remotePtr", "internal override");
+        b.AppendLine("RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);");
         b.EndBlock();
 
         b.EndBlock();

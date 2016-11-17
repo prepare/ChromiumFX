@@ -45,14 +45,14 @@ namespace Chromium.Remote {
     /// </remarks>
     public class CfrV8Exception : CfrBase {
 
-        internal static CfrV8Exception Wrap(IntPtr proxyId) {
-            if(proxyId == IntPtr.Zero) return null;
+        internal static CfrV8Exception Wrap(RemotePtr remotePtr) {
+            if(remotePtr == RemotePtr.Zero) return null;
             var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
             lock(weakCache) {
-                var cfrObj = (CfrV8Exception)weakCache.Get(proxyId);
+                var cfrObj = (CfrV8Exception)weakCache.Get(remotePtr.ptr);
                 if(cfrObj == null) {
-                    cfrObj = new CfrV8Exception(proxyId);
-                    weakCache.Add(proxyId, cfrObj);
+                    cfrObj = new CfrV8Exception(remotePtr);
+                    weakCache.Add(remotePtr.ptr, cfrObj);
                 }
                 return cfrObj;
             }
@@ -60,7 +60,7 @@ namespace Chromium.Remote {
 
 
 
-        private CfrV8Exception(IntPtr proxyId) : base(proxyId) {}
+        private CfrV8Exception(RemotePtr remotePtr) : base(remotePtr) {}
 
         /// <summary>
         /// Returns the exception message.
@@ -72,8 +72,8 @@ namespace Chromium.Remote {
         public string Message {
             get {
                 var call = new CfxV8ExceptionGetMessageRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -88,8 +88,8 @@ namespace Chromium.Remote {
         public string SourceLine {
             get {
                 var call = new CfxV8ExceptionGetSourceLineRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -105,8 +105,8 @@ namespace Chromium.Remote {
         public string ScriptResourceName {
             get {
                 var call = new CfxV8ExceptionGetScriptResourceNameRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -122,8 +122,8 @@ namespace Chromium.Remote {
         public int LineNumber {
             get {
                 var call = new CfxV8ExceptionGetLineNumberRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -139,8 +139,8 @@ namespace Chromium.Remote {
         public int StartPosition {
             get {
                 var call = new CfxV8ExceptionGetStartPositionRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -156,8 +156,8 @@ namespace Chromium.Remote {
         public int EndPosition {
             get {
                 var call = new CfxV8ExceptionGetEndPositionRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -173,8 +173,8 @@ namespace Chromium.Remote {
         public int StartColumn {
             get {
                 var call = new CfxV8ExceptionGetStartColumnRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -190,14 +190,14 @@ namespace Chromium.Remote {
         public int EndColumn {
             get {
                 var call = new CfxV8ExceptionGetEndColumnRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
 
-        internal override void OnDispose(IntPtr proxyId) {
-            connection.weakCache.Remove(proxyId);
+        internal override void OnDispose(RemotePtr remotePtr) {
+            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
         }
     }
 }

@@ -49,14 +49,14 @@ namespace Chromium.Remote {
     /// </remarks>
     public class CfrTaskRunner : CfrBase {
 
-        internal static CfrTaskRunner Wrap(IntPtr proxyId) {
-            if(proxyId == IntPtr.Zero) return null;
+        internal static CfrTaskRunner Wrap(RemotePtr remotePtr) {
+            if(remotePtr == RemotePtr.Zero) return null;
             var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
             lock(weakCache) {
-                var cfrObj = (CfrTaskRunner)weakCache.Get(proxyId);
+                var cfrObj = (CfrTaskRunner)weakCache.Get(remotePtr.ptr);
                 if(cfrObj == null) {
-                    cfrObj = new CfrTaskRunner(proxyId);
-                    weakCache.Add(proxyId, cfrObj);
+                    cfrObj = new CfrTaskRunner(remotePtr);
+                    weakCache.Add(remotePtr.ptr, cfrObj);
                 }
                 return cfrObj;
             }
@@ -75,7 +75,7 @@ namespace Chromium.Remote {
         public static CfrTaskRunner GetForCurrentThread() {
             var call = new CfxTaskRunnerGetForCurrentThreadRenderProcessCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrTaskRunner.Wrap(call.__retval);
+            return CfrTaskRunner.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
 
         /// <summary>
@@ -89,11 +89,11 @@ namespace Chromium.Remote {
             var call = new CfxTaskRunnerGetForThreadRenderProcessCall();
             call.threadId = (int)threadId;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrTaskRunner.Wrap(call.__retval);
+            return CfrTaskRunner.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
 
 
-        private CfrTaskRunner(IntPtr proxyId) : base(proxyId) {}
+        private CfrTaskRunner(RemotePtr remotePtr) : base(remotePtr) {}
 
         /// <summary>
         /// Returns true (1) if this object is pointing to the same task runner as
@@ -105,9 +105,9 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsSame(CfrTaskRunner that) {
             var call = new CfxTaskRunnerIsSameRenderProcessCall();
-            call.@this = proxyId;
-            call.that = CfrObject.Unwrap(that);
-            call.RequestExecution(this);
+            call.@this = RemotePtr.ptr;
+            call.that = CfrObject.Unwrap(that).ptr;
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
@@ -120,8 +120,8 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool BelongsToCurrentThread() {
             var call = new CfxTaskRunnerBelongsToCurrentThreadRenderProcessCall();
-            call.@this = proxyId;
-            call.RequestExecution(this);
+            call.@this = RemotePtr.ptr;
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
@@ -134,9 +134,9 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool BelongsToThread(CfxThreadId threadId) {
             var call = new CfxTaskRunnerBelongsToThreadRenderProcessCall();
-            call.@this = proxyId;
+            call.@this = RemotePtr.ptr;
             call.threadId = (int)threadId;
-            call.RequestExecution(this);
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
@@ -150,9 +150,9 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool PostTask(CfrTask task) {
             var call = new CfxTaskRunnerPostTaskRenderProcessCall();
-            call.@this = proxyId;
-            call.task = CfrObject.Unwrap(task);
-            call.RequestExecution(this);
+            call.@this = RemotePtr.ptr;
+            call.task = CfrObject.Unwrap(task).ptr;
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
@@ -168,15 +168,15 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool PostDelayedTask(CfrTask task, long delayMs) {
             var call = new CfxTaskRunnerPostDelayedTaskRenderProcessCall();
-            call.@this = proxyId;
-            call.task = CfrObject.Unwrap(task);
+            call.@this = RemotePtr.ptr;
+            call.task = CfrObject.Unwrap(task).ptr;
             call.delayMs = delayMs;
-            call.RequestExecution(this);
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
-        internal override void OnDispose(IntPtr proxyId) {
-            connection.weakCache.Remove(proxyId);
+        internal override void OnDispose(RemotePtr remotePtr) {
+            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
         }
     }
 }

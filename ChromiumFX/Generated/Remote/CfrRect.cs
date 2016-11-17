@@ -44,29 +44,29 @@ namespace Chromium.Remote {
     /// </remarks>
     public sealed class CfrRect : CfrStructure {
 
-        internal static CfrRect Wrap(IntPtr proxyId) {
-            if(proxyId == IntPtr.Zero) return null;
+        internal static CfrRect Wrap(RemotePtr remotePtr) {
+            if(remotePtr == RemotePtr.Zero) return null;
             var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
             lock(weakCache) {
-                var cfrObj = (CfrRect)weakCache.Get(proxyId);
+                var cfrObj = (CfrRect)weakCache.Get(remotePtr.ptr);
                 if(cfrObj == null) {
-                    cfrObj = new CfrRect(proxyId);
-                    weakCache.Add(proxyId, cfrObj);
+                    cfrObj = new CfrRect(remotePtr);
+                    weakCache.Add(remotePtr.ptr, cfrObj);
                 }
                 return cfrObj;
             }
         }
 
 
-        internal static IntPtr CreateRemote() {
+        internal static RemotePtr CreateRemote() {
             var call = new CfxRectCtorRenderProcessCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return call.__retval;
+            return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);
         }
 
-        private CfrRect(IntPtr proxyId) : base(proxyId) {}
+        private CfrRect(RemotePtr remotePtr) : base(remotePtr) {}
         public CfrRect() : base(CreateRemote()) {
-            connection.weakCache.Add(proxyId, this);
+            RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
         }
 
         int m_X;
@@ -76,8 +76,8 @@ namespace Chromium.Remote {
             get {
                 if(!m_X_fetched) {
                     var call = new CfxRectGetXRenderProcessCall();
-                    call.sender = this.proxyId;
-                    call.RequestExecution(this);
+                    call.sender = RemotePtr.ptr;
+                    call.RequestExecution(RemotePtr.connection);
                     m_X = call.value;
                     m_X_fetched = true;
                 }
@@ -85,9 +85,9 @@ namespace Chromium.Remote {
             }
             set {
                 var call = new CfxRectSetXRenderProcessCall();
-                call.sender = this.proxyId;
+                call.sender = RemotePtr.ptr;
                 call.value = value;
-                call.RequestExecution(this);
+                call.RequestExecution(RemotePtr.connection);
                 m_X = value;
                 m_X_fetched = true;
             }
@@ -100,8 +100,8 @@ namespace Chromium.Remote {
             get {
                 if(!m_Y_fetched) {
                     var call = new CfxRectGetYRenderProcessCall();
-                    call.sender = this.proxyId;
-                    call.RequestExecution(this);
+                    call.sender = RemotePtr.ptr;
+                    call.RequestExecution(RemotePtr.connection);
                     m_Y = call.value;
                     m_Y_fetched = true;
                 }
@@ -109,9 +109,9 @@ namespace Chromium.Remote {
             }
             set {
                 var call = new CfxRectSetYRenderProcessCall();
-                call.sender = this.proxyId;
+                call.sender = RemotePtr.ptr;
                 call.value = value;
-                call.RequestExecution(this);
+                call.RequestExecution(RemotePtr.connection);
                 m_Y = value;
                 m_Y_fetched = true;
             }
@@ -124,8 +124,8 @@ namespace Chromium.Remote {
             get {
                 if(!m_Width_fetched) {
                     var call = new CfxRectGetWidthRenderProcessCall();
-                    call.sender = this.proxyId;
-                    call.RequestExecution(this);
+                    call.sender = RemotePtr.ptr;
+                    call.RequestExecution(RemotePtr.connection);
                     m_Width = call.value;
                     m_Width_fetched = true;
                 }
@@ -133,9 +133,9 @@ namespace Chromium.Remote {
             }
             set {
                 var call = new CfxRectSetWidthRenderProcessCall();
-                call.sender = this.proxyId;
+                call.sender = RemotePtr.ptr;
                 call.value = value;
-                call.RequestExecution(this);
+                call.RequestExecution(RemotePtr.connection);
                 m_Width = value;
                 m_Width_fetched = true;
             }
@@ -148,8 +148,8 @@ namespace Chromium.Remote {
             get {
                 if(!m_Height_fetched) {
                     var call = new CfxRectGetHeightRenderProcessCall();
-                    call.sender = this.proxyId;
-                    call.RequestExecution(this);
+                    call.sender = RemotePtr.ptr;
+                    call.RequestExecution(RemotePtr.connection);
                     m_Height = call.value;
                     m_Height_fetched = true;
                 }
@@ -157,16 +157,16 @@ namespace Chromium.Remote {
             }
             set {
                 var call = new CfxRectSetHeightRenderProcessCall();
-                call.sender = this.proxyId;
+                call.sender = RemotePtr.ptr;
                 call.value = value;
-                call.RequestExecution(this);
+                call.RequestExecution(RemotePtr.connection);
                 m_Height = value;
                 m_Height_fetched = true;
             }
         }
 
-        internal override void OnDispose(IntPtr proxyId) {
-            connection.weakCache.Remove(proxyId);
+        internal override void OnDispose(RemotePtr remotePtr) {
+            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
         }
     }
 }

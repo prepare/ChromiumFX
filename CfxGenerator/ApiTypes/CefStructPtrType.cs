@@ -81,11 +81,11 @@ public class CefStructPtrType : ApiType {
     }
 
     public override string RemoteUnwrapExpression(string var) {
-        return string.Format("CfrObject.Unwrap({0})", CSharp.Escape(var));
+        return string.Format("CfrObject.Unwrap({0}).ptr", CSharp.Escape(var));
     }
 
     public override string RemoteWrapExpression(string var) {
-        return string.Format("{0}.Wrap({1})", RemoteSymbol, var);
+        return string.Format("{0}.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, {1}))", RemoteSymbol, var);
     }
 
     public override void EmitPreNativeCallStatements(CodeBuilder b, string var) {
@@ -113,9 +113,9 @@ public class CefStructPtrType : ApiType {
 
     public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
         if(var == "this")
-            b.AppendLine("call.@this = proxyId;");
+            b.AppendLine("call.@this = RemotePtr.ptr;");
         else
-            b.AppendLine("call.{0} = CfrObject.Unwrap({0});", CSharp.Escape(var));
+            b.AppendLine("call.{0} = CfrObject.Unwrap({0}).ptr;", CSharp.Escape(var));
     }
 
     public override string PInvokeSymbol {

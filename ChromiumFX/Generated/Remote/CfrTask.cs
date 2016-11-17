@@ -50,24 +50,24 @@ namespace Chromium.Remote {
     /// </remarks>
     public class CfrTask : CfrBase {
 
-        internal static CfrTask Wrap(IntPtr proxyId) {
-            if(proxyId == IntPtr.Zero) return null;
+        internal static CfrTask Wrap(RemotePtr remotePtr) {
+            if(remotePtr == RemotePtr.Zero) return null;
             var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
             lock(weakCache) {
-                var cfrObj = (CfrTask)weakCache.Get(proxyId);
+                var cfrObj = (CfrTask)weakCache.Get(remotePtr.ptr);
                 if(cfrObj == null) {
-                    cfrObj = new CfrTask(proxyId);
-                    weakCache.Add(proxyId, cfrObj);
+                    cfrObj = new CfrTask(remotePtr);
+                    weakCache.Add(remotePtr.ptr, cfrObj);
                 }
                 return cfrObj;
             }
         }
 
 
-        internal static IntPtr CreateRemote() {
+        internal static RemotePtr CreateRemote() {
             var call = new CfxTaskCtorRenderProcessCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return call.__retval;
+            return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);
         }
 
         internal void raise_Execute(object sender, CfrEventArgs e) {
@@ -78,9 +78,9 @@ namespace Chromium.Remote {
         }
 
 
-        private CfrTask(IntPtr proxyId) : base(proxyId) {}
+        private CfrTask(RemotePtr remotePtr) : base(remotePtr) {}
         public CfrTask() : base(CreateRemote()) {
-            connection.weakCache.Add(proxyId, this);
+            RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
         }
 
         /// <summary>
@@ -94,8 +94,8 @@ namespace Chromium.Remote {
             add {
                 if(m_Execute == null) {
                     var call = new CfxTaskExecuteActivateRenderProcessCall();
-                    call.sender = proxyId;
-                    call.RequestExecution(this);
+                    call.sender = RemotePtr.ptr;
+                    call.RequestExecution(RemotePtr.connection);
                 }
                 m_Execute += value;
             }
@@ -103,8 +103,8 @@ namespace Chromium.Remote {
                 m_Execute -= value;
                 if(m_Execute == null) {
                     var call = new CfxTaskExecuteDeactivateRenderProcessCall();
-                    call.sender = proxyId;
-                    call.RequestExecution(this);
+                    call.sender = RemotePtr.ptr;
+                    call.RequestExecution(RemotePtr.connection);
                 }
             }
         }
@@ -112,8 +112,8 @@ namespace Chromium.Remote {
         CfrEventHandler m_Execute;
 
 
-        internal override void OnDispose(IntPtr proxyId) {
-            connection.weakCache.Remove(proxyId);
+        internal override void OnDispose(RemotePtr remotePtr) {
+            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
         }
     }
 

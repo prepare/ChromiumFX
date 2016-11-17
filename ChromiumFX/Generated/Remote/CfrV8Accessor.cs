@@ -48,24 +48,24 @@ namespace Chromium.Remote {
     /// </remarks>
     public class CfrV8Accessor : CfrBase {
 
-        internal static CfrV8Accessor Wrap(IntPtr proxyId) {
-            if(proxyId == IntPtr.Zero) return null;
+        internal static CfrV8Accessor Wrap(RemotePtr remotePtr) {
+            if(remotePtr == RemotePtr.Zero) return null;
             var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
             lock(weakCache) {
-                var cfrObj = (CfrV8Accessor)weakCache.Get(proxyId);
+                var cfrObj = (CfrV8Accessor)weakCache.Get(remotePtr.ptr);
                 if(cfrObj == null) {
-                    cfrObj = new CfrV8Accessor(proxyId);
-                    weakCache.Add(proxyId, cfrObj);
+                    cfrObj = new CfrV8Accessor(remotePtr);
+                    weakCache.Add(remotePtr.ptr, cfrObj);
                 }
                 return cfrObj;
             }
         }
 
 
-        internal static IntPtr CreateRemote() {
+        internal static RemotePtr CreateRemote() {
             var call = new CfxV8AccessorCtorRenderProcessCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return call.__retval;
+            return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);
         }
 
         internal void raise_Get(object sender, CfrV8AccessorGetEventArgs e) {
@@ -83,9 +83,9 @@ namespace Chromium.Remote {
         }
 
 
-        private CfrV8Accessor(IntPtr proxyId) : base(proxyId) {}
+        private CfrV8Accessor(RemotePtr remotePtr) : base(remotePtr) {}
         public CfrV8Accessor() : base(CreateRemote()) {
-            connection.weakCache.Add(proxyId, this);
+            RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
         }
 
         /// <summary>
@@ -103,8 +103,8 @@ namespace Chromium.Remote {
             add {
                 if(m_Get == null) {
                     var call = new CfxV8AccessorGetActivateRenderProcessCall();
-                    call.sender = proxyId;
-                    call.RequestExecution(this);
+                    call.sender = RemotePtr.ptr;
+                    call.RequestExecution(RemotePtr.connection);
                 }
                 m_Get += value;
             }
@@ -112,8 +112,8 @@ namespace Chromium.Remote {
                 m_Get -= value;
                 if(m_Get == null) {
                     var call = new CfxV8AccessorGetDeactivateRenderProcessCall();
-                    call.sender = proxyId;
-                    call.RequestExecution(this);
+                    call.sender = RemotePtr.ptr;
+                    call.RequestExecution(RemotePtr.connection);
                 }
             }
         }
@@ -136,8 +136,8 @@ namespace Chromium.Remote {
             add {
                 if(m_Set == null) {
                     var call = new CfxV8AccessorSetActivateRenderProcessCall();
-                    call.sender = proxyId;
-                    call.RequestExecution(this);
+                    call.sender = RemotePtr.ptr;
+                    call.RequestExecution(RemotePtr.connection);
                 }
                 m_Set += value;
             }
@@ -145,8 +145,8 @@ namespace Chromium.Remote {
                 m_Set -= value;
                 if(m_Set == null) {
                     var call = new CfxV8AccessorSetDeactivateRenderProcessCall();
-                    call.sender = proxyId;
-                    call.RequestExecution(this);
+                    call.sender = RemotePtr.ptr;
+                    call.RequestExecution(RemotePtr.connection);
                 }
             }
         }
@@ -154,8 +154,8 @@ namespace Chromium.Remote {
         CfrV8AccessorSetEventHandler m_Set;
 
 
-        internal override void OnDispose(IntPtr proxyId) {
-            connection.weakCache.Remove(proxyId);
+        internal override void OnDispose(RemotePtr remotePtr) {
+            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
         }
     }
 
@@ -225,7 +225,7 @@ namespace Chromium.Remote {
                         var call = new CfxV8AccessorGetGetObjectRenderProcessCall();
                         call.eventArgsId = eventArgsId;
                         call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-                        m_Object = CfrV8Value.Wrap(call.value);
+                        m_Object = CfrV8Value.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.value));
                     }
                     return m_Object;
                 }
@@ -238,7 +238,7 @@ namespace Chromium.Remote {
                     CheckAccess();
                     var call = new CfxV8AccessorGetSetRetvalRenderProcessCall();
                     call.eventArgsId = eventArgsId;
-                    call.value = CfrV8Value.Unwrap(value);
+                    call.value = CfrV8Value.Unwrap(value).ptr;
                     call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                 }
             }
@@ -353,7 +353,7 @@ namespace Chromium.Remote {
                         var call = new CfxV8AccessorSetGetObjectRenderProcessCall();
                         call.eventArgsId = eventArgsId;
                         call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-                        m_Object = CfrV8Value.Wrap(call.value);
+                        m_Object = CfrV8Value.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.value));
                     }
                     return m_Object;
                 }
@@ -369,7 +369,7 @@ namespace Chromium.Remote {
                         var call = new CfxV8AccessorSetGetValueRenderProcessCall();
                         call.eventArgsId = eventArgsId;
                         call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-                        m_Value = CfrV8Value.Wrap(call.value);
+                        m_Value = CfrV8Value.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.value));
                     }
                     return m_Value;
                 }

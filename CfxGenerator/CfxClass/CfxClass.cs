@@ -228,14 +228,14 @@ public abstract class CfxClass {
     public abstract void EmitRemoteClass(CodeBuilder b);
 
     protected void EmitRemoteClassWrapperFunction(CodeBuilder b) {
-        b.BeginFunction("Wrap", RemoteClassName, "IntPtr proxyId", "internal static");
-        b.AppendLine("if(proxyId == IntPtr.Zero) return null;");
+        b.BeginFunction("Wrap", RemoteClassName, "RemotePtr remotePtr", "internal static");
+        b.AppendLine("if(remotePtr == RemotePtr.Zero) return null;");
         b.AppendLine("var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;");
         b.BeginBlock("lock(weakCache)");
-        b.AppendLine("var cfrObj = ({0})weakCache.Get(proxyId);", RemoteClassName);
+        b.AppendLine("var cfrObj = ({0})weakCache.Get(remotePtr.ptr);", RemoteClassName);
         b.BeginBlock("if(cfrObj == null)");
-        b.AppendLine("cfrObj = new {0}(proxyId);", RemoteClassName);
-        b.AppendLine("weakCache.Add(proxyId, cfrObj);");
+        b.AppendLine("cfrObj = new {0}(remotePtr);", RemoteClassName);
+        b.AppendLine("weakCache.Add(remotePtr.ptr, cfrObj);");
         b.EndBlock();
         b.AppendLine("return cfrObj;");
         b.EndBlock();

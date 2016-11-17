@@ -45,24 +45,24 @@ namespace Chromium.Remote {
     /// </remarks>
     public class CfrStringVisitor : CfrBase {
 
-        internal static CfrStringVisitor Wrap(IntPtr proxyId) {
-            if(proxyId == IntPtr.Zero) return null;
+        internal static CfrStringVisitor Wrap(RemotePtr remotePtr) {
+            if(remotePtr == RemotePtr.Zero) return null;
             var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
             lock(weakCache) {
-                var cfrObj = (CfrStringVisitor)weakCache.Get(proxyId);
+                var cfrObj = (CfrStringVisitor)weakCache.Get(remotePtr.ptr);
                 if(cfrObj == null) {
-                    cfrObj = new CfrStringVisitor(proxyId);
-                    weakCache.Add(proxyId, cfrObj);
+                    cfrObj = new CfrStringVisitor(remotePtr);
+                    weakCache.Add(remotePtr.ptr, cfrObj);
                 }
                 return cfrObj;
             }
         }
 
 
-        internal static IntPtr CreateRemote() {
+        internal static RemotePtr CreateRemote() {
             var call = new CfxStringVisitorCtorRenderProcessCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return call.__retval;
+            return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);
         }
 
         internal void raise_Visit(object sender, CfrStringVisitorVisitEventArgs e) {
@@ -73,9 +73,9 @@ namespace Chromium.Remote {
         }
 
 
-        private CfrStringVisitor(IntPtr proxyId) : base(proxyId) {}
+        private CfrStringVisitor(RemotePtr remotePtr) : base(remotePtr) {}
         public CfrStringVisitor() : base(CreateRemote()) {
-            connection.weakCache.Add(proxyId, this);
+            RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
         }
 
         /// <summary>
@@ -89,8 +89,8 @@ namespace Chromium.Remote {
             add {
                 if(m_Visit == null) {
                     var call = new CfxStringVisitorVisitActivateRenderProcessCall();
-                    call.sender = proxyId;
-                    call.RequestExecution(this);
+                    call.sender = RemotePtr.ptr;
+                    call.RequestExecution(RemotePtr.connection);
                 }
                 m_Visit += value;
             }
@@ -98,8 +98,8 @@ namespace Chromium.Remote {
                 m_Visit -= value;
                 if(m_Visit == null) {
                     var call = new CfxStringVisitorVisitDeactivateRenderProcessCall();
-                    call.sender = proxyId;
-                    call.RequestExecution(this);
+                    call.sender = RemotePtr.ptr;
+                    call.RequestExecution(RemotePtr.connection);
                 }
             }
         }
@@ -107,8 +107,8 @@ namespace Chromium.Remote {
         CfrStringVisitorVisitEventHandler m_Visit;
 
 
-        internal override void OnDispose(IntPtr proxyId) {
-            connection.weakCache.Remove(proxyId);
+        internal override void OnDispose(RemotePtr remotePtr) {
+            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
         }
     }
 

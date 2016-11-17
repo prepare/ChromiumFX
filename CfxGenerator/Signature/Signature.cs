@@ -373,7 +373,7 @@ public class Signature {
         if(isStatic)
             b.AppendLine("call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);");
         else
-            b.AppendLine("call.RequestExecution(this);");
+            b.AppendLine("call.RequestExecution(RemotePtr.connection);");
 
         foreach(var arg in ManagedArguments) {
             arg.EmitPostRemoteCallStatements(b);

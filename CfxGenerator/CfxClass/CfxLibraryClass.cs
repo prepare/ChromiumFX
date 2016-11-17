@@ -250,7 +250,7 @@ public class CfxLibraryClass : CfxClass {
 
         b.AppendLine();
 
-        b.AppendLine("private {0}(IntPtr proxyId) : base(proxyId) {{}}", RemoteClassName);
+        b.AppendLine("private {0}(RemotePtr remotePtr) : base(remotePtr) {{}}", RemoteClassName);
 
         b.AppendLine();
 
@@ -297,8 +297,8 @@ public class CfxLibraryClass : CfxClass {
         }
 
 
-        b.BeginFunction("OnDispose", "void", "IntPtr proxyId", "internal override");
-        b.AppendLine("connection.weakCache.Remove(proxyId);");
+        b.BeginFunction("OnDispose", "void", "RemotePtr remotePtr", "internal override");
+        b.AppendLine("RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);");
         b.EndBlock();
 
         b.EndBlock();

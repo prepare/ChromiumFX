@@ -48,11 +48,11 @@ namespace Chromium {
             return retval;
         }
 
-        internal static T[] GetCfrObjects<T>(IntPtr[] proxyIds, Func<IntPtr, T> wrapFunction) where T : CfrObject {
-            if(proxyIds == null) return null;
-            var retval = new T[proxyIds.Length];
-            for(int i = 0; i < proxyIds.Length; ++i)
-                retval[i] = wrapFunction(proxyIds[i]);
+        internal static T[] GetCfrObjects<T>(RemoteConnection connection, IntPtr[] remotePtrs, Func<RemotePtr, T> wrapFunction) where T : CfrObject {
+            if(remotePtrs == null) return null;
+            var retval = new T[remotePtrs.Length];
+            for(int i = 0; i < remotePtrs.Length; ++i)
+                retval[i] = wrapFunction(new RemotePtr(connection, remotePtrs[i]));
             return retval;
         }
 

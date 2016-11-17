@@ -52,7 +52,7 @@ namespace Chromium.Remote {
         /// </summary>
         public static int ExecuteProcess(CfrApp application) {
             var call = new CfxRuntimeExecuteProcessRenderProcessCall();
-            call.application = CfrObject.Unwrap(application);
+            call.application = CfrObject.Unwrap(application).ptr;
             // Looks like this almost never returns with a value
             // from the call into the render process. Probably the
             // IPC connection doesn't get a chance to send over the

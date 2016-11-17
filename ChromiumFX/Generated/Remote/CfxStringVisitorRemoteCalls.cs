@@ -64,7 +64,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrStringVisitor.Wrap(this.sender);
+            var sender = CfrStringVisitor.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrStringVisitorVisitEventArgs(eventArgsId);
             sender.raise_Visit(sender, e);
         }

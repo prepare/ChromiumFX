@@ -48,14 +48,14 @@ namespace Chromium.Remote {
     /// </remarks>
     public class CfrV8StackTrace : CfrBase {
 
-        internal static CfrV8StackTrace Wrap(IntPtr proxyId) {
-            if(proxyId == IntPtr.Zero) return null;
+        internal static CfrV8StackTrace Wrap(RemotePtr remotePtr) {
+            if(remotePtr == RemotePtr.Zero) return null;
             var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
             lock(weakCache) {
-                var cfrObj = (CfrV8StackTrace)weakCache.Get(proxyId);
+                var cfrObj = (CfrV8StackTrace)weakCache.Get(remotePtr.ptr);
                 if(cfrObj == null) {
-                    cfrObj = new CfrV8StackTrace(proxyId);
-                    weakCache.Add(proxyId, cfrObj);
+                    cfrObj = new CfrV8StackTrace(remotePtr);
+                    weakCache.Add(remotePtr.ptr, cfrObj);
                 }
                 return cfrObj;
             }
@@ -74,11 +74,11 @@ namespace Chromium.Remote {
             var call = new CfxV8StackTraceGetCurrentRenderProcessCall();
             call.frameLimit = frameLimit;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrV8StackTrace.Wrap(call.__retval);
+            return CfrV8StackTrace.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
 
 
-        private CfrV8StackTrace(IntPtr proxyId) : base(proxyId) {}
+        private CfrV8StackTrace(RemotePtr remotePtr) : base(remotePtr) {}
 
         /// <summary>
         /// Returns true (1) if the underlying handle is valid and it can be accessed
@@ -92,8 +92,8 @@ namespace Chromium.Remote {
         public bool IsValid {
             get {
                 var call = new CfxV8StackTraceIsValidRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -108,8 +108,8 @@ namespace Chromium.Remote {
         public int FrameCount {
             get {
                 var call = new CfxV8StackTraceGetFrameCountRenderProcessCall();
-                call.@this = proxyId;
-                call.RequestExecution(this);
+                call.@this = RemotePtr.ptr;
+                call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
         }
@@ -123,14 +123,14 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrV8StackFrame GetFrame(int index) {
             var call = new CfxV8StackTraceGetFrameRenderProcessCall();
-            call.@this = proxyId;
+            call.@this = RemotePtr.ptr;
             call.index = index;
-            call.RequestExecution(this);
-            return CfrV8StackFrame.Wrap(call.__retval);
+            call.RequestExecution(RemotePtr.connection);
+            return CfrV8StackFrame.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
 
-        internal override void OnDispose(IntPtr proxyId) {
-            connection.weakCache.Remove(proxyId);
+        internal override void OnDispose(RemotePtr remotePtr) {
+            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
         }
     }
 }

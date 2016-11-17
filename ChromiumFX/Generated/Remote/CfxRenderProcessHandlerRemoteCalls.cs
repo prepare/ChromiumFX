@@ -64,7 +64,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrRenderProcessHandler.Wrap(this.sender);
+            var sender = CfrRenderProcessHandler.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrOnRenderThreadCreatedEventArgs(eventArgsId);
             sender.raise_OnRenderThreadCreated(sender, e);
         }
@@ -140,7 +140,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrRenderProcessHandler.Wrap(this.sender);
+            var sender = CfrRenderProcessHandler.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrEventArgs(eventArgsId);
             sender.raise_OnWebKitInitialized(sender, e);
         }
@@ -189,7 +189,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrRenderProcessHandler.Wrap(this.sender);
+            var sender = CfrRenderProcessHandler.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrOnBrowserCreatedEventArgs(eventArgsId);
             sender.raise_OnBrowserCreated(sender, e);
         }
@@ -265,7 +265,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrRenderProcessHandler.Wrap(this.sender);
+            var sender = CfrRenderProcessHandler.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrOnBrowserDestroyedEventArgs(eventArgsId);
             sender.raise_OnBrowserDestroyed(sender, e);
         }
@@ -341,7 +341,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrRenderProcessHandler.Wrap(this.sender);
+            var sender = CfrRenderProcessHandler.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrGetLoadHandlerEventArgs(eventArgsId);
             sender.raise_GetLoadHandler(sender, e);
         }
@@ -413,7 +413,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrRenderProcessHandler.Wrap(this.sender);
+            var sender = CfrRenderProcessHandler.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrOnBeforeNavigationEventArgs(eventArgsId);
             sender.raise_OnBeforeNavigation(sender, e);
         }
@@ -620,7 +620,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrRenderProcessHandler.Wrap(this.sender);
+            var sender = CfrRenderProcessHandler.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrOnContextCreatedEventArgs(eventArgsId);
             sender.raise_OnContextCreated(sender, e);
         }
@@ -750,7 +750,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrRenderProcessHandler.Wrap(this.sender);
+            var sender = CfrRenderProcessHandler.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrOnContextReleasedEventArgs(eventArgsId);
             sender.raise_OnContextReleased(sender, e);
         }
@@ -880,7 +880,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrRenderProcessHandler.Wrap(this.sender);
+            var sender = CfrRenderProcessHandler.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrOnUncaughtExceptionEventArgs(eventArgsId);
             sender.raise_OnUncaughtException(sender, e);
         }
@@ -1064,7 +1064,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrRenderProcessHandler.Wrap(this.sender);
+            var sender = CfrRenderProcessHandler.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrOnFocusedNodeChangedEventArgs(eventArgsId);
             sender.raise_OnFocusedNodeChanged(sender, e);
         }
@@ -1194,7 +1194,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrRenderProcessHandler.Wrap(this.sender);
+            var sender = CfrRenderProcessHandler.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrOnProcessMessageReceivedEventArgs(eventArgsId);
             sender.raise_OnProcessMessageReceived(sender, e);
         }

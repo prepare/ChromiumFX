@@ -64,7 +64,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrV8Interceptor.Wrap(this.sender);
+            var sender = CfrV8Interceptor.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrGetByNameEventArgs(eventArgsId);
             sender.raise_GetByName(sender, e);
         }
@@ -263,7 +263,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrV8Interceptor.Wrap(this.sender);
+            var sender = CfrV8Interceptor.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrGetByIndexEventArgs(eventArgsId);
             sender.raise_GetByIndex(sender, e);
         }
@@ -462,7 +462,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrV8Interceptor.Wrap(this.sender);
+            var sender = CfrV8Interceptor.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrSetByNameEventArgs(eventArgsId);
             sender.raise_SetByName(sender, e);
         }
@@ -665,7 +665,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrV8Interceptor.Wrap(this.sender);
+            var sender = CfrV8Interceptor.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrSetByIndexEventArgs(eventArgsId);
             sender.raise_SetByIndex(sender, e);
         }

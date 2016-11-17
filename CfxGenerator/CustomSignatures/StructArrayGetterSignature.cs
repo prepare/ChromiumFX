@@ -109,12 +109,12 @@ ptrs_p.Free();
     public override void EmitRemoteCall(CodeBuilder b, string remoteCallId, bool isStatic) {
         Debug.Assert(Arguments[2].ArgumentType.PublicSymbol == "CfxPostDataElement");
         b.AppendLine("var call = new CfxPostDataGetElementsRenderProcessCall();");
-        b.AppendLine("call.@this = proxyId;");
-        b.AppendLine("call.RequestExecution(this);");
+        b.AppendLine("call.@this = RemotePtr.ptr;");
+        b.AppendLine("call.RequestExecution(RemotePtr.connection);");
         b.AppendLine("if(call.__retval == null) return null;");
         b.AppendLine("var retval = new CfrPostDataElement[call.__retval.Length];");
         b.BeginFor("retval.Length");
-        b.AppendLine("retval[i] = CfrPostDataElement.Wrap(call.__retval[i]);");
+        b.AppendLine("retval[i] = CfrPostDataElement.Wrap(new RemotePtr(connection, call.__retval[i]));");
         b.EndBlock();
         b.AppendLine("return retval;");
     }

@@ -84,11 +84,11 @@ public class CefStructOutType : CefStructPtrPtrType {
     }
 
     public override string RemoteUnwrapExpression(string var) {
-        return string.Format("{0}.Unwrap({1})", Struct.RemoteClassName, var);
+        return string.Format("{0}.Unwrap({1}).ptr", Struct.RemoteClassName, var);
     }
 
     public override string RemoteWrapExpression(string var) {
-        return string.Format("{0}.Wrap({1})", Struct.RemoteClassName, var);
+        return string.Format("{0}.Wrap(new RemotePtr(connection, {1}))", Struct.RemoteClassName, var);
     }
 
     public override string PublicEventConstructorParameter(string var) {

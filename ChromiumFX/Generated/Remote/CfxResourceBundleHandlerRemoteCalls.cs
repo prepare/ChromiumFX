@@ -64,7 +64,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrResourceBundleHandler.Wrap(this.sender);
+            var sender = CfrResourceBundleHandler.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrGetLocalizedStringEventArgs(eventArgsId);
             sender.raise_GetLocalizedString(sender, e);
         }
@@ -213,7 +213,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrResourceBundleHandler.Wrap(this.sender);
+            var sender = CfrResourceBundleHandler.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrGetDataResourceEventArgs(eventArgsId);
             sender.raise_GetDataResource(sender, e);
         }
@@ -358,7 +358,7 @@ namespace Chromium.Remote {
             RemoveEventArgs(call.eventArgsId);
         }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrResourceBundleHandler.Wrap(this.sender);
+            var sender = CfrResourceBundleHandler.Wrap(new RemotePtr(connection, this.sender));
             var e = new CfrGetDataResourceForScaleEventArgs(eventArgsId);
             sender.raise_GetDataResourceForScale(sender, e);
         }

@@ -40,26 +40,19 @@ namespace Chromium.Remote {
     /// </summary>
     public abstract class CfrObject : IDisposable {
 
-        internal static IntPtr Unwrap(CfrObject remoteObject) {
-            return remoteObject == null ? IntPtr.Zero : remoteObject.proxyId;
+        internal static RemotePtr Unwrap(CfrObject remoteObject) {
+            return remoteObject == null ? RemotePtr.Zero : remoteObject.RemotePtr;
         }
 
-        internal readonly RemoteConnection connection;
-        internal IntPtr m_proxyId;
+        private RemotePtr m_remotePtr;
 
-
-        internal CfrObject(IntPtr proxyId) {
-            this.m_proxyId = proxyId;
-            this.connection = CfxRemoteCallContext.CurrentContext.connection;
+        internal CfrObject(RemotePtr remotePtr) {
+            m_remotePtr = remotePtr;
         }
 
-        internal IntPtr proxyId {
+        internal RemoteConnection connection {
             get {
-                if(m_proxyId == IntPtr.Zero) {
-                    throw new ObjectDisposedException(this.GetType().Name);
-                } else {
-                    return m_proxyId;
-                }
+                return RemotePtr.connection;
             }
         }
 
@@ -69,7 +62,7 @@ namespace Chromium.Remote {
         /// </summary>
         /// <returns></returns>
         public CfxRemoteCallContext CreateRemoteCallContext() {
-            return new CfxRemoteCallContext(connection, 0);
+            return new CfxRemoteCallContext(RemotePtr.connection, 0);
         }
 
         /// <summary>
@@ -78,21 +71,25 @@ namespace Chromium.Remote {
         /// </summary>
         public RemotePtr RemotePtr {
             get {
-                return new RemotePtr(connection, proxyId);
+                if(m_remotePtr == RemotePtr.Zero) {
+                    throw new ObjectDisposedException(this.GetType().Name);
+                } else {
+                    return m_remotePtr;
+                }
             }
         }
 
 
-        internal abstract void OnDispose(IntPtr proxyId);
+        internal abstract void OnDispose(RemotePtr remotePtr);
 
         private void Release() {
-            if(m_proxyId != IntPtr.Zero) {
+            if(m_remotePtr != RemotePtr.Zero) {
                 try {
-                    OnDispose(m_proxyId);
-                    if(connection.connectionLostException == null) {
-                        var call = new ReleaseProxyRemoteCall();
-                        call.proxyId = m_proxyId;
-                        call.RequestExecution(this);
+                    OnDispose(m_remotePtr);
+                    if(m_remotePtr.connection.connectionLostException == null) {
+                        var call = new ReleaseRemotePtrRemoteCall();
+                        call.remotePtr = m_remotePtr.ptr;
+                        call.RequestExecution(m_remotePtr.connection);
                     }
 #if DEBUG
                 } catch(Exception e) {
@@ -102,7 +99,7 @@ namespace Chromium.Remote {
                 } catch {
 #endif
                 } finally {
-                    m_proxyId = IntPtr.Zero;
+                    m_remotePtr = RemotePtr.Zero;
                 }
             }
         }

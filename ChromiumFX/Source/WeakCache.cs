@@ -32,7 +32,7 @@ using System;
 using System.Collections.Generic;
 
 namespace Chromium {
-    internal class WeakCacheBase {
+    internal abstract class WeakCacheBase {
 
         protected readonly Dictionary<IntPtr, WeakReference> cache = new Dictionary<IntPtr, WeakReference>();
 
