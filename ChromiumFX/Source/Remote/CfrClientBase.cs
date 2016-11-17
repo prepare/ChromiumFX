@@ -34,26 +34,10 @@ using System;
 
 namespace Chromium.Remote {
     /// <summary>
-    /// Represents an IntPtr in the remote process.
+    /// Base class for all remote wrapper classes for CEF client structs.
     /// </summary>
-    public struct RemotePtr {
-        /// <summary>
-        /// Two remote pointers are equal if both are null or both are of the same value on the same connection.
-        /// </summary>
-        public static bool operator ==(RemotePtr p1, RemotePtr p2) { return p1.ptr == p2.ptr && (p1.connection == p2.connection || p1.ptr == IntPtr.Zero); }
-        public static bool operator !=(RemotePtr p1, RemotePtr p2) { return !(p1.ptr == p2.ptr); }
-        public static readonly RemotePtr Zero;
-        internal RemoteConnection connection;
-        internal IntPtr ptr;
-        internal RemotePtr(RemoteConnection connection, IntPtr ptr) {
-            this.connection = connection;
-            this.ptr = ptr;
-        }
-        public override bool Equals(object obj) {
-            return this == (RemotePtr)obj;
-        }
-        public override int GetHashCode() {
-            return ptr.GetHashCode() ^ connection.GetHashCode();
-        }
+    public abstract class CfrClientBase : CfrBase {
+        internal CfrClientBase(RemotePtr remotePtr) : base(remotePtr) { }
     }
+
 }

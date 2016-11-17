@@ -260,6 +260,8 @@
     <Compile Include="Source\CfxWindowInfo.cs" />
     <Compile Include="Source\NativeFunctionLoader.cs" />
     <Compile Include="Source\CfxMainArgs.cs" />
+    <Compile Include="Source\Remote\CfrLibraryBase.cs" />
+    <Compile Include="Source\Remote\CfrClientBase.cs" />
     <Compile Include="Source\Remote\PipeFactory.cs" />
     <Compile Include="Source\Remote\PipeBufferStream.cs" />
     <Compile Include="Source\Remote\WindowsPipeFactory.cs" />

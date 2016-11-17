@@ -236,7 +236,7 @@ public class CfxLibraryClass : CfxClass {
         b.AppendLine();
 
         b.AppendSummaryAndRemarks(Comments, true, Category == StructCategory.ApiCallbacks);
-        b.BeginClass(RemoteClassName + " : CfrBase", GeneratorConfig.ClassModifiers(RemoteClassName));
+        b.BeginClass(RemoteClassName + " : CfrLibraryBase", GeneratorConfig.ClassModifiers(RemoteClassName));
         b.AppendLine();
 
         EmitRemoteClassWrapperFunction(b);

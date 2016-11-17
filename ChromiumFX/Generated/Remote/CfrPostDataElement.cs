@@ -43,7 +43,7 @@ namespace Chromium.Remote {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
     /// </remarks>
-    public class CfrPostDataElement : CfrBase {
+    public class CfrPostDataElement : CfrLibraryBase {
 
         internal static CfrPostDataElement Wrap(RemotePtr remotePtr) {
             if(remotePtr == RemotePtr.Zero) return null;

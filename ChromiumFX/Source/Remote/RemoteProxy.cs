@@ -49,39 +49,39 @@ namespace Chromium.Remote {
             return o.nativePtrUnchecked;
         }
 
-        internal static CfxObject Unwrap(IntPtr proxyId, Func<IntPtr, CfxObject> ctor) {
+        internal static CfxObject Unwrap(IntPtr remotePtr, Func<IntPtr, CfxObject> ctor) {
 
-            if(proxyId == IntPtr.Zero)
+            if(remotePtr == IntPtr.Zero)
                 return null;
 
             lock(objects) {
                 CfxObject o;
-                if(!objects.TryGetValue(proxyId, out o)) {
-                    o = ctor(proxyId);
-                    objects.Add(proxyId, o);
+                if(!objects.TryGetValue(remotePtr, out o)) {
+                    o = ctor(remotePtr);
+                    objects.Add(remotePtr, o);
                 }
                 return o;
             }
         }
 
-        internal static void Release(IntPtr proxyId) {
+        internal static void Release(IntPtr remotePtr) {
             lock(objects) {
-                if(!objects.Remove(proxyId)) {
+                if(!objects.Remove(remotePtr)) {
                     //was not wrapped locally, release manually
-                    CfxApi.cfx_release(proxyId);
+                    CfxApi.cfx_release(remotePtr);
                 }
             }
         }
     }
 
-    internal class ReleaseProxyRemoteCall : RenderProcessCall {
-        internal ReleaseProxyRemoteCall() : base(RemoteCallId.ReleaseProxyRemoteCall, true) { }
-        internal IntPtr proxyId;
-        protected override void WriteArgs(StreamHandler h) { h.Write(proxyId); }
-        protected override void ReadArgs(StreamHandler h) { h.Read(out proxyId); }
+    internal class ReleaseRemotePtrRemoteCall : RenderProcessCall {
+        internal ReleaseRemotePtrRemoteCall() : base(RemoteCallId.ReleaseRemotePtrRemoteCall, true) { }
+        internal IntPtr remotePtr;
+        protected override void WriteArgs(StreamHandler h) { h.Write(remotePtr); }
+        protected override void ReadArgs(StreamHandler h) { h.Read(out remotePtr); }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            RemoteProxy.Release(proxyId);
+            RemoteProxy.Release(remotePtr);
         }
     }
 

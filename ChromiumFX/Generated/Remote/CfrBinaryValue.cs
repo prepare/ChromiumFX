@@ -42,7 +42,7 @@ namespace Chromium.Remote {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
     /// </remarks>
-    public partial class CfrBinaryValue : CfrBase {
+    public partial class CfrBinaryValue : CfrLibraryBase {
 
         internal static CfrBinaryValue Wrap(RemotePtr remotePtr) {
             if(remotePtr == RemotePtr.Zero) return null;
