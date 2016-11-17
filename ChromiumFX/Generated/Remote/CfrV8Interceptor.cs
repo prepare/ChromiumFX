@@ -240,9 +240,6 @@ namespace Chromium.Remote {
         CfrSetByIndexEventHandler m_SetByIndex;
 
 
-        internal override void OnDispose(RemotePtr remotePtr) {
-            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
-        }
     }
 
     namespace Event {

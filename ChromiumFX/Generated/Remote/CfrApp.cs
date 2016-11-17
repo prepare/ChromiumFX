@@ -231,9 +231,6 @@ namespace Chromium.Remote {
         CfrGetRenderProcessHandlerEventHandler m_GetRenderProcessHandler;
 
 
-        internal override void OnDispose(RemotePtr remotePtr) {
-            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
-        }
     }
 
     namespace Event {

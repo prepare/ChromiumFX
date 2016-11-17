@@ -79,13 +79,10 @@ namespace Chromium.Remote {
             }
         }
 
-
-        internal abstract void OnDispose(RemotePtr remotePtr);
-
         private void Release() {
             if(m_remotePtr != RemotePtr.Zero) {
                 try {
-                    OnDispose(m_remotePtr);
+                    RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
                     if(m_remotePtr.connection.connectionLostException == null) {
                         var call = new ReleaseRemotePtrRemoteCall();
                         call.remotePtr = m_remotePtr.ptr;

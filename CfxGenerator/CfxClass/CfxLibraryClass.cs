@@ -252,11 +252,12 @@ public class CfxLibraryClass : CfxClass {
 
         b.AppendLine("private {0}(RemotePtr remotePtr) : base(remotePtr) {{}}", RemoteClassName);
 
-        b.AppendLine();
-
         foreach(var p in m_structProperties) {
             if(GeneratorConfig.CreateRemoteProxy(CefStruct.Name + "::" + p.Getter.Name)) {
+
                 var cb = p.Getter;
+
+                b.AppendLine();
 
                 if(p.Setter != null && p.Setter.Comments != null) {
                     List<string> summaryLines = new List<string>();
@@ -282,24 +283,20 @@ public class CfxLibraryClass : CfxClass {
                     b.EndBlock();
                 }
                 b.EndBlock();
-                b.AppendLine();
+                
             }
         }
 
         foreach(var cb in m_structFunctions) {
             if(GeneratorConfig.CreateRemoteProxy(CefStruct.Name + "::" + cb.Name)) {
+                b.AppendLine();
                 b.AppendSummaryAndRemarks(cb.Comments, true);
                 b.BeginFunction(cb.PublicName, cb.RemoteReturnType.RemoteSymbol, cb.Signature.RemoteParameterList);
                 cb.Signature.EmitRemoteCall(b, cb.RemoteCallId, false);
                 b.EndBlock();
-                b.AppendLine();
             }
         }
 
-
-        b.BeginFunction("OnDispose", "void", "RemotePtr remotePtr", "internal override");
-        b.AppendLine("RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);");
-        b.EndBlock();
 
         b.EndBlock();
 

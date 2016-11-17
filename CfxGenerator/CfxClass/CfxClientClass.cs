@@ -632,8 +632,6 @@ public class CfxClientClass : CfxClass {
 
         b.AppendLine();
 
-
-
         foreach(var cb in CallbackFunctions) {
             if(!GeneratorConfig.IsBrowserProcessOnly(CefStruct.Name + "::" + cb.Name)) {
                 b.AppendSummaryAndRemarks(cb.Comments, true, true);
@@ -661,12 +659,6 @@ public class CfxClientClass : CfxClass {
                 b.AppendLine();
             }
         }
-
-
-
-        b.BeginFunction("OnDispose", "void", "RemotePtr remotePtr", "internal override");
-        b.AppendLine("RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);");
-        b.EndBlock();
 
         b.EndBlock();
 

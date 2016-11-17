@@ -491,9 +491,6 @@ namespace Chromium.Remote {
         CfrOnProcessMessageReceivedEventHandler m_OnProcessMessageReceived;
 
 
-        internal override void OnDispose(RemotePtr remotePtr) {
-            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
-        }
     }
 
     namespace Event {

@@ -994,9 +994,5 @@ namespace Chromium.Remote {
             call.RequestExecution(RemotePtr.connection);
             return CfrV8Value.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
-
-        internal override void OnDispose(RemotePtr remotePtr) {
-            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
-        }
     }
 }

@@ -263,9 +263,5 @@ namespace Chromium.Remote {
             exception = CfrV8Exception.Wrap(new RemotePtr(connection, call.exception));
             return call.__retval;
         }
-
-        internal override void OnDispose(RemotePtr remotePtr) {
-            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
-        }
     }
 }

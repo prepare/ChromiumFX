@@ -194,9 +194,6 @@ namespace Chromium.Remote {
         CfrGetDataResourceForScaleEventHandler m_GetDataResourceForScale;
 
 
-        internal override void OnDispose(RemotePtr remotePtr) {
-            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
-        }
     }
 
     namespace Event {

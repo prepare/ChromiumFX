@@ -195,9 +195,5 @@ namespace Chromium.Remote {
                 return call.__retval;
             }
         }
-
-        internal override void OnDispose(RemotePtr remotePtr) {
-            RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
-        }
     }
 }

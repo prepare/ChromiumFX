@@ -256,11 +256,9 @@ public class CfxValueClass : CfxClass {
         b.AppendLine("RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);");
         b.EndBlock();
 
-        b.AppendLine();
-
-
         foreach(var sm in StructMembers) {
             if(sm.Name != "size") {
+                b.AppendLine();
                 b.AppendLine("{0} m_{1};", sm.MemberType.RemoteSymbol, sm.PublicName);
                 b.AppendLine("bool m_{0}_fetched;", sm.PublicName);
                 b.AppendLine();
@@ -286,14 +284,8 @@ public class CfxValueClass : CfxClass {
                 b.AppendLine("m_{0}_fetched = true;", sm.PublicName);
                 b.EndBlock();
                 b.EndBlock();
-                b.AppendLine();
             }
         }
-
-
-        b.BeginFunction("OnDispose", "void", "RemotePtr remotePtr", "internal override");
-        b.AppendLine("RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);");
-        b.EndBlock();
 
         b.EndBlock();
 
