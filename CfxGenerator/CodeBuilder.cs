@@ -192,12 +192,12 @@ public class CodeBuilder {
             AppendLine(": base(RemoteCallId.{0}RemoteCall) {{}}", name);
             DecreaseIndent();
         } else {
-            BeginClass(name + "BrowserProcessCall : BrowserProcessCall", "internal");
-            callIds.Add(name + "BrowserProcessCall");
+            BeginClass(name + "RemoteClientCall : RemoteClientCall", "internal");
+            callIds.Add(name + "RemoteClientCall");
             AppendLine();
-            AppendLine("internal {0}BrowserProcessCall()", name);
+            AppendLine("internal {0}RemoteClientCall()", name);
             IncreaseIndent();
-            AppendLine(": base(RemoteCallId.{0}BrowserProcessCall) {{}}", name);
+            AppendLine(": base(RemoteCallId.{0}RemoteClientCall) {{}}", name);
             DecreaseIndent();
         }
     }

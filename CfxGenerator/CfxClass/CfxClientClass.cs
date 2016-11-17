@@ -453,7 +453,7 @@ public class CfxClientClass : CfxClass {
                 b.AppendLine();
 
                 b.BeginBlock("internal static void EventCall(object sender, {0} e)", cb.PublicEventArgsClassName);
-                b.AppendLine("var call = new {0}BrowserProcessCall();", cb.EventName);
+                b.AppendLine("var call = new {0}RemoteClientCall();", cb.EventName);
                 b.AppendLine("call.sender = RemoteProxy.Wrap((CfxBase)sender);");
                 b.AppendLine("call.eventArgsId = AddEventArgs(e);");
                 b.AppendLine("call.RequestExecution(RemoteClient.connection);");
@@ -476,7 +476,7 @@ public class CfxClientClass : CfxClass {
                 b.AppendLine();
                 b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
                 b.AppendLine("var sender = ({0})RemoteProxy.Unwrap(this.sender, null);", ClassName);
-                b.AppendLine("sender.{0} += {1}BrowserProcessCall.EventCall;", cb.PublicName, cb.EventName);
+                b.AppendLine("sender.{0} += {1}RemoteClientCall.EventCall;", cb.PublicName, cb.EventName);
                 b.EndBlock();
                 b.EndBlock();
                 b.AppendLine();
@@ -489,7 +489,7 @@ public class CfxClientClass : CfxClass {
                 b.AppendLine();
                 b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
                 b.AppendLine("var sender = ({0})RemoteProxy.Unwrap(this.sender, null);", ClassName);
-                b.AppendLine("sender.{0} -= {1}BrowserProcessCall.EventCall;", cb.PublicName, cb.EventName);
+                b.AppendLine("sender.{0} -= {1}RemoteClientCall.EventCall;", cb.PublicName, cb.EventName);
                 b.EndBlock();
                 b.EndBlock();
                 b.AppendLine();
@@ -515,7 +515,7 @@ public class CfxClientClass : CfxClass {
 
                         b.AppendLine();
                         b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-                        b.AppendLine("var e = ({0})BrowserProcessCall.GetEventArgs(eventArgsId);", cb.PublicEventArgsClassName);
+                        b.AppendLine("var e = ({0})RemoteClientCall.GetEventArgs(eventArgsId);", cb.PublicEventArgsClassName);
                         arg.EmitProxyEventArgSetter(b);
                         b.EndBlock();
 
@@ -549,7 +549,7 @@ public class CfxClientClass : CfxClass {
                         b.AppendLine();
 
                         b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-                        b.AppendLine("var e = ({0})BrowserProcessCall.GetEventArgs(eventArgsId);", cb.PublicEventArgsClassName);
+                        b.AppendLine("var e = ({0})RemoteClientCall.GetEventArgs(eventArgsId);", cb.PublicEventArgsClassName);
                         b.AppendLine("value = {0};", arg.ArgumentType.ProxyWrapExpression("e." + arg.PublicPropertyName));
                         b.EndBlock();
 
@@ -577,7 +577,7 @@ public class CfxClientClass : CfxClass {
 
                     b.AppendLine();
                     b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-                    b.AppendLine("var e = ({0})BrowserProcessCall.GetEventArgs(eventArgsId);", cb.PublicEventArgsClassName);
+                    b.AppendLine("var e = ({0})RemoteClientCall.GetEventArgs(eventArgsId);", cb.PublicEventArgsClassName);
                     b.AppendLine("e.SetReturnValue({0});", sig.PublicReturnType.ProxyUnwrapExpression("value"));
                     b.EndBlock();
 

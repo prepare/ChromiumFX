@@ -285,7 +285,7 @@
     <Compile Include="Source\Remote\RemoteCall.cs" />
     <Compile Include="Source\Remote\RemoteCallStack.cs" />
     <Compile Include="Source\Remote\RemoteConnection.cs" />
-    <Compile Include="Source\Remote\BrowserProcessCall.cs" />
+    <Compile Include="Source\Remote\RemoteClientCall.cs" />
     <Compile Include="Source\Remote\RemoteProxy.cs" />
     <Compile Include="Source\Remote\RemotePtr.cs" />
     <Compile Include="Source\Remote\StreamHandler.cs" />

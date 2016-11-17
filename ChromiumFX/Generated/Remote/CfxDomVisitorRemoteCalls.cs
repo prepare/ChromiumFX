@@ -51,13 +51,13 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDomVisitorVisitBrowserProcessCall : BrowserProcessCall {
+    internal class CfxDomVisitorVisitRemoteClientCall : RemoteClientCall {
 
-        internal CfxDomVisitorVisitBrowserProcessCall()
-            : base(RemoteCallId.CfxDomVisitorVisitBrowserProcessCall) {}
+        internal CfxDomVisitorVisitRemoteClientCall()
+            : base(RemoteCallId.CfxDomVisitorVisitRemoteClientCall) {}
 
         internal static void EventCall(object sender, CfxDomVisitorVisitEventArgs e) {
-            var call = new CfxDomVisitorVisitBrowserProcessCall();
+            var call = new CfxDomVisitorVisitRemoteClientCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
             call.RequestExecution(RemoteClient.connection);
@@ -81,7 +81,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var sender = (CfxDomVisitor)RemoteProxy.Unwrap(this.sender, null);
-            sender.Visit += CfxDomVisitorVisitBrowserProcessCall.EventCall;
+            sender.Visit += CfxDomVisitorVisitRemoteClientCall.EventCall;
         }
     }
 
@@ -96,7 +96,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var sender = (CfxDomVisitor)RemoteProxy.Unwrap(this.sender, null);
-            sender.Visit -= CfxDomVisitorVisitBrowserProcessCall.EventCall;
+            sender.Visit -= CfxDomVisitorVisitRemoteClientCall.EventCall;
         }
     }
 
@@ -122,7 +122,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxDomVisitorVisitEventArgs)BrowserProcessCall.GetEventArgs(eventArgsId);
+            var e = (CfxDomVisitorVisitEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
             value = RemoteProxy.Wrap(e.Document);
         }
     }

@@ -35,9 +35,9 @@ using System.Collections.Generic;
 
 namespace Chromium.Remote {
     /// <summary>
-    /// Marshals a call from the render process to the browser process.
+    /// Marshals a callback from a client in the render process to the browser process.
     /// </summary>
-    abstract class BrowserProcessCall : RemoteCall {
+    abstract class RemoteClientCall : RemoteCall {
 
         private static readonly Dictionary<ulong, object> eventArgs = new Dictionary<ulong, object>();
         private static ulong globalEventArgId;
@@ -68,7 +68,7 @@ namespace Chromium.Remote {
         internal IntPtr sender;
         internal ulong eventArgsId;
 
-        internal BrowserProcessCall(RemoteCallId callId) : base(callId) {}
+        internal RemoteClientCall(RemoteCallId callId) : base(callId) {}
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(sender);

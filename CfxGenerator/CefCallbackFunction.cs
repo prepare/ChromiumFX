@@ -241,7 +241,7 @@ public class CefCallbackFunction  {
     public string RemoteCallId {
         get {
             if(Parent.ClassBuilder.Category == StructCategory.ApiCallbacks) {
-                return Parent.ClassName + RemoteCallClassName + "BrowserProcessCall";
+                return Parent.ClassName + RemoteCallClassName + "RemoteClientCall";
             } else {
                 return Parent.ClassName + RemoteCallClassName + "RemoteCall";
             }

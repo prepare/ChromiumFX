@@ -51,13 +51,13 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxStringVisitorVisitBrowserProcessCall : BrowserProcessCall {
+    internal class CfxStringVisitorVisitRemoteClientCall : RemoteClientCall {
 
-        internal CfxStringVisitorVisitBrowserProcessCall()
-            : base(RemoteCallId.CfxStringVisitorVisitBrowserProcessCall) {}
+        internal CfxStringVisitorVisitRemoteClientCall()
+            : base(RemoteCallId.CfxStringVisitorVisitRemoteClientCall) {}
 
         internal static void EventCall(object sender, CfxStringVisitorVisitEventArgs e) {
-            var call = new CfxStringVisitorVisitBrowserProcessCall();
+            var call = new CfxStringVisitorVisitRemoteClientCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
             call.RequestExecution(RemoteClient.connection);
@@ -81,7 +81,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var sender = (CfxStringVisitor)RemoteProxy.Unwrap(this.sender, null);
-            sender.Visit += CfxStringVisitorVisitBrowserProcessCall.EventCall;
+            sender.Visit += CfxStringVisitorVisitRemoteClientCall.EventCall;
         }
     }
 
@@ -96,7 +96,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var sender = (CfxStringVisitor)RemoteProxy.Unwrap(this.sender, null);
-            sender.Visit -= CfxStringVisitorVisitBrowserProcessCall.EventCall;
+            sender.Visit -= CfxStringVisitorVisitRemoteClientCall.EventCall;
         }
     }
 
@@ -122,7 +122,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxStringVisitorVisitEventArgs)BrowserProcessCall.GetEventArgs(eventArgsId);
+            var e = (CfxStringVisitorVisitEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
             value = e.String;
         }
     }

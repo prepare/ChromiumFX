@@ -51,13 +51,13 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxOnBeforeCommandLineProcessingBrowserProcessCall : BrowserProcessCall {
+    internal class CfxOnBeforeCommandLineProcessingRemoteClientCall : RemoteClientCall {
 
-        internal CfxOnBeforeCommandLineProcessingBrowserProcessCall()
-            : base(RemoteCallId.CfxOnBeforeCommandLineProcessingBrowserProcessCall) {}
+        internal CfxOnBeforeCommandLineProcessingRemoteClientCall()
+            : base(RemoteCallId.CfxOnBeforeCommandLineProcessingRemoteClientCall) {}
 
         internal static void EventCall(object sender, CfxOnBeforeCommandLineProcessingEventArgs e) {
-            var call = new CfxOnBeforeCommandLineProcessingBrowserProcessCall();
+            var call = new CfxOnBeforeCommandLineProcessingRemoteClientCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
             call.RequestExecution(RemoteClient.connection);
@@ -81,7 +81,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var sender = (CfxApp)RemoteProxy.Unwrap(this.sender, null);
-            sender.OnBeforeCommandLineProcessing += CfxOnBeforeCommandLineProcessingBrowserProcessCall.EventCall;
+            sender.OnBeforeCommandLineProcessing += CfxOnBeforeCommandLineProcessingRemoteClientCall.EventCall;
         }
     }
 
@@ -96,7 +96,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var sender = (CfxApp)RemoteProxy.Unwrap(this.sender, null);
-            sender.OnBeforeCommandLineProcessing -= CfxOnBeforeCommandLineProcessingBrowserProcessCall.EventCall;
+            sender.OnBeforeCommandLineProcessing -= CfxOnBeforeCommandLineProcessingRemoteClientCall.EventCall;
         }
     }
 
@@ -122,7 +122,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxOnBeforeCommandLineProcessingEventArgs)BrowserProcessCall.GetEventArgs(eventArgsId);
+            var e = (CfxOnBeforeCommandLineProcessingEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
             value = e.ProcessType;
         }
     }
@@ -149,18 +149,18 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxOnBeforeCommandLineProcessingEventArgs)BrowserProcessCall.GetEventArgs(eventArgsId);
+            var e = (CfxOnBeforeCommandLineProcessingEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
             value = RemoteProxy.Wrap(e.CommandLine);
         }
     }
 
-    internal class CfxOnRegisterCustomSchemesBrowserProcessCall : BrowserProcessCall {
+    internal class CfxOnRegisterCustomSchemesRemoteClientCall : RemoteClientCall {
 
-        internal CfxOnRegisterCustomSchemesBrowserProcessCall()
-            : base(RemoteCallId.CfxOnRegisterCustomSchemesBrowserProcessCall) {}
+        internal CfxOnRegisterCustomSchemesRemoteClientCall()
+            : base(RemoteCallId.CfxOnRegisterCustomSchemesRemoteClientCall) {}
 
         internal static void EventCall(object sender, CfxOnRegisterCustomSchemesEventArgs e) {
-            var call = new CfxOnRegisterCustomSchemesBrowserProcessCall();
+            var call = new CfxOnRegisterCustomSchemesRemoteClientCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
             call.RequestExecution(RemoteClient.connection);
@@ -184,7 +184,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var sender = (CfxApp)RemoteProxy.Unwrap(this.sender, null);
-            sender.OnRegisterCustomSchemes += CfxOnRegisterCustomSchemesBrowserProcessCall.EventCall;
+            sender.OnRegisterCustomSchemes += CfxOnRegisterCustomSchemesRemoteClientCall.EventCall;
         }
     }
 
@@ -199,7 +199,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var sender = (CfxApp)RemoteProxy.Unwrap(this.sender, null);
-            sender.OnRegisterCustomSchemes -= CfxOnRegisterCustomSchemesBrowserProcessCall.EventCall;
+            sender.OnRegisterCustomSchemes -= CfxOnRegisterCustomSchemesRemoteClientCall.EventCall;
         }
     }
 
@@ -225,18 +225,18 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxOnRegisterCustomSchemesEventArgs)BrowserProcessCall.GetEventArgs(eventArgsId);
+            var e = (CfxOnRegisterCustomSchemesEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
             value = RemoteProxy.Wrap(e.Registrar);
         }
     }
 
-    internal class CfxGetResourceBundleHandlerBrowserProcessCall : BrowserProcessCall {
+    internal class CfxGetResourceBundleHandlerRemoteClientCall : RemoteClientCall {
 
-        internal CfxGetResourceBundleHandlerBrowserProcessCall()
-            : base(RemoteCallId.CfxGetResourceBundleHandlerBrowserProcessCall) {}
+        internal CfxGetResourceBundleHandlerRemoteClientCall()
+            : base(RemoteCallId.CfxGetResourceBundleHandlerRemoteClientCall) {}
 
         internal static void EventCall(object sender, CfxGetResourceBundleHandlerEventArgs e) {
-            var call = new CfxGetResourceBundleHandlerBrowserProcessCall();
+            var call = new CfxGetResourceBundleHandlerRemoteClientCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
             call.RequestExecution(RemoteClient.connection);
@@ -260,7 +260,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var sender = (CfxApp)RemoteProxy.Unwrap(this.sender, null);
-            sender.GetResourceBundleHandler += CfxGetResourceBundleHandlerBrowserProcessCall.EventCall;
+            sender.GetResourceBundleHandler += CfxGetResourceBundleHandlerRemoteClientCall.EventCall;
         }
     }
 
@@ -275,7 +275,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var sender = (CfxApp)RemoteProxy.Unwrap(this.sender, null);
-            sender.GetResourceBundleHandler -= CfxGetResourceBundleHandlerBrowserProcessCall.EventCall;
+            sender.GetResourceBundleHandler -= CfxGetResourceBundleHandlerRemoteClientCall.EventCall;
         }
     }
 
@@ -297,18 +297,18 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxGetResourceBundleHandlerEventArgs)BrowserProcessCall.GetEventArgs(eventArgsId);
+            var e = (CfxGetResourceBundleHandlerEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
             e.SetReturnValue((CfxResourceBundleHandler)RemoteProxy.Unwrap(value, (ptr) => new CfxResourceBundleHandler(ptr)));
         }
     }
 
-    internal class CfxGetRenderProcessHandlerBrowserProcessCall : BrowserProcessCall {
+    internal class CfxGetRenderProcessHandlerRemoteClientCall : RemoteClientCall {
 
-        internal CfxGetRenderProcessHandlerBrowserProcessCall()
-            : base(RemoteCallId.CfxGetRenderProcessHandlerBrowserProcessCall) {}
+        internal CfxGetRenderProcessHandlerRemoteClientCall()
+            : base(RemoteCallId.CfxGetRenderProcessHandlerRemoteClientCall) {}
 
         internal static void EventCall(object sender, CfxGetRenderProcessHandlerEventArgs e) {
-            var call = new CfxGetRenderProcessHandlerBrowserProcessCall();
+            var call = new CfxGetRenderProcessHandlerRemoteClientCall();
             call.sender = RemoteProxy.Wrap((CfxBase)sender);
             call.eventArgsId = AddEventArgs(e);
             call.RequestExecution(RemoteClient.connection);
@@ -332,7 +332,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var sender = (CfxApp)RemoteProxy.Unwrap(this.sender, null);
-            sender.GetRenderProcessHandler += CfxGetRenderProcessHandlerBrowserProcessCall.EventCall;
+            sender.GetRenderProcessHandler += CfxGetRenderProcessHandlerRemoteClientCall.EventCall;
         }
     }
 
@@ -347,7 +347,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var sender = (CfxApp)RemoteProxy.Unwrap(this.sender, null);
-            sender.GetRenderProcessHandler -= CfxGetRenderProcessHandlerBrowserProcessCall.EventCall;
+            sender.GetRenderProcessHandler -= CfxGetRenderProcessHandlerRemoteClientCall.EventCall;
         }
     }
 
@@ -369,7 +369,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxGetRenderProcessHandlerEventArgs)BrowserProcessCall.GetEventArgs(eventArgsId);
+            var e = (CfxGetRenderProcessHandlerEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
             e.SetReturnValue((CfxRenderProcessHandler)RemoteProxy.Unwrap(value, (ptr) => new CfxRenderProcessHandler(ptr)));
         }
     }
