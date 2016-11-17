@@ -47,13 +47,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxEndTracingCallback : CfxClientBase {
 
-        internal static CfxEndTracingCallback Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.EndTracingCallback.cfx_end_tracing_callback_get_gc_handle(nativePtr);
-            return (CfxEndTracingCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {

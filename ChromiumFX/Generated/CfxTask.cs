@@ -50,13 +50,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxTask : CfxClientBase {
 
-        internal static CfxTask Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.Task.cfx_task_get_gc_handle(nativePtr);
-            return (CfxTask)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {

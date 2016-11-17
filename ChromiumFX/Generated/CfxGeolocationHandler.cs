@@ -47,13 +47,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxGeolocationHandler : CfxClientBase {
 
-        internal static CfxGeolocationHandler Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.GeolocationHandler.cfx_geolocation_handler_get_gc_handle(nativePtr);
-            return (CfxGeolocationHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {

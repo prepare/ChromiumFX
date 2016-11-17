@@ -46,13 +46,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxJsDialogHandler : CfxClientBase {
 
-        internal static CfxJsDialogHandler Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.JsDialogHandler.cfx_jsdialog_handler_get_gc_handle(nativePtr);
-            return (CfxJsDialogHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {

@@ -40,14 +40,18 @@ public enum SignatureType {
 
 public class Signature {
 
+    public static List<Signature> AllSignatures = new List<Signature>();
+
     public static Signature Create(SignatureType type, string cefName, CefConfigData cefConfig, CfxCallMode callMode, Parser.SignatureData sd, ApiTypeBuilder api) {
         var s = new Signature(type, sd, api);
         var cs = CustomSignatures.ForFunction(s, cefName, cefConfig);
         if(cs == null) {
             s.DebugPrintUnhandledArrayArguments(cefName, cefConfig, callMode);
+            AllSignatures.Add(s);
             return s;
         } else {
             cs.DebugPrintUnhandledArrayArguments(cefName, cefConfig, callMode);
+            AllSignatures.Add(cs);
             return cs;
         }
     }

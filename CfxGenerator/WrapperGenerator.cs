@@ -47,6 +47,9 @@ public class WrapperGenerator {
     }
 
     public void Run() {
+
+        CheckForNeededWrapFunctions();
+
         var fileManager = new GeneratedFileManager(System.IO.Path.Combine("libcfx", "Generated"));
         BuildLibCfx(fileManager);
         BuildAmalgamation(fileManager);
@@ -99,6 +102,34 @@ public class WrapperGenerator {
             return sb.ToString();
         } else {
             return string.Empty;
+        }
+    }
+
+    private void CheckForNeededWrapFunctions() {
+        foreach(var s in Signature.AllSignatures) {
+
+            switch(s.Type) {
+                case SignatureType.ClientCallback:
+                    foreach(var arg in s.Arguments) {
+                        if(!arg.IsThisArgument) {
+                            if(arg.ArgumentType.IsCefStructPtrType) {
+                                var t = arg.ArgumentType.AsCefStructPtrType;
+                                if(t.Struct.ClassBuilder is CfxClientClass) {
+                                    (t.Struct.ClassBuilder as CfxClientClass).NeedsWrapFunction = true;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case SignatureType.LibraryCall:
+                    if(s.ReturnType.IsCefStructPtrType) {
+                        var t = s.ReturnType.AsCefStructPtrType;
+                        if(t.Struct.ClassBuilder is CfxClientClass) {
+                            (t.Struct.ClassBuilder as CfxClientClass).NeedsWrapFunction = true;
+                        }
+                    }
+                    break;
+            }
         }
     }
 

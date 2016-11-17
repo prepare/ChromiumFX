@@ -46,13 +46,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxResponseFilter : CfxClientBase {
 
-        internal static CfxResponseFilter Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.ResponseFilter.cfx_response_filter_get_gc_handle(nativePtr);
-            return (CfxResponseFilter)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {

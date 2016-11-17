@@ -48,13 +48,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxV8Accessor : CfxClientBase {
 
-        internal static CfxV8Accessor Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.V8Accessor.cfx_v8accessor_get_gc_handle(nativePtr);
-            return (CfxV8Accessor)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {

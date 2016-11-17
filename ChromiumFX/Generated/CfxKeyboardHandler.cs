@@ -46,13 +46,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxKeyboardHandler : CfxClientBase {
 
-        internal static CfxKeyboardHandler Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.KeyboardHandler.cfx_keyboard_handler_get_gc_handle(nativePtr);
-            return (CfxKeyboardHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {

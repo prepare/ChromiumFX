@@ -166,7 +166,7 @@ public class CfxClientClass : CfxClass {
         b.BeginClass(ClassName + " : CfxClientBase", GeneratorConfig.ClassModifiers(ClassName));
         b.AppendLine();
 
-        if(true || NeedsWrapFunction) {
+        if(NeedsWrapFunction) {
             b.BeginFunction("Wrap", ClassName, "IntPtr nativePtr", "internal static");
             b.AppendLine("if(nativePtr == IntPtr.Zero) return null;");
             b.AppendLine("var handlePtr = CfxApi.{0}.{1}_get_gc_handle(nativePtr);", ApiClassName, CfxName);

@@ -46,13 +46,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxWebPluginUnstableCallback : CfxClientBase {
 
-        internal static CfxWebPluginUnstableCallback Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.WebPluginUnstableCallback.cfx_web_plugin_unstable_callback_get_gc_handle(nativePtr);
-            return (CfxWebPluginUnstableCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {

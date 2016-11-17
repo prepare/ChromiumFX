@@ -47,13 +47,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxRegisterCdmCallback : CfxClientBase {
 
-        internal static CfxRegisterCdmCallback Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.RegisterCdmCallback.cfx_register_cdm_callback_get_gc_handle(nativePtr);
-            return (CfxRegisterCdmCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {

@@ -46,13 +46,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxRunFileDialogCallback : CfxClientBase {
 
-        internal static CfxRunFileDialogCallback Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.RunFileDialogCallback.cfx_run_file_dialog_callback_get_gc_handle(nativePtr);
-            return (CfxRunFileDialogCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {

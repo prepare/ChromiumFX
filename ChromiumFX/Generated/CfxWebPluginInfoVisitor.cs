@@ -46,13 +46,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxWebPluginInfoVisitor : CfxClientBase {
 
-        internal static CfxWebPluginInfoVisitor Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.WebPluginInfoVisitor.cfx_web_plugin_info_visitor_get_gc_handle(nativePtr);
-            return (CfxWebPluginInfoVisitor)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {

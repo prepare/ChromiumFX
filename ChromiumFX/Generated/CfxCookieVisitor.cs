@@ -46,13 +46,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxCookieVisitor : CfxClientBase {
 
-        internal static CfxCookieVisitor Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.CookieVisitor.cfx_cookie_visitor_get_gc_handle(nativePtr);
-            return (CfxCookieVisitor)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {

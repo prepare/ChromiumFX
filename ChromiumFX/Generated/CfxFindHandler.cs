@@ -46,13 +46,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxFindHandler : CfxClientBase {
 
-        internal static CfxFindHandler Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.FindHandler.cfx_find_handler_get_gc_handle(nativePtr);
-            return (CfxFindHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {

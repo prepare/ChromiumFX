@@ -46,13 +46,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxDeleteCookiesCallback : CfxClientBase {
 
-        internal static CfxDeleteCookiesCallback Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.DeleteCookiesCallback.cfx_delete_cookies_callback_get_gc_handle(nativePtr);
-            return (CfxDeleteCookiesCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {

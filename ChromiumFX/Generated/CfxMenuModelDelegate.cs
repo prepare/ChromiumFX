@@ -47,13 +47,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxMenuModelDelegate : CfxClientBase {
 
-        internal static CfxMenuModelDelegate Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.MenuModelDelegate.cfx_menu_model_delegate_get_gc_handle(nativePtr);
-            return (CfxMenuModelDelegate)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {

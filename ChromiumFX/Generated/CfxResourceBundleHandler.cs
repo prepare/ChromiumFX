@@ -47,13 +47,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxResourceBundleHandler : CfxClientBase {
 
-        internal static CfxResourceBundleHandler Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_get_gc_handle(nativePtr);
-            return (CfxResourceBundleHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {

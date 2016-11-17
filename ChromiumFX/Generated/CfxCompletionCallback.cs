@@ -45,13 +45,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxCompletionCallback : CfxClientBase {
 
-        internal static CfxCompletionCallback Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.CompletionCallback.cfx_completion_callback_get_gc_handle(nativePtr);
-            return (CfxCompletionCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {

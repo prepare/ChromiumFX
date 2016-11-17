@@ -46,13 +46,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxPdfPrintCallback : CfxClientBase {
 
-        internal static CfxPdfPrintCallback Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.PdfPrintCallback.cfx_pdf_print_callback_get_gc_handle(nativePtr);
-            return (CfxPdfPrintCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {

@@ -47,13 +47,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxSchemeHandlerFactory : CfxClientBase {
 
-        internal static CfxSchemeHandlerFactory Wrap(IntPtr nativePtr) {
-            if(nativePtr == IntPtr.Zero) return null;
-            var handlePtr = CfxApi.SchemeHandlerFactory.cfx_scheme_handler_factory_get_gc_handle(nativePtr);
-            return (CfxSchemeHandlerFactory)System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;
-        }
-
-
         private static object eventLock = new object();
 
         internal static void SetNativeCallbacks() {
