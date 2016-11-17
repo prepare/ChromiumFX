@@ -61,12 +61,6 @@ namespace Chromium.Remote {
         }
 
 
-        internal static RemotePtr CreateRemote() {
-            var call = new CfxLoadHandlerCtorRemoteCall();
-            call.RequestExecution();
-            return new RemotePtr(call.__retval);
-        }
-
         internal void raise_OnLoadingStateChange(object sender, CfrOnLoadingStateChangeEventArgs e) {
             var handler = m_OnLoadingStateChange;
             if(handler == null) return;
@@ -97,7 +91,7 @@ namespace Chromium.Remote {
 
 
         private CfrLoadHandler(RemotePtr remotePtr) : base(remotePtr) {}
-        public CfrLoadHandler() : base(CreateRemote()) {
+        public CfrLoadHandler() : base(new CfxLoadHandlerCtorRemoteCall()) {
             RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
         }
 

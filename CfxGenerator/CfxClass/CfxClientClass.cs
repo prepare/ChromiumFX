@@ -37,6 +37,8 @@ using System.Text;
 
 public class CfxClientClass : CfxClass {
 
+    public bool NeedsWrapFunction;
+
     public CfxClientClass(CefStructType cefStruct, Parser.StructData sd, ApiTypeBuilder api)
         : base(cefStruct, sd, api) {
 
@@ -164,13 +166,15 @@ public class CfxClientClass : CfxClass {
         b.BeginClass(ClassName + " : CfxClientBase", GeneratorConfig.ClassModifiers(ClassName));
         b.AppendLine();
 
-        b.BeginFunction("Wrap", ClassName, "IntPtr nativePtr", "internal static");
-        b.AppendLine("if(nativePtr == IntPtr.Zero) return null;");
-        b.AppendLine("var handlePtr = CfxApi.{0}.{1}_get_gc_handle(nativePtr);", ApiClassName, CfxName);
-        b.AppendLine("return ({0})System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;", ClassName);
-        b.EndBlock();
-        b.AppendLine();
-        b.AppendLine();
+        if(true || NeedsWrapFunction) {
+            b.BeginFunction("Wrap", ClassName, "IntPtr nativePtr", "internal static");
+            b.AppendLine("if(nativePtr == IntPtr.Zero) return null;");
+            b.AppendLine("var handlePtr = CfxApi.{0}.{1}_get_gc_handle(nativePtr);", ApiClassName, CfxName);
+            b.AppendLine("return ({0})System.Runtime.InteropServices.GCHandle.FromIntPtr(handlePtr).Target;", ClassName);
+            b.EndBlock();
+            b.AppendLine();
+            b.AppendLine();
+        }
 
         b.AppendLine("private static object eventLock = new object();");
         b.AppendLine();
@@ -598,16 +602,7 @@ public class CfxClientClass : CfxClass {
         b.BeginClass(RemoteClassName + " : CfrClientBase", GeneratorConfig.ClassModifiers(RemoteClassName));
         b.AppendLine();
         EmitRemoteClassWrapperFunction(b);
-
-        b.BeginFunction("CreateRemote", "RemotePtr", "", "internal static");
-        b.AppendLine("var call = new {0}CtorRemoteCall();", ClassName);
-        b.AppendLine("call.RequestExecution();");
-        b.AppendLine("return new RemotePtr(call.__retval);");
-        b.EndBlock();
-
-
-        b.AppendLine();
-
+        
         foreach(var cb in CallbackFunctions) {
             if(!GeneratorConfig.IsBrowserProcessOnly(CefStruct.Name + "::" + cb.Name)) {
                 b.BeginBlock("internal void raise_{0}(object sender, {1} e)", cb.PublicName, cb.RemoteEventArgsClassName);
@@ -626,7 +621,7 @@ public class CfxClientClass : CfxClass {
         b.AppendLine("private {0}(RemotePtr remotePtr) : base(remotePtr) {{}}", RemoteClassName);
 
 
-        b.BeginBlock("public {0}() : base(CreateRemote())", RemoteClassName);
+        b.BeginBlock("public {0}() : base(new {1}CtorRemoteCall())", RemoteClassName, ClassName);
         b.AppendLine("RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);");
         b.EndBlock();
 

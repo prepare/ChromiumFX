@@ -64,12 +64,6 @@ namespace Chromium.Remote {
         }
 
 
-        internal static RemotePtr CreateRemote() {
-            var call = new CfxTaskCtorRemoteCall();
-            call.RequestExecution();
-            return new RemotePtr(call.__retval);
-        }
-
         internal void raise_Execute(object sender, CfrEventArgs e) {
             var handler = m_Execute;
             if(handler == null) return;
@@ -79,7 +73,7 @@ namespace Chromium.Remote {
 
 
         private CfrTask(RemotePtr remotePtr) : base(remotePtr) {}
-        public CfrTask() : base(CreateRemote()) {
+        public CfrTask() : base(new CfxTaskCtorRemoteCall()) {
             RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
         }
 

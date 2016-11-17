@@ -59,12 +59,6 @@ namespace Chromium.Remote {
         }
 
 
-        internal static RemotePtr CreateRemote() {
-            var call = new CfxStringVisitorCtorRemoteCall();
-            call.RequestExecution();
-            return new RemotePtr(call.__retval);
-        }
-
         internal void raise_Visit(object sender, CfrStringVisitorVisitEventArgs e) {
             var handler = m_Visit;
             if(handler == null) return;
@@ -74,7 +68,7 @@ namespace Chromium.Remote {
 
 
         private CfrStringVisitor(RemotePtr remotePtr) : base(remotePtr) {}
-        public CfrStringVisitor() : base(CreateRemote()) {
+        public CfrStringVisitor() : base(new CfxStringVisitorCtorRemoteCall()) {
             RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
         }
 

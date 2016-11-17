@@ -60,12 +60,6 @@ namespace Chromium.Remote {
         }
 
 
-        internal static RemotePtr CreateRemote() {
-            var call = new CfxAppCtorRemoteCall();
-            call.RequestExecution();
-            return new RemotePtr(call.__retval);
-        }
-
         internal void raise_OnBeforeCommandLineProcessing(object sender, CfrOnBeforeCommandLineProcessingEventArgs e) {
             var handler = m_OnBeforeCommandLineProcessing;
             if(handler == null) return;
@@ -96,7 +90,7 @@ namespace Chromium.Remote {
 
 
         private CfrApp(RemotePtr remotePtr) : base(remotePtr) {}
-        public CfrApp() : base(CreateRemote()) {
+        public CfrApp() : base(new CfxAppCtorRemoteCall()) {
             RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
         }
 

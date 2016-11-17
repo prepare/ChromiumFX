@@ -61,12 +61,6 @@ namespace Chromium.Remote {
         }
 
 
-        internal static RemotePtr CreateRemote() {
-            var call = new CfxRenderProcessHandlerCtorRemoteCall();
-            call.RequestExecution();
-            return new RemotePtr(call.__retval);
-        }
-
         internal void raise_OnRenderThreadCreated(object sender, CfrOnRenderThreadCreatedEventArgs e) {
             var handler = m_OnRenderThreadCreated;
             if(handler == null) return;
@@ -146,7 +140,7 @@ namespace Chromium.Remote {
 
 
         private CfrRenderProcessHandler(RemotePtr remotePtr) : base(remotePtr) {}
-        public CfrRenderProcessHandler() : base(CreateRemote()) {
+        public CfrRenderProcessHandler() : base(new CfxRenderProcessHandlerCtorRemoteCall()) {
             RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
         }
 

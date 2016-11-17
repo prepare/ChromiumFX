@@ -37,6 +37,13 @@ namespace Chromium.Remote {
     /// Base class for all remote wrapper classes for CEF client structs.
     /// </summary>
     public abstract class CfrClientBase : CfrBase {
+
+        private static RemotePtr CreateRemote(CtorRemoteCall call) {
+            call.RequestExecution();
+            return new RemotePtr(call.__retval);
+        }
+
+        internal CfrClientBase(CtorRemoteCall call) : base(CreateRemote(call)) { }
         internal CfrClientBase(RemotePtr remotePtr) : base(remotePtr) { }
     }
 

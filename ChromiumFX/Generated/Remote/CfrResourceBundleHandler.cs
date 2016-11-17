@@ -61,12 +61,6 @@ namespace Chromium.Remote {
         }
 
 
-        internal static RemotePtr CreateRemote() {
-            var call = new CfxResourceBundleHandlerCtorRemoteCall();
-            call.RequestExecution();
-            return new RemotePtr(call.__retval);
-        }
-
         internal void raise_GetLocalizedString(object sender, CfrGetLocalizedStringEventArgs e) {
             var handler = m_GetLocalizedString;
             if(handler == null) return;
@@ -90,7 +84,7 @@ namespace Chromium.Remote {
 
 
         private CfrResourceBundleHandler(RemotePtr remotePtr) : base(remotePtr) {}
-        public CfrResourceBundleHandler() : base(CreateRemote()) {
+        public CfrResourceBundleHandler() : base(new CfxResourceBundleHandlerCtorRemoteCall()) {
             RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
         }
 
