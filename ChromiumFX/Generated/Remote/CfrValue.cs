@@ -69,8 +69,8 @@ namespace Chromium.Remote {
         /// </remarks>
         public static CfrValue Create() {
             var call = new CfxValueCreateRemoteCall();
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            call.RequestExecution();
+            return CfrValue.Wrap(new RemotePtr(call.__retval));
         }
 
 
@@ -227,7 +227,7 @@ namespace Chromium.Remote {
                 var call = new CfxValueGetBinaryRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
-                return CfrBinaryValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+                return CfrBinaryValue.Wrap(new RemotePtr(call.__retval));
             }
         }
 
@@ -248,7 +248,7 @@ namespace Chromium.Remote {
                 var call = new CfxValueGetDictionaryRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
-                return CfrDictionaryValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+                return CfrDictionaryValue.Wrap(new RemotePtr(call.__retval));
             }
         }
 
@@ -269,7 +269,7 @@ namespace Chromium.Remote {
                 var call = new CfxValueGetListRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
-                return CfrListValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+                return CfrListValue.Wrap(new RemotePtr(call.__retval));
             }
         }
 
@@ -317,7 +317,7 @@ namespace Chromium.Remote {
             var call = new CfxValueCopyRemoteCall();
             call.@this = RemotePtr.ptr;
             call.RequestExecution(RemotePtr.connection);
-            return CfrValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            return CfrValue.Wrap(new RemotePtr(call.__retval));
         }
 
         /// <summary>

@@ -62,8 +62,8 @@ namespace Chromium.Remote {
 
         internal static RemotePtr CreateRemote() {
             var call = new CfxDomVisitorCtorRemoteCall();
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);
+            call.RequestExecution();
+            return new RemotePtr(call.__retval);
         }
 
         internal void raise_Visit(object sender, CfrDomVisitorVisitEventArgs e) {
@@ -157,8 +157,8 @@ namespace Chromium.Remote {
                         DocumentFetched = true;
                         var call = new CfxDomVisitorVisitGetDocumentRemoteCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-                        m_Document = CfrDomDocument.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.value));
+                        call.RequestExecution();
+                        m_Document = CfrDomDocument.Wrap(new RemotePtr(call.value));
                     }
                     return m_Document;
                 }

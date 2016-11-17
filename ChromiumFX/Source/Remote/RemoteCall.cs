@@ -61,8 +61,8 @@ namespace Chromium.Remote {
         }
 
 
-        internal void RequestExecution(CfrObject owner) {
-            RequestExecution(owner.connection);
+        internal void RequestExecution() {
+            RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
         }
 
         internal void RequestExecution(RemoteConnection connection) {

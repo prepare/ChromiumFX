@@ -601,8 +601,8 @@ public class CfxClientClass : CfxClass {
 
         b.BeginFunction("CreateRemote", "RemotePtr", "", "internal static");
         b.AppendLine("var call = new {0}CtorRemoteCall();", ClassName);
-        b.AppendLine("call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);");
-        b.AppendLine("return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);");
+        b.AppendLine("call.RequestExecution();");
+        b.AppendLine("return new RemotePtr(call.__retval);");
         b.EndBlock();
 
 
@@ -725,7 +725,7 @@ public class CfxClientClass : CfxClass {
                 b.AppendLine("{0}Fetched = true;", arg.PublicPropertyName);
                 b.AppendLine("var call = new {0}Get{1}RemoteCall();", cb.EventName, arg.PublicPropertyName);
                 b.AppendLine("call.eventArgsId = eventArgsId;");
-                b.AppendLine("call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);");
+                b.AppendLine("call.RequestExecution();");
                 b.AppendLine("m_{0} = {1};", arg.PublicPropertyName, arg.ArgumentType.RemoteWrapExpression("call.value"));
                 b.EndBlock();
                 b.AppendLine("return m_{0};", arg.PublicPropertyName);
@@ -741,7 +741,7 @@ public class CfxClientClass : CfxClass {
                 b.AppendLine("var call = new {0}Set{1}RemoteCall();", cb.EventName, arg.PublicPropertyName);
                 b.AppendLine("call.eventArgsId = eventArgsId;");
                 b.AppendLine("call.value = {0};", arg.ArgumentType.RemoteUnwrapExpression("value"));
-                b.AppendLine("call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);");
+                b.AppendLine("call.RequestExecution();");
                 b.EndBlock();
             }
             b.EndBlock();
@@ -760,7 +760,7 @@ public class CfxClientClass : CfxClass {
             b.AppendLine("var call = new {0}SetReturnValueRemoteCall();", cb.EventName);
             b.AppendLine("call.eventArgsId = eventArgsId;");
             b.AppendLine("call.value = {0};", cb.Signature.PublicReturnType.RemoteUnwrapExpression("returnValue"));
-            b.AppendLine("call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);");
+            b.AppendLine("call.RequestExecution();");
             b.AppendLine("returnValueSet = true;");
             b.EndBlock();
         }

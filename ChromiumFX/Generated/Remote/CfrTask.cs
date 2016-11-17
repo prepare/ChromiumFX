@@ -66,8 +66,8 @@ namespace Chromium.Remote {
 
         internal static RemotePtr CreateRemote() {
             var call = new CfxTaskCtorRemoteCall();
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);
+            call.RequestExecution();
+            return new RemotePtr(call.__retval);
         }
 
         internal void raise_Execute(object sender, CfrEventArgs e) {

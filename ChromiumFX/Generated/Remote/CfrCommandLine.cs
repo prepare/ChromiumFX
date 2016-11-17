@@ -74,8 +74,8 @@ namespace Chromium.Remote {
         /// </remarks>
         public static CfrCommandLine Create() {
             var call = new CfxCommandLineCreateRemoteCall();
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrCommandLine.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            call.RequestExecution();
+            return CfrCommandLine.Wrap(new RemotePtr(call.__retval));
         }
 
         /// <summary>
@@ -88,8 +88,8 @@ namespace Chromium.Remote {
         /// </remarks>
         public static CfrCommandLine GetGlobal() {
             var call = new CfxCommandLineGetGlobalRemoteCall();
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrCommandLine.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            call.RequestExecution();
+            return CfrCommandLine.Wrap(new RemotePtr(call.__retval));
         }
 
 
@@ -213,7 +213,7 @@ namespace Chromium.Remote {
             var call = new CfxCommandLineCopyRemoteCall();
             call.@this = RemotePtr.ptr;
             call.RequestExecution(RemotePtr.connection);
-            return CfrCommandLine.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            return CfrCommandLine.Wrap(new RemotePtr(call.__retval));
         }
 
         /// <summary>

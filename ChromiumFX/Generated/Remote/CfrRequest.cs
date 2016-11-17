@@ -68,8 +68,8 @@ namespace Chromium.Remote {
         /// </remarks>
         public static CfrRequest Create() {
             var call = new CfxRequestCreateRemoteCall();
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrRequest.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            call.RequestExecution();
+            return CfrRequest.Wrap(new RemotePtr(call.__retval));
         }
 
 
@@ -186,7 +186,7 @@ namespace Chromium.Remote {
                 var call = new CfxRequestGetPostDataRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
-                return CfrPostData.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+                return CfrPostData.Wrap(new RemotePtr(call.__retval));
             }
             set {
                 var call = new CfxRequestSetPostDataRemoteCall();

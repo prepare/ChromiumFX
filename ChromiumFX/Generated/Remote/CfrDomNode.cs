@@ -218,7 +218,7 @@ namespace Chromium.Remote {
                 var call = new CfxDomNodeGetDocumentRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
-                return CfrDomDocument.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+                return CfrDomDocument.Wrap(new RemotePtr(call.__retval));
             }
         }
 
@@ -234,7 +234,7 @@ namespace Chromium.Remote {
                 var call = new CfxDomNodeGetParentRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
-                return CfrDomNode.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+                return CfrDomNode.Wrap(new RemotePtr(call.__retval));
             }
         }
 
@@ -250,7 +250,7 @@ namespace Chromium.Remote {
                 var call = new CfxDomNodeGetPreviousSiblingRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
-                return CfrDomNode.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+                return CfrDomNode.Wrap(new RemotePtr(call.__retval));
             }
         }
 
@@ -266,7 +266,7 @@ namespace Chromium.Remote {
                 var call = new CfxDomNodeGetNextSiblingRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
-                return CfrDomNode.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+                return CfrDomNode.Wrap(new RemotePtr(call.__retval));
             }
         }
 
@@ -298,7 +298,7 @@ namespace Chromium.Remote {
                 var call = new CfxDomNodeGetFirstChildRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
-                return CfrDomNode.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+                return CfrDomNode.Wrap(new RemotePtr(call.__retval));
             }
         }
 
@@ -314,7 +314,7 @@ namespace Chromium.Remote {
                 var call = new CfxDomNodeGetLastChildRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
-                return CfrDomNode.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+                return CfrDomNode.Wrap(new RemotePtr(call.__retval));
             }
         }
 

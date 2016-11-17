@@ -70,8 +70,8 @@ namespace Chromium.Remote {
             var call = new CfxBinaryValueCreateRemoteCall();
             call.data = data.ptr;
             call.dataSize = dataSize;
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrBinaryValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            call.RequestExecution();
+            return CfrBinaryValue.Wrap(new RemotePtr(call.__retval));
         }
 
 
@@ -171,7 +171,7 @@ namespace Chromium.Remote {
             var call = new CfxBinaryValueCopyRemoteCall();
             call.@this = RemotePtr.ptr;
             call.RequestExecution(RemotePtr.connection);
-            return CfrBinaryValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            return CfrBinaryValue.Wrap(new RemotePtr(call.__retval));
         }
 
         /// <summary>

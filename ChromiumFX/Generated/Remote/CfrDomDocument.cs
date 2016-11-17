@@ -90,7 +90,7 @@ namespace Chromium.Remote {
                 var call = new CfxDomDocumentGetDocumentRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
-                return CfrDomNode.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+                return CfrDomNode.Wrap(new RemotePtr(call.__retval));
             }
         }
 
@@ -106,7 +106,7 @@ namespace Chromium.Remote {
                 var call = new CfxDomDocumentGetBodyRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
-                return CfrDomNode.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+                return CfrDomNode.Wrap(new RemotePtr(call.__retval));
             }
         }
 
@@ -122,7 +122,7 @@ namespace Chromium.Remote {
                 var call = new CfxDomDocumentGetHeadRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
-                return CfrDomNode.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+                return CfrDomNode.Wrap(new RemotePtr(call.__retval));
             }
         }
 
@@ -154,7 +154,7 @@ namespace Chromium.Remote {
                 var call = new CfxDomDocumentGetFocusedNodeRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
-                return CfrDomNode.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+                return CfrDomNode.Wrap(new RemotePtr(call.__retval));
             }
         }
 
@@ -266,7 +266,7 @@ namespace Chromium.Remote {
             call.@this = RemotePtr.ptr;
             call.id = id;
             call.RequestExecution(RemotePtr.connection);
-            return CfrDomNode.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            return CfrDomNode.Wrap(new RemotePtr(call.__retval));
         }
 
         /// <summary>

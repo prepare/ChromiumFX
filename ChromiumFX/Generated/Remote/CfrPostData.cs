@@ -68,8 +68,8 @@ namespace Chromium.Remote {
         /// </remarks>
         public static CfrPostData Create() {
             var call = new CfxPostDataCreateRemoteCall();
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrPostData.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            call.RequestExecution();
+            return CfrPostData.Wrap(new RemotePtr(call.__retval));
         }
 
 

@@ -60,7 +60,7 @@ namespace Chromium.Remote {
             // render process exits. So we don't throw an exception but
             // use a return value of -2 to indicate connection lost.
             try {
-                call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                call.RequestExecution();
                 return call.__retval;
             } catch(CfxException) {
                 return -2;

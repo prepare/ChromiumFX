@@ -50,8 +50,8 @@ namespace Chromium.Remote {
             public static RemotePtr AllocHGlobal(int cb) {
                 var call = new CfrMarshalAllocHGlobalRemoteCall();
                 call.cb = cb;
-                call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-                return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);
+                call.RequestExecution();
+                return new RemotePtr(call.__retval);
             }
 
             /// <summary>

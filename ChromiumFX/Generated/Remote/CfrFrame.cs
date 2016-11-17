@@ -162,7 +162,7 @@ namespace Chromium.Remote {
                 var call = new CfxFrameGetParentRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
-                return CfrFrame.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+                return CfrFrame.Wrap(new RemotePtr(call.__retval));
             }
         }
 
@@ -194,7 +194,7 @@ namespace Chromium.Remote {
                 var call = new CfxFrameGetBrowserRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
-                return CfrBrowser.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+                return CfrBrowser.Wrap(new RemotePtr(call.__retval));
             }
         }
 
@@ -211,7 +211,7 @@ namespace Chromium.Remote {
                 var call = new CfxFrameGetV8ContextRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
-                return CfrV8Context.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+                return CfrV8Context.Wrap(new RemotePtr(call.__retval));
             }
         }
 

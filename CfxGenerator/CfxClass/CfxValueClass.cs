@@ -244,8 +244,8 @@ public class CfxValueClass : CfxClass {
 
         b.BeginFunction("CreateRemote", "RemotePtr", "", "internal static");
         b.AppendLine("var call = new {0}CtorRemoteCall();", ClassName);
-        b.AppendLine("call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);");
-        b.AppendLine("return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);");
+        b.AppendLine("call.RequestExecution();");
+        b.AppendLine("return new RemotePtr(call.__retval);");
         b.EndBlock();
 
         b.AppendLine();

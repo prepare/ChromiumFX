@@ -73,8 +73,8 @@ namespace Chromium.Remote {
         public static CfrV8StackTrace GetCurrent(int frameLimit) {
             var call = new CfxV8StackTraceGetCurrentRemoteCall();
             call.frameLimit = frameLimit;
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrV8StackTrace.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            call.RequestExecution();
+            return CfrV8StackTrace.Wrap(new RemotePtr(call.__retval));
         }
 
 
@@ -126,7 +126,7 @@ namespace Chromium.Remote {
             call.@this = RemotePtr.ptr;
             call.index = index;
             call.RequestExecution(RemotePtr.connection);
-            return CfrV8StackFrame.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            return CfrV8StackFrame.Wrap(new RemotePtr(call.__retval));
         }
     }
 }

@@ -63,8 +63,8 @@ namespace Chromium.Remote {
 
         internal static RemotePtr CreateRemote() {
             var call = new CfxResourceBundleHandlerCtorRemoteCall();
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);
+            call.RequestExecution();
+            return new RemotePtr(call.__retval);
         }
 
         internal void raise_GetLocalizedString(object sender, CfrGetLocalizedStringEventArgs e) {
@@ -241,7 +241,7 @@ namespace Chromium.Remote {
                         StringIdFetched = true;
                         var call = new CfxGetLocalizedStringGetStringIdRemoteCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                        call.RequestExecution();
                         m_StringId = call.value;
                     }
                     return m_StringId;
@@ -257,7 +257,7 @@ namespace Chromium.Remote {
                         StringFetched = true;
                         var call = new CfxGetLocalizedStringGetStringRemoteCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                        call.RequestExecution();
                         m_String = call.value;
                     }
                     return m_String;
@@ -269,7 +269,7 @@ namespace Chromium.Remote {
                     var call = new CfxGetLocalizedStringSetStringRemoteCall();
                     call.eventArgsId = eventArgsId;
                     call.value = value;
-                    call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                    call.RequestExecution();
                 }
             }
             /// <summary>
@@ -283,7 +283,7 @@ namespace Chromium.Remote {
                 var call = new CfxGetLocalizedStringSetReturnValueRemoteCall();
                 call.eventArgsId = eventArgsId;
                 call.value = returnValue;
-                call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                call.RequestExecution();
                 returnValueSet = true;
             }
 
@@ -337,7 +337,7 @@ namespace Chromium.Remote {
                         ResourceIdFetched = true;
                         var call = new CfxGetDataResourceGetResourceIdRemoteCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                        call.RequestExecution();
                         m_ResourceId = call.value;
                     }
                     return m_ResourceId;
@@ -352,7 +352,7 @@ namespace Chromium.Remote {
                     var call = new CfxGetDataResourceSetDataRemoteCall();
                     call.eventArgsId = eventArgsId;
                     call.value = value.ptr;
-                    call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                    call.RequestExecution();
                 }
             }
             /// <summary>
@@ -364,7 +364,7 @@ namespace Chromium.Remote {
                     var call = new CfxGetDataResourceSetDataSizeRemoteCall();
                     call.eventArgsId = eventArgsId;
                     call.value = value;
-                    call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                    call.RequestExecution();
                 }
             }
             /// <summary>
@@ -378,7 +378,7 @@ namespace Chromium.Remote {
                 var call = new CfxGetDataResourceSetReturnValueRemoteCall();
                 call.eventArgsId = eventArgsId;
                 call.value = returnValue;
-                call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                call.RequestExecution();
                 returnValueSet = true;
             }
 
@@ -434,7 +434,7 @@ namespace Chromium.Remote {
                         ResourceIdFetched = true;
                         var call = new CfxGetDataResourceForScaleGetResourceIdRemoteCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                        call.RequestExecution();
                         m_ResourceId = call.value;
                     }
                     return m_ResourceId;
@@ -450,7 +450,7 @@ namespace Chromium.Remote {
                         ScaleFactorFetched = true;
                         var call = new CfxGetDataResourceForScaleGetScaleFactorRemoteCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                        call.RequestExecution();
                         m_ScaleFactor = (CfxScaleFactor)call.value;
                     }
                     return m_ScaleFactor;
@@ -465,7 +465,7 @@ namespace Chromium.Remote {
                     var call = new CfxGetDataResourceForScaleSetDataRemoteCall();
                     call.eventArgsId = eventArgsId;
                     call.value = value.ptr;
-                    call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                    call.RequestExecution();
                 }
             }
             /// <summary>
@@ -477,7 +477,7 @@ namespace Chromium.Remote {
                     var call = new CfxGetDataResourceForScaleSetDataSizeRemoteCall();
                     call.eventArgsId = eventArgsId;
                     call.value = value;
-                    call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                    call.RequestExecution();
                 }
             }
             /// <summary>
@@ -491,7 +491,7 @@ namespace Chromium.Remote {
                 var call = new CfxGetDataResourceForScaleSetReturnValueRemoteCall();
                 call.eventArgsId = eventArgsId;
                 call.value = returnValue;
-                call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                call.RequestExecution();
                 returnValueSet = true;
             }
 

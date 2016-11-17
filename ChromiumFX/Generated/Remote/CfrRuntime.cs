@@ -47,7 +47,7 @@ namespace Chromium.Remote {
         public static bool CurrentlyOn(CfxThreadId threadId) {
             var call = new CfxRuntimeCurrentlyOnRemoteCall();
             call.threadId = (int)threadId;
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -68,7 +68,7 @@ namespace Chromium.Remote {
         public static string FormatUrlForSecurityDisplay(string originUrl) {
             var call = new CfxRuntimeFormatUrlForSecurityDisplayRemoteCall();
             call.originUrl = originUrl;
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -82,7 +82,7 @@ namespace Chromium.Remote {
         public static bool IsCertStatusError(CfxCertStatus status) {
             var call = new CfxRuntimeIsCertStatusErrorRemoteCall();
             call.status = (int)status;
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -97,7 +97,7 @@ namespace Chromium.Remote {
         public static bool IsCertStatusMinorError(CfxCertStatus status) {
             var call = new CfxRuntimeIsCertStatusMinorErrorRemoteCall();
             call.status = (int)status;
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -115,7 +115,7 @@ namespace Chromium.Remote {
             call.threadId = (int)threadId;
             call.task = CfrObject.Unwrap(task).ptr;
             call.delayMs = delayMs;
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -131,7 +131,7 @@ namespace Chromium.Remote {
             var call = new CfxRuntimePostTaskRemoteCall();
             call.threadId = (int)threadId;
             call.task = CfrObject.Unwrap(task).ptr;
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+            call.RequestExecution();
             return call.__retval;
         }
 
@@ -198,7 +198,7 @@ namespace Chromium.Remote {
             call.extensionName = extensionName;
             call.javascriptCode = javascriptCode;
             call.handler = CfrObject.Unwrap(handler).ptr;
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+            call.RequestExecution();
             return call.__retval;
         }
 

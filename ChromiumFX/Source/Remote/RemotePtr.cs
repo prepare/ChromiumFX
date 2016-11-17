@@ -49,6 +49,10 @@ namespace Chromium.Remote {
             this.connection = connection;
             this.ptr = ptr;
         }
+        internal RemotePtr(IntPtr ptr) {
+            this.connection = CfxRemoteCallContext.CurrentContext.connection;
+            this.ptr = ptr;
+        }
         public override bool Equals(object obj) {
             return this == (RemotePtr)obj;
         }

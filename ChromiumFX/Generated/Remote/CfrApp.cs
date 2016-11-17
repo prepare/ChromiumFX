@@ -62,8 +62,8 @@ namespace Chromium.Remote {
 
         internal static RemotePtr CreateRemote() {
             var call = new CfxAppCtorRemoteCall();
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);
+            call.RequestExecution();
+            return new RemotePtr(call.__retval);
         }
 
         internal void raise_OnBeforeCommandLineProcessing(object sender, CfrOnBeforeCommandLineProcessingEventArgs e) {
@@ -286,7 +286,7 @@ namespace Chromium.Remote {
                         ProcessTypeFetched = true;
                         var call = new CfxOnBeforeCommandLineProcessingGetProcessTypeRemoteCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                        call.RequestExecution();
                         m_ProcessType = call.value;
                     }
                     return m_ProcessType;
@@ -302,8 +302,8 @@ namespace Chromium.Remote {
                         CommandLineFetched = true;
                         var call = new CfxOnBeforeCommandLineProcessingGetCommandLineRemoteCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-                        m_CommandLine = CfrCommandLine.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.value));
+                        call.RequestExecution();
+                        m_CommandLine = CfrCommandLine.Wrap(new RemotePtr(call.value));
                     }
                     return m_CommandLine;
                 }
@@ -353,8 +353,8 @@ namespace Chromium.Remote {
                         RegistrarFetched = true;
                         var call = new CfxOnRegisterCustomSchemesGetRegistrarRemoteCall();
                         call.eventArgsId = eventArgsId;
-                        call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-                        m_Registrar = CfrSchemeRegistrar.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.value));
+                        call.RequestExecution();
+                        m_Registrar = CfrSchemeRegistrar.Wrap(new RemotePtr(call.value));
                     }
                     return m_Registrar;
                 }
@@ -405,7 +405,7 @@ namespace Chromium.Remote {
                 var call = new CfxGetResourceBundleHandlerSetReturnValueRemoteCall();
                 call.eventArgsId = eventArgsId;
                 call.value = CfrObject.Unwrap(returnValue).ptr;
-                call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                call.RequestExecution();
                 returnValueSet = true;
             }
         }
@@ -446,7 +446,7 @@ namespace Chromium.Remote {
                 var call = new CfxGetRenderProcessHandlerSetReturnValueRemoteCall();
                 call.eventArgsId = eventArgsId;
                 call.value = CfrObject.Unwrap(returnValue).ptr;
-                call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+                call.RequestExecution();
                 returnValueSet = true;
             }
         }

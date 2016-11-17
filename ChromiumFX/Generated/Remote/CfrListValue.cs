@@ -67,8 +67,8 @@ namespace Chromium.Remote {
         /// </remarks>
         public static CfrListValue Create() {
             var call = new CfxListValueCreateRemoteCall();
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrListValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            call.RequestExecution();
+            return CfrListValue.Wrap(new RemotePtr(call.__retval));
         }
 
 
@@ -186,7 +186,7 @@ namespace Chromium.Remote {
             var call = new CfxListValueCopyRemoteCall();
             call.@this = RemotePtr.ptr;
             call.RequestExecution(RemotePtr.connection);
-            return CfrListValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            return CfrListValue.Wrap(new RemotePtr(call.__retval));
         }
 
         /// <summary>
@@ -265,7 +265,7 @@ namespace Chromium.Remote {
             call.@this = RemotePtr.ptr;
             call.index = index;
             call.RequestExecution(RemotePtr.connection);
-            return CfrValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            return CfrValue.Wrap(new RemotePtr(call.__retval));
         }
 
         /// <summary>
@@ -341,7 +341,7 @@ namespace Chromium.Remote {
             call.@this = RemotePtr.ptr;
             call.index = index;
             call.RequestExecution(RemotePtr.connection);
-            return CfrBinaryValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            return CfrBinaryValue.Wrap(new RemotePtr(call.__retval));
         }
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace Chromium.Remote {
             call.@this = RemotePtr.ptr;
             call.index = index;
             call.RequestExecution(RemotePtr.connection);
-            return CfrDictionaryValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            return CfrDictionaryValue.Wrap(new RemotePtr(call.__retval));
         }
 
         /// <summary>
@@ -375,7 +375,7 @@ namespace Chromium.Remote {
             call.@this = RemotePtr.ptr;
             call.index = index;
             call.RequestExecution(RemotePtr.connection);
-            return CfrListValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            return CfrListValue.Wrap(new RemotePtr(call.__retval));
         }
 
         /// <summary>

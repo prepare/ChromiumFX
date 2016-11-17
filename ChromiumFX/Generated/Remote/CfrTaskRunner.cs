@@ -74,8 +74,8 @@ namespace Chromium.Remote {
         /// </remarks>
         public static CfrTaskRunner GetForCurrentThread() {
             var call = new CfxTaskRunnerGetForCurrentThreadRemoteCall();
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrTaskRunner.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            call.RequestExecution();
+            return CfrTaskRunner.Wrap(new RemotePtr(call.__retval));
         }
 
         /// <summary>
@@ -88,8 +88,8 @@ namespace Chromium.Remote {
         public static CfrTaskRunner GetForThread(CfxThreadId threadId) {
             var call = new CfxTaskRunnerGetForThreadRemoteCall();
             call.threadId = (int)threadId;
-            call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
-            return CfrTaskRunner.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
+            call.RequestExecution();
+            return CfrTaskRunner.Wrap(new RemotePtr(call.__retval));
         }
 
 
