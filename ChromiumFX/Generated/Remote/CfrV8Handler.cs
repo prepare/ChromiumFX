@@ -62,7 +62,7 @@ namespace Chromium.Remote {
 
 
         internal static RemotePtr CreateRemote() {
-            var call = new CfxV8HandlerCtorRenderProcessCall();
+            var call = new CfxV8HandlerCtorRemoteCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);
         }
@@ -94,7 +94,7 @@ namespace Chromium.Remote {
         public event CfrV8HandlerExecuteEventHandler Execute {
             add {
                 if(m_Execute == null) {
-                    var call = new CfxV8HandlerExecuteActivateRenderProcessCall();
+                    var call = new CfxV8HandlerExecuteActivateRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                 }
@@ -103,7 +103,7 @@ namespace Chromium.Remote {
             remove {
                 m_Execute -= value;
                 if(m_Execute == null) {
-                    var call = new CfxV8HandlerExecuteDeactivateRenderProcessCall();
+                    var call = new CfxV8HandlerExecuteDeactivateRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                 }
@@ -162,7 +162,7 @@ namespace Chromium.Remote {
                     CheckAccess();
                     if(!NameFetched) {
                         NameFetched = true;
-                        var call = new CfxV8HandlerExecuteGetNameRenderProcessCall();
+                        var call = new CfxV8HandlerExecuteGetNameRemoteCall();
                         call.eventArgsId = eventArgsId;
                         call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Name = call.value;
@@ -178,7 +178,7 @@ namespace Chromium.Remote {
                     CheckAccess();
                     if(!ObjectFetched) {
                         ObjectFetched = true;
-                        var call = new CfxV8HandlerExecuteGetObjectRenderProcessCall();
+                        var call = new CfxV8HandlerExecuteGetObjectRemoteCall();
                         call.eventArgsId = eventArgsId;
                         call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Object = CfrV8Value.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.value));
@@ -194,7 +194,7 @@ namespace Chromium.Remote {
                     CheckAccess();
                     if(!ArgumentsFetched) {
                         ArgumentsFetched = true;
-                        var call = new CfxV8HandlerExecuteGetArgumentsRenderProcessCall();
+                        var call = new CfxV8HandlerExecuteGetArgumentsRemoteCall();
                         call.eventArgsId = eventArgsId;
                         call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Arguments = CfxArray.GetCfrObjects<CfrV8Value>(CfxRemoteCallContext.CurrentContext.connection, call.value, CfrV8Value.Wrap);
@@ -208,7 +208,7 @@ namespace Chromium.Remote {
             public string Exception {
                 set {
                     CheckAccess();
-                    var call = new CfxV8HandlerExecuteSetExceptionRenderProcessCall();
+                    var call = new CfxV8HandlerExecuteSetExceptionRemoteCall();
                     call.eventArgsId = eventArgsId;
                     call.value = value;
                     call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
@@ -222,7 +222,7 @@ namespace Chromium.Remote {
                 if(returnValueSet) {
                     throw new CfxException("The return value has already been set");
                 }
-                var call = new CfxV8HandlerExecuteSetReturnValueRenderProcessCall();
+                var call = new CfxV8HandlerExecuteSetReturnValueRemoteCall();
                 call.eventArgsId = eventArgsId;
                 call.value = CfrObject.Unwrap(returnValue).ptr;
                 call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);

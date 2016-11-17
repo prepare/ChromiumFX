@@ -59,7 +59,7 @@ namespace Chromium.Remote {
 
 
         internal static RemotePtr CreateRemote() {
-            var call = new CfxTimeCtorRenderProcessCall();
+            var call = new CfxTimeCtorRemoteCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);
         }
@@ -75,7 +75,7 @@ namespace Chromium.Remote {
         public int Year {
             get {
                 if(!m_Year_fetched) {
-                    var call = new CfxTimeGetYearRenderProcessCall();
+                    var call = new CfxTimeGetYearRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                     m_Year = call.value;
@@ -84,7 +84,7 @@ namespace Chromium.Remote {
                 return m_Year;
             }
             set {
-                var call = new CfxTimeSetYearRenderProcessCall();
+                var call = new CfxTimeSetYearRemoteCall();
                 call.sender = RemotePtr.ptr;
                 call.value = value;
                 call.RequestExecution(RemotePtr.connection);
@@ -99,7 +99,7 @@ namespace Chromium.Remote {
         public int Month {
             get {
                 if(!m_Month_fetched) {
-                    var call = new CfxTimeGetMonthRenderProcessCall();
+                    var call = new CfxTimeGetMonthRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                     m_Month = call.value;
@@ -108,7 +108,7 @@ namespace Chromium.Remote {
                 return m_Month;
             }
             set {
-                var call = new CfxTimeSetMonthRenderProcessCall();
+                var call = new CfxTimeSetMonthRemoteCall();
                 call.sender = RemotePtr.ptr;
                 call.value = value;
                 call.RequestExecution(RemotePtr.connection);
@@ -123,7 +123,7 @@ namespace Chromium.Remote {
         public int DayOfWeek {
             get {
                 if(!m_DayOfWeek_fetched) {
-                    var call = new CfxTimeGetDayOfWeekRenderProcessCall();
+                    var call = new CfxTimeGetDayOfWeekRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                     m_DayOfWeek = call.value;
@@ -132,7 +132,7 @@ namespace Chromium.Remote {
                 return m_DayOfWeek;
             }
             set {
-                var call = new CfxTimeSetDayOfWeekRenderProcessCall();
+                var call = new CfxTimeSetDayOfWeekRemoteCall();
                 call.sender = RemotePtr.ptr;
                 call.value = value;
                 call.RequestExecution(RemotePtr.connection);
@@ -147,7 +147,7 @@ namespace Chromium.Remote {
         public int DayOfMonth {
             get {
                 if(!m_DayOfMonth_fetched) {
-                    var call = new CfxTimeGetDayOfMonthRenderProcessCall();
+                    var call = new CfxTimeGetDayOfMonthRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                     m_DayOfMonth = call.value;
@@ -156,7 +156,7 @@ namespace Chromium.Remote {
                 return m_DayOfMonth;
             }
             set {
-                var call = new CfxTimeSetDayOfMonthRenderProcessCall();
+                var call = new CfxTimeSetDayOfMonthRemoteCall();
                 call.sender = RemotePtr.ptr;
                 call.value = value;
                 call.RequestExecution(RemotePtr.connection);
@@ -171,7 +171,7 @@ namespace Chromium.Remote {
         public int Hour {
             get {
                 if(!m_Hour_fetched) {
-                    var call = new CfxTimeGetHourRenderProcessCall();
+                    var call = new CfxTimeGetHourRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                     m_Hour = call.value;
@@ -180,7 +180,7 @@ namespace Chromium.Remote {
                 return m_Hour;
             }
             set {
-                var call = new CfxTimeSetHourRenderProcessCall();
+                var call = new CfxTimeSetHourRemoteCall();
                 call.sender = RemotePtr.ptr;
                 call.value = value;
                 call.RequestExecution(RemotePtr.connection);
@@ -195,7 +195,7 @@ namespace Chromium.Remote {
         public int Minute {
             get {
                 if(!m_Minute_fetched) {
-                    var call = new CfxTimeGetMinuteRenderProcessCall();
+                    var call = new CfxTimeGetMinuteRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                     m_Minute = call.value;
@@ -204,7 +204,7 @@ namespace Chromium.Remote {
                 return m_Minute;
             }
             set {
-                var call = new CfxTimeSetMinuteRenderProcessCall();
+                var call = new CfxTimeSetMinuteRemoteCall();
                 call.sender = RemotePtr.ptr;
                 call.value = value;
                 call.RequestExecution(RemotePtr.connection);
@@ -219,7 +219,7 @@ namespace Chromium.Remote {
         public int Second {
             get {
                 if(!m_Second_fetched) {
-                    var call = new CfxTimeGetSecondRenderProcessCall();
+                    var call = new CfxTimeGetSecondRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                     m_Second = call.value;
@@ -228,7 +228,7 @@ namespace Chromium.Remote {
                 return m_Second;
             }
             set {
-                var call = new CfxTimeSetSecondRenderProcessCall();
+                var call = new CfxTimeSetSecondRemoteCall();
                 call.sender = RemotePtr.ptr;
                 call.value = value;
                 call.RequestExecution(RemotePtr.connection);
@@ -250,7 +250,7 @@ namespace Chromium.Remote {
         public int Millisecond {
             get {
                 if(!m_Millisecond_fetched) {
-                    var call = new CfxTimeGetMillisecondRenderProcessCall();
+                    var call = new CfxTimeGetMillisecondRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                     m_Millisecond = call.value;
@@ -259,7 +259,7 @@ namespace Chromium.Remote {
                 return m_Millisecond;
             }
             set {
-                var call = new CfxTimeSetMillisecondRenderProcessCall();
+                var call = new CfxTimeSetMillisecondRemoteCall();
                 call.sender = RemotePtr.ptr;
                 call.value = value;
                 call.RequestExecution(RemotePtr.connection);

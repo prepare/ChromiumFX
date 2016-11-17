@@ -35,10 +35,10 @@ using System;
 
 namespace Chromium.Remote {
 
-    internal class CfxPostDataElementCreateRenderProcessCall : RenderProcessCall {
+    internal class CfxPostDataElementCreateRemoteCall : RemoteCall {
 
-        internal CfxPostDataElementCreateRenderProcessCall()
-            : base(RemoteCallId.CfxPostDataElementCreateRenderProcessCall) {}
+        internal CfxPostDataElementCreateRemoteCall()
+            : base(RemoteCallId.CfxPostDataElementCreateRemoteCall) {}
 
         internal IntPtr __retval;
 
@@ -55,10 +55,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxPostDataElementIsReadOnlyRenderProcessCall : RenderProcessCall {
+    internal class CfxPostDataElementIsReadOnlyRemoteCall : RemoteCall {
 
-        internal CfxPostDataElementIsReadOnlyRenderProcessCall()
-            : base(RemoteCallId.CfxPostDataElementIsReadOnlyRenderProcessCall) {}
+        internal CfxPostDataElementIsReadOnlyRemoteCall()
+            : base(RemoteCallId.CfxPostDataElementIsReadOnlyRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -84,10 +84,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxPostDataElementSetToEmptyRenderProcessCall : RenderProcessCall {
+    internal class CfxPostDataElementSetToEmptyRemoteCall : RemoteCall {
 
-        internal CfxPostDataElementSetToEmptyRenderProcessCall()
-            : base(RemoteCallId.CfxPostDataElementSetToEmptyRenderProcessCall) {}
+        internal CfxPostDataElementSetToEmptyRemoteCall()
+            : base(RemoteCallId.CfxPostDataElementSetToEmptyRemoteCall) {}
 
         internal IntPtr @this;
 
@@ -104,10 +104,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxPostDataElementSetToFileRenderProcessCall : RenderProcessCall {
+    internal class CfxPostDataElementSetToFileRemoteCall : RemoteCall {
 
-        internal CfxPostDataElementSetToFileRenderProcessCall()
-            : base(RemoteCallId.CfxPostDataElementSetToFileRenderProcessCall) {}
+        internal CfxPostDataElementSetToFileRemoteCall()
+            : base(RemoteCallId.CfxPostDataElementSetToFileRemoteCall) {}
 
         internal IntPtr @this;
         internal string fileName;
@@ -129,10 +129,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxPostDataElementSetToBytesRenderProcessCall : RenderProcessCall {
+    internal class CfxPostDataElementSetToBytesRemoteCall : RemoteCall {
 
-        internal CfxPostDataElementSetToBytesRenderProcessCall()
-            : base(RemoteCallId.CfxPostDataElementSetToBytesRenderProcessCall) {}
+        internal CfxPostDataElementSetToBytesRemoteCall()
+            : base(RemoteCallId.CfxPostDataElementSetToBytesRemoteCall) {}
 
         internal IntPtr @this;
         internal ulong size;
@@ -155,10 +155,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxPostDataElementGetTypeRenderProcessCall : RenderProcessCall {
+    internal class CfxPostDataElementGetTypeRemoteCall : RemoteCall {
 
-        internal CfxPostDataElementGetTypeRenderProcessCall()
-            : base(RemoteCallId.CfxPostDataElementGetTypeRenderProcessCall) {}
+        internal CfxPostDataElementGetTypeRemoteCall()
+            : base(RemoteCallId.CfxPostDataElementGetTypeRemoteCall) {}
 
         internal IntPtr @this;
         internal int __retval;
@@ -184,10 +184,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxPostDataElementGetFileRenderProcessCall : RenderProcessCall {
+    internal class CfxPostDataElementGetFileRemoteCall : RemoteCall {
 
-        internal CfxPostDataElementGetFileRenderProcessCall()
-            : base(RemoteCallId.CfxPostDataElementGetFileRenderProcessCall) {}
+        internal CfxPostDataElementGetFileRemoteCall()
+            : base(RemoteCallId.CfxPostDataElementGetFileRemoteCall) {}
 
         internal IntPtr @this;
         internal string __retval;
@@ -213,10 +213,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxPostDataElementGetBytesCountRenderProcessCall : RenderProcessCall {
+    internal class CfxPostDataElementGetBytesCountRemoteCall : RemoteCall {
 
-        internal CfxPostDataElementGetBytesCountRenderProcessCall()
-            : base(RemoteCallId.CfxPostDataElementGetBytesCountRenderProcessCall) {}
+        internal CfxPostDataElementGetBytesCountRemoteCall()
+            : base(RemoteCallId.CfxPostDataElementGetBytesCountRemoteCall) {}
 
         internal IntPtr @this;
         internal ulong __retval;
@@ -242,10 +242,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxPostDataElementGetBytesRenderProcessCall : RenderProcessCall {
+    internal class CfxPostDataElementGetBytesRemoteCall : RemoteCall {
 
-        internal CfxPostDataElementGetBytesRenderProcessCall()
-            : base(RemoteCallId.CfxPostDataElementGetBytesRenderProcessCall) {}
+        internal CfxPostDataElementGetBytesRemoteCall()
+            : base(RemoteCallId.CfxPostDataElementGetBytesRemoteCall) {}
 
         internal IntPtr @this;
         internal ulong size;

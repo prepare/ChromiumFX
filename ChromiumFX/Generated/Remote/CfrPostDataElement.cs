@@ -67,7 +67,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public static CfrPostDataElement Create() {
-            var call = new CfxPostDataElementCreateRenderProcessCall();
+            var call = new CfxPostDataElementCreateRemoteCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrPostDataElement.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
@@ -84,7 +84,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsReadOnly {
             get {
-                var call = new CfxPostDataElementIsReadOnlyRenderProcessCall();
+                var call = new CfxPostDataElementIsReadOnlyRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -100,7 +100,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfxPostdataElementType Type {
             get {
-                var call = new CfxPostDataElementGetTypeRenderProcessCall();
+                var call = new CfxPostDataElementGetTypeRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return (CfxPostdataElementType)call.__retval;
@@ -116,7 +116,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public string File {
             get {
-                var call = new CfxPostDataElementGetFileRenderProcessCall();
+                var call = new CfxPostDataElementGetFileRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -132,7 +132,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public ulong BytesCount {
             get {
-                var call = new CfxPostDataElementGetBytesCountRenderProcessCall();
+                var call = new CfxPostDataElementGetBytesCountRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -147,7 +147,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public void SetToEmpty() {
-            var call = new CfxPostDataElementSetToEmptyRenderProcessCall();
+            var call = new CfxPostDataElementSetToEmptyRemoteCall();
             call.@this = RemotePtr.ptr;
             call.RequestExecution(RemotePtr.connection);
         }
@@ -160,7 +160,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public void SetToFile(string fileName) {
-            var call = new CfxPostDataElementSetToFileRenderProcessCall();
+            var call = new CfxPostDataElementSetToFileRemoteCall();
             call.@this = RemotePtr.ptr;
             call.fileName = fileName;
             call.RequestExecution(RemotePtr.connection);
@@ -175,7 +175,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public void SetToBytes(ulong size, RemotePtr bytes) {
-            var call = new CfxPostDataElementSetToBytesRenderProcessCall();
+            var call = new CfxPostDataElementSetToBytesRemoteCall();
             call.@this = RemotePtr.ptr;
             call.size = size;
             call.bytes = bytes.ptr;
@@ -191,7 +191,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public ulong GetBytes(ulong size, RemotePtr bytes) {
-            var call = new CfxPostDataElementGetBytesRenderProcessCall();
+            var call = new CfxPostDataElementGetBytesRemoteCall();
             call.@this = RemotePtr.ptr;
             call.size = size;
             call.bytes = bytes.ptr;

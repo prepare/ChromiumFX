@@ -71,7 +71,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public string Message {
             get {
-                var call = new CfxV8ExceptionGetMessageRenderProcessCall();
+                var call = new CfxV8ExceptionGetMessageRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -87,7 +87,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public string SourceLine {
             get {
-                var call = new CfxV8ExceptionGetSourceLineRenderProcessCall();
+                var call = new CfxV8ExceptionGetSourceLineRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -104,7 +104,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public string ScriptResourceName {
             get {
-                var call = new CfxV8ExceptionGetScriptResourceNameRenderProcessCall();
+                var call = new CfxV8ExceptionGetScriptResourceNameRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -121,7 +121,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public int LineNumber {
             get {
-                var call = new CfxV8ExceptionGetLineNumberRenderProcessCall();
+                var call = new CfxV8ExceptionGetLineNumberRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -138,7 +138,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public int StartPosition {
             get {
-                var call = new CfxV8ExceptionGetStartPositionRenderProcessCall();
+                var call = new CfxV8ExceptionGetStartPositionRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -155,7 +155,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public int EndPosition {
             get {
-                var call = new CfxV8ExceptionGetEndPositionRenderProcessCall();
+                var call = new CfxV8ExceptionGetEndPositionRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -172,7 +172,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public int StartColumn {
             get {
-                var call = new CfxV8ExceptionGetStartColumnRenderProcessCall();
+                var call = new CfxV8ExceptionGetStartColumnRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -189,7 +189,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public int EndColumn {
             get {
-                var call = new CfxV8ExceptionGetEndColumnRenderProcessCall();
+                var call = new CfxV8ExceptionGetEndColumnRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;

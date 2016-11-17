@@ -35,10 +35,10 @@ using System;
 
 namespace Chromium.Remote {
 
-    internal class CfxTaskRunnerGetForCurrentThreadRenderProcessCall : RenderProcessCall {
+    internal class CfxTaskRunnerGetForCurrentThreadRemoteCall : RemoteCall {
 
-        internal CfxTaskRunnerGetForCurrentThreadRenderProcessCall()
-            : base(RemoteCallId.CfxTaskRunnerGetForCurrentThreadRenderProcessCall) {}
+        internal CfxTaskRunnerGetForCurrentThreadRemoteCall()
+            : base(RemoteCallId.CfxTaskRunnerGetForCurrentThreadRemoteCall) {}
 
         internal IntPtr __retval;
 
@@ -55,10 +55,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxTaskRunnerGetForThreadRenderProcessCall : RenderProcessCall {
+    internal class CfxTaskRunnerGetForThreadRemoteCall : RemoteCall {
 
-        internal CfxTaskRunnerGetForThreadRenderProcessCall()
-            : base(RemoteCallId.CfxTaskRunnerGetForThreadRenderProcessCall) {}
+        internal CfxTaskRunnerGetForThreadRemoteCall()
+            : base(RemoteCallId.CfxTaskRunnerGetForThreadRemoteCall) {}
 
         internal int threadId;
         internal IntPtr __retval;
@@ -84,10 +84,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxTaskRunnerIsSameRenderProcessCall : RenderProcessCall {
+    internal class CfxTaskRunnerIsSameRemoteCall : RemoteCall {
 
-        internal CfxTaskRunnerIsSameRenderProcessCall()
-            : base(RemoteCallId.CfxTaskRunnerIsSameRenderProcessCall) {}
+        internal CfxTaskRunnerIsSameRemoteCall()
+            : base(RemoteCallId.CfxTaskRunnerIsSameRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr that;
@@ -116,10 +116,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxTaskRunnerBelongsToCurrentThreadRenderProcessCall : RenderProcessCall {
+    internal class CfxTaskRunnerBelongsToCurrentThreadRemoteCall : RemoteCall {
 
-        internal CfxTaskRunnerBelongsToCurrentThreadRenderProcessCall()
-            : base(RemoteCallId.CfxTaskRunnerBelongsToCurrentThreadRenderProcessCall) {}
+        internal CfxTaskRunnerBelongsToCurrentThreadRemoteCall()
+            : base(RemoteCallId.CfxTaskRunnerBelongsToCurrentThreadRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -145,10 +145,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxTaskRunnerBelongsToThreadRenderProcessCall : RenderProcessCall {
+    internal class CfxTaskRunnerBelongsToThreadRemoteCall : RemoteCall {
 
-        internal CfxTaskRunnerBelongsToThreadRenderProcessCall()
-            : base(RemoteCallId.CfxTaskRunnerBelongsToThreadRenderProcessCall) {}
+        internal CfxTaskRunnerBelongsToThreadRemoteCall()
+            : base(RemoteCallId.CfxTaskRunnerBelongsToThreadRemoteCall) {}
 
         internal IntPtr @this;
         internal int threadId;
@@ -177,10 +177,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxTaskRunnerPostTaskRenderProcessCall : RenderProcessCall {
+    internal class CfxTaskRunnerPostTaskRemoteCall : RemoteCall {
 
-        internal CfxTaskRunnerPostTaskRenderProcessCall()
-            : base(RemoteCallId.CfxTaskRunnerPostTaskRenderProcessCall) {}
+        internal CfxTaskRunnerPostTaskRemoteCall()
+            : base(RemoteCallId.CfxTaskRunnerPostTaskRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr task;
@@ -209,10 +209,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxTaskRunnerPostDelayedTaskRenderProcessCall : RenderProcessCall {
+    internal class CfxTaskRunnerPostDelayedTaskRemoteCall : RemoteCall {
 
-        internal CfxTaskRunnerPostDelayedTaskRenderProcessCall()
-            : base(RemoteCallId.CfxTaskRunnerPostDelayedTaskRenderProcessCall) {}
+        internal CfxTaskRunnerPostDelayedTaskRemoteCall()
+            : base(RemoteCallId.CfxTaskRunnerPostDelayedTaskRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr task;

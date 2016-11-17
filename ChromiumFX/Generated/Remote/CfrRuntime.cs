@@ -45,7 +45,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static bool CurrentlyOn(CfxThreadId threadId) {
-            var call = new CfxRuntimeCurrentlyOnRenderProcessCall();
+            var call = new CfxRuntimeCurrentlyOnRemoteCall();
             call.threadId = (int)threadId;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return call.__retval;
@@ -66,7 +66,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
         /// </remarks>
         public static string FormatUrlForSecurityDisplay(string originUrl) {
-            var call = new CfxRuntimeFormatUrlForSecurityDisplayRenderProcessCall();
+            var call = new CfxRuntimeFormatUrlForSecurityDisplayRemoteCall();
             call.originUrl = originUrl;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return call.__retval;
@@ -80,7 +80,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
         /// </remarks>
         public static bool IsCertStatusError(CfxCertStatus status) {
-            var call = new CfxRuntimeIsCertStatusErrorRenderProcessCall();
+            var call = new CfxRuntimeIsCertStatusErrorRemoteCall();
             call.status = (int)status;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return call.__retval;
@@ -95,7 +95,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
         /// </remarks>
         public static bool IsCertStatusMinorError(CfxCertStatus status) {
-            var call = new CfxRuntimeIsCertStatusMinorErrorRenderProcessCall();
+            var call = new CfxRuntimeIsCertStatusMinorErrorRemoteCall();
             call.status = (int)status;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return call.__retval;
@@ -111,7 +111,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static bool PostDelayedTask(CfxThreadId threadId, CfrTask task, long delayMs) {
-            var call = new CfxRuntimePostDelayedTaskRenderProcessCall();
+            var call = new CfxRuntimePostDelayedTaskRemoteCall();
             call.threadId = (int)threadId;
             call.task = CfrObject.Unwrap(task).ptr;
             call.delayMs = delayMs;
@@ -128,7 +128,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static bool PostTask(CfxThreadId threadId, CfrTask task) {
-            var call = new CfxRuntimePostTaskRenderProcessCall();
+            var call = new CfxRuntimePostTaskRemoteCall();
             call.threadId = (int)threadId;
             call.task = CfrObject.Unwrap(task).ptr;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
@@ -194,7 +194,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public static bool RegisterExtension(string extensionName, string javascriptCode, CfrV8Handler handler) {
-            var call = new CfxRuntimeRegisterExtensionRenderProcessCall();
+            var call = new CfxRuntimeRegisterExtensionRemoteCall();
             call.extensionName = extensionName;
             call.javascriptCode = javascriptCode;
             call.handler = CfrObject.Unwrap(handler).ptr;

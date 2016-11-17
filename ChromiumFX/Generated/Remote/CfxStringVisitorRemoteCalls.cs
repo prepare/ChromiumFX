@@ -37,10 +37,10 @@ namespace Chromium.Remote {
     using Event;
     using Chromium.Event;
 
-    internal class CfxStringVisitorCtorRenderProcessCall : RenderProcessCall {
+    internal class CfxStringVisitorCtorRemoteCall : RemoteCall {
 
-        internal CfxStringVisitorCtorRenderProcessCall()
-            : base(RemoteCallId.CfxStringVisitorCtorRenderProcessCall) {}
+        internal CfxStringVisitorCtorRemoteCall()
+            : base(RemoteCallId.CfxStringVisitorCtorRemoteCall) {}
 
         internal IntPtr __retval;
         protected override void WriteReturn(StreamHandler h) { h.Write(__retval); }
@@ -70,10 +70,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxStringVisitorVisitActivateRenderProcessCall : RenderProcessCall {
+    internal class CfxStringVisitorVisitActivateRemoteCall : RemoteCall {
 
-        internal CfxStringVisitorVisitActivateRenderProcessCall()
-            : base(RemoteCallId.CfxStringVisitorVisitActivateRenderProcessCall) {}
+        internal CfxStringVisitorVisitActivateRemoteCall()
+            : base(RemoteCallId.CfxStringVisitorVisitActivateRemoteCall) {}
 
         internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -85,10 +85,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxStringVisitorVisitDeactivateRenderProcessCall : RenderProcessCall {
+    internal class CfxStringVisitorVisitDeactivateRemoteCall : RemoteCall {
 
-        internal CfxStringVisitorVisitDeactivateRenderProcessCall()
-            : base(RemoteCallId.CfxStringVisitorVisitDeactivateRenderProcessCall) {}
+        internal CfxStringVisitorVisitDeactivateRemoteCall()
+            : base(RemoteCallId.CfxStringVisitorVisitDeactivateRemoteCall) {}
 
         internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -100,10 +100,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxStringVisitorVisitGetStringRenderProcessCall : RenderProcessCall {
+    internal class CfxStringVisitorVisitGetStringRemoteCall : RemoteCall {
 
-        internal CfxStringVisitorVisitGetStringRenderProcessCall()
-            : base(RemoteCallId.CfxStringVisitorVisitGetStringRenderProcessCall) {}
+        internal CfxStringVisitorVisitGetStringRemoteCall()
+            : base(RemoteCallId.CfxStringVisitorVisitGetStringRemoteCall) {}
 
         internal ulong eventArgsId;
         internal string value;

@@ -35,10 +35,10 @@ using System;
 
 namespace Chromium.Remote {
 
-    internal class CfxPostDataCreateRenderProcessCall : RenderProcessCall {
+    internal class CfxPostDataCreateRemoteCall : RemoteCall {
 
-        internal CfxPostDataCreateRenderProcessCall()
-            : base(RemoteCallId.CfxPostDataCreateRenderProcessCall) {}
+        internal CfxPostDataCreateRemoteCall()
+            : base(RemoteCallId.CfxPostDataCreateRemoteCall) {}
 
         internal IntPtr __retval;
 
@@ -55,10 +55,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxPostDataIsReadOnlyRenderProcessCall : RenderProcessCall {
+    internal class CfxPostDataIsReadOnlyRemoteCall : RemoteCall {
 
-        internal CfxPostDataIsReadOnlyRenderProcessCall()
-            : base(RemoteCallId.CfxPostDataIsReadOnlyRenderProcessCall) {}
+        internal CfxPostDataIsReadOnlyRemoteCall()
+            : base(RemoteCallId.CfxPostDataIsReadOnlyRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -84,10 +84,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxPostDataHasExcludedElementsRenderProcessCall : RenderProcessCall {
+    internal class CfxPostDataHasExcludedElementsRemoteCall : RemoteCall {
 
-        internal CfxPostDataHasExcludedElementsRenderProcessCall()
-            : base(RemoteCallId.CfxPostDataHasExcludedElementsRenderProcessCall) {}
+        internal CfxPostDataHasExcludedElementsRemoteCall()
+            : base(RemoteCallId.CfxPostDataHasExcludedElementsRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -113,10 +113,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxPostDataGetElementCountRenderProcessCall : RenderProcessCall {
+    internal class CfxPostDataGetElementCountRemoteCall : RemoteCall {
 
-        internal CfxPostDataGetElementCountRenderProcessCall()
-            : base(RemoteCallId.CfxPostDataGetElementCountRenderProcessCall) {}
+        internal CfxPostDataGetElementCountRemoteCall()
+            : base(RemoteCallId.CfxPostDataGetElementCountRemoteCall) {}
 
         internal IntPtr @this;
         internal ulong __retval;
@@ -142,10 +142,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxPostDataGetElementsRenderProcessCall : RenderProcessCall {
+    internal class CfxPostDataGetElementsRemoteCall : RemoteCall {
 
-        internal CfxPostDataGetElementsRenderProcessCall()
-            : base(RemoteCallId.CfxPostDataGetElementsRenderProcessCall) {}
+        internal CfxPostDataGetElementsRemoteCall()
+            : base(RemoteCallId.CfxPostDataGetElementsRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr[] __retval;
@@ -177,10 +177,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxPostDataRemoveElementRenderProcessCall : RenderProcessCall {
+    internal class CfxPostDataRemoveElementRemoteCall : RemoteCall {
 
-        internal CfxPostDataRemoveElementRenderProcessCall()
-            : base(RemoteCallId.CfxPostDataRemoveElementRenderProcessCall) {}
+        internal CfxPostDataRemoveElementRemoteCall()
+            : base(RemoteCallId.CfxPostDataRemoveElementRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr element;
@@ -209,10 +209,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxPostDataAddElementRenderProcessCall : RenderProcessCall {
+    internal class CfxPostDataAddElementRemoteCall : RemoteCall {
 
-        internal CfxPostDataAddElementRenderProcessCall()
-            : base(RemoteCallId.CfxPostDataAddElementRenderProcessCall) {}
+        internal CfxPostDataAddElementRemoteCall()
+            : base(RemoteCallId.CfxPostDataAddElementRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr element;
@@ -241,10 +241,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxPostDataRemoveElementsRenderProcessCall : RenderProcessCall {
+    internal class CfxPostDataRemoveElementsRemoteCall : RemoteCall {
 
-        internal CfxPostDataRemoveElementsRenderProcessCall()
-            : base(RemoteCallId.CfxPostDataRemoveElementsRenderProcessCall) {}
+        internal CfxPostDataRemoveElementsRemoteCall()
+            : base(RemoteCallId.CfxPostDataRemoveElementsRemoteCall) {}
 
         internal IntPtr @this;
 

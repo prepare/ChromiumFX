@@ -47,22 +47,19 @@ namespace Chromium.Remote {
 
             connection = new RemoteConnection(pipeIn, pipeOut, true);
 
-            var call = new ExecuteRemoteProcessRemoteCall();
+            var call = new ExecuteProcessRemoteCall();
             call.RequestExecution(connection);
             return call.__retval;
 
         }
     }
 
-    internal class ExecuteRemoteProcessRemoteCall : BrowserProcessCall {
+    internal class ExecuteProcessRemoteCall : RemoteCall {
 
         internal int __retval;
 
-        internal ExecuteRemoteProcessRemoteCall() 
-            : base(RemoteCallId.ExecuteRemoteProcessRemoteCall) { }
-
-        protected override void WriteArgs(StreamHandler h) { }
-        protected override void ReadArgs(StreamHandler h) { }
+        internal ExecuteProcessRemoteCall() 
+            : base(RemoteCallId.ExecuteProcessRemoteCall) { }
 
         protected override void WriteReturn(StreamHandler h) { h.Write(__retval); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out __retval); }

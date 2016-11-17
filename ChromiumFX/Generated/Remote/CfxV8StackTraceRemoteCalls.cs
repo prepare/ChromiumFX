@@ -35,10 +35,10 @@ using System;
 
 namespace Chromium.Remote {
 
-    internal class CfxV8StackTraceGetCurrentRenderProcessCall : RenderProcessCall {
+    internal class CfxV8StackTraceGetCurrentRemoteCall : RemoteCall {
 
-        internal CfxV8StackTraceGetCurrentRenderProcessCall()
-            : base(RemoteCallId.CfxV8StackTraceGetCurrentRenderProcessCall) {}
+        internal CfxV8StackTraceGetCurrentRemoteCall()
+            : base(RemoteCallId.CfxV8StackTraceGetCurrentRemoteCall) {}
 
         internal int frameLimit;
         internal IntPtr __retval;
@@ -64,10 +64,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8StackTraceIsValidRenderProcessCall : RenderProcessCall {
+    internal class CfxV8StackTraceIsValidRemoteCall : RemoteCall {
 
-        internal CfxV8StackTraceIsValidRenderProcessCall()
-            : base(RemoteCallId.CfxV8StackTraceIsValidRenderProcessCall) {}
+        internal CfxV8StackTraceIsValidRemoteCall()
+            : base(RemoteCallId.CfxV8StackTraceIsValidRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -93,10 +93,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8StackTraceGetFrameCountRenderProcessCall : RenderProcessCall {
+    internal class CfxV8StackTraceGetFrameCountRemoteCall : RemoteCall {
 
-        internal CfxV8StackTraceGetFrameCountRenderProcessCall()
-            : base(RemoteCallId.CfxV8StackTraceGetFrameCountRenderProcessCall) {}
+        internal CfxV8StackTraceGetFrameCountRemoteCall()
+            : base(RemoteCallId.CfxV8StackTraceGetFrameCountRemoteCall) {}
 
         internal IntPtr @this;
         internal int __retval;
@@ -122,10 +122,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8StackTraceGetFrameRenderProcessCall : RenderProcessCall {
+    internal class CfxV8StackTraceGetFrameRemoteCall : RemoteCall {
 
-        internal CfxV8StackTraceGetFrameRenderProcessCall()
-            : base(RemoteCallId.CfxV8StackTraceGetFrameRenderProcessCall) {}
+        internal CfxV8StackTraceGetFrameRemoteCall()
+            : base(RemoteCallId.CfxV8StackTraceGetFrameRemoteCall) {}
 
         internal IntPtr @this;
         internal int index;

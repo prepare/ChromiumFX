@@ -59,7 +59,7 @@ namespace Chromium.Remote {
 
 
         internal static RemotePtr CreateRemote() {
-            var call = new CfxRectCtorRenderProcessCall();
+            var call = new CfxRectCtorRemoteCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);
         }
@@ -75,7 +75,7 @@ namespace Chromium.Remote {
         public int X {
             get {
                 if(!m_X_fetched) {
-                    var call = new CfxRectGetXRenderProcessCall();
+                    var call = new CfxRectGetXRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                     m_X = call.value;
@@ -84,7 +84,7 @@ namespace Chromium.Remote {
                 return m_X;
             }
             set {
-                var call = new CfxRectSetXRenderProcessCall();
+                var call = new CfxRectSetXRemoteCall();
                 call.sender = RemotePtr.ptr;
                 call.value = value;
                 call.RequestExecution(RemotePtr.connection);
@@ -99,7 +99,7 @@ namespace Chromium.Remote {
         public int Y {
             get {
                 if(!m_Y_fetched) {
-                    var call = new CfxRectGetYRenderProcessCall();
+                    var call = new CfxRectGetYRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                     m_Y = call.value;
@@ -108,7 +108,7 @@ namespace Chromium.Remote {
                 return m_Y;
             }
             set {
-                var call = new CfxRectSetYRenderProcessCall();
+                var call = new CfxRectSetYRemoteCall();
                 call.sender = RemotePtr.ptr;
                 call.value = value;
                 call.RequestExecution(RemotePtr.connection);
@@ -123,7 +123,7 @@ namespace Chromium.Remote {
         public int Width {
             get {
                 if(!m_Width_fetched) {
-                    var call = new CfxRectGetWidthRenderProcessCall();
+                    var call = new CfxRectGetWidthRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                     m_Width = call.value;
@@ -132,7 +132,7 @@ namespace Chromium.Remote {
                 return m_Width;
             }
             set {
-                var call = new CfxRectSetWidthRenderProcessCall();
+                var call = new CfxRectSetWidthRemoteCall();
                 call.sender = RemotePtr.ptr;
                 call.value = value;
                 call.RequestExecution(RemotePtr.connection);
@@ -147,7 +147,7 @@ namespace Chromium.Remote {
         public int Height {
             get {
                 if(!m_Height_fetched) {
-                    var call = new CfxRectGetHeightRenderProcessCall();
+                    var call = new CfxRectGetHeightRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                     m_Height = call.value;
@@ -156,7 +156,7 @@ namespace Chromium.Remote {
                 return m_Height;
             }
             set {
-                var call = new CfxRectSetHeightRenderProcessCall();
+                var call = new CfxRectSetHeightRemoteCall();
                 call.sender = RemotePtr.ptr;
                 call.value = value;
                 call.RequestExecution(RemotePtr.connection);

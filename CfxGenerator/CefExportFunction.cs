@@ -163,7 +163,7 @@ public class CefExportFunction {
     }
 
     public string RemoteCallId {
-        get { return PublicClassName + PublicName + "RenderProcessCall"; }
+        get { return PublicClassName + PublicName + "RemoteCall"; }
     }
 
     public string PublicClassName {

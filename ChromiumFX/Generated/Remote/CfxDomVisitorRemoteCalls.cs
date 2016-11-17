@@ -37,10 +37,10 @@ namespace Chromium.Remote {
     using Event;
     using Chromium.Event;
 
-    internal class CfxDomVisitorCtorRenderProcessCall : RenderProcessCall {
+    internal class CfxDomVisitorCtorRemoteCall : RemoteCall {
 
-        internal CfxDomVisitorCtorRenderProcessCall()
-            : base(RemoteCallId.CfxDomVisitorCtorRenderProcessCall) {}
+        internal CfxDomVisitorCtorRemoteCall()
+            : base(RemoteCallId.CfxDomVisitorCtorRemoteCall) {}
 
         internal IntPtr __retval;
         protected override void WriteReturn(StreamHandler h) { h.Write(__retval); }
@@ -70,10 +70,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDomVisitorVisitActivateRenderProcessCall : RenderProcessCall {
+    internal class CfxDomVisitorVisitActivateRemoteCall : RemoteCall {
 
-        internal CfxDomVisitorVisitActivateRenderProcessCall()
-            : base(RemoteCallId.CfxDomVisitorVisitActivateRenderProcessCall) {}
+        internal CfxDomVisitorVisitActivateRemoteCall()
+            : base(RemoteCallId.CfxDomVisitorVisitActivateRemoteCall) {}
 
         internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -85,10 +85,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDomVisitorVisitDeactivateRenderProcessCall : RenderProcessCall {
+    internal class CfxDomVisitorVisitDeactivateRemoteCall : RemoteCall {
 
-        internal CfxDomVisitorVisitDeactivateRenderProcessCall()
-            : base(RemoteCallId.CfxDomVisitorVisitDeactivateRenderProcessCall) {}
+        internal CfxDomVisitorVisitDeactivateRemoteCall()
+            : base(RemoteCallId.CfxDomVisitorVisitDeactivateRemoteCall) {}
 
         internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -100,10 +100,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDomVisitorVisitGetDocumentRenderProcessCall : RenderProcessCall {
+    internal class CfxDomVisitorVisitGetDocumentRemoteCall : RemoteCall {
 
-        internal CfxDomVisitorVisitGetDocumentRenderProcessCall()
-            : base(RemoteCallId.CfxDomVisitorVisitGetDocumentRenderProcessCall) {}
+        internal CfxDomVisitorVisitGetDocumentRemoteCall()
+            : base(RemoteCallId.CfxDomVisitorVisitGetDocumentRemoteCall) {}
 
         internal ulong eventArgsId;
         internal IntPtr value;

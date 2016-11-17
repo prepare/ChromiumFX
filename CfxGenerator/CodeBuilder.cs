@@ -184,12 +184,12 @@ public class CodeBuilder {
 
     public void BeginRemoteCallClass(string name, bool eventCall, List<string> callIds) {
         if(!eventCall) {
-            BeginClass(name + "RenderProcessCall : RenderProcessCall", "internal");
-            callIds.Add(name + "RenderProcessCall");
+            BeginClass(name + "RemoteCall : RemoteCall", "internal");
+            callIds.Add(name + "RemoteCall");
             AppendLine();
-            AppendLine("internal {0}RenderProcessCall()", name);
+            AppendLine("internal {0}RemoteCall()", name);
             IncreaseIndent();
-            AppendLine(": base(RemoteCallId.{0}RenderProcessCall) {{}}", name);
+            AppendLine(": base(RemoteCallId.{0}RemoteCall) {{}}", name);
             DecreaseIndent();
         } else {
             BeginClass(name + "BrowserProcessCall : BrowserProcessCall", "internal");

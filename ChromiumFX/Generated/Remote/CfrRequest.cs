@@ -67,7 +67,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public static CfrRequest Create() {
-            var call = new CfxRequestCreateRenderProcessCall();
+            var call = new CfxRequestCreateRemoteCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrRequest.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
@@ -84,7 +84,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsReadOnly {
             get {
-                var call = new CfxRequestIsReadOnlyRenderProcessCall();
+                var call = new CfxRequestIsReadOnlyRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -102,13 +102,13 @@ namespace Chromium.Remote {
         /// </remarks>
         public string Url {
             get {
-                var call = new CfxRequestGetUrlRenderProcessCall();
+                var call = new CfxRequestGetUrlRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
             set {
-                var call = new CfxRequestSetUrlRenderProcessCall();
+                var call = new CfxRequestSetUrlRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.value = value;
                 call.RequestExecution(RemotePtr.connection);
@@ -127,13 +127,13 @@ namespace Chromium.Remote {
         /// </remarks>
         public string Method {
             get {
-                var call = new CfxRequestGetMethodRenderProcessCall();
+                var call = new CfxRequestGetMethodRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
             set {
-                var call = new CfxRequestSetMethodRenderProcessCall();
+                var call = new CfxRequestSetMethodRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.value = value;
                 call.RequestExecution(RemotePtr.connection);
@@ -149,7 +149,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public string ReferrerUrl {
             get {
-                var call = new CfxRequestGetReferrerUrlRenderProcessCall();
+                var call = new CfxRequestGetReferrerUrlRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -165,7 +165,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfxReferrerPolicy ReferrerPolicy {
             get {
-                var call = new CfxRequestGetReferrerPolicyRenderProcessCall();
+                var call = new CfxRequestGetReferrerPolicyRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return (CfxReferrerPolicy)call.__retval;
@@ -183,13 +183,13 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrPostData PostData {
             get {
-                var call = new CfxRequestGetPostDataRenderProcessCall();
+                var call = new CfxRequestGetPostDataRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return CfrPostData.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
             }
             set {
-                var call = new CfxRequestSetPostDataRenderProcessCall();
+                var call = new CfxRequestSetPostDataRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.value = CfrObject.Unwrap(value).ptr;
                 call.RequestExecution(RemotePtr.connection);
@@ -209,13 +209,13 @@ namespace Chromium.Remote {
         /// </remarks>
         public int Flags {
             get {
-                var call = new CfxRequestGetFlagsRenderProcessCall();
+                var call = new CfxRequestGetFlagsRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
             set {
-                var call = new CfxRequestSetFlagsRenderProcessCall();
+                var call = new CfxRequestSetFlagsRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.value = value;
                 call.RequestExecution(RemotePtr.connection);
@@ -235,13 +235,13 @@ namespace Chromium.Remote {
         /// </remarks>
         public string FirstPartyForCookies {
             get {
-                var call = new CfxRequestGetFirstPartyForCookiesRenderProcessCall();
+                var call = new CfxRequestGetFirstPartyForCookiesRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
             }
             set {
-                var call = new CfxRequestSetFirstPartyForCookiesRenderProcessCall();
+                var call = new CfxRequestSetFirstPartyForCookiesRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.value = value;
                 call.RequestExecution(RemotePtr.connection);
@@ -258,7 +258,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfxResourceType ResourceType {
             get {
-                var call = new CfxRequestGetResourceTypeRenderProcessCall();
+                var call = new CfxRequestGetResourceTypeRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return (CfxResourceType)call.__retval;
@@ -276,7 +276,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfxTransitionType TransitionType {
             get {
-                var call = new CfxRequestGetTransitionTypeRenderProcessCall();
+                var call = new CfxRequestGetTransitionTypeRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return (CfxTransitionType)call.__retval;
@@ -294,7 +294,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public ulong Identifier {
             get {
-                var call = new CfxRequestGetIdentifierRenderProcessCall();
+                var call = new CfxRequestGetIdentifierRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -311,7 +311,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public void SetReferrer(string referrerUrl, CfxReferrerPolicy policy) {
-            var call = new CfxRequestSetReferrerRenderProcessCall();
+            var call = new CfxRequestSetReferrerRemoteCall();
             call.@this = RemotePtr.ptr;
             call.referrerUrl = referrerUrl;
             call.policy = (int)policy;
@@ -326,7 +326,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public System.Collections.Generic.List<string[]> GetHeaderMap() {
-            var call = new CfxRequestGetHeaderMapRenderProcessCall();
+            var call = new CfxRequestGetHeaderMapRemoteCall();
             call.@this = RemotePtr.ptr;
             call.RequestExecution(RemotePtr.connection);
             return call.__retval;
@@ -341,7 +341,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public void SetHeaderMap(System.Collections.Generic.List<string[]> headerMap) {
-            var call = new CfxRequestSetHeaderMapRenderProcessCall();
+            var call = new CfxRequestSetHeaderMapRemoteCall();
             call.@this = RemotePtr.ptr;
             call.headerMap = headerMap;
             call.RequestExecution(RemotePtr.connection);
@@ -355,7 +355,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public void Set(string url, string method, CfrPostData postData, System.Collections.Generic.List<string[]> headerMap) {
-            var call = new CfxRequestSetRenderProcessCall();
+            var call = new CfxRequestSetRemoteCall();
             call.@this = RemotePtr.ptr;
             call.url = url;
             call.method = method;

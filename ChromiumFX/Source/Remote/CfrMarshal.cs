@@ -48,7 +48,7 @@ namespace Chromium.Remote {
             /// Call Marshal.AllocHGlobal in the target process.
             /// </summary>
             public static RemotePtr AllocHGlobal(int cb) {
-                var call = new CfrMarshalAllocHGlobalRenderProcessCall();
+                var call = new CfrMarshalAllocHGlobalRemoteCall();
                 call.cb = cb;
                 call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                 return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);
@@ -58,7 +58,7 @@ namespace Chromium.Remote {
             /// Call Marshal.FreeHGlobal in the target process.
             /// </summary>
             public static void FreeHGlobal(RemotePtr hglobal) {
-                var call = new CfrMarshalFreeHGlobalRenderProcessCall();
+                var call = new CfrMarshalFreeHGlobalRemoteCall();
                 call.hglobal = hglobal.ptr;
                 call.RequestExecution(hglobal.connection);
             }
@@ -67,7 +67,7 @@ namespace Chromium.Remote {
             /// Call Marshal.Copy in the target process.
             /// </summary>
             public static void Copy(byte[] source, int startIndex, RemotePtr destination, int length) {
-                var call = new CfrMarshalCopyToNativeRenderProcessCall();
+                var call = new CfrMarshalCopyToNativeRemoteCall();
                 call.source = source;
                 call.startIndex = startIndex;
                 call.destination = destination.ptr;
@@ -79,7 +79,7 @@ namespace Chromium.Remote {
             /// Call Marshal.Copy in the target process.
             /// </summary>
             public static void Copy(RemotePtr source, byte[] destination, int startIndex, int length) {
-                var call = new CfrMarshalCopyToManagedRenderProcessCall();
+                var call = new CfrMarshalCopyToManagedRemoteCall();
                 call.source = source.ptr;
                 call.destination = destination;
                 call.startIndex = startIndex;
@@ -90,12 +90,12 @@ namespace Chromium.Remote {
         }
     }
     
-    internal class CfrMarshalAllocHGlobalRenderProcessCall : RenderProcessCall {
+    internal class CfrMarshalAllocHGlobalRemoteCall : RemoteCall {
 
         internal int cb;
         internal IntPtr __retval;
 
-        internal CfrMarshalAllocHGlobalRenderProcessCall() : base(RemoteCallId.CfrMarshalAllocHGlobalRenderProcessCall) { }
+        internal CfrMarshalAllocHGlobalRemoteCall() : base(RemoteCallId.CfrMarshalAllocHGlobalRemoteCall) { }
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(cb);
@@ -119,11 +119,11 @@ namespace Chromium.Remote {
     }
 
 
-    internal class CfrMarshalFreeHGlobalRenderProcessCall : RenderProcessCall {
+    internal class CfrMarshalFreeHGlobalRemoteCall : RemoteCall {
 
         internal IntPtr hglobal;
 
-        internal CfrMarshalFreeHGlobalRenderProcessCall() : base(RemoteCallId.CfrMarshalFreeHGlobalRenderProcessCall) { }
+        internal CfrMarshalFreeHGlobalRemoteCall() : base(RemoteCallId.CfrMarshalFreeHGlobalRemoteCall) { }
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(hglobal);
@@ -139,14 +139,14 @@ namespace Chromium.Remote {
     }
 
 
-    internal class CfrMarshalCopyToNativeRenderProcessCall : RenderProcessCall {
+    internal class CfrMarshalCopyToNativeRemoteCall : RemoteCall {
 
         internal byte[] source;
         internal int startIndex;
         internal IntPtr destination;
         internal int length;
 
-        internal CfrMarshalCopyToNativeRenderProcessCall() : base(RemoteCallId.CfrMarshalCopyToNativeRenderProcessCall) { }
+        internal CfrMarshalCopyToNativeRemoteCall() : base(RemoteCallId.CfrMarshalCopyToNativeRemoteCall) { }
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(source);
@@ -167,14 +167,14 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfrMarshalCopyToManagedRenderProcessCall : RenderProcessCall {
+    internal class CfrMarshalCopyToManagedRemoteCall : RemoteCall {
 
         internal IntPtr source;
         internal byte[] destination;
         internal int startIndex;
         internal int length;
 
-        internal CfrMarshalCopyToManagedRenderProcessCall() : base(RemoteCallId.CfrMarshalCopyToManagedRenderProcessCall) { }
+        internal CfrMarshalCopyToManagedRemoteCall() : base(RemoteCallId.CfrMarshalCopyToManagedRemoteCall) { }
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(source);

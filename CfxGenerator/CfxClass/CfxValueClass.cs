@@ -243,7 +243,7 @@ public class CfxValueClass : CfxClass {
         EmitRemoteClassWrapperFunction(b);
 
         b.BeginFunction("CreateRemote", "RemotePtr", "", "internal static");
-        b.AppendLine("var call = new {0}CtorRenderProcessCall();", ClassName);
+        b.AppendLine("var call = new {0}CtorRemoteCall();", ClassName);
         b.AppendLine("call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);");
         b.AppendLine("return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);");
         b.EndBlock();
@@ -267,7 +267,7 @@ public class CfxValueClass : CfxClass {
                 b.BeginBlock("public {1} {0}", CSharp.Escape(sm.PublicName), sm.MemberType.RemoteSymbol);
                 b.BeginBlock("get");
                 b.BeginIf("!m_{0}_fetched", sm.PublicName);
-                b.AppendLine("var call = new {0}Get{1}RenderProcessCall();", ClassName, sm.PublicName);
+                b.AppendLine("var call = new {0}Get{1}RemoteCall();", ClassName, sm.PublicName);
                 b.AppendLine("call.sender = RemotePtr.ptr;");
                 b.AppendLine("call.RequestExecution(RemotePtr.connection);");
                 b.AppendLine("m_{0} = {1};", sm.PublicName, sm.MemberType.RemoteWrapExpression("call.value"));
@@ -276,7 +276,7 @@ public class CfxValueClass : CfxClass {
                 b.AppendLine("return m_{0};", sm.PublicName);
                 b.EndBlock();
                 b.BeginBlock("set");
-                b.AppendLine("var call = new {0}Set{1}RenderProcessCall();", ClassName, sm.PublicName);
+                b.AppendLine("var call = new {0}Set{1}RemoteCall();", ClassName, sm.PublicName);
                 b.AppendLine("call.sender = RemotePtr.ptr;");
                 b.AppendLine("call.value = {0};", sm.MemberType.RemoteUnwrapExpression("value"));
                 b.AppendLine("call.RequestExecution(RemotePtr.connection);");

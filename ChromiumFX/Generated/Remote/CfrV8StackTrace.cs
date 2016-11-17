@@ -71,7 +71,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public static CfrV8StackTrace GetCurrent(int frameLimit) {
-            var call = new CfxV8StackTraceGetCurrentRenderProcessCall();
+            var call = new CfxV8StackTraceGetCurrentRemoteCall();
             call.frameLimit = frameLimit;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrV8StackTrace.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
@@ -91,7 +91,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsValid {
             get {
-                var call = new CfxV8StackTraceIsValidRenderProcessCall();
+                var call = new CfxV8StackTraceIsValidRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -107,7 +107,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public int FrameCount {
             get {
-                var call = new CfxV8StackTraceGetFrameCountRenderProcessCall();
+                var call = new CfxV8StackTraceGetFrameCountRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -122,7 +122,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public CfrV8StackFrame GetFrame(int index) {
-            var call = new CfxV8StackTraceGetFrameRenderProcessCall();
+            var call = new CfxV8StackTraceGetFrameRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
             call.RequestExecution(RemotePtr.connection);

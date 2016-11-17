@@ -51,7 +51,7 @@ namespace Chromium.Remote {
         /// from within the render process.
         /// </summary>
         public static int ExecuteProcess(CfrApp application) {
-            var call = new CfxRuntimeExecuteProcessRenderProcessCall();
+            var call = new CfxRuntimeExecuteProcessRemoteCall();
             call.application = CfrObject.Unwrap(application).ptr;
             // Looks like this almost never returns with a value
             // from the call into the render process. Probably the
@@ -65,6 +65,35 @@ namespace Chromium.Remote {
             } catch(CfxException) {
                 return -2;
             }
+        }
+    }
+
+    internal class CfxRuntimeExecuteProcessRemoteCall : RemoteCall {
+
+        internal CfxRuntimeExecuteProcessRemoteCall()
+            : base(RemoteCallId.CfxRuntimeExecuteProcessRemoteCall) { }
+
+        internal IntPtr application;
+        internal int __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(application);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out application);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            __retval = CfxRuntime.ExecuteProcessInternal((CfxApp)RemoteProxy.Unwrap(application, null));
         }
     }
 }

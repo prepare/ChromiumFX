@@ -66,7 +66,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
         /// </remarks>
         public static CfrProcessMessage Create(string name) {
-            var call = new CfxProcessMessageCreateRenderProcessCall();
+            var call = new CfxProcessMessageCreateRemoteCall();
             call.name = name;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrProcessMessage.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
@@ -85,7 +85,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsValid {
             get {
-                var call = new CfxProcessMessageIsValidRenderProcessCall();
+                var call = new CfxProcessMessageIsValidRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -102,7 +102,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsReadOnly {
             get {
-                var call = new CfxProcessMessageIsReadOnlyRenderProcessCall();
+                var call = new CfxProcessMessageIsReadOnlyRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -118,7 +118,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public string Name {
             get {
-                var call = new CfxProcessMessageGetNameRenderProcessCall();
+                var call = new CfxProcessMessageGetNameRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -134,7 +134,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrListValue ArgumentList {
             get {
-                var call = new CfxProcessMessageGetArgumentListRenderProcessCall();
+                var call = new CfxProcessMessageGetArgumentListRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return CfrListValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
@@ -149,7 +149,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
         /// </remarks>
         public CfrProcessMessage Copy() {
-            var call = new CfxProcessMessageCopyRenderProcessCall();
+            var call = new CfxProcessMessageCopyRemoteCall();
             call.@this = RemotePtr.ptr;
             call.RequestExecution(RemotePtr.connection);
             return CfrProcessMessage.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));

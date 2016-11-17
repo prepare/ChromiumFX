@@ -52,9 +52,10 @@ public class GeneratorConfig {
             var files = Directory.GetFiles(Path.Combine("ChromiumFX", "Source", "Remote"));
             foreach(var f in files) {
                 var content = File.ReadAllText(f);
-                var mm = Regex.Matches(content, @"class\s+(\w+)\s*:\s*(?:Browser|Render)ProcessCall");
+                var mm = Regex.Matches(content, @"class\s+(\w+)\s*:\s*(?:BrowserProcessCall|RemoteCall)");
                 foreach(Match m in mm) {
-                    callIds.Add(m.Groups[1].Value);
+                    if(m.Groups[1].Value != "BrowserProcessCall")
+                        callIds.Add(m.Groups[1].Value);
                 }
             }
             return callIds.ToArray();

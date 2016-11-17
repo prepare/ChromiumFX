@@ -34,10 +34,10 @@
 using System;
 
 namespace Chromium.Remote {
-    internal class CfxRuntimeCurrentlyOnRenderProcessCall : RenderProcessCall {
+    internal class CfxRuntimeCurrentlyOnRemoteCall : RemoteCall {
 
-        internal CfxRuntimeCurrentlyOnRenderProcessCall()
-            : base(RemoteCallId.CfxRuntimeCurrentlyOnRenderProcessCall) {}
+        internal CfxRuntimeCurrentlyOnRemoteCall()
+            : base(RemoteCallId.CfxRuntimeCurrentlyOnRemoteCall) {}
 
         internal int threadId;
         internal bool __retval;
@@ -63,10 +63,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxRuntimeFormatUrlForSecurityDisplayRenderProcessCall : RenderProcessCall {
+    internal class CfxRuntimeFormatUrlForSecurityDisplayRemoteCall : RemoteCall {
 
-        internal CfxRuntimeFormatUrlForSecurityDisplayRenderProcessCall()
-            : base(RemoteCallId.CfxRuntimeFormatUrlForSecurityDisplayRenderProcessCall) {}
+        internal CfxRuntimeFormatUrlForSecurityDisplayRemoteCall()
+            : base(RemoteCallId.CfxRuntimeFormatUrlForSecurityDisplayRemoteCall) {}
 
         internal string originUrl;
         internal string __retval;
@@ -94,10 +94,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxRuntimeIsCertStatusErrorRenderProcessCall : RenderProcessCall {
+    internal class CfxRuntimeIsCertStatusErrorRemoteCall : RemoteCall {
 
-        internal CfxRuntimeIsCertStatusErrorRenderProcessCall()
-            : base(RemoteCallId.CfxRuntimeIsCertStatusErrorRenderProcessCall) {}
+        internal CfxRuntimeIsCertStatusErrorRemoteCall()
+            : base(RemoteCallId.CfxRuntimeIsCertStatusErrorRemoteCall) {}
 
         internal int status;
         internal bool __retval;
@@ -123,10 +123,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxRuntimeIsCertStatusMinorErrorRenderProcessCall : RenderProcessCall {
+    internal class CfxRuntimeIsCertStatusMinorErrorRemoteCall : RemoteCall {
 
-        internal CfxRuntimeIsCertStatusMinorErrorRenderProcessCall()
-            : base(RemoteCallId.CfxRuntimeIsCertStatusMinorErrorRenderProcessCall) {}
+        internal CfxRuntimeIsCertStatusMinorErrorRemoteCall()
+            : base(RemoteCallId.CfxRuntimeIsCertStatusMinorErrorRemoteCall) {}
 
         internal int status;
         internal bool __retval;
@@ -152,10 +152,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxRuntimePostDelayedTaskRenderProcessCall : RenderProcessCall {
+    internal class CfxRuntimePostDelayedTaskRemoteCall : RemoteCall {
 
-        internal CfxRuntimePostDelayedTaskRenderProcessCall()
-            : base(RemoteCallId.CfxRuntimePostDelayedTaskRenderProcessCall) {}
+        internal CfxRuntimePostDelayedTaskRemoteCall()
+            : base(RemoteCallId.CfxRuntimePostDelayedTaskRemoteCall) {}
 
         internal int threadId;
         internal IntPtr task;
@@ -187,10 +187,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxRuntimePostTaskRenderProcessCall : RenderProcessCall {
+    internal class CfxRuntimePostTaskRemoteCall : RemoteCall {
 
-        internal CfxRuntimePostTaskRenderProcessCall()
-            : base(RemoteCallId.CfxRuntimePostTaskRenderProcessCall) {}
+        internal CfxRuntimePostTaskRemoteCall()
+            : base(RemoteCallId.CfxRuntimePostTaskRemoteCall) {}
 
         internal int threadId;
         internal IntPtr task;
@@ -219,10 +219,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxRuntimeRegisterExtensionRenderProcessCall : RenderProcessCall {
+    internal class CfxRuntimeRegisterExtensionRemoteCall : RemoteCall {
 
-        internal CfxRuntimeRegisterExtensionRenderProcessCall()
-            : base(RemoteCallId.CfxRuntimeRegisterExtensionRenderProcessCall) {}
+        internal CfxRuntimeRegisterExtensionRemoteCall()
+            : base(RemoteCallId.CfxRuntimeRegisterExtensionRemoteCall) {}
 
         internal string extensionName;
         internal string javascriptCode;

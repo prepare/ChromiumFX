@@ -243,7 +243,7 @@ public class CefCallbackFunction  {
             if(Parent.ClassBuilder.Category == StructCategory.ApiCallbacks) {
                 return Parent.ClassName + RemoteCallClassName + "BrowserProcessCall";
             } else {
-                return Parent.ClassName + RemoteCallClassName + "RenderProcessCall";
+                return Parent.ClassName + RemoteCallClassName + "RemoteCall";
             }
         }
     }

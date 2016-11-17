@@ -35,10 +35,10 @@ using System;
 
 namespace Chromium.Remote {
 
-    internal class CfxCommandLineCreateRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineCreateRemoteCall : RemoteCall {
 
-        internal CfxCommandLineCreateRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineCreateRenderProcessCall) {}
+        internal CfxCommandLineCreateRemoteCall()
+            : base(RemoteCallId.CfxCommandLineCreateRemoteCall) {}
 
         internal IntPtr __retval;
 
@@ -55,10 +55,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineGetGlobalRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineGetGlobalRemoteCall : RemoteCall {
 
-        internal CfxCommandLineGetGlobalRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineGetGlobalRenderProcessCall) {}
+        internal CfxCommandLineGetGlobalRemoteCall()
+            : base(RemoteCallId.CfxCommandLineGetGlobalRemoteCall) {}
 
         internal IntPtr __retval;
 
@@ -75,10 +75,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineIsValidRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineIsValidRemoteCall : RemoteCall {
 
-        internal CfxCommandLineIsValidRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineIsValidRenderProcessCall) {}
+        internal CfxCommandLineIsValidRemoteCall()
+            : base(RemoteCallId.CfxCommandLineIsValidRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -104,10 +104,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineIsReadOnlyRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineIsReadOnlyRemoteCall : RemoteCall {
 
-        internal CfxCommandLineIsReadOnlyRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineIsReadOnlyRenderProcessCall) {}
+        internal CfxCommandLineIsReadOnlyRemoteCall()
+            : base(RemoteCallId.CfxCommandLineIsReadOnlyRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -133,10 +133,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineCopyRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineCopyRemoteCall : RemoteCall {
 
-        internal CfxCommandLineCopyRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineCopyRenderProcessCall) {}
+        internal CfxCommandLineCopyRemoteCall()
+            : base(RemoteCallId.CfxCommandLineCopyRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr __retval;
@@ -162,10 +162,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineInitFromArgvRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineInitFromArgvRemoteCall : RemoteCall {
 
-        internal CfxCommandLineInitFromArgvRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineInitFromArgvRenderProcessCall) {}
+        internal CfxCommandLineInitFromArgvRemoteCall()
+            : base(RemoteCallId.CfxCommandLineInitFromArgvRemoteCall) {}
 
         internal IntPtr @this;
         internal int argc;
@@ -188,10 +188,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineInitFromStringRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineInitFromStringRemoteCall : RemoteCall {
 
-        internal CfxCommandLineInitFromStringRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineInitFromStringRenderProcessCall) {}
+        internal CfxCommandLineInitFromStringRemoteCall()
+            : base(RemoteCallId.CfxCommandLineInitFromStringRemoteCall) {}
 
         internal IntPtr @this;
         internal string commandLine;
@@ -213,10 +213,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineResetRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineResetRemoteCall : RemoteCall {
 
-        internal CfxCommandLineResetRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineResetRenderProcessCall) {}
+        internal CfxCommandLineResetRemoteCall()
+            : base(RemoteCallId.CfxCommandLineResetRemoteCall) {}
 
         internal IntPtr @this;
 
@@ -233,10 +233,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineGetArgvRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineGetArgvRemoteCall : RemoteCall {
 
-        internal CfxCommandLineGetArgvRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineGetArgvRenderProcessCall) {}
+        internal CfxCommandLineGetArgvRemoteCall()
+            : base(RemoteCallId.CfxCommandLineGetArgvRemoteCall) {}
 
         internal IntPtr @this;
         internal System.Collections.Generic.List<string> __retval;
@@ -266,10 +266,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineGetCommandLineStringRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineGetCommandLineStringRemoteCall : RemoteCall {
 
-        internal CfxCommandLineGetCommandLineStringRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineGetCommandLineStringRenderProcessCall) {}
+        internal CfxCommandLineGetCommandLineStringRemoteCall()
+            : base(RemoteCallId.CfxCommandLineGetCommandLineStringRemoteCall) {}
 
         internal IntPtr @this;
         internal string __retval;
@@ -295,10 +295,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineGetProgramRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineGetProgramRemoteCall : RemoteCall {
 
-        internal CfxCommandLineGetProgramRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineGetProgramRenderProcessCall) {}
+        internal CfxCommandLineGetProgramRemoteCall()
+            : base(RemoteCallId.CfxCommandLineGetProgramRemoteCall) {}
 
         internal IntPtr @this;
         internal string __retval;
@@ -324,10 +324,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineSetProgramRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineSetProgramRemoteCall : RemoteCall {
 
-        internal CfxCommandLineSetProgramRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineSetProgramRenderProcessCall) {}
+        internal CfxCommandLineSetProgramRemoteCall()
+            : base(RemoteCallId.CfxCommandLineSetProgramRemoteCall) {}
 
         internal IntPtr @this;
         internal string value;
@@ -349,10 +349,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineHasSwitchesRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineHasSwitchesRemoteCall : RemoteCall {
 
-        internal CfxCommandLineHasSwitchesRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineHasSwitchesRenderProcessCall) {}
+        internal CfxCommandLineHasSwitchesRemoteCall()
+            : base(RemoteCallId.CfxCommandLineHasSwitchesRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -378,10 +378,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineHasSwitchRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineHasSwitchRemoteCall : RemoteCall {
 
-        internal CfxCommandLineHasSwitchRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineHasSwitchRenderProcessCall) {}
+        internal CfxCommandLineHasSwitchRemoteCall()
+            : base(RemoteCallId.CfxCommandLineHasSwitchRemoteCall) {}
 
         internal IntPtr @this;
         internal string name;
@@ -412,10 +412,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineGetSwitchValueRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineGetSwitchValueRemoteCall : RemoteCall {
 
-        internal CfxCommandLineGetSwitchValueRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineGetSwitchValueRenderProcessCall) {}
+        internal CfxCommandLineGetSwitchValueRemoteCall()
+            : base(RemoteCallId.CfxCommandLineGetSwitchValueRemoteCall) {}
 
         internal IntPtr @this;
         internal string name;
@@ -446,10 +446,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineGetSwitchesRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineGetSwitchesRemoteCall : RemoteCall {
 
-        internal CfxCommandLineGetSwitchesRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineGetSwitchesRenderProcessCall) {}
+        internal CfxCommandLineGetSwitchesRemoteCall()
+            : base(RemoteCallId.CfxCommandLineGetSwitchesRemoteCall) {}
 
         internal IntPtr @this;
         internal System.Collections.Generic.List<string[]> __retval;
@@ -479,10 +479,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineAppendSwitchRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineAppendSwitchRemoteCall : RemoteCall {
 
-        internal CfxCommandLineAppendSwitchRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineAppendSwitchRenderProcessCall) {}
+        internal CfxCommandLineAppendSwitchRemoteCall()
+            : base(RemoteCallId.CfxCommandLineAppendSwitchRemoteCall) {}
 
         internal IntPtr @this;
         internal string name;
@@ -504,10 +504,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineAppendSwitchWithValueRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineAppendSwitchWithValueRemoteCall : RemoteCall {
 
-        internal CfxCommandLineAppendSwitchWithValueRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineAppendSwitchWithValueRenderProcessCall) {}
+        internal CfxCommandLineAppendSwitchWithValueRemoteCall()
+            : base(RemoteCallId.CfxCommandLineAppendSwitchWithValueRemoteCall) {}
 
         internal IntPtr @this;
         internal string name;
@@ -534,10 +534,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineHasArgumentsRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineHasArgumentsRemoteCall : RemoteCall {
 
-        internal CfxCommandLineHasArgumentsRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineHasArgumentsRenderProcessCall) {}
+        internal CfxCommandLineHasArgumentsRemoteCall()
+            : base(RemoteCallId.CfxCommandLineHasArgumentsRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -563,10 +563,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineGetArgumentsRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineGetArgumentsRemoteCall : RemoteCall {
 
-        internal CfxCommandLineGetArgumentsRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineGetArgumentsRenderProcessCall) {}
+        internal CfxCommandLineGetArgumentsRemoteCall()
+            : base(RemoteCallId.CfxCommandLineGetArgumentsRemoteCall) {}
 
         internal IntPtr @this;
         internal System.Collections.Generic.List<string> __retval;
@@ -596,10 +596,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLineAppendArgumentRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLineAppendArgumentRemoteCall : RemoteCall {
 
-        internal CfxCommandLineAppendArgumentRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLineAppendArgumentRenderProcessCall) {}
+        internal CfxCommandLineAppendArgumentRemoteCall()
+            : base(RemoteCallId.CfxCommandLineAppendArgumentRemoteCall) {}
 
         internal IntPtr @this;
         internal string argument;
@@ -621,10 +621,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxCommandLinePrependWrapperRenderProcessCall : RenderProcessCall {
+    internal class CfxCommandLinePrependWrapperRemoteCall : RemoteCall {
 
-        internal CfxCommandLinePrependWrapperRenderProcessCall()
-            : base(RemoteCallId.CfxCommandLinePrependWrapperRenderProcessCall) {}
+        internal CfxCommandLinePrependWrapperRemoteCall()
+            : base(RemoteCallId.CfxCommandLinePrependWrapperRemoteCall) {}
 
         internal IntPtr @this;
         internal string wrapper;

@@ -73,7 +73,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsValid {
             get {
-                var call = new CfxFrameIsValidRenderProcessCall();
+                var call = new CfxFrameIsValidRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -89,7 +89,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsMain {
             get {
-                var call = new CfxFrameIsMainRenderProcessCall();
+                var call = new CfxFrameIsMainRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -105,7 +105,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsFocused {
             get {
-                var call = new CfxFrameIsFocusedRenderProcessCall();
+                var call = new CfxFrameIsFocusedRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -125,7 +125,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public string Name {
             get {
-                var call = new CfxFrameGetNameRenderProcessCall();
+                var call = new CfxFrameGetNameRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -142,7 +142,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public long Identifier {
             get {
-                var call = new CfxFrameGetIdentifierRenderProcessCall();
+                var call = new CfxFrameGetIdentifierRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -159,7 +159,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrFrame Parent {
             get {
-                var call = new CfxFrameGetParentRenderProcessCall();
+                var call = new CfxFrameGetParentRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return CfrFrame.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
@@ -175,7 +175,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public string Url {
             get {
-                var call = new CfxFrameGetUrlRenderProcessCall();
+                var call = new CfxFrameGetUrlRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -191,7 +191,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrBrowser Browser {
             get {
-                var call = new CfxFrameGetBrowserRenderProcessCall();
+                var call = new CfxFrameGetBrowserRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return CfrBrowser.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
@@ -208,7 +208,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrV8Context V8Context {
             get {
-                var call = new CfxFrameGetV8ContextRenderProcessCall();
+                var call = new CfxFrameGetV8ContextRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return CfrV8Context.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
@@ -223,7 +223,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
         public void Undo() {
-            var call = new CfxFrameUndoRenderProcessCall();
+            var call = new CfxFrameUndoRemoteCall();
             call.@this = RemotePtr.ptr;
             call.RequestExecution(RemotePtr.connection);
         }
@@ -236,7 +236,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
         public void Redo() {
-            var call = new CfxFrameRedoRenderProcessCall();
+            var call = new CfxFrameRedoRemoteCall();
             call.@this = RemotePtr.ptr;
             call.RequestExecution(RemotePtr.connection);
         }
@@ -249,7 +249,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
         public void Cut() {
-            var call = new CfxFrameCutRenderProcessCall();
+            var call = new CfxFrameCutRemoteCall();
             call.@this = RemotePtr.ptr;
             call.RequestExecution(RemotePtr.connection);
         }
@@ -262,7 +262,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
         public void Copy() {
-            var call = new CfxFrameCopyRenderProcessCall();
+            var call = new CfxFrameCopyRemoteCall();
             call.@this = RemotePtr.ptr;
             call.RequestExecution(RemotePtr.connection);
         }
@@ -275,7 +275,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
         public void Paste() {
-            var call = new CfxFramePasteRenderProcessCall();
+            var call = new CfxFramePasteRemoteCall();
             call.@this = RemotePtr.ptr;
             call.RequestExecution(RemotePtr.connection);
         }
@@ -288,7 +288,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
         public void Delete() {
-            var call = new CfxFrameDelRenderProcessCall();
+            var call = new CfxFrameDelRemoteCall();
             call.@this = RemotePtr.ptr;
             call.RequestExecution(RemotePtr.connection);
         }
@@ -301,7 +301,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
         public void SelectAll() {
-            var call = new CfxFrameSelectAllRenderProcessCall();
+            var call = new CfxFrameSelectAllRemoteCall();
             call.@this = RemotePtr.ptr;
             call.RequestExecution(RemotePtr.connection);
         }
@@ -315,7 +315,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
         public void GetSource(CfrStringVisitor visitor) {
-            var call = new CfxFrameGetSourceRenderProcessCall();
+            var call = new CfxFrameGetSourceRemoteCall();
             call.@this = RemotePtr.ptr;
             call.visitor = CfrObject.Unwrap(visitor).ptr;
             call.RequestExecution(RemotePtr.connection);
@@ -330,7 +330,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
         public void GetText(CfrStringVisitor visitor) {
-            var call = new CfxFrameGetTextRenderProcessCall();
+            var call = new CfxFrameGetTextRemoteCall();
             call.@this = RemotePtr.ptr;
             call.visitor = CfrObject.Unwrap(visitor).ptr;
             call.RequestExecution(RemotePtr.connection);
@@ -344,7 +344,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
         public void LoadRequest(CfrRequest request) {
-            var call = new CfxFrameLoadRequestRenderProcessCall();
+            var call = new CfxFrameLoadRequestRemoteCall();
             call.@this = RemotePtr.ptr;
             call.request = CfrObject.Unwrap(request).ptr;
             call.RequestExecution(RemotePtr.connection);
@@ -358,7 +358,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
         public void LoadUrl(string url) {
-            var call = new CfxFrameLoadUrlRenderProcessCall();
+            var call = new CfxFrameLoadUrlRemoteCall();
             call.@this = RemotePtr.ptr;
             call.url = url;
             call.RequestExecution(RemotePtr.connection);
@@ -374,7 +374,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
         public void LoadString(string stringVal, string url) {
-            var call = new CfxFrameLoadStringRenderProcessCall();
+            var call = new CfxFrameLoadStringRemoteCall();
             call.@this = RemotePtr.ptr;
             call.stringVal = stringVal;
             call.url = url;
@@ -393,7 +393,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
         public void ExecuteJavaScript(string code, string scriptUrl, int startLine) {
-            var call = new CfxFrameExecuteJavaScriptRenderProcessCall();
+            var call = new CfxFrameExecuteJavaScriptRemoteCall();
             call.@this = RemotePtr.ptr;
             call.code = code;
             call.scriptUrl = scriptUrl;
@@ -410,7 +410,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
         /// </remarks>
         public void VisitDom(CfrDomVisitor visitor) {
-            var call = new CfxFrameVisitDomRenderProcessCall();
+            var call = new CfxFrameVisitDomRemoteCall();
             call.@this = RemotePtr.ptr;
             call.visitor = CfrObject.Unwrap(visitor).ptr;
             call.RequestExecution(RemotePtr.connection);

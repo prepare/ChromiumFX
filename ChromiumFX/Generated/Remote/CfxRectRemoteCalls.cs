@@ -35,10 +35,10 @@ using System;
 
 namespace Chromium.Remote {
 
-    internal class CfxRectCtorRenderProcessCall : RenderProcessCall {
+    internal class CfxRectCtorRemoteCall : RemoteCall {
 
-        internal CfxRectCtorRenderProcessCall()
-            : base(RemoteCallId.CfxRectCtorRenderProcessCall) {}
+        internal CfxRectCtorRemoteCall()
+            : base(RemoteCallId.CfxRectCtorRemoteCall) {}
 
         internal IntPtr __retval;
         protected override void WriteReturn(StreamHandler h) { h.Write(__retval); }
@@ -49,10 +49,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxRectGetXRenderProcessCall : RenderProcessCall {
+    internal class CfxRectGetXRemoteCall : RemoteCall {
 
-        internal CfxRectGetXRenderProcessCall()
-            : base(RemoteCallId.CfxRectGetXRenderProcessCall) {}
+        internal CfxRectGetXRemoteCall()
+            : base(RemoteCallId.CfxRectGetXRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -64,10 +64,10 @@ namespace Chromium.Remote {
             value = sender.X;
         }
     }
-    internal class CfxRectSetXRenderProcessCall : RenderProcessCall {
+    internal class CfxRectSetXRemoteCall : RemoteCall {
 
-        internal CfxRectSetXRenderProcessCall()
-            : base(RemoteCallId.CfxRectSetXRenderProcessCall) {}
+        internal CfxRectSetXRemoteCall()
+            : base(RemoteCallId.CfxRectSetXRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
@@ -77,10 +77,10 @@ namespace Chromium.Remote {
             sender.X = value;
         }
     }
-    internal class CfxRectGetYRenderProcessCall : RenderProcessCall {
+    internal class CfxRectGetYRemoteCall : RemoteCall {
 
-        internal CfxRectGetYRenderProcessCall()
-            : base(RemoteCallId.CfxRectGetYRenderProcessCall) {}
+        internal CfxRectGetYRemoteCall()
+            : base(RemoteCallId.CfxRectGetYRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -92,10 +92,10 @@ namespace Chromium.Remote {
             value = sender.Y;
         }
     }
-    internal class CfxRectSetYRenderProcessCall : RenderProcessCall {
+    internal class CfxRectSetYRemoteCall : RemoteCall {
 
-        internal CfxRectSetYRenderProcessCall()
-            : base(RemoteCallId.CfxRectSetYRenderProcessCall) {}
+        internal CfxRectSetYRemoteCall()
+            : base(RemoteCallId.CfxRectSetYRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
@@ -105,10 +105,10 @@ namespace Chromium.Remote {
             sender.Y = value;
         }
     }
-    internal class CfxRectGetWidthRenderProcessCall : RenderProcessCall {
+    internal class CfxRectGetWidthRemoteCall : RemoteCall {
 
-        internal CfxRectGetWidthRenderProcessCall()
-            : base(RemoteCallId.CfxRectGetWidthRenderProcessCall) {}
+        internal CfxRectGetWidthRemoteCall()
+            : base(RemoteCallId.CfxRectGetWidthRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -120,10 +120,10 @@ namespace Chromium.Remote {
             value = sender.Width;
         }
     }
-    internal class CfxRectSetWidthRenderProcessCall : RenderProcessCall {
+    internal class CfxRectSetWidthRemoteCall : RemoteCall {
 
-        internal CfxRectSetWidthRenderProcessCall()
-            : base(RemoteCallId.CfxRectSetWidthRenderProcessCall) {}
+        internal CfxRectSetWidthRemoteCall()
+            : base(RemoteCallId.CfxRectSetWidthRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
@@ -133,10 +133,10 @@ namespace Chromium.Remote {
             sender.Width = value;
         }
     }
-    internal class CfxRectGetHeightRenderProcessCall : RenderProcessCall {
+    internal class CfxRectGetHeightRemoteCall : RemoteCall {
 
-        internal CfxRectGetHeightRenderProcessCall()
-            : base(RemoteCallId.CfxRectGetHeightRenderProcessCall) {}
+        internal CfxRectGetHeightRemoteCall()
+            : base(RemoteCallId.CfxRectGetHeightRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -148,10 +148,10 @@ namespace Chromium.Remote {
             value = sender.Height;
         }
     }
-    internal class CfxRectSetHeightRenderProcessCall : RenderProcessCall {
+    internal class CfxRectSetHeightRemoteCall : RemoteCall {
 
-        internal CfxRectSetHeightRenderProcessCall()
-            : base(RemoteCallId.CfxRectSetHeightRenderProcessCall) {}
+        internal CfxRectSetHeightRemoteCall()
+            : base(RemoteCallId.CfxRectSetHeightRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }

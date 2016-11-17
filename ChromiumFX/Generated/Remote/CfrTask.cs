@@ -65,7 +65,7 @@ namespace Chromium.Remote {
 
 
         internal static RemotePtr CreateRemote() {
-            var call = new CfxTaskCtorRenderProcessCall();
+            var call = new CfxTaskCtorRemoteCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);
         }
@@ -93,7 +93,7 @@ namespace Chromium.Remote {
         public event CfrEventHandler Execute {
             add {
                 if(m_Execute == null) {
-                    var call = new CfxTaskExecuteActivateRenderProcessCall();
+                    var call = new CfxTaskExecuteActivateRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                 }
@@ -102,7 +102,7 @@ namespace Chromium.Remote {
             remove {
                 m_Execute -= value;
                 if(m_Execute == null) {
-                    var call = new CfxTaskExecuteDeactivateRenderProcessCall();
+                    var call = new CfxTaskExecuteDeactivateRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                 }

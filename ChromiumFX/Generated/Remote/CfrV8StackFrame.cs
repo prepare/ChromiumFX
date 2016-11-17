@@ -76,7 +76,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsValid {
             get {
-                var call = new CfxV8StackFrameIsValidRenderProcessCall();
+                var call = new CfxV8StackFrameIsValidRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -92,7 +92,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public string ScriptName {
             get {
-                var call = new CfxV8StackFrameGetScriptNameRenderProcessCall();
+                var call = new CfxV8StackFrameGetScriptNameRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -110,7 +110,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public string ScriptNameOrSourceUrl {
             get {
-                var call = new CfxV8StackFrameGetScriptNameOrSourceUrlRenderProcessCall();
+                var call = new CfxV8StackFrameGetScriptNameOrSourceUrlRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -126,7 +126,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public string FunctionName {
             get {
-                var call = new CfxV8StackFrameGetFunctionNameRenderProcessCall();
+                var call = new CfxV8StackFrameGetFunctionNameRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -142,7 +142,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public int LineNumber {
             get {
-                var call = new CfxV8StackFrameGetLineNumberRenderProcessCall();
+                var call = new CfxV8StackFrameGetLineNumberRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -159,7 +159,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public int Column {
             get {
-                var call = new CfxV8StackFrameGetColumnRenderProcessCall();
+                var call = new CfxV8StackFrameGetColumnRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -175,7 +175,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsEval {
             get {
-                var call = new CfxV8StackFrameIsEvalRenderProcessCall();
+                var call = new CfxV8StackFrameIsEvalRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -191,7 +191,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsConstructor {
             get {
-                var call = new CfxV8StackFrameIsConstructorRenderProcessCall();
+                var call = new CfxV8StackFrameIsConstructorRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;

@@ -70,7 +70,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public static CfrV8Context GetCurrentContext() {
-            var call = new CfxV8ContextGetCurrentContextRenderProcessCall();
+            var call = new CfxV8ContextGetCurrentContextRemoteCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrV8Context.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
@@ -83,7 +83,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public static CfrV8Context GetEnteredContext() {
-            var call = new CfxV8ContextGetEnteredContextRenderProcessCall();
+            var call = new CfxV8ContextGetEnteredContextRemoteCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrV8Context.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
@@ -96,7 +96,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public static bool InContext() {
-            var call = new CfxV8ContextInContextRenderProcessCall();
+            var call = new CfxV8ContextInContextRemoteCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return call.__retval;
         }
@@ -115,7 +115,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrTaskRunner TaskRunner {
             get {
-                var call = new CfxV8ContextGetTaskRunnerRenderProcessCall();
+                var call = new CfxV8ContextGetTaskRunnerRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return CfrTaskRunner.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
@@ -133,7 +133,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsValid {
             get {
-                var call = new CfxV8ContextIsValidRenderProcessCall();
+                var call = new CfxV8ContextIsValidRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -150,7 +150,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrBrowser Browser {
             get {
-                var call = new CfxV8ContextGetBrowserRenderProcessCall();
+                var call = new CfxV8ContextGetBrowserRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return CfrBrowser.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
@@ -167,7 +167,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrFrame Frame {
             get {
-                var call = new CfxV8ContextGetFrameRenderProcessCall();
+                var call = new CfxV8ContextGetFrameRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return CfrFrame.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
@@ -184,7 +184,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrV8Value Global {
             get {
-                var call = new CfxV8ContextGetGlobalRenderProcessCall();
+                var call = new CfxV8ContextGetGlobalRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return CfrV8Value.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
@@ -203,7 +203,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public bool Enter() {
-            var call = new CfxV8ContextEnterRenderProcessCall();
+            var call = new CfxV8ContextEnterRemoteCall();
             call.@this = RemotePtr.ptr;
             call.RequestExecution(RemotePtr.connection);
             return call.__retval;
@@ -218,7 +218,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public bool Exit() {
-            var call = new CfxV8ContextExitRenderProcessCall();
+            var call = new CfxV8ContextExitRemoteCall();
             call.@this = RemotePtr.ptr;
             call.RequestExecution(RemotePtr.connection);
             return call.__retval;
@@ -233,7 +233,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public bool IsSame(CfrV8Context that) {
-            var call = new CfxV8ContextIsSameRenderProcessCall();
+            var call = new CfxV8ContextIsSameRemoteCall();
             call.@this = RemotePtr.ptr;
             call.that = CfrObject.Unwrap(that).ptr;
             call.RequestExecution(RemotePtr.connection);
@@ -253,7 +253,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public bool Eval(string code, string scriptUrl, int startLine, out CfrV8Value retval, out CfrV8Exception exception) {
-            var call = new CfxV8ContextEvalRenderProcessCall();
+            var call = new CfxV8ContextEvalRemoteCall();
             call.@this = RemotePtr.ptr;
             call.code = code;
             call.scriptUrl = scriptUrl;

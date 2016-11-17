@@ -40,7 +40,7 @@ namespace Chromium.Remote {
         /// |data| will be copied.
         /// </summary>
         public static CfrBinaryValue Create(byte[] data) {
-            var call = new CfxBinaryValueCreateFromArrayRenderProcessCall();
+            var call = new CfxBinaryValueCreateFromArrayRemoteCall();
             call.data = data;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrBinaryValue.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
@@ -48,10 +48,10 @@ namespace Chromium.Remote {
     }
 
 
-    internal class CfxBinaryValueCreateFromArrayRenderProcessCall : RenderProcessCall {
+    internal class CfxBinaryValueCreateFromArrayRemoteCall : RemoteCall {
 
-        internal CfxBinaryValueCreateFromArrayRenderProcessCall()
-            : base(RemoteCallId.CfxBinaryValueCreateFromArrayRenderProcessCall) { }
+        internal CfxBinaryValueCreateFromArrayRemoteCall()
+            : base(RemoteCallId.CfxBinaryValueCreateFromArrayRemoteCall) { }
 
         internal byte[] data;
         internal IntPtr __retval;

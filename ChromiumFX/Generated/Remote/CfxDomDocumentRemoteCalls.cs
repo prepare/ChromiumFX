@@ -35,10 +35,10 @@ using System;
 
 namespace Chromium.Remote {
 
-    internal class CfxDomDocumentGetTypeRenderProcessCall : RenderProcessCall {
+    internal class CfxDomDocumentGetTypeRemoteCall : RemoteCall {
 
-        internal CfxDomDocumentGetTypeRenderProcessCall()
-            : base(RemoteCallId.CfxDomDocumentGetTypeRenderProcessCall) {}
+        internal CfxDomDocumentGetTypeRemoteCall()
+            : base(RemoteCallId.CfxDomDocumentGetTypeRemoteCall) {}
 
         internal IntPtr @this;
         internal int __retval;
@@ -64,10 +64,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDomDocumentGetDocumentRenderProcessCall : RenderProcessCall {
+    internal class CfxDomDocumentGetDocumentRemoteCall : RemoteCall {
 
-        internal CfxDomDocumentGetDocumentRenderProcessCall()
-            : base(RemoteCallId.CfxDomDocumentGetDocumentRenderProcessCall) {}
+        internal CfxDomDocumentGetDocumentRemoteCall()
+            : base(RemoteCallId.CfxDomDocumentGetDocumentRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr __retval;
@@ -93,10 +93,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDomDocumentGetBodyRenderProcessCall : RenderProcessCall {
+    internal class CfxDomDocumentGetBodyRemoteCall : RemoteCall {
 
-        internal CfxDomDocumentGetBodyRenderProcessCall()
-            : base(RemoteCallId.CfxDomDocumentGetBodyRenderProcessCall) {}
+        internal CfxDomDocumentGetBodyRemoteCall()
+            : base(RemoteCallId.CfxDomDocumentGetBodyRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr __retval;
@@ -122,10 +122,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDomDocumentGetHeadRenderProcessCall : RenderProcessCall {
+    internal class CfxDomDocumentGetHeadRemoteCall : RemoteCall {
 
-        internal CfxDomDocumentGetHeadRenderProcessCall()
-            : base(RemoteCallId.CfxDomDocumentGetHeadRenderProcessCall) {}
+        internal CfxDomDocumentGetHeadRemoteCall()
+            : base(RemoteCallId.CfxDomDocumentGetHeadRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr __retval;
@@ -151,10 +151,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDomDocumentGetTitleRenderProcessCall : RenderProcessCall {
+    internal class CfxDomDocumentGetTitleRemoteCall : RemoteCall {
 
-        internal CfxDomDocumentGetTitleRenderProcessCall()
-            : base(RemoteCallId.CfxDomDocumentGetTitleRenderProcessCall) {}
+        internal CfxDomDocumentGetTitleRemoteCall()
+            : base(RemoteCallId.CfxDomDocumentGetTitleRemoteCall) {}
 
         internal IntPtr @this;
         internal string __retval;
@@ -180,10 +180,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDomDocumentGetElementByIdRenderProcessCall : RenderProcessCall {
+    internal class CfxDomDocumentGetElementByIdRemoteCall : RemoteCall {
 
-        internal CfxDomDocumentGetElementByIdRenderProcessCall()
-            : base(RemoteCallId.CfxDomDocumentGetElementByIdRenderProcessCall) {}
+        internal CfxDomDocumentGetElementByIdRemoteCall()
+            : base(RemoteCallId.CfxDomDocumentGetElementByIdRemoteCall) {}
 
         internal IntPtr @this;
         internal string id;
@@ -214,10 +214,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDomDocumentGetFocusedNodeRenderProcessCall : RenderProcessCall {
+    internal class CfxDomDocumentGetFocusedNodeRemoteCall : RemoteCall {
 
-        internal CfxDomDocumentGetFocusedNodeRenderProcessCall()
-            : base(RemoteCallId.CfxDomDocumentGetFocusedNodeRenderProcessCall) {}
+        internal CfxDomDocumentGetFocusedNodeRemoteCall()
+            : base(RemoteCallId.CfxDomDocumentGetFocusedNodeRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr __retval;
@@ -243,10 +243,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDomDocumentHasSelectionRenderProcessCall : RenderProcessCall {
+    internal class CfxDomDocumentHasSelectionRemoteCall : RemoteCall {
 
-        internal CfxDomDocumentHasSelectionRenderProcessCall()
-            : base(RemoteCallId.CfxDomDocumentHasSelectionRenderProcessCall) {}
+        internal CfxDomDocumentHasSelectionRemoteCall()
+            : base(RemoteCallId.CfxDomDocumentHasSelectionRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -272,10 +272,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDomDocumentGetSelectionStartOffsetRenderProcessCall : RenderProcessCall {
+    internal class CfxDomDocumentGetSelectionStartOffsetRemoteCall : RemoteCall {
 
-        internal CfxDomDocumentGetSelectionStartOffsetRenderProcessCall()
-            : base(RemoteCallId.CfxDomDocumentGetSelectionStartOffsetRenderProcessCall) {}
+        internal CfxDomDocumentGetSelectionStartOffsetRemoteCall()
+            : base(RemoteCallId.CfxDomDocumentGetSelectionStartOffsetRemoteCall) {}
 
         internal IntPtr @this;
         internal int __retval;
@@ -301,10 +301,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDomDocumentGetSelectionEndOffsetRenderProcessCall : RenderProcessCall {
+    internal class CfxDomDocumentGetSelectionEndOffsetRemoteCall : RemoteCall {
 
-        internal CfxDomDocumentGetSelectionEndOffsetRenderProcessCall()
-            : base(RemoteCallId.CfxDomDocumentGetSelectionEndOffsetRenderProcessCall) {}
+        internal CfxDomDocumentGetSelectionEndOffsetRemoteCall()
+            : base(RemoteCallId.CfxDomDocumentGetSelectionEndOffsetRemoteCall) {}
 
         internal IntPtr @this;
         internal int __retval;
@@ -330,10 +330,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDomDocumentGetSelectionAsMarkupRenderProcessCall : RenderProcessCall {
+    internal class CfxDomDocumentGetSelectionAsMarkupRemoteCall : RemoteCall {
 
-        internal CfxDomDocumentGetSelectionAsMarkupRenderProcessCall()
-            : base(RemoteCallId.CfxDomDocumentGetSelectionAsMarkupRenderProcessCall) {}
+        internal CfxDomDocumentGetSelectionAsMarkupRemoteCall()
+            : base(RemoteCallId.CfxDomDocumentGetSelectionAsMarkupRemoteCall) {}
 
         internal IntPtr @this;
         internal string __retval;
@@ -359,10 +359,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDomDocumentGetSelectionAsTextRenderProcessCall : RenderProcessCall {
+    internal class CfxDomDocumentGetSelectionAsTextRemoteCall : RemoteCall {
 
-        internal CfxDomDocumentGetSelectionAsTextRenderProcessCall()
-            : base(RemoteCallId.CfxDomDocumentGetSelectionAsTextRenderProcessCall) {}
+        internal CfxDomDocumentGetSelectionAsTextRemoteCall()
+            : base(RemoteCallId.CfxDomDocumentGetSelectionAsTextRemoteCall) {}
 
         internal IntPtr @this;
         internal string __retval;
@@ -388,10 +388,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDomDocumentGetBaseUrlRenderProcessCall : RenderProcessCall {
+    internal class CfxDomDocumentGetBaseUrlRemoteCall : RemoteCall {
 
-        internal CfxDomDocumentGetBaseUrlRenderProcessCall()
-            : base(RemoteCallId.CfxDomDocumentGetBaseUrlRenderProcessCall) {}
+        internal CfxDomDocumentGetBaseUrlRemoteCall()
+            : base(RemoteCallId.CfxDomDocumentGetBaseUrlRemoteCall) {}
 
         internal IntPtr @this;
         internal string __retval;
@@ -417,10 +417,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDomDocumentGetCompleteUrlRenderProcessCall : RenderProcessCall {
+    internal class CfxDomDocumentGetCompleteUrlRemoteCall : RemoteCall {
 
-        internal CfxDomDocumentGetCompleteUrlRenderProcessCall()
-            : base(RemoteCallId.CfxDomDocumentGetCompleteUrlRenderProcessCall) {}
+        internal CfxDomDocumentGetCompleteUrlRemoteCall()
+            : base(RemoteCallId.CfxDomDocumentGetCompleteUrlRemoteCall) {}
 
         internal IntPtr @this;
         internal string partialURL;

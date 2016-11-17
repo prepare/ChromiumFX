@@ -35,10 +35,10 @@ using System;
 
 namespace Chromium.Remote {
 
-    internal class CfxProcessMessageCreateRenderProcessCall : RenderProcessCall {
+    internal class CfxProcessMessageCreateRemoteCall : RemoteCall {
 
-        internal CfxProcessMessageCreateRenderProcessCall()
-            : base(RemoteCallId.CfxProcessMessageCreateRenderProcessCall) {}
+        internal CfxProcessMessageCreateRemoteCall()
+            : base(RemoteCallId.CfxProcessMessageCreateRemoteCall) {}
 
         internal string name;
         internal IntPtr __retval;
@@ -66,10 +66,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxProcessMessageIsValidRenderProcessCall : RenderProcessCall {
+    internal class CfxProcessMessageIsValidRemoteCall : RemoteCall {
 
-        internal CfxProcessMessageIsValidRenderProcessCall()
-            : base(RemoteCallId.CfxProcessMessageIsValidRenderProcessCall) {}
+        internal CfxProcessMessageIsValidRemoteCall()
+            : base(RemoteCallId.CfxProcessMessageIsValidRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -95,10 +95,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxProcessMessageIsReadOnlyRenderProcessCall : RenderProcessCall {
+    internal class CfxProcessMessageIsReadOnlyRemoteCall : RemoteCall {
 
-        internal CfxProcessMessageIsReadOnlyRenderProcessCall()
-            : base(RemoteCallId.CfxProcessMessageIsReadOnlyRenderProcessCall) {}
+        internal CfxProcessMessageIsReadOnlyRemoteCall()
+            : base(RemoteCallId.CfxProcessMessageIsReadOnlyRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -124,10 +124,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxProcessMessageCopyRenderProcessCall : RenderProcessCall {
+    internal class CfxProcessMessageCopyRemoteCall : RemoteCall {
 
-        internal CfxProcessMessageCopyRenderProcessCall()
-            : base(RemoteCallId.CfxProcessMessageCopyRenderProcessCall) {}
+        internal CfxProcessMessageCopyRemoteCall()
+            : base(RemoteCallId.CfxProcessMessageCopyRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr __retval;
@@ -153,10 +153,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxProcessMessageGetNameRenderProcessCall : RenderProcessCall {
+    internal class CfxProcessMessageGetNameRemoteCall : RemoteCall {
 
-        internal CfxProcessMessageGetNameRenderProcessCall()
-            : base(RemoteCallId.CfxProcessMessageGetNameRenderProcessCall) {}
+        internal CfxProcessMessageGetNameRemoteCall()
+            : base(RemoteCallId.CfxProcessMessageGetNameRemoteCall) {}
 
         internal IntPtr @this;
         internal string __retval;
@@ -182,10 +182,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxProcessMessageGetArgumentListRenderProcessCall : RenderProcessCall {
+    internal class CfxProcessMessageGetArgumentListRemoteCall : RemoteCall {
 
-        internal CfxProcessMessageGetArgumentListRenderProcessCall()
-            : base(RemoteCallId.CfxProcessMessageGetArgumentListRenderProcessCall) {}
+        internal CfxProcessMessageGetArgumentListRemoteCall()
+            : base(RemoteCallId.CfxProcessMessageGetArgumentListRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr __retval;

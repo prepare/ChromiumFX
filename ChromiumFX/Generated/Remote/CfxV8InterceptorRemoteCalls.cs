@@ -37,10 +37,10 @@ namespace Chromium.Remote {
     using Event;
     using Chromium.Event;
 
-    internal class CfxV8InterceptorCtorRenderProcessCall : RenderProcessCall {
+    internal class CfxV8InterceptorCtorRemoteCall : RemoteCall {
 
-        internal CfxV8InterceptorCtorRenderProcessCall()
-            : base(RemoteCallId.CfxV8InterceptorCtorRenderProcessCall) {}
+        internal CfxV8InterceptorCtorRemoteCall()
+            : base(RemoteCallId.CfxV8InterceptorCtorRemoteCall) {}
 
         internal IntPtr __retval;
         protected override void WriteReturn(StreamHandler h) { h.Write(__retval); }
@@ -70,10 +70,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetByNameActivateRenderProcessCall : RenderProcessCall {
+    internal class CfxGetByNameActivateRemoteCall : RemoteCall {
 
-        internal CfxGetByNameActivateRenderProcessCall()
-            : base(RemoteCallId.CfxGetByNameActivateRenderProcessCall) {}
+        internal CfxGetByNameActivateRemoteCall()
+            : base(RemoteCallId.CfxGetByNameActivateRemoteCall) {}
 
         internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -85,10 +85,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetByNameDeactivateRenderProcessCall : RenderProcessCall {
+    internal class CfxGetByNameDeactivateRemoteCall : RemoteCall {
 
-        internal CfxGetByNameDeactivateRenderProcessCall()
-            : base(RemoteCallId.CfxGetByNameDeactivateRenderProcessCall) {}
+        internal CfxGetByNameDeactivateRemoteCall()
+            : base(RemoteCallId.CfxGetByNameDeactivateRemoteCall) {}
 
         internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -100,10 +100,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetByNameGetNameRenderProcessCall : RenderProcessCall {
+    internal class CfxGetByNameGetNameRemoteCall : RemoteCall {
 
-        internal CfxGetByNameGetNameRenderProcessCall()
-            : base(RemoteCallId.CfxGetByNameGetNameRenderProcessCall) {}
+        internal CfxGetByNameGetNameRemoteCall()
+            : base(RemoteCallId.CfxGetByNameGetNameRemoteCall) {}
 
         internal ulong eventArgsId;
         internal string value;
@@ -127,10 +127,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetByNameGetObjectRenderProcessCall : RenderProcessCall {
+    internal class CfxGetByNameGetObjectRemoteCall : RemoteCall {
 
-        internal CfxGetByNameGetObjectRenderProcessCall()
-            : base(RemoteCallId.CfxGetByNameGetObjectRenderProcessCall) {}
+        internal CfxGetByNameGetObjectRemoteCall()
+            : base(RemoteCallId.CfxGetByNameGetObjectRemoteCall) {}
 
         internal ulong eventArgsId;
         internal IntPtr value;
@@ -154,10 +154,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetByNameSetRetvalRenderProcessCall : RenderProcessCall {
+    internal class CfxGetByNameSetRetvalRemoteCall : RemoteCall {
 
-        internal CfxGetByNameSetRetvalRenderProcessCall()
-            : base(RemoteCallId.CfxGetByNameSetRetvalRenderProcessCall) {}
+        internal CfxGetByNameSetRetvalRemoteCall()
+            : base(RemoteCallId.CfxGetByNameSetRetvalRemoteCall) {}
 
         internal ulong eventArgsId;
         internal IntPtr value;
@@ -177,10 +177,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetByNameSetExceptionRenderProcessCall : RenderProcessCall {
+    internal class CfxGetByNameSetExceptionRemoteCall : RemoteCall {
 
-        internal CfxGetByNameSetExceptionRenderProcessCall()
-            : base(RemoteCallId.CfxGetByNameSetExceptionRenderProcessCall) {}
+        internal CfxGetByNameSetExceptionRemoteCall()
+            : base(RemoteCallId.CfxGetByNameSetExceptionRemoteCall) {}
 
         internal ulong eventArgsId;
         internal string value;
@@ -200,10 +200,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetByNameGetExceptionRenderProcessCall : RenderProcessCall {
+    internal class CfxGetByNameGetExceptionRemoteCall : RemoteCall {
 
-        internal CfxGetByNameGetExceptionRenderProcessCall()
-            : base(RemoteCallId.CfxGetByNameGetExceptionRenderProcessCall) {}
+        internal CfxGetByNameGetExceptionRemoteCall()
+            : base(RemoteCallId.CfxGetByNameGetExceptionRemoteCall) {}
 
         internal ulong eventArgsId;
         internal string value;
@@ -227,10 +227,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetByNameSetReturnValueRenderProcessCall : RenderProcessCall {
+    internal class CfxGetByNameSetReturnValueRemoteCall : RemoteCall {
 
-        internal CfxGetByNameSetReturnValueRenderProcessCall()
-            : base(RemoteCallId.CfxGetByNameSetReturnValueRenderProcessCall) {}
+        internal CfxGetByNameSetReturnValueRemoteCall()
+            : base(RemoteCallId.CfxGetByNameSetReturnValueRemoteCall) {}
 
         internal ulong eventArgsId;
         internal bool value;
@@ -269,10 +269,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetByIndexActivateRenderProcessCall : RenderProcessCall {
+    internal class CfxGetByIndexActivateRemoteCall : RemoteCall {
 
-        internal CfxGetByIndexActivateRenderProcessCall()
-            : base(RemoteCallId.CfxGetByIndexActivateRenderProcessCall) {}
+        internal CfxGetByIndexActivateRemoteCall()
+            : base(RemoteCallId.CfxGetByIndexActivateRemoteCall) {}
 
         internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -284,10 +284,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetByIndexDeactivateRenderProcessCall : RenderProcessCall {
+    internal class CfxGetByIndexDeactivateRemoteCall : RemoteCall {
 
-        internal CfxGetByIndexDeactivateRenderProcessCall()
-            : base(RemoteCallId.CfxGetByIndexDeactivateRenderProcessCall) {}
+        internal CfxGetByIndexDeactivateRemoteCall()
+            : base(RemoteCallId.CfxGetByIndexDeactivateRemoteCall) {}
 
         internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -299,10 +299,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetByIndexGetIndexRenderProcessCall : RenderProcessCall {
+    internal class CfxGetByIndexGetIndexRemoteCall : RemoteCall {
 
-        internal CfxGetByIndexGetIndexRenderProcessCall()
-            : base(RemoteCallId.CfxGetByIndexGetIndexRenderProcessCall) {}
+        internal CfxGetByIndexGetIndexRemoteCall()
+            : base(RemoteCallId.CfxGetByIndexGetIndexRemoteCall) {}
 
         internal ulong eventArgsId;
         internal int value;
@@ -326,10 +326,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetByIndexGetObjectRenderProcessCall : RenderProcessCall {
+    internal class CfxGetByIndexGetObjectRemoteCall : RemoteCall {
 
-        internal CfxGetByIndexGetObjectRenderProcessCall()
-            : base(RemoteCallId.CfxGetByIndexGetObjectRenderProcessCall) {}
+        internal CfxGetByIndexGetObjectRemoteCall()
+            : base(RemoteCallId.CfxGetByIndexGetObjectRemoteCall) {}
 
         internal ulong eventArgsId;
         internal IntPtr value;
@@ -353,10 +353,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetByIndexSetRetvalRenderProcessCall : RenderProcessCall {
+    internal class CfxGetByIndexSetRetvalRemoteCall : RemoteCall {
 
-        internal CfxGetByIndexSetRetvalRenderProcessCall()
-            : base(RemoteCallId.CfxGetByIndexSetRetvalRenderProcessCall) {}
+        internal CfxGetByIndexSetRetvalRemoteCall()
+            : base(RemoteCallId.CfxGetByIndexSetRetvalRemoteCall) {}
 
         internal ulong eventArgsId;
         internal IntPtr value;
@@ -376,10 +376,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetByIndexSetExceptionRenderProcessCall : RenderProcessCall {
+    internal class CfxGetByIndexSetExceptionRemoteCall : RemoteCall {
 
-        internal CfxGetByIndexSetExceptionRenderProcessCall()
-            : base(RemoteCallId.CfxGetByIndexSetExceptionRenderProcessCall) {}
+        internal CfxGetByIndexSetExceptionRemoteCall()
+            : base(RemoteCallId.CfxGetByIndexSetExceptionRemoteCall) {}
 
         internal ulong eventArgsId;
         internal string value;
@@ -399,10 +399,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetByIndexGetExceptionRenderProcessCall : RenderProcessCall {
+    internal class CfxGetByIndexGetExceptionRemoteCall : RemoteCall {
 
-        internal CfxGetByIndexGetExceptionRenderProcessCall()
-            : base(RemoteCallId.CfxGetByIndexGetExceptionRenderProcessCall) {}
+        internal CfxGetByIndexGetExceptionRemoteCall()
+            : base(RemoteCallId.CfxGetByIndexGetExceptionRemoteCall) {}
 
         internal ulong eventArgsId;
         internal string value;
@@ -426,10 +426,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetByIndexSetReturnValueRenderProcessCall : RenderProcessCall {
+    internal class CfxGetByIndexSetReturnValueRemoteCall : RemoteCall {
 
-        internal CfxGetByIndexSetReturnValueRenderProcessCall()
-            : base(RemoteCallId.CfxGetByIndexSetReturnValueRenderProcessCall) {}
+        internal CfxGetByIndexSetReturnValueRemoteCall()
+            : base(RemoteCallId.CfxGetByIndexSetReturnValueRemoteCall) {}
 
         internal ulong eventArgsId;
         internal bool value;
@@ -468,10 +468,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxSetByNameActivateRenderProcessCall : RenderProcessCall {
+    internal class CfxSetByNameActivateRemoteCall : RemoteCall {
 
-        internal CfxSetByNameActivateRenderProcessCall()
-            : base(RemoteCallId.CfxSetByNameActivateRenderProcessCall) {}
+        internal CfxSetByNameActivateRemoteCall()
+            : base(RemoteCallId.CfxSetByNameActivateRemoteCall) {}
 
         internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -483,10 +483,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxSetByNameDeactivateRenderProcessCall : RenderProcessCall {
+    internal class CfxSetByNameDeactivateRemoteCall : RemoteCall {
 
-        internal CfxSetByNameDeactivateRenderProcessCall()
-            : base(RemoteCallId.CfxSetByNameDeactivateRenderProcessCall) {}
+        internal CfxSetByNameDeactivateRemoteCall()
+            : base(RemoteCallId.CfxSetByNameDeactivateRemoteCall) {}
 
         internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -498,10 +498,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxSetByNameGetNameRenderProcessCall : RenderProcessCall {
+    internal class CfxSetByNameGetNameRemoteCall : RemoteCall {
 
-        internal CfxSetByNameGetNameRenderProcessCall()
-            : base(RemoteCallId.CfxSetByNameGetNameRenderProcessCall) {}
+        internal CfxSetByNameGetNameRemoteCall()
+            : base(RemoteCallId.CfxSetByNameGetNameRemoteCall) {}
 
         internal ulong eventArgsId;
         internal string value;
@@ -525,10 +525,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxSetByNameGetObjectRenderProcessCall : RenderProcessCall {
+    internal class CfxSetByNameGetObjectRemoteCall : RemoteCall {
 
-        internal CfxSetByNameGetObjectRenderProcessCall()
-            : base(RemoteCallId.CfxSetByNameGetObjectRenderProcessCall) {}
+        internal CfxSetByNameGetObjectRemoteCall()
+            : base(RemoteCallId.CfxSetByNameGetObjectRemoteCall) {}
 
         internal ulong eventArgsId;
         internal IntPtr value;
@@ -552,10 +552,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxSetByNameGetValueRenderProcessCall : RenderProcessCall {
+    internal class CfxSetByNameGetValueRemoteCall : RemoteCall {
 
-        internal CfxSetByNameGetValueRenderProcessCall()
-            : base(RemoteCallId.CfxSetByNameGetValueRenderProcessCall) {}
+        internal CfxSetByNameGetValueRemoteCall()
+            : base(RemoteCallId.CfxSetByNameGetValueRemoteCall) {}
 
         internal ulong eventArgsId;
         internal IntPtr value;
@@ -579,10 +579,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxSetByNameSetExceptionRenderProcessCall : RenderProcessCall {
+    internal class CfxSetByNameSetExceptionRemoteCall : RemoteCall {
 
-        internal CfxSetByNameSetExceptionRenderProcessCall()
-            : base(RemoteCallId.CfxSetByNameSetExceptionRenderProcessCall) {}
+        internal CfxSetByNameSetExceptionRemoteCall()
+            : base(RemoteCallId.CfxSetByNameSetExceptionRemoteCall) {}
 
         internal ulong eventArgsId;
         internal string value;
@@ -602,10 +602,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxSetByNameGetExceptionRenderProcessCall : RenderProcessCall {
+    internal class CfxSetByNameGetExceptionRemoteCall : RemoteCall {
 
-        internal CfxSetByNameGetExceptionRenderProcessCall()
-            : base(RemoteCallId.CfxSetByNameGetExceptionRenderProcessCall) {}
+        internal CfxSetByNameGetExceptionRemoteCall()
+            : base(RemoteCallId.CfxSetByNameGetExceptionRemoteCall) {}
 
         internal ulong eventArgsId;
         internal string value;
@@ -629,10 +629,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxSetByNameSetReturnValueRenderProcessCall : RenderProcessCall {
+    internal class CfxSetByNameSetReturnValueRemoteCall : RemoteCall {
 
-        internal CfxSetByNameSetReturnValueRenderProcessCall()
-            : base(RemoteCallId.CfxSetByNameSetReturnValueRenderProcessCall) {}
+        internal CfxSetByNameSetReturnValueRemoteCall()
+            : base(RemoteCallId.CfxSetByNameSetReturnValueRemoteCall) {}
 
         internal ulong eventArgsId;
         internal bool value;
@@ -671,10 +671,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxSetByIndexActivateRenderProcessCall : RenderProcessCall {
+    internal class CfxSetByIndexActivateRemoteCall : RemoteCall {
 
-        internal CfxSetByIndexActivateRenderProcessCall()
-            : base(RemoteCallId.CfxSetByIndexActivateRenderProcessCall) {}
+        internal CfxSetByIndexActivateRemoteCall()
+            : base(RemoteCallId.CfxSetByIndexActivateRemoteCall) {}
 
         internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -686,10 +686,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxSetByIndexDeactivateRenderProcessCall : RenderProcessCall {
+    internal class CfxSetByIndexDeactivateRemoteCall : RemoteCall {
 
-        internal CfxSetByIndexDeactivateRenderProcessCall()
-            : base(RemoteCallId.CfxSetByIndexDeactivateRenderProcessCall) {}
+        internal CfxSetByIndexDeactivateRemoteCall()
+            : base(RemoteCallId.CfxSetByIndexDeactivateRemoteCall) {}
 
         internal IntPtr sender;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -701,10 +701,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxSetByIndexGetIndexRenderProcessCall : RenderProcessCall {
+    internal class CfxSetByIndexGetIndexRemoteCall : RemoteCall {
 
-        internal CfxSetByIndexGetIndexRenderProcessCall()
-            : base(RemoteCallId.CfxSetByIndexGetIndexRenderProcessCall) {}
+        internal CfxSetByIndexGetIndexRemoteCall()
+            : base(RemoteCallId.CfxSetByIndexGetIndexRemoteCall) {}
 
         internal ulong eventArgsId;
         internal int value;
@@ -728,10 +728,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxSetByIndexGetObjectRenderProcessCall : RenderProcessCall {
+    internal class CfxSetByIndexGetObjectRemoteCall : RemoteCall {
 
-        internal CfxSetByIndexGetObjectRenderProcessCall()
-            : base(RemoteCallId.CfxSetByIndexGetObjectRenderProcessCall) {}
+        internal CfxSetByIndexGetObjectRemoteCall()
+            : base(RemoteCallId.CfxSetByIndexGetObjectRemoteCall) {}
 
         internal ulong eventArgsId;
         internal IntPtr value;
@@ -755,10 +755,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxSetByIndexGetValueRenderProcessCall : RenderProcessCall {
+    internal class CfxSetByIndexGetValueRemoteCall : RemoteCall {
 
-        internal CfxSetByIndexGetValueRenderProcessCall()
-            : base(RemoteCallId.CfxSetByIndexGetValueRenderProcessCall) {}
+        internal CfxSetByIndexGetValueRemoteCall()
+            : base(RemoteCallId.CfxSetByIndexGetValueRemoteCall) {}
 
         internal ulong eventArgsId;
         internal IntPtr value;
@@ -782,10 +782,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxSetByIndexSetExceptionRenderProcessCall : RenderProcessCall {
+    internal class CfxSetByIndexSetExceptionRemoteCall : RemoteCall {
 
-        internal CfxSetByIndexSetExceptionRenderProcessCall()
-            : base(RemoteCallId.CfxSetByIndexSetExceptionRenderProcessCall) {}
+        internal CfxSetByIndexSetExceptionRemoteCall()
+            : base(RemoteCallId.CfxSetByIndexSetExceptionRemoteCall) {}
 
         internal ulong eventArgsId;
         internal string value;
@@ -805,10 +805,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxSetByIndexGetExceptionRenderProcessCall : RenderProcessCall {
+    internal class CfxSetByIndexGetExceptionRemoteCall : RemoteCall {
 
-        internal CfxSetByIndexGetExceptionRenderProcessCall()
-            : base(RemoteCallId.CfxSetByIndexGetExceptionRenderProcessCall) {}
+        internal CfxSetByIndexGetExceptionRemoteCall()
+            : base(RemoteCallId.CfxSetByIndexGetExceptionRemoteCall) {}
 
         internal ulong eventArgsId;
         internal string value;
@@ -832,10 +832,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxSetByIndexSetReturnValueRenderProcessCall : RenderProcessCall {
+    internal class CfxSetByIndexSetReturnValueRemoteCall : RemoteCall {
 
-        internal CfxSetByIndexSetReturnValueRenderProcessCall()
-            : base(RemoteCallId.CfxSetByIndexSetReturnValueRenderProcessCall) {}
+        internal CfxSetByIndexSetReturnValueRemoteCall()
+            : base(RemoteCallId.CfxSetByIndexSetReturnValueRemoteCall) {}
 
         internal ulong eventArgsId;
         internal bool value;

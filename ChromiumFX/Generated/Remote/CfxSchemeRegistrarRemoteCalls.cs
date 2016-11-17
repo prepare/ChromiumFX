@@ -35,10 +35,10 @@ using System;
 
 namespace Chromium.Remote {
 
-    internal class CfxSchemeRegistrarAddCustomSchemeRenderProcessCall : RenderProcessCall {
+    internal class CfxSchemeRegistrarAddCustomSchemeRemoteCall : RemoteCall {
 
-        internal CfxSchemeRegistrarAddCustomSchemeRenderProcessCall()
-            : base(RemoteCallId.CfxSchemeRegistrarAddCustomSchemeRenderProcessCall) {}
+        internal CfxSchemeRegistrarAddCustomSchemeRemoteCall()
+            : base(RemoteCallId.CfxSchemeRegistrarAddCustomSchemeRemoteCall) {}
 
         internal IntPtr @this;
         internal string schemeName;

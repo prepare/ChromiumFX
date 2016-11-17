@@ -35,10 +35,10 @@ using System;
 
 namespace Chromium.Remote {
 
-    internal class CfxV8StackFrameIsValidRenderProcessCall : RenderProcessCall {
+    internal class CfxV8StackFrameIsValidRemoteCall : RemoteCall {
 
-        internal CfxV8StackFrameIsValidRenderProcessCall()
-            : base(RemoteCallId.CfxV8StackFrameIsValidRenderProcessCall) {}
+        internal CfxV8StackFrameIsValidRemoteCall()
+            : base(RemoteCallId.CfxV8StackFrameIsValidRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -64,10 +64,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8StackFrameGetScriptNameRenderProcessCall : RenderProcessCall {
+    internal class CfxV8StackFrameGetScriptNameRemoteCall : RemoteCall {
 
-        internal CfxV8StackFrameGetScriptNameRenderProcessCall()
-            : base(RemoteCallId.CfxV8StackFrameGetScriptNameRenderProcessCall) {}
+        internal CfxV8StackFrameGetScriptNameRemoteCall()
+            : base(RemoteCallId.CfxV8StackFrameGetScriptNameRemoteCall) {}
 
         internal IntPtr @this;
         internal string __retval;
@@ -93,10 +93,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8StackFrameGetScriptNameOrSourceUrlRenderProcessCall : RenderProcessCall {
+    internal class CfxV8StackFrameGetScriptNameOrSourceUrlRemoteCall : RemoteCall {
 
-        internal CfxV8StackFrameGetScriptNameOrSourceUrlRenderProcessCall()
-            : base(RemoteCallId.CfxV8StackFrameGetScriptNameOrSourceUrlRenderProcessCall) {}
+        internal CfxV8StackFrameGetScriptNameOrSourceUrlRemoteCall()
+            : base(RemoteCallId.CfxV8StackFrameGetScriptNameOrSourceUrlRemoteCall) {}
 
         internal IntPtr @this;
         internal string __retval;
@@ -122,10 +122,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8StackFrameGetFunctionNameRenderProcessCall : RenderProcessCall {
+    internal class CfxV8StackFrameGetFunctionNameRemoteCall : RemoteCall {
 
-        internal CfxV8StackFrameGetFunctionNameRenderProcessCall()
-            : base(RemoteCallId.CfxV8StackFrameGetFunctionNameRenderProcessCall) {}
+        internal CfxV8StackFrameGetFunctionNameRemoteCall()
+            : base(RemoteCallId.CfxV8StackFrameGetFunctionNameRemoteCall) {}
 
         internal IntPtr @this;
         internal string __retval;
@@ -151,10 +151,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8StackFrameGetLineNumberRenderProcessCall : RenderProcessCall {
+    internal class CfxV8StackFrameGetLineNumberRemoteCall : RemoteCall {
 
-        internal CfxV8StackFrameGetLineNumberRenderProcessCall()
-            : base(RemoteCallId.CfxV8StackFrameGetLineNumberRenderProcessCall) {}
+        internal CfxV8StackFrameGetLineNumberRemoteCall()
+            : base(RemoteCallId.CfxV8StackFrameGetLineNumberRemoteCall) {}
 
         internal IntPtr @this;
         internal int __retval;
@@ -180,10 +180,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8StackFrameGetColumnRenderProcessCall : RenderProcessCall {
+    internal class CfxV8StackFrameGetColumnRemoteCall : RemoteCall {
 
-        internal CfxV8StackFrameGetColumnRenderProcessCall()
-            : base(RemoteCallId.CfxV8StackFrameGetColumnRenderProcessCall) {}
+        internal CfxV8StackFrameGetColumnRemoteCall()
+            : base(RemoteCallId.CfxV8StackFrameGetColumnRemoteCall) {}
 
         internal IntPtr @this;
         internal int __retval;
@@ -209,10 +209,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8StackFrameIsEvalRenderProcessCall : RenderProcessCall {
+    internal class CfxV8StackFrameIsEvalRemoteCall : RemoteCall {
 
-        internal CfxV8StackFrameIsEvalRenderProcessCall()
-            : base(RemoteCallId.CfxV8StackFrameIsEvalRenderProcessCall) {}
+        internal CfxV8StackFrameIsEvalRemoteCall()
+            : base(RemoteCallId.CfxV8StackFrameIsEvalRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -238,10 +238,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8StackFrameIsConstructorRenderProcessCall : RenderProcessCall {
+    internal class CfxV8StackFrameIsConstructorRemoteCall : RemoteCall {
 
-        internal CfxV8StackFrameIsConstructorRenderProcessCall()
-            : base(RemoteCallId.CfxV8StackFrameIsConstructorRenderProcessCall) {}
+        internal CfxV8StackFrameIsConstructorRemoteCall()
+            : base(RemoteCallId.CfxV8StackFrameIsConstructorRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;

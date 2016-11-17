@@ -108,7 +108,7 @@ ptrs_p.Free();
 
     public override void EmitRemoteCall(CodeBuilder b, string remoteCallId, bool isStatic) {
         Debug.Assert(Arguments[2].ArgumentType.PublicSymbol == "CfxPostDataElement");
-        b.AppendLine("var call = new CfxPostDataGetElementsRenderProcessCall();");
+        b.AppendLine("var call = new CfxPostDataGetElementsRemoteCall();");
         b.AppendLine("call.@this = RemotePtr.ptr;");
         b.AppendLine("call.RequestExecution(RemotePtr.connection);");
         b.AppendLine("if(call.__retval == null) return null;");

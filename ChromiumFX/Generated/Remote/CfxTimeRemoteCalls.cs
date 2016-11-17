@@ -35,10 +35,10 @@ using System;
 
 namespace Chromium.Remote {
 
-    internal class CfxTimeCtorRenderProcessCall : RenderProcessCall {
+    internal class CfxTimeCtorRemoteCall : RemoteCall {
 
-        internal CfxTimeCtorRenderProcessCall()
-            : base(RemoteCallId.CfxTimeCtorRenderProcessCall) {}
+        internal CfxTimeCtorRemoteCall()
+            : base(RemoteCallId.CfxTimeCtorRemoteCall) {}
 
         internal IntPtr __retval;
         protected override void WriteReturn(StreamHandler h) { h.Write(__retval); }
@@ -49,10 +49,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxTimeGetYearRenderProcessCall : RenderProcessCall {
+    internal class CfxTimeGetYearRemoteCall : RemoteCall {
 
-        internal CfxTimeGetYearRenderProcessCall()
-            : base(RemoteCallId.CfxTimeGetYearRenderProcessCall) {}
+        internal CfxTimeGetYearRemoteCall()
+            : base(RemoteCallId.CfxTimeGetYearRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -64,10 +64,10 @@ namespace Chromium.Remote {
             value = sender.Year;
         }
     }
-    internal class CfxTimeSetYearRenderProcessCall : RenderProcessCall {
+    internal class CfxTimeSetYearRemoteCall : RemoteCall {
 
-        internal CfxTimeSetYearRenderProcessCall()
-            : base(RemoteCallId.CfxTimeSetYearRenderProcessCall) {}
+        internal CfxTimeSetYearRemoteCall()
+            : base(RemoteCallId.CfxTimeSetYearRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
@@ -77,10 +77,10 @@ namespace Chromium.Remote {
             sender.Year = value;
         }
     }
-    internal class CfxTimeGetMonthRenderProcessCall : RenderProcessCall {
+    internal class CfxTimeGetMonthRemoteCall : RemoteCall {
 
-        internal CfxTimeGetMonthRenderProcessCall()
-            : base(RemoteCallId.CfxTimeGetMonthRenderProcessCall) {}
+        internal CfxTimeGetMonthRemoteCall()
+            : base(RemoteCallId.CfxTimeGetMonthRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -92,10 +92,10 @@ namespace Chromium.Remote {
             value = sender.Month;
         }
     }
-    internal class CfxTimeSetMonthRenderProcessCall : RenderProcessCall {
+    internal class CfxTimeSetMonthRemoteCall : RemoteCall {
 
-        internal CfxTimeSetMonthRenderProcessCall()
-            : base(RemoteCallId.CfxTimeSetMonthRenderProcessCall) {}
+        internal CfxTimeSetMonthRemoteCall()
+            : base(RemoteCallId.CfxTimeSetMonthRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
@@ -105,10 +105,10 @@ namespace Chromium.Remote {
             sender.Month = value;
         }
     }
-    internal class CfxTimeGetDayOfWeekRenderProcessCall : RenderProcessCall {
+    internal class CfxTimeGetDayOfWeekRemoteCall : RemoteCall {
 
-        internal CfxTimeGetDayOfWeekRenderProcessCall()
-            : base(RemoteCallId.CfxTimeGetDayOfWeekRenderProcessCall) {}
+        internal CfxTimeGetDayOfWeekRemoteCall()
+            : base(RemoteCallId.CfxTimeGetDayOfWeekRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -120,10 +120,10 @@ namespace Chromium.Remote {
             value = sender.DayOfWeek;
         }
     }
-    internal class CfxTimeSetDayOfWeekRenderProcessCall : RenderProcessCall {
+    internal class CfxTimeSetDayOfWeekRemoteCall : RemoteCall {
 
-        internal CfxTimeSetDayOfWeekRenderProcessCall()
-            : base(RemoteCallId.CfxTimeSetDayOfWeekRenderProcessCall) {}
+        internal CfxTimeSetDayOfWeekRemoteCall()
+            : base(RemoteCallId.CfxTimeSetDayOfWeekRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
@@ -133,10 +133,10 @@ namespace Chromium.Remote {
             sender.DayOfWeek = value;
         }
     }
-    internal class CfxTimeGetDayOfMonthRenderProcessCall : RenderProcessCall {
+    internal class CfxTimeGetDayOfMonthRemoteCall : RemoteCall {
 
-        internal CfxTimeGetDayOfMonthRenderProcessCall()
-            : base(RemoteCallId.CfxTimeGetDayOfMonthRenderProcessCall) {}
+        internal CfxTimeGetDayOfMonthRemoteCall()
+            : base(RemoteCallId.CfxTimeGetDayOfMonthRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -148,10 +148,10 @@ namespace Chromium.Remote {
             value = sender.DayOfMonth;
         }
     }
-    internal class CfxTimeSetDayOfMonthRenderProcessCall : RenderProcessCall {
+    internal class CfxTimeSetDayOfMonthRemoteCall : RemoteCall {
 
-        internal CfxTimeSetDayOfMonthRenderProcessCall()
-            : base(RemoteCallId.CfxTimeSetDayOfMonthRenderProcessCall) {}
+        internal CfxTimeSetDayOfMonthRemoteCall()
+            : base(RemoteCallId.CfxTimeSetDayOfMonthRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
@@ -161,10 +161,10 @@ namespace Chromium.Remote {
             sender.DayOfMonth = value;
         }
     }
-    internal class CfxTimeGetHourRenderProcessCall : RenderProcessCall {
+    internal class CfxTimeGetHourRemoteCall : RemoteCall {
 
-        internal CfxTimeGetHourRenderProcessCall()
-            : base(RemoteCallId.CfxTimeGetHourRenderProcessCall) {}
+        internal CfxTimeGetHourRemoteCall()
+            : base(RemoteCallId.CfxTimeGetHourRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -176,10 +176,10 @@ namespace Chromium.Remote {
             value = sender.Hour;
         }
     }
-    internal class CfxTimeSetHourRenderProcessCall : RenderProcessCall {
+    internal class CfxTimeSetHourRemoteCall : RemoteCall {
 
-        internal CfxTimeSetHourRenderProcessCall()
-            : base(RemoteCallId.CfxTimeSetHourRenderProcessCall) {}
+        internal CfxTimeSetHourRemoteCall()
+            : base(RemoteCallId.CfxTimeSetHourRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
@@ -189,10 +189,10 @@ namespace Chromium.Remote {
             sender.Hour = value;
         }
     }
-    internal class CfxTimeGetMinuteRenderProcessCall : RenderProcessCall {
+    internal class CfxTimeGetMinuteRemoteCall : RemoteCall {
 
-        internal CfxTimeGetMinuteRenderProcessCall()
-            : base(RemoteCallId.CfxTimeGetMinuteRenderProcessCall) {}
+        internal CfxTimeGetMinuteRemoteCall()
+            : base(RemoteCallId.CfxTimeGetMinuteRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -204,10 +204,10 @@ namespace Chromium.Remote {
             value = sender.Minute;
         }
     }
-    internal class CfxTimeSetMinuteRenderProcessCall : RenderProcessCall {
+    internal class CfxTimeSetMinuteRemoteCall : RemoteCall {
 
-        internal CfxTimeSetMinuteRenderProcessCall()
-            : base(RemoteCallId.CfxTimeSetMinuteRenderProcessCall) {}
+        internal CfxTimeSetMinuteRemoteCall()
+            : base(RemoteCallId.CfxTimeSetMinuteRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
@@ -217,10 +217,10 @@ namespace Chromium.Remote {
             sender.Minute = value;
         }
     }
-    internal class CfxTimeGetSecondRenderProcessCall : RenderProcessCall {
+    internal class CfxTimeGetSecondRemoteCall : RemoteCall {
 
-        internal CfxTimeGetSecondRenderProcessCall()
-            : base(RemoteCallId.CfxTimeGetSecondRenderProcessCall) {}
+        internal CfxTimeGetSecondRemoteCall()
+            : base(RemoteCallId.CfxTimeGetSecondRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -232,10 +232,10 @@ namespace Chromium.Remote {
             value = sender.Second;
         }
     }
-    internal class CfxTimeSetSecondRenderProcessCall : RenderProcessCall {
+    internal class CfxTimeSetSecondRemoteCall : RemoteCall {
 
-        internal CfxTimeSetSecondRenderProcessCall()
-            : base(RemoteCallId.CfxTimeSetSecondRenderProcessCall) {}
+        internal CfxTimeSetSecondRemoteCall()
+            : base(RemoteCallId.CfxTimeSetSecondRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
@@ -245,10 +245,10 @@ namespace Chromium.Remote {
             sender.Second = value;
         }
     }
-    internal class CfxTimeGetMillisecondRenderProcessCall : RenderProcessCall {
+    internal class CfxTimeGetMillisecondRemoteCall : RemoteCall {
 
-        internal CfxTimeGetMillisecondRenderProcessCall()
-            : base(RemoteCallId.CfxTimeGetMillisecondRenderProcessCall) {}
+        internal CfxTimeGetMillisecondRemoteCall()
+            : base(RemoteCallId.CfxTimeGetMillisecondRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
@@ -260,10 +260,10 @@ namespace Chromium.Remote {
             value = sender.Millisecond;
         }
     }
-    internal class CfxTimeSetMillisecondRenderProcessCall : RenderProcessCall {
+    internal class CfxTimeSetMillisecondRemoteCall : RemoteCall {
 
-        internal CfxTimeSetMillisecondRenderProcessCall()
-            : base(RemoteCallId.CfxTimeSetMillisecondRenderProcessCall) {}
+        internal CfxTimeSetMillisecondRemoteCall()
+            : base(RemoteCallId.CfxTimeSetMillisecondRemoteCall) {}
         internal IntPtr sender;
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }

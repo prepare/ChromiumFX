@@ -60,7 +60,7 @@ namespace Chromium.Remote {
 
 
         internal static RemotePtr CreateRemote() {
-            var call = new CfxStringVisitorCtorRenderProcessCall();
+            var call = new CfxStringVisitorCtorRemoteCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);
         }
@@ -88,7 +88,7 @@ namespace Chromium.Remote {
         public event CfrStringVisitorVisitEventHandler Visit {
             add {
                 if(m_Visit == null) {
-                    var call = new CfxStringVisitorVisitActivateRenderProcessCall();
+                    var call = new CfxStringVisitorVisitActivateRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                 }
@@ -97,7 +97,7 @@ namespace Chromium.Remote {
             remove {
                 m_Visit -= value;
                 if(m_Visit == null) {
-                    var call = new CfxStringVisitorVisitDeactivateRenderProcessCall();
+                    var call = new CfxStringVisitorVisitDeactivateRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                 }
@@ -142,7 +142,7 @@ namespace Chromium.Remote {
                     CheckAccess();
                     if(!StringFetched) {
                         StringFetched = true;
-                        var call = new CfxStringVisitorVisitGetStringRenderProcessCall();
+                        var call = new CfxStringVisitorVisitGetStringRemoteCall();
                         call.eventArgsId = eventArgsId;
                         call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_String = call.value;

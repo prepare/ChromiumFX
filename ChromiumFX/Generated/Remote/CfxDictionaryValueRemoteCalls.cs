@@ -35,10 +35,10 @@ using System;
 
 namespace Chromium.Remote {
 
-    internal class CfxDictionaryValueCreateRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueCreateRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueCreateRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueCreateRenderProcessCall) {}
+        internal CfxDictionaryValueCreateRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueCreateRemoteCall) {}
 
         internal IntPtr __retval;
 
@@ -55,10 +55,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueIsValidRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueIsValidRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueIsValidRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueIsValidRenderProcessCall) {}
+        internal CfxDictionaryValueIsValidRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueIsValidRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -84,10 +84,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueIsOwnedRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueIsOwnedRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueIsOwnedRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueIsOwnedRenderProcessCall) {}
+        internal CfxDictionaryValueIsOwnedRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueIsOwnedRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -113,10 +113,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueIsReadOnlyRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueIsReadOnlyRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueIsReadOnlyRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueIsReadOnlyRenderProcessCall) {}
+        internal CfxDictionaryValueIsReadOnlyRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueIsReadOnlyRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -142,10 +142,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueIsSameRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueIsSameRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueIsSameRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueIsSameRenderProcessCall) {}
+        internal CfxDictionaryValueIsSameRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueIsSameRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr that;
@@ -174,10 +174,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueIsEqualRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueIsEqualRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueIsEqualRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueIsEqualRenderProcessCall) {}
+        internal CfxDictionaryValueIsEqualRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueIsEqualRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr that;
@@ -206,10 +206,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueCopyRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueCopyRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueCopyRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueCopyRenderProcessCall) {}
+        internal CfxDictionaryValueCopyRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueCopyRemoteCall) {}
 
         internal IntPtr @this;
         internal bool excludeEmptyChildren;
@@ -238,10 +238,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueGetSizeRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueGetSizeRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueGetSizeRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueGetSizeRenderProcessCall) {}
+        internal CfxDictionaryValueGetSizeRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueGetSizeRemoteCall) {}
 
         internal IntPtr @this;
         internal ulong __retval;
@@ -267,10 +267,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueClearRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueClearRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueClearRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueClearRenderProcessCall) {}
+        internal CfxDictionaryValueClearRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueClearRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -296,10 +296,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueHasKeyRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueHasKeyRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueHasKeyRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueHasKeyRenderProcessCall) {}
+        internal CfxDictionaryValueHasKeyRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueHasKeyRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -330,10 +330,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueGetKeysRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueGetKeysRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueGetKeysRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueGetKeysRenderProcessCall) {}
+        internal CfxDictionaryValueGetKeysRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueGetKeysRemoteCall) {}
 
         internal IntPtr @this;
         internal System.Collections.Generic.List<string> keys;
@@ -369,10 +369,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueRemoveRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueRemoveRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueRemoveRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueRemoveRenderProcessCall) {}
+        internal CfxDictionaryValueRemoveRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueRemoveRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -403,10 +403,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueGetTypeRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueGetTypeRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueGetTypeRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueGetTypeRenderProcessCall) {}
+        internal CfxDictionaryValueGetTypeRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueGetTypeRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -437,10 +437,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueGetValueRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueGetValueRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueGetValueRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueGetValueRenderProcessCall) {}
+        internal CfxDictionaryValueGetValueRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueGetValueRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -471,10 +471,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueGetBoolRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueGetBoolRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueGetBoolRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueGetBoolRenderProcessCall) {}
+        internal CfxDictionaryValueGetBoolRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueGetBoolRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -505,10 +505,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueGetIntRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueGetIntRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueGetIntRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueGetIntRenderProcessCall) {}
+        internal CfxDictionaryValueGetIntRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueGetIntRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -539,10 +539,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueGetDoubleRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueGetDoubleRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueGetDoubleRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueGetDoubleRenderProcessCall) {}
+        internal CfxDictionaryValueGetDoubleRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueGetDoubleRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -573,10 +573,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueGetStringRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueGetStringRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueGetStringRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueGetStringRenderProcessCall) {}
+        internal CfxDictionaryValueGetStringRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueGetStringRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -607,10 +607,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueGetBinaryRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueGetBinaryRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueGetBinaryRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueGetBinaryRenderProcessCall) {}
+        internal CfxDictionaryValueGetBinaryRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueGetBinaryRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -641,10 +641,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueGetDictionaryRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueGetDictionaryRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueGetDictionaryRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueGetDictionaryRenderProcessCall) {}
+        internal CfxDictionaryValueGetDictionaryRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueGetDictionaryRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -675,10 +675,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueGetListRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueGetListRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueGetListRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueGetListRenderProcessCall) {}
+        internal CfxDictionaryValueGetListRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueGetListRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -709,10 +709,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueSetValueRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueSetValueRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueSetValueRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueSetValueRenderProcessCall) {}
+        internal CfxDictionaryValueSetValueRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueSetValueRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -746,10 +746,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueSetNullRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueSetNullRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueSetNullRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueSetNullRenderProcessCall) {}
+        internal CfxDictionaryValueSetNullRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueSetNullRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -780,10 +780,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueSetBoolRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueSetBoolRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueSetBoolRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueSetBoolRenderProcessCall) {}
+        internal CfxDictionaryValueSetBoolRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueSetBoolRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -817,10 +817,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueSetIntRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueSetIntRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueSetIntRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueSetIntRenderProcessCall) {}
+        internal CfxDictionaryValueSetIntRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueSetIntRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -854,10 +854,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueSetDoubleRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueSetDoubleRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueSetDoubleRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueSetDoubleRenderProcessCall) {}
+        internal CfxDictionaryValueSetDoubleRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueSetDoubleRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -891,10 +891,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueSetStringRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueSetStringRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueSetStringRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueSetStringRenderProcessCall) {}
+        internal CfxDictionaryValueSetStringRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueSetStringRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -930,10 +930,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueSetBinaryRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueSetBinaryRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueSetBinaryRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueSetBinaryRenderProcessCall) {}
+        internal CfxDictionaryValueSetBinaryRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueSetBinaryRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -967,10 +967,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueSetDictionaryRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueSetDictionaryRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueSetDictionaryRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueSetDictionaryRenderProcessCall) {}
+        internal CfxDictionaryValueSetDictionaryRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueSetDictionaryRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;
@@ -1004,10 +1004,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxDictionaryValueSetListRenderProcessCall : RenderProcessCall {
+    internal class CfxDictionaryValueSetListRemoteCall : RemoteCall {
 
-        internal CfxDictionaryValueSetListRenderProcessCall()
-            : base(RemoteCallId.CfxDictionaryValueSetListRenderProcessCall) {}
+        internal CfxDictionaryValueSetListRemoteCall()
+            : base(RemoteCallId.CfxDictionaryValueSetListRemoteCall) {}
 
         internal IntPtr @this;
         internal string key;

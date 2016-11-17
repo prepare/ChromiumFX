@@ -600,7 +600,7 @@ public class CfxClientClass : CfxClass {
         EmitRemoteClassWrapperFunction(b);
 
         b.BeginFunction("CreateRemote", "RemotePtr", "", "internal static");
-        b.AppendLine("var call = new {0}CtorRenderProcessCall();", ClassName);
+        b.AppendLine("var call = new {0}CtorRemoteCall();", ClassName);
         b.AppendLine("call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);");
         b.AppendLine("return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);");
         b.EndBlock();
@@ -638,7 +638,7 @@ public class CfxClientClass : CfxClass {
                 b.BeginBlock("public event {0} {1}", cb.RemoteEventHandlerName, CSharp.Escape(cb.PublicName));
                 b.BeginBlock("add");
                 b.BeginBlock("if(m_{0} == null)", cb.PublicName);
-                b.AppendLine("var call = new {0}ActivateRenderProcessCall();", cb.EventName);
+                b.AppendLine("var call = new {0}ActivateRemoteCall();", cb.EventName);
                 b.AppendLine("call.sender = RemotePtr.ptr;");
                 b.AppendLine("call.RequestExecution(RemotePtr.connection);");
                 b.EndBlock();
@@ -647,7 +647,7 @@ public class CfxClientClass : CfxClass {
                 b.BeginBlock("remove");
                 b.AppendLine("m_{0} -= value;", cb.PublicName);
                 b.BeginBlock("if(m_{0} == null)", cb.PublicName);
-                b.AppendLine("var call = new {0}DeactivateRenderProcessCall();", cb.EventName);
+                b.AppendLine("var call = new {0}DeactivateRemoteCall();", cb.EventName);
                 b.AppendLine("call.sender = RemotePtr.ptr;");
                 b.AppendLine("call.RequestExecution(RemotePtr.connection);");
                 b.EndBlock();
@@ -723,7 +723,7 @@ public class CfxClientClass : CfxClass {
                 b.AppendLine("CheckAccess();");
                 b.BeginBlock("if(!{0}Fetched)", arg.PublicPropertyName);
                 b.AppendLine("{0}Fetched = true;", arg.PublicPropertyName);
-                b.AppendLine("var call = new {0}Get{1}RenderProcessCall();", cb.EventName, arg.PublicPropertyName);
+                b.AppendLine("var call = new {0}Get{1}RemoteCall();", cb.EventName, arg.PublicPropertyName);
                 b.AppendLine("call.eventArgsId = eventArgsId;");
                 b.AppendLine("call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);");
                 b.AppendLine("m_{0} = {1};", arg.PublicPropertyName, arg.ArgumentType.RemoteWrapExpression("call.value"));
@@ -738,7 +738,7 @@ public class CfxClientClass : CfxClass {
                     b.AppendLine("m_{0} = value;", arg.PublicPropertyName);
                     b.AppendLine("{0}Fetched = true;", arg.PublicPropertyName);
                 }
-                b.AppendLine("var call = new {0}Set{1}RenderProcessCall();", cb.EventName, arg.PublicPropertyName);
+                b.AppendLine("var call = new {0}Set{1}RemoteCall();", cb.EventName, arg.PublicPropertyName);
                 b.AppendLine("call.eventArgsId = eventArgsId;");
                 b.AppendLine("call.value = {0};", arg.ArgumentType.RemoteUnwrapExpression("value"));
                 b.AppendLine("call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);");
@@ -757,7 +757,7 @@ public class CfxClientClass : CfxClass {
             b.BeginIf("returnValueSet");
             b.AppendLine("throw new CfxException(\"The return value has already been set\");");
             b.EndBlock();
-            b.AppendLine("var call = new {0}SetReturnValueRenderProcessCall();", cb.EventName);
+            b.AppendLine("var call = new {0}SetReturnValueRemoteCall();", cb.EventName);
             b.AppendLine("call.eventArgsId = eventArgsId;");
             b.AppendLine("call.value = {0};", cb.Signature.PublicReturnType.RemoteUnwrapExpression("returnValue"));
             b.AppendLine("call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);");

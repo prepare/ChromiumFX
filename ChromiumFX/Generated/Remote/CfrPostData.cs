@@ -67,7 +67,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public static CfrPostData Create() {
-            var call = new CfxPostDataCreateRenderProcessCall();
+            var call = new CfxPostDataCreateRemoteCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrPostData.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
@@ -84,7 +84,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsReadOnly {
             get {
-                var call = new CfxPostDataIsReadOnlyRenderProcessCall();
+                var call = new CfxPostDataIsReadOnlyRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -103,7 +103,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool HasExcludedElements {
             get {
-                var call = new CfxPostDataHasExcludedElementsRenderProcessCall();
+                var call = new CfxPostDataHasExcludedElementsRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -119,7 +119,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public ulong ElementCount {
             get {
-                var call = new CfxPostDataGetElementCountRenderProcessCall();
+                var call = new CfxPostDataGetElementCountRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -135,7 +135,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrPostDataElement[] Elements {
             get {
-                var call = new CfxPostDataGetElementsRenderProcessCall();
+                var call = new CfxPostDataGetElementsRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 if(call.__retval == null) return null;
@@ -156,7 +156,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public bool RemoveElement(CfrPostDataElement element) {
-            var call = new CfxPostDataRemoveElementRenderProcessCall();
+            var call = new CfxPostDataRemoveElementRemoteCall();
             call.@this = RemotePtr.ptr;
             call.element = CfrObject.Unwrap(element).ptr;
             call.RequestExecution(RemotePtr.connection);
@@ -171,7 +171,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public bool AddElement(CfrPostDataElement element) {
-            var call = new CfxPostDataAddElementRenderProcessCall();
+            var call = new CfxPostDataAddElementRemoteCall();
             call.@this = RemotePtr.ptr;
             call.element = CfrObject.Unwrap(element).ptr;
             call.RequestExecution(RemotePtr.connection);
@@ -186,7 +186,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_capi.h">cef/include/capi/cef_request_capi.h</see>.
         /// </remarks>
         public void RemoveElements() {
-            var call = new CfxPostDataRemoveElementsRenderProcessCall();
+            var call = new CfxPostDataRemoveElementsRemoteCall();
             call.@this = RemotePtr.ptr;
             call.RequestExecution(RemotePtr.connection);
         }

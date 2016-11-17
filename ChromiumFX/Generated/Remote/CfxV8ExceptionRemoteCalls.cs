@@ -35,10 +35,10 @@ using System;
 
 namespace Chromium.Remote {
 
-    internal class CfxV8ExceptionGetMessageRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ExceptionGetMessageRemoteCall : RemoteCall {
 
-        internal CfxV8ExceptionGetMessageRenderProcessCall()
-            : base(RemoteCallId.CfxV8ExceptionGetMessageRenderProcessCall) {}
+        internal CfxV8ExceptionGetMessageRemoteCall()
+            : base(RemoteCallId.CfxV8ExceptionGetMessageRemoteCall) {}
 
         internal IntPtr @this;
         internal string __retval;
@@ -64,10 +64,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8ExceptionGetSourceLineRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ExceptionGetSourceLineRemoteCall : RemoteCall {
 
-        internal CfxV8ExceptionGetSourceLineRenderProcessCall()
-            : base(RemoteCallId.CfxV8ExceptionGetSourceLineRenderProcessCall) {}
+        internal CfxV8ExceptionGetSourceLineRemoteCall()
+            : base(RemoteCallId.CfxV8ExceptionGetSourceLineRemoteCall) {}
 
         internal IntPtr @this;
         internal string __retval;
@@ -93,10 +93,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8ExceptionGetScriptResourceNameRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ExceptionGetScriptResourceNameRemoteCall : RemoteCall {
 
-        internal CfxV8ExceptionGetScriptResourceNameRenderProcessCall()
-            : base(RemoteCallId.CfxV8ExceptionGetScriptResourceNameRenderProcessCall) {}
+        internal CfxV8ExceptionGetScriptResourceNameRemoteCall()
+            : base(RemoteCallId.CfxV8ExceptionGetScriptResourceNameRemoteCall) {}
 
         internal IntPtr @this;
         internal string __retval;
@@ -122,10 +122,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8ExceptionGetLineNumberRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ExceptionGetLineNumberRemoteCall : RemoteCall {
 
-        internal CfxV8ExceptionGetLineNumberRenderProcessCall()
-            : base(RemoteCallId.CfxV8ExceptionGetLineNumberRenderProcessCall) {}
+        internal CfxV8ExceptionGetLineNumberRemoteCall()
+            : base(RemoteCallId.CfxV8ExceptionGetLineNumberRemoteCall) {}
 
         internal IntPtr @this;
         internal int __retval;
@@ -151,10 +151,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8ExceptionGetStartPositionRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ExceptionGetStartPositionRemoteCall : RemoteCall {
 
-        internal CfxV8ExceptionGetStartPositionRenderProcessCall()
-            : base(RemoteCallId.CfxV8ExceptionGetStartPositionRenderProcessCall) {}
+        internal CfxV8ExceptionGetStartPositionRemoteCall()
+            : base(RemoteCallId.CfxV8ExceptionGetStartPositionRemoteCall) {}
 
         internal IntPtr @this;
         internal int __retval;
@@ -180,10 +180,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8ExceptionGetEndPositionRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ExceptionGetEndPositionRemoteCall : RemoteCall {
 
-        internal CfxV8ExceptionGetEndPositionRenderProcessCall()
-            : base(RemoteCallId.CfxV8ExceptionGetEndPositionRenderProcessCall) {}
+        internal CfxV8ExceptionGetEndPositionRemoteCall()
+            : base(RemoteCallId.CfxV8ExceptionGetEndPositionRemoteCall) {}
 
         internal IntPtr @this;
         internal int __retval;
@@ -209,10 +209,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8ExceptionGetStartColumnRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ExceptionGetStartColumnRemoteCall : RemoteCall {
 
-        internal CfxV8ExceptionGetStartColumnRenderProcessCall()
-            : base(RemoteCallId.CfxV8ExceptionGetStartColumnRenderProcessCall) {}
+        internal CfxV8ExceptionGetStartColumnRemoteCall()
+            : base(RemoteCallId.CfxV8ExceptionGetStartColumnRemoteCall) {}
 
         internal IntPtr @this;
         internal int __retval;
@@ -238,10 +238,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8ExceptionGetEndColumnRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ExceptionGetEndColumnRemoteCall : RemoteCall {
 
-        internal CfxV8ExceptionGetEndColumnRenderProcessCall()
-            : base(RemoteCallId.CfxV8ExceptionGetEndColumnRenderProcessCall) {}
+        internal CfxV8ExceptionGetEndColumnRemoteCall()
+            : base(RemoteCallId.CfxV8ExceptionGetEndColumnRemoteCall) {}
 
         internal IntPtr @this;
         internal int __retval;

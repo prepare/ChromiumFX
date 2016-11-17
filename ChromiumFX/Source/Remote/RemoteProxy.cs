@@ -74,7 +74,7 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class ReleaseRemotePtrRemoteCall : RenderProcessCall {
+    internal class ReleaseRemotePtrRemoteCall : RemoteCall {
         internal ReleaseRemotePtrRemoteCall() : base(RemoteCallId.ReleaseRemotePtrRemoteCall, true) { }
         internal IntPtr remotePtr;
         protected override void WriteArgs(StreamHandler h) { h.Write(remotePtr); }

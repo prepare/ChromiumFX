@@ -73,7 +73,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static CfrTaskRunner GetForCurrentThread() {
-            var call = new CfxTaskRunnerGetForCurrentThreadRenderProcessCall();
+            var call = new CfxTaskRunnerGetForCurrentThreadRemoteCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrTaskRunner.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
         }
@@ -86,7 +86,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static CfrTaskRunner GetForThread(CfxThreadId threadId) {
-            var call = new CfxTaskRunnerGetForThreadRenderProcessCall();
+            var call = new CfxTaskRunnerGetForThreadRemoteCall();
             call.threadId = (int)threadId;
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return CfrTaskRunner.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
@@ -104,7 +104,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public bool IsSame(CfrTaskRunner that) {
-            var call = new CfxTaskRunnerIsSameRenderProcessCall();
+            var call = new CfxTaskRunnerIsSameRemoteCall();
             call.@this = RemotePtr.ptr;
             call.that = CfrObject.Unwrap(that).ptr;
             call.RequestExecution(RemotePtr.connection);
@@ -119,7 +119,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public bool BelongsToCurrentThread() {
-            var call = new CfxTaskRunnerBelongsToCurrentThreadRenderProcessCall();
+            var call = new CfxTaskRunnerBelongsToCurrentThreadRemoteCall();
             call.@this = RemotePtr.ptr;
             call.RequestExecution(RemotePtr.connection);
             return call.__retval;
@@ -133,7 +133,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public bool BelongsToThread(CfxThreadId threadId) {
-            var call = new CfxTaskRunnerBelongsToThreadRenderProcessCall();
+            var call = new CfxTaskRunnerBelongsToThreadRemoteCall();
             call.@this = RemotePtr.ptr;
             call.threadId = (int)threadId;
             call.RequestExecution(RemotePtr.connection);
@@ -149,7 +149,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public bool PostTask(CfrTask task) {
-            var call = new CfxTaskRunnerPostTaskRenderProcessCall();
+            var call = new CfxTaskRunnerPostTaskRemoteCall();
             call.@this = RemotePtr.ptr;
             call.task = CfrObject.Unwrap(task).ptr;
             call.RequestExecution(RemotePtr.connection);
@@ -167,7 +167,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public bool PostDelayedTask(CfrTask task, long delayMs) {
-            var call = new CfxTaskRunnerPostDelayedTaskRenderProcessCall();
+            var call = new CfxTaskRunnerPostDelayedTaskRemoteCall();
             call.@this = RemotePtr.ptr;
             call.task = CfrObject.Unwrap(task).ptr;
             call.delayMs = delayMs;

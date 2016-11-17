@@ -71,7 +71,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfxDomDocumentType Type {
             get {
-                var call = new CfxDomDocumentGetTypeRenderProcessCall();
+                var call = new CfxDomDocumentGetTypeRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return (CfxDomDocumentType)call.__retval;
@@ -87,7 +87,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrDomNode Document {
             get {
-                var call = new CfxDomDocumentGetDocumentRenderProcessCall();
+                var call = new CfxDomDocumentGetDocumentRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return CfrDomNode.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
@@ -103,7 +103,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrDomNode Body {
             get {
-                var call = new CfxDomDocumentGetBodyRenderProcessCall();
+                var call = new CfxDomDocumentGetBodyRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return CfrDomNode.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
@@ -119,7 +119,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrDomNode Head {
             get {
-                var call = new CfxDomDocumentGetHeadRenderProcessCall();
+                var call = new CfxDomDocumentGetHeadRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return CfrDomNode.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
@@ -135,7 +135,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public string Title {
             get {
-                var call = new CfxDomDocumentGetTitleRenderProcessCall();
+                var call = new CfxDomDocumentGetTitleRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -151,7 +151,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrDomNode FocusedNode {
             get {
-                var call = new CfxDomDocumentGetFocusedNodeRenderProcessCall();
+                var call = new CfxDomDocumentGetFocusedNodeRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return CfrDomNode.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval));
@@ -167,7 +167,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool HasSelection {
             get {
-                var call = new CfxDomDocumentHasSelectionRenderProcessCall();
+                var call = new CfxDomDocumentHasSelectionRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -183,7 +183,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public int SelectionStartOffset {
             get {
-                var call = new CfxDomDocumentGetSelectionStartOffsetRenderProcessCall();
+                var call = new CfxDomDocumentGetSelectionStartOffsetRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -199,7 +199,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public int SelectionEndOffset {
             get {
-                var call = new CfxDomDocumentGetSelectionEndOffsetRenderProcessCall();
+                var call = new CfxDomDocumentGetSelectionEndOffsetRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -215,7 +215,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public string SelectionAsMarkup {
             get {
-                var call = new CfxDomDocumentGetSelectionAsMarkupRenderProcessCall();
+                var call = new CfxDomDocumentGetSelectionAsMarkupRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -231,7 +231,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public string SelectionAsText {
             get {
-                var call = new CfxDomDocumentGetSelectionAsTextRenderProcessCall();
+                var call = new CfxDomDocumentGetSelectionAsTextRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -247,7 +247,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public string BaseUrl {
             get {
-                var call = new CfxDomDocumentGetBaseUrlRenderProcessCall();
+                var call = new CfxDomDocumentGetBaseUrlRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
                 return call.__retval;
@@ -262,7 +262,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
         public CfrDomNode GetElementById(string id) {
-            var call = new CfxDomDocumentGetElementByIdRenderProcessCall();
+            var call = new CfxDomDocumentGetElementByIdRemoteCall();
             call.@this = RemotePtr.ptr;
             call.id = id;
             call.RequestExecution(RemotePtr.connection);
@@ -278,7 +278,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
         public string GetCompleteUrl(string partialURL) {
-            var call = new CfxDomDocumentGetCompleteUrlRenderProcessCall();
+            var call = new CfxDomDocumentGetCompleteUrlRemoteCall();
             call.@this = RemotePtr.ptr;
             call.partialURL = partialURL;
             call.RequestExecution(RemotePtr.connection);

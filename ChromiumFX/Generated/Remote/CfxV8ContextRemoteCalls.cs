@@ -35,10 +35,10 @@ using System;
 
 namespace Chromium.Remote {
 
-    internal class CfxV8ContextGetCurrentContextRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ContextGetCurrentContextRemoteCall : RemoteCall {
 
-        internal CfxV8ContextGetCurrentContextRenderProcessCall()
-            : base(RemoteCallId.CfxV8ContextGetCurrentContextRenderProcessCall) {}
+        internal CfxV8ContextGetCurrentContextRemoteCall()
+            : base(RemoteCallId.CfxV8ContextGetCurrentContextRemoteCall) {}
 
         internal IntPtr __retval;
 
@@ -55,10 +55,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8ContextGetEnteredContextRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ContextGetEnteredContextRemoteCall : RemoteCall {
 
-        internal CfxV8ContextGetEnteredContextRenderProcessCall()
-            : base(RemoteCallId.CfxV8ContextGetEnteredContextRenderProcessCall) {}
+        internal CfxV8ContextGetEnteredContextRemoteCall()
+            : base(RemoteCallId.CfxV8ContextGetEnteredContextRemoteCall) {}
 
         internal IntPtr __retval;
 
@@ -75,10 +75,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8ContextInContextRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ContextInContextRemoteCall : RemoteCall {
 
-        internal CfxV8ContextInContextRenderProcessCall()
-            : base(RemoteCallId.CfxV8ContextInContextRenderProcessCall) {}
+        internal CfxV8ContextInContextRemoteCall()
+            : base(RemoteCallId.CfxV8ContextInContextRemoteCall) {}
 
         internal bool __retval;
 
@@ -95,10 +95,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8ContextGetTaskRunnerRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ContextGetTaskRunnerRemoteCall : RemoteCall {
 
-        internal CfxV8ContextGetTaskRunnerRenderProcessCall()
-            : base(RemoteCallId.CfxV8ContextGetTaskRunnerRenderProcessCall) {}
+        internal CfxV8ContextGetTaskRunnerRemoteCall()
+            : base(RemoteCallId.CfxV8ContextGetTaskRunnerRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr __retval;
@@ -124,10 +124,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8ContextIsValidRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ContextIsValidRemoteCall : RemoteCall {
 
-        internal CfxV8ContextIsValidRenderProcessCall()
-            : base(RemoteCallId.CfxV8ContextIsValidRenderProcessCall) {}
+        internal CfxV8ContextIsValidRemoteCall()
+            : base(RemoteCallId.CfxV8ContextIsValidRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -153,10 +153,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8ContextGetBrowserRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ContextGetBrowserRemoteCall : RemoteCall {
 
-        internal CfxV8ContextGetBrowserRenderProcessCall()
-            : base(RemoteCallId.CfxV8ContextGetBrowserRenderProcessCall) {}
+        internal CfxV8ContextGetBrowserRemoteCall()
+            : base(RemoteCallId.CfxV8ContextGetBrowserRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr __retval;
@@ -182,10 +182,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8ContextGetFrameRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ContextGetFrameRemoteCall : RemoteCall {
 
-        internal CfxV8ContextGetFrameRenderProcessCall()
-            : base(RemoteCallId.CfxV8ContextGetFrameRenderProcessCall) {}
+        internal CfxV8ContextGetFrameRemoteCall()
+            : base(RemoteCallId.CfxV8ContextGetFrameRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr __retval;
@@ -211,10 +211,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8ContextGetGlobalRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ContextGetGlobalRemoteCall : RemoteCall {
 
-        internal CfxV8ContextGetGlobalRenderProcessCall()
-            : base(RemoteCallId.CfxV8ContextGetGlobalRenderProcessCall) {}
+        internal CfxV8ContextGetGlobalRemoteCall()
+            : base(RemoteCallId.CfxV8ContextGetGlobalRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr __retval;
@@ -240,10 +240,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8ContextEnterRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ContextEnterRemoteCall : RemoteCall {
 
-        internal CfxV8ContextEnterRenderProcessCall()
-            : base(RemoteCallId.CfxV8ContextEnterRenderProcessCall) {}
+        internal CfxV8ContextEnterRemoteCall()
+            : base(RemoteCallId.CfxV8ContextEnterRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -269,10 +269,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8ContextExitRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ContextExitRemoteCall : RemoteCall {
 
-        internal CfxV8ContextExitRenderProcessCall()
-            : base(RemoteCallId.CfxV8ContextExitRenderProcessCall) {}
+        internal CfxV8ContextExitRemoteCall()
+            : base(RemoteCallId.CfxV8ContextExitRemoteCall) {}
 
         internal IntPtr @this;
         internal bool __retval;
@@ -298,10 +298,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8ContextIsSameRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ContextIsSameRemoteCall : RemoteCall {
 
-        internal CfxV8ContextIsSameRenderProcessCall()
-            : base(RemoteCallId.CfxV8ContextIsSameRenderProcessCall) {}
+        internal CfxV8ContextIsSameRemoteCall()
+            : base(RemoteCallId.CfxV8ContextIsSameRemoteCall) {}
 
         internal IntPtr @this;
         internal IntPtr that;
@@ -330,10 +330,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxV8ContextEvalRenderProcessCall : RenderProcessCall {
+    internal class CfxV8ContextEvalRemoteCall : RemoteCall {
 
-        internal CfxV8ContextEvalRenderProcessCall()
-            : base(RemoteCallId.CfxV8ContextEvalRenderProcessCall) {}
+        internal CfxV8ContextEvalRemoteCall()
+            : base(RemoteCallId.CfxV8ContextEvalRemoteCall) {}
 
         internal IntPtr @this;
         internal string code;

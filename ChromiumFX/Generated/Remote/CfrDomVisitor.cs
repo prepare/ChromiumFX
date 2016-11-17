@@ -61,7 +61,7 @@ namespace Chromium.Remote {
 
 
         internal static RemotePtr CreateRemote() {
-            var call = new CfxDomVisitorCtorRenderProcessCall();
+            var call = new CfxDomVisitorCtorRemoteCall();
             call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
             return new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.__retval);
         }
@@ -93,7 +93,7 @@ namespace Chromium.Remote {
         public event CfrDomVisitorVisitEventHandler Visit {
             add {
                 if(m_Visit == null) {
-                    var call = new CfxDomVisitorVisitActivateRenderProcessCall();
+                    var call = new CfxDomVisitorVisitActivateRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                 }
@@ -102,7 +102,7 @@ namespace Chromium.Remote {
             remove {
                 m_Visit -= value;
                 if(m_Visit == null) {
-                    var call = new CfxDomVisitorVisitDeactivateRenderProcessCall();
+                    var call = new CfxDomVisitorVisitDeactivateRemoteCall();
                     call.sender = RemotePtr.ptr;
                     call.RequestExecution(RemotePtr.connection);
                 }
@@ -155,7 +155,7 @@ namespace Chromium.Remote {
                     CheckAccess();
                     if(!DocumentFetched) {
                         DocumentFetched = true;
-                        var call = new CfxDomVisitorVisitGetDocumentRenderProcessCall();
+                        var call = new CfxDomVisitorVisitGetDocumentRemoteCall();
                         call.eventArgsId = eventArgsId;
                         call.RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
                         m_Document = CfrDomDocument.Wrap(new RemotePtr(CfxRemoteCallContext.CurrentContext.connection, call.value));
