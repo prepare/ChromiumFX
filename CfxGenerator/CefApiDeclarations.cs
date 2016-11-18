@@ -88,11 +88,9 @@ public class CefApiDeclarations {
                         list.Add(st.CfxName + "_ctor");
                         list.Add(st.CfxName + "_dtor");
                         foreach(var sm in st.ClassBuilder.StructMembers) {
-                            if(sm.Name != "size") {
-                                sm.ApiIndex = list.Count;
-                                list.Add(st.CfxName + "_set_" + sm.Name);
-                                list.Add(st.CfxName + "_get_" + sm.Name);
-                            }
+                            sm.ApiIndex = list.Count;
+                            list.Add(st.CfxName + "_set_" + sm.Name);
+                            list.Add(st.CfxName + "_get_" + sm.Name);
                         }
 
                         break;

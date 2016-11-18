@@ -65,4 +65,12 @@ static void cfx_cursor_info_get_buffer(cef_cursor_info_t *self, void** buffer) {
     *buffer = self->buffer;
 }
 
+// cef_cursor_info_t->size
+static void cfx_cursor_info_set_size(cef_cursor_info_t *self, cef_size_t* size) {
+    self->size = *(size);
+}
+static void cfx_cursor_info_get_size(cef_cursor_info_t *self, cef_size_t** size) {
+    *size = &(self->size);
+}
+
 

@@ -419,10 +419,8 @@ public class WrapperGenerator {
                     b.AppendLine("CfxApi.{0}.{1}_dtor = (CfxApi.cfx_dtor_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_dtor, typeof(CfxApi.cfx_dtor_delegate));", apiClassName, cefStruct.CfxName);
 
                     foreach(var sm in cefStruct.ClassBuilder.StructMembers) {
-                        if(sm.Name != "size") {
-                            CodeSnippets.EmitPInvokeDelegateInitialization(b, apiClassName, cefStruct.CfxName + "_set_" + sm.Name);
-                            CodeSnippets.EmitPInvokeDelegateInitialization(b, apiClassName, cefStruct.CfxName + "_get_" + sm.Name);
-                        }
+                        CodeSnippets.EmitPInvokeDelegateInitialization(b, apiClassName, cefStruct.CfxName + "_set_" + sm.Name);
+                        CodeSnippets.EmitPInvokeDelegateInitialization(b, apiClassName, cefStruct.CfxName + "_get_" + sm.Name);
                     }
 
                     break;

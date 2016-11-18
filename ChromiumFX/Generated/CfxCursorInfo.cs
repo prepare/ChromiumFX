@@ -92,5 +92,16 @@ namespace Chromium {
             }
         }
 
+        public CfxSize Size {
+            get {
+                IntPtr value;
+                CfxApi.CursorInfo.cfx_cursor_info_get_size(nativePtrUnchecked, out value);
+                return CfxSize.Wrap(value);
+            }
+            set {
+                CfxApi.CursorInfo.cfx_cursor_info_set_size(nativePtrUnchecked, CfxSize.Unwrap(value));
+            }
+        }
+
     }
 }

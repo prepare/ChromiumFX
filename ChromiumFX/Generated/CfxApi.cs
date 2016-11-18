@@ -1689,6 +1689,15 @@ namespace Chromium {
             public delegate void cfx_cursor_info_get_buffer_delegate(IntPtr self, out IntPtr buffer);
             public static cfx_cursor_info_get_buffer_delegate cfx_cursor_info_get_buffer;
 
+            // static void cfx_cursor_info_set_size(cef_cursor_info_t *self, cef_size_t* size)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_cursor_info_set_size_delegate(IntPtr self, IntPtr size);
+            public static cfx_cursor_info_set_size_delegate cfx_cursor_info_set_size;
+            // static void cfx_cursor_info_get_size(cef_cursor_info_t *self, cef_size_t** size)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_cursor_info_get_size_delegate(IntPtr self, out IntPtr size);
+            public static cfx_cursor_info_get_size_delegate cfx_cursor_info_get_size;
+
         }
 
         internal static class DeleteCookiesCallback {

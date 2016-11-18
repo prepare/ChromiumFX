@@ -37,12 +37,19 @@ using System.Text;
 
 public class CfxValueClass : CfxClass {
 
+    private bool hasSizeMember;
+
     public CfxValueClass(CefStructType cefStruct, Parser.StructData sd, ApiTypeBuilder api)
         : base(cefStruct, sd, api) {
 
         var smlist = new List<StructMember>();
         foreach(var smd in sd.StructMembers) {
             smlist.Add(new StructMember(cefStruct, Category, smd, api));
+        }
+        var sm0 = smlist[0];
+        if(sm0.Name == "size" && sm0.MemberType.OriginalSymbol == "size_t") {
+            smlist.RemoveAt(0);
+            hasSizeMember = true;
         }
         StructMembers = smlist.ToArray();
     }
@@ -58,7 +65,7 @@ public class CfxValueClass : CfxClass {
         }
 
         b.BeginBlock("static {0}* {1}_ctor()", OriginalSymbol, CfxName);
-        if(StructMembers.Length > 0 && StructMembers[0].Name == "size") {
+        if(hasSizeMember) {
             b.AppendLine("{0}* self = ({0}*)calloc(1, sizeof({0}));", OriginalSymbol);
             b.AppendLine("if(!self) return 0;");
             b.AppendLine("self->size = sizeof({0});", OriginalSymbol);
@@ -78,16 +85,14 @@ public class CfxValueClass : CfxClass {
         b.AppendLine();
 
         foreach(var sm in StructMembers) {
-            if(sm.Name != "size") {
-                b.AppendComment("{0}->{1}", CefStruct.OriginalSymbol, sm.Name);
-                b.BeginBlock("static void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, CefStruct.OriginalSymbol, sm.MemberType.NativeCallParameter(sm.Name, false));
-                sm.MemberType.EmitAssignToNativeStructMember(b, sm.Name);
-                b.EndBlock();
-                b.BeginBlock("static void {0}_get_{1}({2} *self, {3})", CfxName, sm.Name, CefStruct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name));
-                sm.MemberType.EmitAssignFromNativeStructMember(b, sm.Name);
-                b.EndBlock();
-                b.AppendLine();
-            }
+            b.AppendComment("{0}->{1}", CefStruct.OriginalSymbol, sm.Name);
+            b.BeginBlock("static void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, CefStruct.OriginalSymbol, sm.MemberType.NativeCallParameter(sm.Name, false));
+            sm.MemberType.EmitAssignToNativeStructMember(b, sm.Name);
+            b.EndBlock();
+            b.BeginBlock("static void {0}_get_{1}({2} *self, {3})", CfxName, sm.Name, CefStruct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name));
+            sm.MemberType.EmitAssignFromNativeStructMember(b, sm.Name);
+            b.EndBlock();
+            b.AppendLine();
         }
 
         if(CefStruct.IsCefPlatformStructType) {
@@ -95,10 +100,8 @@ public class CfxValueClass : CfxClass {
             b.AppendLine("#define {0}_ctor 0", CfxName);
             b.AppendLine("#define {0}_dtor 0", CfxName);
             foreach(var sm in StructMembers) {
-                if(sm.Name != "size") {
-                    b.AppendLine("#define {0}_set_{1} 0", CfxName, sm.Name, CefStruct.OriginalSymbol, sm.MemberType.NativeCallParameter(sm.Name, false));
-                    b.AppendLine("#define {0}_get_{1} 0", CfxName, sm.Name, CefStruct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name));
-                }
+                b.AppendLine("#define {0}_set_{1} 0", CfxName, sm.Name, CefStruct.OriginalSymbol, sm.MemberType.NativeCallParameter(sm.Name, false));
+                b.AppendLine("#define {0}_get_{1} 0", CfxName, sm.Name, CefStruct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name));
             }
             b.AppendLine("#endif //ifdef CFX_" + CefStruct.AsCefPlatformStructType.Platform.ToString().ToUpper());
             b.AppendLine();
@@ -115,17 +118,15 @@ public class CfxValueClass : CfxClass {
         b.AppendLine();
 
         foreach(var sm in StructMembers) {
-            if(sm.Name != "size") {
-                b.AppendComment("static void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, CefStruct.OriginalSymbol, sm.MemberType.NativeCallParameter(sm.Name, false));
-                b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]");
-                b.AppendLine("public delegate void {0}_set_{1}_delegate(IntPtr self, {2});", CfxName, sm.Name, sm.MemberType.PInvokeCallParameter(sm.Name));
-                b.AppendLine("public static {0}_set_{1}_delegate {0}_set_{1};", CfxName, sm.Name);
-                b.AppendComment("static void {0}_get_{1}({2} *self, {3})", CfxName, sm.Name, CefStruct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name));
-                b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]");
-                b.AppendLine("public delegate void {0}_get_{1}_delegate(IntPtr self, {2});", CfxName, sm.Name, sm.MemberType.PInvokeOutSignature(sm.Name));
-                b.AppendLine("public static {0}_get_{1}_delegate {0}_get_{1};", CfxName, sm.Name);
-                b.AppendLine();
-            }
+            b.AppendComment("static void {0}_set_{1}({2} *self, {3})", CfxName, sm.Name, CefStruct.OriginalSymbol, sm.MemberType.NativeCallParameter(sm.Name, false));
+            b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]");
+            b.AppendLine("public delegate void {0}_set_{1}_delegate(IntPtr self, {2});", CfxName, sm.Name, sm.MemberType.PInvokeCallParameter(sm.Name));
+            b.AppendLine("public static {0}_set_{1}_delegate {0}_set_{1};", CfxName, sm.Name);
+            b.AppendComment("static void {0}_get_{1}({2} *self, {3})", CfxName, sm.Name, CefStruct.OriginalSymbol, sm.MemberType.NativeOutSignature(sm.Name));
+            b.AppendLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]");
+            b.AppendLine("public delegate void {0}_get_{1}_delegate(IntPtr self, {2});", CfxName, sm.Name, sm.MemberType.PInvokeOutSignature(sm.Name));
+            b.AppendLine("public static {0}_get_{1}_delegate {0}_get_{1};", CfxName, sm.Name);
+            b.AppendLine();
         }
     }
 
@@ -177,22 +178,20 @@ public class CfxValueClass : CfxClass {
         b.AppendLine();
 
         foreach(var sm in StructMembers) {
-            if(sm.Name != "size") {
-                b.AppendSummaryAndRemarks(sm.Comments);
-                b.BeginBlock("public {1} {0}", CSharp.Escape(sm.PublicName), sm.MemberType.PublicSymbol);
-                b.BeginBlock("get");
-                sm.MemberType.EmitValueStructGetterVars(b, "value");
-                b.AppendLine("CfxApi.{3}.{0}_get_{1}(nativePtrUnchecked, {2});", CfxName, sm.Name, sm.MemberType.PInvokeOutArgument("value"), ApiClassName);
-                b.AppendLine("return {0};", sm.MemberType.PublicWrapExpression("value"));
-                b.EndBlock();
-                b.BeginBlock("set");
-                sm.MemberType.EmitPrePublicCallStatements(b, "value");
-                b.AppendLine("CfxApi.{3}.{0}_set_{1}(nativePtrUnchecked, {2});", CfxName, sm.Name, sm.MemberType.PublicUnwrapExpression("value"), ApiClassName);
-                sm.MemberType.EmitPostPublicCallStatements(b, "value");
-                b.EndBlock();
-                b.EndBlock();
-                b.AppendLine();
-            }
+            b.AppendSummaryAndRemarks(sm.Comments);
+            b.BeginBlock("public {1} {0}", CSharp.Escape(sm.PublicName), sm.MemberType.PublicSymbol);
+            b.BeginBlock("get");
+            sm.MemberType.EmitValueStructGetterVars(b, "value");
+            b.AppendLine("CfxApi.{3}.{0}_get_{1}(nativePtrUnchecked, {2});", CfxName, sm.Name, sm.MemberType.PInvokeOutArgument("value"), ApiClassName);
+            b.AppendLine("return {0};", sm.MemberType.PublicWrapExpression("value"));
+            b.EndBlock();
+            b.BeginBlock("set");
+            sm.MemberType.EmitPrePublicCallStatements(b, "value");
+            b.AppendLine("CfxApi.{3}.{0}_set_{1}(nativePtrUnchecked, {2});", CfxName, sm.Name, sm.MemberType.PublicUnwrapExpression("value"), ApiClassName);
+            sm.MemberType.EmitPostPublicCallStatements(b, "value");
+            b.EndBlock();
+            b.EndBlock();
+            b.AppendLine();
         }
 
         b.EndBlock();
@@ -256,34 +255,32 @@ public class CfxValueClass : CfxClass {
         b.EndBlock();
 
         foreach(var sm in StructMembers) {
-            if(sm.Name != "size") {
-                b.AppendLine();
-                b.AppendLine("{0} m_{1};", sm.MemberType.RemoteSymbol, sm.PublicName);
-                b.AppendLine("bool m_{0}_fetched;", sm.PublicName);
-                b.AppendLine();
+            b.AppendLine();
+            b.AppendLine("{0} m_{1};", sm.MemberType.RemoteSymbol, sm.PublicName);
+            b.AppendLine("bool m_{0}_fetched;", sm.PublicName);
+            b.AppendLine();
 
-                b.AppendSummaryAndRemarks(sm.Comments, true);
-                b.BeginBlock("public {1} {0}", CSharp.Escape(sm.PublicName), sm.MemberType.RemoteSymbol);
-                b.BeginBlock("get");
-                b.BeginIf("!m_{0}_fetched", sm.PublicName);
-                b.AppendLine("var call = new {0}Get{1}RemoteCall();", ClassName, sm.PublicName);
-                b.AppendLine("call.sender = RemotePtr.ptr;");
-                b.AppendLine("call.RequestExecution(RemotePtr.connection);");
-                b.AppendLine("m_{0} = {1};", sm.PublicName, sm.MemberType.RemoteWrapExpression("call.value"));
-                b.AppendLine("m_{0}_fetched = true;", sm.PublicName);
-                b.EndBlock();
-                b.AppendLine("return m_{0};", sm.PublicName);
-                b.EndBlock();
-                b.BeginBlock("set");
-                b.AppendLine("var call = new {0}Set{1}RemoteCall();", ClassName, sm.PublicName);
-                b.AppendLine("call.sender = RemotePtr.ptr;");
-                b.AppendLine("call.value = {0};", sm.MemberType.RemoteUnwrapExpression("value"));
-                b.AppendLine("call.RequestExecution(RemotePtr.connection);");
-                b.AppendLine("m_{0} = value;", sm.PublicName);
-                b.AppendLine("m_{0}_fetched = true;", sm.PublicName);
-                b.EndBlock();
-                b.EndBlock();
-            }
+            b.AppendSummaryAndRemarks(sm.Comments, true);
+            b.BeginBlock("public {1} {0}", CSharp.Escape(sm.PublicName), sm.MemberType.RemoteSymbol);
+            b.BeginBlock("get");
+            b.BeginIf("!m_{0}_fetched", sm.PublicName);
+            b.AppendLine("var call = new {0}Get{1}RemoteCall();", ClassName, sm.PublicName);
+            b.AppendLine("call.sender = RemotePtr.ptr;");
+            b.AppendLine("call.RequestExecution(RemotePtr.connection);");
+            b.AppendLine("m_{0} = {1};", sm.PublicName, sm.MemberType.RemoteWrapExpression("call.value"));
+            b.AppendLine("m_{0}_fetched = true;", sm.PublicName);
+            b.EndBlock();
+            b.AppendLine("return m_{0};", sm.PublicName);
+            b.EndBlock();
+            b.BeginBlock("set");
+            b.AppendLine("var call = new {0}Set{1}RemoteCall();", ClassName, sm.PublicName);
+            b.AppendLine("call.sender = RemotePtr.ptr;");
+            b.AppendLine("call.value = {0};", sm.MemberType.RemoteUnwrapExpression("value"));
+            b.AppendLine("call.RequestExecution(RemotePtr.connection);");
+            b.AppendLine("m_{0} = value;", sm.PublicName);
+            b.AppendLine("m_{0}_fetched = true;", sm.PublicName);
+            b.EndBlock();
+            b.EndBlock();
         }
 
         b.EndBlock();

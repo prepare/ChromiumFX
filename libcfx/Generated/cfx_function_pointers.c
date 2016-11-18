@@ -31,7 +31,7 @@
 // Generated file. Do not edit.
 
 
-static void* cfx_function_pointers[1366] =  {
+static void* cfx_function_pointers[1368] =  {
     (void*)cfx_add_cross_origin_whitelist_entry,
     (void*)cfx_api_hash,
     (void*)cfx_begin_tracing,
@@ -350,6 +350,8 @@ static void* cfx_function_pointers[1366] =  {
     (void*)cfx_cursor_info_get_image_scale_factor,
     (void*)cfx_cursor_info_set_buffer,
     (void*)cfx_cursor_info_get_buffer,
+    (void*)cfx_cursor_info_set_size,
+    (void*)cfx_cursor_info_get_size,
     (void*)cfx_delete_cookies_callback_ctor,
     (void*)cfx_delete_cookies_callback_get_gc_handle,
     (void*)cfx_delete_cookies_callback_set_callback,

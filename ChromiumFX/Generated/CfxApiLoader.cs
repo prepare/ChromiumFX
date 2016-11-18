@@ -354,6 +354,8 @@ namespace Chromium {
             cfx_cursor_info_get_image_scale_factor,
             cfx_cursor_info_set_buffer,
             cfx_cursor_info_get_buffer,
+            cfx_cursor_info_set_size,
+            cfx_cursor_info_get_size,
             cfx_delete_cookies_callback_ctor,
             cfx_delete_cookies_callback_get_gc_handle,
             cfx_delete_cookies_callback_set_callback,
@@ -1835,6 +1837,8 @@ namespace Chromium {
             CfxApi.CursorInfo.cfx_cursor_info_get_image_scale_factor = (CfxApi.CursorInfo.cfx_cursor_info_get_image_scale_factor_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_cursor_info_get_image_scale_factor, typeof(CfxApi.CursorInfo.cfx_cursor_info_get_image_scale_factor_delegate));
             CfxApi.CursorInfo.cfx_cursor_info_set_buffer = (CfxApi.CursorInfo.cfx_cursor_info_set_buffer_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_cursor_info_set_buffer, typeof(CfxApi.CursorInfo.cfx_cursor_info_set_buffer_delegate));
             CfxApi.CursorInfo.cfx_cursor_info_get_buffer = (CfxApi.CursorInfo.cfx_cursor_info_get_buffer_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_cursor_info_get_buffer, typeof(CfxApi.CursorInfo.cfx_cursor_info_get_buffer_delegate));
+            CfxApi.CursorInfo.cfx_cursor_info_set_size = (CfxApi.CursorInfo.cfx_cursor_info_set_size_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_cursor_info_set_size, typeof(CfxApi.CursorInfo.cfx_cursor_info_set_size_delegate));
+            CfxApi.CursorInfo.cfx_cursor_info_get_size = (CfxApi.CursorInfo.cfx_cursor_info_get_size_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_cursor_info_get_size, typeof(CfxApi.CursorInfo.cfx_cursor_info_get_size_delegate));
         }
 
         internal static void LoadCfxDeleteCookiesCallbackApi() {
