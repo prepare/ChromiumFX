@@ -45,7 +45,6 @@ public class CfxValueClass : CfxClass {
             smlist.Add(new StructMember(cefStruct, Category, smd, api));
         }
         StructMembers = smlist.ToArray();
-        NeedsWrapping = GeneratorConfig.ValueStructNeedsWrapping(cefStruct.Name);
     }
 
     public override void EmitNativeWrapper(CodeBuilder b) {
@@ -152,7 +151,7 @@ public class CfxValueClass : CfxClass {
         }
         b.AppendLine();
 
-        if(NeedsWrapping) {
+        if(NeedsWrapFunction) {
             b.BeginFunction("Wrap", ClassName, "IntPtr nativePtr", "internal static");
             b.AppendLine("if(nativePtr == IntPtr.Zero) return null;");
             b.AppendLine("return new {0}(nativePtr);", ClassName);
@@ -171,7 +170,7 @@ public class CfxValueClass : CfxClass {
             b.AppendLine("public {0}() : base(CfxApi.{1}.{2}_ctor, CfxApi.{1}.{2}_dtor) {{}}", ClassName, ApiClassName, CfxName);
         }
 
-        if(NeedsWrapping) {
+        if(NeedsWrapFunction) {
             b.AppendLine("internal {0}(IntPtr nativePtr) : base(nativePtr) {{}}", ClassName);
             b.AppendLine("internal {0}(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {{}}", ClassName);
         }

@@ -69,12 +69,6 @@ public class GeneratorConfig {
         return privateWrapperFunctions.Contains(item);
     }
 
-    private static string[] callbackValueStructs = AssemblyResources.GetLines("StructsNeedWrapping.txt");
-
-    public static bool ValueStructNeedsWrapping(string item) {
-        return callbackValueStructs.Contains(item);
-    }
-
     private static HashSet<string> partialClasses;
 
     public static string ClassModifiers(string className, string baseModifiers = "public") {

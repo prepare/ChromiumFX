@@ -106,6 +106,7 @@ public class WrapperGenerator {
     }
 
     private void CheckForNeededWrapFunctions() {
+
         foreach(var s in Signature.AllSignatures) {
 
             switch(s.Type) {
@@ -114,9 +115,14 @@ public class WrapperGenerator {
                         if(!arg.IsThisArgument) {
                             if(arg.ArgumentType.IsCefStructPtrType) {
                                 var t = arg.ArgumentType.AsCefStructPtrType;
-                                if(t.Struct.ClassBuilder is CfxClientClass) {
-                                    (t.Struct.ClassBuilder as CfxClientClass).NeedsWrapFunction = true;
-                                }
+                                t.Struct.ClassBuilder.NeedsWrapFunction = true;
+                            } else if(arg.ArgumentType.IsCefStructType) {
+                                var t = arg.ArgumentType.AsCefStructType;
+                                Debug.Assert(t.ClassBuilder is CfxValueClass);
+                                t.ClassBuilder.NeedsWrapFunction = true;
+                            } else if(arg.ArgumentType is CefStructPtrArrayType) {
+                                var t = arg.ArgumentType as CefStructPtrArrayType;
+                                t.Struct.ClassBuilder.NeedsWrapFunction = true;
                             }
                         }
                     }
@@ -128,6 +134,25 @@ public class WrapperGenerator {
                             (t.Struct.ClassBuilder as CfxClientClass).NeedsWrapFunction = true;
                         }
                     }
+                    break;
+            }
+        }
+
+        foreach(var st in decls.CefStructTypes) {
+            if(st.ClassBuilder is CfxValueClass) {
+                foreach(var sm in st.ClassBuilder.StructMembers) {
+                    if(sm.MemberType.IsCefStructType) {
+                        var t = sm.MemberType.AsCefStructType;
+                        Debug.Assert(t.ClassBuilder is CfxValueClass);
+                        (t.ClassBuilder as CfxValueClass).NeedsWrapFunction = true;
+                    }
+                }
+            }
+            switch(st.Name) {
+                case "cef_window_info_windows":
+                case "cef_window_info_linux":
+                case "cef_range":
+                    st.ClassBuilder.NeedsWrapFunction = true;
                     break;
             }
         }

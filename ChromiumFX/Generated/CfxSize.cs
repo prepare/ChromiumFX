@@ -43,7 +43,19 @@ namespace Chromium {
     /// </remarks>
     public sealed class CfxSize : CfxStructure {
 
+        internal static CfxSize Wrap(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return null;
+            return new CfxSize(nativePtr);
+        }
+
+        internal static CfxSize WrapOwned(IntPtr nativePtr) {
+            if(nativePtr == IntPtr.Zero) return null;
+            return new CfxSize(nativePtr, CfxApi.Size.cfx_size_dtor);
+        }
+
         public CfxSize() : base(CfxApi.Size.cfx_size_ctor, CfxApi.Size.cfx_size_dtor) {}
+        internal CfxSize(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxSize(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
         public int Width {
             get {

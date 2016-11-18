@@ -68,6 +68,8 @@ public class CfxLibraryClass : CfxClass {
                 m_structFunctions.Add(sm);
             }
         }
+
+        NeedsWrapFunction = true;
     }
 
     public override void EmitNativeWrapper(CodeBuilder b) {

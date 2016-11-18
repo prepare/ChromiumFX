@@ -139,7 +139,7 @@ public abstract class CfxClass {
 
     protected readonly string RemoteClassName;
 
-    protected bool NeedsWrapping;
+    public bool NeedsWrapFunction;
 
     protected CfxClass(CefStructType cefStruct, Parser.StructData sd, ApiTypeBuilder api) {
 

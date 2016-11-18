@@ -37,8 +37,6 @@ using System.Text;
 
 public class CfxClientClass : CfxClass {
 
-    public bool NeedsWrapFunction;
-
     public CfxClientClass(CefStructType cefStruct, Parser.StructData sd, ApiTypeBuilder api)
         : base(cefStruct, sd, api) {
 
