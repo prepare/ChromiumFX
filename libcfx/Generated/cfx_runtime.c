@@ -70,7 +70,7 @@ static cef_request_context_t* cfx_create_context_shared(cef_request_context_t* o
 
 // CEF_EXPORT int cef_create_url(const cef_urlparts_t* parts, cef_string_t* url);
 static int cfx_create_url(const cef_urlparts_t* parts, char16 **url_str, int *url_length) {
-    cef_string_t url = { *url_str, *url_length, 0 };
+    cef_string_t url = { 0 };
     int __ret_val_ = cef_create_url(parts, &url);
     *url_str = url.str; *url_length = (int)url.length;
     return __ret_val_;
@@ -134,7 +134,7 @@ static cef_string_userfree_t cfx_get_mime_type(char16 *extension_str, int extens
 
 // CEF_EXPORT int cef_get_path(cef_path_key_t key, cef_string_t* path);
 static int cfx_get_path(cef_path_key_t key, char16 **path_str, int *path_length) {
-    cef_string_t path = { *path_str, *path_length, 0 };
+    cef_string_t path = { 0 };
     int __ret_val_ = cef_get_path(key, &path);
     *path_str = path.str; *path_length = (int)path.length;
     return __ret_val_;
@@ -196,7 +196,7 @@ static cef_value_t* cfx_parse_json(char16 *json_string_str, int json_string_leng
 // CEF_EXPORT cef_value_t* cef_parse_jsonand_return_error(const cef_string_t* json_string, cef_json_parser_options_t options, cef_json_parser_error_t* error_code_out, cef_string_t* error_msg_out);
 static cef_value_t* cfx_parse_jsonand_return_error(char16 *json_string_str, int json_string_length, cef_json_parser_options_t options, cef_json_parser_error_t* error_code_out, char16 **error_msg_out_str, int *error_msg_out_length) {
     cef_string_t json_string = { json_string_str, json_string_length, 0 };
-    cef_string_t error_msg_out = { *error_msg_out_str, *error_msg_out_length, 0 };
+    cef_string_t error_msg_out = { 0 };
     cef_value_t* __ret_val_ = cef_parse_jsonand_return_error(&json_string, options, error_code_out, &error_msg_out);
     *error_msg_out_str = error_msg_out.str; *error_msg_out_length = (int)error_msg_out.length;
     return __ret_val_;

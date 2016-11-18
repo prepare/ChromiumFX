@@ -61,23 +61,31 @@ namespace Chromium {
 
         // get_localized_string
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void get_localized_string_delegate(IntPtr gcHandlePtr, out int __retval, int string_id, ref IntPtr string_str, ref int string_length);
+        private delegate void get_localized_string_delegate(IntPtr gcHandlePtr, out int __retval, int string_id, out IntPtr string_str, out int string_length, out IntPtr string_gc_handle);
         private static get_localized_string_delegate get_localized_string_native;
         private static IntPtr get_localized_string_native_ptr;
 
-        internal static void get_localized_string(IntPtr gcHandlePtr, out int __retval, int string_id, ref IntPtr string_str, ref int string_length) {
+        internal static void get_localized_string(IntPtr gcHandlePtr, out int __retval, int string_id, out IntPtr string_str, out int string_length, out IntPtr string_gc_handle) {
             var self = (CfxResourceBundleHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
+                string_str = IntPtr.Zero;
+                string_length = 0;
+                string_gc_handle = IntPtr.Zero;
                 return;
             }
-            var e = new CfxGetLocalizedStringEventArgs(string_id, string_str, string_length);
+            var e = new CfxGetLocalizedStringEventArgs(string_id);
             self.m_GetLocalizedString?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_string_changed) {
+            if(e.m_string_wrapped != null && e.m_string_wrapped.Length > 0) {
                 var string_pinned = new PinnedString(e.m_string_wrapped);
                 string_str = string_pinned.Obj.PinnedPtr;
                 string_length = string_pinned.Length;
+                string_gc_handle = string_pinned.Obj.ToIntPtr();
+            } else {
+                string_str = IntPtr.Zero;
+                string_length = 0;
+                string_gc_handle = IntPtr.Zero;
             }
             __retval = e.m_returnValue ? 1 : 0;
         }
@@ -271,18 +279,13 @@ namespace Chromium {
         public class CfxGetLocalizedStringEventArgs : CfxEventArgs {
 
             internal int m_string_id;
-            internal IntPtr m_string_str;
-            internal int m_string_length;
             internal string m_string_wrapped;
-            internal bool m_string_changed;
 
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxGetLocalizedStringEventArgs(int string_id, IntPtr string_str, int string_length) {
+            internal CfxGetLocalizedStringEventArgs(int string_id) {
                 m_string_id = string_id;
-                m_string_str = string_str;
-                m_string_length = string_length;
             }
 
             /// <summary>
@@ -295,20 +298,12 @@ namespace Chromium {
                 }
             }
             /// <summary>
-            /// Get or set the String parameter for the <see cref="CfxResourceBundleHandler.GetLocalizedString"/> callback.
+            /// Set the String out parameter for the <see cref="CfxResourceBundleHandler.GetLocalizedString"/> callback.
             /// </summary>
             public string String {
-                get {
-                    CheckAccess();
-                    if(!m_string_changed && m_string_wrapped == null) {
-                        m_string_wrapped = StringFunctions.PtrToStringUni(m_string_str, m_string_length);
-                    }
-                    return m_string_wrapped;
-                }
                 set {
                     CheckAccess();
                     m_string_wrapped = value;
-                    m_string_changed = true;
                 }
             }
             /// <summary>
@@ -325,7 +320,7 @@ namespace Chromium {
             }
 
             public override string ToString() {
-                return String.Format("StringId={{{0}}}, String={{{1}}}", StringId, String);
+                return String.Format("StringId={{{0}}}", StringId);
             }
         }
 

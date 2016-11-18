@@ -86,25 +86,33 @@ namespace Chromium {
 
         // get_response_headers
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void get_response_headers_delegate(IntPtr gcHandlePtr, IntPtr response, out long response_length, ref IntPtr redirectUrl_str, ref int redirectUrl_length);
+        private delegate void get_response_headers_delegate(IntPtr gcHandlePtr, IntPtr response, out long response_length, out IntPtr redirectUrl_str, out int redirectUrl_length, out IntPtr redirectUrl_gc_handle);
         private static get_response_headers_delegate get_response_headers_native;
         private static IntPtr get_response_headers_native_ptr;
 
-        internal static void get_response_headers(IntPtr gcHandlePtr, IntPtr response, out long response_length, ref IntPtr redirectUrl_str, ref int redirectUrl_length) {
+        internal static void get_response_headers(IntPtr gcHandlePtr, IntPtr response, out long response_length, out IntPtr redirectUrl_str, out int redirectUrl_length, out IntPtr redirectUrl_gc_handle) {
             var self = (CfxResourceHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 response_length = default(long);
+                redirectUrl_str = IntPtr.Zero;
+                redirectUrl_length = 0;
+                redirectUrl_gc_handle = IntPtr.Zero;
                 return;
             }
-            var e = new CfxGetResponseHeadersEventArgs(response, redirectUrl_str, redirectUrl_length);
+            var e = new CfxGetResponseHeadersEventArgs(response);
             self.m_GetResponseHeaders?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_response_wrapped == null) CfxApi.cfx_release(e.m_response);
             response_length = e.m_response_length;
-            if(e.m_redirectUrl_changed) {
+            if(e.m_redirectUrl_wrapped != null && e.m_redirectUrl_wrapped.Length > 0) {
                 var redirectUrl_pinned = new PinnedString(e.m_redirectUrl_wrapped);
                 redirectUrl_str = redirectUrl_pinned.Obj.PinnedPtr;
                 redirectUrl_length = redirectUrl_pinned.Length;
+                redirectUrl_gc_handle = redirectUrl_pinned.Obj.ToIntPtr();
+            } else {
+                redirectUrl_str = IntPtr.Zero;
+                redirectUrl_length = 0;
+                redirectUrl_gc_handle = IntPtr.Zero;
             }
         }
 
@@ -517,15 +525,10 @@ namespace Chromium {
             internal IntPtr m_response;
             internal CfxResponse m_response_wrapped;
             internal long m_response_length;
-            internal IntPtr m_redirectUrl_str;
-            internal int m_redirectUrl_length;
             internal string m_redirectUrl_wrapped;
-            internal bool m_redirectUrl_changed;
 
-            internal CfxGetResponseHeadersEventArgs(IntPtr response, IntPtr redirectUrl_str, int redirectUrl_length) {
+            internal CfxGetResponseHeadersEventArgs(IntPtr response) {
                 m_response = response;
-                m_redirectUrl_str = redirectUrl_str;
-                m_redirectUrl_length = redirectUrl_length;
             }
 
             /// <summary>
@@ -548,25 +551,17 @@ namespace Chromium {
                 }
             }
             /// <summary>
-            /// Get or set the RedirectUrl parameter for the <see cref="CfxResourceHandler.GetResponseHeaders"/> callback.
+            /// Set the RedirectUrl out parameter for the <see cref="CfxResourceHandler.GetResponseHeaders"/> callback.
             /// </summary>
             public string RedirectUrl {
-                get {
-                    CheckAccess();
-                    if(!m_redirectUrl_changed && m_redirectUrl_wrapped == null) {
-                        m_redirectUrl_wrapped = StringFunctions.PtrToStringUni(m_redirectUrl_str, m_redirectUrl_length);
-                    }
-                    return m_redirectUrl_wrapped;
-                }
                 set {
                     CheckAccess();
                     m_redirectUrl_wrapped = value;
-                    m_redirectUrl_changed = true;
                 }
             }
 
             public override string ToString() {
-                return String.Format("Response={{{0}}}, RedirectUrl={{{1}}}", Response, RedirectUrl);
+                return String.Format("Response={{{0}}}", Response);
             }
         }
 

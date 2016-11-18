@@ -23,7 +23,6 @@ public class CefStringOutType : CefStringPtrType {
     }
 
     public override string PInvokeCallParameter(string var) {
-        Debug.Assert(false);
         return string.Format("out IntPtr {0}_str, out int {0}_length", var);
     }
 
@@ -32,12 +31,11 @@ public class CefStringOutType : CefStringPtrType {
     }
 
     public override string PublicCallParameter(string var) {
-        Debug.Assert(false);
         return string.Format("out string {0}", var);
     }
 
     public override string NativeUnwrapExpression(string var) {
-        throw new Exception();
+        return "&" + var;
     }
 
     public override string PublicWrapExpression(string var) {

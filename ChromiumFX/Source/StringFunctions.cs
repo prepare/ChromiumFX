@@ -146,11 +146,11 @@ namespace Chromium {
 
         internal static void CfxStringListCopyToManaged(IntPtr source, List<string> target) {
             var size = CfxApi.Runtime.cfx_string_list_size(source);
-            IntPtr str = IntPtr.Zero;
-            int length = 0;
+            IntPtr str;
+            int length;
             target.Clear();
             for(int i = 0; i < size; i++) {
-                if(CfxApi.Runtime.cfx_string_list_value(source, i, ref str, ref length) == 0) {
+                if(CfxApi.Runtime.cfx_string_list_value(source, i, out str, out length) == 0) {
                     throw new CfxException("CfxStringList operation failed.");
                 }
                 target.Add(PtrToStringUni(str, length));
@@ -170,16 +170,16 @@ namespace Chromium {
 
         internal static void CfxStringMapCopyToManaged(IntPtr source, List<string[]> target) {
             var size = CfxApi.Runtime.cfx_string_map_size(source);
-            IntPtr str = IntPtr.Zero;
-            int length = 0;
+            IntPtr str;
+            int length;
             target.Clear();
             for (int i = 0; i < size; i++) {
                 string[] pair = new string[2];
-                if (CfxApi.Runtime.cfx_string_map_key(source, i, ref str, ref length) == 0) {
+                if (CfxApi.Runtime.cfx_string_map_key(source, i, out str, out length) == 0) {
                     throw new CfxException("CfxStringMap operation failed.");
                 }
                 pair[0] = PtrToStringUni(str, length);
-                if (CfxApi.Runtime.cfx_string_map_value(source, i, ref str, ref length) == 0) {
+                if (CfxApi.Runtime.cfx_string_map_value(source, i, out str, out length) == 0) {
                     throw new CfxException("CfxStringMap operation failed.");
                 }
                 pair[1] = PtrToStringUni(str, length);
@@ -204,16 +204,16 @@ namespace Chromium {
 
         internal static void CfxStringMultimapCopyToManaged(IntPtr source, List<string[]> target) {
             var size = CfxApi.Runtime.cfx_string_multimap_size(source);
-            IntPtr str = IntPtr.Zero;
-            int length = 0;
+            IntPtr str;
+            int length;
             target.Clear();
             for(int i = 0; i < size; i++) {
                 string[] pair = new string[2];
-                if(CfxApi.Runtime.cfx_string_multimap_key(source, i, ref str, ref length) == 0) {
+                if(CfxApi.Runtime.cfx_string_multimap_key(source, i, out str, out length) == 0) {
                     throw new CfxException("CfxStringMultimap operation failed.");
                 }
                 pair[0] = PtrToStringUni(str, length);
-                if (CfxApi.Runtime.cfx_string_multimap_value(source, i, ref str, ref length) == 0) {
+                if (CfxApi.Runtime.cfx_string_multimap_value(source, i, out str, out length) == 0) {
                     throw new CfxException("CfxStringMultimap operation failed.");
                 }
                 pair[1] = PtrToStringUni(str, length);

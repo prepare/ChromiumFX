@@ -146,33 +146,6 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetLocalizedStringGetStringRemoteCall : RemoteCall {
-
-        internal CfxGetLocalizedStringGetStringRemoteCall()
-            : base(RemoteCallId.CfxGetLocalizedStringGetStringRemoteCall) {}
-
-        internal ulong eventArgsId;
-        internal string value;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(eventArgsId);
-        }
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out eventArgsId);
-        }
-        protected override void WriteReturn(StreamHandler h) {
-            h.Write(value);
-        }
-        protected override void ReadReturn(StreamHandler h) {
-            h.Read(out value);
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxGetLocalizedStringEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
-            value = e.String;
-        }
-    }
-
     internal class CfxGetLocalizedStringSetReturnValueRemoteCall : RemoteCall {
 
         internal CfxGetLocalizedStringSetReturnValueRemoteCall()

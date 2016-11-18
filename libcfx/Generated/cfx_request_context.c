@@ -120,7 +120,7 @@ static int cfx_request_context_can_set_preference(cef_request_context_t* self, c
 static int cfx_request_context_set_preference(cef_request_context_t* self, char16 *name_str, int name_length, cef_value_t* value, char16 **error_str, int *error_length) {
     cef_string_t name = { name_str, name_length, 0 };
     if(value) ((cef_base_t*)value)->add_ref((cef_base_t*)value);
-    cef_string_t error = { *error_str, *error_length, 0 };
+    cef_string_t error = { 0 };
     int __ret_val_ = self->set_preference(self, &name, value, &error);
     *error_str = error.str; *error_length = (int)error.length;
     return __ret_val_;

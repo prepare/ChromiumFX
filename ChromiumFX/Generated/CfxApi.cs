@@ -65,7 +65,7 @@ namespace Chromium {
             public static cfx_create_context_shared_delegate cfx_create_context_shared;
             // CEF_EXPORT int cef_create_url(const cef_urlparts_t* parts, cef_string_t* url);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_create_url_delegate(IntPtr parts, ref IntPtr url_str, ref int url_length);
+            public delegate int cfx_create_url_delegate(IntPtr parts, out IntPtr url_str, out int url_length);
             public static cfx_create_url_delegate cfx_create_url;
             // CEF_EXPORT int cef_currently_on(cef_thread_id_t threadId);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -105,7 +105,7 @@ namespace Chromium {
             public static cfx_get_mime_type_delegate cfx_get_mime_type;
             // CEF_EXPORT int cef_get_path(cef_path_key_t key, cef_string_t* path);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_get_path_delegate(int key, ref IntPtr path_str, ref int path_length);
+            public delegate int cfx_get_path_delegate(int key, out IntPtr path_str, out int path_length);
             public static cfx_get_path_delegate cfx_get_path;
             // CEF_EXPORT XDisplay* cef_get_xdisplay();
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -141,7 +141,7 @@ namespace Chromium {
             public static cfx_parse_json_delegate cfx_parse_json;
             // CEF_EXPORT cef_value_t* cef_parse_jsonand_return_error(const cef_string_t* json_string, cef_json_parser_options_t options, cef_json_parser_error_t* error_code_out, cef_string_t* error_msg_out);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate IntPtr cfx_parse_jsonand_return_error_delegate(IntPtr json_string_str, int json_string_length, int options, out int error_code_out, ref IntPtr error_msg_out_str, ref int error_msg_out_length);
+            public delegate IntPtr cfx_parse_jsonand_return_error_delegate(IntPtr json_string_str, int json_string_length, int options, out int error_code_out, out IntPtr error_msg_out_str, out int error_msg_out_length);
             public static cfx_parse_jsonand_return_error_delegate cfx_parse_jsonand_return_error;
             // CEF_EXPORT int cef_parse_url(const cef_string_t* url, cef_urlparts_t* parts);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -230,7 +230,7 @@ namespace Chromium {
             public static cfx_string_list_size_delegate cfx_string_list_size;
             // CEF_EXPORT int cef_string_list_value(cef_string_list_t list, int index, cef_string_t* value);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_string_list_value_delegate(IntPtr list, int index, ref IntPtr value_str, ref int value_length);
+            public delegate int cfx_string_list_value_delegate(IntPtr list, int index, out IntPtr value_str, out int value_length);
             public static cfx_string_list_value_delegate cfx_string_list_value;
             // CEF_EXPORT void cef_string_list_append(cef_string_list_t list, const cef_string_t* value);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -258,15 +258,15 @@ namespace Chromium {
             public static cfx_string_map_size_delegate cfx_string_map_size;
             // CEF_EXPORT int cef_string_map_find(cef_string_map_t map, const cef_string_t* key, cef_string_t* value);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_string_map_find_delegate(IntPtr map, IntPtr key_str, int key_length, ref IntPtr value_str, ref int value_length);
+            public delegate int cfx_string_map_find_delegate(IntPtr map, IntPtr key_str, int key_length, out IntPtr value_str, out int value_length);
             public static cfx_string_map_find_delegate cfx_string_map_find;
             // CEF_EXPORT int cef_string_map_key(cef_string_map_t map, int index, cef_string_t* key);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_string_map_key_delegate(IntPtr map, int index, ref IntPtr key_str, ref int key_length);
+            public delegate int cfx_string_map_key_delegate(IntPtr map, int index, out IntPtr key_str, out int key_length);
             public static cfx_string_map_key_delegate cfx_string_map_key;
             // CEF_EXPORT int cef_string_map_value(cef_string_map_t map, int index, cef_string_t* value);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_string_map_value_delegate(IntPtr map, int index, ref IntPtr value_str, ref int value_length);
+            public delegate int cfx_string_map_value_delegate(IntPtr map, int index, out IntPtr value_str, out int value_length);
             public static cfx_string_map_value_delegate cfx_string_map_value;
             // CEF_EXPORT int cef_string_map_append(cef_string_map_t map, const cef_string_t* key, const cef_string_t* value);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -294,15 +294,15 @@ namespace Chromium {
             public static cfx_string_multimap_find_count_delegate cfx_string_multimap_find_count;
             // CEF_EXPORT int cef_string_multimap_enumerate(cef_string_multimap_t map, const cef_string_t* key, int value_index, cef_string_t* value);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_string_multimap_enumerate_delegate(IntPtr map, IntPtr key_str, int key_length, int value_index, ref IntPtr value_str, ref int value_length);
+            public delegate int cfx_string_multimap_enumerate_delegate(IntPtr map, IntPtr key_str, int key_length, int value_index, out IntPtr value_str, out int value_length);
             public static cfx_string_multimap_enumerate_delegate cfx_string_multimap_enumerate;
             // CEF_EXPORT int cef_string_multimap_key(cef_string_multimap_t map, int index, cef_string_t* key);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_string_multimap_key_delegate(IntPtr map, int index, ref IntPtr key_str, ref int key_length);
+            public delegate int cfx_string_multimap_key_delegate(IntPtr map, int index, out IntPtr key_str, out int key_length);
             public static cfx_string_multimap_key_delegate cfx_string_multimap_key;
             // CEF_EXPORT int cef_string_multimap_value(cef_string_multimap_t map, int index, cef_string_t* value);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_string_multimap_value_delegate(IntPtr map, int index, ref IntPtr value_str, ref int value_length);
+            public delegate int cfx_string_multimap_value_delegate(IntPtr map, int index, out IntPtr value_str, out int value_length);
             public static cfx_string_multimap_value_delegate cfx_string_multimap_value;
             // CEF_EXPORT int cef_string_multimap_append(cef_string_multimap_t map, const cef_string_t* key, const cef_string_t* value);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -4599,7 +4599,7 @@ namespace Chromium {
 
             // static int cfx_request_context_set_preference(cef_request_context_t* self, char16 *name_str, int name_length, cef_value_t* value, char16 **error_str, int *error_length)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_request_context_set_preference_delegate(IntPtr self, IntPtr name_str, int name_length, IntPtr value, ref IntPtr error_str, ref int error_length);
+            public delegate int cfx_request_context_set_preference_delegate(IntPtr self, IntPtr name_str, int name_length, IntPtr value, out IntPtr error_str, out int error_length);
             public static cfx_request_context_set_preference_delegate cfx_request_context_set_preference;
 
             // static void cfx_request_context_clear_certificate_exceptions(cef_request_context_t* self, cef_completion_callback_t* callback)

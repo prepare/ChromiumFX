@@ -310,22 +310,18 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_request_context_capi.h">cef/include/capi/cef_request_context_capi.h</see>.
         /// </remarks>
-        public bool SetPreference(string name, CfxValue value, ref string error) {
+        public bool SetPreference(string name, CfxValue value, out string error) {
             var name_pinned = new PinnedString(name);
-            var error_pinned = new PinnedString(error);
-            IntPtr error_str = error_pinned.Obj.PinnedPtr;
-            int error_length = error_pinned.Length;
-            var __retval = CfxApi.RequestContext.cfx_request_context_set_preference(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length, CfxValue.Unwrap(value), ref error_str, ref error_length);
+            IntPtr error_str;
+            int error_length;
+            var __retval = CfxApi.RequestContext.cfx_request_context_set_preference(NativePtr, name_pinned.Obj.PinnedPtr, name_pinned.Length, CfxValue.Unwrap(value), out error_str, out error_length);
             name_pinned.Obj.Free();
-            if(error_str != error_pinned.Obj.PinnedPtr) {
-                if(error_length > 0) {
-                    error = System.Runtime.InteropServices.Marshal.PtrToStringUni(error_str, error_length);
-                    // free the native string?
-                } else {
-                    error = null;
-                }
+            if(error_length > 0) {
+                error = System.Runtime.InteropServices.Marshal.PtrToStringUni(error_str, error_length);
+                // free the native string?
+            } else {
+                error = null;
             }
-            error_pinned.Obj.Free();
             return 0 != __retval;
         }
 

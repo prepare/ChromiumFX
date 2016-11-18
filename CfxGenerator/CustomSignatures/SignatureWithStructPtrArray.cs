@@ -33,26 +33,29 @@ using System.Collections.Generic;
 
 public class SignatureWithStructPtrArray : Signature {
 
-    private Argument[] m_publicArguments;
+    int arrayIndex;
+    int countIndex;
 
     public SignatureWithStructPtrArray(Signature s, int arrayIndex, int countIndex)
         : base(s) {
-
-        var list = new List<Argument>();
-        for(var i = 0; i <= Arguments.Length - 1; i++) {
-            if(i != arrayIndex && i != countIndex) {
-                list.Add(Arguments[i]);
-            } else if(i == arrayIndex) {
-                var a = new Argument(Arguments[arrayIndex], new CefStructPtrArrayType(Arguments[arrayIndex], Arguments[countIndex]));
-                list.Add(a);
-                Arguments[i] = a;
-            }
-        }
-        m_publicArguments = list.ToArray();
+        this.arrayIndex = arrayIndex;
+        this.countIndex = countIndex;
     }
 
     public override Argument[] ManagedArguments {
-        get { return m_publicArguments; }
+        get {
+            var list = new List<Argument>();
+            for(var i = 0; i <= Arguments.Length - 1; i++) {
+                if(i != arrayIndex && i != countIndex) {
+                    list.Add(Arguments[i]);
+                } else if(i == arrayIndex) {
+                    var a = new Argument(Arguments[arrayIndex], new CefStructPtrArrayType(Arguments[arrayIndex], Arguments[countIndex]));
+                    list.Add(a);
+                    Arguments[i] = a;
+                }
+            }
+            return list.ToArray();
+        }
     }
 
     public override void DebugPrintUnhandledArrayArguments(string cefName, CefConfigData cefConfig, CfxCallMode callMode) {

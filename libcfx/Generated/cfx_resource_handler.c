@@ -39,7 +39,7 @@ typedef struct _cfx_resource_handler_t {
     gc_handle_t gc_handle;
     // managed callbacks
     void (CEF_CALLBACK *process_request)(gc_handle_t self, int* __retval, cef_request_t* request, cef_callback_t* callback);
-    void (CEF_CALLBACK *get_response_headers)(gc_handle_t self, cef_response_t* response, int64* response_length, char16 **redirectUrl_str, int *redirectUrl_length);
+    void (CEF_CALLBACK *get_response_headers)(gc_handle_t self, cef_response_t* response, int64* response_length, char16 **redirectUrl_str, int *redirectUrl_length, gc_handle_t *redirectUrl_gc_handle);
     void (CEF_CALLBACK *read_response)(gc_handle_t self, int* __retval, void* data_out, int bytes_to_read, int* bytes_read, cef_callback_t* callback);
     void (CEF_CALLBACK *can_get_cookie)(gc_handle_t self, int* __retval, const cef_cookie_t* cookie);
     void (CEF_CALLBACK *can_set_cookie)(gc_handle_t self, int* __retval, const cef_cookie_t* cookie);
@@ -94,12 +94,11 @@ int CEF_CALLBACK cfx_resource_handler_process_request(cef_resource_handler_t* se
 // get_response_headers
 
 void CEF_CALLBACK cfx_resource_handler_get_response_headers(cef_resource_handler_t* self, cef_response_t* response, int64* response_length, cef_string_t* redirectUrl) {
-    char16* redirectUrl_tmp_str = redirectUrl->str; int redirectUrl_tmp_length = (int)redirectUrl->length;
-    ((cfx_resource_handler_t*)self)->get_response_headers(((cfx_resource_handler_t*)self)->gc_handle, response, response_length, &(redirectUrl_tmp_str), &(redirectUrl_tmp_length));
-    if(redirectUrl_tmp_str != redirectUrl->str) {
-        if(redirectUrl->dtor) redirectUrl->dtor(redirectUrl->str);
+    char16* redirectUrl_tmp_str = 0; int redirectUrl_tmp_length = 0; gc_handle_t redirectUrl_gc_handle = 0;
+    ((cfx_resource_handler_t*)self)->get_response_headers(((cfx_resource_handler_t*)self)->gc_handle, response, response_length, &redirectUrl_tmp_str, &redirectUrl_tmp_length, &redirectUrl_gc_handle);
+    if(redirectUrl_tmp_length > 0) {
         cef_string_set(redirectUrl_tmp_str, redirectUrl_tmp_length, redirectUrl, 1);
-        cfx_gc_handle_free((gc_handle_t)redirectUrl_tmp_str);
+        cfx_gc_handle_free(redirectUrl_gc_handle);
     }
 }
 
@@ -140,7 +139,7 @@ static void cfx_resource_handler_set_callback(cef_resource_handler_t* self, int 
         self->process_request = callback ? cfx_resource_handler_process_request : 0;
         break;
     case 1:
-        ((cfx_resource_handler_t*)self)->get_response_headers = (void (CEF_CALLBACK *)(gc_handle_t self, cef_response_t* response, int64* response_length, char16 **redirectUrl_str, int *redirectUrl_length))callback;
+        ((cfx_resource_handler_t*)self)->get_response_headers = (void (CEF_CALLBACK *)(gc_handle_t self, cef_response_t* response, int64* response_length, char16 **redirectUrl_str, int *redirectUrl_length, gc_handle_t *redirectUrl_gc_handle))callback;
         self->get_response_headers = callback ? cfx_resource_handler_get_response_headers : 0;
         break;
     case 2:

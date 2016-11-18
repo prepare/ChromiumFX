@@ -182,8 +182,6 @@ namespace Chromium.Remote {
             string m_Name;
             bool ObjectFetched;
             CfrV8Value m_Object;
-            bool ExceptionFetched;
-            string m_Exception;
 
             private bool returnValueSet;
 
@@ -234,24 +232,11 @@ namespace Chromium.Remote {
                 }
             }
             /// <summary>
-            /// Get or set the Exception parameter for the <see cref="CfrV8Accessor.Get"/> render process callback.
+            /// Set the Exception out parameter for the <see cref="CfrV8Accessor.Get"/> render process callback.
             /// </summary>
             public string Exception {
-                get {
-                    CheckAccess();
-                    if(!ExceptionFetched) {
-                        ExceptionFetched = true;
-                        var call = new CfxV8AccessorGetGetExceptionRemoteCall();
-                        call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
-                        m_Exception = call.value;
-                    }
-                    return m_Exception;
-                }
                 set {
                     CheckAccess();
-                    m_Exception = value;
-                    ExceptionFetched = true;
                     var call = new CfxV8AccessorGetSetExceptionRemoteCall();
                     call.eventArgsId = eventArgsId;
                     call.value = value;
@@ -274,7 +259,7 @@ namespace Chromium.Remote {
             }
 
             public override string ToString() {
-                return String.Format("Name={{{0}}}, Object={{{1}}}, Exception={{{2}}}", Name, Object, Exception);
+                return String.Format("Name={{{0}}}, Object={{{1}}}", Name, Object);
             }
         }
 
@@ -310,8 +295,6 @@ namespace Chromium.Remote {
             CfrV8Value m_Object;
             bool ValueFetched;
             CfrV8Value m_Value;
-            bool ExceptionFetched;
-            string m_Exception;
 
             private bool returnValueSet;
 
@@ -366,24 +349,11 @@ namespace Chromium.Remote {
                 }
             }
             /// <summary>
-            /// Get or set the Exception parameter for the <see cref="CfrV8Accessor.Set"/> render process callback.
+            /// Set the Exception out parameter for the <see cref="CfrV8Accessor.Set"/> render process callback.
             /// </summary>
             public string Exception {
-                get {
-                    CheckAccess();
-                    if(!ExceptionFetched) {
-                        ExceptionFetched = true;
-                        var call = new CfxV8AccessorSetGetExceptionRemoteCall();
-                        call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
-                        m_Exception = call.value;
-                    }
-                    return m_Exception;
-                }
                 set {
                     CheckAccess();
-                    m_Exception = value;
-                    ExceptionFetched = true;
                     var call = new CfxV8AccessorSetSetExceptionRemoteCall();
                     call.eventArgsId = eventArgsId;
                     call.value = value;
@@ -406,7 +376,7 @@ namespace Chromium.Remote {
             }
 
             public override string ToString() {
-                return String.Format("Name={{{0}}}, Object={{{1}}}, Value={{{2}}}, Exception={{{3}}}", Name, Object, Value, Exception);
+                return String.Format("Name={{{0}}}, Object={{{1}}}, Value={{{2}}}", Name, Object, Value);
             }
         }
 

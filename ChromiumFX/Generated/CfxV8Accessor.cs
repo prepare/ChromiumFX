@@ -60,51 +60,67 @@ namespace Chromium {
 
         // get
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void get_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out IntPtr retval, ref IntPtr exception_str, ref int exception_length);
+        private delegate void get_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out IntPtr retval, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle);
         private static get_delegate get_native;
         private static IntPtr get_native_ptr;
 
-        internal static void get(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out IntPtr retval, ref IntPtr exception_str, ref int exception_length) {
+        internal static void get(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out IntPtr retval, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle) {
             var self = (CfxV8Accessor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
                 retval = default(IntPtr);
+                exception_str = IntPtr.Zero;
+                exception_length = 0;
+                exception_gc_handle = IntPtr.Zero;
                 return;
             }
-            var e = new CfxV8AccessorGetEventArgs(name_str, name_length, @object, exception_str, exception_length);
+            var e = new CfxV8AccessorGetEventArgs(name_str, name_length, @object);
             self.m_Get?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_object_wrapped == null) CfxApi.cfx_release(e.m_object);
             retval = CfxV8Value.Unwrap(e.m_retval_wrapped);
-            if(e.m_exception_changed) {
+            if(e.m_exception_wrapped != null && e.m_exception_wrapped.Length > 0) {
                 var exception_pinned = new PinnedString(e.m_exception_wrapped);
                 exception_str = exception_pinned.Obj.PinnedPtr;
                 exception_length = exception_pinned.Length;
+                exception_gc_handle = exception_pinned.Obj.ToIntPtr();
+            } else {
+                exception_str = IntPtr.Zero;
+                exception_length = 0;
+                exception_gc_handle = IntPtr.Zero;
             }
             __retval = e.m_returnValue ? 1 : 0;
         }
 
         // set
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void set_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, IntPtr value, ref IntPtr exception_str, ref int exception_length);
+        private delegate void set_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, IntPtr value, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle);
         private static set_delegate set_native;
         private static IntPtr set_native_ptr;
 
-        internal static void set(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, IntPtr value, ref IntPtr exception_str, ref int exception_length) {
+        internal static void set(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, IntPtr value, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle) {
             var self = (CfxV8Accessor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
+                exception_str = IntPtr.Zero;
+                exception_length = 0;
+                exception_gc_handle = IntPtr.Zero;
                 return;
             }
-            var e = new CfxV8AccessorSetEventArgs(name_str, name_length, @object, value, exception_str, exception_length);
+            var e = new CfxV8AccessorSetEventArgs(name_str, name_length, @object, value);
             self.m_Set?.Invoke(self, e);
             e.m_isInvalid = true;
             if(e.m_object_wrapped == null) CfxApi.cfx_release(e.m_object);
             if(e.m_value_wrapped == null) CfxApi.cfx_release(e.m_value);
-            if(e.m_exception_changed) {
+            if(e.m_exception_wrapped != null && e.m_exception_wrapped.Length > 0) {
                 var exception_pinned = new PinnedString(e.m_exception_wrapped);
                 exception_str = exception_pinned.Obj.PinnedPtr;
                 exception_length = exception_pinned.Length;
+                exception_gc_handle = exception_pinned.Obj.ToIntPtr();
+            } else {
+                exception_str = IntPtr.Zero;
+                exception_length = 0;
+                exception_gc_handle = IntPtr.Zero;
             }
             __retval = e.m_returnValue ? 1 : 0;
         }
@@ -224,20 +240,15 @@ namespace Chromium {
             internal IntPtr m_object;
             internal CfxV8Value m_object_wrapped;
             internal CfxV8Value m_retval_wrapped;
-            internal IntPtr m_exception_str;
-            internal int m_exception_length;
             internal string m_exception_wrapped;
-            internal bool m_exception_changed;
 
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxV8AccessorGetEventArgs(IntPtr name_str, int name_length, IntPtr @object, IntPtr exception_str, int exception_length) {
+            internal CfxV8AccessorGetEventArgs(IntPtr name_str, int name_length, IntPtr @object) {
                 m_name_str = name_str;
                 m_name_length = name_length;
                 m_object = @object;
-                m_exception_str = exception_str;
-                m_exception_length = exception_length;
             }
 
             /// <summary>
@@ -270,20 +281,12 @@ namespace Chromium {
                 }
             }
             /// <summary>
-            /// Get or set the Exception parameter for the <see cref="CfxV8Accessor.Get"/> callback.
+            /// Set the Exception out parameter for the <see cref="CfxV8Accessor.Get"/> callback.
             /// </summary>
             public string Exception {
-                get {
-                    CheckAccess();
-                    if(!m_exception_changed && m_exception_wrapped == null) {
-                        m_exception_wrapped = StringFunctions.PtrToStringUni(m_exception_str, m_exception_length);
-                    }
-                    return m_exception_wrapped;
-                }
                 set {
                     CheckAccess();
                     m_exception_wrapped = value;
-                    m_exception_changed = true;
                 }
             }
             /// <summary>
@@ -300,7 +303,7 @@ namespace Chromium {
             }
 
             public override string ToString() {
-                return String.Format("Name={{{0}}}, Object={{{1}}}, Exception={{{2}}}", Name, Object, Exception);
+                return String.Format("Name={{{0}}}, Object={{{1}}}", Name, Object);
             }
         }
 
@@ -337,21 +340,16 @@ namespace Chromium {
             internal CfxV8Value m_object_wrapped;
             internal IntPtr m_value;
             internal CfxV8Value m_value_wrapped;
-            internal IntPtr m_exception_str;
-            internal int m_exception_length;
             internal string m_exception_wrapped;
-            internal bool m_exception_changed;
 
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxV8AccessorSetEventArgs(IntPtr name_str, int name_length, IntPtr @object, IntPtr value, IntPtr exception_str, int exception_length) {
+            internal CfxV8AccessorSetEventArgs(IntPtr name_str, int name_length, IntPtr @object, IntPtr value) {
                 m_name_str = name_str;
                 m_name_length = name_length;
                 m_object = @object;
                 m_value = value;
-                m_exception_str = exception_str;
-                m_exception_length = exception_length;
             }
 
             /// <summary>
@@ -385,20 +383,12 @@ namespace Chromium {
                 }
             }
             /// <summary>
-            /// Get or set the Exception parameter for the <see cref="CfxV8Accessor.Set"/> callback.
+            /// Set the Exception out parameter for the <see cref="CfxV8Accessor.Set"/> callback.
             /// </summary>
             public string Exception {
-                get {
-                    CheckAccess();
-                    if(!m_exception_changed && m_exception_wrapped == null) {
-                        m_exception_wrapped = StringFunctions.PtrToStringUni(m_exception_str, m_exception_length);
-                    }
-                    return m_exception_wrapped;
-                }
                 set {
                     CheckAccess();
                     m_exception_wrapped = value;
-                    m_exception_changed = true;
                 }
             }
             /// <summary>
@@ -415,7 +405,7 @@ namespace Chromium {
             }
 
             public override string ToString() {
-                return String.Format("Name={{{0}}}, Object={{{1}}}, Value={{{2}}}, Exception={{{3}}}", Name, Object, Value, Exception);
+                return String.Format("Name={{{0}}}, Object={{{1}}}, Value={{{2}}}", Name, Object, Value);
             }
         }
 

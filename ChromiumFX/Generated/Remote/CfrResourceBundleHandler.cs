@@ -218,8 +218,6 @@ namespace Chromium.Remote {
 
             bool StringIdFetched;
             int m_StringId;
-            bool StringFetched;
-            string m_String;
 
             private bool returnValueSet;
 
@@ -242,24 +240,11 @@ namespace Chromium.Remote {
                 }
             }
             /// <summary>
-            /// Get or set the String parameter for the <see cref="CfrResourceBundleHandler.GetLocalizedString"/> render process callback.
+            /// Set the String out parameter for the <see cref="CfrResourceBundleHandler.GetLocalizedString"/> render process callback.
             /// </summary>
             public string String {
-                get {
-                    CheckAccess();
-                    if(!StringFetched) {
-                        StringFetched = true;
-                        var call = new CfxGetLocalizedStringGetStringRemoteCall();
-                        call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
-                        m_String = call.value;
-                    }
-                    return m_String;
-                }
                 set {
                     CheckAccess();
-                    m_String = value;
-                    StringFetched = true;
                     var call = new CfxGetLocalizedStringSetStringRemoteCall();
                     call.eventArgsId = eventArgsId;
                     call.value = value;
@@ -282,7 +267,7 @@ namespace Chromium.Remote {
             }
 
             public override string ToString() {
-                return String.Format("StringId={{{0}}}, String={{{1}}}", StringId, String);
+                return String.Format("StringId={{{0}}}", StringId);
             }
         }
 

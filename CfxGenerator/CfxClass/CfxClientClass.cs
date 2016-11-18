@@ -214,7 +214,7 @@ public class CfxClientClass : CfxClass {
             }
             b.AppendLine("return;");
             b.EndBlock();
-            b.AppendLine("var e = new {0}({1});", cb.PublicEventArgsClassName, sig.PublicEventConstructorParameterList);
+            b.AppendLine("var e = new {0}({1});", cb.PublicEventArgsClassName, sig.PublicEventConstructorArguments);
             b.AppendLine("self.m_{0}?.Invoke(self, e);", cb.PublicName);
             b.AppendLine("e.m_isInvalid = true;");
 
@@ -358,7 +358,7 @@ public class CfxClientClass : CfxClass {
             b.AppendLine();
         }
 
-        b.BeginBlock("internal {0}({1})", cb.PublicEventArgsClassName, cb.Signature.PublicEventConstructorArgumentList);
+        b.BeginBlock("internal {0}({1})", cb.PublicEventArgsClassName, cb.Signature.PublicEventConstructorParameters);
         cb.Signature.EmitPublicEventCtorStatements(b);
         b.EndBlock();
         b.AppendLine();

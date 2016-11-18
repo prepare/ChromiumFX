@@ -114,20 +114,15 @@ public class Signature {
         get { return PublicReturnType; }
     }
 
-    private Argument[] _managedArgs;
-
     public virtual Argument[] ManagedArguments {
         get {
-            if(_managedArgs == null) {
-                var list = new List<Argument>();
-                foreach(var arg in Arguments) {
-                    if(arg.ArgumentType.PInvokeSymbol != null) {
-                        list.Add(arg);
-                    }
+            var list = new List<Argument>();
+            foreach(var arg in Arguments) {
+                if(arg.ArgumentType.PInvokeSymbol != null) {
+                    list.Add(arg);
                 }
-                _managedArgs = list.ToArray();
             }
-            return _managedArgs;
+            return list.ToArray();
         }
     }
 
@@ -154,7 +149,7 @@ public class Signature {
         }
     }
 
-    public string PublicEventConstructorArgumentList {
+    public string PublicEventConstructorParameters {
         get {
             for(var i = 1; i <= ManagedArguments.Count() - 1; i++) {
                 if(ManagedArguments[i].ArgumentType.IsIn) {
@@ -165,9 +160,10 @@ public class Signature {
         }
     }
 
-    public string PublicEventConstructorParameterList {
+    public string PublicEventConstructorArguments {
         get {
             for(var i = 1; i <= ManagedArguments.Length - 1; i++) {
+                //Debug.Assert(ManagedArguments[i].VarName != "exception");
                 if(ManagedArguments[i].ArgumentType.IsIn) {
                     args.Add(ManagedArguments[i].PublicEventConstructorArgument);
                 }

@@ -170,20 +170,16 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
         /// </remarks>
-        public static bool CreateUrl(CfxUrlParts parts, ref string url) {
-            var url_pinned = new PinnedString(url);
-            IntPtr url_str = url_pinned.Obj.PinnedPtr;
-            int url_length = url_pinned.Length;
-            var __retval = CfxApi.Runtime.cfx_create_url(CfxUrlParts.Unwrap(parts), ref url_str, ref url_length);
-            if(url_str != url_pinned.Obj.PinnedPtr) {
-                if(url_length > 0) {
-                    url = System.Runtime.InteropServices.Marshal.PtrToStringUni(url_str, url_length);
-                    // free the native string?
-                } else {
-                    url = null;
-                }
+        public static bool CreateUrl(CfxUrlParts parts, out string url) {
+            IntPtr url_str;
+            int url_length;
+            var __retval = CfxApi.Runtime.cfx_create_url(CfxUrlParts.Unwrap(parts), out url_str, out url_length);
+            if(url_length > 0) {
+                url = System.Runtime.InteropServices.Marshal.PtrToStringUni(url_str, url_length);
+                // free the native string?
+            } else {
+                url = null;
             }
-            url_pinned.Obj.Free();
             return 0 != __retval;
         }
 
@@ -354,20 +350,16 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_path_util_capi.h">cef/include/capi/cef_path_util_capi.h</see>.
         /// </remarks>
-        public static bool GetPath(CfxPathKey key, ref string path) {
-            var path_pinned = new PinnedString(path);
-            IntPtr path_str = path_pinned.Obj.PinnedPtr;
-            int path_length = path_pinned.Length;
-            var __retval = CfxApi.Runtime.cfx_get_path((int)key, ref path_str, ref path_length);
-            if(path_str != path_pinned.Obj.PinnedPtr) {
-                if(path_length > 0) {
-                    path = System.Runtime.InteropServices.Marshal.PtrToStringUni(path_str, path_length);
-                    // free the native string?
-                } else {
-                    path = null;
-                }
+        public static bool GetPath(CfxPathKey key, out string path) {
+            IntPtr path_str;
+            int path_length;
+            var __retval = CfxApi.Runtime.cfx_get_path((int)key, out path_str, out path_length);
+            if(path_length > 0) {
+                path = System.Runtime.InteropServices.Marshal.PtrToStringUni(path_str, path_length);
+                // free the native string?
+            } else {
+                path = null;
             }
-            path_pinned.Obj.Free();
             return 0 != __retval;
         }
 
@@ -478,24 +470,20 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
         /// </remarks>
-        public static CfxValue ParseJsonAndReturnError(string jsonString, CfxJsonParserOptions options, out CfxJsonParserError errorCodeOut, ref string errorMsgOut) {
+        public static CfxValue ParseJsonAndReturnError(string jsonString, CfxJsonParserOptions options, out CfxJsonParserError errorCodeOut, out string errorMsgOut) {
             var jsonString_pinned = new PinnedString(jsonString);
             int errorCodeOut_tmp;
-            var errorMsgOut_pinned = new PinnedString(errorMsgOut);
-            IntPtr errorMsgOut_str = errorMsgOut_pinned.Obj.PinnedPtr;
-            int errorMsgOut_length = errorMsgOut_pinned.Length;
-            var __retval = CfxApi.Runtime.cfx_parse_jsonand_return_error(jsonString_pinned.Obj.PinnedPtr, jsonString_pinned.Length, (int)options, out errorCodeOut_tmp, ref errorMsgOut_str, ref errorMsgOut_length);
+            IntPtr errorMsgOut_str;
+            int errorMsgOut_length;
+            var __retval = CfxApi.Runtime.cfx_parse_jsonand_return_error(jsonString_pinned.Obj.PinnedPtr, jsonString_pinned.Length, (int)options, out errorCodeOut_tmp, out errorMsgOut_str, out errorMsgOut_length);
             jsonString_pinned.Obj.Free();
             errorCodeOut = (CfxJsonParserError)errorCodeOut_tmp;
-            if(errorMsgOut_str != errorMsgOut_pinned.Obj.PinnedPtr) {
-                if(errorMsgOut_length > 0) {
-                    errorMsgOut = System.Runtime.InteropServices.Marshal.PtrToStringUni(errorMsgOut_str, errorMsgOut_length);
-                    // free the native string?
-                } else {
-                    errorMsgOut = null;
-                }
+            if(errorMsgOut_length > 0) {
+                errorMsgOut = System.Runtime.InteropServices.Marshal.PtrToStringUni(errorMsgOut_str, errorMsgOut_length);
+                // free the native string?
+            } else {
+                errorMsgOut = null;
             }
-            errorMsgOut_pinned.Obj.Free();
             return CfxValue.Wrap(__retval);
         }
 

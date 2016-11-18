@@ -32,19 +32,9 @@
 using System.Collections.Generic;
 
 public class CefV8HandlerExecuteSignature : SignatureWithStructPtrArray {
-    private Argument[] m_publicArguments;
 
     public CefV8HandlerExecuteSignature(Signature s)
         : base(s, 4, 3) {
-        Arguments[6] = new Argument(Arguments[6], new CefStringOutType());
-        base.ManagedArguments[5] = new Argument(base.ManagedArguments[5], new CefStringOutType());
-        var list = new List<Argument>();
-        foreach(var arg in base.ManagedArguments) {
-            if(arg.VarName != "retval") {
-                list.Add(arg);
-            }
-        }
-        m_publicArguments = list.ToArray();
     }
 
     public override ApiType PublicReturnType {
@@ -52,7 +42,15 @@ public class CefV8HandlerExecuteSignature : SignatureWithStructPtrArray {
     }
 
     public override Argument[] ManagedArguments {
-        get { return m_publicArguments; }
+        get {
+            var list = new List<Argument>();
+            foreach(var arg in base.ManagedArguments) {
+                if(arg.VarName != "retval") {
+                    list.Add(arg);
+                }
+            }
+            return list.ToArray();
+        }
     }
 
     protected override void EmitPostPublicEventHandlerReturnValueStatements(CodeBuilder b) {

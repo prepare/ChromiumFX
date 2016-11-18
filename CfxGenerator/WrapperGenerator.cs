@@ -29,6 +29,7 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -43,12 +44,12 @@ public class WrapperGenerator {
 
     public WrapperGenerator(CefApiDeclarations decls) {
         this.decls = decls;
+        CheckForNeededWrapFunctions();
+        CheckForStringOutArguments();
         this.remoteDecls = decls.GetRemoteDeclarations();
     }
 
     public void Run() {
-
-        CheckForNeededWrapFunctions();
 
         var fileManager = new GeneratedFileManager(System.IO.Path.Combine("libcfx", "Generated"));
         BuildLibCfx(fileManager);
@@ -154,6 +155,69 @@ public class WrapperGenerator {
                 case "cef_range":
                     st.ClassBuilder.NeedsWrapFunction = true;
                     break;
+            }
+        }
+    }
+
+    private void CheckForStringOutArguments() {
+        foreach(var f in decls.AllExportFunctions()) {
+            CheckForStringOutArguments(f.Signature, f.Name, f.Comments.Lines);
+        }
+        foreach(var f in decls.StringCollectionFunctions) {
+            CheckForStringOutArguments(f.Signature, f.Name, null);
+        }
+        foreach(var st in decls.CefStructTypes) {
+            if(st.ClassBuilder.CallbackFunctions != null) {
+                foreach(var cb in st.ClassBuilder.CallbackFunctions) {
+                    CheckForStringOutArguments(cb.Signature, st.Name + "::" + cb.Name, cb.Comments.Lines);
+                }
+            }
+        }
+    }
+
+    private void CheckForStringOutArguments(Signature s, string function, string[] funcComments) {
+        for(int i = 0; i < s.Arguments.Length; ++i) {
+            var arg = s.Arguments[i];
+            if(arg.ArgumentType.IsCefStringPtrType) {
+                switch(function + "!" + arg.VarName) {
+
+                    case "cef_create_url!url":
+                    case "cef_get_path!path":
+                    case "cef_parse_jsonand_return_error!error_msg_out":
+                    case "cef_request_context::set_preference!error":
+                    case "cef_resource_bundle_handler::get_localized_string!string":
+                    case "cef_resource_handler::get_response_headers!redirectUrl":
+                    case "cef_v8accessor::get!exception":
+                    case "cef_v8accessor::set!exception":
+                    case "cef_v8handler::execute!exception":
+                    case "cef_v8interceptor::get_byname!exception":
+                    case "cef_v8interceptor::get_byindex!exception":
+                    case "cef_v8interceptor::set_byname!exception":
+                    case "cef_v8interceptor::set_byindex!exception":
+
+                        s.Arguments[i] = new Argument(arg, new CefStringOutType());
+                        break;
+
+                    case "cef_display_handler::on_tooltip!text":
+                    case "cef_menu_model_delegate::format_label!label":
+                    case "cef_request_handler::on_resource_redirect!new_url":
+                        break;
+
+                    default:
+
+                        if(funcComments == null) {
+                            //this is arg string collection function
+                            s.Arguments[i] = new Argument(arg, new CefStringOutType());
+                            break;
+                        }
+
+                        Debug.Print("Check comments to see if string pointer argument is out our inout:");
+                        Debug.Print("If in doubt, leave it inout.");
+                        Debug.Print(function + "!" + arg.VarName);
+                        Debug.Print(string.Join(Environment.NewLine, funcComments));
+                        Debugger.Break();
+                        break;
+                }
             }
         }
     }
