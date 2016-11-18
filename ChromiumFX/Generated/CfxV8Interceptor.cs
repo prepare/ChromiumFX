@@ -89,7 +89,7 @@ namespace Chromium {
                 var exception_pinned = new PinnedString(e.m_exception_wrapped);
                 exception_str = exception_pinned.Obj.PinnedPtr;
                 exception_length = exception_pinned.Length;
-                exception_gc_handle = exception_pinned.Obj.ToIntPtr();
+                exception_gc_handle = exception_pinned.Obj.GCHandlePtr();
             } else {
                 exception_str = IntPtr.Zero;
                 exception_length = 0;
@@ -123,7 +123,7 @@ namespace Chromium {
                 var exception_pinned = new PinnedString(e.m_exception_wrapped);
                 exception_str = exception_pinned.Obj.PinnedPtr;
                 exception_length = exception_pinned.Length;
-                exception_gc_handle = exception_pinned.Obj.ToIntPtr();
+                exception_gc_handle = exception_pinned.Obj.GCHandlePtr();
             } else {
                 exception_str = IntPtr.Zero;
                 exception_length = 0;
@@ -156,7 +156,7 @@ namespace Chromium {
                 var exception_pinned = new PinnedString(e.m_exception_wrapped);
                 exception_str = exception_pinned.Obj.PinnedPtr;
                 exception_length = exception_pinned.Length;
-                exception_gc_handle = exception_pinned.Obj.ToIntPtr();
+                exception_gc_handle = exception_pinned.Obj.GCHandlePtr();
             } else {
                 exception_str = IntPtr.Zero;
                 exception_length = 0;
@@ -189,7 +189,7 @@ namespace Chromium {
                 var exception_pinned = new PinnedString(e.m_exception_wrapped);
                 exception_str = exception_pinned.Obj.PinnedPtr;
                 exception_length = exception_pinned.Length;
-                exception_gc_handle = exception_pinned.Obj.ToIntPtr();
+                exception_gc_handle = exception_pinned.Obj.GCHandlePtr();
             } else {
                 exception_str = IntPtr.Zero;
                 exception_length = 0;

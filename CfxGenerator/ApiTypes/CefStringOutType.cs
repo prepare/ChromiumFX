@@ -116,7 +116,7 @@ public class CefStringOutType : CefStringPtrType {
         b.AppendLine("var {0}_pinned = new PinnedString(e.m_{0}_wrapped);", var);
         b.AppendLine("{0}_str = {0}_pinned.Obj.PinnedPtr;", var);
         b.AppendLine("{0}_length = {0}_pinned.Length;", var);
-        b.AppendLine("{0}_gc_handle = {0}_pinned.Obj.ToIntPtr();", var);
+        b.AppendLine("{0}_gc_handle = {0}_pinned.Obj.GCHandlePtr();", var);
         b.BeginElse();
         b.AppendLine("{0}_str = IntPtr.Zero;", var);
         b.AppendLine("{0}_length = 0;", var);

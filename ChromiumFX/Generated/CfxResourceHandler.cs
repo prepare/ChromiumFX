@@ -108,7 +108,7 @@ namespace Chromium {
                 var redirectUrl_pinned = new PinnedString(e.m_redirectUrl_wrapped);
                 redirectUrl_str = redirectUrl_pinned.Obj.PinnedPtr;
                 redirectUrl_length = redirectUrl_pinned.Length;
-                redirectUrl_gc_handle = redirectUrl_pinned.Obj.ToIntPtr();
+                redirectUrl_gc_handle = redirectUrl_pinned.Obj.GCHandlePtr();
             } else {
                 redirectUrl_str = IntPtr.Zero;
                 redirectUrl_length = 0;

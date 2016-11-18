@@ -49,7 +49,7 @@ namespace Chromium {
             }
         }
 
-        public IntPtr ToIntPtr() {
+        public IntPtr GCHandlePtr() {
             return GCHandle.ToIntPtr(handle);
         }
 

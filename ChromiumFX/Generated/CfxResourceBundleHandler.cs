@@ -81,7 +81,7 @@ namespace Chromium {
                 var string_pinned = new PinnedString(e.m_string_wrapped);
                 string_str = string_pinned.Obj.PinnedPtr;
                 string_length = string_pinned.Length;
-                string_gc_handle = string_pinned.Obj.ToIntPtr();
+                string_gc_handle = string_pinned.Obj.GCHandlePtr();
             } else {
                 string_str = IntPtr.Zero;
                 string_length = 0;
