@@ -261,15 +261,15 @@ namespace CfxTestApplication {
             }
             LogCallback(sender, e);
             var context = CfrV8Context.GetEnteredContext();
-            e.SetReturnValue("CfxHelloWorld returns this text.");
+            e.SetReturnValue((CfrV8Value)"CfxHelloWorld returns this text.");
 
         }
 
         void TestDoubleCallback_Execute(object sender, CfrV8HandlerExecuteEventArgs e) {
             var doubleCallback = e.Arguments[0];
             var args = new CfrV8Value[] {
-                "This is the first argument",
-                123.4567
+                (CfrV8Value)"This is the first argument",
+                (CfrV8Value)123.4567
             };
             var retval = doubleCallback.ExecuteFunction(null, args);
             e.SetReturnValue(retval);

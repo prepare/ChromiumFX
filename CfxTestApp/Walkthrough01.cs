@@ -103,7 +103,7 @@ namespace CfxTestApplication {
                 var firstArg = e.Arguments[0].IntValue;
                 MessageBox.Show("First argument supplied: " + firstArg);
             }
-            e.SetReturnValue(100);
+            e.SetReturnValue((CfrV8Value)100);
         }
 
         static void ChromiumWebBrowser_OnBeforeCfxInitialize(CfxSettings settings, CfxBrowserProcessHandler processHandler, out CfxOnBeforeCommandLineProcessingEventHandler onBeforeCommandLineProcessingEventHandler) {
