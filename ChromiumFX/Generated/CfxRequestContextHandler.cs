@@ -84,20 +84,21 @@ namespace Chromium {
 
         // on_before_plugin_load
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_before_plugin_load_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr mime_type_str, int mime_type_length, IntPtr plugin_url_str, int plugin_url_length, IntPtr top_origin_url_str, int top_origin_url_length, IntPtr plugin_info, ref int plugin_policy);
+        private delegate void on_before_plugin_load_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr mime_type_str, int mime_type_length, IntPtr plugin_url_str, int plugin_url_length, IntPtr top_origin_url_str, int top_origin_url_length, IntPtr plugin_info, out int _release_plugin_info, ref int plugin_policy);
         private static on_before_plugin_load_delegate on_before_plugin_load_native;
         private static IntPtr on_before_plugin_load_native_ptr;
 
-        internal static void on_before_plugin_load(IntPtr gcHandlePtr, out int __retval, IntPtr mime_type_str, int mime_type_length, IntPtr plugin_url_str, int plugin_url_length, IntPtr top_origin_url_str, int top_origin_url_length, IntPtr plugin_info, ref int plugin_policy) {
+        internal static void on_before_plugin_load(IntPtr gcHandlePtr, out int __retval, IntPtr mime_type_str, int mime_type_length, IntPtr plugin_url_str, int plugin_url_length, IntPtr top_origin_url_str, int top_origin_url_length, IntPtr plugin_info, out int _release_plugin_info, ref int plugin_policy) {
             var self = (CfxRequestContextHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
+                _release_plugin_info = 1;
                 return;
             }
             var e = new CfxOnBeforePluginLoadEventArgs(mime_type_str, mime_type_length, plugin_url_str, plugin_url_length, top_origin_url_str, top_origin_url_length, plugin_info, plugin_policy);
             self.m_OnBeforePluginLoad?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_plugin_info_wrapped == null) CfxApi.cfx_release(e.m_plugin_info);
+            _release_plugin_info = e.m_plugin_info_wrapped == null? 1 : 0;
             plugin_policy = e.m_plugin_policy;
             __retval = e.m_returnValue ? 1 : 0;
         }

@@ -56,20 +56,21 @@ namespace Chromium {
 
         // visit
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void visit_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr info, int count, int total);
+        private delegate void visit_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr info, out int _release_info, int count, int total);
         private static visit_delegate visit_native;
         private static IntPtr visit_native_ptr;
 
-        internal static void visit(IntPtr gcHandlePtr, out int __retval, IntPtr info, int count, int total) {
+        internal static void visit(IntPtr gcHandlePtr, out int __retval, IntPtr info, out int _release_info, int count, int total) {
             var self = (CfxWebPluginInfoVisitor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
+                _release_info = 1;
                 return;
             }
             var e = new CfxWebPluginInfoVisitorVisitEventArgs(info, count, total);
             self.m_Visit?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_info_wrapped == null) CfxApi.cfx_release(e.m_info);
+            _release_info = e.m_info_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 

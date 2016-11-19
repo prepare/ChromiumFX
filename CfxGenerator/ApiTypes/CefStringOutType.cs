@@ -124,7 +124,7 @@ public class CefStringOutType : CefStringPtrType {
         b.EndBlock();
     }
 
-    public override void EmitSetPInvokeParamToDefaultStatements(CodeBuilder b, string var) {
+    public override void EmitSetCallbackArgumentToDefaultStatements(CodeBuilder b, string var) {
         b.AppendLine("{0}_str = IntPtr.Zero;", var);
         b.AppendLine("{0}_length = 0;", var);
         b.AppendLine("{0}_gc_handle = IntPtr.Zero;", var);

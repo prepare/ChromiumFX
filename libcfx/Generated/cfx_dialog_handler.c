@@ -38,7 +38,7 @@ typedef struct _cfx_dialog_handler_t {
     unsigned int ref_count;
     gc_handle_t gc_handle;
     // managed callbacks
-    void (CEF_CALLBACK *on_file_dialog)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_file_dialog_mode_t mode, char16 *title_str, int title_length, char16 *default_file_path_str, int default_file_path_length, cef_string_list_t accept_filters, int selected_accept_filter, cef_file_dialog_callback_t* callback);
+    void (CEF_CALLBACK *on_file_dialog)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *_release_browser, cef_file_dialog_mode_t mode, char16 *title_str, int title_length, char16 *default_file_path_str, int default_file_path_length, cef_string_list_t accept_filters, int selected_accept_filter, cef_file_dialog_callback_t* callback, int *_release_callback);
 } cfx_dialog_handler_t;
 
 void CEF_CALLBACK _cfx_dialog_handler_add_ref(struct _cef_base_t* base) {
@@ -82,14 +82,18 @@ static gc_handle_t cfx_dialog_handler_get_gc_handle(cfx_dialog_handler_t* self) 
 
 int CEF_CALLBACK cfx_dialog_handler_on_file_dialog(cef_dialog_handler_t* self, cef_browser_t* browser, cef_file_dialog_mode_t mode, const cef_string_t* title, const cef_string_t* default_file_path, cef_string_list_t accept_filters, int selected_accept_filter, cef_file_dialog_callback_t* callback) {
     int __retval;
-    ((cfx_dialog_handler_t*)self)->on_file_dialog(((cfx_dialog_handler_t*)self)->gc_handle, &__retval, browser, mode, title ? title->str : 0, title ? (int)title->length : 0, default_file_path ? default_file_path->str : 0, default_file_path ? (int)default_file_path->length : 0, accept_filters, selected_accept_filter, callback);
+    int _release_browser;
+    int _release_callback;
+    ((cfx_dialog_handler_t*)self)->on_file_dialog(((cfx_dialog_handler_t*)self)->gc_handle, &__retval, browser, &_release_browser, mode, title ? title->str : 0, title ? (int)title->length : 0, default_file_path ? default_file_path->str : 0, default_file_path ? (int)default_file_path->length : 0, accept_filters, selected_accept_filter, callback, &_release_callback);
+    if(_release_browser) browser->base.release((cef_base_t*)browser);
+    if(_release_callback) callback->base.release((cef_base_t*)callback);
     return __retval;
 }
 
 static void cfx_dialog_handler_set_callback(cef_dialog_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        ((cfx_dialog_handler_t*)self)->on_file_dialog = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_file_dialog_mode_t mode, char16 *title_str, int title_length, char16 *default_file_path_str, int default_file_path_length, cef_string_list_t accept_filters, int selected_accept_filter, cef_file_dialog_callback_t* callback))callback;
+        ((cfx_dialog_handler_t*)self)->on_file_dialog = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *_release_browser, cef_file_dialog_mode_t mode, char16 *title_str, int title_length, char16 *default_file_path_str, int default_file_path_length, cef_string_list_t accept_filters, int selected_accept_filter, cef_file_dialog_callback_t* callback, int *_release_callback))callback;
         self->on_file_dialog = callback ? cfx_dialog_handler_on_file_dialog : 0;
         break;
     }

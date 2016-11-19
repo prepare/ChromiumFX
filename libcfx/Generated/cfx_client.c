@@ -52,7 +52,7 @@ typedef struct _cfx_client_t {
     void (CEF_CALLBACK *get_load_handler)(gc_handle_t self, cef_load_handler_t** __retval);
     void (CEF_CALLBACK *get_render_handler)(gc_handle_t self, cef_render_handler_t** __retval);
     void (CEF_CALLBACK *get_request_handler)(gc_handle_t self, cef_request_handler_t** __retval);
-    void (CEF_CALLBACK *on_process_message_received)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_process_id_t source_process, cef_process_message_t* message);
+    void (CEF_CALLBACK *on_process_message_received)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *_release_browser, cef_process_id_t source_process, cef_process_message_t* message, int *_release_message);
 } cfx_client_t;
 
 void CEF_CALLBACK _cfx_client_add_ref(struct _cef_base_t* base) {
@@ -250,7 +250,11 @@ cef_request_handler_t* CEF_CALLBACK cfx_client_get_request_handler(cef_client_t*
 
 int CEF_CALLBACK cfx_client_on_process_message_received(cef_client_t* self, cef_browser_t* browser, cef_process_id_t source_process, cef_process_message_t* message) {
     int __retval;
-    ((cfx_client_t*)self)->on_process_message_received(((cfx_client_t*)self)->gc_handle, &__retval, browser, source_process, message);
+    int _release_browser;
+    int _release_message;
+    ((cfx_client_t*)self)->on_process_message_received(((cfx_client_t*)self)->gc_handle, &__retval, browser, &_release_browser, source_process, message, &_release_message);
+    if(_release_browser) browser->base.release((cef_base_t*)browser);
+    if(_release_message) message->base.release((cef_base_t*)message);
     return __retval;
 }
 
@@ -313,7 +317,7 @@ static void cfx_client_set_callback(cef_client_t* self, int index, void* callbac
         self->get_request_handler = callback ? cfx_client_get_request_handler : 0;
         break;
     case 14:
-        ((cfx_client_t*)self)->on_process_message_received = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_process_id_t source_process, cef_process_message_t* message))callback;
+        ((cfx_client_t*)self)->on_process_message_received = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *_release_browser, cef_process_id_t source_process, cef_process_message_t* message, int *_release_message))callback;
         self->on_process_message_received = callback ? cfx_client_on_process_message_received : 0;
         break;
     }

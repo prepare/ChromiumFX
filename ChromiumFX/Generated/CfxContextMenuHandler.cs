@@ -62,84 +62,98 @@ namespace Chromium {
 
         // on_before_context_menu
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_before_context_menu_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr parameters, IntPtr model);
+        private delegate void on_before_context_menu_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr parameters, out int _release_params, IntPtr model, out int _release_model);
         private static on_before_context_menu_delegate on_before_context_menu_native;
         private static IntPtr on_before_context_menu_native_ptr;
 
-        internal static void on_before_context_menu(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, IntPtr parameters, IntPtr model) {
+        internal static void on_before_context_menu(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr parameters, out int _release_params, IntPtr model, out int _release_model) {
             var self = (CfxContextMenuHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
+                _release_browser = 1;
+                _release_frame = 1;
+                _release_params = 1;
+                _release_model = 1;
                 return;
             }
             var e = new CfxOnBeforeContextMenuEventArgs(browser, frame, parameters, model);
             self.m_OnBeforeContextMenu?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
-            if(e.m_params_wrapped == null) CfxApi.cfx_release(e.m_params);
-            if(e.m_model_wrapped == null) CfxApi.cfx_release(e.m_model);
+            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            _release_frame = e.m_frame_wrapped == null? 1 : 0;
+            _release_params = e.m_params_wrapped == null? 1 : 0;
+            _release_model = e.m_model_wrapped == null? 1 : 0;
         }
 
         // run_context_menu
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void run_context_menu_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr parameters, IntPtr model, IntPtr callback);
+        private delegate void run_context_menu_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr parameters, out int _release_params, IntPtr model, out int _release_model, IntPtr callback, out int _release_callback);
         private static run_context_menu_delegate run_context_menu_native;
         private static IntPtr run_context_menu_native_ptr;
 
-        internal static void run_context_menu(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr parameters, IntPtr model, IntPtr callback) {
+        internal static void run_context_menu(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr parameters, out int _release_params, IntPtr model, out int _release_model, IntPtr callback, out int _release_callback) {
             var self = (CfxContextMenuHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
+                _release_browser = 1;
+                _release_frame = 1;
+                _release_params = 1;
+                _release_model = 1;
+                _release_callback = 1;
                 return;
             }
             var e = new CfxRunContextMenuEventArgs(browser, frame, parameters, model, callback);
             self.m_RunContextMenu?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
-            if(e.m_params_wrapped == null) CfxApi.cfx_release(e.m_params);
-            if(e.m_model_wrapped == null) CfxApi.cfx_release(e.m_model);
-            if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
+            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            _release_frame = e.m_frame_wrapped == null? 1 : 0;
+            _release_params = e.m_params_wrapped == null? 1 : 0;
+            _release_model = e.m_model_wrapped == null? 1 : 0;
+            _release_callback = e.m_callback_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 
         // on_context_menu_command
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_context_menu_command_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr parameters, int command_id, int event_flags);
+        private delegate void on_context_menu_command_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr parameters, out int _release_params, int command_id, int event_flags);
         private static on_context_menu_command_delegate on_context_menu_command_native;
         private static IntPtr on_context_menu_command_native_ptr;
 
-        internal static void on_context_menu_command(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr parameters, int command_id, int event_flags) {
+        internal static void on_context_menu_command(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr parameters, out int _release_params, int command_id, int event_flags) {
             var self = (CfxContextMenuHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
+                _release_browser = 1;
+                _release_frame = 1;
+                _release_params = 1;
                 return;
             }
             var e = new CfxOnContextMenuCommandEventArgs(browser, frame, parameters, command_id, event_flags);
             self.m_OnContextMenuCommand?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
-            if(e.m_params_wrapped == null) CfxApi.cfx_release(e.m_params);
+            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            _release_frame = e.m_frame_wrapped == null? 1 : 0;
+            _release_params = e.m_params_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 
         // on_context_menu_dismissed
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_context_menu_dismissed_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame);
+        private delegate void on_context_menu_dismissed_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame);
         private static on_context_menu_dismissed_delegate on_context_menu_dismissed_native;
         private static IntPtr on_context_menu_dismissed_native_ptr;
 
-        internal static void on_context_menu_dismissed(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame) {
+        internal static void on_context_menu_dismissed(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame) {
             var self = (CfxContextMenuHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
+                _release_browser = 1;
+                _release_frame = 1;
                 return;
             }
             var e = new CfxOnContextMenuDismissedEventArgs(browser, frame);
             self.m_OnContextMenuDismissed?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
+            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            _release_frame = e.m_frame_wrapped == null? 1 : 0;
         }
 
         internal CfxContextMenuHandler(IntPtr nativePtr) : base(nativePtr) {}

@@ -60,14 +60,15 @@ namespace Chromium {
 
         // get
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void get_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out IntPtr retval, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle);
+        private delegate void get_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out int _release_object, out IntPtr retval, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle);
         private static get_delegate get_native;
         private static IntPtr get_native_ptr;
 
-        internal static void get(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out IntPtr retval, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle) {
+        internal static void get(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out int _release_object, out IntPtr retval, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle) {
             var self = (CfxV8Accessor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
+                _release_object = 1;
                 retval = default(IntPtr);
                 exception_str = IntPtr.Zero;
                 exception_length = 0;
@@ -77,7 +78,7 @@ namespace Chromium {
             var e = new CfxV8AccessorGetEventArgs(name_str, name_length, @object);
             self.m_Get?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_object_wrapped == null) CfxApi.cfx_release(e.m_object);
+            _release_object = e.m_object_wrapped == null? 1 : 0;
             retval = CfxV8Value.Unwrap(e.m_retval_wrapped);
             if(e.m_exception_wrapped != null && e.m_exception_wrapped.Length > 0) {
                 var exception_pinned = new PinnedString(e.m_exception_wrapped);
@@ -94,14 +95,16 @@ namespace Chromium {
 
         // set
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void set_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, IntPtr value, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle);
+        private delegate void set_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out int _release_object, IntPtr value, out int _release_value, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle);
         private static set_delegate set_native;
         private static IntPtr set_native_ptr;
 
-        internal static void set(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, IntPtr value, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle) {
+        internal static void set(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out int _release_object, IntPtr value, out int _release_value, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle) {
             var self = (CfxV8Accessor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
+                _release_object = 1;
+                _release_value = 1;
                 exception_str = IntPtr.Zero;
                 exception_length = 0;
                 exception_gc_handle = IntPtr.Zero;
@@ -110,8 +113,8 @@ namespace Chromium {
             var e = new CfxV8AccessorSetEventArgs(name_str, name_length, @object, value);
             self.m_Set?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_object_wrapped == null) CfxApi.cfx_release(e.m_object);
-            if(e.m_value_wrapped == null) CfxApi.cfx_release(e.m_value);
+            _release_object = e.m_object_wrapped == null? 1 : 0;
+            _release_value = e.m_value_wrapped == null? 1 : 0;
             if(e.m_exception_wrapped != null && e.m_exception_wrapped.Length > 0) {
                 var exception_pinned = new PinnedString(e.m_exception_wrapped);
                 exception_str = exception_pinned.Obj.PinnedPtr;

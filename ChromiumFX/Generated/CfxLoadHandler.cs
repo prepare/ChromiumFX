@@ -63,73 +63,80 @@ namespace Chromium {
 
         // on_loading_state_change
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_loading_state_change_delegate(IntPtr gcHandlePtr, IntPtr browser, int isLoading, int canGoBack, int canGoForward);
+        private delegate void on_loading_state_change_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, int isLoading, int canGoBack, int canGoForward);
         private static on_loading_state_change_delegate on_loading_state_change_native;
         private static IntPtr on_loading_state_change_native_ptr;
 
-        internal static void on_loading_state_change(IntPtr gcHandlePtr, IntPtr browser, int isLoading, int canGoBack, int canGoForward) {
+        internal static void on_loading_state_change(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, int isLoading, int canGoBack, int canGoForward) {
             var self = (CfxLoadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
+                _release_browser = 1;
                 return;
             }
             var e = new CfxOnLoadingStateChangeEventArgs(browser, isLoading, canGoBack, canGoForward);
             self.m_OnLoadingStateChange?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
+            _release_browser = e.m_browser_wrapped == null? 1 : 0;
         }
 
         // on_load_start
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_load_start_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, int transition_type);
+        private delegate void on_load_start_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, int transition_type);
         private static on_load_start_delegate on_load_start_native;
         private static IntPtr on_load_start_native_ptr;
 
-        internal static void on_load_start(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, int transition_type) {
+        internal static void on_load_start(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, int transition_type) {
             var self = (CfxLoadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
+                _release_browser = 1;
+                _release_frame = 1;
                 return;
             }
             var e = new CfxOnLoadStartEventArgs(browser, frame, transition_type);
             self.m_OnLoadStart?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
+            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            _release_frame = e.m_frame_wrapped == null? 1 : 0;
         }
 
         // on_load_end
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_load_end_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, int httpStatusCode);
+        private delegate void on_load_end_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, int httpStatusCode);
         private static on_load_end_delegate on_load_end_native;
         private static IntPtr on_load_end_native_ptr;
 
-        internal static void on_load_end(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, int httpStatusCode) {
+        internal static void on_load_end(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, int httpStatusCode) {
             var self = (CfxLoadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
+                _release_browser = 1;
+                _release_frame = 1;
                 return;
             }
             var e = new CfxOnLoadEndEventArgs(browser, frame, httpStatusCode);
             self.m_OnLoadEnd?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
+            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            _release_frame = e.m_frame_wrapped == null? 1 : 0;
         }
 
         // on_load_error
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_load_error_delegate(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, int errorCode, IntPtr errorText_str, int errorText_length, IntPtr failedUrl_str, int failedUrl_length);
+        private delegate void on_load_error_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, int errorCode, IntPtr errorText_str, int errorText_length, IntPtr failedUrl_str, int failedUrl_length);
         private static on_load_error_delegate on_load_error_native;
         private static IntPtr on_load_error_native_ptr;
 
-        internal static void on_load_error(IntPtr gcHandlePtr, IntPtr browser, IntPtr frame, int errorCode, IntPtr errorText_str, int errorText_length, IntPtr failedUrl_str, int failedUrl_length) {
+        internal static void on_load_error(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, int errorCode, IntPtr errorText_str, int errorText_length, IntPtr failedUrl_str, int failedUrl_length) {
             var self = (CfxLoadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
+                _release_browser = 1;
+                _release_frame = 1;
                 return;
             }
             var e = new CfxOnLoadErrorEventArgs(browser, frame, errorCode, errorText_str, errorText_length, failedUrl_str, failedUrl_length);
             self.m_OnLoadError?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
+            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            _release_frame = e.m_frame_wrapped == null? 1 : 0;
         }
 
         internal CfxLoadHandler(IntPtr nativePtr) : base(nativePtr) {}

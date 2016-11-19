@@ -38,10 +38,10 @@ typedef struct _cfx_v8interceptor_t {
     unsigned int ref_count;
     gc_handle_t gc_handle;
     // managed callbacks
-    void (CEF_CALLBACK *get_byname)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, cef_v8value_t** retval, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle);
-    void (CEF_CALLBACK *get_byindex)(gc_handle_t self, int* __retval, int index, cef_v8value_t* object, cef_v8value_t** retval, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle);
-    void (CEF_CALLBACK *set_byname)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, cef_v8value_t* value, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle);
-    void (CEF_CALLBACK *set_byindex)(gc_handle_t self, int* __retval, int index, cef_v8value_t* object, cef_v8value_t* value, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle);
+    void (CEF_CALLBACK *get_byname)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, int *_release_object, cef_v8value_t** retval, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle);
+    void (CEF_CALLBACK *get_byindex)(gc_handle_t self, int* __retval, int index, cef_v8value_t* object, int *_release_object, cef_v8value_t** retval, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle);
+    void (CEF_CALLBACK *set_byname)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, int *_release_object, cef_v8value_t* value, int *_release_value, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle);
+    void (CEF_CALLBACK *set_byindex)(gc_handle_t self, int* __retval, int index, cef_v8value_t* object, int *_release_object, cef_v8value_t* value, int *_release_value, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle);
 } cfx_v8interceptor_t;
 
 void CEF_CALLBACK _cfx_v8interceptor_add_ref(struct _cef_base_t* base) {
@@ -85,8 +85,10 @@ static gc_handle_t cfx_v8interceptor_get_gc_handle(cfx_v8interceptor_t* self) {
 
 int CEF_CALLBACK cfx_v8interceptor_get_byname(cef_v8interceptor_t* self, const cef_string_t* name, cef_v8value_t* object, cef_v8value_t** retval, cef_string_t* exception) {
     int __retval;
+    int _release_object;
     char16* exception_tmp_str = 0; int exception_tmp_length = 0; gc_handle_t exception_gc_handle = 0;
-    ((cfx_v8interceptor_t*)self)->get_byname(((cfx_v8interceptor_t*)self)->gc_handle, &__retval, name ? name->str : 0, name ? (int)name->length : 0, object, retval, &exception_tmp_str, &exception_tmp_length, &exception_gc_handle);
+    ((cfx_v8interceptor_t*)self)->get_byname(((cfx_v8interceptor_t*)self)->gc_handle, &__retval, name ? name->str : 0, name ? (int)name->length : 0, object, &_release_object, retval, &exception_tmp_str, &exception_tmp_length, &exception_gc_handle);
+    if(_release_object) object->base.release((cef_base_t*)object);
     if(*retval)((cef_base_t*)*retval)->add_ref((cef_base_t*)*retval);
     if(exception_tmp_length > 0) {
         cef_string_set(exception_tmp_str, exception_tmp_length, exception, 1);
@@ -99,8 +101,10 @@ int CEF_CALLBACK cfx_v8interceptor_get_byname(cef_v8interceptor_t* self, const c
 
 int CEF_CALLBACK cfx_v8interceptor_get_byindex(cef_v8interceptor_t* self, int index, cef_v8value_t* object, cef_v8value_t** retval, cef_string_t* exception) {
     int __retval;
+    int _release_object;
     char16* exception_tmp_str = 0; int exception_tmp_length = 0; gc_handle_t exception_gc_handle = 0;
-    ((cfx_v8interceptor_t*)self)->get_byindex(((cfx_v8interceptor_t*)self)->gc_handle, &__retval, index, object, retval, &exception_tmp_str, &exception_tmp_length, &exception_gc_handle);
+    ((cfx_v8interceptor_t*)self)->get_byindex(((cfx_v8interceptor_t*)self)->gc_handle, &__retval, index, object, &_release_object, retval, &exception_tmp_str, &exception_tmp_length, &exception_gc_handle);
+    if(_release_object) object->base.release((cef_base_t*)object);
     if(*retval)((cef_base_t*)*retval)->add_ref((cef_base_t*)*retval);
     if(exception_tmp_length > 0) {
         cef_string_set(exception_tmp_str, exception_tmp_length, exception, 1);
@@ -113,8 +117,12 @@ int CEF_CALLBACK cfx_v8interceptor_get_byindex(cef_v8interceptor_t* self, int in
 
 int CEF_CALLBACK cfx_v8interceptor_set_byname(cef_v8interceptor_t* self, const cef_string_t* name, cef_v8value_t* object, cef_v8value_t* value, cef_string_t* exception) {
     int __retval;
+    int _release_object;
+    int _release_value;
     char16* exception_tmp_str = 0; int exception_tmp_length = 0; gc_handle_t exception_gc_handle = 0;
-    ((cfx_v8interceptor_t*)self)->set_byname(((cfx_v8interceptor_t*)self)->gc_handle, &__retval, name ? name->str : 0, name ? (int)name->length : 0, object, value, &exception_tmp_str, &exception_tmp_length, &exception_gc_handle);
+    ((cfx_v8interceptor_t*)self)->set_byname(((cfx_v8interceptor_t*)self)->gc_handle, &__retval, name ? name->str : 0, name ? (int)name->length : 0, object, &_release_object, value, &_release_value, &exception_tmp_str, &exception_tmp_length, &exception_gc_handle);
+    if(_release_object) object->base.release((cef_base_t*)object);
+    if(_release_value) value->base.release((cef_base_t*)value);
     if(exception_tmp_length > 0) {
         cef_string_set(exception_tmp_str, exception_tmp_length, exception, 1);
         cfx_gc_handle_free(exception_gc_handle);
@@ -126,8 +134,12 @@ int CEF_CALLBACK cfx_v8interceptor_set_byname(cef_v8interceptor_t* self, const c
 
 int CEF_CALLBACK cfx_v8interceptor_set_byindex(cef_v8interceptor_t* self, int index, cef_v8value_t* object, cef_v8value_t* value, cef_string_t* exception) {
     int __retval;
+    int _release_object;
+    int _release_value;
     char16* exception_tmp_str = 0; int exception_tmp_length = 0; gc_handle_t exception_gc_handle = 0;
-    ((cfx_v8interceptor_t*)self)->set_byindex(((cfx_v8interceptor_t*)self)->gc_handle, &__retval, index, object, value, &exception_tmp_str, &exception_tmp_length, &exception_gc_handle);
+    ((cfx_v8interceptor_t*)self)->set_byindex(((cfx_v8interceptor_t*)self)->gc_handle, &__retval, index, object, &_release_object, value, &_release_value, &exception_tmp_str, &exception_tmp_length, &exception_gc_handle);
+    if(_release_object) object->base.release((cef_base_t*)object);
+    if(_release_value) value->base.release((cef_base_t*)value);
     if(exception_tmp_length > 0) {
         cef_string_set(exception_tmp_str, exception_tmp_length, exception, 1);
         cfx_gc_handle_free(exception_gc_handle);
@@ -138,19 +150,19 @@ int CEF_CALLBACK cfx_v8interceptor_set_byindex(cef_v8interceptor_t* self, int in
 static void cfx_v8interceptor_set_callback(cef_v8interceptor_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        ((cfx_v8interceptor_t*)self)->get_byname = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, cef_v8value_t** retval, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle))callback;
+        ((cfx_v8interceptor_t*)self)->get_byname = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, int *_release_object, cef_v8value_t** retval, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle))callback;
         self->get_byname = callback ? cfx_v8interceptor_get_byname : 0;
         break;
     case 1:
-        ((cfx_v8interceptor_t*)self)->get_byindex = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int index, cef_v8value_t* object, cef_v8value_t** retval, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle))callback;
+        ((cfx_v8interceptor_t*)self)->get_byindex = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int index, cef_v8value_t* object, int *_release_object, cef_v8value_t** retval, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle))callback;
         self->get_byindex = callback ? cfx_v8interceptor_get_byindex : 0;
         break;
     case 2:
-        ((cfx_v8interceptor_t*)self)->set_byname = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, cef_v8value_t* value, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle))callback;
+        ((cfx_v8interceptor_t*)self)->set_byname = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, int *_release_object, cef_v8value_t* value, int *_release_value, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle))callback;
         self->set_byname = callback ? cfx_v8interceptor_set_byname : 0;
         break;
     case 3:
-        ((cfx_v8interceptor_t*)self)->set_byindex = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int index, cef_v8value_t* object, cef_v8value_t* value, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle))callback;
+        ((cfx_v8interceptor_t*)self)->set_byindex = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, int index, cef_v8value_t* object, int *_release_object, cef_v8value_t* value, int *_release_value, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle))callback;
         self->set_byindex = callback ? cfx_v8interceptor_set_byindex : 0;
         break;
     }

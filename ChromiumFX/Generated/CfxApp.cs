@@ -64,36 +64,38 @@ namespace Chromium {
 
         // on_before_command_line_processing
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_before_command_line_processing_delegate(IntPtr gcHandlePtr, IntPtr process_type_str, int process_type_length, IntPtr command_line);
+        private delegate void on_before_command_line_processing_delegate(IntPtr gcHandlePtr, IntPtr process_type_str, int process_type_length, IntPtr command_line, out int _release_command_line);
         private static on_before_command_line_processing_delegate on_before_command_line_processing_native;
         private static IntPtr on_before_command_line_processing_native_ptr;
 
-        internal static void on_before_command_line_processing(IntPtr gcHandlePtr, IntPtr process_type_str, int process_type_length, IntPtr command_line) {
+        internal static void on_before_command_line_processing(IntPtr gcHandlePtr, IntPtr process_type_str, int process_type_length, IntPtr command_line, out int _release_command_line) {
             var self = (CfxApp)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
+                _release_command_line = 1;
                 return;
             }
             var e = new CfxOnBeforeCommandLineProcessingEventArgs(process_type_str, process_type_length, command_line);
             self.m_OnBeforeCommandLineProcessing?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_command_line_wrapped == null) CfxApi.cfx_release(e.m_command_line);
+            _release_command_line = e.m_command_line_wrapped == null? 1 : 0;
         }
 
         // on_register_custom_schemes
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_register_custom_schemes_delegate(IntPtr gcHandlePtr, IntPtr registrar);
+        private delegate void on_register_custom_schemes_delegate(IntPtr gcHandlePtr, IntPtr registrar, out int _release_registrar);
         private static on_register_custom_schemes_delegate on_register_custom_schemes_native;
         private static IntPtr on_register_custom_schemes_native_ptr;
 
-        internal static void on_register_custom_schemes(IntPtr gcHandlePtr, IntPtr registrar) {
+        internal static void on_register_custom_schemes(IntPtr gcHandlePtr, IntPtr registrar, out int _release_registrar) {
             var self = (CfxApp)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
+                _release_registrar = 1;
                 return;
             }
             var e = new CfxOnRegisterCustomSchemesEventArgs(registrar);
             self.m_OnRegisterCustomSchemes?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_registrar_wrapped == null) CfxApi.cfx_release(e.m_registrar);
+            _release_registrar = e.m_registrar_wrapped == null? 1 : 0;
         }
 
         // get_resource_bundle_handler

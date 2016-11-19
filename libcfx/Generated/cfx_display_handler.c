@@ -38,13 +38,13 @@ typedef struct _cfx_display_handler_t {
     unsigned int ref_count;
     gc_handle_t gc_handle;
     // managed callbacks
-    void (CEF_CALLBACK *on_address_change)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, char16 *url_str, int url_length);
-    void (CEF_CALLBACK *on_title_change)(gc_handle_t self, cef_browser_t* browser, char16 *title_str, int title_length);
-    void (CEF_CALLBACK *on_favicon_urlchange)(gc_handle_t self, cef_browser_t* browser, cef_string_list_t icon_urls);
-    void (CEF_CALLBACK *on_fullscreen_mode_change)(gc_handle_t self, cef_browser_t* browser, int fullscreen);
-    void (CEF_CALLBACK *on_tooltip)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 **text_str, int *text_length);
-    void (CEF_CALLBACK *on_status_message)(gc_handle_t self, cef_browser_t* browser, char16 *value_str, int value_length);
-    void (CEF_CALLBACK *on_console_message)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *message_str, int message_length, char16 *source_str, int source_length, int line);
+    void (CEF_CALLBACK *on_address_change)(gc_handle_t self, cef_browser_t* browser, int *_release_browser, cef_frame_t* frame, int *_release_frame, char16 *url_str, int url_length);
+    void (CEF_CALLBACK *on_title_change)(gc_handle_t self, cef_browser_t* browser, int *_release_browser, char16 *title_str, int title_length);
+    void (CEF_CALLBACK *on_favicon_urlchange)(gc_handle_t self, cef_browser_t* browser, int *_release_browser, cef_string_list_t icon_urls);
+    void (CEF_CALLBACK *on_fullscreen_mode_change)(gc_handle_t self, cef_browser_t* browser, int *_release_browser, int fullscreen);
+    void (CEF_CALLBACK *on_tooltip)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *_release_browser, char16 **text_str, int *text_length);
+    void (CEF_CALLBACK *on_status_message)(gc_handle_t self, cef_browser_t* browser, int *_release_browser, char16 *value_str, int value_length);
+    void (CEF_CALLBACK *on_console_message)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *_release_browser, char16 *message_str, int message_length, char16 *source_str, int source_length, int line);
 } cfx_display_handler_t;
 
 void CEF_CALLBACK _cfx_display_handler_add_ref(struct _cef_base_t* base) {
@@ -87,33 +87,45 @@ static gc_handle_t cfx_display_handler_get_gc_handle(cfx_display_handler_t* self
 // on_address_change
 
 void CEF_CALLBACK cfx_display_handler_on_address_change(cef_display_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, const cef_string_t* url) {
-    ((cfx_display_handler_t*)self)->on_address_change(((cfx_display_handler_t*)self)->gc_handle, browser, frame, url ? url->str : 0, url ? (int)url->length : 0);
+    int _release_browser;
+    int _release_frame;
+    ((cfx_display_handler_t*)self)->on_address_change(((cfx_display_handler_t*)self)->gc_handle, browser, &_release_browser, frame, &_release_frame, url ? url->str : 0, url ? (int)url->length : 0);
+    if(_release_browser) browser->base.release((cef_base_t*)browser);
+    if(_release_frame) frame->base.release((cef_base_t*)frame);
 }
 
 // on_title_change
 
 void CEF_CALLBACK cfx_display_handler_on_title_change(cef_display_handler_t* self, cef_browser_t* browser, const cef_string_t* title) {
-    ((cfx_display_handler_t*)self)->on_title_change(((cfx_display_handler_t*)self)->gc_handle, browser, title ? title->str : 0, title ? (int)title->length : 0);
+    int _release_browser;
+    ((cfx_display_handler_t*)self)->on_title_change(((cfx_display_handler_t*)self)->gc_handle, browser, &_release_browser, title ? title->str : 0, title ? (int)title->length : 0);
+    if(_release_browser) browser->base.release((cef_base_t*)browser);
 }
 
 // on_favicon_urlchange
 
 void CEF_CALLBACK cfx_display_handler_on_favicon_urlchange(cef_display_handler_t* self, cef_browser_t* browser, cef_string_list_t icon_urls) {
-    ((cfx_display_handler_t*)self)->on_favicon_urlchange(((cfx_display_handler_t*)self)->gc_handle, browser, icon_urls);
+    int _release_browser;
+    ((cfx_display_handler_t*)self)->on_favicon_urlchange(((cfx_display_handler_t*)self)->gc_handle, browser, &_release_browser, icon_urls);
+    if(_release_browser) browser->base.release((cef_base_t*)browser);
 }
 
 // on_fullscreen_mode_change
 
 void CEF_CALLBACK cfx_display_handler_on_fullscreen_mode_change(cef_display_handler_t* self, cef_browser_t* browser, int fullscreen) {
-    ((cfx_display_handler_t*)self)->on_fullscreen_mode_change(((cfx_display_handler_t*)self)->gc_handle, browser, fullscreen);
+    int _release_browser;
+    ((cfx_display_handler_t*)self)->on_fullscreen_mode_change(((cfx_display_handler_t*)self)->gc_handle, browser, &_release_browser, fullscreen);
+    if(_release_browser) browser->base.release((cef_base_t*)browser);
 }
 
 // on_tooltip
 
 int CEF_CALLBACK cfx_display_handler_on_tooltip(cef_display_handler_t* self, cef_browser_t* browser, cef_string_t* text) {
     int __retval;
+    int _release_browser;
     char16* text_tmp_str = text->str; int text_tmp_length = (int)text->length;
-    ((cfx_display_handler_t*)self)->on_tooltip(((cfx_display_handler_t*)self)->gc_handle, &__retval, browser, &(text_tmp_str), &(text_tmp_length));
+    ((cfx_display_handler_t*)self)->on_tooltip(((cfx_display_handler_t*)self)->gc_handle, &__retval, browser, &_release_browser, &(text_tmp_str), &(text_tmp_length));
+    if(_release_browser) browser->base.release((cef_base_t*)browser);
     if(text_tmp_str != text->str) {
         if(text->dtor) text->dtor(text->str);
         cef_string_set(text_tmp_str, text_tmp_length, text, 1);
@@ -125,45 +137,49 @@ int CEF_CALLBACK cfx_display_handler_on_tooltip(cef_display_handler_t* self, cef
 // on_status_message
 
 void CEF_CALLBACK cfx_display_handler_on_status_message(cef_display_handler_t* self, cef_browser_t* browser, const cef_string_t* value) {
-    ((cfx_display_handler_t*)self)->on_status_message(((cfx_display_handler_t*)self)->gc_handle, browser, value ? value->str : 0, value ? (int)value->length : 0);
+    int _release_browser;
+    ((cfx_display_handler_t*)self)->on_status_message(((cfx_display_handler_t*)self)->gc_handle, browser, &_release_browser, value ? value->str : 0, value ? (int)value->length : 0);
+    if(_release_browser) browser->base.release((cef_base_t*)browser);
 }
 
 // on_console_message
 
 int CEF_CALLBACK cfx_display_handler_on_console_message(cef_display_handler_t* self, cef_browser_t* browser, const cef_string_t* message, const cef_string_t* source, int line) {
     int __retval;
-    ((cfx_display_handler_t*)self)->on_console_message(((cfx_display_handler_t*)self)->gc_handle, &__retval, browser, message ? message->str : 0, message ? (int)message->length : 0, source ? source->str : 0, source ? (int)source->length : 0, line);
+    int _release_browser;
+    ((cfx_display_handler_t*)self)->on_console_message(((cfx_display_handler_t*)self)->gc_handle, &__retval, browser, &_release_browser, message ? message->str : 0, message ? (int)message->length : 0, source ? source->str : 0, source ? (int)source->length : 0, line);
+    if(_release_browser) browser->base.release((cef_base_t*)browser);
     return __retval;
 }
 
 static void cfx_display_handler_set_callback(cef_display_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        ((cfx_display_handler_t*)self)->on_address_change = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, char16 *url_str, int url_length))callback;
+        ((cfx_display_handler_t*)self)->on_address_change = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int *_release_browser, cef_frame_t* frame, int *_release_frame, char16 *url_str, int url_length))callback;
         self->on_address_change = callback ? cfx_display_handler_on_address_change : 0;
         break;
     case 1:
-        ((cfx_display_handler_t*)self)->on_title_change = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, char16 *title_str, int title_length))callback;
+        ((cfx_display_handler_t*)self)->on_title_change = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int *_release_browser, char16 *title_str, int title_length))callback;
         self->on_title_change = callback ? cfx_display_handler_on_title_change : 0;
         break;
     case 2:
-        ((cfx_display_handler_t*)self)->on_favicon_urlchange = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_string_list_t icon_urls))callback;
+        ((cfx_display_handler_t*)self)->on_favicon_urlchange = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int *_release_browser, cef_string_list_t icon_urls))callback;
         self->on_favicon_urlchange = callback ? cfx_display_handler_on_favicon_urlchange : 0;
         break;
     case 3:
-        ((cfx_display_handler_t*)self)->on_fullscreen_mode_change = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int fullscreen))callback;
+        ((cfx_display_handler_t*)self)->on_fullscreen_mode_change = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int *_release_browser, int fullscreen))callback;
         self->on_fullscreen_mode_change = callback ? cfx_display_handler_on_fullscreen_mode_change : 0;
         break;
     case 4:
-        ((cfx_display_handler_t*)self)->on_tooltip = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 **text_str, int *text_length))callback;
+        ((cfx_display_handler_t*)self)->on_tooltip = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *_release_browser, char16 **text_str, int *text_length))callback;
         self->on_tooltip = callback ? cfx_display_handler_on_tooltip : 0;
         break;
     case 5:
-        ((cfx_display_handler_t*)self)->on_status_message = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, char16 *value_str, int value_length))callback;
+        ((cfx_display_handler_t*)self)->on_status_message = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int *_release_browser, char16 *value_str, int value_length))callback;
         self->on_status_message = callback ? cfx_display_handler_on_status_message : 0;
         break;
     case 6:
-        ((cfx_display_handler_t*)self)->on_console_message = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, char16 *message_str, int message_length, char16 *source_str, int source_length, int line))callback;
+        ((cfx_display_handler_t*)self)->on_console_message = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *_release_browser, char16 *message_str, int message_length, char16 *source_str, int source_length, int line))callback;
         self->on_console_message = callback ? cfx_display_handler_on_console_message : 0;
         break;
     }

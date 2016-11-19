@@ -56,19 +56,20 @@ namespace Chromium {
 
         // on_download_image_finished
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_download_image_finished_delegate(IntPtr gcHandlePtr, IntPtr image_url_str, int image_url_length, int http_status_code, IntPtr image);
+        private delegate void on_download_image_finished_delegate(IntPtr gcHandlePtr, IntPtr image_url_str, int image_url_length, int http_status_code, IntPtr image, out int _release_image);
         private static on_download_image_finished_delegate on_download_image_finished_native;
         private static IntPtr on_download_image_finished_native_ptr;
 
-        internal static void on_download_image_finished(IntPtr gcHandlePtr, IntPtr image_url_str, int image_url_length, int http_status_code, IntPtr image) {
+        internal static void on_download_image_finished(IntPtr gcHandlePtr, IntPtr image_url_str, int image_url_length, int http_status_code, IntPtr image, out int _release_image) {
             var self = (CfxDownloadImageCallback)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
+                _release_image = 1;
                 return;
             }
             var e = new CfxDownloadImageCallbackOnDownloadImageFinishedEventArgs(image_url_str, image_url_length, http_status_code, image);
             self.m_OnDownloadImageFinished?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_image_wrapped == null) CfxApi.cfx_release(e.m_image);
+            _release_image = e.m_image_wrapped == null? 1 : 0;
         }
 
         internal CfxDownloadImageCallback(IntPtr nativePtr) : base(nativePtr) {}

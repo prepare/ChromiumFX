@@ -38,7 +38,7 @@ typedef struct _cfx_download_image_callback_t {
     unsigned int ref_count;
     gc_handle_t gc_handle;
     // managed callbacks
-    void (CEF_CALLBACK *on_download_image_finished)(gc_handle_t self, char16 *image_url_str, int image_url_length, int http_status_code, cef_image_t* image);
+    void (CEF_CALLBACK *on_download_image_finished)(gc_handle_t self, char16 *image_url_str, int image_url_length, int http_status_code, cef_image_t* image, int *_release_image);
 } cfx_download_image_callback_t;
 
 void CEF_CALLBACK _cfx_download_image_callback_add_ref(struct _cef_base_t* base) {
@@ -81,13 +81,15 @@ static gc_handle_t cfx_download_image_callback_get_gc_handle(cfx_download_image_
 // on_download_image_finished
 
 void CEF_CALLBACK cfx_download_image_callback_on_download_image_finished(cef_download_image_callback_t* self, const cef_string_t* image_url, int http_status_code, cef_image_t* image) {
-    ((cfx_download_image_callback_t*)self)->on_download_image_finished(((cfx_download_image_callback_t*)self)->gc_handle, image_url ? image_url->str : 0, image_url ? (int)image_url->length : 0, http_status_code, image);
+    int _release_image;
+    ((cfx_download_image_callback_t*)self)->on_download_image_finished(((cfx_download_image_callback_t*)self)->gc_handle, image_url ? image_url->str : 0, image_url ? (int)image_url->length : 0, http_status_code, image, &_release_image);
+    if(_release_image) image->base.release((cef_base_t*)image);
 }
 
 static void cfx_download_image_callback_set_callback(cef_download_image_callback_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        ((cfx_download_image_callback_t*)self)->on_download_image_finished = (void (CEF_CALLBACK *)(gc_handle_t self, char16 *image_url_str, int image_url_length, int http_status_code, cef_image_t* image))callback;
+        ((cfx_download_image_callback_t*)self)->on_download_image_finished = (void (CEF_CALLBACK *)(gc_handle_t self, char16 *image_url_str, int image_url_length, int http_status_code, cef_image_t* image, int *_release_image))callback;
         self->on_download_image_finished = callback ? cfx_download_image_callback_on_download_image_finished : 0;
         break;
     }

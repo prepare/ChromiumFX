@@ -80,6 +80,27 @@ public class CefStructPtrType : ApiType {
         return CSharp.Escape(var);
     }
 
+    public override string PInvokeCallbackParameter(string var) {
+        if(Struct.ClassBuilder.IsRefCounted)
+            return base.PInvokeCallbackParameter(var) + ", out int _release_" + var;
+        else
+            return base.PInvokeCallbackParameter(var);
+    }
+
+    public override string NativeCallbackParameter(string var, bool isConst) {
+        if(Struct.ClassBuilder.IsRefCounted)
+            return base.NativeCallbackParameter(var, isConst) + ", int *_release_" + var;
+        else
+            return base.NativeCallbackParameter(var, isConst);
+    }
+
+    public override string NativeCallbackArgument(string var) {
+        if(Struct.ClassBuilder.IsRefCounted)
+            return base.NativeCallbackArgument(var) + ", &_release_" + var;
+        else
+            return base.NativeCallbackArgument(var);
+    }
+
     public override string RemoteUnwrapExpression(string var) {
         return string.Format("CfrObject.Unwrap({0}).ptr", CSharp.Escape(var));
     }
@@ -94,6 +115,25 @@ public class CefStructPtrType : ApiType {
         }
     }
 
+    public override void EmitPreNativeCallbackStatements(CodeBuilder b, string var) {
+        if(Struct.ClassBuilder.IsRefCounted && var != "self")
+            b.AppendLine("int _release_" + var + ";");
+    }
+
+    public override void EmitPostNativeCallbackStatements(CodeBuilder b, string var) {
+        if(Struct.ClassBuilder.IsRefCounted && var != "self")
+            b.AppendLine("if(_release_{0}) {0}->base.release((cef_base_t*){0});", var);
+    }
+
+    public override string PublicEventConstructorParameter(string var) {
+        return "IntPtr " + CSharp.Escape(var);
+    }
+
+    public override void EmitSetCallbackArgumentToDefaultStatements(CodeBuilder b, string var) {
+        if(Struct.ClassBuilder.IsRefCounted && var != "self")
+            b.AppendLine("_release_{0} = 1;", var);
+    }
+
     public override void EmitNativeCallbackReturnStatements(CodeBuilder b, string var) {
         b.BeginIf("__retval");
         b.AppendLine("((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);");
@@ -104,6 +144,11 @@ public class CefStructPtrType : ApiType {
     public override void EmitPublicEventArgGetterStatements(CodeBuilder b, string var) {
         b.AppendLine("if(m_{0}_wrapped == null) m_{0}_wrapped = {1};", var, PublicWrapExpression("m_" + var));
         b.AppendLine("return m_{0}_wrapped;", var);
+    }
+
+    public override void EmitPostPublicRaiseEventStatements(CodeBuilder b, string var) {
+        if(Struct.ClassBuilder.IsRefCounted && var != "self")
+            b.AppendLine("_release_{0} = e.m_{0}_wrapped == null? 1 : 0;", var);
     }
 
     public override void EmitPublicEventArgFields(CodeBuilder b, string var) {

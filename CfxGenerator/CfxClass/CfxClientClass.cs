@@ -208,9 +208,8 @@ public class CfxClientClass : CfxClass {
                 b.AppendLine("__retval = default({0});", sig.ReturnType.PInvokeSymbol);
             }
             foreach(var arg in sig.Arguments) {
-                if(arg.ArgumentType.IsOut && !arg.ArgumentType.IsIn) {
-                    arg.ArgumentType.EmitSetPInvokeParamToDefaultStatements(b, arg.VarName);
-                }
+                if(!arg.IsThisArgument)
+                    arg.ArgumentType.EmitSetCallbackArgumentToDefaultStatements(b, arg.VarName);
             }
             b.AppendLine("return;");
             b.EndBlock();
@@ -218,7 +217,11 @@ public class CfxClientClass : CfxClass {
             b.AppendLine("self.m_{0}?.Invoke(self, e);", cb.PublicName);
             b.AppendLine("e.m_isInvalid = true;");
 
-            sig.EmitPostPublicEventHandlerCallStatements(b);
+            for(var i = 1; i <= sig.ManagedArguments.Count() - 1; i++) {
+                sig.ManagedArguments[i].EmitPostPublicRaiseEventStatements(b);
+            }
+
+            sig.EmitPostPublicEventHandlerReturnValueStatements(b);
 
             b.EndBlock();
             b.AppendLine();
@@ -600,7 +603,7 @@ public class CfxClientClass : CfxClass {
         b.BeginClass(RemoteClassName + " : CfrClientBase", GeneratorConfig.ClassModifiers(RemoteClassName));
         b.AppendLine();
         EmitRemoteClassWrapperFunction(b);
-        
+
         foreach(var cb in CallbackFunctions) {
             if(!GeneratorConfig.IsBrowserProcessOnly(CefStruct.Name + "::" + cb.Name)) {
                 b.BeginBlock("internal void raise_{0}(object sender, {1} e)", cb.PublicName, cb.RemoteEventArgsClassName);

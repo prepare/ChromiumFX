@@ -59,39 +59,42 @@ namespace Chromium {
 
         // on_request_geolocation_permission
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_request_geolocation_permission_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id, IntPtr callback);
+        private delegate void on_request_geolocation_permission_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr requesting_url_str, int requesting_url_length, int request_id, IntPtr callback, out int _release_callback);
         private static on_request_geolocation_permission_delegate on_request_geolocation_permission_native;
         private static IntPtr on_request_geolocation_permission_native_ptr;
 
-        internal static void on_request_geolocation_permission(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr requesting_url_str, int requesting_url_length, int request_id, IntPtr callback) {
+        internal static void on_request_geolocation_permission(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr requesting_url_str, int requesting_url_length, int request_id, IntPtr callback, out int _release_callback) {
             var self = (CfxGeolocationHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
+                _release_browser = 1;
+                _release_callback = 1;
                 return;
             }
             var e = new CfxOnRequestGeolocationPermissionEventArgs(browser, requesting_url_str, requesting_url_length, request_id, callback);
             self.m_OnRequestGeolocationPermission?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            if(e.m_callback_wrapped == null) CfxApi.cfx_release(e.m_callback);
+            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            _release_callback = e.m_callback_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 
         // on_cancel_geolocation_permission
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_cancel_geolocation_permission_delegate(IntPtr gcHandlePtr, IntPtr browser, int request_id);
+        private delegate void on_cancel_geolocation_permission_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, int request_id);
         private static on_cancel_geolocation_permission_delegate on_cancel_geolocation_permission_native;
         private static IntPtr on_cancel_geolocation_permission_native_ptr;
 
-        internal static void on_cancel_geolocation_permission(IntPtr gcHandlePtr, IntPtr browser, int request_id) {
+        internal static void on_cancel_geolocation_permission(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, int request_id) {
             var self = (CfxGeolocationHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
+                _release_browser = 1;
                 return;
             }
             var e = new CfxOnCancelGeolocationPermissionEventArgs(browser, request_id);
             self.m_OnCancelGeolocationPermission?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
+            _release_browser = e.m_browser_wrapped == null? 1 : 0;
         }
 
         internal CfxGeolocationHandler(IntPtr nativePtr) : base(nativePtr) {}

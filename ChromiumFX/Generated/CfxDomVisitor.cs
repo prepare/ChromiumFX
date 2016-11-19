@@ -56,19 +56,20 @@ namespace Chromium {
 
         // visit
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void visit_delegate(IntPtr gcHandlePtr, IntPtr document);
+        private delegate void visit_delegate(IntPtr gcHandlePtr, IntPtr document, out int _release_document);
         private static visit_delegate visit_native;
         private static IntPtr visit_native_ptr;
 
-        internal static void visit(IntPtr gcHandlePtr, IntPtr document) {
+        internal static void visit(IntPtr gcHandlePtr, IntPtr document, out int _release_document) {
             var self = (CfxDomVisitor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
+                _release_document = 1;
                 return;
             }
             var e = new CfxDomVisitorVisitEventArgs(document);
             self.m_Visit?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_document_wrapped == null) CfxApi.cfx_release(e.m_document);
+            _release_document = e.m_document_wrapped == null? 1 : 0;
         }
 
         internal CfxDomVisitor(IntPtr nativePtr) : base(nativePtr) {}

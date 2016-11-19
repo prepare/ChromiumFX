@@ -343,18 +343,7 @@ public class Signature {
         }
     }
 
-    public void EmitPostPublicEventHandlerCallStatements(CodeBuilder b) {
-
-        for(var i = 1; i <= ManagedArguments.Count() - 1; i++) {
-            ManagedArguments[i].EmitPostPublicRaiseEventStatements(b);
-            if(ManagedArguments[i].TypeIsRefCounted) {
-                b.AppendLine("if(e.m_{0}_wrapped == null) CfxApi.cfx_release(e.m_{0});", ManagedArguments[i].VarName);
-            }
-        }
-        EmitPostPublicEventHandlerReturnValueStatements(b);
-    }
-
-    protected virtual void EmitPostPublicEventHandlerReturnValueStatements(CodeBuilder b) {
+    public virtual void EmitPostPublicEventHandlerReturnValueStatements(CodeBuilder b) {
         if(!PublicReturnType.IsVoid) {
             b.AppendLine("__retval = {0};", PublicReturnType.PublicUnwrapExpression("e.m_returnValue"));
         }

@@ -38,10 +38,10 @@ typedef struct _cfx_context_menu_handler_t {
     unsigned int ref_count;
     gc_handle_t gc_handle;
     // managed callbacks
-    void (CEF_CALLBACK *on_before_context_menu)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* params, cef_menu_model_t* model);
-    void (CEF_CALLBACK *run_context_menu)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* params, cef_menu_model_t* model, cef_run_context_menu_callback_t* callback);
-    void (CEF_CALLBACK *on_context_menu_command)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* params, int command_id, cef_event_flags_t event_flags);
-    void (CEF_CALLBACK *on_context_menu_dismissed)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame);
+    void (CEF_CALLBACK *on_before_context_menu)(gc_handle_t self, cef_browser_t* browser, int *_release_browser, cef_frame_t* frame, int *_release_frame, cef_context_menu_params_t* params, int *_release_params, cef_menu_model_t* model, int *_release_model);
+    void (CEF_CALLBACK *run_context_menu)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *_release_browser, cef_frame_t* frame, int *_release_frame, cef_context_menu_params_t* params, int *_release_params, cef_menu_model_t* model, int *_release_model, cef_run_context_menu_callback_t* callback, int *_release_callback);
+    void (CEF_CALLBACK *on_context_menu_command)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *_release_browser, cef_frame_t* frame, int *_release_frame, cef_context_menu_params_t* params, int *_release_params, int command_id, cef_event_flags_t event_flags);
+    void (CEF_CALLBACK *on_context_menu_dismissed)(gc_handle_t self, cef_browser_t* browser, int *_release_browser, cef_frame_t* frame, int *_release_frame);
 } cfx_context_menu_handler_t;
 
 void CEF_CALLBACK _cfx_context_menu_handler_add_ref(struct _cef_base_t* base) {
@@ -84,14 +84,32 @@ static gc_handle_t cfx_context_menu_handler_get_gc_handle(cfx_context_menu_handl
 // on_before_context_menu
 
 void CEF_CALLBACK cfx_context_menu_handler_on_before_context_menu(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* params, cef_menu_model_t* model) {
-    ((cfx_context_menu_handler_t*)self)->on_before_context_menu(((cfx_context_menu_handler_t*)self)->gc_handle, browser, frame, params, model);
+    int _release_browser;
+    int _release_frame;
+    int _release_params;
+    int _release_model;
+    ((cfx_context_menu_handler_t*)self)->on_before_context_menu(((cfx_context_menu_handler_t*)self)->gc_handle, browser, &_release_browser, frame, &_release_frame, params, &_release_params, model, &_release_model);
+    if(_release_browser) browser->base.release((cef_base_t*)browser);
+    if(_release_frame) frame->base.release((cef_base_t*)frame);
+    if(_release_params) params->base.release((cef_base_t*)params);
+    if(_release_model) model->base.release((cef_base_t*)model);
 }
 
 // run_context_menu
 
 int CEF_CALLBACK cfx_context_menu_handler_run_context_menu(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* params, cef_menu_model_t* model, cef_run_context_menu_callback_t* callback) {
     int __retval;
-    ((cfx_context_menu_handler_t*)self)->run_context_menu(((cfx_context_menu_handler_t*)self)->gc_handle, &__retval, browser, frame, params, model, callback);
+    int _release_browser;
+    int _release_frame;
+    int _release_params;
+    int _release_model;
+    int _release_callback;
+    ((cfx_context_menu_handler_t*)self)->run_context_menu(((cfx_context_menu_handler_t*)self)->gc_handle, &__retval, browser, &_release_browser, frame, &_release_frame, params, &_release_params, model, &_release_model, callback, &_release_callback);
+    if(_release_browser) browser->base.release((cef_base_t*)browser);
+    if(_release_frame) frame->base.release((cef_base_t*)frame);
+    if(_release_params) params->base.release((cef_base_t*)params);
+    if(_release_model) model->base.release((cef_base_t*)model);
+    if(_release_callback) callback->base.release((cef_base_t*)callback);
     return __retval;
 }
 
@@ -99,32 +117,42 @@ int CEF_CALLBACK cfx_context_menu_handler_run_context_menu(cef_context_menu_hand
 
 int CEF_CALLBACK cfx_context_menu_handler_on_context_menu_command(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* params, int command_id, cef_event_flags_t event_flags) {
     int __retval;
-    ((cfx_context_menu_handler_t*)self)->on_context_menu_command(((cfx_context_menu_handler_t*)self)->gc_handle, &__retval, browser, frame, params, command_id, event_flags);
+    int _release_browser;
+    int _release_frame;
+    int _release_params;
+    ((cfx_context_menu_handler_t*)self)->on_context_menu_command(((cfx_context_menu_handler_t*)self)->gc_handle, &__retval, browser, &_release_browser, frame, &_release_frame, params, &_release_params, command_id, event_flags);
+    if(_release_browser) browser->base.release((cef_base_t*)browser);
+    if(_release_frame) frame->base.release((cef_base_t*)frame);
+    if(_release_params) params->base.release((cef_base_t*)params);
     return __retval;
 }
 
 // on_context_menu_dismissed
 
 void CEF_CALLBACK cfx_context_menu_handler_on_context_menu_dismissed(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame) {
-    ((cfx_context_menu_handler_t*)self)->on_context_menu_dismissed(((cfx_context_menu_handler_t*)self)->gc_handle, browser, frame);
+    int _release_browser;
+    int _release_frame;
+    ((cfx_context_menu_handler_t*)self)->on_context_menu_dismissed(((cfx_context_menu_handler_t*)self)->gc_handle, browser, &_release_browser, frame, &_release_frame);
+    if(_release_browser) browser->base.release((cef_base_t*)browser);
+    if(_release_frame) frame->base.release((cef_base_t*)frame);
 }
 
 static void cfx_context_menu_handler_set_callback(cef_context_menu_handler_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        ((cfx_context_menu_handler_t*)self)->on_before_context_menu = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* params, cef_menu_model_t* model))callback;
+        ((cfx_context_menu_handler_t*)self)->on_before_context_menu = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int *_release_browser, cef_frame_t* frame, int *_release_frame, cef_context_menu_params_t* params, int *_release_params, cef_menu_model_t* model, int *_release_model))callback;
         self->on_before_context_menu = callback ? cfx_context_menu_handler_on_before_context_menu : 0;
         break;
     case 1:
-        ((cfx_context_menu_handler_t*)self)->run_context_menu = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* params, cef_menu_model_t* model, cef_run_context_menu_callback_t* callback))callback;
+        ((cfx_context_menu_handler_t*)self)->run_context_menu = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *_release_browser, cef_frame_t* frame, int *_release_frame, cef_context_menu_params_t* params, int *_release_params, cef_menu_model_t* model, int *_release_model, cef_run_context_menu_callback_t* callback, int *_release_callback))callback;
         self->run_context_menu = callback ? cfx_context_menu_handler_run_context_menu : 0;
         break;
     case 2:
-        ((cfx_context_menu_handler_t*)self)->on_context_menu_command = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* params, int command_id, cef_event_flags_t event_flags))callback;
+        ((cfx_context_menu_handler_t*)self)->on_context_menu_command = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *_release_browser, cef_frame_t* frame, int *_release_frame, cef_context_menu_params_t* params, int *_release_params, int command_id, cef_event_flags_t event_flags))callback;
         self->on_context_menu_command = callback ? cfx_context_menu_handler_on_context_menu_command : 0;
         break;
     case 3:
-        ((cfx_context_menu_handler_t*)self)->on_context_menu_dismissed = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, cef_frame_t* frame))callback;
+        ((cfx_context_menu_handler_t*)self)->on_context_menu_dismissed = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int *_release_browser, cef_frame_t* frame, int *_release_frame))callback;
         self->on_context_menu_dismissed = callback ? cfx_context_menu_handler_on_context_menu_dismissed : 0;
         break;
     }

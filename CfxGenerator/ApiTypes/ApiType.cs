@@ -319,8 +319,9 @@ public class ApiType {
         }
     }
 
-    public virtual void EmitSetPInvokeParamToDefaultStatements(CodeBuilder b, string var) {
-        b.AppendLine("{0} = default({1});", var, PInvokeSymbol);
+    public virtual void EmitSetCallbackArgumentToDefaultStatements(CodeBuilder b, string var) {
+        if(IsOut && !IsIn)
+            b.AppendLine("{0} = default({1});", var, PInvokeSymbol);
     }
 
     public void EmitRemoteCallFields(CodeBuilder b, string var) {

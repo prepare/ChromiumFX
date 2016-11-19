@@ -63,14 +63,16 @@ namespace Chromium {
 
         // on_before_popup
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_before_popup_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, int target_disposition, int user_gesture, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access);
+        private delegate void on_before_popup_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, int target_disposition, int user_gesture, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access);
         private static on_before_popup_delegate on_before_popup_native;
         private static IntPtr on_before_popup_native_ptr;
 
-        internal static void on_before_popup(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, int target_disposition, int user_gesture, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access) {
+        internal static void on_before_popup(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, int target_disposition, int user_gesture, IntPtr popupFeatures, IntPtr windowInfo, out IntPtr client, IntPtr settings, out int no_javascript_access) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
+                _release_browser = 1;
+                _release_frame = 1;
                 client = default(IntPtr);
                 no_javascript_access = default(int);
                 return;
@@ -78,8 +80,8 @@ namespace Chromium {
             var e = new CfxOnBeforePopupEventArgs(browser, frame, target_url_str, target_url_length, target_frame_name_str, target_frame_name_length, target_disposition, user_gesture, popupFeatures, windowInfo, settings);
             self.m_OnBeforePopup?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            if(e.m_frame_wrapped == null) CfxApi.cfx_release(e.m_frame);
+            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            _release_frame = e.m_frame_wrapped == null? 1 : 0;
             client = CfxClient.Unwrap(e.m_client_wrapped);
             no_javascript_access = e.m_no_javascript_access;
             __retval = e.m_returnValue ? 1 : 0;
@@ -87,55 +89,58 @@ namespace Chromium {
 
         // on_after_created
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_after_created_delegate(IntPtr gcHandlePtr, IntPtr browser);
+        private delegate void on_after_created_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser);
         private static on_after_created_delegate on_after_created_native;
         private static IntPtr on_after_created_native_ptr;
 
-        internal static void on_after_created(IntPtr gcHandlePtr, IntPtr browser) {
+        internal static void on_after_created(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
+                _release_browser = 1;
                 return;
             }
             var e = new CfxOnAfterCreatedEventArgs(browser);
             self.m_OnAfterCreated?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
+            _release_browser = e.m_browser_wrapped == null? 1 : 0;
         }
 
         // do_close
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void do_close_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser);
+        private delegate void do_close_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser);
         private static do_close_delegate do_close_native;
         private static IntPtr do_close_native_ptr;
 
-        internal static void do_close(IntPtr gcHandlePtr, out int __retval, IntPtr browser) {
+        internal static void do_close(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
+                _release_browser = 1;
                 return;
             }
             var e = new CfxDoCloseEventArgs(browser);
             self.m_DoClose?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
+            _release_browser = e.m_browser_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 
         // on_before_close
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_before_close_delegate(IntPtr gcHandlePtr, IntPtr browser);
+        private delegate void on_before_close_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser);
         private static on_before_close_delegate on_before_close_native;
         private static IntPtr on_before_close_native_ptr;
 
-        internal static void on_before_close(IntPtr gcHandlePtr, IntPtr browser) {
+        internal static void on_before_close(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser) {
             var self = (CfxLifeSpanHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
+                _release_browser = 1;
                 return;
             }
             var e = new CfxOnBeforeCloseEventArgs(browser);
             self.m_OnBeforeClose?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
+            _release_browser = e.m_browser_wrapped == null? 1 : 0;
         }
 
         internal CfxLifeSpanHandler(IntPtr nativePtr) : base(nativePtr) {}

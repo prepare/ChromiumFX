@@ -38,7 +38,7 @@ typedef struct _cfx_domvisitor_t {
     unsigned int ref_count;
     gc_handle_t gc_handle;
     // managed callbacks
-    void (CEF_CALLBACK *visit)(gc_handle_t self, cef_domdocument_t* document);
+    void (CEF_CALLBACK *visit)(gc_handle_t self, cef_domdocument_t* document, int *_release_document);
 } cfx_domvisitor_t;
 
 void CEF_CALLBACK _cfx_domvisitor_add_ref(struct _cef_base_t* base) {
@@ -81,13 +81,15 @@ static gc_handle_t cfx_domvisitor_get_gc_handle(cfx_domvisitor_t* self) {
 // visit
 
 void CEF_CALLBACK cfx_domvisitor_visit(cef_domvisitor_t* self, cef_domdocument_t* document) {
-    ((cfx_domvisitor_t*)self)->visit(((cfx_domvisitor_t*)self)->gc_handle, document);
+    int _release_document;
+    ((cfx_domvisitor_t*)self)->visit(((cfx_domvisitor_t*)self)->gc_handle, document, &_release_document);
+    if(_release_document) document->base.release((cef_base_t*)document);
 }
 
 static void cfx_domvisitor_set_callback(cef_domvisitor_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        ((cfx_domvisitor_t*)self)->visit = (void (CEF_CALLBACK *)(gc_handle_t self, cef_domdocument_t* document))callback;
+        ((cfx_domvisitor_t*)self)->visit = (void (CEF_CALLBACK *)(gc_handle_t self, cef_domdocument_t* document, int *_release_document))callback;
         self->visit = callback ? cfx_domvisitor_visit : 0;
         break;
     }

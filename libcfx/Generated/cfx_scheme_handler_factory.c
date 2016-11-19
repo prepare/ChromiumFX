@@ -38,7 +38,7 @@ typedef struct _cfx_scheme_handler_factory_t {
     unsigned int ref_count;
     gc_handle_t gc_handle;
     // managed callbacks
-    void (CEF_CALLBACK *create)(gc_handle_t self, cef_resource_handler_t** __retval, cef_browser_t* browser, cef_frame_t* frame, char16 *scheme_name_str, int scheme_name_length, cef_request_t* request);
+    void (CEF_CALLBACK *create)(gc_handle_t self, cef_resource_handler_t** __retval, cef_browser_t* browser, int *_release_browser, cef_frame_t* frame, int *_release_frame, char16 *scheme_name_str, int scheme_name_length, cef_request_t* request, int *_release_request);
 } cfx_scheme_handler_factory_t;
 
 void CEF_CALLBACK _cfx_scheme_handler_factory_add_ref(struct _cef_base_t* base) {
@@ -82,7 +82,13 @@ static gc_handle_t cfx_scheme_handler_factory_get_gc_handle(cfx_scheme_handler_f
 
 cef_resource_handler_t* CEF_CALLBACK cfx_scheme_handler_factory_create(cef_scheme_handler_factory_t* self, cef_browser_t* browser, cef_frame_t* frame, const cef_string_t* scheme_name, cef_request_t* request) {
     cef_resource_handler_t* __retval;
-    ((cfx_scheme_handler_factory_t*)self)->create(((cfx_scheme_handler_factory_t*)self)->gc_handle, &__retval, browser, frame, scheme_name ? scheme_name->str : 0, scheme_name ? (int)scheme_name->length : 0, request);
+    int _release_browser;
+    int _release_frame;
+    int _release_request;
+    ((cfx_scheme_handler_factory_t*)self)->create(((cfx_scheme_handler_factory_t*)self)->gc_handle, &__retval, browser, &_release_browser, frame, &_release_frame, scheme_name ? scheme_name->str : 0, scheme_name ? (int)scheme_name->length : 0, request, &_release_request);
+    if(_release_browser) browser->base.release((cef_base_t*)browser);
+    if(_release_frame) frame->base.release((cef_base_t*)frame);
+    if(_release_request) request->base.release((cef_base_t*)request);
     if(__retval) {
         ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
     }
@@ -92,7 +98,7 @@ cef_resource_handler_t* CEF_CALLBACK cfx_scheme_handler_factory_create(cef_schem
 static void cfx_scheme_handler_factory_set_callback(cef_scheme_handler_factory_t* self, int index, void* callback) {
     switch(index) {
     case 0:
-        ((cfx_scheme_handler_factory_t*)self)->create = (void (CEF_CALLBACK *)(gc_handle_t self, cef_resource_handler_t** __retval, cef_browser_t* browser, cef_frame_t* frame, char16 *scheme_name_str, int scheme_name_length, cef_request_t* request))callback;
+        ((cfx_scheme_handler_factory_t*)self)->create = (void (CEF_CALLBACK *)(gc_handle_t self, cef_resource_handler_t** __retval, cef_browser_t* browser, int *_release_browser, cef_frame_t* frame, int *_release_frame, char16 *scheme_name_str, int scheme_name_length, cef_request_t* request, int *_release_request))callback;
         self->create = callback ? cfx_scheme_handler_factory_create : 0;
         break;
     }

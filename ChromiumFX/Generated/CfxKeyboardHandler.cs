@@ -58,41 +58,43 @@ namespace Chromium {
 
         // on_pre_key_event
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_pre_key_event_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr @event, IntPtr os_event, out int is_keyboard_shortcut);
+        private delegate void on_pre_key_event_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr @event, IntPtr os_event, out int is_keyboard_shortcut);
         private static on_pre_key_event_delegate on_pre_key_event_native;
         private static IntPtr on_pre_key_event_native_ptr;
 
-        internal static void on_pre_key_event(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr @event, IntPtr os_event, out int is_keyboard_shortcut) {
+        internal static void on_pre_key_event(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr @event, IntPtr os_event, out int is_keyboard_shortcut) {
             var self = (CfxKeyboardHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
+                _release_browser = 1;
                 is_keyboard_shortcut = default(int);
                 return;
             }
             var e = new CfxOnPreKeyEventEventArgs(browser, @event, os_event);
             self.m_OnPreKeyEvent?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
+            _release_browser = e.m_browser_wrapped == null? 1 : 0;
             is_keyboard_shortcut = e.m_is_keyboard_shortcut;
             __retval = e.m_returnValue ? 1 : 0;
         }
 
         // on_key_event
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_key_event_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr @event, IntPtr os_event);
+        private delegate void on_key_event_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr @event, IntPtr os_event);
         private static on_key_event_delegate on_key_event_native;
         private static IntPtr on_key_event_native_ptr;
 
-        internal static void on_key_event(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr @event, IntPtr os_event) {
+        internal static void on_key_event(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr @event, IntPtr os_event) {
             var self = (CfxKeyboardHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
+                _release_browser = 1;
                 return;
             }
             var e = new CfxOnKeyEventEventArgs(browser, @event, os_event);
             self.m_OnKeyEvent?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
+            _release_browser = e.m_browser_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 

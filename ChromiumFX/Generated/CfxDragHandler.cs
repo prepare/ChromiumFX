@@ -58,39 +58,42 @@ namespace Chromium {
 
         // on_drag_enter
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_drag_enter_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr dragData, int mask);
+        private delegate void on_drag_enter_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr dragData, out int _release_dragData, int mask);
         private static on_drag_enter_delegate on_drag_enter_native;
         private static IntPtr on_drag_enter_native_ptr;
 
-        internal static void on_drag_enter(IntPtr gcHandlePtr, out int __retval, IntPtr browser, IntPtr dragData, int mask) {
+        internal static void on_drag_enter(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr dragData, out int _release_dragData, int mask) {
             var self = (CfxDragHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
+                _release_browser = 1;
+                _release_dragData = 1;
                 return;
             }
             var e = new CfxOnDragEnterEventArgs(browser, dragData, mask);
             self.m_OnDragEnter?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
-            if(e.m_dragData_wrapped == null) CfxApi.cfx_release(e.m_dragData);
+            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            _release_dragData = e.m_dragData_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 
         // on_draggable_regions_changed
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_draggable_regions_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, UIntPtr regionsCount, IntPtr regions, int regions_structsize);
+        private delegate void on_draggable_regions_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, UIntPtr regionsCount, IntPtr regions, int regions_structsize);
         private static on_draggable_regions_changed_delegate on_draggable_regions_changed_native;
         private static IntPtr on_draggable_regions_changed_native_ptr;
 
-        internal static void on_draggable_regions_changed(IntPtr gcHandlePtr, IntPtr browser, UIntPtr regionsCount, IntPtr regions, int regions_structsize) {
+        internal static void on_draggable_regions_changed(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, UIntPtr regionsCount, IntPtr regions, int regions_structsize) {
             var self = (CfxDragHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
+                _release_browser = 1;
                 return;
             }
             var e = new CfxOnDraggableRegionsChangedEventArgs(browser, regions, regionsCount, regions_structsize);
             self.m_OnDraggableRegionsChanged?.Invoke(self, e);
             e.m_isInvalid = true;
-            if(e.m_browser_wrapped == null) CfxApi.cfx_release(e.m_browser);
+            _release_browser = e.m_browser_wrapped == null? 1 : 0;
             if(e.m_regions_managed != null) {
                 for(int i = 0; i < e.m_regions_managed.Length; ++i) {
                     e.m_regions_managed[i].Dispose();
