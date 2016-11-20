@@ -64,15 +64,16 @@ namespace Chromium {
 
         // execute
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void execute_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out int _release_object, UIntPtr argumentsCount, IntPtr arguments, out IntPtr retval, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle);
+        private delegate void execute_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out int _release_object, UIntPtr argumentsCount, IntPtr arguments, out int _release_arguments, out IntPtr retval, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle);
         private static execute_delegate execute_native;
         private static IntPtr execute_native_ptr;
 
-        internal static void execute(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out int _release_object, UIntPtr argumentsCount, IntPtr arguments, out IntPtr retval, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle) {
+        internal static void execute(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out int _release_object, UIntPtr argumentsCount, IntPtr arguments, out int _release_arguments, out IntPtr retval, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle) {
             var self = (CfxV8Handler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
                 _release_object = 1;
+                _release_arguments = 1;
                 retval = default(IntPtr);
                 exception_str = IntPtr.Zero;
                 exception_length = 0;
@@ -83,11 +84,7 @@ namespace Chromium {
             self.m_Execute?.Invoke(self, e);
             e.m_isInvalid = true;
             _release_object = e.m_object_wrapped == null? 1 : 0;
-            if(e.m_arguments_managed == null) {
-                for(ulong i = 0; i < (ulong)argumentsCount; ++i) {
-                    CfxApi.cfx_release(e.m_arguments[i]);
-                }
-            }
+            _release_arguments = e.m_arguments_managed == null? 1 : 0;
             if(e.m_exception_wrapped != null && e.m_exception_wrapped.Length > 0) {
                 var exception_pinned = new PinnedString(e.m_exception_wrapped);
                 exception_str = exception_pinned.Obj.PinnedPtr;
