@@ -63,13 +63,13 @@ public class CfxClientClass : CfxClass {
         b.BeginBlock("void CEF_CALLBACK _{0}_add_ref(struct _cef_base_t* base)", CfxName);
         b.AppendLine("int count = InterlockedIncrement(&(({0}*)base)->ref_count);", CfxNativeSymbol);
         b.BeginIf("count == 2");
-        b.AppendLine("(({0}*)base)->gc_handle = cfx_gc_handle_switch((({0}*)base)->gc_handle, count);", CfxNativeSymbol);
+        b.AppendLine("cfx_set_native_reference((({0}*)base)->gc_handle, count);", CfxNativeSymbol);
         b.EndBlock();
         b.EndBlock();
         b.BeginBlock("int CEF_CALLBACK _{0}_release(struct _cef_base_t* base)", CfxName);
         b.AppendLine("int count = InterlockedDecrement(&(({0}*)base)->ref_count);", CfxNativeSymbol);
         b.BeginIf("count == 1");
-        b.AppendLine("(({0}*)base)->gc_handle = cfx_gc_handle_switch((({0}*)base)->gc_handle, count);", CfxNativeSymbol);
+        b.AppendLine("cfx_set_native_reference((({0}*)base)->gc_handle, count);", CfxNativeSymbol);
         b.BeginElseIf("!count");
         b.AppendLine("cfx_gc_handle_free((({0}*)base)->gc_handle);", CfxNativeSymbol);
         b.AppendLine("free(base);");

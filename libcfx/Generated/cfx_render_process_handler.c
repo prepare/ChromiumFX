@@ -54,13 +54,13 @@ typedef struct _cfx_render_process_handler_t {
 void CEF_CALLBACK _cfx_render_process_handler_add_ref(struct _cef_base_t* base) {
     int count = InterlockedIncrement(&((cfx_render_process_handler_t*)base)->ref_count);
     if(count == 2) {
-        ((cfx_render_process_handler_t*)base)->gc_handle = cfx_gc_handle_switch(((cfx_render_process_handler_t*)base)->gc_handle, count);
+        cfx_set_native_reference(((cfx_render_process_handler_t*)base)->gc_handle, count);
     }
 }
 int CEF_CALLBACK _cfx_render_process_handler_release(struct _cef_base_t* base) {
     int count = InterlockedDecrement(&((cfx_render_process_handler_t*)base)->ref_count);
     if(count == 1) {
-        ((cfx_render_process_handler_t*)base)->gc_handle = cfx_gc_handle_switch(((cfx_render_process_handler_t*)base)->gc_handle, count);
+        cfx_set_native_reference(((cfx_render_process_handler_t*)base)->gc_handle, count);
     } else if(!count) {
         cfx_gc_handle_free(((cfx_render_process_handler_t*)base)->gc_handle);
         free(base);

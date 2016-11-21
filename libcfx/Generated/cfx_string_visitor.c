@@ -44,13 +44,13 @@ typedef struct _cfx_string_visitor_t {
 void CEF_CALLBACK _cfx_string_visitor_add_ref(struct _cef_base_t* base) {
     int count = InterlockedIncrement(&((cfx_string_visitor_t*)base)->ref_count);
     if(count == 2) {
-        ((cfx_string_visitor_t*)base)->gc_handle = cfx_gc_handle_switch(((cfx_string_visitor_t*)base)->gc_handle, count);
+        cfx_set_native_reference(((cfx_string_visitor_t*)base)->gc_handle, count);
     }
 }
 int CEF_CALLBACK _cfx_string_visitor_release(struct _cef_base_t* base) {
     int count = InterlockedDecrement(&((cfx_string_visitor_t*)base)->ref_count);
     if(count == 1) {
-        ((cfx_string_visitor_t*)base)->gc_handle = cfx_gc_handle_switch(((cfx_string_visitor_t*)base)->gc_handle, count);
+        cfx_set_native_reference(((cfx_string_visitor_t*)base)->gc_handle, count);
     } else if(!count) {
         cfx_gc_handle_free(((cfx_string_visitor_t*)base)->gc_handle);
         free(base);

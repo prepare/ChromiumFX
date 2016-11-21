@@ -64,9 +64,9 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate IntPtr cfx_get_gc_handle_delegate(IntPtr nativePtr);
 
-        //CFX_EXPORT int cfx_api_initialize(void *libcef, void *gc_handle_free, void *gc_handle_switch, int *platform, int *cw_usedefault, void **release, void **string_get_ptr, void **string_destroy, void **get_function_pointer)
+        //CFX_EXPORT int cfx_api_initialize(void *libcef, void *gc_handle_free, void *set_native_reference, int *platform, int *cw_usedefault, void **release, void **string_get_ptr, void **string_destroy, void **get_function_pointer)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate int cfx_api_initialize_delegate(IntPtr libcef, IntPtr gc_handle_free, IntPtr gc_handle_switch, out int platform, out int cw_usedefault, out IntPtr release, out IntPtr string_get_ptr, out IntPtr string_destroy, out IntPtr get_function_pointer);
+        public delegate int cfx_api_initialize_delegate(IntPtr libcef, IntPtr gc_handle_free, IntPtr set_native_reference, out int platform, out int cw_usedefault, out IntPtr release, out IntPtr string_get_ptr, out IntPtr string_destroy, out IntPtr get_function_pointer);
 
         //static int cfx_release(cef_base_t* base)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -100,42 +100,30 @@ namespace Chromium {
         private delegate void cfx_gc_handle_free_delegate(IntPtr gc_handle);
         private static cfx_gc_handle_free_delegate cfx_gc_handle_free;
 
-        //static gc_handle_t (CEF_CALLBACK *cfx_free_gc_handle)(gc_handle_t)
+        //static void (CEF_CALLBACK *cfx_set_native_reference)(gc_handle_t)
         [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        private delegate IntPtr cfx_gc_handle_switch_delegate(IntPtr gc_handle, int ref_count);
-        private static cfx_gc_handle_switch_delegate cfx_gc_handle_switch;
+        private delegate void cfx_set_native_reference_delegate(IntPtr gc_handle, int ref_count);
+        private static cfx_set_native_reference_delegate cfx_set_native_reference;
 
         private static void FreeGcHandle(IntPtr gc_handle) {
             GCHandle.FromIntPtr(gc_handle).Free();
         }
 
-        private static IntPtr SwitchGcHandle(IntPtr gc_handle, int ref_count) {
-            var h = GCHandle.FromIntPtr(gc_handle);
+        private static void SetNativeReference(IntPtr gc_handle, int ref_count) {
             Debug.Assert(ref_count == 1 || ref_count == 2);
+            var h = GCHandle.FromIntPtr(gc_handle);
             if(ref_count == 1) {
                 // ref count of cef client object reached 1 after decrement: 
                 // CEF released it's last reference ->
-                // switch from strong handle to weak handle
-                var t = h.Target;
-                h.Free();
-                return (IntPtr)GCHandle.Alloc(t, GCHandleType.Weak);
+                // free native reference handle
+                var client = (CfxClientBase)h.Target;
+                client.nativeReference.Free();
             } else {
                 // ref count of cef client object reached 2 after increment:
-                // CEF holds it's first reference ->
-                // switch from weak handle to strong handle
-                var t = h.Target;
-                if(t == null) {
-                    // target already collected
-                    // just return the old weak handle, callbacks will return with default values
-                    // TODO: this should never happen, because 
-                    // - if the finalizer is running but ref_count is still 1, the wrapper is out of scope so add_ref can't be called from managed code
-                    // - if ref_count is 1, CEF does not hold a reference so add_ref can't be called from native code either
-                    // so it seems that ref_count can't be incremented from 1 to 2 unless the managed wrapper is in scope
-                    Debug.Assert(false);
-                    return gc_handle;
-                }
-                h.Free();
-                return (IntPtr)GCHandle.Alloc(t, GCHandleType.Normal);
+                // CEF obtained it's first reference ->
+                // alloc native reference handle
+                var client = (CfxClientBase)h.Target;
+                client.nativeReference = GCHandle.Alloc(client, GCHandleType.Normal);
             }
         }
 
@@ -172,7 +160,7 @@ namespace Chromium {
             }
 
             cfx_gc_handle_free = FreeGcHandle;
-            cfx_gc_handle_switch = SwitchGcHandle;
+            cfx_set_native_reference = SetNativeReference;
 
             int platform;
             IntPtr release;
@@ -184,7 +172,7 @@ namespace Chromium {
             int retval = api_initialize(
                 libcefPtr,
                 Marshal.GetFunctionPointerForDelegate(cfx_gc_handle_free),
-                Marshal.GetFunctionPointerForDelegate(cfx_gc_handle_switch),
+                Marshal.GetFunctionPointerForDelegate(cfx_set_native_reference),
                 out platform,
                 out CW_USEDEFAULT,
                 out release,
