@@ -50,7 +50,7 @@ typedef struct _cfx_request_handler_t {
     void (CEF_CALLBACK *on_quota_request)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *_release_browser, char16 *origin_url_str, int origin_url_length, int64 new_size, cef_request_callback_t* callback, int *_release_callback);
     void (CEF_CALLBACK *on_protocol_execution)(gc_handle_t self, cef_browser_t* browser, int *_release_browser, char16 *url_str, int url_length, int* allow_os_execution);
     void (CEF_CALLBACK *on_certificate_error)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *_release_browser, cef_errorcode_t cert_error, char16 *request_url_str, int request_url_length, cef_sslinfo_t* ssl_info, int *_release_ssl_info, cef_request_callback_t* callback, int *_release_callback);
-    void (CEF_CALLBACK *on_select_client_certificate)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *_release_browser, int isProxy, char16 *host_str, int host_length, int port, size_t certificatesCount, cef_x509certificate_t* const* certificates, cef_select_client_certificate_callback_t* callback, int *_release_callback);
+    void (CEF_CALLBACK *on_select_client_certificate)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *_release_browser, int isProxy, char16 *host_str, int host_length, int port, size_t certificatesCount, cef_x509certificate_t* const* certificates, int *_release_certificates, cef_select_client_certificate_callback_t* callback, int *_release_callback);
     void (CEF_CALLBACK *on_plugin_crashed)(gc_handle_t self, cef_browser_t* browser, int *_release_browser, char16 *plugin_path_str, int plugin_path_length);
     void (CEF_CALLBACK *on_render_view_ready)(gc_handle_t self, cef_browser_t* browser, int *_release_browser);
     void (CEF_CALLBACK *on_render_process_terminated)(gc_handle_t self, cef_browser_t* browser, int *_release_browser, cef_termination_status_t status);
@@ -274,9 +274,15 @@ int CEF_CALLBACK cfx_request_handler_on_certificate_error(cef_request_handler_t*
 int CEF_CALLBACK cfx_request_handler_on_select_client_certificate(cef_request_handler_t* self, cef_browser_t* browser, int isProxy, const cef_string_t* host, int port, size_t certificatesCount, cef_x509certificate_t* const* certificates, cef_select_client_certificate_callback_t* callback) {
     int __retval;
     int _release_browser;
+    int _release_certificates;
     int _release_callback;
-    ((cfx_request_handler_t*)self)->on_select_client_certificate(((cfx_request_handler_t*)self)->gc_handle, &__retval, browser, &_release_browser, isProxy, host ? host->str : 0, host ? (int)host->length : 0, port, certificatesCount, certificates, callback, &_release_callback);
+    ((cfx_request_handler_t*)self)->on_select_client_certificate(((cfx_request_handler_t*)self)->gc_handle, &__retval, browser, &_release_browser, isProxy, host ? host->str : 0, host ? (int)host->length : 0, port, certificatesCount, certificates, &_release_certificates, callback, &_release_callback);
     if(_release_browser) browser->base.release((cef_base_t*)browser);
+    if(_release_certificates) {
+        for(size_t i = 0; i < certificatesCount; ++i) {
+            certificates[i]->base.release((cef_base_t*)certificates[i]);
+        }
+    }
     if(_release_callback) callback->base.release((cef_base_t*)callback);
     return __retval;
 }
@@ -356,7 +362,7 @@ static void cfx_request_handler_set_callback(cef_request_handler_t* self, int in
         self->on_certificate_error = callback ? cfx_request_handler_on_certificate_error : 0;
         break;
     case 12:
-        ((cfx_request_handler_t*)self)->on_select_client_certificate = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *_release_browser, int isProxy, char16 *host_str, int host_length, int port, size_t certificatesCount, cef_x509certificate_t* const* certificates, cef_select_client_certificate_callback_t* callback, int *_release_callback))callback;
+        ((cfx_request_handler_t*)self)->on_select_client_certificate = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *_release_browser, int isProxy, char16 *host_str, int host_length, int port, size_t certificatesCount, cef_x509certificate_t* const* certificates, int *_release_certificates, cef_select_client_certificate_callback_t* callback, int *_release_callback))callback;
         self->on_select_client_certificate = callback ? cfx_request_handler_on_select_client_certificate : 0;
         break;
     case 13:

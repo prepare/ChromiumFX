@@ -40,18 +40,15 @@ public class SignatureWithStructPtrArray : Signature {
         : base(s) {
         this.arrayIndex = arrayIndex;
         this.countIndex = countIndex;
+        Arguments[arrayIndex] = new Argument(Arguments[arrayIndex], new CefStructPtrArrayType(Arguments[arrayIndex], Arguments[countIndex]));
     }
 
     public override Argument[] ManagedArguments {
         get {
             var list = new List<Argument>();
             for(var i = 0; i <= Arguments.Length - 1; i++) {
-                if(i != arrayIndex && i != countIndex) {
+                if(i != countIndex) {
                     list.Add(Arguments[i]);
-                } else if(i == arrayIndex) {
-                    var a = new Argument(Arguments[arrayIndex], new CefStructPtrArrayType(Arguments[arrayIndex], Arguments[countIndex]));
-                    list.Add(a);
-                    Arguments[i] = a;
                 }
             }
             return list.ToArray();

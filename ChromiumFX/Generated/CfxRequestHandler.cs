@@ -377,22 +377,24 @@ namespace Chromium {
 
         // on_select_client_certificate
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_select_client_certificate_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, int isProxy, IntPtr host_str, int host_length, int port, UIntPtr certificatesCount, IntPtr certificates, IntPtr callback, out int _release_callback);
+        private delegate void on_select_client_certificate_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, int isProxy, IntPtr host_str, int host_length, int port, UIntPtr certificatesCount, IntPtr certificates, out int _release_certificates, IntPtr callback, out int _release_callback);
         private static on_select_client_certificate_delegate on_select_client_certificate_native;
         private static IntPtr on_select_client_certificate_native_ptr;
 
-        internal static void on_select_client_certificate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, int isProxy, IntPtr host_str, int host_length, int port, UIntPtr certificatesCount, IntPtr certificates, IntPtr callback, out int _release_callback) {
+        internal static void on_select_client_certificate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, int isProxy, IntPtr host_str, int host_length, int port, UIntPtr certificatesCount, IntPtr certificates, out int _release_certificates, IntPtr callback, out int _release_callback) {
             var self = (CfxRequestHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
                 _release_browser = 1;
+                _release_certificates = 1;
                 _release_callback = 1;
                 return;
             }
-            var e = new CfxOnSelectClientCertificateEventArgs(browser, isProxy, host_str, host_length, port, certificatesCount, certificates, callback);
+            var e = new CfxOnSelectClientCertificateEventArgs(browser, isProxy, host_str, host_length, port, certificates, certificatesCount, callback);
             self.m_OnSelectClientCertificate?.Invoke(self, e);
             e.m_isInvalid = true;
             _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            _release_certificates = e.m_certificates_managed == null? 1 : 0;
             _release_callback = e.m_callback_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
@@ -2411,22 +2413,24 @@ namespace Chromium {
             internal int m_host_length;
             internal string m_host;
             internal int m_port;
-            internal UIntPtr m_certificatesCount;
-            internal IntPtr m_certificates;
+            internal IntPtr[] m_certificates;
+            internal CfxX509Certificate[] m_certificates_managed;
             internal IntPtr m_callback;
             internal CfxSelectClientCertificateCallback m_callback_wrapped;
 
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnSelectClientCertificateEventArgs(IntPtr browser, int isProxy, IntPtr host_str, int host_length, int port, UIntPtr certificatesCount, IntPtr certificates, IntPtr callback) {
+            internal CfxOnSelectClientCertificateEventArgs(IntPtr browser, int isProxy, IntPtr host_str, int host_length, int port, IntPtr certificates, UIntPtr certificatesCount, IntPtr callback) {
                 m_browser = browser;
                 m_isProxy = isProxy;
                 m_host_str = host_str;
                 m_host_length = host_length;
                 m_port = port;
-                m_certificatesCount = certificatesCount;
-                m_certificates = certificates;
+                m_certificates = new IntPtr[(ulong)certificatesCount];
+                if(m_certificates.Length > 0) {
+                    System.Runtime.InteropServices.Marshal.Copy(certificates, m_certificates, 0, (int)certificatesCount);
+                }
                 m_callback = callback;
             }
 
@@ -2469,21 +2473,18 @@ namespace Chromium {
                 }
             }
             /// <summary>
-            /// Get the CertificatesCount parameter for the <see cref="CfxRequestHandler.OnSelectClientCertificate"/> callback.
-            /// </summary>
-            public ulong CertificatesCount {
-                get {
-                    CheckAccess();
-                    return (ulong)m_certificatesCount;
-                }
-            }
-            /// <summary>
             /// Get the Certificates parameter for the <see cref="CfxRequestHandler.OnSelectClientCertificate"/> callback.
             /// </summary>
-            public IntPtr Certificates {
+            public CfxX509Certificate[] Certificates {
                 get {
                     CheckAccess();
-                    return m_certificates;
+                    if(m_certificates_managed == null) {
+                        m_certificates_managed = new CfxX509Certificate[m_certificates.Length];
+                        for(int i = 0; i < m_certificates.Length; ++i) {
+                            m_certificates_managed[i] = CfxX509Certificate.Wrap(m_certificates[i]);
+                        }
+                    }
+                    return m_certificates_managed;
                 }
             }
             /// <summary>
@@ -2510,7 +2511,7 @@ namespace Chromium {
             }
 
             public override string ToString() {
-                return String.Format("Browser={{{0}}}, IsProxy={{{1}}}, Host={{{2}}}, Port={{{3}}}, CertificatesCount={{{4}}}, Certificates={{{5}}}, Callback={{{6}}}", Browser, IsProxy, Host, Port, CertificatesCount, Certificates, Callback);
+                return String.Format("Browser={{{0}}}, IsProxy={{{1}}}, Host={{{2}}}, Port={{{3}}}, Certificates={{{4}}}, Callback={{{5}}}", Browser, IsProxy, Host, Port, Certificates, Callback);
             }
         }
 

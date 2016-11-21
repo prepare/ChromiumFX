@@ -58,6 +58,9 @@ public class CustomSignatures {
             case "cef_v8value::execute_function":
                 return new SignatureWithStructPtrArray(s, 3, 2);
 
+            case "cef_request_handler::on_select_client_certificate":
+                return new SignatureWithStructPtrArray(s, 6, 5);
+
             case "cef_render_handler::on_paint":
                 return new SignatureWithStructArray(s, 4, 3);
 

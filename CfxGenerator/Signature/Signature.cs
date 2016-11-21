@@ -509,8 +509,8 @@ public class Signature {
     }
 
     public override string ToString() {
-        for(var i = 0; i <= ManagedArguments.Length - 1; i++) {
-            args.Add(ManagedArguments[i].ToString());
+        for(var i = 0; i <= Arguments.Length - 1; i++) {
+            args.Add(Arguments[i].ToString());
         }
         return args.Join();
     }
