@@ -70,7 +70,7 @@ namespace CfxTestApplication {
 
         void AnotherTestFunction_Execute(object sender, Chromium.Remote.Event.CfrV8HandlerExecuteEventArgs e) {
             form.LogWriteLine("AnotherTestFunction_Execute({0}, {1})", sender, e);
-            e.SetReturnValue((CfrV8Value)"The other test function returns this text.");
+            e.SetReturnValue("The other test function returns this text.");
         }
 
     }
