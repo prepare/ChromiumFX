@@ -851,6 +851,7 @@ namespace Chromium.WebBrowser {
         /// The callback may never be called if the render process gets killed prematurely.
         /// Do not keep a reference to the remote DOM or remote browser object after returning from the callback.
         /// Do not block the callback since it blocks the renderer thread.
+        /// Explicitly Dispose() all CfrDomNode objects, otherwise the render process may become unstable and crash.
         /// </summary>
         /// <param name="callback"></param>
         /// <returns></returns>

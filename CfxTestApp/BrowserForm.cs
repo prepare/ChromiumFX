@@ -431,6 +431,9 @@ namespace CfxTestApplication {
 
         private void RemoteLayerStressTest() {
 
+            int domCount = 0;
+            int evalCount = 0;
+
             for(int i = 0; i < 100; ++i) {
 
                 WebBrowser.ExecuteJavascript("document.getElementById('testbutton1').click()");
@@ -438,28 +441,36 @@ namespace CfxTestApplication {
                 WebBrowser.ExecuteJavascript("document.getElementById('testbutton2').click()");
 
                 WebBrowser.EvaluateJavascript("document.getElementById('testbutton3').click()", (value, exception) => {
-                    LogWriteLine("document.getElementById('testbutton3').click()");
-                    LogWriteLine(value.StringValue);
+                    LogWriteLine("EVAL {0}: document.getElementById('testbutton3').click() = {1}", ++evalCount, value.StringValue);
                 });
 
                 WebBrowser.ExecuteJavascript("document.getElementById('testbutton4').click()");
 
                 WebBrowser.EvaluateJavascript("document.getElementById('testbutton5').click()", (value, exception) => {
-                    LogWriteLine("document.getElementById('testbutton5').click()");
-                    LogWriteLine(value.StringValue);
+                    LogWriteLine("EVAL {0}: document.getElementById('testbutton5').click() = {1}", ++evalCount, value.StringValue);
                 });
 
                 WebBrowser.ExecuteJavascript("document.getElementById('testbutton6').click()");
 
                 WebBrowser.EvaluateJavascript("doubleCallback('foo', 123)", (value, exception) => {
-                    LogWriteLine("doubleCallback('foo', 123)");
-                    LogWriteLine(value.StringValue);
+                    LogWriteLine("EVAL {0}: doubleCallback('foo', 123) = {1}", ++evalCount, value.StringValue);
                 });
 
                 WebBrowser.VisitDom((doc, b) => {
-                    LogWriteLine("VisitDom {0} {1}", doc.ToString(), b.ToString());
-                    LogWriteLine("testbutton6", doc.GetElementById("testbutton6").AsMarkup);
+                    //LogWriteLine("VisitDom {0} {1}", doc.ToString(), b.ToString());
+                    var n = doc.GetElementById("testbutton6");
+                    LogWriteLine("DOM {0} - testbutton6 = {1}", ++domCount, n.AsMarkup);
+                    // must dispose node, otherwise finalizer crash in the render process.
+                    n.Dispose();
                 });
+                
+                //WebBrowser.VisitDom(VisitDOMCallback);
+                //for(int ii = 0; ii < 100; ++ii)
+                //    VisitDomButton_Click(null, null);
+
+                //MessageBox.Show("GC.WaitForPendingFinalizers();");
+                //GC.Collect();
+                //GC.WaitForPendingFinalizers();
 
                 // give the browser some time to render and do message loop work
                 //Thread.Sleep(20);
@@ -469,8 +480,7 @@ namespace CfxTestApplication {
 
         private void evaluateJavascriptToolStripMenuItem_Click(object sender, EventArgs e) {
             LogWriteLine("Request evaluation for [document.body.scrollWidth, document.body.scrollHeight]");
-            var retval = WebBrowser.EvaluateJavascript("[document.body.scrollWidth,document.body.scrollHeight]", (value, exception) =>
-            {
+            var retval = WebBrowser.EvaluateJavascript("[document.body.scrollWidth,document.body.scrollHeight]", (value, exception) => {
                 if(value != null) {
                     var v0 = value.GetValue(0);
                     if(v0 == null) {
@@ -509,9 +519,9 @@ namespace CfxTestApplication {
 
                 string documentAllLength = null;
 
-                var evaluationStarted = WebBrowser.EvaluateJavascript("'document.all.length = ' + document.all.length", 
+                var evaluationStarted = WebBrowser.EvaluateJavascript("'document.all.length = ' + document.all.length",
                     // Don't invoke, otherwise the ui thread will deadlock!
-                    JSInvokeMode.DontInvoke, 
+                    JSInvokeMode.DontInvoke,
                     (v, ex) => {
                         Monitor.Enter(waitLock);
                         try {
