@@ -46,8 +46,14 @@ namespace Chromium.Remote {
 
         private RemotePtr m_remotePtr;
 
+        internal CfrObject() { }
+
         internal CfrObject(RemotePtr remotePtr) {
             m_remotePtr = remotePtr;
+        }
+
+        internal void SetRemotePtr(RemotePtr ptr) {
+            m_remotePtr = ptr;
         }
 
         internal RemoteConnection connection {
@@ -79,35 +85,23 @@ namespace Chromium.Remote {
             }
         }
 
-        private void Release() {
+        internal abstract void OnDispose(RemotePtr nativePtr);
+
+        public void Dispose() {
             if(m_remotePtr != RemotePtr.Zero) {
-                try {
-                    RemotePtr.connection.weakCache.Remove(RemotePtr.ptr);
-                    if(m_remotePtr.connection.connectionLostException == null) {
-                        var call = new ReleaseRemotePtrRemoteCall();
-                        call.remotePtr = m_remotePtr.ptr;
-                        call.RequestExecution(m_remotePtr.connection);
-                    }
-#if DEBUG
-                } catch(Exception e) {
-                    Debug.Print("Exception cought in CfrObject.Release():");
-                    Debug.Print(e.ToString());
-#else
-                } catch {
-#endif
-                } finally {
-                    m_remotePtr = RemotePtr.Zero;
-                }
+                m_remotePtr.connection.weakCache.Remove(m_remotePtr.ptr);
+                OnDispose(m_remotePtr);
+                m_remotePtr = RemotePtr.Zero;
+                GC.SuppressFinalize(this);
             }
         }
 
-        public void Dispose() {
-            Release();
-            GC.SuppressFinalize(this);
-        }
-
         ~CfrObject() {
-            Release();
+            if(m_remotePtr != RemotePtr.Zero) {
+                m_remotePtr.connection.weakCache.Remove(m_remotePtr.ptr);
+                OnDispose(m_remotePtr);
+                m_remotePtr = RemotePtr.Zero;
+            }
         }
     }
 }

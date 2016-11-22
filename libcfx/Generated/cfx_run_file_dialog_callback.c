@@ -37,6 +37,7 @@ typedef struct _cfx_run_file_dialog_callback_t {
     cef_run_file_dialog_callback_t cef_run_file_dialog_callback;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    int wrapper_kind;
     // managed callbacks
     void (CEF_CALLBACK *on_file_dialog_dismissed)(gc_handle_t self, int selected_accept_filter, cef_string_list_t file_paths);
 } cfx_run_file_dialog_callback_t;
@@ -44,17 +45,17 @@ typedef struct _cfx_run_file_dialog_callback_t {
 void CEF_CALLBACK _cfx_run_file_dialog_callback_add_ref(struct _cef_base_t* base) {
     int count = InterlockedIncrement(&((cfx_run_file_dialog_callback_t*)base)->ref_count);
     if(count == 2) {
-        cfx_set_native_reference(((cfx_run_file_dialog_callback_t*)base)->gc_handle, count);
+        cfx_set_native_reference(((cfx_run_file_dialog_callback_t*)base)->gc_handle, ((cfx_run_file_dialog_callback_t*)base)->wrapper_kind, count);
     }
 }
 int CEF_CALLBACK _cfx_run_file_dialog_callback_release(struct _cef_base_t* base) {
     int count = InterlockedDecrement(&((cfx_run_file_dialog_callback_t*)base)->ref_count);
-    if(count == 1) {
-        cfx_set_native_reference(((cfx_run_file_dialog_callback_t*)base)->gc_handle, count);
-    } else if(!count) {
-        cfx_gc_handle_free(((cfx_run_file_dialog_callback_t*)base)->gc_handle);
-        free(base);
-        return 1;
+    if(count < 2) {
+        cfx_set_native_reference(((cfx_run_file_dialog_callback_t*)base)->gc_handle, ((cfx_run_file_dialog_callback_t*)base)->wrapper_kind, count);
+        if(!count) {
+            free(base);
+            return 1;
+        }
     }
     return 0;
 }
@@ -62,7 +63,7 @@ int CEF_CALLBACK _cfx_run_file_dialog_callback_has_one_ref(struct _cef_base_t* b
     return ((cfx_run_file_dialog_callback_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
-static cfx_run_file_dialog_callback_t* cfx_run_file_dialog_callback_ctor(gc_handle_t gc_handle) {
+static cfx_run_file_dialog_callback_t* cfx_run_file_dialog_callback_ctor(gc_handle_t gc_handle, int wrapper_kind) {
     cfx_run_file_dialog_callback_t* ptr = (cfx_run_file_dialog_callback_t*)calloc(1, sizeof(cfx_run_file_dialog_callback_t));
     if(!ptr) return 0;
     ptr->cef_run_file_dialog_callback.base.size = sizeof(cef_run_file_dialog_callback_t);
@@ -71,6 +72,7 @@ static cfx_run_file_dialog_callback_t* cfx_run_file_dialog_callback_ctor(gc_hand
     ptr->cef_run_file_dialog_callback.base.has_one_ref = _cfx_run_file_dialog_callback_has_one_ref;
     ptr->ref_count = 1;
     ptr->gc_handle = gc_handle;
+    ptr->wrapper_kind = wrapper_kind;
     return ptr;
 }
 

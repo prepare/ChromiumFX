@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -209,6 +209,7 @@
     <Compile Include="Generated\Remote\CfrV8Value.cs" />
     <Compile Include="Generated\Remote\CfrValue.cs" />
     <Compile Include="Generated\Remote\CfxAppRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxAppRemoteClient.cs" />
     <Compile Include="Generated\Remote\CfxBinaryValueRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxBrowserRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxCommandLineRemoteCalls.cs" />
@@ -216,27 +217,36 @@
     <Compile Include="Generated\Remote\CfxDomDocumentRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxDomNodeRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxDomVisitorRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxDomVisitorRemoteClient.cs" />
     <Compile Include="Generated\Remote\CfxFrameRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxListValueRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxLoadHandlerRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxLoadHandlerRemoteClient.cs" />
     <Compile Include="Generated\Remote\CfxPostDataElementRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxPostDataRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxProcessMessageRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxRectRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxRenderProcessHandlerRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxRenderProcessHandlerRemoteClient.cs" />
     <Compile Include="Generated\Remote\CfxRequestRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxResourceBundleHandlerRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxResourceBundleHandlerRemoteClient.cs" />
     <Compile Include="Generated\Remote\CfxRuntimeRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxSchemeRegistrarRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxStringVisitorRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxStringVisitorRemoteClient.cs" />
     <Compile Include="Generated\Remote\CfxTaskRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxTaskRemoteClient.cs" />
     <Compile Include="Generated\Remote\CfxTaskRunnerRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxTimeRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8AccessorRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxV8AccessorRemoteClient.cs" />
     <Compile Include="Generated\Remote\CfxV8ContextRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8ExceptionRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8HandlerRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxV8HandlerRemoteClient.cs" />
     <Compile Include="Generated\Remote\CfxV8InterceptorRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxV8InterceptorRemoteClient.cs" />
     <Compile Include="Generated\Remote\CfxV8StackFrameRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8StackTraceRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8ValueRemoteCalls.cs" />
@@ -286,7 +296,6 @@
     <Compile Include="Source\Remote\RemoteCallStack.cs" />
     <Compile Include="Source\Remote\RemoteConnection.cs" />
     <Compile Include="Source\Remote\RemoteCallBases.cs" />
-    <Compile Include="Source\Remote\RemoteProxy.cs" />
     <Compile Include="Source\Remote\RemotePtr.cs" />
     <Compile Include="Source\Remote\StreamHandler.cs" />
     <Compile Include="Source\Remote\RemoteClient.cs" />

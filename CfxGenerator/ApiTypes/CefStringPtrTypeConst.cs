@@ -88,10 +88,22 @@ public class CefStringPtrTypeConst : ApiType {
         b.AppendLine("return m_{0};", var);
     }
 
+    public override void EmitRemoteEventArgGetterStatements(CodeBuilder b, string var) {
+        b.BeginBlock("if(!m_{0}_fetched)", var);
+        b.AppendLine("m_{0} = call.{0}_str == IntPtr.Zero ? null : (call.{0}_length == 0 ? String.Empty : CfrRuntime.Marshal.PtrToStringUni(new RemotePtr(call.{0}_str), call.{0}_length));", var);
+        b.AppendLine("m_{0}_fetched = true;", var);
+        b.EndBlock();
+        b.AppendLine("return m_{0};", var);
+    }
+
     public override void EmitPublicEventArgFields(CodeBuilder b, string var) {
         b.AppendLine("internal IntPtr m_{0}_str;", var);
         b.AppendLine("internal int m_{0}_length;", var);
         b.AppendLine("internal string m_{0};", var);
+    }
+    public override void EmitRemoteEventArgFields(CodeBuilder b, string var) {
+        b.AppendLine("internal string m_{0};", var);
+        b.AppendLine("internal bool m_{0}_fetched;", var);
     }
 
     public override void EmitPublicEventCtorStatements(CodeBuilder b, string var) {

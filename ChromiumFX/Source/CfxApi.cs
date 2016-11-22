@@ -52,7 +52,7 @@ namespace Chromium {
         public delegate IntPtr cfx_ctor_delegate();
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate IntPtr cfx_ctor_with_gc_handle_delegate(IntPtr gc_handle);
+        public delegate IntPtr cfx_ctor_with_gc_handle_delegate(IntPtr gc_handle, int wrapper_kind);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate void cfx_dtor_delegate(IntPtr nativePtr);
@@ -102,17 +102,30 @@ namespace Chromium {
 
         //static void (CEF_CALLBACK *cfx_set_native_reference)(gc_handle_t)
         [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_set_native_reference_delegate(IntPtr gc_handle, int ref_count);
+        private delegate void cfx_set_native_reference_delegate(IntPtr gc_handle, int wrapper_kind, int ref_count);
         private static cfx_set_native_reference_delegate cfx_set_native_reference;
 
-        private static void FreeGcHandle(IntPtr gc_handle) {
-            GCHandle.FromIntPtr(gc_handle).Free();
+        internal static void FreeGcHandle(IntPtr gc_handle) {
+            var h = GCHandle.FromIntPtr(gc_handle);
+            h.Free();
         }
 
-        private static void SetNativeReference(IntPtr gc_handle, int ref_count) {
-            Debug.Assert(ref_count == 1 || ref_count == 2);
+        internal static void SetNativeReference(IntPtr gc_handle, int wrapper_kind, int ref_count) {
+            Debug.Assert(ref_count <= 2);
+            Debug.Assert(wrapper_kind == 0 || wrapper_kind == 1);
+            if(wrapper_kind == 1) {
+                var call = new Remote.GCHandleRemoteCall();
+                call.gc_handle = gc_handle;
+                call.ref_count = ref_count;
+                call.RequestExecution(Remote.RemoteClient.connection);
+                return;
+            }
             var h = GCHandle.FromIntPtr(gc_handle);
-            if(ref_count == 1) {
+            if(ref_count == 0) {
+                // the managed wrapper released it's reference
+                // and the native object is destroyed
+                h.Free();
+            } else if(ref_count == 1) {
                 // ref count of cef client object reached 1 after decrement: 
                 // CEF released it's last reference ->
                 // free native reference handle

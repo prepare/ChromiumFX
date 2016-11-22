@@ -62,84 +62,84 @@ namespace Chromium {
 
         // on_jsdialog
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_jsdialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr origin_url_str, int origin_url_length, int dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback, out int _release_callback, out int suppress_message);
+        private delegate void on_jsdialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr origin_url_str, int origin_url_length, int dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback, out int callback_release, out int suppress_message);
         private static on_jsdialog_delegate on_jsdialog_native;
         private static IntPtr on_jsdialog_native_ptr;
 
-        internal static void on_jsdialog(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr origin_url_str, int origin_url_length, int dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback, out int _release_callback, out int suppress_message) {
+        internal static void on_jsdialog(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr origin_url_str, int origin_url_length, int dialog_type, IntPtr message_text_str, int message_text_length, IntPtr default_prompt_text_str, int default_prompt_text_length, IntPtr callback, out int callback_release, out int suppress_message) {
             var self = (CfxJsDialogHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_browser = 1;
-                _release_callback = 1;
+                browser_release = 1;
+                callback_release = 1;
                 suppress_message = default(int);
                 return;
             }
             var e = new CfxOnJsDialogEventArgs(browser, origin_url_str, origin_url_length, dialog_type, message_text_str, message_text_length, default_prompt_text_str, default_prompt_text_length, callback);
             self.m_OnJsDialog?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
-            _release_callback = e.m_callback_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
+            callback_release = e.m_callback_wrapped == null? 1 : 0;
             suppress_message = e.m_suppress_message;
             __retval = e.m_returnValue ? 1 : 0;
         }
 
         // on_before_unload_dialog
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_before_unload_dialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr message_text_str, int message_text_length, int is_reload, IntPtr callback, out int _release_callback);
+        private delegate void on_before_unload_dialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr message_text_str, int message_text_length, int is_reload, IntPtr callback, out int callback_release);
         private static on_before_unload_dialog_delegate on_before_unload_dialog_native;
         private static IntPtr on_before_unload_dialog_native_ptr;
 
-        internal static void on_before_unload_dialog(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr message_text_str, int message_text_length, int is_reload, IntPtr callback, out int _release_callback) {
+        internal static void on_before_unload_dialog(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr message_text_str, int message_text_length, int is_reload, IntPtr callback, out int callback_release) {
             var self = (CfxJsDialogHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_browser = 1;
-                _release_callback = 1;
+                browser_release = 1;
+                callback_release = 1;
                 return;
             }
             var e = new CfxOnBeforeUnloadDialogEventArgs(browser, message_text_str, message_text_length, is_reload, callback);
             self.m_OnBeforeUnloadDialog?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
-            _release_callback = e.m_callback_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
+            callback_release = e.m_callback_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 
         // on_reset_dialog_state
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_reset_dialog_state_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser);
+        private delegate void on_reset_dialog_state_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release);
         private static on_reset_dialog_state_delegate on_reset_dialog_state_native;
         private static IntPtr on_reset_dialog_state_native_ptr;
 
-        internal static void on_reset_dialog_state(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser) {
+        internal static void on_reset_dialog_state(IntPtr gcHandlePtr, IntPtr browser, out int browser_release) {
             var self = (CfxJsDialogHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnResetDialogStateEventArgs(browser);
             self.m_OnResetDialogState?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         // on_dialog_closed
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_dialog_closed_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser);
+        private delegate void on_dialog_closed_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release);
         private static on_dialog_closed_delegate on_dialog_closed_native;
         private static IntPtr on_dialog_closed_native_ptr;
 
-        internal static void on_dialog_closed(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser) {
+        internal static void on_dialog_closed(IntPtr gcHandlePtr, IntPtr browser, out int browser_release) {
             var self = (CfxJsDialogHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnDialogClosedEventArgs(browser);
             self.m_OnDialogClosed?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         internal CfxJsDialogHandler(IntPtr nativePtr) : base(nativePtr) {}

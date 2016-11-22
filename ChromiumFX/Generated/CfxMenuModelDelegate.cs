@@ -63,75 +63,75 @@ namespace Chromium {
 
         // execute_command
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void execute_command_delegate(IntPtr gcHandlePtr, IntPtr menu_model, out int _release_menu_model, int command_id, int event_flags);
+        private delegate void execute_command_delegate(IntPtr gcHandlePtr, IntPtr menu_model, out int menu_model_release, int command_id, int event_flags);
         private static execute_command_delegate execute_command_native;
         private static IntPtr execute_command_native_ptr;
 
-        internal static void execute_command(IntPtr gcHandlePtr, IntPtr menu_model, out int _release_menu_model, int command_id, int event_flags) {
+        internal static void execute_command(IntPtr gcHandlePtr, IntPtr menu_model, out int menu_model_release, int command_id, int event_flags) {
             var self = (CfxMenuModelDelegate)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_menu_model = 1;
+                menu_model_release = 1;
                 return;
             }
             var e = new CfxExecuteCommandEventArgs(menu_model, command_id, event_flags);
             self.m_ExecuteCommand?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_menu_model = e.m_menu_model_wrapped == null? 1 : 0;
+            menu_model_release = e.m_menu_model_wrapped == null? 1 : 0;
         }
 
         // menu_will_show
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void menu_will_show_delegate(IntPtr gcHandlePtr, IntPtr menu_model, out int _release_menu_model);
+        private delegate void menu_will_show_delegate(IntPtr gcHandlePtr, IntPtr menu_model, out int menu_model_release);
         private static menu_will_show_delegate menu_will_show_native;
         private static IntPtr menu_will_show_native_ptr;
 
-        internal static void menu_will_show(IntPtr gcHandlePtr, IntPtr menu_model, out int _release_menu_model) {
+        internal static void menu_will_show(IntPtr gcHandlePtr, IntPtr menu_model, out int menu_model_release) {
             var self = (CfxMenuModelDelegate)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_menu_model = 1;
+                menu_model_release = 1;
                 return;
             }
             var e = new CfxMenuWillShowEventArgs(menu_model);
             self.m_MenuWillShow?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_menu_model = e.m_menu_model_wrapped == null? 1 : 0;
+            menu_model_release = e.m_menu_model_wrapped == null? 1 : 0;
         }
 
         // menu_closed
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void menu_closed_delegate(IntPtr gcHandlePtr, IntPtr menu_model, out int _release_menu_model);
+        private delegate void menu_closed_delegate(IntPtr gcHandlePtr, IntPtr menu_model, out int menu_model_release);
         private static menu_closed_delegate menu_closed_native;
         private static IntPtr menu_closed_native_ptr;
 
-        internal static void menu_closed(IntPtr gcHandlePtr, IntPtr menu_model, out int _release_menu_model) {
+        internal static void menu_closed(IntPtr gcHandlePtr, IntPtr menu_model, out int menu_model_release) {
             var self = (CfxMenuModelDelegate)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_menu_model = 1;
+                menu_model_release = 1;
                 return;
             }
             var e = new CfxMenuClosedEventArgs(menu_model);
             self.m_MenuClosed?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_menu_model = e.m_menu_model_wrapped == null? 1 : 0;
+            menu_model_release = e.m_menu_model_wrapped == null? 1 : 0;
         }
 
         // format_label
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void format_label_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr menu_model, out int _release_menu_model, ref IntPtr label_str, ref int label_length);
+        private delegate void format_label_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr menu_model, out int menu_model_release, ref IntPtr label_str, ref int label_length);
         private static format_label_delegate format_label_native;
         private static IntPtr format_label_native_ptr;
 
-        internal static void format_label(IntPtr gcHandlePtr, out int __retval, IntPtr menu_model, out int _release_menu_model, ref IntPtr label_str, ref int label_length) {
+        internal static void format_label(IntPtr gcHandlePtr, out int __retval, IntPtr menu_model, out int menu_model_release, ref IntPtr label_str, ref int label_length) {
             var self = (CfxMenuModelDelegate)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_menu_model = 1;
+                menu_model_release = 1;
                 return;
             }
             var e = new CfxFormatLabelEventArgs(menu_model, label_str, label_length);
             self.m_FormatLabel?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_menu_model = e.m_menu_model_wrapped == null? 1 : 0;
+            menu_model_release = e.m_menu_model_wrapped == null? 1 : 0;
             if(e.m_label_changed) {
                 var label_pinned = new PinnedString(e.m_label_wrapped);
                 label_str = label_pinned.Obj.PinnedPtr;

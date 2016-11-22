@@ -41,7 +41,17 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxRectCtorRemoteCall) {}
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = RemoteProxy.Wrap(new CfxRect());
+            __retval = CfxApi.Rect.cfx_rect_ctor();
+        }
+    }
+
+    internal class CfxRectDtorRemoteCall : DtorRemoteCall {
+
+        internal CfxRectDtorRemoteCall()
+            : base(RemoteCallId.CfxRectDtorRemoteCall) {}
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            CfxApi.Rect.cfx_rect_dtor(nativePtr);
         }
     }
 
@@ -56,8 +66,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxRect)RemoteProxy.Unwrap(this.sender, null);
-            value = sender.X;
+            CfxApi.Rect.cfx_rect_get_x(sender, out value);
         }
     }
     internal class CfxRectSetXRemoteCall : RemoteCall {
@@ -69,8 +78,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxRect)RemoteProxy.Unwrap(this.sender, null);
-            sender.X = value;
+            CfxApi.Rect.cfx_rect_set_x(sender, value);
         }
     }
     internal class CfxRectGetYRemoteCall : RemoteCall {
@@ -84,8 +92,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxRect)RemoteProxy.Unwrap(this.sender, null);
-            value = sender.Y;
+            CfxApi.Rect.cfx_rect_get_y(sender, out value);
         }
     }
     internal class CfxRectSetYRemoteCall : RemoteCall {
@@ -97,8 +104,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxRect)RemoteProxy.Unwrap(this.sender, null);
-            sender.Y = value;
+            CfxApi.Rect.cfx_rect_set_y(sender, value);
         }
     }
     internal class CfxRectGetWidthRemoteCall : RemoteCall {
@@ -112,8 +118,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxRect)RemoteProxy.Unwrap(this.sender, null);
-            value = sender.Width;
+            CfxApi.Rect.cfx_rect_get_width(sender, out value);
         }
     }
     internal class CfxRectSetWidthRemoteCall : RemoteCall {
@@ -125,8 +130,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxRect)RemoteProxy.Unwrap(this.sender, null);
-            sender.Width = value;
+            CfxApi.Rect.cfx_rect_set_width(sender, value);
         }
     }
     internal class CfxRectGetHeightRemoteCall : RemoteCall {
@@ -140,8 +144,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxRect)RemoteProxy.Unwrap(this.sender, null);
-            value = sender.Height;
+            CfxApi.Rect.cfx_rect_get_height(sender, out value);
         }
     }
     internal class CfxRectSetHeightRemoteCall : RemoteCall {
@@ -153,8 +156,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxRect)RemoteProxy.Unwrap(this.sender, null);
-            sender.Height = value;
+            CfxApi.Rect.cfx_rect_set_height(sender, value);
         }
     }
 }

@@ -81,11 +81,35 @@ namespace Chromium.Remote {
             public static void Copy(RemotePtr source, byte[] destination, int startIndex, int length) {
                 var call = new CfrMarshalCopyToManagedRemoteCall();
                 call.source = source.ptr;
-                call.destination = destination;
                 call.startIndex = startIndex;
                 call.length = length;
                 call.RequestExecution(source.connection);
+                Array.Copy(call.destination, startIndex, destination, startIndex, length);
+            }
 
+            /// <summary>
+            /// Call Marshal.Copy in the target process.
+            /// </summary>
+            public static void Copy(RemotePtr source, RemotePtr[] destination, int startIndex, int length) {
+                var call = new CfrMarshalCopyToManagedIntPtrArrayRemoteCall();
+                call.source = source.ptr;
+                call.startIndex = startIndex;
+                call.length = length;
+                call.RequestExecution(source.connection);
+                for(int i = 0; i < length; ++i) {
+                    destination[startIndex + i] = new RemotePtr(source.connection, call.destination[startIndex + i]);
+                }
+            }
+
+            /// <summary>
+            /// Call Marshal.PtrToStringUni in the target process.
+            /// </summary>
+            public static string PtrToStringUni(RemotePtr str, int length) {
+                var call = new CfrMarshalPtrToStringUniRemoteCall();
+                call.str = str.ptr;
+                call.length = length;
+                call.RequestExecution(str.connection);
+                return call.__retval;
             }
         }
     }
@@ -178,20 +202,93 @@ namespace Chromium.Remote {
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(source);
-            h.Write(destination);
             h.Write(startIndex);
             h.Write(length);
         }
 
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out source);
-            h.Read(out destination);
             h.Read(out startIndex);
             h.Read(out length);
         }
 
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(destination);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out destination);
+        }
+
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            destination = new byte[startIndex + length];
             Marshal.Copy(source, destination, startIndex, length);
+        }
+    }
+
+    internal class CfrMarshalCopyToManagedIntPtrArrayRemoteCall : RemoteCall {
+
+        internal IntPtr source;
+        internal IntPtr[] destination;
+        internal int startIndex;
+        internal int length;
+
+        internal CfrMarshalCopyToManagedIntPtrArrayRemoteCall() : base(RemoteCallId.CfrMarshalCopyToManagedIntPtrArrayRemoteCall) { }
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(source);
+            h.Write(startIndex);
+            h.Write(length);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out source);
+            h.Read(out startIndex);
+            h.Read(out length);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(destination);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out destination);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            destination = new IntPtr[startIndex + length];
+            Marshal.Copy(source, destination, startIndex, length);
+        }
+    }
+
+    internal class CfrMarshalPtrToStringUniRemoteCall : RemoteCall {
+
+        internal IntPtr str;
+        internal int length;
+        internal string __retval;
+
+        internal CfrMarshalPtrToStringUniRemoteCall() : base(RemoteCallId.CfrMarshalPtrToStringUniRemoteCall) { }
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(str);
+            h.Write(length);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out str);
+            h.Read(out length);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            __retval = Marshal.PtrToStringUni(str, length);
         }
     }
 

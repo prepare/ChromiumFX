@@ -28,6 +28,7 @@
 // TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE 
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+using System;
 using System.Diagnostics;
 
 /// <summary>
@@ -83,21 +84,21 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
 
     public override string PInvokeCallbackParameter(string var) {
         if(Struct.ClassBuilder.IsRefCounted)
-            return base.PInvokeCallbackParameter(var) + ", out int _release_" + var;
+            return base.PInvokeCallbackParameter(var) + ", out int " + var + "_release";
         else
             return base.PInvokeCallbackParameter(var);
     }
 
     public override string NativeCallbackParameter(string var, bool isConst) {
         if(Struct.ClassBuilder.IsRefCounted)
-            return base.NativeCallbackParameter(var, isConst) + ", int *_release_" + var;
+            return base.NativeCallbackParameter(var, isConst) + ", int *" + var + "_release";
         else
             return base.NativeCallbackParameter(var, isConst);
     }
 
     public override string NativeCallbackArgument(string var) {
         if(Struct.ClassBuilder.IsRefCounted)
-            return base.NativeCallbackArgument(var) + ", &_release_" + var;
+            return base.NativeCallbackArgument(var) + ", &" + var + "_release";
         else
             return base.NativeCallbackArgument(var);
     }
@@ -112,12 +113,12 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
 
     public override void EmitPreNativeCallbackStatements(CodeBuilder b, string var) {
         if(Struct.ClassBuilder.IsRefCounted)
-            b.AppendLine("int _release_" + var + ";");
+            b.AppendLine("int " + var + "_release;");
     }
 
     public override void EmitPostNativeCallbackStatements(CodeBuilder b, string var) {
         if(Struct.ClassBuilder.IsRefCounted) {
-            b.BeginBlock("if(_release_{0})", var);
+            b.BeginBlock("if({0}_release)", var);
             b.BeginBlock("for(size_t i = 0; i < {0}; ++i)", CountArg.VarName);
             b.AppendLine("{0}[i]->base.release((cef_base_t*){0}[i]);", var);
             b.EndBlock();
@@ -158,6 +159,10 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
         b.AppendLine("internal {0}[] m_{1}_managed;", Struct.ClassName, var);
     }
 
+    public override void EmitRemoteEventArgFields(CodeBuilder b, string var) {
+        b.AppendLine("internal {0}[] m_{1}_managed;", Struct.RemoteClassName, var);
+    }
+
     public override void EmitPublicEventCtorStatements(CodeBuilder b, string var) {
         b.AppendLine("m_{0} = new IntPtr[(ulong){1}];", var, CountArg.VarName);
         b.BeginIf("m_{0}.Length > 0", var);
@@ -175,16 +180,35 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
         b.AppendLine("return m_{0}_managed;", var);
     }
 
+    public override void EmitRemoteEventArgGetterStatements(CodeBuilder b, string var) {
+        b.BeginIf("m_{0}_managed == null", var);
+        b.AppendLine("var {0} = new RemotePtr[(ulong)call.{1}];", var, CountArg.VarName);
+        b.AppendLine("m_{0}_managed = new {1}[{0}.Length];", var, Struct.RemoteClassName);
+        b.BeginIf("{0}.Length > 0", var);
+        b.AppendLine("CfrRuntime.Marshal.Copy(new RemotePtr(call.{0}), {0}, 0, {0}.Length);", var);
+        b.BeginBlock("for(int i = 0; i < {0}.Length; ++i)", var);
+        b.AppendLine("m_{0}_managed[i] = {1}.Wrap({0}[i]);", var, Struct.RemoteClassName);
+        b.EndBlock();
+        b.EndBlock();
+        b.EndBlock();
+        b.AppendLine("return m_{0}_managed;", var);
+    }
+
     public override void EmitPostPublicRaiseEventStatements(CodeBuilder b, string var) {
         if(Struct.ClassBuilder.IsRefCounted)
-            b.AppendLine("_release_{0} = e.m_{0}_managed == null? 1 : 0;", var);
+            b.AppendLine("{0}_release = e.m_{0}_managed == null? 1 : 0;", var);
+    }
+
+    public override void EmitPostRemoteRaiseEventStatements(CodeBuilder b, string var) {
+        if(Struct.ClassBuilder.IsRefCounted)
+            b.AppendLine("{0}_release = e.m_{0}_managed == null? 1 : 0;", var);
     }
 
     public override void EmitSetCallbackArgumentToDefaultStatements(CodeBuilder b, string var) {
         if(Struct.ClassBuilder.IsRefCounted)
-            b.AppendLine("_release_{0} = 1;", var);
+            b.AppendLine("{0}_release = 1;", var);
     }
-
+    
     public override void EmitPreProxyCallStatements(CodeBuilder b, string var) {
         b.AppendLine("PinnedObject {0}_pinned = new PinnedObject({0});", var);
         b.AppendLine("var {0}_length = {0} == null ? UIntPtr.Zero : (UIntPtr){0}.LongLength;", var);

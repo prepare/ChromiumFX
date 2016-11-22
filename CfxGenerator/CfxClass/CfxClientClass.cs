@@ -39,9 +39,7 @@ public class CfxClientClass : CfxClass {
 
     public CfxClientClass(CefStructType cefStruct, Parser.StructData sd, ApiTypeBuilder api)
         : base(cefStruct, sd, api) {
-
         GetCallbackFunctions(sd, api);
-
     }
 
     public override void EmitNativeWrapper(CodeBuilder b) {
@@ -53,6 +51,7 @@ public class CfxClientClass : CfxClass {
         b.AppendLine("{0} {1};", OriginalSymbol, CefStruct.Name);
         b.AppendLine("unsigned int ref_count;");
         b.AppendLine("gc_handle_t gc_handle;");
+        b.AppendLine("int wrapper_kind;");
         b.AppendLine("// managed callbacks");
         foreach(var cb in CallbackFunctions) {
             b.AppendLine("void (CEF_CALLBACK *{0})({1});", cb.Name, cb.Signature.NativeParameterList);
@@ -63,17 +62,17 @@ public class CfxClientClass : CfxClass {
         b.BeginBlock("void CEF_CALLBACK _{0}_add_ref(struct _cef_base_t* base)", CfxName);
         b.AppendLine("int count = InterlockedIncrement(&(({0}*)base)->ref_count);", CfxNativeSymbol);
         b.BeginIf("count == 2");
-        b.AppendLine("cfx_set_native_reference((({0}*)base)->gc_handle, count);", CfxNativeSymbol);
+        b.AppendLine("cfx_set_native_reference((({0}*)base)->gc_handle, (({0}*)base)->wrapper_kind, count);", CfxNativeSymbol);
         b.EndBlock();
         b.EndBlock();
         b.BeginBlock("int CEF_CALLBACK _{0}_release(struct _cef_base_t* base)", CfxName);
         b.AppendLine("int count = InterlockedDecrement(&(({0}*)base)->ref_count);", CfxNativeSymbol);
-        b.BeginIf("count == 1");
-        b.AppendLine("cfx_set_native_reference((({0}*)base)->gc_handle, count);", CfxNativeSymbol);
-        b.BeginElseIf("!count");
-        b.AppendLine("cfx_gc_handle_free((({0}*)base)->gc_handle);", CfxNativeSymbol);
+        b.BeginIf("count < 2");
+        b.AppendLine("cfx_set_native_reference((({0}*)base)->gc_handle, (({0}*)base)->wrapper_kind, count);", CfxNativeSymbol);
+        b.BeginIf("!count");
         b.AppendLine("free(base);");
         b.AppendLine("return 1;");
+        b.EndBlock();
         b.EndBlock();
         b.AppendLine("return 0;");
         b.EndBlock();
@@ -82,7 +81,7 @@ public class CfxClientClass : CfxClass {
         b.EndBlock();
         b.AppendLine();
 
-        b.BeginBlock("static {0}* {1}_ctor(gc_handle_t gc_handle)", CfxNativeSymbol, CfxName);
+        b.BeginBlock("static {0}* {1}_ctor(gc_handle_t gc_handle, int wrapper_kind)", CfxNativeSymbol, CfxName);
         b.AppendLine("{0}* ptr = ({0}*)calloc(1, sizeof({0}));", CfxNativeSymbol);
         b.AppendLine("if(!ptr) return 0;");
         b.AppendLine("ptr->{0}.base.size = sizeof({1});", CefStruct.Name, OriginalSymbol);
@@ -91,6 +90,7 @@ public class CfxClientClass : CfxClass {
         b.AppendLine("ptr->{0}.base.has_one_ref = _{1}_has_one_ref;", CefStruct.Name, CfxName);
         b.AppendLine("ptr->ref_count = 1;");
         b.AppendLine("ptr->gc_handle = gc_handle;");
+        b.AppendLine("ptr->wrapper_kind = wrapper_kind;");
         b.AppendLine("return ptr;");
         b.EndBlock();
         b.AppendLine();
@@ -136,7 +136,7 @@ public class CfxClientClass : CfxClass {
             b.AppendLine("(({0}_t*)self)->{1} = (void (CEF_CALLBACK *)({2}))callback;", CfxName, cb.Name, cb.Signature.NativeParameterList);
             b.AppendLine("self->{0} = callback ? {1} : 0;", cb.Name, cb.NativeCallbackName);
             b.AppendLine("break;");
-
+            cb.ClientCallbackIndex = index;
             index += 1;
         }
         b.EndBlock();
@@ -438,159 +438,189 @@ public class CfxClientClass : CfxClass {
     }
 
     public override void EmitRemoteCalls(CodeBuilder b, List<string> callIds) {
-        if(Category == StructCategory.ApiCallbacks) {
-            b.AppendLine("using Event;");
-            b.AppendLine("using Chromium.Event;");
-        }
+
+        b.AppendLine("using Event;");
 
         b.AppendLine();
 
-        EmitRemoteConstructorCalls(b, callIds);
+        b.BeginRemoteCallClass(ClassName, callIds, "CtorWithGCHandleRemoteCall");
+        b.AppendLine();
+        b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
+        b.AppendLine("__retval = CfxApi.{0}.{1}_ctor(gcHandlePtr, 1);", ApiClassName, CfxName);
+        b.EndBlock();
+        b.EndBlock();
+        b.AppendLine();
 
+        b.BeginRemoteCallClass(ClassName, callIds, "SetCallbackRemoteCall");
+        b.AppendLine();
+        b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
+        b.AppendLine("{0}RemoteClient.SetCallback(self, index, active);", ClassName);
+        b.EndBlock();
+        b.EndBlock();
+        b.AppendLine();
 
-        foreach(var cb in CallbackFunctions) {
+        foreach(var cb in RemoteCallbackFunctions) {
 
-            if(!GeneratorConfig.IsBrowserProcessOnly(CefStruct.Name + "::" + cb.Name)) {
+            var sig = cb.Signature;
 
-                var sig = cb.Signature;
+            b.BeginRemoteCallClass(cb.EventName, callIds, "RemoteEventCall");
+            b.AppendLine();
 
-                b.BeginRemoteCallClass(cb.EventName, callIds, "RemoteClientCall");
-                b.AppendLine();
+            var inArgumentList = new List<string>();
+            var outArgumentList = new List<string>();
 
-                b.BeginBlock("internal static void EventCall(object sender, {0} e)", cb.PublicEventArgsClassName);
-                b.AppendLine("var call = new {0}RemoteClientCall();", cb.EventName);
-                b.AppendLine("call.sender = RemoteProxy.Wrap((CfxBase)sender);");
-                b.AppendLine("call.eventArgsId = AddEventArgs(e);");
-                b.AppendLine("call.RequestExecution(RemoteClient.connection);");
-                b.AppendLine("RemoveEventArgs(call.eventArgsId);");
-                b.EndBlock();
-
-                b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-                b.AppendLine("var sender = {0}.Wrap(new RemotePtr(connection, this.sender));", RemoteClassName);
-                b.AppendLine("var e = new {0}(eventArgsId);", cb.RemoteEventArgsClassName);
-                b.AppendLine("sender.raise_{0}(sender, e);", cb.PublicName);
-                b.EndBlock();
-                b.EndBlock();
-                b.AppendLine();
-
-                b.BeginRemoteCallClass(cb.EventName + "Activate", callIds);
-                b.AppendLine();
-                b.AppendLine("internal IntPtr sender;");
-                b.AppendLine("protected override void WriteArgs(StreamHandler h) { h.Write(sender); }");
-                b.AppendLine("protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }");
-                b.AppendLine();
-                b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-                b.AppendLine("var sender = ({0})RemoteProxy.Unwrap(this.sender, null);", ClassName);
-                b.AppendLine("sender.{0} += {1}RemoteClientCall.EventCall;", cb.PublicName, cb.EventName);
-                b.EndBlock();
-                b.EndBlock();
-                b.AppendLine();
-
-                b.BeginRemoteCallClass(cb.EventName + "Deactivate", callIds);
-                b.AppendLine();
-                b.AppendLine("internal IntPtr sender;");
-                b.AppendLine("protected override void WriteArgs(StreamHandler h) { h.Write(sender); }");
-                b.AppendLine("protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }");
-                b.AppendLine();
-                b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-                b.AppendLine("var sender = ({0})RemoteProxy.Unwrap(this.sender, null);", ClassName);
-                b.AppendLine("sender.{0} -= {1}RemoteClientCall.EventCall;", cb.PublicName, cb.EventName);
-                b.EndBlock();
-                b.EndBlock();
-                b.AppendLine();
-
-                for(var ii = 1; ii <= sig.ManagedArguments.Length - 1; ii++) {
-                    var arg = sig.ManagedArguments[ii];
-                    if(arg.ArgumentType.IsOut) {
-                        b.BeginRemoteCallClass(cb.EventName + "Set" + arg.PublicPropertyName, callIds);
-                        b.AppendLine();
-                        b.AppendLine("internal ulong eventArgsId;");
-                        arg.ArgumentType.EmitRemoteCallFields(b, "value");
-                        b.AppendLine();
-
-                        b.BeginBlock("protected override void WriteArgs(StreamHandler h)");
-                        b.AppendLine("h.Write(eventArgsId);");
-                        arg.ArgumentType.EmitRemoteWrite(b, "value");
-                        b.EndBlock();
-
-                        b.BeginBlock("protected override void ReadArgs(StreamHandler h)");
-                        b.AppendLine("h.Read(out eventArgsId);");
-                        arg.ArgumentType.EmitRemoteRead(b, "value");
-                        b.EndBlock();
-
-                        b.AppendLine();
-                        b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-                        b.AppendLine("var e = ({0})RemoteClientCall.GetEventArgs(eventArgsId);", cb.PublicEventArgsClassName);
-                        arg.EmitProxyEventArgSetter(b);
-                        b.EndBlock();
-
-                        b.EndBlock();
-                        b.AppendLine();
+            foreach(var arg in sig.Arguments) {
+                if(!arg.IsThisArgument) {
+                    foreach(var pm in arg.ArgumentType.RemoteCallbackParameterList(arg.VarName)) {
+                        if(pm.StartsWith("out ")) {
+                            b.AppendLine("internal {0};", pm.Substring(4));
+                            outArgumentList.Add(pm.Substring(pm.LastIndexOf(' ') + 1));
+                        } else {
+                            b.AppendLine("internal {0};", pm);
+                            inArgumentList.Add(pm.Substring(pm.LastIndexOf(' ') + 1));
+                        }
                     }
-                    if(arg.ArgumentType.IsIn) {
-                        b.BeginRemoteCallClass(cb.EventName + "Get" + arg.PublicPropertyName, callIds);
-                        b.AppendLine();
-
-                        b.AppendLine("internal ulong eventArgsId;");
-                        arg.ArgumentType.EmitRemoteCallFields(b, "value");
-                        b.AppendLine();
-
-                        b.BeginBlock("protected override void WriteArgs(StreamHandler h)");
-                        b.AppendLine("h.Write(eventArgsId);");
-                        b.EndBlock();
-
-                        b.BeginBlock("protected override void ReadArgs(StreamHandler h)");
-                        b.AppendLine("h.Read(out eventArgsId);");
-                        b.EndBlock();
-
-                        b.BeginBlock("protected override void WriteReturn(StreamHandler h)");
-                        arg.ArgumentType.EmitRemoteWrite(b, "value");
-                        b.EndBlock();
-
-                        b.BeginBlock("protected override void ReadReturn(StreamHandler h)");
-                        arg.ArgumentType.EmitRemoteRead(b, "value");
-                        b.EndBlock();
-
-                        b.AppendLine();
-
-                        b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-                        b.AppendLine("var e = ({0})RemoteClientCall.GetEventArgs(eventArgsId);", cb.PublicEventArgsClassName);
-                        b.AppendLine("value = {0};", arg.ArgumentType.ProxyWrapExpression("e." + arg.PublicPropertyName));
-                        b.EndBlock();
-
-                        b.EndBlock();
-                        b.AppendLine();
-                    }
-                }
-
-                if(!sig.PublicReturnType.IsVoid) {
-                    b.BeginRemoteCallClass(cb.EventName + "SetReturnValue", callIds);
-                    b.AppendLine();
-                    b.AppendLine("internal ulong eventArgsId;");
-                    sig.PublicReturnType.EmitRemoteCallFields(b, "value");
-                    b.AppendLine();
-
-                    b.BeginBlock("protected override void WriteArgs(StreamHandler h)");
-                    b.AppendLine("h.Write(eventArgsId);");
-                    sig.PublicReturnType.EmitRemoteWrite(b, "value");
-                    b.EndBlock();
-
-                    b.BeginBlock("protected override void ReadArgs(StreamHandler h)");
-                    b.AppendLine("h.Read(out eventArgsId);");
-                    sig.PublicReturnType.EmitRemoteRead(b, "value");
-                    b.EndBlock();
-
-                    b.AppendLine();
-                    b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-                    b.AppendLine("var e = ({0})RemoteClientCall.GetEventArgs(eventArgsId);", cb.PublicEventArgsClassName);
-                    b.AppendLine("e.SetReturnValue({0});", sig.PublicReturnType.ProxyUnwrapExpression("value"));
-                    b.EndBlock();
-
-                    b.EndBlock();
-                    b.AppendLine();
                 }
             }
+            b.AppendLine();
+
+            if(!sig.ReturnType.IsVoid) {
+                b.AppendLine("internal {0} __retval;", sig.ReturnType.PInvokeSymbol);
+                b.AppendLine();
+            }
+
+            b.BeginBlock("protected override void WriteArgs(StreamHandler h)");
+            b.AppendLine("h.Write(gcHandlePtr);");
+            foreach(var pm in inArgumentList) {
+                b.AppendLine("h.Write({0});", pm);
+            }
+            b.EndBlock();
+            b.AppendLine();
+            b.BeginBlock("protected override void ReadArgs(StreamHandler h)");
+            b.AppendLine("h.Read(out gcHandlePtr);");
+            foreach(var pm in inArgumentList) {
+                b.AppendLine("h.Read(out {0});", pm);
+            }
+            b.EndBlock();
+            b.AppendLine();
+            b.BeginBlock("protected override void WriteReturn(StreamHandler h)");
+            foreach(var pm in outArgumentList) {
+                b.AppendLine("h.Write({0});", pm);
+            }
+            if(!sig.ReturnType.IsVoid) {
+                b.AppendLine("h.Write(__retval);");
+            }
+            b.EndBlock();
+            b.AppendLine();
+            b.BeginBlock("protected override void ReadReturn(StreamHandler h)");
+            foreach(var pm in outArgumentList) {
+                b.AppendLine("h.Read(out {0});", pm);
+            }
+            if(!sig.ReturnType.IsVoid) {
+                b.AppendLine("h.Read(out __retval);");
+            }
+            b.EndBlock();
+            b.AppendLine();
+            b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
+
+            b.AppendLine("var self = ({0})System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;", RemoteClassName);
+            b.BeginIf("self == null || self.CallbacksDisabled");
+            b.AppendLine("return;");
+            b.EndBlock();
+            if(cb.IsBasicEvent)
+                b.AppendLine("var e = new CfrEventArgs();");
+            else
+                b.AppendLine("var e = new {0}(this);", cb.RemoteEventArgsClassName);
+            b.AppendLine("self.m_{0}?.Invoke(self, e);", cb.PublicName);
+            b.AppendLine("e.m_isInvalid = true;");
+
+            for(var i = 1; i <= sig.ManagedArguments.Count() - 1; i++) {
+                sig.ManagedArguments[i].EmitPostRemoteRaiseEventStatements(b);
+            }
+
+            sig.EmitPostRemoteEventHandlerReturnValueStatements(b);
+
+            b.EndBlock();
+            b.EndBlock();
+            b.AppendLine();
         }
+
+    }
+
+    public void EmitRemoteClient(CodeBuilder b) {
+        b.BeginClass(ClassName + "RemoteClient", "internal static");
+        b.AppendLine();
+
+        b.BeginBlock("static {0}RemoteClient()", ClassName);
+
+        foreach(var sm in RemoteCallbackFunctions) {
+            b.AppendLine("{0}_native = {0};", sm.Name);
+        }
+        foreach(var sm in RemoteCallbackFunctions) {
+            b.AppendLine("{0}_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate({0}_native);", sm.Name);
+        }
+
+        b.EndBlock();
+        b.AppendLine();
+
+        b.BeginBlock("internal static void SetCallback(IntPtr self, int index, bool active)");
+        b.BeginBlock("switch(index)");
+        foreach(var cb in RemoteCallbackFunctions) {
+            b.AppendLine("case {0}:", cb.ClientCallbackIndex);
+            b.IncreaseIndent();
+            b.AppendLine("CfxApi.{0}.{1}_set_callback(self, index, active ? {2}_native_ptr : IntPtr.Zero);", ApiClassName, CfxName, cb.Name);
+            b.AppendLine("break;");
+            b.DecreaseIndent();
+        }
+        b.EndBlock();
+        b.EndBlock();
+        b.AppendLine();
+
+        foreach(var cb in RemoteCallbackFunctions) {
+
+            var sig = cb.Signature;
+
+            b.AppendComment(cb.ToString());
+            CodeSnippets.EmitPInvokeCallbackDelegate(b, cb.Name, cb.Signature);
+            b.AppendLine("private static {0}_delegate {0}_native;", cb.Name);
+            b.AppendLine("private static IntPtr {0}_native_ptr;", cb.Name);
+            b.AppendLine();
+
+            var inArgumentList = new List<string>();
+
+            foreach(var arg in sig.Arguments) {
+                if(!arg.IsThisArgument) {
+                    foreach(var pm in arg.ArgumentType.RemoteCallbackParameterList(arg.VarName)) {
+                        if(!pm.StartsWith("out ")) {
+                            inArgumentList.Add(pm.Substring(pm.LastIndexOf(' ') + 1));
+                        }
+                    }
+                }
+            }
+
+            b.BeginFunction(cb.Name, "void", sig.PInvokeParameterList, "internal static");
+            b.AppendLine("var call = new {0}RemoteEventCall();", cb.EventName);
+            b.AppendLine("call.gcHandlePtr = gcHandlePtr;");
+            foreach(var pm in inArgumentList) {
+                b.AppendLine("call.{0} = {0};", pm);
+            }
+            b.AppendLine("call.RequestExecution();");
+            foreach(var arg in sig.Arguments) {
+                if(!arg.IsThisArgument)
+                    arg.ArgumentType.EmitPostRemoteCallbackStatements(b, arg.VarName);
+            }
+            if(!sig.ReturnType.IsVoid) {
+                b.AppendLine("__retval = call.__retval;");
+            }
+
+            //sig.EmitPostPublicEventHandlerCallStatements(b);
+
+            b.EndBlock();
+            b.AppendLine();
+        }
+
+
+        b.EndBlock();
     }
 
     public override void EmitRemoteClass(CodeBuilder b) {
@@ -602,27 +632,14 @@ public class CfxClientClass : CfxClass {
         b.AppendSummaryAndRemarks(Comments, true, Category == StructCategory.ApiCallbacks);
         b.BeginClass(RemoteClassName + " : CfrClientBase", GeneratorConfig.ClassModifiers(RemoteClassName));
         b.AppendLine();
+
         EmitRemoteClassWrapperFunction(b);
-
-        foreach(var cb in CallbackFunctions) {
-            if(!GeneratorConfig.IsBrowserProcessOnly(CefStruct.Name + "::" + cb.Name)) {
-                b.BeginBlock("internal void raise_{0}(object sender, {1} e)", cb.PublicName, cb.RemoteEventArgsClassName);
-                b.AppendLine("var handler = m_{0};", cb.PublicName);
-                b.AppendLine("if(handler == null) return;");
-                b.AppendLine("handler(this, e);");
-                b.AppendLine("e.m_isInvalid = true;");
-                b.EndBlock();
-                b.AppendLine();
-            }
-        }
-
-
         b.AppendLine();
 
         b.AppendLine("private {0}(RemotePtr remotePtr) : base(remotePtr) {{}}", RemoteClassName);
 
 
-        b.BeginBlock("public {0}() : base(new {1}CtorRemoteCall())", RemoteClassName, ClassName);
+        b.BeginBlock("public {0}() : base(new {1}CtorWithGCHandleRemoteCall())", RemoteClassName, ClassName);
         b.AppendLine("RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);");
         b.EndBlock();
 
@@ -634,8 +651,10 @@ public class CfxClientClass : CfxClass {
                 b.BeginBlock("public event {0} {1}", cb.RemoteEventHandlerName, CSharp.Escape(cb.PublicName));
                 b.BeginBlock("add");
                 b.BeginBlock("if(m_{0} == null)", cb.PublicName);
-                b.AppendLine("var call = new {0}ActivateRemoteCall();", cb.EventName);
-                b.AppendLine("call.sender = RemotePtr.ptr;");
+                b.AppendLine("var call = new {0}SetCallbackRemoteCall();", ClassName);
+                b.AppendLine("call.self = RemotePtr.ptr;");
+                b.AppendLine("call.index = {0};", cb.ClientCallbackIndex);
+                b.AppendLine("call.active = true;");
                 b.AppendLine("call.RequestExecution(RemotePtr.connection);");
                 b.EndBlock();
                 b.AppendLine("m_{0} += value;", cb.PublicName);
@@ -643,14 +662,16 @@ public class CfxClientClass : CfxClass {
                 b.BeginBlock("remove");
                 b.AppendLine("m_{0} -= value;", cb.PublicName);
                 b.BeginBlock("if(m_{0} == null)", cb.PublicName);
-                b.AppendLine("var call = new {0}DeactivateRemoteCall();", cb.EventName);
-                b.AppendLine("call.sender = RemotePtr.ptr;");
+                b.AppendLine("var call = new {0}SetCallbackRemoteCall();", ClassName);
+                b.AppendLine("call.self = RemotePtr.ptr;");
+                b.AppendLine("call.index = {0};", cb.ClientCallbackIndex);
+                b.AppendLine("call.active = false;");
                 b.AppendLine("call.RequestExecution(RemotePtr.connection);");
                 b.EndBlock();
                 b.EndBlock();
                 b.EndBlock();
                 b.AppendLine();
-                b.AppendLine("{0} m_{1};", cb.RemoteEventHandlerName, cb.PublicName);
+                b.AppendLine("internal {0} m_{1};", cb.RemoteEventHandlerName, cb.PublicName);
                 b.AppendLine();
                 b.AppendLine();
             }
@@ -686,20 +707,21 @@ public class CfxClientClass : CfxClass {
         b.BeginClass(cb.RemoteEventArgsClassName + " : CfrEventArgs", GeneratorConfig.ClassModifiers(cb.RemoteEventArgsClassName));
         b.AppendLine();
 
+        b.AppendLine("private {0}RemoteEventCall call;", cb.EventName);
+        b.AppendLine();
+
         for(var i = 1; i <= cb.Signature.ManagedArguments.Count() - 1; i++) {
-            if(cb.Signature.ManagedArguments[i].ArgumentType.IsIn) {
-                b.AppendLine("bool {0}Fetched;", cb.Signature.ManagedArguments[i].PublicPropertyName);
-                b.AppendLine("{0} m_{1};", cb.Signature.ManagedArguments[i].ArgumentType.RemoteSymbol, cb.Signature.ManagedArguments[i].PublicPropertyName);
-            }
+            cb.Signature.ManagedArguments[i].EmitRemoteEventArgFields(b);
         }
         b.AppendLine();
 
         if(!cb.Signature.PublicReturnType.IsVoid) {
+            b.AppendLine("internal {0} m_returnValue;", cb.Signature.PublicReturnType.RemoteSymbol);
             b.AppendLine("private bool returnValueSet;");
             b.AppendLine();
         }
 
-        b.AppendLine("internal {0}(ulong eventArgsId) : base(eventArgsId) {{}}", cb.RemoteEventArgsClassName);
+        b.AppendLine("internal {0}({1}RemoteEventCall call) {{ this.call = call; }}", cb.RemoteEventArgsClassName, cb.EventName);
         b.AppendLine();
 
         for(var i = 1; i <= cb.Signature.ManagedArguments.Count() - 1; i++) {
@@ -712,32 +734,21 @@ public class CfxClientClass : CfxClass {
             } else {
                 cd.Lines = new string[] { string.Format("Set the {0} out parameter for the <see cref=\"{1}.{2}\"/> render process callback.", arg.PublicPropertyName, CefStruct.RemoteSymbol, cb.PublicFunctionName) };
             }
+            if(arg.ArgumentType is CefStructArrayType && arg.ArgumentType.IsIn) {
+                cd.Lines = cd.Lines.Concat(new string[] { "Do not keep a reference to the elements of this array outside of this function." }).ToArray();
+            }
             b.AppendSummary(cd);
             b.BeginBlock("public {0} {1}", arg.ArgumentType.RemoteSymbol, arg.PublicPropertyName);
             if(arg.ArgumentType.IsIn) {
                 b.BeginBlock("get");
                 b.AppendLine("CheckAccess();");
-                b.BeginBlock("if(!{0}Fetched)", arg.PublicPropertyName);
-                b.AppendLine("{0}Fetched = true;", arg.PublicPropertyName);
-                b.AppendLine("var call = new {0}Get{1}RemoteCall();", cb.EventName, arg.PublicPropertyName);
-                b.AppendLine("call.eventArgsId = eventArgsId;");
-                b.AppendLine("call.RequestExecution();");
-                b.AppendLine("m_{0} = {1};", arg.PublicPropertyName, arg.ArgumentType.RemoteWrapExpression("call.value"));
-                b.EndBlock();
-                b.AppendLine("return m_{0};", arg.PublicPropertyName);
+                arg.EmitRemoteEventArgGetterStatements(b);
                 b.EndBlock();
             }
             if(arg.ArgumentType.IsOut) {
                 b.BeginBlock("set");
                 b.AppendLine("CheckAccess();");
-                if(arg.ArgumentType.IsIn) {
-                    b.AppendLine("m_{0} = value;", arg.PublicPropertyName);
-                    b.AppendLine("{0}Fetched = true;", arg.PublicPropertyName);
-                }
-                b.AppendLine("var call = new {0}Set{1}RemoteCall();", cb.EventName, arg.PublicPropertyName);
-                b.AppendLine("call.eventArgsId = eventArgsId;");
-                b.AppendLine("call.value = {0};", arg.ArgumentType.RemoteUnwrapExpression("value"));
-                b.AppendLine("call.RequestExecution();");
+                arg.EmitRemoteEventArgSetterStatements(b);
                 b.EndBlock();
             }
             b.EndBlock();
@@ -753,10 +764,7 @@ public class CfxClientClass : CfxClass {
             b.BeginIf("returnValueSet");
             b.AppendLine("throw new CfxException(\"The return value has already been set\");");
             b.EndBlock();
-            b.AppendLine("var call = new {0}SetReturnValueRemoteCall();", cb.EventName);
-            b.AppendLine("call.eventArgsId = eventArgsId;");
-            b.AppendLine("call.value = {0};", cb.Signature.PublicReturnType.RemoteUnwrapExpression("returnValue"));
-            b.AppendLine("call.RequestExecution();");
+            b.AppendLine("m_returnValue = returnValue;");
             b.AppendLine("returnValueSet = true;");
             b.EndBlock();
         }

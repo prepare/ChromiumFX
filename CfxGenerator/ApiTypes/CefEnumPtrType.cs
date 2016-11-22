@@ -29,6 +29,8 @@
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+using System;
+
 public class CefEnumPtrType : CefType {
     private CefEnumType cefEnum;
 
@@ -89,6 +91,11 @@ public class CefEnumPtrType : CefType {
 
     public override void EmitPostPublicRaiseEventStatements(CodeBuilder b, string var) {
         b.AppendLine("{0} = e.m_{0};", var);
+    }
+
+    public override void EmitPostRemoteRaiseEventStatements(CodeBuilder b, string var) {
+        b.AppendLine("aaaaarghhshshshs;");
+        throw new Exception();
     }
 
     public override bool IsOut {

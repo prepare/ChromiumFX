@@ -204,12 +204,28 @@ public class Argument {
         ArgumentType.EmitPublicEventArgSetterStatements(b, VarName);
     }
 
+    public void EmitRemoteEventArgGetterStatements(CodeBuilder b) {
+        ArgumentType.EmitRemoteEventArgGetterStatements(b, VarName);
+    }
+
+    public void EmitRemoteEventArgSetterStatements(CodeBuilder b) {
+        ArgumentType.EmitRemoteEventArgSetterStatements(b, VarName);
+    }
+
     public void EmitPublicEventArgFields(CodeBuilder b) {
         ArgumentType.EmitPublicEventArgFields(b, VarName);
     }
 
+    public void EmitRemoteEventArgFields(CodeBuilder b) {
+        ArgumentType.EmitRemoteEventArgFields(b, VarName);
+    }
+
     public void EmitPostPublicRaiseEventStatements(CodeBuilder b) {
         ArgumentType.EmitPostPublicRaiseEventStatements(b, VarName);
+    }
+
+    public void EmitPostRemoteRaiseEventStatements(CodeBuilder b) {
+        ArgumentType.EmitPostRemoteRaiseEventStatements(b, VarName);
     }
 
     public virtual void EmitRemoteCallFields(CodeBuilder b) {
@@ -222,10 +238,6 @@ public class Argument {
 
     public void EmitRemoteRead(CodeBuilder b) {
         ArgumentType.EmitRemoteRead(b, CSharp.Escape(ProxyVarName));
-    }
-
-    public void EmitProxyEventArgSetter(CodeBuilder b) {
-        ArgumentType.EmitProxyEventArgSetter(b, PublicPropertyName);
     }
 
     public override string ToString() {

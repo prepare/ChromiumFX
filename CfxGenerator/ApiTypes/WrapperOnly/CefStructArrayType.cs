@@ -131,6 +131,10 @@ public class CefStructArrayType : CefStructPtrArrayType {
         b.AppendLine("internal {0} m_{1}_managed;", PublicSymbol, var);
     }
 
+    public override void EmitRemoteEventArgFields(CodeBuilder b, string var) {
+        b.AppendLine("internal {0} m_{1}_managed;", PublicSymbol, var);
+    }
+
     public override void EmitPublicEventCtorStatements(CodeBuilder b, string var) {
         b.AppendLine("m_{0} = {0};", var);
         b.AppendLine("m_{0}_structsize = {0}_structsize;", var);
@@ -149,7 +153,27 @@ public class CefStructArrayType : CefStructPtrArrayType {
         b.AppendLine("return m_{0}_managed;", var);
     }
 
+    public override void EmitRemoteEventArgGetterStatements(CodeBuilder b, string var) {
+        b.BeginIf("m_{0}_managed == null", var);
+        b.AppendLine("m_{0}_managed = new {1}[({2})m_{3}];", var, Struct.RemoteClassName, CountArg.ArgumentType.PublicSymbol, CountArg.VarName);
+        b.AppendLine("var currentPtr = m_{0};", var);
+        b.BeginBlock("for({0} i = 0; i < ({0})m_{1}; ++i)", CountArg.ArgumentType.PublicSymbol, CountArg.VarName);
+        b.AppendLine("m_{0}_managed[i] = {1}.Wrap(currentPtr);", var, Struct.ClassName);
+        b.AppendLine("currentPtr += m_{0}_structsize;", var);
+        b.EndBlock();
+        b.EndBlock();
+        b.AppendLine("return m_{0}_managed;", var);
+    }
+
     public override void EmitPostPublicRaiseEventStatements(CodeBuilder b, string var) {
+        b.BeginIf("e.m_{0}_managed != null", var);
+        b.BeginFor("e.m_{0}_managed.Length", var);
+        b.AppendLine("e.m_{0}_managed[i].Dispose();", var);
+        b.EndBlock();
+        b.EndBlock();
+    }
+
+    public override void EmitPostRemoteRaiseEventStatements(CodeBuilder b, string var) {
         b.BeginIf("e.m_{0}_managed != null", var);
         b.BeginFor("e.m_{0}_managed.Length", var);
         b.AppendLine("e.m_{0}_managed[i].Dispose();", var);

@@ -76,55 +76,55 @@ namespace Chromium {
 
         // get_root_screen_rect
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void get_root_screen_rect_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr rect);
+        private delegate void get_root_screen_rect_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr rect);
         private static get_root_screen_rect_delegate get_root_screen_rect_native;
         private static IntPtr get_root_screen_rect_native_ptr;
 
-        internal static void get_root_screen_rect(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr rect) {
+        internal static void get_root_screen_rect(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr rect) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxGetRootScreenRectEventArgs(browser, rect);
             self.m_GetRootScreenRect?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 
         // get_view_rect
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void get_view_rect_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr rect);
+        private delegate void get_view_rect_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr rect);
         private static get_view_rect_delegate get_view_rect_native;
         private static IntPtr get_view_rect_native_ptr;
 
-        internal static void get_view_rect(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr rect) {
+        internal static void get_view_rect(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr rect) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxGetViewRectEventArgs(browser, rect);
             self.m_GetViewRect?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 
         // get_screen_point
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void get_screen_point_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, int viewX, int viewY, out int screenX, out int screenY);
+        private delegate void get_screen_point_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, int viewX, int viewY, out int screenX, out int screenY);
         private static get_screen_point_delegate get_screen_point_native;
         private static IntPtr get_screen_point_native_ptr;
 
-        internal static void get_screen_point(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, int viewX, int viewY, out int screenX, out int screenY) {
+        internal static void get_screen_point(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, int viewX, int viewY, out int screenX, out int screenY) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_browser = 1;
+                browser_release = 1;
                 screenX = default(int);
                 screenY = default(int);
                 return;
@@ -132,7 +132,7 @@ namespace Chromium {
             var e = new CfxGetScreenPointEventArgs(browser, viewX, viewY);
             self.m_GetScreenPoint?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
             screenX = e.m_screenX;
             screenY = e.m_screenY;
             __retval = e.m_returnValue ? 1 : 0;
@@ -140,76 +140,76 @@ namespace Chromium {
 
         // get_screen_info
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void get_screen_info_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr screen_info);
+        private delegate void get_screen_info_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr screen_info);
         private static get_screen_info_delegate get_screen_info_native;
         private static IntPtr get_screen_info_native_ptr;
 
-        internal static void get_screen_info(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr screen_info) {
+        internal static void get_screen_info(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr screen_info) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxGetScreenInfoEventArgs(browser, screen_info);
             self.m_GetScreenInfo?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 
         // on_popup_show
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_popup_show_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, int show);
+        private delegate void on_popup_show_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, int show);
         private static on_popup_show_delegate on_popup_show_native;
         private static IntPtr on_popup_show_native_ptr;
 
-        internal static void on_popup_show(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, int show) {
+        internal static void on_popup_show(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, int show) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnPopupShowEventArgs(browser, show);
             self.m_OnPopupShow?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         // on_popup_size
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_popup_size_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr rect);
+        private delegate void on_popup_size_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr rect);
         private static on_popup_size_delegate on_popup_size_native;
         private static IntPtr on_popup_size_native_ptr;
 
-        internal static void on_popup_size(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr rect) {
+        internal static void on_popup_size(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr rect) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnPopupSizeEventArgs(browser, rect);
             self.m_OnPopupSize?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         // on_paint
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_paint_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, int type, UIntPtr dirtyRectsCount, IntPtr dirtyRects, int dirtyRects_structsize, IntPtr buffer, int width, int height);
+        private delegate void on_paint_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, int type, UIntPtr dirtyRectsCount, IntPtr dirtyRects, int dirtyRects_structsize, IntPtr buffer, int width, int height);
         private static on_paint_delegate on_paint_native;
         private static IntPtr on_paint_native_ptr;
 
-        internal static void on_paint(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, int type, UIntPtr dirtyRectsCount, IntPtr dirtyRects, int dirtyRects_structsize, IntPtr buffer, int width, int height) {
+        internal static void on_paint(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, int type, UIntPtr dirtyRectsCount, IntPtr dirtyRects, int dirtyRects_structsize, IntPtr buffer, int width, int height) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnPaintEventArgs(browser, type, dirtyRects, dirtyRectsCount, dirtyRects_structsize, buffer, width, height);
             self.m_OnPaint?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
             if(e.m_dirtyRects_managed != null) {
                 for(int i = 0; i < e.m_dirtyRects_managed.Length; ++i) {
                     e.m_dirtyRects_managed[i].Dispose();
@@ -219,78 +219,78 @@ namespace Chromium {
 
         // on_cursor_change
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_cursor_change_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr cursor, int type, IntPtr custom_cursor_info);
+        private delegate void on_cursor_change_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr cursor, int type, IntPtr custom_cursor_info);
         private static on_cursor_change_delegate on_cursor_change_native;
         private static IntPtr on_cursor_change_native_ptr;
 
-        internal static void on_cursor_change(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr cursor, int type, IntPtr custom_cursor_info) {
+        internal static void on_cursor_change(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr cursor, int type, IntPtr custom_cursor_info) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnCursorChangeEventArgs(browser, cursor, type, custom_cursor_info);
             self.m_OnCursorChange?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         // start_dragging
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void start_dragging_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr drag_data, out int _release_drag_data, int allowed_ops, int x, int y);
+        private delegate void start_dragging_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr drag_data, out int drag_data_release, int allowed_ops, int x, int y);
         private static start_dragging_delegate start_dragging_native;
         private static IntPtr start_dragging_native_ptr;
 
-        internal static void start_dragging(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr drag_data, out int _release_drag_data, int allowed_ops, int x, int y) {
+        internal static void start_dragging(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr drag_data, out int drag_data_release, int allowed_ops, int x, int y) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_browser = 1;
-                _release_drag_data = 1;
+                browser_release = 1;
+                drag_data_release = 1;
                 return;
             }
             var e = new CfxStartDraggingEventArgs(browser, drag_data, allowed_ops, x, y);
             self.m_StartDragging?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
-            _release_drag_data = e.m_drag_data_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
+            drag_data_release = e.m_drag_data_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 
         // update_drag_cursor
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void update_drag_cursor_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, int operation);
+        private delegate void update_drag_cursor_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, int operation);
         private static update_drag_cursor_delegate update_drag_cursor_native;
         private static IntPtr update_drag_cursor_native_ptr;
 
-        internal static void update_drag_cursor(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, int operation) {
+        internal static void update_drag_cursor(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, int operation) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxUpdateDragCursorEventArgs(browser, operation);
             self.m_UpdateDragCursor?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         // on_scroll_offset_changed
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_scroll_offset_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, double x, double y);
+        private delegate void on_scroll_offset_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, double x, double y);
         private static on_scroll_offset_changed_delegate on_scroll_offset_changed_native;
         private static IntPtr on_scroll_offset_changed_native_ptr;
 
-        internal static void on_scroll_offset_changed(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, double x, double y) {
+        internal static void on_scroll_offset_changed(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, double x, double y) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnScrollOffsetChangedEventArgs(browser, x, y);
             self.m_OnScrollOffsetChanged?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         internal CfxRenderHandler(IntPtr nativePtr) : base(nativePtr) {}

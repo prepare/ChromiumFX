@@ -54,9 +54,8 @@ namespace Chromium {
             // must be a weak handle
             // otherwise transient callback structs never go out of scope if
             // they are not explicitly disposed
-            System.Runtime.InteropServices.GCHandle handle =
-                System.Runtime.InteropServices.GCHandle.Alloc(this, System.Runtime.InteropServices.GCHandleType.Weak);
-            var nativePtr = cfx_ctor(System.Runtime.InteropServices.GCHandle.ToIntPtr(handle));
+            GCHandle handle = GCHandle.Alloc(this, GCHandleType.Weak);
+            var nativePtr = cfx_ctor(GCHandle.ToIntPtr(handle), 0);
             if(nativePtr == IntPtr.Zero)
                 throw new OutOfMemoryException();
             SetNative(nativePtr);

@@ -54,7 +54,7 @@ public class GeneratorConfig {
                 if(f.EndsWith("RemoteCallBases.cs"))
                     continue;
                 var content = File.ReadAllText(f);
-                var mm = Regex.Matches(content, @"class\s+(\w+)\s*:\s*(?:RemoteClientCall|RemoteCall)");
+                var mm = Regex.Matches(content, @"class\s+(\w+)\s*:\s*(?:RemoteClientCall|\w*RemoteCall)");
                 foreach(Match m in mm) {
                     callIds.Add(m.Groups[1].Value);
                 }

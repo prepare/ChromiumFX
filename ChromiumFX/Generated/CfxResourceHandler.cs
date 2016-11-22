@@ -66,36 +66,36 @@ namespace Chromium {
 
         // process_request
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void process_request_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr request, out int _release_request, IntPtr callback, out int _release_callback);
+        private delegate void process_request_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr request, out int request_release, IntPtr callback, out int callback_release);
         private static process_request_delegate process_request_native;
         private static IntPtr process_request_native_ptr;
 
-        internal static void process_request(IntPtr gcHandlePtr, out int __retval, IntPtr request, out int _release_request, IntPtr callback, out int _release_callback) {
+        internal static void process_request(IntPtr gcHandlePtr, out int __retval, IntPtr request, out int request_release, IntPtr callback, out int callback_release) {
             var self = (CfxResourceHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_request = 1;
-                _release_callback = 1;
+                request_release = 1;
+                callback_release = 1;
                 return;
             }
             var e = new CfxProcessRequestEventArgs(request, callback);
             self.m_ProcessRequest?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_request = e.m_request_wrapped == null? 1 : 0;
-            _release_callback = e.m_callback_wrapped == null? 1 : 0;
+            request_release = e.m_request_wrapped == null? 1 : 0;
+            callback_release = e.m_callback_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 
         // get_response_headers
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void get_response_headers_delegate(IntPtr gcHandlePtr, IntPtr response, out int _release_response, out long response_length, out IntPtr redirectUrl_str, out int redirectUrl_length, out IntPtr redirectUrl_gc_handle);
+        private delegate void get_response_headers_delegate(IntPtr gcHandlePtr, IntPtr response, out int response_release, out long response_length, out IntPtr redirectUrl_str, out int redirectUrl_length, out IntPtr redirectUrl_gc_handle);
         private static get_response_headers_delegate get_response_headers_native;
         private static IntPtr get_response_headers_native_ptr;
 
-        internal static void get_response_headers(IntPtr gcHandlePtr, IntPtr response, out int _release_response, out long response_length, out IntPtr redirectUrl_str, out int redirectUrl_length, out IntPtr redirectUrl_gc_handle) {
+        internal static void get_response_headers(IntPtr gcHandlePtr, IntPtr response, out int response_release, out long response_length, out IntPtr redirectUrl_str, out int redirectUrl_length, out IntPtr redirectUrl_gc_handle) {
             var self = (CfxResourceHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_response = 1;
+                response_release = 1;
                 response_length = default(long);
                 redirectUrl_str = IntPtr.Zero;
                 redirectUrl_length = 0;
@@ -105,7 +105,7 @@ namespace Chromium {
             var e = new CfxGetResponseHeadersEventArgs(response);
             self.m_GetResponseHeaders?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_response = e.m_response_wrapped == null? 1 : 0;
+            response_release = e.m_response_wrapped == null? 1 : 0;
             response_length = e.m_response_length;
             if(e.m_redirectUrl_wrapped != null && e.m_redirectUrl_wrapped.Length > 0) {
                 var redirectUrl_pinned = new PinnedString(e.m_redirectUrl_wrapped);
@@ -121,23 +121,23 @@ namespace Chromium {
 
         // read_response
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void read_response_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr data_out, int bytes_to_read, out int bytes_read, IntPtr callback, out int _release_callback);
+        private delegate void read_response_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr data_out, int bytes_to_read, out int bytes_read, IntPtr callback, out int callback_release);
         private static read_response_delegate read_response_native;
         private static IntPtr read_response_native_ptr;
 
-        internal static void read_response(IntPtr gcHandlePtr, out int __retval, IntPtr data_out, int bytes_to_read, out int bytes_read, IntPtr callback, out int _release_callback) {
+        internal static void read_response(IntPtr gcHandlePtr, out int __retval, IntPtr data_out, int bytes_to_read, out int bytes_read, IntPtr callback, out int callback_release) {
             var self = (CfxResourceHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
                 bytes_read = default(int);
-                _release_callback = 1;
+                callback_release = 1;
                 return;
             }
             var e = new CfxReadResponseEventArgs(data_out, bytes_to_read, callback);
             self.m_ReadResponse?.Invoke(self, e);
             e.m_isInvalid = true;
             bytes_read = e.m_bytes_read;
-            _release_callback = e.m_callback_wrapped == null? 1 : 0;
+            callback_release = e.m_callback_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 

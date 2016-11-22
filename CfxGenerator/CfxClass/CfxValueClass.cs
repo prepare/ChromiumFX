@@ -201,29 +201,41 @@ public class CfxValueClass : CfxClass {
 
         b.AppendLine();
 
-        EmitRemoteConstructorCalls(b, callIds);
+        b.BeginRemoteCallClass(ClassName, callIds, "CtorRemoteCall");
+        b.AppendLine();
+        b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
+        b.AppendLine("__retval = CfxApi.{0}.{1}_ctor();", ApiClassName, CfxName);
+        b.EndBlock();
+        b.EndBlock();
+        b.AppendLine();
+
+        b.BeginRemoteCallClass(ClassName, callIds, "DtorRemoteCall");
+        b.AppendLine();
+        b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
+        b.AppendLine("CfxApi.{0}.{1}_dtor(nativePtr);", ApiClassName, CfxName);
+        b.EndBlock();
+        b.EndBlock();
+        b.AppendLine();
 
         foreach(var sm in StructMembers) {
             b.BeginRemoteCallClass(ClassName + "Get" + sm.PublicName, callIds);
             b.AppendLine("internal IntPtr sender;");
-            b.AppendLine("internal {0} value;", sm.MemberType.ProxySymbol);
+            b.AppendLine("internal {0} value;", sm.MemberType.PInvokeSymbol);
             b.AppendLine("protected override void WriteArgs(StreamHandler h) { h.Write(sender); }");
             b.AppendLine("protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }");
             b.AppendLine("protected override void WriteReturn(StreamHandler h) { h.Write(value); }");
             b.AppendLine("protected override void ReadReturn(StreamHandler h) { h.Read(out value); }");
             b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-            b.AppendLine("var sender = ({0})RemoteProxy.Unwrap(this.sender, null);", ClassName);
-            b.AppendLine("value = {0};", sm.MemberType.ProxyWrapExpression("sender." + sm.PublicName));
+            b.AppendLine("CfxApi.{0}.{1}_get_{2}(sender, out value);", ApiClassName, CfxName, sm.Name);
             b.EndBlock();
             b.EndBlock();
             b.BeginRemoteCallClass(ClassName + "Set" + sm.PublicName, callIds);
             b.AppendLine("internal IntPtr sender;");
-            b.AppendLine("internal {0} value;", sm.MemberType.ProxySymbol);
+            b.AppendLine("internal {0} value;", sm.MemberType.PInvokeSymbol);
             b.AppendLine("protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }");
             b.AppendLine("protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }");
             b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-            b.AppendLine("var sender = ({0})RemoteProxy.Unwrap(this.sender, null);", ClassName);
-            b.AppendLine("sender.{0} = {1};", sm.PublicName, sm.MemberType.ProxyUnwrapExpression("value"));
+            b.AppendLine("CfxApi.{0}.{1}_set_{2}(sender, value);", ApiClassName, CfxName, sm.Name);
             b.EndBlock();
             b.EndBlock();
         }
@@ -240,19 +252,8 @@ public class CfxValueClass : CfxClass {
 
         EmitRemoteClassWrapperFunction(b);
 
-        b.BeginFunction("CreateRemote", "RemotePtr", "", "internal static");
-        b.AppendLine("var call = new {0}CtorRemoteCall();", ClassName);
-        b.AppendLine("call.RequestExecution();");
-        b.AppendLine("return new RemotePtr(call.__retval);");
-        b.EndBlock();
-
-        b.AppendLine();
-
         b.AppendLine("private {0}(RemotePtr remotePtr) : base(remotePtr) {{}}", RemoteClassName);
-
-        b.BeginBlock("public {0}() : base(CreateRemote())", RemoteClassName);
-        b.AppendLine("RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);");
-        b.EndBlock();
+        b.AppendLine("public {0}() : base(new {1}CtorRemoteCall(), new {1}DtorRemoteCall()) {{}}", RemoteClassName, ClassName);
 
         foreach(var sm in StructMembers) {
             b.AppendLine();

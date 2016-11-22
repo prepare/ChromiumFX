@@ -536,10 +536,21 @@ public class WrapperGenerator {
             fileManager.WriteFileIfContentChanged(t.ClassName + "RemoteCalls.cs", b.ToString());
         }
 
+        foreach(var t in remoteDecls.CefStructTypes) {
+            if(t.ClassBuilder is CfxClientClass) {
+                b.Clear();
+                b.BeginCfxNamespace(".Remote");
+                (t.ClassBuilder as CfxClientClass).EmitRemoteClient(b);
+                b.EndBlock();
+                fileManager.WriteFileIfContentChanged(t.ClassName + "RemoteClient.cs", b.ToString());
+            }
+        }
+
         callIds.AddRange(GeneratorConfig.AdditionalCallIds);
         callIds.Sort();
 
         b.Clear();
+
         b.BeginCfxNamespace(".Remote");
         b.BeginBlock("internal enum RemoteCallId : ushort");
         foreach(var id in callIds) {

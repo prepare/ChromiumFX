@@ -60,37 +60,9 @@ namespace Chromium.Remote {
         }
 
 
-        internal void raise_OnBeforeCommandLineProcessing(object sender, CfrOnBeforeCommandLineProcessingEventArgs e) {
-            var handler = m_OnBeforeCommandLineProcessing;
-            if(handler == null) return;
-            handler(this, e);
-            e.m_isInvalid = true;
-        }
-
-        internal void raise_OnRegisterCustomSchemes(object sender, CfrOnRegisterCustomSchemesEventArgs e) {
-            var handler = m_OnRegisterCustomSchemes;
-            if(handler == null) return;
-            handler(this, e);
-            e.m_isInvalid = true;
-        }
-
-        internal void raise_GetResourceBundleHandler(object sender, CfrGetResourceBundleHandlerEventArgs e) {
-            var handler = m_GetResourceBundleHandler;
-            if(handler == null) return;
-            handler(this, e);
-            e.m_isInvalid = true;
-        }
-
-        internal void raise_GetRenderProcessHandler(object sender, CfrGetRenderProcessHandlerEventArgs e) {
-            var handler = m_GetRenderProcessHandler;
-            if(handler == null) return;
-            handler(this, e);
-            e.m_isInvalid = true;
-        }
-
 
         private CfrApp(RemotePtr remotePtr) : base(remotePtr) {}
-        public CfrApp() : base(new CfxAppCtorRemoteCall()) {
+        public CfrApp() : base(new CfxAppCtorWithGCHandleRemoteCall()) {
             RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
         }
 
@@ -112,8 +84,10 @@ namespace Chromium.Remote {
         public event CfrOnBeforeCommandLineProcessingEventHandler OnBeforeCommandLineProcessing {
             add {
                 if(m_OnBeforeCommandLineProcessing == null) {
-                    var call = new CfxOnBeforeCommandLineProcessingActivateRemoteCall();
-                    call.sender = RemotePtr.ptr;
+                    var call = new CfxAppSetCallbackRemoteCall();
+                    call.self = RemotePtr.ptr;
+                    call.index = 0;
+                    call.active = true;
                     call.RequestExecution(RemotePtr.connection);
                 }
                 m_OnBeforeCommandLineProcessing += value;
@@ -121,14 +95,16 @@ namespace Chromium.Remote {
             remove {
                 m_OnBeforeCommandLineProcessing -= value;
                 if(m_OnBeforeCommandLineProcessing == null) {
-                    var call = new CfxOnBeforeCommandLineProcessingDeactivateRemoteCall();
-                    call.sender = RemotePtr.ptr;
+                    var call = new CfxAppSetCallbackRemoteCall();
+                    call.self = RemotePtr.ptr;
+                    call.index = 0;
+                    call.active = false;
                     call.RequestExecution(RemotePtr.connection);
                 }
             }
         }
 
-        CfrOnBeforeCommandLineProcessingEventHandler m_OnBeforeCommandLineProcessing;
+        internal CfrOnBeforeCommandLineProcessingEventHandler m_OnBeforeCommandLineProcessing;
 
 
         /// <summary>
@@ -144,8 +120,10 @@ namespace Chromium.Remote {
         public event CfrOnRegisterCustomSchemesEventHandler OnRegisterCustomSchemes {
             add {
                 if(m_OnRegisterCustomSchemes == null) {
-                    var call = new CfxOnRegisterCustomSchemesActivateRemoteCall();
-                    call.sender = RemotePtr.ptr;
+                    var call = new CfxAppSetCallbackRemoteCall();
+                    call.self = RemotePtr.ptr;
+                    call.index = 1;
+                    call.active = true;
                     call.RequestExecution(RemotePtr.connection);
                 }
                 m_OnRegisterCustomSchemes += value;
@@ -153,14 +131,16 @@ namespace Chromium.Remote {
             remove {
                 m_OnRegisterCustomSchemes -= value;
                 if(m_OnRegisterCustomSchemes == null) {
-                    var call = new CfxOnRegisterCustomSchemesDeactivateRemoteCall();
-                    call.sender = RemotePtr.ptr;
+                    var call = new CfxAppSetCallbackRemoteCall();
+                    call.self = RemotePtr.ptr;
+                    call.index = 1;
+                    call.active = false;
                     call.RequestExecution(RemotePtr.connection);
                 }
             }
         }
 
-        CfrOnRegisterCustomSchemesEventHandler m_OnRegisterCustomSchemes;
+        internal CfrOnRegisterCustomSchemesEventHandler m_OnRegisterCustomSchemes;
 
 
         /// <summary>
@@ -176,8 +156,10 @@ namespace Chromium.Remote {
         public event CfrGetResourceBundleHandlerEventHandler GetResourceBundleHandler {
             add {
                 if(m_GetResourceBundleHandler == null) {
-                    var call = new CfxGetResourceBundleHandlerActivateRemoteCall();
-                    call.sender = RemotePtr.ptr;
+                    var call = new CfxAppSetCallbackRemoteCall();
+                    call.self = RemotePtr.ptr;
+                    call.index = 2;
+                    call.active = true;
                     call.RequestExecution(RemotePtr.connection);
                 }
                 m_GetResourceBundleHandler += value;
@@ -185,14 +167,16 @@ namespace Chromium.Remote {
             remove {
                 m_GetResourceBundleHandler -= value;
                 if(m_GetResourceBundleHandler == null) {
-                    var call = new CfxGetResourceBundleHandlerDeactivateRemoteCall();
-                    call.sender = RemotePtr.ptr;
+                    var call = new CfxAppSetCallbackRemoteCall();
+                    call.self = RemotePtr.ptr;
+                    call.index = 2;
+                    call.active = false;
                     call.RequestExecution(RemotePtr.connection);
                 }
             }
         }
 
-        CfrGetResourceBundleHandlerEventHandler m_GetResourceBundleHandler;
+        internal CfrGetResourceBundleHandlerEventHandler m_GetResourceBundleHandler;
 
 
         /// <summary>
@@ -206,8 +190,10 @@ namespace Chromium.Remote {
         public event CfrGetRenderProcessHandlerEventHandler GetRenderProcessHandler {
             add {
                 if(m_GetRenderProcessHandler == null) {
-                    var call = new CfxGetRenderProcessHandlerActivateRemoteCall();
-                    call.sender = RemotePtr.ptr;
+                    var call = new CfxAppSetCallbackRemoteCall();
+                    call.self = RemotePtr.ptr;
+                    call.index = 4;
+                    call.active = true;
                     call.RequestExecution(RemotePtr.connection);
                 }
                 m_GetRenderProcessHandler += value;
@@ -215,14 +201,16 @@ namespace Chromium.Remote {
             remove {
                 m_GetRenderProcessHandler -= value;
                 if(m_GetRenderProcessHandler == null) {
-                    var call = new CfxGetRenderProcessHandlerDeactivateRemoteCall();
-                    call.sender = RemotePtr.ptr;
+                    var call = new CfxAppSetCallbackRemoteCall();
+                    call.self = RemotePtr.ptr;
+                    call.index = 4;
+                    call.active = false;
                     call.RequestExecution(RemotePtr.connection);
                 }
             }
         }
 
-        CfrGetRenderProcessHandlerEventHandler m_GetRenderProcessHandler;
+        internal CfrGetRenderProcessHandlerEventHandler m_GetRenderProcessHandler;
 
 
     }
@@ -263,12 +251,13 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrOnBeforeCommandLineProcessingEventArgs : CfrEventArgs {
 
-            bool ProcessTypeFetched;
-            string m_ProcessType;
-            bool CommandLineFetched;
-            CfrCommandLine m_CommandLine;
+            private CfxOnBeforeCommandLineProcessingRemoteEventCall call;
 
-            internal CfrOnBeforeCommandLineProcessingEventArgs(ulong eventArgsId) : base(eventArgsId) {}
+            internal string m_process_type;
+            internal bool m_process_type_fetched;
+            internal CfrCommandLine m_command_line_wrapped;
+
+            internal CfrOnBeforeCommandLineProcessingEventArgs(CfxOnBeforeCommandLineProcessingRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Get the ProcessType parameter for the <see cref="CfrApp.OnBeforeCommandLineProcessing"/> render process callback.
@@ -276,14 +265,11 @@ namespace Chromium.Remote {
             public string ProcessType {
                 get {
                     CheckAccess();
-                    if(!ProcessTypeFetched) {
-                        ProcessTypeFetched = true;
-                        var call = new CfxOnBeforeCommandLineProcessingGetProcessTypeRemoteCall();
-                        call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
-                        m_ProcessType = call.value;
+                    if(!m_process_type_fetched) {
+                        m_process_type = call.process_type_str == IntPtr.Zero ? null : (call.process_type_length == 0 ? String.Empty : CfrRuntime.Marshal.PtrToStringUni(new RemotePtr(call.process_type_str), call.process_type_length));
+                        m_process_type_fetched = true;
                     }
-                    return m_ProcessType;
+                    return m_process_type;
                 }
             }
             /// <summary>
@@ -292,14 +278,8 @@ namespace Chromium.Remote {
             public CfrCommandLine CommandLine {
                 get {
                     CheckAccess();
-                    if(!CommandLineFetched) {
-                        CommandLineFetched = true;
-                        var call = new CfxOnBeforeCommandLineProcessingGetCommandLineRemoteCall();
-                        call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
-                        m_CommandLine = CfrCommandLine.Wrap(new RemotePtr(call.value));
-                    }
-                    return m_CommandLine;
+                    if(m_command_line_wrapped == null) m_command_line_wrapped = CfrCommandLine.Wrap(new RemotePtr(call.command_line));
+                    return m_command_line_wrapped;
                 }
             }
 
@@ -332,10 +312,11 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrOnRegisterCustomSchemesEventArgs : CfrEventArgs {
 
-            bool RegistrarFetched;
-            CfrSchemeRegistrar m_Registrar;
+            private CfxOnRegisterCustomSchemesRemoteEventCall call;
 
-            internal CfrOnRegisterCustomSchemesEventArgs(ulong eventArgsId) : base(eventArgsId) {}
+            internal CfrSchemeRegistrar m_registrar_wrapped;
+
+            internal CfrOnRegisterCustomSchemesEventArgs(CfxOnRegisterCustomSchemesRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Get the Registrar parameter for the <see cref="CfrApp.OnRegisterCustomSchemes"/> render process callback.
@@ -343,14 +324,8 @@ namespace Chromium.Remote {
             public CfrSchemeRegistrar Registrar {
                 get {
                     CheckAccess();
-                    if(!RegistrarFetched) {
-                        RegistrarFetched = true;
-                        var call = new CfxOnRegisterCustomSchemesGetRegistrarRemoteCall();
-                        call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
-                        m_Registrar = CfrSchemeRegistrar.Wrap(new RemotePtr(call.value));
-                    }
-                    return m_Registrar;
+                    if(m_registrar_wrapped == null) m_registrar_wrapped = CfrSchemeRegistrar.Wrap(new RemotePtr(call.registrar));
+                    return m_registrar_wrapped;
                 }
             }
 
@@ -383,10 +358,13 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrGetResourceBundleHandlerEventArgs : CfrEventArgs {
 
+            private CfxGetResourceBundleHandlerRemoteEventCall call;
 
+
+            internal CfrResourceBundleHandler m_returnValue;
             private bool returnValueSet;
 
-            internal CfrGetResourceBundleHandlerEventArgs(ulong eventArgsId) : base(eventArgsId) {}
+            internal CfrGetResourceBundleHandlerEventArgs(CfxGetResourceBundleHandlerRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Set the return value for the <see cref="CfrApp.GetResourceBundleHandler"/> render process callback.
@@ -396,10 +374,7 @@ namespace Chromium.Remote {
                 if(returnValueSet) {
                     throw new CfxException("The return value has already been set");
                 }
-                var call = new CfxGetResourceBundleHandlerSetReturnValueRemoteCall();
-                call.eventArgsId = eventArgsId;
-                call.value = CfrObject.Unwrap(returnValue).ptr;
-                call.RequestExecution();
+                m_returnValue = returnValue;
                 returnValueSet = true;
             }
         }
@@ -424,10 +399,13 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrGetRenderProcessHandlerEventArgs : CfrEventArgs {
 
+            private CfxGetRenderProcessHandlerRemoteEventCall call;
 
+
+            internal CfrRenderProcessHandler m_returnValue;
             private bool returnValueSet;
 
-            internal CfrGetRenderProcessHandlerEventArgs(ulong eventArgsId) : base(eventArgsId) {}
+            internal CfrGetRenderProcessHandlerEventArgs(CfxGetRenderProcessHandlerRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Set the return value for the <see cref="CfrApp.GetRenderProcessHandler"/> render process callback.
@@ -437,10 +415,7 @@ namespace Chromium.Remote {
                 if(returnValueSet) {
                     throw new CfxException("The return value has already been set");
                 }
-                var call = new CfxGetRenderProcessHandlerSetReturnValueRemoteCall();
-                call.eventArgsId = eventArgsId;
-                call.value = CfrObject.Unwrap(returnValue).ptr;
-                call.RequestExecution();
+                m_returnValue = returnValue;
                 returnValueSet = true;
             }
         }

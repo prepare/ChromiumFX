@@ -72,93 +72,93 @@ namespace Chromium {
 
         // on_request_complete
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_request_complete_delegate(IntPtr gcHandlePtr, IntPtr request, out int _release_request);
+        private delegate void on_request_complete_delegate(IntPtr gcHandlePtr, IntPtr request, out int request_release);
         private static on_request_complete_delegate on_request_complete_native;
         private static IntPtr on_request_complete_native_ptr;
 
-        internal static void on_request_complete(IntPtr gcHandlePtr, IntPtr request, out int _release_request) {
+        internal static void on_request_complete(IntPtr gcHandlePtr, IntPtr request, out int request_release) {
             var self = (CfxUrlRequestClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_request = 1;
+                request_release = 1;
                 return;
             }
             var e = new CfxOnRequestCompleteEventArgs(request);
             self.m_OnRequestComplete?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_request = e.m_request_wrapped == null? 1 : 0;
+            request_release = e.m_request_wrapped == null? 1 : 0;
         }
 
         // on_upload_progress
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_upload_progress_delegate(IntPtr gcHandlePtr, IntPtr request, out int _release_request, long current, long total);
+        private delegate void on_upload_progress_delegate(IntPtr gcHandlePtr, IntPtr request, out int request_release, long current, long total);
         private static on_upload_progress_delegate on_upload_progress_native;
         private static IntPtr on_upload_progress_native_ptr;
 
-        internal static void on_upload_progress(IntPtr gcHandlePtr, IntPtr request, out int _release_request, long current, long total) {
+        internal static void on_upload_progress(IntPtr gcHandlePtr, IntPtr request, out int request_release, long current, long total) {
             var self = (CfxUrlRequestClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_request = 1;
+                request_release = 1;
                 return;
             }
             var e = new CfxOnUploadProgressEventArgs(request, current, total);
             self.m_OnUploadProgress?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_request = e.m_request_wrapped == null? 1 : 0;
+            request_release = e.m_request_wrapped == null? 1 : 0;
         }
 
         // on_download_progress
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_download_progress_delegate(IntPtr gcHandlePtr, IntPtr request, out int _release_request, long current, long total);
+        private delegate void on_download_progress_delegate(IntPtr gcHandlePtr, IntPtr request, out int request_release, long current, long total);
         private static on_download_progress_delegate on_download_progress_native;
         private static IntPtr on_download_progress_native_ptr;
 
-        internal static void on_download_progress(IntPtr gcHandlePtr, IntPtr request, out int _release_request, long current, long total) {
+        internal static void on_download_progress(IntPtr gcHandlePtr, IntPtr request, out int request_release, long current, long total) {
             var self = (CfxUrlRequestClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_request = 1;
+                request_release = 1;
                 return;
             }
             var e = new CfxOnDownloadProgressEventArgs(request, current, total);
             self.m_OnDownloadProgress?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_request = e.m_request_wrapped == null? 1 : 0;
+            request_release = e.m_request_wrapped == null? 1 : 0;
         }
 
         // on_download_data
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_download_data_delegate(IntPtr gcHandlePtr, IntPtr request, out int _release_request, IntPtr data, UIntPtr data_length);
+        private delegate void on_download_data_delegate(IntPtr gcHandlePtr, IntPtr request, out int request_release, IntPtr data, UIntPtr data_length);
         private static on_download_data_delegate on_download_data_native;
         private static IntPtr on_download_data_native_ptr;
 
-        internal static void on_download_data(IntPtr gcHandlePtr, IntPtr request, out int _release_request, IntPtr data, UIntPtr data_length) {
+        internal static void on_download_data(IntPtr gcHandlePtr, IntPtr request, out int request_release, IntPtr data, UIntPtr data_length) {
             var self = (CfxUrlRequestClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_request = 1;
+                request_release = 1;
                 return;
             }
             var e = new CfxOnDownloadDataEventArgs(request, data, data_length);
             self.m_OnDownloadData?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_request = e.m_request_wrapped == null? 1 : 0;
+            request_release = e.m_request_wrapped == null? 1 : 0;
         }
 
         // get_auth_credentials
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void get_auth_credentials_delegate(IntPtr gcHandlePtr, out int __retval, int isProxy, IntPtr host_str, int host_length, int port, IntPtr realm_str, int realm_length, IntPtr scheme_str, int scheme_length, IntPtr callback, out int _release_callback);
+        private delegate void get_auth_credentials_delegate(IntPtr gcHandlePtr, out int __retval, int isProxy, IntPtr host_str, int host_length, int port, IntPtr realm_str, int realm_length, IntPtr scheme_str, int scheme_length, IntPtr callback, out int callback_release);
         private static get_auth_credentials_delegate get_auth_credentials_native;
         private static IntPtr get_auth_credentials_native_ptr;
 
-        internal static void get_auth_credentials(IntPtr gcHandlePtr, out int __retval, int isProxy, IntPtr host_str, int host_length, int port, IntPtr realm_str, int realm_length, IntPtr scheme_str, int scheme_length, IntPtr callback, out int _release_callback) {
+        internal static void get_auth_credentials(IntPtr gcHandlePtr, out int __retval, int isProxy, IntPtr host_str, int host_length, int port, IntPtr realm_str, int realm_length, IntPtr scheme_str, int scheme_length, IntPtr callback, out int callback_release) {
             var self = (CfxUrlRequestClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_callback = 1;
+                callback_release = 1;
                 return;
             }
             var e = new CfxUrlRequestClientGetAuthCredentialsEventArgs(isProxy, host_str, host_length, port, realm_str, realm_length, scheme_str, scheme_length, callback);
             self.m_GetAuthCredentials?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_callback = e.m_callback_wrapped == null? 1 : 0;
+            callback_release = e.m_callback_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 

@@ -35,64 +35,55 @@ using System;
 
 namespace Chromium.Remote {
     using Event;
-    using Chromium.Event;
 
-    internal class CfxTaskCtorRemoteCall : CtorRemoteCall {
+    internal class CfxTaskCtorWithGCHandleRemoteCall : CtorWithGCHandleRemoteCall {
 
-        internal CfxTaskCtorRemoteCall()
-            : base(RemoteCallId.CfxTaskCtorRemoteCall) {}
+        internal CfxTaskCtorWithGCHandleRemoteCall()
+            : base(RemoteCallId.CfxTaskCtorWithGCHandleRemoteCall) {}
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = RemoteProxy.Wrap(new CfxTask());
+            __retval = CfxApi.Task.cfx_task_ctor(gcHandlePtr, 1);
         }
     }
 
-    internal class CfxTaskExecuteRemoteClientCall : RemoteClientCall {
+    internal class CfxTaskSetCallbackRemoteCall : SetCallbackRemoteCall {
 
-        internal CfxTaskExecuteRemoteClientCall()
-            : base(RemoteCallId.CfxTaskExecuteRemoteClientCall) {}
+        internal CfxTaskSetCallbackRemoteCall()
+            : base(RemoteCallId.CfxTaskSetCallbackRemoteCall) {}
 
-        internal static void EventCall(object sender, CfxEventArgs e) {
-            var call = new CfxTaskExecuteRemoteClientCall();
-            call.sender = RemoteProxy.Wrap((CfxBase)sender);
-            call.eventArgsId = AddEventArgs(e);
-            call.RequestExecution(RemoteClient.connection);
-            RemoveEventArgs(call.eventArgsId);
-        }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrTask.Wrap(new RemotePtr(connection, this.sender));
-            var e = new CfrEventArgs(eventArgsId);
-            sender.raise_Execute(sender, e);
+            CfxTaskRemoteClient.SetCallback(self, index, active);
         }
     }
 
-    internal class CfxTaskExecuteActivateRemoteCall : RemoteCall {
+    internal class CfxTaskExecuteRemoteEventCall : RemoteEventCall {
 
-        internal CfxTaskExecuteActivateRemoteCall()
-            : base(RemoteCallId.CfxTaskExecuteActivateRemoteCall) {}
+        internal CfxTaskExecuteRemoteEventCall()
+            : base(RemoteCallId.CfxTaskExecuteRemoteEventCall) {}
 
-        internal IntPtr sender;
-        protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
-        protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTask)RemoteProxy.Unwrap(this.sender, null);
-            sender.Execute += CfxTaskExecuteRemoteClientCall.EventCall;
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(gcHandlePtr);
         }
-    }
 
-    internal class CfxTaskExecuteDeactivateRemoteCall : RemoteCall {
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out gcHandlePtr);
+        }
 
-        internal CfxTaskExecuteDeactivateRemoteCall()
-            : base(RemoteCallId.CfxTaskExecuteDeactivateRemoteCall) {}
+        protected override void WriteReturn(StreamHandler h) {
+        }
 
-        internal IntPtr sender;
-        protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
-        protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
+        protected override void ReadReturn(StreamHandler h) {
+        }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTask)RemoteProxy.Unwrap(this.sender, null);
-            sender.Execute -= CfxTaskExecuteRemoteClientCall.EventCall;
+            var self = (CfrTask)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                return;
+            }
+            var e = new CfrEventArgs();
+            self.m_Execute?.Invoke(self, e);
+            e.m_isInvalid = true;
         }
     }
 

@@ -40,14 +40,6 @@ using Chromium.Remote;
 namespace Chromium {
     internal class CfxArray {
 
-        internal static IntPtr[] GetProxyIds<T>(T[] values) where T : CfxBase {
-            if(values == null) return null;
-            var retval = new IntPtr[values.Length];
-            for(int i = 0; i < values.Length; ++i)
-                retval[i] = RemoteProxy.Wrap(values[i]);
-            return retval;
-        }
-
         internal static T[] GetCfrObjects<T>(RemoteConnection connection, IntPtr[] remotePtrs, Func<RemotePtr, T> wrapFunction) where T : CfrObject {
             if(remotePtrs == null) return null;
             var retval = new T[remotePtrs.Length];

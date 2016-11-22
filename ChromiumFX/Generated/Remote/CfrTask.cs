@@ -64,16 +64,9 @@ namespace Chromium.Remote {
         }
 
 
-        internal void raise_Execute(object sender, CfrEventArgs e) {
-            var handler = m_Execute;
-            if(handler == null) return;
-            handler(this, e);
-            e.m_isInvalid = true;
-        }
-
 
         private CfrTask(RemotePtr remotePtr) : base(remotePtr) {}
-        public CfrTask() : base(new CfxTaskCtorRemoteCall()) {
+        public CfrTask() : base(new CfxTaskCtorWithGCHandleRemoteCall()) {
             RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
         }
 
@@ -87,8 +80,10 @@ namespace Chromium.Remote {
         public event CfrEventHandler Execute {
             add {
                 if(m_Execute == null) {
-                    var call = new CfxTaskExecuteActivateRemoteCall();
-                    call.sender = RemotePtr.ptr;
+                    var call = new CfxTaskSetCallbackRemoteCall();
+                    call.self = RemotePtr.ptr;
+                    call.index = 0;
+                    call.active = true;
                     call.RequestExecution(RemotePtr.connection);
                 }
                 m_Execute += value;
@@ -96,14 +91,16 @@ namespace Chromium.Remote {
             remove {
                 m_Execute -= value;
                 if(m_Execute == null) {
-                    var call = new CfxTaskExecuteDeactivateRemoteCall();
-                    call.sender = RemotePtr.ptr;
+                    var call = new CfxTaskSetCallbackRemoteCall();
+                    call.self = RemotePtr.ptr;
+                    call.index = 0;
+                    call.active = false;
                     call.RequestExecution(RemotePtr.connection);
                 }
             }
         }
 
-        CfrEventHandler m_Execute;
+        internal CfrEventHandler m_Execute;
 
 
     }

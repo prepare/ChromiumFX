@@ -56,23 +56,23 @@ namespace Chromium {
 
         // on_file_dialog
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_file_dialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, int mode, IntPtr title_str, int title_length, IntPtr default_file_path_str, int default_file_path_length, IntPtr accept_filters, int selected_accept_filter, IntPtr callback, out int _release_callback);
+        private delegate void on_file_dialog_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, int mode, IntPtr title_str, int title_length, IntPtr default_file_path_str, int default_file_path_length, IntPtr accept_filters, int selected_accept_filter, IntPtr callback, out int callback_release);
         private static on_file_dialog_delegate on_file_dialog_native;
         private static IntPtr on_file_dialog_native_ptr;
 
-        internal static void on_file_dialog(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, int mode, IntPtr title_str, int title_length, IntPtr default_file_path_str, int default_file_path_length, IntPtr accept_filters, int selected_accept_filter, IntPtr callback, out int _release_callback) {
+        internal static void on_file_dialog(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, int mode, IntPtr title_str, int title_length, IntPtr default_file_path_str, int default_file_path_length, IntPtr accept_filters, int selected_accept_filter, IntPtr callback, out int callback_release) {
             var self = (CfxDialogHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_browser = 1;
-                _release_callback = 1;
+                browser_release = 1;
+                callback_release = 1;
                 return;
             }
             var e = new CfxDialogHandlerOnFileDialogEventArgs(browser, mode, title_str, title_length, default_file_path_str, default_file_path_length, accept_filters, selected_accept_filter, callback);
             self.m_OnFileDialog?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
-            _release_callback = e.m_callback_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
+            callback_release = e.m_callback_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 

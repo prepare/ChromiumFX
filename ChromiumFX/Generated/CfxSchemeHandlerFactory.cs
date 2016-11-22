@@ -57,25 +57,25 @@ namespace Chromium {
 
         // create
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void create_delegate(IntPtr gcHandlePtr, out IntPtr __retval, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr scheme_name_str, int scheme_name_length, IntPtr request, out int _release_request);
+        private delegate void create_delegate(IntPtr gcHandlePtr, out IntPtr __retval, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr scheme_name_str, int scheme_name_length, IntPtr request, out int request_release);
         private static create_delegate create_native;
         private static IntPtr create_native_ptr;
 
-        internal static void create(IntPtr gcHandlePtr, out IntPtr __retval, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr scheme_name_str, int scheme_name_length, IntPtr request, out int _release_request) {
+        internal static void create(IntPtr gcHandlePtr, out IntPtr __retval, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr scheme_name_str, int scheme_name_length, IntPtr request, out int request_release) {
             var self = (CfxSchemeHandlerFactory)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(IntPtr);
-                _release_browser = 1;
-                _release_frame = 1;
-                _release_request = 1;
+                browser_release = 1;
+                frame_release = 1;
+                request_release = 1;
                 return;
             }
             var e = new CfxSchemeHandlerFactoryCreateEventArgs(browser, frame, scheme_name_str, scheme_name_length, request);
             self.m_Create?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
-            _release_frame = e.m_frame_wrapped == null? 1 : 0;
-            _release_request = e.m_request_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
+            frame_release = e.m_frame_wrapped == null? 1 : 0;
+            request_release = e.m_request_wrapped == null? 1 : 0;
             __retval = CfxResourceHandler.Unwrap(e.m_returnValue);
         }
 

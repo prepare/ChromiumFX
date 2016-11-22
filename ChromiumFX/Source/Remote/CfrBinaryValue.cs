@@ -73,7 +73,12 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = RemoteProxy.Wrap(CfxBinaryValue.Create(data));
+            if(data == null || data.Length == 0) {
+                throw new ArgumentException("Data is null or zero length", "data");
+            }
+            var po = new PinnedObject(data);
+            __retval = CfxApi.BinaryValue.cfx_binary_value_create(po.PinnedPtr, (UIntPtr)data.Length);
+            po.Free();
         }
     }
 

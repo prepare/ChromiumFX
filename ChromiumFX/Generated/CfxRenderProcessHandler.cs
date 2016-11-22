@@ -77,20 +77,20 @@ namespace Chromium {
 
         // on_render_thread_created
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_render_thread_created_delegate(IntPtr gcHandlePtr, IntPtr extra_info, out int _release_extra_info);
+        private delegate void on_render_thread_created_delegate(IntPtr gcHandlePtr, IntPtr extra_info, out int extra_info_release);
         private static on_render_thread_created_delegate on_render_thread_created_native;
         private static IntPtr on_render_thread_created_native_ptr;
 
-        internal static void on_render_thread_created(IntPtr gcHandlePtr, IntPtr extra_info, out int _release_extra_info) {
+        internal static void on_render_thread_created(IntPtr gcHandlePtr, IntPtr extra_info, out int extra_info_release) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_extra_info = 1;
+                extra_info_release = 1;
                 return;
             }
             var e = new CfxOnRenderThreadCreatedEventArgs(extra_info);
             self.m_OnRenderThreadCreated?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_extra_info = e.m_extra_info_wrapped == null? 1 : 0;
+            extra_info_release = e.m_extra_info_wrapped == null? 1 : 0;
         }
 
         // on_web_kit_initialized
@@ -111,38 +111,38 @@ namespace Chromium {
 
         // on_browser_created
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_browser_created_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser);
+        private delegate void on_browser_created_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release);
         private static on_browser_created_delegate on_browser_created_native;
         private static IntPtr on_browser_created_native_ptr;
 
-        internal static void on_browser_created(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser) {
+        internal static void on_browser_created(IntPtr gcHandlePtr, IntPtr browser, out int browser_release) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnBrowserCreatedEventArgs(browser);
             self.m_OnBrowserCreated?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         // on_browser_destroyed
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_browser_destroyed_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser);
+        private delegate void on_browser_destroyed_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release);
         private static on_browser_destroyed_delegate on_browser_destroyed_native;
         private static IntPtr on_browser_destroyed_native_ptr;
 
-        internal static void on_browser_destroyed(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser) {
+        internal static void on_browser_destroyed(IntPtr gcHandlePtr, IntPtr browser, out int browser_release) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnBrowserDestroyedEventArgs(browser);
             self.m_OnBrowserDestroyed?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         // get_load_handler
@@ -165,139 +165,139 @@ namespace Chromium {
 
         // on_before_navigation
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_before_navigation_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr request, out int _release_request, int navigation_type, int is_redirect);
+        private delegate void on_before_navigation_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr request, out int request_release, int navigation_type, int is_redirect);
         private static on_before_navigation_delegate on_before_navigation_native;
         private static IntPtr on_before_navigation_native_ptr;
 
-        internal static void on_before_navigation(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr request, out int _release_request, int navigation_type, int is_redirect) {
+        internal static void on_before_navigation(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr request, out int request_release, int navigation_type, int is_redirect) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_browser = 1;
-                _release_frame = 1;
-                _release_request = 1;
+                browser_release = 1;
+                frame_release = 1;
+                request_release = 1;
                 return;
             }
             var e = new CfxOnBeforeNavigationEventArgs(browser, frame, request, navigation_type, is_redirect);
             self.m_OnBeforeNavigation?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
-            _release_frame = e.m_frame_wrapped == null? 1 : 0;
-            _release_request = e.m_request_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
+            frame_release = e.m_frame_wrapped == null? 1 : 0;
+            request_release = e.m_request_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 
         // on_context_created
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_context_created_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr context, out int _release_context);
+        private delegate void on_context_created_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr context, out int context_release);
         private static on_context_created_delegate on_context_created_native;
         private static IntPtr on_context_created_native_ptr;
 
-        internal static void on_context_created(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr context, out int _release_context) {
+        internal static void on_context_created(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr context, out int context_release) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
-                _release_frame = 1;
-                _release_context = 1;
+                browser_release = 1;
+                frame_release = 1;
+                context_release = 1;
                 return;
             }
             var e = new CfxOnContextCreatedEventArgs(browser, frame, context);
             self.m_OnContextCreated?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
-            _release_frame = e.m_frame_wrapped == null? 1 : 0;
-            _release_context = e.m_context_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
+            frame_release = e.m_frame_wrapped == null? 1 : 0;
+            context_release = e.m_context_wrapped == null? 1 : 0;
         }
 
         // on_context_released
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_context_released_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr context, out int _release_context);
+        private delegate void on_context_released_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr context, out int context_release);
         private static on_context_released_delegate on_context_released_native;
         private static IntPtr on_context_released_native_ptr;
 
-        internal static void on_context_released(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr context, out int _release_context) {
+        internal static void on_context_released(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr context, out int context_release) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
-                _release_frame = 1;
-                _release_context = 1;
+                browser_release = 1;
+                frame_release = 1;
+                context_release = 1;
                 return;
             }
             var e = new CfxOnContextReleasedEventArgs(browser, frame, context);
             self.m_OnContextReleased?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
-            _release_frame = e.m_frame_wrapped == null? 1 : 0;
-            _release_context = e.m_context_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
+            frame_release = e.m_frame_wrapped == null? 1 : 0;
+            context_release = e.m_context_wrapped == null? 1 : 0;
         }
 
         // on_uncaught_exception
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_uncaught_exception_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr context, out int _release_context, IntPtr exception, out int _release_exception, IntPtr stackTrace, out int _release_stackTrace);
+        private delegate void on_uncaught_exception_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr context, out int context_release, IntPtr exception, out int exception_release, IntPtr stackTrace, out int stackTrace_release);
         private static on_uncaught_exception_delegate on_uncaught_exception_native;
         private static IntPtr on_uncaught_exception_native_ptr;
 
-        internal static void on_uncaught_exception(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr context, out int _release_context, IntPtr exception, out int _release_exception, IntPtr stackTrace, out int _release_stackTrace) {
+        internal static void on_uncaught_exception(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr context, out int context_release, IntPtr exception, out int exception_release, IntPtr stackTrace, out int stackTrace_release) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
-                _release_frame = 1;
-                _release_context = 1;
-                _release_exception = 1;
-                _release_stackTrace = 1;
+                browser_release = 1;
+                frame_release = 1;
+                context_release = 1;
+                exception_release = 1;
+                stackTrace_release = 1;
                 return;
             }
             var e = new CfxOnUncaughtExceptionEventArgs(browser, frame, context, exception, stackTrace);
             self.m_OnUncaughtException?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
-            _release_frame = e.m_frame_wrapped == null? 1 : 0;
-            _release_context = e.m_context_wrapped == null? 1 : 0;
-            _release_exception = e.m_exception_wrapped == null? 1 : 0;
-            _release_stackTrace = e.m_stackTrace_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
+            frame_release = e.m_frame_wrapped == null? 1 : 0;
+            context_release = e.m_context_wrapped == null? 1 : 0;
+            exception_release = e.m_exception_wrapped == null? 1 : 0;
+            stackTrace_release = e.m_stackTrace_wrapped == null? 1 : 0;
         }
 
         // on_focused_node_changed
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_focused_node_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr node, out int _release_node);
+        private delegate void on_focused_node_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr node, out int node_release);
         private static on_focused_node_changed_delegate on_focused_node_changed_native;
         private static IntPtr on_focused_node_changed_native_ptr;
 
-        internal static void on_focused_node_changed(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr node, out int _release_node) {
+        internal static void on_focused_node_changed(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr node, out int node_release) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
-                _release_frame = 1;
-                _release_node = 1;
+                browser_release = 1;
+                frame_release = 1;
+                node_release = 1;
                 return;
             }
             var e = new CfxOnFocusedNodeChangedEventArgs(browser, frame, node);
             self.m_OnFocusedNodeChanged?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
-            _release_frame = e.m_frame_wrapped == null? 1 : 0;
-            _release_node = e.m_node_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
+            frame_release = e.m_frame_wrapped == null? 1 : 0;
+            node_release = e.m_node_wrapped == null? 1 : 0;
         }
 
         // on_process_message_received
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_process_message_received_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, int source_process, IntPtr message, out int _release_message);
+        private delegate void on_process_message_received_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, int source_process, IntPtr message, out int message_release);
         private static on_process_message_received_delegate on_process_message_received_native;
         private static IntPtr on_process_message_received_native_ptr;
 
-        internal static void on_process_message_received(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, int source_process, IntPtr message, out int _release_message) {
+        internal static void on_process_message_received(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, int source_process, IntPtr message, out int message_release) {
             var self = (CfxRenderProcessHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_browser = 1;
-                _release_message = 1;
+                browser_release = 1;
+                message_release = 1;
                 return;
             }
             var e = new CfxOnProcessMessageReceivedEventArgs(browser, source_process, message);
             self.m_OnProcessMessageReceived?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
-            _release_message = e.m_message_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
+            message_release = e.m_message_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 

@@ -122,6 +122,17 @@ public abstract class CfxClass {
     public CefExportFunction[] ExportFunctions;
     public CefCallbackFunction[] CallbackFunctions;
 
+    public CefCallbackFunction[] RemoteCallbackFunctions {
+        get {
+            var l = new List<CefCallbackFunction>(CallbackFunctions.Length);
+            foreach(var cb in CallbackFunctions) {
+                if(!GeneratorConfig.IsBrowserProcessOnly(CefStruct.Name + "::" + cb.Name))
+                    l.Add(cb);
+            }
+            return l.ToArray();
+        }
+    }
+
     public StructMember[] StructMembers;
 
     protected readonly CommentData Comments;
@@ -210,16 +221,6 @@ public abstract class CfxClass {
     public abstract void EmitPublicClass(CodeBuilder b);
 
     public abstract void EmitRemoteCalls(CodeBuilder b, List<string> callIds);
-
-    protected void EmitRemoteConstructorCalls(CodeBuilder b, List<string> callIds) {
-        b.BeginRemoteCallClass(ClassName, callIds, "CtorRemoteCall");
-        b.AppendLine();
-        b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-        b.AppendLine("__retval = RemoteProxy.Wrap(new {0}());", ClassName);
-        b.EndBlock();
-        b.EndBlock();
-        b.AppendLine();
-    }
 
     public abstract void EmitRemoteClass(CodeBuilder b);
 

@@ -349,6 +349,12 @@ public class Signature {
         }
     }
 
+    public virtual void EmitPostRemoteEventHandlerReturnValueStatements(CodeBuilder b) {
+        if(!PublicReturnType.IsVoid) {
+            b.AppendLine("__retval = {0};", PublicReturnType.RemoteUnwrapExpression("e.m_returnValue"));
+        }
+    }
+
     public virtual void EmitRemoteCall(CodeBuilder b, string remoteCallId, bool isStatic) {
 
         b.AppendLine("var call = new {0}();", remoteCallId);

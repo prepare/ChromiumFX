@@ -68,95 +68,95 @@ namespace Chromium {
 
         // on_address_change
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_address_change_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr url_str, int url_length);
+        private delegate void on_address_change_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr url_str, int url_length);
         private static on_address_change_delegate on_address_change_native;
         private static IntPtr on_address_change_native_ptr;
 
-        internal static void on_address_change(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr frame, out int _release_frame, IntPtr url_str, int url_length) {
+        internal static void on_address_change(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr url_str, int url_length) {
             var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
-                _release_frame = 1;
+                browser_release = 1;
+                frame_release = 1;
                 return;
             }
             var e = new CfxOnAddressChangeEventArgs(browser, frame, url_str, url_length);
             self.m_OnAddressChange?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
-            _release_frame = e.m_frame_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
+            frame_release = e.m_frame_wrapped == null? 1 : 0;
         }
 
         // on_title_change
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_title_change_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr title_str, int title_length);
+        private delegate void on_title_change_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr title_str, int title_length);
         private static on_title_change_delegate on_title_change_native;
         private static IntPtr on_title_change_native_ptr;
 
-        internal static void on_title_change(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr title_str, int title_length) {
+        internal static void on_title_change(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr title_str, int title_length) {
             var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnTitleChangeEventArgs(browser, title_str, title_length);
             self.m_OnTitleChange?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         // on_favicon_urlchange
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_favicon_urlchange_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr icon_urls);
+        private delegate void on_favicon_urlchange_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr icon_urls);
         private static on_favicon_urlchange_delegate on_favicon_urlchange_native;
         private static IntPtr on_favicon_urlchange_native_ptr;
 
-        internal static void on_favicon_urlchange(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr icon_urls) {
+        internal static void on_favicon_urlchange(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr icon_urls) {
             var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnFaviconUrlchangeEventArgs(browser, icon_urls);
             self.m_OnFaviconUrlchange?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         // on_fullscreen_mode_change
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_fullscreen_mode_change_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, int fullscreen);
+        private delegate void on_fullscreen_mode_change_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, int fullscreen);
         private static on_fullscreen_mode_change_delegate on_fullscreen_mode_change_native;
         private static IntPtr on_fullscreen_mode_change_native_ptr;
 
-        internal static void on_fullscreen_mode_change(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, int fullscreen) {
+        internal static void on_fullscreen_mode_change(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, int fullscreen) {
             var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnFullscreenModeChangeEventArgs(browser, fullscreen);
             self.m_OnFullscreenModeChange?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         // on_tooltip
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_tooltip_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, ref IntPtr text_str, ref int text_length);
+        private delegate void on_tooltip_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, ref IntPtr text_str, ref int text_length);
         private static on_tooltip_delegate on_tooltip_native;
         private static IntPtr on_tooltip_native_ptr;
 
-        internal static void on_tooltip(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, ref IntPtr text_str, ref int text_length) {
+        internal static void on_tooltip(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, ref IntPtr text_str, ref int text_length) {
             var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnTooltipEventArgs(browser, text_str, text_length);
             self.m_OnTooltip?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
             if(e.m_text_changed) {
                 var text_pinned = new PinnedString(e.m_text_wrapped);
                 text_str = text_pinned.Obj.PinnedPtr;
@@ -167,39 +167,39 @@ namespace Chromium {
 
         // on_status_message
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_status_message_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr value_str, int value_length);
+        private delegate void on_status_message_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr value_str, int value_length);
         private static on_status_message_delegate on_status_message_native;
         private static IntPtr on_status_message_native_ptr;
 
-        internal static void on_status_message(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr value_str, int value_length) {
+        internal static void on_status_message(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr value_str, int value_length) {
             var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnStatusMessageEventArgs(browser, value_str, value_length);
             self.m_OnStatusMessage?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         // on_console_message
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_console_message_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr message_str, int message_length, IntPtr source_str, int source_length, int line);
+        private delegate void on_console_message_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr message_str, int message_length, IntPtr source_str, int source_length, int line);
         private static on_console_message_delegate on_console_message_native;
         private static IntPtr on_console_message_native_ptr;
 
-        internal static void on_console_message(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, IntPtr message_str, int message_length, IntPtr source_str, int source_length, int line) {
+        internal static void on_console_message(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr message_str, int message_length, IntPtr source_str, int source_length, int line) {
             var self = (CfxDisplayHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnConsoleMessageEventArgs(browser, message_str, message_length, source_str, source_length, line);
             self.m_OnConsoleMessage?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 

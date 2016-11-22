@@ -30,6 +30,10 @@ public class CefStringOutType : CefStringPtrType {
         return string.Format("out IntPtr {0}_str, out int {0}_length, out IntPtr {0}_gc_handle", var);
     }
 
+    public override string[] RemoteCallbackParameterList(string var) {
+        return new string[] { "out string " + CSharp.Escape(var) };
+    }
+
     public override string PublicCallParameter(string var) {
         return string.Format("out string {0}", var);
     }
@@ -99,11 +103,19 @@ public class CefStringOutType : CefStringPtrType {
         b.AppendLine("m_{0}_wrapped = value;", var);
     }
 
+    public override void EmitRemoteEventArgSetterStatements(CodeBuilder b, string var) {
+        b.AppendLine("m_{0}_wrapped = value;", var);
+    }
+
     public override void EmitPublicEventArgGetterStatements(CodeBuilder b, string var) {
         throw new Exception();
     }
 
     public override void EmitPublicEventArgFields(CodeBuilder b, string var) {
+        b.AppendLine("internal string m_{0}_wrapped;", var);
+    }
+
+    public override void EmitRemoteEventArgFields(CodeBuilder b, string var) {
         b.AppendLine("internal string m_{0}_wrapped;", var);
     }
 
@@ -114,6 +126,23 @@ public class CefStringOutType : CefStringPtrType {
     public override void EmitPostPublicRaiseEventStatements(CodeBuilder b, string var) {
         b.BeginIf("e.m_{0}_wrapped != null && e.m_{0}_wrapped.Length > 0", var);
         b.AppendLine("var {0}_pinned = new PinnedString(e.m_{0}_wrapped);", var);
+        b.AppendLine("{0}_str = {0}_pinned.Obj.PinnedPtr;", var);
+        b.AppendLine("{0}_length = {0}_pinned.Length;", var);
+        b.AppendLine("{0}_gc_handle = {0}_pinned.Obj.GCHandlePtr();", var);
+        b.BeginElse();
+        b.AppendLine("{0}_str = IntPtr.Zero;", var);
+        b.AppendLine("{0}_length = 0;", var);
+        b.AppendLine("{0}_gc_handle = IntPtr.Zero;", var);
+        b.EndBlock();
+    }
+
+    public override void EmitPostRemoteRaiseEventStatements(CodeBuilder b, string var) {
+        b.AppendLine("{0} = e.m_{1}_wrapped;", CSharp.Escape(var), var);
+    }
+
+    public override void EmitPostRemoteCallbackStatements(CodeBuilder b, string var) {
+        b.BeginIf("call.{0} != null && call.{0}.Length > 0", CSharp.Escape(var));
+        b.AppendLine("var {0}_pinned = new PinnedString(call.{1});", var, CSharp.Escape(var));
         b.AppendLine("{0}_str = {0}_pinned.Obj.PinnedPtr;", var);
         b.AppendLine("{0}_length = {0}_pinned.Length;", var);
         b.AppendLine("{0}_gc_handle = {0}_pinned.Obj.GCHandlePtr();", var);

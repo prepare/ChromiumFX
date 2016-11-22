@@ -37,6 +37,7 @@ typedef struct _cfx_register_cdm_callback_t {
     cef_register_cdm_callback_t cef_register_cdm_callback;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    int wrapper_kind;
     // managed callbacks
     void (CEF_CALLBACK *on_cdm_registration_complete)(gc_handle_t self, cef_cdm_registration_error_t result, char16 *error_message_str, int error_message_length);
 } cfx_register_cdm_callback_t;
@@ -44,17 +45,17 @@ typedef struct _cfx_register_cdm_callback_t {
 void CEF_CALLBACK _cfx_register_cdm_callback_add_ref(struct _cef_base_t* base) {
     int count = InterlockedIncrement(&((cfx_register_cdm_callback_t*)base)->ref_count);
     if(count == 2) {
-        cfx_set_native_reference(((cfx_register_cdm_callback_t*)base)->gc_handle, count);
+        cfx_set_native_reference(((cfx_register_cdm_callback_t*)base)->gc_handle, ((cfx_register_cdm_callback_t*)base)->wrapper_kind, count);
     }
 }
 int CEF_CALLBACK _cfx_register_cdm_callback_release(struct _cef_base_t* base) {
     int count = InterlockedDecrement(&((cfx_register_cdm_callback_t*)base)->ref_count);
-    if(count == 1) {
-        cfx_set_native_reference(((cfx_register_cdm_callback_t*)base)->gc_handle, count);
-    } else if(!count) {
-        cfx_gc_handle_free(((cfx_register_cdm_callback_t*)base)->gc_handle);
-        free(base);
-        return 1;
+    if(count < 2) {
+        cfx_set_native_reference(((cfx_register_cdm_callback_t*)base)->gc_handle, ((cfx_register_cdm_callback_t*)base)->wrapper_kind, count);
+        if(!count) {
+            free(base);
+            return 1;
+        }
     }
     return 0;
 }
@@ -62,7 +63,7 @@ int CEF_CALLBACK _cfx_register_cdm_callback_has_one_ref(struct _cef_base_t* base
     return ((cfx_register_cdm_callback_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
-static cfx_register_cdm_callback_t* cfx_register_cdm_callback_ctor(gc_handle_t gc_handle) {
+static cfx_register_cdm_callback_t* cfx_register_cdm_callback_ctor(gc_handle_t gc_handle, int wrapper_kind) {
     cfx_register_cdm_callback_t* ptr = (cfx_register_cdm_callback_t*)calloc(1, sizeof(cfx_register_cdm_callback_t));
     if(!ptr) return 0;
     ptr->cef_register_cdm_callback.base.size = sizeof(cef_register_cdm_callback_t);
@@ -71,6 +72,7 @@ static cfx_register_cdm_callback_t* cfx_register_cdm_callback_ctor(gc_handle_t g
     ptr->cef_register_cdm_callback.base.has_one_ref = _cfx_register_cdm_callback_has_one_ref;
     ptr->ref_count = 1;
     ptr->gc_handle = gc_handle;
+    ptr->wrapper_kind = wrapper_kind;
     return ptr;
 }
 

@@ -41,7 +41,17 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxTimeCtorRemoteCall) {}
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = RemoteProxy.Wrap(new CfxTime());
+            __retval = CfxApi.Time.cfx_time_ctor();
+        }
+    }
+
+    internal class CfxTimeDtorRemoteCall : DtorRemoteCall {
+
+        internal CfxTimeDtorRemoteCall()
+            : base(RemoteCallId.CfxTimeDtorRemoteCall) {}
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            CfxApi.Time.cfx_time_dtor(nativePtr);
         }
     }
 
@@ -56,8 +66,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
-            value = sender.Year;
+            CfxApi.Time.cfx_time_get_year(sender, out value);
         }
     }
     internal class CfxTimeSetYearRemoteCall : RemoteCall {
@@ -69,8 +78,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
-            sender.Year = value;
+            CfxApi.Time.cfx_time_set_year(sender, value);
         }
     }
     internal class CfxTimeGetMonthRemoteCall : RemoteCall {
@@ -84,8 +92,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
-            value = sender.Month;
+            CfxApi.Time.cfx_time_get_month(sender, out value);
         }
     }
     internal class CfxTimeSetMonthRemoteCall : RemoteCall {
@@ -97,8 +104,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
-            sender.Month = value;
+            CfxApi.Time.cfx_time_set_month(sender, value);
         }
     }
     internal class CfxTimeGetDayOfWeekRemoteCall : RemoteCall {
@@ -112,8 +118,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
-            value = sender.DayOfWeek;
+            CfxApi.Time.cfx_time_get_day_of_week(sender, out value);
         }
     }
     internal class CfxTimeSetDayOfWeekRemoteCall : RemoteCall {
@@ -125,8 +130,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
-            sender.DayOfWeek = value;
+            CfxApi.Time.cfx_time_set_day_of_week(sender, value);
         }
     }
     internal class CfxTimeGetDayOfMonthRemoteCall : RemoteCall {
@@ -140,8 +144,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
-            value = sender.DayOfMonth;
+            CfxApi.Time.cfx_time_get_day_of_month(sender, out value);
         }
     }
     internal class CfxTimeSetDayOfMonthRemoteCall : RemoteCall {
@@ -153,8 +156,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
-            sender.DayOfMonth = value;
+            CfxApi.Time.cfx_time_set_day_of_month(sender, value);
         }
     }
     internal class CfxTimeGetHourRemoteCall : RemoteCall {
@@ -168,8 +170,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
-            value = sender.Hour;
+            CfxApi.Time.cfx_time_get_hour(sender, out value);
         }
     }
     internal class CfxTimeSetHourRemoteCall : RemoteCall {
@@ -181,8 +182,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
-            sender.Hour = value;
+            CfxApi.Time.cfx_time_set_hour(sender, value);
         }
     }
     internal class CfxTimeGetMinuteRemoteCall : RemoteCall {
@@ -196,8 +196,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
-            value = sender.Minute;
+            CfxApi.Time.cfx_time_get_minute(sender, out value);
         }
     }
     internal class CfxTimeSetMinuteRemoteCall : RemoteCall {
@@ -209,8 +208,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
-            sender.Minute = value;
+            CfxApi.Time.cfx_time_set_minute(sender, value);
         }
     }
     internal class CfxTimeGetSecondRemoteCall : RemoteCall {
@@ -224,8 +222,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
-            value = sender.Second;
+            CfxApi.Time.cfx_time_get_second(sender, out value);
         }
     }
     internal class CfxTimeSetSecondRemoteCall : RemoteCall {
@@ -237,8 +234,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
-            sender.Second = value;
+            CfxApi.Time.cfx_time_set_second(sender, value);
         }
     }
     internal class CfxTimeGetMillisecondRemoteCall : RemoteCall {
@@ -252,8 +248,7 @@ namespace Chromium.Remote {
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
-            value = sender.Millisecond;
+            CfxApi.Time.cfx_time_get_millisecond(sender, out value);
         }
     }
     internal class CfxTimeSetMillisecondRemoteCall : RemoteCall {
@@ -265,8 +260,7 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxTime)RemoteProxy.Unwrap(this.sender, null);
-            sender.Millisecond = value;
+            CfxApi.Time.cfx_time_set_millisecond(sender, value);
         }
     }
 }

@@ -115,16 +115,24 @@ public class CefStructOutType : CefStructPtrPtrType {
         b.AppendLine("internal {0} m_{1}_wrapped;", PublicSymbol, var);
     }
 
+    public override void EmitRemoteEventArgFields(CodeBuilder b, string var) {
+        b.AppendLine("internal {0} m_{1}_wrapped;", RemoteSymbol, var);
+    }
+
     public override void EmitPostPublicRaiseEventStatements(CodeBuilder b, string var) {
         b.AppendLine("{0} = {1};", var, StructPtr.PublicUnwrapExpression(string.Concat("e.m_", var, "_wrapped")));
+    }
+
+    public override void EmitPostRemoteRaiseEventStatements(CodeBuilder b, string var) {
+        b.AppendLine("{0} = {1};", var, StructPtr.RemoteUnwrapExpression(string.Concat("e.m_", var, "_wrapped")));
     }
 
     public override void EmitPublicEventArgSetterStatements(CodeBuilder b, string var) {
         b.AppendLine("m_{0}_wrapped = value;", var);
     }
 
-    public override void EmitProxyEventArgSetter(CodeBuilder b, string var) {
-        b.AppendLine("e.{0} = {1};", var, StructPtr.ProxyUnwrapExpression("value"));
+    public override void EmitRemoteEventArgSetterStatements(CodeBuilder b, string var) {
+        b.AppendLine("m_{0}_wrapped = value;", var);
     }
 
     public override void EmitPreProxyCallStatements(CodeBuilder b, string var) {

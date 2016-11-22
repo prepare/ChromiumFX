@@ -59,7 +59,7 @@ static int (*cef_string_utf16_set_ptr)(const char16* src, size_t src_len,	cef_st
 
 typedef void* gc_handle_t;
 static void (CEF_CALLBACK *cfx_gc_handle_free)(gc_handle_t);
-static void (CEF_CALLBACK *cfx_set_native_reference)(gc_handle_t, int);
+static void (CEF_CALLBACK *cfx_set_native_reference)(gc_handle_t, int, int);
 
 
 static __inline void* cfx_copy_structure(void* source, size_t size) {

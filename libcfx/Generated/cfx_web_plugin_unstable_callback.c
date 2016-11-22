@@ -37,6 +37,7 @@ typedef struct _cfx_web_plugin_unstable_callback_t {
     cef_web_plugin_unstable_callback_t cef_web_plugin_unstable_callback;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    int wrapper_kind;
     // managed callbacks
     void (CEF_CALLBACK *is_unstable)(gc_handle_t self, char16 *path_str, int path_length, int unstable);
 } cfx_web_plugin_unstable_callback_t;
@@ -44,17 +45,17 @@ typedef struct _cfx_web_plugin_unstable_callback_t {
 void CEF_CALLBACK _cfx_web_plugin_unstable_callback_add_ref(struct _cef_base_t* base) {
     int count = InterlockedIncrement(&((cfx_web_plugin_unstable_callback_t*)base)->ref_count);
     if(count == 2) {
-        cfx_set_native_reference(((cfx_web_plugin_unstable_callback_t*)base)->gc_handle, count);
+        cfx_set_native_reference(((cfx_web_plugin_unstable_callback_t*)base)->gc_handle, ((cfx_web_plugin_unstable_callback_t*)base)->wrapper_kind, count);
     }
 }
 int CEF_CALLBACK _cfx_web_plugin_unstable_callback_release(struct _cef_base_t* base) {
     int count = InterlockedDecrement(&((cfx_web_plugin_unstable_callback_t*)base)->ref_count);
-    if(count == 1) {
-        cfx_set_native_reference(((cfx_web_plugin_unstable_callback_t*)base)->gc_handle, count);
-    } else if(!count) {
-        cfx_gc_handle_free(((cfx_web_plugin_unstable_callback_t*)base)->gc_handle);
-        free(base);
-        return 1;
+    if(count < 2) {
+        cfx_set_native_reference(((cfx_web_plugin_unstable_callback_t*)base)->gc_handle, ((cfx_web_plugin_unstable_callback_t*)base)->wrapper_kind, count);
+        if(!count) {
+            free(base);
+            return 1;
+        }
     }
     return 0;
 }
@@ -62,7 +63,7 @@ int CEF_CALLBACK _cfx_web_plugin_unstable_callback_has_one_ref(struct _cef_base_
     return ((cfx_web_plugin_unstable_callback_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
-static cfx_web_plugin_unstable_callback_t* cfx_web_plugin_unstable_callback_ctor(gc_handle_t gc_handle) {
+static cfx_web_plugin_unstable_callback_t* cfx_web_plugin_unstable_callback_ctor(gc_handle_t gc_handle, int wrapper_kind) {
     cfx_web_plugin_unstable_callback_t* ptr = (cfx_web_plugin_unstable_callback_t*)calloc(1, sizeof(cfx_web_plugin_unstable_callback_t));
     if(!ptr) return 0;
     ptr->cef_web_plugin_unstable_callback.base.size = sizeof(cef_web_plugin_unstable_callback_t);
@@ -71,6 +72,7 @@ static cfx_web_plugin_unstable_callback_t* cfx_web_plugin_unstable_callback_ctor
     ptr->cef_web_plugin_unstable_callback.base.has_one_ref = _cfx_web_plugin_unstable_callback_has_one_ref;
     ptr->ref_count = 1;
     ptr->gc_handle = gc_handle;
+    ptr->wrapper_kind = wrapper_kind;
     return ptr;
 }
 

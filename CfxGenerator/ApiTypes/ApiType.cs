@@ -135,6 +135,14 @@ public class ApiType {
         return PInvokeCallParameter(var);
     }
 
+    public virtual string[] RemoteCallbackParameterList(string var) {
+        var pp = PInvokeCallbackParameter(var).Split(',');
+        for(int i = 0; i < pp.Length; ++i) {
+            pp[i] = pp[i].Trim();
+        }
+        return pp;
+    }
+
     public virtual string PublicEventConstructorParameter(string var) {
         return PInvokeCallbackParameter(var);
     }
@@ -286,6 +294,15 @@ public class ApiType {
             b.AppendLine("{0} = {1};", var, RemoteWrapExpression("call." + (var == "this" ? "self" : CSharp.Escape(var))));
     }
 
+
+    public virtual void EmitPostRemoteCallbackStatements(CodeBuilder b, string var) {
+        var pp = RemoteCallbackParameterList(var);
+        foreach(var p in pp) {
+            if(p.StartsWith("out "))
+                b.AppendLine("{0} = call.{0};", CSharp.Escape(p.Substring(p.LastIndexOf(' ') + 1)));
+        }
+    }
+
     /// <summary>
     /// Called if IsIn is true.
     /// </summary>
@@ -302,6 +319,10 @@ public class ApiType {
         b.AppendLine("return {0};", PublicWrapExpression("m_" + var));
     }
 
+    public virtual void EmitRemoteEventArgGetterStatements(CodeBuilder b, string var) {
+        b.AppendLine("return {0};", RemoteWrapExpression("call." + CSharp.Escape(var)));
+    }
+
     /// <summary>
     /// Called if IsOut is true.
     /// </summary>
@@ -309,14 +330,24 @@ public class ApiType {
         b.AppendLine("m_{0} = {1};", var, PublicUnwrapExpression("value"));
     }
 
+    public virtual void EmitRemoteEventArgSetterStatements(CodeBuilder b, string var) {
+        b.AppendLine("call.{0} = {1};", CSharp.Escape(var), RemoteUnwrapExpression("value"));
+    }
+
     public virtual void EmitPublicEventArgFields(CodeBuilder b, string var) {
         b.AppendLine("internal {0} m_{1};", PInvokeSymbol, var);
+    }
+
+    public virtual void EmitRemoteEventArgFields(CodeBuilder b, string var) {
     }
 
     public virtual void EmitPostPublicRaiseEventStatements(CodeBuilder b, string var) {
         if(this.IsOut) {
             b.AppendLine("{0} = e.m_{0};", var);
         }
+    }
+
+    public virtual void EmitPostRemoteRaiseEventStatements(CodeBuilder b, string var) {
     }
 
     public virtual void EmitSetCallbackArgumentToDefaultStatements(CodeBuilder b, string var) {
@@ -334,10 +365,6 @@ public class ApiType {
 
     public virtual void EmitRemoteRead(CodeBuilder b, string var) {
         b.AppendLine("h.Read(out {0});", var);
-    }
-
-    public virtual void EmitProxyEventArgSetter(CodeBuilder b, string var) {
-        b.AppendLine("e.{0} = {1};", var, ProxyUnwrapExpression("value"));
     }
 
     public virtual void EmitValueStructGetterVars(CodeBuilder b, string var) {

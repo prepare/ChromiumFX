@@ -58,46 +58,46 @@ namespace Chromium {
 
         // on_before_download
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_before_download_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr download_item, out int _release_download_item, IntPtr suggested_name_str, int suggested_name_length, IntPtr callback, out int _release_callback);
+        private delegate void on_before_download_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr download_item, out int download_item_release, IntPtr suggested_name_str, int suggested_name_length, IntPtr callback, out int callback_release);
         private static on_before_download_delegate on_before_download_native;
         private static IntPtr on_before_download_native_ptr;
 
-        internal static void on_before_download(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr download_item, out int _release_download_item, IntPtr suggested_name_str, int suggested_name_length, IntPtr callback, out int _release_callback) {
+        internal static void on_before_download(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr download_item, out int download_item_release, IntPtr suggested_name_str, int suggested_name_length, IntPtr callback, out int callback_release) {
             var self = (CfxDownloadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
-                _release_download_item = 1;
-                _release_callback = 1;
+                browser_release = 1;
+                download_item_release = 1;
+                callback_release = 1;
                 return;
             }
             var e = new CfxOnBeforeDownloadEventArgs(browser, download_item, suggested_name_str, suggested_name_length, callback);
             self.m_OnBeforeDownload?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
-            _release_download_item = e.m_download_item_wrapped == null? 1 : 0;
-            _release_callback = e.m_callback_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
+            download_item_release = e.m_download_item_wrapped == null? 1 : 0;
+            callback_release = e.m_callback_wrapped == null? 1 : 0;
         }
 
         // on_download_updated
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_download_updated_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr download_item, out int _release_download_item, IntPtr callback, out int _release_callback);
+        private delegate void on_download_updated_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr download_item, out int download_item_release, IntPtr callback, out int callback_release);
         private static on_download_updated_delegate on_download_updated_native;
         private static IntPtr on_download_updated_native_ptr;
 
-        internal static void on_download_updated(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, IntPtr download_item, out int _release_download_item, IntPtr callback, out int _release_callback) {
+        internal static void on_download_updated(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr download_item, out int download_item_release, IntPtr callback, out int callback_release) {
             var self = (CfxDownloadHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
-                _release_download_item = 1;
-                _release_callback = 1;
+                browser_release = 1;
+                download_item_release = 1;
+                callback_release = 1;
                 return;
             }
             var e = new CfxOnDownloadUpdatedEventArgs(browser, download_item, callback);
             self.m_OnDownloadUpdated?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
-            _release_download_item = e.m_download_item_wrapped == null? 1 : 0;
-            _release_callback = e.m_callback_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
+            download_item_release = e.m_download_item_wrapped == null? 1 : 0;
+            callback_release = e.m_callback_wrapped == null? 1 : 0;
         }
 
         internal CfxDownloadHandler(IntPtr nativePtr) : base(nativePtr) {}

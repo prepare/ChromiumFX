@@ -38,13 +38,7 @@ namespace Chromium.Remote
     /// </summary>
     public class CfrEventArgs : EventArgs {
         
-        internal readonly ulong eventArgsId;
         internal bool m_isInvalid = false;
-
-        internal CfrEventArgs(ulong eventArgsId) {
-            this.eventArgsId = eventArgsId;
-        }
-
         internal void CheckAccess() {
             if(m_isInvalid)
                 throw new CfxException("Do not keep/use a reference to callback event arguments outside the scope of the event handler.");

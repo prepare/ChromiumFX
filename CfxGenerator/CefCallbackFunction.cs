@@ -50,6 +50,8 @@ public class CefCallbackFunction  {
 
     public int ApiIndex;
 
+    public int ClientCallbackIndex;
+
     private string cppApiName {
         get {
             if(CefConfig != null) {

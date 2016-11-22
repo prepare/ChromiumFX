@@ -35,454 +35,160 @@ using System;
 
 namespace Chromium.Remote {
     using Event;
-    using Chromium.Event;
 
-    internal class CfxResourceBundleHandlerCtorRemoteCall : CtorRemoteCall {
+    internal class CfxResourceBundleHandlerCtorWithGCHandleRemoteCall : CtorWithGCHandleRemoteCall {
 
-        internal CfxResourceBundleHandlerCtorRemoteCall()
-            : base(RemoteCallId.CfxResourceBundleHandlerCtorRemoteCall) {}
+        internal CfxResourceBundleHandlerCtorWithGCHandleRemoteCall()
+            : base(RemoteCallId.CfxResourceBundleHandlerCtorWithGCHandleRemoteCall) {}
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = RemoteProxy.Wrap(new CfxResourceBundleHandler());
+            __retval = CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_ctor(gcHandlePtr, 1);
         }
     }
 
-    internal class CfxGetLocalizedStringRemoteClientCall : RemoteClientCall {
+    internal class CfxResourceBundleHandlerSetCallbackRemoteCall : SetCallbackRemoteCall {
 
-        internal CfxGetLocalizedStringRemoteClientCall()
-            : base(RemoteCallId.CfxGetLocalizedStringRemoteClientCall) {}
+        internal CfxResourceBundleHandlerSetCallbackRemoteCall()
+            : base(RemoteCallId.CfxResourceBundleHandlerSetCallbackRemoteCall) {}
 
-        internal static void EventCall(object sender, CfxGetLocalizedStringEventArgs e) {
-            var call = new CfxGetLocalizedStringRemoteClientCall();
-            call.sender = RemoteProxy.Wrap((CfxBase)sender);
-            call.eventArgsId = AddEventArgs(e);
-            call.RequestExecution(RemoteClient.connection);
-            RemoveEventArgs(call.eventArgsId);
-        }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrResourceBundleHandler.Wrap(new RemotePtr(connection, this.sender));
-            var e = new CfrGetLocalizedStringEventArgs(eventArgsId);
-            sender.raise_GetLocalizedString(sender, e);
+            CfxResourceBundleHandlerRemoteClient.SetCallback(self, index, active);
         }
     }
 
-    internal class CfxGetLocalizedStringActivateRemoteCall : RemoteCall {
+    internal class CfxGetLocalizedStringRemoteEventCall : RemoteEventCall {
 
-        internal CfxGetLocalizedStringActivateRemoteCall()
-            : base(RemoteCallId.CfxGetLocalizedStringActivateRemoteCall) {}
+        internal CfxGetLocalizedStringRemoteEventCall()
+            : base(RemoteCallId.CfxGetLocalizedStringRemoteEventCall) {}
 
-        internal IntPtr sender;
-        protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
-        protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
+        internal int string_id;
+        internal string @string;
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxResourceBundleHandler)RemoteProxy.Unwrap(this.sender, null);
-            sender.GetLocalizedString += CfxGetLocalizedStringRemoteClientCall.EventCall;
-        }
-    }
-
-    internal class CfxGetLocalizedStringDeactivateRemoteCall : RemoteCall {
-
-        internal CfxGetLocalizedStringDeactivateRemoteCall()
-            : base(RemoteCallId.CfxGetLocalizedStringDeactivateRemoteCall) {}
-
-        internal IntPtr sender;
-        protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
-        protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxResourceBundleHandler)RemoteProxy.Unwrap(this.sender, null);
-            sender.GetLocalizedString -= CfxGetLocalizedStringRemoteClientCall.EventCall;
-        }
-    }
-
-    internal class CfxGetLocalizedStringGetStringIdRemoteCall : RemoteCall {
-
-        internal CfxGetLocalizedStringGetStringIdRemoteCall()
-            : base(RemoteCallId.CfxGetLocalizedStringGetStringIdRemoteCall) {}
-
-        internal ulong eventArgsId;
-        internal int value;
+        internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(eventArgsId);
+            h.Write(gcHandlePtr);
+            h.Write(string_id);
         }
+
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out eventArgsId);
+            h.Read(out gcHandlePtr);
+            h.Read(out string_id);
         }
+
         protected override void WriteReturn(StreamHandler h) {
-            h.Write(value);
+            h.Write(@string);
+            h.Write(__retval);
         }
+
         protected override void ReadReturn(StreamHandler h) {
-            h.Read(out value);
+            h.Read(out @string);
+            h.Read(out __retval);
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxGetLocalizedStringEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
-            value = e.StringId;
+            var self = (CfrResourceBundleHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                return;
+            }
+            var e = new CfrGetLocalizedStringEventArgs(this);
+            self.m_GetLocalizedString?.Invoke(self, e);
+            e.m_isInvalid = true;
+            @string = e.m_string_wrapped;
+            __retval = e.m_returnValue ? 1 : 0;
         }
     }
 
-    internal class CfxGetLocalizedStringSetStringRemoteCall : RemoteCall {
+    internal class CfxGetDataResourceRemoteEventCall : RemoteEventCall {
 
-        internal CfxGetLocalizedStringSetStringRemoteCall()
-            : base(RemoteCallId.CfxGetLocalizedStringSetStringRemoteCall) {}
+        internal CfxGetDataResourceRemoteEventCall()
+            : base(RemoteCallId.CfxGetDataResourceRemoteEventCall) {}
 
-        internal ulong eventArgsId;
-        internal string value;
+        internal int resource_id;
+        internal IntPtr data;
+        internal UIntPtr data_size;
+
+        internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(eventArgsId);
-            h.Write(value);
+            h.Write(gcHandlePtr);
+            h.Write(resource_id);
         }
+
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out eventArgsId);
-            h.Read(out value);
+            h.Read(out gcHandlePtr);
+            h.Read(out resource_id);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxGetLocalizedStringEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
-            e.String = value;
-        }
-    }
-
-    internal class CfxGetLocalizedStringSetReturnValueRemoteCall : RemoteCall {
-
-        internal CfxGetLocalizedStringSetReturnValueRemoteCall()
-            : base(RemoteCallId.CfxGetLocalizedStringSetReturnValueRemoteCall) {}
-
-        internal ulong eventArgsId;
-        internal bool value;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(eventArgsId);
-            h.Write(value);
-        }
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out eventArgsId);
-            h.Read(out value);
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxGetLocalizedStringEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
-            e.SetReturnValue(value);
-        }
-    }
-
-    internal class CfxGetDataResourceRemoteClientCall : RemoteClientCall {
-
-        internal CfxGetDataResourceRemoteClientCall()
-            : base(RemoteCallId.CfxGetDataResourceRemoteClientCall) {}
-
-        internal static void EventCall(object sender, CfxGetDataResourceEventArgs e) {
-            var call = new CfxGetDataResourceRemoteClientCall();
-            call.sender = RemoteProxy.Wrap((CfxBase)sender);
-            call.eventArgsId = AddEventArgs(e);
-            call.RequestExecution(RemoteClient.connection);
-            RemoveEventArgs(call.eventArgsId);
-        }
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrResourceBundleHandler.Wrap(new RemotePtr(connection, this.sender));
-            var e = new CfrGetDataResourceEventArgs(eventArgsId);
-            sender.raise_GetDataResource(sender, e);
-        }
-    }
-
-    internal class CfxGetDataResourceActivateRemoteCall : RemoteCall {
-
-        internal CfxGetDataResourceActivateRemoteCall()
-            : base(RemoteCallId.CfxGetDataResourceActivateRemoteCall) {}
-
-        internal IntPtr sender;
-        protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
-        protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxResourceBundleHandler)RemoteProxy.Unwrap(this.sender, null);
-            sender.GetDataResource += CfxGetDataResourceRemoteClientCall.EventCall;
-        }
-    }
-
-    internal class CfxGetDataResourceDeactivateRemoteCall : RemoteCall {
-
-        internal CfxGetDataResourceDeactivateRemoteCall()
-            : base(RemoteCallId.CfxGetDataResourceDeactivateRemoteCall) {}
-
-        internal IntPtr sender;
-        protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
-        protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxResourceBundleHandler)RemoteProxy.Unwrap(this.sender, null);
-            sender.GetDataResource -= CfxGetDataResourceRemoteClientCall.EventCall;
-        }
-    }
-
-    internal class CfxGetDataResourceGetResourceIdRemoteCall : RemoteCall {
-
-        internal CfxGetDataResourceGetResourceIdRemoteCall()
-            : base(RemoteCallId.CfxGetDataResourceGetResourceIdRemoteCall) {}
-
-        internal ulong eventArgsId;
-        internal int value;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(eventArgsId);
-        }
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out eventArgsId);
-        }
         protected override void WriteReturn(StreamHandler h) {
-            h.Write(value);
+            h.Write(data);
+            h.Write(data_size);
+            h.Write(__retval);
         }
+
         protected override void ReadReturn(StreamHandler h) {
-            h.Read(out value);
+            h.Read(out data);
+            h.Read(out data_size);
+            h.Read(out __retval);
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxGetDataResourceEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
-            value = e.ResourceId;
+            var self = (CfrResourceBundleHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                return;
+            }
+            var e = new CfrGetDataResourceEventArgs(this);
+            self.m_GetDataResource?.Invoke(self, e);
+            e.m_isInvalid = true;
+            __retval = e.m_returnValue ? 1 : 0;
         }
     }
 
-    internal class CfxGetDataResourceSetDataRemoteCall : RemoteCall {
+    internal class CfxGetDataResourceForScaleRemoteEventCall : RemoteEventCall {
 
-        internal CfxGetDataResourceSetDataRemoteCall()
-            : base(RemoteCallId.CfxGetDataResourceSetDataRemoteCall) {}
+        internal CfxGetDataResourceForScaleRemoteEventCall()
+            : base(RemoteCallId.CfxGetDataResourceForScaleRemoteEventCall) {}
 
-        internal ulong eventArgsId;
-        internal IntPtr value;
+        internal int resource_id;
+        internal int scale_factor;
+        internal IntPtr data;
+        internal UIntPtr data_size;
+
+        internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(eventArgsId);
-            h.Write(value);
+            h.Write(gcHandlePtr);
+            h.Write(resource_id);
+            h.Write(scale_factor);
         }
+
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out eventArgsId);
-            h.Read(out value);
+            h.Read(out gcHandlePtr);
+            h.Read(out resource_id);
+            h.Read(out scale_factor);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxGetDataResourceEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
-            e.Data = value;
-        }
-    }
-
-    internal class CfxGetDataResourceSetDataSizeRemoteCall : RemoteCall {
-
-        internal CfxGetDataResourceSetDataSizeRemoteCall()
-            : base(RemoteCallId.CfxGetDataResourceSetDataSizeRemoteCall) {}
-
-        internal ulong eventArgsId;
-        internal UIntPtr value;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(eventArgsId);
-            h.Write(value);
-        }
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out eventArgsId);
-            h.Read(out value);
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxGetDataResourceEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
-            e.DataSize = value;
-        }
-    }
-
-    internal class CfxGetDataResourceSetReturnValueRemoteCall : RemoteCall {
-
-        internal CfxGetDataResourceSetReturnValueRemoteCall()
-            : base(RemoteCallId.CfxGetDataResourceSetReturnValueRemoteCall) {}
-
-        internal ulong eventArgsId;
-        internal bool value;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(eventArgsId);
-            h.Write(value);
-        }
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out eventArgsId);
-            h.Read(out value);
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxGetDataResourceEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
-            e.SetReturnValue(value);
-        }
-    }
-
-    internal class CfxGetDataResourceForScaleRemoteClientCall : RemoteClientCall {
-
-        internal CfxGetDataResourceForScaleRemoteClientCall()
-            : base(RemoteCallId.CfxGetDataResourceForScaleRemoteClientCall) {}
-
-        internal static void EventCall(object sender, CfxGetDataResourceForScaleEventArgs e) {
-            var call = new CfxGetDataResourceForScaleRemoteClientCall();
-            call.sender = RemoteProxy.Wrap((CfxBase)sender);
-            call.eventArgsId = AddEventArgs(e);
-            call.RequestExecution(RemoteClient.connection);
-            RemoveEventArgs(call.eventArgsId);
-        }
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrResourceBundleHandler.Wrap(new RemotePtr(connection, this.sender));
-            var e = new CfrGetDataResourceForScaleEventArgs(eventArgsId);
-            sender.raise_GetDataResourceForScale(sender, e);
-        }
-    }
-
-    internal class CfxGetDataResourceForScaleActivateRemoteCall : RemoteCall {
-
-        internal CfxGetDataResourceForScaleActivateRemoteCall()
-            : base(RemoteCallId.CfxGetDataResourceForScaleActivateRemoteCall) {}
-
-        internal IntPtr sender;
-        protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
-        protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxResourceBundleHandler)RemoteProxy.Unwrap(this.sender, null);
-            sender.GetDataResourceForScale += CfxGetDataResourceForScaleRemoteClientCall.EventCall;
-        }
-    }
-
-    internal class CfxGetDataResourceForScaleDeactivateRemoteCall : RemoteCall {
-
-        internal CfxGetDataResourceForScaleDeactivateRemoteCall()
-            : base(RemoteCallId.CfxGetDataResourceForScaleDeactivateRemoteCall) {}
-
-        internal IntPtr sender;
-        protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
-        protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxResourceBundleHandler)RemoteProxy.Unwrap(this.sender, null);
-            sender.GetDataResourceForScale -= CfxGetDataResourceForScaleRemoteClientCall.EventCall;
-        }
-    }
-
-    internal class CfxGetDataResourceForScaleGetResourceIdRemoteCall : RemoteCall {
-
-        internal CfxGetDataResourceForScaleGetResourceIdRemoteCall()
-            : base(RemoteCallId.CfxGetDataResourceForScaleGetResourceIdRemoteCall) {}
-
-        internal ulong eventArgsId;
-        internal int value;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(eventArgsId);
-        }
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out eventArgsId);
-        }
         protected override void WriteReturn(StreamHandler h) {
-            h.Write(value);
+            h.Write(data);
+            h.Write(data_size);
+            h.Write(__retval);
         }
+
         protected override void ReadReturn(StreamHandler h) {
-            h.Read(out value);
+            h.Read(out data);
+            h.Read(out data_size);
+            h.Read(out __retval);
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxGetDataResourceForScaleEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
-            value = e.ResourceId;
-        }
-    }
-
-    internal class CfxGetDataResourceForScaleGetScaleFactorRemoteCall : RemoteCall {
-
-        internal CfxGetDataResourceForScaleGetScaleFactorRemoteCall()
-            : base(RemoteCallId.CfxGetDataResourceForScaleGetScaleFactorRemoteCall) {}
-
-        internal ulong eventArgsId;
-        internal int value;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(eventArgsId);
-        }
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out eventArgsId);
-        }
-        protected override void WriteReturn(StreamHandler h) {
-            h.Write(value);
-        }
-        protected override void ReadReturn(StreamHandler h) {
-            h.Read(out value);
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxGetDataResourceForScaleEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
-            value = (int)e.ScaleFactor;
-        }
-    }
-
-    internal class CfxGetDataResourceForScaleSetDataRemoteCall : RemoteCall {
-
-        internal CfxGetDataResourceForScaleSetDataRemoteCall()
-            : base(RemoteCallId.CfxGetDataResourceForScaleSetDataRemoteCall) {}
-
-        internal ulong eventArgsId;
-        internal IntPtr value;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(eventArgsId);
-            h.Write(value);
-        }
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out eventArgsId);
-            h.Read(out value);
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxGetDataResourceForScaleEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
-            e.Data = value;
-        }
-    }
-
-    internal class CfxGetDataResourceForScaleSetDataSizeRemoteCall : RemoteCall {
-
-        internal CfxGetDataResourceForScaleSetDataSizeRemoteCall()
-            : base(RemoteCallId.CfxGetDataResourceForScaleSetDataSizeRemoteCall) {}
-
-        internal ulong eventArgsId;
-        internal UIntPtr value;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(eventArgsId);
-            h.Write(value);
-        }
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out eventArgsId);
-            h.Read(out value);
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxGetDataResourceForScaleEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
-            e.DataSize = value;
-        }
-    }
-
-    internal class CfxGetDataResourceForScaleSetReturnValueRemoteCall : RemoteCall {
-
-        internal CfxGetDataResourceForScaleSetReturnValueRemoteCall()
-            : base(RemoteCallId.CfxGetDataResourceForScaleSetReturnValueRemoteCall) {}
-
-        internal ulong eventArgsId;
-        internal bool value;
-
-        protected override void WriteArgs(StreamHandler h) {
-            h.Write(eventArgsId);
-            h.Write(value);
-        }
-        protected override void ReadArgs(StreamHandler h) {
-            h.Read(out eventArgsId);
-            h.Read(out value);
-        }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxGetDataResourceForScaleEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
-            e.SetReturnValue(value);
+            var self = (CfrResourceBundleHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                return;
+            }
+            var e = new CfrGetDataResourceForScaleEventArgs(this);
+            self.m_GetDataResourceForScale?.Invoke(self, e);
+            e.m_isInvalid = true;
+            __retval = e.m_returnValue ? 1 : 0;
         }
     }
 

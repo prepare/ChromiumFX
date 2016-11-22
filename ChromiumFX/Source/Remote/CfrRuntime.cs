@@ -93,7 +93,19 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxRuntime.ExecuteProcessInternal((CfxApp)RemoteProxy.Unwrap(application, null));
+            switch(CfxApi.PlatformOS) {
+                case CfxPlatformOS.Windows:
+                    __retval = CfxApi.Runtime.cfx_execute_process(IntPtr.Zero, application, IntPtr.Zero);
+                    return;
+                case CfxPlatformOS.Linux:
+                    using(var mainArgs = CfxMainArgs.ForLinux()) {
+                        __retval = CfxApi.Runtime.cfx_execute_process(CfxMainArgs.Unwrap(mainArgs), application, IntPtr.Zero);
+                        mainArgs.mainArgsLinux.Free();
+                    }
+                    return;
+                default:
+                    throw new CfxException("Unsupported platform.");
+            }
         }
     }
 }

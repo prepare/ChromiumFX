@@ -60,58 +60,58 @@ namespace Chromium {
 
         // on_take_focus
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_take_focus_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, int next);
+        private delegate void on_take_focus_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, int next);
         private static on_take_focus_delegate on_take_focus_native;
         private static IntPtr on_take_focus_native_ptr;
 
-        internal static void on_take_focus(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, int next) {
+        internal static void on_take_focus(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, int next) {
             var self = (CfxFocusHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnTakeFocusEventArgs(browser, next);
             self.m_OnTakeFocus?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         // on_set_focus
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_set_focus_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, int source);
+        private delegate void on_set_focus_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, int source);
         private static on_set_focus_delegate on_set_focus_native;
         private static IntPtr on_set_focus_native_ptr;
 
-        internal static void on_set_focus(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, int source) {
+        internal static void on_set_focus(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, int source) {
             var self = (CfxFocusHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnSetFocusEventArgs(browser, source);
             self.m_OnSetFocus?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 
         // on_got_focus
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_got_focus_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser);
+        private delegate void on_got_focus_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release);
         private static on_got_focus_delegate on_got_focus_native;
         private static IntPtr on_got_focus_native_ptr;
 
-        internal static void on_got_focus(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser) {
+        internal static void on_got_focus(IntPtr gcHandlePtr, IntPtr browser, out int browser_release) {
             var self = (CfxFocusHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnGotFocusEventArgs(browser);
             self.m_OnGotFocus?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         internal CfxFocusHandler(IntPtr nativePtr) : base(nativePtr) {}

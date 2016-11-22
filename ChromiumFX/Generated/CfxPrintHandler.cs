@@ -66,77 +66,77 @@ namespace Chromium {
 
         // on_print_start
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_print_start_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser);
+        private delegate void on_print_start_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release);
         private static on_print_start_delegate on_print_start_native;
         private static IntPtr on_print_start_native_ptr;
 
-        internal static void on_print_start(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser) {
+        internal static void on_print_start(IntPtr gcHandlePtr, IntPtr browser, out int browser_release) {
             var self = (CfxPrintHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxOnPrintStartEventArgs(browser);
             self.m_OnPrintStart?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         // on_print_settings
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_print_settings_delegate(IntPtr gcHandlePtr, IntPtr settings, out int _release_settings, int get_defaults);
+        private delegate void on_print_settings_delegate(IntPtr gcHandlePtr, IntPtr settings, out int settings_release, int get_defaults);
         private static on_print_settings_delegate on_print_settings_native;
         private static IntPtr on_print_settings_native_ptr;
 
-        internal static void on_print_settings(IntPtr gcHandlePtr, IntPtr settings, out int _release_settings, int get_defaults) {
+        internal static void on_print_settings(IntPtr gcHandlePtr, IntPtr settings, out int settings_release, int get_defaults) {
             var self = (CfxPrintHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_settings = 1;
+                settings_release = 1;
                 return;
             }
             var e = new CfxOnPrintSettingsEventArgs(settings, get_defaults);
             self.m_OnPrintSettings?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_settings = e.m_settings_wrapped == null? 1 : 0;
+            settings_release = e.m_settings_wrapped == null? 1 : 0;
         }
 
         // on_print_dialog
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_print_dialog_delegate(IntPtr gcHandlePtr, out int __retval, int has_selection, IntPtr callback, out int _release_callback);
+        private delegate void on_print_dialog_delegate(IntPtr gcHandlePtr, out int __retval, int has_selection, IntPtr callback, out int callback_release);
         private static on_print_dialog_delegate on_print_dialog_native;
         private static IntPtr on_print_dialog_native_ptr;
 
-        internal static void on_print_dialog(IntPtr gcHandlePtr, out int __retval, int has_selection, IntPtr callback, out int _release_callback) {
+        internal static void on_print_dialog(IntPtr gcHandlePtr, out int __retval, int has_selection, IntPtr callback, out int callback_release) {
             var self = (CfxPrintHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_callback = 1;
+                callback_release = 1;
                 return;
             }
             var e = new CfxOnPrintDialogEventArgs(has_selection, callback);
             self.m_OnPrintDialog?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_callback = e.m_callback_wrapped == null? 1 : 0;
+            callback_release = e.m_callback_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 
         // on_print_job
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_print_job_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr document_name_str, int document_name_length, IntPtr pdf_file_path_str, int pdf_file_path_length, IntPtr callback, out int _release_callback);
+        private delegate void on_print_job_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr document_name_str, int document_name_length, IntPtr pdf_file_path_str, int pdf_file_path_length, IntPtr callback, out int callback_release);
         private static on_print_job_delegate on_print_job_native;
         private static IntPtr on_print_job_native_ptr;
 
-        internal static void on_print_job(IntPtr gcHandlePtr, out int __retval, IntPtr document_name_str, int document_name_length, IntPtr pdf_file_path_str, int pdf_file_path_length, IntPtr callback, out int _release_callback) {
+        internal static void on_print_job(IntPtr gcHandlePtr, out int __retval, IntPtr document_name_str, int document_name_length, IntPtr pdf_file_path_str, int pdf_file_path_length, IntPtr callback, out int callback_release) {
             var self = (CfxPrintHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_callback = 1;
+                callback_release = 1;
                 return;
             }
             var e = new CfxOnPrintJobEventArgs(document_name_str, document_name_length, pdf_file_path_str, pdf_file_path_length, callback);
             self.m_OnPrintJob?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_callback = e.m_callback_wrapped == null? 1 : 0;
+            callback_release = e.m_callback_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 

@@ -39,5 +39,4 @@ namespace Chromium.Remote {
     public abstract class CfrLibraryBase : CfrBase {
         internal CfrLibraryBase(RemotePtr remotePtr) : base(remotePtr) { }
     }
-
 }

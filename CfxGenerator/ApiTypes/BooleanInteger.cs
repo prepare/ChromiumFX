@@ -66,8 +66,16 @@ public class BooleanInteger : NumericType {
         return string.Format("{0} ? 1 : 0", CSharp.Escape(var));
     }
 
+    public override string RemoteUnwrapExpression(string var) {
+        return string.Format("{0} ? 1 : 0", CSharp.Escape(var));
+    }
+
     public override string[] ParserMatches {
         get { return new string[] { "bool" }; }
+    }
+
+    public override void EmitRemoteEventArgGetterStatements(CodeBuilder b, string var) {
+        b.AppendLine("return 0 != call.{0};", CSharp.Escape(var));
     }
 }
 

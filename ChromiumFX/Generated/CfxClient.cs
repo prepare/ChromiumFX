@@ -342,23 +342,23 @@ namespace Chromium {
 
         // on_process_message_received
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_process_message_received_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, int source_process, IntPtr message, out int _release_message);
+        private delegate void on_process_message_received_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, int source_process, IntPtr message, out int message_release);
         private static on_process_message_received_delegate on_process_message_received_native;
         private static IntPtr on_process_message_received_native_ptr;
 
-        internal static void on_process_message_received(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int _release_browser, int source_process, IntPtr message, out int _release_message) {
+        internal static void on_process_message_received(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, int source_process, IntPtr message, out int message_release) {
             var self = (CfxClient)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
-                _release_browser = 1;
-                _release_message = 1;
+                browser_release = 1;
+                message_release = 1;
                 return;
             }
             var e = new CfxOnProcessMessageReceivedEventArgs(browser, source_process, message);
             self.m_OnProcessMessageReceived?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
-            _release_message = e.m_message_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
+            message_release = e.m_message_wrapped == null? 1 : 0;
             __retval = e.m_returnValue ? 1 : 0;
         }
 

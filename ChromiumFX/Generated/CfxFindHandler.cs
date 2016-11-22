@@ -56,20 +56,20 @@ namespace Chromium {
 
         // on_find_result
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_find_result_delegate(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, int identifier, int count, IntPtr selectionRect, int activeMatchOrdinal, int finalUpdate);
+        private delegate void on_find_result_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, int identifier, int count, IntPtr selectionRect, int activeMatchOrdinal, int finalUpdate);
         private static on_find_result_delegate on_find_result_native;
         private static IntPtr on_find_result_native_ptr;
 
-        internal static void on_find_result(IntPtr gcHandlePtr, IntPtr browser, out int _release_browser, int identifier, int count, IntPtr selectionRect, int activeMatchOrdinal, int finalUpdate) {
+        internal static void on_find_result(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, int identifier, int count, IntPtr selectionRect, int activeMatchOrdinal, int finalUpdate) {
             var self = (CfxFindHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                _release_browser = 1;
+                browser_release = 1;
                 return;
             }
             var e = new CfxFindHandlerOnFindResultEventArgs(browser, identifier, count, selectionRect, activeMatchOrdinal, finalUpdate);
             self.m_OnFindResult?.Invoke(self, e);
             e.m_isInvalid = true;
-            _release_browser = e.m_browser_wrapped == null? 1 : 0;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
         internal CfxFindHandler(IntPtr nativePtr) : base(nativePtr) {}

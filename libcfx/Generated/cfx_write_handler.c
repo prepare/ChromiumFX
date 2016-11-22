@@ -37,6 +37,7 @@ typedef struct _cfx_write_handler_t {
     cef_write_handler_t cef_write_handler;
     unsigned int ref_count;
     gc_handle_t gc_handle;
+    int wrapper_kind;
     // managed callbacks
     void (CEF_CALLBACK *write)(gc_handle_t self, size_t* __retval, const void* ptr, size_t size, size_t n);
     void (CEF_CALLBACK *seek)(gc_handle_t self, int* __retval, int64 offset, int whence);
@@ -48,17 +49,17 @@ typedef struct _cfx_write_handler_t {
 void CEF_CALLBACK _cfx_write_handler_add_ref(struct _cef_base_t* base) {
     int count = InterlockedIncrement(&((cfx_write_handler_t*)base)->ref_count);
     if(count == 2) {
-        cfx_set_native_reference(((cfx_write_handler_t*)base)->gc_handle, count);
+        cfx_set_native_reference(((cfx_write_handler_t*)base)->gc_handle, ((cfx_write_handler_t*)base)->wrapper_kind, count);
     }
 }
 int CEF_CALLBACK _cfx_write_handler_release(struct _cef_base_t* base) {
     int count = InterlockedDecrement(&((cfx_write_handler_t*)base)->ref_count);
-    if(count == 1) {
-        cfx_set_native_reference(((cfx_write_handler_t*)base)->gc_handle, count);
-    } else if(!count) {
-        cfx_gc_handle_free(((cfx_write_handler_t*)base)->gc_handle);
-        free(base);
-        return 1;
+    if(count < 2) {
+        cfx_set_native_reference(((cfx_write_handler_t*)base)->gc_handle, ((cfx_write_handler_t*)base)->wrapper_kind, count);
+        if(!count) {
+            free(base);
+            return 1;
+        }
     }
     return 0;
 }
@@ -66,7 +67,7 @@ int CEF_CALLBACK _cfx_write_handler_has_one_ref(struct _cef_base_t* base) {
     return ((cfx_write_handler_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
-static cfx_write_handler_t* cfx_write_handler_ctor(gc_handle_t gc_handle) {
+static cfx_write_handler_t* cfx_write_handler_ctor(gc_handle_t gc_handle, int wrapper_kind) {
     cfx_write_handler_t* ptr = (cfx_write_handler_t*)calloc(1, sizeof(cfx_write_handler_t));
     if(!ptr) return 0;
     ptr->cef_write_handler.base.size = sizeof(cef_write_handler_t);
@@ -75,6 +76,7 @@ static cfx_write_handler_t* cfx_write_handler_ctor(gc_handle_t gc_handle) {
     ptr->cef_write_handler.base.has_one_ref = _cfx_write_handler_has_one_ref;
     ptr->ref_count = 1;
     ptr->gc_handle = gc_handle;
+    ptr->wrapper_kind = wrapper_kind;
     return ptr;
 }
 

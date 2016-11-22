@@ -58,16 +58,8 @@ namespace Chromium.Remote {
         }
 
 
-        internal static RemotePtr CreateRemote() {
-            var call = new CfxTimeCtorRemoteCall();
-            call.RequestExecution();
-            return new RemotePtr(call.__retval);
-        }
-
         private CfrTime(RemotePtr remotePtr) : base(remotePtr) {}
-        public CfrTime() : base(CreateRemote()) {
-            RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
-        }
+        public CfrTime() : base(new CfxTimeCtorRemoteCall(), new CfxTimeDtorRemoteCall()) {}
 
         int m_Year;
         bool m_Year_fetched;

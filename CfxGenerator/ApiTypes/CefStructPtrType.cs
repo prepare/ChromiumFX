@@ -82,21 +82,21 @@ public class CefStructPtrType : ApiType {
 
     public override string PInvokeCallbackParameter(string var) {
         if(Struct.ClassBuilder.IsRefCounted)
-            return base.PInvokeCallbackParameter(var) + ", out int _release_" + var;
+            return base.PInvokeCallbackParameter(var) + ", out int " + var + "_release";
         else
             return base.PInvokeCallbackParameter(var);
     }
 
     public override string NativeCallbackParameter(string var, bool isConst) {
         if(Struct.ClassBuilder.IsRefCounted)
-            return base.NativeCallbackParameter(var, isConst) + ", int *_release_" + var;
+            return base.NativeCallbackParameter(var, isConst) + ", int *" + var + "_release";
         else
             return base.NativeCallbackParameter(var, isConst);
     }
 
     public override string NativeCallbackArgument(string var) {
         if(Struct.ClassBuilder.IsRefCounted)
-            return base.NativeCallbackArgument(var) + ", &_release_" + var;
+            return base.NativeCallbackArgument(var) + ", &" + var + "_release";
         else
             return base.NativeCallbackArgument(var);
     }
@@ -117,12 +117,12 @@ public class CefStructPtrType : ApiType {
 
     public override void EmitPreNativeCallbackStatements(CodeBuilder b, string var) {
         if(Struct.ClassBuilder.IsRefCounted && var != "self")
-            b.AppendLine("int _release_" + var + ";");
+            b.AppendLine("int " + var + "_release;");
     }
 
     public override void EmitPostNativeCallbackStatements(CodeBuilder b, string var) {
         if(Struct.ClassBuilder.IsRefCounted && var != "self")
-            b.AppendLine("if(_release_{0}) {0}->base.release((cef_base_t*){0});", var);
+            b.AppendLine("if({0}_release) {0}->base.release((cef_base_t*){0});", var);
     }
 
     public override string PublicEventConstructorParameter(string var) {
@@ -131,7 +131,7 @@ public class CefStructPtrType : ApiType {
 
     public override void EmitSetCallbackArgumentToDefaultStatements(CodeBuilder b, string var) {
         if(Struct.ClassBuilder.IsRefCounted && var != "self")
-            b.AppendLine("_release_{0} = 1;", var);
+            b.AppendLine("{0}_release = 1;", var);
     }
 
     public override void EmitNativeCallbackReturnStatements(CodeBuilder b, string var) {
@@ -146,14 +146,28 @@ public class CefStructPtrType : ApiType {
         b.AppendLine("return m_{0}_wrapped;", var);
     }
 
+    public override void EmitRemoteEventArgGetterStatements(CodeBuilder b, string var) {
+        b.AppendLine("if(m_{0}_wrapped == null) m_{0}_wrapped = {1};", var, RemoteWrapExpression("call." + CSharp.Escape(var)));
+        b.AppendLine("return m_{0}_wrapped;", var);
+    }
+
     public override void EmitPostPublicRaiseEventStatements(CodeBuilder b, string var) {
         if(Struct.ClassBuilder.IsRefCounted && var != "self")
-            b.AppendLine("_release_{0} = e.m_{0}_wrapped == null? 1 : 0;", var);
+            b.AppendLine("{0}_release = e.m_{0}_wrapped == null? 1 : 0;", var);
+    }
+
+    public override void EmitPostRemoteRaiseEventStatements(CodeBuilder b, string var) {
+        if(Struct.ClassBuilder.IsRefCounted && var != "self")
+            b.AppendLine("{0}_release = e.m_{0}_wrapped == null? 1 : 0;", var);
     }
 
     public override void EmitPublicEventArgFields(CodeBuilder b, string var) {
         base.EmitPublicEventArgFields(b, var);
         b.AppendLine("internal {0} m_{1}_wrapped;", PublicSymbol, var);
+    }
+
+    public override void EmitRemoteEventArgFields(CodeBuilder b, string var) {
+        b.AppendLine("internal {0} m_{1}_wrapped;", RemoteSymbol, var);
     }
 
     public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {

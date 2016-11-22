@@ -60,16 +60,9 @@ namespace Chromium.Remote {
         }
 
 
-        internal void raise_Visit(object sender, CfrDomVisitorVisitEventArgs e) {
-            var handler = m_Visit;
-            if(handler == null) return;
-            handler(this, e);
-            e.m_isInvalid = true;
-        }
-
 
         private CfrDomVisitor(RemotePtr remotePtr) : base(remotePtr) {}
-        public CfrDomVisitor() : base(new CfxDomVisitorCtorRemoteCall()) {
+        public CfrDomVisitor() : base(new CfxDomVisitorCtorWithGCHandleRemoteCall()) {
             RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
         }
 
@@ -87,8 +80,10 @@ namespace Chromium.Remote {
         public event CfrDomVisitorVisitEventHandler Visit {
             add {
                 if(m_Visit == null) {
-                    var call = new CfxDomVisitorVisitActivateRemoteCall();
-                    call.sender = RemotePtr.ptr;
+                    var call = new CfxDomVisitorSetCallbackRemoteCall();
+                    call.self = RemotePtr.ptr;
+                    call.index = 0;
+                    call.active = true;
                     call.RequestExecution(RemotePtr.connection);
                 }
                 m_Visit += value;
@@ -96,14 +91,16 @@ namespace Chromium.Remote {
             remove {
                 m_Visit -= value;
                 if(m_Visit == null) {
-                    var call = new CfxDomVisitorVisitDeactivateRemoteCall();
-                    call.sender = RemotePtr.ptr;
+                    var call = new CfxDomVisitorSetCallbackRemoteCall();
+                    call.self = RemotePtr.ptr;
+                    call.index = 0;
+                    call.active = false;
                     call.RequestExecution(RemotePtr.connection);
                 }
             }
         }
 
-        CfrDomVisitorVisitEventHandler m_Visit;
+        internal CfrDomVisitorVisitEventHandler m_Visit;
 
 
     }
@@ -136,10 +133,11 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrDomVisitorVisitEventArgs : CfrEventArgs {
 
-            bool DocumentFetched;
-            CfrDomDocument m_Document;
+            private CfxDomVisitorVisitRemoteEventCall call;
 
-            internal CfrDomVisitorVisitEventArgs(ulong eventArgsId) : base(eventArgsId) {}
+            internal CfrDomDocument m_document_wrapped;
+
+            internal CfrDomVisitorVisitEventArgs(CfxDomVisitorVisitRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Get the Document parameter for the <see cref="CfrDomVisitor.Visit"/> render process callback.
@@ -147,14 +145,8 @@ namespace Chromium.Remote {
             public CfrDomDocument Document {
                 get {
                     CheckAccess();
-                    if(!DocumentFetched) {
-                        DocumentFetched = true;
-                        var call = new CfxDomVisitorVisitGetDocumentRemoteCall();
-                        call.eventArgsId = eventArgsId;
-                        call.RequestExecution();
-                        m_Document = CfrDomDocument.Wrap(new RemotePtr(call.value));
-                    }
-                    return m_Document;
+                    if(m_document_wrapped == null) m_document_wrapped = CfrDomDocument.Wrap(new RemotePtr(call.document));
+                    return m_document_wrapped;
                 }
             }
 

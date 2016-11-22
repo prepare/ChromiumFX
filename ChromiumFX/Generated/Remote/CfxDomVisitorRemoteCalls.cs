@@ -35,91 +35,62 @@ using System;
 
 namespace Chromium.Remote {
     using Event;
-    using Chromium.Event;
 
-    internal class CfxDomVisitorCtorRemoteCall : CtorRemoteCall {
+    internal class CfxDomVisitorCtorWithGCHandleRemoteCall : CtorWithGCHandleRemoteCall {
 
-        internal CfxDomVisitorCtorRemoteCall()
-            : base(RemoteCallId.CfxDomVisitorCtorRemoteCall) {}
+        internal CfxDomVisitorCtorWithGCHandleRemoteCall()
+            : base(RemoteCallId.CfxDomVisitorCtorWithGCHandleRemoteCall) {}
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = RemoteProxy.Wrap(new CfxDomVisitor());
+            __retval = CfxApi.DomVisitor.cfx_domvisitor_ctor(gcHandlePtr, 1);
         }
     }
 
-    internal class CfxDomVisitorVisitRemoteClientCall : RemoteClientCall {
+    internal class CfxDomVisitorSetCallbackRemoteCall : SetCallbackRemoteCall {
 
-        internal CfxDomVisitorVisitRemoteClientCall()
-            : base(RemoteCallId.CfxDomVisitorVisitRemoteClientCall) {}
+        internal CfxDomVisitorSetCallbackRemoteCall()
+            : base(RemoteCallId.CfxDomVisitorSetCallbackRemoteCall) {}
 
-        internal static void EventCall(object sender, CfxDomVisitorVisitEventArgs e) {
-            var call = new CfxDomVisitorVisitRemoteClientCall();
-            call.sender = RemoteProxy.Wrap((CfxBase)sender);
-            call.eventArgsId = AddEventArgs(e);
-            call.RequestExecution(RemoteClient.connection);
-            RemoveEventArgs(call.eventArgsId);
-        }
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = CfrDomVisitor.Wrap(new RemotePtr(connection, this.sender));
-            var e = new CfrDomVisitorVisitEventArgs(eventArgsId);
-            sender.raise_Visit(sender, e);
+            CfxDomVisitorRemoteClient.SetCallback(self, index, active);
         }
     }
 
-    internal class CfxDomVisitorVisitActivateRemoteCall : RemoteCall {
+    internal class CfxDomVisitorVisitRemoteEventCall : RemoteEventCall {
 
-        internal CfxDomVisitorVisitActivateRemoteCall()
-            : base(RemoteCallId.CfxDomVisitorVisitActivateRemoteCall) {}
+        internal CfxDomVisitorVisitRemoteEventCall()
+            : base(RemoteCallId.CfxDomVisitorVisitRemoteEventCall) {}
 
-        internal IntPtr sender;
-        protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
-        protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxDomVisitor)RemoteProxy.Unwrap(this.sender, null);
-            sender.Visit += CfxDomVisitorVisitRemoteClientCall.EventCall;
-        }
-    }
-
-    internal class CfxDomVisitorVisitDeactivateRemoteCall : RemoteCall {
-
-        internal CfxDomVisitorVisitDeactivateRemoteCall()
-            : base(RemoteCallId.CfxDomVisitorVisitDeactivateRemoteCall) {}
-
-        internal IntPtr sender;
-        protected override void WriteArgs(StreamHandler h) { h.Write(sender); }
-        protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
-
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var sender = (CfxDomVisitor)RemoteProxy.Unwrap(this.sender, null);
-            sender.Visit -= CfxDomVisitorVisitRemoteClientCall.EventCall;
-        }
-    }
-
-    internal class CfxDomVisitorVisitGetDocumentRemoteCall : RemoteCall {
-
-        internal CfxDomVisitorVisitGetDocumentRemoteCall()
-            : base(RemoteCallId.CfxDomVisitorVisitGetDocumentRemoteCall) {}
-
-        internal ulong eventArgsId;
-        internal IntPtr value;
+        internal IntPtr document;
+        internal int document_release;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(eventArgsId);
+            h.Write(gcHandlePtr);
+            h.Write(document);
         }
+
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out eventArgsId);
+            h.Read(out gcHandlePtr);
+            h.Read(out document);
         }
+
         protected override void WriteReturn(StreamHandler h) {
-            h.Write(value);
+            h.Write(document_release);
         }
+
         protected override void ReadReturn(StreamHandler h) {
-            h.Read(out value);
+            h.Read(out document_release);
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var e = (CfxDomVisitorVisitEventArgs)RemoteClientCall.GetEventArgs(eventArgsId);
-            value = RemoteProxy.Wrap(e.Document);
+            var self = (CfrDomVisitor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                return;
+            }
+            var e = new CfrDomVisitorVisitEventArgs(this);
+            self.m_Visit?.Invoke(self, e);
+            e.m_isInvalid = true;
+            document_release = e.m_document_wrapped == null? 1 : 0;
         }
     }
 
