@@ -49,9 +49,8 @@ namespace Chromium.Remote {
 
         private readonly bool isClient;
 
-        private readonly Queue<Action<StreamHandler>> writeQueue = new Queue<Action<StreamHandler>>();
-
-        private readonly Thread writer;
+        private bool connected;
+        
         private readonly Thread reader;
 
         private readonly object syncRoot = new object();
@@ -79,16 +78,9 @@ namespace Chromium.Remote {
                 CfxRuntime.OnCfxShutdown += new Action(CfxRuntime_OnCfxShutdown);
             }
 
-            writer = new Thread(WriteLoopEntry);
             reader = new Thread(ReadLoopEntry);
-
-            writer.Name = "cfx_rpc_writer";
             reader.Name = "cfx_rpc_reader";
-
-            writer.IsBackground = true;
             reader.IsBackground = true;
-
-            writer.Start();
             reader.Start();
         }
 
@@ -98,24 +90,22 @@ namespace Chromium.Remote {
             RemoteService.RemoveConnection(this);
         }
 
-        internal void EnqueueWrite(Action<StreamHandler> callback) {
-            lock(syncRoot) {
-                if(writeQueue.Count == 0)
-                    Monitor.PulseAll(syncRoot);
-                writeQueue.Enqueue(callback);
-            }
-        }
-
-        internal void WriteLoopEntry() {
+        internal void Write(Action<StreamHandler> callback) {
+            Monitor.Enter(syncRoot);
             try {
-                Connect(pipeOut);
-                streamHandler.Write(localProcessId);
-                streamHandler.Flush();
-                WriteLoop();
+                if(!connected) {
+                    Connect(pipeOut);
+                    streamHandler.Write(localProcessId);
+                    streamHandler.Flush();
+                    connected = true;
+                }
+                callback.Invoke(streamHandler);
             } catch(EndOfStreamException ex) {
                 OnConnectionLost(ex);
             } catch(IOException ex) {
                 OnConnectionLost(ex);
+            } finally {
+                Monitor.Exit(syncRoot);
             }
         }
 
@@ -139,23 +129,8 @@ namespace Chromium.Remote {
             }
         }
 
-        private void WriteLoop() {
-            for(; ; ) {
-                Action<StreamHandler> writeCallback = null;
-                lock(syncRoot) {
-                    if(writeQueue.Count == 0) {
-                        Monitor.Wait(syncRoot);
-                        if(writeQueue.Count == 0)
-                            return;
-                    }
-                    writeCallback = writeQueue.Dequeue();
-                }
-                writeCallback.Invoke(streamHandler);
-            }
-        }
-
         private void ReadLoop() {
-            for(; ; ) {
+            for(;;) {
                 var callId = streamHandler.ReadUInt16();
                 if(callId == ushort.MaxValue) {
                     var threadId = streamHandler.ReadInt32();

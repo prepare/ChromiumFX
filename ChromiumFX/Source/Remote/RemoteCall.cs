@@ -87,7 +87,7 @@ namespace Chromium.Remote {
                     return;
                 else if(connection.connectionLostException != null)
                     throw new CfxRemotingException("Remote connection lost.", connection.connectionLostException);
-                connection.EnqueueWrite(WriteRequest);
+                connection.Write(WriteRequest);
                 return;
             }
 
@@ -104,7 +104,7 @@ namespace Chromium.Remote {
 
                 remoteThreadId = CfxRemoteCallContext.currentThreadId;
 
-                connection.EnqueueWrite(WriteRequest);
+                connection.Write(WriteRequest);
 
                 for(; ; ) {
 
@@ -200,7 +200,7 @@ namespace Chromium.Remote {
                 if(!CfxRemoteCallbackManager.IncrementCallbackCount(connection.remoteProcessId)) {
                     // The application has suspended remote callbacks.
                     // Write the response without ececuting event handlers, returning default values.
-                    connection.EnqueueWrite(WriteResponse);
+                    connection.Write(WriteResponse);
                     return;
                 }
             }
@@ -222,7 +222,7 @@ namespace Chromium.Remote {
                 threadContext.Exit();
             }
 
-            connection.EnqueueWrite(WriteResponse);
+            connection.Write(WriteResponse);
         }
 
         protected virtual void WriteArgs(StreamHandler h) { }
