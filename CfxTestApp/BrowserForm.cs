@@ -560,5 +560,20 @@ namespace CfxTestApplication {
             setBrowserInvisibleToolStripMenuItem.Checked = !setBrowserInvisibleToolStripMenuItem.Checked;
             WebBrowser.Visible = !setBrowserInvisibleToolStripMenuItem.Checked;
         }
+
+        private void testGCOfChromiumWebBrowserToolStripMenuItem_Click(object sender, EventArgs e) {
+            // Make sure a ChromiumWebBrowser object without references outside of the 
+            // ChromiumWebBroeser and ChromiumFX libraries gets garbage collected
+            var weak = new WeakReference(WebBrowser);
+            WebBrowser.Parent = null;
+            WebBrowser = null;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            if(weak.Target != null) {
+                MessageBox.Show("WebBrowser not collected!", "GC Test", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else {
+                MessageBox.Show("WebBrowser collected!", "GC Test", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }
 }
