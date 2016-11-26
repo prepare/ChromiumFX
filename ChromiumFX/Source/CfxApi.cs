@@ -125,18 +125,23 @@ namespace Chromium {
                 // the managed wrapper released it's reference
                 // and the native object is destroyed
                 h.Free();
-            } else if(ref_count == 1) {
-                // ref count of cef client object reached 1 after decrement: 
-                // CEF released it's last reference ->
-                // free native reference handle
-                var client = (CfxClientBase)h.Target;
-                client.nativeReference.Free();
-            } else {
-                // ref count of cef client object reached 2 after increment:
-                // CEF obtained it's first reference ->
-                // alloc native reference handle
-                var client = (CfxClientBase)h.Target;
-                client.nativeReference = GCHandle.Alloc(client, GCHandleType.Normal);
+                
+                
+                // TODO
+                // this approach leads to undesired retention. 
+
+            //} else if(ref_count == 1) {
+            //    // ref count of cef client object reached 1 after decrement: 
+            //    // CEF released it's last reference ->
+            //    // free native reference handle
+            //    var client = (CfxClientBase)h.Target;
+            //    client.nativeReference.Free();
+            //} else {
+            //    // ref count of cef client object reached 2 after increment:
+            //    // CEF obtained it's first reference ->
+            //    // alloc native reference handle
+            //    var client = (CfxClientBase)h.Target;
+            //    client.nativeReference = GCHandle.Alloc(client, GCHandleType.Normal);
             }
         }
 
