@@ -31,6 +31,7 @@
 
 
 using System;
+using System.Collections.Generic;
 using Chromium.Remote;
 using Chromium.Remote.Event;
 
@@ -46,11 +47,11 @@ namespace Chromium.WebBrowser {
                 return -1;
             }
         }
-        
+
         private readonly CfrApp app;
         private readonly RenderProcessHandler processHandler;
 
-        internal event Action<RenderProcess> OnExit;
+        private List<WeakReference> browserReferences = new List<WeakReference>();
 
         internal int RemoteProcessId { get; private set; }
 
@@ -61,14 +62,25 @@ namespace Chromium.WebBrowser {
             app.GetRenderProcessHandler += (s, e) => e.SetReturnValue(processHandler);
         }
 
+        internal void AddBrowserReference(ChromiumWebBrowser browser) {
+            for(int i = 0; i < browserReferences.Count; ++i) {
+                if(browserReferences[i].Target == null) {
+                    browserReferences[i] = new WeakReference(browser);
+                    return;
+                }
+            }
+            browserReferences.Add(new WeakReference(browser));
+        }
+
         private int RemoteMain() {
             try {
                 var retval = CfrRuntime.ExecuteProcess(app);
                 return retval;
             } finally {
-                var handler = OnExit;
-                if(handler != null)
-                    handler(this);
+                foreach(var br in browserReferences) {
+                    var b = (ChromiumWebBrowser)br.Target;
+                    b?.RemoteProcessExited(this);
+                }
             }
         }
 
