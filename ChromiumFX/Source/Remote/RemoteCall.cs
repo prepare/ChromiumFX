@@ -190,8 +190,6 @@ namespace Chromium.Remote {
         private void ExecutionThreadEntry(RemoteConnection connection) {
 
             if(returnImmediately) {
-                // only happens in calls from the browser to the renderer
-                CfxDebug.Assert(connection == RemoteClient.connection);
                 ExecuteInTargetProcess(connection);
                 return;
             }

@@ -43,19 +43,18 @@ typedef struct _cfx_navigation_entry_visitor_t {
 } cfx_navigation_entry_visitor_t;
 
 void CEF_CALLBACK _cfx_navigation_entry_visitor_add_ref(struct _cef_base_t* base) {
-    int count = InterlockedIncrement(&((cfx_navigation_entry_visitor_t*)base)->ref_count);
-    if(count == 2) {
-        cfx_set_native_reference(((cfx_navigation_entry_visitor_t*)base)->gc_handle, ((cfx_navigation_entry_visitor_t*)base)->wrapper_kind, count);
-    }
+    InterlockedIncrement(&((cfx_navigation_entry_visitor_t*)base)->ref_count);
 }
 int CEF_CALLBACK _cfx_navigation_entry_visitor_release(struct _cef_base_t* base) {
     int count = InterlockedDecrement(&((cfx_navigation_entry_visitor_t*)base)->ref_count);
-    if(count < 2) {
-        cfx_set_native_reference(((cfx_navigation_entry_visitor_t*)base)->gc_handle, ((cfx_navigation_entry_visitor_t*)base)->wrapper_kind, count);
-        if(!count) {
-            free(base);
-            return 1;
+    if(count == 0) {
+        if(((cfx_navigation_entry_visitor_t*)base)->wrapper_kind == 0) {
+            cfx_gc_handle_free(((cfx_navigation_entry_visitor_t*)base)->gc_handle);
+        } else {
+            cfx_gc_handle_free_remote(((cfx_navigation_entry_visitor_t*)base)->gc_handle);
         }
+        free(base);
+        return 1;
     }
     return 0;
 }

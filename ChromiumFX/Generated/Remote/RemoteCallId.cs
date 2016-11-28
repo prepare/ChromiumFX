@@ -466,6 +466,6 @@ namespace Chromium.Remote {
         CfxValueSetNullRemoteCall,
         CfxValueSetStringRemoteCall,
         ExecuteProcessRemoteCall,
-        GCHandleRemoteCall
+        FreeGCHandleRemoteCall
     }
 }

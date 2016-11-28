@@ -468,7 +468,7 @@ namespace Chromium.Remote {
             () => { return new CfxValueSetNullRemoteCall(); },
             () => { return new CfxValueSetStringRemoteCall(); },
             () => { return new ExecuteProcessRemoteCall(); },
-            () => { return new GCHandleRemoteCall(); },
+            () => { return new FreeGCHandleRemoteCall(); },
         } ;
 
         internal static RemoteCall ForCallId(RemoteCallId id) {

@@ -33,6 +33,7 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using Chromium.Remote;
 
 namespace Chromium {
     partial class CfxApi {
@@ -100,49 +101,18 @@ namespace Chromium {
         private delegate void cfx_gc_handle_free_delegate(IntPtr gc_handle);
         private static cfx_gc_handle_free_delegate cfx_gc_handle_free;
 
-        //static void (CEF_CALLBACK *cfx_set_native_reference)(gc_handle_t)
-        [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_set_native_reference_delegate(IntPtr gc_handle, int wrapper_kind, int ref_count);
-        private static cfx_set_native_reference_delegate cfx_set_native_reference;
+        //static void (CEF_CALLBACK *cfx_free_gc_handle_remote)(gc_handle_t)
+        private static cfx_gc_handle_free_delegate cfx_gc_handle_free_remote;
 
         internal static void FreeGcHandle(IntPtr gc_handle) {
             var h = GCHandle.FromIntPtr(gc_handle);
             h.Free();
         }
 
-        internal static void SetNativeReference(IntPtr gc_handle, int wrapper_kind, int ref_count) {
-            Debug.Assert(ref_count <= 2);
-            Debug.Assert(wrapper_kind == 0 || wrapper_kind == 1);
-            if(wrapper_kind == 1) {
-                var call = new Remote.GCHandleRemoteCall();
-                call.gc_handle = gc_handle;
-                call.ref_count = ref_count;
-                call.RequestExecution(Remote.RemoteClient.connection);
-                return;
-            }
-            var h = GCHandle.FromIntPtr(gc_handle);
-            if(ref_count == 0) {
-                // the managed wrapper released it's reference
-                // and the native object is destroyed
-                h.Free();
-                
-                
-                // TODO
-                // this approach leads to undesired retention. 
-
-            //} else if(ref_count == 1) {
-            //    // ref count of cef client object reached 1 after decrement: 
-            //    // CEF released it's last reference ->
-            //    // free native reference handle
-            //    var client = (CfxClientBase)h.Target;
-            //    client.nativeReference.Free();
-            //} else {
-            //    // ref count of cef client object reached 2 after increment:
-            //    // CEF obtained it's first reference ->
-            //    // alloc native reference handle
-            //    var client = (CfxClientBase)h.Target;
-            //    client.nativeReference = GCHandle.Alloc(client, GCHandleType.Normal);
-            }
+        internal static void FreeRemoteGcHandle(IntPtr gc_handle) {
+            var call = new FreeGCHandleRemoteCall();
+            call.gc_handle = gc_handle;
+            call.RequestExecution(RemoteClient.connection);
         }
 
         private static object loadLock = new object();
@@ -178,7 +148,7 @@ namespace Chromium {
             }
 
             cfx_gc_handle_free = FreeGcHandle;
-            cfx_set_native_reference = SetNativeReference;
+            cfx_gc_handle_free_remote = FreeRemoteGcHandle;
 
             int platform;
             IntPtr release;
@@ -190,7 +160,7 @@ namespace Chromium {
             int retval = api_initialize(
                 libcefPtr,
                 Marshal.GetFunctionPointerForDelegate(cfx_gc_handle_free),
-                Marshal.GetFunctionPointerForDelegate(cfx_set_native_reference),
+                Marshal.GetFunctionPointerForDelegate(cfx_gc_handle_free_remote),
                 out platform,
                 out CW_USEDEFAULT,
                 out release,

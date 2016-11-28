@@ -44,19 +44,18 @@ typedef struct _cfx_drag_handler_t {
 } cfx_drag_handler_t;
 
 void CEF_CALLBACK _cfx_drag_handler_add_ref(struct _cef_base_t* base) {
-    int count = InterlockedIncrement(&((cfx_drag_handler_t*)base)->ref_count);
-    if(count == 2) {
-        cfx_set_native_reference(((cfx_drag_handler_t*)base)->gc_handle, ((cfx_drag_handler_t*)base)->wrapper_kind, count);
-    }
+    InterlockedIncrement(&((cfx_drag_handler_t*)base)->ref_count);
 }
 int CEF_CALLBACK _cfx_drag_handler_release(struct _cef_base_t* base) {
     int count = InterlockedDecrement(&((cfx_drag_handler_t*)base)->ref_count);
-    if(count < 2) {
-        cfx_set_native_reference(((cfx_drag_handler_t*)base)->gc_handle, ((cfx_drag_handler_t*)base)->wrapper_kind, count);
-        if(!count) {
-            free(base);
-            return 1;
+    if(count == 0) {
+        if(((cfx_drag_handler_t*)base)->wrapper_kind == 0) {
+            cfx_gc_handle_free(((cfx_drag_handler_t*)base)->gc_handle);
+        } else {
+            cfx_gc_handle_free_remote(((cfx_drag_handler_t*)base)->gc_handle);
         }
+        free(base);
+        return 1;
     }
     return 0;
 }

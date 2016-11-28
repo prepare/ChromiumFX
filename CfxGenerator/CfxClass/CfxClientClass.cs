@@ -60,19 +60,18 @@ public class CfxClientClass : CfxClass {
         b.AppendLine();
 
         b.BeginBlock("void CEF_CALLBACK _{0}_add_ref(struct _cef_base_t* base)", CfxName);
-        b.AppendLine("int count = InterlockedIncrement(&(({0}*)base)->ref_count);", CfxNativeSymbol);
-        b.BeginIf("count == 2");
-        b.AppendLine("cfx_set_native_reference((({0}*)base)->gc_handle, (({0}*)base)->wrapper_kind, count);", CfxNativeSymbol);
-        b.EndBlock();
+        b.AppendLine("InterlockedIncrement(&(({0}*)base)->ref_count);", CfxNativeSymbol);
         b.EndBlock();
         b.BeginBlock("int CEF_CALLBACK _{0}_release(struct _cef_base_t* base)", CfxName);
         b.AppendLine("int count = InterlockedDecrement(&(({0}*)base)->ref_count);", CfxNativeSymbol);
-        b.BeginIf("count < 2");
-        b.AppendLine("cfx_set_native_reference((({0}*)base)->gc_handle, (({0}*)base)->wrapper_kind, count);", CfxNativeSymbol);
-        b.BeginIf("!count");
+        b.BeginIf("count == 0");
+        b.BeginIf("(({0}*)base)->wrapper_kind == 0", CfxNativeSymbol);
+        b.AppendLine("cfx_gc_handle_free((({0}*)base)->gc_handle);", CfxNativeSymbol);
+        b.BeginElse();
+        b.AppendLine("cfx_gc_handle_free_remote((({0}*)base)->gc_handle);", CfxNativeSymbol);
+        b.EndBlock();
         b.AppendLine("free(base);");
         b.AppendLine("return 1;");
-        b.EndBlock();
         b.EndBlock();
         b.AppendLine("return 0;");
         b.EndBlock();
