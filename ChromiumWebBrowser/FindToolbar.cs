@@ -134,7 +134,7 @@ namespace Chromium.WebBrowser {
 
             upButton.GotFocus += (s, e) => { textBox.Focus(); };
 
-            toolTip.SetToolTip(upButton, "Goto previous match");
+            ConfigToolTip("Goto previous match", upButton);
 
             downButton.Font = new Font(Font.FontFamily, 9);
             downButton.SetBounds(upButton.Left + upButton.Width - 1, textBox.Top, textBox.Height, textBox.Height);
@@ -148,7 +148,7 @@ namespace Chromium.WebBrowser {
 
             downButton.GotFocus += (s, e) => { textBox.Focus(); };
 
-            toolTip.SetToolTip(downButton, "Goto next match");
+            ConfigToolTip("Goto next match", downButton);
 
             matchCaseButton.Text = "Match Case";
             matchCaseButton.ForeColor = Color.DimGray;
@@ -183,7 +183,8 @@ namespace Chromium.WebBrowser {
             closeButton.Image = Images.Cross.Create();
             closeButton.FlatStyle = FlatStyle.Flat;
             closeButton.FlatAppearance.BorderSize = 0;
-            toolTip.SetToolTip(closeButton, "Close the Find Bar");
+
+            ConfigToolTip("Close the Find Bar", closeButton);
 
             closeButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 
@@ -204,6 +205,17 @@ namespace Chromium.WebBrowser {
                     BeginInvoke(() => UpdateMatchInfo(count));
                 }
             };
+        }
+
+
+        private void ConfigToolTip(string text, Button b) {
+            b.MouseHover += (s, e) => {
+                var pos = b.PointToClient(MousePosition);
+                pos.X += 12;
+                pos.Y += 14;
+                toolTip.Show(text, b, pos);
+            };
+            b.MouseLeave += (s, e) => { toolTip.Hide(b); };
         }
 
         private void UpdateMatchInfo(int count) {
