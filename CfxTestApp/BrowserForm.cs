@@ -463,7 +463,7 @@ namespace CfxTestApplication {
                     // must dispose node, otherwise finalizer crash in the render process.
                     n.Dispose();
                 });
-                
+
                 //WebBrowser.VisitDom(VisitDOMCallback);
                 //for(int ii = 0; ii < 100; ++ii)
                 //    VisitDomButton_Click(null, null);
@@ -563,7 +563,7 @@ namespace CfxTestApplication {
 
         private void testGCOfChromiumWebBrowserToolStripMenuItem_Click(object sender, EventArgs e) {
             // Make sure a ChromiumWebBrowser object without references outside of the 
-            // ChromiumWebBroeser and ChromiumFX libraries gets garbage collected
+            // ChromiumWebBrowser and ChromiumFX libraries gets garbage collected
             var weak = new WeakReference(WebBrowser);
             WebBrowser.Parent = null;
             WebBrowser = null;
