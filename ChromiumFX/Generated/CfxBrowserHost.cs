@@ -697,10 +697,28 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public void ImeSetComposition(string text, ulong underlinesCount, CfxCompositionUnderline underlines, CfxRange replacementRange, CfxRange selectionRange) {
+        public void ImeSetComposition(string text, CfxCompositionUnderline[] underlines, CfxRange replacementRange, CfxRange selectionRange) {
             var text_pinned = new PinnedString(text);
-            CfxApi.BrowserHost.cfx_browser_host_ime_set_composition(NativePtr, text_pinned.Obj.PinnedPtr, text_pinned.Length, (UIntPtr)underlinesCount, CfxCompositionUnderline.Unwrap(underlines), CfxRange.Unwrap(replacementRange), CfxRange.Unwrap(selectionRange));
+            UIntPtr underlines_length;
+            IntPtr[] underlines_ptrs;
+            if(underlines != null) {
+                underlines_length = (UIntPtr)underlines.Length;
+                underlines_ptrs = new IntPtr[underlines.Length];
+                for(int i = 0; i < underlines.Length; ++i) {
+                    underlines_ptrs[i] = CfxCompositionUnderline.Unwrap(underlines[i]);
+                }
+            } else {
+                underlines_length = UIntPtr.Zero;
+                underlines_ptrs = null;
+            }
+            PinnedObject underlines_pinned = new PinnedObject(underlines_ptrs);
+            int underlines_nomem;
+            CfxApi.BrowserHost.cfx_browser_host_ime_set_composition(NativePtr, text_pinned.Obj.PinnedPtr, text_pinned.Length, underlines_length, underlines_pinned.PinnedPtr, out underlines_nomem, CfxRange.Unwrap(replacementRange), CfxRange.Unwrap(selectionRange));
             text_pinned.Obj.Free();
+            underlines_pinned.Free();
+            if(underlines_nomem != 0) {
+                throw new OutOfMemoryException();
+            }
         }
 
         /// <summary>

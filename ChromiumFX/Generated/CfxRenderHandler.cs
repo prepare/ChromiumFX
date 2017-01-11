@@ -297,20 +297,25 @@ namespace Chromium {
 
         // on_ime_composition_range_changed
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_ime_composition_range_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr selected_range, UIntPtr character_boundsCount, IntPtr character_bounds);
+        private delegate void on_ime_composition_range_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr selected_range, UIntPtr character_boundsCount, IntPtr character_bounds, int character_bounds_structsize);
         private static on_ime_composition_range_changed_delegate on_ime_composition_range_changed_native;
         private static IntPtr on_ime_composition_range_changed_native_ptr;
 
-        internal static void on_ime_composition_range_changed(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr selected_range, UIntPtr character_boundsCount, IntPtr character_bounds) {
+        internal static void on_ime_composition_range_changed(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr selected_range, UIntPtr character_boundsCount, IntPtr character_bounds, int character_bounds_structsize) {
             var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxOnImeCompositionRangeChangedEventArgs(browser, selected_range, character_boundsCount, character_bounds);
+            var e = new CfxOnImeCompositionRangeChangedEventArgs(browser, selected_range, character_bounds, character_boundsCount, character_bounds_structsize);
             self.m_OnImeCompositionRangeChanged?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
+            if(e.m_character_bounds_managed != null) {
+                for(int i = 0; i < e.m_character_bounds_managed.Length; ++i) {
+                    e.m_character_bounds_managed[i].Dispose();
+                }
+            }
         }
 
         internal CfxRenderHandler(IntPtr nativePtr) : base(nativePtr) {}
@@ -1637,15 +1642,17 @@ namespace Chromium {
             internal CfxBrowser m_browser_wrapped;
             internal IntPtr m_selected_range;
             internal CfxRange m_selected_range_wrapped;
-            internal UIntPtr m_character_boundsCount;
-            internal IntPtr m_character_bounds;
-            internal CfxRect m_character_bounds_wrapped;
+            IntPtr m_character_bounds;
+            int m_character_bounds_structsize;
+            UIntPtr m_character_boundsCount;
+            internal CfxRect[] m_character_bounds_managed;
 
-            internal CfxOnImeCompositionRangeChangedEventArgs(IntPtr browser, IntPtr selected_range, UIntPtr character_boundsCount, IntPtr character_bounds) {
+            internal CfxOnImeCompositionRangeChangedEventArgs(IntPtr browser, IntPtr selected_range, IntPtr character_bounds, UIntPtr character_boundsCount, int character_bounds_structsize) {
                 m_browser = browser;
                 m_selected_range = selected_range;
-                m_character_boundsCount = character_boundsCount;
                 m_character_bounds = character_bounds;
+                m_character_bounds_structsize = character_bounds_structsize;
+                m_character_boundsCount = character_boundsCount;
             }
 
             /// <summary>
@@ -1669,27 +1676,26 @@ namespace Chromium {
                 }
             }
             /// <summary>
-            /// Get the CharacterBoundsCount parameter for the <see cref="CfxRenderHandler.OnImeCompositionRangeChanged"/> callback.
-            /// </summary>
-            public ulong CharacterBoundsCount {
-                get {
-                    CheckAccess();
-                    return (ulong)m_character_boundsCount;
-                }
-            }
-            /// <summary>
             /// Get the CharacterBounds parameter for the <see cref="CfxRenderHandler.OnImeCompositionRangeChanged"/> callback.
+            /// Do not keep a reference to the elements of this array outside of this function.
             /// </summary>
-            public CfxRect CharacterBounds {
+            public CfxRect[] CharacterBounds {
                 get {
                     CheckAccess();
-                    if(m_character_bounds_wrapped == null) m_character_bounds_wrapped = CfxRect.Wrap(m_character_bounds);
-                    return m_character_bounds_wrapped;
+                    if(m_character_bounds_managed == null) {
+                        m_character_bounds_managed = new CfxRect[(ulong)m_character_boundsCount];
+                        var currentPtr = m_character_bounds;
+                        for(ulong i = 0; i < (ulong)m_character_boundsCount; ++i) {
+                            m_character_bounds_managed[i] = CfxRect.Wrap(currentPtr);
+                            currentPtr += m_character_bounds_structsize;
+                        }
+                    }
+                    return m_character_bounds_managed;
                 }
             }
 
             public override string ToString() {
-                return String.Format("Browser={{{0}}}, SelectedRange={{{1}}}, CharacterBoundsCount={{{2}}}, CharacterBounds={{{3}}}", Browser, SelectedRange, CharacterBoundsCount, CharacterBounds);
+                return String.Format("Browser={{{0}}}, SelectedRange={{{1}}}, CharacterBounds={{{2}}}", Browser, SelectedRange, CharacterBounds);
             }
         }
 

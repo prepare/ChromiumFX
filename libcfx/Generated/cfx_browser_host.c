@@ -261,9 +261,20 @@ static void cfx_browser_host_set_windowless_frame_rate(cef_browser_host_t* self,
 }
 
 // ime_set_composition
-static void cfx_browser_host_ime_set_composition(cef_browser_host_t* self, char16 *text_str, int text_length, size_t underlinesCount, cef_composition_underline_t const* underlines, const cef_range_t* replacement_range, const cef_range_t* selection_range) {
+static void cfx_browser_host_ime_set_composition(cef_browser_host_t* self, char16 *text_str, int text_length, size_t underlinesCount, cef_composition_underline_t const** underlines, int* underlines_nomem, const cef_range_t* replacement_range, const cef_range_t* selection_range) {
     cef_string_t text = { text_str, text_length, 0 };
-    self->ime_set_composition(self, &text, underlinesCount, underlines, replacement_range, selection_range);
+    cef_composition_underline_t *underlines_tmp = (cef_composition_underline_t*)malloc(underlinesCount * sizeof(cef_composition_underline_t));
+    if(underlines_tmp) {
+        for(size_t i = 0; i < underlinesCount; ++i) {
+            underlines_tmp[i] = *underlines[i];
+        }
+        *underlines_nomem = 0;
+    } else {
+        underlinesCount = 0;
+        *underlines_nomem = 1;
+    }
+    self->ime_set_composition(self, &text, underlinesCount, underlines_tmp, replacement_range, selection_range);
+    if(underlines_tmp) free(underlines_tmp);
 }
 
 // ime_commit_text

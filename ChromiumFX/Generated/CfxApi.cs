@@ -859,9 +859,9 @@ namespace Chromium {
             public delegate void cfx_browser_host_set_windowless_frame_rate_delegate(IntPtr self, int frame_rate);
             public static cfx_browser_host_set_windowless_frame_rate_delegate cfx_browser_host_set_windowless_frame_rate;
 
-            // static void cfx_browser_host_ime_set_composition(cef_browser_host_t* self, char16 *text_str, int text_length, size_t underlinesCount, cef_composition_underline_t const* underlines, const cef_range_t* replacement_range, const cef_range_t* selection_range)
+            // static void cfx_browser_host_ime_set_composition(cef_browser_host_t* self, char16 *text_str, int text_length, size_t underlinesCount, cef_composition_underline_t const** underlines, int* underlines_nomem, const cef_range_t* replacement_range, const cef_range_t* selection_range)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_browser_host_ime_set_composition_delegate(IntPtr self, IntPtr text_str, int text_length, UIntPtr underlinesCount, IntPtr underlines, IntPtr replacement_range, IntPtr selection_range);
+            public delegate void cfx_browser_host_ime_set_composition_delegate(IntPtr self, IntPtr text_str, int text_length, UIntPtr underlinesCount, IntPtr underlines, out int underlines_nomem, IntPtr replacement_range, IntPtr selection_range);
             public static cfx_browser_host_ime_set_composition_delegate cfx_browser_host_ime_set_composition;
 
             // static void cfx_browser_host_ime_commit_text(cef_browser_host_t* self, char16 *text_str, int text_length, const cef_range_t* replacement_range, int relative_cursor_pos)

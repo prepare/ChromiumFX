@@ -50,7 +50,7 @@ typedef struct _cfx_render_handler_t {
     void (CEF_CALLBACK *start_dragging)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *browser_release, cef_drag_data_t* drag_data, int *drag_data_release, cef_drag_operations_mask_t allowed_ops, int x, int y);
     void (CEF_CALLBACK *update_drag_cursor)(gc_handle_t self, cef_browser_t* browser, int *browser_release, cef_drag_operations_mask_t operation);
     void (CEF_CALLBACK *on_scroll_offset_changed)(gc_handle_t self, cef_browser_t* browser, int *browser_release, double x, double y);
-    void (CEF_CALLBACK *on_ime_composition_range_changed)(gc_handle_t self, cef_browser_t* browser, int *browser_release, const cef_range_t* selected_range, size_t character_boundsCount, cef_rect_t const* character_bounds);
+    void (CEF_CALLBACK *on_ime_composition_range_changed)(gc_handle_t self, cef_browser_t* browser, int *browser_release, const cef_range_t* selected_range, size_t character_boundsCount, cef_rect_t const* character_bounds, int character_bounds_structsize);
 } cfx_render_handler_t;
 
 void CEF_CALLBACK _cfx_render_handler_add_ref(struct _cef_base_t* base) {
@@ -194,7 +194,7 @@ void CEF_CALLBACK cfx_render_handler_on_scroll_offset_changed(cef_render_handler
 
 void CEF_CALLBACK cfx_render_handler_on_ime_composition_range_changed(cef_render_handler_t* self, cef_browser_t* browser, const cef_range_t* selected_range, size_t character_boundsCount, cef_rect_t const* character_bounds) {
     int browser_release;
-    ((cfx_render_handler_t*)self)->on_ime_composition_range_changed(((cfx_render_handler_t*)self)->gc_handle, browser, &browser_release, selected_range, character_boundsCount, character_bounds);
+    ((cfx_render_handler_t*)self)->on_ime_composition_range_changed(((cfx_render_handler_t*)self)->gc_handle, browser, &browser_release, selected_range, character_boundsCount, character_bounds, (int)sizeof(cef_rect_t));
     if(browser_release) browser->base.release((cef_base_t*)browser);
 }
 
@@ -245,7 +245,7 @@ static void cfx_render_handler_set_callback(cef_render_handler_t* self, int inde
         self->on_scroll_offset_changed = callback ? cfx_render_handler_on_scroll_offset_changed : 0;
         break;
     case 11:
-        ((cfx_render_handler_t*)self)->on_ime_composition_range_changed = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int *browser_release, const cef_range_t* selected_range, size_t character_boundsCount, cef_rect_t const* character_bounds))callback;
+        ((cfx_render_handler_t*)self)->on_ime_composition_range_changed = (void (CEF_CALLBACK *)(gc_handle_t self, cef_browser_t* browser, int *browser_release, const cef_range_t* selected_range, size_t character_boundsCount, cef_rect_t const* character_bounds, int character_bounds_structsize))callback;
         self->on_ime_composition_range_changed = callback ? cfx_render_handler_on_ime_composition_range_changed : 0;
         break;
     }
