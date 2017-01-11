@@ -52,15 +52,6 @@ public class CustomSignatures {
             case "cef_browser::get_frame_identifiers":
                 return new GetFrameIdentifiersSignature(s);
 
-            case "cef_v8value::execute_function_with_context":
-                return new SignatureWithStructPtrArray(s, 4, 3);
-
-            case "cef_v8value::execute_function":
-                return new SignatureWithStructPtrArray(s, 3, 2);
-
-            case "cef_request_handler::on_select_client_certificate":
-                return new SignatureWithStructPtrArray(s, 6, 5);
-
             case "cef_v8handler::execute":
                 return new CefV8HandlerExecuteSignature(s);
 
@@ -89,6 +80,8 @@ public class CustomSignatures {
                     if(arrayType.IsCefStructPtrType) {
                         Debug.Assert(arrayType.AsCefStructPtrType.Struct.ClassBuilder.Category == StructCategory.Values);
                         return new SignatureWithStructArray(s, arrayArgIndex, i);
+                    } else if(arrayType.IsCefStructPtrPtrType) {
+                        return new SignatureWithStructPtrArray(s, arrayArgIndex, i);
                     }
                 }
             }
