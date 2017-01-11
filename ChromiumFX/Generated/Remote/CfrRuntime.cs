@@ -67,7 +67,6 @@ namespace Chromium.Remote {
         public static bool CreateNewTempDirectory(string prefix, string newTempPath) {
             var call = new CfxRuntimeCreateNewTempDirectoryRemoteCall();
             call.prefix = prefix;
-            call.newTempPath = newTempPath;
             call.RequestExecution();
             newTempPath = call.newTempPath;
             return call.__retval;
@@ -89,7 +88,6 @@ namespace Chromium.Remote {
             var call = new CfxRuntimeCreateTempDirectoryInDirectoryRemoteCall();
             call.baseDir = baseDir;
             call.prefix = prefix;
-            call.newDir = newDir;
             call.RequestExecution();
             newDir = call.newDir;
             return call.__retval;
@@ -180,7 +178,6 @@ namespace Chromium.Remote {
         /// </remarks>
         public static bool GetTempDirectory(string tempDir) {
             var call = new CfxRuntimeGetTempDirectoryRemoteCall();
-            call.tempDir = tempDir;
             call.RequestExecution();
             tempDir = call.tempDir;
             return call.__retval;

@@ -69,11 +69,11 @@ namespace Chromium {
             public static cfx_create_directory_delegate cfx_create_directory;
             // CEF_EXPORT int cef_create_new_temp_directory(const cef_string_t* prefix, cef_string_t* new_temp_path);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_create_new_temp_directory_delegate(IntPtr prefix_str, int prefix_length, ref IntPtr new_temp_path_str, ref int new_temp_path_length);
+            public delegate int cfx_create_new_temp_directory_delegate(IntPtr prefix_str, int prefix_length, out IntPtr new_temp_path_str, out int new_temp_path_length);
             public static cfx_create_new_temp_directory_delegate cfx_create_new_temp_directory;
             // CEF_EXPORT int cef_create_temp_directory_in_directory(const cef_string_t* base_dir, const cef_string_t* prefix, cef_string_t* new_dir);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_create_temp_directory_in_directory_delegate(IntPtr base_dir_str, int base_dir_length, IntPtr prefix_str, int prefix_length, ref IntPtr new_dir_str, ref int new_dir_length);
+            public delegate int cfx_create_temp_directory_in_directory_delegate(IntPtr base_dir_str, int base_dir_length, IntPtr prefix_str, int prefix_length, out IntPtr new_dir_str, out int new_dir_length);
             public static cfx_create_temp_directory_in_directory_delegate cfx_create_temp_directory_in_directory;
             // CEF_EXPORT int cef_create_url(const cef_urlparts_t* parts, cef_string_t* url);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -129,7 +129,7 @@ namespace Chromium {
             public static cfx_get_path_delegate cfx_get_path;
             // CEF_EXPORT int cef_get_temp_directory(cef_string_t* temp_dir);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_get_temp_directory_delegate(ref IntPtr temp_dir_str, ref int temp_dir_length);
+            public delegate int cfx_get_temp_directory_delegate(out IntPtr temp_dir_str, out int temp_dir_length);
             public static cfx_get_temp_directory_delegate cfx_get_temp_directory;
             // CEF_EXPORT XDisplay* cef_get_xdisplay();
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]

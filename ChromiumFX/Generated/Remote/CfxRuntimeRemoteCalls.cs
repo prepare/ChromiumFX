@@ -76,12 +76,10 @@ namespace Chromium.Remote {
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(prefix);
-            h.Write(newTempPath);
         }
 
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out prefix);
-            h.Read(out newTempPath);
         }
 
         protected override void WriteReturn(StreamHandler h) {
@@ -96,20 +94,16 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var prefix_pinned = new PinnedString(prefix);
-            var newTempPath_pinned = new PinnedString(newTempPath);
-            IntPtr newTempPath_str = newTempPath_pinned.Obj.PinnedPtr;
-            int newTempPath_length = newTempPath_pinned.Length;
-            __retval = 0 != CfxApi.Runtime.cfx_create_new_temp_directory(prefix_pinned.Obj.PinnedPtr, prefix_pinned.Length, ref newTempPath_str, ref newTempPath_length);
+            IntPtr newTempPath_str;
+            int newTempPath_length;
+            __retval = 0 != CfxApi.Runtime.cfx_create_new_temp_directory(prefix_pinned.Obj.PinnedPtr, prefix_pinned.Length, out newTempPath_str, out newTempPath_length);
             prefix_pinned.Obj.Free();
-            if(newTempPath_str != newTempPath_pinned.Obj.PinnedPtr) {
-                if(newTempPath_length > 0) {
-                    newTempPath = System.Runtime.InteropServices.Marshal.PtrToStringUni(newTempPath_str, newTempPath_length);
-                    // free the native string?
-                } else {
-                    newTempPath = null;
-                }
+            if(newTempPath_length > 0) {
+                newTempPath = System.Runtime.InteropServices.Marshal.PtrToStringUni(newTempPath_str, newTempPath_length);
+                // free the native string?
+            } else {
+                newTempPath = null;
             }
-            newTempPath_pinned.Obj.Free();
         }
     }
 
@@ -126,13 +120,11 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) {
             h.Write(baseDir);
             h.Write(prefix);
-            h.Write(newDir);
         }
 
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out baseDir);
             h.Read(out prefix);
-            h.Read(out newDir);
         }
 
         protected override void WriteReturn(StreamHandler h) {
@@ -148,21 +140,17 @@ namespace Chromium.Remote {
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var baseDir_pinned = new PinnedString(baseDir);
             var prefix_pinned = new PinnedString(prefix);
-            var newDir_pinned = new PinnedString(newDir);
-            IntPtr newDir_str = newDir_pinned.Obj.PinnedPtr;
-            int newDir_length = newDir_pinned.Length;
-            __retval = 0 != CfxApi.Runtime.cfx_create_temp_directory_in_directory(baseDir_pinned.Obj.PinnedPtr, baseDir_pinned.Length, prefix_pinned.Obj.PinnedPtr, prefix_pinned.Length, ref newDir_str, ref newDir_length);
+            IntPtr newDir_str;
+            int newDir_length;
+            __retval = 0 != CfxApi.Runtime.cfx_create_temp_directory_in_directory(baseDir_pinned.Obj.PinnedPtr, baseDir_pinned.Length, prefix_pinned.Obj.PinnedPtr, prefix_pinned.Length, out newDir_str, out newDir_length);
             baseDir_pinned.Obj.Free();
             prefix_pinned.Obj.Free();
-            if(newDir_str != newDir_pinned.Obj.PinnedPtr) {
-                if(newDir_length > 0) {
-                    newDir = System.Runtime.InteropServices.Marshal.PtrToStringUni(newDir_str, newDir_length);
-                    // free the native string?
-                } else {
-                    newDir = null;
-                }
+            if(newDir_length > 0) {
+                newDir = System.Runtime.InteropServices.Marshal.PtrToStringUni(newDir_str, newDir_length);
+                // free the native string?
+            } else {
+                newDir = null;
             }
-            newDir_pinned.Obj.Free();
         }
     }
 
@@ -300,11 +288,9 @@ namespace Chromium.Remote {
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
-            h.Write(tempDir);
         }
 
         protected override void ReadArgs(StreamHandler h) {
-            h.Read(out tempDir);
         }
 
         protected override void WriteReturn(StreamHandler h) {
@@ -318,19 +304,15 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var tempDir_pinned = new PinnedString(tempDir);
-            IntPtr tempDir_str = tempDir_pinned.Obj.PinnedPtr;
-            int tempDir_length = tempDir_pinned.Length;
-            __retval = 0 != CfxApi.Runtime.cfx_get_temp_directory(ref tempDir_str, ref tempDir_length);
-            if(tempDir_str != tempDir_pinned.Obj.PinnedPtr) {
-                if(tempDir_length > 0) {
-                    tempDir = System.Runtime.InteropServices.Marshal.PtrToStringUni(tempDir_str, tempDir_length);
-                    // free the native string?
-                } else {
-                    tempDir = null;
-                }
+            IntPtr tempDir_str;
+            int tempDir_length;
+            __retval = 0 != CfxApi.Runtime.cfx_get_temp_directory(out tempDir_str, out tempDir_length);
+            if(tempDir_length > 0) {
+                tempDir = System.Runtime.InteropServices.Marshal.PtrToStringUni(tempDir_str, tempDir_length);
+                // free the native string?
+            } else {
+                tempDir = null;
             }
-            tempDir_pinned.Obj.Free();
         }
     }
 

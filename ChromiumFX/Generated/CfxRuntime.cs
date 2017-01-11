@@ -189,22 +189,18 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
         /// </remarks>
-        public static bool CreateNewTempDirectory(string prefix, ref string newTempPath) {
+        public static bool CreateNewTempDirectory(string prefix, out string newTempPath) {
             var prefix_pinned = new PinnedString(prefix);
-            var newTempPath_pinned = new PinnedString(newTempPath);
-            IntPtr newTempPath_str = newTempPath_pinned.Obj.PinnedPtr;
-            int newTempPath_length = newTempPath_pinned.Length;
-            var __retval = CfxApi.Runtime.cfx_create_new_temp_directory(prefix_pinned.Obj.PinnedPtr, prefix_pinned.Length, ref newTempPath_str, ref newTempPath_length);
+            IntPtr newTempPath_str;
+            int newTempPath_length;
+            var __retval = CfxApi.Runtime.cfx_create_new_temp_directory(prefix_pinned.Obj.PinnedPtr, prefix_pinned.Length, out newTempPath_str, out newTempPath_length);
             prefix_pinned.Obj.Free();
-            if(newTempPath_str != newTempPath_pinned.Obj.PinnedPtr) {
-                if(newTempPath_length > 0) {
-                    newTempPath = System.Runtime.InteropServices.Marshal.PtrToStringUni(newTempPath_str, newTempPath_length);
-                    // free the native string?
-                } else {
-                    newTempPath = null;
-                }
+            if(newTempPath_length > 0) {
+                newTempPath = System.Runtime.InteropServices.Marshal.PtrToStringUni(newTempPath_str, newTempPath_length);
+                // free the native string?
+            } else {
+                newTempPath = null;
             }
-            newTempPath_pinned.Obj.Free();
             return 0 != __retval;
         }
 
@@ -220,24 +216,20 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
         /// </remarks>
-        public static bool CreateTempDirectoryInDirectory(string baseDir, string prefix, ref string newDir) {
+        public static bool CreateTempDirectoryInDirectory(string baseDir, string prefix, out string newDir) {
             var baseDir_pinned = new PinnedString(baseDir);
             var prefix_pinned = new PinnedString(prefix);
-            var newDir_pinned = new PinnedString(newDir);
-            IntPtr newDir_str = newDir_pinned.Obj.PinnedPtr;
-            int newDir_length = newDir_pinned.Length;
-            var __retval = CfxApi.Runtime.cfx_create_temp_directory_in_directory(baseDir_pinned.Obj.PinnedPtr, baseDir_pinned.Length, prefix_pinned.Obj.PinnedPtr, prefix_pinned.Length, ref newDir_str, ref newDir_length);
+            IntPtr newDir_str;
+            int newDir_length;
+            var __retval = CfxApi.Runtime.cfx_create_temp_directory_in_directory(baseDir_pinned.Obj.PinnedPtr, baseDir_pinned.Length, prefix_pinned.Obj.PinnedPtr, prefix_pinned.Length, out newDir_str, out newDir_length);
             baseDir_pinned.Obj.Free();
             prefix_pinned.Obj.Free();
-            if(newDir_str != newDir_pinned.Obj.PinnedPtr) {
-                if(newDir_length > 0) {
-                    newDir = System.Runtime.InteropServices.Marshal.PtrToStringUni(newDir_str, newDir_length);
-                    // free the native string?
-                } else {
-                    newDir = null;
-                }
+            if(newDir_length > 0) {
+                newDir = System.Runtime.InteropServices.Marshal.PtrToStringUni(newDir_str, newDir_length);
+                // free the native string?
+            } else {
+                newDir = null;
             }
-            newDir_pinned.Obj.Free();
             return 0 != __retval;
         }
 
@@ -489,20 +481,16 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
         /// </remarks>
-        public static bool GetTempDirectory(ref string tempDir) {
-            var tempDir_pinned = new PinnedString(tempDir);
-            IntPtr tempDir_str = tempDir_pinned.Obj.PinnedPtr;
-            int tempDir_length = tempDir_pinned.Length;
-            var __retval = CfxApi.Runtime.cfx_get_temp_directory(ref tempDir_str, ref tempDir_length);
-            if(tempDir_str != tempDir_pinned.Obj.PinnedPtr) {
-                if(tempDir_length > 0) {
-                    tempDir = System.Runtime.InteropServices.Marshal.PtrToStringUni(tempDir_str, tempDir_length);
-                    // free the native string?
-                } else {
-                    tempDir = null;
-                }
+        public static bool GetTempDirectory(out string tempDir) {
+            IntPtr tempDir_str;
+            int tempDir_length;
+            var __retval = CfxApi.Runtime.cfx_get_temp_directory(out tempDir_str, out tempDir_length);
+            if(tempDir_length > 0) {
+                tempDir = System.Runtime.InteropServices.Marshal.PtrToStringUni(tempDir_str, tempDir_length);
+                // free the native string?
+            } else {
+                tempDir = null;
             }
-            tempDir_pinned.Obj.Free();
             return 0 != __retval;
         }
 

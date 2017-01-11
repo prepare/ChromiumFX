@@ -77,7 +77,7 @@ static int cfx_create_directory(char16 *full_path_str, int full_path_length) {
 // CEF_EXPORT int cef_create_new_temp_directory(const cef_string_t* prefix, cef_string_t* new_temp_path);
 static int cfx_create_new_temp_directory(char16 *prefix_str, int prefix_length, char16 **new_temp_path_str, int *new_temp_path_length) {
     cef_string_t prefix = { prefix_str, prefix_length, 0 };
-    cef_string_t new_temp_path = { *new_temp_path_str, *new_temp_path_length, 0 };
+    cef_string_t new_temp_path = { 0 };
     int __ret_val_ = cef_create_new_temp_directory(&prefix, &new_temp_path);
     *new_temp_path_str = new_temp_path.str; *new_temp_path_length = (int)new_temp_path.length;
     return __ret_val_;
@@ -87,7 +87,7 @@ static int cfx_create_new_temp_directory(char16 *prefix_str, int prefix_length, 
 static int cfx_create_temp_directory_in_directory(char16 *base_dir_str, int base_dir_length, char16 *prefix_str, int prefix_length, char16 **new_dir_str, int *new_dir_length) {
     cef_string_t base_dir = { base_dir_str, base_dir_length, 0 };
     cef_string_t prefix = { prefix_str, prefix_length, 0 };
-    cef_string_t new_dir = { *new_dir_str, *new_dir_length, 0 };
+    cef_string_t new_dir = { 0 };
     int __ret_val_ = cef_create_temp_directory_in_directory(&base_dir, &prefix, &new_dir);
     *new_dir_str = new_dir.str; *new_dir_length = (int)new_dir.length;
     return __ret_val_;
@@ -179,7 +179,7 @@ static int cfx_get_path(cef_path_key_t key, char16 **path_str, int *path_length)
 
 // CEF_EXPORT int cef_get_temp_directory(cef_string_t* temp_dir);
 static int cfx_get_temp_directory(char16 **temp_dir_str, int *temp_dir_length) {
-    cef_string_t temp_dir = { *temp_dir_str, *temp_dir_length, 0 };
+    cef_string_t temp_dir = { 0 };
     int __ret_val_ = cef_get_temp_directory(&temp_dir);
     *temp_dir_str = temp_dir.str; *temp_dir_length = (int)temp_dir.length;
     return __ret_val_;
