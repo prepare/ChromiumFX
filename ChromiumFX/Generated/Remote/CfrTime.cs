@@ -88,6 +88,13 @@ namespace Chromium.Remote {
         int m_Month;
         bool m_Month_fetched;
 
+        /// <summary>
+        /// Windows, 1970 to 2038 on 32-bit POSIX)
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_time.h">cef/include/internal/cef_time.h</see>.
+        /// </remarks>
         public int Month {
             get {
                 if(!m_Month_fetched) {

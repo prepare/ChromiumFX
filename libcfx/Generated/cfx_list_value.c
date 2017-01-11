@@ -85,101 +85,101 @@ static int cfx_list_value_clear(cef_list_value_t* self) {
 }
 
 // remove
-static int cfx_list_value_remove(cef_list_value_t* self, int index) {
+static int cfx_list_value_remove(cef_list_value_t* self, size_t index) {
     return self->remove(self, index);
 }
 
 // get_type
-static cef_value_type_t cfx_list_value_get_type(cef_list_value_t* self, int index) {
+static cef_value_type_t cfx_list_value_get_type(cef_list_value_t* self, size_t index) {
     return self->get_type(self, index);
 }
 
 // get_value
-static cef_value_t* cfx_list_value_get_value(cef_list_value_t* self, int index) {
+static cef_value_t* cfx_list_value_get_value(cef_list_value_t* self, size_t index) {
     return self->get_value(self, index);
 }
 
 // get_bool
-static int cfx_list_value_get_bool(cef_list_value_t* self, int index) {
+static int cfx_list_value_get_bool(cef_list_value_t* self, size_t index) {
     return self->get_bool(self, index);
 }
 
 // get_int
-static int cfx_list_value_get_int(cef_list_value_t* self, int index) {
+static int cfx_list_value_get_int(cef_list_value_t* self, size_t index) {
     return self->get_int(self, index);
 }
 
 // get_double
-static double cfx_list_value_get_double(cef_list_value_t* self, int index) {
+static double cfx_list_value_get_double(cef_list_value_t* self, size_t index) {
     return self->get_double(self, index);
 }
 
 // get_string
-static cef_string_userfree_t cfx_list_value_get_string(cef_list_value_t* self, int index) {
+static cef_string_userfree_t cfx_list_value_get_string(cef_list_value_t* self, size_t index) {
     return self->get_string(self, index);
 }
 
 // get_binary
-static cef_binary_value_t* cfx_list_value_get_binary(cef_list_value_t* self, int index) {
+static cef_binary_value_t* cfx_list_value_get_binary(cef_list_value_t* self, size_t index) {
     return self->get_binary(self, index);
 }
 
 // get_dictionary
-static cef_dictionary_value_t* cfx_list_value_get_dictionary(cef_list_value_t* self, int index) {
+static cef_dictionary_value_t* cfx_list_value_get_dictionary(cef_list_value_t* self, size_t index) {
     return self->get_dictionary(self, index);
 }
 
 // get_list
-static cef_list_value_t* cfx_list_value_get_list(cef_list_value_t* self, int index) {
+static cef_list_value_t* cfx_list_value_get_list(cef_list_value_t* self, size_t index) {
     return self->get_list(self, index);
 }
 
 // set_value
-static int cfx_list_value_set_value(cef_list_value_t* self, int index, cef_value_t* value) {
+static int cfx_list_value_set_value(cef_list_value_t* self, size_t index, cef_value_t* value) {
     if(value) ((cef_base_t*)value)->add_ref((cef_base_t*)value);
     return self->set_value(self, index, value);
 }
 
 // set_null
-static int cfx_list_value_set_null(cef_list_value_t* self, int index) {
+static int cfx_list_value_set_null(cef_list_value_t* self, size_t index) {
     return self->set_null(self, index);
 }
 
 // set_bool
-static int cfx_list_value_set_bool(cef_list_value_t* self, int index, int value) {
+static int cfx_list_value_set_bool(cef_list_value_t* self, size_t index, int value) {
     return self->set_bool(self, index, value);
 }
 
 // set_int
-static int cfx_list_value_set_int(cef_list_value_t* self, int index, int value) {
+static int cfx_list_value_set_int(cef_list_value_t* self, size_t index, int value) {
     return self->set_int(self, index, value);
 }
 
 // set_double
-static int cfx_list_value_set_double(cef_list_value_t* self, int index, double value) {
+static int cfx_list_value_set_double(cef_list_value_t* self, size_t index, double value) {
     return self->set_double(self, index, value);
 }
 
 // set_string
-static int cfx_list_value_set_string(cef_list_value_t* self, int index, char16 *value_str, int value_length) {
+static int cfx_list_value_set_string(cef_list_value_t* self, size_t index, char16 *value_str, int value_length) {
     cef_string_t value = { value_str, value_length, 0 };
     return self->set_string(self, index, &value);
 }
 
 // set_binary
-static int cfx_list_value_set_binary(cef_list_value_t* self, int index, cef_binary_value_t* value) {
+static int cfx_list_value_set_binary(cef_list_value_t* self, size_t index, cef_binary_value_t* value) {
     if(value) ((cef_base_t*)value)->add_ref((cef_base_t*)value);
     return self->set_binary(self, index, value);
 }
 
 // set_dictionary
-static int cfx_list_value_set_dictionary(cef_list_value_t* self, int index, cef_dictionary_value_t* value) {
+static int cfx_list_value_set_dictionary(cef_list_value_t* self, size_t index, cef_dictionary_value_t* value) {
     if(value) ((cef_base_t*)value)->add_ref((cef_base_t*)value);
     return self->set_dictionary(self, index, value);
 }
 
 // set_list
-static int cfx_list_value_set_list(cef_list_value_t* self, int index, cef_list_value_t* value) {
+static int cfx_list_value_set_list(cef_list_value_t* self, size_t index, cef_list_value_t* value) {
     if(value) ((cef_base_t*)value)->add_ref((cef_base_t*)value);
     return self->set_list(self, index, value);
 }

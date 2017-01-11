@@ -60,6 +60,7 @@
     <Compile Include="Generated\CfxClient.cs" />
     <Compile Include="Generated\CfxCommandLine.cs" />
     <Compile Include="Generated\CfxCompletionCallback.cs" />
+    <Compile Include="Generated\CfxCompositionUnderline.cs" />
     <Compile Include="Generated\CfxContextMenuHandler.cs" />
     <Compile Include="Generated\CfxContextMenuParams.cs" />
     <Compile Include="Generated\CfxCookie.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Generated\CfxStringVisitor.cs" />
     <Compile Include="Generated\CfxTask.cs" />
     <Compile Include="Generated\CfxTaskRunner.cs" />
+    <Compile Include="Generated\CfxThread.cs" />
     <Compile Include="Generated\CfxTime.cs" />
     <Compile Include="Generated\CfxUrlParts.cs" />
     <Compile Include="Generated\CfxUrlRequest.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="Generated\CfxV8StackTrace.cs" />
     <Compile Include="Generated\CfxV8Value.cs" />
     <Compile Include="Generated\CfxValue.cs" />
+    <Compile Include="Generated\CfxWaitableEvent.cs" />
     <Compile Include="Generated\CfxWebPluginInfo.cs" />
     <Compile Include="Generated\CfxWebPluginInfoVisitor.cs" />
     <Compile Include="Generated\CfxWebPluginUnstableCallback.cs" />

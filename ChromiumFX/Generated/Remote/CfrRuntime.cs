@@ -37,6 +37,65 @@ namespace Chromium.Remote {
     public partial class CfrRuntime {
 
         /// <summary>
+        /// Creates a directory and all parent directories if they don't already exist.
+        /// Returns true (1) on successful creation or if the directory already exists.
+        /// The directory is only readable by the current user. Calling this function on
+        /// the browser process UI or IO threads is not allowed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
+        /// </remarks>
+        public static bool CreateDirectory(string fullPath) {
+            var call = new CfxRuntimeCreateDirectoryRemoteCall();
+            call.fullPath = fullPath;
+            call.RequestExecution();
+            return call.__retval;
+        }
+
+        /// <summary>
+        /// Creates a new directory. On Windows if |prefix| is provided the new directory
+        /// name is in the format of "prefixyyyy". Returns true (1) on success and sets
+        /// |newTempPath| to the full path of the directory that was created. The
+        /// directory is only readable by the current user. Calling this function on the
+        /// browser process UI or IO threads is not allowed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
+        /// </remarks>
+        public static bool CreateNewTempDirectory(string prefix, string newTempPath) {
+            var call = new CfxRuntimeCreateNewTempDirectoryRemoteCall();
+            call.prefix = prefix;
+            call.newTempPath = newTempPath;
+            call.RequestExecution();
+            newTempPath = call.newTempPath;
+            return call.__retval;
+        }
+
+        /// <summary>
+        /// Creates a directory within another directory. Extra characters will be
+        /// appended to |prefix| to ensure that the new directory does not have the same
+        /// name as an existing directory. Returns true (1) on success and sets |newDir|
+        /// to the full path of the directory that was created. The directory is only
+        /// readable by the current user. Calling this function on the browser process UI
+        /// or IO threads is not allowed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
+        /// </remarks>
+        public static bool CreateTempDirectoryInDirectory(string baseDir, string prefix, string newDir) {
+            var call = new CfxRuntimeCreateTempDirectoryInDirectoryRemoteCall();
+            call.baseDir = baseDir;
+            call.prefix = prefix;
+            call.newDir = newDir;
+            call.RequestExecution();
+            newDir = call.newDir;
+            return call.__retval;
+        }
+
+        /// <summary>
         /// Returns true (1) if called on the specified thread. Equivalent to using
         /// CfrTaskRunner.GetForThread(threadId).BelongsToCurrentThread().
         /// </summary>
@@ -47,6 +106,42 @@ namespace Chromium.Remote {
         public static bool CurrentlyOn(CfxThreadId threadId) {
             var call = new CfxRuntimeCurrentlyOnRemoteCall();
             call.threadId = (int)threadId;
+            call.RequestExecution();
+            return call.__retval;
+        }
+
+        /// <summary>
+        /// Deletes the given path whether it's a file or a directory. If |path| is a
+        /// directory all contents will be deleted.  If |recursive| is true (1) any sub-
+        /// directories and their contents will also be deleted (equivalent to executing
+        /// "rm -rf", so use with caution). On POSIX environments if |path| is a symbolic
+        /// link then only the symlink will be deleted. Returns true (1) on successful
+        /// deletion or if |path| does not exist. Calling this function on the browser
+        /// process UI or IO threads is not allowed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
+        /// </remarks>
+        public static bool DeleteFile(string path, bool recursive) {
+            var call = new CfxRuntimeDeleteFileRemoteCall();
+            call.path = path;
+            call.recursive = recursive;
+            call.RequestExecution();
+            return call.__retval;
+        }
+
+        /// <summary>
+        /// Returns true (1) if the given path exists and is a directory. Calling this
+        /// function on the browser process UI or IO threads is not allowed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
+        /// </remarks>
+        public static bool DirectoryExists(string path) {
+            var call = new CfxRuntimeDirectoryExistsRemoteCall();
+            call.path = path;
             call.RequestExecution();
             return call.__retval;
         }
@@ -69,6 +164,25 @@ namespace Chromium.Remote {
             var call = new CfxRuntimeFormatUrlForSecurityDisplayRemoteCall();
             call.originUrl = originUrl;
             call.RequestExecution();
+            return call.__retval;
+        }
+
+        /// <summary>
+        /// Get the temporary directory provided by the system.
+        /// WARNING: In general, you should use the temp directory variants below instead
+        /// of this function. Those variants will ensure that the proper permissions are
+        /// set so that other users on the system can't edit them while they're open
+        /// (which could lead to security issues).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
+        /// </remarks>
+        public static bool GetTempDirectory(string tempDir) {
+            var call = new CfxRuntimeGetTempDirectoryRemoteCall();
+            call.tempDir = tempDir;
+            call.RequestExecution();
+            tempDir = call.tempDir;
             return call.__retval;
         }
 
@@ -198,6 +312,25 @@ namespace Chromium.Remote {
             call.extensionName = extensionName;
             call.javascriptCode = javascriptCode;
             call.handler = CfrObject.Unwrap(handler).ptr;
+            call.RequestExecution();
+            return call.__retval;
+        }
+
+        /// <summary>
+        /// Writes the contents of |srcDir| into a zip archive at |destFile|. If
+        /// |includeHiddenFiles| is true (1) files starting with "." will be included.
+        /// Returns true (1) on success.  Calling this function on the browser process UI
+        /// or IO threads is not allowed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
+        /// </remarks>
+        public static bool ZipDirectory(string srcDir, string destFile, bool includeHiddenFiles) {
+            var call = new CfxRuntimeZipDirectoryRemoteCall();
+            call.srcDir = srcDir;
+            call.destFile = destFile;
+            call.includeHiddenFiles = includeHiddenFiles;
             call.RequestExecution();
             return call.__retval;
         }

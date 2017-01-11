@@ -270,20 +270,6 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Get the NSTextInputContext implementation for enabling IME on Mac when
-        /// window rendering is disabled.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
-        /// </remarks>
-        public IntPtr NsTextInputContext {
-            get {
-                return CfxApi.BrowserHost.cfx_browser_host_get_nstext_input_context(NativePtr);
-            }
-        }
-
-        /// <summary>
         /// Returns the current visible navigation entry for this browser. This
         /// function can only be called on the UI thread.
         /// </summary>
@@ -687,26 +673,80 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Handles a keyDown event prior to passing it through the NSTextInputClient
-        /// machinery.
+        /// Begins a new composition or updates the existing composition. Blink has a
+        /// special node (a composition node) that allows the input function to change
+        /// text without affecting other DOM nodes. |text| is the optional text that
+        /// will be inserted into the composition node. |underlines| is an optional set
+        /// of ranges that will be underlined in the resulting text.
+        /// |replacementRange| is an optional range of the existing text that will be
+        /// replaced. |selectionRange| is an optional range of the resulting text that
+        /// will be selected after insertion or replacement. The |replacementRange|
+        /// value is only used on OS X.
+        /// This function may be called multiple times as the composition changes. When
+        /// the client is done making changes the composition should either be canceled
+        /// or completed. To cancel the composition call ImeCancelComposition. To
+        /// complete the composition call either ImeCommitText or
+        /// ImeFinishComposingText. Completion is usually signaled when:
+        /// A. The client receives a WM_IME_COMPOSITION message with a GCS_RESULTSTR
+        /// flag (on Windows), or;
+        /// B. The client receives a "commit" signal of GtkIMContext (on Linux), or;
+        /// C. insertText of NSTextInput is called (on Mac).
+        /// This function is only used when window rendering is disabled.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public void HandleKeyEventBeforeTextInputClient(IntPtr keyEvent) {
-            CfxApi.BrowserHost.cfx_browser_host_handle_key_event_before_text_input_client(NativePtr, keyEvent);
+        public void ImeSetComposition(string text, ulong underlinesCount, CfxCompositionUnderline underlines, CfxRange replacementRange, CfxRange selectionRange) {
+            var text_pinned = new PinnedString(text);
+            CfxApi.BrowserHost.cfx_browser_host_ime_set_composition(NativePtr, text_pinned.Obj.PinnedPtr, text_pinned.Length, (UIntPtr)underlinesCount, CfxCompositionUnderline.Unwrap(underlines), CfxRange.Unwrap(replacementRange), CfxRange.Unwrap(selectionRange));
+            text_pinned.Obj.Free();
         }
 
         /// <summary>
-        /// Performs any additional actions after NSTextInputClient handles the event.
+        /// Completes the existing composition by optionally inserting the specified
+        /// |text| into the composition node. |replacementRange| is an optional range
+        /// of the existing text that will be replaced. |relativeCursorPos| is where
+        /// the cursor will be positioned relative to the current cursor position. See
+        /// comments on ImeSetComposition for usage. The |replacementRange| and
+        /// |relativeCursorPos| values are only used on OS X. This function is only
+        /// used when window rendering is disabled.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
         /// </remarks>
-        public void HandleKeyEventAfterTextInputClient(IntPtr keyEvent) {
-            CfxApi.BrowserHost.cfx_browser_host_handle_key_event_after_text_input_client(NativePtr, keyEvent);
+        public void ImeCommitText(string text, CfxRange replacementRange, int relativeCursorPos) {
+            var text_pinned = new PinnedString(text);
+            CfxApi.BrowserHost.cfx_browser_host_ime_commit_text(NativePtr, text_pinned.Obj.PinnedPtr, text_pinned.Length, CfxRange.Unwrap(replacementRange), relativeCursorPos);
+            text_pinned.Obj.Free();
+        }
+
+        /// <summary>
+        /// Completes the existing composition by applying the current composition node
+        /// contents. If |keepSelection| is false (0) the current selection, if any,
+        /// will be discarded. See comments on ImeSetComposition for usage. This
+        /// function is only used when window rendering is disabled.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
+        public void ImeFinishComposingText(bool keepSelection) {
+            CfxApi.BrowserHost.cfx_browser_host_ime_finish_composing_text(NativePtr, keepSelection ? 1 : 0);
+        }
+
+        /// <summary>
+        /// Cancels the existing composition and discards the composition node contents
+        /// without applying them. See comments on ImeSetComposition for usage. This
+        /// function is only used when window rendering is disabled.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
+        /// </remarks>
+        public void ImeCancelComposition() {
+            CfxApi.BrowserHost.cfx_browser_host_ime_cancel_composition(NativePtr);
         }
 
         /// <summary>
