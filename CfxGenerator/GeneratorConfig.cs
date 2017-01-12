@@ -43,7 +43,12 @@ public class GeneratorConfig {
     private static string[] browserProcessOnly = AssemblyResources.GetLines("BrowserProcessOnly.txt");
 
     public static bool IsBrowserProcessOnly(string item) {
-        return browserProcessOnly.Contains(item);
+        foreach(var func in browserProcessOnly) {
+            if(item == func) return true;
+            if(func.EndsWith("_") && item.StartsWith(func))
+                return true;
+        }
+        return false;
     }
 
     public static string[] AdditionalCallIds {

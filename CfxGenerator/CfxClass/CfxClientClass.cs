@@ -318,9 +318,8 @@ public class CfxClientClass : CfxClass {
         b.AppendLine("private {0} m_{1};", cb.EventHandlerName, cb.PublicName);
     }
 
-    private static Dictionary<string, CommentData> emittedHandlers = new Dictionary<string, CommentData>();
-
-    private void EmitPublicEventArgsAndHandler(CodeBuilder b, CefCallbackFunction cb) {
+    
+    private bool ShouldEmitEventHandler(Dictionary<string, CommentData> emittedHandlers, CefCallbackFunction cb) {
         if(emittedHandlers.ContainsKey(cb.EventName)) {
             var c0 = emittedHandlers[cb.EventName];
             if(c0 != null) {
@@ -334,12 +333,20 @@ public class CfxClientClass : CfxClass {
                     }
                 }
             }
-            return;
+            return false;
         }
         emittedHandlers.Add(cb.EventName, cb.Comments);
+        return true;
+    }
+
+    private static Dictionary<string, CommentData> emittedPublicHandlers = new Dictionary<string, CommentData>();
+
+    private void EmitPublicEventArgsAndHandler(CodeBuilder b, CefCallbackFunction cb) {
 
         if(cb.IsBasicEvent)
             return;
+
+        if(!ShouldEmitEventHandler(emittedPublicHandlers, cb)) return;
 
         b.AppendSummaryAndRemarks(cb.Comments, false, true);
         b.AppendLine("public delegate void {0}(object sender, {1} e);", cb.EventHandlerName, cb.PublicEventArgsClassName);
@@ -462,7 +469,7 @@ public class CfxClientClass : CfxClass {
 
             var sig = cb.Signature;
 
-            b.BeginRemoteCallClass(cb.EventName, callIds, "RemoteEventCall");
+            b.BeginRemoteCallClass(cb.RemoteCallName, callIds, "RemoteEventCall");
             b.AppendLine();
 
             var inArgumentList = new List<string>();
@@ -598,7 +605,7 @@ public class CfxClientClass : CfxClass {
             }
 
             b.BeginFunction(cb.Name, "void", sig.PInvokeParameterList, "internal static");
-            b.AppendLine("var call = new {0}RemoteEventCall();", cb.EventName);
+            b.AppendLine("var call = new {0}RemoteEventCall();", cb.RemoteCallName);
             b.AppendLine("call.gcHandlePtr = gcHandlePtr;");
             foreach(var pm in inArgumentList) {
                 b.AppendLine("call.{0} = {0};", pm);
@@ -692,11 +699,14 @@ public class CfxClientClass : CfxClass {
         b.EndBlock();
     }
 
+    private static Dictionary<string, CommentData> emittedRemoteHandlers = new Dictionary<string, CommentData>();
 
     public void EmitRemoteEventArgsAndHandler(CodeBuilder b, CefCallbackFunction cb) {
 
         if(cb.IsBasicEvent)
             return;
+
+        if(!ShouldEmitEventHandler(emittedRemoteHandlers, cb)) return;
 
         b.AppendSummaryAndRemarks(cb.Comments, true, true);
         b.AppendLine("public delegate void {0}(object sender, {1} e);", cb.RemoteEventHandlerName, cb.RemoteEventArgsClassName);
@@ -706,7 +716,7 @@ public class CfxClientClass : CfxClass {
         b.BeginClass(cb.RemoteEventArgsClassName + " : CfrEventArgs", GeneratorConfig.ClassModifiers(cb.RemoteEventArgsClassName));
         b.AppendLine();
 
-        b.AppendLine("private {0}RemoteEventCall call;", cb.EventName);
+        b.AppendLine("private {0}RemoteEventCall call;", cb.RemoteCallName);
         b.AppendLine();
 
         for(var i = 1; i <= cb.Signature.ManagedArguments.Count() - 1; i++) {
@@ -720,7 +730,7 @@ public class CfxClientClass : CfxClass {
             b.AppendLine();
         }
 
-        b.AppendLine("internal {0}({1}RemoteEventCall call) {{ this.call = call; }}", cb.RemoteEventArgsClassName, cb.EventName);
+        b.AppendLine("internal {0}({1}RemoteEventCall call) {{ this.call = call; }}", cb.RemoteEventArgsClassName, cb.RemoteCallName);
         b.AppendLine();
 
         for(var i = 1; i <= cb.Signature.ManagedArguments.Count() - 1; i++) {

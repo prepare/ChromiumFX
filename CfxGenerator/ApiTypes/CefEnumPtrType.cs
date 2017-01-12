@@ -30,6 +30,7 @@
 
 
 using System;
+using System.Diagnostics;
 
 public class CefEnumPtrType : CefType {
     private CefEnumType cefEnum;
@@ -94,8 +95,9 @@ public class CefEnumPtrType : CefType {
     }
 
     public override void EmitPostRemoteRaiseEventStatements(CodeBuilder b, string var) {
-        b.AppendLine("aaaaarghhshshshs;");
-        throw new Exception();
+        b.AppendLine("/* implement this */;");
+        Debug.Print("implement this");
+        Debugger.Break();
     }
 
     public override bool IsOut {

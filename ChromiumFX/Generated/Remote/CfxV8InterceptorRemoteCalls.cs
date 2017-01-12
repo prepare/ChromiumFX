@@ -56,10 +56,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetByNameRemoteEventCall : RemoteEventCall {
+    internal class CfxV8InterceptorGetByNameRemoteEventCall : RemoteEventCall {
 
-        internal CfxGetByNameRemoteEventCall()
-            : base(RemoteCallId.CfxGetByNameRemoteEventCall) {}
+        internal CfxV8InterceptorGetByNameRemoteEventCall()
+            : base(RemoteCallId.CfxV8InterceptorGetByNameRemoteEventCall) {}
 
         internal IntPtr name_str;
         internal int name_length;
@@ -113,10 +113,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetByIndexRemoteEventCall : RemoteEventCall {
+    internal class CfxV8InterceptorGetByIndexRemoteEventCall : RemoteEventCall {
 
-        internal CfxGetByIndexRemoteEventCall()
-            : base(RemoteCallId.CfxGetByIndexRemoteEventCall) {}
+        internal CfxV8InterceptorGetByIndexRemoteEventCall()
+            : base(RemoteCallId.CfxV8InterceptorGetByIndexRemoteEventCall) {}
 
         internal int index;
         internal IntPtr @object;
@@ -167,10 +167,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxSetByNameRemoteEventCall : RemoteEventCall {
+    internal class CfxV8InterceptorSetByNameRemoteEventCall : RemoteEventCall {
 
-        internal CfxSetByNameRemoteEventCall()
-            : base(RemoteCallId.CfxSetByNameRemoteEventCall) {}
+        internal CfxV8InterceptorSetByNameRemoteEventCall()
+            : base(RemoteCallId.CfxV8InterceptorSetByNameRemoteEventCall) {}
 
         internal IntPtr name_str;
         internal int name_length;
@@ -227,10 +227,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxSetByIndexRemoteEventCall : RemoteEventCall {
+    internal class CfxV8InterceptorSetByIndexRemoteEventCall : RemoteEventCall {
 
-        internal CfxSetByIndexRemoteEventCall()
-            : base(RemoteCallId.CfxSetByIndexRemoteEventCall) {}
+        internal CfxV8InterceptorSetByIndexRemoteEventCall()
+            : base(RemoteCallId.CfxV8InterceptorSetByIndexRemoteEventCall) {}
 
         internal int index;
         internal IntPtr @object;

@@ -71,7 +71,7 @@ namespace Chromium.Remote {
         private static IntPtr get_byname_native_ptr;
 
         internal static void get_byname(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out int object_release, out IntPtr retval, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle) {
-            var call = new CfxGetByNameRemoteEventCall();
+            var call = new CfxV8InterceptorGetByNameRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.name_str = name_str;
             call.name_length = name_length;
@@ -99,7 +99,7 @@ namespace Chromium.Remote {
         private static IntPtr get_byindex_native_ptr;
 
         internal static void get_byindex(IntPtr gcHandlePtr, out int __retval, int index, IntPtr @object, out int object_release, out IntPtr retval, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle) {
-            var call = new CfxGetByIndexRemoteEventCall();
+            var call = new CfxV8InterceptorGetByIndexRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.index = index;
             call.@object = @object;
@@ -126,7 +126,7 @@ namespace Chromium.Remote {
         private static IntPtr set_byname_native_ptr;
 
         internal static void set_byname(IntPtr gcHandlePtr, out int __retval, IntPtr name_str, int name_length, IntPtr @object, out int object_release, IntPtr value, out int value_release, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle) {
-            var call = new CfxSetByNameRemoteEventCall();
+            var call = new CfxV8InterceptorSetByNameRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.name_str = name_str;
             call.name_length = name_length;
@@ -155,7 +155,7 @@ namespace Chromium.Remote {
         private static IntPtr set_byindex_native_ptr;
 
         internal static void set_byindex(IntPtr gcHandlePtr, out int __retval, int index, IntPtr @object, out int object_release, IntPtr value, out int value_release, out IntPtr exception_str, out int exception_length, out IntPtr exception_gc_handle) {
-            var call = new CfxSetByIndexRemoteEventCall();
+            var call = new CfxV8InterceptorSetByIndexRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.index = index;
             call.@object = @object;

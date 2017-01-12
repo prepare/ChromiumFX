@@ -250,11 +250,11 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrOnLoadingStateChangeEventArgs : CfrEventArgs {
 
-            private CfxOnLoadingStateChangeRemoteEventCall call;
+            private CfxLoadHandlerOnLoadingStateChangeRemoteEventCall call;
 
             internal CfrBrowser m_browser_wrapped;
 
-            internal CfrOnLoadingStateChangeEventArgs(CfxOnLoadingStateChangeRemoteEventCall call) { this.call = call; }
+            internal CfrOnLoadingStateChangeEventArgs(CfxLoadHandlerOnLoadingStateChangeRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfrLoadHandler.OnLoadingStateChange"/> render process callback.
@@ -333,12 +333,12 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrOnLoadStartEventArgs : CfrEventArgs {
 
-            private CfxOnLoadStartRemoteEventCall call;
+            private CfxLoadHandlerOnLoadStartRemoteEventCall call;
 
             internal CfrBrowser m_browser_wrapped;
             internal CfrFrame m_frame_wrapped;
 
-            internal CfrOnLoadStartEventArgs(CfxOnLoadStartRemoteEventCall call) { this.call = call; }
+            internal CfrOnLoadStartEventArgs(CfxLoadHandlerOnLoadStartRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfrLoadHandler.OnLoadStart"/> render process callback.
@@ -405,12 +405,12 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrOnLoadEndEventArgs : CfrEventArgs {
 
-            private CfxOnLoadEndRemoteEventCall call;
+            private CfxLoadHandlerOnLoadEndRemoteEventCall call;
 
             internal CfrBrowser m_browser_wrapped;
             internal CfrFrame m_frame_wrapped;
 
-            internal CfrOnLoadEndEventArgs(CfxOnLoadEndRemoteEventCall call) { this.call = call; }
+            internal CfrOnLoadEndEventArgs(CfxLoadHandlerOnLoadEndRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfrLoadHandler.OnLoadEnd"/> render process callback.
@@ -471,7 +471,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrOnLoadErrorEventArgs : CfrEventArgs {
 
-            private CfxOnLoadErrorRemoteEventCall call;
+            private CfxLoadHandlerOnLoadErrorRemoteEventCall call;
 
             internal CfrBrowser m_browser_wrapped;
             internal CfrFrame m_frame_wrapped;
@@ -480,7 +480,7 @@ namespace Chromium.Remote {
             internal string m_failedUrl;
             internal bool m_failedUrl_fetched;
 
-            internal CfrOnLoadErrorEventArgs(CfxOnLoadErrorRemoteEventCall call) { this.call = call; }
+            internal CfrOnLoadErrorEventArgs(CfxLoadHandlerOnLoadErrorRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfrLoadHandler.OnLoadError"/> render process callback.

@@ -186,6 +186,12 @@ public class CefCallbackFunction  {
         }
     }
 
+    public string RemoteCallName {
+        get {
+            return Parent.ClassName + PublicName;
+        }
+    }
+
     public string EventHandlerName {
         get {
             if(IsBasicEvent)

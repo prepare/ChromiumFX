@@ -66,7 +66,7 @@ namespace Chromium.Remote {
         private static IntPtr get_localized_string_native_ptr;
 
         internal static void get_localized_string(IntPtr gcHandlePtr, out int __retval, int string_id, out IntPtr string_str, out int string_length, out IntPtr string_gc_handle) {
-            var call = new CfxGetLocalizedStringRemoteEventCall();
+            var call = new CfxResourceBundleHandlerGetLocalizedStringRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.string_id = string_id;
             call.RequestExecution();
@@ -90,7 +90,7 @@ namespace Chromium.Remote {
         private static IntPtr get_data_resource_native_ptr;
 
         internal static void get_data_resource(IntPtr gcHandlePtr, out int __retval, int resource_id, out IntPtr data, out UIntPtr data_size) {
-            var call = new CfxGetDataResourceRemoteEventCall();
+            var call = new CfxResourceBundleHandlerGetDataResourceRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.resource_id = resource_id;
             call.RequestExecution();
@@ -106,7 +106,7 @@ namespace Chromium.Remote {
         private static IntPtr get_data_resource_for_scale_native_ptr;
 
         internal static void get_data_resource_for_scale(IntPtr gcHandlePtr, out int __retval, int resource_id, int scale_factor, out IntPtr data, out UIntPtr data_size) {
-            var call = new CfxGetDataResourceForScaleRemoteEventCall();
+            var call = new CfxResourceBundleHandlerGetDataResourceForScaleRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.resource_id = resource_id;
             call.scale_factor = scale_factor;

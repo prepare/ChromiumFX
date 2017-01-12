@@ -71,7 +71,7 @@ namespace Chromium.Remote {
         private static IntPtr on_before_command_line_processing_native_ptr;
 
         internal static void on_before_command_line_processing(IntPtr gcHandlePtr, IntPtr process_type_str, int process_type_length, IntPtr command_line, out int command_line_release) {
-            var call = new CfxOnBeforeCommandLineProcessingRemoteEventCall();
+            var call = new CfxAppOnBeforeCommandLineProcessingRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.process_type_str = process_type_str;
             call.process_type_length = process_type_length;
@@ -87,7 +87,7 @@ namespace Chromium.Remote {
         private static IntPtr on_register_custom_schemes_native_ptr;
 
         internal static void on_register_custom_schemes(IntPtr gcHandlePtr, IntPtr registrar, out int registrar_release) {
-            var call = new CfxOnRegisterCustomSchemesRemoteEventCall();
+            var call = new CfxAppOnRegisterCustomSchemesRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.registrar = registrar;
             call.RequestExecution();
@@ -101,7 +101,7 @@ namespace Chromium.Remote {
         private static IntPtr get_resource_bundle_handler_native_ptr;
 
         internal static void get_resource_bundle_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
-            var call = new CfxGetResourceBundleHandlerRemoteEventCall();
+            var call = new CfxAppGetResourceBundleHandlerRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.RequestExecution();
             __retval = call.__retval;
@@ -114,7 +114,7 @@ namespace Chromium.Remote {
         private static IntPtr get_render_process_handler_native_ptr;
 
         internal static void get_render_process_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
-            var call = new CfxGetRenderProcessHandlerRemoteEventCall();
+            var call = new CfxAppGetRenderProcessHandlerRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.RequestExecution();
             __retval = call.__retval;

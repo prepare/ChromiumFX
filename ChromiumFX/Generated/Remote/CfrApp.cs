@@ -251,13 +251,13 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrOnBeforeCommandLineProcessingEventArgs : CfrEventArgs {
 
-            private CfxOnBeforeCommandLineProcessingRemoteEventCall call;
+            private CfxAppOnBeforeCommandLineProcessingRemoteEventCall call;
 
             internal string m_process_type;
             internal bool m_process_type_fetched;
             internal CfrCommandLine m_command_line_wrapped;
 
-            internal CfrOnBeforeCommandLineProcessingEventArgs(CfxOnBeforeCommandLineProcessingRemoteEventCall call) { this.call = call; }
+            internal CfrOnBeforeCommandLineProcessingEventArgs(CfxAppOnBeforeCommandLineProcessingRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Get the ProcessType parameter for the <see cref="CfrApp.OnBeforeCommandLineProcessing"/> render process callback.
@@ -312,11 +312,11 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrOnRegisterCustomSchemesEventArgs : CfrEventArgs {
 
-            private CfxOnRegisterCustomSchemesRemoteEventCall call;
+            private CfxAppOnRegisterCustomSchemesRemoteEventCall call;
 
             internal CfrSchemeRegistrar m_registrar_wrapped;
 
-            internal CfrOnRegisterCustomSchemesEventArgs(CfxOnRegisterCustomSchemesRemoteEventCall call) { this.call = call; }
+            internal CfrOnRegisterCustomSchemesEventArgs(CfxAppOnRegisterCustomSchemesRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Get the Registrar parameter for the <see cref="CfrApp.OnRegisterCustomSchemes"/> render process callback.
@@ -358,13 +358,13 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrGetResourceBundleHandlerEventArgs : CfrEventArgs {
 
-            private CfxGetResourceBundleHandlerRemoteEventCall call;
+            private CfxAppGetResourceBundleHandlerRemoteEventCall call;
 
 
             internal CfrResourceBundleHandler m_returnValue;
             private bool returnValueSet;
 
-            internal CfrGetResourceBundleHandlerEventArgs(CfxGetResourceBundleHandlerRemoteEventCall call) { this.call = call; }
+            internal CfrGetResourceBundleHandlerEventArgs(CfxAppGetResourceBundleHandlerRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Set the return value for the <see cref="CfrApp.GetResourceBundleHandler"/> render process callback.
@@ -399,13 +399,13 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrGetRenderProcessHandlerEventArgs : CfrEventArgs {
 
-            private CfxGetRenderProcessHandlerRemoteEventCall call;
+            private CfxAppGetRenderProcessHandlerRemoteEventCall call;
 
 
             internal CfrRenderProcessHandler m_returnValue;
             private bool returnValueSet;
 
-            internal CfrGetRenderProcessHandlerEventArgs(CfxGetRenderProcessHandlerRemoteEventCall call) { this.call = call; }
+            internal CfrGetRenderProcessHandlerEventArgs(CfxAppGetRenderProcessHandlerRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Set the return value for the <see cref="CfrApp.GetRenderProcessHandler"/> render process callback.

@@ -207,14 +207,14 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrGetLocalizedStringEventArgs : CfrEventArgs {
 
-            private CfxGetLocalizedStringRemoteEventCall call;
+            private CfxResourceBundleHandlerGetLocalizedStringRemoteEventCall call;
 
             internal string m_string_wrapped;
 
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfrGetLocalizedStringEventArgs(CfxGetLocalizedStringRemoteEventCall call) { this.call = call; }
+            internal CfrGetLocalizedStringEventArgs(CfxResourceBundleHandlerGetLocalizedStringRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Get the StringId parameter for the <see cref="CfrResourceBundleHandler.GetLocalizedString"/> render process callback.
@@ -279,13 +279,13 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrGetDataResourceEventArgs : CfrEventArgs {
 
-            private CfxGetDataResourceRemoteEventCall call;
+            private CfxResourceBundleHandlerGetDataResourceRemoteEventCall call;
 
 
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfrGetDataResourceEventArgs(CfxGetDataResourceRemoteEventCall call) { this.call = call; }
+            internal CfrGetDataResourceEventArgs(CfxResourceBundleHandlerGetDataResourceRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Get the ResourceId parameter for the <see cref="CfrResourceBundleHandler.GetDataResource"/> render process callback.
@@ -308,10 +308,10 @@ namespace Chromium.Remote {
             /// <summary>
             /// Set the DataSize out parameter for the <see cref="CfrResourceBundleHandler.GetDataResource"/> render process callback.
             /// </summary>
-            public UIntPtr DataSize {
+            public ulong DataSize {
                 set {
                     CheckAccess();
-                    call.data_size = value;
+                    call.data_size = (UIntPtr)value;
                 }
             }
             /// <summary>
@@ -359,13 +359,13 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrGetDataResourceForScaleEventArgs : CfrEventArgs {
 
-            private CfxGetDataResourceForScaleRemoteEventCall call;
+            private CfxResourceBundleHandlerGetDataResourceForScaleRemoteEventCall call;
 
 
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfrGetDataResourceForScaleEventArgs(CfxGetDataResourceForScaleRemoteEventCall call) { this.call = call; }
+            internal CfrGetDataResourceForScaleEventArgs(CfxResourceBundleHandlerGetDataResourceForScaleRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Get the ResourceId parameter for the <see cref="CfrResourceBundleHandler.GetDataResourceForScale"/> render process callback.
@@ -397,10 +397,10 @@ namespace Chromium.Remote {
             /// <summary>
             /// Set the DataSize out parameter for the <see cref="CfrResourceBundleHandler.GetDataResourceForScale"/> render process callback.
             /// </summary>
-            public UIntPtr DataSize {
+            public ulong DataSize {
                 set {
                     CheckAccess();
-                    call.data_size = value;
+                    call.data_size = (UIntPtr)value;
                 }
             }
             /// <summary>

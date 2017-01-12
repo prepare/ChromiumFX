@@ -56,10 +56,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxOnLoadingStateChangeRemoteEventCall : RemoteEventCall {
+    internal class CfxLoadHandlerOnLoadingStateChangeRemoteEventCall : RemoteEventCall {
 
-        internal CfxOnLoadingStateChangeRemoteEventCall()
-            : base(RemoteCallId.CfxOnLoadingStateChangeRemoteEventCall) {}
+        internal CfxLoadHandlerOnLoadingStateChangeRemoteEventCall()
+            : base(RemoteCallId.CfxLoadHandlerOnLoadingStateChangeRemoteEventCall) {}
 
         internal IntPtr browser;
         internal int browser_release;
@@ -103,10 +103,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxOnLoadStartRemoteEventCall : RemoteEventCall {
+    internal class CfxLoadHandlerOnLoadStartRemoteEventCall : RemoteEventCall {
 
-        internal CfxOnLoadStartRemoteEventCall()
-            : base(RemoteCallId.CfxOnLoadStartRemoteEventCall) {}
+        internal CfxLoadHandlerOnLoadStartRemoteEventCall()
+            : base(RemoteCallId.CfxLoadHandlerOnLoadStartRemoteEventCall) {}
 
         internal IntPtr browser;
         internal int browser_release;
@@ -151,10 +151,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxOnLoadEndRemoteEventCall : RemoteEventCall {
+    internal class CfxLoadHandlerOnLoadEndRemoteEventCall : RemoteEventCall {
 
-        internal CfxOnLoadEndRemoteEventCall()
-            : base(RemoteCallId.CfxOnLoadEndRemoteEventCall) {}
+        internal CfxLoadHandlerOnLoadEndRemoteEventCall()
+            : base(RemoteCallId.CfxLoadHandlerOnLoadEndRemoteEventCall) {}
 
         internal IntPtr browser;
         internal int browser_release;
@@ -199,10 +199,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxOnLoadErrorRemoteEventCall : RemoteEventCall {
+    internal class CfxLoadHandlerOnLoadErrorRemoteEventCall : RemoteEventCall {
 
-        internal CfxOnLoadErrorRemoteEventCall()
-            : base(RemoteCallId.CfxOnLoadErrorRemoteEventCall) {}
+        internal CfxLoadHandlerOnLoadErrorRemoteEventCall()
+            : base(RemoteCallId.CfxLoadHandlerOnLoadErrorRemoteEventCall) {}
 
         internal IntPtr browser;
         internal int browser_release;

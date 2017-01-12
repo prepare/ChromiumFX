@@ -56,10 +56,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetLocalizedStringRemoteEventCall : RemoteEventCall {
+    internal class CfxResourceBundleHandlerGetLocalizedStringRemoteEventCall : RemoteEventCall {
 
-        internal CfxGetLocalizedStringRemoteEventCall()
-            : base(RemoteCallId.CfxGetLocalizedStringRemoteEventCall) {}
+        internal CfxResourceBundleHandlerGetLocalizedStringRemoteEventCall()
+            : base(RemoteCallId.CfxResourceBundleHandlerGetLocalizedStringRemoteEventCall) {}
 
         internal int string_id;
         internal string @string;
@@ -99,10 +99,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetDataResourceRemoteEventCall : RemoteEventCall {
+    internal class CfxResourceBundleHandlerGetDataResourceRemoteEventCall : RemoteEventCall {
 
-        internal CfxGetDataResourceRemoteEventCall()
-            : base(RemoteCallId.CfxGetDataResourceRemoteEventCall) {}
+        internal CfxResourceBundleHandlerGetDataResourceRemoteEventCall()
+            : base(RemoteCallId.CfxResourceBundleHandlerGetDataResourceRemoteEventCall) {}
 
         internal int resource_id;
         internal IntPtr data;
@@ -144,10 +144,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetDataResourceForScaleRemoteEventCall : RemoteEventCall {
+    internal class CfxResourceBundleHandlerGetDataResourceForScaleRemoteEventCall : RemoteEventCall {
 
-        internal CfxGetDataResourceForScaleRemoteEventCall()
-            : base(RemoteCallId.CfxGetDataResourceForScaleRemoteEventCall) {}
+        internal CfxResourceBundleHandlerGetDataResourceForScaleRemoteEventCall()
+            : base(RemoteCallId.CfxResourceBundleHandlerGetDataResourceForScaleRemoteEventCall) {}
 
         internal int resource_id;
         internal int scale_factor;

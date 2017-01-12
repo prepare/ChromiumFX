@@ -256,7 +256,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrGetByNameEventArgs : CfrEventArgs {
 
-            private CfxGetByNameRemoteEventCall call;
+            private CfxV8InterceptorGetByNameRemoteEventCall call;
 
             internal string m_name;
             internal bool m_name_fetched;
@@ -267,7 +267,7 @@ namespace Chromium.Remote {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfrGetByNameEventArgs(CfxGetByNameRemoteEventCall call) { this.call = call; }
+            internal CfrGetByNameEventArgs(CfxV8InterceptorGetByNameRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Get the Name parameter for the <see cref="CfrV8Interceptor.GetByName"/> render process callback.
@@ -355,7 +355,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrGetByIndexEventArgs : CfrEventArgs {
 
-            private CfxGetByIndexRemoteEventCall call;
+            private CfxV8InterceptorGetByIndexRemoteEventCall call;
 
             internal CfrV8Value m_object_wrapped;
             internal CfrV8Value m_retval_wrapped;
@@ -364,7 +364,7 @@ namespace Chromium.Remote {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfrGetByIndexEventArgs(CfxGetByIndexRemoteEventCall call) { this.call = call; }
+            internal CfrGetByIndexEventArgs(CfxV8InterceptorGetByIndexRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Get the Index parameter for the <see cref="CfrV8Interceptor.GetByIndex"/> render process callback.
@@ -448,7 +448,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrSetByNameEventArgs : CfrEventArgs {
 
-            private CfxSetByNameRemoteEventCall call;
+            private CfxV8InterceptorSetByNameRemoteEventCall call;
 
             internal string m_name;
             internal bool m_name_fetched;
@@ -459,7 +459,7 @@ namespace Chromium.Remote {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfrSetByNameEventArgs(CfxSetByNameRemoteEventCall call) { this.call = call; }
+            internal CfrSetByNameEventArgs(CfxV8InterceptorSetByNameRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Get the Name parameter for the <see cref="CfrV8Interceptor.SetByName"/> render process callback.
@@ -546,7 +546,7 @@ namespace Chromium.Remote {
         /// </remarks>
         public class CfrSetByIndexEventArgs : CfrEventArgs {
 
-            private CfxSetByIndexRemoteEventCall call;
+            private CfxV8InterceptorSetByIndexRemoteEventCall call;
 
             internal CfrV8Value m_object_wrapped;
             internal CfrV8Value m_value_wrapped;
@@ -555,7 +555,7 @@ namespace Chromium.Remote {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfrSetByIndexEventArgs(CfxSetByIndexRemoteEventCall call) { this.call = call; }
+            internal CfrSetByIndexEventArgs(CfxV8InterceptorSetByIndexRemoteEventCall call) { this.call = call; }
 
             /// <summary>
             /// Get the Index parameter for the <see cref="CfrV8Interceptor.SetByIndex"/> render process callback.

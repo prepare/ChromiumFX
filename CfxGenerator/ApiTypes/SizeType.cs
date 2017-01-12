@@ -48,4 +48,13 @@ public class SizeType : NumericType {
     public override string PublicUnwrapExpression(string var) {
         return string.Format("(UIntPtr){0}", CSharp.Escape(var));
     }
+
+    public override string RemoteUnwrapExpression(string var) {
+        return string.Format("(UIntPtr){0}", CSharp.Escape(var));
+    }
+
+    public override void EmitRemoteEventArgGetterStatements(CodeBuilder b, string var) {
+        b.AppendLine("return (ulong)call.{0};", CSharp.Escape(var));
+    }
+
 }

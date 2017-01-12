@@ -30,6 +30,7 @@
 
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 public class CefApiDeclarations {
@@ -114,6 +115,16 @@ public class CefApiDeclarations {
         foreach(var f in ExportFunctions) {
             if(!GeneratorConfig.IsBrowserProcessOnly(f.Name)) {
                 AddRemoteFunc(f);
+            }
+        }
+
+        foreach(var t in CefStructTypes) {
+            if(t.ClassBuilder.ExportFunctions != null) {
+                foreach(var f in t.ClassBuilder.ExportFunctions) {
+                    if(!GeneratorConfig.IsBrowserProcessOnly(f.Name)) {
+                        AnalyzeSignature(f.Signature);
+                    }
+                }
             }
         }
 

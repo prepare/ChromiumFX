@@ -56,10 +56,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxOnRenderThreadCreatedRemoteEventCall : RemoteEventCall {
+    internal class CfxRenderProcessHandlerOnRenderThreadCreatedRemoteEventCall : RemoteEventCall {
 
-        internal CfxOnRenderThreadCreatedRemoteEventCall()
-            : base(RemoteCallId.CfxOnRenderThreadCreatedRemoteEventCall) {}
+        internal CfxRenderProcessHandlerOnRenderThreadCreatedRemoteEventCall()
+            : base(RemoteCallId.CfxRenderProcessHandlerOnRenderThreadCreatedRemoteEventCall) {}
 
         internal IntPtr extra_info;
         internal int extra_info_release;
@@ -94,10 +94,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxOnWebKitInitializedRemoteEventCall : RemoteEventCall {
+    internal class CfxRenderProcessHandlerOnWebKitInitializedRemoteEventCall : RemoteEventCall {
 
-        internal CfxOnWebKitInitializedRemoteEventCall()
-            : base(RemoteCallId.CfxOnWebKitInitializedRemoteEventCall) {}
+        internal CfxRenderProcessHandlerOnWebKitInitializedRemoteEventCall()
+            : base(RemoteCallId.CfxRenderProcessHandlerOnWebKitInitializedRemoteEventCall) {}
 
 
         protected override void WriteArgs(StreamHandler h) {
@@ -125,10 +125,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxOnBrowserCreatedRemoteEventCall : RemoteEventCall {
+    internal class CfxRenderProcessHandlerOnBrowserCreatedRemoteEventCall : RemoteEventCall {
 
-        internal CfxOnBrowserCreatedRemoteEventCall()
-            : base(RemoteCallId.CfxOnBrowserCreatedRemoteEventCall) {}
+        internal CfxRenderProcessHandlerOnBrowserCreatedRemoteEventCall()
+            : base(RemoteCallId.CfxRenderProcessHandlerOnBrowserCreatedRemoteEventCall) {}
 
         internal IntPtr browser;
         internal int browser_release;
@@ -163,10 +163,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxOnBrowserDestroyedRemoteEventCall : RemoteEventCall {
+    internal class CfxRenderProcessHandlerOnBrowserDestroyedRemoteEventCall : RemoteEventCall {
 
-        internal CfxOnBrowserDestroyedRemoteEventCall()
-            : base(RemoteCallId.CfxOnBrowserDestroyedRemoteEventCall) {}
+        internal CfxRenderProcessHandlerOnBrowserDestroyedRemoteEventCall()
+            : base(RemoteCallId.CfxRenderProcessHandlerOnBrowserDestroyedRemoteEventCall) {}
 
         internal IntPtr browser;
         internal int browser_release;
@@ -201,10 +201,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxGetLoadHandlerRemoteEventCall : RemoteEventCall {
+    internal class CfxRenderProcessHandlerGetLoadHandlerRemoteEventCall : RemoteEventCall {
 
-        internal CfxGetLoadHandlerRemoteEventCall()
-            : base(RemoteCallId.CfxGetLoadHandlerRemoteEventCall) {}
+        internal CfxRenderProcessHandlerGetLoadHandlerRemoteEventCall()
+            : base(RemoteCallId.CfxRenderProcessHandlerGetLoadHandlerRemoteEventCall) {}
 
 
         internal IntPtr __retval;
@@ -237,10 +237,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxOnBeforeNavigationRemoteEventCall : RemoteEventCall {
+    internal class CfxRenderProcessHandlerOnBeforeNavigationRemoteEventCall : RemoteEventCall {
 
-        internal CfxOnBeforeNavigationRemoteEventCall()
-            : base(RemoteCallId.CfxOnBeforeNavigationRemoteEventCall) {}
+        internal CfxRenderProcessHandlerOnBeforeNavigationRemoteEventCall()
+            : base(RemoteCallId.CfxRenderProcessHandlerOnBeforeNavigationRemoteEventCall) {}
 
         internal IntPtr browser;
         internal int browser_release;
@@ -300,10 +300,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxOnContextCreatedRemoteEventCall : RemoteEventCall {
+    internal class CfxRenderProcessHandlerOnContextCreatedRemoteEventCall : RemoteEventCall {
 
-        internal CfxOnContextCreatedRemoteEventCall()
-            : base(RemoteCallId.CfxOnContextCreatedRemoteEventCall) {}
+        internal CfxRenderProcessHandlerOnContextCreatedRemoteEventCall()
+            : base(RemoteCallId.CfxRenderProcessHandlerOnContextCreatedRemoteEventCall) {}
 
         internal IntPtr browser;
         internal int browser_release;
@@ -352,10 +352,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxOnContextReleasedRemoteEventCall : RemoteEventCall {
+    internal class CfxRenderProcessHandlerOnContextReleasedRemoteEventCall : RemoteEventCall {
 
-        internal CfxOnContextReleasedRemoteEventCall()
-            : base(RemoteCallId.CfxOnContextReleasedRemoteEventCall) {}
+        internal CfxRenderProcessHandlerOnContextReleasedRemoteEventCall()
+            : base(RemoteCallId.CfxRenderProcessHandlerOnContextReleasedRemoteEventCall) {}
 
         internal IntPtr browser;
         internal int browser_release;
@@ -404,10 +404,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxOnUncaughtExceptionRemoteEventCall : RemoteEventCall {
+    internal class CfxRenderProcessHandlerOnUncaughtExceptionRemoteEventCall : RemoteEventCall {
 
-        internal CfxOnUncaughtExceptionRemoteEventCall()
-            : base(RemoteCallId.CfxOnUncaughtExceptionRemoteEventCall) {}
+        internal CfxRenderProcessHandlerOnUncaughtExceptionRemoteEventCall()
+            : base(RemoteCallId.CfxRenderProcessHandlerOnUncaughtExceptionRemoteEventCall) {}
 
         internal IntPtr browser;
         internal int browser_release;
@@ -470,10 +470,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxOnFocusedNodeChangedRemoteEventCall : RemoteEventCall {
+    internal class CfxRenderProcessHandlerOnFocusedNodeChangedRemoteEventCall : RemoteEventCall {
 
-        internal CfxOnFocusedNodeChangedRemoteEventCall()
-            : base(RemoteCallId.CfxOnFocusedNodeChangedRemoteEventCall) {}
+        internal CfxRenderProcessHandlerOnFocusedNodeChangedRemoteEventCall()
+            : base(RemoteCallId.CfxRenderProcessHandlerOnFocusedNodeChangedRemoteEventCall) {}
 
         internal IntPtr browser;
         internal int browser_release;
@@ -522,10 +522,10 @@ namespace Chromium.Remote {
         }
     }
 
-    internal class CfxOnProcessMessageReceivedRemoteEventCall : RemoteEventCall {
+    internal class CfxRenderProcessHandlerOnProcessMessageReceivedRemoteEventCall : RemoteEventCall {
 
-        internal CfxOnProcessMessageReceivedRemoteEventCall()
-            : base(RemoteCallId.CfxOnProcessMessageReceivedRemoteEventCall) {}
+        internal CfxRenderProcessHandlerOnProcessMessageReceivedRemoteEventCall()
+            : base(RemoteCallId.CfxRenderProcessHandlerOnProcessMessageReceivedRemoteEventCall) {}
 
         internal IntPtr browser;
         internal int browser_release;

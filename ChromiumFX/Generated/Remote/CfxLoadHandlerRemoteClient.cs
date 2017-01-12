@@ -71,7 +71,7 @@ namespace Chromium.Remote {
         private static IntPtr on_loading_state_change_native_ptr;
 
         internal static void on_loading_state_change(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, int isLoading, int canGoBack, int canGoForward) {
-            var call = new CfxOnLoadingStateChangeRemoteEventCall();
+            var call = new CfxLoadHandlerOnLoadingStateChangeRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.browser = browser;
             call.isLoading = isLoading;
@@ -88,7 +88,7 @@ namespace Chromium.Remote {
         private static IntPtr on_load_start_native_ptr;
 
         internal static void on_load_start(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, int transition_type) {
-            var call = new CfxOnLoadStartRemoteEventCall();
+            var call = new CfxLoadHandlerOnLoadStartRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.browser = browser;
             call.frame = frame;
@@ -105,7 +105,7 @@ namespace Chromium.Remote {
         private static IntPtr on_load_end_native_ptr;
 
         internal static void on_load_end(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, int httpStatusCode) {
-            var call = new CfxOnLoadEndRemoteEventCall();
+            var call = new CfxLoadHandlerOnLoadEndRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.browser = browser;
             call.frame = frame;
@@ -122,7 +122,7 @@ namespace Chromium.Remote {
         private static IntPtr on_load_error_native_ptr;
 
         internal static void on_load_error(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, int errorCode, IntPtr errorText_str, int errorText_length, IntPtr failedUrl_str, int failedUrl_length) {
-            var call = new CfxOnLoadErrorRemoteEventCall();
+            var call = new CfxLoadHandlerOnLoadErrorRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.browser = browser;
             call.frame = frame;

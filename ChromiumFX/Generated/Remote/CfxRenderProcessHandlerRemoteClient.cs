@@ -106,7 +106,7 @@ namespace Chromium.Remote {
         private static IntPtr on_render_thread_created_native_ptr;
 
         internal static void on_render_thread_created(IntPtr gcHandlePtr, IntPtr extra_info, out int extra_info_release) {
-            var call = new CfxOnRenderThreadCreatedRemoteEventCall();
+            var call = new CfxRenderProcessHandlerOnRenderThreadCreatedRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.extra_info = extra_info;
             call.RequestExecution();
@@ -120,7 +120,7 @@ namespace Chromium.Remote {
         private static IntPtr on_web_kit_initialized_native_ptr;
 
         internal static void on_web_kit_initialized(IntPtr gcHandlePtr) {
-            var call = new CfxOnWebKitInitializedRemoteEventCall();
+            var call = new CfxRenderProcessHandlerOnWebKitInitializedRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.RequestExecution();
         }
@@ -132,7 +132,7 @@ namespace Chromium.Remote {
         private static IntPtr on_browser_created_native_ptr;
 
         internal static void on_browser_created(IntPtr gcHandlePtr, IntPtr browser, out int browser_release) {
-            var call = new CfxOnBrowserCreatedRemoteEventCall();
+            var call = new CfxRenderProcessHandlerOnBrowserCreatedRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.browser = browser;
             call.RequestExecution();
@@ -146,7 +146,7 @@ namespace Chromium.Remote {
         private static IntPtr on_browser_destroyed_native_ptr;
 
         internal static void on_browser_destroyed(IntPtr gcHandlePtr, IntPtr browser, out int browser_release) {
-            var call = new CfxOnBrowserDestroyedRemoteEventCall();
+            var call = new CfxRenderProcessHandlerOnBrowserDestroyedRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.browser = browser;
             call.RequestExecution();
@@ -160,7 +160,7 @@ namespace Chromium.Remote {
         private static IntPtr get_load_handler_native_ptr;
 
         internal static void get_load_handler(IntPtr gcHandlePtr, out IntPtr __retval) {
-            var call = new CfxGetLoadHandlerRemoteEventCall();
+            var call = new CfxRenderProcessHandlerGetLoadHandlerRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.RequestExecution();
             __retval = call.__retval;
@@ -173,7 +173,7 @@ namespace Chromium.Remote {
         private static IntPtr on_before_navigation_native_ptr;
 
         internal static void on_before_navigation(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr request, out int request_release, int navigation_type, int is_redirect) {
-            var call = new CfxOnBeforeNavigationRemoteEventCall();
+            var call = new CfxRenderProcessHandlerOnBeforeNavigationRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.browser = browser;
             call.frame = frame;
@@ -194,7 +194,7 @@ namespace Chromium.Remote {
         private static IntPtr on_context_created_native_ptr;
 
         internal static void on_context_created(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr context, out int context_release) {
-            var call = new CfxOnContextCreatedRemoteEventCall();
+            var call = new CfxRenderProcessHandlerOnContextCreatedRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.browser = browser;
             call.frame = frame;
@@ -212,7 +212,7 @@ namespace Chromium.Remote {
         private static IntPtr on_context_released_native_ptr;
 
         internal static void on_context_released(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr context, out int context_release) {
-            var call = new CfxOnContextReleasedRemoteEventCall();
+            var call = new CfxRenderProcessHandlerOnContextReleasedRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.browser = browser;
             call.frame = frame;
@@ -230,7 +230,7 @@ namespace Chromium.Remote {
         private static IntPtr on_uncaught_exception_native_ptr;
 
         internal static void on_uncaught_exception(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr context, out int context_release, IntPtr exception, out int exception_release, IntPtr stackTrace, out int stackTrace_release) {
-            var call = new CfxOnUncaughtExceptionRemoteEventCall();
+            var call = new CfxRenderProcessHandlerOnUncaughtExceptionRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.browser = browser;
             call.frame = frame;
@@ -252,7 +252,7 @@ namespace Chromium.Remote {
         private static IntPtr on_focused_node_changed_native_ptr;
 
         internal static void on_focused_node_changed(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr frame, out int frame_release, IntPtr node, out int node_release) {
-            var call = new CfxOnFocusedNodeChangedRemoteEventCall();
+            var call = new CfxRenderProcessHandlerOnFocusedNodeChangedRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.browser = browser;
             call.frame = frame;
@@ -270,7 +270,7 @@ namespace Chromium.Remote {
         private static IntPtr on_process_message_received_native_ptr;
 
         internal static void on_process_message_received(IntPtr gcHandlePtr, out int __retval, IntPtr browser, out int browser_release, int source_process, IntPtr message, out int message_release) {
-            var call = new CfxOnProcessMessageReceivedRemoteEventCall();
+            var call = new CfxRenderProcessHandlerOnProcessMessageReceivedRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.browser = browser;
             call.source_process = source_process;

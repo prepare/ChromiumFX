@@ -36,115 +36,120 @@ using System;
 namespace Chromium.Remote {
     using Event;
 
-    internal class CfxAppCtorWithGCHandleRemoteCall : CtorWithGCHandleRemoteCall {
+    internal class CfxWriteHandlerCtorWithGCHandleRemoteCall : CtorWithGCHandleRemoteCall {
 
-        internal CfxAppCtorWithGCHandleRemoteCall()
-            : base(RemoteCallId.CfxAppCtorWithGCHandleRemoteCall) {}
+        internal CfxWriteHandlerCtorWithGCHandleRemoteCall()
+            : base(RemoteCallId.CfxWriteHandlerCtorWithGCHandleRemoteCall) {}
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.App.cfx_app_ctor(gcHandlePtr, 1);
+            __retval = CfxApi.WriteHandler.cfx_write_handler_ctor(gcHandlePtr, 1);
         }
     }
 
-    internal class CfxAppSetCallbackRemoteCall : SetCallbackRemoteCall {
+    internal class CfxWriteHandlerSetCallbackRemoteCall : SetCallbackRemoteCall {
 
-        internal CfxAppSetCallbackRemoteCall()
-            : base(RemoteCallId.CfxAppSetCallbackRemoteCall) {}
+        internal CfxWriteHandlerSetCallbackRemoteCall()
+            : base(RemoteCallId.CfxWriteHandlerSetCallbackRemoteCall) {}
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            CfxAppRemoteClient.SetCallback(self, index, active);
+            CfxWriteHandlerRemoteClient.SetCallback(self, index, active);
         }
     }
 
-    internal class CfxAppOnBeforeCommandLineProcessingRemoteEventCall : RemoteEventCall {
+    internal class CfxWriteHandlerWriteRemoteEventCall : RemoteEventCall {
 
-        internal CfxAppOnBeforeCommandLineProcessingRemoteEventCall()
-            : base(RemoteCallId.CfxAppOnBeforeCommandLineProcessingRemoteEventCall) {}
+        internal CfxWriteHandlerWriteRemoteEventCall()
+            : base(RemoteCallId.CfxWriteHandlerWriteRemoteEventCall) {}
 
-        internal IntPtr process_type_str;
-        internal int process_type_length;
-        internal IntPtr command_line;
-        internal int command_line_release;
+        internal IntPtr ptr;
+        internal UIntPtr size;
+        internal UIntPtr n;
+
+        internal UIntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(gcHandlePtr);
-            h.Write(process_type_str);
-            h.Write(process_type_length);
-            h.Write(command_line);
+            h.Write(ptr);
+            h.Write(size);
+            h.Write(n);
         }
 
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out gcHandlePtr);
-            h.Read(out process_type_str);
-            h.Read(out process_type_length);
-            h.Read(out command_line);
+            h.Read(out ptr);
+            h.Read(out size);
+            h.Read(out n);
         }
 
         protected override void WriteReturn(StreamHandler h) {
-            h.Write(command_line_release);
+            h.Write(__retval);
         }
 
         protected override void ReadReturn(StreamHandler h) {
-            h.Read(out command_line_release);
+            h.Read(out __retval);
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self = (CfrApp)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            var self = (CfrWriteHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 return;
             }
-            var e = new CfrOnBeforeCommandLineProcessingEventArgs(this);
-            self.m_OnBeforeCommandLineProcessing?.Invoke(self, e);
+            var e = new CfrWriteEventArgs(this);
+            self.m_Write?.Invoke(self, e);
             e.m_isInvalid = true;
-            command_line_release = e.m_command_line_wrapped == null? 1 : 0;
+            __retval = (UIntPtr)e.m_returnValue;
         }
     }
 
-    internal class CfxAppOnRegisterCustomSchemesRemoteEventCall : RemoteEventCall {
+    internal class CfxWriteHandlerSeekRemoteEventCall : RemoteEventCall {
 
-        internal CfxAppOnRegisterCustomSchemesRemoteEventCall()
-            : base(RemoteCallId.CfxAppOnRegisterCustomSchemesRemoteEventCall) {}
+        internal CfxWriteHandlerSeekRemoteEventCall()
+            : base(RemoteCallId.CfxWriteHandlerSeekRemoteEventCall) {}
 
-        internal IntPtr registrar;
-        internal int registrar_release;
+        internal long offset;
+        internal int whence;
+
+        internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(gcHandlePtr);
-            h.Write(registrar);
+            h.Write(offset);
+            h.Write(whence);
         }
 
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out gcHandlePtr);
-            h.Read(out registrar);
+            h.Read(out offset);
+            h.Read(out whence);
         }
 
         protected override void WriteReturn(StreamHandler h) {
-            h.Write(registrar_release);
+            h.Write(__retval);
         }
 
         protected override void ReadReturn(StreamHandler h) {
-            h.Read(out registrar_release);
+            h.Read(out __retval);
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self = (CfrApp)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            var self = (CfrWriteHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 return;
             }
-            var e = new CfrOnRegisterCustomSchemesEventArgs(this);
-            self.m_OnRegisterCustomSchemes?.Invoke(self, e);
+            var e = new CfrSeekEventArgs(this);
+            self.m_Seek?.Invoke(self, e);
             e.m_isInvalid = true;
-            registrar_release = e.m_registrar_wrapped == null? 1 : 0;
+            __retval = e.m_returnValue;
         }
     }
 
-    internal class CfxAppGetResourceBundleHandlerRemoteEventCall : RemoteEventCall {
+    internal class CfxWriteHandlerTellRemoteEventCall : RemoteEventCall {
 
-        internal CfxAppGetResourceBundleHandlerRemoteEventCall()
-            : base(RemoteCallId.CfxAppGetResourceBundleHandlerRemoteEventCall) {}
+        internal CfxWriteHandlerTellRemoteEventCall()
+            : base(RemoteCallId.CfxWriteHandlerTellRemoteEventCall) {}
 
 
-        internal IntPtr __retval;
+        internal long __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(gcHandlePtr);
@@ -163,24 +168,24 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self = (CfrApp)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            var self = (CfrWriteHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 return;
             }
-            var e = new CfrGetResourceBundleHandlerEventArgs(this);
-            self.m_GetResourceBundleHandler?.Invoke(self, e);
+            var e = new CfrTellEventArgs(this);
+            self.m_Tell?.Invoke(self, e);
             e.m_isInvalid = true;
-            __retval = CfrObject.Unwrap(e.m_returnValue).ptr;
+            __retval = e.m_returnValue;
         }
     }
 
-    internal class CfxAppGetRenderProcessHandlerRemoteEventCall : RemoteEventCall {
+    internal class CfxWriteHandlerFlushRemoteEventCall : RemoteEventCall {
 
-        internal CfxAppGetRenderProcessHandlerRemoteEventCall()
-            : base(RemoteCallId.CfxAppGetRenderProcessHandlerRemoteEventCall) {}
+        internal CfxWriteHandlerFlushRemoteEventCall()
+            : base(RemoteCallId.CfxWriteHandlerFlushRemoteEventCall) {}
 
 
-        internal IntPtr __retval;
+        internal int __retval;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(gcHandlePtr);
@@ -199,14 +204,50 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var self = (CfrApp)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            var self = (CfrWriteHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 return;
             }
-            var e = new CfrGetRenderProcessHandlerEventArgs(this);
-            self.m_GetRenderProcessHandler?.Invoke(self, e);
+            var e = new CfrFlushEventArgs(this);
+            self.m_Flush?.Invoke(self, e);
             e.m_isInvalid = true;
-            __retval = CfrObject.Unwrap(e.m_returnValue).ptr;
+            __retval = e.m_returnValue;
+        }
+    }
+
+    internal class CfxWriteHandlerMayBlockRemoteEventCall : RemoteEventCall {
+
+        internal CfxWriteHandlerMayBlockRemoteEventCall()
+            : base(RemoteCallId.CfxWriteHandlerMayBlockRemoteEventCall) {}
+
+
+        internal int __retval;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(gcHandlePtr);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out gcHandlePtr);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var self = (CfrWriteHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                return;
+            }
+            var e = new CfrMayBlockEventArgs(this);
+            self.m_MayBlock?.Invoke(self, e);
+            e.m_isInvalid = true;
+            __retval = e.m_returnValue ? 1 : 0;
         }
     }
 

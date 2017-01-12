@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -192,15 +192,21 @@
     <Compile Include="Generated\Remote\CfrPostData.cs" />
     <Compile Include="Generated\Remote\CfrPostDataElement.cs" />
     <Compile Include="Generated\Remote\CfrProcessMessage.cs" />
+    <Compile Include="Generated\Remote\CfrReadHandler.cs" />
     <Compile Include="Generated\Remote\CfrRect.cs" />
     <Compile Include="Generated\Remote\CfrRenderProcessHandler.cs" />
     <Compile Include="Generated\Remote\CfrRequest.cs" />
+    <Compile Include="Generated\Remote\CfrResourceBundle.cs" />
     <Compile Include="Generated\Remote\CfrResourceBundleHandler.cs" />
+    <Compile Include="Generated\Remote\CfrResponse.cs" />
     <Compile Include="Generated\Remote\CfrRuntime.cs" />
     <Compile Include="Generated\Remote\CfrSchemeRegistrar.cs" />
+    <Compile Include="Generated\Remote\CfrStreamReader.cs" />
+    <Compile Include="Generated\Remote\CfrStreamWriter.cs" />
     <Compile Include="Generated\Remote\CfrStringVisitor.cs" />
     <Compile Include="Generated\Remote\CfrTask.cs" />
     <Compile Include="Generated\Remote\CfrTaskRunner.cs" />
+    <Compile Include="Generated\Remote\CfrThread.cs" />
     <Compile Include="Generated\Remote\CfrTime.cs" />
     <Compile Include="Generated\Remote\CfrV8Accessor.cs" />
     <Compile Include="Generated\Remote\CfrV8Context.cs" />
@@ -211,6 +217,10 @@
     <Compile Include="Generated\Remote\CfrV8StackTrace.cs" />
     <Compile Include="Generated\Remote\CfrV8Value.cs" />
     <Compile Include="Generated\Remote\CfrValue.cs" />
+    <Compile Include="Generated\Remote\CfrWaitableEvent.cs" />
+    <Compile Include="Generated\Remote\CfrWriteHandler.cs" />
+    <Compile Include="Generated\Remote\CfrXmlReader.cs" />
+    <Compile Include="Generated\Remote\CfrZipReader.cs" />
     <Compile Include="Generated\Remote\CfxAppRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxAppRemoteClient.cs" />
     <Compile Include="Generated\Remote\CfxBinaryValueRemoteCalls.cs" />
@@ -228,19 +238,26 @@
     <Compile Include="Generated\Remote\CfxPostDataElementRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxPostDataRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxProcessMessageRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxReadHandlerRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxReadHandlerRemoteClient.cs" />
     <Compile Include="Generated\Remote\CfxRectRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxRenderProcessHandlerRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxRenderProcessHandlerRemoteClient.cs" />
     <Compile Include="Generated\Remote\CfxRequestRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxResourceBundleHandlerRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxResourceBundleHandlerRemoteClient.cs" />
+    <Compile Include="Generated\Remote\CfxResourceBundleRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxResponseRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxRuntimeRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxSchemeRegistrarRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxStreamReaderRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxStreamWriterRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxStringVisitorRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxStringVisitorRemoteClient.cs" />
     <Compile Include="Generated\Remote\CfxTaskRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxTaskRemoteClient.cs" />
     <Compile Include="Generated\Remote\CfxTaskRunnerRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxThreadRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxTimeRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8AccessorRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8AccessorRemoteClient.cs" />
@@ -254,6 +271,11 @@
     <Compile Include="Generated\Remote\CfxV8StackTraceRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxV8ValueRemoteCalls.cs" />
     <Compile Include="Generated\Remote\CfxValueRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxWaitableEventRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxWriteHandlerRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxWriteHandlerRemoteClient.cs" />
+    <Compile Include="Generated\Remote\CfxXmlReaderRemoteCalls.cs" />
+    <Compile Include="Generated\Remote\CfxZipReaderRemoteCalls.cs" />
     <Compile Include="Generated\Remote\RemoteCallFactory.cs" />
     <Compile Include="Generated\Remote\RemoteCallId.cs" />
     <Compile Include="Source\CfxApi.cs" />
@@ -275,6 +297,9 @@
     <Compile Include="Source\CfxMainArgs.cs" />
     <Compile Include="Source\Remote\CfrLibraryBase.cs" />
     <Compile Include="Source\Remote\CfrClientBase.cs" />
+    <Compile Include="Source\Remote\CfrMayBlockEventArgs.cs" />
+    <Compile Include="Source\Remote\CfrTellEventArgs.cs" />
+    <Compile Include="Source\Remote\CfrSeekEventArgs.cs" />
     <Compile Include="Source\Remote\PipeFactory.cs" />
     <Compile Include="Source\Remote\PipeBufferStream.cs" />
     <Compile Include="Source\Remote\WindowsPipeFactory.cs" />
