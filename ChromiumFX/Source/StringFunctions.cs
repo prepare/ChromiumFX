@@ -71,7 +71,7 @@ namespace Chromium {
             if(list == IntPtr.Zero)
                 return null;
             var size = CfxApi.Runtime.cfx_string_list_size(list);
-            var target = new List<string>(size);
+            var target = new List<string>((int)size);
             CfxStringListCopyToManaged(list, target);
             return target;
         }
@@ -149,11 +149,13 @@ namespace Chromium {
             IntPtr str;
             int length;
             target.Clear();
-            for(int i = 0; i < size; i++) {
-                if(CfxApi.Runtime.cfx_string_list_value(source, i, out str, out length) == 0) {
+            UIntPtr current = UIntPtr.Zero;
+            while(current != size) {
+                if(CfxApi.Runtime.cfx_string_list_value(source, current, out str, out length) == 0) {
                     throw new CfxException("CfxStringList operation failed.");
                 }
                 target.Add(PtrToStringUni(str, length));
+                current += 1;
             }
         }
 
@@ -173,17 +175,19 @@ namespace Chromium {
             IntPtr str;
             int length;
             target.Clear();
-            for (int i = 0; i < size; i++) {
+            UIntPtr current = UIntPtr.Zero;
+            while(current != size) {
                 string[] pair = new string[2];
-                if (CfxApi.Runtime.cfx_string_map_key(source, i, out str, out length) == 0) {
+                if(CfxApi.Runtime.cfx_string_map_key(source, current, out str, out length) == 0) {
                     throw new CfxException("CfxStringMap operation failed.");
                 }
                 pair[0] = PtrToStringUni(str, length);
-                if (CfxApi.Runtime.cfx_string_map_value(source, i, out str, out length) == 0) {
+                if(CfxApi.Runtime.cfx_string_map_value(source, current, out str, out length) == 0) {
                     throw new CfxException("CfxStringMap operation failed.");
                 }
                 pair[1] = PtrToStringUni(str, length);
                 target.Add(pair);
+                current += 1;
             }
         }
 
@@ -191,7 +195,7 @@ namespace Chromium {
             handles = new PinnedString[source.Count * 2];
             var ih = 0;
             CfxApi.Runtime.cfx_string_map_clear(target);
-            foreach (var pair in source) {
+            foreach(var pair in source) {
                 var hKey = new PinnedString(pair[0]);
                 var hValue = new PinnedString(pair[1]);
                 if(CfxApi.Runtime.cfx_string_map_append(target, hKey.Obj.PinnedPtr, hKey.Length, hValue.Obj.PinnedPtr, hValue.Length) == 0)
@@ -207,17 +211,19 @@ namespace Chromium {
             IntPtr str;
             int length;
             target.Clear();
-            for(int i = 0; i < size; i++) {
+            UIntPtr current = UIntPtr.Zero;
+            while(current != size) {
                 string[] pair = new string[2];
-                if(CfxApi.Runtime.cfx_string_multimap_key(source, i, out str, out length) == 0) {
+                if(CfxApi.Runtime.cfx_string_multimap_key(source, current, out str, out length) == 0) {
                     throw new CfxException("CfxStringMultimap operation failed.");
                 }
                 pair[0] = PtrToStringUni(str, length);
-                if (CfxApi.Runtime.cfx_string_multimap_value(source, i, out str, out length) == 0) {
+                if(CfxApi.Runtime.cfx_string_multimap_value(source, current, out str, out length) == 0) {
                     throw new CfxException("CfxStringMultimap operation failed.");
                 }
                 pair[1] = PtrToStringUni(str, length);
                 target.Add(pair);
+                current += 1;
             }
         }
 
@@ -228,7 +234,7 @@ namespace Chromium {
             foreach(var pair in source) {
                 var hKey = new PinnedString(pair[0]);
                 var hValue = new PinnedString(pair[1]);
-                if(CfxApi.Runtime.cfx_string_multimap_append(target, hKey.Obj.PinnedPtr, hKey.Length, hValue.Obj.PinnedPtr, hValue.Length) == 0) 
+                if(CfxApi.Runtime.cfx_string_multimap_append(target, hKey.Obj.PinnedPtr, hKey.Length, hValue.Obj.PinnedPtr, hValue.Length) == 0)
                     throw new CfxException("CfxStringMultimap operation failed.");
                 handles[ih++] = hKey;
                 handles[ih++] = hValue;

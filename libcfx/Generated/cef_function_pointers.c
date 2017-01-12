@@ -37,8 +37,13 @@ static int (*cef_begin_tracing_ptr)(const cef_string_t* categories, cef_completi
 static int (*cef_clear_cross_origin_whitelist_ptr)();
 static int (*cef_clear_scheme_handler_factories_ptr)();
 static cef_request_context_t* (*cef_create_context_shared_ptr)(cef_request_context_t* other, cef_request_context_handler_t* handler);
+static int (*cef_create_directory_ptr)(const cef_string_t* full_path);
+static int (*cef_create_new_temp_directory_ptr)(const cef_string_t* prefix, cef_string_t* new_temp_path);
+static int (*cef_create_temp_directory_in_directory_ptr)(const cef_string_t* base_dir, const cef_string_t* prefix, cef_string_t* new_dir);
 static int (*cef_create_url_ptr)(const cef_urlparts_t* parts, cef_string_t* url);
 static int (*cef_currently_on_ptr)(cef_thread_id_t threadId);
+static int (*cef_delete_file_ptr)(const cef_string_t* path, int recursive);
+static int (*cef_directory_exists_ptr)(const cef_string_t* path);
 static void (*cef_do_message_loop_work_ptr)();
 static void (*cef_enable_highdpi_support_ptr)();
 static int (*cef_end_tracing_ptr)(const cef_string_t* tracing_file, cef_end_tracing_callback_t* callback);
@@ -48,6 +53,7 @@ static void (*cef_get_extensions_for_mime_type_ptr)(const cef_string_t* mime_typ
 static int (*cef_get_geolocation_ptr)(cef_get_geolocation_callback_t* callback);
 static cef_string_userfree_t (*cef_get_mime_type_ptr)(const cef_string_t* extension);
 static int (*cef_get_path_ptr)(cef_path_key_t key, cef_string_t* path);
+static int (*cef_get_temp_directory_ptr)(cef_string_t* temp_dir);
 #ifdef CFX_LINUX
 static XDisplay* (*cef_get_xdisplay_ptr)();
 #endif
@@ -78,6 +84,7 @@ static cef_string_userfree_t (*cef_uriencode_ptr)(const cef_string_t* text, int 
 static int (*cef_version_info_ptr)(int entry);
 static void (*cef_visit_web_plugin_info_ptr)(cef_web_plugin_info_visitor_t* visitor);
 static cef_string_userfree_t (*cef_write_json_ptr)(cef_value_t* node, cef_json_writer_options_t options);
+static int (*cef_zip_directory_ptr)(const cef_string_t* src_dir, const cef_string_t* dest_file, int include_hidden_files);
 static cef_binary_value_t* (*cef_binary_value_create_ptr)(const void* data, size_t data_size);
 static int (*cef_browser_host_create_browser_ptr)(const cef_window_info_t* windowInfo, cef_client_t* client, const cef_string_t* url, const cef_browser_settings_t* settings, cef_request_context_t* request_context);
 static cef_browser_t* (*cef_browser_host_create_browser_sync_ptr)(const cef_window_info_t* windowInfo, cef_client_t* client, const cef_string_t* url, const cef_browser_settings_t* settings, cef_request_context_t* request_context);
@@ -106,6 +113,7 @@ static cef_stream_writer_t* (*cef_stream_writer_create_for_file_ptr)(const cef_s
 static cef_stream_writer_t* (*cef_stream_writer_create_for_handler_ptr)(cef_write_handler_t* handler);
 static cef_task_runner_t* (*cef_task_runner_get_for_current_thread_ptr)();
 static cef_task_runner_t* (*cef_task_runner_get_for_thread_ptr)(cef_thread_id_t threadId);
+static cef_thread_t* (*cef_thread_create_ptr)(const cef_string_t* display_name, cef_thread_priority_t priority, cef_message_loop_type_t message_loop_type, int stoppable, cef_com_init_mode_t com_init_mode);
 static cef_urlrequest_t* (*cef_urlrequest_create_ptr)(cef_request_t* request, cef_urlrequest_client_t* client, cef_request_context_t* request_context);
 static cef_v8context_t* (*cef_v8context_get_current_context_ptr)();
 static cef_v8context_t* (*cef_v8context_get_entered_context_ptr)();
@@ -123,29 +131,30 @@ static cef_v8value_t* (*cef_v8value_create_object_ptr)(cef_v8accessor_t* accesso
 static cef_v8value_t* (*cef_v8value_create_array_ptr)(int length);
 static cef_v8value_t* (*cef_v8value_create_function_ptr)(const cef_string_t* name, cef_v8handler_t* handler);
 static cef_value_t* (*cef_value_create_ptr)();
+static cef_waitable_event_t* (*cef_waitable_event_create_ptr)(int automatic_reset, int initially_signaled);
 static cef_xml_reader_t* (*cef_xml_reader_create_ptr)(cef_stream_reader_t* stream, cef_xml_encoding_type_t encodingType, const cef_string_t* URI);
 static cef_zip_reader_t* (*cef_zip_reader_create_ptr)(cef_stream_reader_t* stream);
 static cef_string_list_t (*cef_string_list_alloc_ptr)();
-static int (*cef_string_list_size_ptr)(cef_string_list_t list);
-static int (*cef_string_list_value_ptr)(cef_string_list_t list, int index, cef_string_t* value);
+static size_t (*cef_string_list_size_ptr)(cef_string_list_t list);
+static int (*cef_string_list_value_ptr)(cef_string_list_t list, size_t index, cef_string_t* value);
 static void (*cef_string_list_append_ptr)(cef_string_list_t list, const cef_string_t* value);
 static void (*cef_string_list_clear_ptr)(cef_string_list_t list);
 static void (*cef_string_list_free_ptr)(cef_string_list_t list);
 static cef_string_list_t (*cef_string_list_copy_ptr)(cef_string_list_t list);
 static cef_string_map_t (*cef_string_map_alloc_ptr)();
-static int (*cef_string_map_size_ptr)(cef_string_map_t map);
+static size_t (*cef_string_map_size_ptr)(cef_string_map_t map);
 static int (*cef_string_map_find_ptr)(cef_string_map_t map, const cef_string_t* key, cef_string_t* value);
-static int (*cef_string_map_key_ptr)(cef_string_map_t map, int index, cef_string_t* key);
-static int (*cef_string_map_value_ptr)(cef_string_map_t map, int index, cef_string_t* value);
+static int (*cef_string_map_key_ptr)(cef_string_map_t map, size_t index, cef_string_t* key);
+static int (*cef_string_map_value_ptr)(cef_string_map_t map, size_t index, cef_string_t* value);
 static int (*cef_string_map_append_ptr)(cef_string_map_t map, const cef_string_t* key, const cef_string_t* value);
 static void (*cef_string_map_clear_ptr)(cef_string_map_t map);
 static void (*cef_string_map_free_ptr)(cef_string_map_t map);
 static cef_string_multimap_t (*cef_string_multimap_alloc_ptr)();
-static int (*cef_string_multimap_size_ptr)(cef_string_multimap_t map);
-static int (*cef_string_multimap_find_count_ptr)(cef_string_multimap_t map, const cef_string_t* key);
-static int (*cef_string_multimap_enumerate_ptr)(cef_string_multimap_t map, const cef_string_t* key, int value_index, cef_string_t* value);
-static int (*cef_string_multimap_key_ptr)(cef_string_multimap_t map, int index, cef_string_t* key);
-static int (*cef_string_multimap_value_ptr)(cef_string_multimap_t map, int index, cef_string_t* value);
+static size_t (*cef_string_multimap_size_ptr)(cef_string_multimap_t map);
+static size_t (*cef_string_multimap_find_count_ptr)(cef_string_multimap_t map, const cef_string_t* key);
+static int (*cef_string_multimap_enumerate_ptr)(cef_string_multimap_t map, const cef_string_t* key, size_t value_index, cef_string_t* value);
+static int (*cef_string_multimap_key_ptr)(cef_string_multimap_t map, size_t index, cef_string_t* key);
+static int (*cef_string_multimap_value_ptr)(cef_string_multimap_t map, size_t index, cef_string_t* value);
 static int (*cef_string_multimap_append_ptr)(cef_string_multimap_t map, const cef_string_t* key, const cef_string_t* value);
 static void (*cef_string_multimap_clear_ptr)(cef_string_multimap_t map);
 static void (*cef_string_multimap_free_ptr)(cef_string_multimap_t map);
@@ -156,8 +165,13 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_clear_cross_origin_whitelist_ptr = (int (*)())cfx_platform_get_fptr(libcef, "cef_clear_cross_origin_whitelist");
     cef_clear_scheme_handler_factories_ptr = (int (*)())cfx_platform_get_fptr(libcef, "cef_clear_scheme_handler_factories");
     cef_create_context_shared_ptr = (cef_request_context_t* (*)(cef_request_context_t*, cef_request_context_handler_t*))cfx_platform_get_fptr(libcef, "cef_create_context_shared");
+    cef_create_directory_ptr = (int (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_create_directory");
+    cef_create_new_temp_directory_ptr = (int (*)(const cef_string_t*, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_create_new_temp_directory");
+    cef_create_temp_directory_in_directory_ptr = (int (*)(const cef_string_t*, const cef_string_t*, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_create_temp_directory_in_directory");
     cef_create_url_ptr = (int (*)(const cef_urlparts_t*, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_create_url");
     cef_currently_on_ptr = (int (*)(cef_thread_id_t))cfx_platform_get_fptr(libcef, "cef_currently_on");
+    cef_delete_file_ptr = (int (*)(const cef_string_t*, int))cfx_platform_get_fptr(libcef, "cef_delete_file");
+    cef_directory_exists_ptr = (int (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_directory_exists");
     cef_do_message_loop_work_ptr = (void (*)())cfx_platform_get_fptr(libcef, "cef_do_message_loop_work");
     cef_enable_highdpi_support_ptr = (void (*)())cfx_platform_get_fptr(libcef, "cef_enable_highdpi_support");
     cef_end_tracing_ptr = (int (*)(const cef_string_t*, cef_end_tracing_callback_t*))cfx_platform_get_fptr(libcef, "cef_end_tracing");
@@ -167,6 +181,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_get_geolocation_ptr = (int (*)(cef_get_geolocation_callback_t*))cfx_platform_get_fptr(libcef, "cef_get_geolocation");
     cef_get_mime_type_ptr = (cef_string_userfree_t (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_get_mime_type");
     cef_get_path_ptr = (int (*)(cef_path_key_t, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_get_path");
+    cef_get_temp_directory_ptr = (int (*)(cef_string_t*))cfx_platform_get_fptr(libcef, "cef_get_temp_directory");
     #ifdef CFX_LINUX
     cef_get_xdisplay_ptr = (XDisplay* (*)())cfx_platform_get_fptr(libcef, "cef_get_xdisplay");
     #endif
@@ -197,6 +212,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_version_info_ptr = (int (*)(int))cfx_platform_get_fptr(libcef, "cef_version_info");
     cef_visit_web_plugin_info_ptr = (void (*)(cef_web_plugin_info_visitor_t*))cfx_platform_get_fptr(libcef, "cef_visit_web_plugin_info");
     cef_write_json_ptr = (cef_string_userfree_t (*)(cef_value_t*, cef_json_writer_options_t))cfx_platform_get_fptr(libcef, "cef_write_json");
+    cef_zip_directory_ptr = (int (*)(const cef_string_t*, const cef_string_t*, int))cfx_platform_get_fptr(libcef, "cef_zip_directory");
     cef_binary_value_create_ptr = (cef_binary_value_t* (*)(const void*, size_t))cfx_platform_get_fptr(libcef, "cef_binary_value_create");
     cef_browser_host_create_browser_ptr = (int (*)(const cef_window_info_t*, cef_client_t*, const cef_string_t*, const cef_browser_settings_t*, cef_request_context_t*))cfx_platform_get_fptr(libcef, "cef_browser_host_create_browser");
     cef_browser_host_create_browser_sync_ptr = (cef_browser_t* (*)(const cef_window_info_t*, cef_client_t*, const cef_string_t*, const cef_browser_settings_t*, cef_request_context_t*))cfx_platform_get_fptr(libcef, "cef_browser_host_create_browser_sync");
@@ -225,6 +241,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_stream_writer_create_for_handler_ptr = (cef_stream_writer_t* (*)(cef_write_handler_t*))cfx_platform_get_fptr(libcef, "cef_stream_writer_create_for_handler");
     cef_task_runner_get_for_current_thread_ptr = (cef_task_runner_t* (*)())cfx_platform_get_fptr(libcef, "cef_task_runner_get_for_current_thread");
     cef_task_runner_get_for_thread_ptr = (cef_task_runner_t* (*)(cef_thread_id_t))cfx_platform_get_fptr(libcef, "cef_task_runner_get_for_thread");
+    cef_thread_create_ptr = (cef_thread_t* (*)(const cef_string_t*, cef_thread_priority_t, cef_message_loop_type_t, int, cef_com_init_mode_t))cfx_platform_get_fptr(libcef, "cef_thread_create");
     cef_urlrequest_create_ptr = (cef_urlrequest_t* (*)(cef_request_t*, cef_urlrequest_client_t*, cef_request_context_t*))cfx_platform_get_fptr(libcef, "cef_urlrequest_create");
     cef_v8context_get_current_context_ptr = (cef_v8context_t* (*)())cfx_platform_get_fptr(libcef, "cef_v8context_get_current_context");
     cef_v8context_get_entered_context_ptr = (cef_v8context_t* (*)())cfx_platform_get_fptr(libcef, "cef_v8context_get_entered_context");
@@ -242,29 +259,30 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_v8value_create_array_ptr = (cef_v8value_t* (*)(int))cfx_platform_get_fptr(libcef, "cef_v8value_create_array");
     cef_v8value_create_function_ptr = (cef_v8value_t* (*)(const cef_string_t*, cef_v8handler_t*))cfx_platform_get_fptr(libcef, "cef_v8value_create_function");
     cef_value_create_ptr = (cef_value_t* (*)())cfx_platform_get_fptr(libcef, "cef_value_create");
+    cef_waitable_event_create_ptr = (cef_waitable_event_t* (*)(int, int))cfx_platform_get_fptr(libcef, "cef_waitable_event_create");
     cef_xml_reader_create_ptr = (cef_xml_reader_t* (*)(cef_stream_reader_t*, cef_xml_encoding_type_t, const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_xml_reader_create");
     cef_zip_reader_create_ptr = (cef_zip_reader_t* (*)(cef_stream_reader_t*))cfx_platform_get_fptr(libcef, "cef_zip_reader_create");
     cef_string_list_alloc_ptr = (cef_string_list_t (*)())cfx_platform_get_fptr(libcef, "cef_string_list_alloc");
-    cef_string_list_size_ptr = (int (*)(cef_string_list_t))cfx_platform_get_fptr(libcef, "cef_string_list_size");
-    cef_string_list_value_ptr = (int (*)(cef_string_list_t, int, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_string_list_value");
+    cef_string_list_size_ptr = (size_t (*)(cef_string_list_t))cfx_platform_get_fptr(libcef, "cef_string_list_size");
+    cef_string_list_value_ptr = (int (*)(cef_string_list_t, size_t, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_string_list_value");
     cef_string_list_append_ptr = (void (*)(cef_string_list_t, const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_string_list_append");
     cef_string_list_clear_ptr = (void (*)(cef_string_list_t))cfx_platform_get_fptr(libcef, "cef_string_list_clear");
     cef_string_list_free_ptr = (void (*)(cef_string_list_t))cfx_platform_get_fptr(libcef, "cef_string_list_free");
     cef_string_list_copy_ptr = (cef_string_list_t (*)(cef_string_list_t))cfx_platform_get_fptr(libcef, "cef_string_list_copy");
     cef_string_map_alloc_ptr = (cef_string_map_t (*)())cfx_platform_get_fptr(libcef, "cef_string_map_alloc");
-    cef_string_map_size_ptr = (int (*)(cef_string_map_t))cfx_platform_get_fptr(libcef, "cef_string_map_size");
+    cef_string_map_size_ptr = (size_t (*)(cef_string_map_t))cfx_platform_get_fptr(libcef, "cef_string_map_size");
     cef_string_map_find_ptr = (int (*)(cef_string_map_t, const cef_string_t*, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_string_map_find");
-    cef_string_map_key_ptr = (int (*)(cef_string_map_t, int, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_string_map_key");
-    cef_string_map_value_ptr = (int (*)(cef_string_map_t, int, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_string_map_value");
+    cef_string_map_key_ptr = (int (*)(cef_string_map_t, size_t, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_string_map_key");
+    cef_string_map_value_ptr = (int (*)(cef_string_map_t, size_t, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_string_map_value");
     cef_string_map_append_ptr = (int (*)(cef_string_map_t, const cef_string_t*, const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_string_map_append");
     cef_string_map_clear_ptr = (void (*)(cef_string_map_t))cfx_platform_get_fptr(libcef, "cef_string_map_clear");
     cef_string_map_free_ptr = (void (*)(cef_string_map_t))cfx_platform_get_fptr(libcef, "cef_string_map_free");
     cef_string_multimap_alloc_ptr = (cef_string_multimap_t (*)())cfx_platform_get_fptr(libcef, "cef_string_multimap_alloc");
-    cef_string_multimap_size_ptr = (int (*)(cef_string_multimap_t))cfx_platform_get_fptr(libcef, "cef_string_multimap_size");
-    cef_string_multimap_find_count_ptr = (int (*)(cef_string_multimap_t, const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_string_multimap_find_count");
-    cef_string_multimap_enumerate_ptr = (int (*)(cef_string_multimap_t, const cef_string_t*, int, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_string_multimap_enumerate");
-    cef_string_multimap_key_ptr = (int (*)(cef_string_multimap_t, int, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_string_multimap_key");
-    cef_string_multimap_value_ptr = (int (*)(cef_string_multimap_t, int, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_string_multimap_value");
+    cef_string_multimap_size_ptr = (size_t (*)(cef_string_multimap_t))cfx_platform_get_fptr(libcef, "cef_string_multimap_size");
+    cef_string_multimap_find_count_ptr = (size_t (*)(cef_string_multimap_t, const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_string_multimap_find_count");
+    cef_string_multimap_enumerate_ptr = (int (*)(cef_string_multimap_t, const cef_string_t*, size_t, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_string_multimap_enumerate");
+    cef_string_multimap_key_ptr = (int (*)(cef_string_multimap_t, size_t, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_string_multimap_key");
+    cef_string_multimap_value_ptr = (int (*)(cef_string_multimap_t, size_t, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_string_multimap_value");
     cef_string_multimap_append_ptr = (int (*)(cef_string_multimap_t, const cef_string_t*, const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_string_multimap_append");
     cef_string_multimap_clear_ptr = (void (*)(cef_string_multimap_t))cfx_platform_get_fptr(libcef, "cef_string_multimap_clear");
     cef_string_multimap_free_ptr = (void (*)(cef_string_multimap_t))cfx_platform_get_fptr(libcef, "cef_string_multimap_free");
@@ -276,8 +294,13 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_clear_cross_origin_whitelist cef_clear_cross_origin_whitelist_ptr
 #define cef_clear_scheme_handler_factories cef_clear_scheme_handler_factories_ptr
 #define cef_create_context_shared cef_create_context_shared_ptr
+#define cef_create_directory cef_create_directory_ptr
+#define cef_create_new_temp_directory cef_create_new_temp_directory_ptr
+#define cef_create_temp_directory_in_directory cef_create_temp_directory_in_directory_ptr
 #define cef_create_url cef_create_url_ptr
 #define cef_currently_on cef_currently_on_ptr
+#define cef_delete_file cef_delete_file_ptr
+#define cef_directory_exists cef_directory_exists_ptr
 #define cef_do_message_loop_work cef_do_message_loop_work_ptr
 #define cef_enable_highdpi_support cef_enable_highdpi_support_ptr
 #define cef_end_tracing cef_end_tracing_ptr
@@ -287,6 +310,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_get_geolocation cef_get_geolocation_ptr
 #define cef_get_mime_type cef_get_mime_type_ptr
 #define cef_get_path cef_get_path_ptr
+#define cef_get_temp_directory cef_get_temp_directory_ptr
 #ifdef CFX_LINUX
 #define cef_get_xdisplay cef_get_xdisplay_ptr
 #endif
@@ -317,6 +341,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_version_info cef_version_info_ptr
 #define cef_visit_web_plugin_info cef_visit_web_plugin_info_ptr
 #define cef_write_json cef_write_json_ptr
+#define cef_zip_directory cef_zip_directory_ptr
 #define cef_binary_value_create cef_binary_value_create_ptr
 #define cef_browser_host_create_browser cef_browser_host_create_browser_ptr
 #define cef_browser_host_create_browser_sync cef_browser_host_create_browser_sync_ptr
@@ -345,6 +370,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_stream_writer_create_for_handler cef_stream_writer_create_for_handler_ptr
 #define cef_task_runner_get_for_current_thread cef_task_runner_get_for_current_thread_ptr
 #define cef_task_runner_get_for_thread cef_task_runner_get_for_thread_ptr
+#define cef_thread_create cef_thread_create_ptr
 #define cef_urlrequest_create cef_urlrequest_create_ptr
 #define cef_v8context_get_current_context cef_v8context_get_current_context_ptr
 #define cef_v8context_get_entered_context cef_v8context_get_entered_context_ptr
@@ -362,6 +388,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_v8value_create_array cef_v8value_create_array_ptr
 #define cef_v8value_create_function cef_v8value_create_function_ptr
 #define cef_value_create cef_value_create_ptr
+#define cef_waitable_event_create cef_waitable_event_create_ptr
 #define cef_xml_reader_create cef_xml_reader_create_ptr
 #define cef_zip_reader_create cef_zip_reader_create_ptr
 #define cef_string_list_alloc cef_string_list_alloc_ptr

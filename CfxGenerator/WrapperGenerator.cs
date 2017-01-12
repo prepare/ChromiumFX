@@ -194,6 +194,9 @@ public class WrapperGenerator {
                     case "cef_v8interceptor::get_byindex!exception":
                     case "cef_v8interceptor::set_byname!exception":
                     case "cef_v8interceptor::set_byindex!exception":
+                    case "cef_create_new_temp_directory!new_temp_path":
+                    case "cef_create_temp_directory_in_directory!new_dir":
+                    case "cef_get_temp_directory!temp_dir":
 
                         s.Arguments[i] = new Argument(arg, new CefStringOutType());
                         break;

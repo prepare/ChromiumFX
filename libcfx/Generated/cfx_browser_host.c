@@ -260,19 +260,37 @@ static void cfx_browser_host_set_windowless_frame_rate(cef_browser_host_t* self,
     self->set_windowless_frame_rate(self, frame_rate);
 }
 
-// get_nstext_input_context
-static cef_text_input_context_t cfx_browser_host_get_nstext_input_context(cef_browser_host_t* self) {
-    return self->get_nstext_input_context(self);
+// ime_set_composition
+static void cfx_browser_host_ime_set_composition(cef_browser_host_t* self, char16 *text_str, int text_length, size_t underlinesCount, cef_composition_underline_t const** underlines, int* underlines_nomem, const cef_range_t* replacement_range, const cef_range_t* selection_range) {
+    cef_string_t text = { text_str, text_length, 0 };
+    cef_composition_underline_t *underlines_tmp = (cef_composition_underline_t*)malloc(underlinesCount * sizeof(cef_composition_underline_t));
+    if(underlines_tmp) {
+        for(size_t i = 0; i < underlinesCount; ++i) {
+            underlines_tmp[i] = *underlines[i];
+        }
+        *underlines_nomem = 0;
+    } else {
+        underlinesCount = 0;
+        *underlines_nomem = 1;
+    }
+    self->ime_set_composition(self, &text, underlinesCount, underlines_tmp, replacement_range, selection_range);
+    if(underlines_tmp) free(underlines_tmp);
 }
 
-// handle_key_event_before_text_input_client
-static void cfx_browser_host_handle_key_event_before_text_input_client(cef_browser_host_t* self, cef_event_handle_t keyEvent) {
-    self->handle_key_event_before_text_input_client(self, keyEvent);
+// ime_commit_text
+static void cfx_browser_host_ime_commit_text(cef_browser_host_t* self, char16 *text_str, int text_length, const cef_range_t* replacement_range, int relative_cursor_pos) {
+    cef_string_t text = { text_str, text_length, 0 };
+    self->ime_commit_text(self, &text, replacement_range, relative_cursor_pos);
 }
 
-// handle_key_event_after_text_input_client
-static void cfx_browser_host_handle_key_event_after_text_input_client(cef_browser_host_t* self, cef_event_handle_t keyEvent) {
-    self->handle_key_event_after_text_input_client(self, keyEvent);
+// ime_finish_composing_text
+static void cfx_browser_host_ime_finish_composing_text(cef_browser_host_t* self, int keep_selection) {
+    self->ime_finish_composing_text(self, keep_selection);
+}
+
+// ime_cancel_composition
+static void cfx_browser_host_ime_cancel_composition(cef_browser_host_t* self) {
+    self->ime_cancel_composition(self);
 }
 
 // drag_target_drag_enter

@@ -28,15 +28,38 @@
 // TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE 
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+// Generated file. Do not edit.
 
 
-using System.Reflection;
-using System.Runtime.InteropServices;
+// cef_waitable_event
 
-[assembly: AssemblyTitle("ChromiumFX")]
-[assembly: AssemblyDescription("Chromium for .NET based on the Chromium Embedded Framework (CEF).")]
-[assembly: AssemblyCopyright("Copyright © 2014-2017 Wolfgang Borgsmüller")]
+// CEF_EXPORT cef_waitable_event_t* cef_waitable_event_create(int automatic_reset, int initially_signaled);
+static cef_waitable_event_t* cfx_waitable_event_create(int automatic_reset, int initially_signaled) {
+    return cef_waitable_event_create(automatic_reset, initially_signaled);
+}
+// reset
+static void cfx_waitable_event_reset(cef_waitable_event_t* self) {
+    self->reset(self);
+}
 
-[assembly: ComVisible(false)]
+// signal
+static void cfx_waitable_event_signal(cef_waitable_event_t* self) {
+    self->signal(self);
+}
 
-[assembly: AssemblyVersion("3.2883.0")]
+// is_signaled
+static int cfx_waitable_event_is_signaled(cef_waitable_event_t* self) {
+    return self->is_signaled(self);
+}
+
+// wait
+static void cfx_waitable_event_wait(cef_waitable_event_t* self) {
+    self->wait(self);
+}
+
+// timed_wait
+static int cfx_waitable_event_timed_wait(cef_waitable_event_t* self, int64 max_ms) {
+    return self->timed_wait(self, max_ms);
+}
+
+

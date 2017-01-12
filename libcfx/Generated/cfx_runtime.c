@@ -68,6 +68,31 @@ static cef_request_context_t* cfx_create_context_shared(cef_request_context_t* o
     return cef_create_context_shared(other, handler);
 }
 
+// CEF_EXPORT int cef_create_directory(const cef_string_t* full_path);
+static int cfx_create_directory(char16 *full_path_str, int full_path_length) {
+    cef_string_t full_path = { full_path_str, full_path_length, 0 };
+    return cef_create_directory(&full_path);
+}
+
+// CEF_EXPORT int cef_create_new_temp_directory(const cef_string_t* prefix, cef_string_t* new_temp_path);
+static int cfx_create_new_temp_directory(char16 *prefix_str, int prefix_length, char16 **new_temp_path_str, int *new_temp_path_length) {
+    cef_string_t prefix = { prefix_str, prefix_length, 0 };
+    cef_string_t new_temp_path = { 0 };
+    int __ret_val_ = cef_create_new_temp_directory(&prefix, &new_temp_path);
+    *new_temp_path_str = new_temp_path.str; *new_temp_path_length = (int)new_temp_path.length;
+    return __ret_val_;
+}
+
+// CEF_EXPORT int cef_create_temp_directory_in_directory(const cef_string_t* base_dir, const cef_string_t* prefix, cef_string_t* new_dir);
+static int cfx_create_temp_directory_in_directory(char16 *base_dir_str, int base_dir_length, char16 *prefix_str, int prefix_length, char16 **new_dir_str, int *new_dir_length) {
+    cef_string_t base_dir = { base_dir_str, base_dir_length, 0 };
+    cef_string_t prefix = { prefix_str, prefix_length, 0 };
+    cef_string_t new_dir = { 0 };
+    int __ret_val_ = cef_create_temp_directory_in_directory(&base_dir, &prefix, &new_dir);
+    *new_dir_str = new_dir.str; *new_dir_length = (int)new_dir.length;
+    return __ret_val_;
+}
+
 // CEF_EXPORT int cef_create_url(const cef_urlparts_t* parts, cef_string_t* url);
 static int cfx_create_url(const cef_urlparts_t* parts, char16 **url_str, int *url_length) {
     cef_string_t url = { 0 };
@@ -79,6 +104,18 @@ static int cfx_create_url(const cef_urlparts_t* parts, char16 **url_str, int *ur
 // CEF_EXPORT int cef_currently_on(cef_thread_id_t threadId);
 static int cfx_currently_on(cef_thread_id_t threadId) {
     return cef_currently_on(threadId);
+}
+
+// CEF_EXPORT int cef_delete_file(const cef_string_t* path, int recursive);
+static int cfx_delete_file(char16 *path_str, int path_length, int recursive) {
+    cef_string_t path = { path_str, path_length, 0 };
+    return cef_delete_file(&path, recursive);
+}
+
+// CEF_EXPORT int cef_directory_exists(const cef_string_t* path);
+static int cfx_directory_exists(char16 *path_str, int path_length) {
+    cef_string_t path = { path_str, path_length, 0 };
+    return cef_directory_exists(&path);
 }
 
 // CEF_EXPORT void cef_do_message_loop_work();
@@ -137,6 +174,14 @@ static int cfx_get_path(cef_path_key_t key, char16 **path_str, int *path_length)
     cef_string_t path = { 0 };
     int __ret_val_ = cef_get_path(key, &path);
     *path_str = path.str; *path_length = (int)path.length;
+    return __ret_val_;
+}
+
+// CEF_EXPORT int cef_get_temp_directory(cef_string_t* temp_dir);
+static int cfx_get_temp_directory(char16 **temp_dir_str, int *temp_dir_length) {
+    cef_string_t temp_dir = { 0 };
+    int __ret_val_ = cef_get_temp_directory(&temp_dir);
+    *temp_dir_str = temp_dir.str; *temp_dir_length = (int)temp_dir.length;
     return __ret_val_;
 }
 
@@ -315,6 +360,13 @@ static void cfx_visit_web_plugin_info(cef_web_plugin_info_visitor_t* visitor) {
 static cef_string_userfree_t cfx_write_json(cef_value_t* node, cef_json_writer_options_t options) {
     if(node) ((cef_base_t*)node)->add_ref((cef_base_t*)node);
     return cef_write_json(node, options);
+}
+
+// CEF_EXPORT int cef_zip_directory(const cef_string_t* src_dir, const cef_string_t* dest_file, int include_hidden_files);
+static int cfx_zip_directory(char16 *src_dir_str, int src_dir_length, char16 *dest_file_str, int dest_file_length, int include_hidden_files) {
+    cef_string_t src_dir = { src_dir_str, src_dir_length, 0 };
+    cef_string_t dest_file = { dest_file_str, dest_file_length, 0 };
+    return cef_zip_directory(&src_dir, &dest_file, include_hidden_files);
 }
 
 

@@ -32,6 +32,7 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using Chromium.Remote;
 
@@ -136,6 +137,11 @@ namespace Chromium {
 
             var libcfxPath = System.IO.Path.Combine(libCfxDirPath, libCfx);
             var libcefPath = System.IO.Path.Combine(libCefDirPath, libCef);
+
+            // as of 3.2883, this must be in the path due to libcef dependencies.
+
+            var path = Environment.GetEnvironmentVariable("PATH");
+            Environment.SetEnvironmentVariable("PATH", libCefDirPath + ";" + path);
 
             libcefPtr = loader.LoadNativeLibrary(libcefPath);
             if(libcefPtr == IntPtr.Zero) {

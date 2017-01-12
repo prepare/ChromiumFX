@@ -170,6 +170,28 @@ namespace Chromium {
         Bgra8888
     }
     /// <summary>
+    /// Windows COM initialization mode. Specifies how COM will be initialized for a
+    /// new thread.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxComInitMode {
+        /// <summary>
+        /// No COM initialization.
+        /// </summary>
+        None,
+        /// <summary>
+        /// Initialize COM using single-threaded apartments.
+        /// </summary>
+        Sta,
+        /// <summary>
+        /// Initialize COM using multi-threaded apartments.
+        /// </summary>
+        Mta
+    }
+    /// <summary>
     /// Supported context menu edit state bit flags.
     /// </summary>
     /// <remarks>
@@ -861,6 +883,28 @@ namespace Chromium {
         Submenu
     }
     /// <summary>
+    /// Message loop types. Indicates the set of asynchronous events that a message
+    /// loop can process.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxMessageLoopType {
+        /// <summary>
+        /// Supports tasks and timers.
+        /// </summary>
+        Default,
+        /// <summary>
+        /// Supports tasks, timers and native UI events (e.g. Windows messages).
+        /// </summary>
+        Ui,
+        /// <summary>
+        /// Supports tasks, timers and asynchronous IO events.
+        /// </summary>
+        Io
+    }
+    /// <summary>
     /// Mouse button types.
     /// </summary>
     /// <remarks>
@@ -1354,6 +1398,31 @@ namespace Chromium {
         /// The main thread in the renderer. Used for all WebKit and V8 interaction.
         /// </summary>
         Renderer
+    }
+    /// <summary>
+    /// Thread priority values listed in increasing order of importance.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxThreadPriority {
+        /// <summary>
+        /// Suitable for threads that shouldn't disrupt high priority work.
+        /// </summary>
+        Background,
+        /// <summary>
+        /// Default priority level.
+        /// </summary>
+        Normal,
+        /// <summary>
+        /// Suitable for threads which generate data for the display (at ~60Hz).
+        /// </summary>
+        Display,
+        /// <summary>
+        /// Suitable for low-latency, glitch-resistant audio.
+        /// </summary>
+        RealtimeAudio
     }
     /// <summary>
     /// Transition type for a request. Made up of one source value and 0 or more

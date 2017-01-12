@@ -226,7 +226,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public bool Remove(int index) {
+        public bool Remove(ulong index) {
             var call = new CfxListValueRemoveRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
@@ -241,7 +241,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public CfxValueType GetType(int index) {
+        public CfxValueType GetType(ulong index) {
             var call = new CfxListValueGetTypeRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
@@ -260,7 +260,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public CfrValue GetValue(int index) {
+        public CfrValue GetValue(ulong index) {
             var call = new CfxListValueGetValueRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
@@ -275,7 +275,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public bool GetBool(int index) {
+        public bool GetBool(ulong index) {
             var call = new CfxListValueGetBoolRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
@@ -290,7 +290,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public int GetInt(int index) {
+        public int GetInt(ulong index) {
             var call = new CfxListValueGetIntRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
@@ -305,7 +305,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public double GetDouble(int index) {
+        public double GetDouble(ulong index) {
             var call = new CfxListValueGetDoubleRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
@@ -320,7 +320,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public string GetString(int index) {
+        public string GetString(ulong index) {
             var call = new CfxListValueGetStringRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
@@ -336,7 +336,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public CfrBinaryValue GetBinary(int index) {
+        public CfrBinaryValue GetBinary(ulong index) {
             var call = new CfxListValueGetBinaryRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
@@ -353,7 +353,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public CfrDictionaryValue GetDictionary(int index) {
+        public CfrDictionaryValue GetDictionary(ulong index) {
             var call = new CfxListValueGetDictionaryRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
@@ -370,7 +370,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public CfrListValue GetList(int index) {
+        public CfrListValue GetList(ulong index) {
             var call = new CfxListValueGetListRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
@@ -390,7 +390,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public bool SetValue(int index, CfrValue value) {
+        public bool SetValue(ulong index, CfrValue value) {
             var call = new CfxListValueSetValueRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
@@ -407,7 +407,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public bool SetNull(int index) {
+        public bool SetNull(ulong index) {
             var call = new CfxListValueSetNullRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
@@ -423,7 +423,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public bool SetBool(int index, bool value) {
+        public bool SetBool(ulong index, bool value) {
             var call = new CfxListValueSetBoolRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
@@ -440,7 +440,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public bool SetInt(int index, int value) {
+        public bool SetInt(ulong index, int value) {
             var call = new CfxListValueSetIntRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
@@ -457,7 +457,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public bool SetDouble(int index, double value) {
+        public bool SetDouble(ulong index, double value) {
             var call = new CfxListValueSetDoubleRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
@@ -474,7 +474,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public bool SetString(int index, string value) {
+        public bool SetString(ulong index, string value) {
             var call = new CfxListValueSetStringRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
@@ -494,7 +494,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public bool SetBinary(int index, CfrBinaryValue value) {
+        public bool SetBinary(ulong index, CfrBinaryValue value) {
             var call = new CfxListValueSetBinaryRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
@@ -514,7 +514,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public bool SetDictionary(int index, CfrDictionaryValue value) {
+        public bool SetDictionary(ulong index, CfrDictionaryValue value) {
             var call = new CfxListValueSetDictionaryRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
@@ -534,7 +534,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
-        public bool SetList(int index, CfrListValue value) {
+        public bool SetList(ulong index, CfrListValue value) {
             var call = new CfxListValueSetListRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;

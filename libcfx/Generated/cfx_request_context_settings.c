@@ -79,6 +79,14 @@ static void cfx_request_context_settings_get_ignore_certificate_errors(cef_reque
     *ignore_certificate_errors = self->ignore_certificate_errors;
 }
 
+// cef_request_context_settings_t->enable_net_security_expiration
+static void cfx_request_context_settings_set_enable_net_security_expiration(cef_request_context_settings_t *self, int enable_net_security_expiration) {
+    self->enable_net_security_expiration = enable_net_security_expiration;
+}
+static void cfx_request_context_settings_get_enable_net_security_expiration(cef_request_context_settings_t *self, int* enable_net_security_expiration) {
+    *enable_net_security_expiration = self->enable_net_security_expiration;
+}
+
 // cef_request_context_settings_t->accept_language_list
 static void cfx_request_context_settings_set_accept_language_list(cef_request_context_settings_t *self, char16 *accept_language_list_str, int accept_language_list_length) {
     cef_string_utf16_set(accept_language_list_str, accept_language_list_length, &(self->accept_language_list), 1);

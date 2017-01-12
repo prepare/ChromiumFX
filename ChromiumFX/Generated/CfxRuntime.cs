@@ -162,6 +162,78 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Creates a directory and all parent directories if they don't already exist.
+        /// Returns true (1) on successful creation or if the directory already exists.
+        /// The directory is only readable by the current user. Calling this function on
+        /// the browser process UI or IO threads is not allowed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
+        /// </remarks>
+        public static bool CreateDirectory(string fullPath) {
+            var fullPath_pinned = new PinnedString(fullPath);
+            var __retval = CfxApi.Runtime.cfx_create_directory(fullPath_pinned.Obj.PinnedPtr, fullPath_pinned.Length);
+            fullPath_pinned.Obj.Free();
+            return 0 != __retval;
+        }
+
+        /// <summary>
+        /// Creates a new directory. On Windows if |prefix| is provided the new directory
+        /// name is in the format of "prefixyyyy". Returns true (1) on success and sets
+        /// |newTempPath| to the full path of the directory that was created. The
+        /// directory is only readable by the current user. Calling this function on the
+        /// browser process UI or IO threads is not allowed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
+        /// </remarks>
+        public static bool CreateNewTempDirectory(string prefix, out string newTempPath) {
+            var prefix_pinned = new PinnedString(prefix);
+            IntPtr newTempPath_str;
+            int newTempPath_length;
+            var __retval = CfxApi.Runtime.cfx_create_new_temp_directory(prefix_pinned.Obj.PinnedPtr, prefix_pinned.Length, out newTempPath_str, out newTempPath_length);
+            prefix_pinned.Obj.Free();
+            if(newTempPath_length > 0) {
+                newTempPath = System.Runtime.InteropServices.Marshal.PtrToStringUni(newTempPath_str, newTempPath_length);
+                // free the native string?
+            } else {
+                newTempPath = null;
+            }
+            return 0 != __retval;
+        }
+
+        /// <summary>
+        /// Creates a directory within another directory. Extra characters will be
+        /// appended to |prefix| to ensure that the new directory does not have the same
+        /// name as an existing directory. Returns true (1) on success and sets |newDir|
+        /// to the full path of the directory that was created. The directory is only
+        /// readable by the current user. Calling this function on the browser process UI
+        /// or IO threads is not allowed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
+        /// </remarks>
+        public static bool CreateTempDirectoryInDirectory(string baseDir, string prefix, out string newDir) {
+            var baseDir_pinned = new PinnedString(baseDir);
+            var prefix_pinned = new PinnedString(prefix);
+            IntPtr newDir_str;
+            int newDir_length;
+            var __retval = CfxApi.Runtime.cfx_create_temp_directory_in_directory(baseDir_pinned.Obj.PinnedPtr, baseDir_pinned.Length, prefix_pinned.Obj.PinnedPtr, prefix_pinned.Length, out newDir_str, out newDir_length);
+            baseDir_pinned.Obj.Free();
+            prefix_pinned.Obj.Free();
+            if(newDir_length > 0) {
+                newDir = System.Runtime.InteropServices.Marshal.PtrToStringUni(newDir_str, newDir_length);
+                // free the native string?
+            } else {
+                newDir = null;
+            }
+            return 0 != __retval;
+        }
+
+        /// <summary>
         /// Creates a URL from the specified |parts|, which must contain a non-NULL spec
         /// or a non-NULL host and path (at a minimum), but not both. Returns false (0)
         /// if |parts| isn't initialized as described.
@@ -193,6 +265,41 @@ namespace Chromium {
         /// </remarks>
         public static bool CurrentlyOn(CfxThreadId threadId) {
             return 0 != CfxApi.Runtime.cfx_currently_on((int)threadId);
+        }
+
+        /// <summary>
+        /// Deletes the given path whether it's a file or a directory. If |path| is a
+        /// directory all contents will be deleted.  If |recursive| is true (1) any sub-
+        /// directories and their contents will also be deleted (equivalent to executing
+        /// "rm -rf", so use with caution). On POSIX environments if |path| is a symbolic
+        /// link then only the symlink will be deleted. Returns true (1) on successful
+        /// deletion or if |path| does not exist. Calling this function on the browser
+        /// process UI or IO threads is not allowed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
+        /// </remarks>
+        public static bool DeleteFile(string path, bool recursive) {
+            var path_pinned = new PinnedString(path);
+            var __retval = CfxApi.Runtime.cfx_delete_file(path_pinned.Obj.PinnedPtr, path_pinned.Length, recursive ? 1 : 0);
+            path_pinned.Obj.Free();
+            return 0 != __retval;
+        }
+
+        /// <summary>
+        /// Returns true (1) if the given path exists and is a directory. Calling this
+        /// function on the browser process UI or IO threads is not allowed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
+        /// </remarks>
+        public static bool DirectoryExists(string path) {
+            var path_pinned = new PinnedString(path);
+            var __retval = CfxApi.Runtime.cfx_directory_exists(path_pinned.Obj.PinnedPtr, path_pinned.Length);
+            path_pinned.Obj.Free();
+            return 0 != __retval;
         }
 
         /// <summary>
@@ -359,6 +466,30 @@ namespace Chromium {
                 // free the native string?
             } else {
                 path = null;
+            }
+            return 0 != __retval;
+        }
+
+        /// <summary>
+        /// Get the temporary directory provided by the system.
+        /// WARNING: In general, you should use the temp directory variants below instead
+        /// of this function. Those variants will ensure that the proper permissions are
+        /// set so that other users on the system can't edit them while they're open
+        /// (which could lead to security issues).
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
+        /// </remarks>
+        public static bool GetTempDirectory(out string tempDir) {
+            IntPtr tempDir_str;
+            int tempDir_length;
+            var __retval = CfxApi.Runtime.cfx_get_temp_directory(out tempDir_str, out tempDir_length);
+            if(tempDir_length > 0) {
+                tempDir = System.Runtime.InteropServices.Marshal.PtrToStringUni(tempDir_str, tempDir_length);
+                // free the native string?
+            } else {
+                tempDir = null;
             }
             return 0 != __retval;
         }
@@ -863,6 +994,25 @@ namespace Chromium {
         /// </remarks>
         public static string WriteJson(CfxValue node, CfxJsonWriterOptions options) {
             return StringFunctions.ConvertStringUserfree(CfxApi.Runtime.cfx_write_json(CfxValue.Unwrap(node), (int)options));
+        }
+
+        /// <summary>
+        /// Writes the contents of |srcDir| into a zip archive at |destFile|. If
+        /// |includeHiddenFiles| is true (1) files starting with "." will be included.
+        /// Returns true (1) on success.  Calling this function on the browser process UI
+        /// or IO threads is not allowed.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
+        /// </remarks>
+        public static bool ZipDirectory(string srcDir, string destFile, bool includeHiddenFiles) {
+            var srcDir_pinned = new PinnedString(srcDir);
+            var destFile_pinned = new PinnedString(destFile);
+            var __retval = CfxApi.Runtime.cfx_zip_directory(srcDir_pinned.Obj.PinnedPtr, srcDir_pinned.Length, destFile_pinned.Obj.PinnedPtr, destFile_pinned.Length, includeHiddenFiles ? 1 : 0);
+            srcDir_pinned.Obj.Free();
+            destFile_pinned.Obj.Free();
+            return 0 != __retval;
         }
 
         public class Linux {

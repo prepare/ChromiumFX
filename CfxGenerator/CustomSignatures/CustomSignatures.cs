@@ -52,29 +52,39 @@ public class CustomSignatures {
             case "cef_browser::get_frame_identifiers":
                 return new GetFrameIdentifiersSignature(s);
 
-            case "cef_v8value::execute_function_with_context":
-                return new SignatureWithStructPtrArray(s, 4, 3);
-
-            case "cef_v8value::execute_function":
-                return new SignatureWithStructPtrArray(s, 3, 2);
-
-            case "cef_request_handler::on_select_client_certificate":
-                return new SignatureWithStructPtrArray(s, 6, 5);
-
-            case "cef_render_handler::on_paint":
-                return new SignatureWithStructArray(s, 4, 3);
-
             case "cef_v8handler::execute":
                 return new CefV8HandlerExecuteSignature(s);
-
-            case "cef_print_settings::set_page_ranges":
-                return new SignatureWithStructArray(s, 2, 1);
 
             case "cef_print_settings::get_page_ranges":
                 return new GetPageRangesSignature(s, 2, 1);
 
-            case "cef_drag_handler::on_draggable_regions_changed":
-                return new SignatureWithStructArray(s, 3, 2);
+        }
+
+        for(var i = 0; i <= s.Arguments.Length - 1; i++) {
+
+            var suffixLength = 0;
+            if(s.Arguments[i].VarName.EndsWith("_count")) suffixLength = 6;
+            if(s.Arguments[i].VarName.EndsWith("Count")) suffixLength = 5;
+
+            if(suffixLength > 0) {
+                var arrName = s.Arguments[i].VarName.Substring(0, s.Arguments[i].VarName.Length - suffixLength);
+                int arrayArgIndex = -1;
+                if(i > 0 && s.Arguments[i - 1].VarName.StartsWith(arrName)) {
+                    arrayArgIndex = i - 1;
+                } else if(i < s.Arguments.Length - 1 && s.Arguments[i + 1].VarName.StartsWith(arrName)) {
+                    arrayArgIndex = i + 1;
+                } else {
+                }
+                if(arrayArgIndex > 0) {
+                    var arrayType = s.Arguments[arrayArgIndex].ArgumentType;
+                    if(arrayType.IsCefStructPtrType) {
+                        Debug.Assert(arrayType.AsCefStructPtrType.Struct.ClassBuilder.Category == StructCategory.Values);
+                        return new SignatureWithStructArray(s, arrayArgIndex, i);
+                    } else if(arrayType.IsCefStructPtrPtrType) {
+                        return new SignatureWithStructPtrArray(s, arrayArgIndex, i);
+                    }
+                }
+            }
         }
 
         return null;

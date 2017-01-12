@@ -140,6 +140,30 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Set to true (1) to enable date-based expiration of built in network
+        /// security information (i.e. certificate transparency logs, HSTS preloading
+        /// and pinning information). Enabling this option improves network security
+        /// but may cause HTTPS load failures when using CEF binaries built more than
+        /// 10 weeks in the past. See https://www.certificate-transparency.org/ and
+        /// https://www.chromium.org/hsts for details. Can be set globally using the
+        /// CfxSettings.EnableNetSecurityExpiration value.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
+        public bool EnableNetSecurityExpiration {
+            get {
+                int value;
+                CfxApi.RequestContextSettings.cfx_request_context_settings_get_enable_net_security_expiration(nativePtrUnchecked, out value);
+                return 0 != value;
+            }
+            set {
+                CfxApi.RequestContextSettings.cfx_request_context_settings_set_enable_net_security_expiration(nativePtrUnchecked, value ? 1 : 0);
+            }
+        }
+
+        /// <summary>
         /// Comma delimited ordered list of language codes without any whitespace that
         /// will be used in the "Accept-Language" HTTP header. Can be set globally
         /// using the CfxSettings.AcceptLanguageList value or overridden on a per-

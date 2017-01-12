@@ -257,6 +257,14 @@ static void cfx_settings_get_ignore_certificate_errors(cef_settings_t *self, int
     *ignore_certificate_errors = self->ignore_certificate_errors;
 }
 
+// cef_settings_t->enable_net_security_expiration
+static void cfx_settings_set_enable_net_security_expiration(cef_settings_t *self, int enable_net_security_expiration) {
+    self->enable_net_security_expiration = enable_net_security_expiration;
+}
+static void cfx_settings_get_enable_net_security_expiration(cef_settings_t *self, int* enable_net_security_expiration) {
+    *enable_net_security_expiration = self->enable_net_security_expiration;
+}
+
 // cef_settings_t->background_color
 static void cfx_settings_set_background_color(cef_settings_t *self, uint32 background_color) {
     self->background_color = background_color;

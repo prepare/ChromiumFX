@@ -489,7 +489,7 @@ namespace Parser {
         }
 
         private void ParseCppHeaders() {
-            var classEx = new Regex("(?:/\\*--cef\\(([^)]*)\\)--\\*/\\s*)?class\\s+(\\w+)\\s*(?::\\s*public\\s+virtual\\s+CefBase\\s*)?{(.+?)};", RegexOptions.Singleline);
+            var classEx = new Regex("(?:/\\*--cef\\(([^)]*)\\)--\\*/\\s*)?class\\s+(\\w+)\\s*(?::\\s*public\\s+(?:virtual\\s+)?CefBase\\s*)?{(.+?)};", RegexOptions.Singleline);
             var boolRetvalEx = new Regex("\\bbool\\b\\s+(\\w+)\\s*\\(");
             var funcEx = new Regex("(\\w+)\\s*\\((.*?)\\)", RegexOptions.Singleline);
             var boolParamEx = new Regex("\\bbool\\b(?:\\s*[&*])?\\s*\\b(\\w+)\\b");
@@ -497,6 +497,8 @@ namespace Parser {
 			var files = Directory.GetFiles(System.IO.Path.Combine("cef", "include"));
             foreach(var f in files) {
                 var code = File.ReadAllText(f);
+
+                Debug.Assert(!f.EndsWith("cef_thread.h"));
 
                 var mmClasses = classEx.Matches(code);
                 foreach(Match m in mmClasses) {

@@ -60,6 +60,7 @@ namespace Chromium {
             start_dragging_native = start_dragging;
             update_drag_cursor_native = update_drag_cursor;
             on_scroll_offset_changed_native = on_scroll_offset_changed;
+            on_ime_composition_range_changed_native = on_ime_composition_range_changed;
 
             get_root_screen_rect_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_root_screen_rect_native);
             get_view_rect_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(get_view_rect_native);
@@ -72,6 +73,7 @@ namespace Chromium {
             start_dragging_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(start_dragging_native);
             update_drag_cursor_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(update_drag_cursor_native);
             on_scroll_offset_changed_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_scroll_offset_changed_native);
+            on_ime_composition_range_changed_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(on_ime_composition_range_changed_native);
         }
 
         // get_root_screen_rect
@@ -291,6 +293,29 @@ namespace Chromium {
             self.m_OnScrollOffsetChanged?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
+        }
+
+        // on_ime_composition_range_changed
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void on_ime_composition_range_changed_delegate(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr selected_range, UIntPtr character_boundsCount, IntPtr character_bounds, int character_bounds_structsize);
+        private static on_ime_composition_range_changed_delegate on_ime_composition_range_changed_native;
+        private static IntPtr on_ime_composition_range_changed_native_ptr;
+
+        internal static void on_ime_composition_range_changed(IntPtr gcHandlePtr, IntPtr browser, out int browser_release, IntPtr selected_range, UIntPtr character_boundsCount, IntPtr character_bounds, int character_bounds_structsize) {
+            var self = (CfxRenderHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                browser_release = 1;
+                return;
+            }
+            var e = new CfxOnImeCompositionRangeChangedEventArgs(browser, selected_range, character_bounds, character_boundsCount, character_bounds_structsize);
+            self.m_OnImeCompositionRangeChanged?.Invoke(self, e);
+            e.m_isInvalid = true;
+            browser_release = e.m_browser_wrapped == null? 1 : 0;
+            if(e.m_character_bounds_managed != null) {
+                for(int i = 0; i < e.m_character_bounds_managed.Length; ++i) {
+                    e.m_character_bounds_managed[i].Dispose();
+                }
+            }
         }
 
         internal CfxRenderHandler(IntPtr nativePtr) : base(nativePtr) {}
@@ -633,6 +658,36 @@ namespace Chromium {
 
         private CfxOnScrollOffsetChangedEventHandler m_OnScrollOffsetChanged;
 
+        /// <summary>
+        /// Called when the IME composition range has changed. |SelectedRange| is the
+        /// range of characters that have been selected. |CharacterBounds| is the
+        /// bounds of each character in view coordinates.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
+        public event CfxOnImeCompositionRangeChangedEventHandler OnImeCompositionRangeChanged {
+            add {
+                lock(eventLock) {
+                    if(m_OnImeCompositionRangeChanged == null) {
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 11, on_ime_composition_range_changed_native_ptr);
+                    }
+                    m_OnImeCompositionRangeChanged += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_OnImeCompositionRangeChanged -= value;
+                    if(m_OnImeCompositionRangeChanged == null) {
+                        CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 11, IntPtr.Zero);
+                    }
+                }
+            }
+        }
+
+        private CfxOnImeCompositionRangeChangedEventHandler m_OnImeCompositionRangeChanged;
+
         internal override void OnDispose(IntPtr nativePtr) {
             if(m_GetRootScreenRect != null) {
                 m_GetRootScreenRect = null;
@@ -677,6 +732,10 @@ namespace Chromium {
             if(m_OnScrollOffsetChanged != null) {
                 m_OnScrollOffsetChanged = null;
                 CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 10, IntPtr.Zero);
+            }
+            if(m_OnImeCompositionRangeChanged != null) {
+                m_OnImeCompositionRangeChanged = null;
+                CfxApi.RenderHandler.cfx_render_handler_set_callback(NativePtr, 11, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -1554,6 +1613,89 @@ namespace Chromium {
 
             public override string ToString() {
                 return String.Format("Browser={{{0}}}, X={{{1}}}, Y={{{2}}}", Browser, X, Y);
+            }
+        }
+
+        /// <summary>
+        /// Called when the IME composition range has changed. |SelectedRange| is the
+        /// range of characters that have been selected. |CharacterBounds| is the
+        /// bounds of each character in view coordinates.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxOnImeCompositionRangeChangedEventHandler(object sender, CfxOnImeCompositionRangeChangedEventArgs e);
+
+        /// <summary>
+        /// Called when the IME composition range has changed. |SelectedRange| is the
+        /// range of characters that have been selected. |CharacterBounds| is the
+        /// bounds of each character in view coordinates.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_handler_capi.h">cef/include/capi/cef_render_handler_capi.h</see>.
+        /// </remarks>
+        public class CfxOnImeCompositionRangeChangedEventArgs : CfxEventArgs {
+
+            internal IntPtr m_browser;
+            internal CfxBrowser m_browser_wrapped;
+            internal IntPtr m_selected_range;
+            internal CfxRange m_selected_range_wrapped;
+            IntPtr m_character_bounds;
+            int m_character_bounds_structsize;
+            UIntPtr m_character_boundsCount;
+            internal CfxRect[] m_character_bounds_managed;
+
+            internal CfxOnImeCompositionRangeChangedEventArgs(IntPtr browser, IntPtr selected_range, IntPtr character_bounds, UIntPtr character_boundsCount, int character_bounds_structsize) {
+                m_browser = browser;
+                m_selected_range = selected_range;
+                m_character_bounds = character_bounds;
+                m_character_bounds_structsize = character_bounds_structsize;
+                m_character_boundsCount = character_boundsCount;
+            }
+
+            /// <summary>
+            /// Get the Browser parameter for the <see cref="CfxRenderHandler.OnImeCompositionRangeChanged"/> callback.
+            /// </summary>
+            public CfxBrowser Browser {
+                get {
+                    CheckAccess();
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfxBrowser.Wrap(m_browser);
+                    return m_browser_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the SelectedRange parameter for the <see cref="CfxRenderHandler.OnImeCompositionRangeChanged"/> callback.
+            /// </summary>
+            public CfxRange SelectedRange {
+                get {
+                    CheckAccess();
+                    if(m_selected_range_wrapped == null) m_selected_range_wrapped = CfxRange.Wrap(m_selected_range);
+                    return m_selected_range_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the CharacterBounds parameter for the <see cref="CfxRenderHandler.OnImeCompositionRangeChanged"/> callback.
+            /// Do not keep a reference to the elements of this array outside of this function.
+            /// </summary>
+            public CfxRect[] CharacterBounds {
+                get {
+                    CheckAccess();
+                    if(m_character_bounds_managed == null) {
+                        m_character_bounds_managed = new CfxRect[(ulong)m_character_boundsCount];
+                        var currentPtr = m_character_bounds;
+                        for(ulong i = 0; i < (ulong)m_character_boundsCount; ++i) {
+                            m_character_bounds_managed[i] = CfxRect.Wrap(currentPtr);
+                            currentPtr += m_character_bounds_structsize;
+                        }
+                    }
+                    return m_character_bounds_managed;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("Browser={{{0}}}, SelectedRange={{{1}}}, CharacterBounds={{{2}}}", Browser, SelectedRange, CharacterBounds);
             }
         }
 
