@@ -167,12 +167,6 @@ public class ApiType {
         return PublicUnwrapExpression(var);
     }
 
-    public virtual string ProxyCallParameter(string var) {
-        if(ProxySymbol == null)
-            return null;
-        return string.Format("{0} {1}", ProxySymbol, CSharp.Escape(var));
-    }
-
     public virtual string ProxyCallArgument(string var) {
         return PublicCallArgument(var);
     }
@@ -224,8 +218,6 @@ public class ApiType {
     }
 
     public virtual string RemoteUnwrapExpression(string var) {
-        if(ProxySymbol == null)
-            return null;
         if(RemoteSymbol == "RemotePtr") {
             return CSharp.Escape(var) + ".ptr";
         } else {
@@ -355,7 +347,7 @@ public class ApiType {
             b.AppendLine("{0} = default({1});", var, PInvokeSymbol);
     }
 
-    public virtual void EmitRemoteCallFields(CodeBuilder b, string var) {
+    public void EmitRemoteCallFields(CodeBuilder b, string var) {
         b.AppendLine("internal {0} {1};", ProxySymbol, var);
     }
 

@@ -63,10 +63,6 @@ public class CefStructOutType : CefStructPtrPtrType {
         return "out " + StructPtr.PublicCallParameter(var);
     }
 
-    public override string ProxyCallParameter(string var) {
-        return "out " + StructPtr.ProxyCallParameter(var);
-    }
-
     public override string ProxyCallArgument(string var) {
         return "out " + var;
     }

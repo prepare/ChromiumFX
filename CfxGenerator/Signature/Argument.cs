@@ -72,10 +72,6 @@ public class Argument {
         }
     }
 
-    public string ProxyVarName {
-        get { return CSharp.Escape(PublicVarName); }
-    }
-
     public string PublicPropertyName {
         get { return CSharp.Escape(CSharp.ApplyStyle(VarName, false)); }
     }
@@ -229,15 +225,15 @@ public class Argument {
     }
 
     public virtual void EmitRemoteCallFields(CodeBuilder b) {
-        ArgumentType.EmitRemoteCallFields(b, CSharp.Escape(ProxyVarName));
+        ArgumentType.EmitRemoteCallFields(b, CSharp.Escape(PublicVarName));
     }
 
     public void EmitRemoteWrite(CodeBuilder b) {
-        ArgumentType.EmitRemoteWrite(b, CSharp.Escape(ProxyVarName));
+        ArgumentType.EmitRemoteWrite(b, CSharp.Escape(PublicVarName));
     }
 
     public void EmitRemoteRead(CodeBuilder b) {
-        ArgumentType.EmitRemoteRead(b, CSharp.Escape(ProxyVarName));
+        ArgumentType.EmitRemoteRead(b, CSharp.Escape(PublicVarName));
     }
 
     public override string ToString() {
