@@ -473,8 +473,6 @@ namespace Parser {
             foreach(var f in files) {
                 var code = File.ReadAllText(f);
 
-                Debug.Assert(!f.EndsWith("cef_thread.h"));
-
                 var mmClasses = classEx.Matches(code);
                 foreach(Match m in mmClasses) {
                     var cefConfig = m.Groups[1].Value;
