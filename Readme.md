@@ -54,6 +54,9 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2883.1 ###
+- Update to CEF 3.2883.1552 with API changes.
+
 ### Version 3.2883.0 ###
 - Update to CEF 3.2883.1540 with API changes.
 - Refactored the remote client callback interface to call directly into the pinvoke api in the render process, removing another layer of bookkeeping.

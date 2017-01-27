@@ -35,6 +35,10 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate int cfx_clear_scheme_handler_factories_delegate();
             public static cfx_clear_scheme_handler_factories_delegate cfx_clear_scheme_handler_factories;
+            // CEF_EXPORT int cef_crash_reporting_enabled();
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate int cfx_crash_reporting_enabled_delegate();
+            public static cfx_crash_reporting_enabled_delegate cfx_crash_reporting_enabled;
             // CEF_EXPORT cef_request_context_t* cef_create_context_shared(cef_request_context_t* other, cef_request_context_handler_t* handler);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate IntPtr cfx_create_context_shared_delegate(IntPtr other, IntPtr handler);
@@ -187,6 +191,10 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_run_message_loop_delegate();
             public static cfx_run_message_loop_delegate cfx_run_message_loop;
+            // CEF_EXPORT void cef_set_crash_key_value(const cef_string_t* key, const cef_string_t* value);
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_set_crash_key_value_delegate(IntPtr key_str, int key_length, IntPtr value_str, int value_length);
+            public static cfx_set_crash_key_value_delegate cfx_set_crash_key_value;
             // CEF_EXPORT void cef_set_osmodal_loop(int osModalLoop);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_set_osmodal_loop_delegate(int osModalLoop);
@@ -1474,6 +1482,11 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate int cfx_context_menu_params_has_image_contents_delegate(IntPtr self);
             public static cfx_context_menu_params_has_image_contents_delegate cfx_context_menu_params_has_image_contents;
+
+            // static cef_string_userfree_t cfx_context_menu_params_get_title_text(cef_context_menu_params_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_context_menu_params_get_title_text_delegate(IntPtr self);
+            public static cfx_context_menu_params_get_title_text_delegate cfx_context_menu_params_get_title_text;
 
             // static cef_string_userfree_t cfx_context_menu_params_get_page_url(cef_context_menu_params_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]

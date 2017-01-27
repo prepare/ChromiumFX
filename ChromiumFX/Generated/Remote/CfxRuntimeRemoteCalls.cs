@@ -10,6 +10,26 @@
 using System;
 
 namespace Chromium.Remote {
+    internal class CfxRuntimeCrashReportingEnabledRemoteCall : RemoteCall {
+
+        internal CfxRuntimeCrashReportingEnabledRemoteCall()
+            : base(RemoteCallId.CfxRuntimeCrashReportingEnabledRemoteCall) {}
+
+        internal bool __retval;
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(__retval);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out __retval);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            __retval = 0 != CfxApi.Runtime.cfx_crash_reporting_enabled();
+        }
+    }
+
     internal class CfxRuntimeCreateDirectoryRemoteCall : RemoteCall {
 
         internal CfxRuntimeCreateDirectoryRemoteCall()
@@ -453,6 +473,33 @@ namespace Chromium.Remote {
             __retval = 0 != CfxApi.Runtime.cfx_register_extension(extensionName_pinned.Obj.PinnedPtr, extensionName_pinned.Length, javascriptCode_pinned.Obj.PinnedPtr, javascriptCode_pinned.Length, handler);
             extensionName_pinned.Obj.Free();
             javascriptCode_pinned.Obj.Free();
+        }
+    }
+
+    internal class CfxRuntimeSetCrashKeyValueRemoteCall : RemoteCall {
+
+        internal CfxRuntimeSetCrashKeyValueRemoteCall()
+            : base(RemoteCallId.CfxRuntimeSetCrashKeyValueRemoteCall) {}
+
+        internal string key;
+        internal string value;
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(key);
+            h.Write(value);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out key);
+            h.Read(out value);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            var key_pinned = new PinnedString(key);
+            var value_pinned = new PinnedString(value);
+            CfxApi.Runtime.cfx_set_crash_key_value(key_pinned.Obj.PinnedPtr, key_pinned.Length, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+            key_pinned.Obj.Free();
+            value_pinned.Obj.Free();
         }
     }
 

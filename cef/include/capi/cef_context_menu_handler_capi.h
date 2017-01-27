@@ -1,4 +1,4 @@
-// Copyright (c) 2016 Marshall A. Greenblatt. All rights reserved.
+// Copyright (c) 2017 Marshall A. Greenblatt. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -190,6 +190,14 @@ typedef struct _cef_context_menu_params_t {
   // NULL contents.
   ///
   int (CEF_CALLBACK *has_image_contents)(
+      struct _cef_context_menu_params_t* self);
+
+  ///
+  // Returns the title text or the alt text if the context menu was invoked on
+  // an image.
+  ///
+  // The resulting string must be freed by calling cef_string_userfree_free().
+  cef_string_userfree_t (CEF_CALLBACK *get_title_text)(
       struct _cef_context_menu_params_t* self);
 
   ///

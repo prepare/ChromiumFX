@@ -7,12 +7,13 @@
 // Generated file. Do not edit.
 
 
-static void* cfx_function_pointers[1401] =  {
+static void* cfx_function_pointers[1404] =  {
     (void*)cfx_add_cross_origin_whitelist_entry,
     (void*)cfx_api_hash,
     (void*)cfx_begin_tracing,
     (void*)cfx_clear_cross_origin_whitelist,
     (void*)cfx_clear_scheme_handler_factories,
+    (void*)cfx_crash_reporting_enabled,
     (void*)cfx_create_context_shared,
     (void*)cfx_create_directory,
     (void*)cfx_create_new_temp_directory,
@@ -51,6 +52,7 @@ static void* cfx_function_pointers[1401] =  {
     (void*)cfx_register_widevine_cdm,
     (void*)cfx_remove_cross_origin_whitelist_entry,
     (void*)cfx_run_message_loop,
+    (void*)cfx_set_crash_key_value,
     (void*)cfx_set_osmodal_loop,
     (void*)cfx_shutdown,
     (void*)cfx_unregister_internal_web_plugin,
@@ -289,6 +291,7 @@ static void* cfx_function_pointers[1401] =  {
     (void*)cfx_context_menu_params_get_unfiltered_link_url,
     (void*)cfx_context_menu_params_get_source_url,
     (void*)cfx_context_menu_params_has_image_contents,
+    (void*)cfx_context_menu_params_get_title_text,
     (void*)cfx_context_menu_params_get_page_url,
     (void*)cfx_context_menu_params_get_frame_url,
     (void*)cfx_context_menu_params_get_frame_charset,

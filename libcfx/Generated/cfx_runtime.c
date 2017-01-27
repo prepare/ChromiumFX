@@ -37,6 +37,11 @@ static int cfx_clear_scheme_handler_factories() {
     return cef_clear_scheme_handler_factories();
 }
 
+// CEF_EXPORT int cef_crash_reporting_enabled();
+static int cfx_crash_reporting_enabled() {
+    return cef_crash_reporting_enabled();
+}
+
 // CEF_EXPORT cef_request_context_t* cef_create_context_shared(cef_request_context_t* other, cef_request_context_handler_t* handler);
 static cef_request_context_t* cfx_create_context_shared(cef_request_context_t* other, cef_request_context_handler_t* handler) {
     if(other) ((cef_base_t*)other)->add_ref((cef_base_t*)other);
@@ -291,6 +296,13 @@ static int cfx_remove_cross_origin_whitelist_entry(char16 *source_origin_str, in
 // CEF_EXPORT void cef_run_message_loop();
 static void cfx_run_message_loop() {
     cef_run_message_loop();
+}
+
+// CEF_EXPORT void cef_set_crash_key_value(const cef_string_t* key, const cef_string_t* value);
+static void cfx_set_crash_key_value(char16 *key_str, int key_length, char16 *value_str, int value_length) {
+    cef_string_t key = { key_str, key_length, 0 };
+    cef_string_t value = { value_str, value_length, 0 };
+    cef_set_crash_key_value(&key, &value);
 }
 
 // CEF_EXPORT void cef_set_osmodal_loop(int osModalLoop);
