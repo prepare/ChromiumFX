@@ -12,6 +12,7 @@ static const char* (*cef_api_hash_ptr)(int entry);
 static int (*cef_begin_tracing_ptr)(const cef_string_t* categories, cef_completion_callback_t* callback);
 static int (*cef_clear_cross_origin_whitelist_ptr)();
 static int (*cef_clear_scheme_handler_factories_ptr)();
+static int (*cef_crash_reporting_enabled_ptr)();
 static cef_request_context_t* (*cef_create_context_shared_ptr)(cef_request_context_t* other, cef_request_context_handler_t* handler);
 static int (*cef_create_directory_ptr)(const cef_string_t* full_path);
 static int (*cef_create_new_temp_directory_ptr)(const cef_string_t* prefix, cef_string_t* new_temp_path);
@@ -52,6 +53,7 @@ static void (*cef_register_web_plugin_crash_ptr)(const cef_string_t* path);
 static void (*cef_register_widevine_cdm_ptr)(const cef_string_t* path, cef_register_cdm_callback_t* callback);
 static int (*cef_remove_cross_origin_whitelist_entry_ptr)(const cef_string_t* source_origin, const cef_string_t* target_protocol, const cef_string_t* target_domain, int allow_target_subdomains);
 static void (*cef_run_message_loop_ptr)();
+static void (*cef_set_crash_key_value_ptr)(const cef_string_t* key, const cef_string_t* value);
 static void (*cef_set_osmodal_loop_ptr)(int osModalLoop);
 static void (*cef_shutdown_ptr)();
 static void (*cef_unregister_internal_web_plugin_ptr)(const cef_string_t* path);
@@ -140,6 +142,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_begin_tracing_ptr = (int (*)(const cef_string_t*, cef_completion_callback_t*))cfx_platform_get_fptr(libcef, "cef_begin_tracing");
     cef_clear_cross_origin_whitelist_ptr = (int (*)())cfx_platform_get_fptr(libcef, "cef_clear_cross_origin_whitelist");
     cef_clear_scheme_handler_factories_ptr = (int (*)())cfx_platform_get_fptr(libcef, "cef_clear_scheme_handler_factories");
+    cef_crash_reporting_enabled_ptr = (int (*)())cfx_platform_get_fptr(libcef, "cef_crash_reporting_enabled");
     cef_create_context_shared_ptr = (cef_request_context_t* (*)(cef_request_context_t*, cef_request_context_handler_t*))cfx_platform_get_fptr(libcef, "cef_create_context_shared");
     cef_create_directory_ptr = (int (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_create_directory");
     cef_create_new_temp_directory_ptr = (int (*)(const cef_string_t*, cef_string_t*))cfx_platform_get_fptr(libcef, "cef_create_new_temp_directory");
@@ -180,6 +183,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
     cef_register_widevine_cdm_ptr = (void (*)(const cef_string_t*, cef_register_cdm_callback_t*))cfx_platform_get_fptr(libcef, "cef_register_widevine_cdm");
     cef_remove_cross_origin_whitelist_entry_ptr = (int (*)(const cef_string_t*, const cef_string_t*, const cef_string_t*, int))cfx_platform_get_fptr(libcef, "cef_remove_cross_origin_whitelist_entry");
     cef_run_message_loop_ptr = (void (*)())cfx_platform_get_fptr(libcef, "cef_run_message_loop");
+    cef_set_crash_key_value_ptr = (void (*)(const cef_string_t*, const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_set_crash_key_value");
     cef_set_osmodal_loop_ptr = (void (*)(int))cfx_platform_get_fptr(libcef, "cef_set_osmodal_loop");
     cef_shutdown_ptr = (void (*)())cfx_platform_get_fptr(libcef, "cef_shutdown");
     cef_unregister_internal_web_plugin_ptr = (void (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_unregister_internal_web_plugin");
@@ -269,6 +273,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_begin_tracing cef_begin_tracing_ptr
 #define cef_clear_cross_origin_whitelist cef_clear_cross_origin_whitelist_ptr
 #define cef_clear_scheme_handler_factories cef_clear_scheme_handler_factories_ptr
+#define cef_crash_reporting_enabled cef_crash_reporting_enabled_ptr
 #define cef_create_context_shared cef_create_context_shared_ptr
 #define cef_create_directory cef_create_directory_ptr
 #define cef_create_new_temp_directory cef_create_new_temp_directory_ptr
@@ -309,6 +314,7 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 #define cef_register_widevine_cdm cef_register_widevine_cdm_ptr
 #define cef_remove_cross_origin_whitelist_entry cef_remove_cross_origin_whitelist_entry_ptr
 #define cef_run_message_loop cef_run_message_loop_ptr
+#define cef_set_crash_key_value cef_set_crash_key_value_ptr
 #define cef_set_osmodal_loop cef_set_osmodal_loop_ptr
 #define cef_shutdown cef_shutdown_ptr
 #define cef_unregister_internal_web_plugin cef_unregister_internal_web_plugin_ptr

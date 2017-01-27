@@ -17,6 +17,7 @@
 #include "include/capi/cef_command_line_capi.h"
 #include "include/capi/cef_context_menu_handler_capi.h"
 #include "include/capi/cef_cookie_capi.h"
+#include "include/capi/cef_crash_util_capi.h"
 #include "include/capi/cef_dialog_handler_capi.h"
 #include "include/capi/cef_display_handler_capi.h"
 #include "include/capi/cef_dom_capi.h"

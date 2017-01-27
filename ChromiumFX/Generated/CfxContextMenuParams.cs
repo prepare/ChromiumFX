@@ -138,6 +138,20 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Returns the title text or the alt text if the context menu was invoked on
+        /// an image.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_context_menu_handler_capi.h">cef/include/capi/cef_context_menu_handler_capi.h</see>.
+        /// </remarks>
+        public string TitleText {
+            get {
+                return StringFunctions.ConvertStringUserfree(CfxApi.ContextMenuParams.cfx_context_menu_params_get_title_text(NativePtr));
+            }
+        }
+
+        /// <summary>
         /// Returns the URL of the top level page that the context menu was invoked on.
         /// </summary>
         /// <remarks>

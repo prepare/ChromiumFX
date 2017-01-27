@@ -60,18 +60,18 @@ namespace Chromium {
 
         // on_before_plugin_load
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_before_plugin_load_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr mime_type_str, int mime_type_length, IntPtr plugin_url_str, int plugin_url_length, IntPtr top_origin_url_str, int top_origin_url_length, IntPtr plugin_info, out int plugin_info_release, ref int plugin_policy);
+        private delegate void on_before_plugin_load_delegate(IntPtr gcHandlePtr, out int __retval, IntPtr mime_type_str, int mime_type_length, IntPtr plugin_url_str, int plugin_url_length, int is_main_frame, IntPtr top_origin_url_str, int top_origin_url_length, IntPtr plugin_info, out int plugin_info_release, ref int plugin_policy);
         private static on_before_plugin_load_delegate on_before_plugin_load_native;
         private static IntPtr on_before_plugin_load_native_ptr;
 
-        internal static void on_before_plugin_load(IntPtr gcHandlePtr, out int __retval, IntPtr mime_type_str, int mime_type_length, IntPtr plugin_url_str, int plugin_url_length, IntPtr top_origin_url_str, int top_origin_url_length, IntPtr plugin_info, out int plugin_info_release, ref int plugin_policy) {
+        internal static void on_before_plugin_load(IntPtr gcHandlePtr, out int __retval, IntPtr mime_type_str, int mime_type_length, IntPtr plugin_url_str, int plugin_url_length, int is_main_frame, IntPtr top_origin_url_str, int top_origin_url_length, IntPtr plugin_info, out int plugin_info_release, ref int plugin_policy) {
             var self = (CfxRequestContextHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(int);
                 plugin_info_release = 1;
                 return;
             }
-            var e = new CfxOnBeforePluginLoadEventArgs(mime_type_str, mime_type_length, plugin_url_str, plugin_url_length, top_origin_url_str, top_origin_url_length, plugin_info, plugin_policy);
+            var e = new CfxOnBeforePluginLoadEventArgs(mime_type_str, mime_type_length, plugin_url_str, plugin_url_length, is_main_frame, top_origin_url_str, top_origin_url_length, plugin_info, plugin_policy);
             self.m_OnBeforePluginLoad?.Invoke(self, e);
             e.m_isInvalid = true;
             plugin_info_release = e.m_plugin_info_wrapped == null? 1 : 0;
@@ -132,18 +132,20 @@ namespace Chromium {
         /// Called on multiple browser process threads before a plugin instance is
         /// loaded. |MimeType| is the mime type of the plugin that will be loaded.
         /// |PluginUrl| is the content URL that the plugin will load and may be NULL.
-        /// |TopOriginUrl| is the URL for the top-level frame that contains the
-        /// plugin when loading a specific plugin instance or NULL when building the
-        /// initial list of enabled plugins for 'navigator.plugins' JavaScript state.
-        /// |PluginInfo| includes additional information about the plugin that will be
-        /// loaded. |PluginPolicy| is the recommended policy. Modify |PluginPolicy|
-        /// and return true (1) to change the policy. Return false (0) to use the
-        /// recommended policy. The default plugin policy can be set at runtime using
-        /// the `--plugin-policy=[allow|Detect|block]` command-line flag. Decisions to
-        /// mark a plugin as disabled by setting |PluginPolicy| to
-        /// PLUGIN_POLICY_DISABLED may be cached when |TopOriginUrl| is NULL. To
-        /// purge the plugin list cache and potentially trigger new calls to this
-        /// function call CfxRequestContext.PurgePluginListCache.
+        /// |IsMainFrame| will be true (1) if the plugin is being loaded in the main
+        /// (top-level) frame, |TopOriginUrl| is the URL for the top-level frame that
+        /// contains the plugin when loading a specific plugin instance or NULL when
+        /// building the initial list of enabled plugins for 'navigator.plugins'
+        /// JavaScript state. |PluginInfo| includes additional information about the
+        /// plugin that will be loaded. |PluginPolicy| is the recommended policy.
+        /// Modify |PluginPolicy| and return true (1) to change the policy. Return
+        /// false (0) to use the recommended policy. The default plugin policy can be
+        /// set at runtime using the `--plugin-policy=[allow|Detect|block]` command-
+        /// line flag. Decisions to mark a plugin as disabled by setting
+        /// |PluginPolicy| to PLUGIN_POLICY_DISABLED may be cached when
+        /// |TopOriginUrl| is NULL. To purge the plugin list cache and potentially
+        /// trigger new calls to this function call
+        /// CfxRequestContext.PurgePluginListCache.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -233,18 +235,20 @@ namespace Chromium {
         /// Called on multiple browser process threads before a plugin instance is
         /// loaded. |MimeType| is the mime type of the plugin that will be loaded.
         /// |PluginUrl| is the content URL that the plugin will load and may be NULL.
-        /// |TopOriginUrl| is the URL for the top-level frame that contains the
-        /// plugin when loading a specific plugin instance or NULL when building the
-        /// initial list of enabled plugins for 'navigator.plugins' JavaScript state.
-        /// |PluginInfo| includes additional information about the plugin that will be
-        /// loaded. |PluginPolicy| is the recommended policy. Modify |PluginPolicy|
-        /// and return true (1) to change the policy. Return false (0) to use the
-        /// recommended policy. The default plugin policy can be set at runtime using
-        /// the `--plugin-policy=[allow|Detect|block]` command-line flag. Decisions to
-        /// mark a plugin as disabled by setting |PluginPolicy| to
-        /// PLUGIN_POLICY_DISABLED may be cached when |TopOriginUrl| is NULL. To
-        /// purge the plugin list cache and potentially trigger new calls to this
-        /// function call CfxRequestContext.PurgePluginListCache.
+        /// |IsMainFrame| will be true (1) if the plugin is being loaded in the main
+        /// (top-level) frame, |TopOriginUrl| is the URL for the top-level frame that
+        /// contains the plugin when loading a specific plugin instance or NULL when
+        /// building the initial list of enabled plugins for 'navigator.plugins'
+        /// JavaScript state. |PluginInfo| includes additional information about the
+        /// plugin that will be loaded. |PluginPolicy| is the recommended policy.
+        /// Modify |PluginPolicy| and return true (1) to change the policy. Return
+        /// false (0) to use the recommended policy. The default plugin policy can be
+        /// set at runtime using the `--plugin-policy=[allow|Detect|block]` command-
+        /// line flag. Decisions to mark a plugin as disabled by setting
+        /// |PluginPolicy| to PLUGIN_POLICY_DISABLED may be cached when
+        /// |TopOriginUrl| is NULL. To purge the plugin list cache and potentially
+        /// trigger new calls to this function call
+        /// CfxRequestContext.PurgePluginListCache.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -256,18 +260,20 @@ namespace Chromium {
         /// Called on multiple browser process threads before a plugin instance is
         /// loaded. |MimeType| is the mime type of the plugin that will be loaded.
         /// |PluginUrl| is the content URL that the plugin will load and may be NULL.
-        /// |TopOriginUrl| is the URL for the top-level frame that contains the
-        /// plugin when loading a specific plugin instance or NULL when building the
-        /// initial list of enabled plugins for 'navigator.plugins' JavaScript state.
-        /// |PluginInfo| includes additional information about the plugin that will be
-        /// loaded. |PluginPolicy| is the recommended policy. Modify |PluginPolicy|
-        /// and return true (1) to change the policy. Return false (0) to use the
-        /// recommended policy. The default plugin policy can be set at runtime using
-        /// the `--plugin-policy=[allow|Detect|block]` command-line flag. Decisions to
-        /// mark a plugin as disabled by setting |PluginPolicy| to
-        /// PLUGIN_POLICY_DISABLED may be cached when |TopOriginUrl| is NULL. To
-        /// purge the plugin list cache and potentially trigger new calls to this
-        /// function call CfxRequestContext.PurgePluginListCache.
+        /// |IsMainFrame| will be true (1) if the plugin is being loaded in the main
+        /// (top-level) frame, |TopOriginUrl| is the URL for the top-level frame that
+        /// contains the plugin when loading a specific plugin instance or NULL when
+        /// building the initial list of enabled plugins for 'navigator.plugins'
+        /// JavaScript state. |PluginInfo| includes additional information about the
+        /// plugin that will be loaded. |PluginPolicy| is the recommended policy.
+        /// Modify |PluginPolicy| and return true (1) to change the policy. Return
+        /// false (0) to use the recommended policy. The default plugin policy can be
+        /// set at runtime using the `--plugin-policy=[allow|Detect|block]` command-
+        /// line flag. Decisions to mark a plugin as disabled by setting
+        /// |PluginPolicy| to PLUGIN_POLICY_DISABLED may be cached when
+        /// |TopOriginUrl| is NULL. To purge the plugin list cache and potentially
+        /// trigger new calls to this function call
+        /// CfxRequestContext.PurgePluginListCache.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -281,6 +287,7 @@ namespace Chromium {
             internal IntPtr m_plugin_url_str;
             internal int m_plugin_url_length;
             internal string m_plugin_url;
+            internal int m_is_main_frame;
             internal IntPtr m_top_origin_url_str;
             internal int m_top_origin_url_length;
             internal string m_top_origin_url;
@@ -291,11 +298,12 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnBeforePluginLoadEventArgs(IntPtr mime_type_str, int mime_type_length, IntPtr plugin_url_str, int plugin_url_length, IntPtr top_origin_url_str, int top_origin_url_length, IntPtr plugin_info, int plugin_policy) {
+            internal CfxOnBeforePluginLoadEventArgs(IntPtr mime_type_str, int mime_type_length, IntPtr plugin_url_str, int plugin_url_length, int is_main_frame, IntPtr top_origin_url_str, int top_origin_url_length, IntPtr plugin_info, int plugin_policy) {
                 m_mime_type_str = mime_type_str;
                 m_mime_type_length = mime_type_length;
                 m_plugin_url_str = plugin_url_str;
                 m_plugin_url_length = plugin_url_length;
+                m_is_main_frame = is_main_frame;
                 m_top_origin_url_str = top_origin_url_str;
                 m_top_origin_url_length = top_origin_url_length;
                 m_plugin_info = plugin_info;
@@ -320,6 +328,15 @@ namespace Chromium {
                     CheckAccess();
                     m_plugin_url = StringFunctions.PtrToStringUni(m_plugin_url_str, m_plugin_url_length);
                     return m_plugin_url;
+                }
+            }
+            /// <summary>
+            /// Get the IsMainFrame parameter for the <see cref="CfxRequestContextHandler.OnBeforePluginLoad"/> callback.
+            /// </summary>
+            public bool IsMainFrame {
+                get {
+                    CheckAccess();
+                    return 0 != m_is_main_frame;
                 }
             }
             /// <summary>
@@ -369,7 +386,7 @@ namespace Chromium {
             }
 
             public override string ToString() {
-                return String.Format("MimeType={{{0}}}, PluginUrl={{{1}}}, TopOriginUrl={{{2}}}, PluginInfo={{{3}}}, PluginPolicy={{{4}}}", MimeType, PluginUrl, TopOriginUrl, PluginInfo, PluginPolicy);
+                return String.Format("MimeType={{{0}}}, PluginUrl={{{1}}}, IsMainFrame={{{2}}}, TopOriginUrl={{{3}}}, PluginInfo={{{4}}}, PluginPolicy={{{5}}}", MimeType, PluginUrl, IsMainFrame, TopOriginUrl, PluginInfo, PluginPolicy);
             }
         }
 

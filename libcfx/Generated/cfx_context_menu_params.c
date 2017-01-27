@@ -44,6 +44,11 @@ static int cfx_context_menu_params_has_image_contents(cef_context_menu_params_t*
     return self->has_image_contents(self);
 }
 
+// get_title_text
+static cef_string_userfree_t cfx_context_menu_params_get_title_text(cef_context_menu_params_t* self) {
+    return self->get_title_text(self);
+}
+
 // get_page_url
 static cef_string_userfree_t cfx_context_menu_params_get_page_url(cef_context_menu_params_t* self) {
     return self->get_page_url(self);
