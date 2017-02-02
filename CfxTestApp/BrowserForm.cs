@@ -555,7 +555,7 @@ namespace CfxTestApplication {
         // Testing async use of v8 values passed in per JSFunction.
 
         private void asyncUseOfV8ValuesToolStripMenuItem_Click(object sender, EventArgs e) {
-            WebBrowser.ExecuteJavascript(" function AsyncTestFunction(text) { alert(text); return 'The alert was shown'; } var xyz = AsyncTestFunction; SubmitAsyncTestFunction(xyz); ");
+            WebBrowser.ExecuteJavascript(" function AsyncTestFunction(text) { alert(text); return 'The alert was shown'; } SubmitAsyncTestFunction(AsyncTestFunction); ");
         }
 
         private void JS_SubmitAsyncTestFunction(object sender, CfrV8HandlerExecuteEventArgs e) {
