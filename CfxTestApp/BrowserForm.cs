@@ -200,8 +200,9 @@ namespace CfxTestApplication {
                 }
             };
 
-        }
+            WebBrowser.GlobalObject.AddFunction("SubmitAsyncTestFunction").Execute += JS_SubmitAsyncTestFunction;
 
+        }
 
         void VisitDomButton_Click(object sender, EventArgs e) {
             var retval = WebBrowser.VisitDom(VisitDOMCallback);
@@ -549,5 +550,61 @@ namespace CfxTestApplication {
                 MessageBox.Show("WebBrowser collected!", "GC Test", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+
+        // Testing async use of v8 values passed in per JSFunction.
+
+        private void asyncUseOfV8ValuesToolStripMenuItem_Click(object sender, EventArgs e) {
+            WebBrowser.ExecuteJavascript(" function AsyncTestFunction(text) { alert(text); return 'The alert was shown'; } var xyz = AsyncTestFunction; SubmitAsyncTestFunction(xyz); ");
+        }
+
+        private void JS_SubmitAsyncTestFunction(object sender, CfrV8HandlerExecuteEventArgs e) {
+            var function = e.Arguments[0];
+            LogWriteLine("JS_SubmitAsyncTestFunction: function.FunctionName = " + function.FunctionName);
+            LogWriteLine("JS_SubmitAsyncTestFunction: CfrRuntime.CurrentlyOn(CfxThreadId.Renderer) = " + CfrRuntime.CurrentlyOn(CfxThreadId.Renderer));
+            var ctx = CfrV8Context.GetCurrentContext();
+            var t = new Thread(() => { AsyncTestFunctionCallback(function, ctx); });
+            t.Start();
+        }
+
+        private void AsyncTestFunctionCallback(CfrV8Value function, CfrV8Context v8Context) {
+
+            LogWriteLine("AsyncTestFunctionCallback: sleep 2 secs, don't browse away...");
+            Thread.Sleep(2000);
+
+            var rpcContext = function.CreateRemoteCallContext();
+            rpcContext.Enter();
+
+            var task = new CfrTask();
+            string result = null;
+            task.Execute += (s, e) => {
+                v8Context.Enter();
+                LogWriteLine("AsyncTestFunctionCallback -> task.Execute: function.FunctionName = " + function.FunctionName);
+                var args = new CfrV8Value[] { "This is the alert text." };
+                var retval = function.ExecuteFunction(null, args);
+                result = retval.StringValue;
+                v8Context.Exit();
+                // release the waiting thread.
+                lock(task) {
+                    Monitor.PulseAll(task);
+                }
+            };
+
+            // make sure to keep the task alive
+            // do this even if you are not interested in the return value
+            // otherwise GC might collect the handler and task.Execute is never called.
+            lock(task) {
+                CfrTaskRunner.GetForThread(CfxThreadId.Renderer).PostTask(task);
+                Monitor.Wait(task);
+            }
+
+            rpcContext.Exit();
+            GC.KeepAlive(task);
+
+            LogWriteLine("AsyncTestFunctionCallback: result from callback = " + result);
+            LogWriteLine("AsyncTestFunctionCallback: done.");
+
+        }
+
     }
 }
