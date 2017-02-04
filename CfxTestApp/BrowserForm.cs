@@ -575,6 +575,9 @@ namespace CfxTestApplication {
             var rpcContext = function.CreateRemoteCallContext();
             rpcContext.Enter();
 
+            // since v8 values can only be accessed from the thread on which they are created, the task
+            // has to be posted for execution on the remote renderer thread (see CfxV8Value summary)
+
             var task = new CfrTask();
             string result = null;
             task.Execute += (s, e) => {
@@ -599,7 +602,9 @@ namespace CfxTestApplication {
             }
 
             rpcContext.Exit();
-            GC.KeepAlive(task);
+
+            // GC.KeepAlive(task) should not be necessary here since Monitor.Wait(task) above
+            // references the task until it is finished
 
             LogWriteLine("AsyncTestFunctionCallback: result from callback = " + result);
             LogWriteLine("AsyncTestFunctionCallback: done.");
