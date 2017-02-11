@@ -23,7 +23,7 @@ public class ApiTypeBuilder {
         apiData = Deserialize();
         string hash = Parser.ApiParser.ParseApiHash();
         if(apiData == null || !hash.Equals(apiData.ApiHashUniversal)) {
-            var parser = new Parser.ApiParser();
+            var parser = new Parser.Parser();
             apiData = parser.Parse();
             Serialize(apiData);
         }

@@ -11,7 +11,7 @@ namespace Parser {
     [Serializable()]
     public class FunctionData {
         public string Name;
-        public SignatureData Signature;
-        public CommentData Comments;
+        public SignatureData Signature = new SignatureData();
+        public CommentData Comments = new CommentData();
     }
 }

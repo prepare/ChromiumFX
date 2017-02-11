@@ -10,7 +10,7 @@ namespace Parser {
 
     [Serializable()]
     public class ArgumentData {
-        public TypeData ArgumentType;
+        public TypeData ArgumentType = new TypeData();
         public string Var;
         public bool IsConst;
 

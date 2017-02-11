@@ -12,7 +12,7 @@ namespace Parser {
     [Serializable()]
     public class SignatureData {
         public readonly List<ArgumentData> Arguments = new List<ArgumentData>();
-        public TypeData ReturnType;
+        public TypeData ReturnType = new TypeData();
         public bool ReturnValueIsConst;
     }
 }

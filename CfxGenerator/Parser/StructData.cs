@@ -14,7 +14,7 @@ namespace Parser {
         public string Name;
         public readonly List<FunctionData> CefFunctions = new List<FunctionData>();
         public readonly List<StructMemberData> StructMembers = new List<StructMemberData>();
-        public CommentData Comments;
+        public CommentData Comments = new CommentData();
         public CefConfigData CefConfig;
 
         public override string ToString() {

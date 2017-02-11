@@ -14,9 +14,9 @@ namespace Parser {
 
         public string ApiHashUniversal;
 
-        public List<StructData> CefStructs;
-        public List<FunctionData> CefFunctions;
-        public List<EnumData> CefEnums;
+        public List<StructData> CefStructs = new List<StructData>();
+        public List<FunctionData> CefFunctions = new List<FunctionData>();
+        public List<EnumData> CefEnums = new List<EnumData>();
 
         public FunctionData[] CefStringCollectionFunctions;
         public List<StructData> CefStructsWindows;
