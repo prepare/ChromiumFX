@@ -12,6 +12,6 @@ namespace Parser {
     public class EnumMemberData {
         public string Name;
         public string Value;
-        public CommentData Comments;
+        public CommentData Comments = new CommentData();
     }
 }

@@ -13,6 +13,6 @@ namespace Parser {
     public class EnumData {
         public string Name;
         public readonly List<EnumMemberData> Members = new List<EnumMemberData>();
-        public CommentData Comments;
+        public CommentData Comments = new CommentData();
     }
 }
