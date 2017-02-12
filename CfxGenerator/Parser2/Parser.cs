@@ -40,9 +40,10 @@ namespace Parser {
         [DebuggerStepThrough]
         private bool Ensure(bool success) {
             if(success) return true;
+            Debug.Print("***** Parser Failure *****");
             Debug.Print("File: " + currentFile);
             scanner.ShowPosition();
-            throw new Exception("Ensure failed.");
+            throw new Exception("Parser Failure.");
         }
 
         internal CefApiData Parse() {
@@ -73,13 +74,11 @@ namespace Parser {
         /// </summary>
         private void ParseCApiFile(CefApiData api) {
             while(!scanner.Done) {
-                Mark();
-                var success =
+                Ensure(
                     ParseCallbackStruct(api.CefStructs)
                     || ParseCefExportFunction(api.CefFunctions)
-                    || SkipHeaderCode();
-                Unmark(success);
-                Ensure(success);
+                    || SkipHeaderCode()
+                );
             }
         }
 
@@ -88,13 +87,12 @@ namespace Parser {
         /// </summary>
         private void ParseInternalFile(CefApiData api) {
             while(!scanner.Done) {
-                Mark();
-                var success =
+                Ensure(
                     ParseCefEnum(api.CefEnums)
                     || ParseCefTypeStruct(api.CefStructs)
-                    || SkipHeaderCode();
-                Unmark(success);
-                Ensure(success);
+                    || ParseCefExportFunction(api.CefFunctions)
+                    || SkipHeaderCode()
+                );
             }
         }
 
@@ -109,7 +107,7 @@ namespace Parser {
             if(success) {
                 while(
                     ParseCefCallback(cefStruct.CefFunctions)
-                    || SkipComments()
+                    || SkipCommentBlock()
                 ) ;
                 Ensure(Skip(@"} \w+;"));
                 structs.Add(cefStruct);
@@ -121,14 +119,14 @@ namespace Parser {
         private bool ParseCefExportFunction(List<FunctionData> functions) {
             Mark();
             var f = new FunctionData();
+            ParseSummary(f.Comments);
             var success =
-                ParseSummary(f.Comments)
-                && Skip(@"CEF_EXPORT\b")
+                Skip(@"CEF_EXPORT\b")
                 && ParseType(f.Signature.ReturnType)
                 && Scan(@"\w+", () => f.Name = scanner.Value)
                 && Skip(@"\(")
                 && ParseParameterList(f.Signature.Arguments)
-                && Skip(@"\);");
+                && Skip(@"\)\s*;");
             if(success)
                 functions.Add(f);
             Unmark(success);
@@ -139,7 +137,7 @@ namespace Parser {
             var e = new EnumData();
             Mark();
             var success =
-                ParseSummary(e.Comments)
+                (ParseSummary(e.Comments) || ParseCommentBlock(e.Comments))
                 && Skip(@"typedef\s+enum\s*{");
 
             if(!success) {
@@ -147,9 +145,10 @@ namespace Parser {
                 return false;
             }
 
-            while(ParseCefEnumValue(e.Members)) {
-                if(!Skip(",")) break;
-            }
+            while(
+                ParseCefEnumValue(e.Members)
+                || SkipCommentBlock()
+            ) ;
             success = Scan(@"}\s*(\w+);", () => e.Name = scanner.Group01);
             Unmark(success);
             enums.Add(e);
@@ -158,13 +157,17 @@ namespace Parser {
 
         private bool ParseCefEnumValue(List<EnumMemberData> members) {
             var member = new EnumMemberData();
+            Mark();
             ParseSummary(member.Comments);
-            if(!Scan(@"\w+", () => member.Name = scanner.Value)) return false;
-            if(Skip("=")) {
-                Ensure(Scan("[^,}\n]+", () => member.Value = scanner.Value));
+            var success = Scan(@"\w+", () => member.Name = scanner.Value);
+            if(success) {
+                if(Skip("="))
+                    Ensure(Scan("[^,}\n]+", () => member.Value = scanner.Value));
+                members.Add(member);
             }
-            members.Add(member);
-            return true;
+            Skip(",");
+            Unmark(success);
+            return success;
         }
 
 
@@ -177,12 +180,25 @@ namespace Parser {
 
             if(success) {
                 while(
-                    ParseCefCallback(cefStruct.CefFunctions)
-                    || SkipComments()
+                    ParseCefTypeStructMember(cefStruct.StructMembers)
+                    || SkipCommentBlock()
                 ) ;
                 Ensure(Skip(@"} \w+;"));
                 structs.Add(cefStruct);
             }
+            Unmark(success);
+            return success;
+        }
+
+        private bool ParseCefTypeStructMember(List<StructMemberData> members) {
+            var m = new StructMemberData();
+            Mark();
+            ParseSummary(m.Comments);
+            var success =
+                ParseType(m.MemberType)
+                && Scan(@"\w+", () => m.Name = scanner.Value)
+                && Skip(";");
+            if(success) members.Add(m);
             Unmark(success);
             return success;
         }
@@ -194,14 +210,9 @@ namespace Parser {
                 || SkipAll(@"struct\s+\w+;")
                 || SkipAll(@"typedef\s+\w+\s+\w+\s*;")
                 || SkipPreprocessorDirective()
-                || SkipComments();
+                || SkipCommentBlock();
         }
 
-        private bool SkipComments() {
-            return
-                SkipAll(@"// .*")
-                || SkipAll(@"//\n");
-        }
         private bool SkipPreprocessorDirective() {
             string line = null;
             var success = Scan(@"#\w+.*", () => line = scanner.Value);
@@ -221,18 +232,30 @@ namespace Parser {
         }
 
         private bool ParseSummary(CommentData comments) {
-            var lines = new List<string>();
             var success = Skip(@"///");
             if(success) {
-                while(
-                    Scan(@"// (.*)", () => lines.Add(scanner.Group01))
-                    || Scan(@"//\n", () => lines.Add(string.Empty))
-                ) ;
-                Ensure(Skip(@"///"));
-                comments.Lines = lines.ToArray();
-                SkipComments();
+                ParseCommentBlock(comments);
+                if(Skip(@"///"))
+                    SkipCommentBlock();
             }
             return success;
+        }
+
+        private bool ParseCommentBlock(CommentData comments) {
+            var lines = new List<string>();
+            while(
+                Scan(@"// (.*)", () => lines.Add(scanner.Group01))
+                || Scan(@"//\n", () => lines.Add(string.Empty))
+            ) ;
+            comments.Lines = lines.ToArray();
+            comments.FileName = currentFile;
+            return lines.Count > 0;
+        }
+
+        private bool SkipCommentBlock() {
+            return
+                SkipAll(@"// .*")
+                || SkipAll(@"//\n");
         }
 
         private bool ParseCefCallback(List<FunctionData> functions) {
@@ -245,7 +268,7 @@ namespace Parser {
                 && Scan(@"\w+", () => f.Name = scanner.Value)
                 && Skip(@"\)\(")
                 && ParseParameterList(f.Signature.Arguments)
-                && Skip(@"\);");
+                && Skip(@"\)\s*;");
             if(success)
                 functions.Add(f);
             Unmark(success);

@@ -48,9 +48,15 @@ namespace Parser {
         }
 
         internal void ShowPosition() {
-            Debug.Print("Current position: " +  Position);
+            if(marks.Count>0) {
+                foreach(var m in marks) {
+                    Debug.Print("Mark: " + m);
+                    ShowPosition(m);
+                }
+            }
+            Debug.Print("Current: " +  Position);
             ShowPosition(Position);
-            Debug.Print("Max. position: " + maxPosition);
+            Debug.Print("Max: " + maxPosition);
             ShowPosition(maxPosition);
         }
 
@@ -78,6 +84,14 @@ namespace Parser {
                     sb1.Append(input[i]);
                     sb2.Append('-');
                 }
+            }
+            while(sb1.Length < 50 && ++i0 < input.Length) {
+                if(input[i0] == '\n')
+                    sb1.Append("¶");
+                else
+                    sb1.Append(input[i0]);
+                sb2.Append("-");
+
             }
             Debug.Print(sb1.ToString());
             Debug.Print(sb2.ToString());

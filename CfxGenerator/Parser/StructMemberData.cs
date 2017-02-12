@@ -12,9 +12,9 @@ namespace Parser {
     public class StructMemberData {
         public string Name;
         public CefConfigData CefConfig;
-        public TypeData MemberType;
+        public TypeData MemberType = new TypeData();
         public SignatureData CallbackSignature;
-        public CommentData Comments;
+        public CommentData Comments = new CommentData();
 
         public override string ToString() {
             return Name;
