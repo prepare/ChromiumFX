@@ -8,20 +8,88 @@ using System.Text.RegularExpressions;
 
 namespace Parser {
 
-    internal class Parser {
+    /// <summary>
+    /// A simple recursive descent parser for scraping the CEF API header files
+    /// with a regex scanner as token stream.
+    /// 
+    /// The C API header files are scraped for type and function definitions and comments. 
+    /// 
+    /// The C++ API header files are scraped
+    /// for useful additional information needed for the wrapper generator 
+    /// like --cef(...)-- tags and boolean function parameters.
+    /// </summary>
+    internal abstract class Parser {
+
+
+        internal static CefApiData Parse() {
+
+            var api = new CefApiData();
+
+            Parser p = new CefCApiParser();
+            
+            var files = Directory.GetFiles(System.IO.Path.Combine("cef", "include", "capi"));
+            foreach(var f in files) {
+                if(Path.GetFileName(f) == "cef_base_capi.h") continue;
+                p.SetFile(f);
+                p.Parse(api);
+            }
+
+            p = new CefInternalsParser();
+
+            p.SetFile(Path.Combine("cef", "include", "internal", "cef_types.h"));
+            p.Parse(api);
+            p.SetFile(Path.Combine("cef", "include", "internal", "cef_time.h"));
+            p.Parse(api);
+
+            CefApiData tmpApi = new CefApiData();
+
+            p.SetFile(Path.Combine(System.IO.Path.Combine("cef", "include", "internal", "cef_string_list.h")));
+            p.Parse(tmpApi);
+            p.SetFile(Path.Combine(System.IO.Path.Combine("cef", "include", "internal", "cef_string_map.h")));
+            p.Parse(tmpApi);
+            p.SetFile(Path.Combine(System.IO.Path.Combine("cef", "include", "internal", "cef_string_multimap.h")));
+            p.Parse(tmpApi);
+            api.CefStringCollectionFunctions = tmpApi.CefFunctions.ToArray();
+
+            tmpApi = new CefApiData();
+            p.SetFile(Path.Combine(System.IO.Path.Combine("cef", "include", "internal", "cef_types_win.h")));
+            p.Parse(tmpApi);
+            api.CefFunctionsWindows = tmpApi.CefFunctions;
+            api.CefStructsWindows = tmpApi.CefStructs;
+
+            tmpApi = new CefApiData();
+            p.SetFile(Path.Combine(System.IO.Path.Combine("cef", "include", "internal", "cef_types_linux.h")));
+            p.Parse(tmpApi);
+            api.CefFunctionsWindows = tmpApi.CefFunctions;
+            api.CefStructsWindows = tmpApi.CefStructs;
+
+            p = new CefClassesParser();
+
+            files = Directory.GetFiles(System.IO.Path.Combine("cef", "include"));
+            foreach(var f in files) {
+                p.SetFile(f);
+                p.Parse(api);
+            }
+
+            return api;
+        }
+
+
 
         private Scanner scanner;
-        private string currentFile;
+        protected string currentFile;
 
-        private bool Skip(string pattern) {
+        protected abstract void Parse(CefApiData data);
+
+        protected bool Skip(string pattern) {
             return scanner.Scan(pattern, RegexOptions.None);
         }
 
-        private bool Skip(string pattern, RegexOptions options) {
+        protected bool Skip(string pattern, RegexOptions options) {
             return scanner.Scan(pattern, options);
         }
 
-        private bool Scan(string pattern, Action onSuccess) {
+        protected bool Scan(string pattern, Action onSuccess) {
             if(scanner.Scan(pattern, RegexOptions.None)) {
                 onSuccess?.Invoke();
                 return true;
@@ -29,16 +97,34 @@ namespace Parser {
             return false;
         }
 
-        private void Mark() {
+        protected void Mark() {
             scanner.Mark();
         }
 
-        private void Unmark(bool success) {
+        protected void Unmark(bool success) {
             scanner.Unmark(success);
         }
 
+        protected bool Done {
+            get {
+                return scanner.Done;
+            }
+        }
+
+        protected string Value {
+            get {
+                return scanner.Value;
+            }
+        }
+
+        protected string Group01 {
+            get {
+                return scanner.Group01;
+            }
+        }
+
         [DebuggerStepThrough]
-        private bool Ensure(bool success) {
+        protected bool Ensure(bool success) {
             if(success) return true;
             Debug.Print("***** Parser Failure *****");
             Debug.Print("File: " + currentFile);
@@ -46,174 +132,22 @@ namespace Parser {
             throw new Exception("Parser Failure.");
         }
 
-        internal CefApiData Parse() {
-
-            var api = new CefApiData();
-
-            var files = Directory.GetFiles(System.IO.Path.Combine("cef", "include", "capi"));
-            foreach(var f in files) {
-                if(Path.GetFileName(f) == "cef_base_capi.h") continue;
-                var content = File.ReadAllText(f);
-                currentFile = f;
-                scanner = new Scanner(content);
-                ParseCApiFile(api);
-            }
-
-            currentFile = Path.Combine("cef", "include", "internal", "cef_types.h");
+        protected void SetFile(string filename) {
+            currentFile = filename;
             scanner = new Scanner(File.ReadAllText(currentFile));
-            ParseInternalFile(api);
-            currentFile = Path.Combine("cef", "include", "internal", "cef_time.h");
-            scanner = new Scanner(File.ReadAllText(currentFile));
-            ParseInternalFile(api);
-
-            return api;
         }
 
-        /// <summary>
-        /// A file in the include/capi folder
-        /// </summary>
-        private void ParseCApiFile(CefApiData api) {
-            while(!scanner.Done) {
-                Ensure(
-                    ParseCallbackStruct(api.CefStructs)
-                    || ParseCefExportFunction(api.CefFunctions)
-                    || SkipHeaderCode()
-                );
+        protected bool SkipAll(string pattern) {
+            if(Skip(pattern)) {
+                while(Skip(pattern)) ;
+                return true;
             }
+            return false;
         }
 
-        /// <summary>
-        /// A file in the include/internal folder
-        /// </summary>
-        private void ParseInternalFile(CefApiData api) {
-            while(!scanner.Done) {
-                Ensure(
-                    ParseCefEnum(api.CefEnums)
-                    || ParseCefTypeStruct(api.CefStructs)
-                    || ParseCefExportFunction(api.CefFunctions)
-                    || SkipHeaderCode()
-                );
-            }
-        }
+        // common rules for all parsers
 
-        private bool ParseCallbackStruct(List<StructData> structs) {
-            Mark();
-            var cefStruct = new StructData();
-            var success =
-                ParseSummary(cefStruct.Comments)
-                && Scan(@"typedef struct _(cef_\w+_t) {", () => cefStruct.Name = scanner.Group01)
-                && Skip(@"///.*cef_base_t base;", RegexOptions.Singleline);
-
-            if(success) {
-                while(
-                    ParseCefCallback(cefStruct.CefFunctions)
-                    || SkipCommentBlock()
-                ) ;
-                Ensure(Skip(@"} \w+;"));
-                structs.Add(cefStruct);
-            }
-            Unmark(success);
-            return success;
-        }
-
-        private bool ParseCefExportFunction(List<FunctionData> functions) {
-            Mark();
-            var f = new FunctionData();
-            ParseSummary(f.Comments);
-            var success =
-                Skip(@"CEF_EXPORT\b")
-                && ParseType(f.Signature.ReturnType)
-                && Scan(@"\w+", () => f.Name = scanner.Value)
-                && Skip(@"\(")
-                && ParseParameterList(f.Signature.Arguments)
-                && Skip(@"\)\s*;");
-            if(success)
-                functions.Add(f);
-            Unmark(success);
-            return success;
-        }
-
-        private bool ParseCefEnum(List<EnumData> enums) {
-            var e = new EnumData();
-            Mark();
-            var success =
-                (ParseSummary(e.Comments) || ParseCommentBlock(e.Comments))
-                && Skip(@"typedef\s+enum\s*{");
-
-            if(!success) {
-                Unmark(false);
-                return false;
-            }
-
-            while(
-                ParseCefEnumValue(e.Members)
-                || SkipCommentBlock()
-            ) ;
-            success = Scan(@"}\s*(\w+);", () => e.Name = scanner.Group01);
-            Unmark(success);
-            enums.Add(e);
-            return Ensure(success);
-        }
-
-        private bool ParseCefEnumValue(List<EnumMemberData> members) {
-            var member = new EnumMemberData();
-            Mark();
-            ParseSummary(member.Comments);
-            var success = Scan(@"\w+", () => member.Name = scanner.Value);
-            if(success) {
-                if(Skip("="))
-                    Ensure(Scan("[^,}\n]+", () => member.Value = scanner.Value));
-                members.Add(member);
-            }
-            Skip(",");
-            Unmark(success);
-            return success;
-        }
-
-
-        private bool ParseCefTypeStruct(List<StructData> structs) {
-            Mark();
-            var cefStruct = new StructData();
-            var success =
-                ParseSummary(cefStruct.Comments)
-                && Scan(@"typedef struct _(cef_\w+_t) {", () => cefStruct.Name = scanner.Group01);
-
-            if(success) {
-                while(
-                    ParseCefTypeStructMember(cefStruct.StructMembers)
-                    || SkipCommentBlock()
-                ) ;
-                Ensure(Skip(@"} \w+;"));
-                structs.Add(cefStruct);
-            }
-            Unmark(success);
-            return success;
-        }
-
-        private bool ParseCefTypeStructMember(List<StructMemberData> members) {
-            var m = new StructMemberData();
-            Mark();
-            ParseSummary(m.Comments);
-            var success =
-                ParseType(m.MemberType)
-                && Scan(@"\w+", () => m.Name = scanner.Value)
-                && Skip(";");
-            if(success) members.Add(m);
-            Unmark(success);
-            return success;
-        }
-
-        private bool SkipHeaderCode() {
-            return
-                Skip(@"#ifdef\s+__cplusplus\s*}\s*#endif")
-                || Skip(@"extern\s*""C""\s*{")
-                || SkipAll(@"struct\s+\w+;")
-                || SkipAll(@"typedef\s+\w+\s+\w+\s*;")
-                || SkipPreprocessorDirective()
-                || SkipCommentBlock();
-        }
-
-        private bool SkipPreprocessorDirective() {
+        protected bool SkipPreprocessorDirective() {
             string line = null;
             var success = Scan(@"#\w+.*", () => line = scanner.Value);
             if(!success) return false;
@@ -223,15 +157,7 @@ namespace Parser {
             return true;
         }
 
-        private bool SkipAll(string pattern) {
-            if(Skip(pattern)) {
-                while(Skip(pattern)) ;
-                return true;
-            }
-            return false;
-        }
-
-        private bool ParseSummary(CommentData comments) {
+        protected bool ParseSummary(CommentData comments) {
             var success = Skip(@"///");
             if(success) {
                 ParseCommentBlock(comments);
@@ -241,7 +167,15 @@ namespace Parser {
             return success;
         }
 
-        private bool ParseCommentBlock(CommentData comments) {
+        protected bool SkipSummary() {
+            var success = Skip(@"///");
+            if(Skip(@"///")) {
+                SkipCommentBlock();
+            }
+            return success;
+        }
+
+        protected bool ParseCommentBlock(CommentData comments) {
             var lines = new List<string>();
             while(
                 Scan(@"// (.*)", () => lines.Add(scanner.Group01))
@@ -252,61 +186,21 @@ namespace Parser {
             return lines.Count > 0;
         }
 
-        private bool SkipCommentBlock() {
+        protected bool SkipCommentBlock() {
             return
                 SkipAll(@"// .*")
                 || SkipAll(@"//\n");
         }
-
-        private bool ParseCefCallback(List<FunctionData> functions) {
-            Mark();
-            var f = new FunctionData();
-            var success =
-                ParseSummary(f.Comments)
-                && ParseType(f.Signature.ReturnType)
-                && Skip(@"\(\s*CEF_CALLBACK \*")
-                && Scan(@"\w+", () => f.Name = scanner.Value)
-                && Skip(@"\)\(")
-                && ParseParameterList(f.Signature.Arguments)
-                && Skip(@"\)\s*;");
-            if(success)
-                functions.Add(f);
-            Unmark(success);
-            return success;
-        }
-
-        private bool ParseType(TypeData type) {
-            Mark();
-            var success = Scan(@"(?:struct _)?(\w+)", () => type.Name = scanner.Group01);
-            if(success) {
-                type.Indirection = string.Empty;
-                while(
-                    Scan(@"const\b", () => { type.Indirection += scanner.Value; })
-                    || Scan(@"\*", () => type.Indirection += scanner.Value)
-                ) ;
-            }
-            Unmark(success);
-            return success;
-        }
-
-        private bool ParseParameterList(List<ArgumentData> parameters) {
-            var p = new ArgumentData();
-            while(ParseParameter(p)) {
-                parameters.Add(p);
-                if(!Skip(",")) break;
-                p = new ArgumentData();
-            }
-            return true;
-        }
-
-        private bool ParseParameter(ArgumentData parameter) {
-            Mark();
-            Scan(@"const\b", () => parameter.IsConst = true);
-            var success =
-                ParseType(parameter.ArgumentType)
-                && Scan(@"\w+", () => parameter.Var = scanner.Value);
-            Unmark(success);
-            return success;
+        
+        protected bool SkipHeaderCode() {
+            return
+                Skip(@"#ifdef\s+__cplusplus\s*}\s*#endif")
+                || Skip(@"extern\s*""C""\s*{")
+                || SkipAll(@"struct\s+\w+;")
+                || SkipAll(@"typedef\s+(?:\w+(?:\s*\*)*\s+)+\w+\s*;")
+                || SkipPreprocessorDirective()
+                || SkipCommentBlock()
+                || SkipSummary();
         }
     }
 }
