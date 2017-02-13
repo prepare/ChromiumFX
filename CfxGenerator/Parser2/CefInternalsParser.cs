@@ -17,7 +17,7 @@ namespace Parser {
                     ParseCefEnum(api.CefEnums)
                     || ParseCefTypeStruct(api.CefStructs)
                     || ParseCefExportFunction(api.CefFunctions)
-                    || SkipHeaderCode()
+                    || SkipCHeaderCode()
                 );
             }
         }

@@ -25,5 +25,8 @@ namespace Parser {
         public List<StructData> CefStructsLinux;
 
         public List<FunctionData> CefFunctionsLinux;
+
+        public List<CefClassData> CefClasses = new List<CefClassData>();
+
     }
 }

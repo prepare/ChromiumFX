@@ -538,7 +538,7 @@ namespace Parser {
             if(config.Length > 0) {
                 var items = config.Split(',');
                 var data = new CefConfigData();
-                var optParams = new List<string>();
+                
                 foreach(var item in items) {
                     var pair = item.Split('=');
                     string value = null;
@@ -557,7 +557,7 @@ namespace Parser {
                             break;
 
                         case "optional_param":
-                            optParams.Add(value);
+                            data.OptionalParameters.Add(value);
                             break;
 
                         case "count_func":
@@ -585,7 +585,6 @@ namespace Parser {
                             break;
                     }
                 }
-                data.OptionalParameters = optParams.ToArray();
                 cefConfigs.Add(token, data);
             }
         }

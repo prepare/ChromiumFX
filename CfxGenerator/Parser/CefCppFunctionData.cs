@@ -6,9 +6,11 @@ using System.Text;
 
 namespace Parser {
     [Serializable()]
-    public class CefClassData {
+    public class CefCppFunctionData {
         public string Name;
+        public bool IsStatic;
         public CefConfigData CefConfig = new CefConfigData();
-        public List<CefCppFunctionData> Methods = new List<CefCppFunctionData>();
+        public bool IsRetvalBoolean;
+        public List<string> BooleanParameters = new List<string>();
     }
 }

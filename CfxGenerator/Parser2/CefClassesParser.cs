@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Parser {
 
@@ -13,21 +14,122 @@ namespace Parser {
 
         protected override void Parse(CefApiData api) {
             var classes = new List<CefClassData>();
+            var functions = new List<CefCppFunctionData>();
             while(!Done) {
                 Ensure(
-                    ParseCppClass(classes)
-                    
+                    ParseClass(classes)
+                    || ParseFunction(functions)
+                    || SkipCHeaderCode()
+                    || SkipCppHeaderCode()
                 );
             }
         }
 
+        private bool ParseClass(List<CefClassData> classes) {
 
+            var c = new CefClassData();
+            Mark();
+            var success =
+                ParseCefConfig(c.CefConfig)
+                && Scan(@"class (\w+)", () => c.Name = Group01)
+                && Skip(": public (?:virtual )?CefBase {");
 
-        private bool ParseCppClass(List<CefClassData> classes) {
-            return false;
+            if(success) {
+
+                while(
+                    ParseFunction(c.Methods)
+                    || Skip("public:")
+                    || SkipSummary()
+                    || SkipCommentBlock()
+                    || (Skip("typedef.*?;"))
+                    ) ;
+
+                Ensure(Skip(@"}\s*;"));
+                classes.Add(c);
+            }
+
+            Unmark(success);
+            return success;
         }
 
+        private bool ParseFunction(List<CefCppFunctionData> functions) {
+            var f = new CefCppFunctionData();
 
+            Mark();
+            ParseCefConfig(f.CefConfig);
+
+            while(
+                Skip("virtual")
+                || Scan("static", () => f.IsStatic = true)
+            ) ;
+
+            var success =
+                ParseReturnType(f)
+                && Scan(@"\w+", () => f.Name = Value)
+                && Skip(@"\(");
+
+            if(success) {
+                while(ParseParameter(f.BooleanParameters))
+                    Skip(",");
+                Ensure(Skip(@"\)"));
+                Ensure(Skip(";") || Skip(@"=\s*0;") || Skip(@"{.*?}", RegexOptions.Singleline));
+                functions.Add(f);
+            }
+
+            Unmark(success);
+            return success;
+        }
+
+        private bool ParseReturnType(CefCppFunctionData f) {
+            return
+                Scan("bool", () => f.IsRetvalBoolean = true)
+                || SkipType();
+        }
+
+        private bool ParseParameter(List<string> booleanParameters) {
+            return
+                Scan(@"bool\s+(\w+)", () => booleanParameters.Add(Group01))
+                || (SkipType() && Skip(@"\w+"));
+        }
+
+        private bool SkipType() {
+            return
+                Skip(@"(const\s+)?CefRefPtr<\w+>(?:\s*&)?")
+                || Skip(@"(const\s+)?std::\w+<.+?>(?:\s*&)?")
+                || Skip(@"const char\* const\*")
+                || Skip(@"(const\s+)?\w+(?:\s*[&*])*");
+        }
+
+        private bool ParseCefConfig(CefConfigData config) {
+
+            if(!Skip(@"/\*--cef\(")) return false;
+
+            while(ParseCefConfigItem(config)) {
+                Skip(",");
+            }
+            Ensure(Skip(@"\)--\*/"));
+            return true;
+        }
+
+        private bool ParseCefConfigItem(CefConfigData config) {
+
+            return
+                Scan("api_hash_check", () => config.ApiHashCheck = true)
+                || Scan("no_debugct_check", () => config.NoDebugctCheck = true)
+                || Scan(@"optional_param=(\w+)", () => config.OptionalParameters.Add(Group01))
+                || Scan(@"capi_name=(\w+)", () => config.CApiName = Group01)
+                || Scan(@"index_param=(\w+)", () => config.IndexParameter = Group01)
+                || Scan(@"count_func=(\w+:\w+)", () => config.CountFunction = Group01)
+                || Scan(@"default_retval=(\w+)", () => config.DefaultRetval = Group01)
+                || Scan(@"source=(\w+)", () => config.Source = Group01);
+        }
+
+        private bool SkipCppHeaderCode() {
+            return 
+                Skip(@"class\s+\w+\s*;")
+                || (Skip("typedef.*?;"))
+                ;
+        }
 
     }
 }

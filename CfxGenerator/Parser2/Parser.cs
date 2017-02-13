@@ -26,7 +26,7 @@ namespace Parser {
             var api = new CefApiData();
 
             Parser p = new CefCApiParser();
-            
+
             var files = Directory.GetFiles(System.IO.Path.Combine("cef", "include", "capi"));
             foreach(var f in files) {
                 if(Path.GetFileName(f) == "cef_base_capi.h") continue;
@@ -67,6 +67,12 @@ namespace Parser {
 
             files = Directory.GetFiles(System.IO.Path.Combine("cef", "include"));
             foreach(var f in files) {
+                if(Path.GetFileName(f) == "cef_base.h") continue;
+                if(Path.GetFileName(f) == "cef_pack_resources.h") continue;
+                if(Path.GetFileName(f) == "cef_pack_strings.h") continue;
+                if(Path.GetFileName(f) == "cef_sandbox_win.h") continue;
+                if(Path.GetFileName(f) == "cef_version.h") continue;
+
                 p.SetFile(f);
                 p.Parse(api);
             }
@@ -191,8 +197,8 @@ namespace Parser {
                 SkipAll(@"// .*")
                 || SkipAll(@"//\n");
         }
-        
-        protected bool SkipHeaderCode() {
+
+        protected bool SkipCHeaderCode() {
             return
                 Skip(@"#ifdef\s+__cplusplus\s*}\s*#endif")
                 || Skip(@"extern\s*""C""\s*{")

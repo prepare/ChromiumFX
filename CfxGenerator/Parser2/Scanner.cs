@@ -31,8 +31,8 @@ namespace Parser {
             Match = Regex.Match(CurrentInput, "^" + pattern, options);
             if(Match.Success) {
                 Position += Match.Value.Length;
-                if(Position > maxPosition) maxPosition = Position;
                 while(Position < input.Length && char.IsWhiteSpace(input[Position])) ++Position;
+                if(Position > maxPosition) maxPosition = Position;
                 return true;
             }
             return false;

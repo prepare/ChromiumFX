@@ -5,12 +5,14 @@
 // of the BSD license. See the License.txt file for details.
 
 using System;
+using System.Collections.Generic;
 
 [Serializable()]
 public class CefConfigData {
     public string CppApiName;
+    public string CApiName;
     public string IndexParameter;
-    public string[] OptionalParameters;
+    public List<string> OptionalParameters = new List<string>();
     public string CountFunction;
     public string DefaultRetval;
     public bool ApiHashCheck;

@@ -17,7 +17,7 @@ namespace Parser {
                 Ensure(
                     ParseCefCallbackStruct(api.CefStructs)
                     || ParseCefExportFunction(api.CefFunctions)
-                    || SkipHeaderCode()
+                    || SkipCHeaderCode()
                 );
             }
         }

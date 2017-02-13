@@ -88,7 +88,7 @@
     <Compile Include="Parser2\CHeaderParser.cs" />
     <Compile Include="Parser2\CefInternalsParser.cs" />
     <Compile Include="Parser\CefClassData.cs" />
-    <Compile Include="Parser\CefClassMethodData.cs" />
+    <Compile Include="Parser\CefCppFunctionData.cs" />
     <Compile Include="Parser2\CefCApiParser.cs" />
     <Compile Include="Parser2\CefClassesParser.cs" />
     <Compile Include="Parser2\Parser.cs" />
