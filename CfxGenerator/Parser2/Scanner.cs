@@ -66,7 +66,7 @@ namespace Parser {
 
             var i0 = pos;
             while(i0 >= 0 && input[i0] != '\r' && input[i0] != '\n') --i0;
-            if(i0 > 0) ++i0;
+            ++i0;
 
             for(int i = i0; i < pos; ++i) {
                 sb1.Append(input[i]);

@@ -60,8 +60,8 @@ namespace Parser {
             tmpApi = new CefApiData();
             p.SetFile(Path.Combine(System.IO.Path.Combine("cef", "include", "internal", "cef_types_linux.h")));
             p.Parse(tmpApi);
-            api.CefFunctionsWindows = tmpApi.CefFunctions;
-            api.CefStructsWindows = tmpApi.CefStructs;
+            api.CefFunctionsLinux = tmpApi.CefFunctions;
+            api.CefStructsLinux = tmpApi.CefStructs;
 
             p = new CefClassesParser();
 
@@ -77,7 +77,68 @@ namespace Parser {
                 p.Parse(api);
             }
 
+
+            // process c++ findings (compat with previous parser)
+
+            var classes = new Dictionary<string, CefClassData>(api.CefClasses.Count);
+            var funcs = new Dictionary<string, CefCppFunctionData>(api.CefCppFunctions.Count);
+            foreach(var c in api.CefClasses) {
+                classes.Add(CppStyle2CStyle(c.Name) + "_t", c);
+                foreach(var f in c.Methods) {
+                    if(f.CefConfig.CApiName == null)
+                        funcs.Add(CppStyle2CStyle(c.Name) + "_" + CppStyle2CStyle(f.Name), f);
+                    else
+                        funcs.Add(CppStyle2CStyle(c.Name) + "_" + f.CefConfig.CApiName, f);
+                }
+            }
+            foreach(var s in api.CefStructs) {
+                if(classes.ContainsKey(s.Name)) {
+                    var c = classes[s.Name];
+                    classes.Remove(s.Name);
+                    s.CefConfig = c.CefConfig;
+                } else {
+                    if(s.CefFunctions.Count > 0)
+                        Debugger.Break();
+                }
+                foreach(var f in s.CefFunctions) {
+                    if(funcs.ContainsKey(s.Name.Substring(0, s.Name.Length - 1) + f.Name)) {
+                        var cf = funcs[s.Name.Substring(0, s.Name.Length - 1) + f.Name];
+                        if(cf.IsRetvalBoolean) {
+                            f.Signature.ReturnType.Name = "bool";
+                        }
+                        foreach(var pm in cf.BooleanParameters) {
+                            var success = false;
+                            foreach(var pm1 in f.Signature.Arguments) {
+                                if(pm1.Var == pm) {
+                                    pm1.ArgumentType.Name = "bool";
+                                    success = true;
+                                    break;
+                                }
+                            }
+                            if(!success) {
+                                Debugger.Break();
+                            }
+                        }
+                    } else {
+                        Debugger.Break();
+                    }
+                }
+            }
             return api;
+        }
+
+        private static string CppStyle2CStyle(string symbol) {
+            var s = new StringBuilder();
+            for(int i = 0; i < symbol.Length; ++i) {
+                var c = symbol[i];
+                if(char.IsUpper(c)) {
+                    if(s.Length > 0 && char.IsLower(symbol[i - 1])) s.Append("_");
+                    s.Append(char.ToLowerInvariant(c));
+                } else {
+                    s.Append(c);
+                }
+            }
+            return s.ToString();
         }
 
 
@@ -175,8 +236,9 @@ namespace Parser {
 
         protected bool SkipSummary() {
             var success = Skip(@"///");
-            if(Skip(@"///")) {
+            if(success) {
                 SkipCommentBlock();
+                Skip(@"///");
             }
             return success;
         }

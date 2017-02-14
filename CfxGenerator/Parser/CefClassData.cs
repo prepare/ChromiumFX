@@ -10,5 +10,8 @@ namespace Parser {
         public string Name;
         public CefConfigData CefConfig = new CefConfigData();
         public List<CefCppFunctionData> Methods = new List<CefCppFunctionData>();
+        public override string ToString() {
+            return $"class {Name} ({Methods.Count} methods)";
+        }
     }
 }

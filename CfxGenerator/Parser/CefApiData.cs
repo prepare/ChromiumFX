@@ -19,14 +19,15 @@ namespace Parser {
         public List<EnumData> CefEnums = new List<EnumData>();
 
         public FunctionData[] CefStringCollectionFunctions;
+
         public List<StructData> CefStructsWindows;
-
         public List<FunctionData> CefFunctionsWindows;
-        public List<StructData> CefStructsLinux;
 
+        public List<StructData> CefStructsLinux;
         public List<FunctionData> CefFunctionsLinux;
 
         public List<CefClassData> CefClasses = new List<CefClassData>();
+        public List<CefCppFunctionData> CefCppFunctions = new List<CefCppFunctionData>();
 
     }
 }

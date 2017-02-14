@@ -13,12 +13,10 @@ namespace Parser {
     internal class CefClassesParser : Parser {
 
         protected override void Parse(CefApiData api) {
-            var classes = new List<CefClassData>();
-            var functions = new List<CefCppFunctionData>();
             while(!Done) {
                 Ensure(
-                    ParseClass(classes)
-                    || ParseFunction(functions)
+                    ParseClass(api.CefClasses)
+                    || ParseFunction(api.CefCppFunctions)
                     || SkipCHeaderCode()
                     || SkipCppHeaderCode()
                 );
@@ -56,7 +54,8 @@ namespace Parser {
             var f = new CefCppFunctionData();
 
             Mark();
-            ParseCefConfig(f.CefConfig);
+
+            var hasConfig = ParseCefConfig(f.CefConfig);
 
             while(
                 Skip("virtual")
@@ -73,7 +72,10 @@ namespace Parser {
                     Skip(",");
                 Ensure(Skip(@"\)"));
                 Ensure(Skip(";") || Skip(@"=\s*0;") || Skip(@"{.*?}", RegexOptions.Singleline));
-                functions.Add(f);
+                if(hasConfig) {
+                    // only functions with the --cef(...)-- tag have a c-api counterpart.
+                    functions.Add(f);
+                }
             }
 
             Unmark(success);

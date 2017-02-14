@@ -13,5 +13,8 @@ namespace Parser {
         public string Name;
         public SignatureData Signature = new SignatureData();
         public CommentData Comments = new CommentData();
+        public override string ToString() {
+            return Name;
+        }
     }
 }

@@ -27,15 +27,20 @@ namespace Parser {
             var cefStruct = new StructData();
             var success =
                 ParseSummary(cefStruct.Comments)
-                && Scan(@"typedef struct _(cef_\w+_t) {", () => cefStruct.Name = Group01)
-                && Skip(@"///.*cef_base_t base;", RegexOptions.Singleline);
+                && Scan(@"typedef struct _(cef_\w+_t) {", () => cefStruct.Name = Group01);
 
             if(success) {
+
+                Ensure(
+                    SkipSummary()
+                    && Skip("cef_base_t base;")
+                );
+
                 while(
                     ParseCefCallback(cefStruct.CefFunctions)
                     || SkipCommentBlock()
                 ) ;
-                Ensure(Skip(@"} \w+;"));
+                Ensure(Skip(@"}\s*\w+;"));
                 structs.Add(cefStruct);
             }
             Unmark(success);

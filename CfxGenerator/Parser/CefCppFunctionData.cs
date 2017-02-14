@@ -12,5 +12,8 @@ namespace Parser {
         public CefConfigData CefConfig = new CefConfigData();
         public bool IsRetvalBoolean;
         public List<string> BooleanParameters = new List<string>();
+        public override string ToString() {
+            return Name;
+        }
     }
 }

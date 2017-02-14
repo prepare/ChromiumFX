@@ -19,7 +19,7 @@ public class CefEnumType : ApiType {
 
         public EnumMember(string name, string value, CommentData Comments) {
             this.Name = name;
-            if(value.Length > 0)
+            if(!string.IsNullOrEmpty(value))
                 this.Value = value;
             this.Comments = Comments;
         }
