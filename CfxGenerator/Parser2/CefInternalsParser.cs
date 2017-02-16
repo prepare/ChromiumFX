@@ -28,7 +28,7 @@ namespace Parser {
             var success =
                 ParseSummary(cefStruct.Comments)
                 && Scan(@"typedef struct _(cef_\w+_t) {", () => cefStruct.Name = Group01);
-
+            
             if(success) {
                 while(
                     ParseCefTypeStructMember(cefStruct.StructMembers)
@@ -49,6 +49,7 @@ namespace Parser {
                 ParseType(m.MemberType)
                 && Scan(@"\w+", () => m.Name = Value)
                 && Skip(";");
+            
             if(success) members.Add(m);
             Unmark(success);
             return success;
@@ -70,7 +71,7 @@ namespace Parser {
                 ParseCefEnumValue(e.Members)
                 || SkipCommentBlock()
             ) ;
-            success = Scan(@"}\s*(\w+);", () => e.Name = Group01);
+            success = Scan(@"}\s*(\w+)_t\s*;", () => e.Name = Group01);
             Unmark(success);
             enums.Add(e);
             return Ensure(success);

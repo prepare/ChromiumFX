@@ -37,7 +37,7 @@ namespace Parser {
                 );
 
                 while(
-                    ParseCefCallback(cefStruct.CefFunctions)
+                    ParseCefCallback(cefStruct.StructMembers)
                     || SkipCommentBlock()
                 ) ;
                 Ensure(Skip(@"}\s*\w+;"));
@@ -47,19 +47,20 @@ namespace Parser {
             return success;
         }
 
-        private bool ParseCefCallback(List<FunctionData> functions) {
+        private bool ParseCefCallback(List<StructMemberData> members) {
             Mark();
-            var f = new FunctionData();
+            var m = new StructMemberData();
+            m.CallbackSignature = new SignatureData();
             var success =
-                ParseSummary(f.Comments)
-                && ParseType(f.Signature.ReturnType)
+                ParseSummary(m.Comments)
+                && ParseType(m.CallbackSignature.ReturnType)
                 && Skip(@"\(\s*CEF_CALLBACK \*")
-                && Scan(@"\w+", () => f.Name = Value)
+                && Scan(@"\w+", () => m.Name = Value)
                 && Skip(@"\)\(")
-                && ParseParameterList(f.Signature.Arguments)
+                && ParseParameterList(m.CallbackSignature.Arguments)
                 && Skip(@"\)\s*;");
             if(success)
-                functions.Add(f);
+                members.Add(m);
             Unmark(success);
             return success;
         }

@@ -81,16 +81,31 @@ namespace Parser {
             // process c++ findings (compat with previous parser)
 
             var classes = new Dictionary<string, CefClassData>(api.CefClasses.Count);
-            var funcs = new Dictionary<string, CefCppFunctionData>(api.CefCppFunctions.Count);
+            var funcs = new Dictionary<string, CefCppFunctionData>();
+            foreach(var f in api.CefCppFunctions) {
+                if(f.CefConfig.CApiName == null) {
+                    funcs.Add(CppStyle2CStyle(f.Name), f);
+                } else {
+                    f.CefConfig.CppApiName = f.Name;
+                    funcs.Add(f.CefConfig.CApiName, f);
+                }
+            }
             foreach(var c in api.CefClasses) {
                 classes.Add(CppStyle2CStyle(c.Name) + "_t", c);
                 foreach(var f in c.Methods) {
-                    if(f.CefConfig.CApiName == null)
-                        funcs.Add(CppStyle2CStyle(c.Name) + "_" + CppStyle2CStyle(f.Name), f);
-                    else
+                    if(f.CefConfig.CApiName == null) {
+                        if(f.IsStatic && f.Name.EndsWith(c.Name.Substring(3))) {
+                            funcs.Add(CppStyle2CStyle(c.Name) + "_" + CppStyle2CStyle(f.Name.Substring(0, f.Name.Length - (c.Name.Length - 3))), f);
+                        } else {
+                            funcs.Add(CppStyle2CStyle(c.Name) + "_" + CppStyle2CStyle(f.Name), f);
+                        }
+                    } else {
+                        f.CefConfig.CppApiName = f.Name;
                         funcs.Add(CppStyle2CStyle(c.Name) + "_" + f.CefConfig.CApiName, f);
+                    }
                 }
             }
+            
             foreach(var s in api.CefStructs) {
                 if(classes.ContainsKey(s.Name)) {
                     var c = classes[s.Name];
@@ -100,31 +115,75 @@ namespace Parser {
                     if(s.CefFunctions.Count > 0)
                         Debugger.Break();
                 }
-                foreach(var f in s.CefFunctions) {
-                    if(funcs.ContainsKey(s.Name.Substring(0, s.Name.Length - 1) + f.Name)) {
-                        var cf = funcs[s.Name.Substring(0, s.Name.Length - 1) + f.Name];
-                        if(cf.IsRetvalBoolean) {
-                            f.Signature.ReturnType.Name = "bool";
-                        }
-                        foreach(var pm in cf.BooleanParameters) {
-                            var success = false;
-                            foreach(var pm1 in f.Signature.Arguments) {
-                                if(pm1.Var == pm) {
-                                    pm1.ArgumentType.Name = "bool";
-                                    success = true;
-                                    break;
-                                }
-                            }
-                            if(!success) {
-                                Debugger.Break();
-                            }
-                        }
+                foreach(var m in s.StructMembers) {
+                    if(funcs.ContainsKey(s.Name.Substring(0, s.Name.Length - 1) + m.Name)) {
+                        var cf = funcs[s.Name.Substring(0, s.Name.Length - 1) + m.Name];
+                        m.CefConfig = cf.CefConfig;
+                        ApplyBoolParameters(m.CallbackSignature, cf);
                     } else {
-                        Debugger.Break();
+                        if(m.CallbackSignature != null)
+                            Debugger.Break();
                     }
                 }
             }
+
+            foreach(var f in api.CefFunctions) {
+                if(funcs.ContainsKey(f.Name)) {
+                    var cf = funcs[f.Name];
+                    ApplyBoolParameters(f.Signature, cf);
+                } else {
+                    //Debugger.Break();
+                }
+            }
+
+            api.CefStructs.Sort((x, y) => {
+                if(x.StructMembers[0].CallbackSignature == null && y.StructMembers[0].CallbackSignature != null)
+                    return -1;
+                if(y.StructMembers[0].CallbackSignature == null && x.StructMembers[0].CallbackSignature != null)
+                    return 1;
+
+                return y.Name.Length - x.Name.Length;
+            });
+
+            int ifunc = 0;
+            while(ifunc < api.CefFunctions.Count) {
+                var f = api.CefFunctions[ifunc];
+                var found = false;
+                foreach(var s in api.CefStructs) {
+                    if(s.StructMembers[0].CallbackSignature == null) continue;
+                    if(f.Name.StartsWith(s.Name.Substring(0, s.Name.Length - 1))) {
+                        s.CefFunctions.Add(f);
+                        found = true;
+                        break;
+                    } 
+                }
+                if(found) {
+                    api.CefFunctions.RemoveAt(ifunc);
+                } else {
+                    ++ifunc;
+                }
+            }
+
             return api;
+        }
+
+        private static void ApplyBoolParameters(SignatureData signature, CefCppFunctionData cf) {
+            if(cf.IsRetvalBoolean) {
+                signature.ReturnType.Name = "bool";
+            }
+            foreach(var pm in cf.BooleanParameters) {
+                var success = false;
+                foreach(var pm1 in signature.Arguments) {
+                    if(pm1.Var == pm) {
+                        pm1.ArgumentType.Name = "bool";
+                        success = true;
+                        break;
+                    }
+                }
+                if(!success) {
+                    Debugger.Break();
+                }
+            }
         }
 
         private static string CppStyle2CStyle(string symbol) {
@@ -249,7 +308,7 @@ namespace Parser {
                 Scan(@"// (.*)", () => lines.Add(scanner.Group01))
                 || Scan(@"//\n", () => lines.Add(string.Empty))
             ) ;
-            comments.Lines = lines.ToArray();
+            comments.SetParserLines(lines);
             comments.FileName = currentFile;
             return lines.Count > 0;
         }

@@ -5,9 +5,23 @@
 // of the BSD license. See the License.txt file for details.
 
 using System;
+using System.Collections.Generic;
 
 [Serializable()]
 public class CommentData {
-    public string[] Lines;
+    internal void SetParserLines(List<string> lines) {
+        var ll = new List<string>();
+        foreach(var l in lines) {
+            var line = l.Trim();
+            line = line.Replace("<", "&lt;");
+            if(!string.IsNullOrWhiteSpace(line)) {
+                if(!line.Equals("The resulting string must be freed by calling cef_string_userfree_free().")) {
+                    ll.Add(line);
+                }
+            }
+        }
+        Lines = ll.ToArray();
+    }
     public string FileName;
+    public string[] Lines = new string[0];
 }

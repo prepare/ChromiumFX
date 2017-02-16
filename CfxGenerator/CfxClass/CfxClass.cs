@@ -162,7 +162,7 @@ public abstract class CfxClass {
 
     protected void GetCallbackFunctions(Parser.StructData sd, ApiTypeBuilder api) {
         var cblist = new List<CefCallbackFunction>();
-        for(int i = 1; i < sd.StructMembers.Count; ++i) {
+        for(int i = 0; i < sd.StructMembers.Count; ++i) {
             var sm = sd.StructMembers[i];
             Debug.Assert(sm.CallbackSignature != null);
             cblist.Add(new CefCallbackFunction(CefStruct, Category, sm.Name, sm.CefConfig, sm.CallbackSignature, api, sm.Comments));

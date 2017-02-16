@@ -91,6 +91,7 @@ namespace Parser {
         private bool ParseParameter(List<string> booleanParameters) {
             return
                 Scan(@"bool\s+(\w+)", () => booleanParameters.Add(Group01))
+                || Scan(@"bool\s*[&*]\s*(\w+)", () => booleanParameters.Add(Group01))
                 || (SkipType() && Skip(@"\w+"));
         }
 

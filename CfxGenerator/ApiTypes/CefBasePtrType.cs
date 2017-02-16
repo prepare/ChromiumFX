@@ -26,6 +26,15 @@ public class CefBasePtrType : ApiType {
         get { return "RemotePtr"; }
     }
 
+    public override string[] ParserMatches {
+        get {
+            return new string[] {
+                Name,
+                "cef_base_t*"
+            };
+        }
+    }
+
     public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
         b.AppendLine("call.{0} = {0}.ptr;", CSharp.Escape(var));
     }
