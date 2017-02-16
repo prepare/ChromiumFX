@@ -388,6 +388,7 @@ namespace Chromium {
         /// Called to allow the client to fill in the CfxScreenInfo object with
         /// appropriate values. Return true (1) if the |ScreenInfo| structure has been
         /// modified.
+        /// 
         /// If the screen info rectangle is left NULL the rectangle from GetViewRect
         /// will be used. If the rectangle is still NULL or invalid popups may not be
         /// drawn correctly.
@@ -544,8 +545,10 @@ namespace Chromium {
         /// information about the dragged content is supplied by |DragData|. (|X|,
         /// |Y|) is the drag start location in screen coordinates. OS APIs that run a
         /// system message loop may be used within the StartDragging call.
+        /// 
         /// Return false (0) to abort the drag operation. Don't call any of
         /// CfxBrowserHost.DragSource*Ended* functions after returning false (0).
+        /// 
         /// Return true (1) to handle the drag operation. Call
         /// CfxBrowserHost.DragSourceEndedAt and DragSourceSystemDragEnded either
         /// synchronously or asynchronously to inform the web view that the drag
@@ -966,6 +969,7 @@ namespace Chromium {
         /// Called to allow the client to fill in the CfxScreenInfo object with
         /// appropriate values. Return true (1) if the |ScreenInfo| structure has been
         /// modified.
+        /// 
         /// If the screen info rectangle is left NULL the rectangle from GetViewRect
         /// will be used. If the rectangle is still NULL or invalid popups may not be
         /// drawn correctly.
@@ -980,6 +984,7 @@ namespace Chromium {
         /// Called to allow the client to fill in the CfxScreenInfo object with
         /// appropriate values. Return true (1) if the |ScreenInfo| structure has been
         /// modified.
+        /// 
         /// If the screen info rectangle is left NULL the rectangle from GetViewRect
         /// will be used. If the rectangle is still NULL or invalid popups may not be
         /// drawn correctly.
@@ -1358,8 +1363,10 @@ namespace Chromium {
         /// information about the dragged content is supplied by |DragData|. (|X|,
         /// |Y|) is the drag start location in screen coordinates. OS APIs that run a
         /// system message loop may be used within the StartDragging call.
+        /// 
         /// Return false (0) to abort the drag operation. Don't call any of
         /// CfxBrowserHost.DragSource*Ended* functions after returning false (0).
+        /// 
         /// Return true (1) to handle the drag operation. Call
         /// CfxBrowserHost.DragSourceEndedAt and DragSourceSystemDragEnded either
         /// synchronously or asynchronously to inform the web view that the drag
@@ -1376,8 +1383,10 @@ namespace Chromium {
         /// information about the dragged content is supplied by |DragData|. (|X|,
         /// |Y|) is the drag start location in screen coordinates. OS APIs that run a
         /// system message loop may be used within the StartDragging call.
+        /// 
         /// Return false (0) to abort the drag operation. Don't call any of
         /// CfxBrowserHost.DragSource*Ended* functions after returning false (0).
+        /// 
         /// Return true (1) to handle the drag operation. Call
         /// CfxBrowserHost.DragSourceEndedAt and DragSourceSystemDragEnded either
         /// synchronously or asynchronously to inform the web view that the drag

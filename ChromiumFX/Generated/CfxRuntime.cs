@@ -14,6 +14,7 @@ namespace Chromium {
 
         /// <summary>
         /// Add an entry to the cross-origin access whitelist.
+        /// 
         /// The same-origin policy restricts how scripts hosted from different origins
         /// (scheme + domain + port) can communicate. By default, scripts can only access
         /// resources with the same origin. Scripts hosted on the HTTP and HTTPS schemes
@@ -22,11 +23,13 @@ namespace Chromium {
         /// XMLHttpRequest requests on http://target.example.com if the
         /// http://target.example.com request returns an "Access-Control-Allow-Origin:
         /// https://source.example.com" response header.
+        /// 
         /// Scripts in separate frames or iframes and hosted from the same protocol and
         /// domain suffix can execute cross-origin JavaScript if both pages set the
         /// document.domain value to the same domain suffix. For example,
         /// scheme://foo.example.com and scheme://bar.example.com can communicate using
         /// JavaScript if both domains set document.domain="example.com".
+        /// 
         /// This function is used to allow access to origins that would otherwise violate
         /// the same-origin policy. Scripts hosted underneath the fully qualified
         /// |sourceOrigin| URL (like http://www.example.com) will be allowed access to
@@ -37,9 +40,11 @@ namespace Chromium {
         /// true (1) sub-domain matches will be allowed. If |targetDomain| is NULL and
         /// |allowTargetSubdomains| if true (1) all domains and IP addresses will be
         /// allowed.
+        /// 
         /// This function cannot be used to bypass the restrictions on local or display
         /// isolated schemes. See the comments on CfxRegisterCustomScheme for more
         /// information.
+        /// 
         /// This function may be called on any thread. Returns false (0) if
         /// |sourceOrigin| is invalid or the whitelist cannot be accessed.
         /// </summary>
@@ -104,13 +109,17 @@ namespace Chromium {
         /// Start tracing events on all processes. Tracing is initialized asynchronously
         /// and |callback| will be executed on the UI thread after initialization is
         /// complete.
+        /// 
         /// If CfxBeginTracing was called previously, or if a CfxEndTracingAsync call is
         /// pending, CfxBeginTracing will fail and return false (0).
+        /// 
         /// |categories| is a comma-delimited list of category wildcards. A category can
         /// have an optional '-' prefix to make it an excluded category. Having both
         /// included and excluded categories in the same list is not supported.
+        /// 
         /// Example: "test_MyTest*" Example: "test_MyTest*,test_OtherStuff" Example:
         /// "-excluded_category1,-excluded_category2"
+        /// 
         /// This function must be called on the browser process UI thread.
         /// </summary>
         /// <remarks>
@@ -157,69 +166,83 @@ namespace Chromium {
         /// the main application executable. On macOS this file must be placed in the
         /// top-level app bundle Resources directory (e.g.
         /// "&lt;appname>.app/Contents/Resources"). File contents are as follows:
-        /// # Comments start with a hash character and must be on their own line.
-        /// [Config]
-        /// ProductName=&lt;Value of the "prod" crash key; defaults to "cef">
-        /// ProductVersion=&lt;Value of the "ver" crash key; defaults to the CEF version>
-        /// AppName=&lt;Windows only; App-specific folder name component for storing crash
-        /// information; default to "CEF">
-        /// ExternalHandler=&lt;Windows only; Name of the external handler exe to use
-        /// instead of re-launching the main exe; default to empty>
-        /// BrowserCrashForwardingEnabled=&lt;macOS only; True if browser process crashes
-        /// should be forwarded to the system crash
-        /// reporter; default to false>
-        /// ServerURL=&lt;crash server URL; default to empty>
-        /// RateLimitEnabled=&lt;True if uploads should be rate limited; default to true>
-        /// MaxUploadsPerDay=&lt;Max uploads per 24 hours, used if rate limit is enabled;
-        /// default to 5>
-        /// MaxDatabaseSizeInMb=&lt;Total crash report disk usage greater than this value
-        /// will cause older reports to be deleted; default to 20>
-        /// MaxDatabaseAgeInDays=&lt;Crash reports older than this value will be deleted;
-        /// default to 5>
-        /// [CrashKeys]
-        /// my_key1=&lt;small|medium|large>
-        /// my_key2=&lt;small|medium|large>
+        /// 
+        ///  # Comments start with a hash character and must be on their own line.
+        /// 
+        ///  [Config]
+        ///  ProductName=&lt;Value of the "prod" crash key; defaults to "cef">
+        ///  ProductVersion=&lt;Value of the "ver" crash key; defaults to the CEF version>
+        ///  AppName=&lt;Windows only; App-specific folder name component for storing crash
+        ///           information; default to "CEF">
+        ///  ExternalHandler=&lt;Windows only; Name of the external handler exe to use
+        ///                   instead of re-launching the main exe; default to empty>
+        ///  BrowserCrashForwardingEnabled=&lt;macOS only; True if browser process crashes
+        ///                                 should be forwarded to the system crash
+        ///                                 reporter; default to false>
+        ///  ServerURL=&lt;crash server URL; default to empty>
+        ///  RateLimitEnabled=&lt;True if uploads should be rate limited; default to true>
+        ///  MaxUploadsPerDay=&lt;Max uploads per 24 hours, used if rate limit is enabled;
+        ///                    default to 5>
+        ///  MaxDatabaseSizeInMb=&lt;Total crash report disk usage greater than this value
+        ///                       will cause older reports to be deleted; default to 20>
+        ///  MaxDatabaseAgeInDays=&lt;Crash reports older than this value will be deleted;
+        ///                        default to 5>
+        /// 
+        ///  [CrashKeys]
+        ///  my_key1=&lt;small|medium|large>
+        ///  my_key2=&lt;small|medium|large>
+        /// 
         /// Config section:
+        /// 
         /// If "ProductName" and/or "ProductVersion" are set then the specified values
         /// will be included in the crash dump metadata. On macOS if these values are set
         /// to NULL then they will be retrieved from the Info.plist file using the
         /// "CFBundleName" and "CFBundleShortVersionString" keys respectively.
+        /// 
         /// If "AppName" is set on Windows then crash report information (metrics,
         /// database and dumps) will be stored locally on disk under the
         /// "C:\Users\[CurrentUser]\AppData\Local\[AppName]\User Data" folder. On other
         /// platforms the CfxSettings.UserDataPath value will be used.
+        /// 
         /// If "ExternalHandler" is set on Windows then the specified exe will be
         /// launched as the crashpad-handler instead of re-launching the main process
         /// exe. The value can be an absolute path or a path relative to the main exe
         /// directory. On Linux the CfxSettings.BrowserSubprocessPath value will be
         /// used. On macOS the existing subprocess app bundle will be used.
+        /// 
         /// If "BrowserCrashForwardingEnabled" is set to true (1) on macOS then browser
         /// process crashes will be forwarded to the system crash reporter. This results
         /// in the crash UI dialog being displayed to the user and crash reports being
         /// logged under "~/Library/Logs/DiagnosticReports". Forwarding of crash reports
         /// from non-browser processes and Debug builds is always disabled.
+        /// 
         /// If "ServerURL" is set then crashes will be uploaded as a multi-part POST
         /// request to the specified URL. Otherwise, reports will only be stored locally
         /// on disk.
+        /// 
         /// If "RateLimitEnabled" is set to true (1) then crash report uploads will be
         /// rate limited as follows:
-        /// 1. If "MaxUploadsPerDay" is set to a positive value then at most the
-        /// specified number of crashes will be uploaded in each 24 hour period.
-        /// 2. If crash upload fails due to a network or server error then an
-        /// incremental backoff delay up to a maximum of 24 hours will be applied for
-        /// retries.
-        /// 3. If a backoff delay is applied and "MaxUploadsPerDay" is > 1 then the
-        /// "MaxUploadsPerDay" value will be reduced to 1 until the client is
-        /// restarted. This helps to avoid an upload flood when the network or
-        /// server error is resolved.
+        ///  1. If "MaxUploadsPerDay" is set to a positive value then at most the
+        ///     specified number of crashes will be uploaded in each 24 hour period.
+        ///  2. If crash upload fails due to a network or server error then an
+        ///     incremental backoff delay up to a maximum of 24 hours will be applied for
+        ///     retries.
+        ///  3. If a backoff delay is applied and "MaxUploadsPerDay" is > 1 then the
+        ///     "MaxUploadsPerDay" value will be reduced to 1 until the client is
+        ///     restarted. This helps to avoid an upload flood when the network or
+        ///     server error is resolved.
         /// Rate limiting is not supported on Linux.
+        /// 
         /// If "MaxDatabaseSizeInMb" is set to a positive value then crash report storage
         /// on disk will be limited to that size in megabytes. For example, on Windows
         /// each dump is about 600KB so a "MaxDatabaseSizeInMb" value of 20 equates to
         /// about 34 crash reports stored on disk. Not supported on Linux.
+        /// 
         /// If "MaxDatabaseAgeInDays" is set to a positive value then crash reports older
         /// than the specified age in days will be deleted. Not supported on Linux.
+        /// 
         /// CrashKeys section:
+        /// 
         /// Any number of crash keys can be specified for use by the application. Crash
         /// key values will be truncated based on the specified size (small = 63 bytes,
         /// medium = 252 bytes, large = 1008 bytes). The value of crash keys can be set
@@ -428,12 +451,15 @@ namespace Chromium {
 
         /// <summary>
         /// Stop tracing events on all processes.
+        /// 
         /// This function will fail and return false (0) if a previous call to
         /// CfxEndTracingAsync is already pending or if CfxBeginTracing was not called.
+        /// 
         /// |tracingFile| is the path at which tracing data will be written and
         /// |callback| is the callback that will be executed once all processes have sent
         /// their trace data. If |tracingFile| is NULL a new temporary file path will be
         /// used. If |callback| is NULL no trace data will be written.
+        /// 
         /// This function must be called on the browser process UI thread.
         /// </summary>
         /// <remarks>
@@ -560,6 +586,7 @@ namespace Chromium {
 
         /// <summary>
         /// Get the temporary directory provided by the system.
+        /// 
         /// WARNING: In general, you should use the temp directory variants below instead
         /// of this function. Those variants will ensure that the proper permissions are
         /// set so that other users on the system can't edit them while they're open
@@ -637,11 +664,12 @@ namespace Chromium {
         /// <summary>
         /// Launches the process specified via |commandLine|. Returns true (1) upon
         /// success. Must be called on the browser process TID_PROCESS_LAUNCHER thread.
+        /// 
         /// Unix-specific notes: - All file descriptors open in the parent process will
         /// be closed in the
-        /// child process except for stdin, stdout, and stderr.
+        ///   child process except for stdin, stdout, and stderr.
         /// - If the first argument on the command line does not contain a slash,
-        /// PATH will be searched. (See man execvp.)
+        ///   PATH will be searched. (See man execvp.)
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -778,52 +806,54 @@ namespace Chromium {
         /// keyword 'native'. The calling of a native function is restricted to the scope
         /// in which the prototype of the native function is defined. This function may
         /// only be called on the render process main thread.
+        /// 
         /// Example JavaScript extension code: &lt;pre>
-        /// // create the 'example' global object if it doesn't already exist.
-        /// if (!example)
-        /// example = {};
-        /// // create the 'example.test' global object if it doesn't already exist.
-        /// if (!example.test)
-        /// example.test = {};
-        /// (function() {
-        /// // Define the function 'example.test.myfunction'.
-        /// example.test.myfunction = function() {
-        /// // Call CfxV8Handler.Execute() with the function name 'MyFunction'
-        /// // and no arguments.
-        /// native function MyFunction();
-        /// return MyFunction();
-        /// };
-        /// // Define the getter function for parameter 'example.test.myparam'.
-        /// example.test.__defineGetter__('myparam', function() {
-        /// // Call CfxV8Handler.Execute() with the function name 'GetMyParam'
-        /// // and no arguments.
-        /// native function GetMyParam();
-        /// return GetMyParam();
-        /// });
-        /// // Define the setter function for parameter 'example.test.myparam'.
-        /// example.test.__defineSetter__('myparam', function(b) {
-        /// // Call CfxV8Handler.Execute() with the function name 'SetMyParam'
-        /// // and a single argument.
-        /// native function SetMyParam();
-        /// if(b) SetMyParam(b);
-        /// });
-        /// // Extension definitions can also contain normal JavaScript variables
-        /// // and functions.
-        /// var myint = 0;
-        /// example.test.increment = function() {
-        /// myint += 1;
-        /// return myint;
-        /// };
-        /// })();
+        ///   // create the 'example' global object if it doesn't already exist.
+        ///   if (!example)
+        ///     example = {};
+        ///   // create the 'example.test' global object if it doesn't already exist.
+        ///   if (!example.test)
+        ///     example.test = {};
+        ///   (function() {
+        ///     // Define the function 'example.test.myfunction'.
+        ///     example.test.myfunction = function() {
+        ///       // Call CfxV8Handler.Execute() with the function name 'MyFunction'
+        ///       // and no arguments.
+        ///       native function MyFunction();
+        ///       return MyFunction();
+        ///     };
+        ///     // Define the getter function for parameter 'example.test.myparam'.
+        ///     example.test.__defineGetter__('myparam', function() {
+        ///       // Call CfxV8Handler.Execute() with the function name 'GetMyParam'
+        ///       // and no arguments.
+        ///       native function GetMyParam();
+        ///       return GetMyParam();
+        ///     });
+        ///     // Define the setter function for parameter 'example.test.myparam'.
+        ///     example.test.__defineSetter__('myparam', function(b) {
+        ///       // Call CfxV8Handler.Execute() with the function name 'SetMyParam'
+        ///       // and a single argument.
+        ///       native function SetMyParam();
+        ///       if(b) SetMyParam(b);
+        ///     });
+        /// 
+        ///     // Extension definitions can also contain normal JavaScript variables
+        ///     // and functions.
+        ///     var myint = 0;
+        ///     example.test.increment = function() {
+        ///       myint += 1;
+        ///       return myint;
+        ///     };
+        ///   })();
         /// &lt;/pre> Example usage in the page: &lt;pre>
-        /// // Call the function.
-        /// example.test.myfunction();
-        /// // Set the parameter.
-        /// example.test.myparam = value;
-        /// // Get the parameter.
-        /// value = example.test.myparam;
-        /// // Call another function.
-        /// example.test.increment();
+        ///   // Call the function.
+        ///   example.test.myfunction();
+        ///   // Set the parameter.
+        ///   example.test.myparam = value;
+        ///   // Get the parameter.
+        ///   value = example.test.myparam;
+        ///   // Call another function.
+        ///   example.test.increment();
         /// &lt;/pre>
         /// </summary>
         /// <remarks>
@@ -883,36 +913,43 @@ namespace Chromium {
 
         /// <summary>
         /// Register the Widevine CDM plugin.
+        /// 
         /// The client application is responsible for downloading an appropriate
         /// platform-specific CDM binary distribution from Google, extracting the
         /// contents, and building the required directory structure on the local machine.
         /// The CfxBrowserHost.StartDownload function and CfxZipArchive structure
         /// can be used to implement this functionality in CEF. Contact Google via
         /// https://www.widevine.com/contact.html for details on CDM download.
+        /// 
         /// |path| is a directory that must contain the following files:
-        /// 1. manifest.json file from the CDM binary distribution (see below).
-        /// 2. widevinecdm file from the CDM binary distribution (e.g.
-        /// widevinecdm.dll on on Windows, libwidevinecdm.dylib on OS X,
-        /// libwidevinecdm.so on Linux).
-        /// 3. widevidecdmadapter file from the CEF binary distribution (e.g.
-        /// widevinecdmadapter.dll on Windows, widevinecdmadapter.plugin on OS X,
-        /// libwidevinecdmadapter.so on Linux).
+        ///   1. manifest.json file from the CDM binary distribution (see below).
+        ///   2. widevinecdm file from the CDM binary distribution (e.g.
+        ///      widevinecdm.dll on on Windows, libwidevinecdm.dylib on OS X,
+        ///      libwidevinecdm.so on Linux).
+        ///   3. widevidecdmadapter file from the CEF binary distribution (e.g.
+        ///      widevinecdmadapter.dll on Windows, widevinecdmadapter.plugin on OS X,
+        ///      libwidevinecdmadapter.so on Linux).
+        /// 
         /// If any of these files are missing or if the manifest file has incorrect
         /// contents the registration will fail and |callback| will receive a |result|
         /// value of CEF_CDM_REGISTRATION_ERROR_INCORRECT_CONTENTS.
+        /// 
         /// The manifest.json file must contain the following keys:
-        /// A. "os": Supported OS (e.g. "mac", "win" or "linux").
-        /// B. "arch": Supported architecture (e.g. "ia32" or "x64").
-        /// C. "x-cdm-module-versions": Module API version (e.g. "4").
-        /// D. "x-cdm-interface-versions": Interface API version (e.g. "8").
-        /// E. "x-cdm-host-versions": Host API version (e.g. "8").
-        /// F. "version": CDM version (e.g. "1.4.8.903").
-        /// G. "x-cdm-codecs": List of supported codecs (e.g. "vp8,vp9.0,avc1").
+        ///   A. "os": Supported OS (e.g. "mac", "win" or "linux").
+        ///   B. "arch": Supported architecture (e.g. "ia32" or "x64").
+        ///   C. "x-cdm-module-versions": Module API version (e.g. "4").
+        ///   D. "x-cdm-interface-versions": Interface API version (e.g. "8").
+        ///   E. "x-cdm-host-versions": Host API version (e.g. "8").
+        ///   F. "version": CDM version (e.g. "1.4.8.903").
+        ///   G. "x-cdm-codecs": List of supported codecs (e.g. "vp8,vp9.0,avc1").
+        /// 
         /// A through E are used to verify compatibility with the current Chromium
         /// version. If the CDM is not compatible the registration will fail and
         /// |callback| will receive a |result| value of
         /// CEF_CDM_REGISTRATION_ERROR_INCOMPATIBLE.
+        /// 
         /// |callback| will be executed asynchronously once registration is complete.
+        /// 
         /// On Linux this function must be called before cef_initialize() and the
         /// registration cannot be changed during runtime. If registration is not
         /// supported at the time that cef_register_widevine_cdm() is called then

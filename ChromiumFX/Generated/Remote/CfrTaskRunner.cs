@@ -14,6 +14,7 @@ namespace Chromium.Remote {
     /// <summary>
     /// Structure that asynchronously executes tasks on the associated thread. It is
     /// safe to call the functions of this structure on any thread.
+    /// 
     /// CEF maintains multiple internal threads that are used for handling different
     /// types of tasks in different processes. The CfrThreadId definitions in
     /// cef_types.h list the common CEF threads. Task runners are also available for

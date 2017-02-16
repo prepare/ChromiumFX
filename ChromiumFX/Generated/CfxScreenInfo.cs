@@ -111,10 +111,11 @@ namespace Chromium {
 
         /// <summary>
         /// This is set from the rcMonitor member of MONITORINFOEX, to whit:
-        /// "A RECT structure that specifies the display monitor rectangle,
-        /// expressed in virtual-screen coordinates. Note that if the monitor
-        /// is not the primary display monitor, some of the rectangle's
-        /// coordinates may be negative values."
+        ///   "A RECT structure that specifies the display monitor rectangle,
+        ///   expressed in virtual-screen coordinates. Note that if the monitor
+        ///   is not the primary display monitor, some of the rectangle's
+        ///   coordinates may be negative values."
+        /// 
         /// The |rect| and |availableRect| properties are used to determine the
         /// available surface for rendering popup views.
         /// </summary>
@@ -135,13 +136,14 @@ namespace Chromium {
 
         /// <summary>
         /// This is set from the rcWork member of MONITORINFOEX, to whit:
-        /// "A RECT structure that specifies the work area rectangle of the
-        /// display monitor that can be used by applications, expressed in
-        /// virtual-screen coordinates. Windows uses this rectangle to
-        /// maximize an application on the monitor. The rest of the area in
-        /// rcMonitor contains system windows such as the task bar and side
-        /// bars. Note that if the monitor is not the primary display monitor,
-        /// some of the rectangle's coordinates may be negative values".
+        ///   "A RECT structure that specifies the work area rectangle of the
+        ///   display monitor that can be used by applications, expressed in
+        ///   virtual-screen coordinates. Windows uses this rectangle to
+        ///   maximize an application on the monitor. The rest of the area in
+        ///   rcMonitor contains system windows such as the task bar and side
+        ///   bars. Note that if the monitor is not the primary display monitor,
+        ///   some of the rectangle's coordinates may be negative values".
+        /// 
         /// The |rect| and |availableRect| properties are used to determine the
         /// available surface for rendering popup views.
         /// </summary>

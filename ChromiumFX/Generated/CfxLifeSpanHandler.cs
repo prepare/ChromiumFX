@@ -203,12 +203,14 @@ namespace Chromium {
         /// user attempts to close that window (by clicking the 'X', for example). The
         /// do_close() function will be called after the JavaScript 'onunload' event
         /// has been fired.
+        /// 
         /// An application should handle top-level owner window close notifications by
         /// calling CfxBrowserHost.TryCloseBrowser() or
         /// CfxBrowserHost.CloseBrowser(false (0)) instead of allowing the window
         /// to close immediately (see the examples below). This gives CEF an
         /// opportunity to process the 'onbeforeunload' event and optionally cancel the
         /// close before do_close() is called.
+        /// 
         /// When windowed rendering is enabled CEF will internally create a window or
         /// view to host the browser. In that case returning false (0) from do_close()
         /// will send the standard close notification to the browser's top-level owner
@@ -217,65 +219,71 @@ namespace Chromium {
         /// browser's host window/view has already been destroyed (via view hierarchy
         /// tear-down, for example) then do_close() will not be called for that browser
         /// since is no longer possible to cancel the close.
+        /// 
         /// When windowed rendering is disabled returning false (0) from do_close()
         /// will cause the browser object to be destroyed immediately.
+        /// 
         /// If the browser's top-level owner window requires a non-standard close
         /// notification then send that notification from do_close() and return true
         /// (1).
+        /// 
         /// The CfxLifeSpanHandler.OnBeforeClose() function will be called
         /// after do_close() (if do_close() is called) and immediately before the
         /// browser object is destroyed. The application should only exit after
         /// on_before_close() has been called for all existing browsers.
+        /// 
         /// The below examples describe what should happen during window close when the
         /// browser is parented to an application-provided top-level window.
+        /// 
         /// Example 1: Using CfxBrowserHost.TryCloseBrowser(). This is
         /// recommended for clients using standard close handling and windows created
         /// on the browser process UI thread. 1.  User clicks the window close button
         /// which sends a close notification to
-        /// the application's top-level window.
+        ///     the application's top-level window.
         /// 2.  Application's top-level window receives the close notification and
-        /// calls TryCloseBrowser() (which internally calls CloseBrowser(false)).
-        /// TryCloseBrowser() returns false so the client cancels the window close.
+        ///     calls TryCloseBrowser() (which internally calls CloseBrowser(false)).
+        ///     TryCloseBrowser() returns false so the client cancels the window close.
         /// 3.  JavaScript 'onbeforeunload' handler executes and shows the close
-        /// confirmation dialog (which can be overridden via
-        /// CfxJSDialogHandler.OnBeforeUnloadDialog()).
+        ///     confirmation dialog (which can be overridden via
+        ///     CfxJSDialogHandler.OnBeforeUnloadDialog()).
         /// 4.  User approves the close. 5.  JavaScript 'onunload' handler executes. 6.
         /// CEF sends a close notification to the application's top-level window
-        /// (because DoClose() returned false by default).
+        ///     (because DoClose() returned false by default).
         /// 7.  Application's top-level window receives the close notification and
-        /// calls TryCloseBrowser(). TryCloseBrowser() returns true so the client
-        /// allows the window close.
+        ///     calls TryCloseBrowser(). TryCloseBrowser() returns true so the client
+        ///     allows the window close.
         /// 8.  Application's top-level window is destroyed. 9.  Application's
         /// on_before_close() handler is called and the browser object
-        /// is destroyed.
+        ///     is destroyed.
         /// 10. Application exits by calling cef_quit_message_loop() if no other
         /// browsers
-        /// exist.
+        ///     exist.
+        /// 
         /// Example 2: Using CfxBrowserHost.CloseBrowser(false (0)) and
         /// implementing the do_close() callback. This is recommended for clients using
         /// non-standard close handling or windows that were not created on the browser
         /// process UI thread. 1.  User clicks the window close button which sends a
         /// close notification to
-        /// the application's top-level window.
+        ///     the application's top-level window.
         /// 2.  Application's top-level window receives the close notification and:
-        /// A. Calls CfxBrowserHost.CloseBrowser(false).
-        /// B. Cancels the window close.
+        ///     A. Calls CfxBrowserHost.CloseBrowser(false).
+        ///     B. Cancels the window close.
         /// 3.  JavaScript 'onbeforeunload' handler executes and shows the close
-        /// confirmation dialog (which can be overridden via
-        /// CfxJSDialogHandler.OnBeforeUnloadDialog()).
+        ///     confirmation dialog (which can be overridden via
+        ///     CfxJSDialogHandler.OnBeforeUnloadDialog()).
         /// 4.  User approves the close. 5.  JavaScript 'onunload' handler executes. 6.
         /// Application's do_close() handler is called. Application will:
-        /// A. Set a flag to indicate that the next close attempt will be allowed.
-        /// B. Return false.
+        ///     A. Set a flag to indicate that the next close attempt will be allowed.
+        ///     B. Return false.
         /// 7.  CEF sends an close notification to the application's top-level window.
         /// 8.  Application's top-level window receives the close notification and
-        /// allows the window to close based on the flag from #6B.
+        ///     allows the window to close based on the flag from #6B.
         /// 9.  Application's top-level window is destroyed. 10. Application's
         /// on_before_close() handler is called and the browser object
-        /// is destroyed.
+        ///     is destroyed.
         /// 11. Application exits by calling cef_quit_message_loop() if no other
         /// browsers
-        /// exist.
+        ///     exist.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -620,12 +628,14 @@ namespace Chromium {
         /// user attempts to close that window (by clicking the 'X', for example). The
         /// do_close() function will be called after the JavaScript 'onunload' event
         /// has been fired.
+        /// 
         /// An application should handle top-level owner window close notifications by
         /// calling CfxBrowserHost.TryCloseBrowser() or
         /// CfxBrowserHost.CloseBrowser(false (0)) instead of allowing the window
         /// to close immediately (see the examples below). This gives CEF an
         /// opportunity to process the 'onbeforeunload' event and optionally cancel the
         /// close before do_close() is called.
+        /// 
         /// When windowed rendering is enabled CEF will internally create a window or
         /// view to host the browser. In that case returning false (0) from do_close()
         /// will send the standard close notification to the browser's top-level owner
@@ -634,65 +644,71 @@ namespace Chromium {
         /// browser's host window/view has already been destroyed (via view hierarchy
         /// tear-down, for example) then do_close() will not be called for that browser
         /// since is no longer possible to cancel the close.
+        /// 
         /// When windowed rendering is disabled returning false (0) from do_close()
         /// will cause the browser object to be destroyed immediately.
+        /// 
         /// If the browser's top-level owner window requires a non-standard close
         /// notification then send that notification from do_close() and return true
         /// (1).
+        /// 
         /// The CfxLifeSpanHandler.OnBeforeClose() function will be called
         /// after do_close() (if do_close() is called) and immediately before the
         /// browser object is destroyed. The application should only exit after
         /// on_before_close() has been called for all existing browsers.
+        /// 
         /// The below examples describe what should happen during window close when the
         /// browser is parented to an application-provided top-level window.
+        /// 
         /// Example 1: Using CfxBrowserHost.TryCloseBrowser(). This is
         /// recommended for clients using standard close handling and windows created
         /// on the browser process UI thread. 1.  User clicks the window close button
         /// which sends a close notification to
-        /// the application's top-level window.
+        ///     the application's top-level window.
         /// 2.  Application's top-level window receives the close notification and
-        /// calls TryCloseBrowser() (which internally calls CloseBrowser(false)).
-        /// TryCloseBrowser() returns false so the client cancels the window close.
+        ///     calls TryCloseBrowser() (which internally calls CloseBrowser(false)).
+        ///     TryCloseBrowser() returns false so the client cancels the window close.
         /// 3.  JavaScript 'onbeforeunload' handler executes and shows the close
-        /// confirmation dialog (which can be overridden via
-        /// CfxJSDialogHandler.OnBeforeUnloadDialog()).
+        ///     confirmation dialog (which can be overridden via
+        ///     CfxJSDialogHandler.OnBeforeUnloadDialog()).
         /// 4.  User approves the close. 5.  JavaScript 'onunload' handler executes. 6.
         /// CEF sends a close notification to the application's top-level window
-        /// (because DoClose() returned false by default).
+        ///     (because DoClose() returned false by default).
         /// 7.  Application's top-level window receives the close notification and
-        /// calls TryCloseBrowser(). TryCloseBrowser() returns true so the client
-        /// allows the window close.
+        ///     calls TryCloseBrowser(). TryCloseBrowser() returns true so the client
+        ///     allows the window close.
         /// 8.  Application's top-level window is destroyed. 9.  Application's
         /// on_before_close() handler is called and the browser object
-        /// is destroyed.
+        ///     is destroyed.
         /// 10. Application exits by calling cef_quit_message_loop() if no other
         /// browsers
-        /// exist.
+        ///     exist.
+        /// 
         /// Example 2: Using CfxBrowserHost.CloseBrowser(false (0)) and
         /// implementing the do_close() callback. This is recommended for clients using
         /// non-standard close handling or windows that were not created on the browser
         /// process UI thread. 1.  User clicks the window close button which sends a
         /// close notification to
-        /// the application's top-level window.
+        ///     the application's top-level window.
         /// 2.  Application's top-level window receives the close notification and:
-        /// A. Calls CfxBrowserHost.CloseBrowser(false).
-        /// B. Cancels the window close.
+        ///     A. Calls CfxBrowserHost.CloseBrowser(false).
+        ///     B. Cancels the window close.
         /// 3.  JavaScript 'onbeforeunload' handler executes and shows the close
-        /// confirmation dialog (which can be overridden via
-        /// CfxJSDialogHandler.OnBeforeUnloadDialog()).
+        ///     confirmation dialog (which can be overridden via
+        ///     CfxJSDialogHandler.OnBeforeUnloadDialog()).
         /// 4.  User approves the close. 5.  JavaScript 'onunload' handler executes. 6.
         /// Application's do_close() handler is called. Application will:
-        /// A. Set a flag to indicate that the next close attempt will be allowed.
-        /// B. Return false.
+        ///     A. Set a flag to indicate that the next close attempt will be allowed.
+        ///     B. Return false.
         /// 7.  CEF sends an close notification to the application's top-level window.
         /// 8.  Application's top-level window receives the close notification and
-        /// allows the window to close based on the flag from #6B.
+        ///     allows the window to close based on the flag from #6B.
         /// 9.  Application's top-level window is destroyed. 10. Application's
         /// on_before_close() handler is called and the browser object
-        /// is destroyed.
+        ///     is destroyed.
         /// 11. Application exits by calling cef_quit_message_loop() if no other
         /// browsers
-        /// exist.
+        ///     exist.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -707,12 +723,14 @@ namespace Chromium {
         /// user attempts to close that window (by clicking the 'X', for example). The
         /// do_close() function will be called after the JavaScript 'onunload' event
         /// has been fired.
+        /// 
         /// An application should handle top-level owner window close notifications by
         /// calling CfxBrowserHost.TryCloseBrowser() or
         /// CfxBrowserHost.CloseBrowser(false (0)) instead of allowing the window
         /// to close immediately (see the examples below). This gives CEF an
         /// opportunity to process the 'onbeforeunload' event and optionally cancel the
         /// close before do_close() is called.
+        /// 
         /// When windowed rendering is enabled CEF will internally create a window or
         /// view to host the browser. In that case returning false (0) from do_close()
         /// will send the standard close notification to the browser's top-level owner
@@ -721,65 +739,71 @@ namespace Chromium {
         /// browser's host window/view has already been destroyed (via view hierarchy
         /// tear-down, for example) then do_close() will not be called for that browser
         /// since is no longer possible to cancel the close.
+        /// 
         /// When windowed rendering is disabled returning false (0) from do_close()
         /// will cause the browser object to be destroyed immediately.
+        /// 
         /// If the browser's top-level owner window requires a non-standard close
         /// notification then send that notification from do_close() and return true
         /// (1).
+        /// 
         /// The CfxLifeSpanHandler.OnBeforeClose() function will be called
         /// after do_close() (if do_close() is called) and immediately before the
         /// browser object is destroyed. The application should only exit after
         /// on_before_close() has been called for all existing browsers.
+        /// 
         /// The below examples describe what should happen during window close when the
         /// browser is parented to an application-provided top-level window.
+        /// 
         /// Example 1: Using CfxBrowserHost.TryCloseBrowser(). This is
         /// recommended for clients using standard close handling and windows created
         /// on the browser process UI thread. 1.  User clicks the window close button
         /// which sends a close notification to
-        /// the application's top-level window.
+        ///     the application's top-level window.
         /// 2.  Application's top-level window receives the close notification and
-        /// calls TryCloseBrowser() (which internally calls CloseBrowser(false)).
-        /// TryCloseBrowser() returns false so the client cancels the window close.
+        ///     calls TryCloseBrowser() (which internally calls CloseBrowser(false)).
+        ///     TryCloseBrowser() returns false so the client cancels the window close.
         /// 3.  JavaScript 'onbeforeunload' handler executes and shows the close
-        /// confirmation dialog (which can be overridden via
-        /// CfxJSDialogHandler.OnBeforeUnloadDialog()).
+        ///     confirmation dialog (which can be overridden via
+        ///     CfxJSDialogHandler.OnBeforeUnloadDialog()).
         /// 4.  User approves the close. 5.  JavaScript 'onunload' handler executes. 6.
         /// CEF sends a close notification to the application's top-level window
-        /// (because DoClose() returned false by default).
+        ///     (because DoClose() returned false by default).
         /// 7.  Application's top-level window receives the close notification and
-        /// calls TryCloseBrowser(). TryCloseBrowser() returns true so the client
-        /// allows the window close.
+        ///     calls TryCloseBrowser(). TryCloseBrowser() returns true so the client
+        ///     allows the window close.
         /// 8.  Application's top-level window is destroyed. 9.  Application's
         /// on_before_close() handler is called and the browser object
-        /// is destroyed.
+        ///     is destroyed.
         /// 10. Application exits by calling cef_quit_message_loop() if no other
         /// browsers
-        /// exist.
+        ///     exist.
+        /// 
         /// Example 2: Using CfxBrowserHost.CloseBrowser(false (0)) and
         /// implementing the do_close() callback. This is recommended for clients using
         /// non-standard close handling or windows that were not created on the browser
         /// process UI thread. 1.  User clicks the window close button which sends a
         /// close notification to
-        /// the application's top-level window.
+        ///     the application's top-level window.
         /// 2.  Application's top-level window receives the close notification and:
-        /// A. Calls CfxBrowserHost.CloseBrowser(false).
-        /// B. Cancels the window close.
+        ///     A. Calls CfxBrowserHost.CloseBrowser(false).
+        ///     B. Cancels the window close.
         /// 3.  JavaScript 'onbeforeunload' handler executes and shows the close
-        /// confirmation dialog (which can be overridden via
-        /// CfxJSDialogHandler.OnBeforeUnloadDialog()).
+        ///     confirmation dialog (which can be overridden via
+        ///     CfxJSDialogHandler.OnBeforeUnloadDialog()).
         /// 4.  User approves the close. 5.  JavaScript 'onunload' handler executes. 6.
         /// Application's do_close() handler is called. Application will:
-        /// A. Set a flag to indicate that the next close attempt will be allowed.
-        /// B. Return false.
+        ///     A. Set a flag to indicate that the next close attempt will be allowed.
+        ///     B. Return false.
         /// 7.  CEF sends an close notification to the application's top-level window.
         /// 8.  Application's top-level window receives the close notification and
-        /// allows the window to close based on the flag from #6B.
+        ///     allows the window to close based on the flag from #6B.
         /// 9.  Application's top-level window is destroyed. 10. Application's
         /// on_before_close() handler is called and the browser object
-        /// is destroyed.
+        ///     is destroyed.
         /// 11. Application exits by calling cef_quit_message_loop() if no other
         /// browsers
-        /// exist.
+        ///     exist.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

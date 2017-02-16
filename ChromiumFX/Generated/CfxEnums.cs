@@ -1544,6 +1544,7 @@ namespace Chromium {
         /// and control characters (such as BiDi control characters and %01).  This
         /// INCLUDES NULLs.  This is used for rare cases such as data: URL decoding
         /// where the result is binary data.
+        /// 
         /// DO NOT use UU_SPOOFING_AND_CONTROL_CHARS if the URL is going to be
         /// displayed in the UI for security reasons.
         /// </summary>

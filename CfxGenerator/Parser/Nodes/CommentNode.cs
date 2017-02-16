@@ -12,14 +12,16 @@ public class CommentNode {
     internal void SetParserLines(List<string> lines) {
         var ll = new List<string>();
         foreach(var l in lines) {
-            var line = l.Trim();
+            var line = l.TrimEnd();
             line = line.Replace("<", "&lt;");
-            if(!string.IsNullOrWhiteSpace(line)) {
-                if(!line.Equals("The resulting string must be freed by calling cef_string_userfree_free().")) {
-                    ll.Add(line);
-                }
+            if(!line.Equals("The resulting string must be freed by calling cef_string_userfree_free().")) {
+                ll.Add(line);
             }
         }
+
+        while(ll.Count > 0 && string.IsNullOrWhiteSpace(ll[ll.Count - 1]))
+            ll.RemoveAt(ll.Count - 1);
+
         Lines = ll.ToArray();
     }
     public string FileName;

@@ -658,15 +658,17 @@ namespace Chromium {
         /// replaced. |selectionRange| is an optional range of the resulting text that
         /// will be selected after insertion or replacement. The |replacementRange|
         /// value is only used on OS X.
+        /// 
         /// This function may be called multiple times as the composition changes. When
         /// the client is done making changes the composition should either be canceled
         /// or completed. To cancel the composition call ImeCancelComposition. To
         /// complete the composition call either ImeCommitText or
         /// ImeFinishComposingText. Completion is usually signaled when:
-        /// A. The client receives a WM_IME_COMPOSITION message with a GCS_RESULTSTR
-        /// flag (on Windows), or;
-        /// B. The client receives a "commit" signal of GtkIMContext (on Linux), or;
-        /// C. insertText of NSTextInput is called (on Mac).
+        ///   A. The client receives a WM_IME_COMPOSITION message with a GCS_RESULTSTR
+        ///      flag (on Windows), or;
+        ///   B. The client receives a "commit" signal of GtkIMContext (on Linux), or;
+        ///   C. insertText of NSTextInput is called (on Mac).
+        /// 
         /// This function is only used when window rendering is disabled.
         /// </summary>
         /// <remarks>

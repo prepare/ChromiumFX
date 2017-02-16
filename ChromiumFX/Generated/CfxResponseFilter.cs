@@ -106,15 +106,17 @@ namespace Chromium {
 
         /// <summary>
         /// Called to filter a chunk of data. Expected usage is as follows:
-        /// A. Read input data from |DataIn| and set |DataInRead| to the number of
-        /// bytes that were read up to a maximum of |DataInSize|. |DataIn| will
-        /// be NULL if |DataInSize| is zero.
-        /// B. Write filtered output data to |DataOut| and set |DataOutWritten| to
-        /// the number of bytes that were written up to a maximum of
-        /// |DataOutSize|. If no output data was written then all data must be
-        /// read from |DataIn| (user must set |DataInRead| = |DataInSize|).
-        /// C. Return RESPONSE_FILTER_DONE if all output data was written or
-        /// RESPONSE_FILTER_NEED_MORE_DATA if output data is still pending.
+        /// 
+        ///  A. Read input data from |DataIn| and set |DataInRead| to the number of
+        ///     bytes that were read up to a maximum of |DataInSize|. |DataIn| will
+        ///     be NULL if |DataInSize| is zero.
+        ///  B. Write filtered output data to |DataOut| and set |DataOutWritten| to
+        ///     the number of bytes that were written up to a maximum of
+        ///     |DataOutSize|. If no output data was written then all data must be
+        ///     read from |DataIn| (user must set |DataInRead| = |DataInSize|).
+        ///  C. Return RESPONSE_FILTER_DONE if all output data was written or
+        ///     RESPONSE_FILTER_NEED_MORE_DATA if output data is still pending.
+        /// 
         /// This function will be called repeatedly until the input buffer has been
         /// fully read (user sets |DataInRead| = |DataInSize|) and there is no more
         /// input data to filter (the resource response is complete). This function may
@@ -122,12 +124,15 @@ namespace Chromium {
         /// filled the output buffer (set |DataOutWritten| = |DataOutSize|) and
         /// returned RESPONSE_FILTER_NEED_MORE_DATA to indicate that output data is
         /// still pending.
+        /// 
         /// Calls to this function will stop when one of the following conditions is
         /// met:
-        /// A. There is no more input data to filter (the resource response is
-        /// complete) and the user sets |DataOutWritten| = 0 or returns
-        /// RESPONSE_FILTER_DONE to indicate that all data has been written, or;
-        /// B. The user returns RESPONSE_FILTER_ERROR to indicate an error.
+        /// 
+        ///  A. There is no more input data to filter (the resource response is
+        ///     complete) and the user sets |DataOutWritten| = 0 or returns
+        ///     RESPONSE_FILTER_DONE to indicate that all data has been written, or;
+        ///  B. The user returns RESPONSE_FILTER_ERROR to indicate an error.
+        /// 
         /// Do not keep a reference to the buffers passed to this function.
         /// </summary>
         /// <remarks>
@@ -214,15 +219,17 @@ namespace Chromium {
 
         /// <summary>
         /// Called to filter a chunk of data. Expected usage is as follows:
-        /// A. Read input data from |DataIn| and set |DataInRead| to the number of
-        /// bytes that were read up to a maximum of |DataInSize|. |DataIn| will
-        /// be NULL if |DataInSize| is zero.
-        /// B. Write filtered output data to |DataOut| and set |DataOutWritten| to
-        /// the number of bytes that were written up to a maximum of
-        /// |DataOutSize|. If no output data was written then all data must be
-        /// read from |DataIn| (user must set |DataInRead| = |DataInSize|).
-        /// C. Return RESPONSE_FILTER_DONE if all output data was written or
-        /// RESPONSE_FILTER_NEED_MORE_DATA if output data is still pending.
+        /// 
+        ///  A. Read input data from |DataIn| and set |DataInRead| to the number of
+        ///     bytes that were read up to a maximum of |DataInSize|. |DataIn| will
+        ///     be NULL if |DataInSize| is zero.
+        ///  B. Write filtered output data to |DataOut| and set |DataOutWritten| to
+        ///     the number of bytes that were written up to a maximum of
+        ///     |DataOutSize|. If no output data was written then all data must be
+        ///     read from |DataIn| (user must set |DataInRead| = |DataInSize|).
+        ///  C. Return RESPONSE_FILTER_DONE if all output data was written or
+        ///     RESPONSE_FILTER_NEED_MORE_DATA if output data is still pending.
+        /// 
         /// This function will be called repeatedly until the input buffer has been
         /// fully read (user sets |DataInRead| = |DataInSize|) and there is no more
         /// input data to filter (the resource response is complete). This function may
@@ -230,12 +237,15 @@ namespace Chromium {
         /// filled the output buffer (set |DataOutWritten| = |DataOutSize|) and
         /// returned RESPONSE_FILTER_NEED_MORE_DATA to indicate that output data is
         /// still pending.
+        /// 
         /// Calls to this function will stop when one of the following conditions is
         /// met:
-        /// A. There is no more input data to filter (the resource response is
-        /// complete) and the user sets |DataOutWritten| = 0 or returns
-        /// RESPONSE_FILTER_DONE to indicate that all data has been written, or;
-        /// B. The user returns RESPONSE_FILTER_ERROR to indicate an error.
+        /// 
+        ///  A. There is no more input data to filter (the resource response is
+        ///     complete) and the user sets |DataOutWritten| = 0 or returns
+        ///     RESPONSE_FILTER_DONE to indicate that all data has been written, or;
+        ///  B. The user returns RESPONSE_FILTER_ERROR to indicate an error.
+        /// 
         /// Do not keep a reference to the buffers passed to this function.
         /// </summary>
         /// <remarks>
@@ -246,15 +256,17 @@ namespace Chromium {
 
         /// <summary>
         /// Called to filter a chunk of data. Expected usage is as follows:
-        /// A. Read input data from |DataIn| and set |DataInRead| to the number of
-        /// bytes that were read up to a maximum of |DataInSize|. |DataIn| will
-        /// be NULL if |DataInSize| is zero.
-        /// B. Write filtered output data to |DataOut| and set |DataOutWritten| to
-        /// the number of bytes that were written up to a maximum of
-        /// |DataOutSize|. If no output data was written then all data must be
-        /// read from |DataIn| (user must set |DataInRead| = |DataInSize|).
-        /// C. Return RESPONSE_FILTER_DONE if all output data was written or
-        /// RESPONSE_FILTER_NEED_MORE_DATA if output data is still pending.
+        /// 
+        ///  A. Read input data from |DataIn| and set |DataInRead| to the number of
+        ///     bytes that were read up to a maximum of |DataInSize|. |DataIn| will
+        ///     be NULL if |DataInSize| is zero.
+        ///  B. Write filtered output data to |DataOut| and set |DataOutWritten| to
+        ///     the number of bytes that were written up to a maximum of
+        ///     |DataOutSize|. If no output data was written then all data must be
+        ///     read from |DataIn| (user must set |DataInRead| = |DataInSize|).
+        ///  C. Return RESPONSE_FILTER_DONE if all output data was written or
+        ///     RESPONSE_FILTER_NEED_MORE_DATA if output data is still pending.
+        /// 
         /// This function will be called repeatedly until the input buffer has been
         /// fully read (user sets |DataInRead| = |DataInSize|) and there is no more
         /// input data to filter (the resource response is complete). This function may
@@ -262,12 +274,15 @@ namespace Chromium {
         /// filled the output buffer (set |DataOutWritten| = |DataOutSize|) and
         /// returned RESPONSE_FILTER_NEED_MORE_DATA to indicate that output data is
         /// still pending.
+        /// 
         /// Calls to this function will stop when one of the following conditions is
         /// met:
-        /// A. There is no more input data to filter (the resource response is
-        /// complete) and the user sets |DataOutWritten| = 0 or returns
-        /// RESPONSE_FILTER_DONE to indicate that all data has been written, or;
-        /// B. The user returns RESPONSE_FILTER_ERROR to indicate an error.
+        /// 
+        ///  A. There is no more input data to filter (the resource response is
+        ///     complete) and the user sets |DataOutWritten| = 0 or returns
+        ///     RESPONSE_FILTER_DONE to indicate that all data has been written, or;
+        ///  B. The user returns RESPONSE_FILTER_ERROR to indicate an error.
+        /// 
         /// Do not keep a reference to the buffers passed to this function.
         /// </summary>
         /// <remarks>
