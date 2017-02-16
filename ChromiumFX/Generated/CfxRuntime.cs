@@ -75,6 +75,32 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Decodes the base64 encoded string |data|. The returned value will be NULL if
+        /// the decoding fails.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
+        /// </remarks>
+        public static CfxBinaryValue Base64Decode(string data) {
+            var data_pinned = new PinnedString(data);
+            var __retval = CfxApi.Runtime.cfx_base64decode(data_pinned.Obj.PinnedPtr, data_pinned.Length);
+            data_pinned.Obj.Free();
+            return CfxBinaryValue.Wrap(__retval);
+        }
+
+        /// <summary>
+        /// Encodes |data| as a base64 string.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
+        /// </remarks>
+        public static string Base64Encode(IntPtr data, ulong dataSize) {
+            return StringFunctions.ConvertStringUserfree(CfxApi.Runtime.cfx_base64encode(data, (UIntPtr)dataSize));
+        }
+
+        /// <summary>
         /// Start tracing events on all processes. Tracing is initialized asynchronously
         /// and |callback| will be executed on the UI thread after initialization is
         /// complete.

@@ -20,6 +20,17 @@ static const char* cfx_api_hash(int entry) {
     return cef_api_hash(entry);
 }
 
+// CEF_EXPORT cef_binary_value_t* cef_base64decode(const cef_string_t* data);
+static cef_binary_value_t* cfx_base64decode(char16 *data_str, int data_length) {
+    cef_string_t data = { data_str, data_length, 0 };
+    return cef_base64decode(&data);
+}
+
+// CEF_EXPORT cef_string_userfree_t cef_base64encode(const void* data, size_t data_size);
+static cef_string_userfree_t cfx_base64encode(const void* data, size_t data_size) {
+    return cef_base64encode(data, data_size);
+}
+
 // CEF_EXPORT int cef_begin_tracing(const cef_string_t* categories, cef_completion_callback_t* callback);
 static int cfx_begin_tracing(char16 *categories_str, int categories_length, cef_completion_callback_t* callback) {
     cef_string_t categories = { categories_str, categories_length, 0 };

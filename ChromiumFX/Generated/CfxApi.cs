@@ -23,6 +23,14 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate IntPtr cfx_api_hash_delegate(int entry);
             public static cfx_api_hash_delegate cfx_api_hash;
+            // CEF_EXPORT cef_binary_value_t* cef_base64decode(const cef_string_t* data);
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_base64decode_delegate(IntPtr data_str, int data_length);
+            public static cfx_base64decode_delegate cfx_base64decode;
+            // CEF_EXPORT cef_string_userfree_t cef_base64encode(const void* data, size_t data_size);
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate IntPtr cfx_base64encode_delegate(IntPtr data, UIntPtr data_size);
+            public static cfx_base64encode_delegate cfx_base64encode;
             // CEF_EXPORT int cef_begin_tracing(const cef_string_t* categories, cef_completion_callback_t* callback);
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate int cfx_begin_tracing_delegate(IntPtr categories_str, int categories_length, IntPtr callback);

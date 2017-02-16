@@ -7,9 +7,11 @@
 // Generated file. Do not edit.
 
 
-static void* cfx_function_pointers[1404] =  {
+static void* cfx_function_pointers[1406] =  {
     (void*)cfx_add_cross_origin_whitelist_entry,
     (void*)cfx_api_hash,
+    (void*)cfx_base64decode,
+    (void*)cfx_base64encode,
     (void*)cfx_begin_tracing,
     (void*)cfx_clear_cross_origin_whitelist,
     (void*)cfx_clear_scheme_handler_factories,

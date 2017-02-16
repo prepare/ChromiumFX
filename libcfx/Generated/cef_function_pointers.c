@@ -9,6 +9,8 @@
 
 static int (*cef_add_cross_origin_whitelist_entry_ptr)(const cef_string_t* source_origin, const cef_string_t* target_protocol, const cef_string_t* target_domain, int allow_target_subdomains);
 static const char* (*cef_api_hash_ptr)(int entry);
+static cef_binary_value_t* (*cef_base64decode_ptr)(const cef_string_t* data);
+static cef_string_userfree_t (*cef_base64encode_ptr)(const void* data, size_t data_size);
 static int (*cef_begin_tracing_ptr)(const cef_string_t* categories, cef_completion_callback_t* callback);
 static int (*cef_clear_cross_origin_whitelist_ptr)();
 static int (*cef_clear_scheme_handler_factories_ptr)();
@@ -139,6 +141,8 @@ static void (*cef_string_multimap_free_ptr)(cef_string_multimap_t map);
 
 static void cfx_load_cef_function_pointers(void *libcef) {
     cef_add_cross_origin_whitelist_entry_ptr = (int (*)(const cef_string_t*, const cef_string_t*, const cef_string_t*, int))cfx_platform_get_fptr(libcef, "cef_add_cross_origin_whitelist_entry");
+    cef_base64decode_ptr = (cef_binary_value_t* (*)(const cef_string_t*))cfx_platform_get_fptr(libcef, "cef_base64decode");
+    cef_base64encode_ptr = (cef_string_userfree_t (*)(const void*, size_t))cfx_platform_get_fptr(libcef, "cef_base64encode");
     cef_begin_tracing_ptr = (int (*)(const cef_string_t*, cef_completion_callback_t*))cfx_platform_get_fptr(libcef, "cef_begin_tracing");
     cef_clear_cross_origin_whitelist_ptr = (int (*)())cfx_platform_get_fptr(libcef, "cef_clear_cross_origin_whitelist");
     cef_clear_scheme_handler_factories_ptr = (int (*)())cfx_platform_get_fptr(libcef, "cef_clear_scheme_handler_factories");
@@ -270,6 +274,8 @@ static void cfx_load_cef_function_pointers(void *libcef) {
 
 #define cef_add_cross_origin_whitelist_entry cef_add_cross_origin_whitelist_entry_ptr
 #define cef_api_hash cef_api_hash_ptr
+#define cef_base64decode cef_base64decode_ptr
+#define cef_base64encode cef_base64encode_ptr
 #define cef_begin_tracing cef_begin_tracing_ptr
 #define cef_clear_cross_origin_whitelist cef_clear_cross_origin_whitelist_ptr
 #define cef_clear_scheme_handler_factories cef_clear_scheme_handler_factories_ptr

@@ -14,6 +14,8 @@ namespace Chromium {
         internal enum FunctionIndex {
             cfx_add_cross_origin_whitelist_entry,
             cfx_api_hash,
+            cfx_base64decode,
+            cfx_base64encode,
             cfx_begin_tracing,
             cfx_clear_cross_origin_whitelist,
             cfx_clear_scheme_handler_factories,
@@ -1421,6 +1423,8 @@ namespace Chromium {
         internal static void LoadCfxRuntimeApi() {
             CfxApi.Runtime.cfx_add_cross_origin_whitelist_entry = (CfxApi.Runtime.cfx_add_cross_origin_whitelist_entry_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_add_cross_origin_whitelist_entry, typeof(CfxApi.Runtime.cfx_add_cross_origin_whitelist_entry_delegate));
             CfxApi.Runtime.cfx_api_hash = (CfxApi.Runtime.cfx_api_hash_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_api_hash, typeof(CfxApi.Runtime.cfx_api_hash_delegate));
+            CfxApi.Runtime.cfx_base64decode = (CfxApi.Runtime.cfx_base64decode_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_base64decode, typeof(CfxApi.Runtime.cfx_base64decode_delegate));
+            CfxApi.Runtime.cfx_base64encode = (CfxApi.Runtime.cfx_base64encode_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_base64encode, typeof(CfxApi.Runtime.cfx_base64encode_delegate));
             CfxApi.Runtime.cfx_begin_tracing = (CfxApi.Runtime.cfx_begin_tracing_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_begin_tracing, typeof(CfxApi.Runtime.cfx_begin_tracing_delegate));
             CfxApi.Runtime.cfx_clear_cross_origin_whitelist = (CfxApi.Runtime.cfx_clear_cross_origin_whitelist_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_clear_cross_origin_whitelist, typeof(CfxApi.Runtime.cfx_clear_cross_origin_whitelist_delegate));
             CfxApi.Runtime.cfx_clear_scheme_handler_factories = (CfxApi.Runtime.cfx_clear_scheme_handler_factories_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_clear_scheme_handler_factories, typeof(CfxApi.Runtime.cfx_clear_scheme_handler_factories_delegate));
