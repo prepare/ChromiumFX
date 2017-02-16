@@ -54,6 +54,10 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2924.0 ###
+- Update to CEF 3.2924.1569 with API changes.
+- The parser in the generator tool had a rewrite. The new version detected some boolean parameters and 2 functions the previous version missed.
+
 ### Version 3.2883.1 ###
 - Update to CEF 3.2883.1552 with API changes.
 
