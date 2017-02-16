@@ -61,9 +61,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_thread_capi.h">cef/include/capi/cef_thread_capi.h</see>.
         /// </remarks>
-        public static CfxThread Create(string displayName, CfxThreadPriority priority, CfxMessageLoopType messageLoopType, int stoppable, CfxComInitMode comInitMode) {
+        public static CfxThread Create(string displayName, CfxThreadPriority priority, CfxMessageLoopType messageLoopType, bool stoppable, CfxComInitMode comInitMode) {
             var displayName_pinned = new PinnedString(displayName);
-            var __retval = CfxApi.Thread.cfx_thread_create(displayName_pinned.Obj.PinnedPtr, displayName_pinned.Length, (int)priority, (int)messageLoopType, stoppable, (int)comInitMode);
+            var __retval = CfxApi.Thread.cfx_thread_create(displayName_pinned.Obj.PinnedPtr, displayName_pinned.Length, (int)priority, (int)messageLoopType, stoppable ? 1 : 0, (int)comInitMode);
             displayName_pinned.Obj.Free();
             return CfxThread.Wrap(__retval);
         }

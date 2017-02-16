@@ -16,8 +16,8 @@ namespace Chromium.Remote {
         internal CfxWaitableEventCreateRemoteCall()
             : base(RemoteCallId.CfxWaitableEventCreateRemoteCall) {}
 
-        internal int automaticReset;
-        internal int initiallySignaled;
+        internal bool automaticReset;
+        internal bool initiallySignaled;
         internal IntPtr __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -39,7 +39,7 @@ namespace Chromium.Remote {
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            __retval = CfxApi.WaitableEvent.cfx_waitable_event_create(automaticReset, initiallySignaled);
+            __retval = CfxApi.WaitableEvent.cfx_waitable_event_create(automaticReset ? 1 : 0, initiallySignaled ? 1 : 0);
         }
     }
 

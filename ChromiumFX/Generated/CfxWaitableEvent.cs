@@ -57,8 +57,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_waitable_event_capi.h">cef/include/capi/cef_waitable_event_capi.h</see>.
         /// </remarks>
-        public static CfxWaitableEvent Create(int automaticReset, int initiallySignaled) {
-            return CfxWaitableEvent.Wrap(CfxApi.WaitableEvent.cfx_waitable_event_create(automaticReset, initiallySignaled));
+        public static CfxWaitableEvent Create(bool automaticReset, bool initiallySignaled) {
+            return CfxWaitableEvent.Wrap(CfxApi.WaitableEvent.cfx_waitable_event_create(automaticReset ? 1 : 0, initiallySignaled ? 1 : 0));
         }
 
         /// <summary>

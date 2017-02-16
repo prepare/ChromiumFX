@@ -19,7 +19,7 @@ namespace Chromium.Remote {
         internal string displayName;
         internal int priority;
         internal int messageLoopType;
-        internal int stoppable;
+        internal bool stoppable;
         internal int comInitMode;
         internal IntPtr __retval;
 
@@ -49,7 +49,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var displayName_pinned = new PinnedString(displayName);
-            __retval = CfxApi.Thread.cfx_thread_create(displayName_pinned.Obj.PinnedPtr, displayName_pinned.Length, (int)priority, (int)messageLoopType, stoppable, (int)comInitMode);
+            __retval = CfxApi.Thread.cfx_thread_create(displayName_pinned.Obj.PinnedPtr, displayName_pinned.Length, (int)priority, (int)messageLoopType, stoppable ? 1 : 0, (int)comInitMode);
             displayName_pinned.Obj.Free();
         }
     }

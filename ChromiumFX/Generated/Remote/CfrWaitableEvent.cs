@@ -53,7 +53,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_waitable_event_capi.h">cef/include/capi/cef_waitable_event_capi.h</see>.
         /// </remarks>
-        public static CfrWaitableEvent Create(int automaticReset, int initiallySignaled) {
+        public static CfrWaitableEvent Create(bool automaticReset, bool initiallySignaled) {
             var call = new CfxWaitableEventCreateRemoteCall();
             call.automaticReset = automaticReset;
             call.initiallySignaled = initiallySignaled;

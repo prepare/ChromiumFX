@@ -57,7 +57,7 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_thread_capi.h">cef/include/capi/cef_thread_capi.h</see>.
         /// </remarks>
-        public static CfrThread Create(string displayName, CfxThreadPriority priority, CfxMessageLoopType messageLoopType, int stoppable, CfxComInitMode comInitMode) {
+        public static CfrThread Create(string displayName, CfxThreadPriority priority, CfxMessageLoopType messageLoopType, bool stoppable, CfxComInitMode comInitMode) {
             var call = new CfxThreadCreateRemoteCall();
             call.displayName = displayName;
             call.priority = (int)priority;
