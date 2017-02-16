@@ -76,5 +76,20 @@ namespace Parser {
             enums.Add(e);
             return Ensure(success);
         }
+
+        private bool ParseCefEnumValue(List<EnumMemberData> members) {
+            var member = new EnumMemberData();
+            Mark();
+            ParseSummary(member.Comments);
+            var success = Scan(@"\w+", () => member.Name = Value);
+            if(success) {
+                if(Skip("="))
+                    Ensure(Scan("[^,}\n/]+", () => member.Value = Value.Trim()));
+                members.Add(member);
+            }
+            Skip(",");
+            Unmark(success);
+            return success;
+        }
     }
 }

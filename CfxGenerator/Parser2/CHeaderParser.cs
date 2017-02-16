@@ -54,27 +54,11 @@ namespace Parser {
                 || Scan(@"unsigned \w+", () => type.Name = Value)
                 || Scan(@"(?:struct _)?(\w+)", () => type.Name = Group01);
             if(success) {
-                type.Indirection = string.Empty;
-                while(
-                    Scan(@"const\b", () => { type.Indirection += Value; })
-                    || Scan(@"\*", () => type.Indirection += Value)
-                ) ;
+                var tmp = 
+                    Scan(@"\*\s*const\s*\*", () => type.Indirection = Value)
+                    || Scan(@"const\s*\*", () => type.Indirection = Value)
+                    || Scan(@"(?:\s*\*)+", () => type.Indirection = Value);
             }
-            Unmark(success);
-            return success;
-        }
-
-        protected bool ParseCefEnumValue(List<EnumMemberData> members) {
-            var member = new EnumMemberData();
-            Mark();
-            ParseSummary(member.Comments);
-            var success = Scan(@"\w+", () => member.Name = Value);
-            if(success) {
-                if(Skip("="))
-                    Ensure(Scan("[^,}\n]+", () => member.Value = Value));
-                members.Add(member);
-            }
-            Skip(",");
             Unmark(success);
             return success;
         }
