@@ -99,7 +99,7 @@ public class CefCallbackFunction  {
         if(Signature.PublicReturnType.IsStringCollectionType)
             return false;
 
-        if(Signature.ManagedArguments.Length != 1)
+        if(Signature.ManagedParameters.Length != 1)
             return false;
 
         if(Name.StartsWith("has_")) { isBoolean = true; return true; }
@@ -128,10 +128,10 @@ public class CefCallbackFunction  {
     public bool IsPropertySetterForPrivate(CefCallbackFunction getter) {
         if(!Signature.PublicReturnType.IsVoid)
             return false;
-        if(!(Signature.ManagedArguments.Count() == 2))
+        if(!(Signature.ManagedParameters.Count() == 2))
             return false;
-        if(!Signature.ManagedArguments[1].ArgumentType.Equals(getter.Signature.PublicReturnType)) {
-            if(!(getter.Signature.PublicReturnType.Name == "cef_string_userfree_t" && Signature.ManagedArguments[1].ArgumentType.IsCefStringPtrTypeConst))
+        if(!Signature.ManagedParameters[1].ParameterType.Equals(getter.Signature.PublicReturnType)) {
+            if(!(getter.Signature.PublicReturnType.Name == "cef_string_userfree_t" && Signature.ManagedParameters[1].ParameterType.IsCefStringPtrTypeConst))
                 return false;
         }
         if(!Name.Substring(1).Equals(getter.Name.Substring(1)))
@@ -140,7 +140,7 @@ public class CefCallbackFunction  {
     }
 
     public bool IsBasicEvent {
-        get { return Signature.ManagedArguments.Length == 1 && Signature.PublicReturnType.IsVoid; }
+        get { return Signature.ManagedParameters.Length == 1 && Signature.PublicReturnType.IsVoid; }
     }
 
     public string NativeCallbackName {

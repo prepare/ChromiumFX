@@ -11,13 +11,13 @@ using System.Diagnostics;
 // inherit from CefStructPtrArrayType because the public layer is the same
 public class CefStructArrayType : CefStructPtrArrayType {
 
-    public CefStructArrayType(Argument structArg, Argument countArg)
-        : base(new Argument(structArg, new CefStructPtrPtrType(structArg.ArgumentType.AsCefStructPtrType, "*")), countArg) {
+    public CefStructArrayType(Parameter structArg, Parameter countArg)
+        : base(new Parameter(structArg, new CefStructPtrPtrType(structArg.ParameterType.AsCefStructPtrType, "*")), countArg) {
         Debug.Assert(Struct.ClassBuilder.Category == StructCategory.Values);
     }
 
     public override bool IsOut {
-        get { return CountArg.ArgumentType.IsOut; }
+        get { return CountArg.ParameterType.IsOut; }
     }
 
     public override string PInvokeSymbol {
@@ -102,7 +102,7 @@ public class CefStructArrayType : CefStructPtrArrayType {
     public override void EmitPublicEventArgFields(CodeBuilder b, string var) {
         b.AppendLine("IntPtr m_{0};", var);
         b.AppendLine("int m_{0}_structsize;", var);
-        b.AppendLine("{0} m_{1};", CountArg.ArgumentType.PInvokeSymbol, CountArg.VarName);
+        b.AppendLine("{0} m_{1};", CountArg.ParameterType.PInvokeSymbol, CountArg.VarName);
         b.AppendLine("internal {0} m_{1}_managed;", PublicSymbol, var);
     }
 
@@ -118,9 +118,9 @@ public class CefStructArrayType : CefStructPtrArrayType {
 
     public override void EmitPublicEventArgGetterStatements(CodeBuilder b, string var) {
         b.BeginIf("m_{0}_managed == null", var);
-        b.AppendLine("m_{0}_managed = new {1}[({2})m_{3}];", var, Struct.ClassName, CountArg.ArgumentType.PublicSymbol, CountArg.VarName);
+        b.AppendLine("m_{0}_managed = new {1}[({2})m_{3}];", var, Struct.ClassName, CountArg.ParameterType.PublicSymbol, CountArg.VarName);
         b.AppendLine("var currentPtr = m_{0};", var);
-        b.BeginBlock("for({0} i = 0; i < ({0})m_{1}; ++i)", CountArg.ArgumentType.PublicSymbol, CountArg.VarName);
+        b.BeginBlock("for({0} i = 0; i < ({0})m_{1}; ++i)", CountArg.ParameterType.PublicSymbol, CountArg.VarName);
         b.AppendLine("m_{0}_managed[i] = {1}.Wrap(currentPtr);", var, Struct.ClassName);
         b.AppendLine("currentPtr += m_{0}_structsize;", var);
         b.EndBlock();
@@ -130,9 +130,9 @@ public class CefStructArrayType : CefStructPtrArrayType {
 
     public override void EmitRemoteEventArgGetterStatements(CodeBuilder b, string var) {
         b.BeginIf("m_{0}_managed == null", var);
-        b.AppendLine("m_{0}_managed = new {1}[({2})m_{3}];", var, Struct.RemoteClassName, CountArg.ArgumentType.PublicSymbol, CountArg.VarName);
+        b.AppendLine("m_{0}_managed = new {1}[({2})m_{3}];", var, Struct.RemoteClassName, CountArg.ParameterType.PublicSymbol, CountArg.VarName);
         b.AppendLine("var currentPtr = m_{0};", var);
-        b.BeginBlock("for({0} i = 0; i < ({0})m_{1}; ++i)", CountArg.ArgumentType.PublicSymbol, CountArg.VarName);
+        b.BeginBlock("for({0} i = 0; i < ({0})m_{1}; ++i)", CountArg.ParameterType.PublicSymbol, CountArg.VarName);
         b.AppendLine("m_{0}_managed[i] = {1}.Wrap(currentPtr);", var, Struct.ClassName);
         b.AppendLine("currentPtr += m_{0}_structsize;", var);
         b.EndBlock();

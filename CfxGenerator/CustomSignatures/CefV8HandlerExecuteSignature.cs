@@ -16,10 +16,10 @@ public class CefV8HandlerExecuteSignature : SignatureWithStructPtrArray {
         get { return new CefStructPtrType(new CefStructType("cef_v8value", null), "*"); }
     }
 
-    public override Argument[] ManagedArguments {
+    public override Parameter[] ManagedParameters {
         get {
-            var list = new List<Argument>();
-            foreach(var arg in base.ManagedArguments) {
+            var list = new List<Parameter>();
+            foreach(var arg in base.ManagedParameters) {
                 if(arg.VarName != "retval") {
                     list.Add(arg);
                 }

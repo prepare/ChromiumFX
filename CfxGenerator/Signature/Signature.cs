@@ -51,7 +51,7 @@ public class Signature {
 
     public SignatureType Type { get; private set; }
 
-    public readonly Argument[] Arguments;
+    public readonly Parameter[] Parameters;
     public readonly ApiType ReturnType;
 
     public readonly bool ReturnValueIsConst;
@@ -60,15 +60,15 @@ public class Signature {
 
     protected Signature(SignatureType type, Parser.SignatureNode sd, ApiTypeBuilder api) {
         Type = type;
-        var args = new List<Argument>();
+        var args = new List<Parameter>();
         var index = 0;
 
         foreach(var arg in sd.Arguments) {
-            args.Add(new Argument(arg, api, index));
+            args.Add(new Parameter(arg, api, index));
             index += 1;
         }
 
-        this.Arguments = args.ToArray();
+        this.Parameters = args.ToArray();
 
         this.ReturnType = api.GetApiType(sd.ReturnType, false);
         this.ReturnValueIsConst = sd.ReturnValueIsConst;
@@ -76,24 +76,24 @@ public class Signature {
 
     protected Signature(Signature s) {
         Type = s.Type;
-        Arguments = s.Arguments;
+        Parameters = s.Parameters;
         ReturnType = s.ReturnType;
         ReturnValueIsConst = s.ReturnValueIsConst;
     }
 
-    public virtual Argument[] RemoteArguments {
-        get { return ManagedArguments; }
+    public virtual Parameter[] RemoteParameters {
+        get { return ManagedParameters; }
     }
 
     public virtual ApiType RemoteReturnType {
         get { return PublicReturnType; }
     }
 
-    public virtual Argument[] ManagedArguments {
+    public virtual Parameter[] ManagedParameters {
         get {
-            var list = new List<Argument>();
-            foreach(var arg in Arguments) {
-                if(arg.ArgumentType.PInvokeSymbol != null) {
+            var list = new List<Parameter>();
+            foreach(var arg in Parameters) {
+                if(arg.ParameterType.PInvokeSymbol != null) {
                     list.Add(arg);
                 }
             }
@@ -108,16 +108,16 @@ public class Signature {
     public string NativeArgumentList {
         get {
             if(Type == SignatureType.ClientCallback) {
-                args.Add(string.Format("(({0}*)self)->gc_handle", Arguments[0].ArgumentType.AsCefStructPtrType.Struct.CfxNativeSymbol));
+                args.Add(string.Format("(({0}*)self)->gc_handle", Parameters[0].ParameterType.AsCefStructPtrType.Struct.CfxNativeSymbol));
                 if(!ReturnType.IsVoid) {
                     args.Add("&__retval");
                 }
-                for(var i = 1; i <= Arguments.Length - 1; i++) {
-                    args.Add(Arguments[i].NativeCallbackArgument);
+                for(var i = 1; i <= Parameters.Length - 1; i++) {
+                    args.Add(Parameters[i].NativeCallbackArgument);
                 }
             } else {
-                for(var i = 0; i <= Arguments.Length - 1; i++) {
-                    args.Add(Arguments[i].NativeCallArgument);
+                for(var i = 0; i <= Parameters.Length - 1; i++) {
+                    args.Add(Parameters[i].NativeCallArgument);
                 }
             }
             return args.Join();
@@ -126,9 +126,9 @@ public class Signature {
 
     public string PublicEventConstructorParameters {
         get {
-            for(var i = 1; i <= ManagedArguments.Count() - 1; i++) {
-                if(ManagedArguments[i].ArgumentType.IsIn) {
-                    args.Add(ManagedArguments[i].PublicEventConstructorParameter);
+            for(var i = 1; i <= ManagedParameters.Count() - 1; i++) {
+                if(ManagedParameters[i].ParameterType.IsIn) {
+                    args.Add(ManagedParameters[i].PublicEventConstructorParameter);
                 }
             }
             return args.Join();
@@ -137,10 +137,10 @@ public class Signature {
 
     public string PublicEventConstructorArguments {
         get {
-            for(var i = 1; i <= ManagedArguments.Length - 1; i++) {
+            for(var i = 1; i <= ManagedParameters.Length - 1; i++) {
                 //Debug.Assert(ManagedArguments[i].VarName != "exception");
-                if(ManagedArguments[i].ArgumentType.IsIn) {
-                    args.Add(ManagedArguments[i].PublicEventConstructorArgument);
+                if(ManagedParameters[i].ParameterType.IsIn) {
+                    args.Add(ManagedParameters[i].PublicEventConstructorArgument);
                 }
             }
             return args.Join();
@@ -149,7 +149,7 @@ public class Signature {
 
     public string OriginalParameterList {
         get {
-            foreach(var arg in Arguments) {
+            foreach(var arg in Parameters) {
                 args.Add(arg.OriginalParameter);
             }
             return args.Join();
@@ -158,11 +158,11 @@ public class Signature {
 
     public string OriginalParameterListUnnamed {
         get {
-            foreach(var arg in Arguments) {
+            foreach(var arg in Parameters) {
                 if(arg.IsConst) {
-                    args.Add("const " + arg.ArgumentType.OriginalSymbol);
+                    args.Add("const " + arg.ParameterType.OriginalSymbol);
                 } else {
-                    args.Add(arg.ArgumentType.OriginalSymbol);
+                    args.Add(arg.ParameterType.OriginalSymbol);
                 }
             }
             return args.Join();
@@ -176,12 +176,12 @@ public class Signature {
                 if(!ReturnType.IsVoid) {
                     args.Add(ReturnType.NativeOutSignature("__retval"));
                 }
-                for(var i = 1; i <= Arguments.Length - 1; i++) {
-                    args.Add(Arguments[i].NativeCallbackParameter);
+                for(var i = 1; i <= Parameters.Length - 1; i++) {
+                    args.Add(Parameters[i].NativeCallbackParameter);
                 }
             } else {
-                for(var i = 0; i <= Arguments.Length - 1; i++) {
-                    args.Add(Arguments[i].NativeCallParameter);
+                for(var i = 0; i <= Parameters.Length - 1; i++) {
+                    args.Add(Parameters[i].NativeCallParameter);
                 }
             }
             return args.Join();
@@ -199,8 +199,8 @@ public class Signature {
     }
 
     public virtual string PInvokeFunctionHeader(string functionName) {
-        for(var i = 0; i <= Arguments.Length - 1; i++) {
-            args.Add(Arguments[i].PInvokeCallParameter);
+        for(var i = 0; i <= Parameters.Length - 1; i++) {
+            args.Add(Parameters[i].PInvokeCallParameter);
         }
         return string.Format("{0} {1}({2})", ReturnType.PInvokeSymbol, functionName, args.Join());
     }
@@ -211,8 +211,8 @@ public class Signature {
             if(!ReturnType.IsVoid) {
                 args.Add(ReturnType.PInvokeOutSignature("__retval"));
             }
-            for(var i = 1; i <= Arguments.Count() - 1; i++) {
-                args.Add(Arguments[i].PInvokeCallbackParameter);
+            for(var i = 1; i <= Parameters.Count() - 1; i++) {
+                args.Add(Parameters[i].PInvokeCallbackParameter);
             }
             return args.Join();
         }
@@ -221,7 +221,7 @@ public class Signature {
     public string PublicParameterList {
         get {
             Debug.Assert(Type == SignatureType.LibraryCall);
-            foreach(var arg in ManagedArguments) {
+            foreach(var arg in ManagedParameters) {
                 if(arg.PublicCallParameter != null) {
                     args.Add(arg.PublicCallParameter);
                 }
@@ -233,7 +233,7 @@ public class Signature {
     public string PublicArgumentList {
         get {
             Debug.Assert(Type == SignatureType.LibraryCall);
-            foreach(var arg in ManagedArguments) {
+            foreach(var arg in ManagedParameters) {
                 args.Add(arg.PublicCallArgument);
             }
             return args.Join();
@@ -243,7 +243,7 @@ public class Signature {
     public string ProxyArgumentList {
         get {
             Debug.Assert(Type == SignatureType.LibraryCall);
-            foreach(var arg in ManagedArguments) {
+            foreach(var arg in ManagedParameters) {
                 args.Add(arg.ProxyCallArgument);
             }
             return args.Join();
@@ -256,7 +256,7 @@ public class Signature {
 
     public string RemoteParameterList {
         get {
-            foreach(var arg in RemoteArguments) {
+            foreach(var arg in RemoteParameters) {
                 if(arg.RemoteCallParameter != null) {
                     args.Add(arg.RemoteCallParameter);
                 }
@@ -269,13 +269,13 @@ public class Signature {
 
         var apiCall = string.Format("CfxApi.{2}.{0}({1})", apiFunctionName, PublicArgumentList, apiClassName);
 
-        for(var i = 0; i <= ManagedArguments.Length - 1; i++) {
-            ManagedArguments[i].EmitPrePublicCallStatements(b);
+        for(var i = 0; i <= ManagedParameters.Length - 1; i++) {
+            ManagedParameters[i].EmitPrePublicCallStatements(b);
         }
 
         var b1 = new CodeBuilder(b.CurrentIndent);
-        for(var i = 0; i <= ManagedArguments.Length - 1; i++) {
-            ManagedArguments[i].EmitPostPublicStatements(b1);
+        for(var i = 0; i <= ManagedParameters.Length - 1; i++) {
+            ManagedParameters[i].EmitPostPublicStatements(b1);
         }
 
         if(PublicReturnType.IsVoid) {
@@ -294,8 +294,8 @@ public class Signature {
 
     protected virtual void EmitExecuteInTargetProcess(CodeBuilder b, string apiClassName, string apiFunctionName) {
 
-        for(var i = 0; i <= ManagedArguments.Length - 1; i++) {
-            ManagedArguments[i].EmitPreProxyCallStatements(b);
+        for(var i = 0; i <= ManagedParameters.Length - 1; i++) {
+            ManagedParameters[i].EmitPreProxyCallStatements(b);
         }
 
         var apiCall = string.Format("CfxApi.{2}.{0}({1})", apiFunctionName, ProxyArgumentList, apiClassName);
@@ -305,15 +305,15 @@ public class Signature {
             b.AppendLine("__retval = {0};", PublicReturnType.ProxyReturnExpression(apiCall));
         }
 
-        for(var i = 0; i <= ManagedArguments.Length - 1; i++) {
-            ManagedArguments[i].EmitPostProxyCallStatements(b);
+        for(var i = 0; i <= ManagedParameters.Length - 1; i++) {
+            ManagedParameters[i].EmitPostProxyCallStatements(b);
         }
     }
 
     public void EmitPublicEventCtorStatements(CodeBuilder b) {
-        for(var i = 1; i <= ManagedArguments.Count() - 1; i++) {
-            if(ManagedArguments[i].ArgumentType.IsIn) {
-                ManagedArguments[i].EmitPublicEventCtorStatements(b);
+        for(var i = 1; i <= ManagedParameters.Count() - 1; i++) {
+            if(ManagedParameters[i].ParameterType.IsIn) {
+                ManagedParameters[i].EmitPublicEventCtorStatements(b);
             }
         }
     }
@@ -334,8 +334,8 @@ public class Signature {
 
         b.AppendLine("var call = new {0}();", remoteCallId);
 
-        foreach(var arg in ManagedArguments) {
-            if(arg.ArgumentType.IsIn) {
+        foreach(var arg in ManagedParameters) {
+            if(arg.ParameterType.IsIn) {
                 arg.EmitPreRemoteCallStatements(b);
             }
         }
@@ -345,7 +345,7 @@ public class Signature {
         else
             b.AppendLine("call.RequestExecution(RemotePtr.connection);");
 
-        foreach(var arg in ManagedArguments) {
+        foreach(var arg in ManagedParameters) {
             arg.EmitPostRemoteCallStatements(b);
         }
 
@@ -357,7 +357,7 @@ public class Signature {
     public void EmitRemoteCallClassBody(CodeBuilder b, string apiClassName, string apiFunctionName) {
         b.AppendLine();
 
-        foreach(var arg in ManagedArguments) {
+        foreach(var arg in ManagedParameters) {
             arg.EmitRemoteCallFields(b);
         }
 
@@ -366,10 +366,10 @@ public class Signature {
         }
 
         b.AppendLine();
-        if(ManagedArguments.Length > 0) {
+        if(ManagedParameters.Length > 0) {
             b.BeginBlock("protected override void WriteArgs(StreamHandler h)");
-            foreach(var arg in ManagedArguments) {
-                if(arg.ArgumentType.IsIn) {
+            foreach(var arg in ManagedParameters) {
+                if(arg.ParameterType.IsIn) {
                     arg.EmitRemoteWrite(b);
                 }
             }
@@ -377,8 +377,8 @@ public class Signature {
             b.AppendLine();
 
             b.BeginBlock("protected override void ReadArgs(StreamHandler h)");
-            foreach(var arg in ManagedArguments) {
-                if(arg.ArgumentType.IsIn) {
+            foreach(var arg in ManagedParameters) {
+                if(arg.ParameterType.IsIn) {
                     arg.EmitRemoteRead(b);
                 }
             }
@@ -386,11 +386,11 @@ public class Signature {
             b.AppendLine();
         }
 
-        var outArgs = new List<Argument>();
-        foreach(var arg in ManagedArguments) {
-            if(arg.ArgumentType.IsOut) {
+        var outArgs = new List<Parameter>();
+        foreach(var arg in ManagedParameters) {
+            if(arg.ParameterType.IsOut) {
                 outArgs.Add(arg);
-            } else if(arg.ArgumentType.IsStringCollectionType && arg.ArgumentType.AsStringCollectionType.ClassName == "CfxStringList") {
+            } else if(arg.ParameterType.IsStringCollectionType && arg.ParameterType.AsStringCollectionType.ClassName == "CfxStringList") {
                 outArgs.Add(arg);
             }
         }
@@ -425,9 +425,9 @@ public class Signature {
 
     public virtual void EmitNativeCall(CodeBuilder b, string functionName) {
         var b1 = new CodeBuilder(b.CurrentIndent);
-        for(var i = 0; i <= Arguments.Length - 1; i++) {
-            Arguments[i].EmitPreNativeCallStatements(b);
-            Arguments[i].EmitPostNativeCallStatements(b1);
+        for(var i = 0; i <= Parameters.Length - 1; i++) {
+            Parameters[i].EmitPreNativeCallStatements(b);
+            Parameters[i].EmitPostNativeCallStatements(b1);
         }
 
         var functionCall = string.Format("{0}({1})", functionName, NativeArgumentList);
@@ -459,21 +459,21 @@ public class Signature {
             return;
 
 
-        for(var i = 0; i <= Arguments.Length - 1; i++) {
-            var suffixLength = CountArgumentSuffixLength(Arguments[i]);
+        for(var i = 0; i <= Parameters.Length - 1; i++) {
+            var suffixLength = CountArgumentSuffixLength(Parameters[i]);
             if(suffixLength > 0) {
-                var arrName = Arguments[i].VarName.Substring(0, Arguments[i].VarName.Length - suffixLength);
-                if(i > 0 && Arguments[i - 1].VarName.StartsWith(arrName)) {
-                    Debug.Print("UnhandledArrayArgument {0} {1} {2} {3}", callMode, cefName, Arguments[i - 1], Arguments[i]);
-                } else if(i < Arguments.Length - 1 && Arguments[i + 1].VarName.StartsWith(arrName)) {
-                    Debug.Print("UnhandledArrayArgument {0} {1} {2} {3}", callMode, cefName, Arguments[i], Arguments[i + 1]);
+                var arrName = Parameters[i].VarName.Substring(0, Parameters[i].VarName.Length - suffixLength);
+                if(i > 0 && Parameters[i - 1].VarName.StartsWith(arrName)) {
+                    Debug.Print("UnhandledArrayArgument {0} {1} {2} {3}", callMode, cefName, Parameters[i - 1], Parameters[i]);
+                } else if(i < Parameters.Length - 1 && Parameters[i + 1].VarName.StartsWith(arrName)) {
+                    Debug.Print("UnhandledArrayArgument {0} {1} {2} {3}", callMode, cefName, Parameters[i], Parameters[i + 1]);
                 } else {
                 }
             }
         }
     }
 
-    private int CountArgumentSuffixLength(Argument arg) {
+    private int CountArgumentSuffixLength(Parameter arg) {
         if(arg.VarName.EndsWith("_size"))
             return 5;
         if(arg.VarName.EndsWith("_count"))
@@ -490,8 +490,8 @@ public class Signature {
     }
 
     public override string ToString() {
-        for(var i = 0; i <= Arguments.Length - 1; i++) {
-            args.Add(Arguments[i].ToString());
+        for(var i = 0; i <= Parameters.Length - 1; i++) {
+            args.Add(Parameters[i].ToString());
         }
         return args.Join();
     }

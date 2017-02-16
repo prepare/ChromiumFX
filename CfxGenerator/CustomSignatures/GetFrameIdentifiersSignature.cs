@@ -10,8 +10,8 @@ public class GetFrameIdentifiersSignature : Signature {
         : base(s) {
     }
 
-    public override Argument[] ManagedArguments {
-        get { return new Argument[] { Arguments[0] }; }
+    public override Parameter[] ManagedParameters {
+        get { return new Parameter[] { Parameters[0] }; }
     }
 
     public override ApiType PublicReturnType {

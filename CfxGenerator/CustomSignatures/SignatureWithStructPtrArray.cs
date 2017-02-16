@@ -15,15 +15,15 @@ public class SignatureWithStructPtrArray : Signature {
         : base(s) {
         this.arrayIndex = arrayIndex;
         this.countIndex = countIndex;
-        Arguments[arrayIndex] = new Argument(Arguments[arrayIndex], new CefStructPtrArrayType(Arguments[arrayIndex], Arguments[countIndex]));
+        Parameters[arrayIndex] = new Parameter(Parameters[arrayIndex], new CefStructPtrArrayType(Parameters[arrayIndex], Parameters[countIndex]));
     }
 
-    public override Argument[] ManagedArguments {
+    public override Parameter[] ManagedParameters {
         get {
-            var list = new List<Argument>();
-            for(var i = 0; i <= Arguments.Length - 1; i++) {
+            var list = new List<Parameter>();
+            for(var i = 0; i <= Parameters.Length - 1; i++) {
                 if(i != countIndex) {
-                    list.Add(Arguments[i]);
+                    list.Add(Parameters[i]);
                 }
             }
             return list.ToArray();

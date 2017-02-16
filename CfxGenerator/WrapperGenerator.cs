@@ -87,17 +87,17 @@ public class WrapperGenerator {
 
             switch(s.Type) {
                 case SignatureType.ClientCallback:
-                    foreach(var arg in s.Arguments) {
+                    foreach(var arg in s.Parameters) {
                         if(!arg.IsThisArgument) {
-                            if(arg.ArgumentType.IsCefStructPtrType) {
-                                var t = arg.ArgumentType.AsCefStructPtrType;
+                            if(arg.ParameterType.IsCefStructPtrType) {
+                                var t = arg.ParameterType.AsCefStructPtrType;
                                 t.Struct.ClassBuilder.NeedsWrapFunction = true;
-                            } else if(arg.ArgumentType.IsCefStructType) {
-                                var t = arg.ArgumentType.AsCefStructType;
+                            } else if(arg.ParameterType.IsCefStructType) {
+                                var t = arg.ParameterType.AsCefStructType;
                                 Debug.Assert(t.ClassBuilder is CfxValueClass);
                                 t.ClassBuilder.NeedsWrapFunction = true;
-                            } else if(arg.ArgumentType is CefStructPtrArrayType) {
-                                var t = arg.ArgumentType as CefStructPtrArrayType;
+                            } else if(arg.ParameterType is CefStructPtrArrayType) {
+                                var t = arg.ParameterType as CefStructPtrArrayType;
                                 t.Struct.ClassBuilder.NeedsWrapFunction = true;
                             }
                         }
@@ -151,9 +151,9 @@ public class WrapperGenerator {
     }
 
     private void CheckForStringOutArguments(Signature s, string function, string[] funcComments) {
-        for(int i = 0; i < s.Arguments.Length; ++i) {
-            var arg = s.Arguments[i];
-            if(arg.ArgumentType.IsCefStringPtrType) {
+        for(int i = 0; i < s.Parameters.Length; ++i) {
+            var arg = s.Parameters[i];
+            if(arg.ParameterType.IsCefStringPtrType) {
                 switch(function + "!" + arg.VarName) {
 
                     case "cef_create_url!url":
@@ -173,7 +173,7 @@ public class WrapperGenerator {
                     case "cef_create_temp_directory_in_directory!new_dir":
                     case "cef_get_temp_directory!temp_dir":
 
-                        s.Arguments[i] = new Argument(arg, new CefStringOutType());
+                        s.Parameters[i] = new Parameter(arg, new CefStringOutType());
                         break;
 
                     case "cef_display_handler::on_tooltip!text":
@@ -185,7 +185,7 @@ public class WrapperGenerator {
 
                         if(funcComments == null) {
                             //this is arg string collection function
-                            s.Arguments[i] = new Argument(arg, new CefStringOutType());
+                            s.Parameters[i] = new Parameter(arg, new CefStringOutType());
                             break;
                         }
 

@@ -10,8 +10,8 @@ public class GetPageRangesSignature : SignatureWithStructArray {
         : base(s, arrayIndex, countIndex) {
     }
 
-    public override Argument[] ManagedArguments {
-        get { return new Argument[-1 + 1]; }
+    public override Parameter[] ManagedParameters {
+        get { return new Parameter[-1 + 1]; }
     }
 
     public override ApiType PublicReturnType {

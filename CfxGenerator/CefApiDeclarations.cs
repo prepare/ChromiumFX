@@ -120,11 +120,11 @@ public class CefApiDeclarations {
             AddRemoteStruct(sig.PublicReturnType.AsCefStructPtrType.Struct);
         }
 
-        foreach(var arg in sig.ManagedArguments) {
-            if(arg.ArgumentType.IsCefStructType) {
-                AddRemoteStruct(arg.ArgumentType.AsCefStructType);
-            } else if(arg.ArgumentType.IsCefStructPtrType) {
-                AddRemoteStruct(arg.ArgumentType.AsCefStructPtrType.Struct);
+        foreach(var arg in sig.ManagedParameters) {
+            if(arg.ParameterType.IsCefStructType) {
+                AddRemoteStruct(arg.ParameterType.AsCefStructType);
+            } else if(arg.ParameterType.IsCefStructPtrType) {
+                AddRemoteStruct(arg.ParameterType.AsCefStructPtrType.Struct);
             }
         }
     }

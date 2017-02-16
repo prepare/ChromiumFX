@@ -9,16 +9,16 @@ using System.Diagnostics;
 public class CustomSignatures {
 
     public static Signature ForFunction(Signature s, string cefName, CefConfigNode cefConfig) {
-        if(cefName.Contains("::get_") && s.Arguments.Length == 2) {
+        if(cefName.Contains("::get_") && s.Parameters.Length == 2) {
             if(s.ReturnType.IsVoid) {
-                if(s.Arguments[1].ArgumentType.Name.StartsWith("cef_string_list") || s.Arguments[1].ArgumentType.Name.StartsWith("cef_string_m")) {
+                if(s.Parameters[1].ParameterType.Name.StartsWith("cef_string_list") || s.Parameters[1].ParameterType.Name.StartsWith("cef_string_m")) {
                     return new StringCollectionAsRetvalSignature(s);
                 }
             }
         }
 
-        if(cefConfig.CountFunction != null && s.Arguments.Length == 3 && s.ReturnType.IsVoid) {
-            if(s.Arguments[2].ArgumentType.IsCefStructPtrPtrType) {
+        if(cefConfig.CountFunction != null && s.Parameters.Length == 3 && s.ReturnType.IsVoid) {
+            if(s.Parameters[2].ParameterType.IsCefStructPtrPtrType) {
                 return new StructArrayGetterSignature(s, cefConfig.CountFunction);
             }
         }
@@ -35,23 +35,23 @@ public class CustomSignatures {
 
         }
 
-        for(var i = 0; i <= s.Arguments.Length - 1; i++) {
+        for(var i = 0; i <= s.Parameters.Length - 1; i++) {
 
             var suffixLength = 0;
-            if(s.Arguments[i].VarName.EndsWith("_count")) suffixLength = 6;
-            if(s.Arguments[i].VarName.EndsWith("Count")) suffixLength = 5;
+            if(s.Parameters[i].VarName.EndsWith("_count")) suffixLength = 6;
+            if(s.Parameters[i].VarName.EndsWith("Count")) suffixLength = 5;
 
             if(suffixLength > 0) {
-                var arrName = s.Arguments[i].VarName.Substring(0, s.Arguments[i].VarName.Length - suffixLength);
+                var arrName = s.Parameters[i].VarName.Substring(0, s.Parameters[i].VarName.Length - suffixLength);
                 int arrayArgIndex = -1;
-                if(i > 0 && s.Arguments[i - 1].VarName.StartsWith(arrName)) {
+                if(i > 0 && s.Parameters[i - 1].VarName.StartsWith(arrName)) {
                     arrayArgIndex = i - 1;
-                } else if(i < s.Arguments.Length - 1 && s.Arguments[i + 1].VarName.StartsWith(arrName)) {
+                } else if(i < s.Parameters.Length - 1 && s.Parameters[i + 1].VarName.StartsWith(arrName)) {
                     arrayArgIndex = i + 1;
                 } else {
                 }
                 if(arrayArgIndex > 0) {
-                    var arrayType = s.Arguments[arrayArgIndex].ArgumentType;
+                    var arrayType = s.Parameters[arrayArgIndex].ParameterType;
                     if(arrayType.IsCefStructPtrType) {
                         Debug.Assert(arrayType.AsCefStructPtrType.Struct.ClassBuilder.Category == StructCategory.Values);
                         return new SignatureWithStructArray(s, arrayArgIndex, i);

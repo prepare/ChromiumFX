@@ -126,7 +126,7 @@
     <Compile Include="Parser\Nodes\StructMemberNode.cs" />
     <Compile Include="Parser\Nodes\TypeNode.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Signature\Argument.cs" />
+    <Compile Include="Signature\Parameter.cs" />
     <Compile Include="Signature\Signature.cs" />
     <Compile Include="StructProperty.cs" />
     <Compile Include="WrapperGenerator.cs" />

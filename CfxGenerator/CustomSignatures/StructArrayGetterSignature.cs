@@ -16,28 +16,28 @@ public class StructArrayGetterSignature : Signature {
         this.countFunction = countFunction;
     }
 
-    public override Argument[] ManagedArguments {
-        get { return new Argument[] { Arguments[0] }; }
+    public override Parameter[] ManagedParameters {
+        get { return new Parameter[] { Parameters[0] }; }
     }
 
     public override ApiType PublicReturnType {
-        get { return new CefStructPtrArrayType(Arguments[2], Arguments[1]); }
+        get { return new CefStructPtrArrayType(Parameters[2], Parameters[1]); }
     }
 
     public override string NativeFunctionHeader(string functionName) {
         return string.Format("static void {0}({1} self, size_t {2}, {3})",
-                                functionName, Arguments[0].ArgumentType.OriginalSymbol, 
-                                Arguments[1].VarName, Arguments[2].NativeCallParameter);
+                                functionName, Parameters[0].ParameterType.OriginalSymbol, 
+                                Parameters[1].VarName, Parameters[2].NativeCallParameter);
     }
 
     public override string PInvokeFunctionHeader(string functionName) {
         return string.Format("void {0}(IntPtr self, UIntPtr {1}, IntPtr {2})",
-                                functionName, Arguments[1].VarName, Arguments[2].VarName);
+                                functionName, Parameters[1].VarName, Parameters[2].VarName);
     }
 
     public override void EmitNativeCall(CodeBuilder b, string functionName) {
         b.AppendLine("{0}(self, &{1}, {2});",
-                        functionName, Arguments[1].VarName, Arguments[2].VarName);
+                        functionName, Parameters[1].VarName, Parameters[2].VarName);
     }
 
     public override void EmitPublicCall(CodeBuilder b, string apiClassName, string apiFunctionName) {
@@ -46,7 +46,7 @@ public class StructArrayGetterSignature : Signature {
         Debug.Assert(countFunc.StartsWith("Get"));
         countFunc = countFunc.Substring(3);
         b.AppendLine("var count = {0};", countFunc);
-        b.AppendLine("if(count == 0) return new {0}[0];", Arguments[2].ArgumentType.PublicSymbol);
+        b.AppendLine("if(count == 0) return new {0}[0];", Parameters[2].ParameterType.PublicSymbol);
         var code =
 @"IntPtr[] ptrs = new IntPtr[count];
 var ptrs_p = new PinnedObject(ptrs);
@@ -60,12 +60,12 @@ return retval;";
 
         b.AppendMultiline(code,
                 apiFunctionName,
-                Arguments[2].ArgumentType.PublicSymbol,
+                Parameters[2].ParameterType.PublicSymbol,
                 apiClassName);
     }
 
     protected override void EmitExecuteInTargetProcess(CodeBuilder b, string apiClassName, string apiFunctionName) {
-        Debug.Assert(Arguments[2].ArgumentType.PublicSymbol == "CfxPostDataElement");
+        Debug.Assert(Parameters[2].ParameterType.PublicSymbol == "CfxPostDataElement");
         var code =
 @"var count = CfxApi.PostData.cfx_post_data_get_element_count(@this);
 __retval = new IntPtr[(ulong)count];
@@ -77,12 +77,12 @@ ptrs_p.Free();
 
         b.AppendMultiline(code,
                 apiFunctionName,
-                Arguments[2].ArgumentType.PublicSymbol);
+                Parameters[2].ParameterType.PublicSymbol);
         
     }
 
     public override void EmitRemoteCall(CodeBuilder b, string remoteCallId, bool isStatic) {
-        Debug.Assert(Arguments[2].ArgumentType.PublicSymbol == "CfxPostDataElement");
+        Debug.Assert(Parameters[2].ParameterType.PublicSymbol == "CfxPostDataElement");
         b.AppendLine("var call = new CfxPostDataGetElementsRemoteCall();");
         b.AppendLine("call.@this = RemotePtr.ptr;");
         b.AppendLine("call.RequestExecution(RemotePtr.connection);");

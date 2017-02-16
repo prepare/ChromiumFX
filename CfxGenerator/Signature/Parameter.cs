@@ -4,8 +4,8 @@
 // This software may be modified and distributed under the terms
 // of the BSD license. See the License.txt file for details.
 
-public class Argument {
-    public readonly ApiType ArgumentType;
+public class Parameter {
+    public readonly ApiType ParameterType;
     public readonly string VarName;
     public readonly int Index;
 
@@ -14,25 +14,25 @@ public class Argument {
     public bool IsThisArgument;
     public bool IsPropertySetterArgument;
 
-    public Argument(Parser.ParameterNode ad, ApiTypeBuilder api, int index) {
-        this.ArgumentType = api.GetApiType(ad.ParameterType, ad.IsConst);
+    public Parameter(Parser.ParameterNode ad, ApiTypeBuilder api, int index) {
+        this.ParameterType = api.GetApiType(ad.ParameterType, ad.IsConst);
         this.VarName = ad.Var;
         this.Index = index;
         this.IsConst = ad.IsConst;
         this.IsThisArgument = this.VarName.Equals("self");
     }
 
-    public Argument(Argument replacedArg, ApiType newType) {
-        this.ArgumentType = newType;
-        this.VarName = replacedArg.VarName;
-        this.Index = replacedArg.Index;
-        this.IsConst = replacedArg.IsConst;
-        this.IsThisArgument = replacedArg.IsThisArgument;
-        this.IsPropertySetterArgument = replacedArg.IsPropertySetterArgument;
+    public Parameter(Parameter replacedParam, ApiType newType) {
+        this.ParameterType = newType;
+        this.VarName = replacedParam.VarName;
+        this.Index = replacedParam.Index;
+        this.IsConst = replacedParam.IsConst;
+        this.IsThisArgument = replacedParam.IsThisArgument;
+        this.IsPropertySetterArgument = replacedParam.IsPropertySetterArgument;
     }
 
     public bool TypeIsRefCounted {
-        get { return ArgumentType.IsCefStructPtrType && ArgumentType.AsCefStructPtrType.Struct.ClassBuilder.IsRefCounted; }
+        get { return ParameterType.IsCefStructPtrType && ParameterType.AsCefStructPtrType.Struct.ClassBuilder.IsRefCounted; }
     }
 
     public string PublicVarName {
@@ -52,52 +52,52 @@ public class Argument {
     }
 
     public string PublicEventConstructorArgument {
-        get { return ArgumentType.PublicEventConstructorArgument(VarName); }
+        get { return ParameterType.PublicEventConstructorArgument(VarName); }
     }
 
     public string OriginalParameter {
         get {
             if(IsConst) {
-                return string.Concat("const ", ArgumentType.OriginalSymbol, " ", VarName);
+                return string.Concat("const ", ParameterType.OriginalSymbol, " ", VarName);
             } else {
-                return string.Concat(ArgumentType.OriginalSymbol, " ", VarName);
+                return string.Concat(ParameterType.OriginalSymbol, " ", VarName);
             }
         }
     }
 
     public string NativeCallParameter {
-        get { return ArgumentType.NativeCallParameter(VarName, IsConst); }
+        get { return ParameterType.NativeCallParameter(VarName, IsConst); }
     }
 
     public string NativeCallArgument {
-        get { return ArgumentType.NativeCallArgument(VarName); }
+        get { return ParameterType.NativeCallArgument(VarName); }
     }
 
     public string NativeCallbackParameter {
-        get { return ArgumentType.NativeCallbackParameter(VarName, IsConst); }
+        get { return ParameterType.NativeCallbackParameter(VarName, IsConst); }
     }
 
     public string NativeCallbackArgument {
-        get { return ArgumentType.NativeCallbackArgument(VarName); }
+        get { return ParameterType.NativeCallbackArgument(VarName); }
     }
 
     public string PInvokeCallParameter {
-        get { return ArgumentType.PInvokeCallParameter(VarName); }
+        get { return ParameterType.PInvokeCallParameter(VarName); }
     }
 
     public string PInvokeCallbackParameter {
-        get { return ArgumentType.PInvokeCallbackParameter(VarName); }
+        get { return ParameterType.PInvokeCallbackParameter(VarName); }
     }
 
     public string PublicEventConstructorParameter {
-        get { return ArgumentType.PublicEventConstructorParameter(VarName); }
+        get { return ParameterType.PublicEventConstructorParameter(VarName); }
     }
 
     public string PublicCallParameter {
         get {
             if(IsThisArgument)
                 return null;
-            return ArgumentType.PublicCallParameter(PublicVarName);
+            return ParameterType.PublicCallParameter(PublicVarName);
         }
     }
 
@@ -105,13 +105,13 @@ public class Argument {
         get {
             if(IsThisArgument)
                 return "NativePtr";
-            return ArgumentType.PublicCallArgument(PublicVarName);
+            return ParameterType.PublicCallArgument(PublicVarName);
         }
     }
 
     public string ProxyCallArgument {
         get {
-            return ArgumentType.ProxyCallArgument(PublicVarName);
+            return ParameterType.ProxyCallArgument(PublicVarName);
         }
     }
 
@@ -119,103 +119,103 @@ public class Argument {
         get {
             if(IsThisArgument)
                 return null;
-            return ArgumentType.RemoteCallParameter(PublicVarName);
+            return ParameterType.RemoteCallParameter(PublicVarName);
         }
     }
 
     public void EmitPreNativeCallStatements(CodeBuilder b) {
-        ArgumentType.EmitPreNativeCallStatements(b, VarName);
+        ParameterType.EmitPreNativeCallStatements(b, VarName);
     }
 
     public void EmitPostNativeCallStatements(CodeBuilder b) {
-        ArgumentType.EmitPostNativeCallStatements(b, VarName);
+        ParameterType.EmitPostNativeCallStatements(b, VarName);
     }
 
     public void EmitPreNativeCallbackStatements(CodeBuilder b) {
-        ArgumentType.EmitPreNativeCallbackStatements(b, VarName);
+        ParameterType.EmitPreNativeCallbackStatements(b, VarName);
     }
 
     public void EmitPostNativeCallbackStatements(CodeBuilder b) {
-        ArgumentType.EmitPostNativeCallbackStatements(b, VarName);
+        ParameterType.EmitPostNativeCallbackStatements(b, VarName);
     }
 
     public void EmitPrePublicCallStatements(CodeBuilder b) {
-        ArgumentType.EmitPrePublicCallStatements(b, PublicVarName);
+        ParameterType.EmitPrePublicCallStatements(b, PublicVarName);
     }
 
     public void EmitPostPublicStatements(CodeBuilder b) {
-        ArgumentType.EmitPostPublicCallStatements(b, PublicVarName);
+        ParameterType.EmitPostPublicCallStatements(b, PublicVarName);
     }
 
     public void EmitPreProxyCallStatements(CodeBuilder b) {
-        ArgumentType.EmitPreProxyCallStatements(b, PublicVarName);
+        ParameterType.EmitPreProxyCallStatements(b, PublicVarName);
     }
 
     public void EmitPostProxyCallStatements(CodeBuilder b) {
-        ArgumentType.EmitPostProxyCallStatements(b, PublicVarName);
+        ParameterType.EmitPostProxyCallStatements(b, PublicVarName);
     }
 
     public void EmitPreRemoteCallStatements(CodeBuilder b) {
-        ArgumentType.EmitPreRemoteCallStatements(b, PublicVarName);
+        ParameterType.EmitPreRemoteCallStatements(b, PublicVarName);
     }
 
     public void EmitPostRemoteCallStatements(CodeBuilder b) {
-        ArgumentType.EmitPostRemoteCallStatements(b, PublicVarName);
+        ParameterType.EmitPostRemoteCallStatements(b, PublicVarName);
     }
 
     public void EmitPublicEventCtorStatements(CodeBuilder b) {
-        ArgumentType.EmitPublicEventCtorStatements(b, VarName);
+        ParameterType.EmitPublicEventCtorStatements(b, VarName);
     }
 
     public void EmitPublicEventArgGetterStatements(CodeBuilder b) {
-        ArgumentType.EmitPublicEventArgGetterStatements(b, VarName);
+        ParameterType.EmitPublicEventArgGetterStatements(b, VarName);
     }
 
     public void EmitPublicEventArgSetterStatements(CodeBuilder b) {
-        ArgumentType.EmitPublicEventArgSetterStatements(b, VarName);
+        ParameterType.EmitPublicEventArgSetterStatements(b, VarName);
     }
 
     public void EmitRemoteEventArgGetterStatements(CodeBuilder b) {
-        ArgumentType.EmitRemoteEventArgGetterStatements(b, VarName);
+        ParameterType.EmitRemoteEventArgGetterStatements(b, VarName);
     }
 
     public void EmitRemoteEventArgSetterStatements(CodeBuilder b) {
-        ArgumentType.EmitRemoteEventArgSetterStatements(b, VarName);
+        ParameterType.EmitRemoteEventArgSetterStatements(b, VarName);
     }
 
     public void EmitPublicEventArgFields(CodeBuilder b) {
-        ArgumentType.EmitPublicEventArgFields(b, VarName);
+        ParameterType.EmitPublicEventArgFields(b, VarName);
     }
 
     public void EmitRemoteEventArgFields(CodeBuilder b) {
-        ArgumentType.EmitRemoteEventArgFields(b, VarName);
+        ParameterType.EmitRemoteEventArgFields(b, VarName);
     }
 
     public void EmitPostPublicRaiseEventStatements(CodeBuilder b) {
-        ArgumentType.EmitPostPublicRaiseEventStatements(b, VarName);
+        ParameterType.EmitPostPublicRaiseEventStatements(b, VarName);
     }
 
     public void EmitPostRemoteRaiseEventStatements(CodeBuilder b) {
-        ArgumentType.EmitPostRemoteRaiseEventStatements(b, VarName);
+        ParameterType.EmitPostRemoteRaiseEventStatements(b, VarName);
     }
 
     public virtual void EmitRemoteCallFields(CodeBuilder b) {
-        ArgumentType.EmitRemoteCallFields(b, CSharp.Escape(PublicVarName));
+        ParameterType.EmitRemoteCallFields(b, CSharp.Escape(PublicVarName));
     }
 
     public void EmitRemoteWrite(CodeBuilder b) {
-        ArgumentType.EmitRemoteWrite(b, CSharp.Escape(PublicVarName));
+        ParameterType.EmitRemoteWrite(b, CSharp.Escape(PublicVarName));
     }
 
     public void EmitRemoteRead(CodeBuilder b) {
-        ArgumentType.EmitRemoteRead(b, CSharp.Escape(PublicVarName));
+        ParameterType.EmitRemoteRead(b, CSharp.Escape(PublicVarName));
     }
 
     public override string ToString() {
         if(IsConst) {
-            return string.Format("const {0} {1}", ArgumentType.OriginalSymbol, VarName);
+            return string.Format("const {0} {1}", ParameterType.OriginalSymbol, VarName);
         } else {
-            return string.Format("{0} {1}", ArgumentType.OriginalSymbol, VarName);
+            return string.Format("{0} {1}", ParameterType.OriginalSymbol, VarName);
         }
     }
 }

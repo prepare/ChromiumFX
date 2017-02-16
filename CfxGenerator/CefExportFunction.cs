@@ -81,7 +81,7 @@ public class CefExportFunction {
 
         var modifiers = PrivateWrapper ? "private" : "public";
 
-        if(Signature.ManagedArguments.Length == 0 || !Signature.ManagedArguments[0].IsThisArgument) {
+        if(Signature.ManagedParameters.Length == 0 || !Signature.ManagedParameters[0].IsThisArgument) {
             modifiers += " static";
         }
 

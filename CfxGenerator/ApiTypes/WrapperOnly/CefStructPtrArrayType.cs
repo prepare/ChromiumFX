@@ -12,12 +12,12 @@ using System.Diagnostics;
 /// </summary>
 /// <remarks></remarks>
 public class CefStructPtrArrayType : CefStructPtrPtrType {
-    public readonly Argument StructArg;
+    public readonly Parameter StructArg;
 
-    public readonly Argument CountArg;
+    public readonly Parameter CountArg;
 
-    public CefStructPtrArrayType(Argument structArg, Argument countArg)
-        : base(structArg.ArgumentType.AsCefStructPtrPtrType) {
+    public CefStructPtrArrayType(Parameter structArg, Parameter countArg)
+        : base(structArg.ParameterType.AsCefStructPtrPtrType) {
         this.StructArg = structArg;
         this.CountArg = countArg;
     }

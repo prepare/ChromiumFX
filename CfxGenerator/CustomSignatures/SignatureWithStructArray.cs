@@ -8,26 +8,26 @@ using System.Collections.Generic;
 
 public class SignatureWithStructArray : Signature {
 
-    private Argument[] m_publicArguments;
+    private Parameter[] m_publicParameters;
 
     public SignatureWithStructArray(Signature s, int arrayIndex, int countIndex)
         : base(s) {
 
-        var list = new List<Argument>();
-        for(var i = 0; i <= Arguments.Length - 1; i++) {
+        var list = new List<Parameter>();
+        for(var i = 0; i <= Parameters.Length - 1; i++) {
             if(i != arrayIndex && i != countIndex) {
-                list.Add(Arguments[i]);
+                list.Add(Parameters[i]);
             } else if(i == arrayIndex) {
-                var a = new Argument(Arguments[arrayIndex], new CefStructArrayType(Arguments[arrayIndex], Arguments[countIndex]));
+                var a = new Parameter(Parameters[arrayIndex], new CefStructArrayType(Parameters[arrayIndex], Parameters[countIndex]));
                 list.Add(a);
-                Arguments[i] = a;
+                Parameters[i] = a;
             }
         }
-        m_publicArguments = list.ToArray();
+        m_publicParameters = list.ToArray();
     }
 
-    public override Argument[] ManagedArguments {
-        get { return m_publicArguments; }
+    public override Parameter[] ManagedParameters {
+        get { return m_publicParameters; }
     }
 
     public override void DebugPrintUnhandledArrayArguments(string cefName, CefConfigNode cefConfig, CfxCallMode callMode) {

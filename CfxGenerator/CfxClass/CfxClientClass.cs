@@ -83,13 +83,13 @@ public class CfxClientClass : CfxClass {
                 b.AppendLine("{0} __retval;", cb.NativeReturnType.NativeSymbol);
             }
 
-            foreach(var arg in cb.Signature.Arguments) {
+            foreach(var arg in cb.Signature.Parameters) {
                 arg.EmitPreNativeCallbackStatements(b);
             }
 
             b.AppendLine("(({0}_t*)self)->{1}({2});", CfxName, cb.Name, cb.Signature.NativeArgumentList);
 
-            foreach(var arg in cb.Signature.Arguments) {
+            foreach(var arg in cb.Signature.Parameters) {
                 arg.EmitPostNativeCallbackStatements(b);
             }
 
@@ -181,9 +181,9 @@ public class CfxClientClass : CfxClass {
             if(!sig.ReturnType.IsVoid) {
                 b.AppendLine("__retval = default({0});", sig.ReturnType.PInvokeSymbol);
             }
-            foreach(var arg in sig.Arguments) {
+            foreach(var arg in sig.Parameters) {
                 if(!arg.IsThisArgument)
-                    arg.ArgumentType.EmitSetCallbackArgumentToDefaultStatements(b, arg.VarName);
+                    arg.ParameterType.EmitSetCallbackArgumentToDefaultStatements(b, arg.VarName);
             }
             b.AppendLine("return;");
             b.EndBlock();
@@ -191,8 +191,8 @@ public class CfxClientClass : CfxClass {
             b.AppendLine("self.m_{0}?.Invoke(self, e);", cb.PublicName);
             b.AppendLine("e.m_isInvalid = true;");
 
-            for(var i = 1; i <= sig.ManagedArguments.Count() - 1; i++) {
-                sig.ManagedArguments[i].EmitPostPublicRaiseEventStatements(b);
+            for(var i = 1; i <= sig.ManagedParameters.Count() - 1; i++) {
+                sig.ManagedParameters[i].EmitPostPublicRaiseEventStatements(b);
             }
 
             sig.EmitPostPublicEventHandlerReturnValueStatements(b);
@@ -242,7 +242,7 @@ public class CfxClientClass : CfxClass {
 
     private void EmitPublicEvent(CodeBuilder b, int cbIndex, CefCallbackFunction cb) {
 
-        var isSimpleGetterEvent = cb.Signature.ManagedArguments.Length == 1
+        var isSimpleGetterEvent = cb.Signature.ManagedParameters.Length == 1
             && cb.Signature.ReturnType.IsCefStructPtrType;
 
         b.AppendSummaryAndRemarks(cb.Comments, false, true);
@@ -331,8 +331,8 @@ public class CfxClientClass : CfxClass {
         b.BeginClass(cb.PublicEventArgsClassName + " : CfxEventArgs", GeneratorConfig.ClassModifiers(cb.PublicEventArgsClassName));
         b.AppendLine();
 
-        for(var i = 1; i <= cb.Signature.ManagedArguments.Count() - 1; i++) {
-            cb.Signature.ManagedArguments[i].EmitPublicEventArgFields(b);
+        for(var i = 1; i <= cb.Signature.ManagedParameters.Count() - 1; i++) {
+            cb.Signature.ManagedParameters[i].EmitPublicEventArgFields(b);
         }
         b.AppendLine();
 
@@ -347,28 +347,28 @@ public class CfxClientClass : CfxClass {
         b.EndBlock();
         b.AppendLine();
 
-        for(var i = 1; i <= cb.Signature.ManagedArguments.Count() - 1; i++) {
-            var arg = cb.Signature.ManagedArguments[i];
+        for(var i = 1; i <= cb.Signature.ManagedParameters.Count() - 1; i++) {
+            var arg = cb.Signature.ManagedParameters[i];
             var cd = new CommentNode();
-            if(arg.ArgumentType.IsIn && arg.ArgumentType.IsOut) {
+            if(arg.ParameterType.IsIn && arg.ParameterType.IsOut) {
                 cd.Lines = new string[] { string.Format("Get or set the {0} parameter for the <see cref=\"{1}.{2}\"/> callback.", arg.PublicPropertyName, ClassName, cb.PublicName) };
-            } else if(arg.ArgumentType.IsIn) {
+            } else if(arg.ParameterType.IsIn) {
                 cd.Lines = new string[] { string.Format("Get the {0} parameter for the <see cref=\"{1}.{2}\"/> callback.", arg.PublicPropertyName, ClassName, cb.PublicName) };
             } else {
                 cd.Lines = new string[] { string.Format("Set the {0} out parameter for the <see cref=\"{1}.{2}\"/> callback.", arg.PublicPropertyName, ClassName, cb.PublicName) };
             }
-            if(arg.ArgumentType is CefStructArrayType && arg.ArgumentType.IsIn) {
+            if(arg.ParameterType is CefStructArrayType && arg.ParameterType.IsIn) {
                 cd.Lines = cd.Lines.Concat(new string[] { "Do not keep a reference to the elements of this array outside of this function." }).ToArray();
             }
             b.AppendSummary(cd);
-            b.BeginBlock("public {0} {1}", arg.ArgumentType.PublicSymbol, arg.PublicPropertyName);
-            if(arg.ArgumentType.IsIn) {
+            b.BeginBlock("public {0} {1}", arg.ParameterType.PublicSymbol, arg.PublicPropertyName);
+            if(arg.ParameterType.IsIn) {
                 b.BeginBlock("get");
                 b.AppendLine("CheckAccess();");
                 arg.EmitPublicEventArgGetterStatements(b);
                 b.EndBlock();
             }
-            if(arg.ArgumentType.IsOut) {
+            if(arg.ParameterType.IsOut) {
                 b.BeginBlock("set");
                 b.AppendLine("CheckAccess();");
                 arg.EmitPublicEventArgSetterStatements(b);
@@ -394,7 +394,7 @@ public class CfxClientClass : CfxClass {
             b.EndBlock();
         }
 
-        if(cb.Signature.ManagedArguments.Count() > 1) {
+        if(cb.Signature.ManagedParameters.Count() > 1) {
             b.AppendLine();
             EmitEventToString(b, cb);
         }
@@ -406,9 +406,9 @@ public class CfxClientClass : CfxClass {
         var format = new List<string>();
         var vars = new List<string>();
         var formatIndex = 0;
-        for(var i = 1; i <= cb.Signature.ManagedArguments.Count() - 1; i++) {
-            var arg = cb.Signature.ManagedArguments[i];
-            if(arg.ArgumentType.IsIn) {
+        for(var i = 1; i <= cb.Signature.ManagedParameters.Count() - 1; i++) {
+            var arg = cb.Signature.ManagedParameters[i];
+            if(arg.ParameterType.IsIn) {
                 format.Add(string.Format("{0}={{{{{{{1}}}}}}}", arg.PublicPropertyName, formatIndex));
                 vars.Add(arg.PublicPropertyName);
                 formatIndex += 1;
@@ -450,9 +450,9 @@ public class CfxClientClass : CfxClass {
             var inArgumentList = new List<string>();
             var outArgumentList = new List<string>();
 
-            foreach(var arg in sig.Arguments) {
+            foreach(var arg in sig.Parameters) {
                 if(!arg.IsThisArgument) {
-                    foreach(var pm in arg.ArgumentType.RemoteCallbackParameterList(arg.VarName)) {
+                    foreach(var pm in arg.ParameterType.RemoteCallbackParameterList(arg.VarName)) {
                         if(pm.StartsWith("out ")) {
                             b.AppendLine("internal {0};", pm.Substring(4));
                             outArgumentList.Add(pm.Substring(pm.LastIndexOf(' ') + 1));
@@ -515,8 +515,8 @@ public class CfxClientClass : CfxClass {
             b.AppendLine("self.m_{0}?.Invoke(self, e);", cb.PublicName);
             b.AppendLine("e.m_isInvalid = true;");
 
-            for(var i = 1; i <= sig.ManagedArguments.Count() - 1; i++) {
-                sig.ManagedArguments[i].EmitPostRemoteRaiseEventStatements(b);
+            for(var i = 1; i <= sig.ManagedParameters.Count() - 1; i++) {
+                sig.ManagedParameters[i].EmitPostRemoteRaiseEventStatements(b);
             }
 
             sig.EmitPostRemoteEventHandlerReturnValueStatements(b);
@@ -569,9 +569,9 @@ public class CfxClientClass : CfxClass {
 
             var inArgumentList = new List<string>();
 
-            foreach(var arg in sig.Arguments) {
+            foreach(var arg in sig.Parameters) {
                 if(!arg.IsThisArgument) {
-                    foreach(var pm in arg.ArgumentType.RemoteCallbackParameterList(arg.VarName)) {
+                    foreach(var pm in arg.ParameterType.RemoteCallbackParameterList(arg.VarName)) {
                         if(!pm.StartsWith("out ")) {
                             inArgumentList.Add(pm.Substring(pm.LastIndexOf(' ') + 1));
                         }
@@ -586,9 +586,9 @@ public class CfxClientClass : CfxClass {
                 b.AppendLine("call.{0} = {0};", pm);
             }
             b.AppendLine("call.RequestExecution();");
-            foreach(var arg in sig.Arguments) {
+            foreach(var arg in sig.Parameters) {
                 if(!arg.IsThisArgument)
-                    arg.ArgumentType.EmitPostRemoteCallbackStatements(b, arg.VarName);
+                    arg.ParameterType.EmitPostRemoteCallbackStatements(b, arg.VarName);
             }
             if(!sig.ReturnType.IsVoid) {
                 b.AppendLine("__retval = call.__retval;");
@@ -694,8 +694,8 @@ public class CfxClientClass : CfxClass {
         b.AppendLine("private {0}RemoteEventCall call;", cb.RemoteCallName);
         b.AppendLine();
 
-        for(var i = 1; i <= cb.Signature.ManagedArguments.Count() - 1; i++) {
-            cb.Signature.ManagedArguments[i].EmitRemoteEventArgFields(b);
+        for(var i = 1; i <= cb.Signature.ManagedParameters.Count() - 1; i++) {
+            cb.Signature.ManagedParameters[i].EmitRemoteEventArgFields(b);
         }
         b.AppendLine();
 
@@ -708,28 +708,28 @@ public class CfxClientClass : CfxClass {
         b.AppendLine("internal {0}({1}RemoteEventCall call) {{ this.call = call; }}", cb.RemoteEventArgsClassName, cb.RemoteCallName);
         b.AppendLine();
 
-        for(var i = 1; i <= cb.Signature.ManagedArguments.Count() - 1; i++) {
-            var arg = cb.Signature.ManagedArguments[i];
+        for(var i = 1; i <= cb.Signature.ManagedParameters.Count() - 1; i++) {
+            var arg = cb.Signature.ManagedParameters[i];
             var cd = new CommentNode();
-            if(arg.ArgumentType.IsIn && arg.ArgumentType.IsOut) {
+            if(arg.ParameterType.IsIn && arg.ParameterType.IsOut) {
                 cd.Lines = new string[] { string.Format("Get or set the {0} parameter for the <see cref=\"{1}.{2}\"/> render process callback.", arg.PublicPropertyName, CefStruct.RemoteSymbol, cb.PublicFunctionName) };
-            } else if(arg.ArgumentType.IsIn) {
+            } else if(arg.ParameterType.IsIn) {
                 cd.Lines = new string[] { string.Format("Get the {0} parameter for the <see cref=\"{1}.{2}\"/> render process callback.", arg.PublicPropertyName, CefStruct.RemoteSymbol, cb.PublicFunctionName) };
             } else {
                 cd.Lines = new string[] { string.Format("Set the {0} out parameter for the <see cref=\"{1}.{2}\"/> render process callback.", arg.PublicPropertyName, CefStruct.RemoteSymbol, cb.PublicFunctionName) };
             }
-            if(arg.ArgumentType is CefStructArrayType && arg.ArgumentType.IsIn) {
+            if(arg.ParameterType is CefStructArrayType && arg.ParameterType.IsIn) {
                 cd.Lines = cd.Lines.Concat(new string[] { "Do not keep a reference to the elements of this array outside of this function." }).ToArray();
             }
             b.AppendSummary(cd);
-            b.BeginBlock("public {0} {1}", arg.ArgumentType.RemoteSymbol, arg.PublicPropertyName);
-            if(arg.ArgumentType.IsIn) {
+            b.BeginBlock("public {0} {1}", arg.ParameterType.RemoteSymbol, arg.PublicPropertyName);
+            if(arg.ParameterType.IsIn) {
                 b.BeginBlock("get");
                 b.AppendLine("CheckAccess();");
                 arg.EmitRemoteEventArgGetterStatements(b);
                 b.EndBlock();
             }
-            if(arg.ArgumentType.IsOut) {
+            if(arg.ParameterType.IsOut) {
                 b.BeginBlock("set");
                 b.AppendLine("CheckAccess();");
                 arg.EmitRemoteEventArgSetterStatements(b);
@@ -753,7 +753,7 @@ public class CfxClientClass : CfxClass {
             b.EndBlock();
         }
 
-        if(cb.Signature.ManagedArguments.Count() > 1) {
+        if(cb.Signature.ManagedParameters.Count() > 1) {
             b.AppendLine();
             EmitEventToString(b, cb);
         }

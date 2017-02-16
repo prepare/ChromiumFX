@@ -30,7 +30,7 @@ public class CfxLibraryClass : CfxClass {
                 foreach(var cb2 in CallbackFunctions) {
                     if(cb2.IsPropertySetterFor(cb)) {
                         setter = cb2;
-                        setter.Signature.ManagedArguments[1].IsPropertySetterArgument = true;
+                        setter.Signature.ManagedParameters[1].IsPropertySetterArgument = true;
                         break;
                     }
                 }
