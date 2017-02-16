@@ -253,11 +253,29 @@ namespace Chromium {
         /// No node is selected.
         /// </summary>
         None = unchecked((int)0),
+        /// <summary>
+        /// The top page is selected.
+        /// </summary>
         Page = unchecked((int)1 << 0),
+        /// <summary>
+        /// A subframe page is selected.
+        /// </summary>
         Frame = unchecked((int)1 << 1),
+        /// <summary>
+        /// A link is selected.
+        /// </summary>
         Link = unchecked((int)1 << 2),
+        /// <summary>
+        /// A media node is selected.
+        /// </summary>
         Media = unchecked((int)1 << 3),
+        /// <summary>
+        /// There is a textual or mixed selection that is selected.
+        /// </summary>
         Selection = unchecked((int)1 << 4),
+        /// <summary>
+        /// An editable element is selected.
+        /// </summary>
         Editable = unchecked((int)1 << 5)
     }
     /// <summary>
@@ -562,9 +580,6 @@ namespace Chromium {
         /// </summary>
         TypeMask = unchecked((int)0xFF),
         /// <summary>
-        /// Qualifiers.
-        /// Any of the type values above can be augmented by one or more qualifiers.
-        /// These qualifiers further define the dialog behavior.
         /// Prompt to overwrite if the user selects an existing file with the Save
         /// dialog.
         /// </summary>
@@ -669,6 +684,9 @@ namespace Chromium {
         /// base/json/json_reader.h file for known limitations/deviations from the RFC.
         /// </summary>
         Rfc = unchecked((int)0),
+        /// <summary>
+        /// Allows commas to exist after the last element in structures.
+        /// </summary>
         AllowTrailingCommas = unchecked((int)1 << 0)
     }
     /// <summary>
@@ -684,8 +702,24 @@ namespace Chromium {
         /// Default behavior.
         /// </summary>
         Default = unchecked((int)0),
+        /// <summary>
+        /// This option instructs the writer that if a Binary value is encountered,
+        /// the value (and key if within a dictionary) will be omitted from the
+        /// output, and success will be returned. Otherwise, if a binary value is
+        /// encountered, failure will be returned.
+        /// </summary>
         OmitBinaryValues = unchecked((int)1 << 0),
+        /// <summary>
+        /// This option instructs the writer to write doubles that have no fractional
+        /// part as a normal integer (i.e., without using exponential notation
+        /// or appending a '.0') as long as the value is within the range of a
+        /// 64-bit int.
+        /// </summary>
         OmitDoubleTypePreservation = unchecked((int)1 << 1),
+        /// <summary>
+        /// Return a slightly nicer formatted json string (pads with whitespace to
+        /// help with readability).
+        /// </summary>
         PrettyPrint = unchecked((int)1 << 2)
     }
     /// <summary>
@@ -794,17 +828,11 @@ namespace Chromium {
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
     /// </remarks>
     public enum CfxMenuId {
-        /// <summary>
-        /// Navigation.
-        /// </summary>
         Back = unchecked((int)100),
         Forward = unchecked((int)101),
         Reload = unchecked((int)102),
         ReloadNocache = unchecked((int)103),
         Stopload = unchecked((int)104),
-        /// <summary>
-        /// Editing.
-        /// </summary>
         Undo = unchecked((int)110),
         Redo = unchecked((int)111),
         Cut = unchecked((int)112),
@@ -812,15 +840,9 @@ namespace Chromium {
         Paste = unchecked((int)114),
         Delete = unchecked((int)115),
         SelectAll = unchecked((int)116),
-        /// <summary>
-        /// Miscellaneous.
-        /// </summary>
         Find = unchecked((int)130),
         Print = unchecked((int)131),
         ViewSource = unchecked((int)132),
-        /// <summary>
-        /// Spell checking word correction suggestions.
-        /// </summary>
         SpellcheckSuggestion0 = unchecked((int)200),
         SpellcheckSuggestion1 = unchecked((int)201),
         SpellcheckSuggestion2 = unchecked((int)202),
@@ -829,17 +851,8 @@ namespace Chromium {
         SpellcheckSuggestionLast = unchecked((int)204),
         NoSpellingSuggestions = unchecked((int)205),
         AddToDictionary = unchecked((int)206),
-        /// <summary>
-        /// Custom menu items originating from the renderer process. For example,
-        /// plugin placeholder menu items or Flash menu items.
-        /// </summary>
         CustomFirst = unchecked((int)220),
         CustomLast = unchecked((int)250),
-        /// <summary>
-        /// All user-defined menu IDs should come between MENU_ID_USER_FIRST and
-        /// MENU_ID_USER_LAST to avoid overlapping the Chromium and CEF ID ranges
-        /// defined in the tools/gritsettings/resource_ids file.
-        /// </summary>
         UserFirst = unchecked((int)26500),
         UserLast = unchecked((int)28500)
     }
@@ -1257,9 +1270,6 @@ namespace Chromium {
         Tls1 = unchecked((int)3),
         Tls11 = unchecked((int)4),
         Tls12 = unchecked((int)5),
-        /// <summary>
-        /// Reserve 6 for TLS 1.3.
-        /// </summary>
         Quic = unchecked((int)7)
     }
     /// <summary>
@@ -1338,7 +1348,6 @@ namespace Chromium {
     /// </remarks>
     public enum CfxThreadId {
         /// <summary>
-        /// BROWSER PROCESS THREADS -- Only available in the browser process.
         /// The main thread in the browser. This will be the same as the main
         /// application thread if CfxInitialize() is called with a
         /// CfxSettings.MultiThreadedMessageLoop value of false.
@@ -1370,7 +1379,6 @@ namespace Chromium {
         /// </summary>
         Io,
         /// <summary>
-        /// RENDER PROCESS THREADS -- Only available in the render process.
         /// The main thread in the renderer. Used for all WebKit and V8 interaction.
         /// </summary>
         Renderer
@@ -1455,9 +1463,6 @@ namespace Chromium {
         /// </summary>
         SourceMask = unchecked((int)0xFF),
         /// <summary>
-        /// Qualifiers.
-        /// Any of the core values above can be augmented by one or more qualifiers.
-        /// These qualifiers further define the transition.
         /// Attempted to visit a URL but was blocked.
         /// </summary>
         BlockedFlag = unchecked((int)0x00800000),
@@ -1502,11 +1507,50 @@ namespace Chromium {
         /// Don't unescape anything at all.
         /// </summary>
         None = unchecked((int)0),
+        /// <summary>
+        /// Don't unescape anything special, but all normal unescaping will happen.
+        /// This is a placeholder and can't be combined with other flags (since it's
+        /// just the absence of them). All other unescape rules imply "normal" in
+        /// addition to their special meaning. Things like escaped letters, digits,
+        /// and most symbols will get unescaped with this mode.
+        /// </summary>
         Normal = unchecked((int)1 << 0),
+        /// <summary>
+        /// Convert %20 to spaces. In some places where we're showing URLs, we may
+        /// want this. In places where the URL may be copied and pasted out, then
+        /// you wouldn't want this since it might not be interpreted in one piece
+        /// by other applications.
+        /// </summary>
         Spaces = unchecked((int)1 << 1),
+        /// <summary>
+        /// Unescapes '/' and '\\'. If these characters were unescaped, the resulting
+        /// URL won't be the same as the source one. Moreover, they are dangerous to
+        /// unescape in strings that will be used as file paths or names. This value
+        /// should only be used when slashes don't have special meaning, like data
+        /// URLs.
+        /// </summary>
         PathSeparators = unchecked((int)1 << 2),
+        /// <summary>
+        /// Unescapes various characters that will change the meaning of URLs,
+        /// including '%', '+', '&amp;', '#'. Does not unescape path separators.
+        /// If these characters were unescaped, the resulting URL won't be the same
+        /// as the source one. This flag is used when generating final output like
+        /// filenames for URLs where we won't be interpreting as a URL and want to do
+        /// as much unescaping as possible.
+        /// </summary>
         UrlSpecialCharsExceptPathSeparators = unchecked((int)1 << 3),
+        /// <summary>
+        /// Unescapes characters that can be used in spoofing attempts (such as LOCK)
+        /// and control characters (such as BiDi control characters and %01).  This
+        /// INCLUDES NULLs.  This is used for rare cases such as data: URL decoding
+        /// where the result is binary data.
+        /// DO NOT use UU_SPOOFING_AND_CONTROL_CHARS if the URL is going to be
+        /// displayed in the UI for security reasons.
+        /// </summary>
         SpoofingAndControlChars = unchecked((int)1 << 4),
+        /// <summary>
+        /// URL queries use "+" for space. This flag controls that replacement.
+        /// </summary>
         ReplacePlusWithSpace = unchecked((int)1 << 5)
     }
     /// <summary>
@@ -1522,10 +1566,28 @@ namespace Chromium {
         /// Default behavior.
         /// </summary>
         None = unchecked((int)0),
+        /// <summary>
+        /// If set the cache will be skipped when handling the request.
+        /// </summary>
         SkipCache = unchecked((int)1 << 0),
+        /// <summary>
+        /// If set user name, password, and cookies may be sent with the request, and
+        /// cookies may be saved from the response.
+        /// </summary>
         AllowCachedCredentials = unchecked((int)1 << 1),
+        /// <summary>
+        /// If set upload progress events will be generated when a request has a body.
+        /// </summary>
         ReportUploadProgress = unchecked((int)1 << 3),
+        /// <summary>
+        /// If set the CfxURLRequestClient.OnDownloadData method will not be called.
+        /// </summary>
         NoDownloadData = unchecked((int)1 << 6),
+        /// <summary>
+        /// If set 5XX redirect errors will be propagated to the observer instead of
+        /// automatically re-tried. This currently only applies for requests
+        /// originated in the browser process.
+        /// </summary>
         NoRetryOn5xx = unchecked((int)1 << 7)
     }
     /// <summary>

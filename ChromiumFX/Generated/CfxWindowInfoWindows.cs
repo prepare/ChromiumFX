@@ -33,13 +33,6 @@ namespace Chromium {
         internal CfxWindowInfoWindows(IntPtr nativePtr) : base(nativePtr) {}
         internal CfxWindowInfoWindows(IntPtr nativePtr, CfxApi.cfx_dtor_delegate cfx_dtor) : base(nativePtr, cfx_dtor) {}
 
-        /// <summary>
-        /// Standard parameters required by CreateWindowEx()
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types_win.h">cef/include/internal/cef_types_win.h</see>.
-        /// </remarks>
         public int ExStyle {
             get {
                 int value;

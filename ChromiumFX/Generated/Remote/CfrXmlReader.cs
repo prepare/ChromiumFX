@@ -73,8 +73,6 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// The below functions retrieve data for the node at the current cursor
-        /// position.
         /// Returns the node type.
         /// </summary>
         /// <remarks>
@@ -430,10 +428,6 @@ namespace Chromium.Remote {
         }
 
         /// <summary>
-        /// Attribute nodes are not traversed by default. The below functions can be
-        /// used to move the cursor to an attribute node. move_to_carrying_element()
-        /// can be called afterwards to return the cursor to the carrying element. The
-        /// depth of an attribute node will be 1 + the depth of the carrying element.
         /// Moves the cursor to the attribute at the specified 0-based index. Returns
         /// true (1) if the cursor position was set successfully.
         /// </summary>

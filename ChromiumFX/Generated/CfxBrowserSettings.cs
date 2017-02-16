@@ -59,7 +59,6 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// The below values map to WebPreferences settings.
         /// Font settings.
         /// </summary>
         /// <remarks>

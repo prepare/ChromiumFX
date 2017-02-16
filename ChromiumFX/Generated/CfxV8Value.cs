@@ -421,9 +421,6 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// OBJECT METHODS - These functions are only available on objects. Arrays and
-        /// functions are also objects. String- and integer-based keys can be used
-        /// interchangably with the framework converting between them as necessary.
         /// Returns true (1) if this is a user created object.
         /// </summary>
         /// <remarks>
@@ -492,7 +489,6 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// ARRAY METHODS - These functions are only available on arrays.
         /// Returns the number of elements in the array.
         /// </summary>
         /// <remarks>
@@ -506,7 +502,6 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// FUNCTION METHODS - These functions are only available on functions.
         /// Returns the function name.
         /// </summary>
         /// <remarks>

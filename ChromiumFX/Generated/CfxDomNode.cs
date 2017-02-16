@@ -248,7 +248,6 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// The following functions are valid only for element nodes.
         /// Returns the tag name of this element.
         /// </summary>
         /// <remarks>

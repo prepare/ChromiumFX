@@ -53,7 +53,6 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// The below functions act on the file at the current cursor position.
         /// Returns the name of the file.
         /// </summary>
         /// <remarks>

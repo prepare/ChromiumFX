@@ -64,13 +64,6 @@ namespace Chromium.Remote {
         int m_Month;
         bool m_Month_fetched;
 
-        /// <summary>
-        /// Windows, 1970 to 2038 on 32-bit POSIX)
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_time.h">cef/include/internal/cef_time.h</see>.
-        /// </remarks>
         public int Month {
             get {
                 if(!m_Month_fetched) {
@@ -215,13 +208,6 @@ namespace Chromium.Remote {
         int m_Millisecond;
         bool m_Millisecond_fetched;
 
-        /// <summary>
-        /// seconds which may take it up to 60).
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_time.h">cef/include/internal/cef_time.h</see>.
-        /// </remarks>
         public int Millisecond {
             get {
                 if(!m_Millisecond_fetched) {
