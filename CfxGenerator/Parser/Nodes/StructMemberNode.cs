@@ -9,12 +9,12 @@ using System;
 namespace Parser {
 
     [Serializable()]
-    public class StructMemberData {
+    public class StructMemberNode {
         public string Name;
-        public CefConfigData CefConfig;
-        public TypeData MemberType = new TypeData();
-        public SignatureData CallbackSignature;
-        public CommentData Comments = new CommentData();
+        public CefConfigNode CefConfig;
+        public TypeNode MemberType = new TypeNode();
+        public SignatureNode CallbackSignature;
+        public CommentNode Comments = new CommentNode();
 
         public override string ToString() {
             return Name;

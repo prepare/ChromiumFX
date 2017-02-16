@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 
 [Serializable()]
-public class CommentData {
+public class CommentNode {
     internal void SetParserLines(List<string> lines) {
         var ll = new List<string>();
         foreach(var l in lines) {

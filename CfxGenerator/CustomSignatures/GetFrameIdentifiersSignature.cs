@@ -53,6 +53,6 @@ public class GetFrameIdentifiersSignature : Signature {
         b.AppendLine("retval_p.Free();");
     }
 
-    public override void DebugPrintUnhandledArrayArguments(string cefName, CefConfigData cefConfig, CfxCallMode callMode) {
+    public override void DebugPrintUnhandledArrayArguments(string cefName, CefConfigNode cefConfig, CfxCallMode callMode) {
     }
 }

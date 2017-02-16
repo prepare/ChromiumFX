@@ -17,7 +17,7 @@ public class Signature {
 
     public static List<Signature> AllSignatures = new List<Signature>();
 
-    public static Signature Create(SignatureType type, string cefName, CefConfigData cefConfig, CfxCallMode callMode, Parser.SignatureData sd, ApiTypeBuilder api) {
+    public static Signature Create(SignatureType type, string cefName, CefConfigNode cefConfig, CfxCallMode callMode, Parser.SignatureNode sd, ApiTypeBuilder api) {
         var s = new Signature(type, sd, api);
         var cs = CustomSignatures.ForFunction(s, cefName, cefConfig);
         if(cs == null) {
@@ -58,7 +58,7 @@ public class Signature {
 
     protected ArgList args = new ArgList();
 
-    protected Signature(SignatureType type, Parser.SignatureData sd, ApiTypeBuilder api) {
+    protected Signature(SignatureType type, Parser.SignatureNode sd, ApiTypeBuilder api) {
         Type = type;
         var args = new List<Argument>();
         var index = 0;
@@ -434,7 +434,7 @@ public class Signature {
         ReturnType.EmitNativeReturnStatements(b, functionCall, b1);
     }
 
-    public virtual void DebugPrintUnhandledArrayArguments(string cefName, CefConfigData cefConfig, CfxCallMode callMode) {
+    public virtual void DebugPrintUnhandledArrayArguments(string cefName, CefConfigNode cefConfig, CfxCallMode callMode) {
         if(cefName == "cef_binary_value_create")
             return;
         if(cefName == "cef_binary_value::get_data")

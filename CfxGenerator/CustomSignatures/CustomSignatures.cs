@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 public class CustomSignatures {
 
-    public static Signature ForFunction(Signature s, string cefName, CefConfigData cefConfig) {
+    public static Signature ForFunction(Signature s, string cefName, CefConfigNode cefConfig) {
         if(cefName.Contains("::get_") && s.Arguments.Length == 2) {
             if(s.ReturnType.IsVoid) {
                 if(s.Arguments[1].ArgumentType.Name.StartsWith("cef_string_list") || s.Arguments[1].ArgumentType.Name.StartsWith("cef_string_m")) {

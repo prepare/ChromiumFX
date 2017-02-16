@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 
 [Serializable()]
-public class CefConfigData {
+public class CefConfigNode {
     public string CppApiName;
     public string CApiName;
     public string IndexParameter;

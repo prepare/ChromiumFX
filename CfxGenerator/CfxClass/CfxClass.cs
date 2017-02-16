@@ -17,8 +17,8 @@ public class StructMember {
 
     public int ApiIndex;
 
-    public readonly CommentData Comments;
-    private readonly CefConfigData cefConfig;
+    public readonly CommentNode Comments;
+    private readonly CefConfigNode cefConfig;
 
     private string cppApiName {
         get {
@@ -30,7 +30,7 @@ public class StructMember {
         }
     }
 
-    public StructMember(CefStructType parent, StructCategory structCategory, Parser.StructMemberData smd, ApiTypeBuilder api) {
+    public StructMember(CefStructType parent, StructCategory structCategory, Parser.StructMemberNode smd, ApiTypeBuilder api) {
 
         Debug.Assert(structCategory == StructCategory.Values);
         Debug.Assert(smd.MemberType != null);
@@ -76,7 +76,7 @@ public enum StructCategory {
 
 public abstract class CfxClass {
 
-    public static CfxClass Create(CefStructType cefStruct, Parser.StructData sd, ApiTypeBuilder api) {
+    public static CfxClass Create(CefStructType cefStruct, Parser.StructNode sd, ApiTypeBuilder api) {
         if(sd.CefConfig != null) {
             switch(sd.CefConfig.Source) {
                 case "client":
@@ -110,7 +110,7 @@ public abstract class CfxClass {
 
     public StructMember[] StructMembers;
 
-    protected readonly CommentData Comments;
+    protected readonly CommentNode Comments;
 
     protected readonly List<StructProperty> m_structProperties = new List<StructProperty>();
 
@@ -127,7 +127,7 @@ public abstract class CfxClass {
 
     public bool NeedsWrapFunction;
 
-    protected CfxClass(CefStructType cefStruct, Parser.StructData sd, ApiTypeBuilder api) {
+    protected CfxClass(CefStructType cefStruct, Parser.StructNode sd, ApiTypeBuilder api) {
 
         CefStruct = cefStruct;
         OriginalSymbol = cefStruct.OriginalSymbol;
@@ -160,7 +160,7 @@ public abstract class CfxClass {
         Debug.Assert(sd.CefFunctions.Count == 0 || Category == StructCategory.ApiCalls);
     }
 
-    protected void GetCallbackFunctions(Parser.StructData sd, ApiTypeBuilder api) {
+    protected void GetCallbackFunctions(Parser.StructNode sd, ApiTypeBuilder api) {
         var cblist = new List<CefCallbackFunction>();
         for(int i = 0; i < sd.StructMembers.Count; ++i) {
             var sm = sd.StructMembers[i];

@@ -9,9 +9,12 @@ using System;
 namespace Parser {
 
     [Serializable()]
-    public class EnumMemberData {
+    public class TypeNode {
         public string Name;
-        public string Value;
-        public CommentData Comments = new CommentData();
+        public string Indirection;
+
+        public override string ToString() {
+            return Name + " " + Indirection;
+        }
     }
 }

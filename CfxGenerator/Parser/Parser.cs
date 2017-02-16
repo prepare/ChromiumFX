@@ -21,9 +21,9 @@ namespace Parser {
     internal abstract class Parser {
 
 
-        internal static CefApiData Parse() {
+        internal static CefApiNode Parse() {
 
-            var api = new CefApiData();
+            var api = new CefApiNode();
 
             Parser p = new CefCApiParser();
             p.SetFile(Path.Combine("cef", "include", "cef_version.h"));
@@ -42,13 +42,13 @@ namespace Parser {
             p.SetFile(Path.Combine("cef", "include", "internal", "cef_types.h"));
             p.Parse(api);
 
-            CefApiData tmpApi = new CefApiData();
+            CefApiNode tmpApi = new CefApiNode();
 
             p.SetFile(Path.Combine("cef", "include", "internal", "cef_time.h"));
             p.Parse(tmpApi);
             api.CefStructs.AddRange(tmpApi.CefStructs);
 
-            tmpApi = new CefApiData();
+            tmpApi = new CefApiNode();
 
             p.SetFile(Path.Combine(System.IO.Path.Combine("cef", "include", "internal", "cef_string_list.h")));
             p.Parse(tmpApi);
@@ -58,13 +58,13 @@ namespace Parser {
             p.Parse(tmpApi);
             api.CefStringCollectionFunctions = tmpApi.CefFunctions.ToArray();
 
-            tmpApi = new CefApiData();
+            tmpApi = new CefApiNode();
             p.SetFile(Path.Combine(System.IO.Path.Combine("cef", "include", "internal", "cef_types_win.h")));
             p.Parse(tmpApi);
             api.CefFunctionsWindows = tmpApi.CefFunctions;
             api.CefStructsWindows = tmpApi.CefStructs;
 
-            tmpApi = new CefApiData();
+            tmpApi = new CefApiNode();
             p.SetFile(Path.Combine(System.IO.Path.Combine("cef", "include", "internal", "cef_types_linux.h")));
             p.Parse(tmpApi);
             api.CefFunctionsLinux = tmpApi.CefFunctions;
@@ -87,8 +87,8 @@ namespace Parser {
 
             // process c++ findings (compat with previous parser)
 
-            var classes = new Dictionary<string, CefClassData>(api.CefClasses.Count);
-            var funcs = new Dictionary<string, CefCppFunctionData>();
+            var classes = new Dictionary<string, CefClassNode>(api.CefClasses.Count);
+            var funcs = new Dictionary<string, CefCppFunctionNode>();
             foreach(var f in api.CefCppFunctions) {
                 if(f.CefConfig.CApiName == null) {
                     funcs.Add(CppStyle2CStyle(f.Name), f);
@@ -174,7 +174,7 @@ namespace Parser {
             return api;
         }
 
-        private static void ApplyBoolParameters(SignatureData signature, CefCppFunctionData cf) {
+        private static void ApplyBoolParameters(SignatureNode signature, CefCppFunctionNode cf) {
             if(cf.IsRetvalBoolean) {
                 signature.ReturnType.Name = "bool";
             }
@@ -218,7 +218,7 @@ namespace Parser {
         private Scanner scanner;
         protected string currentFile;
 
-        protected abstract void Parse(CefApiData data);
+        protected abstract void Parse(CefApiNode data);
 
         protected bool Skip(string pattern) {
             return scanner.Scan(pattern, RegexOptions.None);
@@ -298,7 +298,7 @@ namespace Parser {
             return true;
         }
 
-        protected bool ParseSummary(CommentData comments) {
+        protected bool ParseSummary(CommentNode comments) {
             Mark();
             var startFound = Skip(@"///");
             ParseCommentBlock(comments);
@@ -320,7 +320,7 @@ namespace Parser {
             return success;
         }
 
-        protected bool ParseCommentBlock(CommentData comments) {
+        protected bool ParseCommentBlock(CommentNode comments) {
             var lines = new List<string>();
             while(
                 Scan(@"// (.*)", () => lines.Add(scanner.Group01))

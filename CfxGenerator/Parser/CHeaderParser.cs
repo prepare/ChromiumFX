@@ -10,9 +10,9 @@ namespace Parser {
 
         // rules for both c header parsers
 
-        protected bool ParseCefExportFunction(List<FunctionData> functions) {
+        protected bool ParseCefExportFunction(List<FunctionNode> functions) {
             Mark();
-            var f = new FunctionData();
+            var f = new FunctionNode();
             ParseSummary(f.Comments);
             var success =
                 Skip(@"CEF_EXPORT\b");
@@ -32,17 +32,17 @@ namespace Parser {
             return success;
         }
 
-        protected bool ParseParameterList(List<ParameterData> parameters) {
-            var p = new ParameterData();
+        protected bool ParseParameterList(List<ParameterNode> parameters) {
+            var p = new ParameterNode();
             while(ParseParameter(p)) {
                 parameters.Add(p);
                 if(!Skip(",")) break;
-                p = new ParameterData();
+                p = new ParameterNode();
             }
             return true;
         }
 
-        protected bool ParseParameter(ParameterData parameter) {
+        protected bool ParseParameter(ParameterNode parameter) {
             Mark();
             Scan(@"const\b", () => parameter.IsConst = true);
             var success =
@@ -52,7 +52,7 @@ namespace Parser {
             return success;
         }
 
-        protected bool ParseType(TypeData type) {
+        protected bool ParseType(TypeNode type) {
             Mark();
             var success =
                 Scan("long long", () => type.Name = Value)

@@ -12,7 +12,7 @@ using System.Text;
 
 public class CfxClientClass : CfxClass {
 
-    public CfxClientClass(CefStructType cefStruct, Parser.StructData sd, ApiTypeBuilder api)
+    public CfxClientClass(CefStructType cefStruct, Parser.StructNode sd, ApiTypeBuilder api)
         : base(cefStruct, sd, api) {
         GetCallbackFunctions(sd, api);
     }
@@ -294,7 +294,7 @@ public class CfxClientClass : CfxClass {
     }
 
     
-    private bool ShouldEmitEventHandler(Dictionary<string, CommentData> emittedHandlers, CefCallbackFunction cb) {
+    private bool ShouldEmitEventHandler(Dictionary<string, CommentNode> emittedHandlers, CefCallbackFunction cb) {
         if(emittedHandlers.ContainsKey(cb.EventName)) {
             var c0 = emittedHandlers[cb.EventName];
             if(c0 != null) {
@@ -314,7 +314,7 @@ public class CfxClientClass : CfxClass {
         return true;
     }
 
-    private static Dictionary<string, CommentData> emittedPublicHandlers = new Dictionary<string, CommentData>();
+    private static Dictionary<string, CommentNode> emittedPublicHandlers = new Dictionary<string, CommentNode>();
 
     private void EmitPublicEventArgsAndHandler(CodeBuilder b, CefCallbackFunction cb) {
 
@@ -349,7 +349,7 @@ public class CfxClientClass : CfxClass {
 
         for(var i = 1; i <= cb.Signature.ManagedArguments.Count() - 1; i++) {
             var arg = cb.Signature.ManagedArguments[i];
-            var cd = new CommentData();
+            var cd = new CommentNode();
             if(arg.ArgumentType.IsIn && arg.ArgumentType.IsOut) {
                 cd.Lines = new string[] { string.Format("Get or set the {0} parameter for the <see cref=\"{1}.{2}\"/> callback.", arg.PublicPropertyName, ClassName, cb.PublicName) };
             } else if(arg.ArgumentType.IsIn) {
@@ -378,7 +378,7 @@ public class CfxClientClass : CfxClass {
         }
 
         if(!cb.Signature.PublicReturnType.IsVoid) {
-            var cd = new CommentData();
+            var cd = new CommentNode();
             cd.Lines = new string[] {
                 string.Format("Set the return value for the <see cref=\"{0}.{1}\"/> callback.", ClassName, cb.PublicFunctionName),
                 "Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown."
@@ -674,7 +674,7 @@ public class CfxClientClass : CfxClass {
         b.EndBlock();
     }
 
-    private static Dictionary<string, CommentData> emittedRemoteHandlers = new Dictionary<string, CommentData>();
+    private static Dictionary<string, CommentNode> emittedRemoteHandlers = new Dictionary<string, CommentNode>();
 
     public void EmitRemoteEventArgsAndHandler(CodeBuilder b, CefCallbackFunction cb) {
 
@@ -710,7 +710,7 @@ public class CfxClientClass : CfxClass {
 
         for(var i = 1; i <= cb.Signature.ManagedArguments.Count() - 1; i++) {
             var arg = cb.Signature.ManagedArguments[i];
-            var cd = new CommentData();
+            var cd = new CommentNode();
             if(arg.ArgumentType.IsIn && arg.ArgumentType.IsOut) {
                 cd.Lines = new string[] { string.Format("Get or set the {0} parameter for the <see cref=\"{1}.{2}\"/> render process callback.", arg.PublicPropertyName, CefStruct.RemoteSymbol, cb.PublicFunctionName) };
             } else if(arg.ArgumentType.IsIn) {
@@ -738,7 +738,7 @@ public class CfxClientClass : CfxClass {
             b.EndBlock();
         }
         if(!cb.Signature.PublicReturnType.IsVoid) {
-            var cd = new CommentData();
+            var cd = new CommentNode();
             cd.Lines = new string[] {
                 string.Format("Set the return value for the <see cref=\"{0}.{1}\"/> render process callback.", CefStruct.RemoteClassName, cb.PublicFunctionName),
                 "Calling SetReturnValue() more then once per callback or from different event handlers will cause an exception to be thrown."

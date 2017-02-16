@@ -12,7 +12,7 @@ namespace Parser {
     /// </summary>
     internal class CefCApiParser : CHeaderParser {
 
-        protected override void Parse(CefApiData api) {
+        protected override void Parse(CefApiNode api) {
             while(!Done) {
                 Ensure(
                     ParseCefCallbackStruct(api.CefStructs)
@@ -22,9 +22,9 @@ namespace Parser {
             }
         }
 
-        private bool ParseCefCallbackStruct(List<StructData> structs) {
+        private bool ParseCefCallbackStruct(List<StructNode> structs) {
             Mark();
-            var cefStruct = new StructData();
+            var cefStruct = new StructNode();
             var success =
                 ParseSummary(cefStruct.Comments)
                 && Scan(@"typedef struct _(cef_\w+_t) {", () => cefStruct.Name = Group01);
@@ -47,10 +47,10 @@ namespace Parser {
             return success;
         }
 
-        private bool ParseCefCallback(List<StructMemberData> members) {
+        private bool ParseCefCallback(List<StructMemberNode> members) {
             Mark();
-            var m = new StructMemberData();
-            m.CallbackSignature = new SignatureData();
+            var m = new StructMemberNode();
+            m.CallbackSignature = new SignatureNode();
             var success =
                 ParseSummary(m.Comments)
                 && ParseType(m.CallbackSignature.ReturnType)

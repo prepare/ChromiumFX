@@ -6,10 +6,10 @@ using System.Text;
 
 namespace Parser {
     [Serializable()]
-    public class CefClassData {
+    public class CefClassNode {
         public string Name;
-        public CefConfigData CefConfig = new CefConfigData();
-        public List<CefCppFunctionData> Methods = new List<CefCppFunctionData>();
+        public CefConfigNode CefConfig = new CefConfigNode();
+        public List<CefCppFunctionNode> Methods = new List<CefCppFunctionNode>();
         public override string ToString() {
             return $"class {Name} ({Methods.Count} methods)";
         }

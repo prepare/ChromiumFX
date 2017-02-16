@@ -215,7 +215,7 @@ public class CodeBuilder {
         AppendComment(string.Format(format, pm));
     }
 
-    public void AppendSummary(CommentData summary, bool forRemote = false, bool forEvent = false) {
+    public void AppendSummary(CommentNode summary, bool forRemote = false, bool forEvent = false) {
         if(summary != null && !(summary.Lines.Length == 0)) {
             AppendLine("/// <summary>");
             foreach(var line in summary.Lines) {
@@ -226,7 +226,7 @@ public class CodeBuilder {
         }
     }
 
-    public void AppendSummaryAndRemarks(CommentData summary, bool forRemote = false, bool forEvent = false) {
+    public void AppendSummaryAndRemarks(CommentNode summary, bool forRemote = false, bool forEvent = false) {
         if(summary != null && !(summary.Lines.Length == 0)) {
             AppendSummary(summary, forRemote, forEvent);
             AppendLine("/// <remarks>");

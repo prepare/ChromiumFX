@@ -10,9 +10,9 @@ using System.Collections.Generic;
 namespace Parser {
 
     [Serializable()]
-    public class SignatureData {
-        public readonly List<ParameterData> Arguments = new List<ParameterData>();
-        public TypeData ReturnType = new TypeData();
-        public bool ReturnValueIsConst;
+    public class EnumNode {
+        public string Name;
+        public readonly List<EnumValueNode> Members = new List<EnumValueNode>();
+        public CommentNode Comments = new CommentNode();
     }
 }

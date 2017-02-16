@@ -11,11 +11,11 @@ public class CefStructType : CefType {
 
     private CfxClass m_classBuilder;
 
-    public CefStructType(string name, CommentData comments)
+    public CefStructType(string name, CommentNode comments)
         : base(name) {
     }
 
-    public void SetMembers(Parser.StructData sd, ApiTypeBuilder api) {
+    public void SetMembers(Parser.StructNode sd, ApiTypeBuilder api) {
         m_classBuilder = CfxClass.Create(this, sd, api);
     }
 

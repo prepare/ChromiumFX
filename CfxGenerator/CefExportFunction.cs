@@ -19,7 +19,7 @@ public class CefExportFunction {
     public readonly Signature Signature;
     public readonly bool PrivateWrapper;
 
-    public CommentData Comments { get; private set; }
+    public CommentNode Comments { get; private set; }
 
     public readonly CefType Parent;
 
@@ -27,7 +27,7 @@ public class CefExportFunction {
 
     public readonly CefPlatform Platform;
 
-    public CefExportFunction(CefType parent, Parser.FunctionData fd, ApiTypeBuilder api, CefPlatform platform) {
+    public CefExportFunction(CefType parent, Parser.FunctionNode fd, ApiTypeBuilder api, CefPlatform platform) {
         this.Name = fd.Name;
         this.Comments = fd.Comments;
         this.Signature = Signature.Create(SignatureType.LibraryCall, CefName, CefConfig, CallMode, fd.Signature, api);
@@ -36,7 +36,7 @@ public class CefExportFunction {
         this.Platform = platform;
     }
 
-    public CefExportFunction(CefType parent, Parser.FunctionData fd, ApiTypeBuilder api)
+    public CefExportFunction(CefType parent, Parser.FunctionNode fd, ApiTypeBuilder api)
         : this(parent, fd, api, CefPlatform.Independent) {
     }
 
@@ -151,7 +151,7 @@ public class CefExportFunction {
         }
     }
 
-    public CefConfigData CefConfig {
-        get { return new CefConfigData(); }
+    public CefConfigNode CefConfig {
+        get { return new CefConfigNode(); }
     }
 }

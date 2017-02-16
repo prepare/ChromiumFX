@@ -15,9 +15,9 @@ public class CefEnumType : ApiType {
         public readonly string Name;
         public readonly string Value;
 
-        public readonly CommentData Comments;
+        public readonly CommentNode Comments;
 
-        public EnumMember(string name, string value, CommentData Comments) {
+        public EnumMember(string name, string value, CommentNode Comments) {
             this.Name = name;
             if(!string.IsNullOrEmpty(value))
                 this.Value = value;
@@ -35,15 +35,15 @@ public class CefEnumType : ApiType {
 
     private readonly EnumMember[] members;
 
-    private readonly CommentData comments;
+    private readonly CommentNode comments;
 
-    public CefEnumType(Parser.EnumData data)
-        : base(data.Name) {
-        members = new EnumMember[data.Members.Count];
-        for(var i = 0; i <= data.Members.Count - 1; i++) {
-            members[i] = new EnumMember(data.Members[i].Name, data.Members[i].Value, data.Members[i].Comments);
+    public CefEnumType(Parser.EnumNode enumNode)
+        : base(enumNode.Name) {
+        members = new EnumMember[enumNode.Members.Count];
+        for(var i = 0; i <= enumNode.Members.Count - 1; i++) {
+            members[i] = new EnumMember(enumNode.Members[i].Name, enumNode.Members[i].Value, enumNode.Members[i].Comments);
         }
-        comments = data.Comments;
+        comments = enumNode.Comments;
     }
 
     protected CefEnumType(string name)

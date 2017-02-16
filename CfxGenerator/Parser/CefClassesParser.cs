@@ -12,7 +12,7 @@ namespace Parser {
     /// </summary>
     internal class CefClassesParser : Parser {
 
-        protected override void Parse(CefApiData api) {
+        protected override void Parse(CefApiNode api) {
             while(!Done) {
                 Ensure(
                     ParseClass(api.CefClasses)
@@ -23,9 +23,9 @@ namespace Parser {
             }
         }
 
-        private bool ParseClass(List<CefClassData> classes) {
+        private bool ParseClass(List<CefClassNode> classes) {
 
-            var c = new CefClassData();
+            var c = new CefClassNode();
             Mark();
             var success =
                 ParseCefConfig(c.CefConfig)
@@ -50,8 +50,8 @@ namespace Parser {
             return success;
         }
 
-        private bool ParseFunction(List<CefCppFunctionData> functions) {
-            var f = new CefCppFunctionData();
+        private bool ParseFunction(List<CefCppFunctionNode> functions) {
+            var f = new CefCppFunctionNode();
 
             Mark();
 
@@ -82,7 +82,7 @@ namespace Parser {
             return success;
         }
 
-        private bool ParseReturnType(CefCppFunctionData f) {
+        private bool ParseReturnType(CefCppFunctionNode f) {
             return
                 Scan("bool", () => f.IsRetvalBoolean = true)
                 || SkipType();
@@ -103,7 +103,7 @@ namespace Parser {
                 || Skip(@"(const\s+)?\w+(?:\s*[&*])*");
         }
 
-        private bool ParseCefConfig(CefConfigData config) {
+        private bool ParseCefConfig(CefConfigNode config) {
 
             if(!Skip(@"/\*--cef\(")) return false;
 
@@ -114,7 +114,7 @@ namespace Parser {
             return true;
         }
 
-        private bool ParseCefConfigItem(CefConfigData config) {
+        private bool ParseCefConfigItem(CefConfigNode config) {
 
             return
                 Scan("api_hash_check", () => config.ApiHashCheck = true)

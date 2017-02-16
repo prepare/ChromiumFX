@@ -16,10 +16,10 @@ public class CefCallbackFunction  {
     public readonly Signature Signature;
     public readonly CefStructType Parent;
 
-    public CommentData Comments { get; private set; }
+    public CommentNode Comments { get; private set; }
 
     private CfxCallMode m_callMode;
-    public CefConfigData CefConfig { get; private set; }
+    public CefConfigNode CefConfig { get; private set; }
 
     public bool IsProperty;
 
@@ -37,12 +37,12 @@ public class CefCallbackFunction  {
         }
     }
 
-    public CefCallbackFunction(CefStructType parent, StructCategory category, string name, CefConfigData cefConfig, Parser.SignatureData sd, ApiTypeBuilder api, CommentData comments) {
+    public CefCallbackFunction(CefStructType parent, StructCategory category, string name, CefConfigNode cefConfig, Parser.SignatureNode sd, ApiTypeBuilder api, CommentNode comments) {
         Name = name;
         this.Parent = parent;
         this.Comments = comments;
         if(cefConfig == null)
-            CefConfig = new CefConfigData();
+            CefConfig = new CefConfigNode();
         else
             CefConfig = cefConfig;
 

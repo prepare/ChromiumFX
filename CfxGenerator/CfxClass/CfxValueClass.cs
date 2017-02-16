@@ -14,7 +14,7 @@ public class CfxValueClass : CfxClass {
 
     private bool hasSizeMember;
 
-    public CfxValueClass(CefStructType cefStruct, Parser.StructData sd, ApiTypeBuilder api)
+    public CfxValueClass(CefStructType cefStruct, Parser.StructNode sd, ApiTypeBuilder api)
         : base(cefStruct, sd, api) {
 
         var smlist = new List<StructMember>();

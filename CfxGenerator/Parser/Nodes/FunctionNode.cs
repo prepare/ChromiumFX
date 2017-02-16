@@ -5,18 +5,14 @@
 // of the BSD license. See the License.txt file for details.
 
 using System;
-using System.Collections.Generic;
 
 namespace Parser {
 
     [Serializable()]
-    public class StructData {
+    public class FunctionNode {
         public string Name;
-        public readonly List<FunctionData> CefFunctions = new List<FunctionData>();
-        public readonly List<StructMemberData> StructMembers = new List<StructMemberData>();
-        public CommentData Comments = new CommentData();
-        public CefConfigData CefConfig;
-
+        public SignatureNode Signature = new SignatureNode();
+        public CommentNode Comments = new CommentNode();
         public override string ToString() {
             return Name;
         }

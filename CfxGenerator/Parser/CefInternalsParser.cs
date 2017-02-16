@@ -11,7 +11,7 @@ namespace Parser {
     /// </summary>
     internal class CefInternalsParser : CHeaderParser {
 
-        protected override void Parse(CefApiData api) {
+        protected override void Parse(CefApiNode api) {
             while(!Done) {
                 Ensure(
                     ParseCefEnum(api.CefEnums)
@@ -22,9 +22,9 @@ namespace Parser {
             }
         }
 
-        private bool ParseCefTypeStruct(List<StructData> structs) {
+        private bool ParseCefTypeStruct(List<StructNode> structs) {
             Mark();
-            var cefStruct = new StructData();
+            var cefStruct = new StructNode();
             var success =
                 ParseSummary(cefStruct.Comments)
                 && Scan(@"typedef struct _(cef_\w+_t) {", () => cefStruct.Name = Group01);
@@ -41,8 +41,8 @@ namespace Parser {
             return success;
         }
 
-        private bool ParseCefTypeStructMember(List<StructMemberData> members) {
-            var m = new StructMemberData();
+        private bool ParseCefTypeStructMember(List<StructMemberNode> members) {
+            var m = new StructMemberNode();
             Mark();
             ParseSummary(m.Comments);
             var success =
@@ -55,8 +55,8 @@ namespace Parser {
             return success;
         }
 
-        private bool ParseCefEnum(List<EnumData> enums) {
-            var e = new EnumData();
+        private bool ParseCefEnum(List<EnumNode> enums) {
+            var e = new EnumNode();
             Mark();
             var success =
                 (ParseSummary(e.Comments) || ParseCommentBlock(e.Comments))
@@ -77,8 +77,8 @@ namespace Parser {
             return Ensure(success);
         }
 
-        private bool ParseCefEnumValue(List<EnumMemberData> members) {
-            var member = new EnumMemberData();
+        private bool ParseCefEnumValue(List<EnumValueNode> members) {
+            var member = new EnumValueNode();
             Mark();
             ParseSummary(member.Comments);
             var success = Scan(@"\w+", () => member.Name = Value);

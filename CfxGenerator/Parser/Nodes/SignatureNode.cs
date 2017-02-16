@@ -5,16 +5,14 @@
 // of the BSD license. See the License.txt file for details.
 
 using System;
+using System.Collections.Generic;
 
 namespace Parser {
 
     [Serializable()]
-    public class TypeData {
-        public string Name;
-        public string Indirection;
-
-        public override string ToString() {
-            return Name + " " + Indirection;
-        }
+    public class SignatureNode {
+        public readonly List<ParameterNode> Arguments = new List<ParameterNode>();
+        public TypeNode ReturnType = new TypeNode();
+        public bool ReturnValueIsConst;
     }
 }

@@ -13,38 +13,38 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class ApiTypeBuilder {
 
-    private Parser.CefApiData apiData;
+    private Parser.CefApiNode apiNode;
 
     private SortedDictionary<string, ApiType> apiTypes;
 
     private CefStringPtrTypeConst constStringPtrType = new CefStringPtrTypeConst();
 
     public CefApiDeclarations GetDeclarations() {
-        apiData = Deserialize();
+        apiNode = Deserialize();
         string hash = Parser.Parser.ParseApiHash();
-        if(apiData == null || !hash.Equals(apiData.ApiHashUniversal)) {
-            apiData = Parser.Parser.Parse();
-            Serialize(apiData);
+        if(apiNode == null || !hash.Equals(apiNode.ApiHashUniversal)) {
+            apiNode = Parser.Parser.Parse();
+            Serialize(apiNode);
         }
         return BuildTypes();
     }
 
     private string serializedApi = System.IO.Path.Combine("cef", "SerializedApi.data");
 
-    private void Serialize(Parser.CefApiData apiData) {
+    private void Serialize(Parser.CefApiNode apiNode) {
         var formatter = new BinaryFormatter();
         var stream = new FileStream(serializedApi, FileMode.Create, FileAccess.Write, FileShare.None);
-        formatter.Serialize(stream, apiData);
+        formatter.Serialize(stream, apiNode);
         stream.Close();
     }
 
-    private Parser.CefApiData Deserialize() {
+    private Parser.CefApiNode Deserialize() {
         if(!File.Exists(serializedApi))
             return null;
         var formatter = new BinaryFormatter();
         var stream = new FileStream(serializedApi, FileMode.Open, FileAccess.Read, FileShare.Read);
         try {
-            return (Parser.CefApiData)formatter.Deserialize(stream);
+            return (Parser.CefApiNode)formatter.Deserialize(stream);
         } catch(Exception) {
             return null;
         } finally {
@@ -92,13 +92,13 @@ public class ApiTypeBuilder {
 
         AddType(new VoidPtrPtrType());
 
-        foreach(var ed in apiData.CefEnums) {
+        foreach(var ed in apiNode.CefEnums) {
             var t = new CefEnumType(ed);
             AddType(t);
             enums.Add(t);
         }
 
-        foreach(var sd in apiData.CefStructs) {
+        foreach(var sd in apiNode.CefStructs) {
             if(!apiTypes.Keys.Contains(sd.Name)) {
                 var structName = sd.Name.Substring(0, sd.Name.Length - 2);
                 var t = new CefStructType(structName, sd.Comments);
@@ -107,14 +107,14 @@ public class ApiTypeBuilder {
             }
         }
 
-        foreach(var sd in apiData.CefStructsWindows) {
+        foreach(var sd in apiNode.CefStructsWindows) {
             var structName = sd.Name.Substring(0, sd.Name.Length - 2);
             var t = new CefPlatformStructType(structName, sd.Comments, CefPlatform.Windows);
             AddType(t);
             structs.Add(t);
         }
 
-        foreach(var sd in apiData.CefStructsLinux) {
+        foreach(var sd in apiNode.CefStructsLinux) {
             var structName = sd.Name.Substring(0, sd.Name.Length - 2);
             var t = new CefPlatformStructType(structName, sd.Comments, CefPlatform.Linux);
             AddType(t);
@@ -129,36 +129,36 @@ public class ApiTypeBuilder {
             AddType(t);
         }
 
-        foreach(var sd in apiData.CefStructs) {
+        foreach(var sd in apiNode.CefStructs) {
             var t = apiTypes[sd.Name];
             if(t.IsCefStructType) {
                 t.AsCefStructType.SetMembers(sd, this);
             }
         }
 
-        foreach(var sd in apiData.CefStructsWindows) {
+        foreach(var sd in apiNode.CefStructsWindows) {
             var t = apiTypes[sd.Name.Substring(0, sd.Name.Length - 2) + "_windows"];
             t.AsCefStructType.SetMembers(sd, this);
         }
 
-        foreach(var sd in apiData.CefStructsLinux) {
+        foreach(var sd in apiNode.CefStructsLinux) {
             var t = apiTypes[sd.Name.Substring(0, sd.Name.Length - 2) + "_linux"];
             t.AsCefStructType.SetMembers(sd, this);
         }
 
-        foreach(var fd in apiData.CefStringCollectionFunctions) {
+        foreach(var fd in apiNode.CefStringCollectionFunctions) {
             stringCollectionFunctions.Add(new CefExportFunction(null, fd, this));
         }
 
-        foreach(var fd in apiData.CefFunctions) {
+        foreach(var fd in apiNode.CefFunctions) {
             var f = new CefExportFunction(null, fd, this);
             functions.Add(f);
         }
 
-        if(apiData.CefFunctionsWindows.Count > 0)
+        if(apiNode.CefFunctionsWindows.Count > 0)
             System.Diagnostics.Debugger.Break();
 
-        foreach(var fd in apiData.CefFunctionsLinux) {
+        foreach(var fd in apiNode.CefFunctionsLinux) {
             var f = new CefExportFunction(null, fd, this, CefPlatform.Linux);
             functions.Add(f);
         }
@@ -177,7 +177,7 @@ public class ApiTypeBuilder {
         }
     }
 
-    public ApiType GetApiType(Parser.TypeData td, bool isConst) {
+    public ApiType GetApiType(Parser.TypeNode td, bool isConst) {
         var t = FindApiType(td);
 
         if(t.IsCefStringPtrType && isConst) {
@@ -187,7 +187,7 @@ public class ApiTypeBuilder {
         return t;
     }
 
-    private ApiType FindApiType(Parser.TypeData td) {
+    private ApiType FindApiType(Parser.TypeNode td) {
         ApiType t = null;
 
         if(td.Indirection == null) {

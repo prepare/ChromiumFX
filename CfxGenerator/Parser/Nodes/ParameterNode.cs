@@ -9,8 +9,8 @@ using System;
 namespace Parser {
 
     [Serializable()]
-    public class ParameterData {
-        public TypeData ParameterType = new TypeData();
+    public class ParameterNode {
+        public TypeNode ParameterType = new TypeNode();
         public string Var;
         public bool IsConst;
 

@@ -5,14 +5,13 @@
 // of the BSD license. See the License.txt file for details.
 
 using System;
-using System.Collections.Generic;
 
 namespace Parser {
 
     [Serializable()]
-    public class EnumData {
+    public class EnumValueNode {
         public string Name;
-        public readonly List<EnumMemberData> Members = new List<EnumMemberData>();
-        public CommentData Comments = new CommentData();
+        public string Value;
+        public CommentNode Comments = new CommentNode();
     }
 }

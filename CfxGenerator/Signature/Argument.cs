@@ -14,7 +14,7 @@ public class Argument {
     public bool IsThisArgument;
     public bool IsPropertySetterArgument;
 
-    public Argument(Parser.ParameterData ad, ApiTypeBuilder api, int index) {
+    public Argument(Parser.ParameterNode ad, ApiTypeBuilder api, int index) {
         this.ArgumentType = api.GetApiType(ad.ParameterType, ad.IsConst);
         this.VarName = ad.Var;
         this.Index = index;

@@ -12,7 +12,7 @@ using System.Text;
 
 public class CfxLibraryClass : CfxClass {
 
-    public CfxLibraryClass(CefStructType cefStruct, Parser.StructData sd, ApiTypeBuilder api)
+    public CfxLibraryClass(CefStructType cefStruct, Parser.StructNode sd, ApiTypeBuilder api)
         : base(cefStruct, sd, api) {
 
         var flist = new List<CefExportFunction>();
@@ -119,7 +119,7 @@ public class CfxLibraryClass : CfxClass {
 
         foreach(var p in m_structProperties) {
             if(p.Setter != null && p.Setter.Comments != null) {
-                var summary = new CommentData();
+                var summary = new CommentNode();
                 summary.FileName = p.Getter.Comments.FileName;
 
                 if(p.Getter.Comments.Lines.Length == 1 && p.Setter.Comments.Lines.Length == 1 && p.Getter.Comments.Lines[0].StartsWith("Get ") && p.Setter.Comments.Lines[0].StartsWith("Set ") && p.Getter.Comments.Lines[0].Substring(4).Equals(p.Setter.Comments.Lines[0].Substring(4))) {
@@ -241,7 +241,7 @@ public class CfxLibraryClass : CfxClass {
                     summaryLines.AddRange(p.Getter.Comments.Lines);
                     summaryLines.Add("");
                     summaryLines.AddRange(p.Setter.Comments.Lines);
-                    var summary = new CommentData();
+                    var summary = new CommentNode();
                     summary.Lines = summaryLines.ToArray();
                     summary.FileName = p.Getter.Comments.FileName;
                     //If RemoteClassName = "CfrRequest" AndAlso p.Getter.PublicName = "GetFlags" Then Stop

@@ -6,10 +6,10 @@ using System.Text;
 
 namespace Parser {
     [Serializable()]
-    public class CefCppFunctionData {
+    public class CefCppFunctionNode {
         public string Name;
         public bool IsStatic;
-        public CefConfigData CefConfig = new CefConfigData();
+        public CefConfigNode CefConfig = new CefConfigNode();
         public bool IsRetvalBoolean;
         public List<string> BooleanParameters = new List<string>();
         public override string ToString() {
