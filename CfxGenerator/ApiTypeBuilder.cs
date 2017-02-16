@@ -21,7 +21,7 @@ public class ApiTypeBuilder {
 
     public CefApiDeclarations GetDeclarations() {
         apiData = Deserialize();
-        string hash = Parser.ApiParser.ParseApiHash();
+        string hash = Parser.Parser.ParseApiHash();
         if(apiData == null || !hash.Equals(apiData.ApiHashUniversal)) {
             apiData = Parser.Parser.Parse();
             Serialize(apiData);

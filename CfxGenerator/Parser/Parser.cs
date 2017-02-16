@@ -207,6 +207,12 @@ namespace Parser {
             return s.ToString();
         }
 
+        public static string ParseApiHash() {
+            var code = File.ReadAllText(System.IO.Path.Combine("cef", "include", "cef_version.h"));
+            var ex = new Regex(@"CEF_API_HASH_UNIVERSAL ""(\w+)""");
+            Debug.Assert(ex.IsMatch(code));
+            return ex.Match(code).Groups[1].Value;
+        }
 
 
         private Scanner scanner;
