@@ -26,13 +26,16 @@ namespace Parser {
             var api = new CefApiData();
 
             Parser p = new CefCApiParser();
-
-            var files = Directory.GetFiles(System.IO.Path.Combine("cef", "include", "capi"));
+            p.SetFile(Path.Combine("cef", "include", "cef_version.h"));
+            p.Parse(api);
+            var files = Directory.GetFiles(Path.Combine("cef", "include", "capi"));
             foreach(var f in files) {
                 if(Path.GetFileName(f) == "cef_base_capi.h") continue;
                 p.SetFile(f);
                 p.Parse(api);
             }
+
+
 
             p = new CefInternalsParser();
 
@@ -105,7 +108,7 @@ namespace Parser {
                     }
                 }
             }
-            
+
             foreach(var s in api.CefStructs) {
                 if(classes.ContainsKey(s.Name)) {
                     var c = classes[s.Name];
@@ -155,7 +158,7 @@ namespace Parser {
                         s.CefFunctions.Add(f);
                         found = true;
                         break;
-                    } 
+                    }
                 }
                 if(found) {
                     api.CefFunctions.RemoveAt(ifunc);
@@ -260,7 +263,9 @@ namespace Parser {
 
         protected void SetFile(string filename) {
             currentFile = filename;
-            scanner = new Scanner(File.ReadAllText(currentFile));
+            var content = File.ReadAllText(currentFile);
+            content = Regex.Replace(content, @"\r\n", "\n");
+            scanner = new Scanner(content);
         }
 
         protected bool SkipAll(string pattern) {
@@ -284,12 +289,15 @@ namespace Parser {
         }
 
         protected bool ParseSummary(CommentData comments) {
-            var success = Skip(@"///");
+            Mark();
+            var startFound = Skip(@"///");
+            ParseCommentBlock(comments);
+            var endFound = Skip(@"///");
+            var success = startFound || endFound;
             if(success) {
-                ParseCommentBlock(comments);
-                if(Skip(@"///"))
-                    SkipCommentBlock();
+                SkipCommentBlock();
             }
+            Unmark(success);
             return success;
         }
 

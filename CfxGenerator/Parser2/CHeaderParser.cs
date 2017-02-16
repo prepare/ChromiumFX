@@ -15,12 +15,17 @@ namespace Parser {
             var f = new FunctionData();
             ParseSummary(f.Comments);
             var success =
-                Skip(@"CEF_EXPORT\b")
-                && ParseType(f.Signature.ReturnType)
-                && Scan(@"\w+", () => f.Name = Value)
-                && Skip(@"\(")
-                && ParseParameterList(f.Signature.Arguments)
-                && Skip(@"\)\s*;");
+                Skip(@"CEF_EXPORT\b");
+            if(success) {
+                Scan(@"const\b", () => f.Signature.ReturnValueIsConst = true);
+                Ensure(
+                    ParseType(f.Signature.ReturnType)
+                    && Scan(@"\w+", () => f.Name = Value)
+                    && Skip(@"\(")
+                    && ParseParameterList(f.Signature.Arguments)
+                    && Skip(@"\)\s*;")
+                );
+            }
             if(success)
                 functions.Add(f);
             Unmark(success);
@@ -54,7 +59,7 @@ namespace Parser {
                 || Scan(@"unsigned \w+", () => type.Name = Value)
                 || Scan(@"(?:struct _)?(\w+)", () => type.Name = Group01);
             if(success) {
-                var tmp = 
+                var tmp =
                     Scan(@"\*\s*const\s*\*", () => type.Indirection = Value)
                     || Scan(@"const\s*\*", () => type.Indirection = Value)
                     || Scan(@"(?:\s*\*)+", () => type.Indirection = Value);
