@@ -435,39 +435,31 @@ public class Signature {
     }
 
     public virtual void DebugPrintUnhandledArrayArguments(string cefName, CefConfigNode cefConfig, CfxCallMode callMode) {
-        if(cefName == "cef_binary_value_create")
-            return;
-        if(cefName == "cef_binary_value::get_data")
-            return;
+        
         if(cefName == "cef_resource_handler::get_response_headers")
             return;
-        if(cefName == "cef_resource_bundle_handler::get_data_resource")
-            return;
-        if(cefName == "cef_resource_bundle_handler::get_data_resource_for_scale")
-            return;
-        if(cefName == "cef_urlrequest_client::on_download_data")
-            return;
-        if(cefName == "cef_zip_reader::read_file")
-            return;
-        if(cefName == "cef_resource_bundle::get_data_resource")
-            return;
-        if(cefName == "cef_resource_bundle::get_data_resource_for_scale")
-            return;
-        if(cefName == "cef_response_filter::filter")
-            return;
-        if(cefName.StartsWith("cef_image::add_"))
-            return;
-
-
+        
         for(var i = 0; i <= Parameters.Length - 1; i++) {
             var suffixLength = CountArgumentSuffixLength(Parameters[i]);
             if(suffixLength > 0) {
                 var arrName = Parameters[i].VarName.Substring(0, Parameters[i].VarName.Length - suffixLength);
+                int iArray = -1;
                 if(i > 0 && Parameters[i - 1].VarName.StartsWith(arrName)) {
-                    Debug.Print("UnhandledArrayArgument {0} {1} {2} {3}", callMode, cefName, Parameters[i - 1], Parameters[i]);
+                    iArray = i - 1;
                 } else if(i < Parameters.Length - 1 && Parameters[i + 1].VarName.StartsWith(arrName)) {
-                    Debug.Print("UnhandledArrayArgument {0} {1} {2} {3}", callMode, cefName, Parameters[i], Parameters[i + 1]);
+                    iArray = i + 1;
                 } else {
+                }
+                if(iArray >= 0) {
+                    switch(Parameters[iArray].ParameterType.Name) {
+                        case "void*":
+                        case "void**":
+                            //binary data
+                            break;
+                        default:
+                            Debug.Print("UnhandledArrayArgument {0} {1} {2} {3}", callMode, cefName, Parameters[i], Parameters[iArray]);
+                            break;
+                    }
                 }
             }
         }
