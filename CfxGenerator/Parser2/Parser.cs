@@ -41,10 +41,14 @@ namespace Parser {
 
             p.SetFile(Path.Combine("cef", "include", "internal", "cef_types.h"));
             p.Parse(api);
-            p.SetFile(Path.Combine("cef", "include", "internal", "cef_time.h"));
-            p.Parse(api);
 
             CefApiData tmpApi = new CefApiData();
+
+            p.SetFile(Path.Combine("cef", "include", "internal", "cef_time.h"));
+            p.Parse(tmpApi);
+            api.CefStructs.AddRange(tmpApi.CefStructs);
+
+            tmpApi = new CefApiData();
 
             p.SetFile(Path.Combine(System.IO.Path.Combine("cef", "include", "internal", "cef_string_list.h")));
             p.Parse(tmpApi);
