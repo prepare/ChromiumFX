@@ -105,22 +105,30 @@ namespace Chromium {
         private CfxInitFilterEventHandler m_InitFilter;
 
         /// <summary>
-        /// Called to filter a chunk of data. |DataIn| is the input buffer containing
-        /// |DataInSize| bytes of pre-filter data (|DataIn| will be NULL if
-        /// |DataInSize| is zero). |DataOut| is the output buffer that can accept up
-        /// to |DataOutSize| bytes of filtered output data. Set |DataInRead| to the
-        /// number of bytes that were read from |DataIn|. Set |DataOutWritten| to
-        /// the number of bytes that were written into |DataOut|. If some or all of
-        /// the pre-filter data was read successfully but more data is needed in order
-        /// to continue filtering (filtered output is pending) return
-        /// RESPONSE_FILTER_NEED_MORE_DATA. If some or all of the pre-filter data was
-        /// read successfully and all available filtered output has been written return
-        /// RESPONSE_FILTER_DONE. If an error occurs during filtering return
-        /// RESPONSE_FILTER_ERROR. This function will be called repeatedly until there
-        /// is no more data to filter (resource response is complete), |DataInRead|
-        /// matches |DataInSize| (all available pre-filter bytes have been read), and
-        /// the function returns RESPONSE_FILTER_DONE or RESPONSE_FILTER_ERROR. Do not
-        /// keep a reference to the buffers passed to this function.
+        /// Called to filter a chunk of data. Expected usage is as follows:
+        /// A. Read input data from |DataIn| and set |DataInRead| to the number of
+        /// bytes that were read up to a maximum of |DataInSize|. |DataIn| will
+        /// be NULL if |DataInSize| is zero.
+        /// B. Write filtered output data to |DataOut| and set |DataOutWritten| to
+        /// the number of bytes that were written up to a maximum of
+        /// |DataOutSize|. If no output data was written then all data must be
+        /// read from |DataIn| (user must set |DataInRead| = |DataInSize|).
+        /// C. Return RESPONSE_FILTER_DONE if all output data was written or
+        /// RESPONSE_FILTER_NEED_MORE_DATA if output data is still pending.
+        /// This function will be called repeatedly until the input buffer has been
+        /// fully read (user sets |DataInRead| = |DataInSize|) and there is no more
+        /// input data to filter (the resource response is complete). This function may
+        /// then be called an additional time with an NULL input buffer if the user
+        /// filled the output buffer (set |DataOutWritten| = |DataOutSize|) and
+        /// returned RESPONSE_FILTER_NEED_MORE_DATA to indicate that output data is
+        /// still pending.
+        /// Calls to this function will stop when one of the following conditions is
+        /// met:
+        /// A. There is no more input data to filter (the resource response is
+        /// complete) and the user sets |DataOutWritten| = 0 or returns
+        /// RESPONSE_FILTER_DONE to indicate that all data has been written, or;
+        /// B. The user returns RESPONSE_FILTER_ERROR to indicate an error.
+        /// Do not keep a reference to the buffers passed to this function.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -205,22 +213,30 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Called to filter a chunk of data. |DataIn| is the input buffer containing
-        /// |DataInSize| bytes of pre-filter data (|DataIn| will be NULL if
-        /// |DataInSize| is zero). |DataOut| is the output buffer that can accept up
-        /// to |DataOutSize| bytes of filtered output data. Set |DataInRead| to the
-        /// number of bytes that were read from |DataIn|. Set |DataOutWritten| to
-        /// the number of bytes that were written into |DataOut|. If some or all of
-        /// the pre-filter data was read successfully but more data is needed in order
-        /// to continue filtering (filtered output is pending) return
-        /// RESPONSE_FILTER_NEED_MORE_DATA. If some or all of the pre-filter data was
-        /// read successfully and all available filtered output has been written return
-        /// RESPONSE_FILTER_DONE. If an error occurs during filtering return
-        /// RESPONSE_FILTER_ERROR. This function will be called repeatedly until there
-        /// is no more data to filter (resource response is complete), |DataInRead|
-        /// matches |DataInSize| (all available pre-filter bytes have been read), and
-        /// the function returns RESPONSE_FILTER_DONE or RESPONSE_FILTER_ERROR. Do not
-        /// keep a reference to the buffers passed to this function.
+        /// Called to filter a chunk of data. Expected usage is as follows:
+        /// A. Read input data from |DataIn| and set |DataInRead| to the number of
+        /// bytes that were read up to a maximum of |DataInSize|. |DataIn| will
+        /// be NULL if |DataInSize| is zero.
+        /// B. Write filtered output data to |DataOut| and set |DataOutWritten| to
+        /// the number of bytes that were written up to a maximum of
+        /// |DataOutSize|. If no output data was written then all data must be
+        /// read from |DataIn| (user must set |DataInRead| = |DataInSize|).
+        /// C. Return RESPONSE_FILTER_DONE if all output data was written or
+        /// RESPONSE_FILTER_NEED_MORE_DATA if output data is still pending.
+        /// This function will be called repeatedly until the input buffer has been
+        /// fully read (user sets |DataInRead| = |DataInSize|) and there is no more
+        /// input data to filter (the resource response is complete). This function may
+        /// then be called an additional time with an NULL input buffer if the user
+        /// filled the output buffer (set |DataOutWritten| = |DataOutSize|) and
+        /// returned RESPONSE_FILTER_NEED_MORE_DATA to indicate that output data is
+        /// still pending.
+        /// Calls to this function will stop when one of the following conditions is
+        /// met:
+        /// A. There is no more input data to filter (the resource response is
+        /// complete) and the user sets |DataOutWritten| = 0 or returns
+        /// RESPONSE_FILTER_DONE to indicate that all data has been written, or;
+        /// B. The user returns RESPONSE_FILTER_ERROR to indicate an error.
+        /// Do not keep a reference to the buffers passed to this function.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -229,22 +245,30 @@ namespace Chromium {
         public delegate void CfxFilterEventHandler(object sender, CfxFilterEventArgs e);
 
         /// <summary>
-        /// Called to filter a chunk of data. |DataIn| is the input buffer containing
-        /// |DataInSize| bytes of pre-filter data (|DataIn| will be NULL if
-        /// |DataInSize| is zero). |DataOut| is the output buffer that can accept up
-        /// to |DataOutSize| bytes of filtered output data. Set |DataInRead| to the
-        /// number of bytes that were read from |DataIn|. Set |DataOutWritten| to
-        /// the number of bytes that were written into |DataOut|. If some or all of
-        /// the pre-filter data was read successfully but more data is needed in order
-        /// to continue filtering (filtered output is pending) return
-        /// RESPONSE_FILTER_NEED_MORE_DATA. If some or all of the pre-filter data was
-        /// read successfully and all available filtered output has been written return
-        /// RESPONSE_FILTER_DONE. If an error occurs during filtering return
-        /// RESPONSE_FILTER_ERROR. This function will be called repeatedly until there
-        /// is no more data to filter (resource response is complete), |DataInRead|
-        /// matches |DataInSize| (all available pre-filter bytes have been read), and
-        /// the function returns RESPONSE_FILTER_DONE or RESPONSE_FILTER_ERROR. Do not
-        /// keep a reference to the buffers passed to this function.
+        /// Called to filter a chunk of data. Expected usage is as follows:
+        /// A. Read input data from |DataIn| and set |DataInRead| to the number of
+        /// bytes that were read up to a maximum of |DataInSize|. |DataIn| will
+        /// be NULL if |DataInSize| is zero.
+        /// B. Write filtered output data to |DataOut| and set |DataOutWritten| to
+        /// the number of bytes that were written up to a maximum of
+        /// |DataOutSize|. If no output data was written then all data must be
+        /// read from |DataIn| (user must set |DataInRead| = |DataInSize|).
+        /// C. Return RESPONSE_FILTER_DONE if all output data was written or
+        /// RESPONSE_FILTER_NEED_MORE_DATA if output data is still pending.
+        /// This function will be called repeatedly until the input buffer has been
+        /// fully read (user sets |DataInRead| = |DataInSize|) and there is no more
+        /// input data to filter (the resource response is complete). This function may
+        /// then be called an additional time with an NULL input buffer if the user
+        /// filled the output buffer (set |DataOutWritten| = |DataOutSize|) and
+        /// returned RESPONSE_FILTER_NEED_MORE_DATA to indicate that output data is
+        /// still pending.
+        /// Calls to this function will stop when one of the following conditions is
+        /// met:
+        /// A. There is no more input data to filter (the resource response is
+        /// complete) and the user sets |DataOutWritten| = 0 or returns
+        /// RESPONSE_FILTER_DONE to indicate that all data has been written, or;
+        /// B. The user returns RESPONSE_FILTER_ERROR to indicate an error.
+        /// Do not keep a reference to the buffers passed to this function.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in

@@ -179,14 +179,6 @@ static void cfx_browser_settings_get_javascript_dom_paste(cef_browser_settings_t
     *javascript_dom_paste = self->javascript_dom_paste;
 }
 
-// cef_browser_settings_t->caret_browsing
-static void cfx_browser_settings_set_caret_browsing(cef_browser_settings_t *self, cef_state_t caret_browsing) {
-    self->caret_browsing = caret_browsing;
-}
-static void cfx_browser_settings_get_caret_browsing(cef_browser_settings_t *self, cef_state_t* caret_browsing) {
-    *caret_browsing = self->caret_browsing;
-}
-
 // cef_browser_settings_t->plugins
 static void cfx_browser_settings_set_plugins(cef_browser_settings_t *self, cef_state_t plugins) {
     self->plugins = plugins;

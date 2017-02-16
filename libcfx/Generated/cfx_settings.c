@@ -18,6 +18,7 @@ static cef_settings_t* cfx_settings_ctor() {
 
 static void cfx_settings_dtor(cef_settings_t* self) {
     if(self->browser_subprocess_path.dtor) self->browser_subprocess_path.dtor(self->browser_subprocess_path.str);
+    if(self->framework_dir_path.dtor) self->framework_dir_path.dtor(self->framework_dir_path.str);
     if(self->cache_path.dtor) self->cache_path.dtor(self->cache_path.str);
     if(self->user_data_path.dtor) self->user_data_path.dtor(self->user_data_path.str);
     if(self->user_agent.dtor) self->user_agent.dtor(self->user_agent.str);
@@ -54,6 +55,15 @@ static void cfx_settings_set_browser_subprocess_path(cef_settings_t *self, char1
 static void cfx_settings_get_browser_subprocess_path(cef_settings_t *self, char16 **browser_subprocess_path_str, int *browser_subprocess_path_length) {
     *browser_subprocess_path_str = self->browser_subprocess_path.str;
     *browser_subprocess_path_length = (int)self->browser_subprocess_path.length;
+}
+
+// cef_settings_t->framework_dir_path
+static void cfx_settings_set_framework_dir_path(cef_settings_t *self, char16 *framework_dir_path_str, int framework_dir_path_length) {
+    cef_string_utf16_set(framework_dir_path_str, framework_dir_path_length, &(self->framework_dir_path), 1);
+}
+static void cfx_settings_get_framework_dir_path(cef_settings_t *self, char16 **framework_dir_path_str, int *framework_dir_path_length) {
+    *framework_dir_path_str = self->framework_dir_path.str;
+    *framework_dir_path_length = (int)self->framework_dir_path.length;
 }
 
 // cef_settings_t->multi_threaded_message_loop

@@ -1093,15 +1093,6 @@ namespace Chromium {
             public delegate void cfx_browser_settings_get_javascript_dom_paste_delegate(IntPtr self, out int javascript_dom_paste);
             public static cfx_browser_settings_get_javascript_dom_paste_delegate cfx_browser_settings_get_javascript_dom_paste;
 
-            // static void cfx_browser_settings_set_caret_browsing(cef_browser_settings_t *self, cef_state_t caret_browsing)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_browser_settings_set_caret_browsing_delegate(IntPtr self, int caret_browsing);
-            public static cfx_browser_settings_set_caret_browsing_delegate cfx_browser_settings_set_caret_browsing;
-            // static void cfx_browser_settings_get_caret_browsing(cef_browser_settings_t *self, cef_state_t* caret_browsing)
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate void cfx_browser_settings_get_caret_browsing_delegate(IntPtr self, out int caret_browsing);
-            public static cfx_browser_settings_get_caret_browsing_delegate cfx_browser_settings_get_caret_browsing;
-
             // static void cfx_browser_settings_set_plugins(cef_browser_settings_t *self, cef_state_t plugins)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_browser_settings_set_plugins_delegate(IntPtr self, int plugins);
@@ -5127,6 +5118,15 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_settings_get_browser_subprocess_path_delegate(IntPtr self, out IntPtr browser_subprocess_path_str, out int browser_subprocess_path_length);
             public static cfx_settings_get_browser_subprocess_path_delegate cfx_settings_get_browser_subprocess_path;
+
+            // static void cfx_settings_set_framework_dir_path(cef_settings_t *self, char16 *framework_dir_path_str, int framework_dir_path_length)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_settings_set_framework_dir_path_delegate(IntPtr self, IntPtr framework_dir_path_str, int framework_dir_path_length);
+            public static cfx_settings_set_framework_dir_path_delegate cfx_settings_set_framework_dir_path;
+            // static void cfx_settings_get_framework_dir_path(cef_settings_t *self, char16 **framework_dir_path_str, int *framework_dir_path_length)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_settings_get_framework_dir_path_delegate(IntPtr self, out IntPtr framework_dir_path_str, out int framework_dir_path_length);
+            public static cfx_settings_get_framework_dir_path_delegate cfx_settings_get_framework_dir_path;
 
             // static void cfx_settings_set_multi_threaded_message_loop(cef_settings_t *self, int multi_threaded_message_loop)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]

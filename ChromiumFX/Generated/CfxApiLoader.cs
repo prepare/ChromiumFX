@@ -217,8 +217,6 @@ namespace Chromium {
             cfx_browser_settings_get_javascript_access_clipboard,
             cfx_browser_settings_set_javascript_dom_paste,
             cfx_browser_settings_get_javascript_dom_paste,
-            cfx_browser_settings_set_caret_browsing,
-            cfx_browser_settings_get_caret_browsing,
             cfx_browser_settings_set_plugins,
             cfx_browser_settings_get_plugins,
             cfx_browser_settings_set_universal_access_from_file_urls,
@@ -1008,6 +1006,8 @@ namespace Chromium {
             cfx_settings_get_no_sandbox,
             cfx_settings_set_browser_subprocess_path,
             cfx_settings_get_browser_subprocess_path,
+            cfx_settings_set_framework_dir_path,
+            cfx_settings_get_framework_dir_path,
             cfx_settings_set_multi_threaded_message_loop,
             cfx_settings_get_multi_threaded_message_loop,
             cfx_settings_set_external_message_pump,
@@ -1694,8 +1694,6 @@ namespace Chromium {
             CfxApi.BrowserSettings.cfx_browser_settings_get_javascript_access_clipboard = (CfxApi.BrowserSettings.cfx_browser_settings_get_javascript_access_clipboard_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_settings_get_javascript_access_clipboard, typeof(CfxApi.BrowserSettings.cfx_browser_settings_get_javascript_access_clipboard_delegate));
             CfxApi.BrowserSettings.cfx_browser_settings_set_javascript_dom_paste = (CfxApi.BrowserSettings.cfx_browser_settings_set_javascript_dom_paste_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_settings_set_javascript_dom_paste, typeof(CfxApi.BrowserSettings.cfx_browser_settings_set_javascript_dom_paste_delegate));
             CfxApi.BrowserSettings.cfx_browser_settings_get_javascript_dom_paste = (CfxApi.BrowserSettings.cfx_browser_settings_get_javascript_dom_paste_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_settings_get_javascript_dom_paste, typeof(CfxApi.BrowserSettings.cfx_browser_settings_get_javascript_dom_paste_delegate));
-            CfxApi.BrowserSettings.cfx_browser_settings_set_caret_browsing = (CfxApi.BrowserSettings.cfx_browser_settings_set_caret_browsing_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_settings_set_caret_browsing, typeof(CfxApi.BrowserSettings.cfx_browser_settings_set_caret_browsing_delegate));
-            CfxApi.BrowserSettings.cfx_browser_settings_get_caret_browsing = (CfxApi.BrowserSettings.cfx_browser_settings_get_caret_browsing_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_settings_get_caret_browsing, typeof(CfxApi.BrowserSettings.cfx_browser_settings_get_caret_browsing_delegate));
             CfxApi.BrowserSettings.cfx_browser_settings_set_plugins = (CfxApi.BrowserSettings.cfx_browser_settings_set_plugins_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_settings_set_plugins, typeof(CfxApi.BrowserSettings.cfx_browser_settings_set_plugins_delegate));
             CfxApi.BrowserSettings.cfx_browser_settings_get_plugins = (CfxApi.BrowserSettings.cfx_browser_settings_get_plugins_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_settings_get_plugins, typeof(CfxApi.BrowserSettings.cfx_browser_settings_get_plugins_delegate));
             CfxApi.BrowserSettings.cfx_browser_settings_set_universal_access_from_file_urls = (CfxApi.BrowserSettings.cfx_browser_settings_set_universal_access_from_file_urls_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_browser_settings_set_universal_access_from_file_urls, typeof(CfxApi.BrowserSettings.cfx_browser_settings_set_universal_access_from_file_urls_delegate));
@@ -2870,6 +2868,8 @@ namespace Chromium {
             CfxApi.Settings.cfx_settings_get_no_sandbox = (CfxApi.Settings.cfx_settings_get_no_sandbox_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_get_no_sandbox, typeof(CfxApi.Settings.cfx_settings_get_no_sandbox_delegate));
             CfxApi.Settings.cfx_settings_set_browser_subprocess_path = (CfxApi.Settings.cfx_settings_set_browser_subprocess_path_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_set_browser_subprocess_path, typeof(CfxApi.Settings.cfx_settings_set_browser_subprocess_path_delegate));
             CfxApi.Settings.cfx_settings_get_browser_subprocess_path = (CfxApi.Settings.cfx_settings_get_browser_subprocess_path_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_get_browser_subprocess_path, typeof(CfxApi.Settings.cfx_settings_get_browser_subprocess_path_delegate));
+            CfxApi.Settings.cfx_settings_set_framework_dir_path = (CfxApi.Settings.cfx_settings_set_framework_dir_path_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_set_framework_dir_path, typeof(CfxApi.Settings.cfx_settings_set_framework_dir_path_delegate));
+            CfxApi.Settings.cfx_settings_get_framework_dir_path = (CfxApi.Settings.cfx_settings_get_framework_dir_path_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_get_framework_dir_path, typeof(CfxApi.Settings.cfx_settings_get_framework_dir_path_delegate));
             CfxApi.Settings.cfx_settings_set_multi_threaded_message_loop = (CfxApi.Settings.cfx_settings_set_multi_threaded_message_loop_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_set_multi_threaded_message_loop, typeof(CfxApi.Settings.cfx_settings_set_multi_threaded_message_loop_delegate));
             CfxApi.Settings.cfx_settings_get_multi_threaded_message_loop = (CfxApi.Settings.cfx_settings_get_multi_threaded_message_loop_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_get_multi_threaded_message_loop, typeof(CfxApi.Settings.cfx_settings_get_multi_threaded_message_loop_delegate));
             CfxApi.Settings.cfx_settings_set_external_message_pump = (CfxApi.Settings.cfx_settings_set_external_message_pump_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_settings_set_external_message_pump, typeof(CfxApi.Settings.cfx_settings_set_external_message_pump_delegate));

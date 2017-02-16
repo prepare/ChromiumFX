@@ -336,25 +336,6 @@ namespace Chromium {
         }
 
         /// <summary>
-        /// Controls whether the caret position will be drawn. Also configurable using
-        /// the "enable-caret-browsing" command-line switch.
-        /// </summary>
-        /// <remarks>
-        /// See also the original CEF documentation in
-        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
-        /// </remarks>
-        public CfxState CaretBrowsing {
-            get {
-                int value;
-                CfxApi.BrowserSettings.cfx_browser_settings_get_caret_browsing(nativePtrUnchecked, out value);
-                return (CfxState)value;
-            }
-            set {
-                CfxApi.BrowserSettings.cfx_browser_settings_set_caret_browsing(nativePtrUnchecked, (int)value);
-            }
-        }
-
-        /// <summary>
         /// Controls whether any plugins will be loaded. Also configurable using the
         /// "disable-plugins" command-line switch.
         /// </summary>

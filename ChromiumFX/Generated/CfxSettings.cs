@@ -66,9 +66,12 @@ namespace Chromium {
 
         /// <summary>
         /// The path to a separate executable that will be launched for sub-processes.
-        /// By default the browser process executable is used. See the comments on
-        /// CfxExecuteProcess() for details. Also configurable using the
-        /// "browser-subprocess-path" command-line switch.
+        /// If this value is empty on Windows or Linux then the main process executable
+        /// will be used. If this value is empty on macOS then a helper executable must
+        /// exist at "Contents/Frameworks/&lt;app> Helper.app/Contents/MacOS/&lt;app> Helper"
+        /// in the top-level app bundle. See the comments on CfxExecuteProcess() for
+        /// details. Also configurable using the "browser-subprocess-path" command-line
+        /// switch.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -84,6 +87,30 @@ namespace Chromium {
             set {
                 var value_pinned = new PinnedString(value);
                 CfxApi.Settings.cfx_settings_set_browser_subprocess_path(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
+                value_pinned.Obj.Free();
+            }
+        }
+
+        /// <summary>
+        /// The path to the CEF framework directory on macOS. If this value is empty
+        /// then the framework must exist at "Contents/Frameworks/Chromium Embedded
+        /// Framework.framework" in the top-level app bundle. Also configurable using
+        /// the "framework-dir-path" command-line switch.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
+        public string FrameworkDirPath {
+            get {
+                IntPtr value_str;
+                int value_length;
+                CfxApi.Settings.cfx_settings_get_framework_dir_path(nativePtrUnchecked, out value_str, out value_length);
+                return StringFunctions.PtrToStringUni(value_str, value_length);
+            }
+            set {
+                var value_pinned = new PinnedString(value);
+                CfxApi.Settings.cfx_settings_set_framework_dir_path(nativePtrUnchecked, value_pinned.Obj.PinnedPtr, value_pinned.Length);
                 value_pinned.Obj.Free();
             }
         }
