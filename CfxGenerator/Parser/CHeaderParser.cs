@@ -32,21 +32,21 @@ namespace Parser {
             return success;
         }
 
-        protected bool ParseParameterList(List<ArgumentData> parameters) {
-            var p = new ArgumentData();
+        protected bool ParseParameterList(List<ParameterData> parameters) {
+            var p = new ParameterData();
             while(ParseParameter(p)) {
                 parameters.Add(p);
                 if(!Skip(",")) break;
-                p = new ArgumentData();
+                p = new ParameterData();
             }
             return true;
         }
 
-        protected bool ParseParameter(ArgumentData parameter) {
+        protected bool ParseParameter(ParameterData parameter) {
             Mark();
             Scan(@"const\b", () => parameter.IsConst = true);
             var success =
-                ParseType(parameter.ArgumentType)
+                ParseType(parameter.ParameterType)
                 && Scan(@"\w+", () => parameter.Var = Value);
             Unmark(success);
             return success;

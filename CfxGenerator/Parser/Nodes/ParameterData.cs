@@ -9,13 +9,13 @@ using System;
 namespace Parser {
 
     [Serializable()]
-    public class ArgumentData {
-        public TypeData ArgumentType = new TypeData();
+    public class ParameterData {
+        public TypeData ParameterType = new TypeData();
         public string Var;
         public bool IsConst;
 
         public override string ToString() {
-            return string.Format("{0} {1}{2}", ArgumentType, Var, IsConst ? " (const)" : "");
+            return string.Format("{0} {1}{2}", ParameterType, Var, IsConst ? " (const)" : "");
         }
     }
 }

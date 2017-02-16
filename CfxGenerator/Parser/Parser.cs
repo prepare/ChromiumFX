@@ -182,7 +182,7 @@ namespace Parser {
                 var success = false;
                 foreach(var pm1 in signature.Arguments) {
                     if(pm1.Var == pm) {
-                        pm1.ArgumentType.Name = "bool";
+                        pm1.ParameterType.Name = "bool";
                         success = true;
                         break;
                     }

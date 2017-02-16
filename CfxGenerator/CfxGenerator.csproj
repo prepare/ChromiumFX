@@ -85,14 +85,14 @@
     <Compile Include="CfxClass\CfxValueClass.cs" />
     <Compile Include="CfxClass\CfxLibraryClass.cs" />
     <Compile Include="CfxClass\CfxClientClass.cs" />
-    <Compile Include="Parser2\CHeaderParser.cs" />
-    <Compile Include="Parser2\CefInternalsParser.cs" />
-    <Compile Include="Parser\CefClassData.cs" />
-    <Compile Include="Parser\CefCppFunctionData.cs" />
-    <Compile Include="Parser2\CefCApiParser.cs" />
-    <Compile Include="Parser2\CefClassesParser.cs" />
-    <Compile Include="Parser2\Parser.cs" />
-    <Compile Include="Parser2\Scanner.cs" />
+    <Compile Include="Parser\CHeaderParser.cs" />
+    <Compile Include="Parser\CefInternalsParser.cs" />
+    <Compile Include="Parser\Nodes\CefClassData.cs" />
+    <Compile Include="Parser\Nodes\CefCppFunctionData.cs" />
+    <Compile Include="Parser\CefCApiParser.cs" />
+    <Compile Include="Parser\CefClassesParser.cs" />
+    <Compile Include="Parser\Parser.cs" />
+    <Compile Include="Parser\Scanner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AssemblyResources.cs" />
     <Compile Include="CefApiDeclarations.cs" />
@@ -114,18 +114,17 @@
     <Compile Include="CustomSignatures\StringCollectionAsRetvalSignature.cs" />
     <Compile Include="GeneratedFileManager.cs" />
     <Compile Include="GeneratorConfig.cs" />
-    <Compile Include="Parser\ApiParser.cs" />
-    <Compile Include="Parser\ArgumentData.cs" />
-    <Compile Include="Parser\CefApiData.cs" />
-    <Compile Include="Parser\CefConfigData.cs" />
-    <Compile Include="Parser\CommentData.cs" />
-    <Compile Include="Parser\EnumData.cs" />
-    <Compile Include="Parser\EnumMemberData.cs" />
-    <Compile Include="Parser\FunctionData.cs" />
-    <Compile Include="Parser\SignatureData.cs" />
-    <Compile Include="Parser\StructData.cs" />
-    <Compile Include="Parser\StructMemberData.cs" />
-    <Compile Include="Parser\TypeData.cs" />
+    <Compile Include="Parser\Nodes\ParameterData.cs" />
+    <Compile Include="Parser\Nodes\CefApiData.cs" />
+    <Compile Include="Parser\Nodes\CefConfigData.cs" />
+    <Compile Include="Parser\Nodes\CommentData.cs" />
+    <Compile Include="Parser\Nodes\EnumData.cs" />
+    <Compile Include="Parser\Nodes\EnumMemberData.cs" />
+    <Compile Include="Parser\Nodes\FunctionData.cs" />
+    <Compile Include="Parser\Nodes\SignatureData.cs" />
+    <Compile Include="Parser\Nodes\StructData.cs" />
+    <Compile Include="Parser\Nodes\StructMemberData.cs" />
+    <Compile Include="Parser\Nodes\TypeData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Signature\Argument.cs" />
     <Compile Include="Signature\Signature.cs" />
@@ -139,6 +138,7 @@
     <EmbeddedResource Include="Config\PrivateWrapper.txt" />
     <EmbeddedResource Include="Config\StructsNeedWrapping.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
