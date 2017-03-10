@@ -22,7 +22,7 @@
 * [Project Setup and Description](https://bitbucket.org/chromiumfx/chromiumfx/wiki/Project)
 * [Getting started with the Browser Control](https://bitbucket.org/chromiumfx/chromiumfx/wiki/Walkthrough_01) 
 * [Getting started with the Remoting Framework](https://bitbucket.org/chromiumfx/chromiumfx/wiki/Walkthrough_02)
-* [API Reference](http://chromiumfx.bitbucket.org/api/)
+* [API Reference](http://chromiumfx.bitbucket.io/api/)
 * [Binary releases](https://bitbucket.org/chromiumfx/chromiumfx/downloads)
 
 ### Warning ###
