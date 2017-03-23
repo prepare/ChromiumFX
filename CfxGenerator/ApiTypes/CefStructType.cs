@@ -30,6 +30,10 @@ public class CefStructType : CefType {
         get { return CefBaseType == "cef_base_ref_counted_t"; }
     }
 
+    public bool IsScoped {
+        get { return CefBaseType == "cef_base_scoped_t"; }
+    }
+
     public string CfxNativeSymbol {
         get { return CfxName + "_t"; }
     }

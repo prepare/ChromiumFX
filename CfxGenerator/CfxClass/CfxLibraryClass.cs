@@ -86,38 +86,50 @@ public class CfxLibraryClass : CfxClass {
 
         b.AppendSummaryAndRemarks(Comments);
 
-        b.BeginClass(ClassName + " : CfxBaseLibrary", GeneratorConfig.ClassModifiers(ClassName));
+        if(CefStruct.IsRefCounted)
+            b.BeginClass(ClassName + " : CfxBaseLibrary", GeneratorConfig.ClassModifiers(ClassName));
+        else if(CefStruct.IsScoped)
+            b.BeginClass(ClassName + " : CfxBaseScoped", GeneratorConfig.ClassModifiers(ClassName));
+        else
+            throw new Exception();
+
         b.AppendLine();
 
-        b.AppendLine("private static readonly WeakCache weakCache = new WeakCache();");
-        b.AppendLine();
+        if(CefStruct.IsRefCounted) {
+            b.AppendLine("private static readonly WeakCache weakCache = new WeakCache();");
+            b.AppendLine();
+        }
+
         b.BeginFunction("Wrap", ClassName, "IntPtr nativePtr", "internal static");
         b.AppendLine("if(nativePtr == IntPtr.Zero) return null;");
-        b.BeginBlock("lock(weakCache)");
-        b.AppendLine("var wrapper = ({0})weakCache.Get(nativePtr);", ClassName);
-        b.BeginBlock("if(wrapper == null)");
-        b.AppendLine("wrapper = new {0}(nativePtr);", ClassName);
-        b.AppendLine("weakCache.Add(wrapper);");
-        b.BeginElse();
-        //release the new ref and reuse the existing ref
-        b.AppendLine("CfxApi.cfx_release(nativePtr);");
-        b.EndBlock();
-        b.AppendLine("return wrapper;");
-        b.EndBlock();
+        if(CefStruct.IsRefCounted) {
+            b.BeginBlock("lock(weakCache)");
+            b.AppendLine("var wrapper = ({0})weakCache.Get(nativePtr);", ClassName);
+            b.BeginBlock("if(wrapper == null)");
+            b.AppendLine("wrapper = new {0}(nativePtr);", ClassName);
+            b.AppendLine("weakCache.Add(wrapper);");
+            b.BeginElse();
+            //release the new ref and reuse the existing ref
+            b.AppendLine("CfxApi.cfx_release(nativePtr);");
+            b.EndBlock();
+            b.AppendLine("return wrapper;");
+            b.EndBlock();
+        } else {
+            b.AppendLine("return new {0}(nativePtr);", ClassName);
+        }
         b.EndBlock();
         b.AppendLine();
         b.AppendLine();
 
         b.AppendLine("internal {0}(IntPtr nativePtr) : base(nativePtr) {{}}", ClassName);
 
-        b.AppendLine();
-
         foreach(var f in ExportFunctions) {
-            f.EmitPublicFunction(b, ApiClassName);
             b.AppendLine();
+            f.EmitPublicFunction(b, ApiClassName);
         }
 
         foreach(var p in m_structProperties) {
+            b.AppendLine();
             if(p.Setter != null && p.Setter.Comments != null) {
                 var summary = new CommentNode();
                 summary.FileName = p.Getter.Comments.FileName;
@@ -137,10 +149,10 @@ public class CfxLibraryClass : CfxClass {
                 b.AppendSummaryAndRemarks(p.Getter.Comments);
             }
             EmitPublicProperty(b, p);
-            b.AppendLine();
         }
 
         foreach(var sf in m_structFunctions) {
+            b.AppendLine();
             b.AppendSummaryAndRemarks(sf.Comments);
             if(GeneratorConfig.HasPrivateWrapper(sf.Parent.Name + "::" + sf.Name)) {
                 b.BeginFunction(sf.Signature.PublicFunctionHeader(sf.PublicName), "private");
@@ -149,13 +161,15 @@ public class CfxLibraryClass : CfxClass {
             }
             sf.Signature.EmitPublicCall(b, ApiClassName, sf.CfxApiFunctionName);
             b.EndBlock();
-            b.AppendLine();
         }
 
-        b.BeginFunction("OnDispose", "void", "IntPtr nativePtr", "internal override");
-        b.AppendLine("weakCache.Remove(nativePtr);");
-        b.AppendLine("base.OnDispose(nativePtr);");
-        b.EndBlock();
+        if(CefStruct.IsRefCounted) {
+            b.AppendLine();
+            b.BeginFunction("OnDispose", "void", "IntPtr nativePtr", "internal override");
+            b.AppendLine("weakCache.Remove(nativePtr);");
+            b.AppendLine("base.OnDispose(nativePtr);");
+            b.EndBlock();
+        }
 
         b.EndBlock();
     }

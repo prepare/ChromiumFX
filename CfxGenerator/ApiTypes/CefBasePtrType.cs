@@ -15,7 +15,7 @@ public class CefBaseRefCountedPtrType : ApiType {
     }
 
     public override string PublicSymbol {
-        get { return "CfxBase"; }
+        get { return "CfxBaseRefCounted"; }
     }
 
     public override string ProxySymbol {
@@ -41,19 +41,19 @@ public class CefBaseRefCountedPtrType : ApiType {
 
 
     public override string PublicWrapExpression(string var) {
-        return string.Format("CfxBase.Cast({0})", var);
+        return string.Format("CfxBaseRefCounted.Cast({0})", var);
     }
 
     public override string PublicUnwrapExpression(string var) {
-        return string.Format("CfxBase.Unwrap({0})", var);
+        return string.Format("CfxBaseRefCounted.Unwrap({0})", var);
     }
 
     public override string ProxyWrapExpression(string var) {
-        return string.Format("CfxBase.Unwrap({0})", var);
+        return string.Format("CfxBaseRefCounted.Unwrap({0})", var);
     }
 
     public override string ProxyUnwrapExpression(string var) {
-        return string.Format("CfxBase.Cast({0})", var);
+        return string.Format("CfxBaseRefCounted.Cast({0})", var);
     }
 
     public override string ProxyReturnExpression(string var) {

@@ -17,22 +17,11 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
     /// </remarks>
-    public class CfxSchemeRegistrar : CfxBaseLibrary {
-
-        private static readonly WeakCache weakCache = new WeakCache();
+    public class CfxSchemeRegistrar : CfxBaseScoped {
 
         internal static CfxSchemeRegistrar Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            lock(weakCache) {
-                var wrapper = (CfxSchemeRegistrar)weakCache.Get(nativePtr);
-                if(wrapper == null) {
-                    wrapper = new CfxSchemeRegistrar(nativePtr);
-                    weakCache.Add(wrapper);
-                } else {
-                    CfxApi.cfx_release(nativePtr);
-                }
-                return wrapper;
-            }
+            return new CfxSchemeRegistrar(nativePtr);
         }
 
 
@@ -103,11 +92,6 @@ namespace Chromium {
             var __retval = CfxApi.SchemeRegistrar.cfx_scheme_registrar_add_custom_scheme(NativePtr, schemeName_pinned.Obj.PinnedPtr, schemeName_pinned.Length, isStandard ? 1 : 0, isLocal ? 1 : 0, isDisplayIsolated ? 1 : 0, isSecure ? 1 : 0, isCorsEnabled ? 1 : 0);
             schemeName_pinned.Obj.Free();
             return 0 != __retval;
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }
