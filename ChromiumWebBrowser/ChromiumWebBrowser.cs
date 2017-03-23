@@ -1149,8 +1149,10 @@ namespace Chromium.WebBrowser {
                     SetWindowPos(browserWindowHandle, IntPtr.Zero, 0, 0, Width, h, SWP_NOMOVE | SWP_NOZORDER);
                 }
             } else {
-                if(browserWindowHandle != IntPtr.Zero)
+                if(browserWindowHandle != IntPtr.Zero) {
                     SetWindowLong(browserWindowHandle, -16, (int)(WindowStyle.WS_CHILD | WindowStyle.WS_CLIPCHILDREN | WindowStyle.WS_CLIPSIBLINGS | WindowStyle.WS_TABSTOP | WindowStyle.WS_DISABLED));
+                    SetWindowPos(browserWindowHandle, IntPtr.Zero, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOZORDER);
+                }
             }
         }
 
