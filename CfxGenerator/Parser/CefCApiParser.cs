@@ -39,7 +39,7 @@ namespace Parser {
 
                 Ensure(
                     SkipSummary()
-                    && Scan("cef_base_(ref_counted|scoped)_t base;", () => cefStruct.CefBaseType = Group01)
+                    && Scan("(cef_base_(?:ref_counted|scoped)_t) base;", () => cefStruct.CefBaseType = Group01)
                     );
 
                 while(

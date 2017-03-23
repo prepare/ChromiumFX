@@ -17,11 +17,15 @@ public class CefStructType : CefType {
 
     public void SetMembers(Parser.StructNode sd, ApiTypeBuilder api) {
         m_classBuilder = CfxClass.Create(this, sd, api);
+        CefBaseType = sd.CefBaseType;
     }
 
     public CfxClass ClassBuilder {
         get { return m_classBuilder; }
     }
+
+    public string CefBaseType { get; private set; }
+
 
     public string CfxNativeSymbol {
         get { return CfxName + "_t"; }
