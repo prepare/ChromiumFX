@@ -281,6 +281,7 @@
     <Compile Include="Source\CfxApi.cs" />
     <Compile Include="Source\CfxArray.cs" />
     <Compile Include="Source\CfxBase.cs" />
+    <Compile Include="Source\CfxBaseScoped.cs" />
     <Compile Include="Source\CfxBinaryValue.cs" />
     <Compile Include="Source\CfxClientBase.cs" />
     <Compile Include="Source\CfxColor.cs" />

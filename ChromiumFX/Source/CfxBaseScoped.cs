@@ -16,7 +16,7 @@ namespace Chromium {
     /// Base class for all wrapper classes for scoped CEF library structs.
     /// Objects of this type will be disposed when they go out of scope. 
     /// </summary>
-    public class CfxBaseScoped : CfxBase {
+    public class CfxBaseScoped : CfxObject {
 
         internal CfxBaseScoped(IntPtr nativePtr) : base(nativePtr) { }
 
