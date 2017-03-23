@@ -32,7 +32,7 @@ namespace Chromium {
 
         /// <summary>
         /// Provides access to the underlying native cef struct.
-        /// This is a refcounted client struct derived from cef_base_t.
+        /// This is a refcounted client struct derived from cef_base_ref_counted_t.
         /// Add a ref in order to keep it alive when this managed object go out of scope.
         /// </summary>
         public sealed override IntPtr NativePtr {

@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2017 Wolfgang Borgsmüller
+﻿// Copyright (c) 2014-2017 Wolfgang Borgsmüller
 // All rights reserved.
 // 
 // This software may be modified and distributed under the terms
@@ -13,16 +13,17 @@ using System.Text;
 namespace Chromium {
 
     /// <summary>
-    /// Base class for all wrapper classes for CEF library structs.
+    /// Base class for all wrapper classes for scoped CEF library structs.
+    /// Objects of this type will be disposed when they go out of scope. 
     /// </summary>
-    public class CfxLibraryBase : CfxBase {
+    public class CfxBaseScoped : CfxBase {
 
-        internal CfxLibraryBase(IntPtr nativePtr) : base(nativePtr) { }
+        internal CfxBaseScoped(IntPtr nativePtr) : base(nativePtr) { }
 
         /// <summary>
         /// Provides access to the underlying native cef struct.
-        /// This is a refcounted library struct derived from cef_base_ref_counted_t.
-        /// Add a ref in order to keep it alive when this managed object go out of scope.
+        /// This is a scoped library struct derived from cef_base_scoped_t.
+        /// It will be destroyed when the managed object goes out of scope.
         /// </summary>
         public sealed override IntPtr NativePtr {
             get {
@@ -35,7 +36,7 @@ namespace Chromium {
         }
 
         internal override void OnDispose(IntPtr nativePtr) {
-            CfxApi.cfx_release(nativePtr);
+            // do nothing
         }
     }
 }
