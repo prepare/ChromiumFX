@@ -17,7 +17,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_x509_certificate_capi.h">cef/include/capi/cef_x509_certificate_capi.h</see>.
     /// </remarks>
-    public class CfxX509CertPrincipal : CfxLibraryBase {
+    public class CfxX509CertPrincipal : CfxBaseLibrary {
 
         private static readonly WeakCache weakCache = new WeakCache();
 

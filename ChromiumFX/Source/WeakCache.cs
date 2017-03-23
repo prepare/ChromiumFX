@@ -41,7 +41,7 @@ namespace Chromium {
             CfxRuntime.OnCfxShutdown += this.OnShutdown;
         }
 
-        internal void Add(CfxBase obj) {
+        internal void Add(CfxBaseRefCounted obj) {
             // always locked by caller
             cache.Add(obj.nativePtrUnchecked, new WeakReference(obj, false));
         }
@@ -53,7 +53,7 @@ namespace Chromium {
                 WeakReference[] refs = new WeakReference[cache.Count];
                 cache.Values.CopyTo(refs, 0);
                 foreach(WeakReference r in refs) {
-                    var obj = (CfxBase)r.Target;
+                    var obj = (CfxBaseRefCounted)r.Target;
                     if(obj != null) obj.Dispose();
                 }
             }

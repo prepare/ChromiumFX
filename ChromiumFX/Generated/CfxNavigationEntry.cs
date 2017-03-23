@@ -17,7 +17,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_navigation_entry_capi.h">cef/include/capi/cef_navigation_entry_capi.h</see>.
     /// </remarks>
-    public class CfxNavigationEntry : CfxLibraryBase {
+    public class CfxNavigationEntry : CfxBaseLibrary {
 
         private static readonly WeakCache weakCache = new WeakCache();
 

@@ -19,7 +19,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_xml_reader_capi.h">cef/include/capi/cef_xml_reader_capi.h</see>.
     /// </remarks>
-    public class CfxXmlReader : CfxLibraryBase {
+    public class CfxXmlReader : CfxBaseLibrary {
 
         private static readonly WeakCache weakCache = new WeakCache();
 

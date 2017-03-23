@@ -9,13 +9,13 @@ namespace Chromium {
     /// <summary>
     /// Base class for all wrapper classes for ref counted CEF structs.
     /// </summary>
-    public abstract class CfxBase : CfxObject {
+    public abstract class CfxBaseRefCounted : CfxObject {
 
-        static internal CfxBase Cast(IntPtr nativePtr) {
+        static internal CfxBaseRefCounted Cast(IntPtr nativePtr) {
             throw new Exception("Implement this");
         }
 
-        static internal IntPtr Unwrap(CfxBase cfxBase) {
+        static internal IntPtr Unwrap(CfxBaseRefCounted cfxBase) {
             if (cfxBase == null) {
                 return IntPtr.Zero;
             } else {
@@ -24,7 +24,7 @@ namespace Chromium {
         }
 
 
-        internal CfxBase() {}
-        internal CfxBase(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxBaseRefCounted() {}
+        internal CfxBaseRefCounted(IntPtr nativePtr) : base(nativePtr) {}
     }
 }

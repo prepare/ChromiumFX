@@ -16,10 +16,10 @@ namespace Chromium {
     /// <summary>
     /// Base class for all wrapper classes for CEF client callback or handler structs.
     /// </summary>
-    public class CfxClientBase : CfxBase {
+    public class CfxBaseClient : CfxBaseRefCounted {
 
-        internal CfxClientBase(IntPtr nativePtr) : base(nativePtr) {}
-        internal CfxClientBase(CfxApi.cfx_ctor_with_gc_handle_delegate cfx_ctor) {
+        internal CfxBaseClient(IntPtr nativePtr) : base(nativePtr) {}
+        internal CfxBaseClient(CfxApi.cfx_ctor_with_gc_handle_delegate cfx_ctor) {
             // must be a weak handle
             // otherwise transient callback structs never go out of scope if
             // they are not explicitly disposed

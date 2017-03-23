@@ -15,9 +15,9 @@ namespace Chromium {
     /// <summary>
     /// Base class for all wrapper classes for CEF library structs.
     /// </summary>
-    public class CfxLibraryBase : CfxBase {
+    public class CfxBaseLibrary : CfxBaseRefCounted {
 
-        internal CfxLibraryBase(IntPtr nativePtr) : base(nativePtr) { }
+        internal CfxBaseLibrary(IntPtr nativePtr) : base(nativePtr) { }
 
         /// <summary>
         /// Provides access to the underlying native cef struct.

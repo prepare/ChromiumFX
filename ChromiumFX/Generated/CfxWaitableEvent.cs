@@ -25,7 +25,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_waitable_event_capi.h">cef/include/capi/cef_waitable_event_capi.h</see>.
     /// </remarks>
-    public class CfxWaitableEvent : CfxLibraryBase {
+    public class CfxWaitableEvent : CfxBaseLibrary {
 
         private static readonly WeakCache weakCache = new WeakCache();
 

@@ -20,7 +20,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_frame_capi.h">cef/include/capi/cef_frame_capi.h</see>.
     /// </remarks>
-    public class CfxFrame : CfxLibraryBase {
+    public class CfxFrame : CfxBaseLibrary {
 
         private static readonly WeakCache weakCache = new WeakCache();
 

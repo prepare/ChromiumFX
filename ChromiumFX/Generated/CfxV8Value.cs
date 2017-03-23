@@ -21,7 +21,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
     /// </remarks>
-    public partial class CfxV8Value : CfxLibraryBase {
+    public partial class CfxV8Value : CfxBaseLibrary {
 
         private static readonly WeakCache weakCache = new WeakCache();
 
@@ -468,9 +468,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public CfxBase UserData {
+        public CfxBaseRefCounted UserData {
             get {
-                return CfxBase.Cast(CfxApi.V8Value.cfx_v8value_get_user_data(NativePtr));
+                return CfxBaseRefCounted.Cast(CfxApi.V8Value.cfx_v8value_get_user_data(NativePtr));
             }
         }
 
@@ -736,8 +736,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool SetUserData(CfxBase userData) {
-            return 0 != CfxApi.V8Value.cfx_v8value_set_user_data(NativePtr, CfxBase.Unwrap(userData));
+        public bool SetUserData(CfxBaseRefCounted userData) {
+            return 0 != CfxApi.V8Value.cfx_v8value_set_user_data(NativePtr, CfxBaseRefCounted.Unwrap(userData));
         }
 
         /// <summary>

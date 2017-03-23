@@ -21,7 +21,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_geolocation_handler_capi.h">cef/include/capi/cef_geolocation_handler_capi.h</see>.
     /// </remarks>
-    public class CfxGeolocationHandler : CfxClientBase {
+    public class CfxGeolocationHandler : CfxBaseClient {
 
         private static object eventLock = new object();
 
