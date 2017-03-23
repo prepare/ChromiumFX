@@ -63,8 +63,9 @@ public class ApiTypeBuilder {
 
         AddType(new ApiType("void"));
 
-        AddType(new CefBaseType());
-        AddType(new CefBasePtrType());
+        AddType(new CefBaseRefCountedType());
+        AddType(new CefBaseScopedType());
+        AddType(new CefBaseRefCountedPtrType());
 
         AddType(new CefColorType());
         AddType(new CefColorRefType());

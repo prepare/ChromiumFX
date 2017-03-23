@@ -53,6 +53,14 @@ static void cfx_pdf_print_settings_get_page_height(cef_pdf_print_settings_t *sel
     *page_height = self->page_height;
 }
 
+// cef_pdf_print_settings_t->scale_factor
+static void cfx_pdf_print_settings_set_scale_factor(cef_pdf_print_settings_t *self, int scale_factor) {
+    self->scale_factor = scale_factor;
+}
+static void cfx_pdf_print_settings_get_scale_factor(cef_pdf_print_settings_t *self, int* scale_factor) {
+    *scale_factor = self->scale_factor;
+}
+
 // cef_pdf_print_settings_t->margin_top
 static void cfx_pdf_print_settings_set_margin_top(cef_pdf_print_settings_t *self, double margin_top) {
     self->margin_top = margin_top;

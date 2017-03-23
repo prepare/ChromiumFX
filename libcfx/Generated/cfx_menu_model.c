@@ -14,6 +14,11 @@ static cef_menu_model_t* cfx_menu_model_create(cef_menu_model_delegate_t* delega
     if(delegate) ((cef_base_t*)delegate)->add_ref((cef_base_t*)delegate);
     return cef_menu_model_create(delegate);
 }
+// is_sub_menu
+static int cfx_menu_model_is_sub_menu(cef_menu_model_t* self) {
+    return self->is_sub_menu(self);
+}
+
 // clear
 static int cfx_menu_model_clear(cef_menu_model_t* self) {
     return self->clear(self);
@@ -267,6 +272,38 @@ static int cfx_menu_model_get_accelerator(cef_menu_model_t* self, int command_id
 // get_accelerator_at
 static int cfx_menu_model_get_accelerator_at(cef_menu_model_t* self, int index, int* key_code, int* shift_pressed, int* ctrl_pressed, int* alt_pressed) {
     return self->get_accelerator_at(self, index, key_code, shift_pressed, ctrl_pressed, alt_pressed);
+}
+
+// set_color
+static int cfx_menu_model_set_color(cef_menu_model_t* self, int command_id, cef_menu_color_type_t color_type, uint32 color) {
+    return self->set_color(self, command_id, color_type, color);
+}
+
+// set_color_at
+static int cfx_menu_model_set_color_at(cef_menu_model_t* self, int index, cef_menu_color_type_t color_type, uint32 color) {
+    return self->set_color_at(self, index, color_type, color);
+}
+
+// get_color
+static int cfx_menu_model_get_color(cef_menu_model_t* self, int command_id, cef_menu_color_type_t color_type, uint32* color) {
+    return self->get_color(self, command_id, color_type, color);
+}
+
+// get_color_at
+static int cfx_menu_model_get_color_at(cef_menu_model_t* self, int index, cef_menu_color_type_t color_type, uint32* color) {
+    return self->get_color_at(self, index, color_type, color);
+}
+
+// set_font_list
+static int cfx_menu_model_set_font_list(cef_menu_model_t* self, int command_id, char16 *font_list_str, int font_list_length) {
+    cef_string_t font_list = { font_list_str, font_list_length, 0 };
+    return self->set_font_list(self, command_id, &font_list);
+}
+
+// set_font_list_at
+static int cfx_menu_model_set_font_list_at(cef_menu_model_t* self, int index, char16 *font_list_str, int font_list_length) {
+    cef_string_t font_list = { font_list_str, font_list_length, 0 };
+    return self->set_font_list_at(self, index, &font_list);
 }
 
 

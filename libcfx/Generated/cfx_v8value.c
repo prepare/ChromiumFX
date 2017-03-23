@@ -243,12 +243,12 @@ static int cfx_v8value_get_keys(cef_v8value_t* self, cef_string_list_t keys) {
 }
 
 // set_user_data
-static int cfx_v8value_set_user_data(cef_v8value_t* self, struct _cef_base_t* user_data) {
+static int cfx_v8value_set_user_data(cef_v8value_t* self, struct _cef_base_ref_counted_t* user_data) {
     return self->set_user_data(self, user_data);
 }
 
 // get_user_data
-static struct _cef_base_t* cfx_v8value_get_user_data(cef_v8value_t* self) {
+static struct _cef_base_ref_counted_t* cfx_v8value_get_user_data(cef_v8value_t* self) {
     return self->get_user_data(self);
 }
 

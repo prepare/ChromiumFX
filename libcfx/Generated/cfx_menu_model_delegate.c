@@ -16,6 +16,9 @@ typedef struct _cfx_menu_model_delegate_t {
     int wrapper_kind;
     // managed callbacks
     void (CEF_CALLBACK *execute_command)(gc_handle_t self, cef_menu_model_t* menu_model, int *menu_model_release, int command_id, cef_event_flags_t event_flags);
+    void (CEF_CALLBACK *mouse_outside_menu)(gc_handle_t self, cef_menu_model_t* menu_model, int *menu_model_release, const cef_point_t* screen_point);
+    void (CEF_CALLBACK *unhandled_open_submenu)(gc_handle_t self, cef_menu_model_t* menu_model, int *menu_model_release, int is_rtl);
+    void (CEF_CALLBACK *unhandled_close_submenu)(gc_handle_t self, cef_menu_model_t* menu_model, int *menu_model_release, int is_rtl);
     void (CEF_CALLBACK *menu_will_show)(gc_handle_t self, cef_menu_model_t* menu_model, int *menu_model_release);
     void (CEF_CALLBACK *menu_closed)(gc_handle_t self, cef_menu_model_t* menu_model, int *menu_model_release);
     void (CEF_CALLBACK *format_label)(gc_handle_t self, int* __retval, cef_menu_model_t* menu_model, int *menu_model_release, char16 **label_str, int *label_length);
@@ -66,6 +69,30 @@ void CEF_CALLBACK cfx_menu_model_delegate_execute_command(cef_menu_model_delegat
     if(menu_model_release) menu_model->base.release((cef_base_t*)menu_model);
 }
 
+// mouse_outside_menu
+
+void CEF_CALLBACK cfx_menu_model_delegate_mouse_outside_menu(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, const cef_point_t* screen_point) {
+    int menu_model_release;
+    ((cfx_menu_model_delegate_t*)self)->mouse_outside_menu(((cfx_menu_model_delegate_t*)self)->gc_handle, menu_model, &menu_model_release, screen_point);
+    if(menu_model_release) menu_model->base.release((cef_base_t*)menu_model);
+}
+
+// unhandled_open_submenu
+
+void CEF_CALLBACK cfx_menu_model_delegate_unhandled_open_submenu(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, int is_rtl) {
+    int menu_model_release;
+    ((cfx_menu_model_delegate_t*)self)->unhandled_open_submenu(((cfx_menu_model_delegate_t*)self)->gc_handle, menu_model, &menu_model_release, is_rtl);
+    if(menu_model_release) menu_model->base.release((cef_base_t*)menu_model);
+}
+
+// unhandled_close_submenu
+
+void CEF_CALLBACK cfx_menu_model_delegate_unhandled_close_submenu(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, int is_rtl) {
+    int menu_model_release;
+    ((cfx_menu_model_delegate_t*)self)->unhandled_close_submenu(((cfx_menu_model_delegate_t*)self)->gc_handle, menu_model, &menu_model_release, is_rtl);
+    if(menu_model_release) menu_model->base.release((cef_base_t*)menu_model);
+}
+
 // menu_will_show
 
 void CEF_CALLBACK cfx_menu_model_delegate_menu_will_show(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model) {
@@ -105,14 +132,26 @@ static void cfx_menu_model_delegate_set_callback(cef_menu_model_delegate_t* self
         self->execute_command = callback ? cfx_menu_model_delegate_execute_command : 0;
         break;
     case 1:
+        ((cfx_menu_model_delegate_t*)self)->mouse_outside_menu = (void (CEF_CALLBACK *)(gc_handle_t self, cef_menu_model_t* menu_model, int *menu_model_release, const cef_point_t* screen_point))callback;
+        self->mouse_outside_menu = callback ? cfx_menu_model_delegate_mouse_outside_menu : 0;
+        break;
+    case 2:
+        ((cfx_menu_model_delegate_t*)self)->unhandled_open_submenu = (void (CEF_CALLBACK *)(gc_handle_t self, cef_menu_model_t* menu_model, int *menu_model_release, int is_rtl))callback;
+        self->unhandled_open_submenu = callback ? cfx_menu_model_delegate_unhandled_open_submenu : 0;
+        break;
+    case 3:
+        ((cfx_menu_model_delegate_t*)self)->unhandled_close_submenu = (void (CEF_CALLBACK *)(gc_handle_t self, cef_menu_model_t* menu_model, int *menu_model_release, int is_rtl))callback;
+        self->unhandled_close_submenu = callback ? cfx_menu_model_delegate_unhandled_close_submenu : 0;
+        break;
+    case 4:
         ((cfx_menu_model_delegate_t*)self)->menu_will_show = (void (CEF_CALLBACK *)(gc_handle_t self, cef_menu_model_t* menu_model, int *menu_model_release))callback;
         self->menu_will_show = callback ? cfx_menu_model_delegate_menu_will_show : 0;
         break;
-    case 2:
+    case 5:
         ((cfx_menu_model_delegate_t*)self)->menu_closed = (void (CEF_CALLBACK *)(gc_handle_t self, cef_menu_model_t* menu_model, int *menu_model_release))callback;
         self->menu_closed = callback ? cfx_menu_model_delegate_menu_closed : 0;
         break;
-    case 3:
+    case 6:
         ((cfx_menu_model_delegate_t*)self)->format_label = (void (CEF_CALLBACK *)(gc_handle_t self, int* __retval, cef_menu_model_t* menu_model, int *menu_model_release, char16 **label_str, int *label_length))callback;
         self->format_label = callback ? cfx_menu_model_delegate_format_label : 0;
         break;

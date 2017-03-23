@@ -21,6 +21,8 @@ namespace Chromium.Remote {
         internal bool isStandard;
         internal bool isLocal;
         internal bool isDisplayIsolated;
+        internal bool isSecure;
+        internal bool isCorsEnabled;
         internal bool __retval;
 
         protected override void WriteArgs(StreamHandler h) {
@@ -29,6 +31,8 @@ namespace Chromium.Remote {
             h.Write(isStandard);
             h.Write(isLocal);
             h.Write(isDisplayIsolated);
+            h.Write(isSecure);
+            h.Write(isCorsEnabled);
         }
 
         protected override void ReadArgs(StreamHandler h) {
@@ -37,6 +41,8 @@ namespace Chromium.Remote {
             h.Read(out isStandard);
             h.Read(out isLocal);
             h.Read(out isDisplayIsolated);
+            h.Read(out isSecure);
+            h.Read(out isCorsEnabled);
         }
 
         protected override void WriteReturn(StreamHandler h) {
@@ -49,7 +55,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var schemeName_pinned = new PinnedString(schemeName);
-            __retval = 0 != CfxApi.SchemeRegistrar.cfx_scheme_registrar_add_custom_scheme(@this, schemeName_pinned.Obj.PinnedPtr, schemeName_pinned.Length, isStandard ? 1 : 0, isLocal ? 1 : 0, isDisplayIsolated ? 1 : 0);
+            __retval = 0 != CfxApi.SchemeRegistrar.cfx_scheme_registrar_add_custom_scheme(@this, schemeName_pinned.Obj.PinnedPtr, schemeName_pinned.Length, isStandard ? 1 : 0, isLocal ? 1 : 0, isDisplayIsolated ? 1 : 0, isSecure ? 1 : 0, isCorsEnabled ? 1 : 0);
             schemeName_pinned.Obj.Free();
         }
     }

@@ -53,6 +53,19 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// Returns true (1) if this menu is a submenu.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
+        /// </remarks>
+        public bool IsSubmenu {
+            get {
+                return 0 != CfxApi.MenuModel.cfx_menu_model_is_sub_menu(NativePtr);
+            }
+        }
+
+        /// <summary>
         /// Returns the number of items in this menu.
         /// </summary>
         /// <remarks>
@@ -662,6 +675,109 @@ namespace Chromium {
             shiftPressed = shiftPressed_unwrapped != 0;
             ctrlPressed = ctrlPressed_unwrapped != 0;
             altPressed = altPressed_unwrapped != 0;
+            return 0 != __retval;
+        }
+
+        /// <summary>
+        /// Set the explicit color for |commandId| and |colorType| to |color|.
+        /// Specify a |color| value of 0 to remove the explicit color. If no explicit
+        /// color or default color is set for |colorType| then the system color will
+        /// be used. Returns true (1) on success.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
+        /// </remarks>
+        public bool SetColor(int commandId, CfxMenuColorType colorType, CfxColor color) {
+            return 0 != CfxApi.MenuModel.cfx_menu_model_set_color(NativePtr, commandId, (int)colorType, CfxColor.Unwrap(color));
+        }
+
+        /// <summary>
+        /// Set the explicit color for |commandId| and |index| to |color|. Specify a
+        /// |color| value of 0 to remove the explicit color. Specify an |index| value
+        /// of -1 to set the default color for items that do not have an explicit color
+        /// set. If no explicit color or default color is set for |colorType| then the
+        /// system color will be used. Returns true (1) on success.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
+        /// </remarks>
+        public bool SetColorAt(int index, CfxMenuColorType colorType, CfxColor color) {
+            return 0 != CfxApi.MenuModel.cfx_menu_model_set_color_at(NativePtr, index, (int)colorType, CfxColor.Unwrap(color));
+        }
+
+        /// <summary>
+        /// Returns in |color| the color that was explicitly set for |commandId| and
+        /// |colorType|. If a color was not set then 0 will be returned in |color|.
+        /// Returns true (1) on success.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
+        /// </remarks>
+        public bool GetColor(int commandId, CfxMenuColorType colorType, ref CfxColor color) {
+            return 0 != CfxApi.MenuModel.cfx_menu_model_get_color(NativePtr, commandId, (int)colorType, ref color.color);
+        }
+
+        /// <summary>
+        /// Returns in |color| the color that was explicitly set for |commandId| and
+        /// |colorType|. Specify an |index| value of -1 to return the default color in
+        /// |color|. If a color was not set then 0 will be returned in |color|. Returns
+        /// true (1) on success.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
+        /// </remarks>
+        public bool GetColorAt(int index, CfxMenuColorType colorType, ref CfxColor color) {
+            return 0 != CfxApi.MenuModel.cfx_menu_model_get_color_at(NativePtr, index, (int)colorType, ref color.color);
+        }
+
+        /// <summary>
+        /// Sets the font list for the specified |commandId|. If |fontList| is NULL
+        /// the system font will be used. Returns true (1) on success. The format is
+        /// "&lt;FONT_FAMILY_LIST>,[STYLES] &lt;SIZE>", where: - FONT_FAMILY_LIST is a comma-
+        /// separated list of font family names, - STYLES is an optional space-
+        /// separated list of style names (case-sensitive
+        ///   "Bold" and "Italic" are supported), and
+        /// - SIZE is an integer font size in pixels with the suffix "px".
+        /// 
+        /// Here are examples of valid font description strings: - "Arial, Helvetica,
+        /// Bold Italic 14px" - "Arial, 14px"
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
+        /// </remarks>
+        public bool SetFontList(int commandId, string fontList) {
+            var fontList_pinned = new PinnedString(fontList);
+            var __retval = CfxApi.MenuModel.cfx_menu_model_set_font_list(NativePtr, commandId, fontList_pinned.Obj.PinnedPtr, fontList_pinned.Length);
+            fontList_pinned.Obj.Free();
+            return 0 != __retval;
+        }
+
+        /// <summary>
+        /// Sets the font list for the specified |index|. Specify an |index| value of
+        /// -1 to set the default font. If |fontList| is NULL the system font will be
+        /// used. Returns true (1) on success. The format is
+        /// "&lt;FONT_FAMILY_LIST>,[STYLES] &lt;SIZE>", where: - FONT_FAMILY_LIST is a comma-
+        /// separated list of font family names, - STYLES is an optional space-
+        /// separated list of style names (case-sensitive
+        ///   "Bold" and "Italic" are supported), and
+        /// - SIZE is an integer font size in pixels with the suffix "px".
+        /// 
+        /// Here are examples of valid font description strings: - "Arial, Helvetica,
+        /// Bold Italic 14px" - "Arial, 14px"
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_capi.h">cef/include/capi/cef_menu_model_capi.h</see>.
+        /// </remarks>
+        public bool SetFontListAt(int index, string fontList) {
+            var fontList_pinned = new PinnedString(fontList);
+            var __retval = CfxApi.MenuModel.cfx_menu_model_set_font_list_at(NativePtr, index, fontList_pinned.Obj.PinnedPtr, fontList_pinned.Length);
+            fontList_pinned.Obj.Free();
             return 0 != __retval;
         }
 

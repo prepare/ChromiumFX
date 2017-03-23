@@ -27,11 +27,17 @@ namespace Chromium {
 
         internal static void SetNativeCallbacks() {
             execute_command_native = execute_command;
+            mouse_outside_menu_native = mouse_outside_menu;
+            unhandled_open_submenu_native = unhandled_open_submenu;
+            unhandled_close_submenu_native = unhandled_close_submenu;
             menu_will_show_native = menu_will_show;
             menu_closed_native = menu_closed;
             format_label_native = format_label;
 
             execute_command_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(execute_command_native);
+            mouse_outside_menu_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(mouse_outside_menu_native);
+            unhandled_open_submenu_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(unhandled_open_submenu_native);
+            unhandled_close_submenu_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(unhandled_close_submenu_native);
             menu_will_show_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(menu_will_show_native);
             menu_closed_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(menu_closed_native);
             format_label_native_ptr = System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(format_label_native);
@@ -51,6 +57,60 @@ namespace Chromium {
             }
             var e = new CfxExecuteCommandEventArgs(menu_model, command_id, event_flags);
             self.m_ExecuteCommand?.Invoke(self, e);
+            e.m_isInvalid = true;
+            menu_model_release = e.m_menu_model_wrapped == null? 1 : 0;
+        }
+
+        // mouse_outside_menu
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void mouse_outside_menu_delegate(IntPtr gcHandlePtr, IntPtr menu_model, out int menu_model_release, IntPtr screen_point);
+        private static mouse_outside_menu_delegate mouse_outside_menu_native;
+        private static IntPtr mouse_outside_menu_native_ptr;
+
+        internal static void mouse_outside_menu(IntPtr gcHandlePtr, IntPtr menu_model, out int menu_model_release, IntPtr screen_point) {
+            var self = (CfxMenuModelDelegate)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                menu_model_release = 1;
+                return;
+            }
+            var e = new CfxMouseOutsideMenuEventArgs(menu_model, screen_point);
+            self.m_MouseOutsideMenu?.Invoke(self, e);
+            e.m_isInvalid = true;
+            menu_model_release = e.m_menu_model_wrapped == null? 1 : 0;
+        }
+
+        // unhandled_open_submenu
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void unhandled_open_submenu_delegate(IntPtr gcHandlePtr, IntPtr menu_model, out int menu_model_release, int is_rtl);
+        private static unhandled_open_submenu_delegate unhandled_open_submenu_native;
+        private static IntPtr unhandled_open_submenu_native_ptr;
+
+        internal static void unhandled_open_submenu(IntPtr gcHandlePtr, IntPtr menu_model, out int menu_model_release, int is_rtl) {
+            var self = (CfxMenuModelDelegate)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                menu_model_release = 1;
+                return;
+            }
+            var e = new CfxUnhandledOpenSubmenuEventArgs(menu_model, is_rtl);
+            self.m_UnhandledOpenSubmenu?.Invoke(self, e);
+            e.m_isInvalid = true;
+            menu_model_release = e.m_menu_model_wrapped == null? 1 : 0;
+        }
+
+        // unhandled_close_submenu
+        [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
+        private delegate void unhandled_close_submenu_delegate(IntPtr gcHandlePtr, IntPtr menu_model, out int menu_model_release, int is_rtl);
+        private static unhandled_close_submenu_delegate unhandled_close_submenu_native;
+        private static IntPtr unhandled_close_submenu_native_ptr;
+
+        internal static void unhandled_close_submenu(IntPtr gcHandlePtr, IntPtr menu_model, out int menu_model_release, int is_rtl) {
+            var self = (CfxMenuModelDelegate)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            if(self == null || self.CallbacksDisabled) {
+                menu_model_release = 1;
+                return;
+            }
+            var e = new CfxUnhandledCloseSubmenuEventArgs(menu_model, is_rtl);
+            self.m_UnhandledCloseSubmenu?.Invoke(self, e);
             e.m_isInvalid = true;
             menu_model_release = e.m_menu_model_wrapped == null? 1 : 0;
         }
@@ -149,6 +209,93 @@ namespace Chromium {
         private CfxExecuteCommandEventHandler m_ExecuteCommand;
 
         /// <summary>
+        /// Called when the user moves the mouse outside the menu and over the owning
+        /// window.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_delegate_capi.h">cef/include/capi/cef_menu_model_delegate_capi.h</see>.
+        /// </remarks>
+        public event CfxMouseOutsideMenuEventHandler MouseOutsideMenu {
+            add {
+                lock(eventLock) {
+                    if(m_MouseOutsideMenu == null) {
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 1, mouse_outside_menu_native_ptr);
+                    }
+                    m_MouseOutsideMenu += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_MouseOutsideMenu -= value;
+                    if(m_MouseOutsideMenu == null) {
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 1, IntPtr.Zero);
+                    }
+                }
+            }
+        }
+
+        private CfxMouseOutsideMenuEventHandler m_MouseOutsideMenu;
+
+        /// <summary>
+        /// Called on unhandled open submenu keyboard commands. |IsRtl| will be true
+        /// (1) if the menu is displaying a right-to-left language.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_delegate_capi.h">cef/include/capi/cef_menu_model_delegate_capi.h</see>.
+        /// </remarks>
+        public event CfxUnhandledOpenSubmenuEventHandler UnhandledOpenSubmenu {
+            add {
+                lock(eventLock) {
+                    if(m_UnhandledOpenSubmenu == null) {
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 2, unhandled_open_submenu_native_ptr);
+                    }
+                    m_UnhandledOpenSubmenu += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_UnhandledOpenSubmenu -= value;
+                    if(m_UnhandledOpenSubmenu == null) {
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 2, IntPtr.Zero);
+                    }
+                }
+            }
+        }
+
+        private CfxUnhandledOpenSubmenuEventHandler m_UnhandledOpenSubmenu;
+
+        /// <summary>
+        /// Called on unhandled close submenu keyboard commands. |IsRtl| will be true
+        /// (1) if the menu is displaying a right-to-left language.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_delegate_capi.h">cef/include/capi/cef_menu_model_delegate_capi.h</see>.
+        /// </remarks>
+        public event CfxUnhandledCloseSubmenuEventHandler UnhandledCloseSubmenu {
+            add {
+                lock(eventLock) {
+                    if(m_UnhandledCloseSubmenu == null) {
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 3, unhandled_close_submenu_native_ptr);
+                    }
+                    m_UnhandledCloseSubmenu += value;
+                }
+            }
+            remove {
+                lock(eventLock) {
+                    m_UnhandledCloseSubmenu -= value;
+                    if(m_UnhandledCloseSubmenu == null) {
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 3, IntPtr.Zero);
+                    }
+                }
+            }
+        }
+
+        private CfxUnhandledCloseSubmenuEventHandler m_UnhandledCloseSubmenu;
+
+        /// <summary>
         /// The menu is about to show.
         /// </summary>
         /// <remarks>
@@ -159,7 +306,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_MenuWillShow == null) {
-                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 1, menu_will_show_native_ptr);
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 4, menu_will_show_native_ptr);
                     }
                     m_MenuWillShow += value;
                 }
@@ -168,7 +315,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_MenuWillShow -= value;
                     if(m_MenuWillShow == null) {
-                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 1, IntPtr.Zero);
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 4, IntPtr.Zero);
                     }
                 }
             }
@@ -187,7 +334,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_MenuClosed == null) {
-                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 2, menu_closed_native_ptr);
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 5, menu_closed_native_ptr);
                     }
                     m_MenuClosed += value;
                 }
@@ -196,7 +343,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_MenuClosed -= value;
                     if(m_MenuClosed == null) {
-                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 2, IntPtr.Zero);
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 5, IntPtr.Zero);
                     }
                 }
             }
@@ -216,7 +363,7 @@ namespace Chromium {
             add {
                 lock(eventLock) {
                     if(m_FormatLabel == null) {
-                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 3, format_label_native_ptr);
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 6, format_label_native_ptr);
                     }
                     m_FormatLabel += value;
                 }
@@ -225,7 +372,7 @@ namespace Chromium {
                 lock(eventLock) {
                     m_FormatLabel -= value;
                     if(m_FormatLabel == null) {
-                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 3, IntPtr.Zero);
+                        CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 6, IntPtr.Zero);
                     }
                 }
             }
@@ -238,17 +385,29 @@ namespace Chromium {
                 m_ExecuteCommand = null;
                 CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 0, IntPtr.Zero);
             }
+            if(m_MouseOutsideMenu != null) {
+                m_MouseOutsideMenu = null;
+                CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 1, IntPtr.Zero);
+            }
+            if(m_UnhandledOpenSubmenu != null) {
+                m_UnhandledOpenSubmenu = null;
+                CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 2, IntPtr.Zero);
+            }
+            if(m_UnhandledCloseSubmenu != null) {
+                m_UnhandledCloseSubmenu = null;
+                CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 3, IntPtr.Zero);
+            }
             if(m_MenuWillShow != null) {
                 m_MenuWillShow = null;
-                CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 1, IntPtr.Zero);
+                CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 4, IntPtr.Zero);
             }
             if(m_MenuClosed != null) {
                 m_MenuClosed = null;
-                CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 2, IntPtr.Zero);
+                CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 5, IntPtr.Zero);
             }
             if(m_FormatLabel != null) {
                 m_FormatLabel = null;
-                CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 3, IntPtr.Zero);
+                CfxApi.MenuModelDelegate.cfx_menu_model_delegate_set_callback(NativePtr, 6, IntPtr.Zero);
             }
             base.OnDispose(nativePtr);
         }
@@ -319,6 +478,170 @@ namespace Chromium {
 
             public override string ToString() {
                 return String.Format("MenuModel={{{0}}}, CommandId={{{1}}}, EventFlags={{{2}}}", MenuModel, CommandId, EventFlags);
+            }
+        }
+
+        /// <summary>
+        /// Called when the user moves the mouse outside the menu and over the owning
+        /// window.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_delegate_capi.h">cef/include/capi/cef_menu_model_delegate_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxMouseOutsideMenuEventHandler(object sender, CfxMouseOutsideMenuEventArgs e);
+
+        /// <summary>
+        /// Called when the user moves the mouse outside the menu and over the owning
+        /// window.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_delegate_capi.h">cef/include/capi/cef_menu_model_delegate_capi.h</see>.
+        /// </remarks>
+        public class CfxMouseOutsideMenuEventArgs : CfxEventArgs {
+
+            internal IntPtr m_menu_model;
+            internal CfxMenuModel m_menu_model_wrapped;
+            internal IntPtr m_screen_point;
+            internal CfxPoint m_screen_point_wrapped;
+
+            internal CfxMouseOutsideMenuEventArgs(IntPtr menu_model, IntPtr screen_point) {
+                m_menu_model = menu_model;
+                m_screen_point = screen_point;
+            }
+
+            /// <summary>
+            /// Get the MenuModel parameter for the <see cref="CfxMenuModelDelegate.MouseOutsideMenu"/> callback.
+            /// </summary>
+            public CfxMenuModel MenuModel {
+                get {
+                    CheckAccess();
+                    if(m_menu_model_wrapped == null) m_menu_model_wrapped = CfxMenuModel.Wrap(m_menu_model);
+                    return m_menu_model_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the ScreenPoint parameter for the <see cref="CfxMenuModelDelegate.MouseOutsideMenu"/> callback.
+            /// </summary>
+            public CfxPoint ScreenPoint {
+                get {
+                    CheckAccess();
+                    if(m_screen_point_wrapped == null) m_screen_point_wrapped = CfxPoint.Wrap(m_screen_point);
+                    return m_screen_point_wrapped;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("MenuModel={{{0}}}, ScreenPoint={{{1}}}", MenuModel, ScreenPoint);
+            }
+        }
+
+        /// <summary>
+        /// Called on unhandled open submenu keyboard commands. |IsRtl| will be true
+        /// (1) if the menu is displaying a right-to-left language.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_delegate_capi.h">cef/include/capi/cef_menu_model_delegate_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxUnhandledOpenSubmenuEventHandler(object sender, CfxUnhandledOpenSubmenuEventArgs e);
+
+        /// <summary>
+        /// Called on unhandled open submenu keyboard commands. |IsRtl| will be true
+        /// (1) if the menu is displaying a right-to-left language.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_delegate_capi.h">cef/include/capi/cef_menu_model_delegate_capi.h</see>.
+        /// </remarks>
+        public class CfxUnhandledOpenSubmenuEventArgs : CfxEventArgs {
+
+            internal IntPtr m_menu_model;
+            internal CfxMenuModel m_menu_model_wrapped;
+            internal int m_is_rtl;
+
+            internal CfxUnhandledOpenSubmenuEventArgs(IntPtr menu_model, int is_rtl) {
+                m_menu_model = menu_model;
+                m_is_rtl = is_rtl;
+            }
+
+            /// <summary>
+            /// Get the MenuModel parameter for the <see cref="CfxMenuModelDelegate.UnhandledOpenSubmenu"/> callback.
+            /// </summary>
+            public CfxMenuModel MenuModel {
+                get {
+                    CheckAccess();
+                    if(m_menu_model_wrapped == null) m_menu_model_wrapped = CfxMenuModel.Wrap(m_menu_model);
+                    return m_menu_model_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the IsRtl parameter for the <see cref="CfxMenuModelDelegate.UnhandledOpenSubmenu"/> callback.
+            /// </summary>
+            public bool IsRtl {
+                get {
+                    CheckAccess();
+                    return 0 != m_is_rtl;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("MenuModel={{{0}}}, IsRtl={{{1}}}", MenuModel, IsRtl);
+            }
+        }
+
+        /// <summary>
+        /// Called on unhandled close submenu keyboard commands. |IsRtl| will be true
+        /// (1) if the menu is displaying a right-to-left language.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_delegate_capi.h">cef/include/capi/cef_menu_model_delegate_capi.h</see>.
+        /// </remarks>
+        public delegate void CfxUnhandledCloseSubmenuEventHandler(object sender, CfxUnhandledCloseSubmenuEventArgs e);
+
+        /// <summary>
+        /// Called on unhandled close submenu keyboard commands. |IsRtl| will be true
+        /// (1) if the menu is displaying a right-to-left language.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_menu_model_delegate_capi.h">cef/include/capi/cef_menu_model_delegate_capi.h</see>.
+        /// </remarks>
+        public class CfxUnhandledCloseSubmenuEventArgs : CfxEventArgs {
+
+            internal IntPtr m_menu_model;
+            internal CfxMenuModel m_menu_model_wrapped;
+            internal int m_is_rtl;
+
+            internal CfxUnhandledCloseSubmenuEventArgs(IntPtr menu_model, int is_rtl) {
+                m_menu_model = menu_model;
+                m_is_rtl = is_rtl;
+            }
+
+            /// <summary>
+            /// Get the MenuModel parameter for the <see cref="CfxMenuModelDelegate.UnhandledCloseSubmenu"/> callback.
+            /// </summary>
+            public CfxMenuModel MenuModel {
+                get {
+                    CheckAccess();
+                    if(m_menu_model_wrapped == null) m_menu_model_wrapped = CfxMenuModel.Wrap(m_menu_model);
+                    return m_menu_model_wrapped;
+                }
+            }
+            /// <summary>
+            /// Get the IsRtl parameter for the <see cref="CfxMenuModelDelegate.UnhandledCloseSubmenu"/> callback.
+            /// </summary>
+            public bool IsRtl {
+                get {
+                    CheckAccess();
+                    return 0 != m_is_rtl;
+                }
+            }
+
+            public override string ToString() {
+                return String.Format("MenuModel={{{0}}}, IsRtl={{{1}}}", MenuModel, IsRtl);
             }
         }
 

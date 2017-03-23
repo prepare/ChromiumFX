@@ -3310,6 +3310,11 @@ namespace Chromium {
             public delegate IntPtr cfx_menu_model_create_delegate(IntPtr @delegate);
             public static cfx_menu_model_create_delegate cfx_menu_model_create;
 
+            // static int cfx_menu_model_is_sub_menu(cef_menu_model_t* self)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate int cfx_menu_model_is_sub_menu_delegate(IntPtr self);
+            public static cfx_menu_model_is_sub_menu_delegate cfx_menu_model_is_sub_menu;
+
             // static int cfx_menu_model_clear(cef_menu_model_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate int cfx_menu_model_clear_delegate(IntPtr self);
@@ -3555,6 +3560,36 @@ namespace Chromium {
             public delegate int cfx_menu_model_get_accelerator_at_delegate(IntPtr self, int index, out int key_code, out int shift_pressed, out int ctrl_pressed, out int alt_pressed);
             public static cfx_menu_model_get_accelerator_at_delegate cfx_menu_model_get_accelerator_at;
 
+            // static int cfx_menu_model_set_color(cef_menu_model_t* self, int command_id, cef_menu_color_type_t color_type, uint32 color)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate int cfx_menu_model_set_color_delegate(IntPtr self, int command_id, int color_type, uint color);
+            public static cfx_menu_model_set_color_delegate cfx_menu_model_set_color;
+
+            // static int cfx_menu_model_set_color_at(cef_menu_model_t* self, int index, cef_menu_color_type_t color_type, uint32 color)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate int cfx_menu_model_set_color_at_delegate(IntPtr self, int index, int color_type, uint color);
+            public static cfx_menu_model_set_color_at_delegate cfx_menu_model_set_color_at;
+
+            // static int cfx_menu_model_get_color(cef_menu_model_t* self, int command_id, cef_menu_color_type_t color_type, uint32* color)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate int cfx_menu_model_get_color_delegate(IntPtr self, int command_id, int color_type, ref uint color);
+            public static cfx_menu_model_get_color_delegate cfx_menu_model_get_color;
+
+            // static int cfx_menu_model_get_color_at(cef_menu_model_t* self, int index, cef_menu_color_type_t color_type, uint32* color)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate int cfx_menu_model_get_color_at_delegate(IntPtr self, int index, int color_type, ref uint color);
+            public static cfx_menu_model_get_color_at_delegate cfx_menu_model_get_color_at;
+
+            // static int cfx_menu_model_set_font_list(cef_menu_model_t* self, int command_id, char16 *font_list_str, int font_list_length)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate int cfx_menu_model_set_font_list_delegate(IntPtr self, int command_id, IntPtr font_list_str, int font_list_length);
+            public static cfx_menu_model_set_font_list_delegate cfx_menu_model_set_font_list;
+
+            // static int cfx_menu_model_set_font_list_at(cef_menu_model_t* self, int index, char16 *font_list_str, int font_list_length)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate int cfx_menu_model_set_font_list_at_delegate(IntPtr self, int index, IntPtr font_list_str, int font_list_length);
+            public static cfx_menu_model_set_font_list_at_delegate cfx_menu_model_set_font_list_at;
+
         }
 
         internal static class MenuModelDelegate {
@@ -3737,6 +3772,15 @@ namespace Chromium {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate void cfx_pdf_print_settings_get_page_height_delegate(IntPtr self, out int page_height);
             public static cfx_pdf_print_settings_get_page_height_delegate cfx_pdf_print_settings_get_page_height;
+
+            // static void cfx_pdf_print_settings_set_scale_factor(cef_pdf_print_settings_t *self, int scale_factor)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_pdf_print_settings_set_scale_factor_delegate(IntPtr self, int scale_factor);
+            public static cfx_pdf_print_settings_set_scale_factor_delegate cfx_pdf_print_settings_set_scale_factor;
+            // static void cfx_pdf_print_settings_get_scale_factor(cef_pdf_print_settings_t *self, int* scale_factor)
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
+            public delegate void cfx_pdf_print_settings_get_scale_factor_delegate(IntPtr self, out int scale_factor);
+            public static cfx_pdf_print_settings_get_scale_factor_delegate cfx_pdf_print_settings_get_scale_factor;
 
             // static void cfx_pdf_print_settings_set_margin_top(cef_pdf_print_settings_t *self, double margin_top)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -4982,9 +5026,9 @@ namespace Chromium {
                 CfxApiLoader.LoadCfxSchemeRegistrarApi();
             }
 
-            // static int cfx_scheme_registrar_add_custom_scheme(cef_scheme_registrar_t* self, char16 *scheme_name_str, int scheme_name_length, int is_standard, int is_local, int is_display_isolated)
+            // static int cfx_scheme_registrar_add_custom_scheme(cef_scheme_registrar_t* self, char16 *scheme_name_str, int scheme_name_length, int is_standard, int is_local, int is_display_isolated, int is_secure, int is_cors_enabled)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-            public delegate int cfx_scheme_registrar_add_custom_scheme_delegate(IntPtr self, IntPtr scheme_name_str, int scheme_name_length, int is_standard, int is_local, int is_display_isolated);
+            public delegate int cfx_scheme_registrar_add_custom_scheme_delegate(IntPtr self, IntPtr scheme_name_str, int scheme_name_length, int is_standard, int is_local, int is_display_isolated, int is_secure, int is_cors_enabled);
             public static cfx_scheme_registrar_add_custom_scheme_delegate cfx_scheme_registrar_add_custom_scheme;
 
         }
@@ -6301,12 +6345,12 @@ namespace Chromium {
             public delegate int cfx_v8value_get_keys_delegate(IntPtr self, IntPtr keys);
             public static cfx_v8value_get_keys_delegate cfx_v8value_get_keys;
 
-            // static int cfx_v8value_set_user_data(cef_v8value_t* self, struct _cef_base_t* user_data)
+            // static int cfx_v8value_set_user_data(cef_v8value_t* self, struct _cef_base_ref_counted_t* user_data)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate int cfx_v8value_set_user_data_delegate(IntPtr self, IntPtr user_data);
             public static cfx_v8value_set_user_data_delegate cfx_v8value_set_user_data;
 
-            // static struct _cef_base_t* cfx_v8value_get_user_data(cef_v8value_t* self)
+            // static struct _cef_base_ref_counted_t* cfx_v8value_get_user_data(cef_v8value_t* self)
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
             public delegate IntPtr cfx_v8value_get_user_data_delegate(IntPtr self);
             public static cfx_v8value_get_user_data_delegate cfx_v8value_get_user_data;
