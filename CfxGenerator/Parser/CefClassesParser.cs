@@ -36,7 +36,7 @@ namespace Parser {
             var success =
                 ParseCefConfig(c.CefConfig)
                 && Scan(@"class (\w+)", () => c.Name = Group01)
-                && Skip(": public (?:virtual )?CefBase {");
+                && Skip(": public (?:virtual )?CefBase(?:RefCounted|Scoped) {");
 
             if(success) {
 
@@ -103,7 +103,7 @@ namespace Parser {
 
         private bool SkipType() {
             return
-                Skip(@"(const\s+)?CefRefPtr<\w+>(?:\s*&)?")
+                Skip(@"(const\s+)?Cef(?:Ref|Raw)Ptr<\w+>(?:\s*&)?")
                 || Skip(@"(const\s+)?std::\w+<.+?>(?:\s*&)?")
                 || Skip(@"const char\* const\*")
                 || Skip(@"(const\s+)?\w+(?:\s*[&*])*");
