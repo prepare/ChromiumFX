@@ -135,7 +135,7 @@ public class CfxClientClass : CfxClass {
 
         b.AppendSummaryAndRemarks(Comments, false, true);
 
-        b.BeginClass(ClassName + " : CfxClientBase", GeneratorConfig.ClassModifiers(ClassName));
+        b.BeginClass(ClassName + " : CfxBaseClient", GeneratorConfig.ClassModifiers(ClassName));
         b.AppendLine();
 
         if(NeedsWrapFunction) {

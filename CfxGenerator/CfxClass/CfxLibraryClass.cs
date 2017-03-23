@@ -86,7 +86,7 @@ public class CfxLibraryClass : CfxClass {
 
         b.AppendSummaryAndRemarks(Comments);
 
-        b.BeginClass(ClassName + " : CfxLibraryBase", GeneratorConfig.ClassModifiers(ClassName));
+        b.BeginClass(ClassName + " : CfxBaseLibrary", GeneratorConfig.ClassModifiers(ClassName));
         b.AppendLine();
 
         b.AppendLine("private static readonly WeakCache weakCache = new WeakCache();");

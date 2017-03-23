@@ -468,9 +468,9 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public CfxBaseRefCounted UserData {
+        public CfxBase UserData {
             get {
-                return CfxBaseRefCounted.Cast(CfxApi.V8Value.cfx_v8value_get_user_data(NativePtr));
+                return CfxBase.Cast(CfxApi.V8Value.cfx_v8value_get_user_data(NativePtr));
             }
         }
 
@@ -736,8 +736,8 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool SetUserData(CfxBaseRefCounted userData) {
-            return 0 != CfxApi.V8Value.cfx_v8value_set_user_data(NativePtr, CfxBaseRefCounted.Unwrap(userData));
+        public bool SetUserData(CfxBase userData) {
+            return 0 != CfxApi.V8Value.cfx_v8value_set_user_data(NativePtr, CfxBase.Unwrap(userData));
         }
 
         /// <summary>
