@@ -18,10 +18,10 @@ typedef struct _cfx_cookie_visitor_t {
     void (CEF_CALLBACK *visit)(gc_handle_t self, int* __retval, const cef_cookie_t* cookie, int count, int total, int* deleteCookie);
 } cfx_cookie_visitor_t;
 
-void CEF_CALLBACK _cfx_cookie_visitor_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_cookie_visitor_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_cookie_visitor_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_cookie_visitor_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_cookie_visitor_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_cookie_visitor_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_cookie_visitor_t*)base)->wrapper_kind == 0) {
@@ -34,7 +34,7 @@ int CEF_CALLBACK _cfx_cookie_visitor_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_cookie_visitor_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_cookie_visitor_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_cookie_visitor_t*)base)->ref_count == 1 ? 1 : 0;
 }
 

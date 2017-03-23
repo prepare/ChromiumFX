@@ -26,6 +26,9 @@ public class CefStructType : CefType {
 
     public string CefBaseType { get; private set; }
 
+    public bool IsRefCounted {
+        get { return CefBaseType == "cef_base_ref_counted_t"; }
+    }
 
     public string CfxNativeSymbol {
         get { return CfxName + "_t"; }

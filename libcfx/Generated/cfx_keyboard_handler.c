@@ -19,10 +19,10 @@ typedef struct _cfx_keyboard_handler_t {
     void (CEF_CALLBACK *on_key_event)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *browser_release, const cef_key_event_t* event, cef_event_handle_t os_event);
 } cfx_keyboard_handler_t;
 
-void CEF_CALLBACK _cfx_keyboard_handler_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_keyboard_handler_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_keyboard_handler_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_keyboard_handler_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_keyboard_handler_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_keyboard_handler_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_keyboard_handler_t*)base)->wrapper_kind == 0) {
@@ -35,7 +35,7 @@ int CEF_CALLBACK _cfx_keyboard_handler_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_keyboard_handler_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_keyboard_handler_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_keyboard_handler_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
@@ -62,7 +62,7 @@ int CEF_CALLBACK cfx_keyboard_handler_on_pre_key_event(cef_keyboard_handler_t* s
     int __retval;
     int browser_release;
     ((cfx_keyboard_handler_t*)self)->on_pre_key_event(((cfx_keyboard_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, event, os_event, is_keyboard_shortcut);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
     return __retval;
 }
 
@@ -72,7 +72,7 @@ int CEF_CALLBACK cfx_keyboard_handler_on_key_event(cef_keyboard_handler_t* self,
     int __retval;
     int browser_release;
     ((cfx_keyboard_handler_t*)self)->on_key_event(((cfx_keyboard_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, event, os_event);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
     return __retval;
 }
 

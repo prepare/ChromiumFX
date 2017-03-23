@@ -63,7 +63,7 @@ static cef_post_data_t* cfx_request_get_post_data(cef_request_t* self) {
 
 // set_post_data
 static void cfx_request_set_post_data(cef_request_t* self, cef_post_data_t* postData) {
-    if(postData) ((cef_base_t*)postData)->add_ref((cef_base_t*)postData);
+    if(postData) ((cef_base_ref_counted_t*)postData)->add_ref((cef_base_ref_counted_t*)postData);
     self->set_post_data(self, postData);
 }
 
@@ -81,7 +81,7 @@ static void cfx_request_set_header_map(cef_request_t* self, cef_string_multimap_
 static void cfx_request_set(cef_request_t* self, char16 *url_str, int url_length, char16 *method_str, int method_length, cef_post_data_t* postData, cef_string_multimap_t headerMap) {
     cef_string_t url = { url_str, url_length, 0 };
     cef_string_t method = { method_str, method_length, 0 };
-    if(postData) ((cef_base_t*)postData)->add_ref((cef_base_t*)postData);
+    if(postData) ((cef_base_ref_counted_t*)postData)->add_ref((cef_base_ref_counted_t*)postData);
     self->set(self, &url, &method, postData, headerMap);
 }
 

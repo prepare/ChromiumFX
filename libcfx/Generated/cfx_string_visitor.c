@@ -18,10 +18,10 @@ typedef struct _cfx_string_visitor_t {
     void (CEF_CALLBACK *visit)(gc_handle_t self, char16 *string_str, int string_length);
 } cfx_string_visitor_t;
 
-void CEF_CALLBACK _cfx_string_visitor_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_string_visitor_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_string_visitor_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_string_visitor_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_string_visitor_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_string_visitor_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_string_visitor_t*)base)->wrapper_kind == 0) {
@@ -34,7 +34,7 @@ int CEF_CALLBACK _cfx_string_visitor_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_string_visitor_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_string_visitor_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_string_visitor_t*)base)->ref_count == 1 ? 1 : 0;
 }
 

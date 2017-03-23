@@ -11,7 +11,7 @@
 
 // CEF_EXPORT cef_xml_reader_t* cef_xml_reader_create(cef_stream_reader_t* stream, cef_xml_encoding_type_t encodingType, const cef_string_t* URI);
 static cef_xml_reader_t* cfx_xml_reader_create(cef_stream_reader_t* stream, cef_xml_encoding_type_t encodingType, char16 *URI_str, int URI_length) {
-    if(stream) ((cef_base_t*)stream)->add_ref((cef_base_t*)stream);
+    if(stream) ((cef_base_ref_counted_t*)stream)->add_ref((cef_base_ref_counted_t*)stream);
     cef_string_t URI = { URI_str, URI_length, 0 };
     return cef_xml_reader_create(stream, encodingType, &URI);
 }

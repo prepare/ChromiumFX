@@ -18,10 +18,10 @@ typedef struct _cfx_find_handler_t {
     void (CEF_CALLBACK *on_find_result)(gc_handle_t self, cef_browser_t* browser, int *browser_release, int identifier, int count, const cef_rect_t* selectionRect, int activeMatchOrdinal, int finalUpdate);
 } cfx_find_handler_t;
 
-void CEF_CALLBACK _cfx_find_handler_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_find_handler_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_find_handler_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_find_handler_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_find_handler_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_find_handler_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_find_handler_t*)base)->wrapper_kind == 0) {
@@ -34,7 +34,7 @@ int CEF_CALLBACK _cfx_find_handler_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_find_handler_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_find_handler_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_find_handler_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
@@ -60,7 +60,7 @@ static gc_handle_t cfx_find_handler_get_gc_handle(cfx_find_handler_t* self) {
 void CEF_CALLBACK cfx_find_handler_on_find_result(cef_find_handler_t* self, cef_browser_t* browser, int identifier, int count, const cef_rect_t* selectionRect, int activeMatchOrdinal, int finalUpdate) {
     int browser_release;
     ((cfx_find_handler_t*)self)->on_find_result(((cfx_find_handler_t*)self)->gc_handle, browser, &browser_release, identifier, count, selectionRect, activeMatchOrdinal, finalUpdate);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
 static void cfx_find_handler_set_callback(cef_find_handler_t* self, int index, void* callback) {

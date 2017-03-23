@@ -18,10 +18,10 @@ typedef struct _cfx_register_cdm_callback_t {
     void (CEF_CALLBACK *on_cdm_registration_complete)(gc_handle_t self, cef_cdm_registration_error_t result, char16 *error_message_str, int error_message_length);
 } cfx_register_cdm_callback_t;
 
-void CEF_CALLBACK _cfx_register_cdm_callback_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_register_cdm_callback_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_register_cdm_callback_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_register_cdm_callback_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_register_cdm_callback_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_register_cdm_callback_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_register_cdm_callback_t*)base)->wrapper_kind == 0) {
@@ -34,7 +34,7 @@ int CEF_CALLBACK _cfx_register_cdm_callback_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_register_cdm_callback_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_register_cdm_callback_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_register_cdm_callback_t*)base)->ref_count == 1 ? 1 : 0;
 }
 

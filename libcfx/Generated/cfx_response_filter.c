@@ -19,10 +19,10 @@ typedef struct _cfx_response_filter_t {
     void (CEF_CALLBACK *filter)(gc_handle_t self, cef_response_filter_status_t* __retval, void* data_in, size_t data_in_size, size_t* data_in_read, void* data_out, size_t data_out_size, size_t* data_out_written);
 } cfx_response_filter_t;
 
-void CEF_CALLBACK _cfx_response_filter_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_response_filter_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_response_filter_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_response_filter_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_response_filter_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_response_filter_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_response_filter_t*)base)->wrapper_kind == 0) {
@@ -35,7 +35,7 @@ int CEF_CALLBACK _cfx_response_filter_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_response_filter_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_response_filter_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_response_filter_t*)base)->ref_count == 1 ? 1 : 0;
 }
 

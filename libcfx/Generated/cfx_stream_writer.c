@@ -16,7 +16,7 @@ static cef_stream_writer_t* cfx_stream_writer_create_for_file(char16 *fileName_s
 }
 // CEF_EXPORT cef_stream_writer_t* cef_stream_writer_create_for_handler(cef_write_handler_t* handler);
 static cef_stream_writer_t* cfx_stream_writer_create_for_handler(cef_write_handler_t* handler) {
-    if(handler) ((cef_base_t*)handler)->add_ref((cef_base_t*)handler);
+    if(handler) ((cef_base_ref_counted_t*)handler)->add_ref((cef_base_ref_counted_t*)handler);
     return cef_stream_writer_create_for_handler(handler);
 }
 // write

@@ -113,7 +113,7 @@ public class CfxValueClass : CfxClass {
             if(sm.MemberType.IsCefStructPtrType) {
                 System.Diagnostics.Debugger.Break();
             }
-            if(sm.MemberType.IsCefStructType && sm.MemberType.AsCefStructType.ClassBuilder.IsRefCounted) {
+            if(sm.MemberType.IsCefStructType && sm.MemberType.AsCefStructType.IsRefCounted) {
                 System.Diagnostics.Debugger.Break();
             }
         }

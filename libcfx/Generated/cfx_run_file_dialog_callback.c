@@ -18,10 +18,10 @@ typedef struct _cfx_run_file_dialog_callback_t {
     void (CEF_CALLBACK *on_file_dialog_dismissed)(gc_handle_t self, int selected_accept_filter, cef_string_list_t file_paths);
 } cfx_run_file_dialog_callback_t;
 
-void CEF_CALLBACK _cfx_run_file_dialog_callback_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_run_file_dialog_callback_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_run_file_dialog_callback_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_run_file_dialog_callback_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_run_file_dialog_callback_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_run_file_dialog_callback_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_run_file_dialog_callback_t*)base)->wrapper_kind == 0) {
@@ -34,7 +34,7 @@ int CEF_CALLBACK _cfx_run_file_dialog_callback_release(struct _cef_base_t* base)
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_run_file_dialog_callback_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_run_file_dialog_callback_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_run_file_dialog_callback_t*)base)->ref_count == 1 ? 1 : 0;
 }
 

@@ -49,7 +49,7 @@ static __inline void* cfx_copy_structure(void* source, size_t size) {
 #include "cfx_function_pointers.c"
 
 
-static int cfx_release(cef_base_t* base) {
+static int cfx_release(cef_base_ref_counted_t* base) {
 	return base->release(base);
 }
 

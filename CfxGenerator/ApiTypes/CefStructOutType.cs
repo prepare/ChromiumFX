@@ -71,7 +71,8 @@ public class CefStructOutType : CefStructPtrPtrType {
     }
 
     public override void EmitPostNativeCallbackStatements(CodeBuilder b, string var) {
-        b.AppendLine("if(*{0})((cef_base_t*)*{0})->add_ref((cef_base_t*)*{0});", var);
+        if(Struct.IsRefCounted)
+            b.AppendLine("if(*{0})((cef_base_ref_counted_t*)*{0})->add_ref((cef_base_ref_counted_t*)*{0});", var);
     }
 
     public override void EmitPrePublicCallStatements(CodeBuilder b, string var) {

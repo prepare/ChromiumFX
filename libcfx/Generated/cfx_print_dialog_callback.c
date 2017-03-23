@@ -11,7 +11,7 @@
 
 // cont
 static void cfx_print_dialog_callback_cont(cef_print_dialog_callback_t* self, cef_print_settings_t* settings) {
-    if(settings) ((cef_base_t*)settings)->add_ref((cef_base_t*)settings);
+    if(settings) ((cef_base_ref_counted_t*)settings)->add_ref((cef_base_ref_counted_t*)settings);
     self->cont(self, settings);
 }
 

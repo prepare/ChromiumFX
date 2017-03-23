@@ -22,10 +22,10 @@ typedef struct _cfx_read_handler_t {
     void (CEF_CALLBACK *may_block)(gc_handle_t self, int* __retval);
 } cfx_read_handler_t;
 
-void CEF_CALLBACK _cfx_read_handler_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_read_handler_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_read_handler_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_read_handler_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_read_handler_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_read_handler_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_read_handler_t*)base)->wrapper_kind == 0) {
@@ -38,7 +38,7 @@ int CEF_CALLBACK _cfx_read_handler_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_read_handler_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_read_handler_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_read_handler_t*)base)->ref_count == 1 ? 1 : 0;
 }
 

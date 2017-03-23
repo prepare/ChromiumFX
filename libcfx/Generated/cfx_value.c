@@ -30,13 +30,13 @@ static int cfx_value_is_read_only(cef_value_t* self) {
 
 // is_same
 static int cfx_value_is_same(cef_value_t* self, cef_value_t* that) {
-    if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
+    if(that) ((cef_base_ref_counted_t*)that)->add_ref((cef_base_ref_counted_t*)that);
     return self->is_same(self, that);
 }
 
 // is_equal
 static int cfx_value_is_equal(cef_value_t* self, cef_value_t* that) {
-    if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
+    if(that) ((cef_base_ref_counted_t*)that)->add_ref((cef_base_ref_counted_t*)that);
     return self->is_equal(self, that);
 }
 
@@ -113,19 +113,19 @@ static int cfx_value_set_string(cef_value_t* self, char16 *value_str, int value_
 
 // set_binary
 static int cfx_value_set_binary(cef_value_t* self, cef_binary_value_t* value) {
-    if(value) ((cef_base_t*)value)->add_ref((cef_base_t*)value);
+    if(value) ((cef_base_ref_counted_t*)value)->add_ref((cef_base_ref_counted_t*)value);
     return self->set_binary(self, value);
 }
 
 // set_dictionary
 static int cfx_value_set_dictionary(cef_value_t* self, cef_dictionary_value_t* value) {
-    if(value) ((cef_base_t*)value)->add_ref((cef_base_t*)value);
+    if(value) ((cef_base_ref_counted_t*)value)->add_ref((cef_base_ref_counted_t*)value);
     return self->set_dictionary(self, value);
 }
 
 // set_list
 static int cfx_value_set_list(cef_value_t* self, cef_list_value_t* value) {
-    if(value) ((cef_base_t*)value)->add_ref((cef_base_t*)value);
+    if(value) ((cef_base_ref_counted_t*)value)->add_ref((cef_base_ref_counted_t*)value);
     return self->set_list(self, value);
 }
 

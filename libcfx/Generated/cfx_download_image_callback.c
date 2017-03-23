@@ -18,10 +18,10 @@ typedef struct _cfx_download_image_callback_t {
     void (CEF_CALLBACK *on_download_image_finished)(gc_handle_t self, char16 *image_url_str, int image_url_length, int http_status_code, cef_image_t* image, int *image_release);
 } cfx_download_image_callback_t;
 
-void CEF_CALLBACK _cfx_download_image_callback_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_download_image_callback_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_download_image_callback_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_download_image_callback_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_download_image_callback_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_download_image_callback_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_download_image_callback_t*)base)->wrapper_kind == 0) {
@@ -34,7 +34,7 @@ int CEF_CALLBACK _cfx_download_image_callback_release(struct _cef_base_t* base) 
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_download_image_callback_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_download_image_callback_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_download_image_callback_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
@@ -60,7 +60,7 @@ static gc_handle_t cfx_download_image_callback_get_gc_handle(cfx_download_image_
 void CEF_CALLBACK cfx_download_image_callback_on_download_image_finished(cef_download_image_callback_t* self, const cef_string_t* image_url, int http_status_code, cef_image_t* image) {
     int image_release;
     ((cfx_download_image_callback_t*)self)->on_download_image_finished(((cfx_download_image_callback_t*)self)->gc_handle, image_url ? image_url->str : 0, image_url ? (int)image_url->length : 0, http_status_code, image, &image_release);
-    if(image_release) image->base.release((cef_base_t*)image);
+    if(image_release) image->base.release((cef_base_ref_counted_t*)image);
 }
 
 static void cfx_download_image_callback_set_callback(cef_download_image_callback_t* self, int index, void* callback) {

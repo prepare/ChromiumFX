@@ -59,21 +59,21 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
     }
 
     public override string PInvokeCallbackParameter(string var) {
-        if(Struct.ClassBuilder.IsRefCounted)
+        if(Struct.IsRefCounted)
             return base.PInvokeCallbackParameter(var) + ", out int " + var + "_release";
         else
             return base.PInvokeCallbackParameter(var);
     }
 
     public override string NativeCallbackParameter(string var, bool isConst) {
-        if(Struct.ClassBuilder.IsRefCounted)
+        if(Struct.IsRefCounted)
             return base.NativeCallbackParameter(var, isConst) + ", int *" + var + "_release";
         else
             return base.NativeCallbackParameter(var, isConst);
     }
 
     public override string NativeCallbackArgument(string var) {
-        if(Struct.ClassBuilder.IsRefCounted)
+        if(Struct.IsRefCounted)
             return base.NativeCallbackArgument(var) + ", &" + var + "_release";
         else
             return base.NativeCallbackArgument(var);
@@ -88,24 +88,25 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
     }
 
     public override void EmitPreNativeCallbackStatements(CodeBuilder b, string var) {
-        if(Struct.ClassBuilder.IsRefCounted)
+        if(Struct.IsRefCounted)
             b.AppendLine("int " + var + "_release;");
     }
 
     public override void EmitPostNativeCallbackStatements(CodeBuilder b, string var) {
-        if(Struct.ClassBuilder.IsRefCounted) {
+        if(Struct.IsRefCounted) {
             b.BeginBlock("if({0}_release)", var);
             b.BeginBlock("for(size_t i = 0; i < {0}; ++i)", CountArg.VarName);
-            b.AppendLine("{0}[i]->base.release((cef_base_t*){0}[i]);", var);
+            b.AppendLine("{0}[i]->base.release((cef_base_ref_counted_t*){0}[i]);", var);
             b.EndBlock();
             b.EndBlock();
         }
     }
 
     public override void EmitPreNativeCallStatements(CodeBuilder b, string var) {
+        Debug.Assert(Struct.IsRefCounted);
         b.BeginIf("{0}", CountArg.VarName);
         b.BeginBlock("for(size_t i = 0; i < {0}; ++i)", CountArg.VarName);
-        b.AppendLine("if({0}[i]) ((cef_base_t*){0}[i])->add_ref((cef_base_t*){0}[i]);", StructArg.VarName);
+        b.AppendLine("if({0}[i]) ((cef_base_ref_counted_t*){0}[i])->add_ref((cef_base_ref_counted_t*){0}[i]);", StructArg.VarName);
         b.EndBlock();
         b.EndBlock();
     }
@@ -171,17 +172,17 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
     }
 
     public override void EmitPostPublicRaiseEventStatements(CodeBuilder b, string var) {
-        if(Struct.ClassBuilder.IsRefCounted)
+        if(Struct.IsRefCounted)
             b.AppendLine("{0}_release = e.m_{0}_managed == null? 1 : 0;", var);
     }
 
     public override void EmitPostRemoteRaiseEventStatements(CodeBuilder b, string var) {
-        if(Struct.ClassBuilder.IsRefCounted)
+        if(Struct.IsRefCounted)
             b.AppendLine("{0}_release = e.m_{0}_managed == null? 1 : 0;", var);
     }
 
     public override void EmitSetCallbackArgumentToDefaultStatements(CodeBuilder b, string var) {
-        if(Struct.ClassBuilder.IsRefCounted)
+        if(Struct.IsRefCounted)
             b.AppendLine("{0}_release = 1;", var);
     }
     

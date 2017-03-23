@@ -20,7 +20,7 @@ static int cfx_image_is_empty(cef_image_t* self) {
 
 // is_same
 static int cfx_image_is_same(cef_image_t* self, cef_image_t* that) {
-    if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
+    if(that) ((cef_base_ref_counted_t*)that)->add_ref((cef_base_ref_counted_t*)that);
     return self->is_same(self, that);
 }
 

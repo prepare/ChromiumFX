@@ -21,10 +21,10 @@ typedef struct _cfx_jsdialog_handler_t {
     void (CEF_CALLBACK *on_dialog_closed)(gc_handle_t self, cef_browser_t* browser, int *browser_release);
 } cfx_jsdialog_handler_t;
 
-void CEF_CALLBACK _cfx_jsdialog_handler_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_jsdialog_handler_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_jsdialog_handler_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_jsdialog_handler_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_jsdialog_handler_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_jsdialog_handler_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_jsdialog_handler_t*)base)->wrapper_kind == 0) {
@@ -37,7 +37,7 @@ int CEF_CALLBACK _cfx_jsdialog_handler_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_jsdialog_handler_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_jsdialog_handler_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_jsdialog_handler_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
@@ -65,8 +65,8 @@ int CEF_CALLBACK cfx_jsdialog_handler_on_jsdialog(cef_jsdialog_handler_t* self, 
     int browser_release;
     int callback_release;
     ((cfx_jsdialog_handler_t*)self)->on_jsdialog(((cfx_jsdialog_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, origin_url ? origin_url->str : 0, origin_url ? (int)origin_url->length : 0, dialog_type, message_text ? message_text->str : 0, message_text ? (int)message_text->length : 0, default_prompt_text ? default_prompt_text->str : 0, default_prompt_text ? (int)default_prompt_text->length : 0, callback, &callback_release, suppress_message);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
-    if(callback_release) callback->base.release((cef_base_t*)callback);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(callback_release) callback->base.release((cef_base_ref_counted_t*)callback);
     return __retval;
 }
 
@@ -77,8 +77,8 @@ int CEF_CALLBACK cfx_jsdialog_handler_on_before_unload_dialog(cef_jsdialog_handl
     int browser_release;
     int callback_release;
     ((cfx_jsdialog_handler_t*)self)->on_before_unload_dialog(((cfx_jsdialog_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, message_text ? message_text->str : 0, message_text ? (int)message_text->length : 0, is_reload, callback, &callback_release);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
-    if(callback_release) callback->base.release((cef_base_t*)callback);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(callback_release) callback->base.release((cef_base_ref_counted_t*)callback);
     return __retval;
 }
 
@@ -87,7 +87,7 @@ int CEF_CALLBACK cfx_jsdialog_handler_on_before_unload_dialog(cef_jsdialog_handl
 void CEF_CALLBACK cfx_jsdialog_handler_on_reset_dialog_state(cef_jsdialog_handler_t* self, cef_browser_t* browser) {
     int browser_release;
     ((cfx_jsdialog_handler_t*)self)->on_reset_dialog_state(((cfx_jsdialog_handler_t*)self)->gc_handle, browser, &browser_release);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
 // on_dialog_closed
@@ -95,7 +95,7 @@ void CEF_CALLBACK cfx_jsdialog_handler_on_reset_dialog_state(cef_jsdialog_handle
 void CEF_CALLBACK cfx_jsdialog_handler_on_dialog_closed(cef_jsdialog_handler_t* self, cef_browser_t* browser) {
     int browser_release;
     ((cfx_jsdialog_handler_t*)self)->on_dialog_closed(((cfx_jsdialog_handler_t*)self)->gc_handle, browser, &browser_release);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
 static void cfx_jsdialog_handler_set_callback(cef_jsdialog_handler_t* self, int index, void* callback) {

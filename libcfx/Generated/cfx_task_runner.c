@@ -19,7 +19,7 @@ static cef_task_runner_t* cfx_task_runner_get_for_thread(cef_thread_id_t threadI
 }
 // is_same
 static int cfx_task_runner_is_same(cef_task_runner_t* self, cef_task_runner_t* that) {
-    if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
+    if(that) ((cef_base_ref_counted_t*)that)->add_ref((cef_base_ref_counted_t*)that);
     return self->is_same(self, that);
 }
 
@@ -35,13 +35,13 @@ static int cfx_task_runner_belongs_to_thread(cef_task_runner_t* self, cef_thread
 
 // post_task
 static int cfx_task_runner_post_task(cef_task_runner_t* self, cef_task_t* task) {
-    if(task) ((cef_base_t*)task)->add_ref((cef_base_t*)task);
+    if(task) ((cef_base_ref_counted_t*)task)->add_ref((cef_base_ref_counted_t*)task);
     return self->post_task(self, task);
 }
 
 // post_delayed_task
 static int cfx_task_runner_post_delayed_task(cef_task_runner_t* self, cef_task_t* task, int64 delay_ms) {
-    if(task) ((cef_base_t*)task)->add_ref((cef_base_t*)task);
+    if(task) ((cef_base_ref_counted_t*)task)->add_ref((cef_base_ref_counted_t*)task);
     return self->post_delayed_task(self, task, delay_ms);
 }
 

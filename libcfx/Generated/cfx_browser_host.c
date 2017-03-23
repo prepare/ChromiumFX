@@ -11,16 +11,16 @@
 
 // CEF_EXPORT int cef_browser_host_create_browser(const cef_window_info_t* windowInfo, cef_client_t* client, const cef_string_t* url, const cef_browser_settings_t* settings, cef_request_context_t* request_context);
 static int cfx_browser_host_create_browser(const cef_window_info_t* windowInfo, cef_client_t* client, char16 *url_str, int url_length, const cef_browser_settings_t* settings, cef_request_context_t* request_context) {
-    if(client) ((cef_base_t*)client)->add_ref((cef_base_t*)client);
+    if(client) ((cef_base_ref_counted_t*)client)->add_ref((cef_base_ref_counted_t*)client);
     cef_string_t url = { url_str, url_length, 0 };
-    if(request_context) ((cef_base_t*)request_context)->add_ref((cef_base_t*)request_context);
+    if(request_context) ((cef_base_ref_counted_t*)request_context)->add_ref((cef_base_ref_counted_t*)request_context);
     return cef_browser_host_create_browser(windowInfo, client, &url, settings, request_context);
 }
 // CEF_EXPORT cef_browser_t* cef_browser_host_create_browser_sync(const cef_window_info_t* windowInfo, cef_client_t* client, const cef_string_t* url, const cef_browser_settings_t* settings, cef_request_context_t* request_context);
 static cef_browser_t* cfx_browser_host_create_browser_sync(const cef_window_info_t* windowInfo, cef_client_t* client, char16 *url_str, int url_length, const cef_browser_settings_t* settings, cef_request_context_t* request_context) {
-    if(client) ((cef_base_t*)client)->add_ref((cef_base_t*)client);
+    if(client) ((cef_base_ref_counted_t*)client)->add_ref((cef_base_ref_counted_t*)client);
     cef_string_t url = { url_str, url_length, 0 };
-    if(request_context) ((cef_base_t*)request_context)->add_ref((cef_base_t*)request_context);
+    if(request_context) ((cef_base_ref_counted_t*)request_context)->add_ref((cef_base_ref_counted_t*)request_context);
     return cef_browser_host_create_browser_sync(windowInfo, client, &url, settings, request_context);
 }
 // get_browser
@@ -82,7 +82,7 @@ static void cfx_browser_host_set_zoom_level(cef_browser_host_t* self, double zoo
 static void cfx_browser_host_run_file_dialog(cef_browser_host_t* self, cef_file_dialog_mode_t mode, char16 *title_str, int title_length, char16 *default_file_path_str, int default_file_path_length, cef_string_list_t accept_filters, int selected_accept_filter, cef_run_file_dialog_callback_t* callback) {
     cef_string_t title = { title_str, title_length, 0 };
     cef_string_t default_file_path = { default_file_path_str, default_file_path_length, 0 };
-    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    if(callback) ((cef_base_ref_counted_t*)callback)->add_ref((cef_base_ref_counted_t*)callback);
     self->run_file_dialog(self, mode, &title, &default_file_path, accept_filters, selected_accept_filter, callback);
 }
 
@@ -95,7 +95,7 @@ static void cfx_browser_host_start_download(cef_browser_host_t* self, char16 *ur
 // download_image
 static void cfx_browser_host_download_image(cef_browser_host_t* self, char16 *image_url_str, int image_url_length, int is_favicon, uint32 max_image_size, int bypass_cache, cef_download_image_callback_t* callback) {
     cef_string_t image_url = { image_url_str, image_url_length, 0 };
-    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    if(callback) ((cef_base_ref_counted_t*)callback)->add_ref((cef_base_ref_counted_t*)callback);
     self->download_image(self, &image_url, is_favicon, max_image_size, bypass_cache, callback);
 }
 
@@ -107,7 +107,7 @@ static void cfx_browser_host_print(cef_browser_host_t* self) {
 // print_to_pdf
 static void cfx_browser_host_print_to_pdf(cef_browser_host_t* self, char16 *path_str, int path_length, const cef_pdf_print_settings_t* settings, cef_pdf_print_callback_t* callback) {
     cef_string_t path = { path_str, path_length, 0 };
-    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    if(callback) ((cef_base_ref_counted_t*)callback)->add_ref((cef_base_ref_counted_t*)callback);
     self->print_to_pdf(self, &path, settings, callback);
 }
 
@@ -124,7 +124,7 @@ static void cfx_browser_host_stop_finding(cef_browser_host_t* self, int clearSel
 
 // show_dev_tools
 static void cfx_browser_host_show_dev_tools(cef_browser_host_t* self, const cef_window_info_t* windowInfo, cef_client_t* client, const cef_browser_settings_t* settings, const cef_point_t* inspect_element_at) {
-    if(client) ((cef_base_t*)client)->add_ref((cef_base_t*)client);
+    if(client) ((cef_base_ref_counted_t*)client)->add_ref((cef_base_ref_counted_t*)client);
     self->show_dev_tools(self, windowInfo, client, settings, inspect_element_at);
 }
 
@@ -140,7 +140,7 @@ static int cfx_browser_host_has_dev_tools(cef_browser_host_t* self) {
 
 // get_navigation_entries
 static void cfx_browser_host_get_navigation_entries(cef_browser_host_t* self, cef_navigation_entry_visitor_t* visitor, int current_only) {
-    if(visitor) ((cef_base_t*)visitor)->add_ref((cef_base_t*)visitor);
+    if(visitor) ((cef_base_ref_counted_t*)visitor)->add_ref((cef_base_ref_counted_t*)visitor);
     self->get_navigation_entries(self, visitor, current_only);
 }
 
@@ -271,7 +271,7 @@ static void cfx_browser_host_ime_cancel_composition(cef_browser_host_t* self) {
 
 // drag_target_drag_enter
 static void cfx_browser_host_drag_target_drag_enter(cef_browser_host_t* self, cef_drag_data_t* drag_data, const cef_mouse_event_t* event, cef_drag_operations_mask_t allowed_ops) {
-    if(drag_data) ((cef_base_t*)drag_data)->add_ref((cef_base_t*)drag_data);
+    if(drag_data) ((cef_base_ref_counted_t*)drag_data)->add_ref((cef_base_ref_counted_t*)drag_data);
     self->drag_target_drag_enter(self, drag_data, event, allowed_ops);
 }
 

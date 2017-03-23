@@ -23,10 +23,10 @@ typedef struct _cfx_print_handler_t {
     void (CEF_CALLBACK *get_pdf_paper_size)(gc_handle_t self, cef_size_t** __retval, int device_units_per_inch);
 } cfx_print_handler_t;
 
-void CEF_CALLBACK _cfx_print_handler_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_print_handler_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_print_handler_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_print_handler_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_print_handler_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_print_handler_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_print_handler_t*)base)->wrapper_kind == 0) {
@@ -39,7 +39,7 @@ int CEF_CALLBACK _cfx_print_handler_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_print_handler_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_print_handler_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_print_handler_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
@@ -65,7 +65,7 @@ static gc_handle_t cfx_print_handler_get_gc_handle(cfx_print_handler_t* self) {
 void CEF_CALLBACK cfx_print_handler_on_print_start(cef_print_handler_t* self, cef_browser_t* browser) {
     int browser_release;
     ((cfx_print_handler_t*)self)->on_print_start(((cfx_print_handler_t*)self)->gc_handle, browser, &browser_release);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
 // on_print_settings
@@ -73,7 +73,7 @@ void CEF_CALLBACK cfx_print_handler_on_print_start(cef_print_handler_t* self, ce
 void CEF_CALLBACK cfx_print_handler_on_print_settings(cef_print_handler_t* self, cef_print_settings_t* settings, int get_defaults) {
     int settings_release;
     ((cfx_print_handler_t*)self)->on_print_settings(((cfx_print_handler_t*)self)->gc_handle, settings, &settings_release, get_defaults);
-    if(settings_release) settings->base.release((cef_base_t*)settings);
+    if(settings_release) settings->base.release((cef_base_ref_counted_t*)settings);
 }
 
 // on_print_dialog
@@ -82,7 +82,7 @@ int CEF_CALLBACK cfx_print_handler_on_print_dialog(cef_print_handler_t* self, in
     int __retval;
     int callback_release;
     ((cfx_print_handler_t*)self)->on_print_dialog(((cfx_print_handler_t*)self)->gc_handle, &__retval, has_selection, callback, &callback_release);
-    if(callback_release) callback->base.release((cef_base_t*)callback);
+    if(callback_release) callback->base.release((cef_base_ref_counted_t*)callback);
     return __retval;
 }
 
@@ -92,7 +92,7 @@ int CEF_CALLBACK cfx_print_handler_on_print_job(cef_print_handler_t* self, const
     int __retval;
     int callback_release;
     ((cfx_print_handler_t*)self)->on_print_job(((cfx_print_handler_t*)self)->gc_handle, &__retval, document_name ? document_name->str : 0, document_name ? (int)document_name->length : 0, pdf_file_path ? pdf_file_path->str : 0, pdf_file_path ? (int)pdf_file_path->length : 0, callback, &callback_release);
-    if(callback_release) callback->base.release((cef_base_t*)callback);
+    if(callback_release) callback->base.release((cef_base_ref_counted_t*)callback);
     return __retval;
 }
 

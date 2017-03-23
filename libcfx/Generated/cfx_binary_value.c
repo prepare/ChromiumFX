@@ -25,13 +25,13 @@ static int cfx_binary_value_is_owned(cef_binary_value_t* self) {
 
 // is_same
 static int cfx_binary_value_is_same(cef_binary_value_t* self, cef_binary_value_t* that) {
-    if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
+    if(that) ((cef_base_ref_counted_t*)that)->add_ref((cef_base_ref_counted_t*)that);
     return self->is_same(self, that);
 }
 
 // is_equal
 static int cfx_binary_value_is_equal(cef_binary_value_t* self, cef_binary_value_t* that) {
-    if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
+    if(that) ((cef_base_ref_counted_t*)that)->add_ref((cef_base_ref_counted_t*)that);
     return self->is_equal(self, that);
 }
 

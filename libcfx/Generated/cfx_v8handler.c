@@ -18,10 +18,10 @@ typedef struct _cfx_v8handler_t {
     void (CEF_CALLBACK *execute)(gc_handle_t self, int* __retval, char16 *name_str, int name_length, cef_v8value_t* object, int *object_release, size_t argumentsCount, cef_v8value_t* const* arguments, int *arguments_release, cef_v8value_t** retval, char16 **exception_str, int *exception_length, gc_handle_t *exception_gc_handle);
 } cfx_v8handler_t;
 
-void CEF_CALLBACK _cfx_v8handler_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_v8handler_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_v8handler_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_v8handler_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_v8handler_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_v8handler_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_v8handler_t*)base)->wrapper_kind == 0) {
@@ -34,7 +34,7 @@ int CEF_CALLBACK _cfx_v8handler_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_v8handler_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_v8handler_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_v8handler_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
@@ -63,13 +63,13 @@ int CEF_CALLBACK cfx_v8handler_execute(cef_v8handler_t* self, const cef_string_t
     int arguments_release;
     char16* exception_tmp_str = 0; int exception_tmp_length = 0; gc_handle_t exception_gc_handle = 0;
     ((cfx_v8handler_t*)self)->execute(((cfx_v8handler_t*)self)->gc_handle, &__retval, name ? name->str : 0, name ? (int)name->length : 0, object, &object_release, argumentsCount, arguments, &arguments_release, retval, &exception_tmp_str, &exception_tmp_length, &exception_gc_handle);
-    if(object_release) object->base.release((cef_base_t*)object);
+    if(object_release) object->base.release((cef_base_ref_counted_t*)object);
     if(arguments_release) {
         for(size_t i = 0; i < argumentsCount; ++i) {
-            arguments[i]->base.release((cef_base_t*)arguments[i]);
+            arguments[i]->base.release((cef_base_ref_counted_t*)arguments[i]);
         }
     }
-    if(*retval)((cef_base_t*)*retval)->add_ref((cef_base_t*)*retval);
+    if(*retval)((cef_base_ref_counted_t*)*retval)->add_ref((cef_base_ref_counted_t*)*retval);
     if(exception_tmp_length > 0) {
         cef_string_set(exception_tmp_str, exception_tmp_length, exception, 1);
         cfx_gc_handle_free(exception_gc_handle);

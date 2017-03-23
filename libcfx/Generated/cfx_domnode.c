@@ -41,7 +41,7 @@ static cef_string_userfree_t cfx_domnode_get_form_control_element_type(cef_domno
 
 // is_same
 static int cfx_domnode_is_same(cef_domnode_t* self, cef_domnode_t* that) {
-    if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
+    if(that) ((cef_base_ref_counted_t*)that)->add_ref((cef_base_ref_counted_t*)that);
     return self->is_same(self, that);
 }
 

@@ -19,10 +19,10 @@ typedef struct _cfx_request_context_handler_t {
     void (CEF_CALLBACK *on_before_plugin_load)(gc_handle_t self, int* __retval, char16 *mime_type_str, int mime_type_length, char16 *plugin_url_str, int plugin_url_length, int is_main_frame, char16 *top_origin_url_str, int top_origin_url_length, cef_web_plugin_info_t* plugin_info, int *plugin_info_release, cef_plugin_policy_t* plugin_policy);
 } cfx_request_context_handler_t;
 
-void CEF_CALLBACK _cfx_request_context_handler_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_request_context_handler_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_request_context_handler_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_request_context_handler_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_request_context_handler_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_request_context_handler_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_request_context_handler_t*)base)->wrapper_kind == 0) {
@@ -35,7 +35,7 @@ int CEF_CALLBACK _cfx_request_context_handler_release(struct _cef_base_t* base) 
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_request_context_handler_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_request_context_handler_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_request_context_handler_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
@@ -62,7 +62,7 @@ cef_cookie_manager_t* CEF_CALLBACK cfx_request_context_handler_get_cookie_manage
     cef_cookie_manager_t* __retval;
     ((cfx_request_context_handler_t*)self)->get_cookie_manager(((cfx_request_context_handler_t*)self)->gc_handle, &__retval);
     if(__retval) {
-        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
+        ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }
     return __retval;
 }
@@ -73,7 +73,7 @@ int CEF_CALLBACK cfx_request_context_handler_on_before_plugin_load(cef_request_c
     int __retval;
     int plugin_info_release;
     ((cfx_request_context_handler_t*)self)->on_before_plugin_load(((cfx_request_context_handler_t*)self)->gc_handle, &__retval, mime_type ? mime_type->str : 0, mime_type ? (int)mime_type->length : 0, plugin_url ? plugin_url->str : 0, plugin_url ? (int)plugin_url->length : 0, is_main_frame, top_origin_url ? top_origin_url->str : 0, top_origin_url ? (int)top_origin_url->length : 0, plugin_info, &plugin_info_release, plugin_policy);
-    if(plugin_info_release) plugin_info->base.release((cef_base_t*)plugin_info);
+    if(plugin_info_release) plugin_info->base.release((cef_base_ref_counted_t*)plugin_info);
     return __retval;
 }
 

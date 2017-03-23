@@ -18,10 +18,10 @@ typedef struct _cfx_navigation_entry_visitor_t {
     void (CEF_CALLBACK *visit)(gc_handle_t self, int* __retval, cef_navigation_entry_t* entry, int *entry_release, int current, int index, int total);
 } cfx_navigation_entry_visitor_t;
 
-void CEF_CALLBACK _cfx_navigation_entry_visitor_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_navigation_entry_visitor_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_navigation_entry_visitor_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_navigation_entry_visitor_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_navigation_entry_visitor_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_navigation_entry_visitor_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_navigation_entry_visitor_t*)base)->wrapper_kind == 0) {
@@ -34,7 +34,7 @@ int CEF_CALLBACK _cfx_navigation_entry_visitor_release(struct _cef_base_t* base)
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_navigation_entry_visitor_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_navigation_entry_visitor_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_navigation_entry_visitor_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
@@ -61,7 +61,7 @@ int CEF_CALLBACK cfx_navigation_entry_visitor_visit(cef_navigation_entry_visitor
     int __retval;
     int entry_release;
     ((cfx_navigation_entry_visitor_t*)self)->visit(((cfx_navigation_entry_visitor_t*)self)->gc_handle, &__retval, entry, &entry_release, current, index, total);
-    if(entry_release) entry->base.release((cef_base_t*)entry);
+    if(entry_release) entry->base.release((cef_base_ref_counted_t*)entry);
     return __retval;
 }
 

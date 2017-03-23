@@ -75,7 +75,7 @@ static cef_string_userfree_t cfx_drag_data_get_file_name(cef_drag_data_t* self) 
 
 // get_file_contents
 static size_t cfx_drag_data_get_file_contents(cef_drag_data_t* self, cef_stream_writer_t* writer) {
-    if(writer) ((cef_base_t*)writer)->add_ref((cef_base_t*)writer);
+    if(writer) ((cef_base_ref_counted_t*)writer)->add_ref((cef_base_ref_counted_t*)writer);
     return self->get_file_contents(self, writer);
 }
 

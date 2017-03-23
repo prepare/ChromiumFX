@@ -32,7 +32,7 @@ public class Parameter {
     }
 
     public bool TypeIsRefCounted {
-        get { return ParameterType.IsCefStructPtrType && ParameterType.AsCefStructPtrType.Struct.ClassBuilder.IsRefCounted; }
+        get { return ParameterType.IsCefStructPtrType && ParameterType.AsCefStructPtrType.Struct.IsRefCounted; }
     }
 
     public string PublicVarName {

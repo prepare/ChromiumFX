@@ -280,13 +280,13 @@
     <Compile Include="Generated\Remote\RemoteCallId.cs" />
     <Compile Include="Source\CfxApi.cs" />
     <Compile Include="Source\CfxArray.cs" />
-    <Compile Include="Source\CfxBase.cs" />
+    <Compile Include="Source\CfxBaseRefCounted.cs" />
     <Compile Include="Source\CfxBaseScoped.cs" />
     <Compile Include="Source\CfxBinaryValue.cs" />
-    <Compile Include="Source\CfxClientBase.cs" />
+    <Compile Include="Source\CfxBaseClient.cs" />
     <Compile Include="Source\CfxColor.cs" />
     <Compile Include="Source\CfxDebug.cs" />
-    <Compile Include="Source\CfxLibraryBase.cs" />
+    <Compile Include="Source\CfxBaseLibrary.cs" />
     <Compile Include="Source\CfxMainArgsLinux.cs" />
     <Compile Include="Source\CfxPlatform.cs" />
     <Compile Include="Source\CfxRemoteCallbackManager.cs" />

@@ -61,7 +61,7 @@ static int cfx_browser_get_identifier(cef_browser_t* self) {
 
 // is_same
 static int cfx_browser_is_same(cef_browser_t* self, cef_browser_t* that) {
-    if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
+    if(that) ((cef_base_ref_counted_t*)that)->add_ref((cef_base_ref_counted_t*)that);
     return self->is_same(self, that);
 }
 
@@ -113,7 +113,7 @@ static void cfx_browser_get_frame_names(cef_browser_t* self, cef_string_list_t n
 
 // send_process_message
 static int cfx_browser_send_process_message(cef_browser_t* self, cef_process_id_t target_process, cef_process_message_t* message) {
-    if(message) ((cef_base_t*)message)->add_ref((cef_base_t*)message);
+    if(message) ((cef_base_ref_counted_t*)message)->add_ref((cef_base_ref_counted_t*)message);
     return self->send_process_message(self, target_process, message);
 }
 
