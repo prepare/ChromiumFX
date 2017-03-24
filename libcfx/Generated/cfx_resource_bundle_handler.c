@@ -20,10 +20,10 @@ typedef struct _cfx_resource_bundle_handler_t {
     void (CEF_CALLBACK *get_data_resource_for_scale)(gc_handle_t self, int* __retval, int resource_id, cef_scale_factor_t scale_factor, void** data, size_t* data_size);
 } cfx_resource_bundle_handler_t;
 
-void CEF_CALLBACK _cfx_resource_bundle_handler_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_resource_bundle_handler_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_resource_bundle_handler_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_resource_bundle_handler_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_resource_bundle_handler_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_resource_bundle_handler_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_resource_bundle_handler_t*)base)->wrapper_kind == 0) {
@@ -36,7 +36,7 @@ int CEF_CALLBACK _cfx_resource_bundle_handler_release(struct _cef_base_t* base) 
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_resource_bundle_handler_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_resource_bundle_handler_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_resource_bundle_handler_t*)base)->ref_count == 1 ? 1 : 0;
 }
 

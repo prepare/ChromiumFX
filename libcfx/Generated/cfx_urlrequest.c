@@ -11,9 +11,9 @@
 
 // CEF_EXPORT cef_urlrequest_t* cef_urlrequest_create(cef_request_t* request, cef_urlrequest_client_t* client, cef_request_context_t* request_context);
 static cef_urlrequest_t* cfx_urlrequest_create(cef_request_t* request, cef_urlrequest_client_t* client, cef_request_context_t* request_context) {
-    if(request) ((cef_base_t*)request)->add_ref((cef_base_t*)request);
-    if(client) ((cef_base_t*)client)->add_ref((cef_base_t*)client);
-    if(request_context) ((cef_base_t*)request_context)->add_ref((cef_base_t*)request_context);
+    if(request) ((cef_base_ref_counted_t*)request)->add_ref((cef_base_ref_counted_t*)request);
+    if(client) ((cef_base_ref_counted_t*)client)->add_ref((cef_base_ref_counted_t*)client);
+    if(request_context) ((cef_base_ref_counted_t*)request_context)->add_ref((cef_base_ref_counted_t*)request_context);
     return cef_urlrequest_create(request, client, request_context);
 }
 // get_request

@@ -18,10 +18,10 @@ typedef struct _cfx_scheme_handler_factory_t {
     void (CEF_CALLBACK *create)(gc_handle_t self, cef_resource_handler_t** __retval, cef_browser_t* browser, int *browser_release, cef_frame_t* frame, int *frame_release, char16 *scheme_name_str, int scheme_name_length, cef_request_t* request, int *request_release);
 } cfx_scheme_handler_factory_t;
 
-void CEF_CALLBACK _cfx_scheme_handler_factory_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_scheme_handler_factory_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_scheme_handler_factory_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_scheme_handler_factory_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_scheme_handler_factory_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_scheme_handler_factory_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_scheme_handler_factory_t*)base)->wrapper_kind == 0) {
@@ -34,7 +34,7 @@ int CEF_CALLBACK _cfx_scheme_handler_factory_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_scheme_handler_factory_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_scheme_handler_factory_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_scheme_handler_factory_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
@@ -63,11 +63,11 @@ cef_resource_handler_t* CEF_CALLBACK cfx_scheme_handler_factory_create(cef_schem
     int frame_release;
     int request_release;
     ((cfx_scheme_handler_factory_t*)self)->create(((cfx_scheme_handler_factory_t*)self)->gc_handle, &__retval, browser, &browser_release, frame, &frame_release, scheme_name ? scheme_name->str : 0, scheme_name ? (int)scheme_name->length : 0, request, &request_release);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
-    if(frame_release) frame->base.release((cef_base_t*)frame);
-    if(request_release) request->base.release((cef_base_t*)request);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(frame_release) frame->base.release((cef_base_ref_counted_t*)frame);
+    if(request_release) request->base.release((cef_base_ref_counted_t*)request);
     if(__retval) {
-        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
+        ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }
     return __retval;
 }

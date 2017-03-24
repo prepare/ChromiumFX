@@ -17,7 +17,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_print_settings_capi.h">cef/include/capi/cef_print_settings_capi.h</see>.
     /// </remarks>
-    public class CfxPrintSettings : CfxLibraryBase {
+    public class CfxPrintSettings : CfxBaseLibrary {
 
         private static readonly WeakCache weakCache = new WeakCache();
 

@@ -54,6 +54,11 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2987.0 ###
+- Update to CEF 3.2987.1596 with API changes.
+- CEF introduced a new basetype cef_base_scoped_t. ChromiumFX was updated to reflect this change and implement the intended funcionality. For now, CfxSchemeRegistrar is the only class to inherit from CfxBaseScoped.
+- There is an issue with the 64-bit version, see issue #136.
+
 ### Version 3.2924.0 ###
 - Update to CEF 3.2924.1569 with API changes.
 - The parser in the generator tool had a rewrite. The new version detected some boolean parameters and 2 functions the previous version missed.

@@ -170,10 +170,6 @@ public abstract class CfxClass {
         CallbackFunctions = cblist.ToArray();
     }
 
-    public bool IsRefCounted {
-        get { return Category != StructCategory.Values; }
-    }
-
     public abstract void EmitNativeWrapper(CodeBuilder b);
 
     public void EmitApiClass(CodeBuilder b) {

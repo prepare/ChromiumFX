@@ -820,6 +820,22 @@ namespace Chromium {
         Bottomcenter
     }
     /// <summary>
+    /// Supported color types for menu items.
+    /// </summary>
+    /// <remarks>
+    /// See also the original CEF documentation in
+    /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+    /// </remarks>
+    public enum CfxMenuColorType {
+        Text,
+        TextHovered,
+        TextAccelerator,
+        TextAcceleratorHovered,
+        Background,
+        BackgroundHovered,
+        Count
+    }
+    /// <summary>
     /// Supported menu IDs. Non-English translations can be provided for the
     /// IDS_MENU_* strings in CfxResourceBundleHandler.GetLocalizedString().
     /// </summary>

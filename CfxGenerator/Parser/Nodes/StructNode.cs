@@ -12,6 +12,7 @@ namespace Parser {
     [Serializable()]
     public class StructNode {
         public string Name;
+        public string CefBaseType;
         public readonly List<FunctionNode> CefFunctions = new List<FunctionNode>();
         public readonly List<StructMemberNode> StructMembers = new List<StructMemberNode>();
         public CommentNode Comments = new CommentNode();

@@ -18,7 +18,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_jsdialog_handler_capi.h">cef/include/capi/cef_jsdialog_handler_capi.h</see>.
     /// </remarks>
-    public class CfxJsDialogCallback : CfxLibraryBase {
+    public class CfxJsDialogCallback : CfxBaseLibrary {
 
         private static readonly WeakCache weakCache = new WeakCache();
 

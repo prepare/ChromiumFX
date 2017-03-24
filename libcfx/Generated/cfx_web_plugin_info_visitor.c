@@ -18,10 +18,10 @@ typedef struct _cfx_web_plugin_info_visitor_t {
     void (CEF_CALLBACK *visit)(gc_handle_t self, int* __retval, cef_web_plugin_info_t* info, int *info_release, int count, int total);
 } cfx_web_plugin_info_visitor_t;
 
-void CEF_CALLBACK _cfx_web_plugin_info_visitor_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_web_plugin_info_visitor_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_web_plugin_info_visitor_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_web_plugin_info_visitor_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_web_plugin_info_visitor_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_web_plugin_info_visitor_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_web_plugin_info_visitor_t*)base)->wrapper_kind == 0) {
@@ -34,7 +34,7 @@ int CEF_CALLBACK _cfx_web_plugin_info_visitor_release(struct _cef_base_t* base) 
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_web_plugin_info_visitor_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_web_plugin_info_visitor_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_web_plugin_info_visitor_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
@@ -61,7 +61,7 @@ int CEF_CALLBACK cfx_web_plugin_info_visitor_visit(cef_web_plugin_info_visitor_t
     int __retval;
     int info_release;
     ((cfx_web_plugin_info_visitor_t*)self)->visit(((cfx_web_plugin_info_visitor_t*)self)->gc_handle, &__retval, info, &info_release, count, total);
-    if(info_release) info->base.release((cef_base_t*)info);
+    if(info_release) info->base.release((cef_base_ref_counted_t*)info);
     return __retval;
 }
 

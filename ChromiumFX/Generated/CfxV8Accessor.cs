@@ -22,7 +22,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
     /// </remarks>
-    public class CfxV8Accessor : CfxClientBase {
+    public class CfxV8Accessor : CfxBaseClient {
 
         private static object eventLock = new object();
 

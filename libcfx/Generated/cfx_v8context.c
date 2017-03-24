@@ -58,7 +58,7 @@ static int cfx_v8context_exit(cef_v8context_t* self) {
 
 // is_same
 static int cfx_v8context_is_same(cef_v8context_t* self, cef_v8context_t* that) {
-    if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
+    if(that) ((cef_base_ref_counted_t*)that)->add_ref((cef_base_ref_counted_t*)that);
     return self->is_same(self, that);
 }
 

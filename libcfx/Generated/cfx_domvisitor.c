@@ -18,10 +18,10 @@ typedef struct _cfx_domvisitor_t {
     void (CEF_CALLBACK *visit)(gc_handle_t self, cef_domdocument_t* document, int *document_release);
 } cfx_domvisitor_t;
 
-void CEF_CALLBACK _cfx_domvisitor_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_domvisitor_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_domvisitor_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_domvisitor_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_domvisitor_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_domvisitor_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_domvisitor_t*)base)->wrapper_kind == 0) {
@@ -34,7 +34,7 @@ int CEF_CALLBACK _cfx_domvisitor_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_domvisitor_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_domvisitor_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_domvisitor_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
@@ -60,7 +60,7 @@ static gc_handle_t cfx_domvisitor_get_gc_handle(cfx_domvisitor_t* self) {
 void CEF_CALLBACK cfx_domvisitor_visit(cef_domvisitor_t* self, cef_domdocument_t* document) {
     int document_release;
     ((cfx_domvisitor_t*)self)->visit(((cfx_domvisitor_t*)self)->gc_handle, document, &document_release);
-    if(document_release) document->base.release((cef_base_t*)document);
+    if(document_release) document->base.release((cef_base_ref_counted_t*)document);
 }
 
 static void cfx_domvisitor_set_callback(cef_domvisitor_t* self, int index, void* callback) {

@@ -19,10 +19,10 @@ typedef struct _cfx_download_handler_t {
     void (CEF_CALLBACK *on_download_updated)(gc_handle_t self, cef_browser_t* browser, int *browser_release, cef_download_item_t* download_item, int *download_item_release, cef_download_item_callback_t* callback, int *callback_release);
 } cfx_download_handler_t;
 
-void CEF_CALLBACK _cfx_download_handler_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_download_handler_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_download_handler_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_download_handler_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_download_handler_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_download_handler_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_download_handler_t*)base)->wrapper_kind == 0) {
@@ -35,7 +35,7 @@ int CEF_CALLBACK _cfx_download_handler_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_download_handler_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_download_handler_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_download_handler_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
@@ -63,9 +63,9 @@ void CEF_CALLBACK cfx_download_handler_on_before_download(cef_download_handler_t
     int download_item_release;
     int callback_release;
     ((cfx_download_handler_t*)self)->on_before_download(((cfx_download_handler_t*)self)->gc_handle, browser, &browser_release, download_item, &download_item_release, suggested_name ? suggested_name->str : 0, suggested_name ? (int)suggested_name->length : 0, callback, &callback_release);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
-    if(download_item_release) download_item->base.release((cef_base_t*)download_item);
-    if(callback_release) callback->base.release((cef_base_t*)callback);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(download_item_release) download_item->base.release((cef_base_ref_counted_t*)download_item);
+    if(callback_release) callback->base.release((cef_base_ref_counted_t*)callback);
 }
 
 // on_download_updated
@@ -75,9 +75,9 @@ void CEF_CALLBACK cfx_download_handler_on_download_updated(cef_download_handler_
     int download_item_release;
     int callback_release;
     ((cfx_download_handler_t*)self)->on_download_updated(((cfx_download_handler_t*)self)->gc_handle, browser, &browser_release, download_item, &download_item_release, callback, &callback_release);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
-    if(download_item_release) download_item->base.release((cef_base_t*)download_item);
-    if(callback_release) callback->base.release((cef_base_t*)callback);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(download_item_release) download_item->base.release((cef_base_ref_counted_t*)download_item);
+    if(callback_release) callback->base.release((cef_base_ref_counted_t*)callback);
 }
 
 static void cfx_download_handler_set_callback(cef_download_handler_t* self, int index, void* callback) {

@@ -21,10 +21,10 @@ typedef struct _cfx_load_handler_t {
     void (CEF_CALLBACK *on_load_error)(gc_handle_t self, cef_browser_t* browser, int *browser_release, cef_frame_t* frame, int *frame_release, cef_errorcode_t errorCode, char16 *errorText_str, int errorText_length, char16 *failedUrl_str, int failedUrl_length);
 } cfx_load_handler_t;
 
-void CEF_CALLBACK _cfx_load_handler_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_load_handler_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_load_handler_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_load_handler_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_load_handler_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_load_handler_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_load_handler_t*)base)->wrapper_kind == 0) {
@@ -37,7 +37,7 @@ int CEF_CALLBACK _cfx_load_handler_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_load_handler_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_load_handler_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_load_handler_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
@@ -63,7 +63,7 @@ static gc_handle_t cfx_load_handler_get_gc_handle(cfx_load_handler_t* self) {
 void CEF_CALLBACK cfx_load_handler_on_loading_state_change(cef_load_handler_t* self, cef_browser_t* browser, int isLoading, int canGoBack, int canGoForward) {
     int browser_release;
     ((cfx_load_handler_t*)self)->on_loading_state_change(((cfx_load_handler_t*)self)->gc_handle, browser, &browser_release, isLoading, canGoBack, canGoForward);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
 // on_load_start
@@ -72,8 +72,8 @@ void CEF_CALLBACK cfx_load_handler_on_load_start(cef_load_handler_t* self, cef_b
     int browser_release;
     int frame_release;
     ((cfx_load_handler_t*)self)->on_load_start(((cfx_load_handler_t*)self)->gc_handle, browser, &browser_release, frame, &frame_release, transition_type);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
-    if(frame_release) frame->base.release((cef_base_t*)frame);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(frame_release) frame->base.release((cef_base_ref_counted_t*)frame);
 }
 
 // on_load_end
@@ -82,8 +82,8 @@ void CEF_CALLBACK cfx_load_handler_on_load_end(cef_load_handler_t* self, cef_bro
     int browser_release;
     int frame_release;
     ((cfx_load_handler_t*)self)->on_load_end(((cfx_load_handler_t*)self)->gc_handle, browser, &browser_release, frame, &frame_release, httpStatusCode);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
-    if(frame_release) frame->base.release((cef_base_t*)frame);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(frame_release) frame->base.release((cef_base_ref_counted_t*)frame);
 }
 
 // on_load_error
@@ -92,8 +92,8 @@ void CEF_CALLBACK cfx_load_handler_on_load_error(cef_load_handler_t* self, cef_b
     int browser_release;
     int frame_release;
     ((cfx_load_handler_t*)self)->on_load_error(((cfx_load_handler_t*)self)->gc_handle, browser, &browser_release, frame, &frame_release, errorCode, errorText ? errorText->str : 0, errorText ? (int)errorText->length : 0, failedUrl ? failedUrl->str : 0, failedUrl ? (int)failedUrl->length : 0);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
-    if(frame_release) frame->base.release((cef_base_t*)frame);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(frame_release) frame->base.release((cef_base_ref_counted_t*)frame);
 }
 
 static void cfx_load_handler_set_callback(cef_load_handler_t* self, int index, void* callback) {

@@ -20,7 +20,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_app_capi.h">cef/include/capi/cef_app_capi.h</see>.
     /// </remarks>
-    public class CfxApp : CfxClientBase {
+    public class CfxApp : CfxBaseClient {
 
         private static object eventLock = new object();
 
@@ -58,20 +58,19 @@ namespace Chromium {
 
         // on_register_custom_schemes
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_register_custom_schemes_delegate(IntPtr gcHandlePtr, IntPtr registrar, out int registrar_release);
+        private delegate void on_register_custom_schemes_delegate(IntPtr gcHandlePtr, IntPtr registrar);
         private static on_register_custom_schemes_delegate on_register_custom_schemes_native;
         private static IntPtr on_register_custom_schemes_native_ptr;
 
-        internal static void on_register_custom_schemes(IntPtr gcHandlePtr, IntPtr registrar, out int registrar_release) {
+        internal static void on_register_custom_schemes(IntPtr gcHandlePtr, IntPtr registrar) {
             var self = (CfxApp)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
-                registrar_release = 1;
                 return;
             }
             var e = new CfxOnRegisterCustomSchemesEventArgs(registrar);
             self.m_OnRegisterCustomSchemes?.Invoke(self, e);
             e.m_isInvalid = true;
-            registrar_release = e.m_registrar_wrapped == null? 1 : 0;
+            if(e.m_registrar_wrapped != null) e.m_registrar_wrapped.Dispose();
         }
 
         // get_resource_bundle_handler

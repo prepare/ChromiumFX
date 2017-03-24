@@ -29,10 +29,10 @@ typedef struct _cfx_render_handler_t {
     void (CEF_CALLBACK *on_ime_composition_range_changed)(gc_handle_t self, cef_browser_t* browser, int *browser_release, const cef_range_t* selected_range, size_t character_boundsCount, cef_rect_t const* character_bounds, int character_bounds_structsize);
 } cfx_render_handler_t;
 
-void CEF_CALLBACK _cfx_render_handler_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_render_handler_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_render_handler_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_render_handler_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_render_handler_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_render_handler_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_render_handler_t*)base)->wrapper_kind == 0) {
@@ -45,7 +45,7 @@ int CEF_CALLBACK _cfx_render_handler_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_render_handler_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_render_handler_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_render_handler_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
@@ -72,7 +72,7 @@ int CEF_CALLBACK cfx_render_handler_get_root_screen_rect(cef_render_handler_t* s
     int __retval;
     int browser_release;
     ((cfx_render_handler_t*)self)->get_root_screen_rect(((cfx_render_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, rect);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
     return __retval;
 }
 
@@ -82,7 +82,7 @@ int CEF_CALLBACK cfx_render_handler_get_view_rect(cef_render_handler_t* self, ce
     int __retval;
     int browser_release;
     ((cfx_render_handler_t*)self)->get_view_rect(((cfx_render_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, rect);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
     return __retval;
 }
 
@@ -92,7 +92,7 @@ int CEF_CALLBACK cfx_render_handler_get_screen_point(cef_render_handler_t* self,
     int __retval;
     int browser_release;
     ((cfx_render_handler_t*)self)->get_screen_point(((cfx_render_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, viewX, viewY, screenX, screenY);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
     return __retval;
 }
 
@@ -102,7 +102,7 @@ int CEF_CALLBACK cfx_render_handler_get_screen_info(cef_render_handler_t* self, 
     int __retval;
     int browser_release;
     ((cfx_render_handler_t*)self)->get_screen_info(((cfx_render_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, screen_info);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
     return __retval;
 }
 
@@ -111,7 +111,7 @@ int CEF_CALLBACK cfx_render_handler_get_screen_info(cef_render_handler_t* self, 
 void CEF_CALLBACK cfx_render_handler_on_popup_show(cef_render_handler_t* self, cef_browser_t* browser, int show) {
     int browser_release;
     ((cfx_render_handler_t*)self)->on_popup_show(((cfx_render_handler_t*)self)->gc_handle, browser, &browser_release, show);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
 // on_popup_size
@@ -119,7 +119,7 @@ void CEF_CALLBACK cfx_render_handler_on_popup_show(cef_render_handler_t* self, c
 void CEF_CALLBACK cfx_render_handler_on_popup_size(cef_render_handler_t* self, cef_browser_t* browser, const cef_rect_t* rect) {
     int browser_release;
     ((cfx_render_handler_t*)self)->on_popup_size(((cfx_render_handler_t*)self)->gc_handle, browser, &browser_release, rect);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
 // on_paint
@@ -127,7 +127,7 @@ void CEF_CALLBACK cfx_render_handler_on_popup_size(cef_render_handler_t* self, c
 void CEF_CALLBACK cfx_render_handler_on_paint(cef_render_handler_t* self, cef_browser_t* browser, cef_paint_element_type_t type, size_t dirtyRectsCount, cef_rect_t const* dirtyRects, const void* buffer, int width, int height) {
     int browser_release;
     ((cfx_render_handler_t*)self)->on_paint(((cfx_render_handler_t*)self)->gc_handle, browser, &browser_release, type, dirtyRectsCount, dirtyRects, (int)sizeof(cef_rect_t), buffer, width, height);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
 // on_cursor_change
@@ -135,7 +135,7 @@ void CEF_CALLBACK cfx_render_handler_on_paint(cef_render_handler_t* self, cef_br
 void CEF_CALLBACK cfx_render_handler_on_cursor_change(cef_render_handler_t* self, cef_browser_t* browser, cef_cursor_handle_t cursor, cef_cursor_type_t type, const cef_cursor_info_t* custom_cursor_info) {
     int browser_release;
     ((cfx_render_handler_t*)self)->on_cursor_change(((cfx_render_handler_t*)self)->gc_handle, browser, &browser_release, cursor, type, custom_cursor_info);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
 // start_dragging
@@ -145,8 +145,8 @@ int CEF_CALLBACK cfx_render_handler_start_dragging(cef_render_handler_t* self, c
     int browser_release;
     int drag_data_release;
     ((cfx_render_handler_t*)self)->start_dragging(((cfx_render_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, drag_data, &drag_data_release, allowed_ops, x, y);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
-    if(drag_data_release) drag_data->base.release((cef_base_t*)drag_data);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(drag_data_release) drag_data->base.release((cef_base_ref_counted_t*)drag_data);
     return __retval;
 }
 
@@ -155,7 +155,7 @@ int CEF_CALLBACK cfx_render_handler_start_dragging(cef_render_handler_t* self, c
 void CEF_CALLBACK cfx_render_handler_update_drag_cursor(cef_render_handler_t* self, cef_browser_t* browser, cef_drag_operations_mask_t operation) {
     int browser_release;
     ((cfx_render_handler_t*)self)->update_drag_cursor(((cfx_render_handler_t*)self)->gc_handle, browser, &browser_release, operation);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
 // on_scroll_offset_changed
@@ -163,7 +163,7 @@ void CEF_CALLBACK cfx_render_handler_update_drag_cursor(cef_render_handler_t* se
 void CEF_CALLBACK cfx_render_handler_on_scroll_offset_changed(cef_render_handler_t* self, cef_browser_t* browser, double x, double y) {
     int browser_release;
     ((cfx_render_handler_t*)self)->on_scroll_offset_changed(((cfx_render_handler_t*)self)->gc_handle, browser, &browser_release, x, y);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
 // on_ime_composition_range_changed
@@ -171,7 +171,7 @@ void CEF_CALLBACK cfx_render_handler_on_scroll_offset_changed(cef_render_handler
 void CEF_CALLBACK cfx_render_handler_on_ime_composition_range_changed(cef_render_handler_t* self, cef_browser_t* browser, const cef_range_t* selected_range, size_t character_boundsCount, cef_rect_t const* character_bounds) {
     int browser_release;
     ((cfx_render_handler_t*)self)->on_ime_composition_range_changed(((cfx_render_handler_t*)self)->gc_handle, browser, &browser_release, selected_range, character_boundsCount, character_bounds, (int)sizeof(cef_rect_t));
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
 static void cfx_render_handler_set_callback(cef_render_handler_t* self, int index, void* callback) {

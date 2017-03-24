@@ -20,7 +20,7 @@ static cef_stream_reader_t* cfx_stream_reader_create_for_data(void* data, size_t
 }
 // CEF_EXPORT cef_stream_reader_t* cef_stream_reader_create_for_handler(cef_read_handler_t* handler);
 static cef_stream_reader_t* cfx_stream_reader_create_for_handler(cef_read_handler_t* handler) {
-    if(handler) ((cef_base_t*)handler)->add_ref((cef_base_t*)handler);
+    if(handler) ((cef_base_ref_counted_t*)handler)->add_ref((cef_base_ref_counted_t*)handler);
     return cef_stream_reader_create_for_handler(handler);
 }
 // read

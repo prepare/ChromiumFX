@@ -30,13 +30,13 @@ static int cfx_list_value_is_read_only(cef_list_value_t* self) {
 
 // is_same
 static int cfx_list_value_is_same(cef_list_value_t* self, cef_list_value_t* that) {
-    if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
+    if(that) ((cef_base_ref_counted_t*)that)->add_ref((cef_base_ref_counted_t*)that);
     return self->is_same(self, that);
 }
 
 // is_equal
 static int cfx_list_value_is_equal(cef_list_value_t* self, cef_list_value_t* that) {
-    if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
+    if(that) ((cef_base_ref_counted_t*)that)->add_ref((cef_base_ref_counted_t*)that);
     return self->is_equal(self, that);
 }
 
@@ -112,7 +112,7 @@ static cef_list_value_t* cfx_list_value_get_list(cef_list_value_t* self, size_t 
 
 // set_value
 static int cfx_list_value_set_value(cef_list_value_t* self, size_t index, cef_value_t* value) {
-    if(value) ((cef_base_t*)value)->add_ref((cef_base_t*)value);
+    if(value) ((cef_base_ref_counted_t*)value)->add_ref((cef_base_ref_counted_t*)value);
     return self->set_value(self, index, value);
 }
 
@@ -144,19 +144,19 @@ static int cfx_list_value_set_string(cef_list_value_t* self, size_t index, char1
 
 // set_binary
 static int cfx_list_value_set_binary(cef_list_value_t* self, size_t index, cef_binary_value_t* value) {
-    if(value) ((cef_base_t*)value)->add_ref((cef_base_t*)value);
+    if(value) ((cef_base_ref_counted_t*)value)->add_ref((cef_base_ref_counted_t*)value);
     return self->set_binary(self, index, value);
 }
 
 // set_dictionary
 static int cfx_list_value_set_dictionary(cef_list_value_t* self, size_t index, cef_dictionary_value_t* value) {
-    if(value) ((cef_base_t*)value)->add_ref((cef_base_t*)value);
+    if(value) ((cef_base_ref_counted_t*)value)->add_ref((cef_base_ref_counted_t*)value);
     return self->set_dictionary(self, index, value);
 }
 
 // set_list
 static int cfx_list_value_set_list(cef_list_value_t* self, size_t index, cef_list_value_t* value) {
-    if(value) ((cef_base_t*)value)->add_ref((cef_base_t*)value);
+    if(value) ((cef_base_ref_counted_t*)value)->add_ref((cef_base_ref_counted_t*)value);
     return self->set_list(self, index, value);
 }
 

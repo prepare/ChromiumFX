@@ -18,7 +18,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_drag_data_capi.h">cef/include/capi/cef_drag_data_capi.h</see>.
     /// </remarks>
-    public class CfxDragData : CfxLibraryBase {
+    public class CfxDragData : CfxBaseLibrary {
 
         private static readonly WeakCache weakCache = new WeakCache();
 

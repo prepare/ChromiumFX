@@ -56,19 +56,19 @@ static void cfx_frame_view_source(cef_frame_t* self) {
 
 // get_source
 static void cfx_frame_get_source(cef_frame_t* self, cef_string_visitor_t* visitor) {
-    if(visitor) ((cef_base_t*)visitor)->add_ref((cef_base_t*)visitor);
+    if(visitor) ((cef_base_ref_counted_t*)visitor)->add_ref((cef_base_ref_counted_t*)visitor);
     self->get_source(self, visitor);
 }
 
 // get_text
 static void cfx_frame_get_text(cef_frame_t* self, cef_string_visitor_t* visitor) {
-    if(visitor) ((cef_base_t*)visitor)->add_ref((cef_base_t*)visitor);
+    if(visitor) ((cef_base_ref_counted_t*)visitor)->add_ref((cef_base_ref_counted_t*)visitor);
     self->get_text(self, visitor);
 }
 
 // load_request
 static void cfx_frame_load_request(cef_frame_t* self, cef_request_t* request) {
-    if(request) ((cef_base_t*)request)->add_ref((cef_base_t*)request);
+    if(request) ((cef_base_ref_counted_t*)request)->add_ref((cef_base_ref_counted_t*)request);
     self->load_request(self, request);
 }
 
@@ -134,7 +134,7 @@ static cef_v8context_t* cfx_frame_get_v8context(cef_frame_t* self) {
 
 // visit_dom
 static void cfx_frame_visit_dom(cef_frame_t* self, cef_domvisitor_t* visitor) {
-    if(visitor) ((cef_base_t*)visitor)->add_ref((cef_base_t*)visitor);
+    if(visitor) ((cef_base_ref_counted_t*)visitor)->add_ref((cef_base_ref_counted_t*)visitor);
     self->visit_dom(self, visitor);
 }
 

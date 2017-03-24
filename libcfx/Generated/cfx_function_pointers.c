@@ -7,7 +7,7 @@
 // Generated file. Do not edit.
 
 
-static void* cfx_function_pointers[1406] =  {
+static void* cfx_function_pointers[1415] =  {
     (void*)cfx_add_cross_origin_whitelist_entry,
     (void*)cfx_api_hash,
     (void*)cfx_base64decode,
@@ -648,6 +648,7 @@ static void* cfx_function_pointers[1406] =  {
     (void*)cfx_main_args_windows_set_instance,
     (void*)cfx_main_args_windows_get_instance,
     (void*)cfx_menu_model_create,
+    (void*)cfx_menu_model_is_sub_menu,
     (void*)cfx_menu_model_clear,
     (void*)cfx_menu_model_get_count,
     (void*)cfx_menu_model_add_separator,
@@ -697,6 +698,12 @@ static void* cfx_function_pointers[1406] =  {
     (void*)cfx_menu_model_remove_accelerator_at,
     (void*)cfx_menu_model_get_accelerator,
     (void*)cfx_menu_model_get_accelerator_at,
+    (void*)cfx_menu_model_set_color,
+    (void*)cfx_menu_model_set_color_at,
+    (void*)cfx_menu_model_get_color,
+    (void*)cfx_menu_model_get_color_at,
+    (void*)cfx_menu_model_set_font_list,
+    (void*)cfx_menu_model_set_font_list_at,
     (void*)cfx_menu_model_delegate_ctor,
     (void*)cfx_menu_model_delegate_get_gc_handle,
     (void*)cfx_menu_model_delegate_set_callback,
@@ -734,6 +741,8 @@ static void* cfx_function_pointers[1406] =  {
     (void*)cfx_pdf_print_settings_get_page_width,
     (void*)cfx_pdf_print_settings_set_page_height,
     (void*)cfx_pdf_print_settings_get_page_height,
+    (void*)cfx_pdf_print_settings_set_scale_factor,
+    (void*)cfx_pdf_print_settings_get_scale_factor,
     (void*)cfx_pdf_print_settings_set_margin_top,
     (void*)cfx_pdf_print_settings_get_margin_top,
     (void*)cfx_pdf_print_settings_set_margin_right,

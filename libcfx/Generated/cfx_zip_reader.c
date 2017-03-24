@@ -11,7 +11,7 @@
 
 // CEF_EXPORT cef_zip_reader_t* cef_zip_reader_create(cef_stream_reader_t* stream);
 static cef_zip_reader_t* cfx_zip_reader_create(cef_stream_reader_t* stream) {
-    if(stream) ((cef_base_t*)stream)->add_ref((cef_base_t*)stream);
+    if(stream) ((cef_base_ref_counted_t*)stream)->add_ref((cef_base_ref_counted_t*)stream);
     return cef_zip_reader_create(stream);
 }
 // move_to_first_file

@@ -96,6 +96,26 @@ namespace Chromium {
         }
 
         /// <summary>
+        /// The percentage to scale the PDF by before printing (e.g. 50 is 50%).
+        /// If this value is less than or equal to zero the default value of 100
+        /// will be used.
+        /// </summary>
+        /// <remarks>
+        /// See also the original CEF documentation in
+        /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/internal/cef_types.h">cef/include/internal/cef_types.h</see>.
+        /// </remarks>
+        public int ScaleFactor {
+            get {
+                int value;
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_scale_factor(nativePtrUnchecked, out value);
+                return value;
+            }
+            set {
+                CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_scale_factor(nativePtrUnchecked, value);
+            }
+        }
+
+        /// <summary>
         /// Margins in millimeters. Only used if |marginType| is set to
         /// PDF_PRINT_MARGIN_CUSTOM.
         /// </summary>

@@ -652,6 +652,7 @@ namespace Chromium {
             cfx_main_args_windows_set_instance,
             cfx_main_args_windows_get_instance,
             cfx_menu_model_create,
+            cfx_menu_model_is_sub_menu,
             cfx_menu_model_clear,
             cfx_menu_model_get_count,
             cfx_menu_model_add_separator,
@@ -701,6 +702,12 @@ namespace Chromium {
             cfx_menu_model_remove_accelerator_at,
             cfx_menu_model_get_accelerator,
             cfx_menu_model_get_accelerator_at,
+            cfx_menu_model_set_color,
+            cfx_menu_model_set_color_at,
+            cfx_menu_model_get_color,
+            cfx_menu_model_get_color_at,
+            cfx_menu_model_set_font_list,
+            cfx_menu_model_set_font_list_at,
             cfx_menu_model_delegate_ctor,
             cfx_menu_model_delegate_get_gc_handle,
             cfx_menu_model_delegate_set_callback,
@@ -738,6 +745,8 @@ namespace Chromium {
             cfx_pdf_print_settings_get_page_width,
             cfx_pdf_print_settings_set_page_height,
             cfx_pdf_print_settings_get_page_height,
+            cfx_pdf_print_settings_set_scale_factor,
+            cfx_pdf_print_settings_get_scale_factor,
             cfx_pdf_print_settings_set_margin_top,
             cfx_pdf_print_settings_get_margin_top,
             cfx_pdf_print_settings_set_margin_right,
@@ -2333,6 +2342,7 @@ namespace Chromium {
         internal static void LoadCfxMenuModelApi() {
             CfxApi.Probe();
             CfxApi.MenuModel.cfx_menu_model_create = (CfxApi.MenuModel.cfx_menu_model_create_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_menu_model_create, typeof(CfxApi.MenuModel.cfx_menu_model_create_delegate));
+            CfxApi.MenuModel.cfx_menu_model_is_sub_menu = (CfxApi.MenuModel.cfx_menu_model_is_sub_menu_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_menu_model_is_sub_menu, typeof(CfxApi.MenuModel.cfx_menu_model_is_sub_menu_delegate));
             CfxApi.MenuModel.cfx_menu_model_clear = (CfxApi.MenuModel.cfx_menu_model_clear_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_menu_model_clear, typeof(CfxApi.MenuModel.cfx_menu_model_clear_delegate));
             CfxApi.MenuModel.cfx_menu_model_get_count = (CfxApi.MenuModel.cfx_menu_model_get_count_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_menu_model_get_count, typeof(CfxApi.MenuModel.cfx_menu_model_get_count_delegate));
             CfxApi.MenuModel.cfx_menu_model_add_separator = (CfxApi.MenuModel.cfx_menu_model_add_separator_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_menu_model_add_separator, typeof(CfxApi.MenuModel.cfx_menu_model_add_separator_delegate));
@@ -2382,6 +2392,12 @@ namespace Chromium {
             CfxApi.MenuModel.cfx_menu_model_remove_accelerator_at = (CfxApi.MenuModel.cfx_menu_model_remove_accelerator_at_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_menu_model_remove_accelerator_at, typeof(CfxApi.MenuModel.cfx_menu_model_remove_accelerator_at_delegate));
             CfxApi.MenuModel.cfx_menu_model_get_accelerator = (CfxApi.MenuModel.cfx_menu_model_get_accelerator_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_menu_model_get_accelerator, typeof(CfxApi.MenuModel.cfx_menu_model_get_accelerator_delegate));
             CfxApi.MenuModel.cfx_menu_model_get_accelerator_at = (CfxApi.MenuModel.cfx_menu_model_get_accelerator_at_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_menu_model_get_accelerator_at, typeof(CfxApi.MenuModel.cfx_menu_model_get_accelerator_at_delegate));
+            CfxApi.MenuModel.cfx_menu_model_set_color = (CfxApi.MenuModel.cfx_menu_model_set_color_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_menu_model_set_color, typeof(CfxApi.MenuModel.cfx_menu_model_set_color_delegate));
+            CfxApi.MenuModel.cfx_menu_model_set_color_at = (CfxApi.MenuModel.cfx_menu_model_set_color_at_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_menu_model_set_color_at, typeof(CfxApi.MenuModel.cfx_menu_model_set_color_at_delegate));
+            CfxApi.MenuModel.cfx_menu_model_get_color = (CfxApi.MenuModel.cfx_menu_model_get_color_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_menu_model_get_color, typeof(CfxApi.MenuModel.cfx_menu_model_get_color_delegate));
+            CfxApi.MenuModel.cfx_menu_model_get_color_at = (CfxApi.MenuModel.cfx_menu_model_get_color_at_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_menu_model_get_color_at, typeof(CfxApi.MenuModel.cfx_menu_model_get_color_at_delegate));
+            CfxApi.MenuModel.cfx_menu_model_set_font_list = (CfxApi.MenuModel.cfx_menu_model_set_font_list_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_menu_model_set_font_list, typeof(CfxApi.MenuModel.cfx_menu_model_set_font_list_delegate));
+            CfxApi.MenuModel.cfx_menu_model_set_font_list_at = (CfxApi.MenuModel.cfx_menu_model_set_font_list_at_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_menu_model_set_font_list_at, typeof(CfxApi.MenuModel.cfx_menu_model_set_font_list_at_delegate));
         }
 
         internal static void LoadCfxMenuModelDelegateApi() {
@@ -2446,6 +2462,8 @@ namespace Chromium {
             CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_page_width = (CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_page_width_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_get_page_width, typeof(CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_page_width_delegate));
             CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_page_height = (CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_page_height_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_set_page_height, typeof(CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_page_height_delegate));
             CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_page_height = (CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_page_height_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_get_page_height, typeof(CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_page_height_delegate));
+            CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_scale_factor = (CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_scale_factor_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_set_scale_factor, typeof(CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_scale_factor_delegate));
+            CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_scale_factor = (CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_scale_factor_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_get_scale_factor, typeof(CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_scale_factor_delegate));
             CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_margin_top = (CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_margin_top_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_set_margin_top, typeof(CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_margin_top_delegate));
             CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_margin_top = (CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_margin_top_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_get_margin_top, typeof(CfxApi.PdfPrintSettings.cfx_pdf_print_settings_get_margin_top_delegate));
             CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_margin_right = (CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_margin_right_delegate)CfxApi.GetDelegate(FunctionIndex.cfx_pdf_print_settings_set_margin_right, typeof(CfxApi.PdfPrintSettings.cfx_pdf_print_settings_set_margin_right_delegate));

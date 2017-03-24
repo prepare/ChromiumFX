@@ -19,7 +19,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_client_capi.h">cef/include/capi/cef_client_capi.h</see>.
     /// </remarks>
-    public class CfxClient : CfxClientBase {
+    public class CfxClient : CfxBaseClient {
 
         internal static CfxClient Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;

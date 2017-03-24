@@ -34,10 +34,10 @@ public class CfxClientClass : CfxClass {
         b.EndBlock("{0};", CfxNativeSymbol);
         b.AppendLine();
 
-        b.BeginBlock("void CEF_CALLBACK _{0}_add_ref(struct _cef_base_t* base)", CfxName);
+        b.BeginBlock("void CEF_CALLBACK _{0}_add_ref(struct _cef_base_ref_counted_t* base)", CfxName);
         b.AppendLine("InterlockedIncrement(&(({0}*)base)->ref_count);", CfxNativeSymbol);
         b.EndBlock();
-        b.BeginBlock("int CEF_CALLBACK _{0}_release(struct _cef_base_t* base)", CfxName);
+        b.BeginBlock("int CEF_CALLBACK _{0}_release(struct _cef_base_ref_counted_t* base)", CfxName);
         b.AppendLine("int count = InterlockedDecrement(&(({0}*)base)->ref_count);", CfxNativeSymbol);
         b.BeginIf("count == 0");
         b.BeginIf("(({0}*)base)->wrapper_kind == 0", CfxNativeSymbol);
@@ -50,7 +50,7 @@ public class CfxClientClass : CfxClass {
         b.EndBlock();
         b.AppendLine("return 0;");
         b.EndBlock();
-        b.BeginBlock("int CEF_CALLBACK _{0}_has_one_ref(struct _cef_base_t* base)", CfxName);
+        b.BeginBlock("int CEF_CALLBACK _{0}_has_one_ref(struct _cef_base_ref_counted_t* base)", CfxName);
         b.AppendLine("return (({0}*)base)->ref_count == 1 ? 1 : 0;", CfxNativeSymbol);
         b.EndBlock();
         b.AppendLine();
@@ -135,7 +135,7 @@ public class CfxClientClass : CfxClass {
 
         b.AppendSummaryAndRemarks(Comments, false, true);
 
-        b.BeginClass(ClassName + " : CfxClientBase", GeneratorConfig.ClassModifiers(ClassName));
+        b.BeginClass(ClassName + " : CfxBaseClient", GeneratorConfig.ClassModifiers(ClassName));
         b.AppendLine();
 
         if(NeedsWrapFunction) {

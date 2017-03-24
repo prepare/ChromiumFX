@@ -32,10 +32,10 @@ typedef struct _cfx_client_t {
     void (CEF_CALLBACK *on_process_message_received)(gc_handle_t self, int* __retval, cef_browser_t* browser, int *browser_release, cef_process_id_t source_process, cef_process_message_t* message, int *message_release);
 } cfx_client_t;
 
-void CEF_CALLBACK _cfx_client_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_client_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_client_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_client_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_client_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_client_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_client_t*)base)->wrapper_kind == 0) {
@@ -48,7 +48,7 @@ int CEF_CALLBACK _cfx_client_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_client_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_client_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_client_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
@@ -75,7 +75,7 @@ cef_context_menu_handler_t* CEF_CALLBACK cfx_client_get_context_menu_handler(cef
     cef_context_menu_handler_t* __retval;
     ((cfx_client_t*)self)->get_context_menu_handler(((cfx_client_t*)self)->gc_handle, &__retval);
     if(__retval) {
-        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
+        ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }
     return __retval;
 }
@@ -86,7 +86,7 @@ cef_dialog_handler_t* CEF_CALLBACK cfx_client_get_dialog_handler(cef_client_t* s
     cef_dialog_handler_t* __retval;
     ((cfx_client_t*)self)->get_dialog_handler(((cfx_client_t*)self)->gc_handle, &__retval);
     if(__retval) {
-        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
+        ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }
     return __retval;
 }
@@ -97,7 +97,7 @@ cef_display_handler_t* CEF_CALLBACK cfx_client_get_display_handler(cef_client_t*
     cef_display_handler_t* __retval;
     ((cfx_client_t*)self)->get_display_handler(((cfx_client_t*)self)->gc_handle, &__retval);
     if(__retval) {
-        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
+        ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }
     return __retval;
 }
@@ -108,7 +108,7 @@ cef_download_handler_t* CEF_CALLBACK cfx_client_get_download_handler(cef_client_
     cef_download_handler_t* __retval;
     ((cfx_client_t*)self)->get_download_handler(((cfx_client_t*)self)->gc_handle, &__retval);
     if(__retval) {
-        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
+        ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }
     return __retval;
 }
@@ -119,7 +119,7 @@ cef_drag_handler_t* CEF_CALLBACK cfx_client_get_drag_handler(cef_client_t* self)
     cef_drag_handler_t* __retval;
     ((cfx_client_t*)self)->get_drag_handler(((cfx_client_t*)self)->gc_handle, &__retval);
     if(__retval) {
-        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
+        ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }
     return __retval;
 }
@@ -130,7 +130,7 @@ cef_find_handler_t* CEF_CALLBACK cfx_client_get_find_handler(cef_client_t* self)
     cef_find_handler_t* __retval;
     ((cfx_client_t*)self)->get_find_handler(((cfx_client_t*)self)->gc_handle, &__retval);
     if(__retval) {
-        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
+        ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }
     return __retval;
 }
@@ -141,7 +141,7 @@ cef_focus_handler_t* CEF_CALLBACK cfx_client_get_focus_handler(cef_client_t* sel
     cef_focus_handler_t* __retval;
     ((cfx_client_t*)self)->get_focus_handler(((cfx_client_t*)self)->gc_handle, &__retval);
     if(__retval) {
-        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
+        ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }
     return __retval;
 }
@@ -152,7 +152,7 @@ cef_geolocation_handler_t* CEF_CALLBACK cfx_client_get_geolocation_handler(cef_c
     cef_geolocation_handler_t* __retval;
     ((cfx_client_t*)self)->get_geolocation_handler(((cfx_client_t*)self)->gc_handle, &__retval);
     if(__retval) {
-        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
+        ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }
     return __retval;
 }
@@ -163,7 +163,7 @@ cef_jsdialog_handler_t* CEF_CALLBACK cfx_client_get_jsdialog_handler(cef_client_
     cef_jsdialog_handler_t* __retval;
     ((cfx_client_t*)self)->get_jsdialog_handler(((cfx_client_t*)self)->gc_handle, &__retval);
     if(__retval) {
-        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
+        ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }
     return __retval;
 }
@@ -174,7 +174,7 @@ cef_keyboard_handler_t* CEF_CALLBACK cfx_client_get_keyboard_handler(cef_client_
     cef_keyboard_handler_t* __retval;
     ((cfx_client_t*)self)->get_keyboard_handler(((cfx_client_t*)self)->gc_handle, &__retval);
     if(__retval) {
-        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
+        ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }
     return __retval;
 }
@@ -185,7 +185,7 @@ cef_life_span_handler_t* CEF_CALLBACK cfx_client_get_life_span_handler(cef_clien
     cef_life_span_handler_t* __retval;
     ((cfx_client_t*)self)->get_life_span_handler(((cfx_client_t*)self)->gc_handle, &__retval);
     if(__retval) {
-        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
+        ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }
     return __retval;
 }
@@ -196,7 +196,7 @@ cef_load_handler_t* CEF_CALLBACK cfx_client_get_load_handler(cef_client_t* self)
     cef_load_handler_t* __retval;
     ((cfx_client_t*)self)->get_load_handler(((cfx_client_t*)self)->gc_handle, &__retval);
     if(__retval) {
-        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
+        ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }
     return __retval;
 }
@@ -207,7 +207,7 @@ cef_render_handler_t* CEF_CALLBACK cfx_client_get_render_handler(cef_client_t* s
     cef_render_handler_t* __retval;
     ((cfx_client_t*)self)->get_render_handler(((cfx_client_t*)self)->gc_handle, &__retval);
     if(__retval) {
-        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
+        ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }
     return __retval;
 }
@@ -218,7 +218,7 @@ cef_request_handler_t* CEF_CALLBACK cfx_client_get_request_handler(cef_client_t*
     cef_request_handler_t* __retval;
     ((cfx_client_t*)self)->get_request_handler(((cfx_client_t*)self)->gc_handle, &__retval);
     if(__retval) {
-        ((cef_base_t*)__retval)->add_ref((cef_base_t*)__retval);
+        ((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);
     }
     return __retval;
 }
@@ -230,8 +230,8 @@ int CEF_CALLBACK cfx_client_on_process_message_received(cef_client_t* self, cef_
     int browser_release;
     int message_release;
     ((cfx_client_t*)self)->on_process_message_received(((cfx_client_t*)self)->gc_handle, &__retval, browser, &browser_release, source_process, message, &message_release);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
-    if(message_release) message->base.release((cef_base_t*)message);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(message_release) message->base.release((cef_base_ref_counted_t*)message);
     return __retval;
 }
 

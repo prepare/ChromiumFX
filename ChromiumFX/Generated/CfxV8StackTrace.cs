@@ -21,7 +21,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
     /// </remarks>
-    public class CfxV8StackTrace : CfxLibraryBase {
+    public class CfxV8StackTrace : CfxBaseLibrary {
 
         private static readonly WeakCache weakCache = new WeakCache();
 

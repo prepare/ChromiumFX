@@ -17,22 +17,11 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
     /// </remarks>
-    public class CfxSchemeRegistrar : CfxLibraryBase {
-
-        private static readonly WeakCache weakCache = new WeakCache();
+    public class CfxSchemeRegistrar : CfxBaseScoped {
 
         internal static CfxSchemeRegistrar Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
-            lock(weakCache) {
-                var wrapper = (CfxSchemeRegistrar)weakCache.Get(nativePtr);
-                if(wrapper == null) {
-                    wrapper = new CfxSchemeRegistrar(nativePtr);
-                    weakCache.Add(wrapper);
-                } else {
-                    CfxApi.cfx_release(nativePtr);
-                }
-                return wrapper;
-            }
+            return new CfxSchemeRegistrar(nativePtr);
         }
 
 
@@ -65,20 +54,30 @@ namespace Chromium {
         /// is. For example, "scheme:///some%20text" will remain the same. Non-standard
         /// scheme URLs cannot be used as a target for form submission.
         /// 
-        /// If |isLocal| is true (1) the scheme will be treated as local (i.e., with
-        /// the same security rules as those applied to "file" URLs). Normal pages
-        /// cannot link to or access local URLs. Also, by default, local URLs can only
-        /// perform XMLHttpRequest calls to the same URL (origin + path) that
-        /// originated the request. To allow XMLHttpRequest calls from a local URL to
-        /// other URLs with the same origin set the
-        /// CfxSettings.FileAccessFromFileUrlsAllowed value to true (1). To allow
-        /// XMLHttpRequest calls from a local URL to all origins set the
-        /// CfxSettings.UniversalAccessFromFileUrlsAllowed value to true (1).
+        /// If |isLocal| is true (1) the scheme will be treated with the same security
+        /// rules as those applied to "file" URLs. Normal pages cannot link to or
+        /// access local URLs. Also, by default, local URLs can only perform
+        /// XMLHttpRequest calls to the same URL (origin + path) that originated the
+        /// request. To allow XMLHttpRequest calls from a local URL to other URLs with
+        /// the same origin set the CfxSettings.FileAccessFromFileUrlsAllowed
+        /// value to true (1). To allow XMLHttpRequest calls from a local URL to all
+        /// origins set the CfxSettings.UniversalAccessFromFileUrlsAllowed value
+        /// to true (1).
         /// 
-        /// If |isDisplayIsolated| is true (1) the scheme will be treated as display-
-        /// isolated. This means that pages cannot display these URLs unless they are
-        /// from the same scheme. For example, pages in another origin cannot create
-        /// iframes or hyperlinks to URLs with this scheme.
+        /// If |isDisplayIsolated| is true (1) the scheme can only be displayed from
+        /// other content hosted with the same scheme. For example, pages in other
+        /// origins cannot create iframes or hyperlinks to URLs with the scheme. For
+        /// schemes that must be accessible from other schemes set this value to false
+        /// (0), set |isCorsEnabled| to true (1), and use CORS "Access-Control-Allow-
+        /// Origin" headers to further restrict access.
+        /// 
+        /// If |isSecure| is true (1) the scheme will be treated with the same
+        /// security rules as those applied to "https" URLs. For example, loading this
+        /// scheme from other secure schemes will not trigger mixed content warnings.
+        /// 
+        /// If |isCorsEnabled| is true (1) the scheme that can be sent CORS requests.
+        /// This value should be true (1) in most cases where |isStandard| is true
+        /// (1).
         /// 
         /// This function may be called on any thread. It should only be called once
         /// per unique |schemeName| value. If |schemeName| is already registered or
@@ -88,16 +87,11 @@ namespace Chromium {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
         /// </remarks>
-        public bool AddCustomScheme(string schemeName, bool isStandard, bool isLocal, bool isDisplayIsolated) {
+        public bool AddCustomScheme(string schemeName, bool isStandard, bool isLocal, bool isDisplayIsolated, bool isSecure, bool isCorsEnabled) {
             var schemeName_pinned = new PinnedString(schemeName);
-            var __retval = CfxApi.SchemeRegistrar.cfx_scheme_registrar_add_custom_scheme(NativePtr, schemeName_pinned.Obj.PinnedPtr, schemeName_pinned.Length, isStandard ? 1 : 0, isLocal ? 1 : 0, isDisplayIsolated ? 1 : 0);
+            var __retval = CfxApi.SchemeRegistrar.cfx_scheme_registrar_add_custom_scheme(NativePtr, schemeName_pinned.Obj.PinnedPtr, schemeName_pinned.Length, isStandard ? 1 : 0, isLocal ? 1 : 0, isDisplayIsolated ? 1 : 0, isSecure ? 1 : 0, isCorsEnabled ? 1 : 0);
             schemeName_pinned.Obj.Free();
             return 0 != __retval;
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

@@ -34,7 +34,7 @@ static cef_string_userfree_t cfx_base64encode(const void* data, size_t data_size
 // CEF_EXPORT int cef_begin_tracing(const cef_string_t* categories, cef_completion_callback_t* callback);
 static int cfx_begin_tracing(char16 *categories_str, int categories_length, cef_completion_callback_t* callback) {
     cef_string_t categories = { categories_str, categories_length, 0 };
-    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    if(callback) ((cef_base_ref_counted_t*)callback)->add_ref((cef_base_ref_counted_t*)callback);
     return cef_begin_tracing(&categories, callback);
 }
 
@@ -55,8 +55,8 @@ static int cfx_crash_reporting_enabled() {
 
 // CEF_EXPORT cef_request_context_t* cef_create_context_shared(cef_request_context_t* other, cef_request_context_handler_t* handler);
 static cef_request_context_t* cfx_create_context_shared(cef_request_context_t* other, cef_request_context_handler_t* handler) {
-    if(other) ((cef_base_t*)other)->add_ref((cef_base_t*)other);
-    if(handler) ((cef_base_t*)handler)->add_ref((cef_base_t*)handler);
+    if(other) ((cef_base_ref_counted_t*)other)->add_ref((cef_base_ref_counted_t*)other);
+    if(handler) ((cef_base_ref_counted_t*)handler)->add_ref((cef_base_ref_counted_t*)handler);
     return cef_create_context_shared(other, handler);
 }
 
@@ -123,7 +123,7 @@ static void cfx_enable_highdpi_support() {
 // CEF_EXPORT int cef_end_tracing(const cef_string_t* tracing_file, cef_end_tracing_callback_t* callback);
 static int cfx_end_tracing(char16 *tracing_file_str, int tracing_file_length, cef_end_tracing_callback_t* callback) {
     cef_string_t tracing_file = { tracing_file_str, tracing_file_length, 0 };
-    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    if(callback) ((cef_base_ref_counted_t*)callback)->add_ref((cef_base_ref_counted_t*)callback);
     return cef_end_tracing(&tracing_file, callback);
 }
 
@@ -133,7 +133,7 @@ static int cfx_execute_process(const cef_main_args_t* args, cef_app_t* applicati
     cef_main_args_t args_tmp = { GetModuleHandle(0) };
     args = &args_tmp;
     #endif
-    if(application) ((cef_base_t*)application)->add_ref((cef_base_t*)application);
+    if(application) ((cef_base_ref_counted_t*)application)->add_ref((cef_base_ref_counted_t*)application);
     return cef_execute_process(args, application, windows_sandbox_info);
 }
 
@@ -151,7 +151,7 @@ static void cfx_get_extensions_for_mime_type(char16 *mime_type_str, int mime_typ
 
 // CEF_EXPORT int cef_get_geolocation(cef_get_geolocation_callback_t* callback);
 static int cfx_get_geolocation(cef_get_geolocation_callback_t* callback) {
-    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    if(callback) ((cef_base_ref_counted_t*)callback)->add_ref((cef_base_ref_counted_t*)callback);
     return cef_get_geolocation(callback);
 }
 
@@ -192,7 +192,7 @@ static int cfx_initialize(const cef_main_args_t* args, const cef_settings_t* set
     cef_main_args_t args_tmp = { GetModuleHandle(0) };
     args = &args_tmp;
     #endif
-    if(application) ((cef_base_t*)application)->add_ref((cef_base_t*)application);
+    if(application) ((cef_base_ref_counted_t*)application)->add_ref((cef_base_ref_counted_t*)application);
     return cef_initialize(args, settings, application, windows_sandbox_info);
 }
 
@@ -209,13 +209,13 @@ static int cfx_is_cert_status_minor_error(cef_cert_status_t status) {
 // CEF_EXPORT void cef_is_web_plugin_unstable(const cef_string_t* path, cef_web_plugin_unstable_callback_t* callback);
 static void cfx_is_web_plugin_unstable(char16 *path_str, int path_length, cef_web_plugin_unstable_callback_t* callback) {
     cef_string_t path = { path_str, path_length, 0 };
-    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    if(callback) ((cef_base_ref_counted_t*)callback)->add_ref((cef_base_ref_counted_t*)callback);
     cef_is_web_plugin_unstable(&path, callback);
 }
 
 // CEF_EXPORT int cef_launch_process(cef_command_line_t* command_line);
 static int cfx_launch_process(cef_command_line_t* command_line) {
-    if(command_line) ((cef_base_t*)command_line)->add_ref((cef_base_t*)command_line);
+    if(command_line) ((cef_base_ref_counted_t*)command_line)->add_ref((cef_base_ref_counted_t*)command_line);
     return cef_launch_process(command_line);
 }
 
@@ -247,13 +247,13 @@ static int cfx_parse_url(char16 *url_str, int url_length, cef_urlparts_t* parts)
 
 // CEF_EXPORT int cef_post_delayed_task(cef_thread_id_t threadId, cef_task_t* task, int64 delay_ms);
 static int cfx_post_delayed_task(cef_thread_id_t threadId, cef_task_t* task, int64 delay_ms) {
-    if(task) ((cef_base_t*)task)->add_ref((cef_base_t*)task);
+    if(task) ((cef_base_ref_counted_t*)task)->add_ref((cef_base_ref_counted_t*)task);
     return cef_post_delayed_task(threadId, task, delay_ms);
 }
 
 // CEF_EXPORT int cef_post_task(cef_thread_id_t threadId, cef_task_t* task);
 static int cfx_post_task(cef_thread_id_t threadId, cef_task_t* task) {
-    if(task) ((cef_base_t*)task)->add_ref((cef_base_t*)task);
+    if(task) ((cef_base_ref_counted_t*)task)->add_ref((cef_base_ref_counted_t*)task);
     return cef_post_task(threadId, task);
 }
 
@@ -271,7 +271,7 @@ static void cfx_refresh_web_plugins() {
 static int cfx_register_extension(char16 *extension_name_str, int extension_name_length, char16 *javascript_code_str, int javascript_code_length, cef_v8handler_t* handler) {
     cef_string_t extension_name = { extension_name_str, extension_name_length, 0 };
     cef_string_t javascript_code = { javascript_code_str, javascript_code_length, 0 };
-    if(handler) ((cef_base_t*)handler)->add_ref((cef_base_t*)handler);
+    if(handler) ((cef_base_ref_counted_t*)handler)->add_ref((cef_base_ref_counted_t*)handler);
     return cef_register_extension(&extension_name, &javascript_code, handler);
 }
 
@@ -279,7 +279,7 @@ static int cfx_register_extension(char16 *extension_name_str, int extension_name
 static int cfx_register_scheme_handler_factory(char16 *scheme_name_str, int scheme_name_length, char16 *domain_name_str, int domain_name_length, cef_scheme_handler_factory_t* factory) {
     cef_string_t scheme_name = { scheme_name_str, scheme_name_length, 0 };
     cef_string_t domain_name = { domain_name_str, domain_name_length, 0 };
-    if(factory) ((cef_base_t*)factory)->add_ref((cef_base_t*)factory);
+    if(factory) ((cef_base_ref_counted_t*)factory)->add_ref((cef_base_ref_counted_t*)factory);
     return cef_register_scheme_handler_factory(&scheme_name, &domain_name, factory);
 }
 
@@ -292,7 +292,7 @@ static void cfx_register_web_plugin_crash(char16 *path_str, int path_length) {
 // CEF_EXPORT void cef_register_widevine_cdm(const cef_string_t* path, cef_register_cdm_callback_t* callback);
 static void cfx_register_widevine_cdm(char16 *path_str, int path_length, cef_register_cdm_callback_t* callback) {
     cef_string_t path = { path_str, path_length, 0 };
-    if(callback) ((cef_base_t*)callback)->add_ref((cef_base_t*)callback);
+    if(callback) ((cef_base_ref_counted_t*)callback)->add_ref((cef_base_ref_counted_t*)callback);
     cef_register_widevine_cdm(&path, callback);
 }
 
@@ -351,13 +351,13 @@ static int cfx_version_info(int entry) {
 
 // CEF_EXPORT void cef_visit_web_plugin_info(cef_web_plugin_info_visitor_t* visitor);
 static void cfx_visit_web_plugin_info(cef_web_plugin_info_visitor_t* visitor) {
-    if(visitor) ((cef_base_t*)visitor)->add_ref((cef_base_t*)visitor);
+    if(visitor) ((cef_base_ref_counted_t*)visitor)->add_ref((cef_base_ref_counted_t*)visitor);
     cef_visit_web_plugin_info(visitor);
 }
 
 // CEF_EXPORT cef_string_userfree_t cef_write_json(cef_value_t* node, cef_json_writer_options_t options);
 static cef_string_userfree_t cfx_write_json(cef_value_t* node, cef_json_writer_options_t options) {
-    if(node) ((cef_base_t*)node)->add_ref((cef_base_t*)node);
+    if(node) ((cef_base_ref_counted_t*)node)->add_ref((cef_base_ref_counted_t*)node);
     return cef_write_json(node, options);
 }
 

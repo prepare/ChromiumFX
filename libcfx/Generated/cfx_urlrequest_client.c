@@ -22,10 +22,10 @@ typedef struct _cfx_urlrequest_client_t {
     void (CEF_CALLBACK *get_auth_credentials)(gc_handle_t self, int* __retval, int isProxy, char16 *host_str, int host_length, int port, char16 *realm_str, int realm_length, char16 *scheme_str, int scheme_length, cef_auth_callback_t* callback, int *callback_release);
 } cfx_urlrequest_client_t;
 
-void CEF_CALLBACK _cfx_urlrequest_client_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_urlrequest_client_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_urlrequest_client_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_urlrequest_client_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_urlrequest_client_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_urlrequest_client_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_urlrequest_client_t*)base)->wrapper_kind == 0) {
@@ -38,7 +38,7 @@ int CEF_CALLBACK _cfx_urlrequest_client_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_urlrequest_client_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_urlrequest_client_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_urlrequest_client_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
@@ -64,7 +64,7 @@ static gc_handle_t cfx_urlrequest_client_get_gc_handle(cfx_urlrequest_client_t* 
 void CEF_CALLBACK cfx_urlrequest_client_on_request_complete(cef_urlrequest_client_t* self, cef_urlrequest_t* request) {
     int request_release;
     ((cfx_urlrequest_client_t*)self)->on_request_complete(((cfx_urlrequest_client_t*)self)->gc_handle, request, &request_release);
-    if(request_release) request->base.release((cef_base_t*)request);
+    if(request_release) request->base.release((cef_base_ref_counted_t*)request);
 }
 
 // on_upload_progress
@@ -72,7 +72,7 @@ void CEF_CALLBACK cfx_urlrequest_client_on_request_complete(cef_urlrequest_clien
 void CEF_CALLBACK cfx_urlrequest_client_on_upload_progress(cef_urlrequest_client_t* self, cef_urlrequest_t* request, int64 current, int64 total) {
     int request_release;
     ((cfx_urlrequest_client_t*)self)->on_upload_progress(((cfx_urlrequest_client_t*)self)->gc_handle, request, &request_release, current, total);
-    if(request_release) request->base.release((cef_base_t*)request);
+    if(request_release) request->base.release((cef_base_ref_counted_t*)request);
 }
 
 // on_download_progress
@@ -80,7 +80,7 @@ void CEF_CALLBACK cfx_urlrequest_client_on_upload_progress(cef_urlrequest_client
 void CEF_CALLBACK cfx_urlrequest_client_on_download_progress(cef_urlrequest_client_t* self, cef_urlrequest_t* request, int64 current, int64 total) {
     int request_release;
     ((cfx_urlrequest_client_t*)self)->on_download_progress(((cfx_urlrequest_client_t*)self)->gc_handle, request, &request_release, current, total);
-    if(request_release) request->base.release((cef_base_t*)request);
+    if(request_release) request->base.release((cef_base_ref_counted_t*)request);
 }
 
 // on_download_data
@@ -88,7 +88,7 @@ void CEF_CALLBACK cfx_urlrequest_client_on_download_progress(cef_urlrequest_clie
 void CEF_CALLBACK cfx_urlrequest_client_on_download_data(cef_urlrequest_client_t* self, cef_urlrequest_t* request, const void* data, size_t data_length) {
     int request_release;
     ((cfx_urlrequest_client_t*)self)->on_download_data(((cfx_urlrequest_client_t*)self)->gc_handle, request, &request_release, data, data_length);
-    if(request_release) request->base.release((cef_base_t*)request);
+    if(request_release) request->base.release((cef_base_ref_counted_t*)request);
 }
 
 // get_auth_credentials
@@ -97,7 +97,7 @@ int CEF_CALLBACK cfx_urlrequest_client_get_auth_credentials(cef_urlrequest_clien
     int __retval;
     int callback_release;
     ((cfx_urlrequest_client_t*)self)->get_auth_credentials(((cfx_urlrequest_client_t*)self)->gc_handle, &__retval, isProxy, host ? host->str : 0, host ? (int)host->length : 0, port, realm ? realm->str : 0, realm ? (int)realm->length : 0, scheme ? scheme->str : 0, scheme ? (int)scheme->length : 0, callback, &callback_release);
-    if(callback_release) callback->base.release((cef_base_t*)callback);
+    if(callback_release) callback->base.release((cef_base_ref_counted_t*)callback);
     return __retval;
 }
 

@@ -19,10 +19,10 @@ typedef struct _cfx_geolocation_handler_t {
     void (CEF_CALLBACK *on_cancel_geolocation_permission)(gc_handle_t self, cef_browser_t* browser, int *browser_release, int request_id);
 } cfx_geolocation_handler_t;
 
-void CEF_CALLBACK _cfx_geolocation_handler_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_geolocation_handler_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_geolocation_handler_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_geolocation_handler_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_geolocation_handler_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_geolocation_handler_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_geolocation_handler_t*)base)->wrapper_kind == 0) {
@@ -35,7 +35,7 @@ int CEF_CALLBACK _cfx_geolocation_handler_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_geolocation_handler_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_geolocation_handler_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_geolocation_handler_t*)base)->ref_count == 1 ? 1 : 0;
 }
 
@@ -63,8 +63,8 @@ int CEF_CALLBACK cfx_geolocation_handler_on_request_geolocation_permission(cef_g
     int browser_release;
     int callback_release;
     ((cfx_geolocation_handler_t*)self)->on_request_geolocation_permission(((cfx_geolocation_handler_t*)self)->gc_handle, &__retval, browser, &browser_release, requesting_url ? requesting_url->str : 0, requesting_url ? (int)requesting_url->length : 0, request_id, callback, &callback_release);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
-    if(callback_release) callback->base.release((cef_base_t*)callback);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
+    if(callback_release) callback->base.release((cef_base_ref_counted_t*)callback);
     return __retval;
 }
 
@@ -73,7 +73,7 @@ int CEF_CALLBACK cfx_geolocation_handler_on_request_geolocation_permission(cef_g
 void CEF_CALLBACK cfx_geolocation_handler_on_cancel_geolocation_permission(cef_geolocation_handler_t* self, cef_browser_t* browser, int request_id) {
     int browser_release;
     ((cfx_geolocation_handler_t*)self)->on_cancel_geolocation_permission(((cfx_geolocation_handler_t*)self)->gc_handle, browser, &browser_release, request_id);
-    if(browser_release) browser->base.release((cef_base_t*)browser);
+    if(browser_release) browser->base.release((cef_base_ref_counted_t*)browser);
 }
 
 static void cfx_geolocation_handler_set_callback(cef_geolocation_handler_t* self, int index, void* callback) {

@@ -82,7 +82,6 @@ namespace Chromium.Remote {
             : base(RemoteCallId.CfxAppOnRegisterCustomSchemesRemoteEventCall) {}
 
         internal IntPtr registrar;
-        internal int registrar_release;
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(gcHandlePtr);
@@ -95,11 +94,9 @@ namespace Chromium.Remote {
         }
 
         protected override void WriteReturn(StreamHandler h) {
-            h.Write(registrar_release);
         }
 
         protected override void ReadReturn(StreamHandler h) {
-            h.Read(out registrar_release);
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
@@ -110,7 +107,7 @@ namespace Chromium.Remote {
             var e = new CfrOnRegisterCustomSchemesEventArgs(this);
             self.m_OnRegisterCustomSchemes?.Invoke(self, e);
             e.m_isInvalid = true;
-            registrar_release = e.m_registrar_wrapped == null? 1 : 0;
+            if(e.m_registrar_wrapped != null) e.m_registrar_wrapped.Dispose();
         }
     }
 

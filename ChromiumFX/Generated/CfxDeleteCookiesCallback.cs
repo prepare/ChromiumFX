@@ -20,7 +20,7 @@ namespace Chromium {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_cookie_capi.h">cef/include/capi/cef_cookie_capi.h</see>.
     /// </remarks>
-    public class CfxDeleteCookiesCallback : CfxClientBase {
+    public class CfxDeleteCookiesCallback : CfxBaseClient {
 
         private static object eventLock = new object();
 

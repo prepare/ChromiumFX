@@ -58,16 +58,15 @@ namespace Chromium.Remote {
 
         // on_register_custom_schemes
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void on_register_custom_schemes_delegate(IntPtr gcHandlePtr, IntPtr registrar, out int registrar_release);
+        private delegate void on_register_custom_schemes_delegate(IntPtr gcHandlePtr, IntPtr registrar);
         private static on_register_custom_schemes_delegate on_register_custom_schemes_native;
         private static IntPtr on_register_custom_schemes_native_ptr;
 
-        internal static void on_register_custom_schemes(IntPtr gcHandlePtr, IntPtr registrar, out int registrar_release) {
+        internal static void on_register_custom_schemes(IntPtr gcHandlePtr, IntPtr registrar) {
             var call = new CfxAppOnRegisterCustomSchemesRemoteEventCall();
             call.gcHandlePtr = gcHandlePtr;
             call.registrar = registrar;
             call.RequestExecution();
-            registrar_release = call.registrar_release;
         }
 
         // get_resource_bundle_handler

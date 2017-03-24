@@ -4,9 +4,16 @@
 // This software may be modified and distributed under the terms
 // of the BSD license. See the License.txt file for details.
 
-public class CefBaseType : SpecialType {
+public class CefBaseRefCountedType : SpecialType {
 
-    public CefBaseType()
-        : base("cef_base_t") {
+    public CefBaseRefCountedType()
+        : base("cef_base_ref_counted_t") {
+    }
+}
+
+public class CefBaseScopedType : SpecialType {
+
+    public CefBaseScopedType()
+        : base("cef_base_scoped_t") {
     }
 }

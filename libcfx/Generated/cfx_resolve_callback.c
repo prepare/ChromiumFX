@@ -18,10 +18,10 @@ typedef struct _cfx_resolve_callback_t {
     void (CEF_CALLBACK *on_resolve_completed)(gc_handle_t self, cef_errorcode_t result, cef_string_list_t resolved_ips);
 } cfx_resolve_callback_t;
 
-void CEF_CALLBACK _cfx_resolve_callback_add_ref(struct _cef_base_t* base) {
+void CEF_CALLBACK _cfx_resolve_callback_add_ref(struct _cef_base_ref_counted_t* base) {
     InterlockedIncrement(&((cfx_resolve_callback_t*)base)->ref_count);
 }
-int CEF_CALLBACK _cfx_resolve_callback_release(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_resolve_callback_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_resolve_callback_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_resolve_callback_t*)base)->wrapper_kind == 0) {
@@ -34,7 +34,7 @@ int CEF_CALLBACK _cfx_resolve_callback_release(struct _cef_base_t* base) {
     }
     return 0;
 }
-int CEF_CALLBACK _cfx_resolve_callback_has_one_ref(struct _cef_base_t* base) {
+int CEF_CALLBACK _cfx_resolve_callback_has_one_ref(struct _cef_base_ref_counted_t* base) {
     return ((cfx_resolve_callback_t*)base)->ref_count == 1 ? 1 : 0;
 }
 

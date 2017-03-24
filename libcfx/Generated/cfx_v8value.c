@@ -44,8 +44,8 @@ static cef_v8value_t* cfx_v8value_create_string(char16 *value_str, int value_len
 }
 // CEF_EXPORT cef_v8value_t* cef_v8value_create_object(cef_v8accessor_t* accessor, cef_v8interceptor_t* interceptor);
 static cef_v8value_t* cfx_v8value_create_object(cef_v8accessor_t* accessor, cef_v8interceptor_t* interceptor) {
-    if(accessor) ((cef_base_t*)accessor)->add_ref((cef_base_t*)accessor);
-    if(interceptor) ((cef_base_t*)interceptor)->add_ref((cef_base_t*)interceptor);
+    if(accessor) ((cef_base_ref_counted_t*)accessor)->add_ref((cef_base_ref_counted_t*)accessor);
+    if(interceptor) ((cef_base_ref_counted_t*)interceptor)->add_ref((cef_base_ref_counted_t*)interceptor);
     return cef_v8value_create_object(accessor, interceptor);
 }
 // CEF_EXPORT cef_v8value_t* cef_v8value_create_array(int length);
@@ -55,7 +55,7 @@ static cef_v8value_t* cfx_v8value_create_array(int length) {
 // CEF_EXPORT cef_v8value_t* cef_v8value_create_function(const cef_string_t* name, cef_v8handler_t* handler);
 static cef_v8value_t* cfx_v8value_create_function(char16 *name_str, int name_length, cef_v8handler_t* handler) {
     cef_string_t name = { name_str, name_length, 0 };
-    if(handler) ((cef_base_t*)handler)->add_ref((cef_base_t*)handler);
+    if(handler) ((cef_base_ref_counted_t*)handler)->add_ref((cef_base_ref_counted_t*)handler);
     return cef_v8value_create_function(&name, handler);
 }
 // is_valid
@@ -120,7 +120,7 @@ static int cfx_v8value_is_function(cef_v8value_t* self) {
 
 // is_same
 static int cfx_v8value_is_same(cef_v8value_t* self, cef_v8value_t* that) {
-    if(that) ((cef_base_t*)that)->add_ref((cef_base_t*)that);
+    if(that) ((cef_base_ref_counted_t*)that)->add_ref((cef_base_ref_counted_t*)that);
     return self->is_same(self, that);
 }
 
@@ -221,13 +221,13 @@ static cef_v8value_t* cfx_v8value_get_value_byindex(cef_v8value_t* self, int ind
 // set_value_bykey
 static int cfx_v8value_set_value_bykey(cef_v8value_t* self, char16 *key_str, int key_length, cef_v8value_t* value, cef_v8_propertyattribute_t attribute) {
     cef_string_t key = { key_str, key_length, 0 };
-    if(value) ((cef_base_t*)value)->add_ref((cef_base_t*)value);
+    if(value) ((cef_base_ref_counted_t*)value)->add_ref((cef_base_ref_counted_t*)value);
     return self->set_value_bykey(self, &key, value, attribute);
 }
 
 // set_value_byindex
 static int cfx_v8value_set_value_byindex(cef_v8value_t* self, int index, cef_v8value_t* value) {
-    if(value) ((cef_base_t*)value)->add_ref((cef_base_t*)value);
+    if(value) ((cef_base_ref_counted_t*)value)->add_ref((cef_base_ref_counted_t*)value);
     return self->set_value_byindex(self, index, value);
 }
 
@@ -243,12 +243,12 @@ static int cfx_v8value_get_keys(cef_v8value_t* self, cef_string_list_t keys) {
 }
 
 // set_user_data
-static int cfx_v8value_set_user_data(cef_v8value_t* self, struct _cef_base_t* user_data) {
+static int cfx_v8value_set_user_data(cef_v8value_t* self, struct _cef_base_ref_counted_t* user_data) {
     return self->set_user_data(self, user_data);
 }
 
 // get_user_data
-static struct _cef_base_t* cfx_v8value_get_user_data(cef_v8value_t* self) {
+static struct _cef_base_ref_counted_t* cfx_v8value_get_user_data(cef_v8value_t* self) {
     return self->get_user_data(self);
 }
 
@@ -279,10 +279,10 @@ static cef_v8handler_t* cfx_v8value_get_function_handler(cef_v8value_t* self) {
 
 // execute_function
 static cef_v8value_t* cfx_v8value_execute_function(cef_v8value_t* self, cef_v8value_t* object, size_t argumentsCount, cef_v8value_t* const* arguments) {
-    if(object) ((cef_base_t*)object)->add_ref((cef_base_t*)object);
+    if(object) ((cef_base_ref_counted_t*)object)->add_ref((cef_base_ref_counted_t*)object);
     if(argumentsCount) {
         for(size_t i = 0; i < argumentsCount; ++i) {
-            if(arguments[i]) ((cef_base_t*)arguments[i])->add_ref((cef_base_t*)arguments[i]);
+            if(arguments[i]) ((cef_base_ref_counted_t*)arguments[i])->add_ref((cef_base_ref_counted_t*)arguments[i]);
         }
     }
     return self->execute_function(self, object, argumentsCount, arguments);
@@ -290,11 +290,11 @@ static cef_v8value_t* cfx_v8value_execute_function(cef_v8value_t* self, cef_v8va
 
 // execute_function_with_context
 static cef_v8value_t* cfx_v8value_execute_function_with_context(cef_v8value_t* self, cef_v8context_t* context, cef_v8value_t* object, size_t argumentsCount, cef_v8value_t* const* arguments) {
-    if(context) ((cef_base_t*)context)->add_ref((cef_base_t*)context);
-    if(object) ((cef_base_t*)object)->add_ref((cef_base_t*)object);
+    if(context) ((cef_base_ref_counted_t*)context)->add_ref((cef_base_ref_counted_t*)context);
+    if(object) ((cef_base_ref_counted_t*)object)->add_ref((cef_base_ref_counted_t*)object);
     if(argumentsCount) {
         for(size_t i = 0; i < argumentsCount; ++i) {
-            if(arguments[i]) ((cef_base_t*)arguments[i])->add_ref((cef_base_t*)arguments[i]);
+            if(arguments[i]) ((cef_base_ref_counted_t*)arguments[i])->add_ref((cef_base_ref_counted_t*)arguments[i]);
         }
     }
     return self->execute_function_with_context(self, context, object, argumentsCount, arguments);

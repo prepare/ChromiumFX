@@ -35,13 +35,13 @@ static void cfx_post_data_get_elements(cef_post_data_t* self, size_t elementsCou
 
 // remove_element
 static int cfx_post_data_remove_element(cef_post_data_t* self, cef_post_data_element_t* element) {
-    if(element) ((cef_base_t*)element)->add_ref((cef_base_t*)element);
+    if(element) ((cef_base_ref_counted_t*)element)->add_ref((cef_base_ref_counted_t*)element);
     return self->remove_element(self, element);
 }
 
 // add_element
 static int cfx_post_data_add_element(cef_post_data_t* self, cef_post_data_element_t* element) {
-    if(element) ((cef_base_t*)element)->add_ref((cef_base_t*)element);
+    if(element) ((cef_base_ref_counted_t*)element)->add_ref((cef_base_ref_counted_t*)element);
     return self->add_element(self, element);
 }
 
