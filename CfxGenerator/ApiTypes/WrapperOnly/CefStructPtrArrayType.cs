@@ -174,11 +174,21 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
     public override void EmitPostPublicRaiseEventStatements(CodeBuilder b, string var) {
         if(Struct.IsRefCounted)
             b.AppendLine("{0}_release = e.m_{0}_managed == null? 1 : 0;", var);
+        else if(Struct.IsScoped) {
+            // never reached, but if this is reached in the future, 
+            // then emit code to dispose all array elements
+            throw new Exception();
+        }
     }
 
     public override void EmitPostRemoteRaiseEventStatements(CodeBuilder b, string var) {
         if(Struct.IsRefCounted)
             b.AppendLine("{0}_release = e.m_{0}_managed == null? 1 : 0;", var);
+        else if(Struct.IsScoped) {
+            // never reached, but if this is reached in the future, 
+            // then emit code to dispose all array elements
+            throw new Exception();
+        }
     }
 
     public override void EmitSetCallbackArgumentToDefaultStatements(CodeBuilder b, string var) {

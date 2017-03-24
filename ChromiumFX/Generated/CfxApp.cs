@@ -70,6 +70,7 @@ namespace Chromium {
             var e = new CfxOnRegisterCustomSchemesEventArgs(registrar);
             self.m_OnRegisterCustomSchemes?.Invoke(self, e);
             e.m_isInvalid = true;
+            if(e.m_registrar_wrapped != null) e.m_registrar_wrapped.Dispose();
         }
 
         // get_resource_bundle_handler

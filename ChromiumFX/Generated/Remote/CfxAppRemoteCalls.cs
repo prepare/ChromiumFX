@@ -107,6 +107,7 @@ namespace Chromium.Remote {
             var e = new CfrOnRegisterCustomSchemesEventArgs(this);
             self.m_OnRegisterCustomSchemes?.Invoke(self, e);
             e.m_isInvalid = true;
+            if(e.m_registrar_wrapped != null) e.m_registrar_wrapped.Dispose();
         }
     }
 

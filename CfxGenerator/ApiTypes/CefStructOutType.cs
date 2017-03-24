@@ -4,6 +4,8 @@
 // This software may be modified and distributed under the terms
 // of the BSD license. See the License.txt file for details.
 
+using System.Diagnostics;
+
 public class CefStructOutType : CefStructPtrPtrType {
 
     public CefStructOutType(CefStructPtrType structPtr, string Indirection)
@@ -92,6 +94,7 @@ public class CefStructOutType : CefStructPtrPtrType {
     }
 
     public override void EmitPostPublicRaiseEventStatements(CodeBuilder b, string var) {
+        Debug.Assert(Struct.IsRefCounted);
         b.AppendLine("{0} = {1};", var, StructPtr.PublicUnwrapExpression(string.Concat("e.m_", var, "_wrapped")));
     }
 

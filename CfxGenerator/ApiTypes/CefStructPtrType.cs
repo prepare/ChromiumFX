@@ -130,13 +130,19 @@ public class CefStructPtrType : ApiType {
     }
 
     public override void EmitPostPublicRaiseEventStatements(CodeBuilder b, string var) {
-        if(Struct.IsRefCounted && var != "self")
+        if(Struct.IsRefCounted && var != "self") {
             b.AppendLine("{0}_release = e.m_{0}_wrapped == null? 1 : 0;", var);
+        } else if(Struct.IsScoped) {
+            b.AppendLine("if(e.m_{0}_wrapped != null) e.m_{0}_wrapped.Dispose();", var);
+        }
     }
 
     public override void EmitPostRemoteRaiseEventStatements(CodeBuilder b, string var) {
-        if(Struct.IsRefCounted && var != "self")
+        if(Struct.IsRefCounted && var != "self") {
             b.AppendLine("{0}_release = e.m_{0}_wrapped == null? 1 : 0;", var);
+        } else if(Struct.IsScoped) {
+            b.AppendLine("if(e.m_{0}_wrapped != null) e.m_{0}_wrapped.Dispose();", var);
+        }
     }
 
     public override void EmitPublicEventArgFields(CodeBuilder b, string var) {
