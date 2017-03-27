@@ -295,7 +295,9 @@ namespace Chromium {
         /// </remarks>
         public CfxRect ElementBounds {
             get {
-                return CfxRect.WrapOwned(CfxApi.DomNode.cfx_domnode_get_element_bounds(NativePtr));
+                var __retval = CfxApi.DomNode.cfx_domnode_get_element_bounds(NativePtr);
+                if(__retval == IntPtr.Zero) throw new OutOfMemoryException();
+                return CfxRect.WrapOwned(__retval);
             }
         }
 

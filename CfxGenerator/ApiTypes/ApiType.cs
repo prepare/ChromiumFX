@@ -237,6 +237,9 @@ public class ApiType {
     public virtual void EmitPostPublicCallStatements(CodeBuilder b, string var) {
     }
 
+    public virtual void EmitPublicCallProcessReturnValueStatements(CodeBuilder b) {
+    }
+
     public virtual void EmitPreProxyCallStatements(CodeBuilder b, string var) {
         EmitPrePublicCallStatements(b, var);
     }
@@ -254,6 +257,8 @@ public class ApiType {
             b.AppendLine("{0} = {1};", var, RemoteWrapExpression("call." + (var == "this" ? "self" : CSharp.Escape(var))));
     }
 
+    public virtual void EmitRemoteCallProcessReturnValueStatements(CodeBuilder b) {
+    }
 
     public virtual void EmitPostRemoteCallbackStatements(CodeBuilder b, string var) {
         var pp = RemoteCallbackParameterList(var);

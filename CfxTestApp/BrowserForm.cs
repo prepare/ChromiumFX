@@ -434,7 +434,8 @@ namespace CfxTestApplication {
                 WebBrowser.VisitDom((doc, b) => {
                     //LogWriteLine("VisitDom {0} {1}", doc.ToString(), b.ToString());
                     var n = doc.GetElementById("testbutton6");
-                    LogWriteLine("DOM {0} - testbutton6 = {1}", ++domCount, n.AsMarkup);
+                    var bounds = n.ElementBounds;
+                    LogWriteLine("DOM {0} - testbutton6 = {1} ({2}, {3})", ++domCount, n.AsMarkup, bounds.Width, bounds.Height);
                     // must dispose node, otherwise finalizer crash in the render process.
                     n.Dispose();
                 });

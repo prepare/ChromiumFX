@@ -142,8 +142,9 @@ static cef_string_userfree_t cfx_domnode_get_element_inner_text(cef_domnode_t* s
 
 // get_element_bounds
 static cef_rect_t* cfx_domnode_get_element_bounds(cef_domnode_t* self) {
-    cef_rect_t __retval_tmp = self->get_element_bounds(self);
-    return (cef_rect_t*)cfx_copy_structure(&__retval_tmp, sizeof(cef_rect_t));
+    cef_rect_t *__retval = malloc(sizeof(cef_rect_t));
+    if(__retval) *__retval = self->get_element_bounds(self);
+    return __retval;
 }
 
 

@@ -87,7 +87,9 @@ namespace Chromium {
         /// </remarks>
         public CfxTime FileLastModified {
             get {
-                return CfxTime.WrapOwned(CfxApi.ZipReader.cfx_zip_reader_get_file_last_modified(NativePtr));
+                var __retval = CfxApi.ZipReader.cfx_zip_reader_get_file_last_modified(NativePtr);
+                if(__retval == IntPtr.Zero) throw new OutOfMemoryException();
+                return CfxTime.WrapOwned(__retval);
             }
         }
 

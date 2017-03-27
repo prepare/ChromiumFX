@@ -354,6 +354,7 @@ namespace Chromium.Remote {
                 var call = new CfxDomNodeGetElementBoundsRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
+                if(call.__retval == IntPtr.Zero) throw new OutOfMemoryException("Render process out of memory.");
                 return CfrRect.Wrap(new RemotePtr(connection, call.__retval));
             }
         }

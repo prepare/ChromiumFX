@@ -51,14 +51,16 @@ static int64 cfx_download_item_get_received_bytes(cef_download_item_t* self) {
 
 // get_start_time
 static cef_time_t* cfx_download_item_get_start_time(cef_download_item_t* self) {
-    cef_time_t __retval_tmp = self->get_start_time(self);
-    return (cef_time_t*)cfx_copy_structure(&__retval_tmp, sizeof(cef_time_t));
+    cef_time_t *__retval = malloc(sizeof(cef_time_t));
+    if(__retval) *__retval = self->get_start_time(self);
+    return __retval;
 }
 
 // get_end_time
 static cef_time_t* cfx_download_item_get_end_time(cef_download_item_t* self) {
-    cef_time_t __retval_tmp = self->get_end_time(self);
-    return (cef_time_t*)cfx_copy_structure(&__retval_tmp, sizeof(cef_time_t));
+    cef_time_t *__retval = malloc(sizeof(cef_time_t));
+    if(__retval) *__retval = self->get_end_time(self);
+    return __retval;
 }
 
 // get_full_path

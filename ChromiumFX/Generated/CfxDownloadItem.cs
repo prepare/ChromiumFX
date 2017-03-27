@@ -153,7 +153,9 @@ namespace Chromium {
         /// </remarks>
         public CfxTime StartTime {
             get {
-                return CfxTime.WrapOwned(CfxApi.DownloadItem.cfx_download_item_get_start_time(NativePtr));
+                var __retval = CfxApi.DownloadItem.cfx_download_item_get_start_time(NativePtr);
+                if(__retval == IntPtr.Zero) throw new OutOfMemoryException();
+                return CfxTime.WrapOwned(__retval);
             }
         }
 
@@ -166,7 +168,9 @@ namespace Chromium {
         /// </remarks>
         public CfxTime EndTime {
             get {
-                return CfxTime.WrapOwned(CfxApi.DownloadItem.cfx_download_item_get_end_time(NativePtr));
+                var __retval = CfxApi.DownloadItem.cfx_download_item_get_end_time(NativePtr);
+                if(__retval == IntPtr.Zero) throw new OutOfMemoryException();
+                return CfxTime.WrapOwned(__retval);
             }
         }
 

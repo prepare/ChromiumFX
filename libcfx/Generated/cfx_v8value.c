@@ -146,8 +146,9 @@ static double cfx_v8value_get_double_value(cef_v8value_t* self) {
 
 // get_date_value
 static cef_time_t* cfx_v8value_get_date_value(cef_v8value_t* self) {
-    cef_time_t __retval_tmp = self->get_date_value(self);
-    return (cef_time_t*)cfx_copy_structure(&__retval_tmp, sizeof(cef_time_t));
+    cef_time_t *__retval = malloc(sizeof(cef_time_t));
+    if(__retval) *__retval = self->get_date_value(self);
+    return __retval;
 }
 
 // get_string_value

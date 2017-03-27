@@ -90,7 +90,9 @@ namespace Chromium {
         /// </remarks>
         public CfxTime ValidStart {
             get {
-                return CfxTime.WrapOwned(CfxApi.X509Certificate.cfx_x509certificate_get_valid_start(NativePtr));
+                var __retval = CfxApi.X509Certificate.cfx_x509certificate_get_valid_start(NativePtr);
+                if(__retval == IntPtr.Zero) throw new OutOfMemoryException();
+                return CfxTime.WrapOwned(__retval);
             }
         }
 
@@ -104,7 +106,9 @@ namespace Chromium {
         /// </remarks>
         public CfxTime ValidExpiry {
             get {
-                return CfxTime.WrapOwned(CfxApi.X509Certificate.cfx_x509certificate_get_valid_expiry(NativePtr));
+                var __retval = CfxApi.X509Certificate.cfx_x509certificate_get_valid_expiry(NativePtr);
+                if(__retval == IntPtr.Zero) throw new OutOfMemoryException();
+                return CfxTime.WrapOwned(__retval);
             }
         }
 

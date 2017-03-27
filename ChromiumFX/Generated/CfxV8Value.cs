@@ -403,7 +403,9 @@ namespace Chromium {
         /// </remarks>
         public CfxTime DateValue {
             get {
-                return CfxTime.WrapOwned(CfxApi.V8Value.cfx_v8value_get_date_value(NativePtr));
+                var __retval = CfxApi.V8Value.cfx_v8value_get_date_value(NativePtr);
+                if(__retval == IntPtr.Zero) throw new OutOfMemoryException();
+                return CfxTime.WrapOwned(__retval);
             }
         }
 

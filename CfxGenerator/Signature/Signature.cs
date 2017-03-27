@@ -277,6 +277,7 @@ public class Signature {
         for(var i = 0; i <= ManagedParameters.Length - 1; i++) {
             ManagedParameters[i].EmitPostPublicStatements(b1);
         }
+        ReturnType.EmitPublicCallProcessReturnValueStatements(b1);
 
         if(PublicReturnType.IsVoid) {
             b.AppendLine(apiCall + ";");
@@ -339,7 +340,7 @@ public class Signature {
                 arg.EmitPreRemoteCallStatements(b);
             }
         }
-
+        
         if(isStatic)
             b.AppendLine("call.RequestExecution();");
         else
@@ -348,6 +349,7 @@ public class Signature {
         foreach(var arg in ManagedParameters) {
             arg.EmitPostRemoteCallStatements(b);
         }
+        ReturnType.EmitRemoteCallProcessReturnValueStatements(b);
 
         if(!PublicReturnType.IsVoid) {
             b.AppendLine("return {0};", ReturnType.RemoteWrapExpression("call.__retval"));

@@ -98,6 +98,7 @@ namespace Chromium.Remote {
                 var call = new CfxZipReaderGetFileLastModifiedRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(RemotePtr.connection);
+                if(call.__retval == IntPtr.Zero) throw new OutOfMemoryException("Render process out of memory.");
                 return CfrTime.Wrap(new RemotePtr(connection, call.__retval));
             }
         }

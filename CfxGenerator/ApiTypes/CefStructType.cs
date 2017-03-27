@@ -80,14 +80,13 @@ public class CefStructType : CefType {
     }
 
     public override void EmitNativeReturnStatements(CodeBuilder b, string functionCall, CodeBuilder postCallStatements) {
-        b.AppendLine("{0} __retval_tmp = {1};", OriginalSymbol, functionCall);
+        Debug.Assert(Category == StructCategory.Values);
+        b.AppendLine("{0} *__retval = malloc(sizeof({0}));", OriginalSymbol, functionCall);
+        b.AppendLine("if(__retval) *__retval = {0};", functionCall);
         if(postCallStatements.IsNotEmpty) {
-            b.AppendLine("{0} *__retval = ({0}*)cfx_copy_structure(&__retval_tmp, sizeof({0}));", OriginalSymbol);
             b.AppendBuilder(postCallStatements);
-            b.AppendLine("return __retval;");
-        } else {
-            b.AppendLine("return ({0}*)cfx_copy_structure(&__retval_tmp, sizeof({0}));", OriginalSymbol);
         }
+        b.AppendLine("return __retval;");
     }
 
     public override void EmitNativeCallbackReturnStatements(CodeBuilder b) {
@@ -103,7 +102,16 @@ public class CefStructType : CefType {
         return string.Format("*({0})", var);
     }
 
+    public override void EmitPublicCallProcessReturnValueStatements(CodeBuilder b) {
+        b.AppendLine("if(__retval == IntPtr.Zero) throw new OutOfMemoryException();");
+    }
+
+    public override void EmitRemoteCallProcessReturnValueStatements(CodeBuilder b) {
+        b.AppendLine("if(call.__retval == IntPtr.Zero) throw new OutOfMemoryException(\"Render process out of memory.\");");
+    }
+
     public override string PublicReturnExpression(string var) {
+        Debug.Assert(Category == StructCategory.Values);
         return string.Format("{0}.WrapOwned({1})", ClassName, var);
     }
 

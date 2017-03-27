@@ -143,7 +143,9 @@ namespace Chromium {
         /// </remarks>
         public CfxTime CompletionTime {
             get {
-                return CfxTime.WrapOwned(CfxApi.NavigationEntry.cfx_navigation_entry_get_completion_time(NativePtr));
+                var __retval = CfxApi.NavigationEntry.cfx_navigation_entry_get_completion_time(NativePtr);
+                if(__retval == IntPtr.Zero) throw new OutOfMemoryException();
+                return CfxTime.WrapOwned(__retval);
             }
         }
 

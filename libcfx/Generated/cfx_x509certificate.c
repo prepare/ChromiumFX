@@ -26,14 +26,16 @@ static cef_binary_value_t* cfx_x509certificate_get_serial_number(cef_x509certifi
 
 // get_valid_start
 static cef_time_t* cfx_x509certificate_get_valid_start(cef_x509certificate_t* self) {
-    cef_time_t __retval_tmp = self->get_valid_start(self);
-    return (cef_time_t*)cfx_copy_structure(&__retval_tmp, sizeof(cef_time_t));
+    cef_time_t *__retval = malloc(sizeof(cef_time_t));
+    if(__retval) *__retval = self->get_valid_start(self);
+    return __retval;
 }
 
 // get_valid_expiry
 static cef_time_t* cfx_x509certificate_get_valid_expiry(cef_x509certificate_t* self) {
-    cef_time_t __retval_tmp = self->get_valid_expiry(self);
-    return (cef_time_t*)cfx_copy_structure(&__retval_tmp, sizeof(cef_time_t));
+    cef_time_t *__retval = malloc(sizeof(cef_time_t));
+    if(__retval) *__retval = self->get_valid_expiry(self);
+    return __retval;
 }
 
 // get_derencoded
