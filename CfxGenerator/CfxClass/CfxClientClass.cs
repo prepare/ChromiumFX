@@ -218,9 +218,12 @@ public class CfxClientClass : CfxClass {
             cbIndex += 1;
         }
 
+        var onlyBasicEvents = true;
+
         b.BeginFunction("OnDispose", "void", "IntPtr nativePtr", "internal override");
         cbIndex = 0;
         foreach(var cb in CallbackFunctions) {
+            onlyBasicEvents &= cb.IsBasicEvent;
             b.BeginIf("m_{0} != null", cb.PublicName);
             b.AppendLine("m_{0} = null;", cb.PublicName);
             b.AppendLine("CfxApi.{0}.{1}_set_callback(NativePtr, {2}, IntPtr.Zero);", ApiClassName, CfxName, cbIndex);
@@ -232,18 +235,21 @@ public class CfxClientClass : CfxClass {
 
         b.EndBlock();
 
-        b.AppendLine();
-        b.AppendLine();
+        if(!onlyBasicEvents) {
 
-        b.BeginBlock("namespace Event");
-        b.AppendLine();
-
-        foreach(var cb in CallbackFunctions) {
-            EmitPublicEventArgsAndHandler(b, cb);
             b.AppendLine();
-        }
+            b.AppendLine();
 
-        b.EndBlock();
+            b.BeginBlock("namespace Event");
+            b.AppendLine();
+
+            foreach(var cb in CallbackFunctions) {
+                EmitPublicEventArgsAndHandler(b, cb);
+                b.AppendLine();
+            }
+
+            b.EndBlock();
+        }
     }
 
     private void EmitPublicEvent(CodeBuilder b, int cbIndex, CefCallbackFunction cb) {

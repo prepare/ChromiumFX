@@ -89,10 +89,4 @@ namespace Chromium {
             base.OnDispose(nativePtr);
         }
     }
-
-
-    namespace Event {
-
-
-    }
 }
