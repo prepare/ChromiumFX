@@ -7,12 +7,11 @@
 using System;
 
 namespace Parser {
-
     [Serializable()]
-    public class StructMemberNode {
+    public class CallbackNode {
         public string Name;
+        public SignatureNode Signature = new SignatureNode();
         public CefConfigNode CefConfig;
-        public TypeNode MemberType = new TypeNode();
         public CommentNode Comments = new CommentNode();
         public override string ToString() {
             return Name;

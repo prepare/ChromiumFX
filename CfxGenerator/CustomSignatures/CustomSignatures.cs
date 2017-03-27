@@ -53,7 +53,7 @@ public class CustomSignatures {
                 if(arrayArgIndex > 0) {
                     var arrayType = s.Parameters[arrayArgIndex].ParameterType;
                     if(arrayType.IsCefStructPtrType) {
-                        Debug.Assert(arrayType.AsCefStructPtrType.Struct.ClassBuilder.Category == StructCategory.Values);
+                        Debug.Assert(arrayType.AsCefStructPtrType.Struct.Category == StructCategory.Values);
                         return new SignatureWithStructArray(s, arrayArgIndex, i);
                     } else if(arrayType.IsCefStructPtrPtrType) {
                         return new SignatureWithStructPtrArray(s, arrayArgIndex, i);

@@ -99,25 +99,34 @@ public class ApiTypeBuilder {
             enums.Add(t);
         }
 
-        foreach(var sd in apiNode.CefStructs) {
-            if(!apiTypes.Keys.Contains(sd.Name)) {
-                var structName = sd.Name.Substring(0, sd.Name.Length - 2);
-                var t = new CefStructType(structName, sd.Comments);
+        foreach(var s in apiNode.CefCallbackStructs) {
+            if(!apiTypes.Keys.Contains(s.Name)) {
+                var structName = s.Name.Substring(0, s.Name.Length - 2);
+                var t = new CefStructType(structName, s.CefConfig.Source == "client" ? StructCategory.Client : StructCategory.Library);
                 AddType(t);
                 structs.Add(t);
             }
         }
 
-        foreach(var sd in apiNode.CefStructsWindows) {
-            var structName = sd.Name.Substring(0, sd.Name.Length - 2);
-            var t = new CefPlatformStructType(structName, sd.Comments, CefPlatform.Windows);
+        foreach(var s in apiNode.CefValueStructs) {
+            if(!apiTypes.Keys.Contains(s.Name)) {
+                var structName = s.Name.Substring(0, s.Name.Length - 2);
+                var t = new CefStructType(structName, StructCategory.Values);
+                AddType(t);
+                structs.Add(t);
+            }
+        }
+
+        foreach(var s in apiNode.CefStructsWindows) {
+            var structName = s.Name.Substring(0, s.Name.Length - 2);
+            var t = new CefPlatformStructType(structName, StructCategory.Values, CefPlatform.Windows);
             AddType(t);
             structs.Add(t);
         }
 
-        foreach(var sd in apiNode.CefStructsLinux) {
-            var structName = sd.Name.Substring(0, sd.Name.Length - 2);
-            var t = new CefPlatformStructType(structName, sd.Comments, CefPlatform.Linux);
+        foreach(var s in apiNode.CefStructsLinux) {
+            var structName = s.Name.Substring(0, s.Name.Length - 2);
+            var t = new CefPlatformStructType(structName, StructCategory.Values, CefPlatform.Linux);
             AddType(t);
             structs.Add(t);
         }
@@ -130,11 +139,16 @@ public class ApiTypeBuilder {
             AddType(t);
         }
 
-        foreach(var sd in apiNode.CefStructs) {
+        foreach(var sd in apiNode.CefCallbackStructs) {
             var t = apiTypes[sd.Name];
-            if(t.IsCefStructType) {
-                t.AsCefStructType.SetMembers(sd, this);
-            }
+            Debug.Assert(t.IsCefStructType);
+            t.AsCefStructType.SetMembers(sd, this);
+        }
+
+        foreach(var sd in apiNode.CefValueStructs) {
+            var t = apiTypes[sd.Name];
+            Debug.Assert(t.IsCefStructType);
+            t.AsCefStructType.SetMembers(sd, this);
         }
 
         foreach(var sd in apiNode.CefStructsWindows) {
@@ -164,9 +178,9 @@ public class ApiTypeBuilder {
             functions.Add(f);
         }
 
-        functions.Sort(new CefExportFunction.Comparer());
-        structs.Sort(new ApiType.Comparer());
-        enums.Sort(new ApiType.Comparer());
+        functions.Sort((x, y) => string.Compare(x.Name, y.Name));
+        structs.Sort((x, y) => string.Compare(x.Name, y.Name));
+        enums.Sort((x, y) => string.Compare(x.Name, y.Name));
 
         var decl = new CefApiDeclarations(functions.ToArray(), structs.ToArray(), enums.ToArray(), stringCollectionTypes.ToArray(), stringCollectionFunctions.ToArray());
         return decl;

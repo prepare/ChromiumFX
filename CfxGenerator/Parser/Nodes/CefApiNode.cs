@@ -14,20 +14,22 @@ namespace Parser {
 
         public string ApiHashUniversal;
 
-        public List<StructNode> CefStructs = new List<StructNode>();
+        public List<CallbackStructNode> CefCallbackStructs = new List<CallbackStructNode>();
+        public List<ValueStructNode> CefValueStructs = new List<ValueStructNode>();
+
         public List<FunctionNode> CefFunctions = new List<FunctionNode>();
         public List<EnumNode> CefEnums = new List<EnumNode>();
 
         public FunctionNode[] CefStringCollectionFunctions;
 
-        public List<StructNode> CefStructsWindows;
+        public List<ValueStructNode> CefStructsWindows;
         public List<FunctionNode> CefFunctionsWindows;
 
-        public List<StructNode> CefStructsLinux;
+        public List<ValueStructNode> CefStructsLinux;
         public List<FunctionNode> CefFunctionsLinux;
 
         public List<CefClassNode> CefClasses = new List<CefClassNode>();
         public List<CefCppFunctionNode> CefCppFunctions = new List<CefCppFunctionNode>();
-
+        
     }
 }

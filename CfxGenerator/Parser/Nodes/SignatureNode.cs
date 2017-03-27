@@ -11,7 +11,7 @@ namespace Parser {
 
     [Serializable()]
     public class SignatureNode {
-        public readonly List<ParameterNode> Arguments = new List<ParameterNode>();
+        public readonly List<ParameterNode> Parameters = new List<ParameterNode>();
         public TypeNode ReturnType = new TypeNode();
         public bool ReturnValueIsConst;
     }

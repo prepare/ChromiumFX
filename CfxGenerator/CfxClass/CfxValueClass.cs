@@ -14,8 +14,14 @@ public class CfxValueClass : CfxClass {
 
     private bool hasSizeMember;
 
-    public CfxValueClass(CefStructType cefStruct, Parser.StructNode sd, ApiTypeBuilder api)
-        : base(cefStruct, sd, api) {
+    public override StructCategory Category {
+        get {
+            return StructCategory.Values;
+        }
+    }
+
+    public CfxValueClass(CefStructType cefStruct, Parser.ValueStructNode sd, ApiTypeBuilder api)
+        : base(cefStruct, sd.Comments) {
 
         var smlist = new List<StructMember>();
         foreach(var smd in sd.StructMembers) {
@@ -221,7 +227,7 @@ public class CfxValueClass : CfxClass {
 
         b.AppendLine();
 
-        b.AppendSummaryAndRemarks(Comments, true, Category == StructCategory.ApiCallbacks);
+        b.AppendSummaryAndRemarks(Comments, true, Category == StructCategory.Client);
         b.BeginClass(RemoteClassName + " : CfrStructure", GeneratorConfig.ClassModifiers(RemoteClassName, "public sealed"));
         b.AppendLine();
 

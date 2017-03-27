@@ -111,12 +111,12 @@ public class CefStructPtrType : ApiType {
             b.AppendLine("{0}_release = 1;", var);
     }
 
-    public override void EmitNativeCallbackReturnStatements(CodeBuilder b, string var) {
+    public override void EmitNativeCallbackReturnStatements(CodeBuilder b) {
         Debug.Assert(Struct.IsRefCounted);
         b.BeginIf("__retval");
         b.AppendLine("((cef_base_ref_counted_t*)__retval)->add_ref((cef_base_ref_counted_t*)__retval);");
         b.EndBlock();
-        base.EmitNativeCallbackReturnStatements(b, var);
+        base.EmitNativeCallbackReturnStatements(b);
     }
 
     public override void EmitPublicEventArgGetterStatements(CodeBuilder b, string var) {

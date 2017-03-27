@@ -70,27 +70,30 @@ public class StructMember {
 
 public enum StructCategory {
     Values,
-    ApiCalls,
-    ApiCallbacks
+    Library,
+    Client
 }
 
 public abstract class CfxClass {
 
-    public static CfxClass Create(CefStructType cefStruct, Parser.StructNode sd, ApiTypeBuilder api) {
-        if(sd.CefConfig != null) {
-            switch(sd.CefConfig.Source) {
+    public static CfxClass Create(CefStructType cefStruct, Parser.CallbackStructNode s, ApiTypeBuilder api) {
+        if(s.CefConfig != null) {
+            switch(s.CefConfig.Source) {
                 case "client":
-                    return new CfxClientClass(cefStruct, sd, api);
+                    return new CfxClientClass(cefStruct, s, api);
                 case "library":
-                    return new CfxLibraryClass(cefStruct, sd, api);
+                    return new CfxLibraryClass(cefStruct, s, api);
                 default:
                     Debug.Assert(false);
                     throw new Exception();
             }
         } else {
-            Debug.Assert(sd.StructMembers.Count == 1 || sd.StructMembers[1].CallbackSignature == null);
-            return new CfxValueClass(cefStruct, sd, api);
+            throw new Exception();
         }
+    }
+
+    public static CfxClass Create(CefStructType cefStruct, Parser.ValueStructNode s, ApiTypeBuilder api) {
+        return new CfxValueClass(cefStruct, s, api);
     }
 
     protected readonly CefStructType CefStruct;
@@ -116,7 +119,6 @@ public abstract class CfxClass {
 
     protected readonly List<CefCallbackFunction> m_structFunctions = new List<CefCallbackFunction>();
 
-    public readonly StructCategory Category;
     protected readonly string OriginalSymbol;
     protected readonly string CfxNativeSymbol;
     protected readonly string CfxName;
@@ -127,7 +129,9 @@ public abstract class CfxClass {
 
     public bool NeedsWrapFunction;
 
-    protected CfxClass(CefStructType cefStruct, Parser.StructNode sd, ApiTypeBuilder api) {
+    public abstract StructCategory Category { get; }
+
+    protected CfxClass(CefStructType cefStruct, CommentNode comments) {
 
         CefStruct = cefStruct;
         OriginalSymbol = cefStruct.OriginalSymbol;
@@ -136,36 +140,14 @@ public abstract class CfxClass {
         ClassName = cefStruct.ClassName;
         ApiClassName = ClassName.Substring(3);
         RemoteClassName = cefStruct.RemoteClassName;
-        Comments = sd.Comments;
-
-        if(sd.CefConfig != null) {
-            switch(sd.CefConfig.Source) {
-                case "client":
-                    Category = StructCategory.ApiCallbacks;
-                    break;
-
-                case "library":
-                    Category = StructCategory.ApiCalls;
-                    break;
-
-                default:
-                    Debug.Assert(false);
-                    break;
-            }
-        } else {
-            Debug.Assert(sd.StructMembers.Count == 1 || sd.StructMembers[1].CallbackSignature == null);
-            Category = StructCategory.Values;
-        }
-
-        Debug.Assert(sd.CefFunctions.Count == 0 || Category == StructCategory.ApiCalls);
+        Comments = comments;
+        
     }
 
-    protected void GetCallbackFunctions(Parser.StructNode sd, ApiTypeBuilder api) {
+    protected void GetCallbackFunctions(Parser.CallbackStructNode sd, ApiTypeBuilder api) {
         var cblist = new List<CefCallbackFunction>();
-        for(int i = 0; i < sd.StructMembers.Count; ++i) {
-            var sm = sd.StructMembers[i];
-            Debug.Assert(sm.CallbackSignature != null);
-            cblist.Add(new CefCallbackFunction(CefStruct, Category, sm.Name, sm.CefConfig, sm.CallbackSignature, api, sm.Comments));
+        foreach(var sm in sd.CefCallbacks) {
+            cblist.Add(new CefCallbackFunction(CefStruct, Category, sm.Name, sm.CefConfig, sm.Signature, api, sm.Comments));
         }
         CallbackFunctions = cblist.ToArray();
     }

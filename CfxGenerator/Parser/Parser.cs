@@ -52,7 +52,7 @@ namespace Parser {
 
             p.SetFile(Path.Combine("cef", "include", "internal", "cef_time.h"));
             p.Parse(tmpApi);
-            api.CefStructs.AddRange(tmpApi.CefStructs);
+            api.CefValueStructs.AddRange(tmpApi.CefValueStructs);
 
             tmpApi = new CefApiNode();
 
@@ -68,13 +68,13 @@ namespace Parser {
             p.SetFile(Path.Combine(System.IO.Path.Combine("cef", "include", "internal", "cef_types_win.h")));
             p.Parse(tmpApi);
             api.CefFunctionsWindows = tmpApi.CefFunctions;
-            api.CefStructsWindows = tmpApi.CefStructs;
+            api.CefStructsWindows = tmpApi.CefValueStructs;
 
             tmpApi = new CefApiNode();
             p.SetFile(Path.Combine(System.IO.Path.Combine("cef", "include", "internal", "cef_types_linux.h")));
             p.Parse(tmpApi);
             api.CefFunctionsLinux = tmpApi.CefFunctions;
-            api.CefStructsLinux = tmpApi.CefStructs;
+            api.CefStructsLinux = tmpApi.CefValueStructs;
 
             p = new CefClassesParser();
 
@@ -90,6 +90,8 @@ namespace Parser {
                 p.Parse(api);
             }
 
+
+            api.ApiHashUniversal = ParseApiHash();
 
             // process c++ findings (compat with previous parser)
 
@@ -119,7 +121,7 @@ namespace Parser {
                 }
             }
 
-            foreach(var s in api.CefStructs) {
+            foreach(var s in api.CefCallbackStructs) {
                 if(classes.ContainsKey(s.Name)) {
                     var c = classes[s.Name];
                     classes.Remove(s.Name);
@@ -128,13 +130,13 @@ namespace Parser {
                     if(s.CefFunctions.Count > 0)
                         Debugger.Break();
                 }
-                foreach(var m in s.StructMembers) {
-                    if(funcs.ContainsKey(s.Name.Substring(0, s.Name.Length - 1) + m.Name)) {
-                        var cf = funcs[s.Name.Substring(0, s.Name.Length - 1) + m.Name];
-                        m.CefConfig = cf.CefConfig;
-                        ApplyBoolParameters(m.CallbackSignature, cf);
+                foreach(var c in s.CefCallbacks) {
+                    if(funcs.ContainsKey(s.Name.Substring(0, s.Name.Length - 1) + c.Name)) {
+                        var cf = funcs[s.Name.Substring(0, s.Name.Length - 1) + c.Name];
+                        c.CefConfig = cf.CefConfig;
+                        ApplyBoolParameters(c.Signature, cf);
                     } else {
-                        if(m.CallbackSignature != null)
+                        if(c.Signature != null)
                             Debugger.Break();
                     }
                 }
@@ -149,12 +151,7 @@ namespace Parser {
                 }
             }
 
-            api.CefStructs.Sort((x, y) => {
-                if(x.StructMembers[0].CallbackSignature == null && y.StructMembers[0].CallbackSignature != null)
-                    return -1;
-                if(y.StructMembers[0].CallbackSignature == null && x.StructMembers[0].CallbackSignature != null)
-                    return 1;
-
+            api.CefCallbackStructs.Sort((x, y) => {
                 return y.Name.Length - x.Name.Length;
             });
 
@@ -162,8 +159,7 @@ namespace Parser {
             while(ifunc < api.CefFunctions.Count) {
                 var f = api.CefFunctions[ifunc];
                 var found = false;
-                foreach(var s in api.CefStructs) {
-                    if(s.StructMembers[0].CallbackSignature == null) continue;
+                foreach(var s in api.CefCallbackStructs) {
                     if(f.Name.StartsWith(s.Name.Substring(0, s.Name.Length - 1))) {
                         s.CefFunctions.Add(f);
                         found = true;
@@ -186,7 +182,7 @@ namespace Parser {
             }
             foreach(var pm in cf.BooleanParameters) {
                 var success = false;
-                foreach(var pm1 in signature.Arguments) {
+                foreach(var pm1 in signature.Parameters) {
                     if(pm1.Var == pm) {
                         pm1.ParameterType.Name = "bool";
                         success = true;

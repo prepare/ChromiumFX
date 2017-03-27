@@ -39,8 +39,8 @@ public class WrapperGenerator {
         BuildPInvokeApi(fileManager);
         BuildEnums(fileManager);
         BuildCfxRuntime(fileManager);
-        BuildApiClasses(fileManager, StructCategory.ApiCalls);
-        BuildApiClasses(fileManager, StructCategory.ApiCallbacks);
+        BuildApiClasses(fileManager, StructCategory.Library);
+        BuildApiClasses(fileManager, StructCategory.Client);
         BuildApiClasses(fileManager, StructCategory.Values);
         fileManager.DeleteObsoleteFiles();
         generatedCSFiles.AddRange(fileManager.GetNewFiles());
@@ -439,7 +439,7 @@ public class WrapperGenerator {
             var apiClassName = cefStruct.ClassName.Substring(3);
 
             switch(cefStruct.ClassBuilder.Category) {
-                case StructCategory.ApiCalls:
+                case StructCategory.Library:
                     foreach(var f in cefStruct.ClassBuilder.ExportFunctions) {
                         CodeSnippets.EmitPInvokeDelegateInitialization(b, f.PublicClassName.Substring(3), f.CfxApiFunctionName);
                     }
@@ -449,7 +449,7 @@ public class WrapperGenerator {
 
                     break;
 
-                case StructCategory.ApiCallbacks:
+                case StructCategory.Client:
                     b.AppendLine("CfxApi.{0}.{1}_ctor = (CfxApi.cfx_ctor_with_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_ctor, typeof(CfxApi.cfx_ctor_with_gc_handle_delegate));", apiClassName, cefStruct.CfxName);
                     b.AppendLine("CfxApi.{0}.{1}_get_gc_handle = (CfxApi.cfx_get_gc_handle_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_get_gc_handle, typeof(CfxApi.cfx_get_gc_handle_delegate));", apiClassName, cefStruct.CfxName);
                     b.AppendLine("CfxApi.{0}.{1}_set_callback = (CfxApi.cfx_set_callback_delegate)CfxApi.GetDelegate(FunctionIndex.{1}_set_callback, typeof(CfxApi.cfx_set_callback_delegate));", apiClassName, cefStruct.CfxName);

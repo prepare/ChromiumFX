@@ -12,9 +12,15 @@ using System.Text;
 
 public class CfxClientClass : CfxClass {
 
-    public CfxClientClass(CefStructType cefStruct, Parser.StructNode sd, ApiTypeBuilder api)
-        : base(cefStruct, sd, api) {
-        GetCallbackFunctions(sd, api);
+    public override StructCategory Category {
+        get {
+            return StructCategory.Client;
+        }
+    }
+
+    public CfxClientClass(CefStructType cefStruct, Parser.CallbackStructNode s, ApiTypeBuilder api)
+        : base(cefStruct, s.Comments) {
+        GetCallbackFunctions(s, api);
     }
 
     public override void EmitNativeWrapper(CodeBuilder b) {
@@ -93,7 +99,7 @@ public class CfxClientClass : CfxClass {
                 arg.EmitPostNativeCallbackStatements(b);
             }
 
-            cb.NativeReturnType.EmitNativeCallbackReturnStatements(b, "__retval");
+            cb.NativeReturnType.EmitNativeCallbackReturnStatements(b);
 
             b.EndBlock();
             b.AppendLine();
@@ -120,7 +126,7 @@ public class CfxClientClass : CfxClass {
     }
 
     protected override void EmitApiDeclarations(CodeBuilder b) {
-        if(Category == StructCategory.ApiCallbacks) {
+        if(Category == StructCategory.Client) {
             b.AppendLine("public static cfx_ctor_with_gc_handle_delegate {0}_ctor;", CfxName);
             b.AppendLine("public static cfx_get_gc_handle_delegate {0}_get_gc_handle;", CfxName);
             b.AppendLine("public static cfx_set_callback_delegate {0}_set_callback;", CfxName);
@@ -610,7 +616,7 @@ public class CfxClientClass : CfxClass {
 
         b.AppendLine();
 
-        b.AppendSummaryAndRemarks(Comments, true, Category == StructCategory.ApiCallbacks);
+        b.AppendSummaryAndRemarks(Comments, true, Category == StructCategory.Client);
         b.BeginClass(RemoteClassName + " : CfrClientBase", GeneratorConfig.ClassModifiers(RemoteClassName));
         b.AppendLine();
 

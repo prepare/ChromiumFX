@@ -8,13 +8,6 @@ using System.Collections.Generic;
 
 public class CefExportFunction {
 
-    public class Comparer : IComparer<CefExportFunction> {
-
-        public int Compare(CefExportFunction x, CefExportFunction y) {
-            return string.Compare(x.Name, y.Name);
-        }
-    }
-
     public readonly string Name;
     public readonly Signature Signature;
     public readonly bool PrivateWrapper;

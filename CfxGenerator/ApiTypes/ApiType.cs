@@ -10,13 +10,6 @@ using System.Diagnostics;
 
 public class ApiType {
 
-    public class Comparer : IComparer<ApiType> {
-
-        public int Compare(ApiType x, ApiType y) {
-            return string.Compare(x.Name, y.Name);
-        }
-    }
-
     protected static string AddIndirection(string typeName, string indirection) {
         if(indirection.StartsWith("*")) {
             return typeName + indirection;
@@ -210,9 +203,9 @@ public class ApiType {
     public virtual void EmitPostNativeCallbackStatements(CodeBuilder b, string var) {
     }
 
-    public virtual void EmitNativeCallbackReturnStatements(CodeBuilder b, string var) {
+    public virtual void EmitNativeCallbackReturnStatements(CodeBuilder b) {
         if(!IsVoid) {
-            b.AppendLine("return {0};", NativeUnwrapExpression(var));
+            b.AppendLine("return {0};", NativeUnwrapExpression("__retval"));
         }
     }
 
@@ -224,17 +217,17 @@ public class ApiType {
 
     public virtual void EmitNativeReturnStatements(CodeBuilder b, string functionCall, CodeBuilder postCallStatements) {
         if(IsVoid) {
-            b.AppendLine("{0};", NativeWrapExpression(functionCall));
+            b.AppendLine("{0};", NativeReturnExpression(functionCall));
             b.AppendBuilder(postCallStatements);
             return;
         }
 
         if(postCallStatements.IsNotEmpty) {
-            b.AppendLine("{0} __ret_val_ = {1};", NativeSymbol, NativeWrapExpression(functionCall));
+            b.AppendLine("{0} __ret_val_ = {1};", NativeSymbol, NativeReturnExpression(functionCall));
             b.AppendBuilder(postCallStatements);
             b.AppendLine("return __ret_val_;");
         } else {
-            b.AppendLine("return {0};", NativeWrapExpression(functionCall));
+            b.AppendLine("return {0};", NativeReturnExpression(functionCall));
         }
     }
 

@@ -13,7 +13,7 @@ public class CefStructArrayType : CefStructPtrArrayType {
 
     public CefStructArrayType(Parameter structArg, Parameter countArg)
         : base(new Parameter(structArg, new CefStructPtrPtrType(structArg.ParameterType.AsCefStructPtrType, "*")), countArg) {
-        Debug.Assert(Struct.ClassBuilder.Category == StructCategory.Values);
+        Debug.Assert(Struct.Category == StructCategory.Values);
     }
 
     public override bool IsOut {

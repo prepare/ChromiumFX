@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 public class SignatureWithStructArray : Signature {
 
-    private Parameter[] m_publicParameters;
+    private Parameter[] m_managedParameters;
 
     public SignatureWithStructArray(Signature s, int arrayIndex, int countIndex)
         : base(s) {
@@ -23,11 +23,11 @@ public class SignatureWithStructArray : Signature {
                 Parameters[i] = a;
             }
         }
-        m_publicParameters = list.ToArray();
+        m_managedParameters = list.ToArray();
     }
 
     public override Parameter[] ManagedParameters {
-        get { return m_publicParameters; }
+        get { return m_managedParameters; }
     }
 
     public override void DebugPrintUnhandledArrayArguments(string cefName, CefConfigNode cefConfig, CfxCallMode callMode) {

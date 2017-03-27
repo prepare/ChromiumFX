@@ -9,8 +9,8 @@ public class CefPlatformStructType : CefStructType {
 
     private readonly string baseTypeName;
 
-    public CefPlatformStructType(string name, CommentNode comments, CefPlatform platform)
-        : base(name + "_" + platform.ToString().ToLowerInvariant(), comments) {
+    public CefPlatformStructType(string name, StructCategory category, CefPlatform platform)
+        : base(name + "_" + platform.ToString().ToLowerInvariant(), category) {
         this.Platform = platform;
         baseTypeName = name;
     }

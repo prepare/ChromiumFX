@@ -7,17 +7,26 @@
 using System.Diagnostics;
 
 public class CefStructType : CefType {
+
     public int ApiIndex;
+
 
     private CfxClass m_classBuilder;
 
-    public CefStructType(string name, CommentNode comments)
+    public StructCategory Category { get; private set; }
+
+    public CefStructType(string name, StructCategory category)
         : base(name) {
+        Category = category;
     }
 
-    public void SetMembers(Parser.StructNode sd, ApiTypeBuilder api) {
-        m_classBuilder = CfxClass.Create(this, sd, api);
-        CefBaseType = sd.CefBaseType;
+    public void SetMembers(Parser.CallbackStructNode s, ApiTypeBuilder api) {
+        m_classBuilder = CfxClass.Create(this, s, api);
+        CefBaseType = s.CefBaseType;
+    }
+
+    public void SetMembers(Parser.ValueStructNode s, ApiTypeBuilder api) {
+        m_classBuilder = CfxClass.Create(this, s, api);
     }
 
     public CfxClass ClassBuilder {
@@ -66,6 +75,10 @@ public class CefStructType : CefType {
         get { return RemoteClassName; }
     }
 
+    public override string NativeReturnExpression(string var) {
+        return string.Format("({0}*)cfx_copy_structure(&{1}, sizeof({0}))", OriginalSymbol, var);
+    }
+
     public override void EmitNativeReturnStatements(CodeBuilder b, string functionCall, CodeBuilder postCallStatements) {
         b.AppendLine("{0} __retval_tmp = {1};", OriginalSymbol, functionCall);
         if(postCallStatements.IsNotEmpty) {
@@ -77,9 +90,9 @@ public class CefStructType : CefType {
         }
     }
 
-    public override void EmitNativeCallbackReturnStatements(CodeBuilder b, string var) {
+    public override void EmitNativeCallbackReturnStatements(CodeBuilder b) {
         b.AppendComment("TODO: possible race with managed GC?");
-        base.EmitNativeCallbackReturnStatements(b, var);
+        base.EmitNativeCallbackReturnStatements(b);
     }
 
     public override string NativeWrapExpression(string var) {

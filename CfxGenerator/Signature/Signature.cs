@@ -63,7 +63,7 @@ public class Signature {
         var args = new List<Parameter>();
         var index = 0;
 
-        foreach(var arg in sd.Arguments) {
+        foreach(var arg in sd.Parameters) {
             args.Add(new Parameter(arg, api, index));
             index += 1;
         }

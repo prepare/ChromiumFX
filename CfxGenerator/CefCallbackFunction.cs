@@ -46,7 +46,7 @@ public class CefCallbackFunction  {
         else
             CefConfig = cefConfig;
 
-        if(category == StructCategory.ApiCallbacks) {
+        if(category == StructCategory.Client) {
             m_callMode = CfxCallMode.Callback;
             this.Signature = Signature.Create(SignatureType.ClientCallback, CefName, CefConfig, CallMode, sd, api);
         } else {
@@ -71,7 +71,7 @@ public class CefCallbackFunction  {
     public string PublicName {
         get {
             if(cppApiName != null) {
-                if(Parent.ClassBuilder.Category == StructCategory.ApiCallbacks) {
+                if(Parent.ClassBuilder.Category == StructCategory.Client) {
                     // can't overload event names, so return the styled c-api name instead
                     return CSharp.ApplyStyle(Name);
                 }
@@ -223,7 +223,7 @@ public class CefCallbackFunction  {
 
     public string RemoteCallId {
         get {
-            if(Parent.ClassBuilder.Category == StructCategory.ApiCallbacks) {
+            if(Parent.ClassBuilder.Category == StructCategory.Client) {
                 return Parent.ClassName + RemoteCallClassName + "RemoteClientCall";
             } else {
                 return Parent.ClassName + RemoteCallClassName + "RemoteCall";

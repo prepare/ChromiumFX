@@ -44,7 +44,7 @@ public class CefApiDeclarations {
                     }
                 }
                 switch(st.ClassBuilder.Category) {
-                    case StructCategory.ApiCalls:
+                    case StructCategory.Library:
                         foreach(var cb in st.ClassBuilder.CallbackFunctions) {
                             cb.ApiIndex = list.Count;
                             list.Add(cb.CfxApiFunctionName);
@@ -52,7 +52,7 @@ public class CefApiDeclarations {
 
                         break;
 
-                    case StructCategory.ApiCallbacks:
+                    case StructCategory.Client:
                         st.ApiIndex = list.Count;
                         list.Add(st.CfxName + "_ctor");
                         list.Add(st.CfxName + "_get_gc_handle");
@@ -146,14 +146,14 @@ public class CefApiDeclarations {
                     }
                 }
                 break;
-            case StructCategory.ApiCalls:
+            case StructCategory.Library:
                 foreach(var f in s.ClassBuilder.ExportFunctions) {
                     if(!GeneratorConfig.IsBrowserProcessOnly(f.Name)) {
                         AnalyzeSignature(f.Signature);
                     }
                 }
-                goto case StructCategory.ApiCallbacks;
-            case StructCategory.ApiCallbacks:
+                goto case StructCategory.Client;
+            case StructCategory.Client:
                 foreach(var cb in s.ClassBuilder.CallbackFunctions) {
                     if(!GeneratorConfig.IsBrowserProcessOnly(s.Name + "::" + cb.Name)) {
                         AnalyzeSignature(cb.Signature);

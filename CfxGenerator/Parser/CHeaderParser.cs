@@ -28,7 +28,7 @@ namespace Parser {
                     ParseType(f.Signature.ReturnType)
                     && Scan(@"\w+", () => f.Name = Value)
                     && Skip(@"\(")
-                    && ParseParameterList(f.Signature.Arguments)
+                    && ParseParameterList(f.Signature.Parameters)
                     && Skip(@"\)\s*;")
                 );
             }

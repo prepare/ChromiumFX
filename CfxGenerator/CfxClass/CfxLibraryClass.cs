@@ -12,8 +12,14 @@ using System.Text;
 
 public class CfxLibraryClass : CfxClass {
 
-    public CfxLibraryClass(CefStructType cefStruct, Parser.StructNode sd, ApiTypeBuilder api)
-        : base(cefStruct, sd, api) {
+    public override StructCategory Category {
+        get {
+            return StructCategory.Library;
+        }
+    }
+
+    public CfxLibraryClass(CefStructType cefStruct, Parser.CallbackStructNode sd, ApiTypeBuilder api)
+        : base(cefStruct, sd.Comments) {
 
         var flist = new List<CefExportFunction>();
         foreach(var fd in sd.CefFunctions) {
@@ -226,7 +232,7 @@ public class CfxLibraryClass : CfxClass {
 
         b.AppendLine();
 
-        b.AppendSummaryAndRemarks(Comments, true, Category == StructCategory.ApiCallbacks);
+        b.AppendSummaryAndRemarks(Comments, true, Category == StructCategory.Client);
         b.BeginClass(RemoteClassName + " : CfrLibraryBase", GeneratorConfig.ClassModifiers(RemoteClassName));
         b.AppendLine();
 

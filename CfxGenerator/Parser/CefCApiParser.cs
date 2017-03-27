@@ -21,16 +21,16 @@ namespace Parser {
         protected override void Parse(CefApiNode api) {
             while(!Done) {
                 Ensure(
-                    ParseCefCallbackStruct(api.CefStructs)
+                    ParseCefCallbackStruct(api.CefCallbackStructs)
                     || ParseCefExportFunction(api.CefFunctions)
                     || SkipCHeaderCode()
                 );
             }
         }
 
-        private bool ParseCefCallbackStruct(List<StructNode> structs) {
+        private bool ParseCefCallbackStruct(List<CallbackStructNode> structs) {
             Mark();
-            var cefStruct = new StructNode();
+            var cefStruct = new CallbackStructNode();
             var success =
                 ParseSummary(cefStruct.Comments)
                 && Scan(@"typedef struct _(cef_\w+_t) {", () => cefStruct.Name = Group01);
@@ -43,7 +43,7 @@ namespace Parser {
                     );
 
                 while(
-                    ParseCefCallback(cefStruct.StructMembers)
+                    ParseCefCallback(cefStruct.CefCallbacks)
                     || SkipCommentBlock()
                 ) ;
                 Ensure(Skip(@"}\s*\w+;"));
@@ -53,17 +53,17 @@ namespace Parser {
             return success;
         }
 
-        private bool ParseCefCallback(List<StructMemberNode> members) {
+        private bool ParseCefCallback(List<CallbackNode> members) {
             Mark();
-            var m = new StructMemberNode();
-            m.CallbackSignature = new SignatureNode();
+            var m = new CallbackNode();
+            m.Signature = new SignatureNode();
             var success =
                 ParseSummary(m.Comments)
-                && ParseType(m.CallbackSignature.ReturnType)
+                && ParseType(m.Signature.ReturnType)
                 && Skip(@"\(\s*CEF_CALLBACK \*")
                 && Scan(@"\w+", () => m.Name = Value)
                 && Skip(@"\)\(")
-                && ParseParameterList(m.CallbackSignature.Arguments)
+                && ParseParameterList(m.Signature.Parameters)
                 && Skip(@"\)\s*;");
             if(success)
                 members.Add(m);

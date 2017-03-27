@@ -21,16 +21,16 @@ namespace Parser {
             while(!Done) {
                 Ensure(
                     ParseCefEnum(api.CefEnums)
-                    || ParseCefTypeStruct(api.CefStructs)
+                    || ParseCefTypeStruct(api.CefValueStructs)
                     || ParseCefExportFunction(api.CefFunctions)
                     || SkipCHeaderCode()
                 );
             }
         }
 
-        private bool ParseCefTypeStruct(List<StructNode> structs) {
+        private bool ParseCefTypeStruct(List<ValueStructNode> structs) {
             Mark();
-            var cefStruct = new StructNode();
+            var cefStruct = new ValueStructNode();
             var success =
                 ParseSummary(cefStruct.Comments)
                 && Scan(@"typedef struct _(cef_\w+_t) {", () => cefStruct.Name = Group01);

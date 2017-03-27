@@ -91,6 +91,7 @@
     <Compile Include="Parser\Nodes\CefCppFunctionNode.cs" />
     <Compile Include="Parser\CefCApiParser.cs" />
     <Compile Include="Parser\CefClassesParser.cs" />
+    <Compile Include="Parser\Nodes\CallbackNode.cs" />
     <Compile Include="Parser\Parser.cs" />
     <Compile Include="Parser\Scanner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

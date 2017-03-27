@@ -13,7 +13,7 @@ public class CefV8HandlerExecuteSignature : SignatureWithStructPtrArray {
     }
 
     public override ApiType PublicReturnType {
-        get { return new CefStructPtrType(new CefStructType("cef_v8value", null), "*"); }
+        get { return new CefStructPtrType(new CefStructType("cef_v8value", StructCategory.Library), "*"); }
     }
 
     public override Parameter[] ManagedParameters {
