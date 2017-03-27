@@ -75,8 +75,30 @@ public class CefStructType : CefType {
         get { return RemoteClassName; }
     }
 
+    public override string NativeCallbackReturnValueParameter() {
+        return base.NativeCallbackReturnValueParameter() + ", gc_handle_t *__retval_handle";
+    }
+
+    public override string NativeCallbackReturnValueArgument() {
+        return string.Format("&__retval, &__retval_handle");
+    }
+
+    public override string PInvokeCallbackReturnValueParameter() {
+        return base.PInvokeCallbackReturnValueParameter() + ", out IntPtr __retval_handle";
+    }
+
     public override string NativeReturnExpression(string var) {
         return string.Format("({0}*)cfx_copy_structure(&{1}, sizeof({0}))", OriginalSymbol, var);
+    }
+
+    public override void EmitSetCallbackReturnValueToDefaultStatements(CodeBuilder b) {
+        base.EmitSetCallbackReturnValueToDefaultStatements(b);
+        b.AppendLine("__retval_handle = default(IntPtr);");
+    }
+
+    public override void EmitSetCallbackReturnValueStatements(CodeBuilder b) {
+        base.EmitSetCallbackReturnValueStatements(b);
+        b.AppendLine("__retval_handle = e.m_returnValue == null ? IntPtr.Zero : System.Runtime.InteropServices.GCHandle.ToIntPtr(System.Runtime.InteropServices.GCHandle.Alloc(e.m_returnValue));");
     }
 
     public override void EmitNativeReturnStatements(CodeBuilder b, string functionCall, CodeBuilder postCallStatements) {
@@ -89,9 +111,16 @@ public class CefStructType : CefType {
         b.AppendLine("return __retval;");
     }
 
+    public override void EmitNativeCallbackReturnValueFields(CodeBuilder b) {
+        base.EmitNativeCallbackReturnValueFields(b);
+        b.AppendLine("gc_handle_t __retval_handle;");
+    }
+
     public override void EmitNativeCallbackReturnStatements(CodeBuilder b) {
-        b.AppendComment("TODO: possible race with managed GC?");
-        base.EmitNativeCallbackReturnStatements(b);
+        b.AppendLine("{0} __retval_value = {{0}};", OriginalSymbol);
+        b.AppendLine("if(__retval) __retval_value = *__retval;");
+        b.AppendLine("if(__retval_handle) cfx_gc_handle_free(__retval_handle);");
+        b.AppendLine("return __retval_value;");
     }
 
     public override string NativeWrapExpression(string var) {

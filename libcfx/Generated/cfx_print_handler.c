@@ -20,7 +20,7 @@ typedef struct _cfx_print_handler_t {
     void (CEF_CALLBACK *on_print_dialog)(gc_handle_t self, int* __retval, int has_selection, cef_print_dialog_callback_t* callback, int *callback_release);
     void (CEF_CALLBACK *on_print_job)(gc_handle_t self, int* __retval, char16 *document_name_str, int document_name_length, char16 *pdf_file_path_str, int pdf_file_path_length, cef_print_job_callback_t* callback, int *callback_release);
     void (CEF_CALLBACK *on_print_reset)(gc_handle_t self);
-    void (CEF_CALLBACK *get_pdf_paper_size)(gc_handle_t self, cef_size_t** __retval, int device_units_per_inch);
+    void (CEF_CALLBACK *get_pdf_paper_size)(gc_handle_t self, cef_size_t** __retval, gc_handle_t *__retval_handle, int device_units_per_inch);
 } cfx_print_handler_t;
 
 void CEF_CALLBACK _cfx_print_handler_add_ref(struct _cef_base_ref_counted_t* base) {
@@ -106,9 +106,12 @@ void CEF_CALLBACK cfx_print_handler_on_print_reset(cef_print_handler_t* self) {
 
 cef_size_t CEF_CALLBACK cfx_print_handler_get_pdf_paper_size(cef_print_handler_t* self, int device_units_per_inch) {
     cef_size_t* __retval;
-    ((cfx_print_handler_t*)self)->get_pdf_paper_size(((cfx_print_handler_t*)self)->gc_handle, &__retval, device_units_per_inch);
-    // TODO: possible race with managed GC?
-    return *(__retval);
+    gc_handle_t __retval_handle;
+    ((cfx_print_handler_t*)self)->get_pdf_paper_size(((cfx_print_handler_t*)self)->gc_handle, &__retval, &__retval_handle, device_units_per_inch);
+    cef_size_t __retval_value = {0};
+    if(__retval) __retval_value = *__retval;
+    if(__retval_handle) cfx_gc_handle_free(__retval_handle);
+    return __retval_value;
 }
 
 static void cfx_print_handler_set_callback(cef_print_handler_t* self, int index, void* callback) {
@@ -134,7 +137,7 @@ static void cfx_print_handler_set_callback(cef_print_handler_t* self, int index,
         self->on_print_reset = callback ? cfx_print_handler_on_print_reset : 0;
         break;
     case 5:
-        ((cfx_print_handler_t*)self)->get_pdf_paper_size = (void (CEF_CALLBACK *)(gc_handle_t self, cef_size_t** __retval, int device_units_per_inch))callback;
+        ((cfx_print_handler_t*)self)->get_pdf_paper_size = (void (CEF_CALLBACK *)(gc_handle_t self, cef_size_t** __retval, gc_handle_t *__retval_handle, int device_units_per_inch))callback;
         self->get_pdf_paper_size = callback ? cfx_print_handler_get_pdf_paper_size : 0;
         break;
     }

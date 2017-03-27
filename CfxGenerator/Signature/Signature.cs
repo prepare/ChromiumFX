@@ -110,7 +110,7 @@ public class Signature {
             if(Type == SignatureType.ClientCallback) {
                 args.Add(string.Format("(({0}*)self)->gc_handle", Parameters[0].ParameterType.AsCefStructPtrType.Struct.CfxNativeSymbol));
                 if(!ReturnType.IsVoid) {
-                    args.Add("&__retval");
+                    args.Add(ReturnType.NativeCallbackReturnValueArgument());
                 }
                 for(var i = 1; i <= Parameters.Length - 1; i++) {
                     args.Add(Parameters[i].NativeCallbackArgument);
@@ -174,7 +174,7 @@ public class Signature {
             if(Type == SignatureType.ClientCallback) {
                 args.Add("gc_handle_t self");
                 if(!ReturnType.IsVoid) {
-                    args.Add(ReturnType.NativeOutSignature("__retval"));
+                    args.Add(ReturnType.NativeCallbackReturnValueParameter());
                 }
                 for(var i = 1; i <= Parameters.Length - 1; i++) {
                     args.Add(Parameters[i].NativeCallbackParameter);
@@ -209,7 +209,7 @@ public class Signature {
         get {
             args.Add("IntPtr gcHandlePtr");
             if(!ReturnType.IsVoid) {
-                args.Add(ReturnType.PInvokeOutSignature("__retval"));
+                args.Add(ReturnType.PInvokeCallbackReturnValueParameter());
             }
             for(var i = 1; i <= Parameters.Count() - 1; i++) {
                 args.Add(Parameters[i].PInvokeCallbackParameter);
@@ -333,7 +333,7 @@ public class Signature {
 
     public virtual void EmitPostPublicEventHandlerReturnValueStatements(CodeBuilder b) {
         if(!PublicReturnType.IsVoid) {
-            b.AppendLine("__retval = {0};", PublicReturnType.PublicUnwrapExpression("e.m_returnValue"));
+            PublicReturnType.EmitSetCallbackReturnValueStatements(b);
         }
     }
 

@@ -86,7 +86,7 @@ public class CfxClientClass : CfxClass {
 
             b.BeginBlock("{0} CEF_CALLBACK {1}({2})", cb.NativeReturnType.OriginalSymbol, cb.NativeCallbackName, cb.Signature.OriginalParameterList);
             if(!cb.NativeReturnType.IsVoid) {
-                b.AppendLine("{0} __retval;", cb.NativeReturnType.NativeSymbol);
+                cb.NativeReturnType.EmitNativeCallbackReturnValueFields(b);
             }
 
             foreach(var arg in cb.Signature.Parameters) {
@@ -189,7 +189,7 @@ public class CfxClientClass : CfxClass {
 
             b.BeginIf("self == null || self.CallbacksDisabled");
             if(!sig.ReturnType.IsVoid) {
-                b.AppendLine("__retval = default({0});", sig.ReturnType.PInvokeSymbol);
+                sig.ReturnType.EmitSetCallbackReturnValueToDefaultStatements(b);
             }
             foreach(var arg in sig.Parameters) {
                 if(!arg.IsThisArgument)

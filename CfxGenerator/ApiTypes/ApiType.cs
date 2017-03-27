@@ -93,10 +93,22 @@ public class ApiType {
         return string.Format("{0} {1}", PInvokeSymbol, CSharp.Escape(var));
     }
 
+    public virtual string NativeCallbackReturnValueParameter() {
+        return string.Concat(NativeSymbol, "* __retval");
+    }
+
+    public virtual string NativeCallbackReturnValueArgument() {
+        return "&__retval";
+    }
+
     public virtual string NativeOutSignature(string var) {
         if(NativeSymbol == null)
             return null;
         return string.Concat(NativeSymbol, "* ", var);
+    }
+
+    public virtual string PInvokeCallbackReturnValueParameter() {
+        return string.Format("out {0} __retval", PInvokeSymbol);
     }
 
     public virtual string PInvokeCallbackParameter(string var) {
@@ -195,6 +207,10 @@ public class ApiType {
 
     public virtual string PublicEventConstructorArgument(string var) {
         return CSharp.Escape(var);
+    }
+
+    public virtual void EmitNativeCallbackReturnValueFields(CodeBuilder b) {
+        b.AppendLine("{0} __retval;", NativeSymbol);
     }
 
     public virtual void EmitPreNativeCallbackStatements(CodeBuilder b, string var) {
@@ -318,6 +334,14 @@ public class ApiType {
     public virtual void EmitSetCallbackArgumentToDefaultStatements(CodeBuilder b, string var) {
         if(IsOut && !IsIn)
             b.AppendLine("{0} = default({1});", var, PInvokeSymbol);
+    }
+
+    public virtual void EmitSetCallbackReturnValueToDefaultStatements(CodeBuilder b) {
+        b.AppendLine("__retval = default({0});", PInvokeSymbol);
+    }
+
+    public virtual void EmitSetCallbackReturnValueStatements(CodeBuilder b) {
+        b.AppendLine("__retval = {0};", PublicUnwrapExpression("e.m_returnValue"));
     }
 
     public void EmitRemoteCallFields(CodeBuilder b, string var) {

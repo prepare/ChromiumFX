@@ -134,20 +134,22 @@ namespace Chromium {
 
         // get_pdf_paper_size
         [System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall, SetLastError = false)]
-        private delegate void get_pdf_paper_size_delegate(IntPtr gcHandlePtr, out IntPtr __retval, int device_units_per_inch);
+        private delegate void get_pdf_paper_size_delegate(IntPtr gcHandlePtr, out IntPtr __retval, out IntPtr __retval_handle, int device_units_per_inch);
         private static get_pdf_paper_size_delegate get_pdf_paper_size_native;
         private static IntPtr get_pdf_paper_size_native_ptr;
 
-        internal static void get_pdf_paper_size(IntPtr gcHandlePtr, out IntPtr __retval, int device_units_per_inch) {
+        internal static void get_pdf_paper_size(IntPtr gcHandlePtr, out IntPtr __retval, out IntPtr __retval_handle, int device_units_per_inch) {
             var self = (CfxPrintHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 __retval = default(IntPtr);
+                __retval_handle = default(IntPtr);
                 return;
             }
             var e = new CfxGetPdfPaperSizeEventArgs(device_units_per_inch);
             self.m_GetPdfPaperSize?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxSize.Unwrap(e.m_returnValue);
+            __retval_handle = e.m_returnValue == null ? IntPtr.Zero : System.Runtime.InteropServices.GCHandle.ToIntPtr(System.Runtime.InteropServices.GCHandle.Alloc(e.m_returnValue));
         }
 
         public CfxPrintHandler() : base(CfxApi.PrintHandler.cfx_print_handler_ctor) {}
