@@ -54,6 +54,7 @@ namespace Chromium.Remote {
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             var self = (CfrTask)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            lock(CfrTaskRunner.runningTasks) CfrTaskRunner.runningTasks.Remove(self);
             if(self == null || self.CallbacksDisabled) {
                 return;
             }

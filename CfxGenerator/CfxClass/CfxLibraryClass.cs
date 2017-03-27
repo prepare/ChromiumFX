@@ -106,6 +106,11 @@ public class CfxLibraryClass : CfxClass {
             b.AppendLine();
         }
 
+        if(ClassName == "CfxTaskRunner") {
+            b.AppendLine("internal static readonly System.Collections.Generic.HashSet<CfxTask> runningTasks = new System.Collections.Generic.HashSet<CfxTask>();");
+            b.AppendLine();
+        }
+
         b.BeginFunction("Wrap", ClassName, "IntPtr nativePtr", "internal static");
         b.AppendLine("if(nativePtr == IntPtr.Zero) return null;");
         if(CefStruct.IsRefCounted) {
@@ -159,12 +164,19 @@ public class CfxLibraryClass : CfxClass {
 
         foreach(var sf in m_structFunctions) {
             b.AppendLine();
+            if(sf.PublicName == "PostTask" || sf.PublicName == "PostDelayedTask") {
+                var cc = new List<string>(sf.Comments.Lines);
+                cc.Add("ChromiumFX specific notes:");
+                cc.Add("The submitted task is kept alive internally until execution.");
+                sf.Comments.Lines = cc.ToArray();
+            }
             b.AppendSummaryAndRemarks(sf.Comments);
             if(GeneratorConfig.HasPrivateWrapper(sf.Parent.Name + "::" + sf.Name)) {
                 b.BeginFunction(sf.Signature.PublicFunctionHeader(sf.PublicName), "private");
             } else {
                 b.BeginFunction(sf.Signature.PublicFunctionHeader(sf.PublicName));
             }
+            
             sf.Signature.EmitPublicCall(b, ApiClassName, sf.CfxApiFunctionName);
             b.EndBlock();
         }
@@ -235,6 +247,11 @@ public class CfxLibraryClass : CfxClass {
         b.AppendSummaryAndRemarks(Comments, true, Category == StructCategory.Client);
         b.BeginClass(RemoteClassName + " : CfrLibraryBase", GeneratorConfig.ClassModifiers(RemoteClassName));
         b.AppendLine();
+
+        if(ClassName == "CfxTaskRunner") {
+            b.AppendLine("internal static readonly System.Collections.Generic.HashSet<CfrTask> runningTasks = new System.Collections.Generic.HashSet<CfrTask>();");
+            b.AppendLine();
+        }
 
         EmitRemoteClassWrapperFunction(b);
 

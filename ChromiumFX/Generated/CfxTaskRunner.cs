@@ -27,6 +27,8 @@ namespace Chromium {
 
         private static readonly WeakCache weakCache = new WeakCache();
 
+        internal static readonly System.Collections.Generic.HashSet<CfxTask> runningTasks = new System.Collections.Generic.HashSet<CfxTask>();
+
         internal static CfxTaskRunner Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -105,13 +107,19 @@ namespace Chromium {
         /// <summary>
         /// Post a task for execution on the thread associated with this task runner.
         /// Execution will occur asynchronously.
+        /// ChromiumFX specific notes:
+        /// The submitted task is kept alive internally until execution.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public bool PostTask(CfxTask task) {
-            return 0 != CfxApi.TaskRunner.cfx_task_runner_post_task(NativePtr, CfxTask.Unwrap(task));
+            lock(runningTasks) {
+                var __retval = CfxApi.TaskRunner.cfx_task_runner_post_task(NativePtr, CfxTask.Unwrap(task));
+                if(0 != __retval) runningTasks.Add(task);
+                return 0 != __retval;
+            }
         }
 
         /// <summary>
@@ -119,13 +127,19 @@ namespace Chromium {
         /// runner. Execution will occur asynchronously. Delayed tasks are not
         /// supported on V8 WebWorker threads and will be executed without the
         /// specified delay.
+        /// ChromiumFX specific notes:
+        /// The submitted task is kept alive internally until execution.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public bool PostDelayedTask(CfxTask task, long delayMs) {
-            return 0 != CfxApi.TaskRunner.cfx_task_runner_post_delayed_task(NativePtr, CfxTask.Unwrap(task), delayMs);
+            lock(runningTasks) {
+                var __retval = CfxApi.TaskRunner.cfx_task_runner_post_delayed_task(NativePtr, CfxTask.Unwrap(task), delayMs);
+                if(0 != __retval) runningTasks.Add(task);
+                return 0 != __retval;
+            }
         }
 
         internal override void OnDispose(IntPtr nativePtr) {

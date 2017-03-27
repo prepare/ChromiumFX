@@ -181,8 +181,12 @@ public class CfxClientClass : CfxClass {
             b.AppendLine();
 
             b.BeginFunction(cb.Name, "void", sig.PInvokeParameterList, "internal static");
-            //b.AppendLine("var handle = System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr);")
             b.AppendLine("var self = ({0})System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;", ClassName);
+
+            if(ClassName == "CfxTask") {
+                b.AppendLine("lock(CfxTaskRunner.runningTasks) CfxTaskRunner.runningTasks.Remove(self);");
+            }
+
             b.BeginIf("self == null || self.CallbacksDisabled");
             if(!sig.ReturnType.IsVoid) {
                 b.AppendLine("__retval = default({0});", sig.ReturnType.PInvokeSymbol);
@@ -210,6 +214,7 @@ public class CfxClientClass : CfxClass {
         if(NeedsWrapFunction) {
             b.AppendLine("internal {0}(IntPtr nativePtr) : base(nativePtr) {{}}", ClassName);
         }
+
         b.AppendLine("public {0}() : base(CfxApi.{1}.{2}_ctor) {{}}", ClassName, ApiClassName, CfxName);
         b.AppendLine();
 
@@ -307,7 +312,7 @@ public class CfxClientClass : CfxClass {
         b.AppendLine("private {0} m_{1};", cb.EventHandlerName, cb.PublicName);
     }
 
-    
+
     private bool ShouldEmitEventHandler(Dictionary<string, CommentNode> emittedHandlers, CefCallbackFunction cb) {
         if(emittedHandlers.ContainsKey(cb.EventName)) {
             var c0 = emittedHandlers[cb.EventName];
@@ -519,6 +524,9 @@ public class CfxClientClass : CfxClass {
             b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
 
             b.AppendLine("var self = ({0})System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;", RemoteClassName);
+            if(ClassName == "CfxTask") {
+                b.AppendLine("lock(CfrTaskRunner.runningTasks) CfrTaskRunner.runningTasks.Remove(self);");
+            }
             b.BeginIf("self == null || self.CallbacksDisabled");
             b.AppendLine("return;");
             b.EndBlock();

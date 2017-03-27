@@ -594,19 +594,14 @@ namespace CfxTestApplication {
                 }
             };
 
-            // make sure to keep the task alive
-            // do this even if you are not interested in the return value
-            // otherwise GC might collect the handler and task.Execute is never called.
+            // wait until the return value is available.
             lock(task) {
                 CfrTaskRunner.GetForThread(CfxThreadId.Renderer).PostTask(task);
                 Monitor.Wait(task);
             }
 
             rpcContext.Exit();
-
-            // GC.KeepAlive(task) should not be necessary here since Monitor.Wait(task) above
-            // references the task until it is finished
-
+            
             LogWriteLine("AsyncTestFunctionCallback: result from callback = " + result);
             LogWriteLine("AsyncTestFunctionCallback: done.");
 

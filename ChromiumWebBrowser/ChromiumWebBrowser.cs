@@ -741,11 +741,6 @@ namespace Chromium.WebBrowser {
 
         private class EvaluateTask : CfrTask {
 
-            // quick fix: cache evaluation tasks so the GC won't
-            // collect them before CEF performs the callback (fixes issue #64)
-            // TODO: This involves hashing and locking. Is there a faster way to do this?
-            private static HashSet<EvaluateTask> tasks = new HashSet<EvaluateTask>();
-
             ChromiumWebBrowser wb;
             string code;
             JSInvokeMode invokeMode;
@@ -756,13 +751,11 @@ namespace Chromium.WebBrowser {
                 this.code = code;
                 this.invokeMode = invokeMode;
                 this.callback = callback;
-                lock(tasks) tasks.Add(this);
                 Execute += (s, e) => {
                     if(invokeMode == JSInvokeMode.Invoke || (invokeMode == JSInvokeMode.Inherit && wb.RemoteCallbacksWillInvoke))
                         wb.RenderThreadInvoke(() => Task_Execute(e));
                     else
                         Task_Execute(e);
-                    lock(tasks) tasks.Remove(this);
                 };
             }
 
@@ -850,8 +843,6 @@ namespace Chromium.WebBrowser {
         
         private class VisitDomTask : CfrTask {
 
-            private static HashSet<VisitDomTask> tasks = new HashSet<VisitDomTask>();
-
             ChromiumWebBrowser wb;
             Action<CfrDomDocument, CfrBrowser> callback;
             CfrDomVisitor visitor;
@@ -867,12 +858,10 @@ namespace Chromium.WebBrowser {
                     else
                         callback(e.Document, wb.remoteBrowser);
                 };
-                tasks.Add(this);
             }
 
             void Task_Execute(object sender, CfrEventArgs e) {
                 wb.remoteBrowser.MainFrame.VisitDom(visitor);
-                tasks.Remove(this);
             }
         }
 

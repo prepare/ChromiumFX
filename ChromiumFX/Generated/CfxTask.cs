@@ -42,6 +42,7 @@ namespace Chromium {
 
         internal static void execute(IntPtr gcHandlePtr) {
             var self = (CfxTask)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
+            lock(CfxTaskRunner.runningTasks) CfxTaskRunner.runningTasks.Remove(self);
             if(self == null || self.CallbacksDisabled) {
                 return;
             }
