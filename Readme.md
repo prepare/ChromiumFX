@@ -54,6 +54,9 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2987.1 ###
+- Starting from this release, CfxTask and CfrTask objects are kept alive internally from the moment they are submitted to (Cfx|Cfr)TaskRunner.PostTask or PostDelayedTast until the Execute callback event is called, so it's not necessary anymore to keep a explicit reference in the client application.
+
 ### Version 3.2987.0 ###
 - Update to CEF 3.2987.1596 with API changes.
 - CEF introduced a new basetype cef_base_scoped_t. ChromiumFX was updated to reflect this change and implement the intended funcionality. For now, CfxSchemeRegistrar is the only class to inherit from CfxBaseScoped.
