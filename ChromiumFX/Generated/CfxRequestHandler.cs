@@ -429,7 +429,6 @@ namespace Chromium {
             browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
-        internal CfxRequestHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxRequestHandler() : base(CfxApi.RequestHandler.cfx_request_handler_ctor) {}
 
         /// <summary>

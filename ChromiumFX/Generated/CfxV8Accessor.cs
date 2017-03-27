@@ -104,7 +104,6 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
-        internal CfxV8Accessor(IntPtr nativePtr) : base(nativePtr) {}
         public CfxV8Accessor() : base(CfxApi.V8Accessor.cfx_v8accessor_ctor) {}
 
         /// <summary>

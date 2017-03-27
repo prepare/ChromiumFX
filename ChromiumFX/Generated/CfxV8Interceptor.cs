@@ -180,7 +180,6 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
-        internal CfxV8Interceptor(IntPtr nativePtr) : base(nativePtr) {}
         public CfxV8Interceptor() : base(CfxApi.V8Interceptor.cfx_v8interceptor_ctor) {}
 
         /// <summary>

@@ -118,7 +118,6 @@ namespace Chromium {
             browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
-        internal CfxJsDialogHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxJsDialogHandler() : base(CfxApi.JsDialogHandler.cfx_jsdialog_handler_ctor) {}
 
         /// <summary>

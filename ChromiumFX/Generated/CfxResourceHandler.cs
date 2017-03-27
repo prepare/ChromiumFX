@@ -169,7 +169,6 @@ namespace Chromium {
             e.m_isInvalid = true;
         }
 
-        internal CfxResourceHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxResourceHandler() : base(CfxApi.ResourceHandler.cfx_resource_handler_ctor) {}
 
         /// <summary>

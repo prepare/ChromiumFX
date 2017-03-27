@@ -115,7 +115,6 @@ namespace Chromium {
             frame_release = e.m_frame_wrapped == null? 1 : 0;
         }
 
-        internal CfxLoadHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxLoadHandler() : base(CfxApi.LoadHandler.cfx_load_handler_ctor) {}
 
         /// <summary>

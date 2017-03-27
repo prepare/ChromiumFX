@@ -47,7 +47,6 @@ namespace Chromium {
             e.m_isInvalid = true;
         }
 
-        internal CfxRegisterCdmCallback(IntPtr nativePtr) : base(nativePtr) {}
         public CfxRegisterCdmCallback() : base(CfxApi.RegisterCdmCallback.cfx_register_cdm_callback_ctor) {}
 
         /// <summary>

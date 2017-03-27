@@ -128,7 +128,6 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
-        internal CfxReadHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxReadHandler() : base(CfxApi.ReadHandler.cfx_read_handler_ctor) {}
 
         /// <summary>

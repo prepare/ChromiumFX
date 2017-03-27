@@ -46,7 +46,6 @@ namespace Chromium {
             e.m_isInvalid = true;
         }
 
-        internal CfxSetCookieCallback(IntPtr nativePtr) : base(nativePtr) {}
         public CfxSetCookieCallback() : base(CfxApi.SetCookieCallback.cfx_set_cookie_callback_ctor) {}
 
         /// <summary>

@@ -277,7 +277,6 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
-        internal CfxRenderProcessHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxRenderProcessHandler() : base(CfxApi.RenderProcessHandler.cfx_render_process_handler_ctor) {}
 
         /// <summary>

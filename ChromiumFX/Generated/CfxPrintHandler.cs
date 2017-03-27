@@ -150,7 +150,6 @@ namespace Chromium {
             __retval = CfxSize.Unwrap(e.m_returnValue);
         }
 
-        internal CfxPrintHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxPrintHandler() : base(CfxApi.PrintHandler.cfx_print_handler_ctor) {}
 
         /// <summary>

@@ -74,7 +74,6 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
-        internal CfxKeyboardHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxKeyboardHandler() : base(CfxApi.KeyboardHandler.cfx_keyboard_handler_ctor) {}
 
         /// <summary>

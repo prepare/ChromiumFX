@@ -128,7 +128,6 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
-        internal CfxWriteHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxWriteHandler() : base(CfxApi.WriteHandler.cfx_write_handler_ctor) {}
 
         /// <summary>

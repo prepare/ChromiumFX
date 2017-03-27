@@ -127,7 +127,6 @@ namespace Chromium {
             __retval = CfxRenderProcessHandler.Unwrap(e.m_returnValue);
         }
 
-        internal CfxApp(IntPtr nativePtr) : base(nativePtr) {}
         public CfxApp() : base(CfxApi.App.cfx_app_ctor) {}
 
         /// <summary>

@@ -119,7 +119,6 @@ namespace Chromium {
             browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
-        internal CfxLifeSpanHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxLifeSpanHandler() : base(CfxApi.LifeSpanHandler.cfx_life_span_handler_ctor) {}
 
         /// <summary>

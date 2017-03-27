@@ -207,7 +207,9 @@ public class CfxClientClass : CfxClass {
             b.AppendLine();
         }
 
-        b.AppendLine("internal {0}(IntPtr nativePtr) : base(nativePtr) {{}}", ClassName);
+        if(NeedsWrapFunction) {
+            b.AppendLine("internal {0}(IntPtr nativePtr) : base(nativePtr) {{}}", ClassName);
+        }
         b.AppendLine("public {0}() : base(CfxApi.{1}.{2}_ctor) {{}}", ClassName, ApiClassName, CfxName);
         b.AppendLine();
 

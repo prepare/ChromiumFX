@@ -46,7 +46,6 @@ namespace Chromium {
             e.m_isInvalid = true;
         }
 
-        internal CfxRunFileDialogCallback(IntPtr nativePtr) : base(nativePtr) {}
         public CfxRunFileDialogCallback() : base(CfxApi.RunFileDialogCallback.cfx_run_file_dialog_callback_ctor) {}
 
         /// <summary>

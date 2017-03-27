@@ -50,7 +50,6 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
-        internal CfxNavigationEntryVisitor(IntPtr nativePtr) : base(nativePtr) {}
         public CfxNavigationEntryVisitor() : base(CfxApi.NavigationEntryVisitor.cfx_navigation_entry_visitor_ctor) {}
 
         /// <summary>

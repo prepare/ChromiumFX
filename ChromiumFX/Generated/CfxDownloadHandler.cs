@@ -76,7 +76,6 @@ namespace Chromium {
             callback_release = e.m_callback_wrapped == null? 1 : 0;
         }
 
-        internal CfxDownloadHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxDownloadHandler() : base(CfxApi.DownloadHandler.cfx_download_handler_ctor) {}
 
         /// <summary>

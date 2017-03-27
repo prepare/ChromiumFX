@@ -72,7 +72,6 @@ namespace Chromium {
             __retval = (int)e.m_returnValue;
         }
 
-        internal CfxResponseFilter(IntPtr nativePtr) : base(nativePtr) {}
         public CfxResponseFilter() : base(CfxApi.ResponseFilter.cfx_response_filter_ctor) {}
 
         /// <summary>

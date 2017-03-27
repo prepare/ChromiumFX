@@ -48,7 +48,6 @@ namespace Chromium {
             image_release = e.m_image_wrapped == null? 1 : 0;
         }
 
-        internal CfxDownloadImageCallback(IntPtr nativePtr) : base(nativePtr) {}
         public CfxDownloadImageCallback() : base(CfxApi.DownloadImageCallback.cfx_download_image_callback_ctor) {}
 
         /// <summary>

@@ -45,7 +45,6 @@ namespace Chromium {
             e.m_isInvalid = true;
         }
 
-        internal CfxStringVisitor(IntPtr nativePtr) : base(nativePtr) {}
         public CfxStringVisitor() : base(CfxApi.StringVisitor.cfx_string_visitor_ctor) {}
 
         /// <summary>

@@ -55,7 +55,6 @@ namespace Chromium {
             __retval = CfxResourceHandler.Unwrap(e.m_returnValue);
         }
 
-        internal CfxSchemeHandlerFactory(IntPtr nativePtr) : base(nativePtr) {}
         public CfxSchemeHandlerFactory() : base(CfxApi.SchemeHandlerFactory.cfx_scheme_handler_factory_ctor) {}
 
         /// <summary>

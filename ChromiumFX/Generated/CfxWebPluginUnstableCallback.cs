@@ -46,7 +46,6 @@ namespace Chromium {
             e.m_isInvalid = true;
         }
 
-        internal CfxWebPluginUnstableCallback(IntPtr nativePtr) : base(nativePtr) {}
         public CfxWebPluginUnstableCallback() : base(CfxApi.WebPluginUnstableCallback.cfx_web_plugin_unstable_callback_ctor) {}
 
         /// <summary>

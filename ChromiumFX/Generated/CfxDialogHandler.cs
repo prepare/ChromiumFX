@@ -52,7 +52,6 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
-        internal CfxDialogHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxDialogHandler() : base(CfxApi.DialogHandler.cfx_dialog_handler_ctor) {}
 
         /// <summary>

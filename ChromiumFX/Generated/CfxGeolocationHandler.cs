@@ -73,7 +73,6 @@ namespace Chromium {
             browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
-        internal CfxGeolocationHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxGeolocationHandler() : base(CfxApi.GeolocationHandler.cfx_geolocation_handler_ctor) {}
 
         /// <summary>

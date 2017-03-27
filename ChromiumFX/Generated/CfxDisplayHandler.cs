@@ -179,7 +179,6 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
-        internal CfxDisplayHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxDisplayHandler() : base(CfxApi.DisplayHandler.cfx_display_handler_ctor) {}
 
         /// <summary>

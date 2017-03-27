@@ -46,7 +46,6 @@ namespace Chromium {
             e.m_isInvalid = true;
         }
 
-        internal CfxPdfPrintCallback(IntPtr nativePtr) : base(nativePtr) {}
         public CfxPdfPrintCallback() : base(CfxApi.PdfPrintCallback.cfx_pdf_print_callback_ctor) {}
 
         /// <summary>

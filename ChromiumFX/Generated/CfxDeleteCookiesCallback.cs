@@ -46,7 +46,6 @@ namespace Chromium {
             e.m_isInvalid = true;
         }
 
-        internal CfxDeleteCookiesCallback(IntPtr nativePtr) : base(nativePtr) {}
         public CfxDeleteCookiesCallback() : base(CfxApi.DeleteCookiesCallback.cfx_delete_cookies_callback_ctor) {}
 
         /// <summary>

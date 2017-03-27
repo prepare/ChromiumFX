@@ -46,7 +46,6 @@ namespace Chromium {
             e.m_isInvalid = true;
         }
 
-        internal CfxGetGeolocationCallback(IntPtr nativePtr) : base(nativePtr) {}
         public CfxGetGeolocationCallback() : base(CfxApi.GetGeolocationCallback.cfx_get_geolocation_callback_ctor) {}
 
         /// <summary>

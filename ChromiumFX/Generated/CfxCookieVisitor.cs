@@ -50,7 +50,6 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
-        internal CfxCookieVisitor(IntPtr nativePtr) : base(nativePtr) {}
         public CfxCookieVisitor() : base(CfxApi.CookieVisitor.cfx_cookie_visitor_ctor) {}
 
         /// <summary>

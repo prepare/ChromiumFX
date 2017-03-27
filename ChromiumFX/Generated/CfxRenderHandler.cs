@@ -294,7 +294,6 @@ namespace Chromium {
             }
         }
 
-        internal CfxRenderHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxRenderHandler() : base(CfxApi.RenderHandler.cfx_render_handler_ctor) {}
 
         /// <summary>

@@ -47,7 +47,6 @@ namespace Chromium {
             e.m_isInvalid = true;
         }
 
-        internal CfxEndTracingCallback(IntPtr nativePtr) : base(nativePtr) {}
         public CfxEndTracingCallback() : base(CfxApi.EndTracingCallback.cfx_end_tracing_callback_ctor) {}
 
         /// <summary>

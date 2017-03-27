@@ -48,7 +48,6 @@ namespace Chromium {
             document_release = e.m_document_wrapped == null? 1 : 0;
         }
 
-        internal CfxDomVisitor(IntPtr nativePtr) : base(nativePtr) {}
         public CfxDomVisitor() : base(CfxApi.DomVisitor.cfx_domvisitor_ctor) {}
 
         /// <summary>

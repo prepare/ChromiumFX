@@ -125,7 +125,6 @@ namespace Chromium {
             e.m_isInvalid = true;
         }
 
-        internal CfxBrowserProcessHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxBrowserProcessHandler() : base(CfxApi.BrowserProcessHandler.cfx_browser_process_handler_ctor) {}
 
         /// <summary>

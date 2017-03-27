@@ -48,7 +48,6 @@ namespace Chromium {
             browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
-        internal CfxFindHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxFindHandler() : base(CfxApi.FindHandler.cfx_find_handler_ctor) {}
 
         /// <summary>

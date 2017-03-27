@@ -77,7 +77,6 @@ namespace Chromium {
             }
         }
 
-        internal CfxDragHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxDragHandler() : base(CfxApi.DragHandler.cfx_drag_handler_ctor) {}
 
         /// <summary>

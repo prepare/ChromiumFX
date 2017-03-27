@@ -90,7 +90,6 @@ namespace Chromium {
             browser_release = e.m_browser_wrapped == null? 1 : 0;
         }
 
-        internal CfxFocusHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxFocusHandler() : base(CfxApi.FocusHandler.cfx_focus_handler_ctor) {}
 
         /// <summary>

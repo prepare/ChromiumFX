@@ -50,7 +50,6 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
-        internal CfxWebPluginInfoVisitor(IntPtr nativePtr) : base(nativePtr) {}
         public CfxWebPluginInfoVisitor() : base(CfxApi.WebPluginInfoVisitor.cfx_web_plugin_info_visitor_ctor) {}
 
         /// <summary>

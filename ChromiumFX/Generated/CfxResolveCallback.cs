@@ -45,7 +45,6 @@ namespace Chromium {
             e.m_isInvalid = true;
         }
 
-        internal CfxResolveCallback(IntPtr nativePtr) : base(nativePtr) {}
         public CfxResolveCallback() : base(CfxApi.ResolveCallback.cfx_resolve_callback_ctor) {}
 
         /// <summary>

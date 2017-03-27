@@ -50,7 +50,6 @@ namespace Chromium {
             e.m_isInvalid = true;
         }
 
-        internal CfxTask(IntPtr nativePtr) : base(nativePtr) {}
         public CfxTask() : base(CfxApi.Task.cfx_task_ctor) {}
 
         /// <summary>

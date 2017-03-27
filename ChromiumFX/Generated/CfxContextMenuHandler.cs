@@ -132,7 +132,6 @@ namespace Chromium {
             frame_release = e.m_frame_wrapped == null? 1 : 0;
         }
 
-        internal CfxContextMenuHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxContextMenuHandler() : base(CfxApi.ContextMenuHandler.cfx_context_menu_handler_ctor) {}
 
         /// <summary>

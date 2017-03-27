@@ -110,7 +110,6 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
-        internal CfxResourceBundleHandler(IntPtr nativePtr) : base(nativePtr) {}
         public CfxResourceBundleHandler() : base(CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_ctor) {}
 
         /// <summary>

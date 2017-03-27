@@ -176,7 +176,6 @@ namespace Chromium {
             __retval = e.m_returnValue ? 1 : 0;
         }
 
-        internal CfxMenuModelDelegate(IntPtr nativePtr) : base(nativePtr) {}
         public CfxMenuModelDelegate() : base(CfxApi.MenuModelDelegate.cfx_menu_model_delegate_ctor) {}
 
         /// <summary>
