@@ -847,8 +847,10 @@ namespace Chromium.WebBrowser {
                 return false;
             }
         }
-
+        
         private class VisitDomTask : CfrTask {
+
+            private static HashSet<VisitDomTask> tasks = new HashSet<VisitDomTask>();
 
             ChromiumWebBrowser wb;
             Action<CfrDomDocument, CfrBrowser> callback;
@@ -865,10 +867,12 @@ namespace Chromium.WebBrowser {
                     else
                         callback(e.Document, wb.remoteBrowser);
                 };
+                tasks.Add(this);
             }
 
             void Task_Execute(object sender, CfrEventArgs e) {
                 wb.remoteBrowser.MainFrame.VisitDom(visitor);
+                tasks.Remove(this);
             }
         }
 
