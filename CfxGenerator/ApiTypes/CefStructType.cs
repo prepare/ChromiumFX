@@ -119,7 +119,7 @@ public class CefStructType : CefType {
     public override void EmitNativeCallbackReturnStatements(CodeBuilder b) {
         b.AppendLine("{0} __retval_value = {{0}};", OriginalSymbol);
         b.AppendLine("if(__retval) __retval_value = *__retval;");
-        b.AppendLine("if(__retval_handle) cfx_gc_handle_free(__retval_handle);");
+        b.AppendLine("if(__retval_handle) cfx_gc_handle_switch(&__retval_handle, GC_HANDLE_FREE);");
         b.AppendLine("return __retval_value;");
     }
 

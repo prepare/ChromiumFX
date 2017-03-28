@@ -40,9 +40,9 @@ namespace Chromium {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
         public delegate IntPtr cfx_get_gc_handle_delegate(IntPtr nativePtr);
 
-        //CFX_EXPORT int cfx_api_initialize(void *libcef, void *gc_handle_free, void *set_native_reference, int *platform, int *cw_usedefault, void **release, void **string_get_ptr, void **string_destroy, void **get_function_pointer)
+        //CFX_EXPORT int cfx_api_initialize(void *libcef, void *gc_handle_switch, int *platform, int *cw_usedefault, void **release, void **string_get_ptr, void **string_destroy, void **get_function_pointer)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
-        public delegate int cfx_api_initialize_delegate(IntPtr libcef, IntPtr gc_handle_free, IntPtr set_native_reference, out int platform, out int cw_usedefault, out IntPtr release, out IntPtr string_get_ptr, out IntPtr string_destroy, out IntPtr get_function_pointer);
+        public delegate int cfx_api_initialize_delegate(IntPtr libcef, IntPtr gc_handle_switch, out int platform, out int cw_usedefault, out IntPtr release, out IntPtr string_get_ptr, out IntPtr string_destroy, out IntPtr get_function_pointer);
 
         //static int cfx_release(cef_base_t* base)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = false)]
@@ -71,23 +71,46 @@ namespace Chromium {
         public static cef_string_userfree_utf16_free_delegate cef_string_userfree_utf16_free;
 
 
-        //static void (CEF_CALLBACK *cfx_free_gc_handle)(gc_handle_t)
+        //static void (CEF_CALLBACK *cfx_gc_handle_switch)(gc_handle_t*, int)
         [UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
-        private delegate void cfx_gc_handle_free_delegate(IntPtr gc_handle);
-        private static cfx_gc_handle_free_delegate cfx_gc_handle_free;
+        private delegate void cfx_gc_handle_switch_delegate(ref IntPtr gc_handle, gc_handle_switch_mode mode);
+        private static cfx_gc_handle_switch_delegate cfx_gc_handle_switch;
 
-        //static void (CEF_CALLBACK *cfx_free_gc_handle_remote)(gc_handle_t)
-        private static cfx_gc_handle_free_delegate cfx_gc_handle_free_remote;
-
-        internal static void FreeGcHandle(IntPtr gc_handle) {
-            var h = GCHandle.FromIntPtr(gc_handle);
-            h.Free();
+        [Flags]
+        internal enum gc_handle_switch_mode {
+            GC_HANDLE_FREE = 0,
+            GC_HANDLE_UPGRADE = 1,
+            GC_HANDLE_DOWNGRADE = 2,
+            GC_HANDLE_REMOTE = 4
         }
 
-        internal static void FreeRemoteGcHandle(IntPtr gc_handle) {
-            var call = new FreeGCHandleRemoteCall();
-            call.gc_handle = gc_handle;
-            call.RequestExecution(RemoteClient.connection);
+        internal static void SwitchGcHandle(ref IntPtr gc_handle, gc_handle_switch_mode mode) {
+
+            if((mode & gc_handle_switch_mode.GC_HANDLE_REMOTE) != 0) {
+                var call = new SwitchGcHandleRemoteCall();
+                call.gc_handle = gc_handle;
+                call.mode = (int)mode - 4;
+                call.RequestExecution(RemoteClient.connection);
+                return;
+            }
+
+            var h = GCHandle.FromIntPtr(gc_handle);
+            if(mode == gc_handle_switch_mode.GC_HANDLE_FREE) {
+                h.Free();
+                return;
+            }
+
+            var t = h.Target;
+            if(t == null) {
+                // handle is weak, and target is gone
+                // nothing to do here
+                return;
+            }
+
+            // downgrade to weak or upgrade to strong
+            var h1 = GCHandle.Alloc(h.Target, mode == gc_handle_switch_mode.GC_HANDLE_DOWNGRADE ? GCHandleType.Weak : GCHandleType.Normal);
+            gc_handle = GCHandle.ToIntPtr(h1);
+            h.Free();
         }
 
         private static object loadLock = new object();
@@ -127,8 +150,7 @@ namespace Chromium {
                 throw new CfxException("Unable to load libcfx library " + libcfxPath);
             }
 
-            cfx_gc_handle_free = FreeGcHandle;
-            cfx_gc_handle_free_remote = FreeRemoteGcHandle;
+            cfx_gc_handle_switch = SwitchGcHandle;
 
             int platform;
             IntPtr release;
@@ -139,8 +161,7 @@ namespace Chromium {
             cfx_api_initialize_delegate api_initialize = (cfx_api_initialize_delegate)LoadDelegate(loader, libcfxPtr, "cfx_api_initialize", typeof(cfx_api_initialize_delegate));
             int retval = api_initialize(
                 libcefPtr,
-                Marshal.GetFunctionPointerForDelegate(cfx_gc_handle_free),
-                Marshal.GetFunctionPointerForDelegate(cfx_gc_handle_free_remote),
+                Marshal.GetFunctionPointerForDelegate(cfx_gc_handle_switch),
                 out platform,
                 out CW_USEDEFAULT,
                 out release,

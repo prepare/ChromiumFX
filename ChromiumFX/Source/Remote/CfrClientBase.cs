@@ -5,6 +5,7 @@
 // of the BSD license. See the License.txt file for details.
 
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace Chromium.Remote {
@@ -13,12 +14,14 @@ namespace Chromium.Remote {
     /// </summary>
     public abstract class CfrClientBase : CfrBase {
 
+        static int cfrTaskCount;
+
         internal CfrClientBase(CtorWithGCHandleRemoteCall call) {
-            System.Runtime.InteropServices.GCHandle handle =
-                System.Runtime.InteropServices.GCHandle.Alloc(this, System.Runtime.InteropServices.GCHandleType.Weak);
-            call.gcHandlePtr = System.Runtime.InteropServices.GCHandle.ToIntPtr(handle);
+            GCHandle handle = GCHandle.Alloc(this, GCHandleType.Weak);
+            call.gcHandlePtr = GCHandle.ToIntPtr(handle);
             call.RequestExecution();
             SetRemotePtr(new RemotePtr(call.__retval));
+            if(this is CfrTask) Debug.Print("CfrTask created: " + (++cfrTaskCount));
         }
 
         internal CfrClientBase(RemotePtr remotePtr) : base(remotePtr) { }
@@ -29,26 +32,38 @@ namespace Chromium.Remote {
         public bool CallbacksDisabled { get; set; }
 
         internal sealed override void OnDispose(RemotePtr nativePtr) {
+            if(this is CfrTask) Debug.Print("CfrTask disposed: " + (--cfrTaskCount));
             CallbacksDisabled = true;
             base.OnDispose(nativePtr);
         }
     }
 
-    internal class FreeGCHandleRemoteCall : RemoteCall {
+    internal class SwitchGcHandleRemoteCall : RemoteCall {
         internal IntPtr gc_handle;
-        internal FreeGCHandleRemoteCall() : base(RemoteCallId.FreeGCHandleRemoteCall, true) { }
+        internal int mode;
+        internal SwitchGcHandleRemoteCall() : base(RemoteCallId.SwitchGcHandleRemoteCall, true) { }
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(gc_handle);
+            h.Write((int)mode);
         }
 
         protected override void ReadArgs(StreamHandler h) {
             h.Read(out gc_handle);
+            h.Read(out mode);
+        }
+
+        protected override void WriteReturn(StreamHandler h) {
+            h.Write(gc_handle);
+        }
+
+        protected override void ReadReturn(StreamHandler h) {
+            h.Read(out gc_handle);
         }
 
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
-            var h = GCHandle.FromIntPtr(gc_handle);
-            h.Free();
+            Debug.Assert((mode & (int)CfxApi.gc_handle_switch_mode.GC_HANDLE_REMOTE) == 0);
+            CfxApi.SwitchGcHandle(ref gc_handle, (CfxApi.gc_handle_switch_mode)mode);
         }
     }
 }

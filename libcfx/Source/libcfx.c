@@ -33,9 +33,14 @@ static int (*cef_string_utf16_set_ptr)(const char16* src, size_t src_len,	cef_st
 #define cef_string_utf16_set cef_string_utf16_set_ptr
 
 typedef void* gc_handle_t;
-static void (CEF_CALLBACK *cfx_gc_handle_free)(gc_handle_t);
-static void (CEF_CALLBACK *cfx_gc_handle_free_remote)(gc_handle_t);
+static void (CEF_CALLBACK *cfx_gc_handle_switch)(gc_handle_t*, int);
 
+enum {
+    GC_HANDLE_FREE = 0,
+    GC_HANDLE_UPGRADE = 1,
+    GC_HANDLE_DOWNGRADE = 2,
+    GC_HANDLE_REMOTE = 4
+};
 
 static __inline void* cfx_copy_structure(void* source, size_t size) {
 	if(!source) return 0;
@@ -66,7 +71,7 @@ static void* cfx_get_function_pointer(int index) {
 	return cfx_function_pointers[index];
 }
 
-CFX_EXPORT int cfx_api_initialize(void *libcef, void *gc_handle_free, void *gc_handle_free_remote, int *platform, int *cw_usedefault, void **release, void **string_get_ptr, void **string_destroy, void **get_function_pointer) {
+CFX_EXPORT int cfx_api_initialize(void *libcef, void *gc_handle_switch, int *platform, int *cw_usedefault, void **release, void **string_get_ptr, void **string_destroy, void **get_function_pointer) {
 
 	cef_api_hash_ptr = (const char* (*)(int))cfx_platform_get_fptr(libcef, "cef_api_hash");
 	if(!cef_api_hash_ptr)
@@ -87,8 +92,7 @@ CFX_EXPORT int cfx_api_initialize(void *libcef, void *gc_handle_free, void *gc_h
 	*cw_usedefault = 0;
 #endif
 
-	cfx_gc_handle_free = (void(CEF_CALLBACK *)(gc_handle_t))gc_handle_free;
-    cfx_gc_handle_free_remote = (void(CEF_CALLBACK *)(gc_handle_t))gc_handle_free_remote;
+    cfx_gc_handle_switch = (void(CEF_CALLBACK *)(gc_handle_t*, int))gc_handle_switch;
     *release = (void*)cfx_release;
 	*string_get_ptr = (void*)cfx_string_get_ptr;
 	*string_destroy = (void*)cfx_string_destroy;

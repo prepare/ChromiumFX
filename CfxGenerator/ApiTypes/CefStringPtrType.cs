@@ -87,7 +87,7 @@ public class CefStringPtrType : ApiType {
         b.BeginBlock("if({0}_tmp_str != {0}->str)", var);
         b.AppendLine("if({0}->dtor) {0}->dtor({0}->str);", var);
         b.AppendLine("cef_string_set({0}_tmp_str, {0}_tmp_length, {0}, 1);", var);
-        b.AppendLine("cfx_gc_handle_free((gc_handle_t){0}_tmp_str);", var);
+        b.AppendLine("cfx_gc_handle_switch(&(gc_handle_t){0}_tmp_str, GC_HANDLE_FREE);", var);
         b.EndBlock();
     }
 

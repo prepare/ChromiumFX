@@ -47,9 +47,9 @@ public class CfxClientClass : CfxClass {
         b.AppendLine("int count = InterlockedDecrement(&(({0}*)base)->ref_count);", CfxNativeSymbol);
         b.BeginIf("count == 0");
         b.BeginIf("(({0}*)base)->wrapper_kind == 0", CfxNativeSymbol);
-        b.AppendLine("cfx_gc_handle_free((({0}*)base)->gc_handle);", CfxNativeSymbol);
+        b.AppendLine("cfx_gc_handle_switch(&(({0}*)base)->gc_handle, GC_HANDLE_FREE);", CfxNativeSymbol);
         b.BeginElse();
-        b.AppendLine("cfx_gc_handle_free_remote((({0}*)base)->gc_handle);", CfxNativeSymbol);
+        b.AppendLine("cfx_gc_handle_switch(&(({0}*)base)->gc_handle, GC_HANDLE_FREE | GC_HANDLE_REMOTE);", CfxNativeSymbol);
         b.EndBlock();
         b.AppendLine("free(base);");
         b.AppendLine("return 1;");

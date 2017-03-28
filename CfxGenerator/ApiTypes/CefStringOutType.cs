@@ -87,7 +87,7 @@ public class CefStringOutType : CefStringPtrType {
     public override void EmitPostNativeCallbackStatements(CodeBuilder b, string var) {
         b.BeginIf("{0}_tmp_length > 0", var);
         b.AppendLine("cef_string_set({0}_tmp_str, {0}_tmp_length, {0}, 1);", var);
-        b.AppendLine("cfx_gc_handle_free({0}_gc_handle);", var);
+        b.AppendLine("cfx_gc_handle_switch(&{0}_gc_handle, GC_HANDLE_FREE);", var);
         b.EndBlock();
     }
 

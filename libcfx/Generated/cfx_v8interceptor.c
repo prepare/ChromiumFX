@@ -28,9 +28,9 @@ int CEF_CALLBACK _cfx_v8interceptor_release(struct _cef_base_ref_counted_t* base
     int count = InterlockedDecrement(&((cfx_v8interceptor_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_v8interceptor_t*)base)->wrapper_kind == 0) {
-            cfx_gc_handle_free(((cfx_v8interceptor_t*)base)->gc_handle);
+            cfx_gc_handle_switch(&((cfx_v8interceptor_t*)base)->gc_handle, GC_HANDLE_FREE);
         } else {
-            cfx_gc_handle_free_remote(((cfx_v8interceptor_t*)base)->gc_handle);
+            cfx_gc_handle_switch(&((cfx_v8interceptor_t*)base)->gc_handle, GC_HANDLE_FREE | GC_HANDLE_REMOTE);
         }
         free(base);
         return 1;
@@ -65,7 +65,7 @@ int CEF_CALLBACK cfx_v8interceptor_get_byname(cef_v8interceptor_t* self, const c
     if(*retval)((cef_base_ref_counted_t*)*retval)->add_ref((cef_base_ref_counted_t*)*retval);
     if(exception_tmp_length > 0) {
         cef_string_set(exception_tmp_str, exception_tmp_length, exception, 1);
-        cfx_gc_handle_free(exception_gc_handle);
+        cfx_gc_handle_switch(&exception_gc_handle, GC_HANDLE_FREE);
     }
     return __retval;
 }
@@ -81,7 +81,7 @@ int CEF_CALLBACK cfx_v8interceptor_get_byindex(cef_v8interceptor_t* self, int in
     if(*retval)((cef_base_ref_counted_t*)*retval)->add_ref((cef_base_ref_counted_t*)*retval);
     if(exception_tmp_length > 0) {
         cef_string_set(exception_tmp_str, exception_tmp_length, exception, 1);
-        cfx_gc_handle_free(exception_gc_handle);
+        cfx_gc_handle_switch(&exception_gc_handle, GC_HANDLE_FREE);
     }
     return __retval;
 }
@@ -98,7 +98,7 @@ int CEF_CALLBACK cfx_v8interceptor_set_byname(cef_v8interceptor_t* self, const c
     if(value_release) value->base.release((cef_base_ref_counted_t*)value);
     if(exception_tmp_length > 0) {
         cef_string_set(exception_tmp_str, exception_tmp_length, exception, 1);
-        cfx_gc_handle_free(exception_gc_handle);
+        cfx_gc_handle_switch(&exception_gc_handle, GC_HANDLE_FREE);
     }
     return __retval;
 }
@@ -115,7 +115,7 @@ int CEF_CALLBACK cfx_v8interceptor_set_byindex(cef_v8interceptor_t* self, int in
     if(value_release) value->base.release((cef_base_ref_counted_t*)value);
     if(exception_tmp_length > 0) {
         cef_string_set(exception_tmp_str, exception_tmp_length, exception, 1);
-        cfx_gc_handle_free(exception_gc_handle);
+        cfx_gc_handle_switch(&exception_gc_handle, GC_HANDLE_FREE);
     }
     return __retval;
 }

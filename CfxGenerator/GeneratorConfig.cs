@@ -11,6 +11,13 @@ using System.Text.RegularExpressions;
 
 public class GeneratorConfig {
 
+
+    private static string[] strongHandleClients = { "cef_task" };
+
+    public static bool UseStrongHandleFor(string client) {
+        return strongHandleClients.Contains(client);
+    }
+
     public static bool CreateRemoteProxy(string item) {
         return !(IsBrowserProcessOnly(item) || HasPrivateWrapper(item));
     }

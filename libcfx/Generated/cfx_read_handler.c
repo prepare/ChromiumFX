@@ -29,9 +29,9 @@ int CEF_CALLBACK _cfx_read_handler_release(struct _cef_base_ref_counted_t* base)
     int count = InterlockedDecrement(&((cfx_read_handler_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_read_handler_t*)base)->wrapper_kind == 0) {
-            cfx_gc_handle_free(((cfx_read_handler_t*)base)->gc_handle);
+            cfx_gc_handle_switch(&((cfx_read_handler_t*)base)->gc_handle, GC_HANDLE_FREE);
         } else {
-            cfx_gc_handle_free_remote(((cfx_read_handler_t*)base)->gc_handle);
+            cfx_gc_handle_switch(&((cfx_read_handler_t*)base)->gc_handle, GC_HANDLE_FREE | GC_HANDLE_REMOTE);
         }
         free(base);
         return 1;

@@ -31,9 +31,9 @@ int CEF_CALLBACK _cfx_menu_model_delegate_release(struct _cef_base_ref_counted_t
     int count = InterlockedDecrement(&((cfx_menu_model_delegate_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_menu_model_delegate_t*)base)->wrapper_kind == 0) {
-            cfx_gc_handle_free(((cfx_menu_model_delegate_t*)base)->gc_handle);
+            cfx_gc_handle_switch(&((cfx_menu_model_delegate_t*)base)->gc_handle, GC_HANDLE_FREE);
         } else {
-            cfx_gc_handle_free_remote(((cfx_menu_model_delegate_t*)base)->gc_handle);
+            cfx_gc_handle_switch(&((cfx_menu_model_delegate_t*)base)->gc_handle, GC_HANDLE_FREE | GC_HANDLE_REMOTE);
         }
         free(base);
         return 1;
@@ -116,7 +116,7 @@ int CEF_CALLBACK cfx_menu_model_delegate_format_label(cef_menu_model_delegate_t*
     if(label_tmp_str != label->str) {
         if(label->dtor) label->dtor(label->str);
         cef_string_set(label_tmp_str, label_tmp_length, label, 1);
-        cfx_gc_handle_free((gc_handle_t)label_tmp_str);
+        cfx_gc_handle_switch(&(gc_handle_t)label_tmp_str, GC_HANDLE_FREE);
     }
     return __retval;
 }

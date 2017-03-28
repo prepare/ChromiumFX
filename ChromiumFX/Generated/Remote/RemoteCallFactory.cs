@@ -553,7 +553,7 @@ namespace Chromium.Remote {
             () => { return new CfxZipReaderReadFileRemoteCall(); },
             () => { return new CfxZipReaderTellRemoteCall(); },
             () => { return new ExecuteProcessRemoteCall(); },
-            () => { return new FreeGCHandleRemoteCall(); },
+            () => { return new SwitchGcHandleRemoteCall(); },
         } ;
 
         internal static RemoteCall ForCallId(RemoteCallId id) {

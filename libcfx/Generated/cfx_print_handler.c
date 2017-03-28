@@ -30,9 +30,9 @@ int CEF_CALLBACK _cfx_print_handler_release(struct _cef_base_ref_counted_t* base
     int count = InterlockedDecrement(&((cfx_print_handler_t*)base)->ref_count);
     if(count == 0) {
         if(((cfx_print_handler_t*)base)->wrapper_kind == 0) {
-            cfx_gc_handle_free(((cfx_print_handler_t*)base)->gc_handle);
+            cfx_gc_handle_switch(&((cfx_print_handler_t*)base)->gc_handle, GC_HANDLE_FREE);
         } else {
-            cfx_gc_handle_free_remote(((cfx_print_handler_t*)base)->gc_handle);
+            cfx_gc_handle_switch(&((cfx_print_handler_t*)base)->gc_handle, GC_HANDLE_FREE | GC_HANDLE_REMOTE);
         }
         free(base);
         return 1;
@@ -106,7 +106,7 @@ cef_size_t CEF_CALLBACK cfx_print_handler_get_pdf_paper_size(cef_print_handler_t
     ((cfx_print_handler_t*)self)->get_pdf_paper_size(((cfx_print_handler_t*)self)->gc_handle, &__retval, &__retval_handle, device_units_per_inch);
     cef_size_t __retval_value = {0};
     if(__retval) __retval_value = *__retval;
-    if(__retval_handle) cfx_gc_handle_free(__retval_handle);
+    if(__retval_handle) cfx_gc_handle_switch(&__retval_handle, GC_HANDLE_FREE);
     return __retval_value;
 }
 
