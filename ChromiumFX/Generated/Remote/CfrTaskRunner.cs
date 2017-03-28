@@ -26,8 +26,6 @@ namespace Chromium.Remote {
     /// </remarks>
     public class CfrTaskRunner : CfrLibraryBase {
 
-        internal static readonly System.Collections.Generic.HashSet<CfrTask> runningTasks = new System.Collections.Generic.HashSet<CfrTask>();
-
         internal static CfrTaskRunner Wrap(RemotePtr remotePtr) {
             if(remotePtr == RemotePtr.Zero) return null;
             var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
@@ -122,8 +120,6 @@ namespace Chromium.Remote {
         /// <summary>
         /// Post a task for execution on the thread associated with this task runner.
         /// Execution will occur asynchronously.
-        /// ChromiumFX specific notes:
-        /// The submitted task is kept alive internally until execution.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -133,10 +129,7 @@ namespace Chromium.Remote {
             var call = new CfxTaskRunnerPostTaskRemoteCall();
             call.@this = RemotePtr.ptr;
             call.task = CfrObject.Unwrap(task).ptr;
-            lock(runningTasks) {
-                call.RequestExecution(RemotePtr.connection);
-                if(call.__retval) runningTasks.Add(task);
-            }
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
 
@@ -145,8 +138,6 @@ namespace Chromium.Remote {
         /// runner. Execution will occur asynchronously. Delayed tasks are not
         /// supported on V8 WebWorker threads and will be executed without the
         /// specified delay.
-        /// ChromiumFX specific notes:
-        /// The submitted task is kept alive internally until execution.
         /// </summary>
         /// <remarks>
         /// See also the original CEF documentation in
@@ -157,10 +148,7 @@ namespace Chromium.Remote {
             call.@this = RemotePtr.ptr;
             call.task = CfrObject.Unwrap(task).ptr;
             call.delayMs = delayMs;
-            lock(runningTasks) {
-                call.RequestExecution(RemotePtr.connection);
-                if(call.__retval) runningTasks.Add(task);
-            }
+            call.RequestExecution(RemotePtr.connection);
             return call.__retval;
         }
     }

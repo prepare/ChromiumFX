@@ -273,19 +273,11 @@ public class Signature {
             ManagedParameters[i].EmitPrePublicCallStatements(b);
         }
 
-        if(apiFunctionName == "cfx_task_runner_post_task" || apiFunctionName == "cfx_task_runner_post_delayed_task") {
-            b.BeginBlock("lock(runningTasks)");
-        }
-
         var b1 = new CodeBuilder(b.CurrentIndent);
         for(var i = 0; i <= ManagedParameters.Length - 1; i++) {
             ManagedParameters[i].EmitPostPublicStatements(b1);
         }
         ReturnType.EmitPublicCallProcessReturnValueStatements(b1);
-
-        if(apiFunctionName == "cfx_task_runner_post_task" || apiFunctionName == "cfx_task_runner_post_delayed_task") {
-            b1.AppendLine("if(0 != __retval) runningTasks.Add(task);");
-        }
 
         if(PublicReturnType.IsVoid) {
             b.AppendLine(apiCall + ";");
@@ -298,10 +290,6 @@ public class Signature {
             } else {
                 b.AppendLine("return {0};", PublicReturnType.PublicReturnExpression(apiCall));
             }
-        }
-
-        if(apiFunctionName == "cfx_task_runner_post_task" || apiFunctionName == "cfx_task_runner_post_delayed_task") {
-            b.EndBlock();
         }
     }
 
@@ -352,26 +340,16 @@ public class Signature {
                 arg.EmitPreRemoteCallStatements(b);
             }
         }
-
-        if(remoteCallId == "CfxTaskRunnerPostTaskRemoteCall" || remoteCallId == "CfxTaskRunnerPostDelayedTaskRemoteCall") {
-            b.BeginBlock("lock(runningTasks)");
-        }
-
+        
         if(isStatic)
             b.AppendLine("call.RequestExecution();");
         else
             b.AppendLine("call.RequestExecution(RemotePtr.connection);");
 
-        if(remoteCallId == "CfxTaskRunnerPostTaskRemoteCall" || remoteCallId == "CfxTaskRunnerPostDelayedTaskRemoteCall") {
-            b.AppendLine("if(call.__retval) runningTasks.Add(task);");
-            b.EndBlock();
-        }
-
         foreach(var arg in ManagedParameters) {
             arg.EmitPostRemoteCallStatements(b);
         }
         ReturnType.EmitRemoteCallProcessReturnValueStatements(b);
-
 
         if(!PublicReturnType.IsVoid) {
             b.AppendLine("return {0};", ReturnType.RemoteWrapExpression("call.__retval"));
