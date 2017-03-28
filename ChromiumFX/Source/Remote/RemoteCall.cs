@@ -35,11 +35,17 @@ namespace Chromium.Remote {
 
 
         internal void RequestExecution() {
-            RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
+            // in a render process, call on the render process' connection
+            // in the browser process, try to get a connection from 
+            // remote context (will throw CfxException if no context exists)
+            if(RemoteClient.connection != null)
+                RequestExecution(RemoteClient.connection);
+            else
+                RequestExecution(CfxRemoteCallContext.CurrentContext.connection);
         }
 
         internal void RequestExecution(RemoteConnection connection) {
-            
+
             if(CfxRemoteCallContext.IsInContext && CfxRemoteCallContext.CurrentContext.connection != connection) {
                 // The thread is in a remote call context, but the requestor wants to call
                 // on another connection. This can happen if a CfrObject method from one connection
@@ -79,7 +85,7 @@ namespace Chromium.Remote {
 
                 connection.Write(WriteRequest);
 
-                for(; ; ) {
+                for(;;) {
 
                     if(responseReceived) {
                         Debug.Assert(reentryCall == null);
@@ -138,7 +144,7 @@ namespace Chromium.Remote {
                 var call = connection.callStack.Peek(localThreadId);
                 lock(call.waitLock) {
                     call.reentryCall = this;
-                    System.Threading.Monitor.PulseAll(call.waitLock);
+                    Monitor.PulseAll(call.waitLock);
                 }
             } else {
                 WorkerPool.EnqueueTask(() => ExecutionThreadEntry(connection));
