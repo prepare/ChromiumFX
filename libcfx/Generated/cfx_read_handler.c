@@ -55,10 +55,6 @@ static cfx_read_handler_t* cfx_read_handler_ctor(gc_handle_t gc_handle, int wrap
     return ptr;
 }
 
-static gc_handle_t cfx_read_handler_get_gc_handle(cfx_read_handler_t* self) {
-    return self->gc_handle;
-}
-
 // read
 
 size_t CEF_CALLBACK cfx_read_handler_read(cef_read_handler_t* self, void* ptr, size_t size, size_t n) {

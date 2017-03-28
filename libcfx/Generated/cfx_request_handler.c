@@ -66,10 +66,6 @@ static cfx_request_handler_t* cfx_request_handler_ctor(gc_handle_t gc_handle, in
     return ptr;
 }
 
-static gc_handle_t cfx_request_handler_get_gc_handle(cfx_request_handler_t* self) {
-    return self->gc_handle;
-}
-
 // on_before_browse
 
 int CEF_CALLBACK cfx_request_handler_on_before_browse(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int is_redirect) {

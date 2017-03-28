@@ -55,10 +55,6 @@ static cfx_app_t* cfx_app_ctor(gc_handle_t gc_handle, int wrapper_kind) {
     return ptr;
 }
 
-static gc_handle_t cfx_app_get_gc_handle(cfx_app_t* self) {
-    return self->gc_handle;
-}
-
 // on_before_command_line_processing
 
 void CEF_CALLBACK cfx_app_on_before_command_line_processing(cef_app_t* self, const cef_string_t* process_type, cef_command_line_t* command_line) {

@@ -54,10 +54,6 @@ static cfx_jsdialog_handler_t* cfx_jsdialog_handler_ctor(gc_handle_t gc_handle, 
     return ptr;
 }
 
-static gc_handle_t cfx_jsdialog_handler_get_gc_handle(cfx_jsdialog_handler_t* self) {
-    return self->gc_handle;
-}
-
 // on_jsdialog
 
 int CEF_CALLBACK cfx_jsdialog_handler_on_jsdialog(cef_jsdialog_handler_t* self, cef_browser_t* browser, const cef_string_t* origin_url, cef_jsdialog_type_t dialog_type, const cef_string_t* message_text, const cef_string_t* default_prompt_text, cef_jsdialog_callback_t* callback, int* suppress_message) {

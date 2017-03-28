@@ -51,10 +51,6 @@ static cfx_dialog_handler_t* cfx_dialog_handler_ctor(gc_handle_t gc_handle, int 
     return ptr;
 }
 
-static gc_handle_t cfx_dialog_handler_get_gc_handle(cfx_dialog_handler_t* self) {
-    return self->gc_handle;
-}
-
 // on_file_dialog
 
 int CEF_CALLBACK cfx_dialog_handler_on_file_dialog(cef_dialog_handler_t* self, cef_browser_t* browser, cef_file_dialog_mode_t mode, const cef_string_t* title, const cef_string_t* default_file_path, cef_string_list_t accept_filters, int selected_accept_filter, cef_file_dialog_callback_t* callback) {

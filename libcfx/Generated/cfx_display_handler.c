@@ -57,10 +57,6 @@ static cfx_display_handler_t* cfx_display_handler_ctor(gc_handle_t gc_handle, in
     return ptr;
 }
 
-static gc_handle_t cfx_display_handler_get_gc_handle(cfx_display_handler_t* self) {
-    return self->gc_handle;
-}
-
 // on_address_change
 
 void CEF_CALLBACK cfx_display_handler_on_address_change(cef_display_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, const cef_string_t* url) {

@@ -51,10 +51,6 @@ static cfx_web_plugin_unstable_callback_t* cfx_web_plugin_unstable_callback_ctor
     return ptr;
 }
 
-static gc_handle_t cfx_web_plugin_unstable_callback_get_gc_handle(cfx_web_plugin_unstable_callback_t* self) {
-    return self->gc_handle;
-}
-
 // is_unstable
 
 void CEF_CALLBACK cfx_web_plugin_unstable_callback_is_unstable(cef_web_plugin_unstable_callback_t* self, const cef_string_t* path, int unstable) {

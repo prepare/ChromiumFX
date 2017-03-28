@@ -51,10 +51,6 @@ static cfx_task_t* cfx_task_ctor(gc_handle_t gc_handle, int wrapper_kind) {
     return ptr;
 }
 
-static gc_handle_t cfx_task_get_gc_handle(cfx_task_t* self) {
-    return self->gc_handle;
-}
-
 // execute
 
 void CEF_CALLBACK cfx_task_execute(cef_task_t* self) {

@@ -51,10 +51,6 @@ static cfx_pdf_print_callback_t* cfx_pdf_print_callback_ctor(gc_handle_t gc_hand
     return ptr;
 }
 
-static gc_handle_t cfx_pdf_print_callback_get_gc_handle(cfx_pdf_print_callback_t* self) {
-    return self->gc_handle;
-}
-
 // on_pdf_print_finished
 
 void CEF_CALLBACK cfx_pdf_print_callback_on_pdf_print_finished(cef_pdf_print_callback_t* self, const cef_string_t* path, int ok) {

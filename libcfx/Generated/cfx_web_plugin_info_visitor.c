@@ -51,10 +51,6 @@ static cfx_web_plugin_info_visitor_t* cfx_web_plugin_info_visitor_ctor(gc_handle
     return ptr;
 }
 
-static gc_handle_t cfx_web_plugin_info_visitor_get_gc_handle(cfx_web_plugin_info_visitor_t* self) {
-    return self->gc_handle;
-}
-
 // visit
 
 int CEF_CALLBACK cfx_web_plugin_info_visitor_visit(cef_web_plugin_info_visitor_t* self, cef_web_plugin_info_t* info, int count, int total) {

@@ -51,10 +51,6 @@ static cfx_get_geolocation_callback_t* cfx_get_geolocation_callback_ctor(gc_hand
     return ptr;
 }
 
-static gc_handle_t cfx_get_geolocation_callback_get_gc_handle(cfx_get_geolocation_callback_t* self) {
-    return self->gc_handle;
-}
-
 // on_location_update
 
 void CEF_CALLBACK cfx_get_geolocation_callback_on_location_update(cef_get_geolocation_callback_t* self, const cef_geoposition_t* position) {

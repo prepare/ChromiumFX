@@ -51,10 +51,6 @@ static cfx_find_handler_t* cfx_find_handler_ctor(gc_handle_t gc_handle, int wrap
     return ptr;
 }
 
-static gc_handle_t cfx_find_handler_get_gc_handle(cfx_find_handler_t* self) {
-    return self->gc_handle;
-}
-
 // on_find_result
 
 void CEF_CALLBACK cfx_find_handler_on_find_result(cef_find_handler_t* self, cef_browser_t* browser, int identifier, int count, const cef_rect_t* selectionRect, int activeMatchOrdinal, int finalUpdate) {

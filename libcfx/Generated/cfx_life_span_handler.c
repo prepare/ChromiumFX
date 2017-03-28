@@ -54,10 +54,6 @@ static cfx_life_span_handler_t* cfx_life_span_handler_ctor(gc_handle_t gc_handle
     return ptr;
 }
 
-static gc_handle_t cfx_life_span_handler_get_gc_handle(cfx_life_span_handler_t* self) {
-    return self->gc_handle;
-}
-
 // on_before_popup
 
 int CEF_CALLBACK cfx_life_span_handler_on_before_popup(cef_life_span_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, const cef_string_t* target_url, const cef_string_t* target_frame_name, cef_window_open_disposition_t target_disposition, int user_gesture, const cef_popup_features_t* popupFeatures, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, int* no_javascript_access) {

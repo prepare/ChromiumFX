@@ -52,10 +52,6 @@ static cfx_drag_handler_t* cfx_drag_handler_ctor(gc_handle_t gc_handle, int wrap
     return ptr;
 }
 
-static gc_handle_t cfx_drag_handler_get_gc_handle(cfx_drag_handler_t* self) {
-    return self->gc_handle;
-}
-
 // on_drag_enter
 
 int CEF_CALLBACK cfx_drag_handler_on_drag_enter(cef_drag_handler_t* self, cef_browser_t* browser, cef_drag_data_t* dragData, cef_drag_operations_mask_t mask) {

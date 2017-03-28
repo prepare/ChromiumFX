@@ -56,10 +56,6 @@ static cfx_print_handler_t* cfx_print_handler_ctor(gc_handle_t gc_handle, int wr
     return ptr;
 }
 
-static gc_handle_t cfx_print_handler_get_gc_handle(cfx_print_handler_t* self) {
-    return self->gc_handle;
-}
-
 // on_print_start
 
 void CEF_CALLBACK cfx_print_handler_on_print_start(cef_print_handler_t* self, cef_browser_t* browser) {

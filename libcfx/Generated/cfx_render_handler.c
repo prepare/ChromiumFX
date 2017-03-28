@@ -62,10 +62,6 @@ static cfx_render_handler_t* cfx_render_handler_ctor(gc_handle_t gc_handle, int 
     return ptr;
 }
 
-static gc_handle_t cfx_render_handler_get_gc_handle(cfx_render_handler_t* self) {
-    return self->gc_handle;
-}
-
 // get_root_screen_rect
 
 int CEF_CALLBACK cfx_render_handler_get_root_screen_rect(cef_render_handler_t* self, cef_browser_t* browser, cef_rect_t* rect) {

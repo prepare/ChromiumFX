@@ -51,10 +51,6 @@ static cfx_domvisitor_t* cfx_domvisitor_ctor(gc_handle_t gc_handle, int wrapper_
     return ptr;
 }
 
-static gc_handle_t cfx_domvisitor_get_gc_handle(cfx_domvisitor_t* self) {
-    return self->gc_handle;
-}
-
 // visit
 
 void CEF_CALLBACK cfx_domvisitor_visit(cef_domvisitor_t* self, cef_domdocument_t* document) {

@@ -53,10 +53,6 @@ static cfx_focus_handler_t* cfx_focus_handler_ctor(gc_handle_t gc_handle, int wr
     return ptr;
 }
 
-static gc_handle_t cfx_focus_handler_get_gc_handle(cfx_focus_handler_t* self) {
-    return self->gc_handle;
-}
-
 // on_take_focus
 
 void CEF_CALLBACK cfx_focus_handler_on_take_focus(cef_focus_handler_t* self, cef_browser_t* browser, int next) {

@@ -51,10 +51,6 @@ static cfx_download_image_callback_t* cfx_download_image_callback_ctor(gc_handle
     return ptr;
 }
 
-static gc_handle_t cfx_download_image_callback_get_gc_handle(cfx_download_image_callback_t* self) {
-    return self->gc_handle;
-}
-
 // on_download_image_finished
 
 void CEF_CALLBACK cfx_download_image_callback_on_download_image_finished(cef_download_image_callback_t* self, const cef_string_t* image_url, int http_status_code, cef_image_t* image) {

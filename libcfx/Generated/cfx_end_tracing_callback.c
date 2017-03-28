@@ -51,10 +51,6 @@ static cfx_end_tracing_callback_t* cfx_end_tracing_callback_ctor(gc_handle_t gc_
     return ptr;
 }
 
-static gc_handle_t cfx_end_tracing_callback_get_gc_handle(cfx_end_tracing_callback_t* self) {
-    return self->gc_handle;
-}
-
 // on_end_tracing_complete
 
 void CEF_CALLBACK cfx_end_tracing_callback_on_end_tracing_complete(cef_end_tracing_callback_t* self, const cef_string_t* tracing_file) {

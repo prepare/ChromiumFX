@@ -56,10 +56,6 @@ static cfx_resource_handler_t* cfx_resource_handler_ctor(gc_handle_t gc_handle, 
     return ptr;
 }
 
-static gc_handle_t cfx_resource_handler_get_gc_handle(cfx_resource_handler_t* self) {
-    return self->gc_handle;
-}
-
 // process_request
 
 int CEF_CALLBACK cfx_resource_handler_process_request(cef_resource_handler_t* self, cef_request_t* request, cef_callback_t* callback) {

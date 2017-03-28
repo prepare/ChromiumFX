@@ -54,10 +54,6 @@ static cfx_context_menu_handler_t* cfx_context_menu_handler_ctor(gc_handle_t gc_
     return ptr;
 }
 
-static gc_handle_t cfx_context_menu_handler_get_gc_handle(cfx_context_menu_handler_t* self) {
-    return self->gc_handle;
-}
-
 // on_before_context_menu
 
 void CEF_CALLBACK cfx_context_menu_handler_on_before_context_menu(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* params, cef_menu_model_t* model) {

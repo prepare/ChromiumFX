@@ -52,10 +52,6 @@ static cfx_download_handler_t* cfx_download_handler_ctor(gc_handle_t gc_handle, 
     return ptr;
 }
 
-static gc_handle_t cfx_download_handler_get_gc_handle(cfx_download_handler_t* self) {
-    return self->gc_handle;
-}
-
 // on_before_download
 
 void CEF_CALLBACK cfx_download_handler_on_before_download(cef_download_handler_t* self, cef_browser_t* browser, cef_download_item_t* download_item, const cef_string_t* suggested_name, cef_before_download_callback_t* callback) {

@@ -51,10 +51,6 @@ static cfx_register_cdm_callback_t* cfx_register_cdm_callback_ctor(gc_handle_t g
     return ptr;
 }
 
-static gc_handle_t cfx_register_cdm_callback_get_gc_handle(cfx_register_cdm_callback_t* self) {
-    return self->gc_handle;
-}
-
 // on_cdm_registration_complete
 
 void CEF_CALLBACK cfx_register_cdm_callback_on_cdm_registration_complete(cef_register_cdm_callback_t* self, cef_cdm_registration_error_t result, const cef_string_t* error_message) {

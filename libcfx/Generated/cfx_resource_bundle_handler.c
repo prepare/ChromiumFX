@@ -53,10 +53,6 @@ static cfx_resource_bundle_handler_t* cfx_resource_bundle_handler_ctor(gc_handle
     return ptr;
 }
 
-static gc_handle_t cfx_resource_bundle_handler_get_gc_handle(cfx_resource_bundle_handler_t* self) {
-    return self->gc_handle;
-}
-
 // get_localized_string
 
 int CEF_CALLBACK cfx_resource_bundle_handler_get_localized_string(cef_resource_bundle_handler_t* self, int string_id, cef_string_t* string) {

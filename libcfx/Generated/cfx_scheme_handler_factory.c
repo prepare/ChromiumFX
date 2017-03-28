@@ -51,10 +51,6 @@ static cfx_scheme_handler_factory_t* cfx_scheme_handler_factory_ctor(gc_handle_t
     return ptr;
 }
 
-static gc_handle_t cfx_scheme_handler_factory_get_gc_handle(cfx_scheme_handler_factory_t* self) {
-    return self->gc_handle;
-}
-
 // create
 
 cef_resource_handler_t* CEF_CALLBACK cfx_scheme_handler_factory_create(cef_scheme_handler_factory_t* self, cef_browser_t* browser, cef_frame_t* frame, const cef_string_t* scheme_name, cef_request_t* request) {

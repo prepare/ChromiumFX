@@ -52,10 +52,6 @@ static cfx_geolocation_handler_t* cfx_geolocation_handler_ctor(gc_handle_t gc_ha
     return ptr;
 }
 
-static gc_handle_t cfx_geolocation_handler_get_gc_handle(cfx_geolocation_handler_t* self) {
-    return self->gc_handle;
-}
-
 // on_request_geolocation_permission
 
 int CEF_CALLBACK cfx_geolocation_handler_on_request_geolocation_permission(cef_geolocation_handler_t* self, cef_browser_t* browser, const cef_string_t* requesting_url, int request_id, cef_geolocation_callback_t* callback) {

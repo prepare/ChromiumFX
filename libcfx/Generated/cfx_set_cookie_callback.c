@@ -51,10 +51,6 @@ static cfx_set_cookie_callback_t* cfx_set_cookie_callback_ctor(gc_handle_t gc_ha
     return ptr;
 }
 
-static gc_handle_t cfx_set_cookie_callback_get_gc_handle(cfx_set_cookie_callback_t* self) {
-    return self->gc_handle;
-}
-
 // on_complete
 
 void CEF_CALLBACK cfx_set_cookie_callback_on_complete(cef_set_cookie_callback_t* self, int success) {

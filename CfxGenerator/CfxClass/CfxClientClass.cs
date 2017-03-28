@@ -74,10 +74,13 @@ public class CfxClientClass : CfxClass {
         b.AppendLine("return ptr;");
         b.EndBlock();
         b.AppendLine();
-        b.BeginBlock("static gc_handle_t {0}_get_gc_handle({1}* self)", CfxName, CfxNativeSymbol);
-        b.AppendLine("return self->gc_handle;");
-        b.EndBlock();
-        b.AppendLine();
+
+        if(NeedsWrapFunction) {
+            b.BeginBlock("static gc_handle_t {0}_get_gc_handle({1}* self)", CfxName, CfxNativeSymbol);
+            b.AppendLine("return self->gc_handle;");
+            b.EndBlock();
+            b.AppendLine();
+        }
 
         foreach(var cb in CallbackFunctions) {
 
@@ -128,7 +131,9 @@ public class CfxClientClass : CfxClass {
     protected override void EmitApiDeclarations(CodeBuilder b) {
         if(Category == StructCategory.Client) {
             b.AppendLine("public static cfx_ctor_with_gc_handle_delegate {0}_ctor;", CfxName);
-            b.AppendLine("public static cfx_get_gc_handle_delegate {0}_get_gc_handle;", CfxName);
+            if(NeedsWrapFunction) {
+                b.AppendLine("public static cfx_get_gc_handle_delegate {0}_get_gc_handle;", CfxName);
+            }
             b.AppendLine("public static cfx_set_callback_delegate {0}_set_callback;", CfxName);
             b.AppendLine();
         }

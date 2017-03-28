@@ -55,10 +55,6 @@ static cfx_browser_process_handler_t* cfx_browser_process_handler_ctor(gc_handle
     return ptr;
 }
 
-static gc_handle_t cfx_browser_process_handler_get_gc_handle(cfx_browser_process_handler_t* self) {
-    return self->gc_handle;
-}
-
 // on_context_initialized
 
 void CEF_CALLBACK cfx_browser_process_handler_on_context_initialized(cef_browser_process_handler_t* self) {

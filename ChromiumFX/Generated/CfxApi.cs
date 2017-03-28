@@ -345,7 +345,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_app_ctor;
-            public static cfx_get_gc_handle_delegate cfx_app_get_gc_handle;
             public static cfx_set_callback_delegate cfx_app_set_callback;
 
         }
@@ -915,7 +914,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_browser_process_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_browser_process_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_browser_process_handler_set_callback;
 
         }
@@ -1375,7 +1373,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_completion_callback_ctor;
-            public static cfx_get_gc_handle_delegate cfx_completion_callback_get_gc_handle;
             public static cfx_set_callback_delegate cfx_completion_callback_set_callback;
 
         }
@@ -1436,7 +1433,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_context_menu_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_context_menu_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_context_menu_handler_set_callback;
 
         }
@@ -1716,7 +1712,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_cookie_visitor_ctor;
-            public static cfx_get_gc_handle_delegate cfx_cookie_visitor_get_gc_handle;
             public static cfx_set_callback_delegate cfx_cookie_visitor_set_callback;
 
         }
@@ -1777,7 +1772,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_delete_cookies_callback_ctor;
-            public static cfx_get_gc_handle_delegate cfx_delete_cookies_callback_get_gc_handle;
             public static cfx_set_callback_delegate cfx_delete_cookies_callback_set_callback;
 
         }
@@ -1789,7 +1783,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_dialog_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_dialog_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_dialog_handler_set_callback;
 
         }
@@ -1959,7 +1952,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_display_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_display_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_display_handler_set_callback;
 
         }
@@ -2187,7 +2179,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_domvisitor_ctor;
-            public static cfx_get_gc_handle_delegate cfx_domvisitor_get_gc_handle;
             public static cfx_set_callback_delegate cfx_domvisitor_set_callback;
 
         }
@@ -2199,7 +2190,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_download_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_download_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_download_handler_set_callback;
 
         }
@@ -2211,7 +2201,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_download_image_callback_ctor;
-            public static cfx_get_gc_handle_delegate cfx_download_image_callback_get_gc_handle;
             public static cfx_set_callback_delegate cfx_download_image_callback_set_callback;
 
         }
@@ -2462,7 +2451,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_drag_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_drag_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_drag_handler_set_callback;
 
         }
@@ -2505,7 +2493,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_end_tracing_callback_ctor;
-            public static cfx_get_gc_handle_delegate cfx_end_tracing_callback_get_gc_handle;
             public static cfx_set_callback_delegate cfx_end_tracing_callback_set_callback;
 
         }
@@ -2535,7 +2522,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_find_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_find_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_find_handler_set_callback;
 
         }
@@ -2547,7 +2533,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_focus_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_focus_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_focus_handler_set_callback;
 
         }
@@ -2700,7 +2685,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_geolocation_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_geolocation_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_geolocation_handler_set_callback;
 
         }
@@ -2815,7 +2799,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_get_geolocation_callback_ctor;
-            public static cfx_get_gc_handle_delegate cfx_get_geolocation_callback_get_gc_handle;
             public static cfx_set_callback_delegate cfx_get_geolocation_callback_set_callback;
 
         }
@@ -2967,7 +2950,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_jsdialog_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_jsdialog_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_jsdialog_handler_set_callback;
 
         }
@@ -3064,7 +3046,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_keyboard_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_keyboard_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_keyboard_handler_set_callback;
 
         }
@@ -3076,7 +3057,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_life_span_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_life_span_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_life_span_handler_set_callback;
 
         }
@@ -3241,7 +3221,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_load_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_load_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_load_handler_set_callback;
 
         }
@@ -3599,7 +3578,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_menu_model_delegate_ctor;
-            public static cfx_get_gc_handle_delegate cfx_menu_model_delegate_get_gc_handle;
             public static cfx_set_callback_delegate cfx_menu_model_delegate_set_callback;
 
         }
@@ -3709,7 +3687,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_navigation_entry_visitor_ctor;
-            public static cfx_get_gc_handle_delegate cfx_navigation_entry_visitor_get_gc_handle;
             public static cfx_set_callback_delegate cfx_navigation_entry_visitor_set_callback;
 
         }
@@ -3721,7 +3698,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_pdf_print_callback_ctor;
-            public static cfx_get_gc_handle_delegate cfx_pdf_print_callback_get_gc_handle;
             public static cfx_set_callback_delegate cfx_pdf_print_callback_set_callback;
 
         }
@@ -4188,7 +4164,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_print_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_print_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_print_handler_set_callback;
 
         }
@@ -4410,7 +4385,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_read_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_read_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_read_handler_set_callback;
 
         }
@@ -4471,7 +4445,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_register_cdm_callback_ctor;
-            public static cfx_get_gc_handle_delegate cfx_register_cdm_callback_get_gc_handle;
             public static cfx_set_callback_delegate cfx_register_cdm_callback_set_callback;
 
         }
@@ -4483,7 +4456,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_render_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_render_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_render_handler_set_callback;
 
         }
@@ -4495,7 +4467,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_render_process_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_render_process_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_render_process_handler_set_callback;
 
         }
@@ -4824,7 +4795,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_request_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_request_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_request_handler_set_callback;
 
         }
@@ -4836,7 +4806,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_resolve_callback_ctor;
-            public static cfx_get_gc_handle_delegate cfx_resolve_callback_get_gc_handle;
             public static cfx_set_callback_delegate cfx_resolve_callback_set_callback;
 
         }
@@ -4876,7 +4845,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_resource_bundle_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_resource_bundle_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_resource_bundle_handler_set_callback;
 
         }
@@ -4888,7 +4856,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_resource_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_resource_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_resource_handler_set_callback;
 
         }
@@ -4973,7 +4940,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_response_filter_ctor;
-            public static cfx_get_gc_handle_delegate cfx_response_filter_get_gc_handle;
             public static cfx_set_callback_delegate cfx_response_filter_set_callback;
 
         }
@@ -5003,7 +4969,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_run_file_dialog_callback_ctor;
-            public static cfx_get_gc_handle_delegate cfx_run_file_dialog_callback_get_gc_handle;
             public static cfx_set_callback_delegate cfx_run_file_dialog_callback_set_callback;
 
         }
@@ -5015,7 +4980,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_scheme_handler_factory_ctor;
-            public static cfx_get_gc_handle_delegate cfx_scheme_handler_factory_get_gc_handle;
             public static cfx_set_callback_delegate cfx_scheme_handler_factory_set_callback;
 
         }
@@ -5120,7 +5084,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_set_cookie_callback_ctor;
-            public static cfx_get_gc_handle_delegate cfx_set_cookie_callback_get_gc_handle;
             public static cfx_set_callback_delegate cfx_set_cookie_callback_set_callback;
 
         }
@@ -5567,7 +5530,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_string_visitor_ctor;
-            public static cfx_get_gc_handle_delegate cfx_string_visitor_get_gc_handle;
             public static cfx_set_callback_delegate cfx_string_visitor_set_callback;
 
         }
@@ -5579,7 +5541,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_task_ctor;
-            public static cfx_get_gc_handle_delegate cfx_task_get_gc_handle;
             public static cfx_set_callback_delegate cfx_task_set_callback;
 
         }
@@ -5900,7 +5861,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_v8accessor_ctor;
-            public static cfx_get_gc_handle_delegate cfx_v8accessor_get_gc_handle;
             public static cfx_set_callback_delegate cfx_v8accessor_set_callback;
 
         }
@@ -6038,7 +5998,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_v8interceptor_ctor;
-            public static cfx_get_gc_handle_delegate cfx_v8interceptor_get_gc_handle;
             public static cfx_set_callback_delegate cfx_v8interceptor_set_callback;
 
         }
@@ -6588,7 +6547,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_web_plugin_info_visitor_ctor;
-            public static cfx_get_gc_handle_delegate cfx_web_plugin_info_visitor_get_gc_handle;
             public static cfx_set_callback_delegate cfx_web_plugin_info_visitor_set_callback;
 
         }
@@ -6600,7 +6558,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_web_plugin_unstable_callback_ctor;
-            public static cfx_get_gc_handle_delegate cfx_web_plugin_unstable_callback_get_gc_handle;
             public static cfx_set_callback_delegate cfx_web_plugin_unstable_callback_set_callback;
 
         }
@@ -6818,7 +6775,6 @@ namespace Chromium {
             }
 
             public static cfx_ctor_with_gc_handle_delegate cfx_write_handler_ctor;
-            public static cfx_get_gc_handle_delegate cfx_write_handler_get_gc_handle;
             public static cfx_set_callback_delegate cfx_write_handler_set_callback;
 
         }

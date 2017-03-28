@@ -55,10 +55,6 @@ static cfx_write_handler_t* cfx_write_handler_ctor(gc_handle_t gc_handle, int wr
     return ptr;
 }
 
-static gc_handle_t cfx_write_handler_get_gc_handle(cfx_write_handler_t* self) {
-    return self->gc_handle;
-}
-
 // write
 
 size_t CEF_CALLBACK cfx_write_handler_write(cef_write_handler_t* self, const void* ptr, size_t size, size_t n) {

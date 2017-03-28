@@ -52,10 +52,6 @@ static cfx_keyboard_handler_t* cfx_keyboard_handler_ctor(gc_handle_t gc_handle, 
     return ptr;
 }
 
-static gc_handle_t cfx_keyboard_handler_get_gc_handle(cfx_keyboard_handler_t* self) {
-    return self->gc_handle;
-}
-
 // on_pre_key_event
 
 int CEF_CALLBACK cfx_keyboard_handler_on_pre_key_event(cef_keyboard_handler_t* self, cef_browser_t* browser, const cef_key_event_t* event, cef_event_handle_t os_event, int* is_keyboard_shortcut) {

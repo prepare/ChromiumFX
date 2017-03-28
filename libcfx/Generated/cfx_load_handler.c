@@ -54,10 +54,6 @@ static cfx_load_handler_t* cfx_load_handler_ctor(gc_handle_t gc_handle, int wrap
     return ptr;
 }
 
-static gc_handle_t cfx_load_handler_get_gc_handle(cfx_load_handler_t* self) {
-    return self->gc_handle;
-}
-
 // on_loading_state_change
 
 void CEF_CALLBACK cfx_load_handler_on_loading_state_change(cef_load_handler_t* self, cef_browser_t* browser, int isLoading, int canGoBack, int canGoForward) {

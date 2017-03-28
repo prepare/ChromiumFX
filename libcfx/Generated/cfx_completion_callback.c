@@ -51,10 +51,6 @@ static cfx_completion_callback_t* cfx_completion_callback_ctor(gc_handle_t gc_ha
     return ptr;
 }
 
-static gc_handle_t cfx_completion_callback_get_gc_handle(cfx_completion_callback_t* self) {
-    return self->gc_handle;
-}
-
 // on_complete
 
 void CEF_CALLBACK cfx_completion_callback_on_complete(cef_completion_callback_t* self) {

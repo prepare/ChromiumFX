@@ -54,10 +54,6 @@ static cfx_v8interceptor_t* cfx_v8interceptor_ctor(gc_handle_t gc_handle, int wr
     return ptr;
 }
 
-static gc_handle_t cfx_v8interceptor_get_gc_handle(cfx_v8interceptor_t* self) {
-    return self->gc_handle;
-}
-
 // get_byname
 
 int CEF_CALLBACK cfx_v8interceptor_get_byname(cef_v8interceptor_t* self, const cef_string_t* name, cef_v8value_t* object, cef_v8value_t** retval, cef_string_t* exception) {

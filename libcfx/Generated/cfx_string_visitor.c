@@ -51,10 +51,6 @@ static cfx_string_visitor_t* cfx_string_visitor_ctor(gc_handle_t gc_handle, int 
     return ptr;
 }
 
-static gc_handle_t cfx_string_visitor_get_gc_handle(cfx_string_visitor_t* self) {
-    return self->gc_handle;
-}
-
 // visit
 
 void CEF_CALLBACK cfx_string_visitor_visit(cef_string_visitor_t* self, const cef_string_t* string) {

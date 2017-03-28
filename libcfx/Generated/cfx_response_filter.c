@@ -52,10 +52,6 @@ static cfx_response_filter_t* cfx_response_filter_ctor(gc_handle_t gc_handle, in
     return ptr;
 }
 
-static gc_handle_t cfx_response_filter_get_gc_handle(cfx_response_filter_t* self) {
-    return self->gc_handle;
-}
-
 // init_filter
 
 int CEF_CALLBACK cfx_response_filter_init_filter(cef_response_filter_t* self) {

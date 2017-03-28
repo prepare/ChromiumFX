@@ -61,10 +61,6 @@ static cfx_render_process_handler_t* cfx_render_process_handler_ctor(gc_handle_t
     return ptr;
 }
 
-static gc_handle_t cfx_render_process_handler_get_gc_handle(cfx_render_process_handler_t* self) {
-    return self->gc_handle;
-}
-
 // on_render_thread_created
 
 void CEF_CALLBACK cfx_render_process_handler_on_render_thread_created(cef_render_process_handler_t* self, cef_list_value_t* extra_info) {

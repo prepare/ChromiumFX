@@ -51,10 +51,6 @@ static cfx_navigation_entry_visitor_t* cfx_navigation_entry_visitor_ctor(gc_hand
     return ptr;
 }
 
-static gc_handle_t cfx_navigation_entry_visitor_get_gc_handle(cfx_navigation_entry_visitor_t* self) {
-    return self->gc_handle;
-}
-
 // visit
 
 int CEF_CALLBACK cfx_navigation_entry_visitor_visit(cef_navigation_entry_visitor_t* self, cef_navigation_entry_t* entry, int current, int index, int total) {

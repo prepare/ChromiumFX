@@ -51,10 +51,6 @@ static cfx_cookie_visitor_t* cfx_cookie_visitor_ctor(gc_handle_t gc_handle, int 
     return ptr;
 }
 
-static gc_handle_t cfx_cookie_visitor_get_gc_handle(cfx_cookie_visitor_t* self) {
-    return self->gc_handle;
-}
-
 // visit
 
 int CEF_CALLBACK cfx_cookie_visitor_visit(cef_cookie_visitor_t* self, const cef_cookie_t* cookie, int count, int total, int* deleteCookie) {

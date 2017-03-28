@@ -51,10 +51,6 @@ static cfx_delete_cookies_callback_t* cfx_delete_cookies_callback_ctor(gc_handle
     return ptr;
 }
 
-static gc_handle_t cfx_delete_cookies_callback_get_gc_handle(cfx_delete_cookies_callback_t* self) {
-    return self->gc_handle;
-}
-
 // on_complete
 
 void CEF_CALLBACK cfx_delete_cookies_callback_on_complete(cef_delete_cookies_callback_t* self, int num_deleted) {

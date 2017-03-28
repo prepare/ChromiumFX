@@ -57,10 +57,6 @@ static cfx_menu_model_delegate_t* cfx_menu_model_delegate_ctor(gc_handle_t gc_ha
     return ptr;
 }
 
-static gc_handle_t cfx_menu_model_delegate_get_gc_handle(cfx_menu_model_delegate_t* self) {
-    return self->gc_handle;
-}
-
 // execute_command
 
 void CEF_CALLBACK cfx_menu_model_delegate_execute_command(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, int command_id, cef_event_flags_t event_flags) {

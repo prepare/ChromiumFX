@@ -55,7 +55,9 @@ public class CefApiDeclarations {
                     case StructCategory.Client:
                         st.ApiIndex = list.Count;
                         list.Add(st.CfxName + "_ctor");
-                        list.Add(st.CfxName + "_get_gc_handle");
+                        if(st.ClassBuilder.NeedsWrapFunction) {
+                            list.Add(st.CfxName + "_get_gc_handle");
+                        }
                         list.Add(st.CfxName + "_set_callback");
                         break;
 

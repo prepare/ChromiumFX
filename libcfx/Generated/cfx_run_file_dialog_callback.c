@@ -51,10 +51,6 @@ static cfx_run_file_dialog_callback_t* cfx_run_file_dialog_callback_ctor(gc_hand
     return ptr;
 }
 
-static gc_handle_t cfx_run_file_dialog_callback_get_gc_handle(cfx_run_file_dialog_callback_t* self) {
-    return self->gc_handle;
-}
-
 // on_file_dialog_dismissed
 
 void CEF_CALLBACK cfx_run_file_dialog_callback_on_file_dialog_dismissed(cef_run_file_dialog_callback_t* self, int selected_accept_filter, cef_string_list_t file_paths) {

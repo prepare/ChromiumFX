@@ -51,10 +51,6 @@ static cfx_resolve_callback_t* cfx_resolve_callback_ctor(gc_handle_t gc_handle, 
     return ptr;
 }
 
-static gc_handle_t cfx_resolve_callback_get_gc_handle(cfx_resolve_callback_t* self) {
-    return self->gc_handle;
-}
-
 // on_resolve_completed
 
 void CEF_CALLBACK cfx_resolve_callback_on_resolve_completed(cef_resolve_callback_t* self, cef_errorcode_t result, cef_string_list_t resolved_ips) {
