@@ -14,14 +14,14 @@ namespace Chromium.Remote {
     /// </summary>
     public abstract class CfrClientBase : CfrBase {
 
-        static int cfrTaskCount;
+        //static int cfrTaskCount;
 
         internal CfrClientBase(CtorWithGCHandleRemoteCall call) {
             GCHandle handle = GCHandle.Alloc(this, GCHandleType.Weak);
             call.gcHandlePtr = GCHandle.ToIntPtr(handle);
             call.RequestExecution();
             SetRemotePtr(new RemotePtr(call.__retval));
-            if(this is CfrTask) Debug.Print("CfrTask created: " + (++cfrTaskCount));
+            //if(this is CfrTask) Debug.Print("CfrTask created: " + System.Threading.Interlocked.Increment(ref cfrTaskCount));
         }
 
         internal CfrClientBase(RemotePtr remotePtr) : base(remotePtr) { }
@@ -32,7 +32,7 @@ namespace Chromium.Remote {
         public bool CallbacksDisabled { get; set; }
 
         internal sealed override void OnDispose(RemotePtr nativePtr) {
-            if(this is CfrTask) Debug.Print("CfrTask disposed: " + (--cfrTaskCount));
+            //if(this is CfrTask) Debug.Print("CfrTask disposed: " + System.Threading.Interlocked.Decrement(ref cfrTaskCount));
             CallbacksDisabled = true;
             base.OnDispose(nativePtr);
         }
@@ -41,7 +41,7 @@ namespace Chromium.Remote {
     internal class SwitchGcHandleRemoteCall : RemoteCall {
         internal IntPtr gc_handle;
         internal int mode;
-        internal SwitchGcHandleRemoteCall() : base(RemoteCallId.SwitchGcHandleRemoteCall, true) { }
+        internal SwitchGcHandleRemoteCall() : base(RemoteCallId.SwitchGcHandleRemoteCall) { }
 
         protected override void WriteArgs(StreamHandler h) {
             h.Write(gc_handle);
@@ -64,6 +64,23 @@ namespace Chromium.Remote {
         protected override void ExecuteInTargetProcess(RemoteConnection connection) {
             Debug.Assert((mode & (int)CfxApi.gc_handle_switch_mode.GC_HANDLE_REMOTE) == 0);
             CfxApi.SwitchGcHandle(ref gc_handle, (CfxApi.gc_handle_switch_mode)mode);
+        }
+    }
+
+    internal class FreeGcHandleRemoteCall : RemoteCall {
+        internal IntPtr gc_handle;
+        internal FreeGcHandleRemoteCall() : base(RemoteCallId.FreeGcHandleRemoteCall, true) { }
+
+        protected override void WriteArgs(StreamHandler h) {
+            h.Write(gc_handle);
+        }
+
+        protected override void ReadArgs(StreamHandler h) {
+            h.Read(out gc_handle);
+        }
+
+        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+            CfxApi.SwitchGcHandle(ref gc_handle, CfxApi.gc_handle_switch_mode.GC_HANDLE_FREE);
         }
     }
 }

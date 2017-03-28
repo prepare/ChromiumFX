@@ -19,7 +19,14 @@ typedef struct _cfx_task_t {
 } cfx_task_t;
 
 void CEF_CALLBACK _cfx_task_add_ref(struct _cef_base_ref_counted_t* base) {
-    InterlockedIncrement(&((cfx_task_t*)base)->ref_count);
+    int count = InterlockedIncrement(&((cfx_task_t*)base)->ref_count);
+    if(count == 2) {
+        if(((cfx_task_t*)base)->wrapper_kind == 0) {
+            cfx_gc_handle_switch(&((cfx_task_t*)base)->gc_handle, GC_HANDLE_UPGRADE);
+        } else {
+            cfx_gc_handle_switch(&((cfx_task_t*)base)->gc_handle, GC_HANDLE_UPGRADE | GC_HANDLE_REMOTE);
+        }
+    }
 }
 int CEF_CALLBACK _cfx_task_release(struct _cef_base_ref_counted_t* base) {
     int count = InterlockedDecrement(&((cfx_task_t*)base)->ref_count);
@@ -31,6 +38,13 @@ int CEF_CALLBACK _cfx_task_release(struct _cef_base_ref_counted_t* base) {
         }
         free(base);
         return 1;
+    }
+    if(count == 1) {
+        if(((cfx_task_t*)base)->wrapper_kind == 0) {
+            cfx_gc_handle_switch(&((cfx_task_t*)base)->gc_handle, GC_HANDLE_DOWNGRADE);
+        } else {
+            cfx_gc_handle_switch(&((cfx_task_t*)base)->gc_handle, GC_HANDLE_DOWNGRADE | GC_HANDLE_REMOTE);
+        }
     }
     return 0;
 }

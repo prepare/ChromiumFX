@@ -41,7 +41,18 @@ public class CfxClientClass : CfxClass {
         b.AppendLine();
 
         b.BeginBlock("void CEF_CALLBACK _{0}_add_ref(struct _cef_base_ref_counted_t* base)", CfxName);
-        b.AppendLine("InterlockedIncrement(&(({0}*)base)->ref_count);", CfxNativeSymbol);
+        if(GeneratorConfig.UseStrongHandleFor(CefStruct.Name)) {
+            b.AppendLine("int count = InterlockedIncrement(&(({0}*)base)->ref_count);", CfxNativeSymbol);
+            b.BeginIf("count == 2");
+            b.BeginIf("(({0}*)base)->wrapper_kind == 0", CfxNativeSymbol);
+            b.AppendLine("cfx_gc_handle_switch(&(({0}*)base)->gc_handle, GC_HANDLE_UPGRADE);", CfxNativeSymbol);
+            b.BeginElse();
+            b.AppendLine("cfx_gc_handle_switch(&(({0}*)base)->gc_handle, GC_HANDLE_UPGRADE | GC_HANDLE_REMOTE);", CfxNativeSymbol);
+            b.EndBlock();
+            b.EndBlock();
+        } else {
+            b.AppendLine("InterlockedIncrement(&(({0}*)base)->ref_count);", CfxNativeSymbol);
+        }
         b.EndBlock();
         b.BeginBlock("int CEF_CALLBACK _{0}_release(struct _cef_base_ref_counted_t* base)", CfxName);
         b.AppendLine("int count = InterlockedDecrement(&(({0}*)base)->ref_count);", CfxNativeSymbol);
@@ -54,6 +65,15 @@ public class CfxClientClass : CfxClass {
         b.AppendLine("free(base);");
         b.AppendLine("return 1;");
         b.EndBlock();
+        if(GeneratorConfig.UseStrongHandleFor(CefStruct.Name)) {
+            b.BeginIf("count == 1");
+            b.BeginIf("(({0}*)base)->wrapper_kind == 0", CfxNativeSymbol);
+            b.AppendLine("cfx_gc_handle_switch(&(({0}*)base)->gc_handle, GC_HANDLE_DOWNGRADE);", CfxNativeSymbol);
+            b.BeginElse();
+            b.AppendLine("cfx_gc_handle_switch(&(({0}*)base)->gc_handle, GC_HANDLE_DOWNGRADE | GC_HANDLE_REMOTE);", CfxNativeSymbol);
+            b.EndBlock();
+            b.EndBlock();
+        }
         b.AppendLine("return 0;");
         b.EndBlock();
         b.BeginBlock("int CEF_CALLBACK _{0}_has_one_ref(struct _cef_base_ref_counted_t* base)", CfxName);

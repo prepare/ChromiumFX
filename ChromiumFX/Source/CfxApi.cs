@@ -87,10 +87,18 @@ namespace Chromium {
         internal static void SwitchGcHandle(ref IntPtr gc_handle, gc_handle_switch_mode mode) {
 
             if((mode & gc_handle_switch_mode.GC_HANDLE_REMOTE) != 0) {
-                var call = new SwitchGcHandleRemoteCall();
-                call.gc_handle = gc_handle;
-                call.mode = (int)mode - 4;
-                call.RequestExecution(RemoteClient.connection);
+                mode -= 4;
+                if(mode == gc_handle_switch_mode.GC_HANDLE_FREE) {
+                    var call = new FreeGcHandleRemoteCall();
+                    call.gc_handle = gc_handle;
+                    call.RequestExecution(RemoteClient.connection);
+                } else {
+                    var call = new SwitchGcHandleRemoteCall();
+                    call.gc_handle = gc_handle;
+                    call.mode = (int)mode;
+                    call.RequestExecution(RemoteClient.connection);
+                    gc_handle = call.gc_handle;
+                }
                 return;
             }
 
@@ -108,7 +116,7 @@ namespace Chromium {
             }
 
             // downgrade to weak or upgrade to strong
-            var h1 = GCHandle.Alloc(h.Target, mode == gc_handle_switch_mode.GC_HANDLE_DOWNGRADE ? GCHandleType.Weak : GCHandleType.Normal);
+            var h1 = GCHandle.Alloc(t, mode == gc_handle_switch_mode.GC_HANDLE_DOWNGRADE ? GCHandleType.Weak : GCHandleType.Normal);
             gc_handle = GCHandle.ToIntPtr(h1);
             h.Free();
         }

@@ -553,6 +553,7 @@ namespace Chromium.Remote {
             () => { return new CfxZipReaderReadFileRemoteCall(); },
             () => { return new CfxZipReaderTellRemoteCall(); },
             () => { return new ExecuteProcessRemoteCall(); },
+            () => { return new FreeGcHandleRemoteCall(); },
             () => { return new SwitchGcHandleRemoteCall(); },
         } ;
 
