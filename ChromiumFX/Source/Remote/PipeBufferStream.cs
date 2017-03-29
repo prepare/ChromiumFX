@@ -128,5 +128,9 @@ namespace Chromium.Remote {
         public override void SetLength(long value) {
             throw new NotSupportedException();
         }
+
+        public override void Close() {
+            pipe.Close();
+        }
     }
 }

@@ -550,8 +550,8 @@ namespace Chromium.Remote {
         CfxZipReaderOpenFileRemoteCall,
         CfxZipReaderReadFileRemoteCall,
         CfxZipReaderTellRemoteCall,
-        ExecuteProcessRemoteCall,
         FreeGcHandleRemoteCall,
+        RenderProcessMainRemoteCall,
         SwitchGcHandleRemoteCall
     }
 }

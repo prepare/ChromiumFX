@@ -46,7 +46,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             if(data == null || data.Length == 0) {
                 throw new ArgumentException("Data is null or zero length", "data");
             }

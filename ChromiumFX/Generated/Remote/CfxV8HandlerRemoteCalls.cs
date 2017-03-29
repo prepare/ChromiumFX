@@ -17,7 +17,7 @@ namespace Chromium.Remote {
         internal CfxV8HandlerCtorWithGCHandleRemoteCall()
             : base(RemoteCallId.CfxV8HandlerCtorWithGCHandleRemoteCall) {}
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = CfxApi.V8Handler.cfx_v8handler_ctor(gcHandlePtr, 1);
         }
     }
@@ -27,7 +27,7 @@ namespace Chromium.Remote {
         internal CfxV8HandlerSetCallbackRemoteCall()
             : base(RemoteCallId.CfxV8HandlerSetCallbackRemoteCall) {}
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             CfxV8HandlerRemoteClient.SetCallback(self, index, active);
         }
     }
@@ -83,7 +83,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var self = (CfrV8Handler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 return;

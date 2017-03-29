@@ -66,7 +66,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             switch(CfxApi.PlatformOS) {
                 case CfxPlatformOS.Windows:
                     __retval = CfxApi.Runtime.cfx_execute_process(IntPtr.Zero, application, IntPtr.Zero);

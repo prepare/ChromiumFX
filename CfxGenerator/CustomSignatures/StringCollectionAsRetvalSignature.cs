@@ -26,7 +26,7 @@ public class StringCollectionAsRetvalSignature : Signature {
         b.AppendLine("return {0};", base.ManagedParameters[1].VarName);
     }
 
-    protected override void EmitExecuteInTargetProcess(CodeBuilder b, string apiClassName, string apiFunctionName) {
+    protected override void EmitRemoteProcedure(CodeBuilder b, string apiClassName, string apiFunctionName) {
         var collectionType = base.ManagedParameters[1].ParameterType.AsStringCollectionType.ClassName;
         b.AppendLine("__retval = new {0}();", base.ManagedParameters[1].ParameterType.PublicSymbol);
         b.AppendLine("var list = StringFunctions.Alloc{0}();", collectionType);

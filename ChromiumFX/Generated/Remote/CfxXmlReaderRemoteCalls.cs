@@ -41,7 +41,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var uri_pinned = new PinnedString(uri);
             __retval = CfxApi.XmlReader.cfx_xml_reader_create(stream, (int)encodingType, uri_pinned.Obj.PinnedPtr, uri_pinned.Length);
             uri_pinned.Obj.Free();
@@ -72,7 +72,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.XmlReader.cfx_xml_reader_move_to_next_node(@this);
         }
     }
@@ -101,7 +101,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.XmlReader.cfx_xml_reader_close(@this);
         }
     }
@@ -130,7 +130,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.XmlReader.cfx_xml_reader_has_error(@this);
         }
     }
@@ -159,7 +159,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_error(@this));
         }
     }
@@ -188,7 +188,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = CfxApi.XmlReader.cfx_xml_reader_get_type(@this);
         }
     }
@@ -217,7 +217,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = CfxApi.XmlReader.cfx_xml_reader_get_depth(@this);
         }
     }
@@ -246,7 +246,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_local_name(@this));
         }
     }
@@ -275,7 +275,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_prefix(@this));
         }
     }
@@ -304,7 +304,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_qualified_name(@this));
         }
     }
@@ -333,7 +333,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_namespace_uri(@this));
         }
     }
@@ -362,7 +362,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_base_uri(@this));
         }
     }
@@ -391,7 +391,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_xml_lang(@this));
         }
     }
@@ -420,7 +420,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.XmlReader.cfx_xml_reader_is_empty_element(@this);
         }
     }
@@ -449,7 +449,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.XmlReader.cfx_xml_reader_has_value(@this);
         }
     }
@@ -478,7 +478,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_value(@this));
         }
     }
@@ -507,7 +507,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.XmlReader.cfx_xml_reader_has_attributes(@this);
         }
     }
@@ -536,7 +536,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = (ulong)CfxApi.XmlReader.cfx_xml_reader_get_attribute_count(@this);
         }
     }
@@ -568,7 +568,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_attribute_byindex(@this, index));
         }
     }
@@ -600,7 +600,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var qualifiedName_pinned = new PinnedString(qualifiedName);
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_attribute_byqname(@this, qualifiedName_pinned.Obj.PinnedPtr, qualifiedName_pinned.Length));
             qualifiedName_pinned.Obj.Free();
@@ -637,7 +637,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var localName_pinned = new PinnedString(localName);
             var namespaceURI_pinned = new PinnedString(namespaceURI);
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_attribute_bylname(@this, localName_pinned.Obj.PinnedPtr, localName_pinned.Length, namespaceURI_pinned.Obj.PinnedPtr, namespaceURI_pinned.Length));
@@ -670,7 +670,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_inner_xml(@this));
         }
     }
@@ -699,7 +699,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.XmlReader.cfx_xml_reader_get_outer_xml(@this));
         }
     }
@@ -728,7 +728,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = CfxApi.XmlReader.cfx_xml_reader_get_line_number(@this);
         }
     }
@@ -760,7 +760,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.XmlReader.cfx_xml_reader_move_to_attribute_byindex(@this, index);
         }
     }
@@ -792,7 +792,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var qualifiedName_pinned = new PinnedString(qualifiedName);
             __retval = 0 != CfxApi.XmlReader.cfx_xml_reader_move_to_attribute_byqname(@this, qualifiedName_pinned.Obj.PinnedPtr, qualifiedName_pinned.Length);
             qualifiedName_pinned.Obj.Free();
@@ -829,7 +829,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var localName_pinned = new PinnedString(localName);
             var namespaceURI_pinned = new PinnedString(namespaceURI);
             __retval = 0 != CfxApi.XmlReader.cfx_xml_reader_move_to_attribute_bylname(@this, localName_pinned.Obj.PinnedPtr, localName_pinned.Length, namespaceURI_pinned.Obj.PinnedPtr, namespaceURI_pinned.Length);
@@ -862,7 +862,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.XmlReader.cfx_xml_reader_move_to_first_attribute(@this);
         }
     }
@@ -891,7 +891,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.XmlReader.cfx_xml_reader_move_to_next_attribute(@this);
         }
     }
@@ -920,7 +920,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.XmlReader.cfx_xml_reader_move_to_carrying_element(@this);
         }
     }

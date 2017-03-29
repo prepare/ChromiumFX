@@ -10,6 +10,10 @@ namespace Chromium.Remote {
 
     internal class RemoteClient {
 
+        /// <summary>
+        /// Remote connection in the render process.
+        /// If null, then this is the browser process.
+        /// </summary>
         internal static RemoteConnection connection;
 
         internal static int ExecuteProcess(string pipeName) {
@@ -21,24 +25,24 @@ namespace Chromium.Remote {
 
             connection = new RemoteConnection(pipeIn, pipeOut, true);
 
-            var call = new ExecuteProcessRemoteCall();
+            var call = new RenderProcessMainRemoteCall();
             call.RequestExecution(connection);
             return call.__retval;
 
         }
     }
 
-    internal class ExecuteProcessRemoteCall : RemoteCall {
+    internal class RenderProcessMainRemoteCall : RemoteCall {
 
         internal int __retval;
 
-        internal ExecuteProcessRemoteCall() 
-            : base(RemoteCallId.ExecuteProcessRemoteCall) { }
+        internal RenderProcessMainRemoteCall() 
+            : base(RemoteCallId.RenderProcessMainRemoteCall) { }
 
         protected override void WriteReturn(StreamHandler h) { h.Write(__retval); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out __retval); }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = RemoteService.renderProcessMainCallback();
         }
     }

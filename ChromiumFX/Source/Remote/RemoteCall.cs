@@ -12,16 +12,12 @@ namespace Chromium.Remote {
     internal abstract class RemoteCall {
 
         private readonly RemoteCallId callId;
-        private readonly bool returnImmediately;
+        internal readonly bool returnImmediately;
 
-        internal readonly object waitLock = new object();
-
-        private RemoteCall reentryCall;
+        internal RemoteCall nextCall;
 
         internal int localThreadId;
         private int remoteThreadId;
-
-        private bool responseReceived;
 
         internal RemoteCall(RemoteCallId callId) {
             this.callId = callId;
@@ -46,6 +42,11 @@ namespace Chromium.Remote {
 
         internal void RequestExecution(RemoteConnection connection) {
 
+            if(returnImmediately) {
+                connection.Write(WriteRequest);
+                return;
+            }
+
             if(CfxRemoteCallContext.IsInContext && CfxRemoteCallContext.CurrentContext.connection != connection) {
                 // The thread is in a remote call context, but the requestor wants to call
                 // on another connection. This can happen if a CfrObject method from one connection
@@ -61,60 +62,22 @@ namespace Chromium.Remote {
                 return;
             }
 
-            if(returnImmediately) {
-                if(connection.ShuttingDown)
+            localThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+            remoteThreadId = CfxRemoteCallContext.currentThreadId;
+
+            connection.SendRequestAndWait(this);
+
+            if(connection.connectionLostException != null) {
+                if(RemoteClient.connection != null) {
+                    // this is the render process calling back into the browser process
+                    // reaching this point usually means the browser process crashed or was killed
+                    // don't throw, just return so the process can exit gracefully
                     return;
-                else if(connection.connectionLostException != null)
-                    throw new CfxRemotingException("Remote connection lost.", connection.connectionLostException);
-                connection.Write(WriteRequest);
-                return;
-            }
-
-
-            lock(waitLock) {
-
-                // The lock must begin here. Otherwise,
-                // there is a race between Wait and PulseAll
-                // causing this thread to wait forever
-                // under some circumstances.
-
-                localThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
-                connection.callStack.Push(this);
-
-                remoteThreadId = CfxRemoteCallContext.currentThreadId;
-
-                connection.Write(WriteRequest);
-
-                for(;;) {
-
-                    if(responseReceived) {
-                        Debug.Assert(reentryCall == null);
-                        return;
-                    }
-
-                    if(this.reentryCall != null) {
-                        reentryCall.ExecutionThreadEntry(connection);
-                        reentryCall = null;
-                    }
-
-                    if(!connection.ShuttingDown && connection.connectionLostException == null)
-                        System.Threading.Monitor.Wait(waitLock);
-
-                    if(connection.ShuttingDown)
-                        return;
-                    else if(connection.connectionLostException != null) {
-                        if(RemoteClient.connection != null) {
-                            // this is the render process calling back into the browser process
-                            // reaching this point usually means the browser process crashed or was killed
-                            // don't throw, just return so the process can exit gracefully
-                            return;
-                        }
-                        throw new CfxRemotingException("Remote connection lost.", connection.connectionLostException);
-                    }
                 }
+                // throw exception in the browser process
+                throw new CfxRemotingException("Remote connection lost.", connection.connectionLostException);
             }
         }
-
 
         internal void WriteRequest(StreamHandler h) {
             h.Write((ushort)callId);
@@ -123,61 +86,43 @@ namespace Chromium.Remote {
                 h.Write(remoteThreadId);
             }
             WriteArgs(h);
-            h.Flush();
         }
 
-        internal void ReadRequest(RemoteConnection connection) {
-
-            if(returnImmediately) {
-                ReadArgs(connection.streamHandler);
-                WorkerPool.EnqueueTask(() => ExecutionThreadEntry(connection));
-                return;
+        internal void ReadRequest(StreamHandler h) {
+            Debug.Assert(localThreadId == 0);
+            // RemoteConnection reads callId before calling this
+            if(!returnImmediately) {
+                h.Read(out remoteThreadId);
+                h.Read(out localThreadId);
             }
-
-            var h = connection.streamHandler;
-
-            h.Read(out remoteThreadId);
-            h.Read(out localThreadId);
             ReadArgs(h);
-
-            if(localThreadId != 0) {
-                var call = connection.callStack.Peek(localThreadId);
-                lock(call.waitLock) {
-                    call.reentryCall = this;
-                    Monitor.PulseAll(call.waitLock);
-                }
-            } else {
-                WorkerPool.EnqueueTask(() => ExecutionThreadEntry(connection));
-            }
         }
 
         internal void WriteResponse(StreamHandler h) {
             h.Write(ushort.MaxValue);
             h.Write(remoteThreadId);
             WriteReturn(h);
-            h.Flush();
         }
 
         internal void ReadResponse(StreamHandler h) {
+            // RemoteConnection reads callId and threadId before calling this
             ReadReturn(h);
-            lock(waitLock) {
-                responseReceived = true;
-                System.Threading.Monitor.PulseAll(waitLock);
-            }
         }
 
-        private void ExecutionThreadEntry(RemoteConnection connection) {
+        /// <summary>
+        /// Prepares and executes the remote procedure in the remote process
+        /// </summary>
+        internal void Execute(RemoteConnection connection) {
 
             if(returnImmediately) {
-                ExecuteInTargetProcess(connection);
+                RemoteProcedure(connection);
                 return;
             }
 
             if(RemoteClient.connection == null) {
                 if(!CfxRemoteCallbackManager.IncrementCallbackCount(connection.remoteProcessId)) {
                     // The application has suspended remote callbacks.
-                    // Write the response without ececuting event handlers, returning default values.
-                    connection.Write(WriteResponse);
+                    // Return without ececuting event handlers, connection will return default values.
                     return;
                 }
             }
@@ -187,7 +132,7 @@ namespace Chromium.Remote {
             var threadStackCount = CfxRemoteCallContext.ContextStackCount;
 
             try {
-                ExecuteInTargetProcess(connection);
+                RemoteProcedure(connection);
             } finally {
                 if(RemoteClient.connection == null) {
                     CfxRemoteCallbackManager.DecrementCallbackCount(connection.remoteProcessId);
@@ -198,8 +143,6 @@ namespace Chromium.Remote {
                 }
                 threadContext.Exit();
             }
-
-            connection.Write(WriteResponse);
         }
 
         protected virtual void WriteArgs(StreamHandler h) { }
@@ -208,7 +151,7 @@ namespace Chromium.Remote {
         protected virtual void WriteReturn(StreamHandler h) { }
         protected virtual void ReadReturn(StreamHandler h) { }
 
-        protected abstract void ExecuteInTargetProcess(RemoteConnection connection);
+        protected abstract void RemoteProcedure(RemoteConnection connection);
 
     }
 }

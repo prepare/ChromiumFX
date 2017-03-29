@@ -293,7 +293,7 @@ public class Signature {
         }
     }
 
-    protected virtual void EmitExecuteInTargetProcess(CodeBuilder b, string apiClassName, string apiFunctionName) {
+    protected virtual void EmitRemoteProcedure(CodeBuilder b, string apiClassName, string apiFunctionName) {
 
         for(var i = 0; i <= ManagedParameters.Length - 1; i++) {
             ManagedParameters[i].EmitPreProxyCallStatements(b);
@@ -420,8 +420,8 @@ public class Signature {
             b.AppendLine();
         }
 
-        b.BeginBlock("protected override void ExecuteInTargetProcess(RemoteConnection connection)");
-        EmitExecuteInTargetProcess(b, apiClassName, apiFunctionName);
+        b.BeginBlock("protected override void RemoteProcedure(RemoteConnection connection)");
+        EmitRemoteProcedure(b, apiClassName, apiFunctionName);
         b.EndBlock();
     }
 

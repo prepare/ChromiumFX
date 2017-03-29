@@ -35,7 +35,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = CfxApi.V8StackTrace.cfx_v8stack_trace_get_current(frameLimit);
         }
     }
@@ -64,7 +64,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.V8StackTrace.cfx_v8stack_trace_is_valid(@this);
         }
     }
@@ -93,7 +93,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = CfxApi.V8StackTrace.cfx_v8stack_trace_get_frame_count(@this);
         }
     }
@@ -125,7 +125,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = CfxApi.V8StackTrace.cfx_v8stack_trace_get_frame(@this, index);
         }
     }

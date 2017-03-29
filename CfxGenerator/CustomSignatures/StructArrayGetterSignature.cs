@@ -64,7 +64,7 @@ return retval;";
                 apiClassName);
     }
 
-    protected override void EmitExecuteInTargetProcess(CodeBuilder b, string apiClassName, string apiFunctionName) {
+    protected override void EmitRemoteProcedure(CodeBuilder b, string apiClassName, string apiFunctionName) {
         Debug.Assert(Parameters[2].ParameterType.PublicSymbol == "CfxPostDataElement");
         var code =
 @"var count = CfxApi.PostData.cfx_post_data_get_element_count(@this);

@@ -17,7 +17,7 @@ namespace Chromium.Remote {
         internal CfxStringVisitorCtorWithGCHandleRemoteCall()
             : base(RemoteCallId.CfxStringVisitorCtorWithGCHandleRemoteCall) {}
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = CfxApi.StringVisitor.cfx_string_visitor_ctor(gcHandlePtr, 1);
         }
     }
@@ -27,7 +27,7 @@ namespace Chromium.Remote {
         internal CfxStringVisitorSetCallbackRemoteCall()
             : base(RemoteCallId.CfxStringVisitorSetCallbackRemoteCall) {}
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             CfxStringVisitorRemoteClient.SetCallback(self, index, active);
         }
     }
@@ -58,7 +58,7 @@ namespace Chromium.Remote {
         protected override void ReadReturn(StreamHandler h) {
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var self = (CfrStringVisitor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 return;

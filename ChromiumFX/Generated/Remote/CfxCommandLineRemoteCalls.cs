@@ -26,7 +26,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = CfxApi.CommandLine.cfx_command_line_create();
         }
     }
@@ -46,7 +46,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = CfxApi.CommandLine.cfx_command_line_get_global();
         }
     }
@@ -75,7 +75,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.CommandLine.cfx_command_line_is_valid(@this);
         }
     }
@@ -104,7 +104,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.CommandLine.cfx_command_line_is_read_only(@this);
         }
     }
@@ -133,7 +133,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = CfxApi.CommandLine.cfx_command_line_copy(@this);
         }
     }
@@ -159,7 +159,7 @@ namespace Chromium.Remote {
             h.Read(out argv);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             CfxApi.CommandLine.cfx_command_line_init_from_argv(@this, argc, argv);
         }
     }
@@ -182,7 +182,7 @@ namespace Chromium.Remote {
             h.Read(out commandLine);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var commandLine_pinned = new PinnedString(commandLine);
             CfxApi.CommandLine.cfx_command_line_init_from_string(@this, commandLine_pinned.Obj.PinnedPtr, commandLine_pinned.Length);
             commandLine_pinned.Obj.Free();
@@ -204,7 +204,7 @@ namespace Chromium.Remote {
             h.Read(out @this);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             CfxApi.CommandLine.cfx_command_line_reset(@this);
         }
     }
@@ -233,7 +233,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = new System.Collections.Generic.List<string>();
             var list = StringFunctions.AllocCfxStringList();
             CfxApi.CommandLine.cfx_command_line_get_argv(@this, list);
@@ -266,7 +266,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.CommandLine.cfx_command_line_get_command_line_string(@this));
         }
     }
@@ -295,7 +295,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.CommandLine.cfx_command_line_get_program(@this));
         }
     }
@@ -318,7 +318,7 @@ namespace Chromium.Remote {
             h.Read(out value);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var value_pinned = new PinnedString(value);
             CfxApi.CommandLine.cfx_command_line_set_program(@this, value_pinned.Obj.PinnedPtr, value_pinned.Length);
             value_pinned.Obj.Free();
@@ -349,7 +349,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.CommandLine.cfx_command_line_has_switches(@this);
         }
     }
@@ -381,7 +381,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var name_pinned = new PinnedString(name);
             __retval = 0 != CfxApi.CommandLine.cfx_command_line_has_switch(@this, name_pinned.Obj.PinnedPtr, name_pinned.Length);
             name_pinned.Obj.Free();
@@ -415,7 +415,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var name_pinned = new PinnedString(name);
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.CommandLine.cfx_command_line_get_switch_value(@this, name_pinned.Obj.PinnedPtr, name_pinned.Length));
             name_pinned.Obj.Free();
@@ -446,7 +446,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = new System.Collections.Generic.List<string[]>();
             var list = StringFunctions.AllocCfxStringMap();
             CfxApi.CommandLine.cfx_command_line_get_switches(@this, list);
@@ -473,7 +473,7 @@ namespace Chromium.Remote {
             h.Read(out name);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var name_pinned = new PinnedString(name);
             CfxApi.CommandLine.cfx_command_line_append_switch(@this, name_pinned.Obj.PinnedPtr, name_pinned.Length);
             name_pinned.Obj.Free();
@@ -501,7 +501,7 @@ namespace Chromium.Remote {
             h.Read(out value);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var name_pinned = new PinnedString(name);
             var value_pinned = new PinnedString(value);
             CfxApi.CommandLine.cfx_command_line_append_switch_with_value(@this, name_pinned.Obj.PinnedPtr, name_pinned.Length, value_pinned.Obj.PinnedPtr, value_pinned.Length);
@@ -534,7 +534,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.CommandLine.cfx_command_line_has_arguments(@this);
         }
     }
@@ -563,7 +563,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = new System.Collections.Generic.List<string>();
             var list = StringFunctions.AllocCfxStringList();
             CfxApi.CommandLine.cfx_command_line_get_arguments(@this, list);
@@ -590,7 +590,7 @@ namespace Chromium.Remote {
             h.Read(out argument);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var argument_pinned = new PinnedString(argument);
             CfxApi.CommandLine.cfx_command_line_append_argument(@this, argument_pinned.Obj.PinnedPtr, argument_pinned.Length);
             argument_pinned.Obj.Free();
@@ -615,7 +615,7 @@ namespace Chromium.Remote {
             h.Read(out wrapper);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var wrapper_pinned = new PinnedString(wrapper);
             CfxApi.CommandLine.cfx_command_line_prepend_wrapper(@this, wrapper_pinned.Obj.PinnedPtr, wrapper_pinned.Length);
             wrapper_pinned.Obj.Free();

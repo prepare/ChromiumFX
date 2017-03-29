@@ -26,7 +26,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = CfxApi.DictionaryValue.cfx_dictionary_value_create();
         }
     }
@@ -55,7 +55,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_is_valid(@this);
         }
     }
@@ -84,7 +84,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_is_owned(@this);
         }
     }
@@ -113,7 +113,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_is_read_only(@this);
         }
     }
@@ -145,7 +145,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_is_same(@this, that);
         }
     }
@@ -177,7 +177,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_is_equal(@this, that);
         }
     }
@@ -209,7 +209,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = CfxApi.DictionaryValue.cfx_dictionary_value_copy(@this, excludeEmptyChildren ? 1 : 0);
         }
     }
@@ -238,7 +238,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = (ulong)CfxApi.DictionaryValue.cfx_dictionary_value_get_size(@this);
         }
     }
@@ -267,7 +267,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_clear(@this);
         }
     }
@@ -299,7 +299,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_has_key(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
@@ -335,7 +335,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             PinnedString[] keys_handles;
             var keys_unwrapped = StringFunctions.UnwrapCfxStringList(keys, out keys_handles);
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_get_keys(@this, keys_unwrapped);
@@ -372,7 +372,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_remove(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
@@ -406,7 +406,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = CfxApi.DictionaryValue.cfx_dictionary_value_get_type(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
@@ -440,7 +440,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = CfxApi.DictionaryValue.cfx_dictionary_value_get_value(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
@@ -474,7 +474,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_get_bool(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
@@ -508,7 +508,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = CfxApi.DictionaryValue.cfx_dictionary_value_get_int(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
@@ -542,7 +542,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = CfxApi.DictionaryValue.cfx_dictionary_value_get_double(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
@@ -576,7 +576,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.DictionaryValue.cfx_dictionary_value_get_string(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length));
             key_pinned.Obj.Free();
@@ -610,7 +610,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = CfxApi.DictionaryValue.cfx_dictionary_value_get_binary(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
@@ -644,7 +644,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = CfxApi.DictionaryValue.cfx_dictionary_value_get_dictionary(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
@@ -678,7 +678,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = CfxApi.DictionaryValue.cfx_dictionary_value_get_list(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
@@ -715,7 +715,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_set_value(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length, value);
             key_pinned.Obj.Free();
@@ -749,7 +749,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_set_null(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length);
             key_pinned.Obj.Free();
@@ -786,7 +786,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_set_bool(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length, value ? 1 : 0);
             key_pinned.Obj.Free();
@@ -823,7 +823,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_set_int(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length, value);
             key_pinned.Obj.Free();
@@ -860,7 +860,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_set_double(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length, value);
             key_pinned.Obj.Free();
@@ -897,7 +897,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             var value_pinned = new PinnedString(value);
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_set_string(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length, value_pinned.Obj.PinnedPtr, value_pinned.Length);
@@ -936,7 +936,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_set_binary(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length, value);
             key_pinned.Obj.Free();
@@ -973,7 +973,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_set_dictionary(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length, value);
             key_pinned.Obj.Free();
@@ -1010,7 +1010,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             var key_pinned = new PinnedString(key);
             __retval = 0 != CfxApi.DictionaryValue.cfx_dictionary_value_set_list(@this, key_pinned.Obj.PinnedPtr, key_pinned.Length, value);
             key_pinned.Obj.Free();

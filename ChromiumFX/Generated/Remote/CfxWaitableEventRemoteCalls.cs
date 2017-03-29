@@ -38,7 +38,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = CfxApi.WaitableEvent.cfx_waitable_event_create(automaticReset ? 1 : 0, initiallySignaled ? 1 : 0);
         }
     }
@@ -58,7 +58,7 @@ namespace Chromium.Remote {
             h.Read(out @this);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             CfxApi.WaitableEvent.cfx_waitable_event_reset(@this);
         }
     }
@@ -78,7 +78,7 @@ namespace Chromium.Remote {
             h.Read(out @this);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             CfxApi.WaitableEvent.cfx_waitable_event_signal(@this);
         }
     }
@@ -107,7 +107,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.WaitableEvent.cfx_waitable_event_is_signaled(@this);
         }
     }
@@ -127,7 +127,7 @@ namespace Chromium.Remote {
             h.Read(out @this);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             CfxApi.WaitableEvent.cfx_waitable_event_wait(@this);
         }
     }
@@ -159,7 +159,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void ExecuteInTargetProcess(RemoteConnection connection) {
+        protected override void RemoteProcedure(RemoteConnection connection) {
             __retval = 0 != CfxApi.WaitableEvent.cfx_waitable_event_timed_wait(@this, maxMs);
         }
     }
