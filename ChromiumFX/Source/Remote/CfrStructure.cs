@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2017 Wolfgang BorgsmÃ¼ller
+// Copyright (c) 2014-2017 Wolfgang Borgsmüller
 // All rights reserved.
 // 
 // This software may be modified and distributed under the terms
@@ -32,7 +32,11 @@ namespace Chromium.Remote {
         internal override sealed void OnDispose(RemotePtr remotePtr) {
             if(dtor != null) {
                 dtor.nativePtr = remotePtr.ptr;
-                dtor.RequestExecution(remotePtr.connection);
+                try
+                {
+                    dtor.RequestExecution(remotePtr.connection);
+                } catch {} // exception is being ignored in CfrBase, but CfrStructure does not inherit from it any longer,
+                 // so CfxRemotingException on the finalizer thread kills client application
             }
         }
     }
