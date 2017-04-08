@@ -12,6 +12,9 @@ namespace Chromium {
 
         protected readonly Dictionary<IntPtr, WeakReference> cache = new Dictionary<IntPtr, WeakReference>();
 
+        /// <summary>
+        /// Always acquire a lock on this weak cache before calling this method.
+        /// </summary>
         internal object Get(IntPtr key) {
             // always locked by caller
             WeakReference r;
@@ -41,6 +44,9 @@ namespace Chromium {
             CfxRuntime.OnCfxShutdown += this.OnShutdown;
         }
 
+        /// <summary>
+        /// Always acquire a lock on this weak cache before calling this method.
+        /// </summary>
         internal void Add(CfxBaseRefCounted obj) {
             // always locked by caller
             cache.Add(obj.nativePtrUnchecked, new WeakReference(obj, false));
@@ -62,6 +68,9 @@ namespace Chromium {
 
     namespace Remote {
         internal class RemoteWeakCache : WeakCacheBase {
+            /// <summary>
+            /// Always acquire a lock on this weak cache before calling this method.
+            /// </summary>
             internal void Add(IntPtr key, object obj) {
                 // always locked by caller
                 cache.Add(key, new WeakReference(obj, false));
