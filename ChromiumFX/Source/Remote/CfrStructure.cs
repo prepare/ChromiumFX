@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2017 Wolfgang Borgsmüller
+// Copyright (c) 2014-2017 Wolfgang BorgsmÃ¼ller
 // All rights reserved.
 // 
 // This software may be modified and distributed under the terms
@@ -20,7 +20,10 @@ namespace Chromium.Remote {
             this.dtor = dtor;
             ctor.RequestExecution();
             SetRemotePtr(new RemotePtr(ctor.__retval));
-            RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
+            lock(RemotePtr.connection.weakCache) {
+                // TODO: where to remove this from the cache?
+                RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
+            }
         }
 
         // Case 2) struct pointer passed in from framework in callback function
@@ -32,11 +35,12 @@ namespace Chromium.Remote {
         internal override sealed void OnDispose(RemotePtr remotePtr) {
             if(dtor != null) {
                 dtor.nativePtr = remotePtr.ptr;
-                try
-                {
+                try {
                     dtor.RequestExecution(remotePtr.connection);
-                } catch {} // exception is being ignored in CfrBase, but CfrStructure does not inherit from it any longer,
-                 // so CfxRemotingException on the finalizer thread kills client application
+                } catch {
+                    // exception is being ignored in CfrBase, but CfrStructure does not inherit from it any longer,
+                    // so CfxRemotingException on the finalizer thread kills client application
+                }
             }
         }
     }

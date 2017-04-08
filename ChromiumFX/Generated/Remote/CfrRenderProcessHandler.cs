@@ -40,7 +40,9 @@ namespace Chromium.Remote {
 
         private CfrRenderProcessHandler(RemotePtr remotePtr) : base(remotePtr) {}
         public CfrRenderProcessHandler() : base(new CfxRenderProcessHandlerCtorWithGCHandleRemoteCall()) {
-            RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
+            lock(RemotePtr.connection.weakCache) {
+                RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
+            }
         }
 
         /// <summary>

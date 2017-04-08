@@ -40,7 +40,9 @@ namespace Chromium.Remote {
 
         private CfrLoadHandler(RemotePtr remotePtr) : base(remotePtr) {}
         public CfrLoadHandler() : base(new CfxLoadHandlerCtorWithGCHandleRemoteCall()) {
-            RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
+            lock(RemotePtr.connection.weakCache) {
+                RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
+            }
         }
 
         /// <summary>

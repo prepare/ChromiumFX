@@ -660,7 +660,9 @@ public class CfxClientClass : CfxClass {
 
 
         b.BeginBlock("public {0}() : base(new {1}CtorWithGCHandleRemoteCall())", RemoteClassName, ClassName);
+        b.BeginBlock("lock(RemotePtr.connection.weakCache)");
         b.AppendLine("RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);");
+        b.EndBlock();
         b.EndBlock();
 
         b.AppendLine();

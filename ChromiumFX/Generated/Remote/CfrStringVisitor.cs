@@ -38,7 +38,9 @@ namespace Chromium.Remote {
 
         private CfrStringVisitor(RemotePtr remotePtr) : base(remotePtr) {}
         public CfrStringVisitor() : base(new CfxStringVisitorCtorWithGCHandleRemoteCall()) {
-            RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
+            lock(RemotePtr.connection.weakCache) {
+                RemotePtr.connection.weakCache.Add(RemotePtr.ptr, this);
+            }
         }
 
         /// <summary>
