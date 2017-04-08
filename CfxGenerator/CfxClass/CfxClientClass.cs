@@ -650,7 +650,7 @@ public class CfxClientClass : CfxClass {
         b.AppendLine();
 
         b.AppendSummaryAndRemarks(Comments, true, Category == StructCategory.Client);
-        b.BeginClass(RemoteClassName + " : CfrClientBase", GeneratorConfig.ClassModifiers(RemoteClassName));
+        b.BeginClass(RemoteClassName + " : CfrBaseClient", GeneratorConfig.ClassModifiers(RemoteClassName));
         b.AppendLine();
 
         EmitRemoteClassWrapperFunction(b);

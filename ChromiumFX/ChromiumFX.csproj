@@ -296,8 +296,8 @@
     <Compile Include="Source\CfxWindowInfo.cs" />
     <Compile Include="Source\NativeFunctionLoader.cs" />
     <Compile Include="Source\CfxMainArgs.cs" />
-    <Compile Include="Source\Remote\CfrLibraryBase.cs" />
-    <Compile Include="Source\Remote\CfrClientBase.cs" />
+    <Compile Include="Source\Remote\CfrBaseLibrary.cs" />
+    <Compile Include="Source\Remote\CfrBaseClient.cs" />
     <Compile Include="Source\Remote\CfrMayBlockEventArgs.cs" />
     <Compile Include="Source\Remote\CfrTellEventArgs.cs" />
     <Compile Include="Source\Remote\CfrSeekEventArgs.cs" />
@@ -314,7 +314,7 @@
     <Compile Include="Source\CfxObject.cs" />
     <Compile Include="Source\PinnedObject.cs" />
     <Compile Include="Source\PinnedString.cs" />
-    <Compile Include="Source\Remote\CfrBase.cs" />
+    <Compile Include="Source\Remote\CfrBaseRefCounted.cs" />
     <Compile Include="Source\CfxEventArgs.cs" />
     <Compile Include="Source\Remote\CfrObject.cs" />
     <Compile Include="Source\Remote\CfrRuntime.cs" />

@@ -21,7 +21,7 @@ namespace Chromium.Remote {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_render_process_handler_capi.h">cef/include/capi/cef_render_process_handler_capi.h</see>.
     /// </remarks>
-    public class CfrRenderProcessHandler : CfrClientBase {
+    public class CfrRenderProcessHandler : CfrBaseClient {
 
         internal static CfrRenderProcessHandler Wrap(RemotePtr remotePtr) {
             if(remotePtr == RemotePtr.Zero) return null;

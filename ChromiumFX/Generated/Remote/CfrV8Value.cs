@@ -22,7 +22,7 @@ namespace Chromium.Remote {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
     /// </remarks>
-    public partial class CfrV8Value : CfrLibraryBase {
+    public partial class CfrV8Value : CfrBaseLibrary {
 
         internal static CfrV8Value Wrap(RemotePtr remotePtr) {
             if(remotePtr == RemotePtr.Zero) return null;

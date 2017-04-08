@@ -21,7 +21,7 @@ namespace Chromium.Remote {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_browser_capi.h">cef/include/capi/cef_browser_capi.h</see>.
     /// </remarks>
-    public class CfrBrowser : CfrLibraryBase {
+    public class CfrBrowser : CfrBaseLibrary {
 
         internal static CfrBrowser Wrap(RemotePtr remotePtr) {
             if(remotePtr == RemotePtr.Zero) return null;

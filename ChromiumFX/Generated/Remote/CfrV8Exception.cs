@@ -19,7 +19,7 @@ namespace Chromium.Remote {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
     /// </remarks>
-    public class CfrV8Exception : CfrLibraryBase {
+    public class CfrV8Exception : CfrBaseLibrary {
 
         internal static CfrV8Exception Wrap(RemotePtr remotePtr) {
             if(remotePtr == RemotePtr.Zero) return null;

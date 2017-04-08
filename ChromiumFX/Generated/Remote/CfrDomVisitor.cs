@@ -20,7 +20,7 @@ namespace Chromium.Remote {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
     /// </remarks>
-    public class CfrDomVisitor : CfrClientBase {
+    public class CfrDomVisitor : CfrBaseClient {
 
         internal static CfrDomVisitor Wrap(RemotePtr remotePtr) {
             if(remotePtr == RemotePtr.Zero) return null;

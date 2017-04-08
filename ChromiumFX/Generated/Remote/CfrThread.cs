@@ -26,7 +26,7 @@ namespace Chromium.Remote {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_thread_capi.h">cef/include/capi/cef_thread_capi.h</see>.
     /// </remarks>
-    public class CfrThread : CfrLibraryBase {
+    public class CfrThread : CfrBaseLibrary {
 
         internal static CfrThread Wrap(RemotePtr remotePtr) {
             if(remotePtr == RemotePtr.Zero) return null;

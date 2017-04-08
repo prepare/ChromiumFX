@@ -12,11 +12,11 @@ namespace Chromium.Remote {
     /// <summary>
     /// Base class for all remote wrapper classes for CEF client structs.
     /// </summary>
-    public abstract class CfrClientBase : CfrBase {
+    public abstract class CfrBaseClient : CfrBaseRefCounted {
 
         //static int cfrTaskCount;
 
-        internal CfrClientBase(CtorWithGCHandleRemoteCall call) {
+        internal CfrBaseClient(CtorWithGCHandleRemoteCall call) {
             GCHandle handle = GCHandle.Alloc(this, GCHandleType.Weak);
             call.gcHandlePtr = GCHandle.ToIntPtr(handle);
             call.RequestExecution();
@@ -24,7 +24,7 @@ namespace Chromium.Remote {
             //if(this is CfrTask) Debug.Print("CfrTask created: " + System.Threading.Interlocked.Increment(ref cfrTaskCount));
         }
 
-        internal CfrClientBase(RemotePtr remotePtr) : base(remotePtr) { }
+        internal CfrBaseClient(RemotePtr remotePtr) : base(remotePtr) { }
 
         /// <summary>
         /// When true, all CEF callback events are disabled for this handler. Incoming callbacks will return default values to CEF.

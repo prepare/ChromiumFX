@@ -20,7 +20,7 @@ namespace Chromium.Remote {
     /// See also the original CEF documentation in
     /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_stream_capi.h">cef/include/capi/cef_stream_capi.h</see>.
     /// </remarks>
-    public class CfrReadHandler : CfrClientBase {
+    public class CfrReadHandler : CfrBaseClient {
 
         internal static CfrReadHandler Wrap(RemotePtr remotePtr) {
             if(remotePtr == RemotePtr.Zero) return null;

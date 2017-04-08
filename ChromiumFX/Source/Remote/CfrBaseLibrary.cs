@@ -10,7 +10,7 @@ namespace Chromium.Remote {
     /// <summary>
     /// Base class for all remote wrapper classes for CEF library structs.
     /// </summary>
-    public abstract class CfrLibraryBase : CfrBase {
-        internal CfrLibraryBase(RemotePtr remotePtr) : base(remotePtr) { }
+    public abstract class CfrBaseLibrary : CfrBaseRefCounted {
+        internal CfrBaseLibrary(RemotePtr remotePtr) : base(remotePtr) { }
     }
 }
