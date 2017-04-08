@@ -24,20 +24,6 @@ namespace Chromium.Remote {
     /// </remarks>
     public class CfrV8Accessor : CfrBaseClient {
 
-        internal static CfrV8Accessor Wrap(RemotePtr remotePtr) {
-            if(remotePtr == RemotePtr.Zero) return null;
-            var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
-            lock(weakCache) {
-                var cfrObj = (CfrV8Accessor)weakCache.Get(remotePtr.ptr);
-                if(cfrObj == null) {
-                    cfrObj = new CfrV8Accessor(remotePtr);
-                    weakCache.Add(remotePtr.ptr, cfrObj);
-                }
-                return cfrObj;
-            }
-        }
-
-
 
         private CfrV8Accessor(RemotePtr remotePtr) : base(remotePtr) {}
         public CfrV8Accessor() : base(new CfxV8AccessorCtorWithGCHandleRemoteCall()) {

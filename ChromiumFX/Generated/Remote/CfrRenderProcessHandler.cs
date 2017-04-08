@@ -23,20 +23,6 @@ namespace Chromium.Remote {
     /// </remarks>
     public class CfrRenderProcessHandler : CfrBaseClient {
 
-        internal static CfrRenderProcessHandler Wrap(RemotePtr remotePtr) {
-            if(remotePtr == RemotePtr.Zero) return null;
-            var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
-            lock(weakCache) {
-                var cfrObj = (CfrRenderProcessHandler)weakCache.Get(remotePtr.ptr);
-                if(cfrObj == null) {
-                    cfrObj = new CfrRenderProcessHandler(remotePtr);
-                    weakCache.Add(remotePtr.ptr, cfrObj);
-                }
-                return cfrObj;
-            }
-        }
-
-
 
         private CfrRenderProcessHandler(RemotePtr remotePtr) : base(remotePtr) {}
         public CfrRenderProcessHandler() : base(new CfxRenderProcessHandlerCtorWithGCHandleRemoteCall()) {

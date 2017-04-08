@@ -22,20 +22,6 @@ namespace Chromium.Remote {
     /// </remarks>
     public class CfrApp : CfrBaseClient {
 
-        internal static CfrApp Wrap(RemotePtr remotePtr) {
-            if(remotePtr == RemotePtr.Zero) return null;
-            var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
-            lock(weakCache) {
-                var cfrObj = (CfrApp)weakCache.Get(remotePtr.ptr);
-                if(cfrObj == null) {
-                    cfrObj = new CfrApp(remotePtr);
-                    weakCache.Add(remotePtr.ptr, cfrObj);
-                }
-                return cfrObj;
-            }
-        }
-
-
 
         private CfrApp(RemotePtr remotePtr) : base(remotePtr) {}
         public CfrApp() : base(new CfxAppCtorWithGCHandleRemoteCall()) {

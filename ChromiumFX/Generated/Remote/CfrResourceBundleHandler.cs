@@ -23,20 +23,6 @@ namespace Chromium.Remote {
     /// </remarks>
     public class CfrResourceBundleHandler : CfrBaseClient {
 
-        internal static CfrResourceBundleHandler Wrap(RemotePtr remotePtr) {
-            if(remotePtr == RemotePtr.Zero) return null;
-            var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
-            lock(weakCache) {
-                var cfrObj = (CfrResourceBundleHandler)weakCache.Get(remotePtr.ptr);
-                if(cfrObj == null) {
-                    cfrObj = new CfrResourceBundleHandler(remotePtr);
-                    weakCache.Add(remotePtr.ptr, cfrObj);
-                }
-                return cfrObj;
-            }
-        }
-
-
 
         private CfrResourceBundleHandler(RemotePtr remotePtr) : base(remotePtr) {}
         public CfrResourceBundleHandler() : base(new CfxResourceBundleHandlerCtorWithGCHandleRemoteCall()) {
