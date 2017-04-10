@@ -22,8 +22,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxFrame : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxFrame Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -349,11 +347,6 @@ namespace Chromium {
         /// </remarks>
         public void VisitDom(CfxDomVisitor visitor) {
             CfxApi.Frame.cfx_frame_visit_dom(NativePtr, CfxDomVisitor.Unwrap(visitor));
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

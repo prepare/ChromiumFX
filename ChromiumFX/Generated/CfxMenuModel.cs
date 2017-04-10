@@ -22,8 +22,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxMenuModel : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxMenuModel Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -779,11 +777,6 @@ namespace Chromium {
             var __retval = CfxApi.MenuModel.cfx_menu_model_set_font_list_at(NativePtr, index, fontList_pinned.Obj.PinnedPtr, fontList_pinned.Length);
             fontList_pinned.Obj.Free();
             return 0 != __retval;
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

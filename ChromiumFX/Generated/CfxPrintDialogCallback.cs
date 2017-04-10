@@ -19,8 +19,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxPrintDialogCallback : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxPrintDialogCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -58,11 +56,6 @@ namespace Chromium {
         /// </remarks>
         public void Cancel() {
             CfxApi.PrintDialogCallback.cfx_print_dialog_callback_cancel(NativePtr);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

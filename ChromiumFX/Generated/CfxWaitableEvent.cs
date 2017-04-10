@@ -27,8 +27,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxWaitableEvent : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxWaitableEvent Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -125,11 +123,6 @@ namespace Chromium {
         /// </remarks>
         public bool TimedWait(long maxMs) {
             return 0 != CfxApi.WaitableEvent.cfx_waitable_event_timed_wait(NativePtr, maxMs);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

@@ -17,6 +17,8 @@ namespace Chromium {
     /// </summary>
     public class CfxBaseLibrary : CfxBaseRefCounted {
 
+        internal static readonly WeakCache weakCache = new WeakCache();
+
         internal CfxBaseLibrary(IntPtr nativePtr) : base(nativePtr) { }
 
         /// <summary>
@@ -34,7 +36,9 @@ namespace Chromium {
             }
         }
 
-        internal override void OnDispose(IntPtr nativePtr) {
+        internal override sealed void OnDispose(IntPtr nativePtr) {
+            // first remove from weak cache, then release native pointer
+            weakCache.Remove(nativePtr);
             CfxApi.cfx_release(nativePtr);
         }
     }

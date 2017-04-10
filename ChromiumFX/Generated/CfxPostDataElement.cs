@@ -20,8 +20,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxPostDataElement : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxPostDataElement Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -148,11 +146,6 @@ namespace Chromium {
         /// </remarks>
         public ulong GetBytes(ulong size, IntPtr bytes) {
             return (ulong)CfxApi.PostDataElement.cfx_post_data_element_get_bytes(NativePtr, (UIntPtr)size, bytes);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

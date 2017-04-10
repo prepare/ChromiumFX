@@ -19,8 +19,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxBeforeDownloadCallback : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxBeforeDownloadCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -52,11 +50,6 @@ namespace Chromium {
             var downloadPath_pinned = new PinnedString(downloadPath);
             CfxApi.BeforeDownloadCallback.cfx_before_download_callback_cont(NativePtr, downloadPath_pinned.Obj.PinnedPtr, downloadPath_pinned.Length, showDialog ? 1 : 0);
             downloadPath_pinned.Obj.Free();
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

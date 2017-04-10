@@ -26,8 +26,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxCommandLine : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxCommandLine Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -343,11 +341,6 @@ namespace Chromium {
             var wrapper_pinned = new PinnedString(wrapper);
             CfxApi.CommandLine.cfx_command_line_prepend_wrapper(NativePtr, wrapper_pinned.Obj.PinnedPtr, wrapper_pinned.Length);
             wrapper_pinned.Obj.Free();
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

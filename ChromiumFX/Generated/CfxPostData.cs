@@ -20,8 +20,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxPostData : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxPostData Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -147,11 +145,6 @@ namespace Chromium {
         /// </remarks>
         public void RemoveElements() {
             CfxApi.PostData.cfx_post_data_remove_elements(NativePtr);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

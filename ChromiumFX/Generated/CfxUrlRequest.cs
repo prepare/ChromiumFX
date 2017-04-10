@@ -23,8 +23,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxUrlRequest : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxUrlRequest Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -143,11 +141,6 @@ namespace Chromium {
         /// </remarks>
         public void Cancel() {
             CfxApi.UrlRequest.cfx_urlrequest_cancel(NativePtr);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

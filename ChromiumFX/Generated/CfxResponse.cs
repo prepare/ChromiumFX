@@ -20,8 +20,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxResponse : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxResponse Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -180,11 +178,6 @@ namespace Chromium {
             StringFunctions.FreePinnedStrings(headerMap_handles);
             StringFunctions.CfxStringMultimapCopyToManaged(headerMap_unwrapped, headerMap);
             CfxApi.Runtime.cfx_string_multimap_free(headerMap_unwrapped);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

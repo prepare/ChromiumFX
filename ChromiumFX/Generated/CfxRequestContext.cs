@@ -32,8 +32,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxRequestContext : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxRequestContext Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -365,11 +363,6 @@ namespace Chromium {
             StringFunctions.CfxStringListCopyToManaged(resolvedIps_unwrapped, resolvedIps);
             CfxApi.Runtime.cfx_string_list_free(resolvedIps_unwrapped);
             return (CfxErrorCode)__retval;
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

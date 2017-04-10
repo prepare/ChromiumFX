@@ -19,8 +19,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxPrintSettings : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxPrintSettings Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -317,11 +315,6 @@ namespace Chromium {
         /// </remarks>
         public bool WillCollate() {
             return 0 != CfxApi.PrintSettings.cfx_print_settings_will_collate(NativePtr);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

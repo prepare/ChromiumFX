@@ -24,8 +24,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxImage : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxImage Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -231,11 +229,6 @@ namespace Chromium {
         /// </remarks>
         public CfxBinaryValue GetAsJpeg(float scaleFactor, int quality, out int pixelWidth, out int pixelHeight) {
             return CfxBinaryValue.Wrap(CfxApi.Image.cfx_image_get_as_jpeg(NativePtr, scaleFactor, quality, out pixelWidth, out pixelHeight));
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

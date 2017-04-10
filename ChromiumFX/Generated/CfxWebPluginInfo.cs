@@ -19,8 +19,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxWebPluginInfo : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxWebPluginInfo Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -88,11 +86,6 @@ namespace Chromium {
             get {
                 return StringFunctions.ConvertStringUserfree(CfxApi.WebPluginInfo.cfx_web_plugin_info_get_description(NativePtr));
             }
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

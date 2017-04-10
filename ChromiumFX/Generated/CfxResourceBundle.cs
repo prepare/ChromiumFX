@@ -23,8 +23,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxResourceBundle : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxResourceBundle Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -104,11 +102,6 @@ namespace Chromium {
             var __retval = CfxApi.ResourceBundle.cfx_resource_bundle_get_data_resource_for_scale(NativePtr, resourceId, (int)scaleFactor, out data, out dataSize_tmp);
             dataSize = (ulong)dataSize_tmp;
             return 0 != __retval;
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

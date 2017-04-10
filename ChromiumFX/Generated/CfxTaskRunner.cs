@@ -25,8 +25,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxTaskRunner : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxTaskRunner Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -126,11 +124,6 @@ namespace Chromium {
         /// </remarks>
         public bool PostDelayedTask(CfxTask task, long delayMs) {
             return 0 != CfxApi.TaskRunner.cfx_task_runner_post_delayed_task(NativePtr, CfxTask.Unwrap(task), delayMs);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

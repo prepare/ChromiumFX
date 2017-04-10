@@ -19,8 +19,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxProcessMessage : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxProcessMessage Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -115,11 +113,6 @@ namespace Chromium {
         /// </remarks>
         public CfxProcessMessage Copy() {
             return CfxProcessMessage.Wrap(CfxApi.ProcessMessage.cfx_process_message_copy(NativePtr));
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

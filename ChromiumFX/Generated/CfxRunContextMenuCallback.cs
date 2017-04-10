@@ -19,8 +19,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxRunContextMenuCallback : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxRunContextMenuCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -59,11 +57,6 @@ namespace Chromium {
         /// </remarks>
         public void Cancel() {
             CfxApi.RunContextMenuCallback.cfx_run_context_menu_callback_cancel(NativePtr);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

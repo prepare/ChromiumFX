@@ -20,8 +20,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxDomNode : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxDomNode Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -388,11 +386,6 @@ namespace Chromium {
             attrName_pinned.Obj.Free();
             value_pinned.Obj.Free();
             return 0 != __retval;
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

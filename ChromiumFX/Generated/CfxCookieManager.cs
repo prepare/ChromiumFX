@@ -20,8 +20,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxCookieManager : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxCookieManager Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -201,11 +199,6 @@ namespace Chromium {
         /// </remarks>
         public bool FlushStore(CfxCompletionCallback callback) {
             return 0 != CfxApi.CookieManager.cfx_cookie_manager_flush_store(NativePtr, CfxCompletionCallback.Unwrap(callback));
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

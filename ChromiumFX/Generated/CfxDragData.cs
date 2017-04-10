@@ -20,8 +20,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxDragData : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxDragData Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -305,11 +303,6 @@ namespace Chromium {
             CfxApi.DragData.cfx_drag_data_add_file(NativePtr, path_pinned.Obj.PinnedPtr, path_pinned.Length, displayName_pinned.Obj.PinnedPtr, displayName_pinned.Length);
             path_pinned.Obj.Free();
             displayName_pinned.Obj.Free();
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

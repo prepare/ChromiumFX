@@ -19,8 +19,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxSelectClientCertificateCallback : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxSelectClientCertificateCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -48,11 +46,6 @@ namespace Chromium {
         /// </remarks>
         public void Select(CfxX509Certificate cert) {
             CfxApi.SelectClientCertificateCallback.cfx_select_client_certificate_callback_select(NativePtr, CfxX509Certificate.Unwrap(cert));
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

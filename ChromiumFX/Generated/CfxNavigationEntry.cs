@@ -19,8 +19,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxNavigationEntry : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxNavigationEntry Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -175,11 +173,6 @@ namespace Chromium {
             get {
                 return CfxSslStatus.Wrap(CfxApi.NavigationEntry.cfx_navigation_entry_get_sslstatus(NativePtr));
             }
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

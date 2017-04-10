@@ -20,8 +20,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxAuthCallback : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxAuthCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -63,11 +61,6 @@ namespace Chromium {
         /// </remarks>
         public void Cancel() {
             CfxApi.AuthCallback.cfx_auth_callback_cancel(NativePtr);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

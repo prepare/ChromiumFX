@@ -101,11 +101,6 @@ public class CfxLibraryClass : CfxClass {
 
         b.AppendLine();
 
-        if(CefStruct.IsRefCounted) {
-            b.AppendLine("private static readonly WeakCache weakCache = new WeakCache();");
-            b.AppendLine();
-        }
-
         b.BeginFunction("Wrap", ClassName, "IntPtr nativePtr", "internal static");
         b.AppendLine("if(nativePtr == IntPtr.Zero) return null;");
         if(CefStruct.IsRefCounted) {
@@ -166,14 +161,6 @@ public class CfxLibraryClass : CfxClass {
                 b.BeginFunction(sf.Signature.PublicFunctionHeader(sf.PublicName));
             }
             sf.Signature.EmitPublicCall(b, ApiClassName, sf.CfxApiFunctionName);
-            b.EndBlock();
-        }
-
-        if(CefStruct.IsRefCounted) {
-            b.AppendLine();
-            b.BeginFunction("OnDispose", "void", "IntPtr nativePtr", "internal override");
-            b.AppendLine("weakCache.Remove(nativePtr);");
-            b.AppendLine("base.OnDispose(nativePtr);");
             b.EndBlock();
         }
 

@@ -20,8 +20,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxGeolocationCallback : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxGeolocationCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -48,11 +46,6 @@ namespace Chromium {
         /// </remarks>
         public void Continue(bool allow) {
             CfxApi.GeolocationCallback.cfx_geolocation_callback_cont(NativePtr, allow ? 1 : 0);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

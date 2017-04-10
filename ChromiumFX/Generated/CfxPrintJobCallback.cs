@@ -19,8 +19,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxPrintJobCallback : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxPrintJobCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -47,11 +45,6 @@ namespace Chromium {
         /// </remarks>
         public void Continue() {
             CfxApi.PrintJobCallback.cfx_print_job_callback_cont(NativePtr);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

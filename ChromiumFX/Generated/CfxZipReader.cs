@@ -21,8 +21,6 @@ namespace Chromium {
     /// </remarks>
     public partial class CfxZipReader : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxZipReader Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -203,11 +201,6 @@ namespace Chromium {
         /// </remarks>
         public bool Eof() {
             return 0 != CfxApi.ZipReader.cfx_zip_reader_eof(NativePtr);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

@@ -22,8 +22,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxBrowser : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxBrowser Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -311,11 +309,6 @@ namespace Chromium {
         /// </remarks>
         public bool SendProcessMessage(CfxProcessId targetProcess, CfxProcessMessage message) {
             return 0 != CfxApi.Browser.cfx_browser_send_process_message(NativePtr, (int)targetProcess, CfxProcessMessage.Unwrap(message));
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

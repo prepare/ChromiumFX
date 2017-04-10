@@ -19,8 +19,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxListValue : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxListValue Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -405,11 +403,6 @@ namespace Chromium {
         /// </remarks>
         public bool SetList(ulong index, CfxListValue value) {
             return 0 != CfxApi.ListValue.cfx_list_value_set_list(NativePtr, (UIntPtr)index, CfxListValue.Unwrap(value));
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

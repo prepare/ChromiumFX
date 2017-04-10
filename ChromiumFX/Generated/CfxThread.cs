@@ -27,8 +27,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxThread : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxThread Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -121,11 +119,6 @@ namespace Chromium {
         /// </remarks>
         public void Stop() {
             CfxApi.Thread.cfx_thread_stop(NativePtr);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

@@ -20,8 +20,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxStreamWriter : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxStreamWriter Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -120,11 +118,6 @@ namespace Chromium {
         /// </remarks>
         public bool MayBlock() {
             return 0 != CfxApi.StreamWriter.cfx_stream_writer_may_block(NativePtr);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

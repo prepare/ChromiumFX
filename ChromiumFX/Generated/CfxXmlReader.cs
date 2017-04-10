@@ -21,8 +21,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxXmlReader : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxXmlReader Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -440,11 +438,6 @@ namespace Chromium {
         /// </remarks>
         public bool MoveToCarryingElement() {
             return 0 != CfxApi.XmlReader.cfx_xml_reader_move_to_carrying_element(NativePtr);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

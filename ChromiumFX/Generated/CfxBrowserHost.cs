@@ -22,8 +22,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxBrowserHost : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxBrowserHost Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -835,11 +833,6 @@ namespace Chromium {
         /// </remarks>
         public void DragSourceSystemDragEnded() {
             CfxApi.BrowserHost.cfx_browser_host_drag_source_system_drag_ended(NativePtr);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

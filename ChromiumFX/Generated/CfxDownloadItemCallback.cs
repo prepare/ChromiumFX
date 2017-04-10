@@ -19,8 +19,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxDownloadItemCallback : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxDownloadItemCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -69,11 +67,6 @@ namespace Chromium {
         /// </remarks>
         public void Resume() {
             CfxApi.DownloadItemCallback.cfx_download_item_callback_resume(NativePtr);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

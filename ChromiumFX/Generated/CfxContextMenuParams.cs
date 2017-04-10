@@ -20,8 +20,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxContextMenuParams : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxContextMenuParams Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -332,11 +330,6 @@ namespace Chromium {
             StringFunctions.CfxStringListCopyToManaged(suggestions_unwrapped, suggestions);
             CfxApi.Runtime.cfx_string_list_free(suggestions_unwrapped);
             return 0 != __retval;
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

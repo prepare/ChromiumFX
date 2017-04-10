@@ -20,8 +20,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxV8Exception : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxV8Exception Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -147,11 +145,6 @@ namespace Chromium {
             get {
                 return CfxApi.V8Exception.cfx_v8exception_get_end_column(NativePtr);
             }
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

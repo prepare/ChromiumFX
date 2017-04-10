@@ -19,8 +19,6 @@ namespace Chromium {
     /// </remarks>
     public partial class CfxBinaryValue : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxBinaryValue Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -137,11 +135,6 @@ namespace Chromium {
         /// </remarks>
         public ulong GetData(IntPtr buffer, ulong bufferSize, ulong dataOffset) {
             return (ulong)CfxApi.BinaryValue.cfx_binary_value_get_data(NativePtr, buffer, (UIntPtr)bufferSize, (UIntPtr)dataOffset);
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

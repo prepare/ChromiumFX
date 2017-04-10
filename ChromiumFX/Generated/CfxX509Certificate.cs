@@ -19,8 +19,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxX509Certificate : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxX509Certificate Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -200,11 +198,6 @@ namespace Chromium {
                 }
                 return retval;
             }
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

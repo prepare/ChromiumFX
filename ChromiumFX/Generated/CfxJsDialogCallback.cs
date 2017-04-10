@@ -20,8 +20,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxJsDialogCallback : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxJsDialogCallback Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -51,11 +49,6 @@ namespace Chromium {
             var userInput_pinned = new PinnedString(userInput);
             CfxApi.JsDialogCallback.cfx_jsdialog_callback_cont(NativePtr, success ? 1 : 0, userInput_pinned.Obj.PinnedPtr, userInput_pinned.Length);
             userInput_pinned.Obj.Free();
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

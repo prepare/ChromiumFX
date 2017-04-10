@@ -23,8 +23,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxV8StackTrace : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxV8StackTrace Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -91,11 +89,6 @@ namespace Chromium {
         /// </remarks>
         public CfxV8StackFrame GetFrame(int index) {
             return CfxV8StackFrame.Wrap(CfxApi.V8StackTrace.cfx_v8stack_trace_get_frame(NativePtr, index));
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }

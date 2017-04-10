@@ -20,8 +20,6 @@ namespace Chromium {
     /// </remarks>
     public class CfxDictionaryValue : CfxBaseLibrary {
 
-        private static readonly WeakCache weakCache = new WeakCache();
-
         internal static CfxDictionaryValue Wrap(IntPtr nativePtr) {
             if(nativePtr == IntPtr.Zero) return null;
             lock(weakCache) {
@@ -483,11 +481,6 @@ namespace Chromium {
             var __retval = CfxApi.DictionaryValue.cfx_dictionary_value_set_list(NativePtr, key_pinned.Obj.PinnedPtr, key_pinned.Length, CfxListValue.Unwrap(value));
             key_pinned.Obj.Free();
             return 0 != __retval;
-        }
-
-        internal override void OnDispose(IntPtr nativePtr) {
-            weakCache.Remove(nativePtr);
-            base.OnDispose(nativePtr);
         }
     }
 }
