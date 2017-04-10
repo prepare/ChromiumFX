@@ -25,15 +25,10 @@ namespace Chromium.Remote {
 
         internal static CfrV8Handler Wrap(RemotePtr remotePtr) {
             if(remotePtr == RemotePtr.Zero) return null;
-            var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;
-            lock(weakCache) {
-                var cfrObj = (CfrV8Handler)weakCache.Get(remotePtr.ptr);
-                if(cfrObj == null) {
-                    cfrObj = new CfrV8Handler(remotePtr);
-                    weakCache.Add(remotePtr.ptr, cfrObj);
-                }
-                return cfrObj;
-            }
+            var call = new CfxV8HandlerGetGcHandleRemoteCall();
+            call.self = remotePtr.ptr;
+            call.RequestExecution(remotePtr.connection);
+            return (CfrV8Handler)System.Runtime.InteropServices.GCHandle.FromIntPtr(call.gc_handle).Target;
         }
 
 

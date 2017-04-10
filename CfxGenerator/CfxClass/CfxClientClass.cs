@@ -471,6 +471,16 @@ public class CfxClientClass : CfxClass {
         b.EndBlock();
         b.AppendLine();
 
+        if(NeedsWrapFunction) {
+            b.BeginRemoteCallClass(ClassName, callIds, "GetGcHandleRemoteCall");
+            b.AppendLine();
+            b.BeginBlock("protected override void RemoteProcedure(RemoteConnection connection)");
+            b.AppendLine("gc_handle = CfxApi.{0}.{1}_get_gc_handle(self);", ApiClassName, CfxName);
+            b.EndBlock();
+            b.EndBlock();
+            b.AppendLine();
+        }
+
         b.BeginRemoteCallClass(ClassName, callIds, "SetCallbackRemoteCall");
         b.AppendLine();
         b.BeginBlock("protected override void RemoteProcedure(RemoteConnection connection)");
@@ -656,15 +666,10 @@ public class CfxClientClass : CfxClass {
         if(NeedsWrapFunction) {
             b.BeginFunction("Wrap", RemoteClassName, "RemotePtr remotePtr", "internal static");
             b.AppendLine("if(remotePtr == RemotePtr.Zero) return null;");
-            b.AppendLine("var weakCache = CfxRemoteCallContext.CurrentContext.connection.weakCache;");
-            b.BeginBlock("lock(weakCache)");
-            b.AppendLine("var cfrObj = ({0})weakCache.Get(remotePtr.ptr);", RemoteClassName);
-            b.BeginBlock("if(cfrObj == null)");
-            b.AppendLine("cfrObj = new {0}(remotePtr);", RemoteClassName);
-            b.AppendLine("weakCache.Add(remotePtr.ptr, cfrObj);");
-            b.EndBlock();
-            b.AppendLine("return cfrObj;");
-            b.EndBlock();
+            b.AppendLine("var call = new {0}GetGcHandleRemoteCall();", ClassName);
+            b.AppendLine("call.self = remotePtr.ptr;");
+            b.AppendLine("call.RequestExecution(remotePtr.connection);");
+            b.AppendLine("return ({0})System.Runtime.InteropServices.GCHandle.FromIntPtr(call.gc_handle).Target;", RemoteClassName);
             b.EndBlock();
             b.AppendLine();
             b.AppendLine();

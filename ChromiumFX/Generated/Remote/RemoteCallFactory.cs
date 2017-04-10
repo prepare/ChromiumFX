@@ -399,6 +399,7 @@ namespace Chromium.Remote {
             () => { return new CfxV8ExceptionGetStartPositionRemoteCall(); },
             () => { return new CfxV8HandlerCtorWithGCHandleRemoteCall(); },
             () => { return new CfxV8HandlerExecuteRemoteEventCall(); },
+            () => { return new CfxV8HandlerGetGcHandleRemoteCall(); },
             () => { return new CfxV8HandlerSetCallbackRemoteCall(); },
             () => { return new CfxV8InterceptorCtorWithGCHandleRemoteCall(); },
             () => { return new CfxV8InterceptorGetByIndexRemoteEventCall(); },

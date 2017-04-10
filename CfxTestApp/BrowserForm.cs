@@ -246,6 +246,12 @@ namespace CfxTestApplication {
                 "This is the first argument",
                 123.4567
             };
+
+            var self = e.Object.GetValue("testDoubleCallback");
+            var handler = self.FunctionHandler;
+            LogWriteLine("testDoubleCallback is a CEF created function: {0}", handler != null);
+            LogWriteLine("doubleCallback is a CEF created function: {0}", doubleCallback.FunctionHandler != null);
+
             var retval = doubleCallback.ExecuteFunction(null, args);
             e.SetReturnValue(retval);
         }

@@ -22,6 +22,16 @@ namespace Chromium.Remote {
         }
     }
 
+    internal class CfxV8HandlerGetGcHandleRemoteCall : GetGcHandleRemoteCall {
+
+        internal CfxV8HandlerGetGcHandleRemoteCall()
+            : base(RemoteCallId.CfxV8HandlerGetGcHandleRemoteCall) {}
+
+        protected override void RemoteProcedure(RemoteConnection connection) {
+            gc_handle = CfxApi.V8Handler.cfx_v8handler_get_gc_handle(self);
+        }
+    }
+
     internal class CfxV8HandlerSetCallbackRemoteCall : SetCallbackRemoteCall {
 
         internal CfxV8HandlerSetCallbackRemoteCall()

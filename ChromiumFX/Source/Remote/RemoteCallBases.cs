@@ -94,4 +94,14 @@ namespace Chromium.Remote {
         protected override void WriteArgs(StreamHandler h) { h.Write(self); h.Write(index); h.Write(active); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out self); h.Read(out index); h.Read(out active); }
     }
+
+    internal abstract class GetGcHandleRemoteCall : RemoteCall {
+        internal IntPtr self;
+        internal IntPtr gc_handle;
+        internal GetGcHandleRemoteCall(RemoteCallId callId) : base(callId) { }
+        protected override void WriteArgs(StreamHandler h) { h.Write(self); }
+        protected override void ReadArgs(StreamHandler h) { h.Read(out self); }
+        protected override void WriteReturn(StreamHandler h) { h.Write(gc_handle); }
+        protected override void ReadReturn(StreamHandler h) { h.Read(out gc_handle); }
+    }
 }

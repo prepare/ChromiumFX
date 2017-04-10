@@ -397,6 +397,7 @@ namespace Chromium.Remote {
         CfxV8ExceptionGetStartPositionRemoteCall,
         CfxV8HandlerCtorWithGCHandleRemoteCall,
         CfxV8HandlerExecuteRemoteEventCall,
+        CfxV8HandlerGetGcHandleRemoteCall,
         CfxV8HandlerSetCallbackRemoteCall,
         CfxV8InterceptorCtorWithGCHandleRemoteCall,
         CfxV8InterceptorGetByIndexRemoteEventCall,
