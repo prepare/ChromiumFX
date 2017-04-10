@@ -77,6 +77,7 @@ namespace Chromium.Remote {
                 streamHandler.Flush();
             } catch(EndOfStreamException) {
             } catch(IOException) {
+            } catch(ObjectDisposedException) {
             } finally {
                 Monitor.Exit(writeSyncRoot);
             }
@@ -114,6 +115,8 @@ namespace Chromium.Remote {
             } catch(EndOfStreamException ex) {
                 OnConnectionLost(ex);
             } catch(IOException ex) {
+                OnConnectionLost(ex);
+            } catch(ObjectDisposedException ex) {
                 OnConnectionLost(ex);
             }
         }
