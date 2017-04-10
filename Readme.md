@@ -56,11 +56,13 @@ This is a summary of the most important changes and those relevant to embedders 
 
 ### Version 3.2987.3 ###
 - Update to CEF 3.2987.1601 without API changes.
+- Fixed exception handling in remote connection.
+- Fixed typo.
 
 ### Version 3.2987.2 ###
 - CfxTask and CfrTask lifetime management is now based on CEF reference counting instead of bookkeeping with hash sets. 
 - Fixed some issues (see pull request #3 and #140)
-- Cleanups and inprovements.
+- Cleanups and improvements.
 
 ### Version 3.2987.1 ###
 - Starting from this release, CfxTask and CfrTask objects are kept alive internally from the moment they are submitted to (Cfx|Cfr)TaskRunner.PostTask or PostDelayedTast until the Execute callback event is called, so it's not necessary anymore to keep a explicit reference in the client application.
@@ -80,7 +82,7 @@ This is a summary of the most important changes and those relevant to embedders 
 ### Version 3.2883.0 ###
 - Update to CEF 3.2883.1540 with API changes.
 - Refactored the remote client callback interface to call directly into the pinvoke api in the render process, removing another layer of bookkeeping.
-- Miscellaneous fixes and inprovements.
+- Miscellaneous fixes and improvements.
 
 ### Version 3.2840.1 ###
 - Fixed a case-folding collision in generated files.
