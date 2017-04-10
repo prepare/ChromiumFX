@@ -17,7 +17,7 @@ namespace Chromium.Remote {
         internal CfxResourceBundleHandlerCtorWithGCHandleRemoteCall()
             : base(RemoteCallId.CfxResourceBundleHandlerCtorWithGCHandleRemoteCall) {}
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.ResourceBundleHandler.cfx_resource_bundle_handler_ctor(gcHandlePtr, 1);
         }
     }
@@ -27,7 +27,7 @@ namespace Chromium.Remote {
         internal CfxResourceBundleHandlerSetCallbackRemoteCall()
             : base(RemoteCallId.CfxResourceBundleHandlerSetCallbackRemoteCall) {}
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxResourceBundleHandlerRemoteClient.SetCallback(self, index, active);
         }
     }
@@ -62,7 +62,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var self = (CfrResourceBundleHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 return;
@@ -108,7 +108,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var self = (CfrResourceBundleHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 return;
@@ -156,7 +156,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var self = (CfrResourceBundleHandler)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 return;

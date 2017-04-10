@@ -111,7 +111,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = Marshal.AllocHGlobal(cb);
         }
     }
@@ -131,7 +131,7 @@ namespace Chromium.Remote {
             h.Read(out hglobal);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             Marshal.FreeHGlobal(hglobal);
         }
     }
@@ -160,7 +160,7 @@ namespace Chromium.Remote {
             h.Read(out length);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             Marshal.Copy(source, startIndex, destination, length);
         }
     }
@@ -194,7 +194,7 @@ namespace Chromium.Remote {
             h.Read(out destination);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             destination = new byte[startIndex + length];
             Marshal.Copy(source, destination, startIndex, length);
         }
@@ -229,7 +229,7 @@ namespace Chromium.Remote {
             h.Read(out destination);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             destination = new IntPtr[startIndex + length];
             Marshal.Copy(source, destination, startIndex, length);
         }
@@ -261,7 +261,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = Marshal.PtrToStringUni(str, length);
         }
     }

@@ -25,7 +25,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.Runtime.cfx_crash_reporting_enabled();
         }
     }
@@ -54,7 +54,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var fullPath_pinned = new PinnedString(fullPath);
             __retval = 0 != CfxApi.Runtime.cfx_create_directory(fullPath_pinned.Obj.PinnedPtr, fullPath_pinned.Length);
             fullPath_pinned.Obj.Free();
@@ -88,7 +88,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var prefix_pinned = new PinnedString(prefix);
             IntPtr newTempPath_str;
             int newTempPath_length;
@@ -133,7 +133,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var baseDir_pinned = new PinnedString(baseDir);
             var prefix_pinned = new PinnedString(prefix);
             IntPtr newDir_str;
@@ -174,7 +174,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.Runtime.cfx_currently_on((int)threadId);
         }
     }
@@ -206,7 +206,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var path_pinned = new PinnedString(path);
             __retval = 0 != CfxApi.Runtime.cfx_delete_file(path_pinned.Obj.PinnedPtr, path_pinned.Length, recursive ? 1 : 0);
             path_pinned.Obj.Free();
@@ -237,7 +237,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var path_pinned = new PinnedString(path);
             __retval = 0 != CfxApi.Runtime.cfx_directory_exists(path_pinned.Obj.PinnedPtr, path_pinned.Length);
             path_pinned.Obj.Free();
@@ -268,7 +268,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var originUrl_pinned = new PinnedString(originUrl);
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.Runtime.cfx_format_url_for_security_display(originUrl_pinned.Obj.PinnedPtr, originUrl_pinned.Length));
             originUrl_pinned.Obj.Free();
@@ -299,7 +299,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             IntPtr tempDir_str;
             int tempDir_length;
             __retval = 0 != CfxApi.Runtime.cfx_get_temp_directory(out tempDir_str, out tempDir_length);
@@ -336,7 +336,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.Runtime.cfx_is_cert_status_error((int)status);
         }
     }
@@ -365,7 +365,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.Runtime.cfx_is_cert_status_minor_error((int)status);
         }
     }
@@ -400,7 +400,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.Runtime.cfx_post_delayed_task((int)threadId, task, delayMs);
         }
     }
@@ -432,7 +432,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.Runtime.cfx_post_task((int)threadId, task);
         }
     }
@@ -467,7 +467,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var extensionName_pinned = new PinnedString(extensionName);
             var javascriptCode_pinned = new PinnedString(javascriptCode);
             __retval = 0 != CfxApi.Runtime.cfx_register_extension(extensionName_pinned.Obj.PinnedPtr, extensionName_pinned.Length, javascriptCode_pinned.Obj.PinnedPtr, javascriptCode_pinned.Length, handler);
@@ -494,7 +494,7 @@ namespace Chromium.Remote {
             h.Read(out value);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var key_pinned = new PinnedString(key);
             var value_pinned = new PinnedString(value);
             CfxApi.Runtime.cfx_set_crash_key_value(key_pinned.Obj.PinnedPtr, key_pinned.Length, value_pinned.Obj.PinnedPtr, value_pinned.Length);
@@ -533,7 +533,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var srcDir_pinned = new PinnedString(srcDir);
             var destFile_pinned = new PinnedString(destFile);
             __retval = 0 != CfxApi.Runtime.cfx_zip_directory(srcDir_pinned.Obj.PinnedPtr, srcDir_pinned.Length, destFile_pinned.Obj.PinnedPtr, destFile_pinned.Length, includeHiddenFiles ? 1 : 0);

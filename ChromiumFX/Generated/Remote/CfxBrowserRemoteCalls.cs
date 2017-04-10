@@ -35,7 +35,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.Browser.cfx_browser_can_go_back(@this);
         }
     }
@@ -55,7 +55,7 @@ namespace Chromium.Remote {
             h.Read(out @this);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxApi.Browser.cfx_browser_go_back(@this);
         }
     }
@@ -84,7 +84,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.Browser.cfx_browser_can_go_forward(@this);
         }
     }
@@ -104,7 +104,7 @@ namespace Chromium.Remote {
             h.Read(out @this);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxApi.Browser.cfx_browser_go_forward(@this);
         }
     }
@@ -133,7 +133,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.Browser.cfx_browser_is_loading(@this);
         }
     }
@@ -153,7 +153,7 @@ namespace Chromium.Remote {
             h.Read(out @this);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxApi.Browser.cfx_browser_reload(@this);
         }
     }
@@ -173,7 +173,7 @@ namespace Chromium.Remote {
             h.Read(out @this);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxApi.Browser.cfx_browser_reload_ignore_cache(@this);
         }
     }
@@ -193,7 +193,7 @@ namespace Chromium.Remote {
             h.Read(out @this);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxApi.Browser.cfx_browser_stop_load(@this);
         }
     }
@@ -222,7 +222,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.Browser.cfx_browser_get_identifier(@this);
         }
     }
@@ -254,7 +254,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.Browser.cfx_browser_is_same(@this, that);
         }
     }
@@ -283,7 +283,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.Browser.cfx_browser_is_popup(@this);
         }
     }
@@ -312,7 +312,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.Browser.cfx_browser_has_document(@this);
         }
     }
@@ -341,7 +341,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.Browser.cfx_browser_get_main_frame(@this);
         }
     }
@@ -370,7 +370,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.Browser.cfx_browser_get_focused_frame(@this);
         }
     }
@@ -402,7 +402,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.Browser.cfx_browser_get_frame_byident(@this, identifier);
         }
     }
@@ -434,7 +434,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var name_pinned = new PinnedString(name);
             __retval = CfxApi.Browser.cfx_browser_get_frame(@this, name_pinned.Obj.PinnedPtr, name_pinned.Length);
             name_pinned.Obj.Free();
@@ -465,7 +465,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = (ulong)CfxApi.Browser.cfx_browser_get_frame_count(@this);
         }
     }
@@ -494,7 +494,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var identifiersCount = CfxApi.Browser.cfx_browser_get_frame_count(@this);
             __retval = new long[(ulong)identifiersCount];
             if(identifiersCount == UIntPtr.Zero) return;
@@ -528,7 +528,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = new System.Collections.Generic.List<string>();
             var list = StringFunctions.AllocCfxStringList();
             CfxApi.Browser.cfx_browser_get_frame_names(@this, list);
@@ -567,7 +567,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.Browser.cfx_browser_send_process_message(@this, (int)targetProcess, message);
         }
     }

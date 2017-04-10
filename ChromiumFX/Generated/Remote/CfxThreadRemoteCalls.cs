@@ -47,7 +47,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var displayName_pinned = new PinnedString(displayName);
             __retval = CfxApi.Thread.cfx_thread_create(displayName_pinned.Obj.PinnedPtr, displayName_pinned.Length, (int)priority, (int)messageLoopType, stoppable ? 1 : 0, (int)comInitMode);
             displayName_pinned.Obj.Free();
@@ -78,7 +78,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.Thread.cfx_thread_get_task_runner(@this);
         }
     }
@@ -107,7 +107,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.Thread.cfx_thread_get_platform_thread_id(@this);
         }
     }
@@ -127,7 +127,7 @@ namespace Chromium.Remote {
             h.Read(out @this);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxApi.Thread.cfx_thread_stop(@this);
         }
     }
@@ -156,7 +156,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.Thread.cfx_thread_is_running(@this);
         }
     }

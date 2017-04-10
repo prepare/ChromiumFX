@@ -184,7 +184,7 @@ public class CfxValueClass : CfxClass {
 
         b.BeginRemoteCallClass(ClassName, callIds, "CtorRemoteCall");
         b.AppendLine();
-        b.BeginBlock("protected override void RemoteProcedure(RemoteConnection connection)");
+        b.BeginBlock("protected override void RemoteProcedure()");
         b.AppendLine("__retval = CfxApi.{0}.{1}_ctor();", ApiClassName, CfxName);
         b.EndBlock();
         b.EndBlock();
@@ -192,7 +192,7 @@ public class CfxValueClass : CfxClass {
 
         b.BeginRemoteCallClass(ClassName, callIds, "DtorRemoteCall");
         b.AppendLine();
-        b.BeginBlock("protected override void RemoteProcedure(RemoteConnection connection)");
+        b.BeginBlock("protected override void RemoteProcedure()");
         b.AppendLine("CfxApi.{0}.{1}_dtor(nativePtr);", ApiClassName, CfxName);
         b.EndBlock();
         b.EndBlock();
@@ -206,7 +206,7 @@ public class CfxValueClass : CfxClass {
             b.AppendLine("protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }");
             b.AppendLine("protected override void WriteReturn(StreamHandler h) { h.Write(value); }");
             b.AppendLine("protected override void ReadReturn(StreamHandler h) { h.Read(out value); }");
-            b.BeginBlock("protected override void RemoteProcedure(RemoteConnection connection)");
+            b.BeginBlock("protected override void RemoteProcedure()");
             b.AppendLine("CfxApi.{0}.{1}_get_{2}(sender, out value);", ApiClassName, CfxName, sm.Name);
             b.EndBlock();
             b.EndBlock();
@@ -215,7 +215,7 @@ public class CfxValueClass : CfxClass {
             b.AppendLine("internal {0} value;", sm.MemberType.PInvokeSymbol);
             b.AppendLine("protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }");
             b.AppendLine("protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }");
-            b.BeginBlock("protected override void RemoteProcedure(RemoteConnection connection)");
+            b.BeginBlock("protected override void RemoteProcedure()");
             b.AppendLine("CfxApi.{0}.{1}_set_{2}(sender, value);", ApiClassName, CfxName, sm.Name);
             b.EndBlock();
             b.EndBlock();

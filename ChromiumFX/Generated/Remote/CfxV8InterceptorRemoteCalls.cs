@@ -17,7 +17,7 @@ namespace Chromium.Remote {
         internal CfxV8InterceptorCtorWithGCHandleRemoteCall()
             : base(RemoteCallId.CfxV8InterceptorCtorWithGCHandleRemoteCall) {}
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.V8Interceptor.cfx_v8interceptor_ctor(gcHandlePtr, 1);
         }
     }
@@ -27,7 +27,7 @@ namespace Chromium.Remote {
         internal CfxV8InterceptorSetCallbackRemoteCall()
             : base(RemoteCallId.CfxV8InterceptorSetCallbackRemoteCall) {}
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxV8InterceptorRemoteClient.SetCallback(self, index, active);
         }
     }
@@ -74,7 +74,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var self = (CfrV8Interceptor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 return;
@@ -128,7 +128,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var self = (CfrV8Interceptor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 return;
@@ -188,7 +188,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var self = (CfrV8Interceptor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 return;
@@ -245,7 +245,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var self = (CfrV8Interceptor)System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;
             if(self == null || self.CallbacksDisabled) {
                 return;

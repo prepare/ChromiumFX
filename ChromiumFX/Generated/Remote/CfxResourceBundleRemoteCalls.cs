@@ -26,7 +26,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.ResourceBundle.cfx_resource_bundle_get_global();
         }
     }
@@ -58,7 +58,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.ResourceBundle.cfx_resource_bundle_get_localized_string(@this, stringId));
         }
     }
@@ -96,7 +96,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             UIntPtr dataSize_tmp = UIntPtr.Zero;
             __retval = 0 != CfxApi.ResourceBundle.cfx_resource_bundle_get_data_resource(@this, resourceId, out data, out dataSize_tmp);
             dataSize = (ulong)dataSize_tmp;
@@ -139,7 +139,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             UIntPtr dataSize_tmp = UIntPtr.Zero;
             __retval = 0 != CfxApi.ResourceBundle.cfx_resource_bundle_get_data_resource_for_scale(@this, resourceId, (int)scaleFactor, out data, out dataSize_tmp);
             dataSize = (ulong)dataSize_tmp;

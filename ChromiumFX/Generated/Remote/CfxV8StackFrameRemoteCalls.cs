@@ -35,7 +35,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.V8StackFrame.cfx_v8stack_frame_is_valid(@this);
         }
     }
@@ -64,7 +64,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.V8StackFrame.cfx_v8stack_frame_get_script_name(@this));
         }
     }
@@ -93,7 +93,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.V8StackFrame.cfx_v8stack_frame_get_script_name_or_source_url(@this));
         }
     }
@@ -122,7 +122,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.V8StackFrame.cfx_v8stack_frame_get_function_name(@this));
         }
     }
@@ -151,7 +151,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.V8StackFrame.cfx_v8stack_frame_get_line_number(@this);
         }
     }
@@ -180,7 +180,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.V8StackFrame.cfx_v8stack_frame_get_column(@this);
         }
     }
@@ -209,7 +209,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.V8StackFrame.cfx_v8stack_frame_is_eval(@this);
         }
     }
@@ -238,7 +238,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.V8StackFrame.cfx_v8stack_frame_is_constructor(@this);
         }
     }

@@ -26,7 +26,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.V8Context.cfx_v8context_get_current_context();
         }
     }
@@ -46,7 +46,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.V8Context.cfx_v8context_get_entered_context();
         }
     }
@@ -66,7 +66,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.V8Context.cfx_v8context_in_context();
         }
     }
@@ -95,7 +95,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.V8Context.cfx_v8context_get_task_runner(@this);
         }
     }
@@ -124,7 +124,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.V8Context.cfx_v8context_is_valid(@this);
         }
     }
@@ -153,7 +153,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.V8Context.cfx_v8context_get_browser(@this);
         }
     }
@@ -182,7 +182,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.V8Context.cfx_v8context_get_frame(@this);
         }
     }
@@ -211,7 +211,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.V8Context.cfx_v8context_get_global(@this);
         }
     }
@@ -240,7 +240,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.V8Context.cfx_v8context_enter(@this);
         }
     }
@@ -269,7 +269,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.V8Context.cfx_v8context_exit(@this);
         }
     }
@@ -301,7 +301,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.V8Context.cfx_v8context_is_same(@this, that);
         }
     }
@@ -345,7 +345,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var code_pinned = new PinnedString(code);
             var scriptUrl_pinned = new PinnedString(scriptUrl);
             __retval = 0 != CfxApi.V8Context.cfx_v8context_eval(@this, code_pinned.Obj.PinnedPtr, code_pinned.Length, scriptUrl_pinned.Obj.PinnedPtr, scriptUrl_pinned.Length, startLine, out retval, out exception);

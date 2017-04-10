@@ -28,7 +28,7 @@ namespace Chromium.Remote {
 
     internal class CfxApiReleaseRemoteCall : DtorRemoteCall {
         internal CfxApiReleaseRemoteCall() : base(RemoteCallId.CfxApiReleaseRemoteCall) { }
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxApi.cfx_release(nativePtr);
         }
     }

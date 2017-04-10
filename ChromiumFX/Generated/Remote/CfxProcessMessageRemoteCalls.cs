@@ -35,7 +35,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var name_pinned = new PinnedString(name);
             __retval = CfxApi.ProcessMessage.cfx_process_message_create(name_pinned.Obj.PinnedPtr, name_pinned.Length);
             name_pinned.Obj.Free();
@@ -66,7 +66,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ProcessMessage.cfx_process_message_is_valid(@this);
         }
     }
@@ -95,7 +95,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ProcessMessage.cfx_process_message_is_read_only(@this);
         }
     }
@@ -124,7 +124,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.ProcessMessage.cfx_process_message_copy(@this);
         }
     }
@@ -153,7 +153,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.ProcessMessage.cfx_process_message_get_name(@this));
         }
     }
@@ -182,7 +182,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.ProcessMessage.cfx_process_message_get_argument_list(@this);
         }
     }

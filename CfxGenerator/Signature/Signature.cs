@@ -420,7 +420,7 @@ public class Signature {
             b.AppendLine();
         }
 
-        b.BeginBlock("protected override void RemoteProcedure(RemoteConnection connection)");
+        b.BeginBlock("protected override void RemoteProcedure()");
         EmitRemoteProcedure(b, apiClassName, apiFunctionName);
         b.EndBlock();
     }

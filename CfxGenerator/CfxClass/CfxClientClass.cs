@@ -465,7 +465,7 @@ public class CfxClientClass : CfxClass {
 
         b.BeginRemoteCallClass(ClassName, callIds, "CtorWithGCHandleRemoteCall");
         b.AppendLine();
-        b.BeginBlock("protected override void RemoteProcedure(RemoteConnection connection)");
+        b.BeginBlock("protected override void RemoteProcedure()");
         b.AppendLine("__retval = CfxApi.{0}.{1}_ctor(gcHandlePtr, 1);", ApiClassName, CfxName);
         b.EndBlock();
         b.EndBlock();
@@ -474,7 +474,7 @@ public class CfxClientClass : CfxClass {
         if(NeedsWrapFunction) {
             b.BeginRemoteCallClass(ClassName, callIds, "GetGcHandleRemoteCall");
             b.AppendLine();
-            b.BeginBlock("protected override void RemoteProcedure(RemoteConnection connection)");
+            b.BeginBlock("protected override void RemoteProcedure()");
             b.AppendLine("gc_handle = CfxApi.{0}.{1}_get_gc_handle(self);", ApiClassName, CfxName);
             b.EndBlock();
             b.EndBlock();
@@ -483,7 +483,7 @@ public class CfxClientClass : CfxClass {
 
         b.BeginRemoteCallClass(ClassName, callIds, "SetCallbackRemoteCall");
         b.AppendLine();
-        b.BeginBlock("protected override void RemoteProcedure(RemoteConnection connection)");
+        b.BeginBlock("protected override void RemoteProcedure()");
         b.AppendLine("{0}RemoteClient.SetCallback(self, index, active);", ClassName);
         b.EndBlock();
         b.EndBlock();
@@ -551,7 +551,7 @@ public class CfxClientClass : CfxClass {
             }
             b.EndBlock();
             b.AppendLine();
-            b.BeginBlock("protected override void RemoteProcedure(RemoteConnection connection)");
+            b.BeginBlock("protected override void RemoteProcedure()");
 
             b.AppendLine("var self = ({0})System.Runtime.InteropServices.GCHandle.FromIntPtr(gcHandlePtr).Target;", RemoteClassName);
             b.BeginIf("self == null || self.CallbacksDisabled");

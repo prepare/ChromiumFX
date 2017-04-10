@@ -26,7 +26,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.ListValue.cfx_list_value_create();
         }
     }
@@ -55,7 +55,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ListValue.cfx_list_value_is_valid(@this);
         }
     }
@@ -84,7 +84,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ListValue.cfx_list_value_is_owned(@this);
         }
     }
@@ -113,7 +113,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ListValue.cfx_list_value_is_read_only(@this);
         }
     }
@@ -145,7 +145,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ListValue.cfx_list_value_is_same(@this, that);
         }
     }
@@ -177,7 +177,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ListValue.cfx_list_value_is_equal(@this, that);
         }
     }
@@ -206,7 +206,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.ListValue.cfx_list_value_copy(@this);
         }
     }
@@ -238,7 +238,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ListValue.cfx_list_value_set_size(@this, (UIntPtr)size);
         }
     }
@@ -267,7 +267,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = (ulong)CfxApi.ListValue.cfx_list_value_get_size(@this);
         }
     }
@@ -296,7 +296,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ListValue.cfx_list_value_clear(@this);
         }
     }
@@ -328,7 +328,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ListValue.cfx_list_value_remove(@this, (UIntPtr)index);
         }
     }
@@ -360,7 +360,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.ListValue.cfx_list_value_get_type(@this, (UIntPtr)index);
         }
     }
@@ -392,7 +392,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.ListValue.cfx_list_value_get_value(@this, (UIntPtr)index);
         }
     }
@@ -424,7 +424,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ListValue.cfx_list_value_get_bool(@this, (UIntPtr)index);
         }
     }
@@ -456,7 +456,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.ListValue.cfx_list_value_get_int(@this, (UIntPtr)index);
         }
     }
@@ -488,7 +488,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.ListValue.cfx_list_value_get_double(@this, (UIntPtr)index);
         }
     }
@@ -520,7 +520,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.ListValue.cfx_list_value_get_string(@this, (UIntPtr)index));
         }
     }
@@ -552,7 +552,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.ListValue.cfx_list_value_get_binary(@this, (UIntPtr)index);
         }
     }
@@ -584,7 +584,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.ListValue.cfx_list_value_get_dictionary(@this, (UIntPtr)index);
         }
     }
@@ -616,7 +616,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.ListValue.cfx_list_value_get_list(@this, (UIntPtr)index);
         }
     }
@@ -651,7 +651,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ListValue.cfx_list_value_set_value(@this, (UIntPtr)index, value);
         }
     }
@@ -683,7 +683,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ListValue.cfx_list_value_set_null(@this, (UIntPtr)index);
         }
     }
@@ -718,7 +718,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ListValue.cfx_list_value_set_bool(@this, (UIntPtr)index, value ? 1 : 0);
         }
     }
@@ -753,7 +753,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ListValue.cfx_list_value_set_int(@this, (UIntPtr)index, value);
         }
     }
@@ -788,7 +788,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ListValue.cfx_list_value_set_double(@this, (UIntPtr)index, value);
         }
     }
@@ -823,7 +823,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var value_pinned = new PinnedString(value);
             __retval = 0 != CfxApi.ListValue.cfx_list_value_set_string(@this, (UIntPtr)index, value_pinned.Obj.PinnedPtr, value_pinned.Length);
             value_pinned.Obj.Free();
@@ -860,7 +860,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ListValue.cfx_list_value_set_binary(@this, (UIntPtr)index, value);
         }
     }
@@ -895,7 +895,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ListValue.cfx_list_value_set_dictionary(@this, (UIntPtr)index, value);
         }
     }
@@ -930,7 +930,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ListValue.cfx_list_value_set_list(@this, (UIntPtr)index, value);
         }
     }

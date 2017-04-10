@@ -115,7 +115,7 @@ namespace Chromium.Remote {
         internal void Execute(RemoteConnection connection) {
 
             if(returnImmediately) {
-                RemoteProcedure(connection);
+                RemoteProcedure();
                 return;
             }
 
@@ -132,7 +132,7 @@ namespace Chromium.Remote {
             var threadStackCount = CfxRemoteCallContext.ContextStackCount;
 
             try {
-                RemoteProcedure(connection);
+                RemoteProcedure();
             } finally {
                 if(RemoteClient.connection == null) {
                     CfxRemoteCallbackManager.DecrementCallbackCount(connection.remoteProcessId);
@@ -151,7 +151,7 @@ namespace Chromium.Remote {
         protected virtual void WriteReturn(StreamHandler h) { }
         protected virtual void ReadReturn(StreamHandler h) { }
 
-        protected abstract void RemoteProcedure(RemoteConnection connection);
+        protected abstract void RemoteProcedure();
 
     }
 }

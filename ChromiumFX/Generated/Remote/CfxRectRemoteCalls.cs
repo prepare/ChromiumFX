@@ -16,7 +16,7 @@ namespace Chromium.Remote {
         internal CfxRectCtorRemoteCall()
             : base(RemoteCallId.CfxRectCtorRemoteCall) {}
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.Rect.cfx_rect_ctor();
         }
     }
@@ -26,7 +26,7 @@ namespace Chromium.Remote {
         internal CfxRectDtorRemoteCall()
             : base(RemoteCallId.CfxRectDtorRemoteCall) {}
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxApi.Rect.cfx_rect_dtor(nativePtr);
         }
     }
@@ -41,7 +41,7 @@ namespace Chromium.Remote {
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxApi.Rect.cfx_rect_get_x(sender, out value);
         }
     }
@@ -53,7 +53,7 @@ namespace Chromium.Remote {
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxApi.Rect.cfx_rect_set_x(sender, value);
         }
     }
@@ -67,7 +67,7 @@ namespace Chromium.Remote {
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxApi.Rect.cfx_rect_get_y(sender, out value);
         }
     }
@@ -79,7 +79,7 @@ namespace Chromium.Remote {
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxApi.Rect.cfx_rect_set_y(sender, value);
         }
     }
@@ -93,7 +93,7 @@ namespace Chromium.Remote {
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxApi.Rect.cfx_rect_get_width(sender, out value);
         }
     }
@@ -105,7 +105,7 @@ namespace Chromium.Remote {
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxApi.Rect.cfx_rect_set_width(sender, value);
         }
     }
@@ -119,7 +119,7 @@ namespace Chromium.Remote {
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); }
         protected override void WriteReturn(StreamHandler h) { h.Write(value); }
         protected override void ReadReturn(StreamHandler h) { h.Read(out value); }
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxApi.Rect.cfx_rect_get_height(sender, out value);
         }
     }
@@ -131,7 +131,7 @@ namespace Chromium.Remote {
         internal int value;
         protected override void WriteArgs(StreamHandler h) { h.Write(sender); h.Write(value); }
         protected override void ReadArgs(StreamHandler h) { h.Read(out sender); h.Read(out value); }
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxApi.Rect.cfx_rect_set_height(sender, value);
         }
     }

@@ -61,7 +61,7 @@ namespace Chromium.Remote {
             h.Read(out gc_handle);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             Debug.Assert((mode & (int)CfxApi.gc_handle_switch_mode.GC_HANDLE_REMOTE) == 0);
             CfxApi.SwitchGcHandle(ref gc_handle, (CfxApi.gc_handle_switch_mode)mode);
         }
@@ -79,7 +79,7 @@ namespace Chromium.Remote {
             h.Read(out gc_handle);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             CfxApi.SwitchGcHandle(ref gc_handle, CfxApi.gc_handle_switch_mode.GC_HANDLE_FREE);
         }
     }

@@ -35,7 +35,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.ZipReader.cfx_zip_reader_create(stream);
         }
     }
@@ -64,7 +64,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ZipReader.cfx_zip_reader_move_to_first_file(@this);
         }
     }
@@ -93,7 +93,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ZipReader.cfx_zip_reader_move_to_next_file(@this);
         }
     }
@@ -128,7 +128,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var fileName_pinned = new PinnedString(fileName);
             __retval = 0 != CfxApi.ZipReader.cfx_zip_reader_move_to_file(@this, fileName_pinned.Obj.PinnedPtr, fileName_pinned.Length, caseSensitive ? 1 : 0);
             fileName_pinned.Obj.Free();
@@ -159,7 +159,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ZipReader.cfx_zip_reader_close(@this);
         }
     }
@@ -188,7 +188,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = StringFunctions.ConvertStringUserfree(CfxApi.ZipReader.cfx_zip_reader_get_file_name(@this));
         }
     }
@@ -217,7 +217,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.ZipReader.cfx_zip_reader_get_file_size(@this);
         }
     }
@@ -246,7 +246,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.ZipReader.cfx_zip_reader_get_file_last_modified(@this);
         }
     }
@@ -278,7 +278,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             var password_pinned = new PinnedString(password);
             __retval = 0 != CfxApi.ZipReader.cfx_zip_reader_open_file(@this, password_pinned.Obj.PinnedPtr, password_pinned.Length);
             password_pinned.Obj.Free();
@@ -309,7 +309,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ZipReader.cfx_zip_reader_close_file(@this);
         }
     }
@@ -344,7 +344,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.ZipReader.cfx_zip_reader_read_file(@this, buffer, (UIntPtr)bufferSize);
         }
     }
@@ -373,7 +373,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = CfxApi.ZipReader.cfx_zip_reader_tell(@this);
         }
     }
@@ -402,7 +402,7 @@ namespace Chromium.Remote {
             h.Read(out __retval);
         }
 
-        protected override void RemoteProcedure(RemoteConnection connection) {
+        protected override void RemoteProcedure() {
             __retval = 0 != CfxApi.ZipReader.cfx_zip_reader_eof(@this);
         }
     }
