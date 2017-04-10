@@ -54,6 +54,9 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2987.3 ###
+- Update to CEF 3.2987.1601 without API changes.
+
 ### Version 3.2987.2 ###
 - CfxTask and CfrTask lifetime management is now based on CEF reference counting instead of bookkeeping with hash sets. 
 - Fixed some issues (see pull request #3 and #140)
