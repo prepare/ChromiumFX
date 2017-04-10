@@ -54,6 +54,11 @@ licensing information. See also [cef/LICENSE.txt](https://bitbucket.org/chromium
 
 This is a summary of the most important changes and those relevant to embedders (API changes etc.).
 
+### Version 3.2987.2 ###
+- CfxTask and CfrTask lifetime management is now based on CEF reference counting instead of bookkeeping with hash sets. 
+- Fixed some issues (see pull request #3 and #140)
+- Cleanups and inprovements.
+
 ### Version 3.2987.1 ###
 - Starting from this release, CfxTask and CfrTask objects are kept alive internally from the moment they are submitted to (Cfx|Cfr)TaskRunner.PostTask or PostDelayedTast until the Execute callback event is called, so it's not necessary anymore to keep a explicit reference in the client application.
 
