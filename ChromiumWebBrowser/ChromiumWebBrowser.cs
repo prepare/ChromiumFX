@@ -760,20 +760,26 @@ namespace Chromium.WebBrowser {
             }
 
             void Task_Execute(CfrEventArgs e) {
+                CfrV8Context context;
                 CfrV8Value retval;
                 CfrV8Exception ex;
                 bool result = false;
                 try {
-                    var context = wb.remoteBrowser.MainFrame.V8Context;
+                    context = wb.remoteBrowser.MainFrame.V8Context;
                     result = context.Eval(code, null, 0, out retval, out ex);
                 } catch {
                     callback(null, null);
                     return;
                 }
-                if(result) {
-                    callback(retval, null);
-                } else {
-                    callback(null, ex);
+                context.Enter();
+                try {
+                    if(result) {
+                        callback(retval, null);
+                    } else {
+                        callback(null, ex);
+                    }
+                } finally {
+                    context.Exit();
                 }
             }
         }
