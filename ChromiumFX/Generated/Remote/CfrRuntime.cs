@@ -315,6 +315,7 @@ namespace Chromium.Remote {
             var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxRuntimePostDelayedTaskRemoteCall();
             call.threadId = (int)threadId;
+            if(!CfrObject.CheckConnection(task, connection)) throw new ArgumentException("Render process connection mismatch.", "task");
             call.task = CfrObject.Unwrap(task).ptr;
             call.delayMs = delayMs;
             call.RequestExecution(connection);
@@ -333,6 +334,7 @@ namespace Chromium.Remote {
             var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxRuntimePostTaskRemoteCall();
             call.threadId = (int)threadId;
+            if(!CfrObject.CheckConnection(task, connection)) throw new ArgumentException("Render process connection mismatch.", "task");
             call.task = CfrObject.Unwrap(task).ptr;
             call.RequestExecution(connection);
             return call.__retval;
@@ -403,6 +405,7 @@ namespace Chromium.Remote {
             var call = new CfxRuntimeRegisterExtensionRemoteCall();
             call.extensionName = extensionName;
             call.javascriptCode = javascriptCode;
+            if(!CfrObject.CheckConnection(handler, connection)) throw new ArgumentException("Render process connection mismatch.", "handler");
             call.handler = CfrObject.Unwrap(handler).ptr;
             call.RequestExecution(connection);
             return call.__retval;

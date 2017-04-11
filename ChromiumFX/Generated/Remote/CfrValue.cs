@@ -274,6 +274,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxValueIsSameRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(that, connection)) throw new ArgumentException("Render process connection mismatch.", "that");
             call.that = CfrObject.Unwrap(that).ptr;
             call.RequestExecution(connection);
             return call.__retval;
@@ -291,6 +292,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxValueIsEqualRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(that, connection)) throw new ArgumentException("Render process connection mismatch.", "that");
             call.that = CfrObject.Unwrap(that).ptr;
             call.RequestExecution(connection);
             return call.__retval;
@@ -408,6 +410,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxValueSetBinaryRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(value, connection)) throw new ArgumentException("Render process connection mismatch.", "value");
             call.value = CfrObject.Unwrap(value).ptr;
             call.RequestExecution(connection);
             return call.__retval;
@@ -426,6 +429,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxValueSetDictionaryRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(value, connection)) throw new ArgumentException("Render process connection mismatch.", "value");
             call.value = CfrObject.Unwrap(value).ptr;
             call.RequestExecution(connection);
             return call.__retval;
@@ -444,6 +448,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxValueSetListRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(value, connection)) throw new ArgumentException("Render process connection mismatch.", "value");
             call.value = CfrObject.Unwrap(value).ptr;
             call.RequestExecution(connection);
             return call.__retval;

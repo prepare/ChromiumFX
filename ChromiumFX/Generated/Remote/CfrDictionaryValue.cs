@@ -137,6 +137,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxDictionaryValueIsSameRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(that, connection)) throw new ArgumentException("Render process connection mismatch.", "that");
             call.that = CfrObject.Unwrap(that).ptr;
             call.RequestExecution(connection);
             return call.__retval;
@@ -154,6 +155,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxDictionaryValueIsEqualRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(that, connection)) throw new ArgumentException("Render process connection mismatch.", "that");
             call.that = CfrObject.Unwrap(that).ptr;
             call.RequestExecution(connection);
             return call.__retval;
@@ -411,6 +413,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueSetValueRemoteCall();
             call.@this = RemotePtr.ptr;
             call.key = key;
+            if(!CfrObject.CheckConnection(value, connection)) throw new ArgumentException("Render process connection mismatch.", "value");
             call.value = CfrObject.Unwrap(value).ptr;
             call.RequestExecution(connection);
             return call.__retval;
@@ -521,6 +524,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueSetBinaryRemoteCall();
             call.@this = RemotePtr.ptr;
             call.key = key;
+            if(!CfrObject.CheckConnection(value, connection)) throw new ArgumentException("Render process connection mismatch.", "value");
             call.value = CfrObject.Unwrap(value).ptr;
             call.RequestExecution(connection);
             return call.__retval;
@@ -542,6 +546,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueSetDictionaryRemoteCall();
             call.@this = RemotePtr.ptr;
             call.key = key;
+            if(!CfrObject.CheckConnection(value, connection)) throw new ArgumentException("Render process connection mismatch.", "value");
             call.value = CfrObject.Unwrap(value).ptr;
             call.RequestExecution(connection);
             return call.__retval;
@@ -563,6 +568,7 @@ namespace Chromium.Remote {
             var call = new CfxDictionaryValueSetListRemoteCall();
             call.@this = RemotePtr.ptr;
             call.key = key;
+            if(!CfrObject.CheckConnection(value, connection)) throw new ArgumentException("Render process connection mismatch.", "value");
             call.value = CfrObject.Unwrap(value).ptr;
             call.RequestExecution(connection);
             return call.__retval;

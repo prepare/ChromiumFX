@@ -155,10 +155,12 @@ public class CefStructPtrType : ApiType {
     }
 
     public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
-        if(var == "this")
+        if(var == "this") {
             b.AppendLine("call.@this = RemotePtr.ptr;");
-        else
+        } else {
+            b.AppendLine("if(!CfrObject.CheckConnection({0}, connection)) throw new ArgumentException(\"Render process connection mismatch.\", \"{1}\");", CSharp.Escape(var), var);
             b.AppendLine("call.{0} = CfrObject.Unwrap({0}).ptr;", CSharp.Escape(var));
+        }
     }
 
     public override string PInvokeSymbol {

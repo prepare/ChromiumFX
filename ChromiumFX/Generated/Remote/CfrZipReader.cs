@@ -47,6 +47,7 @@ namespace Chromium.Remote {
         public static CfrZipReader Create(CfrStreamReader stream) {
             var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxZipReaderCreateRemoteCall();
+            if(!CfrObject.CheckConnection(stream, connection)) throw new ArgumentException("Render process connection mismatch.", "stream");
             call.stream = CfrObject.Unwrap(stream).ptr;
             call.RequestExecution(connection);
             return CfrZipReader.Wrap(new RemotePtr(connection, call.__retval));

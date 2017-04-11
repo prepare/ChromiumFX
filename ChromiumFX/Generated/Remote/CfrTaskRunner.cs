@@ -86,6 +86,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxTaskRunnerIsSameRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(that, connection)) throw new ArgumentException("Render process connection mismatch.", "that");
             call.that = CfrObject.Unwrap(that).ptr;
             call.RequestExecution(connection);
             return call.__retval;
@@ -134,6 +135,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxTaskRunnerPostTaskRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(task, connection)) throw new ArgumentException("Render process connection mismatch.", "task");
             call.task = CfrObject.Unwrap(task).ptr;
             call.RequestExecution(connection);
             return call.__retval;
@@ -153,6 +155,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxTaskRunnerPostDelayedTaskRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(task, connection)) throw new ArgumentException("Render process connection mismatch.", "task");
             call.task = CfrObject.Unwrap(task).ptr;
             call.delayMs = delayMs;
             call.RequestExecution(connection);

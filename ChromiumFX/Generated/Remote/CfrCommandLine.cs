@@ -216,6 +216,7 @@ namespace Chromium.Remote {
             var call = new CfxCommandLineInitFromArgvRemoteCall();
             call.@this = RemotePtr.ptr;
             call.argc = argc;
+            if(argv.connection != connection) throw new ArgumentException("Render process connection mismatch.", "argv");
             call.argv = argv.ptr;
             call.RequestExecution(connection);
         }

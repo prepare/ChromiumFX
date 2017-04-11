@@ -262,6 +262,7 @@ namespace Chromium.Remote {
             public CfrV8Value Retval {
                 set {
                     CheckAccess();
+                    if(!CfrObject.CheckConnection(value, connection)) throw new ArgumentException("Render process connection mismatch.", "value");
                     m_retval_wrapped = value;
                 }
             }
@@ -355,6 +356,7 @@ namespace Chromium.Remote {
             public CfrV8Value Retval {
                 set {
                     CheckAccess();
+                    if(!CfrObject.CheckConnection(value, connection)) throw new ArgumentException("Render process connection mismatch.", "value");
                     m_retval_wrapped = value;
                 }
             }

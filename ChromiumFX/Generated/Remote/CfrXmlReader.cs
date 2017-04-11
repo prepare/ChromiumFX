@@ -47,6 +47,7 @@ namespace Chromium.Remote {
         public static CfrXmlReader Create(CfrStreamReader stream, CfxXmlEncodingType encodingType, string uri) {
             var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxXmlReaderCreateRemoteCall();
+            if(!CfrObject.CheckConnection(stream, connection)) throw new ArgumentException("Render process connection mismatch.", "stream");
             call.stream = CfrObject.Unwrap(stream).ptr;
             call.encodingType = (int)encodingType;
             call.uri = uri;

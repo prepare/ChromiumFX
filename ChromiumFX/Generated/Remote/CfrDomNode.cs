@@ -391,6 +391,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxDomNodeIsSameRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(that, connection)) throw new ArgumentException("Render process connection mismatch.", "that");
             call.that = CfrObject.Unwrap(that).ptr;
             call.RequestExecution(connection);
             return call.__retval;

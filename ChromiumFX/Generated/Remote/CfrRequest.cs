@@ -177,6 +177,7 @@ namespace Chromium.Remote {
                 var connection = RemotePtr.connection;
                 var call = new CfxRequestSetPostDataRemoteCall();
                 call.@this = RemotePtr.ptr;
+                if(!CfrObject.CheckConnection(value, connection)) throw new ArgumentException("Render process connection mismatch.", "value");
                 call.value = CfrObject.Unwrap(value).ptr;
                 call.RequestExecution(connection);
             }
@@ -356,6 +357,7 @@ namespace Chromium.Remote {
             call.@this = RemotePtr.ptr;
             call.url = url;
             call.method = method;
+            if(!CfrObject.CheckConnection(postData, connection)) throw new ArgumentException("Render process connection mismatch.", "postData");
             call.postData = CfrObject.Unwrap(postData).ptr;
             call.headerMap = headerMap;
             call.RequestExecution(connection);

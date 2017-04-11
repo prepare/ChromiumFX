@@ -139,6 +139,7 @@ namespace Chromium.Remote {
         public static CfrV8Value CreateDate(CfrTime date) {
             var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxV8ValueCreateDateRemoteCall();
+            if(!CfrObject.CheckConnection(date, connection)) throw new ArgumentException("Render process connection mismatch.", "date");
             call.date = CfrObject.Unwrap(date).ptr;
             call.RequestExecution(connection);
             return CfrV8Value.Wrap(new RemotePtr(connection, call.__retval));
@@ -173,7 +174,9 @@ namespace Chromium.Remote {
         public static CfrV8Value CreateObject(CfrV8Accessor accessor, CfrV8Interceptor interceptor) {
             var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxV8ValueCreateObjectRemoteCall();
+            if(!CfrObject.CheckConnection(accessor, connection)) throw new ArgumentException("Render process connection mismatch.", "accessor");
             call.accessor = CfrObject.Unwrap(accessor).ptr;
+            if(!CfrObject.CheckConnection(interceptor, connection)) throw new ArgumentException("Render process connection mismatch.", "interceptor");
             call.interceptor = CfrObject.Unwrap(interceptor).ptr;
             call.RequestExecution(connection);
             return CfrV8Value.Wrap(new RemotePtr(connection, call.__retval));
@@ -213,6 +216,7 @@ namespace Chromium.Remote {
             var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxV8ValueCreateFunctionRemoteCall();
             call.name = name;
+            if(!CfrObject.CheckConnection(handler, connection)) throw new ArgumentException("Render process connection mismatch.", "handler");
             call.handler = CfrObject.Unwrap(handler).ptr;
             call.RequestExecution(connection);
             return CfrV8Value.Wrap(new RemotePtr(connection, call.__retval));
@@ -681,6 +685,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxV8ValueIsSameRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(that, connection)) throw new ArgumentException("Render process connection mismatch.", "that");
             call.that = CfrObject.Unwrap(that).ptr;
             call.RequestExecution(connection);
             return call.__retval;
@@ -856,6 +861,7 @@ namespace Chromium.Remote {
             var call = new CfxV8ValueSetValueByKeyRemoteCall();
             call.@this = RemotePtr.ptr;
             call.key = key;
+            if(!CfrObject.CheckConnection(value, connection)) throw new ArgumentException("Render process connection mismatch.", "value");
             call.value = CfrObject.Unwrap(value).ptr;
             call.attribute = (int)attribute;
             call.RequestExecution(connection);
@@ -877,6 +883,7 @@ namespace Chromium.Remote {
             var call = new CfxV8ValueSetValueByIndexRemoteCall();
             call.@this = RemotePtr.ptr;
             call.index = index;
+            if(!CfrObject.CheckConnection(value, connection)) throw new ArgumentException("Render process connection mismatch.", "value");
             call.value = CfrObject.Unwrap(value).ptr;
             call.RequestExecution(connection);
             return call.__retval;
@@ -983,10 +990,12 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxV8ValueExecuteFunctionRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(@object, connection)) throw new ArgumentException("Render process connection mismatch.", "object");
             call.@object = CfrObject.Unwrap(@object).ptr;
             if(arguments != null) {
                 call.arguments = new IntPtr[arguments.Length];
                 for(int i = 0; i < arguments.Length; ++i) {
+                    if(!CheckConnection(arguments[i], connection)) throw new ArgumentException("Render process connection mismatch.", "arguments[" + i + "]");
                     call.arguments[i] = CfrObject.Unwrap(arguments[i]).ptr;
                 }
             }
@@ -1010,11 +1019,14 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxV8ValueExecuteFunctionWithContextRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(context, connection)) throw new ArgumentException("Render process connection mismatch.", "context");
             call.context = CfrObject.Unwrap(context).ptr;
+            if(!CfrObject.CheckConnection(@object, connection)) throw new ArgumentException("Render process connection mismatch.", "object");
             call.@object = CfrObject.Unwrap(@object).ptr;
             if(arguments != null) {
                 call.arguments = new IntPtr[arguments.Length];
                 for(int i = 0; i < arguments.Length; ++i) {
+                    if(!CheckConnection(arguments[i], connection)) throw new ArgumentException("Render process connection mismatch.", "arguments[" + i + "]");
                     call.arguments[i] = CfrObject.Unwrap(arguments[i]).ptr;
                 }
             }

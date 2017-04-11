@@ -107,6 +107,7 @@ public class CefStructOutType : CefStructPtrPtrType {
     }
 
     public override void EmitRemoteEventArgSetterStatements(CodeBuilder b, string var) {
+        b.AppendLine("if(!CfrObject.CheckConnection(value, connection)) throw new ArgumentException(\"Render process connection mismatch.\", \"value\");", CSharp.Escape(var), var);
         b.AppendLine("m_{0}_wrapped = value;", var);
     }
 

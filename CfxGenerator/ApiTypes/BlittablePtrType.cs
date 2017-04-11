@@ -4,6 +4,8 @@
 // This software may be modified and distributed under the terms
 // of the BSD license. See the License.txt file for details.
 
+using System;
+
 public class BlittablePtrType : ApiType {
     public readonly BlittableType BlittableType;
 
@@ -32,6 +34,7 @@ public class BlittablePtrType : ApiType {
     public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
         switch(RemoteSymbol) {
             case "RemotePtr":
+                b.AppendLine("if({0}.connection != connection) throw new ArgumentException(\"Render process connection mismatch.\", \"{1}\");", CSharp.Escape(var), var);
                 b.AppendLine("call.{0} = {0}.ptr;", CSharp.Escape(var));
                 return;
             default:

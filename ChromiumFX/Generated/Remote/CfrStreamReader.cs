@@ -76,6 +76,7 @@ namespace Chromium.Remote {
         public static CfrStreamReader CreateForHandler(CfrReadHandler handler) {
             var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxStreamReaderCreateForHandlerRemoteCall();
+            if(!CfrObject.CheckConnection(handler, connection)) throw new ArgumentException("Render process connection mismatch.", "handler");
             call.handler = CfrObject.Unwrap(handler).ptr;
             call.RequestExecution(connection);
             return CfrStreamReader.Wrap(new RemotePtr(connection, call.__retval));

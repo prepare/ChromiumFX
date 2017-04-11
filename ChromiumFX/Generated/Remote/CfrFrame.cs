@@ -310,6 +310,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxFrameGetSourceRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(visitor, connection)) throw new ArgumentException("Render process connection mismatch.", "visitor");
             call.visitor = CfrObject.Unwrap(visitor).ptr;
             call.RequestExecution(connection);
         }
@@ -326,6 +327,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxFrameGetTextRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(visitor, connection)) throw new ArgumentException("Render process connection mismatch.", "visitor");
             call.visitor = CfrObject.Unwrap(visitor).ptr;
             call.RequestExecution(connection);
         }
@@ -341,6 +343,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxFrameLoadRequestRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(request, connection)) throw new ArgumentException("Render process connection mismatch.", "request");
             call.request = CfrObject.Unwrap(request).ptr;
             call.RequestExecution(connection);
         }
@@ -411,6 +414,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxFrameVisitDomRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(visitor, connection)) throw new ArgumentException("Render process connection mismatch.", "visitor");
             call.visitor = CfrObject.Unwrap(visitor).ptr;
             call.RequestExecution(connection);
         }

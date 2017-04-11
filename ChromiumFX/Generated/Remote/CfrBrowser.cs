@@ -292,6 +292,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxBrowserIsSameRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(!CfrObject.CheckConnection(that, connection)) throw new ArgumentException("Render process connection mismatch.", "that");
             call.that = CfrObject.Unwrap(that).ptr;
             call.RequestExecution(connection);
             return call.__retval;
@@ -357,6 +358,7 @@ namespace Chromium.Remote {
             var call = new CfxBrowserSendProcessMessageRemoteCall();
             call.@this = RemotePtr.ptr;
             call.targetProcess = (int)targetProcess;
+            if(!CfrObject.CheckConnection(message, connection)) throw new ArgumentException("Render process connection mismatch.", "message");
             call.message = CfrObject.Unwrap(message).ptr;
             call.RequestExecution(connection);
             return call.__retval;
