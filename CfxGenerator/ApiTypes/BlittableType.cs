@@ -143,7 +143,7 @@ public class BlittableType : ApiType {
     public override void EmitRemoteEventArgGetterStatements(CodeBuilder b, string var) {
         switch(Name) {
             case "void*":
-                b.AppendLine("return new RemotePtr(call.{0});", CSharp.Escape(var));
+                b.AppendLine("return new RemotePtr(connection, call.{0});", CSharp.Escape(var));
                 break;
             default:
                 base.EmitRemoteEventArgGetterStatements(b, var);

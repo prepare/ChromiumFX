@@ -83,7 +83,7 @@ public class CefStructPtrType : ApiType {
     }
 
     public override string RemoteWrapExpression(string var) {
-        return string.Format("{0}.Wrap(new RemotePtr({1}))", RemoteSymbol, var);
+        return string.Format("{0}.Wrap(new RemotePtr(connection, {1}))", RemoteSymbol, var);
     }
 
     public override void EmitPreNativeCallStatements(CodeBuilder b, string var) {
@@ -125,7 +125,7 @@ public class CefStructPtrType : ApiType {
     }
 
     public override void EmitRemoteEventArgGetterStatements(CodeBuilder b, string var) {
-        b.AppendLine("if(m_{0}_wrapped == null) m_{0}_wrapped = {1};", var, RemoteWrapExpression("call." + CSharp.Escape(var)));
+        b.AppendLine("if(m_{0}_wrapped == null) m_{0}_wrapped = {1}.Wrap(new RemotePtr(connection, call.{2}));", var, Struct.RemoteClassName, CSharp.Escape(var));
         b.AppendLine("return m_{0}_wrapped;", var);
     }
 

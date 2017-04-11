@@ -162,7 +162,7 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
         b.AppendLine("var {0} = new RemotePtr[(ulong)call.{1}];", var, CountArg.VarName);
         b.AppendLine("m_{0}_managed = new {1}[{0}.Length];", var, Struct.RemoteClassName);
         b.BeginIf("{0}.Length > 0", var);
-        b.AppendLine("CfrRuntime.Marshal.Copy(new RemotePtr(call.{0}), {0}, 0, {0}.Length);", var);
+        b.AppendLine("CfrRuntime.Marshal.Copy(new RemotePtr(connection, call.{0}), {0}, 0, {0}.Length);", var);
         b.BeginBlock("for(int i = 0; i < {0}.Length; ++i)", var);
         b.AppendLine("m_{0}_managed[i] = {1}.Wrap({0}[i]);", var, Struct.RemoteClassName);
         b.EndBlock();

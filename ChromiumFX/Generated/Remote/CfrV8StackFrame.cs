@@ -52,9 +52,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsValid {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxV8StackFrameIsValidRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -68,9 +69,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public string ScriptName {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxV8StackFrameGetScriptNameRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -86,9 +88,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public string ScriptNameOrSourceUrl {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxV8StackFrameGetScriptNameOrSourceUrlRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -102,9 +105,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public string FunctionName {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxV8StackFrameGetFunctionNameRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -118,9 +122,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public int LineNumber {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxV8StackFrameGetLineNumberRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -135,9 +140,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public int Column {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxV8StackFrameGetColumnRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -151,9 +157,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsEval {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxV8StackFrameIsEvalRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -167,9 +174,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsConstructor {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxV8StackFrameIsConstructorRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }

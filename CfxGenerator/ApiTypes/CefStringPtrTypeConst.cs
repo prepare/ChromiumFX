@@ -65,7 +65,7 @@ public class CefStringPtrTypeConst : ApiType {
 
     public override void EmitRemoteEventArgGetterStatements(CodeBuilder b, string var) {
         b.BeginBlock("if(!m_{0}_fetched)", var);
-        b.AppendLine("m_{0} = call.{0}_str == IntPtr.Zero ? null : (call.{0}_length == 0 ? String.Empty : CfrRuntime.Marshal.PtrToStringUni(new RemotePtr(call.{0}_str), call.{0}_length));", var);
+        b.AppendLine("m_{0} = call.{0}_str == IntPtr.Zero ? null : (call.{0}_length == 0 ? String.Empty : CfrRuntime.Marshal.PtrToStringUni(new RemotePtr(connection, call.{0}_str), call.{0}_length));", var);
         b.AppendLine("m_{0}_fetched = true;", var);
         b.EndBlock();
         b.AppendLine("return m_{0};", var);

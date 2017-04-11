@@ -45,10 +45,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_zip_reader_capi.h">cef/include/capi/cef_zip_reader_capi.h</see>.
         /// </remarks>
         public static CfrZipReader Create(CfrStreamReader stream) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxZipReaderCreateRemoteCall();
             call.stream = CfrObject.Unwrap(stream).ptr;
-            call.RequestExecution();
-            return CfrZipReader.Wrap(new RemotePtr(call.__retval));
+            call.RequestExecution(connection);
+            return CfrZipReader.Wrap(new RemotePtr(connection, call.__retval));
         }
 
 
@@ -63,9 +64,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public string FileName {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxZipReaderGetFileNameRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -79,9 +81,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public long FileSize {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxZipReaderGetFileSizeRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -95,9 +98,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrTime FileLastModified {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxZipReaderGetFileLastModifiedRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 if(call.__retval == IntPtr.Zero) throw new OutOfMemoryException("Render process out of memory.");
                 return CfrTime.Wrap(new RemotePtr(connection, call.__retval));
             }
@@ -112,9 +116,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_zip_reader_capi.h">cef/include/capi/cef_zip_reader_capi.h</see>.
         /// </remarks>
         public bool MoveToFirstFile() {
+            var connection = RemotePtr.connection;
             var call = new CfxZipReaderMoveToFirstFileRemoteCall();
             call.@this = RemotePtr.ptr;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -127,9 +132,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_zip_reader_capi.h">cef/include/capi/cef_zip_reader_capi.h</see>.
         /// </remarks>
         public bool MoveToNextFile() {
+            var connection = RemotePtr.connection;
             var call = new CfxZipReaderMoveToNextFileRemoteCall();
             call.@this = RemotePtr.ptr;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -143,11 +149,12 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_zip_reader_capi.h">cef/include/capi/cef_zip_reader_capi.h</see>.
         /// </remarks>
         public bool MoveToFile(string fileName, bool caseSensitive) {
+            var connection = RemotePtr.connection;
             var call = new CfxZipReaderMoveToFileRemoteCall();
             call.@this = RemotePtr.ptr;
             call.fileName = fileName;
             call.caseSensitive = caseSensitive;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -160,9 +167,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_zip_reader_capi.h">cef/include/capi/cef_zip_reader_capi.h</see>.
         /// </remarks>
         public bool Close() {
+            var connection = RemotePtr.connection;
             var call = new CfxZipReaderCloseRemoteCall();
             call.@this = RemotePtr.ptr;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -175,10 +183,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_zip_reader_capi.h">cef/include/capi/cef_zip_reader_capi.h</see>.
         /// </remarks>
         public bool OpenFile(string password) {
+            var connection = RemotePtr.connection;
             var call = new CfxZipReaderOpenFileRemoteCall();
             call.@this = RemotePtr.ptr;
             call.password = password;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -190,9 +199,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_zip_reader_capi.h">cef/include/capi/cef_zip_reader_capi.h</see>.
         /// </remarks>
         public bool CloseFile() {
+            var connection = RemotePtr.connection;
             var call = new CfxZipReaderCloseFileRemoteCall();
             call.@this = RemotePtr.ptr;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -205,11 +215,12 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_zip_reader_capi.h">cef/include/capi/cef_zip_reader_capi.h</see>.
         /// </remarks>
         public int ReadFile(RemotePtr buffer, ulong bufferSize) {
+            var connection = RemotePtr.connection;
             var call = new CfxZipReaderReadFileRemoteCall();
             call.@this = RemotePtr.ptr;
             call.buffer = buffer.ptr;
             call.bufferSize = bufferSize;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -221,9 +232,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_zip_reader_capi.h">cef/include/capi/cef_zip_reader_capi.h</see>.
         /// </remarks>
         public long Tell() {
+            var connection = RemotePtr.connection;
             var call = new CfxZipReaderTellRemoteCall();
             call.@this = RemotePtr.ptr;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -235,9 +247,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_zip_reader_capi.h">cef/include/capi/cef_zip_reader_capi.h</see>.
         /// </remarks>
         public bool Eof() {
+            var connection = RemotePtr.connection;
             var call = new CfxZipReaderEofRemoteCall();
             call.@this = RemotePtr.ptr;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
     }

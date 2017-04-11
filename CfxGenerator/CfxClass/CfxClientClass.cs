@@ -561,8 +561,9 @@ public class CfxClientClass : CfxClass {
                 b.AppendLine("var e = new CfrEventArgs();");
             else
                 b.AppendLine("var e = new {0}(this);", cb.RemoteEventArgsClassName);
+            b.AppendLine("e.connection = CfxRemoteCallContext.CurrentContext.connection;");
             b.AppendLine("self.m_{0}?.Invoke(self, e);", cb.PublicName);
-            b.AppendLine("e.m_isInvalid = true;");
+            b.AppendLine("e.connection = null;");
 
             for(var i = 1; i <= sig.ManagedParameters.Count() - 1; i++) {
                 sig.ManagedParameters[i].EmitPostRemoteRaiseEventStatements(b);

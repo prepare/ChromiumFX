@@ -46,9 +46,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_capi.h">cef/include/capi/cef_resource_bundle_capi.h</see>.
         /// </remarks>
         public static CfrResourceBundle GetGlobal() {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxResourceBundleGetGlobalRemoteCall();
-            call.RequestExecution();
-            return CfrResourceBundle.Wrap(new RemotePtr(call.__retval));
+            call.RequestExecution(connection);
+            return CfrResourceBundle.Wrap(new RemotePtr(connection, call.__retval));
         }
 
 
@@ -64,10 +65,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_capi.h">cef/include/capi/cef_resource_bundle_capi.h</see>.
         /// </remarks>
         public string GetLocalizedString(int stringId) {
+            var connection = RemotePtr.connection;
             var call = new CfxResourceBundleGetLocalizedStringRemoteCall();
             call.@this = RemotePtr.ptr;
             call.stringId = stringId;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -84,10 +86,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_capi.h">cef/include/capi/cef_resource_bundle_capi.h</see>.
         /// </remarks>
         public bool GetDataResource(int resourceId, RemotePtr data, ulong dataSize) {
+            var connection = RemotePtr.connection;
             var call = new CfxResourceBundleGetDataResourceRemoteCall();
             call.@this = RemotePtr.ptr;
             call.resourceId = resourceId;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             data = new RemotePtr(connection, call.data);
             dataSize = call.dataSize;
             return call.__retval;
@@ -108,11 +111,12 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_resource_bundle_capi.h">cef/include/capi/cef_resource_bundle_capi.h</see>.
         /// </remarks>
         public bool GetDataResourceForScale(int resourceId, CfxScaleFactor scaleFactor, RemotePtr data, ulong dataSize) {
+            var connection = RemotePtr.connection;
             var call = new CfxResourceBundleGetDataResourceForScaleRemoteCall();
             call.@this = RemotePtr.ptr;
             call.resourceId = resourceId;
             call.scaleFactor = (int)scaleFactor;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             data = new RemotePtr(connection, call.data);
             dataSize = call.dataSize;
             return call.__retval;

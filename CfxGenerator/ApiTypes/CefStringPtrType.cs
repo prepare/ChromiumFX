@@ -118,7 +118,7 @@ public class CefStringPtrType : ApiType {
 
     public override void EmitRemoteEventArgGetterStatements(CodeBuilder b, string var) {
         b.BeginIf("!m_{0}_changed && m_{0}_wrapped == null", var);
-        b.AppendLine("m_{0} = call.{0}_str == IntPtr.Zero ? null : (call.{0}_length == 0 ? String.Empty : CfrRuntime.Marshal.PtrToStringUni(new RemotePtr(call.{0}_str), call.{0}_length));", var);
+        b.AppendLine("m_{0} = call.{0}_str == IntPtr.Zero ? null : (call.{0}_length == 0 ? String.Empty : CfrRuntime.Marshal.PtrToStringUni(new RemotePtr(connection, call.{0}_str), call.{0}_length));", var);
         b.AppendLine("m_{0}_changed = true;", var);
         b.EndBlock();
         b.AppendLine("return m_{0}_wrapped;", var);

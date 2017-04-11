@@ -58,14 +58,15 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_thread_capi.h">cef/include/capi/cef_thread_capi.h</see>.
         /// </remarks>
         public static CfrThread Create(string displayName, CfxThreadPriority priority, CfxMessageLoopType messageLoopType, bool stoppable, CfxComInitMode comInitMode) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxThreadCreateRemoteCall();
             call.displayName = displayName;
             call.priority = (int)priority;
             call.messageLoopType = (int)messageLoopType;
             call.stoppable = stoppable;
             call.comInitMode = (int)comInitMode;
-            call.RequestExecution();
-            return CfrThread.Wrap(new RemotePtr(call.__retval));
+            call.RequestExecution(connection);
+            return CfrThread.Wrap(new RemotePtr(connection, call.__retval));
         }
 
 
@@ -81,10 +82,11 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrTaskRunner TaskRunner {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxThreadGetTaskRunnerRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
-                return CfrTaskRunner.Wrap(new RemotePtr(call.__retval));
+                call.RequestExecution(connection);
+                return CfrTaskRunner.Wrap(new RemotePtr(connection, call.__retval));
             }
         }
 
@@ -98,9 +100,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public uint PlatformThreadId {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxThreadGetPlatformThreadIdRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -115,9 +118,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsRunning {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxThreadIsRunningRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -132,9 +136,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_thread_capi.h">cef/include/capi/cef_thread_capi.h</see>.
         /// </remarks>
         public void Stop() {
+            var connection = RemotePtr.connection;
             var call = new CfxThreadStopRemoteCall();
             call.@this = RemotePtr.ptr;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
         }
     }
 }

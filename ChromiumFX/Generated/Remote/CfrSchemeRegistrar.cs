@@ -98,6 +98,7 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_scheme_capi.h">cef/include/capi/cef_scheme_capi.h</see>.
         /// </remarks>
         public bool AddCustomScheme(string schemeName, bool isStandard, bool isLocal, bool isDisplayIsolated, bool isSecure, bool isCorsEnabled) {
+            var connection = RemotePtr.connection;
             var call = new CfxSchemeRegistrarAddCustomSchemeRemoteCall();
             call.@this = RemotePtr.ptr;
             call.schemeName = schemeName;
@@ -106,7 +107,7 @@ namespace Chromium.Remote {
             call.isDisplayIsolated = isDisplayIsolated;
             call.isSecure = isSecure;
             call.isCorsEnabled = isCorsEnabled;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
     }

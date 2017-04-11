@@ -43,9 +43,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
         /// </remarks>
         public static CfrResponse Create() {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxResponseCreateRemoteCall();
-            call.RequestExecution();
-            return CfrResponse.Wrap(new RemotePtr(call.__retval));
+            call.RequestExecution(connection);
+            return CfrResponse.Wrap(new RemotePtr(connection, call.__retval));
         }
 
 
@@ -60,9 +61,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsReadOnly {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxResponseIsReadOnlyRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -79,16 +81,18 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfxErrorCode Error {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxResponseGetErrorRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return (CfxErrorCode)call.__retval;
             }
             set {
+                var connection = RemotePtr.connection;
                 var call = new CfxResponseSetErrorRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.value = (int)value;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
             }
         }
 
@@ -103,16 +107,18 @@ namespace Chromium.Remote {
         /// </remarks>
         public int Status {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxResponseGetStatusRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
             set {
+                var connection = RemotePtr.connection;
                 var call = new CfxResponseSetStatusRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.value = value;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
             }
         }
 
@@ -127,16 +133,18 @@ namespace Chromium.Remote {
         /// </remarks>
         public string StatusText {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxResponseGetStatusTextRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
             set {
+                var connection = RemotePtr.connection;
                 var call = new CfxResponseSetStatusTextRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.value = value;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
             }
         }
 
@@ -151,16 +159,18 @@ namespace Chromium.Remote {
         /// </remarks>
         public string MimeType {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxResponseGetMimeTypeRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
             set {
+                var connection = RemotePtr.connection;
                 var call = new CfxResponseSetMimeTypeRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.value = value;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
             }
         }
 
@@ -172,10 +182,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
         /// </remarks>
         public string GetHeader(string name) {
+            var connection = RemotePtr.connection;
             var call = new CfxResponseGetHeaderRemoteCall();
             call.@this = RemotePtr.ptr;
             call.name = name;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -187,9 +198,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
         /// </remarks>
         public System.Collections.Generic.List<string[]> GetHeaderMap() {
+            var connection = RemotePtr.connection;
             var call = new CfxResponseGetHeaderMapRemoteCall();
             call.@this = RemotePtr.ptr;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -201,10 +213,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_response_capi.h">cef/include/capi/cef_response_capi.h</see>.
         /// </remarks>
         public void SetHeaderMap(System.Collections.Generic.List<string[]> headerMap) {
+            var connection = RemotePtr.connection;
             var call = new CfxResponseSetHeaderMapRemoteCall();
             call.@this = RemotePtr.ptr;
             call.headerMap = headerMap;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
         }
     }
 }

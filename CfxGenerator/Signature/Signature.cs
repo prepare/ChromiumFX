@@ -333,6 +333,11 @@ public class Signature {
 
     public virtual void EmitRemoteCall(CodeBuilder b, string remoteCallId, bool isStatic) {
 
+        if(isStatic)
+            b.AppendLine("var connection = CfxRemoteCallContext.CurrentContext.connection;");
+        else
+            b.AppendLine("var connection = RemotePtr.connection;");
+
         b.AppendLine("var call = new {0}();", remoteCallId);
 
         foreach(var arg in ManagedParameters) {
@@ -340,15 +345,13 @@ public class Signature {
                 arg.EmitPreRemoteCallStatements(b);
             }
         }
-        
-        if(isStatic)
-            b.AppendLine("call.RequestExecution();");
-        else
-            b.AppendLine("call.RequestExecution(RemotePtr.connection);");
+
+        b.AppendLine("call.RequestExecution(connection);");
 
         foreach(var arg in ManagedParameters) {
             arg.EmitPostRemoteCallStatements(b);
         }
+
         ReturnType.EmitRemoteCallProcessReturnValueStatements(b);
 
         if(!PublicReturnType.IsVoid) {
@@ -437,10 +440,10 @@ public class Signature {
     }
 
     public virtual void DebugPrintUnhandledArrayArguments(string cefName, CefConfigNode cefConfig, CfxCallMode callMode) {
-        
+
         if(cefName == "cef_resource_handler::get_response_headers")
             return;
-        
+
         for(var i = 0; i <= Parameters.Length - 1; i++) {
             var suffixLength = CountArgumentSuffixLength(Parameters[i]);
             if(suffixLength > 0) {

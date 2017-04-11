@@ -226,7 +226,7 @@ namespace Chromium.Remote {
             public CfrBrowser Browser {
                 get {
                     CheckAccess();
-                    if(m_browser_wrapped == null) m_browser_wrapped = CfrBrowser.Wrap(new RemotePtr(call.browser));
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfrBrowser.Wrap(new RemotePtr(connection, call.browser));
                     return m_browser_wrapped;
                 }
             }
@@ -310,7 +310,7 @@ namespace Chromium.Remote {
             public CfrBrowser Browser {
                 get {
                     CheckAccess();
-                    if(m_browser_wrapped == null) m_browser_wrapped = CfrBrowser.Wrap(new RemotePtr(call.browser));
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfrBrowser.Wrap(new RemotePtr(connection, call.browser));
                     return m_browser_wrapped;
                 }
             }
@@ -320,7 +320,7 @@ namespace Chromium.Remote {
             public CfrFrame Frame {
                 get {
                     CheckAccess();
-                    if(m_frame_wrapped == null) m_frame_wrapped = CfrFrame.Wrap(new RemotePtr(call.frame));
+                    if(m_frame_wrapped == null) m_frame_wrapped = CfrFrame.Wrap(new RemotePtr(connection, call.frame));
                     return m_frame_wrapped;
                 }
             }
@@ -382,7 +382,7 @@ namespace Chromium.Remote {
             public CfrBrowser Browser {
                 get {
                     CheckAccess();
-                    if(m_browser_wrapped == null) m_browser_wrapped = CfrBrowser.Wrap(new RemotePtr(call.browser));
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfrBrowser.Wrap(new RemotePtr(connection, call.browser));
                     return m_browser_wrapped;
                 }
             }
@@ -392,7 +392,7 @@ namespace Chromium.Remote {
             public CfrFrame Frame {
                 get {
                     CheckAccess();
-                    if(m_frame_wrapped == null) m_frame_wrapped = CfrFrame.Wrap(new RemotePtr(call.frame));
+                    if(m_frame_wrapped == null) m_frame_wrapped = CfrFrame.Wrap(new RemotePtr(connection, call.frame));
                     return m_frame_wrapped;
                 }
             }
@@ -452,7 +452,7 @@ namespace Chromium.Remote {
             public CfrBrowser Browser {
                 get {
                     CheckAccess();
-                    if(m_browser_wrapped == null) m_browser_wrapped = CfrBrowser.Wrap(new RemotePtr(call.browser));
+                    if(m_browser_wrapped == null) m_browser_wrapped = CfrBrowser.Wrap(new RemotePtr(connection, call.browser));
                     return m_browser_wrapped;
                 }
             }
@@ -462,7 +462,7 @@ namespace Chromium.Remote {
             public CfrFrame Frame {
                 get {
                     CheckAccess();
-                    if(m_frame_wrapped == null) m_frame_wrapped = CfrFrame.Wrap(new RemotePtr(call.frame));
+                    if(m_frame_wrapped == null) m_frame_wrapped = CfrFrame.Wrap(new RemotePtr(connection, call.frame));
                     return m_frame_wrapped;
                 }
             }
@@ -482,7 +482,7 @@ namespace Chromium.Remote {
                 get {
                     CheckAccess();
                     if(!m_errorText_fetched) {
-                        m_errorText = call.errorText_str == IntPtr.Zero ? null : (call.errorText_length == 0 ? String.Empty : CfrRuntime.Marshal.PtrToStringUni(new RemotePtr(call.errorText_str), call.errorText_length));
+                        m_errorText = call.errorText_str == IntPtr.Zero ? null : (call.errorText_length == 0 ? String.Empty : CfrRuntime.Marshal.PtrToStringUni(new RemotePtr(connection, call.errorText_str), call.errorText_length));
                         m_errorText_fetched = true;
                     }
                     return m_errorText;
@@ -495,7 +495,7 @@ namespace Chromium.Remote {
                 get {
                     CheckAccess();
                     if(!m_failedUrl_fetched) {
-                        m_failedUrl = call.failedUrl_str == IntPtr.Zero ? null : (call.failedUrl_length == 0 ? String.Empty : CfrRuntime.Marshal.PtrToStringUni(new RemotePtr(call.failedUrl_str), call.failedUrl_length));
+                        m_failedUrl = call.failedUrl_str == IntPtr.Zero ? null : (call.failedUrl_length == 0 ? String.Empty : CfrRuntime.Marshal.PtrToStringUni(new RemotePtr(connection, call.failedUrl_str), call.failedUrl_length));
                         m_failedUrl_fetched = true;
                     }
                     return m_failedUrl;

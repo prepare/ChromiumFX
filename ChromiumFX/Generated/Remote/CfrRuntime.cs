@@ -109,8 +109,9 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_crash_util_capi.h">cef/include/capi/cef_crash_util_capi.h</see>.
         /// </remarks>
         public static bool CrashReportingEnabled() {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxRuntimeCrashReportingEnabledRemoteCall();
-            call.RequestExecution();
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -125,9 +126,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
         /// </remarks>
         public static bool CreateDirectory(string fullPath) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxRuntimeCreateDirectoryRemoteCall();
             call.fullPath = fullPath;
-            call.RequestExecution();
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -143,9 +145,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
         /// </remarks>
         public static bool CreateNewTempDirectory(string prefix, string newTempPath) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxRuntimeCreateNewTempDirectoryRemoteCall();
             call.prefix = prefix;
-            call.RequestExecution();
+            call.RequestExecution(connection);
             newTempPath = call.newTempPath;
             return call.__retval;
         }
@@ -163,10 +166,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
         /// </remarks>
         public static bool CreateTempDirectoryInDirectory(string baseDir, string prefix, string newDir) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxRuntimeCreateTempDirectoryInDirectoryRemoteCall();
             call.baseDir = baseDir;
             call.prefix = prefix;
-            call.RequestExecution();
+            call.RequestExecution(connection);
             newDir = call.newDir;
             return call.__retval;
         }
@@ -180,9 +184,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static bool CurrentlyOn(CfxThreadId threadId) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxRuntimeCurrentlyOnRemoteCall();
             call.threadId = (int)threadId;
-            call.RequestExecution();
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -200,10 +205,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
         /// </remarks>
         public static bool DeleteFile(string path, bool recursive) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxRuntimeDeleteFileRemoteCall();
             call.path = path;
             call.recursive = recursive;
-            call.RequestExecution();
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -216,9 +222,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
         /// </remarks>
         public static bool DirectoryExists(string path) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxRuntimeDirectoryExistsRemoteCall();
             call.path = path;
-            call.RequestExecution();
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -237,9 +244,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_parser_capi.h">cef/include/capi/cef_parser_capi.h</see>.
         /// </remarks>
         public static string FormatUrlForSecurityDisplay(string originUrl) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxRuntimeFormatUrlForSecurityDisplayRemoteCall();
             call.originUrl = originUrl;
-            call.RequestExecution();
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -256,8 +264,9 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
         /// </remarks>
         public static bool GetTempDirectory(string tempDir) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxRuntimeGetTempDirectoryRemoteCall();
-            call.RequestExecution();
+            call.RequestExecution(connection);
             tempDir = call.tempDir;
             return call.__retval;
         }
@@ -270,9 +279,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
         /// </remarks>
         public static bool IsCertStatusError(CfxCertStatus status) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxRuntimeIsCertStatusErrorRemoteCall();
             call.status = (int)status;
-            call.RequestExecution();
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -285,9 +295,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_ssl_info_capi.h">cef/include/capi/cef_ssl_info_capi.h</see>.
         /// </remarks>
         public static bool IsCertStatusMinorError(CfxCertStatus status) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxRuntimeIsCertStatusMinorErrorRemoteCall();
             call.status = (int)status;
-            call.RequestExecution();
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -301,11 +312,12 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static bool PostDelayedTask(CfxThreadId threadId, CfrTask task, long delayMs) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxRuntimePostDelayedTaskRemoteCall();
             call.threadId = (int)threadId;
             call.task = CfrObject.Unwrap(task).ptr;
             call.delayMs = delayMs;
-            call.RequestExecution();
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -318,10 +330,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_task_capi.h">cef/include/capi/cef_task_capi.h</see>.
         /// </remarks>
         public static bool PostTask(CfxThreadId threadId, CfrTask task) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxRuntimePostTaskRemoteCall();
             call.threadId = (int)threadId;
             call.task = CfrObject.Unwrap(task).ptr;
-            call.RequestExecution();
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -386,11 +399,12 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
         public static bool RegisterExtension(string extensionName, string javascriptCode, CfrV8Handler handler) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxRuntimeRegisterExtensionRemoteCall();
             call.extensionName = extensionName;
             call.javascriptCode = javascriptCode;
             call.handler = CfrObject.Unwrap(handler).ptr;
-            call.RequestExecution();
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -402,10 +416,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_crash_util_capi.h">cef/include/capi/cef_crash_util_capi.h</see>.
         /// </remarks>
         public static void SetCrashKeyValue(string key, string value) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxRuntimeSetCrashKeyValueRemoteCall();
             call.key = key;
             call.value = value;
-            call.RequestExecution();
+            call.RequestExecution(connection);
         }
 
         /// <summary>
@@ -419,11 +434,12 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_file_util_capi.h">cef/include/capi/cef_file_util_capi.h</see>.
         /// </remarks>
         public static bool ZipDirectory(string srcDir, string destFile, bool includeHiddenFiles) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxRuntimeZipDirectoryRemoteCall();
             call.srcDir = srcDir;
             call.destFile = destFile;
             call.includeHiddenFiles = includeHiddenFiles;
-            call.RequestExecution();
+            call.RequestExecution(connection);
             return call.__retval;
         }
 

@@ -47,9 +47,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfxDomNodeType Type {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeGetTypeRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return (CfxDomNodeType)call.__retval;
             }
         }
@@ -63,9 +64,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsText {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeIsTextRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -79,9 +81,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsElement {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeIsElementRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -95,9 +98,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsEditable {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeIsEditableRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -111,9 +115,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsFormControlElement {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeIsFormControlElementRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -127,9 +132,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public string FormControlElementType {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeGetFormControlElementTypeRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -143,9 +149,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public string Name {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeGetNameRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -159,9 +166,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public string Value {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeGetValueRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -175,9 +183,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public string AsMarkup {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeGetAsMarkupRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -191,10 +200,11 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrDomDocument Document {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeGetDocumentRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
-                return CfrDomDocument.Wrap(new RemotePtr(call.__retval));
+                call.RequestExecution(connection);
+                return CfrDomDocument.Wrap(new RemotePtr(connection, call.__retval));
             }
         }
 
@@ -207,10 +217,11 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrDomNode Parent {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeGetParentRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
-                return CfrDomNode.Wrap(new RemotePtr(call.__retval));
+                call.RequestExecution(connection);
+                return CfrDomNode.Wrap(new RemotePtr(connection, call.__retval));
             }
         }
 
@@ -223,10 +234,11 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrDomNode PreviousSibling {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeGetPreviousSiblingRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
-                return CfrDomNode.Wrap(new RemotePtr(call.__retval));
+                call.RequestExecution(connection);
+                return CfrDomNode.Wrap(new RemotePtr(connection, call.__retval));
             }
         }
 
@@ -239,10 +251,11 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrDomNode NextSibling {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeGetNextSiblingRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
-                return CfrDomNode.Wrap(new RemotePtr(call.__retval));
+                call.RequestExecution(connection);
+                return CfrDomNode.Wrap(new RemotePtr(connection, call.__retval));
             }
         }
 
@@ -255,9 +268,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool HasChildren {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeHasChildrenRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -271,10 +285,11 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrDomNode FirstChild {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeGetFirstChildRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
-                return CfrDomNode.Wrap(new RemotePtr(call.__retval));
+                call.RequestExecution(connection);
+                return CfrDomNode.Wrap(new RemotePtr(connection, call.__retval));
             }
         }
 
@@ -287,10 +302,11 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrDomNode LastChild {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeGetLastChildRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
-                return CfrDomNode.Wrap(new RemotePtr(call.__retval));
+                call.RequestExecution(connection);
+                return CfrDomNode.Wrap(new RemotePtr(connection, call.__retval));
             }
         }
 
@@ -303,9 +319,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public string ElementTagName {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeGetElementTagNameRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -319,9 +336,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool HasElementAttributes {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeHasElementAttributesRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -335,9 +353,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public string ElementInnerText {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeGetElementInnerTextRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -351,9 +370,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrRect ElementBounds {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxDomNodeGetElementBoundsRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 if(call.__retval == IntPtr.Zero) throw new OutOfMemoryException("Render process out of memory.");
                 return CfrRect.Wrap(new RemotePtr(connection, call.__retval));
             }
@@ -368,10 +388,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
         public bool IsSame(CfrDomNode that) {
+            var connection = RemotePtr.connection;
             var call = new CfxDomNodeIsSameRemoteCall();
             call.@this = RemotePtr.ptr;
             call.that = CfrObject.Unwrap(that).ptr;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -383,10 +404,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
         public bool SetValue(string value) {
+            var connection = RemotePtr.connection;
             var call = new CfxDomNodeSetValueRemoteCall();
             call.@this = RemotePtr.ptr;
             call.value = value;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -398,10 +420,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
         public bool HasElementAttribute(string attrName) {
+            var connection = RemotePtr.connection;
             var call = new CfxDomNodeHasElementAttributeRemoteCall();
             call.@this = RemotePtr.ptr;
             call.attrName = attrName;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -413,10 +436,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
         public string GetElementAttribute(string attrName) {
+            var connection = RemotePtr.connection;
             var call = new CfxDomNodeGetElementAttributeRemoteCall();
             call.@this = RemotePtr.ptr;
             call.attrName = attrName;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -428,9 +452,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
         public System.Collections.Generic.List<string[]> GetElementAttributes() {
+            var connection = RemotePtr.connection;
             var call = new CfxDomNodeGetElementAttributesRemoteCall();
             call.@this = RemotePtr.ptr;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -443,11 +468,12 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_dom_capi.h">cef/include/capi/cef_dom_capi.h</see>.
         /// </remarks>
         public bool SetElementAttribute(string attrName, string value) {
+            var connection = RemotePtr.connection;
             var call = new CfxDomNodeSetElementAttributeRemoteCall();
             call.@this = RemotePtr.ptr;
             call.attrName = attrName;
             call.value = value;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
     }

@@ -42,10 +42,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
         /// </remarks>
         public static CfrProcessMessage Create(string name) {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxProcessMessageCreateRemoteCall();
             call.name = name;
-            call.RequestExecution();
-            return CfrProcessMessage.Wrap(new RemotePtr(call.__retval));
+            call.RequestExecution(connection);
+            return CfrProcessMessage.Wrap(new RemotePtr(connection, call.__retval));
         }
 
 
@@ -61,9 +62,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsValid {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxProcessMessageIsValidRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -78,9 +80,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsReadOnly {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxProcessMessageIsReadOnlyRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -94,9 +97,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public string Name {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxProcessMessageGetNameRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -110,10 +114,11 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrListValue ArgumentList {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxProcessMessageGetArgumentListRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
-                return CfrListValue.Wrap(new RemotePtr(call.__retval));
+                call.RequestExecution(connection);
+                return CfrListValue.Wrap(new RemotePtr(connection, call.__retval));
             }
         }
 
@@ -125,10 +130,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_process_message_capi.h">cef/include/capi/cef_process_message_capi.h</see>.
         /// </remarks>
         public CfrProcessMessage Copy() {
+            var connection = RemotePtr.connection;
             var call = new CfxProcessMessageCopyRemoteCall();
             call.@this = RemotePtr.ptr;
-            call.RequestExecution(RemotePtr.connection);
-            return CfrProcessMessage.Wrap(new RemotePtr(call.__retval));
+            call.RequestExecution(connection);
+            return CfrProcessMessage.Wrap(new RemotePtr(connection, call.__retval));
         }
     }
 }

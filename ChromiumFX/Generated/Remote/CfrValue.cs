@@ -44,9 +44,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public static CfrValue Create() {
+            var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxValueCreateRemoteCall();
-            call.RequestExecution();
-            return CfrValue.Wrap(new RemotePtr(call.__retval));
+            call.RequestExecution(connection);
+            return CfrValue.Wrap(new RemotePtr(connection, call.__retval));
         }
 
 
@@ -66,9 +67,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsValid {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxValueIsValidRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -82,9 +84,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsOwned {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxValueIsOwnedRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -99,9 +102,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool IsReadOnly {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxValueIsReadOnlyRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -115,9 +119,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfxValueType Type {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxValueGetTypeRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return (CfxValueType)call.__retval;
             }
         }
@@ -131,9 +136,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public bool Bool {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxValueGetBoolRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -147,9 +153,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public int Int {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxValueGetIntRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -163,9 +170,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public double Double {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxValueGetDoubleRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -179,9 +187,10 @@ namespace Chromium.Remote {
         /// </remarks>
         public string String {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxValueGetStringRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
+                call.RequestExecution(connection);
                 return call.__retval;
             }
         }
@@ -200,10 +209,11 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrBinaryValue Binary {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxValueGetBinaryRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
-                return CfrBinaryValue.Wrap(new RemotePtr(call.__retval));
+                call.RequestExecution(connection);
+                return CfrBinaryValue.Wrap(new RemotePtr(connection, call.__retval));
             }
         }
 
@@ -221,10 +231,11 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrDictionaryValue Dictionary {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxValueGetDictionaryRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
-                return CfrDictionaryValue.Wrap(new RemotePtr(call.__retval));
+                call.RequestExecution(connection);
+                return CfrDictionaryValue.Wrap(new RemotePtr(connection, call.__retval));
             }
         }
 
@@ -242,10 +253,11 @@ namespace Chromium.Remote {
         /// </remarks>
         public CfrListValue List {
             get {
+                var connection = RemotePtr.connection;
                 var call = new CfxValueGetListRemoteCall();
                 call.@this = RemotePtr.ptr;
-                call.RequestExecution(RemotePtr.connection);
-                return CfrListValue.Wrap(new RemotePtr(call.__retval));
+                call.RequestExecution(connection);
+                return CfrListValue.Wrap(new RemotePtr(connection, call.__retval));
             }
         }
 
@@ -259,10 +271,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public bool IsSame(CfrValue that) {
+            var connection = RemotePtr.connection;
             var call = new CfxValueIsSameRemoteCall();
             call.@this = RemotePtr.ptr;
             call.that = CfrObject.Unwrap(that).ptr;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -275,10 +288,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public bool IsEqual(CfrValue that) {
+            var connection = RemotePtr.connection;
             var call = new CfxValueIsEqualRemoteCall();
             call.@this = RemotePtr.ptr;
             call.that = CfrObject.Unwrap(that).ptr;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -290,10 +304,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public CfrValue Copy() {
+            var connection = RemotePtr.connection;
             var call = new CfxValueCopyRemoteCall();
             call.@this = RemotePtr.ptr;
-            call.RequestExecution(RemotePtr.connection);
-            return CfrValue.Wrap(new RemotePtr(call.__retval));
+            call.RequestExecution(connection);
+            return CfrValue.Wrap(new RemotePtr(connection, call.__retval));
         }
 
         /// <summary>
@@ -305,9 +320,10 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public bool SetNull() {
+            var connection = RemotePtr.connection;
             var call = new CfxValueSetNullRemoteCall();
             call.@this = RemotePtr.ptr;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -320,10 +336,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public bool SetBool(bool value) {
+            var connection = RemotePtr.connection;
             var call = new CfxValueSetBoolRemoteCall();
             call.@this = RemotePtr.ptr;
             call.value = value;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -336,10 +353,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public bool SetInt(int value) {
+            var connection = RemotePtr.connection;
             var call = new CfxValueSetIntRemoteCall();
             call.@this = RemotePtr.ptr;
             call.value = value;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -352,10 +370,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public bool SetDouble(double value) {
+            var connection = RemotePtr.connection;
             var call = new CfxValueSetDoubleRemoteCall();
             call.@this = RemotePtr.ptr;
             call.value = value;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -368,10 +387,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public bool SetString(string value) {
+            var connection = RemotePtr.connection;
             var call = new CfxValueSetStringRemoteCall();
             call.@this = RemotePtr.ptr;
             call.value = value;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -385,10 +405,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public bool SetBinary(CfrBinaryValue value) {
+            var connection = RemotePtr.connection;
             var call = new CfxValueSetBinaryRemoteCall();
             call.@this = RemotePtr.ptr;
             call.value = CfrObject.Unwrap(value).ptr;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -402,10 +423,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public bool SetDictionary(CfrDictionaryValue value) {
+            var connection = RemotePtr.connection;
             var call = new CfxValueSetDictionaryRemoteCall();
             call.@this = RemotePtr.ptr;
             call.value = CfrObject.Unwrap(value).ptr;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
 
@@ -419,10 +441,11 @@ namespace Chromium.Remote {
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_values_capi.h">cef/include/capi/cef_values_capi.h</see>.
         /// </remarks>
         public bool SetList(CfrListValue value) {
+            var connection = RemotePtr.connection;
             var call = new CfxValueSetListRemoteCall();
             call.@this = RemotePtr.ptr;
             call.value = CfrObject.Unwrap(value).ptr;
-            call.RequestExecution(RemotePtr.connection);
+            call.RequestExecution(connection);
             return call.__retval;
         }
     }
