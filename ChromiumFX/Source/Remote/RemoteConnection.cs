@@ -15,8 +15,8 @@ namespace Chromium.Remote {
     internal class RemoteConnection {
 
 
-        private readonly Stream pipeIn;
-        private readonly Stream pipeOut;
+        private readonly PipeBufferStream pipeIn;
+        private readonly PipeBufferStream pipeOut;
         internal readonly StreamHandler streamHandler;
 
         internal int localProcessId { get; private set; }
@@ -37,7 +37,7 @@ namespace Chromium.Remote {
 
         internal readonly RemoteWeakCache weakCache = new RemoteWeakCache();
 
-        internal RemoteConnection(Stream pipeIn, Stream pipeOut, bool isClient) {
+        internal RemoteConnection(PipeBufferStream pipeIn, PipeBufferStream pipeOut, bool isClient) {
 
             this.pipeIn = pipeIn;
             this.pipeOut = pipeOut;
@@ -68,7 +68,7 @@ namespace Chromium.Remote {
             Monitor.Enter(writeSyncRoot);
             try {
                 if(!connected) {
-                    Connect(pipeOut);
+                    pipeOut.Connect();
                     streamHandler.Write(localProcessId);
                     streamHandler.Flush();
                     connected = true;
@@ -109,7 +109,7 @@ namespace Chromium.Remote {
 
         private void ReadLoopEntry() {
             try {
-                Connect(pipeIn);
+                pipeIn.Connect();
                 remoteProcessId = streamHandler.ReadInt32();
                 ReadLoop();
             } catch(EndOfStreamException ex) {
@@ -118,14 +118,6 @@ namespace Chromium.Remote {
                 OnConnectionLost(ex);
             } catch(ObjectDisposedException ex) {
                 OnConnectionLost(ex);
-            }
-        }
-
-        private void Connect(Stream stream) {
-            if(isClient) {
-                PipeFactory.Instance.Connect(stream);
-            } else {
-                PipeFactory.Instance.WaitForConnection(stream);
             }
         }
 

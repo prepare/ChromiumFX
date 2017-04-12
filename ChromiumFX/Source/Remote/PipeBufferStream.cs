@@ -18,6 +18,27 @@ namespace Chromium.Remote {
     /// </summary>
     class PipeBufferStream : Stream {
 
+        internal static PipeBufferStream CreateServerInputStream(string name) {
+            var s = new NamedPipeServerStream(name, PipeDirection.In, 1);
+            return new PipeBufferStream(s);
+        }
+
+        internal static PipeBufferStream CreateServerOutputStream(string name) {
+            var s = new NamedPipeServerStream(name, PipeDirection.Out, 1);
+            return new PipeBufferStream(s);
+        }
+
+        internal static PipeBufferStream CreateClientInputStream(string name) {
+            var s = new NamedPipeClientStream(".", name, PipeDirection.In);
+            return new PipeBufferStream(s);
+        }
+
+        internal static PipeBufferStream CreateClientOutputStream(string name) {
+            var s = new NamedPipeClientStream(".", name, PipeDirection.Out);
+            return new PipeBufferStream(s);
+        }
+
+
         internal const int bufferLength = 1024;
 
         internal readonly PipeStream pipe;
@@ -29,10 +50,17 @@ namespace Chromium.Remote {
         private int readBufferOffset;
         private int readBufferCount;
 
-        internal PipeBufferStream(PipeStream pipe) {
+        private PipeBufferStream(PipeStream pipe) {
             this.pipe = pipe;
             writeBuffer = new byte[bufferLength];
             readBuffer = new byte[bufferLength];
+        }
+
+        internal void Connect() {
+            if(pipe is NamedPipeServerStream)
+                (pipe as NamedPipeServerStream).WaitForConnection();
+            else
+                (pipe as NamedPipeClientStream).Connect();
         }
 
         public override void Write(byte[] buffer, int offset, int count) {

@@ -48,8 +48,8 @@ namespace Chromium.Remote {
 
             if(e.CommandLine.HasSwitch("type") && e.CommandLine.GetSwitchValue("type") == "renderer") {
                 var pipeName = "cfx" + Guid.NewGuid().ToString().Replace("-", string.Empty);
-                var pipeIn = PipeFactory.Instance.CreateServerPipeInputStream(pipeName + "si");
-                var pipeOut = PipeFactory.Instance.CreateServerPipeOutputStream(pipeName + "so");
+                var pipeIn = PipeBufferStream.CreateServerInputStream(pipeName + "si");
+                var pipeOut = PipeBufferStream.CreateServerOutputStream(pipeName + "so");
                 var connection = new RemoteConnection(pipeIn, pipeOut, false);
                 lock(connections) {
                     connections.Add(connection);
