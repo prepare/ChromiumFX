@@ -42,7 +42,7 @@ namespace Chromium.Remote {
         internal const int bufferLength = 1024;
 
         internal readonly PipeStream pipe;
-        
+
         private readonly byte[] writeBuffer;
         private int writeBufferCount;
 
@@ -64,45 +64,84 @@ namespace Chromium.Remote {
         }
 
         public override void Write(byte[] buffer, int offset, int count) {
-            do {
-                
-                var bytes = count > bufferLength - writeBufferCount ?
-                    bufferLength - writeBufferCount : count;
 
-                Array.Copy(buffer, offset, this.writeBuffer, writeBufferCount, bytes);
-                writeBufferCount += bytes;
-                offset += bytes;
-                count -= bytes;
-
-                
-                if(writeBufferCount == bufferLength) {
-                    pipe.Write(this.writeBuffer, 0, writeBufferCount);
+            if(count > bufferLength) {
+                // if the user wants to write more than bufferLength bytes,
+                // using the buffer would actually split the write instead of bundling it with other writes
+                // so we flush the write buffer and then write the whole buffer at once.
+                if(writeBufferCount > 0) {
+                    pipe.Write(writeBuffer, 0, writeBufferCount);
                     writeBufferCount = 0;
                 }
+                pipe.Write(buffer, offset, count);
+                return;
+            }
 
-            } while(count > 0);
+            if(count > bufferLength - writeBufferCount) {
+                // the new data doesn't fit in the write buffer,
+                // so fill up and flush the buffer
+                var bytes = bufferLength - writeBufferCount;
+                Array.Copy(buffer, offset, writeBuffer, writeBufferCount, bytes);
+                Debug.Assert(writeBufferCount + bytes == bufferLength);
+                pipe.Write(writeBuffer, 0, bufferLength);
+                writeBufferCount = 0;
+                offset += bytes;
+                count -= bytes;
+            }
+
+            // at this point, the remaining new data is guaranteed to fit in the write buffer
+            Debug.Assert(count <= bufferLength - writeBufferCount);
+
+            if(count > 0) {
+                Array.Copy(buffer, offset, writeBuffer, writeBufferCount, count);
+                writeBufferCount += count;
+                if(writeBufferCount == bufferLength) {
+                    pipe.Write(writeBuffer, 0, bufferLength);
+                    writeBufferCount = 0;
+                }
+            }
         }
 
         public override void WriteByte(byte value) {
             writeBuffer[writeBufferCount] = (byte)value;
             ++writeBufferCount;
             if(writeBufferCount == bufferLength) {
-                pipe.Write(this.writeBuffer, 0, writeBufferCount);
+                pipe.Write(writeBuffer, 0, bufferLength);
                 writeBufferCount = 0;
             }
         }
 
         public override int Read(byte[] buffer, int offset, int count) {
+
+            int readCount = 0;
+
+            if(count > bufferLength) {
+                // if the user wants to read more than bufferLength bytes,
+                // using the buffer would actually lead to more pipe reads instead of less
+                // so we flush the read buffer and then read directly from the pipe stream.
+
+                if(readBufferCount > 0) {
+                    readCount = readBufferCount;
+                    Array.Copy(readBuffer, readBufferOffset, buffer, offset, readCount);
+                    readBufferOffset = 0;
+                    readBufferCount = 0;
+                    offset += readCount;
+                    count -= readCount;
+                }
+                return readCount + pipe.Read(buffer, offset, count);
+            }
+
             if(readBufferCount == 0) {
                 readBufferOffset = 0;
                 readBufferCount = pipe.Read(readBuffer, 0, bufferLength);
                 if(readBufferCount == 0) return 0;
             }
-            int bytes = count < readBufferCount ? count : readBufferCount;
-            Array.Copy(readBuffer, readBufferOffset, buffer, offset, bytes);
-            readBufferOffset += bytes;
-            readBufferCount -= bytes;
-            return bytes;
+
+            readCount = count < readBufferCount ? count : readBufferCount;
+            Array.Copy(readBuffer, readBufferOffset, buffer, offset, readCount);
+            readBufferOffset += readCount;
+            readBufferCount -= readCount;
+            return readCount;
         }
 
         public override int ReadByte() {
