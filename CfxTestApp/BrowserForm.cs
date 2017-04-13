@@ -15,6 +15,7 @@ using Chromium.Remote.Event;
 using Chromium.WebBrowser;
 using System.Threading;
 using System.Collections.Generic;
+using System.Text;
 
 namespace CfxTestApplication {
     public partial class BrowserForm : Form {
@@ -201,6 +202,7 @@ namespace CfxTestApplication {
             };
 
             WebBrowser.GlobalObject.AddFunction("SubmitAsyncTestFunction").Execute += JS_SubmitAsyncTestFunction;
+            WebBrowser.GlobalObject.AddFunction("bigStringFunction").Execute += JS_bigStringFunction;
 
         }
 
@@ -607,11 +609,28 @@ namespace CfxTestApplication {
             }
 
             rpcContext.Exit();
-            
+
             LogWriteLine("AsyncTestFunctionCallback: result from callback = " + result);
             LogWriteLine("AsyncTestFunctionCallback: done.");
 
         }
 
+        private void JS_bigStringFunction(object sender, CfrV8HandlerExecuteEventArgs e) {
+            var rnd = new Random(DateTime.Now.Millisecond);
+            var size = rnd.Next(50 * 1024 * 1024, 51 * 1024 * 1024);
+            var chars = new char[size];
+            var charSource = "abcdefghijklmnopqrstuvwzyz0123456789";
+            
+            for(int i = 0; i < chars.Length; ++i) {
+                chars[i] = charSource[rnd.Next(0, charSource.Length)];
+            }
+            var str = new string(chars);
+            LogWriteLine("Sending big string: {0}(...) ({1} bytes)", str.Substring(0, 20), str.Length);
+            e.SetReturnValue(str);
+        }
+
+        private void sendBigStringToJSToolStripMenuItem_Click(object sender, EventArgs e) {
+            WebBrowser.ExecuteJavascript("var bigString = bigStringFunction(); testlog('big string received: ' + bigString.substring(0, 20) + '(...) (' + bigString.length + ' bytes)');");
+        }
     }
 }
