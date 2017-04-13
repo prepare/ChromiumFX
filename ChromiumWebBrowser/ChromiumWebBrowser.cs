@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
@@ -200,7 +201,7 @@ namespace Chromium.WebBrowser {
 
         private readonly object browserSyncRoot = new object();
         private IntPtr browserWindowHandle;
-        
+
         internal readonly Dictionary<string, JSObject> frameGlobalObjects = new Dictionary<string, JSObject>();
         internal readonly Dictionary<string, WebResource> webResources = new Dictionary<string, WebResource>();
 
@@ -337,8 +338,7 @@ namespace Chromium.WebBrowser {
             if(!CfxBrowserHost.CreateBrowser(windowInfo, client, initialUrl, DefaultBrowserSettings, requestContext))
                 throw new ChromiumWebBrowserException("Failed to create browser instance.");
         }
-
-
+        
         /// <summary>
         /// Returns the context menu handler for this browser. If this is never accessed the default
         /// implementation will be used.
@@ -846,7 +846,7 @@ namespace Chromium.WebBrowser {
                 return false;
             }
         }
-        
+
         private class VisitDomTask : CfrTask {
 
             ChromiumWebBrowser wb;
@@ -1106,8 +1106,8 @@ namespace Chromium.WebBrowser {
 
         //protected override void WndProc(ref Message m) {
         //    base.WndProc(ref m);
-        //    System.Diagnostics.Debug.Print(m.ToString());
-        //}   
+        //    Debug.Print(m.ToString());
+        //}
 
         protected override void OnVisibleChanged(EventArgs e) {
             base.OnVisibleChanged(e);
@@ -1126,32 +1126,33 @@ namespace Chromium.WebBrowser {
             ResizeBrowserWindow();
         }
 
+        
+
         internal void ResizeBrowserWindow() {
-            if(Visible) {
-                if(browserWindowHandle != IntPtr.Zero && this.Height > 0 && this.Width > 0) {
-                    int h;
-                    if(m_findToolbar == null || !m_findToolbar.Visible) {
-                        h = Height;
-                    } else {
-                        if(InvokeRequired) {
-                            Invoke((MethodInvoker)(() => {
-                                m_findToolbar.Width = Width;
-                                m_findToolbar.Top = Height - m_findToolbar.Height;
-                            }));
-                        } else {
+            if(browserWindowHandle == IntPtr.Zero) return;
+            if(Visible && Height > 0 && Width > 0) {
+                int h;
+                if(m_findToolbar == null || !m_findToolbar.Visible) {
+                    h = Height;
+                } else {
+                    if(InvokeRequired) {
+                        Invoke((MethodInvoker)(() => {
                             m_findToolbar.Width = Width;
                             m_findToolbar.Top = Height - m_findToolbar.Height;
-                        }
-                        h = m_findToolbar.Top;
+                        }));
+                    } else {
+                        m_findToolbar.Width = Width;
+                        m_findToolbar.Top = Height - m_findToolbar.Height;
                     }
-                    SetWindowLong(browserWindowHandle, -16, (int)(WindowStyle.WS_CHILD | WindowStyle.WS_CLIPCHILDREN | WindowStyle.WS_CLIPSIBLINGS | WindowStyle.WS_TABSTOP | WindowStyle.WS_VISIBLE));
-                    SetWindowPos(browserWindowHandle, IntPtr.Zero, 0, 0, Width, h, SWP_NOMOVE | SWP_NOZORDER);
+                    h = m_findToolbar.Top;
                 }
+                SetWindowLong(browserWindowHandle, -16, (int)(WindowStyle.WS_CHILD | WindowStyle.WS_CLIPCHILDREN | WindowStyle.WS_CLIPSIBLINGS | WindowStyle.WS_TABSTOP | WindowStyle.WS_VISIBLE));
+                SetWindowPos(browserWindowHandle, IntPtr.Zero, 0, 0, Width, h, SWP_NOMOVE | SWP_NOZORDER | SWP_SHOWWINDOW | SWP_NOCOPYBITS | SWP_ASYNCWINDOWPOS);
+                //Debug.Print($"ResizeBrowserWindow: {Width} {h}");
             } else {
-                if(browserWindowHandle != IntPtr.Zero) {
-                    SetWindowLong(browserWindowHandle, -16, (int)(WindowStyle.WS_CHILD | WindowStyle.WS_CLIPCHILDREN | WindowStyle.WS_CLIPSIBLINGS | WindowStyle.WS_TABSTOP | WindowStyle.WS_DISABLED));
-                    SetWindowPos(browserWindowHandle, IntPtr.Zero, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOZORDER);
-                }
+                SetWindowLong(browserWindowHandle, -16, (int)(WindowStyle.WS_CHILD | WindowStyle.WS_CLIPCHILDREN | WindowStyle.WS_CLIPSIBLINGS | WindowStyle.WS_TABSTOP | WindowStyle.WS_DISABLED));
+                SetWindowPos(browserWindowHandle, IntPtr.Zero, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_HIDEWINDOW | SWP_ASYNCWINDOWPOS);
+                //Debug.Print($"ResizeBrowserWindow: hide");
             }
         }
 
@@ -1162,7 +1163,13 @@ namespace Chromium.WebBrowser {
         [DllImport("user32", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
-        private const uint SWP_NOMOVE = 0x2;
-        private const uint SWP_NOZORDER = 0x4;
+        private const uint SWP_NOSIZE = 0x0001;
+        private const uint SWP_NOMOVE = 0x0002;
+        private const uint SWP_NOZORDER = 0x0004;
+        private const uint SWP_SHOWWINDOW = 0x0040;
+        private const uint SWP_HIDEWINDOW = 0x0080;
+        private const uint SWP_NOCOPYBITS = 0x0100;
+        private const uint SWP_ASYNCWINDOWPOS = 0x4000;
+
     }
 }
