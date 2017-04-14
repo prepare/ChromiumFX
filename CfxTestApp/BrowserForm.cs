@@ -468,6 +468,7 @@ namespace CfxTestApplication {
                 if(value != null) {
                     var v0 = value.GetValue(0);
                     if(v0 == null) {
+                        // seems to be fixed in  3.2987.3
                         MessageBox.Show("This test is broken, please refer to issue #65 in the project repo.");
                     } else {
                         LogWriteLine("Evaluation callback with value: scrollWidth={0}, scrollHeight={1}.",
