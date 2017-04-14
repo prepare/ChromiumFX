@@ -89,8 +89,8 @@ namespace Chromium.Remote {
             Debug.Assert(!rc.returnImmediately);
 
             lock(rc) {
-                if(ShuttingDown || connectionLostException != null) return;
                 newCalls.Add(rc);
+                if(ShuttingDown || connectionLostException != null) return;
                 Write(rc.WriteRequest);
                 Monitor.Wait(rc);
             }
@@ -163,9 +163,15 @@ namespace Chromium.Remote {
         private void OnConnectionLost(Exception ex) {
             if(!ShuttingDown)
                 connectionLostException = ex;
+            RemoteCall c;
+            while(newCalls.TryTake(out c)) {
+                lock(c) {
+                    Monitor.PulseAll(c);
+                }
+            }
             foreach(var s in threadCallStack.Values) {
                 if(s.Count > 0) {
-                    var c = s.Peek();
+                    c = s.Peek();
                     lock(c) {
                         Monitor.PulseAll(c);
                     }
