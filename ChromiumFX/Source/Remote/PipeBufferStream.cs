@@ -20,40 +20,39 @@ namespace Chromium.Remote {
 
         internal static PipeBufferStream CreateServerInputStream(string name) {
             var s = new NamedPipeServerStream(name, PipeDirection.In, 1);
-            return new PipeBufferStream(s);
+            return new PipeBufferStream(s, true);
         }
 
         internal static PipeBufferStream CreateServerOutputStream(string name) {
             var s = new NamedPipeServerStream(name, PipeDirection.Out, 1);
-            return new PipeBufferStream(s);
+            return new PipeBufferStream(s, false);
         }
 
         internal static PipeBufferStream CreateClientInputStream(string name) {
             var s = new NamedPipeClientStream(".", name, PipeDirection.In);
-            return new PipeBufferStream(s);
+            return new PipeBufferStream(s, true);
         }
 
         internal static PipeBufferStream CreateClientOutputStream(string name) {
             var s = new NamedPipeClientStream(".", name, PipeDirection.Out);
-            return new PipeBufferStream(s);
+            return new PipeBufferStream(s, false);
         }
 
-
-        internal const int bufferLength = 1024;
+        // for 81920, see https://referencesource.microsoft.com/#mscorlib/system/io/stream.cs,50
+        internal const int bufferLength = 81920;
 
         internal readonly PipeStream pipe;
 
-        private readonly byte[] writeBuffer;
-        private int writeBufferCount;
+        private readonly byte[] pipeBuffer;
+        private int pipeBufferOffset;
+        private int pipeBufferCount;
 
-        private readonly byte[] readBuffer;
-        private int readBufferOffset;
-        private int readBufferCount;
+        private bool isInputStream;
 
-        private PipeBufferStream(PipeStream pipe) {
+        private PipeBufferStream(PipeStream pipe, bool isInputStream) {
             this.pipe = pipe;
-            writeBuffer = new byte[bufferLength];
-            readBuffer = new byte[bufferLength];
+            this.isInputStream = isInputStream;
+            pipeBuffer = new byte[bufferLength];
         }
 
         internal void Connect() {
@@ -65,53 +64,60 @@ namespace Chromium.Remote {
 
         public override void Write(byte[] buffer, int offset, int count) {
 
+            Debug.Assert(!isInputStream);
+
             if(count > bufferLength) {
                 // if the user wants to write more than bufferLength bytes,
                 // using the buffer would actually split the write instead of bundling it with other writes
                 // so we flush the write buffer and then write the whole buffer at once.
-                if(writeBufferCount > 0) {
-                    pipe.Write(writeBuffer, 0, writeBufferCount);
-                    writeBufferCount = 0;
+                if(pipeBufferCount > 0) {
+                    pipe.Write(pipeBuffer, 0, pipeBufferCount);
+                    pipeBufferCount = 0;
                 }
                 pipe.Write(buffer, offset, count);
                 return;
             }
 
-            if(count > bufferLength - writeBufferCount) {
+            if(count > bufferLength - pipeBufferCount) {
                 // the new data doesn't fit in the write buffer,
                 // so fill up and flush the buffer
-                var bytes = bufferLength - writeBufferCount;
-                Array.Copy(buffer, offset, writeBuffer, writeBufferCount, bytes);
-                Debug.Assert(writeBufferCount + bytes == bufferLength);
-                pipe.Write(writeBuffer, 0, bufferLength);
-                writeBufferCount = 0;
+                var bytes = bufferLength - pipeBufferCount;
+                Array.Copy(buffer, offset, pipeBuffer, pipeBufferCount, bytes);
+                Debug.Assert(pipeBufferCount + bytes == bufferLength);
+                pipe.Write(pipeBuffer, 0, bufferLength);
+                pipeBufferCount = 0;
                 offset += bytes;
                 count -= bytes;
             }
 
             // at this point, the remaining new data is guaranteed to fit in the write buffer
-            Debug.Assert(count <= bufferLength - writeBufferCount);
+            Debug.Assert(count <= bufferLength - pipeBufferCount);
 
             if(count > 0) {
-                Array.Copy(buffer, offset, writeBuffer, writeBufferCount, count);
-                writeBufferCount += count;
-                if(writeBufferCount == bufferLength) {
-                    pipe.Write(writeBuffer, 0, bufferLength);
-                    writeBufferCount = 0;
+                Array.Copy(buffer, offset, pipeBuffer, pipeBufferCount, count);
+                pipeBufferCount += count;
+                if(pipeBufferCount == bufferLength) {
+                    pipe.Write(pipeBuffer, 0, bufferLength);
+                    pipeBufferCount = 0;
                 }
             }
         }
 
         public override void WriteByte(byte value) {
-            writeBuffer[writeBufferCount] = (byte)value;
-            ++writeBufferCount;
-            if(writeBufferCount == bufferLength) {
-                pipe.Write(writeBuffer, 0, bufferLength);
-                writeBufferCount = 0;
+
+            Debug.Assert(!isInputStream);
+
+            pipeBuffer[pipeBufferCount] = (byte)value;
+            ++pipeBufferCount;
+            if(pipeBufferCount == bufferLength) {
+                pipe.Write(pipeBuffer, 0, bufferLength);
+                pipeBufferCount = 0;
             }
         }
 
         public override int Read(byte[] buffer, int offset, int count) {
+
+            Debug.Assert(isInputStream);
 
             int readCount = 0;
 
@@ -120,51 +126,57 @@ namespace Chromium.Remote {
                 // using the buffer would actually lead to more pipe reads instead of less
                 // so we flush the read buffer and then read directly from the pipe stream.
 
-                if(readBufferCount > 0) {
-                    readCount = readBufferCount;
-                    Array.Copy(readBuffer, readBufferOffset, buffer, offset, readCount);
-                    readBufferOffset = 0;
-                    readBufferCount = 0;
+                if(pipeBufferCount > 0) {
+                    readCount = pipeBufferCount;
+                    Array.Copy(pipeBuffer, pipeBufferOffset, buffer, offset, readCount);
+                    pipeBufferOffset = 0;
+                    pipeBufferCount = 0;
                     offset += readCount;
                     count -= readCount;
                 }
                 return readCount + pipe.Read(buffer, offset, count);
             }
 
-            if(readBufferCount == 0) {
-                readBufferOffset = 0;
-                readBufferCount = pipe.Read(readBuffer, 0, bufferLength);
-                if(readBufferCount == 0) return 0;
+            if(pipeBufferCount == 0) {
+                pipeBufferOffset = 0;
+                pipeBufferCount = pipe.Read(pipeBuffer, 0, bufferLength);
+                if(pipeBufferCount == 0) return 0;
             }
 
-            readCount = count < readBufferCount ? count : readBufferCount;
-            Array.Copy(readBuffer, readBufferOffset, buffer, offset, readCount);
-            readBufferOffset += readCount;
-            readBufferCount -= readCount;
+            readCount = count < pipeBufferCount ? count : pipeBufferCount;
+            Array.Copy(pipeBuffer, pipeBufferOffset, buffer, offset, readCount);
+            pipeBufferOffset += readCount;
+            pipeBufferCount -= readCount;
             return readCount;
         }
 
         public override int ReadByte() {
-            if(readBufferCount == 0) {
-                readBufferOffset = 0;
-                readBufferCount = pipe.Read(readBuffer, 0, bufferLength);
-                if(readBufferCount == 0) return -1;
+
+            Debug.Assert(isInputStream);
+
+            if(pipeBufferCount == 0) {
+                pipeBufferOffset = 0;
+                pipeBufferCount = pipe.Read(pipeBuffer, 0, bufferLength);
+                if(pipeBufferCount == 0) return -1;
             }
-            var retval = readBuffer[readBufferOffset];
-            ++readBufferOffset;
-            --readBufferCount;
+            var retval = pipeBuffer[pipeBufferOffset];
+            ++pipeBufferOffset;
+            --pipeBufferCount;
             return retval;
         }
 
         public override void Flush() {
-            if(writeBufferCount > 0) {
-                pipe.Write(this.writeBuffer, 0, writeBufferCount);
-                writeBufferCount = 0;
+
+            Debug.Assert(!isInputStream);
+
+            if(pipeBufferCount > 0) {
+                pipe.Write(this.pipeBuffer, 0, pipeBufferCount);
+                pipeBufferCount = 0;
             }
         }
 
         public override bool CanRead {
-            get { return pipe.CanRead; }
+            get { return isInputStream; }
         }
 
         public override bool CanSeek {
@@ -172,7 +184,7 @@ namespace Chromium.Remote {
         }
 
         public override bool CanWrite {
-            get { return pipe.CanWrite; }
+            get { return !isInputStream; }
         }
 
         public override long Length {
