@@ -638,6 +638,10 @@ namespace CfxTestApplication {
         }
 
         private void sendBigStringToJSToolStripMenuItem_Click(object sender, EventArgs e) {
+            if(CfxRuntime.PlatformArch == CfxPlatformArch.x86) {
+                if(MessageBox.Show("This test may crash the render process in 32-bit mode. Continue?", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.Cancel)
+                    return;
+            }
             WebBrowser.ExecuteJavascript("var bigString = bigStringFunction(); testlog('big string received: ' + bigString.substring(0, 20) + '(...) (' + bigString.length + ' chars)'); bigStringFunction(bigString);");
         }
     }
