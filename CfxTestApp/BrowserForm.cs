@@ -616,21 +616,28 @@ namespace CfxTestApplication {
         }
 
         private void JS_bigStringFunction(object sender, CfrV8HandlerExecuteEventArgs e) {
+
+            if(e.Arguments.Length > 0) {
+                var arg = e.Arguments[0].StringValue;
+                LogWriteLine("Big string received: {0}(...) ({1} chars)", arg.Substring(0, 20), arg.Length);
+                return;
+            }
+
             var rnd = new Random(DateTime.Now.Millisecond);
             var size = rnd.Next(50 * 1024 * 1024, 51 * 1024 * 1024);
             var chars = new char[size];
             var charSource = "abcdefghijklmnopqrstuvwzyz0123456789";
-            
+
             for(int i = 0; i < chars.Length; ++i) {
                 chars[i] = charSource[rnd.Next(0, charSource.Length)];
             }
             var str = new string(chars);
-            LogWriteLine("Sending big string: {0}(...) ({1} bytes)", str.Substring(0, 20), str.Length);
+            LogWriteLine("Sending big string: {0}(...) ({1} chars)", str.Substring(0, 20), str.Length);
             e.SetReturnValue(str);
         }
 
         private void sendBigStringToJSToolStripMenuItem_Click(object sender, EventArgs e) {
-            WebBrowser.ExecuteJavascript("var bigString = bigStringFunction(); testlog('big string received: ' + bigString.substring(0, 20) + '(...) (' + bigString.length + ' bytes)');");
+            WebBrowser.ExecuteJavascript("var bigString = bigStringFunction(); testlog('big string received: ' + bigString.substring(0, 20) + '(...) (' + bigString.length + ' chars)'); bigStringFunction(bigString);");
         }
     }
 }
