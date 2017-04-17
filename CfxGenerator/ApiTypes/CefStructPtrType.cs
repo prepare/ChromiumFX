@@ -102,10 +102,6 @@ public class CefStructPtrType : ApiType {
             b.AppendLine("if({0}_release) {0}->base.release((cef_base_ref_counted_t*){0});", var);
     }
 
-    public override string PublicEventConstructorParameter(string var) {
-        return "IntPtr " + CSharp.Escape(var);
-    }
-
     public override void EmitSetCallbackArgumentToDefaultStatements(CodeBuilder b, string var) {
         if(Struct.IsRefCounted && var != "self")
             b.AppendLine("{0}_release = 1;", var);

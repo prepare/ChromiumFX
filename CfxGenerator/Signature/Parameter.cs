@@ -51,10 +51,6 @@ public class Parameter {
         get { return CSharp.Escape(CSharp.ApplyStyle(VarName, false)); }
     }
 
-    public string PublicEventConstructorArgument {
-        get { return ParameterType.PublicEventConstructorArgument(VarName); }
-    }
-
     public string OriginalParameter {
         get {
             if(IsConst) {
@@ -87,10 +83,6 @@ public class Parameter {
 
     public string PInvokeCallbackParameter {
         get { return ParameterType.PInvokeCallbackParameter(VarName); }
-    }
-
-    public string PublicEventConstructorParameter {
-        get { return ParameterType.PublicEventConstructorParameter(VarName); }
     }
 
     public string PublicCallParameter {
@@ -163,7 +155,7 @@ public class Parameter {
         ParameterType.EmitPostRemoteCallStatements(b, PublicVarName);
     }
 
-    public void EmitPublicEventCtorStatements(CodeBuilder b) {
+    public void EmitPublicEventFieldInitializers(CodeBuilder b) {
         ParameterType.EmitPublicEventCtorStatements(b, VarName);
     }
 

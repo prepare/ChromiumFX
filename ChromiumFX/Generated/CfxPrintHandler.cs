@@ -52,7 +52,8 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxOnPrintStartEventArgs(browser);
+            var e = new CfxOnPrintStartEventArgs();
+            e.m_browser = browser;
             self.m_OnPrintStart?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -70,7 +71,9 @@ namespace Chromium {
                 settings_release = 1;
                 return;
             }
-            var e = new CfxOnPrintSettingsEventArgs(settings, get_defaults);
+            var e = new CfxOnPrintSettingsEventArgs();
+            e.m_settings = settings;
+            e.m_get_defaults = get_defaults;
             self.m_OnPrintSettings?.Invoke(self, e);
             e.m_isInvalid = true;
             settings_release = e.m_settings_wrapped == null? 1 : 0;
@@ -89,7 +92,9 @@ namespace Chromium {
                 callback_release = 1;
                 return;
             }
-            var e = new CfxOnPrintDialogEventArgs(has_selection, callback);
+            var e = new CfxOnPrintDialogEventArgs();
+            e.m_has_selection = has_selection;
+            e.m_callback = callback;
             self.m_OnPrintDialog?.Invoke(self, e);
             e.m_isInvalid = true;
             callback_release = e.m_callback_wrapped == null? 1 : 0;
@@ -109,7 +114,12 @@ namespace Chromium {
                 callback_release = 1;
                 return;
             }
-            var e = new CfxOnPrintJobEventArgs(document_name_str, document_name_length, pdf_file_path_str, pdf_file_path_length, callback);
+            var e = new CfxOnPrintJobEventArgs();
+            e.m_document_name_str = document_name_str;
+            e.m_document_name_length = document_name_length;
+            e.m_pdf_file_path_str = pdf_file_path_str;
+            e.m_pdf_file_path_length = pdf_file_path_length;
+            e.m_callback = callback;
             self.m_OnPrintJob?.Invoke(self, e);
             e.m_isInvalid = true;
             callback_release = e.m_callback_wrapped == null? 1 : 0;
@@ -145,7 +155,8 @@ namespace Chromium {
                 __retval_handle = default(IntPtr);
                 return;
             }
-            var e = new CfxGetPdfPaperSizeEventArgs(device_units_per_inch);
+            var e = new CfxGetPdfPaperSizeEventArgs();
+            e.m_device_units_per_inch = device_units_per_inch;
             self.m_GetPdfPaperSize?.Invoke(self, e);
             e.m_isInvalid = true;
             __retval = CfxSize.Unwrap(e.m_returnValue);
@@ -391,9 +402,7 @@ namespace Chromium {
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
 
-            internal CfxOnPrintStartEventArgs(IntPtr browser) {
-                m_browser = browser;
-            }
+            internal CfxOnPrintStartEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxPrintHandler.OnPrintStart"/> callback.
@@ -437,10 +446,7 @@ namespace Chromium {
             internal CfxPrintSettings m_settings_wrapped;
             internal int m_get_defaults;
 
-            internal CfxOnPrintSettingsEventArgs(IntPtr settings, int get_defaults) {
-                m_settings = settings;
-                m_get_defaults = get_defaults;
-            }
+            internal CfxOnPrintSettingsEventArgs() {}
 
             /// <summary>
             /// Get the Settings parameter for the <see cref="CfxPrintHandler.OnPrintSettings"/> callback.
@@ -496,10 +502,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnPrintDialogEventArgs(int has_selection, IntPtr callback) {
-                m_has_selection = has_selection;
-                m_callback = callback;
-            }
+            internal CfxOnPrintDialogEventArgs() {}
 
             /// <summary>
             /// Get the HasSelection parameter for the <see cref="CfxPrintHandler.OnPrintDialog"/> callback.
@@ -572,13 +575,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnPrintJobEventArgs(IntPtr document_name_str, int document_name_length, IntPtr pdf_file_path_str, int pdf_file_path_length, IntPtr callback) {
-                m_document_name_str = document_name_str;
-                m_document_name_length = document_name_length;
-                m_pdf_file_path_str = pdf_file_path_str;
-                m_pdf_file_path_length = pdf_file_path_length;
-                m_callback = callback;
-            }
+            internal CfxOnPrintJobEventArgs() {}
 
             /// <summary>
             /// Get the DocumentName parameter for the <see cref="CfxPrintHandler.OnPrintJob"/> callback.
@@ -654,9 +651,7 @@ namespace Chromium {
             internal CfxSize m_returnValue;
             private bool returnValueSet;
 
-            internal CfxGetPdfPaperSizeEventArgs(int device_units_per_inch) {
-                m_device_units_per_inch = device_units_per_inch;
-            }
+            internal CfxGetPdfPaperSizeEventArgs() {}
 
             /// <summary>
             /// Get the DeviceUnitsPerInch parameter for the <see cref="CfxPrintHandler.GetPdfPaperSize"/> callback.

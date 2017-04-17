@@ -79,14 +79,6 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
             return base.NativeCallbackArgument(var);
     }
 
-    public override string PublicEventConstructorParameter(string var) {
-        return StructPtr.PublicEventConstructorParameter(var) + ", " + CountArg.PublicEventConstructorParameter;
-    }
-
-    public override string PublicEventConstructorArgument(string var) {
-        return StructPtr.PublicEventConstructorArgument(var) + ", " + CountArg.PublicEventConstructorArgument;
-    }
-
     public override void EmitPreNativeCallbackStatements(CodeBuilder b, string var) {
         if(Struct.IsRefCounted)
             b.AppendLine("int " + var + "_release;");
@@ -141,9 +133,9 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
     }
 
     public override void EmitPublicEventCtorStatements(CodeBuilder b, string var) {
-        b.AppendLine("m_{0} = new IntPtr[(ulong){1}];", var, CountArg.VarName);
-        b.BeginIf("m_{0}.Length > 0", var);
-        b.AppendLine("System.Runtime.InteropServices.Marshal.Copy({0}, m_{0}, 0, (int){1});", var, CountArg.VarName);
+        b.AppendLine("e.m_{0} = new IntPtr[(ulong){1}];", var, CountArg.VarName);
+        b.BeginIf("e.m_{0}.Length > 0", var);
+        b.AppendLine("System.Runtime.InteropServices.Marshal.Copy({0}, e.m_{0}, 0, (int){1});", var, CountArg.VarName);
         b.EndBlock();
     }
 

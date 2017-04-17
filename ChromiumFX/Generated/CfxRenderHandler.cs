@@ -65,7 +65,9 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxGetRootScreenRectEventArgs(browser, rect);
+            var e = new CfxGetRootScreenRectEventArgs();
+            e.m_browser = browser;
+            e.m_rect = rect;
             self.m_GetRootScreenRect?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -85,7 +87,9 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxGetViewRectEventArgs(browser, rect);
+            var e = new CfxGetViewRectEventArgs();
+            e.m_browser = browser;
+            e.m_rect = rect;
             self.m_GetViewRect?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -107,7 +111,10 @@ namespace Chromium {
                 screenY = default(int);
                 return;
             }
-            var e = new CfxGetScreenPointEventArgs(browser, viewX, viewY);
+            var e = new CfxGetScreenPointEventArgs();
+            e.m_browser = browser;
+            e.m_viewX = viewX;
+            e.m_viewY = viewY;
             self.m_GetScreenPoint?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -129,7 +136,9 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxGetScreenInfoEventArgs(browser, screen_info);
+            var e = new CfxGetScreenInfoEventArgs();
+            e.m_browser = browser;
+            e.m_screen_info = screen_info;
             self.m_GetScreenInfo?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -148,7 +157,9 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxOnPopupShowEventArgs(browser, show);
+            var e = new CfxOnPopupShowEventArgs();
+            e.m_browser = browser;
+            e.m_show = show;
             self.m_OnPopupShow?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -166,7 +177,9 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxOnPopupSizeEventArgs(browser, rect);
+            var e = new CfxOnPopupSizeEventArgs();
+            e.m_browser = browser;
+            e.m_rect = rect;
             self.m_OnPopupSize?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -184,7 +197,15 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxOnPaintEventArgs(browser, type, dirtyRects, dirtyRectsCount, dirtyRects_structsize, buffer, width, height);
+            var e = new CfxOnPaintEventArgs();
+            e.m_browser = browser;
+            e.m_type = type;
+            e.m_dirtyRects = dirtyRects;
+            e.m_dirtyRects_structsize = dirtyRects_structsize;
+            e.m_dirtyRectsCount = dirtyRectsCount;
+            e.m_buffer = buffer;
+            e.m_width = width;
+            e.m_height = height;
             self.m_OnPaint?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -207,7 +228,11 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxOnCursorChangeEventArgs(browser, cursor, type, custom_cursor_info);
+            var e = new CfxOnCursorChangeEventArgs();
+            e.m_browser = browser;
+            e.m_cursor = cursor;
+            e.m_type = type;
+            e.m_custom_cursor_info = custom_cursor_info;
             self.m_OnCursorChange?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -227,7 +252,12 @@ namespace Chromium {
                 drag_data_release = 1;
                 return;
             }
-            var e = new CfxStartDraggingEventArgs(browser, drag_data, allowed_ops, x, y);
+            var e = new CfxStartDraggingEventArgs();
+            e.m_browser = browser;
+            e.m_drag_data = drag_data;
+            e.m_allowed_ops = allowed_ops;
+            e.m_x = x;
+            e.m_y = y;
             self.m_StartDragging?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -247,7 +277,9 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxUpdateDragCursorEventArgs(browser, operation);
+            var e = new CfxUpdateDragCursorEventArgs();
+            e.m_browser = browser;
+            e.m_operation = operation;
             self.m_UpdateDragCursor?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -265,7 +297,10 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxOnScrollOffsetChangedEventArgs(browser, x, y);
+            var e = new CfxOnScrollOffsetChangedEventArgs();
+            e.m_browser = browser;
+            e.m_x = x;
+            e.m_y = y;
             self.m_OnScrollOffsetChanged?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -283,7 +318,12 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxOnImeCompositionRangeChangedEventArgs(browser, selected_range, character_bounds, character_boundsCount, character_bounds_structsize);
+            var e = new CfxOnImeCompositionRangeChangedEventArgs();
+            e.m_browser = browser;
+            e.m_selected_range = selected_range;
+            e.m_character_bounds = character_bounds;
+            e.m_character_bounds_structsize = character_bounds_structsize;
+            e.m_character_boundsCount = character_boundsCount;
             self.m_OnImeCompositionRangeChanged?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -750,10 +790,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxGetRootScreenRectEventArgs(IntPtr browser, IntPtr rect) {
-                m_browser = browser;
-                m_rect = rect;
-            }
+            internal CfxGetRootScreenRectEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxRenderHandler.GetRootScreenRect"/> callback.
@@ -821,10 +858,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxGetViewRectEventArgs(IntPtr browser, IntPtr rect) {
-                m_browser = browser;
-                m_rect = rect;
-            }
+            internal CfxGetViewRectEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxRenderHandler.GetViewRect"/> callback.
@@ -894,11 +928,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxGetScreenPointEventArgs(IntPtr browser, int viewX, int viewY) {
-                m_browser = browser;
-                m_viewX = viewX;
-                m_viewY = viewY;
-            }
+            internal CfxGetScreenPointEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxRenderHandler.GetScreenPoint"/> callback.
@@ -1002,10 +1032,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxGetScreenInfoEventArgs(IntPtr browser, IntPtr screen_info) {
-                m_browser = browser;
-                m_screen_info = screen_info;
-            }
+            internal CfxGetScreenInfoEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxRenderHandler.GetScreenInfo"/> callback.
@@ -1069,10 +1096,7 @@ namespace Chromium {
             internal CfxBrowser m_browser_wrapped;
             internal int m_show;
 
-            internal CfxOnPopupShowEventArgs(IntPtr browser, int show) {
-                m_browser = browser;
-                m_show = show;
-            }
+            internal CfxOnPopupShowEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxRenderHandler.OnPopupShow"/> callback.
@@ -1124,10 +1148,7 @@ namespace Chromium {
             internal IntPtr m_rect;
             internal CfxRect m_rect_wrapped;
 
-            internal CfxOnPopupSizeEventArgs(IntPtr browser, IntPtr rect) {
-                m_browser = browser;
-                m_rect = rect;
-            }
+            internal CfxOnPopupSizeEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxRenderHandler.OnPopupSize"/> callback.
@@ -1190,24 +1211,15 @@ namespace Chromium {
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
             internal int m_type;
-            IntPtr m_dirtyRects;
-            int m_dirtyRects_structsize;
-            UIntPtr m_dirtyRectsCount;
+            internal IntPtr m_dirtyRects;
+            internal int m_dirtyRects_structsize;
+            internal UIntPtr m_dirtyRectsCount;
             internal CfxRect[] m_dirtyRects_managed;
             internal IntPtr m_buffer;
             internal int m_width;
             internal int m_height;
 
-            internal CfxOnPaintEventArgs(IntPtr browser, int type, IntPtr dirtyRects, UIntPtr dirtyRectsCount, int dirtyRects_structsize, IntPtr buffer, int width, int height) {
-                m_browser = browser;
-                m_type = type;
-                m_dirtyRects = dirtyRects;
-                m_dirtyRects_structsize = dirtyRects_structsize;
-                m_dirtyRectsCount = dirtyRectsCount;
-                m_buffer = buffer;
-                m_width = width;
-                m_height = height;
-            }
+            internal CfxOnPaintEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxRenderHandler.OnPaint"/> callback.
@@ -1306,12 +1318,7 @@ namespace Chromium {
             internal IntPtr m_custom_cursor_info;
             internal CfxCursorInfo m_custom_cursor_info_wrapped;
 
-            internal CfxOnCursorChangeEventArgs(IntPtr browser, IntPtr cursor, int type, IntPtr custom_cursor_info) {
-                m_browser = browser;
-                m_cursor = cursor;
-                m_type = type;
-                m_custom_cursor_info = custom_cursor_info;
-            }
+            internal CfxOnCursorChangeEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxRenderHandler.OnCursorChange"/> callback.
@@ -1408,13 +1415,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxStartDraggingEventArgs(IntPtr browser, IntPtr drag_data, int allowed_ops, int x, int y) {
-                m_browser = browser;
-                m_drag_data = drag_data;
-                m_allowed_ops = allowed_ops;
-                m_x = x;
-                m_y = y;
-            }
+            internal CfxStartDraggingEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxRenderHandler.StartDragging"/> callback.
@@ -1507,10 +1508,7 @@ namespace Chromium {
             internal CfxBrowser m_browser_wrapped;
             internal int m_operation;
 
-            internal CfxUpdateDragCursorEventArgs(IntPtr browser, int operation) {
-                m_browser = browser;
-                m_operation = operation;
-            }
+            internal CfxUpdateDragCursorEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxRenderHandler.UpdateDragCursor"/> callback.
@@ -1560,11 +1558,7 @@ namespace Chromium {
             internal double m_x;
             internal double m_y;
 
-            internal CfxOnScrollOffsetChangedEventArgs(IntPtr browser, double x, double y) {
-                m_browser = browser;
-                m_x = x;
-                m_y = y;
-            }
+            internal CfxOnScrollOffsetChangedEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxRenderHandler.OnScrollOffsetChanged"/> callback.
@@ -1626,18 +1620,12 @@ namespace Chromium {
             internal CfxBrowser m_browser_wrapped;
             internal IntPtr m_selected_range;
             internal CfxRange m_selected_range_wrapped;
-            IntPtr m_character_bounds;
-            int m_character_bounds_structsize;
-            UIntPtr m_character_boundsCount;
+            internal IntPtr m_character_bounds;
+            internal int m_character_bounds_structsize;
+            internal UIntPtr m_character_boundsCount;
             internal CfxRect[] m_character_bounds_managed;
 
-            internal CfxOnImeCompositionRangeChangedEventArgs(IntPtr browser, IntPtr selected_range, IntPtr character_bounds, UIntPtr character_boundsCount, int character_bounds_structsize) {
-                m_browser = browser;
-                m_selected_range = selected_range;
-                m_character_bounds = character_bounds;
-                m_character_bounds_structsize = character_bounds_structsize;
-                m_character_boundsCount = character_boundsCount;
-            }
+            internal CfxOnImeCompositionRangeChangedEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxRenderHandler.OnImeCompositionRangeChanged"/> callback.

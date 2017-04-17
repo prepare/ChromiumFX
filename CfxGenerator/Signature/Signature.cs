@@ -124,28 +124,6 @@ public class Signature {
         }
     }
 
-    public string PublicEventConstructorParameters {
-        get {
-            for(var i = 1; i <= ManagedParameters.Count() - 1; i++) {
-                if(ManagedParameters[i].ParameterType.IsIn) {
-                    args.Add(ManagedParameters[i].PublicEventConstructorParameter);
-                }
-            }
-            return args.Join();
-        }
-    }
-
-    public string PublicEventConstructorArguments {
-        get {
-            for(var i = 1; i <= ManagedParameters.Length - 1; i++) {
-                if(ManagedParameters[i].ParameterType.IsIn) {
-                    args.Add(ManagedParameters[i].PublicEventConstructorArgument);
-                }
-            }
-            return args.Join();
-        }
-    }
-
     public string OriginalParameterList {
         get {
             foreach(var arg in Parameters) {
@@ -307,14 +285,6 @@ public class Signature {
 
         for(var i = 0; i <= ManagedParameters.Length - 1; i++) {
             ManagedParameters[i].EmitPostProxyCallStatements(b);
-        }
-    }
-
-    public void EmitPublicEventCtorStatements(CodeBuilder b) {
-        for(var i = 1; i <= ManagedParameters.Count() - 1; i++) {
-            if(ManagedParameters[i].ParameterType.IsIn) {
-                ManagedParameters[i].EmitPublicEventCtorStatements(b);
-            }
         }
     }
 

@@ -55,7 +55,11 @@ namespace Chromium {
                 frame_release = 1;
                 return;
             }
-            var e = new CfxOnAddressChangeEventArgs(browser, frame, url_str, url_length);
+            var e = new CfxOnAddressChangeEventArgs();
+            e.m_browser = browser;
+            e.m_frame = frame;
+            e.m_url_str = url_str;
+            e.m_url_length = url_length;
             self.m_OnAddressChange?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -74,7 +78,10 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxOnTitleChangeEventArgs(browser, title_str, title_length);
+            var e = new CfxOnTitleChangeEventArgs();
+            e.m_browser = browser;
+            e.m_title_str = title_str;
+            e.m_title_length = title_length;
             self.m_OnTitleChange?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -92,7 +99,9 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxOnFaviconUrlchangeEventArgs(browser, icon_urls);
+            var e = new CfxOnFaviconUrlchangeEventArgs();
+            e.m_browser = browser;
+            e.m_icon_urls = icon_urls;
             self.m_OnFaviconUrlchange?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -110,7 +119,9 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxOnFullscreenModeChangeEventArgs(browser, fullscreen);
+            var e = new CfxOnFullscreenModeChangeEventArgs();
+            e.m_browser = browser;
+            e.m_fullscreen = fullscreen;
             self.m_OnFullscreenModeChange?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -129,7 +140,10 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxOnTooltipEventArgs(browser, text_str, text_length);
+            var e = new CfxOnTooltipEventArgs();
+            e.m_browser = browser;
+            e.m_text_str = text_str;
+            e.m_text_length = text_length;
             self.m_OnTooltip?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -153,7 +167,10 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxOnStatusMessageEventArgs(browser, value_str, value_length);
+            var e = new CfxOnStatusMessageEventArgs();
+            e.m_browser = browser;
+            e.m_value_str = value_str;
+            e.m_value_length = value_length;
             self.m_OnStatusMessage?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -172,7 +189,13 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxOnConsoleMessageEventArgs(browser, message_str, message_length, source_str, source_length, line);
+            var e = new CfxOnConsoleMessageEventArgs();
+            e.m_browser = browser;
+            e.m_message_str = message_str;
+            e.m_message_length = message_length;
+            e.m_source_str = source_str;
+            e.m_source_length = source_length;
+            e.m_line = line;
             self.m_OnConsoleMessage?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -450,12 +473,7 @@ namespace Chromium {
             internal int m_url_length;
             internal string m_url;
 
-            internal CfxOnAddressChangeEventArgs(IntPtr browser, IntPtr frame, IntPtr url_str, int url_length) {
-                m_browser = browser;
-                m_frame = frame;
-                m_url_str = url_str;
-                m_url_length = url_length;
-            }
+            internal CfxOnAddressChangeEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxDisplayHandler.OnAddressChange"/> callback.
@@ -517,11 +535,7 @@ namespace Chromium {
             internal int m_title_length;
             internal string m_title;
 
-            internal CfxOnTitleChangeEventArgs(IntPtr browser, IntPtr title_str, int title_length) {
-                m_browser = browser;
-                m_title_str = title_str;
-                m_title_length = title_length;
-            }
+            internal CfxOnTitleChangeEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxDisplayHandler.OnTitleChange"/> callback.
@@ -571,10 +585,7 @@ namespace Chromium {
             internal CfxBrowser m_browser_wrapped;
             internal IntPtr m_icon_urls;
 
-            internal CfxOnFaviconUrlchangeEventArgs(IntPtr browser, IntPtr icon_urls) {
-                m_browser = browser;
-                m_icon_urls = icon_urls;
-            }
+            internal CfxOnFaviconUrlchangeEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxDisplayHandler.OnFaviconUrlchange"/> callback.
@@ -631,10 +642,7 @@ namespace Chromium {
             internal CfxBrowser m_browser_wrapped;
             internal int m_fullscreen;
 
-            internal CfxOnFullscreenModeChangeEventArgs(IntPtr browser, int fullscreen) {
-                m_browser = browser;
-                m_fullscreen = fullscreen;
-            }
+            internal CfxOnFullscreenModeChangeEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxDisplayHandler.OnFullscreenModeChange"/> callback.
@@ -699,11 +707,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnTooltipEventArgs(IntPtr browser, IntPtr text_str, int text_length) {
-                m_browser = browser;
-                m_text_str = text_str;
-                m_text_length = text_length;
-            }
+            internal CfxOnTooltipEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxDisplayHandler.OnTooltip"/> callback.
@@ -776,11 +780,7 @@ namespace Chromium {
             internal int m_value_length;
             internal string m_value;
 
-            internal CfxOnStatusMessageEventArgs(IntPtr browser, IntPtr value_str, int value_length) {
-                m_browser = browser;
-                m_value_str = value_str;
-                m_value_length = value_length;
-            }
+            internal CfxOnStatusMessageEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxDisplayHandler.OnStatusMessage"/> callback.
@@ -841,14 +841,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnConsoleMessageEventArgs(IntPtr browser, IntPtr message_str, int message_length, IntPtr source_str, int source_length, int line) {
-                m_browser = browser;
-                m_message_str = message_str;
-                m_message_length = message_length;
-                m_source_str = source_str;
-                m_source_length = source_length;
-                m_line = line;
-            }
+            internal CfxOnConsoleMessageEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxDisplayHandler.OnConsoleMessage"/> callback.

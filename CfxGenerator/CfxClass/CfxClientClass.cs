@@ -218,7 +218,12 @@ public class CfxClientClass : CfxClass {
             }
             b.AppendLine("return;");
             b.EndBlock();
-            b.AppendLine("var e = new {0}({1});", cb.PublicEventArgsClassName, sig.PublicEventConstructorArguments);
+            b.AppendLine("var e = new {0}();", cb.PublicEventArgsClassName);
+            for(var i = 1; i <= sig.ManagedParameters.Count() - 1; i++) {
+                if(sig.ManagedParameters[i].ParameterType.IsIn) {
+                    sig.ManagedParameters[i].EmitPublicEventFieldInitializers(b);
+                }
+            }
             b.AppendLine("self.m_{0}?.Invoke(self, e);", cb.PublicName);
             b.AppendLine("e.m_isInvalid = true;");
 
@@ -381,9 +386,7 @@ public class CfxClientClass : CfxClass {
             b.AppendLine();
         }
 
-        b.BeginBlock("internal {0}({1})", cb.PublicEventArgsClassName, cb.Signature.PublicEventConstructorParameters);
-        cb.Signature.EmitPublicEventCtorStatements(b);
-        b.EndBlock();
+        b.AppendLine("internal {0}() {{}}", cb.PublicEventArgsClassName);
         b.AppendLine();
 
         for(var i = 1; i <= cb.Signature.ManagedParameters.Count() - 1; i++) {

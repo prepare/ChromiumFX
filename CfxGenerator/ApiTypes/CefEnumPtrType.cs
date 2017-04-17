@@ -53,10 +53,6 @@ public class CefEnumPtrType : CefType {
         return cefEnum.PublicUnwrapExpression(var);
     }
 
-    public override string PublicEventConstructorParameter(string var) {
-        return PInvokeSymbol + " " + var;
-    }
-
     public override void EmitPrePublicCallStatements(CodeBuilder b, string var) {
         b.AppendLine("int {0}_tmp;", var);
     }

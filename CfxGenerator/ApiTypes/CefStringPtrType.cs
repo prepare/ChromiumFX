@@ -59,14 +59,6 @@ public class CefStringPtrType : ApiType {
         return string.Format("ref {0}", var);
     }
 
-    public override string PublicEventConstructorParameter(string var) {
-        return string.Format("IntPtr {0}_str, int {0}_length", var);
-    }
-
-    public override string PublicEventConstructorArgument(string var) {
-        return string.Format("{0}_str, {0}_length", var);
-    }
-
     public override string PInvokeOutArgument(string var) {
         return string.Format("out {0}_str, out {0}_length", var);
     }
@@ -147,8 +139,8 @@ public class CefStringPtrType : ApiType {
     }
 
     public override void EmitPublicEventCtorStatements(CodeBuilder b, string var) {
-        b.AppendLine("m_{0}_str = {0}_str;", var);
-        b.AppendLine("m_{0}_length = {0}_length;", var);
+        b.AppendLine("e.m_{0}_str = {0}_str;", var);
+        b.AppendLine("e.m_{0}_length = {0}_length;", var);
     }
 
     public override void EmitPostPublicRaiseEventStatements(CodeBuilder b, string var) {

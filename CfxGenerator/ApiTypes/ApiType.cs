@@ -123,10 +123,6 @@ public class ApiType {
         return pp;
     }
 
-    public virtual string PublicEventConstructorParameter(string var) {
-        return PInvokeCallbackParameter(var);
-    }
-
     public virtual string PInvokeOutSignature(string var) {
         if(PInvokeSymbol == null)
             return null;
@@ -203,10 +199,6 @@ public class ApiType {
         } else {
             return CSharp.Escape(var);
         }
-    }
-
-    public virtual string PublicEventConstructorArgument(string var) {
-        return CSharp.Escape(var);
     }
 
     public virtual void EmitNativeCallbackReturnValueFields(CodeBuilder b) {
@@ -289,7 +281,7 @@ public class ApiType {
     /// </summary>
     public virtual void EmitPublicEventCtorStatements(CodeBuilder b, string var) {
         if(IsIn) {
-            b.AppendLine("m_{0} = {1};", var, CSharp.Escape(var));
+            b.AppendLine("e.m_{0} = {1};", var, CSharp.Escape(var));
         }
     }
 

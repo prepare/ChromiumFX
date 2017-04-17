@@ -62,14 +62,6 @@ public class CefStructArrayType : CefStructPtrArrayType {
         return string.Format("{0}, (int)sizeof({1})", var, Struct.OriginalSymbol);
     }
 
-    public override string PublicEventConstructorParameter(string var) {
-        return string.Format("{0}, int {1}_structsize", base.PublicEventConstructorParameter(var), var);
-    }
-
-    public override string PublicEventConstructorArgument(string var) {
-        return string.Format("{0}, {1}_structsize", base.PublicEventConstructorArgument(var), var);
-    }
-
     public override void EmitPrePublicCallStatements(CodeBuilder b, string var) {
         base.EmitPrePublicCallStatements(b, var);
         b.AppendLine("int {0}_nomem;", var);
@@ -100,9 +92,9 @@ public class CefStructArrayType : CefStructPtrArrayType {
     }
 
     public override void EmitPublicEventArgFields(CodeBuilder b, string var) {
-        b.AppendLine("IntPtr m_{0};", var);
-        b.AppendLine("int m_{0}_structsize;", var);
-        b.AppendLine("{0} m_{1};", CountArg.ParameterType.PInvokeSymbol, CountArg.VarName);
+        b.AppendLine("internal IntPtr m_{0};", var);
+        b.AppendLine("internal int m_{0}_structsize;", var);
+        b.AppendLine("internal {0} m_{1};", CountArg.ParameterType.PInvokeSymbol, CountArg.VarName);
         b.AppendLine("internal {0} m_{1}_managed;", PublicSymbol, var);
     }
 
@@ -111,9 +103,9 @@ public class CefStructArrayType : CefStructPtrArrayType {
     }
 
     public override void EmitPublicEventCtorStatements(CodeBuilder b, string var) {
-        b.AppendLine("m_{0} = {0};", var);
-        b.AppendLine("m_{0}_structsize = {0}_structsize;", var);
-        b.AppendLine("m_{0} = {0};", CountArg.VarName);
+        b.AppendLine("e.m_{0} = {0};", var);
+        b.AppendLine("e.m_{0}_structsize = {0}_structsize;", var);
+        b.AppendLine("e.m_{0} = {0};", CountArg.VarName);
     }
 
     public override void EmitPublicEventArgGetterStatements(CodeBuilder b, string var) {

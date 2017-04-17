@@ -38,10 +38,6 @@ public class CefStringPtrTypeConst : ApiType {
         return string.Format("{0}_pinned.Obj.PinnedPtr, {0}_pinned.Length", var);
     }
 
-    public override string PublicEventConstructorArgument(string var) {
-        return string.Format("{0}_str, {0}_length", var);
-    }
-
     public override string PInvokeOutArgument(string var) {
         return string.Format("out {0}_str, out {0}_length", var);
     }
@@ -82,8 +78,8 @@ public class CefStringPtrTypeConst : ApiType {
     }
 
     public override void EmitPublicEventCtorStatements(CodeBuilder b, string var) {
-        b.AppendLine("m_{0}_str = {0}_str;", var);
-        b.AppendLine("m_{0}_length = {0}_length;", var);
+        b.AppendLine("e.m_{0}_str = {0}_str;", var);
+        b.AppendLine("e.m_{0}_length = {0}_length;", var);
     }
 
     public override bool IsCefStringPtrTypeConst {

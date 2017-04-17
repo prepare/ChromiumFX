@@ -64,14 +64,6 @@ public class CefStructOutType : CefStructPtrPtrType {
         return string.Format("{0}.Wrap(new RemotePtr(connection, {1}))", Struct.RemoteClassName, var);
     }
 
-    public override string PublicEventConstructorParameter(string var) {
-        return null;
-    }
-
-    public override string PublicEventConstructorArgument(string var) {
-        return null;
-    }
-
     public override void EmitPostNativeCallbackStatements(CodeBuilder b, string var) {
         if(Struct.IsRefCounted)
             b.AppendLine("if(*{0})((cef_base_ref_counted_t*)*{0})->add_ref((cef_base_ref_counted_t*)*{0});", var);

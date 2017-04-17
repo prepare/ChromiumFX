@@ -60,14 +60,6 @@ public class CefStringOutType : CefStringPtrType {
         return string.Format("out {0}", var);
     }
 
-    public override string PublicEventConstructorParameter(string var) {
-        throw new Exception();
-    }
-
-    public override string PublicEventConstructorArgument(string var) {
-        throw new Exception();
-    }
-
     public override string PInvokeOutArgument(string var) {
         throw new Exception();
     }

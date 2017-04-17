@@ -53,7 +53,18 @@ namespace Chromium {
                 no_javascript_access = default(int);
                 return;
             }
-            var e = new CfxOnBeforePopupEventArgs(browser, frame, target_url_str, target_url_length, target_frame_name_str, target_frame_name_length, target_disposition, user_gesture, popupFeatures, windowInfo, settings);
+            var e = new CfxOnBeforePopupEventArgs();
+            e.m_browser = browser;
+            e.m_frame = frame;
+            e.m_target_url_str = target_url_str;
+            e.m_target_url_length = target_url_length;
+            e.m_target_frame_name_str = target_frame_name_str;
+            e.m_target_frame_name_length = target_frame_name_length;
+            e.m_target_disposition = target_disposition;
+            e.m_user_gesture = user_gesture;
+            e.m_popupFeatures = popupFeatures;
+            e.m_windowInfo = windowInfo;
+            e.m_settings = settings;
             self.m_OnBeforePopup?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -75,7 +86,8 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxOnAfterCreatedEventArgs(browser);
+            var e = new CfxOnAfterCreatedEventArgs();
+            e.m_browser = browser;
             self.m_OnAfterCreated?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -94,7 +106,8 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxDoCloseEventArgs(browser);
+            var e = new CfxDoCloseEventArgs();
+            e.m_browser = browser;
             self.m_DoClose?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -113,7 +126,8 @@ namespace Chromium {
                 browser_release = 1;
                 return;
             }
-            var e = new CfxOnBeforeCloseEventArgs(browser);
+            var e = new CfxOnBeforeCloseEventArgs();
+            e.m_browser = browser;
             self.m_OnBeforeClose?.Invoke(self, e);
             e.m_isInvalid = true;
             browser_release = e.m_browser_wrapped == null? 1 : 0;
@@ -440,19 +454,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnBeforePopupEventArgs(IntPtr browser, IntPtr frame, IntPtr target_url_str, int target_url_length, IntPtr target_frame_name_str, int target_frame_name_length, int target_disposition, int user_gesture, IntPtr popupFeatures, IntPtr windowInfo, IntPtr settings) {
-                m_browser = browser;
-                m_frame = frame;
-                m_target_url_str = target_url_str;
-                m_target_url_length = target_url_length;
-                m_target_frame_name_str = target_frame_name_str;
-                m_target_frame_name_length = target_frame_name_length;
-                m_target_disposition = target_disposition;
-                m_user_gesture = user_gesture;
-                m_popupFeatures = popupFeatures;
-                m_windowInfo = windowInfo;
-                m_settings = settings;
-            }
+            internal CfxOnBeforePopupEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxLifeSpanHandler.OnBeforePopup"/> callback.
@@ -600,9 +602,7 @@ namespace Chromium {
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
 
-            internal CfxOnAfterCreatedEventArgs(IntPtr browser) {
-                m_browser = browser;
-            }
+            internal CfxOnAfterCreatedEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxLifeSpanHandler.OnAfterCreated"/> callback.
@@ -816,9 +816,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxDoCloseEventArgs(IntPtr browser) {
-                m_browser = browser;
-            }
+            internal CfxDoCloseEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxLifeSpanHandler.DoClose"/> callback.
@@ -877,9 +875,7 @@ namespace Chromium {
             internal IntPtr m_browser;
             internal CfxBrowser m_browser_wrapped;
 
-            internal CfxOnBeforeCloseEventArgs(IntPtr browser) {
-                m_browser = browser;
-            }
+            internal CfxOnBeforeCloseEventArgs() {}
 
             /// <summary>
             /// Get the Browser parameter for the <see cref="CfxLifeSpanHandler.OnBeforeClose"/> callback.

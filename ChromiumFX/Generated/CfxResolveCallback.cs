@@ -40,7 +40,9 @@ namespace Chromium {
             if(self == null || self.CallbacksDisabled) {
                 return;
             }
-            var e = new CfxResolveCallbackOnResolveCompletedEventArgs(result, resolved_ips);
+            var e = new CfxResolveCallbackOnResolveCompletedEventArgs();
+            e.m_result = result;
+            e.m_resolved_ips = resolved_ips;
             self.m_OnResolveCompleted?.Invoke(self, e);
             e.m_isInvalid = true;
         }
@@ -114,10 +116,7 @@ namespace Chromium {
             internal int m_result;
             internal IntPtr m_resolved_ips;
 
-            internal CfxResolveCallbackOnResolveCompletedEventArgs(int result, IntPtr resolved_ips) {
-                m_result = result;
-                m_resolved_ips = resolved_ips;
-            }
+            internal CfxResolveCallbackOnResolveCompletedEventArgs() {}
 
             /// <summary>
             /// Get the Result parameter for the <see cref="CfxResolveCallback.OnResolveCompleted"/> callback.

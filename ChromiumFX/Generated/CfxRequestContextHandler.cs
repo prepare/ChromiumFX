@@ -71,7 +71,16 @@ namespace Chromium {
                 plugin_info_release = 1;
                 return;
             }
-            var e = new CfxOnBeforePluginLoadEventArgs(mime_type_str, mime_type_length, plugin_url_str, plugin_url_length, is_main_frame, top_origin_url_str, top_origin_url_length, plugin_info, plugin_policy);
+            var e = new CfxOnBeforePluginLoadEventArgs();
+            e.m_mime_type_str = mime_type_str;
+            e.m_mime_type_length = mime_type_length;
+            e.m_plugin_url_str = plugin_url_str;
+            e.m_plugin_url_length = plugin_url_length;
+            e.m_is_main_frame = is_main_frame;
+            e.m_top_origin_url_str = top_origin_url_str;
+            e.m_top_origin_url_length = top_origin_url_length;
+            e.m_plugin_info = plugin_info;
+            e.m_plugin_policy = plugin_policy;
             self.m_OnBeforePluginLoad?.Invoke(self, e);
             e.m_isInvalid = true;
             plugin_info_release = e.m_plugin_info_wrapped == null? 1 : 0;
@@ -214,8 +223,7 @@ namespace Chromium {
             internal CfxCookieManager m_returnValue;
             private bool returnValueSet;
 
-            internal CfxGetCookieManagerEventArgs() {
-            }
+            internal CfxGetCookieManagerEventArgs() {}
 
             /// <summary>
             /// Set the return value for the <see cref="CfxRequestContextHandler.GetCookieManager"/> callback.
@@ -298,17 +306,7 @@ namespace Chromium {
             internal bool m_returnValue;
             private bool returnValueSet;
 
-            internal CfxOnBeforePluginLoadEventArgs(IntPtr mime_type_str, int mime_type_length, IntPtr plugin_url_str, int plugin_url_length, int is_main_frame, IntPtr top_origin_url_str, int top_origin_url_length, IntPtr plugin_info, int plugin_policy) {
-                m_mime_type_str = mime_type_str;
-                m_mime_type_length = mime_type_length;
-                m_plugin_url_str = plugin_url_str;
-                m_plugin_url_length = plugin_url_length;
-                m_is_main_frame = is_main_frame;
-                m_top_origin_url_str = top_origin_url_str;
-                m_top_origin_url_length = top_origin_url_length;
-                m_plugin_info = plugin_info;
-                m_plugin_policy = plugin_policy;
-            }
+            internal CfxOnBeforePluginLoadEventArgs() {}
 
             /// <summary>
             /// Get the MimeType parameter for the <see cref="CfxRequestContextHandler.OnBeforePluginLoad"/> callback.
