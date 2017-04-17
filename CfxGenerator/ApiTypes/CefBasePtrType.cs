@@ -23,7 +23,7 @@ public class CefBaseRefCountedPtrType : ApiType {
     }
 
     public override string RemoteSymbol {
-        get { return "RemotePtr"; }
+        get { return "CfrBaseRefCounted"; }
     }
 
     public override string[] ParserMatches {
@@ -36,7 +36,8 @@ public class CefBaseRefCountedPtrType : ApiType {
     }
 
     public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
-        b.AppendLine("call.{0} = {0}.ptr;", CSharp.Escape(var));
+        b.AppendLine("if(!CfrObject.CheckConnection({0}, connection)) throw new ArgumentException(\"Render process connection mismatch.\", \"{1}\");", CSharp.Escape(var), var);
+        b.AppendLine("call.{0} = CfrBaseRefCounted.Unwrap({0}).ptr;", CSharp.Escape(var));
     }
 
 
@@ -54,6 +55,10 @@ public class CefBaseRefCountedPtrType : ApiType {
 
     public override string ProxyUnwrapExpression(string var) {
         return string.Format("CfxBaseRefCounted.Cast({0})", var);
+    }
+
+    public override string RemoteWrapExpression(string var) {
+        return string.Format("CfrBaseRefCounted.Cast(new RemotePtr(connection, {0}))", var);
     }
 
     public override string ProxyReturnExpression(string var) {

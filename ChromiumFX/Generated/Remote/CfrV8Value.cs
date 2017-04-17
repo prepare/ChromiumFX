@@ -594,13 +594,13 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public RemotePtr UserData {
+        public CfrBaseRefCounted UserData {
             get {
                 var connection = RemotePtr.connection;
                 var call = new CfxV8ValueGetUserDataRemoteCall();
                 call.@this = RemotePtr.ptr;
                 call.RequestExecution(connection);
-                return new RemotePtr(connection, call.__retval);
+                return CfrBaseRefCounted.Cast(new RemotePtr(connection, call.__retval));
             }
         }
 
@@ -938,11 +938,12 @@ namespace Chromium.Remote {
         /// See also the original CEF documentation in
         /// <see href="https://bitbucket.org/chromiumfx/chromiumfx/src/tip/cef/include/capi/cef_v8_capi.h">cef/include/capi/cef_v8_capi.h</see>.
         /// </remarks>
-        public bool SetUserData(RemotePtr userData) {
+        public bool SetUserData(CfrBaseRefCounted userData) {
             var connection = RemotePtr.connection;
             var call = new CfxV8ValueSetUserDataRemoteCall();
             call.@this = RemotePtr.ptr;
-            call.userData = userData.ptr;
+            if(!CfrObject.CheckConnection(userData, connection)) throw new ArgumentException("Render process connection mismatch.", "userData");
+            call.userData = CfrBaseRefCounted.Unwrap(userData).ptr;
             call.RequestExecution(connection);
             return call.__retval;
         }
