@@ -30,6 +30,6 @@ public class SignatureWithStructPtrArray : Signature {
         }
     }
 
-    public override void DebugPrintUnhandledArrayArguments(string cefName, CefConfigNode cefConfig, CfxCallMode callMode) {
+    public override void DebugPrintUnhandledArrayParameters(string cefName, CefConfigNode cefConfig, CfxCallMode callMode) {
     }
 }

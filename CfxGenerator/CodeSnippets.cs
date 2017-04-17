@@ -19,10 +19,10 @@ public class CodeSnippets {
         EmitDelegate(b, functionName, "void", signature.PInvokeParameterList, "StdCall", true, true);
     }
 
-    public static void EmitDelegate(CodeBuilder b, string functionName, string returnType, string arguments, string callingConvention, bool fullyQualified, bool priv) {
+    public static void EmitDelegate(CodeBuilder b, string functionName, string returnType, string parameters, string callingConvention, bool fullyQualified, bool priv) {
         if(string.IsNullOrWhiteSpace(returnType))
             System.Diagnostics.Debugger.Break();
-        EmitDelegate(b, string.Format("{0} {1}_delegate({2})", returnType, functionName, arguments), callingConvention, fullyQualified, priv);
+        EmitDelegate(b, string.Format("{0} {1}_delegate({2})", returnType, functionName, parameters), callingConvention, fullyQualified, priv);
     }
 
     public static void EmitDelegate(CodeBuilder b, string delegateSignature, string callingConvention, bool fullyQualified, bool priv) {

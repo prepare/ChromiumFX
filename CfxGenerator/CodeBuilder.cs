@@ -171,8 +171,8 @@ public class CodeBuilder {
         BeginBlock("{0} {1}", modifiers, functionSignature);
     }
 
-    public void BeginFunction(string name, string returnType, string arguments, string modifiers = "public") {
-        BeginBlock("{0} {1} {2}({3})", modifiers, returnType, name, arguments);
+    public void BeginFunction(string name, string returnType, string parameters, string modifiers = "public") {
+        BeginBlock("{0} {1} {2}({3})", modifiers, returnType, name, parameters);
     }
 
     public void BeginIf(string condition) {

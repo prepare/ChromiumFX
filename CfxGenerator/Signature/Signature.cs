@@ -21,11 +21,11 @@ public class Signature {
         var s = new Signature(type, sd, api);
         var cs = CustomSignatures.ForFunction(s, cefName, cefConfig);
         if(cs == null) {
-            s.DebugPrintUnhandledArrayArguments(cefName, cefConfig, callMode);
+            s.DebugPrintUnhandledArrayParameters(cefName, cefConfig, callMode);
             AllSignatures.Add(s);
             return s;
         } else {
-            cs.DebugPrintUnhandledArrayArguments(cefName, cefConfig, callMode);
+            cs.DebugPrintUnhandledArrayParameters(cefName, cefConfig, callMode);
             AllSignatures.Add(cs);
             return cs;
         }
@@ -138,7 +138,6 @@ public class Signature {
     public string PublicEventConstructorArguments {
         get {
             for(var i = 1; i <= ManagedParameters.Length - 1; i++) {
-                //Debug.Assert(ManagedArguments[i].VarName != "exception");
                 if(ManagedParameters[i].ParameterType.IsIn) {
                     args.Add(ManagedParameters[i].PublicEventConstructorArgument);
                 }
@@ -439,13 +438,13 @@ public class Signature {
         ReturnType.EmitNativeReturnStatements(b, functionCall, b1);
     }
 
-    public virtual void DebugPrintUnhandledArrayArguments(string cefName, CefConfigNode cefConfig, CfxCallMode callMode) {
+    public virtual void DebugPrintUnhandledArrayParameters(string cefName, CefConfigNode cefConfig, CfxCallMode callMode) {
 
         if(cefName == "cef_resource_handler::get_response_headers")
             return;
 
         for(var i = 0; i <= Parameters.Length - 1; i++) {
-            var suffixLength = CountArgumentSuffixLength(Parameters[i]);
+            var suffixLength = CountParameterSuffixLength(Parameters[i]);
             if(suffixLength > 0) {
                 var arrName = Parameters[i].VarName.Substring(0, Parameters[i].VarName.Length - suffixLength);
                 int iArray = -1;
@@ -470,7 +469,7 @@ public class Signature {
         }
     }
 
-    private int CountArgumentSuffixLength(Parameter arg) {
+    private int CountParameterSuffixLength(Parameter arg) {
         if(arg.VarName.EndsWith("_size"))
             return 5;
         if(arg.VarName.EndsWith("_count"))

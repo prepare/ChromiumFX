@@ -20,7 +20,7 @@ public class WrapperGenerator {
     public WrapperGenerator(CefApiDeclarations decls) {
         this.decls = decls;
         CheckForNeededWrapFunctions();
-        CheckForStringOutArguments();
+        CheckForStringOutParameters();
         this.remoteDecls = decls.GetRemoteDeclarations();
     }
 
@@ -134,23 +134,23 @@ public class WrapperGenerator {
         }
     }
 
-    private void CheckForStringOutArguments() {
+    private void CheckForStringOutParameters() {
         foreach(var f in decls.AllExportFunctions()) {
-            CheckForStringOutArguments(f.Signature, f.Name, f.Comments.Lines);
+            CheckForStringOutParameters(f.Signature, f.Name, f.Comments.Lines);
         }
         foreach(var f in decls.StringCollectionFunctions) {
-            CheckForStringOutArguments(f.Signature, f.Name, null);
+            CheckForStringOutParameters(f.Signature, f.Name, null);
         }
         foreach(var st in decls.CefStructTypes) {
             if(st.ClassBuilder.CallbackFunctions != null) {
                 foreach(var cb in st.ClassBuilder.CallbackFunctions) {
-                    CheckForStringOutArguments(cb.Signature, st.Name + "::" + cb.Name, cb.Comments.Lines);
+                    CheckForStringOutParameters(cb.Signature, st.Name + "::" + cb.Name, cb.Comments.Lines);
                 }
             }
         }
     }
 
-    private void CheckForStringOutArguments(Signature s, string function, string[] funcComments) {
+    private void CheckForStringOutParameters(Signature s, string function, string[] funcComments) {
         for(int i = 0; i < s.Parameters.Length; ++i) {
             var arg = s.Parameters[i];
             if(arg.ParameterType.IsCefStringPtrType) {
