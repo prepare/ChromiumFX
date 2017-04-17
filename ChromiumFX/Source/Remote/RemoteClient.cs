@@ -20,10 +20,7 @@ namespace Chromium.Remote {
 
             //System.Diagnostics.Debugger.Launch();
 
-            var pipeIn = PipeBufferStream.CreateClientInputStream(pipeName + "so");
-            var pipeOut = PipeBufferStream.CreateClientOutputStream(pipeName + "si");
-
-            connection = new RemoteConnection(pipeIn, pipeOut, true);
+            connection = new RemoteConnection(pipeName, true);
 
             var call = new RenderProcessMainRemoteCall();
             call.RequestExecution(connection);
