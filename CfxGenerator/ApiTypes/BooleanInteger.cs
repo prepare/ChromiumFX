@@ -41,6 +41,10 @@ public class BooleanInteger : NumericType {
         return string.Format("{0} ? 1 : 0", CSharp.Escape(var));
     }
 
+    public override string RemoteProcedureReturnExpression(string var) {
+        return PublicReturnExpression(var);
+    }
+
     public override string RemoteUnwrapExpression(string var) {
         return string.Format("{0} ? 1 : 0", CSharp.Escape(var));
     }
@@ -76,11 +80,11 @@ public class BooleanIntegerOutType : NumericOutType {
         b.AppendLine("m_{0} = value ? 1 : 0;", var);
     }
 
-    public override void EmitPrePublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPreCallStatements(CodeBuilder b, string var) {
         b.AppendLine("int {0}_unwrapped;", var);
     }
 
-    public override void EmitPostPublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPostCallStatements(CodeBuilder b, string var) {
         b.AppendLine("{0} = {0}_unwrapped != 0;", var);
     }
 

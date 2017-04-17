@@ -29,8 +29,4 @@ public class CefColorRefType : ApiType {
     public override string PublicUnwrapExpression(string var) {
         return string.Format("ref {0}.color", var);
     }
-
-    public override string ProxyUnwrapExpression(string var) {
-        return string.Concat("ref ", var);
-    }
 }

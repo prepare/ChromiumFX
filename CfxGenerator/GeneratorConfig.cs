@@ -18,7 +18,7 @@ public class GeneratorConfig {
         return strongHandleClients.Contains(client);
     }
 
-    public static bool CreateRemoteProxy(string item) {
+    public static bool CreateRemote(string item) {
         return !(IsBrowserProcessOnly(item) || HasPrivateWrapper(item));
     }
 

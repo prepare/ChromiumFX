@@ -179,10 +179,6 @@ public class CefCallbackFunction  {
         get { return "Cfr" + EventHandlerName.Substring(3); }
     }
 
-    public string ProxyEventHandlerName {
-        get { return RemoteEventHandlerName + "Proxy"; }
-    }
-
     public string PublicEventArgsClassName {
         get {
             if(IsBasicEvent)
@@ -193,10 +189,6 @@ public class CefCallbackFunction  {
 
     public string RemoteEventArgsClassName {
         get { return "Cfr" + PublicEventArgsClassName.Substring(3); }
-    }
-
-    public string ProxyEventArgsClassName {
-        get { return RemoteEventArgsClassName + "Proxy"; }
     }
 
     public CfxCallMode CallMode {

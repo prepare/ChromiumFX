@@ -250,7 +250,7 @@ public class CfxLibraryClass : CfxClass {
         b.AppendLine("private {0}(RemotePtr remotePtr) : base(remotePtr) {{}}", RemoteClassName);
 
         foreach(var p in m_structProperties) {
-            if(GeneratorConfig.CreateRemoteProxy(CefStruct.Name + "::" + p.Getter.Name)) {
+            if(GeneratorConfig.CreateRemote(CefStruct.Name + "::" + p.Getter.Name)) {
 
                 var cb = p.Getter;
 
@@ -285,7 +285,7 @@ public class CfxLibraryClass : CfxClass {
         }
 
         foreach(var cb in m_structFunctions) {
-            if(GeneratorConfig.CreateRemoteProxy(CefStruct.Name + "::" + cb.Name)) {
+            if(GeneratorConfig.CreateRemote(CefStruct.Name + "::" + cb.Name)) {
                 b.AppendLine();
                 b.AppendSummaryAndRemarks(cb.Comments, true);
                 b.BeginFunction(cb.PublicName, cb.RemoteReturnType.RemoteSymbol, cb.Signature.RemoteParameterList);

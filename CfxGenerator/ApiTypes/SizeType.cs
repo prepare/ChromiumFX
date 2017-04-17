@@ -24,6 +24,10 @@ public class SizeType : NumericType {
         return string.Format("(UIntPtr){0}", CSharp.Escape(var));
     }
 
+    public override string RemoteProcedureReturnExpression(string var) {
+        return PublicReturnExpression(var);
+    }
+
     public override string RemoteUnwrapExpression(string var) {
         return string.Format("(UIntPtr){0}", CSharp.Escape(var));
     }

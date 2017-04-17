@@ -25,7 +25,7 @@ public class CefStructPtrType : ApiType {
         get { return Struct.ClassName; }
     }
 
-    public override string ProxySymbol {
+    public override string RemoteCallSymbol {
         get { return "IntPtr"; }
     }
 
@@ -41,19 +41,7 @@ public class CefStructPtrType : ApiType {
         return string.Format("{0}.Unwrap({1})", Struct.ClassName, CSharp.Escape(var));
     }
 
-    public override string ProxyUnwrapExpression(string var) {
-        return string.Format("({0})RemoteProxy.Unwrap({1}, (ptr) => new {0}(ptr))", Struct.ClassName, CSharp.Escape(var));
-    }
-
-    public override string ProxyWrapExpression(string var) {
-        return string.Format("RemoteProxy.Wrap({0})", CSharp.Escape(var));
-    }
-
-    public override string ProxyReturnExpression(string var) {
-        return var;
-    }
-
-    public override string ProxyCallArgument(string var) {
+    public override string RemoteProcedureCallArgument(string var) {
         return CSharp.Escape(var);
     }
 
@@ -86,7 +74,7 @@ public class CefStructPtrType : ApiType {
         return string.Format("{0}.Wrap(new RemotePtr(connection, {1}))", RemoteSymbol, var);
     }
 
-    public override void EmitPreNativeCallStatements(CodeBuilder b, string var) {
+    public override void EmitNativePreCallStatements(CodeBuilder b, string var) {
         if(Struct.IsRefCounted && var != "self") {
             b.AppendLine("if({0}) ((cef_base_ref_counted_t*){0})->add_ref((cef_base_ref_counted_t*){0});", var);
         }
@@ -150,7 +138,7 @@ public class CefStructPtrType : ApiType {
         b.AppendLine("internal {0} m_{1}_wrapped;", RemoteSymbol, var);
     }
 
-    public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
+    public override void EmitRemotePreCallStatements(CodeBuilder b, string var) {
         if(var == "this") {
             b.AppendLine("call.@this = RemotePtr.ptr;");
         } else {

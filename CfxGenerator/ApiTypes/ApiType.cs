@@ -21,7 +21,7 @@ public class ApiType {
     public readonly string Name;
 
     public ApiType(string name) {
-        this.Name = name;
+        Name = name;
     }
 
     public virtual bool IsOut {
@@ -52,12 +52,12 @@ public class ApiType {
         get { return PInvokeSymbol; }
     }
 
-    public virtual string ProxySymbol {
+    public virtual string RemoteCallSymbol {
         get { return PublicSymbol; }
     }
 
     public virtual string RemoteSymbol {
-        get { return ProxySymbol; }
+        get { return RemoteCallSymbol; }
     }
 
     public virtual string NativeCallParameter(string var, bool isConst) {
@@ -87,12 +87,6 @@ public class ApiType {
         return NativeWrapExpression(var);
     }
 
-    public virtual string PInvokeCallParameter(string var) {
-        if(PInvokeSymbol == null)
-            return null;
-        return string.Format("{0} {1}", PInvokeSymbol, CSharp.Escape(var));
-    }
-
     public virtual string NativeCallbackReturnValueParameter() {
         return string.Concat(NativeSymbol, "* __retval");
     }
@@ -105,6 +99,12 @@ public class ApiType {
         if(NativeSymbol == null)
             return null;
         return string.Concat(NativeSymbol, "* ", var);
+    }
+
+    public virtual string PInvokeCallParameter(string var) {
+        if(PInvokeSymbol == null)
+            return null;
+        return string.Format("{0} {1}", PInvokeSymbol, CSharp.Escape(var));
     }
 
     public virtual string PInvokeCallbackReturnValueParameter() {
@@ -143,7 +143,7 @@ public class ApiType {
         return PublicUnwrapExpression(var);
     }
 
-    public virtual string ProxyCallArgument(string var) {
+    public virtual string RemoteProcedureCallArgument(string var) {
         return PublicCallArgument(var);
     }
 
@@ -173,16 +173,8 @@ public class ApiType {
         return CSharp.Escape(var);
     }
 
-    public virtual string ProxyWrapExpression(string var) {
+    public virtual string RemoteProcedureReturnExpression(string var) {
         return CSharp.Escape(var);
-    }
-
-    public virtual string ProxyUnwrapExpression(string var) {
-        return CSharp.Escape(var);
-    }
-
-    public virtual string ProxyReturnExpression(string var) {
-        return PublicReturnExpression(var);
     }
 
     public virtual string RemoteWrapExpression(string var) {
@@ -217,10 +209,10 @@ public class ApiType {
         }
     }
 
-    public virtual void EmitPreNativeCallStatements(CodeBuilder b, string var) {
+    public virtual void EmitNativePreCallStatements(CodeBuilder b, string var) {
     }
 
-    public virtual void EmitPostNativeCallStatements(CodeBuilder b, string var) {
+    public virtual void EmitNativePostCallStatements(CodeBuilder b, string var) {
     }
 
     public virtual void EmitNativeReturnStatements(CodeBuilder b, string functionCall, CodeBuilder postCallStatements) {
@@ -239,28 +231,28 @@ public class ApiType {
         }
     }
 
-    public virtual void EmitPrePublicCallStatements(CodeBuilder b, string var) {
+    public virtual void EmitPublicPreCallStatements(CodeBuilder b, string var) {
     }
 
-    public virtual void EmitPostPublicCallStatements(CodeBuilder b, string var) {
+    public virtual void EmitPublicPostCallStatements(CodeBuilder b, string var) {
     }
 
     public virtual void EmitPublicCallProcessReturnValueStatements(CodeBuilder b) {
     }
 
-    public virtual void EmitPreProxyCallStatements(CodeBuilder b, string var) {
-        EmitPrePublicCallStatements(b, var);
+    public virtual void EmitRemoteProcedurePreCallStatements(CodeBuilder b, string var) {
+        EmitPublicPreCallStatements(b, var);
     }
 
-    public virtual void EmitPostProxyCallStatements(CodeBuilder b, string var) {
-        EmitPostPublicCallStatements(b, var);
+    public virtual void EmitRemoteProcedurePostCallStatements(CodeBuilder b, string var) {
+        EmitPublicPostCallStatements(b, var);
     }
 
-    public virtual void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
+    public virtual void EmitRemotePreCallStatements(CodeBuilder b, string var) {
         b.AppendLine("call.{0} = {0};", CSharp.Escape(var));
     }
 
-    public virtual void EmitPostRemoteCallStatements(CodeBuilder b, string var) {
+    public virtual void EmitRemotePostCallStatements(CodeBuilder b, string var) {
         if(IsOut)
             b.AppendLine("{0} = {1};", var, RemoteWrapExpression("call." + (var == "this" ? "self" : CSharp.Escape(var))));
     }
@@ -279,10 +271,9 @@ public class ApiType {
     /// <summary>
     /// Called if IsIn is true.
     /// </summary>
-    public virtual void EmitPublicEventCtorStatements(CodeBuilder b, string var) {
-        if(IsIn) {
-            b.AppendLine("e.m_{0} = {1};", var, CSharp.Escape(var));
-        }
+    public virtual void EmitPublicEventFieldInitializers(CodeBuilder b, string var) {
+        Debug.Assert(IsIn);
+        b.AppendLine("e.m_{0} = {1};", var, CSharp.Escape(var));
     }
 
     /// <summary>
@@ -337,7 +328,7 @@ public class ApiType {
     }
 
     public void EmitRemoteCallFields(CodeBuilder b, string var) {
-        b.AppendLine("internal {0} {1};", ProxySymbol, var);
+        b.AppendLine("internal {0} {1};", RemoteCallSymbol, var);
     }
 
     public virtual void EmitRemoteWrite(CodeBuilder b, string var) {

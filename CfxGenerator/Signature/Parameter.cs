@@ -101,9 +101,9 @@ public class Parameter {
         }
     }
 
-    public string ProxyCallArgument {
+    public string RemoteProcedureCallArgument {
         get {
-            return ParameterType.ProxyCallArgument(PublicVarName);
+            return ParameterType.RemoteProcedureCallArgument(PublicVarName);
         }
     }
 
@@ -115,12 +115,12 @@ public class Parameter {
         }
     }
 
-    public void EmitPreNativeCallStatements(CodeBuilder b) {
-        ParameterType.EmitPreNativeCallStatements(b, VarName);
+    public void EmitNativePreCallStatements(CodeBuilder b) {
+        ParameterType.EmitNativePreCallStatements(b, VarName);
     }
 
-    public void EmitPostNativeCallStatements(CodeBuilder b) {
-        ParameterType.EmitPostNativeCallStatements(b, VarName);
+    public void EmitNativePostCallStatements(CodeBuilder b) {
+        ParameterType.EmitNativePostCallStatements(b, VarName);
     }
 
     public void EmitPreNativeCallbackStatements(CodeBuilder b) {
@@ -131,32 +131,32 @@ public class Parameter {
         ParameterType.EmitPostNativeCallbackStatements(b, VarName);
     }
 
-    public void EmitPrePublicCallStatements(CodeBuilder b) {
-        ParameterType.EmitPrePublicCallStatements(b, PublicVarName);
+    public void EmitPublicPreCallStatements(CodeBuilder b) {
+        ParameterType.EmitPublicPreCallStatements(b, PublicVarName);
     }
 
     public void EmitPostPublicStatements(CodeBuilder b) {
-        ParameterType.EmitPostPublicCallStatements(b, PublicVarName);
+        ParameterType.EmitPublicPostCallStatements(b, PublicVarName);
     }
 
-    public void EmitPreProxyCallStatements(CodeBuilder b) {
-        ParameterType.EmitPreProxyCallStatements(b, PublicVarName);
+    public void EmitRemoteProcedurePreCallStatements(CodeBuilder b) {
+        ParameterType.EmitRemoteProcedurePreCallStatements(b, PublicVarName);
     }
 
-    public void EmitPostProxyCallStatements(CodeBuilder b) {
-        ParameterType.EmitPostProxyCallStatements(b, PublicVarName);
+    public void EmitRemoteProcedurePostCallStatements(CodeBuilder b) {
+        ParameterType.EmitRemoteProcedurePostCallStatements(b, PublicVarName);
     }
 
-    public void EmitPreRemoteCallStatements(CodeBuilder b) {
-        ParameterType.EmitPreRemoteCallStatements(b, PublicVarName);
+    public void EmitRemotePreCallStatements(CodeBuilder b) {
+        ParameterType.EmitRemotePreCallStatements(b, PublicVarName);
     }
 
-    public void EmitPostRemoteCallStatements(CodeBuilder b) {
-        ParameterType.EmitPostRemoteCallStatements(b, PublicVarName);
+    public void EmitRemotePostCallStatements(CodeBuilder b) {
+        ParameterType.EmitRemotePostCallStatements(b, PublicVarName);
     }
 
     public void EmitPublicEventFieldInitializers(CodeBuilder b) {
-        ParameterType.EmitPublicEventCtorStatements(b, VarName);
+        ParameterType.EmitPublicEventFieldInitializers(b, VarName);
     }
 
     public void EmitPublicEventArgGetterStatements(CodeBuilder b) {

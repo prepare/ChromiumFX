@@ -26,7 +26,7 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
         get { return Struct.ClassName + "[]"; }
     }
 
-    public override string ProxySymbol {
+    public override string RemoteCallSymbol {
         get { return "IntPtr[]"; }
     }
 
@@ -40,14 +40,6 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
         } else {
             return string.Format("{0}_length, {0}_pinned.PinnedPtr", var);
         }
-    }
-
-    public override string ProxyWrapExpression(string var) {
-        return string.Format("CfxArray.GetProxyIds<{0}>({1})", Struct.ClassName, var);
-    }
-
-    public override string ProxyUnwrapExpression(string var) {
-        return var + "_unwrapped";
     }
 
     public override string RemoteWrapExpression(string var) {
@@ -94,7 +86,7 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
         }
     }
 
-    public override void EmitPreNativeCallStatements(CodeBuilder b, string var) {
+    public override void EmitNativePreCallStatements(CodeBuilder b, string var) {
         Debug.Assert(Struct.IsRefCounted);
         b.BeginIf("{0}", CountArg.VarName);
         b.BeginBlock("for(size_t i = 0; i < {0}; ++i)", CountArg.VarName);
@@ -103,7 +95,7 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
         b.EndBlock();
     }
 
-    public override void EmitPrePublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPreCallStatements(CodeBuilder b, string var) {
         b.AppendLine("UIntPtr {0}_length;", var);
         b.AppendLine("IntPtr[] {0}_ptrs;", var);
         b.BeginIf("{0} != null", var);
@@ -119,7 +111,7 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
         b.AppendLine("PinnedObject {0}_pinned = new PinnedObject({0}_ptrs);", var);
     }
 
-    public override void EmitPostPublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPostCallStatements(CodeBuilder b, string var) {
         b.AppendLine("{0}_pinned.Free();", var);
     }
 
@@ -132,7 +124,7 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
         b.AppendLine("internal {0}[] m_{1}_managed;", Struct.RemoteClassName, var);
     }
 
-    public override void EmitPublicEventCtorStatements(CodeBuilder b, string var) {
+    public override void EmitPublicEventFieldInitializers(CodeBuilder b, string var) {
         b.AppendLine("e.m_{0} = new IntPtr[(ulong){1}];", var, CountArg.VarName);
         b.BeginIf("e.m_{0}.Length > 0", var);
         b.AppendLine("System.Runtime.InteropServices.Marshal.Copy({0}, e.m_{0}, 0, (int){1});", var, CountArg.VarName);
@@ -188,12 +180,12 @@ public class CefStructPtrArrayType : CefStructPtrPtrType {
             b.AppendLine("{0}_release = 1;", var);
     }
     
-    public override void EmitPreProxyCallStatements(CodeBuilder b, string var) {
+    public override void EmitRemoteProcedurePreCallStatements(CodeBuilder b, string var) {
         b.AppendLine("PinnedObject {0}_pinned = new PinnedObject({0});", var);
         b.AppendLine("var {0}_length = {0} == null ? UIntPtr.Zero : (UIntPtr){0}.LongLength;", var);
     }
 
-    public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
+    public override void EmitRemotePreCallStatements(CodeBuilder b, string var) {
         b.BeginIf("{0} != null", var);
         b.AppendLine("call.{0} = new IntPtr[{0}.Length];", var);
         b.BeginBlock("for(int i = 0; i < {0}.Length; ++i)", var);

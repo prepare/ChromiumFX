@@ -67,7 +67,7 @@ public class CefStructType : CefType {
         get { return ClassName; }
     }
 
-    public override string ProxySymbol {
+    public override string RemoteCallSymbol {
         get { return "IntPtr"; }
     }
 
@@ -144,25 +144,12 @@ public class CefStructType : CefType {
         return string.Format("{0}.WrapOwned({1})", ClassName, var);
     }
 
-    public override string ProxyReturnExpression(string var) {
-        // TODO: remote object must WrapOwned the ptr
-        return var;
-    }
-
     public override string PublicWrapExpression(string var) {
         return string.Format("{0}.Wrap({1})", ClassName, var);
     }
 
     public override string PublicUnwrapExpression(string var) {
         return string.Format("{0}.Unwrap({1})", ClassName, var);
-    }
-
-    public override string ProxyWrapExpression(string var) {
-        return string.Format("RemoteProxy.Wrap({0})", var);
-    }
-
-    public override string ProxyUnwrapExpression(string var) {
-        return string.Format("({0})RemoteProxy.Unwrap({1})", ClassName, var);
     }
 
     public override string RemoteWrapExpression(string var) {

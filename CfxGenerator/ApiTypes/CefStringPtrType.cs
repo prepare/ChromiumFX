@@ -55,19 +55,15 @@ public class CefStringPtrType : ApiType {
         return string.Format("ref {0}_str, ref {0}_length", var);
     }
 
-    public override string ProxyUnwrapExpression(string var) {
-        return string.Format("ref {0}", var);
-    }
-
     public override string PInvokeOutArgument(string var) {
         return string.Format("out {0}_str, out {0}_length", var);
     }
 
-    public override void EmitPreNativeCallStatements(CodeBuilder b, string var) {
+    public override void EmitNativePreCallStatements(CodeBuilder b, string var) {
         b.AppendLine("cef_string_t {0} = {{ *{0}_str, *{0}_length, 0 }};", var);
     }
 
-    public override void EmitPostNativeCallStatements(CodeBuilder b, string var) {
+    public override void EmitNativePostCallStatements(CodeBuilder b, string var) {
         b.AppendLine("*{0}_str = {0}.str; *{0}_length = (int){0}.length;", var);
     }
 
@@ -83,13 +79,13 @@ public class CefStringPtrType : ApiType {
         b.EndBlock();
     }
 
-    public override void EmitPrePublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPreCallStatements(CodeBuilder b, string var) {
         b.AppendLine("var {0}_pinned = new PinnedString({1});", var, CSharp.Escape(var));
         b.AppendLine("IntPtr {0}_str = {0}_pinned.Obj.PinnedPtr;", var);
         b.AppendLine("int {0}_length = {0}_pinned.Length;", var);
     }
 
-    public override void EmitPostPublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPostCallStatements(CodeBuilder b, string var) {
         b.BeginIf("{0}_str != {0}_pinned.Obj.PinnedPtr", var);
         b.BeginIf("{0}_length > 0", var);
         b.AppendLine("{0} = System.Runtime.InteropServices.Marshal.PtrToStringUni({0}_str, {0}_length);", var);
@@ -138,7 +134,7 @@ public class CefStringPtrType : ApiType {
         b.AppendLine("internal bool m_{0}_changed;", var);
     }
 
-    public override void EmitPublicEventCtorStatements(CodeBuilder b, string var) {
+    public override void EmitPublicEventFieldInitializers(CodeBuilder b, string var) {
         b.AppendLine("e.m_{0}_str = {0}_str;", var);
         b.AppendLine("e.m_{0}_length = {0}_length;", var);
     }

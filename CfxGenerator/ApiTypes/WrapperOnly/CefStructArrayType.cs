@@ -62,19 +62,19 @@ public class CefStructArrayType : CefStructPtrArrayType {
         return string.Format("{0}, (int)sizeof({1})", var, Struct.OriginalSymbol);
     }
 
-    public override void EmitPrePublicCallStatements(CodeBuilder b, string var) {
-        base.EmitPrePublicCallStatements(b, var);
+    public override void EmitPublicPreCallStatements(CodeBuilder b, string var) {
+        base.EmitPublicPreCallStatements(b, var);
         b.AppendLine("int {0}_nomem;", var);
     }
 
-    public override void EmitPostPublicCallStatements(CodeBuilder b, string var) {
-        base.EmitPostPublicCallStatements(b, var);
+    public override void EmitPublicPostCallStatements(CodeBuilder b, string var) {
+        base.EmitPublicPostCallStatements(b, var);
         b.BeginBlock("if({0}_nomem != 0)", var);
         b.AppendLine("throw new OutOfMemoryException();");
         b.EndBlock();
     }
 
-    public override void EmitPreNativeCallStatements(CodeBuilder b, string var) {
+    public override void EmitNativePreCallStatements(CodeBuilder b, string var) {
         b.AppendLine("{0} *{1}_tmp = ({0}*)malloc({2} * sizeof({0}));", Struct.OriginalSymbol, var, CountArg.VarName);
         b.BeginBlock("if({0}_tmp)", var);
         b.BeginBlock("for(size_t i = 0; i < {0}; ++i)", CountArg.VarName);
@@ -87,7 +87,7 @@ public class CefStructArrayType : CefStructPtrArrayType {
         b.EndBlock();
     }
 
-    public override void EmitPostNativeCallStatements(CodeBuilder b, string var) {
+    public override void EmitNativePostCallStatements(CodeBuilder b, string var) {
         b.AppendLine("if({0}_tmp) free({0}_tmp);", var);
     }
 
@@ -102,7 +102,7 @@ public class CefStructArrayType : CefStructPtrArrayType {
         b.AppendLine("internal {0} m_{1}_managed;", PublicSymbol, var);
     }
 
-    public override void EmitPublicEventCtorStatements(CodeBuilder b, string var) {
+    public override void EmitPublicEventFieldInitializers(CodeBuilder b, string var) {
         b.AppendLine("e.m_{0} = {0};", var);
         b.AppendLine("e.m_{0}_structsize = {0}_structsize;", var);
         b.AppendLine("e.m_{0} = {0};", CountArg.VarName);

@@ -22,12 +22,12 @@ public class StringCollectionType : CefType {
         return string.Format("StringFunctions.Wrap{0}({1})", ClassName, var);
     }
 
-    public override void EmitPrePublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPreCallStatements(CodeBuilder b, string var) {
         b.AppendLine("PinnedString[] {0}_handles;", var);
         b.AppendLine("var {0}_unwrapped = StringFunctions.Unwrap{1}({0}, out {0}_handles);", var, ClassName);
     }
 
-    public override void EmitPostPublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPostCallStatements(CodeBuilder b, string var) {
         b.AppendLine("StringFunctions.FreePinnedStrings({0}_handles);", var);
         b.AppendLine("StringFunctions.{0}CopyToManaged({1}_unwrapped, {1});", ClassName, var);
         b.AppendLine("CfxApi.Runtime.{0}_free({1}_unwrapped);", CfxName, var);
@@ -40,7 +40,7 @@ public class StringCollectionType : CefType {
         b.EndBlock();
     }
 
-    public override void EmitPostRemoteCallStatements(CodeBuilder b, string var) {
+    public override void EmitRemotePostCallStatements(CodeBuilder b, string var) {
         // TODO
         if(ClassName == "CfxStringList")
             b.AppendLine("StringFunctions.Copy{0}(call.{1}, {1});", ClassName, var);

@@ -217,11 +217,11 @@ public class Signature {
         }
     }
 
-    public string ProxyArgumentList {
+    public string RemoteProcedureCallArgumentList {
         get {
             Debug.Assert(Type == SignatureType.LibraryCall);
             foreach(var arg in ManagedParameters) {
-                args.Add(arg.ProxyCallArgument);
+                args.Add(arg.RemoteProcedureCallArgument);
             }
             return args.Join();
         }
@@ -247,7 +247,7 @@ public class Signature {
         var apiCall = string.Format("CfxApi.{2}.{0}({1})", apiFunctionName, PublicArgumentList, apiClassName);
 
         for(var i = 0; i <= ManagedParameters.Length - 1; i++) {
-            ManagedParameters[i].EmitPrePublicCallStatements(b);
+            ManagedParameters[i].EmitPublicPreCallStatements(b);
         }
 
         var b1 = new CodeBuilder(b.CurrentIndent);
@@ -273,18 +273,18 @@ public class Signature {
     protected virtual void EmitRemoteProcedure(CodeBuilder b, string apiClassName, string apiFunctionName) {
 
         for(var i = 0; i <= ManagedParameters.Length - 1; i++) {
-            ManagedParameters[i].EmitPreProxyCallStatements(b);
+            ManagedParameters[i].EmitRemoteProcedurePreCallStatements(b);
         }
 
-        var apiCall = string.Format("CfxApi.{2}.{0}({1})", apiFunctionName, ProxyArgumentList, apiClassName);
+        var apiCall = string.Format("CfxApi.{2}.{0}({1})", apiFunctionName, RemoteProcedureCallArgumentList, apiClassName);
         if(PublicReturnType.IsVoid) {
             b.AppendLine(apiCall + ";");
         } else {
-            b.AppendLine("__retval = {0};", PublicReturnType.ProxyReturnExpression(apiCall));
+            b.AppendLine("__retval = {0};", PublicReturnType.RemoteProcedureReturnExpression(apiCall));
         }
 
         for(var i = 0; i <= ManagedParameters.Length - 1; i++) {
-            ManagedParameters[i].EmitPostProxyCallStatements(b);
+            ManagedParameters[i].EmitRemoteProcedurePostCallStatements(b);
         }
     }
 
@@ -311,14 +311,14 @@ public class Signature {
 
         foreach(var arg in ManagedParameters) {
             if(arg.ParameterType.IsIn) {
-                arg.EmitPreRemoteCallStatements(b);
+                arg.EmitRemotePreCallStatements(b);
             }
         }
 
         b.AppendLine("call.RequestExecution(connection);");
 
         foreach(var arg in ManagedParameters) {
-            arg.EmitPostRemoteCallStatements(b);
+            arg.EmitRemotePostCallStatements(b);
         }
 
         ReturnType.EmitRemoteCallProcessReturnValueStatements(b);
@@ -400,8 +400,8 @@ public class Signature {
     public virtual void EmitNativeCall(CodeBuilder b, string functionName) {
         var b1 = new CodeBuilder(b.CurrentIndent);
         for(var i = 0; i <= Parameters.Length - 1; i++) {
-            Parameters[i].EmitPreNativeCallStatements(b);
-            Parameters[i].EmitPostNativeCallStatements(b1);
+            Parameters[i].EmitNativePreCallStatements(b);
+            Parameters[i].EmitNativePostCallStatements(b1);
         }
 
         var functionCall = string.Format("{0}({1})", functionName, NativeArgumentList);

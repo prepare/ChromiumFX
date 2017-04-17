@@ -53,11 +53,11 @@ public class CefEnumPtrType : CefType {
         return cefEnum.PublicUnwrapExpression(var);
     }
 
-    public override void EmitPrePublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPreCallStatements(CodeBuilder b, string var) {
         b.AppendLine("int {0}_tmp;", var);
     }
 
-    public override void EmitPostPublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPostCallStatements(CodeBuilder b, string var) {
         b.AppendLine("{0} = ({1}){0}_tmp;", var, cefEnum.PublicSymbol);
     }
 

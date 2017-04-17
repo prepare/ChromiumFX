@@ -42,11 +42,11 @@ public class CefStringType : SpecialType {
         return string.Format("out {0}_str, out {0}_length", var);
     }
 
-    public override void EmitPrePublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPreCallStatements(CodeBuilder b, string var) {
         b.AppendLine("var {0}_pinned = new PinnedString({1});", var, CSharp.Escape(var));
     }
 
-    public override void EmitPostPublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPostCallStatements(CodeBuilder b, string var) {
         b.AppendLine("{0}_pinned.Obj.Free();", var);
     }
 

@@ -167,9 +167,9 @@ public class CfxValueClass : CfxClass {
             b.AppendLine("return {0};", sm.MemberType.PublicWrapExpression("value"));
             b.EndBlock();
             b.BeginBlock("set");
-            sm.MemberType.EmitPrePublicCallStatements(b, "value");
+            sm.MemberType.EmitPublicPreCallStatements(b, "value");
             b.AppendLine("CfxApi.{3}.{0}_set_{1}(nativePtrUnchecked, {2});", CfxName, sm.Name, sm.MemberType.PublicUnwrapExpression("value"), ApiClassName);
-            sm.MemberType.EmitPostPublicCallStatements(b, "value");
+            sm.MemberType.EmitPublicPostCallStatements(b, "value");
             b.EndBlock();
             b.EndBlock();
             b.AppendLine();

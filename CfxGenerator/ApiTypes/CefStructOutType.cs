@@ -24,8 +24,8 @@ public class CefStructOutType : CefStructPtrPtrType {
         get { return StructPtr.PublicSymbol; }
     }
 
-    public override string ProxySymbol {
-        get { return StructPtr.ProxySymbol; }
+    public override string RemoteCallSymbol {
+        get { return StructPtr.RemoteCallSymbol; }
     }
 
     public override string RemoteSymbol {
@@ -40,7 +40,7 @@ public class CefStructOutType : CefStructPtrPtrType {
         return "out " + StructPtr.PublicCallParameter(var);
     }
 
-    public override string ProxyCallArgument(string var) {
+    public override string RemoteProcedureCallArgument(string var) {
         return "out " + var;
     }
 
@@ -50,10 +50,6 @@ public class CefStructOutType : CefStructPtrPtrType {
 
     public override string PublicUnwrapExpression(string var) {
         return string.Format("out {0}_ptr", var);
-    }
-
-    public override string ProxyUnwrapExpression(string var) {
-        return string.Format("out {0}_local", var);
     }
 
     public override string RemoteUnwrapExpression(string var) {
@@ -69,11 +65,11 @@ public class CefStructOutType : CefStructPtrPtrType {
             b.AppendLine("if(*{0})((cef_base_ref_counted_t*)*{0})->add_ref((cef_base_ref_counted_t*)*{0});", var);
     }
 
-    public override void EmitPrePublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPreCallStatements(CodeBuilder b, string var) {
         b.AppendLine("IntPtr {0}_ptr;", var);
     }
 
-    public override void EmitPostPublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPostCallStatements(CodeBuilder b, string var) {
         b.AppendLine("{0} = {1};", var, StructPtr.PublicWrapExpression(var + "_ptr"));
     }
 
@@ -103,9 +99,9 @@ public class CefStructOutType : CefStructPtrPtrType {
         b.AppendLine("m_{0}_wrapped = value;", var);
     }
 
-    public override void EmitPreProxyCallStatements(CodeBuilder b, string var) {
+    public override void EmitRemoteProcedurePreCallStatements(CodeBuilder b, string var) {
     }
 
-    public override void EmitPostProxyCallStatements(CodeBuilder b, string var) {
+    public override void EmitRemoteProcedurePostCallStatements(CodeBuilder b, string var) {
     }
 }

@@ -28,7 +28,7 @@ public class VoidPtrPtrType : ApiType {
         }
     }
 
-    public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
+    public override void EmitRemotePreCallStatements(CodeBuilder b, string var) {
         b.AppendLine("call.{0} = {0}.ptr;", CSharp.Escape(var));
     }
 

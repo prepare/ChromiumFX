@@ -23,4 +23,8 @@ public class CefStringUserFreeType : BlittableType {
     public override string PublicUnwrapExpression(string var) {
         throw new Exception();
     }
+
+    public override string RemoteProcedureReturnExpression(string var) {
+        return PublicReturnExpression(var);
+    }
 }

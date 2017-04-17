@@ -56,19 +56,15 @@ public class CefStringOutType : CefStringPtrType {
         return string.Format("out {0}_str, out {0}_length", var);
     }
 
-    public override string ProxyUnwrapExpression(string var) {
-        return string.Format("out {0}", var);
-    }
-
     public override string PInvokeOutArgument(string var) {
         throw new Exception();
     }
 
-    public override void EmitPreNativeCallStatements(CodeBuilder b, string var) {
+    public override void EmitNativePreCallStatements(CodeBuilder b, string var) {
         b.AppendLine("cef_string_t {0} = {{ 0 }};", var);
     }
 
-    public override void EmitPostNativeCallStatements(CodeBuilder b, string var) {
+    public override void EmitNativePostCallStatements(CodeBuilder b, string var) {
         b.AppendLine("*{0}_str = {0}.str; *{0}_length = (int){0}.length;", var);
     }
 
@@ -83,12 +79,12 @@ public class CefStringOutType : CefStringPtrType {
         b.EndBlock();
     }
 
-    public override void EmitPrePublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPreCallStatements(CodeBuilder b, string var) {
         b.AppendLine("IntPtr {0}_str;", var);
         b.AppendLine("int {0}_length;", var);
     }
 
-    public override void EmitPostPublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPostCallStatements(CodeBuilder b, string var) {
         b.BeginIf("{0}_length > 0", var);
         b.AppendLine("{0} = System.Runtime.InteropServices.Marshal.PtrToStringUni({0}_str, {0}_length);", var);
         b.AppendLine("// free the native string?", var);
@@ -117,7 +113,7 @@ public class CefStringOutType : CefStringPtrType {
         b.AppendLine("internal string m_{0}_wrapped;", var);
     }
 
-    public override void EmitPublicEventCtorStatements(CodeBuilder b, string var) {
+    public override void EmitPublicEventFieldInitializers(CodeBuilder b, string var) {
         throw new Exception();
     }
 

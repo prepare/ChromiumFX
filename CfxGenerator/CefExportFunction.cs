@@ -45,10 +45,6 @@ public class CefExportFunction {
         get { return CSharp.ApplyStyle(Name).Substring(Parent == null ? 3 : Parent.ClassName.Length) + (PrivateWrapper ? "Private" : ""); }
     }
 
-    public string ProxyFunctionName {
-        get { return CSharp.ApplyStyle(CfxName).Substring(Parent == null ? 3 : 0); }
-    }
-
     public void EmitPInvokeDeclaration(CodeBuilder b) {
         b.AppendComment(this.ToString());
         CodeSnippets.EmitPInvokeDelegate(b, CfxName, Signature);

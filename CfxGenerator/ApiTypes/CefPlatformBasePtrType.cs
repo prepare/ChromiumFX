@@ -22,7 +22,7 @@ public class CefPlatformBasePtrType : SpecialType {
         return string.Format("{0}.Wrap({1})", PublicSymbol, var);
     }
 
-    public override void EmitPreNativeCallStatements(CodeBuilder b, string var) {
+    public override void EmitNativePreCallStatements(CodeBuilder b, string var) {
         if(Name == "cef_main_args_t*") {
             b.AppendLine("#if defined CFX_WINDOWS");
             b.AppendLine("cef_main_args_t args_tmp = { GetModuleHandle(0) };");

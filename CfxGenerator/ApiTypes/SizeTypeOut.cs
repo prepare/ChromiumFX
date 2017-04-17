@@ -16,7 +16,7 @@ internal class SizeTypeOut : NumericOutType {
     internal SizeTypeOut() : base(new SizeType()) {
     }
 
-    public override string ProxySymbol {
+    public override string RemoteCallSymbol {
         get {
             return "ulong";
         }
@@ -26,11 +26,11 @@ internal class SizeTypeOut : NumericOutType {
         return string.Format("out {0}_tmp", var);
     }
 
-    public override void EmitPrePublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPreCallStatements(CodeBuilder b, string var) {
         b.AppendLine("UIntPtr {0}_tmp = UIntPtr.Zero;", var);
     }
 
-    public override void EmitPostPublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPostCallStatements(CodeBuilder b, string var) {
         b.AppendLine("{0} = (ulong){0}_tmp;", var);
     }
 

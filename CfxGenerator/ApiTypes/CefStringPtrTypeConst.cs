@@ -42,15 +42,15 @@ public class CefStringPtrTypeConst : ApiType {
         return string.Format("out {0}_str, out {0}_length", var);
     }
 
-    public override void EmitPreNativeCallStatements(CodeBuilder b, string var) {
+    public override void EmitNativePreCallStatements(CodeBuilder b, string var) {
         b.AppendLine("cef_string_t {0} = {{ {0}_str, {0}_length, 0 }};", var);
     }
 
-    public override void EmitPrePublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPreCallStatements(CodeBuilder b, string var) {
         b.AppendLine("var {0}_pinned = new PinnedString({1});", var, CSharp.Escape(var));
     }
 
-    public override void EmitPostPublicCallStatements(CodeBuilder b, string var) {
+    public override void EmitPublicPostCallStatements(CodeBuilder b, string var) {
         b.AppendLine("{0}_pinned.Obj.Free();", var);
     }
 
@@ -77,7 +77,7 @@ public class CefStringPtrTypeConst : ApiType {
         b.AppendLine("internal bool m_{0}_fetched;", var);
     }
 
-    public override void EmitPublicEventCtorStatements(CodeBuilder b, string var) {
+    public override void EmitPublicEventFieldInitializers(CodeBuilder b, string var) {
         b.AppendLine("e.m_{0}_str = {0}_str;", var);
         b.AppendLine("e.m_{0}_length = {0}_length;", var);
     }

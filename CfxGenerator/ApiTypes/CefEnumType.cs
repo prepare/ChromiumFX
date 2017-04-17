@@ -62,12 +62,8 @@ public class CefEnumType : ApiType {
         get { return CSharp.ApplyStyle(CfxName); }
     }
 
-    public override string ProxySymbol {
+    public override string RemoteCallSymbol {
         get { return "int"; }
-    }
-
-    public override string ProxyReturnExpression(string var) {
-        return var;
     }
 
     public override string RemoteSymbol {
@@ -98,17 +94,9 @@ public class CefEnumType : ApiType {
         return string.Format("({0}){1}", RemoteSymbol, var);
     }
 
-    public override string ProxyWrapExpression(string var) {
-        return "(int)" + var;
-    }
-
-    public override string ProxyUnwrapExpression(string var) {
-        return string.Format("({0}){1}", PublicSymbol, var);
-    }
-
     private static string[] additionalFlags = { "CfxSslContentStatus", "CfxV8PropertyAttribute", "CfxDragOperationsMask", "CfxFileDialogMode", "CfxJsonWriterOptions", "CfxTransitionType", "CfxV8AccessControl" };
 
-    public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
+    public override void EmitRemotePreCallStatements(CodeBuilder b, string var) {
         b.AppendLine("call.{0} = (int){0};", CSharp.Escape(var));
     }
 
