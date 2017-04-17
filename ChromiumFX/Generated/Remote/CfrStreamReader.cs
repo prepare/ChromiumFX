@@ -60,6 +60,7 @@ namespace Chromium.Remote {
         public static CfrStreamReader CreateForData(RemotePtr data, ulong size) {
             var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxStreamReaderCreateForDataRemoteCall();
+            if(data.connection != connection) throw new ArgumentException("Render process connection mismatch.", "data");
             call.data = data.ptr;
             call.size = size;
             call.RequestExecution(connection);
@@ -96,6 +97,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxStreamReaderReadRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(ptr.connection != connection) throw new ArgumentException("Render process connection mismatch.", "ptr");
             call.ptr = ptr.ptr;
             call.size = size;
             call.n = n;

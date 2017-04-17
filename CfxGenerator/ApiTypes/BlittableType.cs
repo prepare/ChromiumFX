@@ -131,6 +131,7 @@ public class BlittableType : ApiType {
     public override void EmitPreRemoteCallStatements(CodeBuilder b, string var) {
         switch(RemoteSymbol) {
             case "RemotePtr":
+                b.AppendLine("if({0}.connection != connection) throw new ArgumentException(\"Render process connection mismatch.\", \"{1}\");", CSharp.Escape(var), var);
                 b.AppendLine("call.{0} = {0}.ptr;", CSharp.Escape(var));
                 return;
             default:

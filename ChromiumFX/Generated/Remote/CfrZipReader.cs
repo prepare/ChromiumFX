@@ -219,6 +219,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxZipReaderReadFileRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(buffer.connection != connection) throw new ArgumentException("Render process connection mismatch.", "buffer");
             call.buffer = buffer.ptr;
             call.bufferSize = bufferSize;
             call.RequestExecution(connection);

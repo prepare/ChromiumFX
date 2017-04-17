@@ -80,6 +80,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxStreamWriterWriteRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(ptr.connection != connection) throw new ArgumentException("Render process connection mismatch.", "ptr");
             call.ptr = ptr.ptr;
             call.size = size;
             call.n = n;

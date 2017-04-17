@@ -45,6 +45,7 @@ namespace Chromium.Remote {
         public static CfrBinaryValue Create(RemotePtr data, ulong dataSize) {
             var connection = CfxRemoteCallContext.CurrentContext.connection;
             var call = new CfxBinaryValueCreateRemoteCall();
+            if(data.connection != connection) throw new ArgumentException("Render process connection mismatch.", "data");
             call.data = data.ptr;
             call.dataSize = dataSize;
             call.RequestExecution(connection);
@@ -171,6 +172,7 @@ namespace Chromium.Remote {
             var connection = RemotePtr.connection;
             var call = new CfxBinaryValueGetDataRemoteCall();
             call.@this = RemotePtr.ptr;
+            if(buffer.connection != connection) throw new ArgumentException("Render process connection mismatch.", "buffer");
             call.buffer = buffer.ptr;
             call.bufferSize = bufferSize;
             call.dataOffset = dataOffset;

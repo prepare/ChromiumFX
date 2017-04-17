@@ -162,6 +162,7 @@ namespace Chromium.Remote {
             var call = new CfxPostDataElementSetToBytesRemoteCall();
             call.@this = RemotePtr.ptr;
             call.size = size;
+            if(bytes.connection != connection) throw new ArgumentException("Render process connection mismatch.", "bytes");
             call.bytes = bytes.ptr;
             call.RequestExecution(connection);
         }
@@ -179,6 +180,7 @@ namespace Chromium.Remote {
             var call = new CfxPostDataElementGetBytesRemoteCall();
             call.@this = RemotePtr.ptr;
             call.size = size;
+            if(bytes.connection != connection) throw new ArgumentException("Render process connection mismatch.", "bytes");
             call.bytes = bytes.ptr;
             call.RequestExecution(connection);
             return call.__retval;
