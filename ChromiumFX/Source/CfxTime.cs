@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2017 Wolfgang Borgsmüller
+// Copyright (c) 2014-2017 Wolfgang BorgsmÃ¼ller
 // All rights reserved.
 // 
 // This software may be modified and distributed under the terms
@@ -11,7 +11,7 @@ namespace Chromium {
     public partial class CfxTime {
 
         public DateTime ToUniversalTime() {
-            return ToUniveralTime(this);
+            return ToUniversalTime(this);
         }
 
         public static DateTime ToUniversalTime(CfxTime time) {
